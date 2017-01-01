@@ -84,6 +84,9 @@
       border-radius: 0 0 13px 0;
       margin: 0;
       }
+    .Alert--ios.Alert--h .Alert__btn:first-child:last-child {
+      border-radius: 0 0 13px 13px;
+      }
 
     .Alert--ios.Alert--v .Alert__btn {
       margin: 0 0 1px;

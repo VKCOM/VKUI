@@ -1,0 +1,13 @@
+.ScreenSpinner {
+  user-select: none;
+  flex: 0 0 auto;
+  }
+
+.ScreenSpinner--ios {
+  width: 88px;
+  height: 88px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  }

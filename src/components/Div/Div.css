@@ -1,7 +1,45 @@
+@import '../../styles/constants.css';
+
 .Div {}
+
 .Div--ios {
   padding: 8px 15px;
   }
 .Div--android {
   padding: 8px 16px;
+  }
+
+.Div--shadow {
+  position: relative;
+  background: #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .03), 0 2px 2px rgba(0, 0, 0, .06);
+  }
+
+.Div--border {
+  position: relative;
+  background: #fff;
+  }
+.Div--border::before,
+.Div--border::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  }
+.Div--border::before {
+  bottom: 100%;
+  background: var(--ios-thick-separator-color);
+  }
+.Div--border::after {
+  bottom: 0;
+  background: var(--ios-thick-separator-color);
+  }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .Div--border::before,
+  .Div--border::after {
+    background: var(--ios-top-border);
+    }
   }

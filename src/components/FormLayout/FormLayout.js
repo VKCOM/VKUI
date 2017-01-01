@@ -8,7 +8,7 @@ export default function FormLayout (props) {
   const children = Array.isArray(props.children) ? props.children : [props.children];
 
   return (
-    <div className={baseClassNames}>
+    <div className={baseClassNames} style={props.style}>
       {children.map((field, i) => (
         <label className="FormLayout__row" key={field.key || `row-${i}`}>
           <div className="FormLayout__separator" />
@@ -28,5 +28,6 @@ export default function FormLayout (props) {
 }
 
 FormLayout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  style: PropTypes.object
 };
