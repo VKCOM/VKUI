@@ -1,0 +1,72 @@
+.Button {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 11px 15px 12px;
+  width: 100%;
+  outline: none;
+  border: 0;
+  background: #fff;
+  text-align: left;
+  font: 17px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  user-select: none;
+}
+.Button::before,
+.Button::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  }
+.Button::before {
+  bottom: 100%;
+  background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  }
+.Button::after {
+  top: 100%;
+  background: linear-gradient(to bottom, #C8C7CC 50%, transparent 50%);
+  }
+
+/**
+ * Disabled
+ */
+.Button[disabled] {
+  color: #8E8E93;
+  background: #fff;
+}
+
+/**
+ * Alignment
+ */
+.Button--left {
+  text-align: left;
+}
+.Button--center {
+  text-align: center;
+}
+.Button--right {
+  text-align: right;
+}
+
+/**
+ * Appearance
+ */
+.Button--primary {
+  color: #007aff;
+  font-weight: 500;
+}
+.Button--default {
+
+}
+.Button--danger {
+  color: #ff3f34;
+}
+
+/**
+ * Single separator between two buttons
+ */
+.Button + .Button::before {
+  content: none;
+}

@@ -1,0 +1,21 @@
+.Group {
+  margin: 0;
+  padding: 15px 0 15px;
+}
+
+.Group__title {
+  font: 13px/18px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin: 0;
+  padding: 0 15px 7px;
+  color: #6D6D72;
+}
+
+.Group__content {}
+
+.Group__description {
+  font: 13px/16px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  color: #6D6D72;
+  padding: 7px 15px 0;
+  }

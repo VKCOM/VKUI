@@ -1,0 +1,4 @@
+.Tappable-inactive {}
+.Tappable-active:not([disabled]) {
+  background: #c8c7cc !important;
+}

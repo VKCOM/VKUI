@@ -1,0 +1,116 @@
+/**
+ * List
+ */
+.List {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  list-style: none;
+  user-select: none;
+  }
+.List::before,
+.List::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  }
+.List::before {
+  bottom: 100%;
+  background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  }
+.List::after {
+  top: 100%;
+  background: linear-gradient(to bottom, #C8C7CC 50%, transparent 50%);
+  }
+
+/**
+ * List item
+ */
+.ListItem {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  font-size: 17px;
+  line-height: 22px;
+  }
+
+  .ListItem__in {
+    position: relative;
+    display: flex;
+    padding: 0 15px;
+    max-width: 100%;
+    background: #fff;
+    }
+  .ListItem--expandable .ListItem__in {
+    padding: 0 35px 0 15px;
+    }
+  .ListItem--expandable .ListItem__in::before {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    margin-top: -4px;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid #C7C7CC;
+    border-right: 2px solid #C7C7CC;
+    content: '';
+    transform: rotate(45deg);
+    }
+
+    .ListItem__icon {
+      position: relative;
+      flex: 0 0 auto;
+      }
+    .List--icon-indent .ListItem__icon:empty,
+    .ListItem--icon-indent .ListItem__icon:empty {
+      padding-left: 44px;
+      }
+    .ListItem__icon::before {
+      position: absolute;
+      bottom: 0;
+      left: 100%;
+      width: 100vw;
+      height: 1px;
+      background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+      content: '';
+      }
+    .ListItem:last-child .ListItem__icon::before {
+      content: none;
+      }
+
+      .ListItem__icon-in {
+        width: 29px;
+        height: 29px;
+        padding: 8px 15px 8px 0;
+        }
+        .ListItem__icon-in > svg,
+        .ListItem__icon-in > img {
+          vertical-align: top;
+          }
+
+    .ListItem__main {
+      flex: 1 1 auto;
+      overflow: hidden;
+      padding: 11px .5em 12px 0;
+      text-overflow: ellipsis;
+      }
+
+    .ListItem__indicator,
+    .ListItem__aside {
+      flex: 0 0 auto;
+      overflow: hidden;
+      padding: 11px 0 12px;
+      max-width: 75%;
+      color: #8e8e93;
+      text-align: right;
+      text-overflow: ellipsis;
+      }
+    .ListItem__aside {
+      padding: 0;
+      overflow: visible;
+      }
