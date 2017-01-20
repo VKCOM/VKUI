@@ -14,4 +14,5 @@ html, body, #root {
   overflow: hidden;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
 }
