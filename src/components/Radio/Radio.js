@@ -1,5 +1,5 @@
 import './Radio.css';
-import React, { Component } from 'react';
+import React from 'react';
 import { List, ListItem } from '../List/List';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 
