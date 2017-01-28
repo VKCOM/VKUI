@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import View from './components/View/View';
 import ScrollView from './components/ScrollView/ScrollView';
-import Link from './components/Link/Link';
 import { List, ListItem } from './components/List/List';
 import Group from './components/Group/Group';
 import Button from './components/Button/Button';
 import Checkbox from './components/Checkbox/Checkbox';
 import { Radio } from './components/Radio/Radio';
+import Slider from './components/Slider/Slider';
+import Input from './components/Input/Input';
+
+import FormLayout from './components/FormLayout/FormLayout';
 
 const UserIcon = (props) => <svg width="29" height="29" viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="29" height="29" rx="7" fill={props.color} /></svg>
 const getIcon = color => <UserIcon color={color} />;
@@ -42,16 +45,20 @@ export default class App extends Component {
 
           <Group title="Layouts">
             <List>
-              <ListItem expandable={true} onClick={this.changePanelHandler('lists')}>List</ListItem>
+              <ListItem expandable={true} onClick={this.changePanelHandler('lists')}>
+                List
+              </ListItem>
               <ListItem expandable={true} onClick={this.changePanelHandler('groups')}>Group</ListItem>
             </List>
           </Group>
 
           <Group title="Controls">
             <List>
+              <ListItem expandable={true} onClick={this.changePanelHandler('inputs')}>Input</ListItem>
               <ListItem expandable={true} onClick={this.changePanelHandler('buttons')}>Button</ListItem>
               <ListItem expandable={true} onClick={this.changePanelHandler('checkboxes')}>Checkbox</ListItem>
               <ListItem expandable={true} onClick={this.changePanelHandler('radios')}>Radio</ListItem>
+              <ListItem expandable={true} onClick={this.changePanelHandler('slider')}>Slider</ListItem>
             </List>
           </Group>
 
@@ -263,6 +270,57 @@ export default class App extends Component {
 
         </ScrollView>
 
+        <ScrollView id="inputs">
+          <Group title="Simple inputs">
+            <FormLayout>
+              <Input type="text" placeholder="Your login" />
+              <Input type="password" placeholder="Your password" />
+            </FormLayout>
+          </Group>
+
+          <Group title="Date and time">
+            <FormLayout>
+              <Input type="date" placeholder="1 янв. 2017 г." label="Date" />
+              <Input type="datetime-local" placeholder="Local datetime" label="Local datetime" />
+              <Input type="time" placeholder="Time" label="Time" />
+              <Input type="month" placeholder="Month" label="Month" />
+            </FormLayout>
+          </Group>
+
+          <Group title="Other">
+            <FormLayout>
+              <Input type="email" placeholder="E-mail" label="E-mail" />
+              <Input type="url" placeholder="URL" label="URL" />
+              <Input type="tel" placeholder="Phone" label="Phone" />
+              <Input type="number" placeholder="Number" label="Number" />
+            </FormLayout>
+          </Group>
+
+          <Group>
+            <Button
+              appearance="primary"
+              alignment="center"
+              onClick={this.changePanelHandler('main')}
+            >
+              Back
+            </Button>
+          </Group>
+        </ScrollView>
+
+        <ScrollView id="slider">
+          <Slider />
+
+          <Group>
+            <Button
+              appearance="primary"
+              alignment="center"
+              onClick={this.changePanelHandler('main')}
+            >
+              Back
+            </Button>
+          </Group>
+        </ScrollView>
+
         <ScrollView id="nothing">
           <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ flex: '0 0 auto', color: 'gray', textAlign: 'center' }}>
@@ -277,12 +335,12 @@ export default class App extends Component {
   }
 }
 
-const Log = (props) => (
-  <dl>
-    <dt>Panel: </dt>
-    <dd>{props.panel}</dd>
-  </dl>
-);
+// const Log = (props) => (
+//   <dl>
+//     <dt>Panel: </dt>
+//     <dd>{props.panel}</dd>
+//   </dl>
+// );
 
 // External — without animation
 // Internal — use animation
