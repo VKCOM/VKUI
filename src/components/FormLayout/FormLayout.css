@@ -1,0 +1,84 @@
+.FormLayout {
+  display: table;
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  list-style: none;
+  user-select: none;
+  }
+.FormLayout::before,
+.FormLayout::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  }
+.FormLayout::before {
+  bottom: 100%;
+  background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  }
+.FormLayout::after {
+  top: 100%;
+  background: linear-gradient(to bottom, #C8C7CC 50%, transparent 50%);
+  }
+
+  .FormLayout__row {
+    display: table-row;
+    position: relative;
+    margin: 0;
+    white-space: nowrap;
+    font-size: 17px;
+    line-height: 22px;
+    max-width: 100%;
+    }
+
+    .FormLayout__separator {
+      display: table-cell;
+      position: relative;
+      width: 0px;
+      }
+    .FormLayout__separator::before {
+      position: absolute;
+      bottom: 0;
+      left: 15px;
+      width: 100vw;
+      height: 1px;
+      background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+      content: '';
+      }
+    .FormLayout__row:last-child .FormLayout__separator::before {
+      content: none;
+      }
+
+    .FormLayout__label {
+      position: relative;
+      display: table-cell;
+      max-width: 75px;
+      }
+    .FormLayout__label::before {
+      position: absolute;
+      bottom: 0;
+      left: 15px;
+      width: 100vw;
+      height: 1px;
+      background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+      content: '';
+      }
+    .FormLayout__row:last-child .FormLayout__label::before {
+      content: none;
+      }
+
+      .FormLayout__label-in {
+        padding: 11px 15px 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        }
+
+    .FormLayout__field {
+      display: table-cell;
+      padding: 0 15px;
+      }
