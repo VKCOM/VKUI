@@ -19,12 +19,14 @@ export default class View extends Component {
     style: {}
   };
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      prevPanel: this.state.activePanel,
-      nextPanel: nextProps.activePanel,
-      activePanel: null,
-      animated: true
-    });
+    if (this.state.activePanel !== nextProps.activePanel) {
+      this.setState({
+        prevPanel: this.state.activePanel,
+        nextPanel: nextProps.activePanel,
+        activePanel: null,
+        animated: true
+      });
+    }
   }
   transitionEndHandler = () => {
     this.setState({
