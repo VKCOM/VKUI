@@ -23,7 +23,7 @@
   background: #dfdfdf;
   }
 .List::after {
-  top: 100%;
+  bottom: 0;
   background: #dfdfdf;
   }
 
@@ -38,6 +38,18 @@
   font-size: 17px;
   line-height: 22px;
   }
+.ListItem--expandable::before {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  margin-top: -4px;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid #C7C7CC;
+  border-right: 2px solid #C7C7CC;
+  content: '';
+  transform: rotate(45deg);
+  }
 
   .ListItem__in {
     position: relative;
@@ -48,18 +60,6 @@
     }
   .ListItem--expandable .ListItem__in {
     padding: 0 35px 0 15px;
-    }
-  .ListItem--expandable .ListItem__in::before {
-    position: absolute;
-    top: 50%;
-    right: 16px;
-    margin-top: -4px;
-    width: 7px;
-    height: 7px;
-    border-top: 2px solid #C7C7CC;
-    border-right: 2px solid #C7C7CC;
-    content: '';
-    transform: rotate(45deg);
     }
 
     .ListItem__icon {
@@ -116,9 +116,11 @@
       }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .List::before,
+  .List::before {
+    background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+    }
   .List::after,
   .ListItem__icon::before {
-    background: linear-gradient(to bottom, #C8C7CC 50%, transparent 50%);
+    background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+    }
   }
-}

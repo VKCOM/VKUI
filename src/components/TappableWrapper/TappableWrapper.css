@@ -1,4 +1,29 @@
 .Tappable-inactive {}
 .Tappable-active:not([disabled]) {
-  background: #c8c7cc !important;
+  background: #d9d9d9 !important;
+}
+
+.Tappable-active::before,
+.Tappable-active::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: #c8c7cc;
+  z-index: 2;
+}
+.Tappable-active::before {
+  bottom: 100%;
+}
+.Tappable-active::after {
+  bottom: 0;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .Tappable-active::before {
+    background: linear-gradient(to bottom, #C8C7CC 50%, #d9d9d9 50%);
+  }
+  .Tappable-active::after {
+    background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  }
 }

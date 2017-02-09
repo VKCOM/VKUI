@@ -25,7 +25,7 @@
   background: #dfdfdf;
   }
 .Button::after {
-  top: 100%;
+  bottom: 0;
   background: #dfdfdf;
   }
 
