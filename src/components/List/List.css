@@ -20,11 +20,11 @@
   }
 .List::before {
   bottom: 100%;
-  background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  background: #dfdfdf;
   }
 .List::after {
   top: 100%;
-  background: linear-gradient(to bottom, #C8C7CC 50%, transparent 50%);
+  background: #dfdfdf;
   }
 
 /**
@@ -76,7 +76,7 @@
       left: 100%;
       width: 100vw;
       height: 1px;
-      background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+      background: #dfdfdf;
       content: '';
       }
     .ListItem:last-child .ListItem__icon::before {
@@ -114,3 +114,11 @@
       padding: 0;
       overflow: visible;
       }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .List::before,
+  .List::after,
+  .ListItem__icon::before {
+    background: linear-gradient(to bottom, #C8C7CC 50%, transparent 50%);
+  }
+}

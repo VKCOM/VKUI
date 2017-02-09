@@ -22,11 +22,11 @@
   }
 .Button::before {
   bottom: 100%;
-  background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  background: #dfdfdf;
   }
 .Button::after {
   top: 100%;
-  background: linear-gradient(to bottom, #C8C7CC 50%, transparent 50%);
+  background: #dfdfdf;
   }
 
 /**
@@ -69,4 +69,12 @@
  */
 .Button + .Button::before {
   content: none;
+}
+
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .Button::before,
+  .Button::after {
+    background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  }
 }

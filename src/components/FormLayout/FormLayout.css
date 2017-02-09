@@ -19,11 +19,11 @@
   }
 .FormLayout::before {
   bottom: 100%;
-  background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  background: #dfdfdf;
   }
 .FormLayout::after {
   top: 100%;
-  background: linear-gradient(to bottom, #C8C7CC 50%, transparent 50%);
+  background: #dfdfdf;
   }
 
   .FormLayout__row {
@@ -47,7 +47,7 @@
       left: 15px;
       width: 100vw;
       height: 1px;
-      background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+      background: #dfdfdf;
       content: '';
       }
     .FormLayout__row:last-child .FormLayout__separator::before {
@@ -65,7 +65,7 @@
       left: 15px;
       width: 100vw;
       height: 1px;
-      background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+      background: #dfdfdf;
       content: '';
       }
     .FormLayout__row:last-child .FormLayout__label::before {
@@ -82,3 +82,12 @@
       display: table-cell;
       padding: 0 15px;
       }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .FormLayout::before,
+  .FormLayout::after,
+  .FormLayout__separator::before,
+  .FormLayout__label::before {
+    background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  }
+}
