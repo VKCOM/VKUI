@@ -1,0 +1,9 @@
+:root {
+  --ios-thick-separator-color: #dfdfdf;
+  --ios-thin-separator-color: #c8c7cc;
+  --ios-top-border: linear-gradient(to top, var(--ios-thin-separator-color) 50%, transparent 50%);
+  --ios-bottom-border: linear-gradient(to bottom, var(--ios-thin-separator-color) 50%, transparent 50%);
+  --ios-active-color: #d9d9d9;
+
+  --android-active-color: #f0f1f3;
+}
