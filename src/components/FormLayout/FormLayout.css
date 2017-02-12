@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .FormLayout {
   display: table;
   width: 100%;
@@ -15,15 +17,14 @@
   left: 0;
   z-index: 1;
   height: 1px;
+  background: var(--ios-thick-separator-color);
   content: '';
   }
 .FormLayout::before {
   bottom: 100%;
-  background: #dfdfdf;
   }
 .FormLayout::after {
   top: 100%;
-  background: #dfdfdf;
   }
 
   .FormLayout__row {
@@ -31,9 +32,14 @@
     position: relative;
     margin: 0;
     white-space: nowrap;
-    font-size: 17px;
     line-height: 22px;
     max-width: 100%;
+    }
+  .FormLayout--ios .FormLayout__row {
+    font-size: 17px;
+    }
+  .FormLayout--android .FormLayout__row {
+    font-size: 16px;
     }
 
     .FormLayout__separator {
@@ -44,14 +50,19 @@
     .FormLayout__separator::before {
       position: absolute;
       bottom: 0;
-      left: 15px;
       width: 100vw;
       height: 1px;
-      background: #dfdfdf;
+      background: var(--ios-thick-separator-color);
       content: '';
       }
     .FormLayout__row:last-child .FormLayout__separator::before {
       content: none;
+      }
+    .FormLayout--ios .FormLayout__separator {
+      left: 15px;
+      }
+    .FormLayout--android .FormLayout__separator {
+      left: 0;
       }
 
     .FormLayout__label {
@@ -65,7 +76,7 @@
       left: 15px;
       width: 100vw;
       height: 1px;
-      background: #dfdfdf;
+      background: var(--ios-thick-separator-color);
       content: '';
       }
     .FormLayout__row:last-child .FormLayout__label::before {
@@ -73,9 +84,14 @@
       }
 
       .FormLayout__label-in {
-        padding: 11px 15px 12px;
         overflow: hidden;
         text-overflow: ellipsis;
+        }
+      .FormLayout--ios .FormLayout__label-in {
+        padding: 11px 15px 12px;
+        }
+      .FormLayout--android .FormLayout__label-in {
+        padding: 16px 15px 18px;
         }
 
     .FormLayout__field {
@@ -88,6 +104,6 @@
   .FormLayout::after,
   .FormLayout__separator::before,
   .FormLayout__label::before {
-    background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+    background: var(--ios-top-border);
+    }
   }
-}

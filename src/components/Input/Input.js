@@ -1,5 +1,9 @@
 import './Input.css';
 import React, { Component, PropTypes } from 'react';
+import classnames from '../../lib/classnames';
+import { platform, ANDROID, IOS } from '../../lib/platform.js';
+
+const osname = platform();
 
 export default class Input extends Component {
   static propTypes = {
@@ -10,7 +14,12 @@ export default class Input extends Component {
     ])
   };
   render() {
+    const modifiers = {
+      'Input--android': osname === ANDROID,
+      'Input--ios': osname === IOS,
+    };
+
     // remove label
-    return <input className="Input" {...this.props} />;
+    return <input className={classnames('Input', modifiers)} {...this.props} />;
   }
 }
