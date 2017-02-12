@@ -1,29 +1,36 @@
-.Tappable-inactive {}
-.Tappable-active:not([disabled]) {
-  background: #d9d9d9 !important;
+@import '../../styles/constants.css';
+
+.Tappable--inactive {}
+
+.Tappable--ios.Tappable--active:not([disabled]) {
+  background: var(--ios-active-color) !important;
+}
+.Tappable--android.Tappable--active:not([disabled]) {
+  background: var(--android-active-color) !important;
 }
 
-.Tappable-active::before,
-.Tappable-active::after {
+.Tappable--ios.Tappable--active::before,
+.Tappable--ios.Tappable--active::after {
   content: '';
   position: absolute;
   right: 0;
   left: 0;
   height: 1px;
-  background: #c8c7cc;
+  background: var(--ios-thick-separator-color);
   z-index: 2;
 }
-.Tappable-active::before {
+.Tappable--ios.Tappable--active::before {
   bottom: 100%;
 }
-.Tappable-active::after {
+.Tappable--ios.Tappable--active::after {
   bottom: 0;
 }
+
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .Tappable-active::before {
-    background: linear-gradient(to bottom, #C8C7CC 50%, #d9d9d9 50%);
+  .Tappable--ios.Tappable--active::before {
+    background: linear-gradient(to bottom, var(--ios-thin-separator-color) 50%, #d9d9d9 50%);
   }
-  .Tappable-active::after {
-    background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+  .Tappable--ios.Tappable--active::after {
+    background: var(--ios-top-border);
   }
 }
