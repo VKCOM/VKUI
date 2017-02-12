@@ -1,16 +1,22 @@
 .Group {
   margin: 0;
   padding: 15px 0 15px;
-}
+  }
 
 .Group__title {
+  margin: 0;
+
+  }
+
+.Group--ios .Group__title {
   font: 13px/18px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
   text-transform: uppercase;
   letter-spacing: .04em;
-  margin: 0;
+  color: #6d6d72;
   padding: 0 15px 7px;
-  color: #6D6D72;
 }
+
+
 
 .Group__content {}
 
@@ -19,3 +25,10 @@
   color: #6D6D72;
   padding: 7px 15px 0;
   }
+
+.Group--android .Group__title {
+  font: 500 14px/16px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  color: #5181b8;
+  padding: 0 16px 17px;
+}
+

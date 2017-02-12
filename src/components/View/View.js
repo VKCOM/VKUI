@@ -2,6 +2,9 @@ import './View.css';
 
 import React, { Component, PropTypes } from 'react';
 import classnames from '../../lib/classnames';
+import { platform, ANDROID, IOS } from '../../lib/platform.js';
+
+const osname = platform();
 
 export default class View extends Component {
   constructor(props) {
@@ -42,6 +45,8 @@ export default class View extends Component {
     const hasPopout = typeof popoutContent !== 'undefined';
     const panels = [].concat(this.props.children).filter(a => !!a);
     const modifiers = {
+      'View--android': osname === ANDROID,
+      'View--ios': osname === IOS,
       'View--popout': hasPopout,
       'View--animated': this.state.animated
     };

@@ -1,8 +1,12 @@
 import './List.css';
+
 import React, { Component, PropTypes } from 'react';
 import classnames from '../../lib/classnames';
 import removeObjectKeys from '../../lib/removeObjectKeys';
+import { platform, ANDROID, IOS } from '../../lib/platform.js';
 import TappableWrapper from '../TappableWrapper/TappableWrapper';
+
+const osname = platform();
 
 export class List extends Component {
   static propTypes = {
@@ -16,6 +20,8 @@ export class List extends Component {
   render() {
     const { style, indented } = this.props;
     const modifiers = {
+      'List--android': osname === ANDROID,
+      'List--ios': osname === IOS,
       'List--indented': indented
     };
 
@@ -51,6 +57,8 @@ export class ListItem extends Component {
   render() {
     const { icon, indicator, asideContent, expandable, indented, onClick, children } = this.props;
     const modifiers = {
+      'ListItem--android': osname === ANDROID,
+      'ListItem--ios': osname === IOS,
       'ListItem--expandable': expandable,
       'ListItem--indented': indented
     };

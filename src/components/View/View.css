@@ -35,7 +35,14 @@
   left: 0;
   z-index: 1;
   visibility: hidden;
+}
+
+.View--ios .View__panel {
   background: #efeff4;
+}
+
+.View--android .View__panel {
+  background: #fff;
 }
 
 /**

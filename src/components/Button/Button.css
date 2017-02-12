@@ -1,4 +1,5 @@
 .Button {
+  box-sizing: border-box;
   position: relative;
   display: block;
   margin: 0;
@@ -72,7 +73,7 @@
 }
 
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .Button::before,
   .Button::after {
     background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);

@@ -1,7 +1,7 @@
 html, body, #root {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  font-family: /* -apple-system, BlinkMacSystemFont, */ Roboto, Open Sans, Helvetica Neue, sans-serif;
   height: 100%;
   background: #EFEFF4;
   -webkit-font-smoothing: subpixel-antialiased;
