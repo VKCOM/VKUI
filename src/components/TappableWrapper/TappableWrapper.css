@@ -1,13 +1,13 @@
 @import '../../styles/constants.css';
 
-.Tappable--inactive {}
+.Tappable {
+  position: relative;
+  }
 
+/* iOS */
 .Tappable--ios.Tappable--active:not([disabled]) {
   background: var(--ios-active-color) !important;
-}
-.Tappable--android.Tappable--active:not([disabled]) {
-  background: var(--android-active-color) !important;
-}
+  }
 
 .Tappable--ios.Tappable--active::before,
 .Tappable--ios.Tappable--active::after {
@@ -18,19 +18,64 @@
   height: 1px;
   background: var(--ios-thick-separator-color);
   z-index: 2;
-}
+  }
 .Tappable--ios.Tappable--active::before {
   bottom: 100%;
-}
+  }
 .Tappable--ios.Tappable--active::after {
   bottom: 0;
-}
+  }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .Tappable--ios.Tappable--active::before {
     background: linear-gradient(to bottom, var(--ios-thin-separator-color) 50%, #d9d9d9 50%);
-  }
+    }
   .Tappable--ios.Tappable--active::after {
     background: var(--ios-top-border);
+    }
+  }
+
+/* Android */
+.Tappable--android {
+  transition: background-color .3s ease-out;
+  }
+.Tappable--android.Tappable--active:not([disabled]) {
+  background: var(--android-active-color) !important;
+  }
+
+  .Tappable--android .Tappable__waves {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+    }
+
+    .Tappable--android .Tappable__wave {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 24px;
+      height: 24px;
+      margin: -12px 0 0 -12px;
+      content: '';
+      border-radius: 50%;
+      background: rgba(127, 127, 127, .1);
+      animation: animation-wave .3s cubic-bezier(.4, .0, .2, 1);
+      }
+
+@keyframes animation-wave {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(8);
+    opacity: 0;
   }
 }
