@@ -1,0 +1,21 @@
+.Icon {}
+.Icon--verbose {
+  background: #ccc;
+  }
+
+  .Icon > svg,
+  .Icon > img {
+    vertical-align: top;
+    }
+
+.Icon--ios {
+  width: 29px;
+  height: 29px;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+.Icon--android {
+  width: 24px;
+  height: 24px;
+}

@@ -8,11 +8,9 @@ import Checkbox from './components/Checkbox/Checkbox';
 import { Radio } from './components/Radio/Radio';
 import Slider from './components/Slider/Slider';
 import Input from './components/Input/Input';
+import Icon from './components/Icon/Icon';
 
 import FormLayout from './components/FormLayout/FormLayout';
-
-const UserIcon = (props) => <svg width="29" height="29" viewBox="0 0 29 29" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="29" height="29" rx="7" fill={props.color} /></svg>
-const getIcon = color => <UserIcon color={color} />;
 
 export default class App extends Component {
   constructor(props) {
@@ -98,9 +96,9 @@ export default class App extends Component {
 
           <Group title="Icons">
             <List>
-              <ListItem icon={getIcon('#4CD964')}>Label 1</ListItem>
-              <ListItem icon={getIcon('#4CD964')}>Label 2</ListItem>
-              <ListItem icon={getIcon('#4CD964')}>Label 3</ListItem>
+              <ListItem icon={<Icon />}>Label 1</ListItem>
+              <ListItem icon={<Icon />}>Label 2</ListItem>
+              <ListItem icon={<Icon />}>Label 3</ListItem>
             </List>
           </Group>
 
@@ -225,14 +223,14 @@ export default class App extends Component {
             <List>
 
               <ListItem
-                icon={getIcon('#FF9500')}
+                icon={<Icon />}
                 asideContent={<Checkbox />}
               >
                 Airplane Mode
               </ListItem>
 
               <ListItem
-                icon={getIcon('#007AFF')}
+                icon={<Icon />}
                 expandable={true}
                 indicator="Philip's Wi-Fi Network"
                  onClick={this.changePanelHandler('nothing')}
@@ -240,19 +238,19 @@ export default class App extends Component {
                 Wi-Fi
               </ListItem>
 
-              <ListItem icon={getIcon('#007AFF')} expandable={true} onClick={this.changePanelHandler('nothing')} indicator="On">
+              <ListItem icon={<Icon />} expandable={true} onClick={this.changePanelHandler('nothing')} indicator="On">
                 Bluetooth
               </ListItem>
-              <ListItem icon={getIcon('#4CD964')} expandable={true} onClick={this.changePanelHandler('nothing')}>
+              <ListItem icon={<Icon />} expandable={true} onClick={this.changePanelHandler('nothing')}>
                 Cellular
               </ListItem>
-              <ListItem icon={getIcon('#4CD964')} expandable={true} onClick={this.changePanelHandler('nothing')} indicator="Off">
+              <ListItem icon={<Icon />} expandable={true} onClick={this.changePanelHandler('nothing')} indicator="Off">
                 Personal Hotspot
               </ListItem>
-              <ListItem icon={getIcon('#007AFF')} expandable={true} onClick={this.changePanelHandler('nothing')} indicator="Not connected">
+              <ListItem icon={<Icon />} expandable={true} onClick={this.changePanelHandler('nothing')} indicator="Not connected">
                 VPN
               </ListItem>
-              <ListItem icon={getIcon('#4CD964')} expandable={true} onClick={this.changePanelHandler('nothing')} indicator="EE">
+              <ListItem icon={<Icon />} expandable={true} onClick={this.changePanelHandler('nothing')} indicator="EE">
                 Carrier
               </ListItem>
             </List>
