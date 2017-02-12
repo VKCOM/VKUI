@@ -8,148 +8,203 @@
   bottom: 0;
   left: 0;
   overflow: hidden;
-  background: #efeff4;
   background: #000;
-}
+  }
 .View--animated {
   pointer-events: none;
-}
+  }
+
+  /**
+   * Panels list
+   */
+  .View__panels {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    }
+
+    /**
+     * Panel
+     */
+    .View__panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      visibility: hidden;
+      }
+
+  /**
+   * Mask
+   */
+  .View__mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background: rgba(0, 0, 0, .6);
+    opacity: 0;
+    transition: opacity .3s ease;
+    user-select: none;
+    }
+
+  .View--popout .View__mask {
+    opacity: 1;
+    user-select: auto;
+    }
+
+  /**
+   * Popout
+   */
+  .View__popout {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 3;
+    }
+
 
 /**
- * Panels list
+ * iOS
  */
-.View__panels {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+.View--ios {}
+
+  .View--ios .View__panels {}
+
+    .View--ios .View__panel {
+      background: #efeff4;
+      }
+
+    /**
+     * Panel transition
+     */
+    .View--ios .View__panel--prev,
+    .View--ios .View__panel--next {
+      visibility: visible;
+      transition:
+        transform .6s var(--ios-easing),
+        background .6s var(--ios-easing),
+        visibility .6s var(--ios-easing);
+      }
+    .View--ios .View__panel {
+      transform: translate3d(-50%, 0, 0);
+      }
+    .View--ios .View__panel--next {
+      transform: translate3d(0, 0, 0);
+      }
+    .View--ios .View__panel--next ~ .View__panel {
+      transform: translate3d(100%, 0, 0);
+      }
+
+    .View--ios .View__panel--prev::before,
+    .View--ios .View__panel--next::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      background: #000;
+      content: '';
+      pointer-events: none;
+      }
+    .View--ios .View__panel--prev::before {
+      animation: animation-fade-in .6s var(--ios-easing);
+      }
+    .View--ios .View__panel--next::before {
+      animation: animation-fade-out .6s var(--ios-easing);
+      }
+    .View--ios .View__panel--prev ~ .View__panel--next::before,
+    .View--ios .View__panel--next ~ .View__panel--prev::before {
+      content: none;
+      }
+
+    /**
+     * Active panel
+     */
+    .View--ios .View__panel--active {
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+      }
+    .View--ios .View__panel--active::before {
+      content: none;
+      }
+    .View--ios .View__panel--active ~ .View__panel {
+      transform: translate3d(100%, 0, 0);
+      }
 
 /**
- * Panel
+ * Android
  */
-.View__panel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  visibility: hidden;
-}
+.View--android {}
 
-.View--ios .View__panel {
-  background: #efeff4;
-}
+  .View--android .View__panels {}
 
-.View--android .View__panel {
-  background: #fff;
-}
+    .View--android .View__panel {
+      background: #fff;
+      }
+
+    /**
+     * Panel transition
+     */
+    .View--android .View__panel--prev,
+    .View--android .View__panel--next {
+      visibility: visible;
+      transition:
+        transform .3s var(--android-easing) .2s,
+        opacity .3s var(--android-easing) .2s,
+        visibility .3s var(--android-easing) .2s;
+      }
+    .View--android .View__panel {
+      transform: translate3d(0, 0, 0);
+      }
+    .View--android .View__panel--next {
+      transform: translate3d(0, 0, 0);
+      }
+    .View--android .View__panel--next ~ .View__panel {
+      transform: translate3d(0, 10%, 0);
+      opacity: 0;
+      visibility: hidden;
+      }
+
+    /**
+     * Active panel
+     */
+    .View--android .View__panel--active {
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+      }
+    .View--android .View__panel--active::before {
+      content: none;
+      }
+    .View--android .View__panel--active ~ .View__panel {
+      transform: translate3d(0, 10%, 0);
+      }
+
 
 /**
- * Panel transition
+ * Animations
  */
-.View__panel--prev,
-.View__panel--next {
-  visibility: visible;
-  transition:
-    transform .6s cubic-bezier(.36, .66, .04, 1),
-    background .6s cubic-bezier(.36, .66, .04, 1),
-    visibility .6s cubic-bezier(.36, .66, .04, 1);
-}
-.View__panel {
-  transform: translate3d(-50%, 0, 0);
-}
-.View__panel--next {
-  transform: translate3d(0, 0, 0);
-}
-.View__panel--next ~ .View__panel {
-  transform: translate3d(100%, 0, 0);
-}
-
-.View__panel--prev::before,
-.View__panel--next::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 10;
-  background: #000;
-  content: '';
-  pointer-events: none;
-}
-.View__panel--prev::before {
-  animation: animation-fade-in .6s ease;
-}
-.View__panel--next::before {
-  animation: animation-fade-out .6s ease;
-}
-.View__panel--prev ~ .View__panel--next::before,
-.View__panel--next ~ .View__panel--prev::before {
-  content: none;
-}
-
-/**
- * Active panel
- */
-.View__panel--active {
-  visibility: visible;
-  transform: translate3d(0, 0, 0);
-}
-.View__panel--active::before {
-  content: none;
-}
-.View__panel--active ~ .View__panel {
-  transform: translate3d(100%, 0, 0);
-}
-
-/**
- * Mask
- */
-.View__mask {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
-  background: rgba(0, 0, 0, .6);
-  opacity: 0;
-  transition: opacity .3s ease;
-  user-select: none;
-}
-
-.View--popout .View__mask {
-  opacity: 1;
-  user-select: auto;
-}
-
-/**
- * Popout
- */
-.View__popout {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 3;
-}
-
 @keyframes animation-fade-in {
   from {
     opacity: 0;
-  }
+    }
   to {
     opacity: .3;
+    }
   }
-}
 
 @keyframes animation-fade-out {
   from {
     opacity: .3;
-  }
+    }
   to {
     opacity: 0;
+    }
   }
-}
