@@ -3,13 +3,12 @@
   position: relative;
   display: block;
   margin: 0;
-  padding: 11px 15px 12px;
   width: 100%;
   outline: none;
   border: 0;
   background: #fff;
   text-align: left;
-  font: 17px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+
   user-select: none;
 }
 .Button::before,
@@ -36,46 +35,54 @@
 .Button[disabled] {
   color: #8E8E93;
   background: #fff;
-}
+  }
 
 /**
  * Alignment
  */
 .Button--left {
   text-align: left;
-}
+  }
 .Button--center {
   text-align: center;
-}
+  }
 .Button--right {
   text-align: right;
-}
+  }
 
 /**
  * Appearance
  */
-.Button--primary {
+.Button--ios.Button--primary {
   color: #007aff;
   font-weight: 500;
-}
-.Button--default {
-
-}
-.Button--danger {
+  }
+.Button--ios.Button--default {}
+.Button--ios.Button--danger {
   color: #ff3f34;
-}
+  }
 
 /**
  * Single separator between two buttons
  */
 .Button + .Button::before {
   content: none;
-}
+  }
+
+.Button--ios {
+  font: 17px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  padding: 11px 15px 12px;
+  }
+
+.Button--android {
+  font: 16px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  padding: 16px 16px 18px;
+  }
 
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .Button::before,
   .Button::after {
     background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+    }
   }
-}

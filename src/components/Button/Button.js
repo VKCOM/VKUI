@@ -3,6 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import classnames from '../../lib/classnames';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import TappableWrapper from '../TappableWrapper/TappableWrapper';
+import { platform, ANDROID, IOS } from '../../lib/platform.js';
+
+const osname = platform();
 
 export default class Button extends Component {
   static propTypes = {
@@ -18,6 +21,8 @@ export default class Button extends Component {
   render() {
     const { style, children, alignment, appearance } = this.props;
     const modifiers = {
+      'Button--ios': osname === IOS,
+      'Button--android': osname === ANDROID,
       'Button--left': alignment === 'left',
       'Button--center': alignment === 'center',
       'Button--right': alignment === 'right',
