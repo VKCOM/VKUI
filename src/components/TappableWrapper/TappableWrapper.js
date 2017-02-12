@@ -5,6 +5,7 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
 import { platform, ANDROID, IOS } from '../../lib/platform.js';
 import { getOffsetRect } from '../../lib/offset';
+import { coordX, coordY } from '../Touch/TouchUtils';
 
 const osname = platform();
 
@@ -18,14 +19,15 @@ export default class TappableWrapper extends Component {
   getContainer = container => this.container = container;
   onDown = (e) => {
     const { top, left } = getOffsetRect(this.container);
-    const { clientX, clientY } = e;
+    const x = coordX(e);
+    const y = coordY(e);
     const key = 'wave' + Date.now().toString();
 
     this.setState(state => ({
       clicks: Object.assign({}, state.clicks, {
         [key]: {
-          x: Math.round(clientX - left),
-          y: Math.round(clientY - top)
+          x: Math.round(x - left),
+          y: Math.round(y - top)
         }
       })
     }));
