@@ -4,8 +4,10 @@ import { List, ListItem } from '../List/List';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { platform, ANDROID, IOS } from '../../lib/platform.js';
 import classnames from '../../lib/classnames';
+import TappableWrapper from '../TappableWrapper/TappableWrapper';
 
 const osname = platform();
+const noop = () => {};
 
 export function RadioContainer(props) {
   return (
@@ -22,7 +24,7 @@ export function Radio(props) {
   };
 
   return (
-    <ListItem>
+    <ListItem onClick={noop}>
       <label className={classnames('Radio', modifiers)}>
         <input
           {...removeObjectKeys(props, ['children'])}

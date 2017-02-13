@@ -66,7 +66,7 @@ export default class TappableWrapper extends Component {
         onMouseDown: onDownHandler,
         onTouchStart: onDownHandler,
         onTap: this.props.onClick
-      }), ['onClick', 'component']);
+      }), ['onClick']);
     } else {
       containerProps = removeObjectKeys(Object.assign({}, this.props), ['component']);
     }
