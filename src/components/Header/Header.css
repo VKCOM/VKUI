@@ -1,0 +1,28 @@
+@import '../../styles/constants.css';
+
+.Header {
+  background: var(--vk-color);
+  color: #fff;
+  }
+
+  .Header__title {
+    margin: 0;
+    padding: 0 12px;
+    }
+
+.Header--ios {
+  height: 44px;
+  }
+
+  .Header--ios .Header__title {
+    font: 500 17px/44px var(--font);
+    text-align: center;
+    }
+
+.Header--android {
+  height: 56px;
+  }
+
+  .Header--android .Header__title {
+    font: 500 20px/56px var(--font);
+    }

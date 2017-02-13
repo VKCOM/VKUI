@@ -9,6 +9,7 @@ import { Radio } from './components/Radio/Radio';
 import Slider from './components/Slider/Slider';
 import Input from './components/Input/Input';
 import Icon from './components/Icon/Icon';
+import Header from './components/Header/Header';
 
 import FormLayout from './components/FormLayout/FormLayout';
 
@@ -40,6 +41,8 @@ export default class App extends Component {
       <View activePanel={this.state.activePanel}>
 
         <ScrollView id="main">
+
+          <Header>Заголовок</Header>
 
           <Group title="Layouts">
             <List>

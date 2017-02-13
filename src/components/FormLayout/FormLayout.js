@@ -13,8 +13,8 @@ export default function FormLayout(props) {
 
   return (
     <div className={classnames('FormLayout', modifiers)}>
-      {props.children.map(field => (
-        <label className="FormLayout__row">
+      {props.children.map((field, i) => (
+        <label className="FormLayout__row" key={field.key || `row-${i}`}>
           <div className="FormLayout__separator" />
           {!!field.props.label && (
             <div className="FormLayout__label">

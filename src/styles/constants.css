@@ -1,4 +1,7 @@
 :root {
+  --font: /* -apple-system, BlinkMacSystemFont, */ Roboto, Open Sans, Helvetica Neue, sans-serif;
+  --vk-color: #5181b8;
+
   --ios-thick-separator-color: #dfdfdf;
   --ios-thin-separator-color: #c8c7cc;
   --ios-top-border: linear-gradient(to top, var(--ios-thin-separator-color) 50%, transparent 50%);
