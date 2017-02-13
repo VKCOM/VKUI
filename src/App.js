@@ -42,7 +42,7 @@ export default class App extends Component {
 
         <ScrollView id="main">
 
-          <Header>Заголовок</Header>
+          <Header>VKUI</Header>
 
           <Group title="Layouts">
             <List>
@@ -72,6 +72,8 @@ export default class App extends Component {
         </ScrollView>
 
         <ScrollView id="lists">
+
+          <Header>List</Header>
 
           <Group title="Simple list">
             <List>
@@ -119,6 +121,8 @@ export default class App extends Component {
 
         <ScrollView id="groups">
 
+          <Header>Group</Header>
+
           <Group title="Group title" description="Group description. Lorem ipsum dolor sit amet, consectetur adipisicing elit.">
             <List>
               <ListItem>Group content</ListItem>
@@ -138,6 +142,8 @@ export default class App extends Component {
         </ScrollView>
 
         <ScrollView id="buttons">
+
+          <Header>Button</Header>
 
           <Group title="Appearance">
             <Button appearance="default" onClick={() => {}}>Default button</Button>
@@ -165,6 +171,8 @@ export default class App extends Component {
         </ScrollView>
 
         <ScrollView id="checkboxes">
+
+          <Header>Checkbox</Header>
 
           <Group title="Checkboxes">
             <List>
@@ -200,6 +208,8 @@ export default class App extends Component {
 
         <ScrollView id="radios">
 
+          <Header>Radio</Header>
+
           <Group title="Radios">
             <List>
               <Radio name="radio" value="1">First</Radio>
@@ -221,6 +231,8 @@ export default class App extends Component {
         </ScrollView>
 
         <ScrollView id="demo">
+
+          <Header>Demo</Header>
 
           <Group title="Settings" description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quod vel, possimus reiciendis tempora explicabo omnis error veritatis dolore officia maiores quia adipisci quos beatae voluptas at ipsa pariatur repellat.">
             <List>
@@ -272,6 +284,9 @@ export default class App extends Component {
         </ScrollView>
 
         <ScrollView id="inputs">
+
+          <Header>Input</Header>
+
           <Group title="Simple inputs">
             <FormLayout>
               <Input type="text" placeholder="Your login" />
@@ -309,6 +324,9 @@ export default class App extends Component {
         </ScrollView>
 
         <ScrollView id="slider">
+
+          <Header>Slider</Header>
+
           <Slider />
 
           <Group>

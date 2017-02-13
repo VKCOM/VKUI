@@ -69,6 +69,7 @@
       position: relative;
       display: table-cell;
       max-width: 75px;
+      vertical-align: top;
       }
     .FormLayout__label::before {
       position: absolute;
@@ -97,6 +98,7 @@
     .FormLayout__field {
       display: table-cell;
       padding: 0 15px;
+      vertical-align: top;
       }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {

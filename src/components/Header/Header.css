@@ -3,6 +3,8 @@
 .Header {
   background: var(--vk-color);
   color: #fff;
+  display: flex;
+  align-items: center;
   }
 
   .Header__title {
@@ -10,8 +12,12 @@
     padding: 0 12px;
     }
 
+/**
+ * iOS Header
+ */
 .Header--ios {
   height: 44px;
+  justify-content: center;
   }
 
   .Header--ios .Header__title {
@@ -19,6 +25,9 @@
     text-align: center;
     }
 
+/**
+ * Android header
+ */
 .Header--android {
   height: 56px;
   }

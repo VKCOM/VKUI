@@ -8,6 +8,7 @@
   background: transparent;
   font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
   line-height: 22px;
+  min-width: 140px; /* Fix iOS rendering for FormLayout */
   }
 
 .Input--ios {
