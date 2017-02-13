@@ -4,25 +4,43 @@
   text-overflow: ellipsis;
   margin-right: -.5em;
   align-items: center;
-}
+  }
 
-.Radio__self {
-  display: none;
-}
+  .Radio__self {
+    display: none;
+    }
 
-.Radio__label {
-  flex: 1 1 auto;
-}
+  .Radio__label {
+    flex: 1 1 auto;
+    }
 
-.Radio__icon {
-  flex: 0 0 auto;
-  width: 13px;
-  height: 11px;
-  opacity: 0;
-  transition: opacity .14s ease;
-}
+  .Radio__icon {
+    flex: 0 0 auto;
+    width: 13px;
+    height: 11px;
+    opacity: 0;
+    transition: opacity .14s ease;
+    }
 
-.Radio__self:checked ~ .Radio__icon {
-  background: url('../../../public/checkmark.svg') 0 0/100% no-repeat;
-  opacity: 1;
-}
+  .Radio__self:checked ~ .Radio__icon {
+    background: url('../../../public/checkmark.svg') 0 0/100% no-repeat;
+    opacity: 1;
+    }
+
+/**
+ * iOS radio
+ */
+.Radio--ios {
+  margin: -11px 0 -12px;
+  padding: 11px 0 12px;
+  }
+
+/**
+ * Android radio
+ */
+.Radio--android {
+  margin: -16px 0 -17px;
+  padding: 16px 0 17px;
+  }
+
+  .Radio--android .Radio__label {}
