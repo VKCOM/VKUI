@@ -20,27 +20,32 @@ export default class Touch extends Component {
    * @returns {void}
    */
   onStart = (e) => {
-    this.setState({
+    const newState = {
       gesture: {
         startX: coordX(e),
         startY: coordY(e),
         startT: new Date(),
         isPressed: true
       }
-    });
+    };
+
+    this.setState(newState);
 
     // Вызываем нужные колбеки из props
+    const outputEvent = Object.assign({}, newState.gesture, {
+      originalEvent: e
+    });
 
     if (this.props.onStart) {
-      this.props.onStart(this.state.gesture);
+      this.props.onStart(outputEvent);
     }
 
     if (this.props.onStartX) {
-      this.props.onStartX(this.state.gesture);
+      this.props.onStartX(outputEvent);
     }
 
     if (this.props.onStartY) {
-      this.props.onStartY(this.state.gesture);
+      this.props.onStartY(outputEvent);
     }
 
     document.addEventListener(events[1], this.onMove);
@@ -103,19 +108,22 @@ export default class Touch extends Component {
         });
 
         // Вызываем нужные колбеки из props
+        const outputEvent = Object.assign({}, this.state.gesture, {
+          originalEvent: e
+        });
 
         if (this.props.onMove) {
-          this.props.onMove(this.state.gesture);
+          this.props.onMove(outputEvent);
           e.preventDefault();
         }
 
         if (this.state.gesture.isSlideX && this.props.onMoveX) {
-          this.props.onMoveX(this.state.gesture);
+          this.props.onMoveX(outputEvent);
           e.preventDefault();
         }
 
         if (this.state.gesture.isSlideY && this.props.onMoveY) {
-          this.props.onMoveY(this.state.gesture);
+          this.props.onMoveY(outputEvent);
           e.preventDefault();
         }
       }
@@ -134,17 +142,20 @@ export default class Touch extends Component {
 
     if (isPressed) {
       // Вызываем нужные колбеки из props
+      const outputEvent = Object.assign({}, this.state.gesture, {
+        originalEvent: e
+      });
 
       if (this.props.onEnd) {
-        this.props.onEnd();
+        this.props.onEnd(outputEvent);
       }
 
       if (isSlideY && this.props.onEndY) {
-        this.props.onEndY();
+        this.props.onEndY(outputEvent);
       }
 
       if (isSlideX && this.props.onEndX) {
-        this.props.onEndX();
+        this.props.onEndX(outputEvent);
       }
     }
 
@@ -203,7 +214,7 @@ export default class Touch extends Component {
       'onEnd',
       'onEndX',
       'onEndY'
-    ])
+    ]);
 
     return <div {...handlers} {...nativeProps}>{this.props.children}</div>;
   }

@@ -1,35 +1,86 @@
+@import '../../styles/constants.css';
+
 .Slider {
   position: relative;
   height: 28px;
   margin: 2px 14px;
+  }
+
+  .Slider__in {
+    height: 100%;
+    }
+
+  .Slider__dragger {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0;
+    height: 0;
+    }
+
+  .Slider__dragger::before {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    content: '';
+    }
+
+  .Slider__thumb {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 28px;
+    height: 28px;
+    content: '';
+    transition: transform .1s ease;
+    }
+
+/**
+ * iOS
+ */
+.Slider--ios {
   background: linear-gradient(to bottom, #b7b7b7 1px, transparent 1px) 0 14px repeat-x;
-}
+  }
 
-.Slider__dragger {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 0;
-  height: 0;
-}
+  .Slider--ios .Slider__in {}
 
-.Slider__dragger::before {
-  position: absolute;
-  top: 0;
-  height: 1px;
-  background: #0f7afb;
-  width: 100%;
-  content: '';
-}
-.Slider__dragger::after {
-  position: absolute;
-  top: -14px;
-  right: -14px;
-  width: 28px;
-  height: 28px;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, .35), 0 1px 1px rgba(0, 0, 0, .15);
-  content: '';
-  transition: transform .1s ease;
-}
+    .Slider__dragger::before {
+      height: 1px;
+      background: #0f7afb;
+      }
+
+    .Slider--ios .Slider__thumb {
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 2px 7px rgba(0, 0, 0, .35), 0 1px 1px rgba(0, 0, 0, .15);
+      }
+
+/**
+ * Android
+ */
+.Slider--android {
+  background: linear-gradient(to bottom, #bfbfbf 2px, transparent 2px) 0 14px repeat-x;
+  }
+
+  .Slider--ios .Slider__in {}
+
+    .Slider--android .Slider__dragger::before {
+      height: 2px;
+      background: var(--vk-color);
+      }
+
+    .Slider--android .Slider__thumb {
+      top: -13px;
+      }
+
+    .Slider--android .Slider__thumb::before {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      margin: -6px 0 0 -6px;
+      content: '';
+      background: var(--vk-color);
+      border-radius: 6px;
+      }

@@ -1,6 +1,10 @@
 import './Slider.css';
 import React, { Component, PropTypes } from 'react';
 import Touch from '../Touch/Touch';
+import classnames from '../../lib/classnames';
+import { platform, ANDROID, IOS } from '../../lib/platform.js';
+
+const osname = platform();
 
 export default class Slider extends Component {
   constructor(props) {
@@ -23,6 +27,11 @@ export default class Slider extends Component {
     value: 0,
     step: 0
   };
+  onStart = (e) => {
+    if (!e.originalEvent.target.closest('.Slider__thumb')) {
+      // calculate absolute position
+    }
+  }
   onMove = e => {
     this.setState(this.calculate(this.state.startX + (e.shiftX || 0)));
   }
@@ -69,16 +78,17 @@ export default class Slider extends Component {
     window.removeEventListener('resize', this.onResize);
   }
   render() {
+    const modifiers = {
+      'Slider--ios': osname === IOS,
+      'Slider--android': osname === ANDROID
+    };
+
     return (
-      <div className="Slider" ref={el => this.container = el}>
-        <Touch
-          onMoveX={this.onMove}
-          onEndX={this.onEnd}
-        >
-          <div
-            className="Slider__dragger"
-            style={{ width: this.state.position + '%' }}
-          />
+      <div className={classnames('Slider', modifiers)} ref={el => this.container = el}>
+        <Touch onStartX={this.onStart} onMoveX={this.onMove} onEndX={this.onEnd} className="Slider__in">
+          <div className="Slider__dragger" style={{ width: this.state.position + '%' }}>
+            <span className="Slider__thumb" />
+          </div>
         </Touch>
       </div>
     );
