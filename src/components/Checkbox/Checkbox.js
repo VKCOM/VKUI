@@ -1,6 +1,10 @@
 import './Checkbox.css';
 import React, { Component, PropTypes } from 'react';
 import removeObjectKeys from '../../lib/removeObjectKeys';
+import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import classnames from '../../lib/classnames';
+
+const osname = platform();
 
 export default class Group extends Component {
   constructor(props) {
@@ -23,9 +27,13 @@ export default class Group extends Component {
   }
   render() {
     const { style } = this.props;
+    const modifiers = {
+      'Checkbox--ios': osname === IOS,
+      'Checkbox--android': osname === ANDROID
+    };
 
     return (
-      <label className="Checkbox" style={style}>
+      <label className={classnames('Checkbox', modifiers)} style={style}>
         <input
           {...removeObjectKeys(this.props, ['onChange'])}
           type="checkbox"

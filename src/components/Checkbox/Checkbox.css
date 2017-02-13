@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .Checkbox {
   display: block;
   margin: -11px -15px;
@@ -11,6 +13,30 @@
   .Checkbox__pseudo {
     position: relative;
     display: block;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+    }
+  .Checkbox__self:checked + .Checkbox__pseudo {
+
+    }
+  .Checkbox__self[disabled] + .Checkbox__pseudo {
+
+    }
+  .Checkbox__pseudo::before {
+    position: absolute;
+    content: '';
+    transition: transform .1s ease;
+    }
+  .Checkbox__self:checked + .Checkbox__pseudo::before {
+    transform: translateX(20px);
+    }
+
+/**
+ * iOS Checkbox
+ */
+.Checkbox--ios {}
+
+  .Checkbox--ios .Checkbox__pseudo {
     width: 48px;
     height: 28px;
     border: 1px solid #E6E6E6;
@@ -18,19 +44,17 @@
     transition:
       background-color .1s ease,
       border-color .1s ease;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    -webkit-tap-highlight-color: transparent;
     }
-  .Checkbox__self:checked + .Checkbox__pseudo {
+
+  .Checkbox--ios .Checkbox__self:checked + .Checkbox__pseudo {
     border-color: #4CD864;
     background: #4CD864;
     }
-  .Checkbox__self[disabled] + .Checkbox__pseudo {
+  .Checkbox--ios .Checkbox__self[disabled] + .Checkbox__pseudo {
     border-color: #ddd;
     background: #ddd;
     }
-  .Checkbox__pseudo::before {
-    position: absolute;
+  .Checkbox--ios .Checkbox__pseudo::before {
     top: 0;
     left: 0;
     width: 28px;
@@ -38,9 +62,36 @@
     border-radius: 14px;
     background: #fff;
     box-shadow: 0 2px 7px rgba(0, 0, 0, .35), 0 1px 1px rgba(0, 0, 0, .15);
-    content: '';
-    transition: transform .1s ease;
     }
-  .Checkbox__self:checked + .Checkbox__pseudo::before {
-    transform: translateX(20px);
+
+/**
+ * Android Checkbox
+ */
+.Checkbox--android {}
+
+  .Checkbox--android .Checkbox__pseudo {
+    width: 34px;
+    height: 14px;
+    background: #c6c5c5;
+    border-radius: 7px;
+    transition: background-color .1s ease;
+    }
+
+  .Checkbox--android .Checkbox__self:checked + .Checkbox__pseudo {
+    background: #a8bfdb;
+    }
+  .Checkbox--android .Checkbox__self[disabled] + .Checkbox__pseudo {
+    opacity: .5;
+    }
+  .Checkbox--android .Checkbox__pseudo::before {
+    top: -3px;
+    left: -3px;
+    width: 20px;
+    height: 20px;
+    background: #F1F1F1;
+    border-radius: 10px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 2px 2px 0 rgba(0, 0, 0, .24);
+    }
+  .Checkbox--android .Checkbox__self:checked + .Checkbox__pseudo::before {
+    background: var(--vk-color);
     }
