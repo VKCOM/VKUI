@@ -2,9 +2,9 @@ import './Slider.css';
 import React, { Component, PropTypes } from 'react';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import getClassName from '../../helpers/getClassName';
 
-const osname = platform();
+const baseClassNames = getClassName('Slider');
 
 export default class Slider extends Component {
   constructor(props) {
@@ -41,6 +41,7 @@ export default class Slider extends Component {
   }
   onMove = e => {
     this.setState(this.calculate(this.state.startX + (e.shiftX || 0)));
+    e.originalEvent.preventDefault();
   }
   onEnd = () => {
     this.setState({
@@ -90,13 +91,11 @@ export default class Slider extends Component {
   }
   render() {
     const modifiers = {
-      'Slider--ios': osname === IOS,
-      'Slider--android': osname === ANDROID,
       'Slider--active': this.state.active
     };
 
     return (
-      <div className={classnames('Slider', modifiers)} ref={el => this.container = el}>
+      <div className={classnames(baseClassNames, modifiers)} ref={el => this.container = el}>
         <Touch onStart={this.onStart} onMove={this.onMove} onEnd={this.onEnd} className="Slider__in">
           <div className="Slider__dragger" style={{ width: this.state.position + '%' }}>
             <span className="Slider__thumb" />

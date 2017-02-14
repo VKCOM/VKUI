@@ -114,17 +114,17 @@ export default class Touch extends Component {
 
         if (this.props.onMove) {
           this.props.onMove(outputEvent);
-          e.preventDefault();
+          // e.preventDefault();
         }
 
         if (this.state.gesture.isSlideX && this.props.onMoveX) {
           this.props.onMoveX(outputEvent);
-          e.preventDefault();
+          // e.preventDefault();
         }
 
         if (this.state.gesture.isSlideY && this.props.onMoveY) {
           this.props.onMoveY(outputEvent);
-          e.preventDefault();
+          // e.preventDefault();
         }
       }
     }
@@ -204,6 +204,7 @@ export default class Touch extends Component {
       onDragStart: this.onDragStart,
       onClick: this.onClick
     };
+    const Tag = this.props.tagName || 'div';
     const nativeProps = removeObjectKeys(Object.assign({}, this.props), [
       'onStart',
       'onStartX',
@@ -213,9 +214,10 @@ export default class Touch extends Component {
       'onMoveY',
       'onEnd',
       'onEndX',
-      'onEndY'
+      'onEndY',
+      'tagName'
     ]);
 
-    return <div {...handlers} {...nativeProps}>{this.props.children}</div>;
+    return <Tag {...handlers} {...nativeProps}>{this.props.children}</Tag>;
   }
 }

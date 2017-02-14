@@ -1,16 +1,20 @@
 import './Icon.css';
 import React, { Component, PropTypes } from 'react';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
 import classnames from '../../lib/classnames';
+import getClassName from '../../helpers/getClassName';
 
-const osname = platform();
+const baseClassNames = getClassName('Icon');
 
-export default class Group extends Component {
+export default class Icon extends Component {
+  static propTypes = {
+    style: PropTypes.object
+  };
+  static defaultProps = {
+    style: {}
+  };
   render() {
     const { style, children } = this.props;
-    const classes = classnames('Icon', {
-      'Icon--android': osname === ANDROID,
-      'Icon--ios': osname === IOS,
+    const classes = classnames(baseClassNames, {
       'Icon--verbose': !children
     });
 

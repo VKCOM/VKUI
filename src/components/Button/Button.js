@@ -3,9 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import classnames from '../../lib/classnames';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import TappableWrapper from '../TappableWrapper/TappableWrapper';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import getClassName from '../../helpers/getClassName';
 
-const osname = platform();
+const baseClassNames = getClassName('Button');
 
 export default class Button extends Component {
   static propTypes = {
@@ -21,8 +21,6 @@ export default class Button extends Component {
   render() {
     const { style, children, alignment, appearance } = this.props;
     const modifiers = {
-      'Button--ios': osname === IOS,
-      'Button--android': osname === ANDROID,
       'Button--left': alignment === 'left',
       'Button--center': alignment === 'center',
       'Button--right': alignment === 'right',
@@ -35,7 +33,7 @@ export default class Button extends Component {
     return (
       <TappableWrapper
         component="button"
-        className={classnames('Button', modifiers)}
+        className={classnames(baseClassNames, modifiers)}
         style={style}
         {...nativeProps}
       >

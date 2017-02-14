@@ -1,9 +1,8 @@
 import './Input.css';
 import React, { Component, PropTypes } from 'react';
-import classnames from '../../lib/classnames';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import getClassName from '../../helpers/getClassName';
 
-const osname = platform();
+const baseClassNames = getClassName('Input');
 
 export default class Input extends Component {
   static propTypes = {
@@ -14,12 +13,6 @@ export default class Input extends Component {
     ])
   };
   render() {
-    const modifiers = {
-      'Input--android': osname === ANDROID,
-      'Input--ios': osname === IOS,
-    };
-
-    // remove label
-    return <input className={classnames('Input', modifiers)} {...this.props} />;
+    return <input className={baseClassNames} {...this.props} />;
   }
 }

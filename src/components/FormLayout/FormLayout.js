@@ -1,18 +1,12 @@
 import './FormLayout.css';
 import React from 'react';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
-import classnames from '../../lib/classnames';
+import getClassName from '../../helpers/getClassName';
 
-const osname = platform();
+const baseClassNames = getClassName('FormLayout');
 
 export default function FormLayout(props) {
-  const modifiers = {
-    'FormLayout--ios': osname === IOS,
-    'FormLayout--android': osname === ANDROID
-  };
-
   return (
-    <div className={classnames('FormLayout', modifiers)}>
+    <div className={baseClassNames}>
       {props.children.map((field, i) => (
         <label className="FormLayout__row" key={field.key || `row-${i}`}>
           <div className="FormLayout__separator" />

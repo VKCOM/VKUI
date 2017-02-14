@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import Tappable from 'react-tappable';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import { platform, ANDROID } from '../../lib/platform.js';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../Touch/TouchUtils';
+import getClassName from '../../helpers/getClassName';
 
+const baseClassNames = getClassName('Tappable');
 const osname = platform();
 
 export default class TappableWrapper extends Component {
@@ -44,10 +46,7 @@ export default class TappableWrapper extends Component {
     const { clicks } = this.state;
     const Container = !this.props.onClick ? this.props.component || 'div' : Tappable;
     const commonProps = {
-      className: classnames('Tappable', this.props.className, {
-        'Tappable--android': osname === ANDROID,
-        'Tappable--ios': osname === IOS
-      })
+      className: classnames(baseClassNames, this.props.className)
     };
     const TappableProps = {
       className: commonProps.className,

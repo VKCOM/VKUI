@@ -1,9 +1,8 @@
 import './Group.css';
 import React, { Component, PropTypes } from 'react';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
-import classnames from '../../lib/classnames';
+import getClassName from '../../helpers/getClassName';
 
-const osname = platform();
+const baseClassNames = getClassName('Group');
 
 export default class Group extends Component {
   static propTypes = {
@@ -18,13 +17,9 @@ export default class Group extends Component {
   };
   render() {
     const { style, title, description } = this.props;
-    const classes = classnames('Group', {
-      'Group--android': osname === ANDROID,
-      'Group--ios': osname === IOS,
-    });
 
     return (
-      <div className={classes} style={style}>
+      <div className={baseClassNames} style={style}>
         {title && <h3 className="Group__title">{title}</h3>}
         <div className="Group__content">
           {this.props.children}

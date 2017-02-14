@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import View from './components/View/View';
 import ScrollView from './components/ScrollView/ScrollView';
-import { List, ListItem } from './components/List/List';
+import List from './components/List/List';
+import ListItem from './components/ListItem/ListItem';
 import Group from './components/Group/Group';
 import Button from './components/Button/Button';
 import Checkbox from './components/Checkbox/Checkbox';
-import { Radio } from './components/Radio/Radio';
+import Radio from './components/Radio/Radio';
 import Slider from './components/Slider/Slider';
 import Input from './components/Input/Input';
 import Icon from './components/Icon/Icon';

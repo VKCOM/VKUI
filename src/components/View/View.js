@@ -1,10 +1,9 @@
 import './View.css';
-
 import React, { Component, PropTypes } from 'react';
 import classnames from '../../lib/classnames';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import getClassName from '../../helpers/getClassName';
 
-const osname = platform();
+const baseClassNames = getClassName('View');
 
 export default class View extends Component {
   constructor(props) {
@@ -33,8 +32,6 @@ export default class View extends Component {
   }
   transitionEndHandler = () => {
     this.setState({
-      // prevPanel: null,
-      // nextPanel: null,
       activePanel: this.props.activePanel,
       animated: false
     });
@@ -45,14 +42,12 @@ export default class View extends Component {
     const hasPopout = typeof popoutContent !== 'undefined';
     const panels = [].concat(this.props.children).filter(a => !!a);
     const modifiers = {
-      'View--android': osname === ANDROID,
-      'View--ios': osname === IOS,
       'View--popout': hasPopout,
       'View--animated': this.state.animated
     };
 
     return (
-      <section className={classnames('View', modifiers)} style={style}>
+      <section className={classnames(baseClassNames, modifiers)} style={style}>
         <div className="View__panels">
           {panels.map((panel, i) => (
             <div

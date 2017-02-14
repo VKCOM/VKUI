@@ -1,31 +1,15 @@
 import './Radio.css';
 import React from 'react';
-import { List, ListItem } from '../List/List';
+import ListItem from '../ListItem/ListItem';
 import removeObjectKeys from '../../lib/removeObjectKeys';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
-import classnames from '../../lib/classnames';
-import TappableWrapper from '../TappableWrapper/TappableWrapper';
+import getClassName from '../../helpers/getClassName';
 
-const osname = platform();
-const noop = () => {};
+const baseClassNames = getClassName('Radio');
 
-export function RadioContainer(props) {
+export default function Radio(props) {
   return (
-    <List>
-      {props.children}
-    </List>
-  );
-}
-
-export function Radio(props) {
-  const modifiers = {
-    'Radio--ios': osname === IOS,
-    'Radio--android': osname === ANDROID
-  };
-
-  return (
-    <ListItem onClick={noop}>
-      <label className={classnames('Radio', modifiers)}>
+    <ListItem>
+      <label className={baseClassNames}>
         <input
           {...removeObjectKeys(props, ['children'])}
           type="radio"
