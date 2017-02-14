@@ -29,7 +29,14 @@ export default class Slider extends Component {
   };
   onStart = (e) => {
     if (!e.originalEvent.target.closest('.Slider__thumb')) {
-      // calculate absolute position
+      const coords = this.calculate(e.startX - this.state.containerLeft);
+
+      this.setState(Object.assign({}, coords, {
+        startX: coords.absolutePosition,
+        deltaX: 0
+      }));
+    } else {
+      this.setState({ active: true });
     }
   }
   onMove = e => {
@@ -38,11 +45,15 @@ export default class Slider extends Component {
   onEnd = () => {
     this.setState({
       startX: this.state.absolutePosition,
-      deltaX: 0
+      deltaX: 0,
+      active: false
     });
   }
   onResize = () => {
-    this.setState({ containerWidth: this.container.offsetWidth });
+    this.setState({
+      containerLeft: this.container.offsetLeft,
+      containerWidth: this.container.offsetWidth
+    });
   }
   calculate(pos) {
     const { min, max, step } = this.props;
@@ -80,12 +91,13 @@ export default class Slider extends Component {
   render() {
     const modifiers = {
       'Slider--ios': osname === IOS,
-      'Slider--android': osname === ANDROID
+      'Slider--android': osname === ANDROID,
+      'Slider--active': this.state.active
     };
 
     return (
       <div className={classnames('Slider', modifiers)} ref={el => this.container = el}>
-        <Touch onStartX={this.onStart} onMoveX={this.onMove} onEndX={this.onEnd} className="Slider__in">
+        <Touch onStart={this.onStart} onMove={this.onMove} onEnd={this.onEnd} className="Slider__in">
           <div className="Slider__dragger" style={{ width: this.state.position + '%' }}>
             <span className="Slider__thumb" />
           </div>

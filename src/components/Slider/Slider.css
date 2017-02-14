@@ -83,4 +83,9 @@
       content: '';
       background: var(--vk-color);
       border-radius: 6px;
+      transition: box-shadow .14s ease, transform .14s ease;
+      }
+    .Slider--android.Slider--active .Slider__thumb::before {
+      box-shadow: 0 0 0 3px rgba(127, 127, 127, .2);
+      transform: scale(1.25);
       }
