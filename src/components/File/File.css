@@ -1,0 +1,17 @@
+.File {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  padding: 1px 0 0;
+}
+
+.File__self {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  font-size: 10em;
+  z-index: 1;
+  opacity: 0;
+}

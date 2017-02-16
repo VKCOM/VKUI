@@ -12,6 +12,7 @@ import Input from './components/Input/Input';
 import Textarea from './components/Textarea/Textarea';
 import Icon from './components/Icon/Icon';
 import Header from './components/Header/Header';
+import File from './components/File/File';
 
 import FormLayout from './components/FormLayout/FormLayout';
 
@@ -313,6 +314,10 @@ export default class App extends Component {
               <Input type="number" placeholder="Number" label="Number" />
               <Textarea placeholder="Textarea" />
             </FormLayout>
+          </Group>
+
+          <Group title="File">
+            <File />
           </Group>
 
           <Group>
