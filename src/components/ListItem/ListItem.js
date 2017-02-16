@@ -6,7 +6,7 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 import TappableWrapper from '../TappableWrapper/TappableWrapper';
 
-const listItemBaseClassNames = getClassName('ListItem');
+const baseClassNames = getClassName('ListItem');
 
 export default class ListItem extends Component {
   static propTypes = {
@@ -45,7 +45,7 @@ export default class ListItem extends Component {
     ]);
 
     return (
-      <li className={classnames(listItemBaseClassNames, modifiers)} {...nativeProps}>
+      <li className={classnames(baseClassNames, modifiers)} {...nativeProps}>
         <TappableWrapper component="div" className="ListItem__in" onClick={onClick}>
           <div className="ListItem__icon">
             {icon && <div className="ListItem__icon-in">{icon}</div>}

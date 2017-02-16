@@ -15,9 +15,11 @@ export default class Header extends Component {
     const { style, children } = this.props;
 
     return (
-      <div className={baseClassNames} style={style}>
-        <h1 className="Header__title">{children}</h1>
-      </div>
+      <header className={baseClassNames} style={style}>
+        <div className="Header__in">
+          <h1 className="Header__title">{children}</h1>
+        </div>
+      </header>
     );
   }
 }

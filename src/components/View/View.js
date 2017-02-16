@@ -39,7 +39,7 @@ export default class View extends Component {
   render() {
     const { style, popout } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
-    const hasPopout = typeof popoutContent !== 'undefined';
+    const hasPopout = typeof popout !== 'undefined';
     const panels = [].concat(this.props.children).filter(a => !!a);
     const modifiers = {
       'View--popout': hasPopout,
