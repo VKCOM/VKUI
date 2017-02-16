@@ -9,6 +9,7 @@ import Checkbox from './components/Checkbox/Checkbox';
 import Radio from './components/Radio/Radio';
 import Slider from './components/Slider/Slider';
 import Input from './components/Input/Input';
+import Textarea from './components/Textarea/Textarea';
 import Icon from './components/Icon/Icon';
 import Header from './components/Header/Header';
 
@@ -310,6 +311,7 @@ export default class App extends Component {
               <Input type="url" placeholder="URL" label="URL" />
               <Input type="tel" placeholder="Phone" label="Phone" />
               <Input type="number" placeholder="Number" label="Number" />
+              <Textarea placeholder="Textarea" />
             </FormLayout>
           </Group>
 
