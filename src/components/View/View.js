@@ -37,17 +37,41 @@ export default class View extends Component {
     });
   }
   render() {
-    const { style, popout } = this.props;
+    const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
     const hasPopout = typeof popout !== 'undefined';
+    const hasHeader = typeof header !== 'undefined';
     const panels = [].concat(this.props.children).filter(a => !!a);
     const modifiers = {
+      'View--header': hasHeader,
       'View--popout': hasPopout,
       'View--animated': this.state.animated
     };
 
     return (
       <section className={classnames(baseClassNames, modifiers)} style={style}>
+        {hasHeader && (
+          <div className="View__header">
+            <div className="View__header-in">
+              {panels.map((panel, i) => (
+                <div
+                  className={classnames('View__header-item', {
+                    'View__header-item--active': panel.props.id === activePanel,
+                    'View__header-item--prev': panel.props.id === prevPanel,
+                    'View__header-item--next': panel.props.id === nextPanel
+                  })}
+                  key={panel.key || panel.props.id}
+                >
+                  <div className="View__header-title">{panel.props.header.title}</div>
+                </div>
+              ))}
+              {/* Icon */}
+              {/* Left */}
+              {header.title}
+              {/* Left */}
+            </div>
+          </div>
+        )}
         <div className="View__panels">
           {panels.map((panel, i) => (
             <div

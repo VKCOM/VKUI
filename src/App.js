@@ -11,7 +11,6 @@ import Slider from './components/Slider/Slider';
 import Input from './components/Input/Input';
 import Textarea from './components/Textarea/Textarea';
 import Icon from './components/Icon/Icon';
-import Header from './components/Header/Header';
 import File from './components/File/File';
 
 import FormLayout from './components/FormLayout/FormLayout';
@@ -41,11 +40,9 @@ export default class App extends Component {
 
   render() {
     return (
-      <View activePanel={this.state.activePanel}>
+      <View activePanel={this.state.activePanel} header={true}>
 
-        <ScrollView id="main">
-
-          <Header>VKUI</Header>
+        <ScrollView id="main" header={{ title: 'VKUI' }}>
 
           <Group title="Layouts">
             <List>
@@ -74,9 +71,7 @@ export default class App extends Component {
 
         </ScrollView>
 
-        <ScrollView id="lists">
-
-          <Header>List</Header>
+        <ScrollView id="lists"  header={{ title: 'Lists' }}>
 
           <Group title="Simple list">
             <List>
@@ -122,9 +117,7 @@ export default class App extends Component {
 
         </ScrollView>
 
-        <ScrollView id="groups">
-
-          <Header>Group</Header>
+        <ScrollView id="groups" header={{ title: 'Groups' }}>
 
           <Group title="Group title" description="Group description. Lorem ipsum dolor sit amet, consectetur adipisicing elit.">
             <List>
@@ -144,9 +137,7 @@ export default class App extends Component {
 
         </ScrollView>
 
-        <ScrollView id="buttons">
-
-          <Header>Button</Header>
+        <ScrollView id="buttons" header={{ title: 'Buttons' }}>
 
           <Group title="Appearance">
             <Button appearance="default" onClick={() => {}}>Default button</Button>
@@ -173,9 +164,7 @@ export default class App extends Component {
 
         </ScrollView>
 
-        <ScrollView id="checkboxes">
-
-          <Header>Checkbox</Header>
+        <ScrollView id="checkboxes"  header={{ title: 'Checkboxes' }}>
 
           <Group title="Checkboxes">
             <List>
@@ -209,9 +198,7 @@ export default class App extends Component {
 
         </ScrollView>
 
-        <ScrollView id="radios">
-
-          <Header>Radio</Header>
+        <ScrollView id="radios" header={{ title: 'Radios' }}>
 
           <Group title="Radios">
             <List>
@@ -233,9 +220,7 @@ export default class App extends Component {
 
         </ScrollView>
 
-        <ScrollView id="demo">
-
-          <Header>Demo</Header>
+        <ScrollView id="demo" header={{ title: 'Demo' }}>
 
           <Group title="Settings" description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quod vel, possimus reiciendis tempora explicabo omnis error veritatis dolore officia maiores quia adipisci quos beatae voluptas at ipsa pariatur repellat.">
             <List>
@@ -286,9 +271,7 @@ export default class App extends Component {
 
         </ScrollView>
 
-        <ScrollView id="inputs">
-
-          <Header>Input</Header>
+        <ScrollView id="inputs" header={{ title: 'Inputs' }}>
 
           <Group title="Simple inputs">
             <FormLayout>
@@ -331,9 +314,7 @@ export default class App extends Component {
           </Group>
         </ScrollView>
 
-        <ScrollView id="slider">
-
-          <Header>Slider</Header>
+        <ScrollView id="slider" header={{ title: 'Slider' }}>
 
           <Slider />
 
@@ -348,7 +329,7 @@ export default class App extends Component {
           </Group>
         </ScrollView>
 
-        <ScrollView id="nothing">
+        <ScrollView id="nothing" header={{ title: 'Nothing' }}>
           <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ flex: '0 0 auto', color: 'gray', textAlign: 'center' }}>
               Here is nothing<br />

@@ -15,12 +15,46 @@
   }
 
   /**
+   * Header
+   */
+  .View__header {}
+
+    .View__header-in {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      background: var(--vk-color);
+      color: #fff;
+      z-index: 5;
+      }
+
+      .View__header-item {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        visibility: hidden;
+        display: flex;
+        align-items: center;
+        }
+
+        .View__header-title {
+          margin: 0;
+          padding: 0 12px;
+          }
+
+  /**
    * Panels list
    */
   .View__panels {
-    position: relative;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     }
 
     /**
@@ -75,7 +109,74 @@
  */
 .View--ios {}
 
+  /**
+   * Header
+   */
+  .View--ios .View__header {
+    height: 64px;
+    }
+
+    .View--ios .View__header-in {
+      height: 64px;
+      }
+
+      .View--ios .View__header-item {
+        top: 12px;
+        height: 52px;
+        justify-content: center;
+        }
+
+      /**
+       * Header transition
+       */
+      .View--ios .View__header-item--prev,
+      .View--ios .View__header-item--next {
+        visibility: visible;
+        transition:
+          transform .6s var(--ios-easing),
+          visibility .6s var(--ios-easing),
+          opacity .6s var(--ios-easing);
+        }
+      .View--ios .View__header-item--prev {
+        opacity: 0;
+        }
+      .View--ios .View__header-item--next {
+        opacity: 1;
+        }
+      .View--ios .View__header-item {
+        transform: translate3d(-50%, 0, 0);
+        }
+      .View--ios .View__header-item--next {
+        transform: translate3d(0, 0, 0);
+        }
+      .View--ios .View__header-item--next ~ .View__header-item {
+        transform: translate3d(50%, 0, 0);
+        }
+
+        .View--ios .View__header-title {
+          font: 500 17px/54px var(--font);
+          text-align: center;
+          }
+
+      /**
+       * Active header
+       */
+      .View--ios .View__header-item--active {
+        opacity: 1;
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
+        }
+      .View--ios .View__header-item--active ~ .View__header-item {
+        transform: translate3d(50%, 0, 0);
+        }
+
+  /**
+   * Panels
+   */
   .View--ios .View__panels {}
+  .View--ios.View--header .View__panels {
+    top: 64px;
+    }
 
     .View--ios .View__panel {
       background: #efeff4;
@@ -89,7 +190,6 @@
       visibility: visible;
       transition:
         transform .6s var(--ios-easing),
-        background .6s var(--ios-easing),
         visibility .6s var(--ios-easing);
       }
     .View--ios .View__panel {
@@ -144,6 +244,24 @@
  */
 .View--android {}
 
+  /**
+   * Header
+   */
+  .View--android .View__header {
+    height: 56px;
+    }
+
+    .View--android .View__header-in {
+      height: 56px;
+      }
+
+      .View--android .View__header-title {
+        font: 500 20px/56px var(--font);
+        }
+
+  /**
+   * Panels
+   */
   .View--android .View__panels {}
 
     .View--android .View__panel {
