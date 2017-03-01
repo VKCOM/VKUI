@@ -12,6 +12,7 @@ import Input from './components/Input/Input';
 import Textarea from './components/Textarea/Textarea';
 import Icon from './components/Icon/Icon';
 import File from './components/File/File';
+import Spinner from './components/Spinner/Spinner';
 
 import FormLayout from './components/FormLayout/FormLayout';
 
@@ -49,7 +50,12 @@ export default class App extends Component {
               <ListItem expandable={true} onClick={this.changePanelHandler('lists')}>
                 List
               </ListItem>
-              <ListItem expandable={true} onClick={this.changePanelHandler('groups')}>Group</ListItem>
+              <ListItem expandable={true} onClick={this.changePanelHandler('groups')}>
+                Group
+              </ListItem>
+              <ListItem expandable={true} onClick={this.changePanelHandler('spinners')}>
+                Spinner
+              </ListItem>
             </List>
           </Group>
 
@@ -207,6 +213,24 @@ export default class App extends Component {
               <Radio name="radio" value="3">Third</Radio>
             </List>
           </Group>
+
+          <Group>
+            <Button
+              appearance="primary"
+              alignment="center"
+              onClick={this.changePanelHandler('main')}
+            >
+              Back
+            </Button>
+          </Group>
+
+        </ScrollView>
+
+        <ScrollView id="spinners" header={{ title: 'Spinner' }}>
+
+          <div style={{ height: 200 }}>
+            <Spinner />
+          </div>
 
           <Group>
             <Button

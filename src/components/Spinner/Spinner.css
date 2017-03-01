@@ -1,0 +1,49 @@
+@import '../../styles/constants.css';
+
+:root {
+  --offset: 106;
+  --duration: 1.4s;
+}
+
+.Spinner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+  .Spinner__self {
+    animation: rotator var(--duration) linear infinite;
+    }
+
+    .Spinner__path {
+      stroke-dasharray: var(--offset);
+      stroke-dashoffset: var(--offset);
+      transform-origin: center;
+      stroke: var(--vk-color);
+      animation: dash var(--duration) ease-in-out infinite;
+      }
+
+@keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+    }
+  100% {
+    transform: rotate(360deg);
+    }
+  }
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: var(--offset);
+    }
+  50% {
+    stroke-dashoffset: 26;
+    transform: rotate(135deg);
+    }
+  100% {
+    stroke-dashoffset: var(--offset);
+    transform: rotate(360deg);
+    }
+  }
