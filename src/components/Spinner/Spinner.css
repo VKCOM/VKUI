@@ -17,33 +17,26 @@
     position: relative;
     }
 
-  .Spinner--android .Spinner__self {
+  .Spinner--android .Spinner__self {}
+  .Spinner--android.Spinner--on .Spinner__self {
     animation: rotator var(--duration) linear infinite;
     }
 
     .Spinner--android .Spinner__path {
-      stroke-dasharray: var(--offset);
-      stroke-dashoffset: var(--offset);
       transform-origin: center;
-      stroke: var(--vk-color);
-      animation: dash var(--duration) ease-in-out infinite;
       }
 
-  .Spinner__part {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-    width: 8.64%;
-    height: 27.88%;
-    border-radius: 3px;
-    background: rgba(127, 127, 127, .5);
+  .Spinner--ios .Spinner__part {
+    width: 7.5%;
+    height: 27.5%;
+    x: 46.25%;
+    y: 36.25%;
+    }
+  .Spinner--ios.Spinner--on .Spinner__part {
     animation: fade var(--duration) linear infinite;
     }
 
-  .Spinner__part:nth-child(1) {
+  /*.Spinner__part:nth-child(1) {
     transform: rotate(0deg) translate(0, -130%);
     animation-delay: calc(var(--duration) / 12 * 1);
     }
@@ -90,7 +83,7 @@
   .Spinner__part:nth-child(12) {
     transform: rotate(330deg) translate(0, -130%);
     animation-delay: calc(var(--duration) / 12 * 12);
-    }
+    }*/
 
 @keyframes rotator {
   0% {
@@ -101,21 +94,11 @@
     }
   }
 
-@keyframes dash {
-  0% {
-    stroke-dashoffset: var(--offset);
+@keyframes fade {
+  from {
+    opacity: 1;
     }
-  50% {
-    stroke-dashoffset: 26;
-    transform: rotate(135deg);
-    }
-  100% {
-    stroke-dashoffset: var(--offset);
-    transform: rotate(360deg);
+  to {
+    opacity: .1;
     }
   }
-
-@keyframes fade {
-  from {opacity: 1;}
-  to {opacity: 0.25;}
-}
