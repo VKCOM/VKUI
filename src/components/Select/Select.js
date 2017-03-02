@@ -24,7 +24,7 @@ export default class Select extends Component {
     options: null,
     name: ''
   };
-  changeHandler(e) {
+  changeHandler = (e) => {
     this.setState({ checked: e.target.value });
     if (this.props.onChange) {
       this.props.onChange(e);
@@ -35,7 +35,11 @@ export default class Select extends Component {
 
     return (
       <label className={baseClassNames} style={style}>
-        <select className="Select__self" {...removeObjectKeys(this.props, ['onChange', 'label', 'options'])}>
+        <select
+          className="Select__self"
+          onChange={this.changeHandler}
+          {...removeObjectKeys(this.props, ['onChange', 'label', 'options'])}
+        >
           {Array.isArray(options) && options.length && options.map((option, i) => {
             const isString = typeof option === 'string';
             const value = isString ? option : option.value || option.text;
