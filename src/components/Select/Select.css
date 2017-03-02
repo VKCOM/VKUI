@@ -1,0 +1,28 @@
+.Select {
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  min-width: 140px;
+  outline: none;
+  }
+
+  .Select__self {
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+    line-height: 22px;
+    appearance: none;
+    border: 0;
+    background: none;
+    width: 100%;
+    outline: none;
+    }
+
+  .Select--ios .Select__self {
+    font-size: 17px;
+    padding: 11px 0 12px;
+    }
+
+  .Select--android .Select__self {
+    font-size: 16px;
+    padding: 16px 0 18px;
+    }

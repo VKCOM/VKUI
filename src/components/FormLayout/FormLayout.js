@@ -5,9 +5,11 @@ import getClassName from '../../helpers/getClassName';
 const baseClassNames = getClassName('FormLayout');
 
 export default function FormLayout(props) {
+  const children = Array.isArray(props.children) ? props.children : [props.children];
+
   return (
     <div className={baseClassNames}>
-      {props.children.map((field, i) => (
+      {children.map((field, i) => (
         <label className="FormLayout__row" key={field.key || `row-${i}`}>
           <div className="FormLayout__separator" />
           {!!field.props.label && (

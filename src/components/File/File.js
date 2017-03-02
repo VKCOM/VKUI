@@ -10,7 +10,7 @@ export default class File extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: !!props.checked
+      value: null
     };
   }
   static propTypes = {
@@ -25,8 +25,8 @@ export default class File extends Component {
     alignment: 'left',
     appearance: 'default'
   };
-  changeHandler(e) {
-    this.setState({ checked: e.target.value });
+  changeHandler = e => {
+    this.setState({ value: e.target.value });
     if (this.props.onChange) {
       this.props.onChange(e);
     }
@@ -39,6 +39,7 @@ export default class File extends Component {
         <input
           className="File__self"
           type="file"
+          onChange={this.changeHandler}
           {...removeObjectKeys(this.props, ['onChange', 'style', 'label', 'alignment', 'appearance'])}
         />
         <Button alignment={alignment} appearance={appearance}>{label}</Button>

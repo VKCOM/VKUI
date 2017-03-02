@@ -13,6 +13,7 @@ import Textarea from './components/Textarea/Textarea';
 import Icon from './components/Icon/Icon';
 import File from './components/File/File';
 import Spinner from './components/Spinner/Spinner';
+import Select from './components/Select/Select';
 
 import FormLayout from './components/FormLayout/FormLayout';
 
@@ -57,6 +58,7 @@ export default class App extends Component {
               <ListItem expandable={true} onClick={this.changePanelHandler('buttons')}>Button</ListItem>
               <ListItem expandable={true} onClick={this.changePanelHandler('checkboxes')}>Checkbox</ListItem>
               <ListItem expandable={true} onClick={this.changePanelHandler('radios')}>Radio</ListItem>
+              <ListItem expandable={true} onClick={this.changePanelHandler('selects')}>Select</ListItem>
               <ListItem expandable={true} onClick={this.changePanelHandler('slider')}>Slider</ListItem>
             </List>
           </Group>
@@ -317,6 +319,30 @@ export default class App extends Component {
 
           <Group title="File">
             <File />
+          </Group>
+
+          <Group>
+            <Button
+              appearance="primary"
+              alignment="center"
+              onClick={this.changePanelHandler('main')}
+            >
+              Back
+            </Button>
+          </Group>
+        </ScrollView>
+
+        <ScrollView id="selects" header={{ title: 'Selects' }}>
+
+          <Group title="Native selects">
+            <FormLayout>
+              <Select label="Children">
+                <option>One</option>
+                <option>Two</option>
+                <option>Three</option>
+              </Select>
+              <Select label="Props" options={['One', 'Two', 'Three']} />
+            </FormLayout>
           </Group>
 
           <Group>
