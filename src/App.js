@@ -31,14 +31,6 @@ export default class App extends Component {
     };
   }
 
-  componentDidMount() {
-    document.documentElement.addEventListener('touchstart', function (event) {
-      if (event.touches.length > 1) {
-        event.preventDefault();
-      }
-    }, false);
-  }
-
   render() {
     return (
       <View activePanel={this.state.activePanel} header={true}>
@@ -366,13 +358,3 @@ export default class App extends Component {
     );
   }
 }
-
-// const Log = (props) => (
-//   <dl>
-//     <dt>Panel: </dt>
-//     <dd>{props.panel}</dd>
-//   </dl>
-// );
-
-// External — without animation
-// Internal — use animation
