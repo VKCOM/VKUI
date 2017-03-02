@@ -8,7 +8,7 @@ const baseClassNames = getClassName('Spinner');
 
 export default class Spinner extends Component {
   render() {
-    const size = osname === ANDROID ? 38 : 24;
+    const size = 38;
     const stroke = this.props.stroke || 4;
 
     return (
@@ -31,7 +31,23 @@ export default class Spinner extends Component {
           </svg>
         )}
         {osname === IOS && (
-          <div />
+          <div
+            className="Spinner__self"
+            style={{ width: size, height: size }}
+          >
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+            <b className="Spinner__part" />
+          </div>
         )}
       </div>
     );
