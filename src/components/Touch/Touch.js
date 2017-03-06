@@ -5,12 +5,8 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 const events = getSupportedEvents();
 
 export default class Touch extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gesture: {}
-    };
-  }
+  cancelClick = false;
+  gesture = {};
 
   /**
    * Обработчик событий touchstart
@@ -20,19 +16,15 @@ export default class Touch extends Component {
    * @returns {void}
    */
   onStart = (e) => {
-    const newState = {
-      gesture: {
-        startX: coordX(e),
-        startY: coordY(e),
-        startT: new Date(),
-        isPressed: true
-      }
+    this.gesture = {
+      startX: coordX(e),
+      startY: coordY(e),
+      startT: new Date(),
+      isPressed: true
     };
 
-    this.setState(newState);
-
     // Вызываем нужные колбеки из props
-    const outputEvent = Object.assign({}, newState.gesture, {
+    const outputEvent = Object.assign({}, this.gesture, {
       originalEvent: e
     });
 
@@ -61,7 +53,7 @@ export default class Touch extends Component {
    * @returns {void}
    */
   onMove = (e) => {
-    const { isPressed, isX, isY, startX, startY } = this.state.gesture;
+    const { isPressed, isX, isY, startX, startY } = this.gesture;
 
     if (isPressed) {
       // смещения
@@ -84,47 +76,34 @@ export default class Touch extends Component {
         let willBeSlidedX = (willBeX && !!this.props.onMoveX) || !!this.props.onMove;
         let willBeSlidedY = (willBeY && !!this.props.onMoveY) || !!this.props.onMove;
 
-        this.setState({
-          gesture: {
-            ...this.state.gesture,
-            isY: willBeY,
-            isX: willBeX,
-            isSlideX: willBeSlidedX,
-            isSlideY: willBeSlidedY,
-            isSlide: willBeSlidedX || willBeSlidedY
-          }
-        });
+        this.gesture.isY = willBeY;
+        this.gesture.isX = willBeX;
+        this.gesture.isSlideX = willBeSlidedX;
+        this.gesture.isSlideY = willBeSlidedY;
+        this.gesture.isSlide = willBeSlidedX || willBeSlidedY;
       }
 
-      if (this.state.gesture.isSlide) {
-        this.setState({
-          gesture: {
-            ...this.state.gesture,
-            shiftX,
-            shiftY,
-            shiftXAbs,
-            shiftYAbs
-          }
-        });
+      if (this.gesture.isSlide) {
+        this.gesture.shiftX = shiftX;
+        this.gesture.shiftY = shiftY;
+        this.gesture.shiftXAbs = shiftXAbs;
+        this.gesture.shiftYAbs = shiftYAbs;
 
         // Вызываем нужные колбеки из props
-        const outputEvent = Object.assign({}, this.state.gesture, {
+        const outputEvent = Object.assign({}, this.gesture, {
           originalEvent: e
         });
 
         if (this.props.onMove) {
           this.props.onMove(outputEvent);
-          // e.preventDefault();
         }
 
-        if (this.state.gesture.isSlideX && this.props.onMoveX) {
+        if (this.gesture.isSlideX && this.props.onMoveX) {
           this.props.onMoveX(outputEvent);
-          // e.preventDefault();
         }
 
-        if (this.state.gesture.isSlideY && this.props.onMoveY) {
+        if (this.gesture.isSlideY && this.props.onMoveY) {
           this.props.onMoveY(outputEvent);
-          // e.preventDefault();
         }
       }
     }
@@ -138,11 +117,11 @@ export default class Touch extends Component {
    * @returns {void}
    */
   onEnd = (e) => {
-    const { isPressed, isSlide, isSlideX, isSlideY } = this.state.gesture;
+    const { isPressed, isSlide, isSlideX, isSlideY } = this.gesture;
 
     if (isPressed) {
       // Вызываем нужные колбеки из props
-      const outputEvent = Object.assign({}, this.state.gesture, {
+      const outputEvent = Object.assign({}, this.gesture, {
         originalEvent: e
       });
 
@@ -159,11 +138,9 @@ export default class Touch extends Component {
       }
     }
 
-    this.setState({
-      // Если закончили жест на ссылке, выставляем флаг для отмены перехода
-      cancelClick: e.target.tagName === 'A' && isSlide,
-      gesture: {}
-    });
+    // Если закончили жест на ссылке, выставляем флаг для отмены перехода
+    this.cancelClick = e.target.tagName === 'A' && isSlide;
+    this.gesture = {};
 
     document.removeEventListener(events[1], this.onMove);
     document.removeEventListener(events[2], this.onEnd);
@@ -191,8 +168,8 @@ export default class Touch extends Component {
    * @returns {void}
    */
   onClick = (e) => {
-    if (this.state.cancelClick) {
-      this.setState({ cancelClick: false });
+    if (this.cancelClick) {
+      this.cancelClick = false;
 
       return e.preventDefault();
     }
@@ -218,6 +195,10 @@ export default class Touch extends Component {
       'tagName'
     ]);
 
-    return <Tag {...handlers} {...nativeProps}>{this.props.children}</Tag>;
+    return (
+      <Tag {...handlers} {...nativeProps} ref={container => this.container = container}>
+        {this.props.children}
+      </Tag>
+    );
   }
 }
