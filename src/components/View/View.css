@@ -135,9 +135,9 @@
       .View--ios .View__header-item--next {
         visibility: visible;
         transition:
-          transform .6s var(--ios-easing),
-          visibility .6s var(--ios-easing),
-          opacity .6s var(--ios-easing);
+          transform .6s cubic-bezier(.36, .66, .04, 1),
+          visibility .6s cubic-bezier(.36, .66, .04, 1),
+          opacity .6s cubic-bezier(.36, .66, .04, 1);
         }
       .View--ios .View__header-item--prev {
         opacity: 0;
@@ -192,8 +192,8 @@
     .View--ios .View__panel--next {
       visibility: visible;
       transition:
-        transform .6s var(--ios-easing),
-        visibility .6s var(--ios-easing);
+        transform .6s cubic-bezier(.36, .66, .04, 1),
+        visibility .6s cubic-bezier(.36, .66, .04, 1);
       }
     .View--ios .View__panel {
       transform: translate3d(-50%, 0, 0);
@@ -218,10 +218,10 @@
       pointer-events: none;
       }
     .View--ios .View__panel--prev::before {
-      animation: animation-fade-in .6s var(--ios-easing);
+      animation: animation-fade-in .6s cubic-bezier(.36, .66, .04, 1);
       }
     .View--ios .View__panel--next::before {
-      animation: animation-fade-out .6s var(--ios-easing);
+      animation: animation-fade-out .6s cubic-bezier(.36, .66, .04, 1);
       }
     .View--ios .View__panel--prev ~ .View__panel--next::before,
     .View--ios .View__panel--next ~ .View__panel--prev::before {
