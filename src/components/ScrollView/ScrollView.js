@@ -4,9 +4,11 @@ import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import Spinner from '../Spinner/Spinner';
 import Touch from '../Touch/Touch';
+import { platform, ANDROID, IOS } from '../../lib/platform.js';
 
+const osname = platform();
 const baseClassNames = getClassName('ScrollView');
-const MAXPULL = 120;
+const MAXPULL = 60;
 
 export default class ScrollView extends Component {
   constructor(props) {
@@ -51,14 +53,15 @@ export default class ScrollView extends Component {
           transform: `translate3d(0, ${shift}px, 0)`,
           transition: 'none'
         },
-        styles: {
+        styles: osname === IOS ? {
           transform: `translate3d(0, ${shift}px, 0)`,
           transition: 'none'
-        }
+        } : {}
       };
 
       this.setState(state);
       this.prevScrollTopValue = scroll;
+      e.originalEvent.preventDefault();
     }
   };
   onEnd = e => {
@@ -70,9 +73,9 @@ export default class ScrollView extends Component {
         pullStyles: {
           transition: 'transform .24s cubic-bezier(.36, .66, .04, 1)'
         },
-        styles: {
+        styles: osname === IOS ? {
           transition: 'transform .24s cubic-bezier(.36, .66, .04, 1)'
-        }
+        } : {}
       };
 
       const progress = Math.abs(this.startShift - e.shiftY) / MAXPULL;
@@ -87,10 +90,10 @@ export default class ScrollView extends Component {
           transform: `translate3d(0, ${on ? MAXPULL : 0}px, 0)`,
           transition: 'transform .24s cubic-bezier(.36, .66, .04, 1)'
         },
-        styles: {
+        styles: osname === IOS ? {
           transform: `translate3d(0, ${on ? MAXPULL : 0}px, 0)`,
           transition: 'transform .24s cubic-bezier(.36, .66, .04, 1)'
-        }
+        } : {}
       });
 
       if (on) {
@@ -127,10 +130,17 @@ export default class ScrollView extends Component {
       >
         {onPullTop && (
           <div className="ScrollView__top" style={this.state.pullStyles}>
-            <Spinner on={this.state.on} progress={!this.state.on ? this.state.progress : null} />
+            <Spinner
+              size={osname === IOS ? 27 : 25}
+              strokeWidth={3}
+              on={this.state.on}
+              progress={!this.state.on ? this.state.progress : null}
+            />
           </div>
         )}
-        <div className="ScrollView__in" style={this.state.styles}>{this.props.children}</div>
+        <div className="ScrollView__in" style={this.state.styles}>
+          {this.props.children}
+        </div>
       </Component>
     );
   }

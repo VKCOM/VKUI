@@ -9,11 +9,27 @@
 
   .ScrollView__top {
     position: absolute;
+    z-index: 1;
+    }
+
+  .ScrollView--ios .ScrollView__top {
     right: 0;
     bottom: 100%;
     left: 0;
     height: 60px;
     bottom: 100%;
+    }
+
+  .ScrollView--android .ScrollView__top {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    height: 40px;
+    width: 40px;
+    margin: -20px 0 0 -20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
     }
 
   .ScrollView__in {
