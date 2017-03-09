@@ -53,7 +53,8 @@ export default class TappableWrapper extends Component {
       classes: {
         active: 'Tappable--active',
         inactive: 'Tappable--inactive'
-      }
+      },
+      activeDelay: 150
     };
 
     let containerProps;

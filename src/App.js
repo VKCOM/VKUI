@@ -32,6 +32,11 @@ export default class App extends Component {
     };
   }
 
+  pullHandler() {
+    console.log('foo');
+    return new Promise(resolve => setTimeout(resolve, 2000));
+  }
+
   render() {
     return (
       <View activePanel={this.state.activePanel} header={true}>
@@ -46,9 +51,6 @@ export default class App extends Component {
               <ListItem expandable={true} onClick={this.changePanelHandler('groups')}>
                 Group
               </ListItem>
-              <ListItem expandable={true} onClick={this.changePanelHandler('spinners')}>
-                Spinner
-              </ListItem>
             </List>
           </Group>
 
@@ -60,6 +62,17 @@ export default class App extends Component {
               <ListItem expandable={true} onClick={this.changePanelHandler('radios')}>Radio</ListItem>
               <ListItem expandable={true} onClick={this.changePanelHandler('selects')}>Select</ListItem>
               <ListItem expandable={true} onClick={this.changePanelHandler('slider')}>Slider</ListItem>
+            </List>
+          </Group>
+
+          <Group title="Utils">
+            <List>
+              <ListItem expandable={true} onClick={this.changePanelHandler('spinners')}>
+                Spinner
+              </ListItem>
+              <ListItem expandable={true} onClick={this.changePanelHandler('pull2refresh')}>
+                Pull to refresh
+              </ListItem>
             </List>
           </Group>
 
@@ -222,8 +235,22 @@ export default class App extends Component {
 
         <ScrollView id="spinners" header={{ title: 'Spinner' }}>
 
-          <div style={{ height: 200 }}>
-            <Spinner />
+          <div style={{ display: 'flex', width: '100%', height: 200 }}>
+            <div style={{ flex: '1 0 auto', height: 200 }}><Spinner size={80} /></div>
+            <div style={{ flex: '1 0 auto', height: 200 }}><Spinner size={40} /></div>
+            <div style={{ flex: '1 0 auto', height: 200 }}><Spinner /></div>
+          </div>
+
+          <div style={{ display: 'flex', width: '100%', height: 200, background: '#222' }}>
+            <div style={{ flex: '1 0 auto', height: 200 }}><Spinner color="#fff" size={80} /></div>
+            <div style={{ flex: '1 0 auto', height: 200 }}><Spinner color="#fff" size={40} /></div>
+            <div style={{ flex: '1 0 auto', height: 200 }}><Spinner color="#fff" /></div>
+          </div>
+
+          <div style={{ display: 'flex', width: '100%', height: 200 }}>
+            <div style={{ flex: '1 0 auto', height: 200 }}><Spinner on={false} progress={50} /></div>
+            <div style={{ flex: '1 0 auto', height: 200 }}><Spinner on={false} progress={75} /></div>
+            <div style={{ flex: '1 0 auto', height: 200 }}><Spinner on={false} progress={100} /></div>
           </div>
 
           <Group>
@@ -236,6 +263,40 @@ export default class App extends Component {
             </Button>
           </Group>
 
+        </ScrollView>
+
+        <ScrollView
+          id="pull2refresh"
+          header={{ title: 'pull2refresh' }}
+          onPullTop={this.pullHandler}
+        >
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas non incidunt ullam optio. Quam laborum aut amet, nihil illo quas, iste ratione omnis commodi eveniet hic nemo nulla in unde.
+          </p>
+          <p>Earum omnis hic molestias et, illo expedita aperiam illum voluptate perferendis nemo dolor, enim, at laboriosam quia! Magni tempora tempore, aliquam incidunt quia repellat ullam error, alias adipisci, distinctio animi.
+          </p>
+          <p>Qui nobis recusandae assumenda eius adipisci! Quos illo rem eum unde provident aspernatur numquam eligendi rerum deleniti animi, repudiandae nam molestiae similique quis, a consequuntur? Ex suscipit officia, fugiat mollitia!
+          </p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas non incidunt ullam optio. Quam laborum aut amet, nihil illo quas, iste ratione omnis commodi eveniet hic nemo nulla in unde.
+          </p>
+          <p>Earum omnis hic molestias et, illo expedita aperiam illum voluptate perferendis nemo dolor, enim, at laboriosam quia! Magni tempora tempore, aliquam incidunt quia repellat ullam error, alias adipisci, distinctio animi.
+          </p>
+          <p>Qui nobis recusandae assumenda eius adipisci! Quos illo rem eum unde provident aspernatur numquam eligendi rerum deleniti animi, repudiandae nam molestiae similique quis, a consequuntur? Ex suscipit officia, fugiat mollitia!
+          </p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas non incidunt ullam optio. Quam laborum aut amet, nihil illo quas, iste ratione omnis commodi eveniet hic nemo nulla in unde.
+          </p>
+          <p>Earum omnis hic molestias et, illo expedita aperiam illum voluptate perferendis nemo dolor, enim, at laboriosam quia! Magni tempora tempore, aliquam incidunt quia repellat ullam error, alias adipisci, distinctio animi.
+          </p>
+          <p>Qui nobis recusandae assumenda eius adipisci! Quos illo rem eum unde provident aspernatur numquam eligendi rerum deleniti animi, repudiandae nam molestiae similique quis, a consequuntur? Ex suscipit officia, fugiat mollitia!
+          </p>
+          <Group>
+            <Button
+              appearance="primary"
+              alignment="center"
+              onClick={this.changePanelHandler('main')}
+            >
+              Back
+            </Button>
+          </Group>
         </ScrollView>
 
         <ScrollView id="demo" header={{ title: 'Demo' }}>
