@@ -23,7 +23,7 @@ export default class View extends Component {
   static defaultProps = {
     style: {},
     children: null,
-    popout: null,
+    popout: undefined,
     header: false
   };
   componentWillReceiveProps (nextProps) {

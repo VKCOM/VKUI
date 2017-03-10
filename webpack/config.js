@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin;
 const merge = require('webpack-merge');
 const assets = require('postcss-assets');
 const cssCustomProperties = require('postcss-custom-properties');
@@ -46,8 +45,10 @@ const config = {
   },
   output: {
     path: path.resolve('./dist'),
-    filename: '[name].js'
+    filename: '[name].js',
+    libraryTarget: 'umd'
   },
+  target: 'node',
   module: {
     rules: [
       {
@@ -63,29 +64,12 @@ const config = {
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new StatsWriterPlugin({
-      filename: '../stats.json'
-    }),
     new ExtractTextPlugin('[name].css')
   ],
-  externals: [
-    {
-      react: {
-        root: 'React',
-        commonjs2: 'react',
-        commonjs: 'react',
-        amd: 'react'
-      }
-    },
-    {
-      'react-dom': {
-        root: 'ReactDOM',
-        commonjs2: 'react-dom',
-        commonjs: 'react-dom',
-        amd: 'react-dom'
-      }
-    }
-  ]
+  externals: {
+    'react': 'react',
+    'react-dom': 'react-dom'
+  }
 };
 
 const devConfig = {
