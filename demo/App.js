@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
-import View from './components/View/View';
-import ScrollView from './components/ScrollView/ScrollView';
-import List from './components/List/List';
-import ListItem from './components/ListItem/ListItem';
-import Group from './components/Group/Group';
-import Button from './components/Button/Button';
-import Checkbox from './components/Checkbox/Checkbox';
-import Radio from './components/Radio/Radio';
-import Slider from './components/Slider/Slider';
-import Input from './components/Input/Input';
-import Textarea from './components/Textarea/Textarea';
-import Icon from './components/Icon/Icon';
-import File from './components/File/File';
-import Spinner from './components/Spinner/Spinner';
-import Select from './components/Select/Select';
 
-import FormLayout from './components/FormLayout/FormLayout';
+import {
+  View,
+  ScrollView,
+  Group,
+  List,
+  ListItem,
+  FormLayout,
+  Button,
+  Checkbox,
+  Radio,
+  Slider,
+  Input,
+  Textarea,
+  File,
+  Select,
+  Icon,
+  Spinner
+} from '../src';
 
 export default class App extends Component {
   constructor(props) {
@@ -33,7 +35,6 @@ export default class App extends Component {
   }
 
   pullHandler() {
-    console.log('foo');
     return new Promise(resolve => setTimeout(resolve, 2000));
   }
 

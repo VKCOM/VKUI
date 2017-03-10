@@ -156,7 +156,7 @@
         }
 
         .View--ios .View__header-title {
-          font: 500 17px/54px var(--font);
+          font: 500 17px/54px var(--ios-font);
           text-align: center;
           }
 
@@ -300,7 +300,7 @@
         }
 
         .View--android .View__header-title {
-          font: 500 20px/56px var(--font);
+          font: 500 20px/56px var(--android-font);
           }
 
   /**
