@@ -42,7 +42,6 @@
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack/config.js --bail -p --json > stats.json",
     "dev": "webpack --config ./webpack/config.js --hot --watch",
     "clear": "rm -rf dist/*",
-    "test": "eslint . && node ./node_modules/stylelint/dist/cli.js ./src/styles/*.css",
-    "postinstall": "npm run build"
+    "test": "eslint . && node ./node_modules/stylelint/dist/cli.js ./src/styles/*.css"
   }
 }
