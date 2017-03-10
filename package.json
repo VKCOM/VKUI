@@ -1,6 +1,6 @@
 {
   "name": "vkui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "main": "dist/vkui.js",
   "devDependencies": {
@@ -42,6 +42,6 @@
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack/config.js --bail -p --json > stats.json",
     "dev": "webpack --config ./webpack/config.js --hot --watch",
     "clear": "rm -rf dist/*",
-    "test": "eslint . && node ./node_modules/stylelint/dist/cli.js ./src/styles/*.css"
+    "test": "eslint . && ./node_modules/.bin/stylelint ./src/**/*.css"
   }
 }
