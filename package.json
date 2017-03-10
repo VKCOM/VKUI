@@ -2,6 +2,7 @@
   "name": "VKUI",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/vkui.js",
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-loader": "^6.4.0",
