@@ -1,4 +1,4 @@
-export default function keyframes(name, obj) {
+export default function keyframes (name, obj) {
   if (!name || !obj) {
     return '';
   }

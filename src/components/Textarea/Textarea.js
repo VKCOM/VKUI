@@ -6,7 +6,7 @@ import getClassName from '../../helpers/getClassName';
 const baseClassNames = getClassName('Textarea');
 
 export default class Textarea extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       value: props.initialValue || ''
@@ -23,7 +23,7 @@ export default class Textarea extends Component {
   onChange = (e) => {
     this.setState({ value: e.target.value });
   }
-  render() {
+  render () {
     return (
       <textarea
         className={baseClassNames}

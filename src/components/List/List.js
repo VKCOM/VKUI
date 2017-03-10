@@ -9,13 +9,15 @@ const baseClassNames = getClassName('List');
 export default class List extends Component {
   static propTypes = {
     style: PropTypes.object,
-    indented: PropTypes.bool
+    indented: PropTypes.bool,
+    children: PropTypes.node
   };
   static defaultProps = {
     style: {},
-    indented: false
+    indented: false,
+    children: ''
   };
-  render() {
+  render () {
     const { style, indented } = this.props;
     const modifiers = {
       'List--indented': indented
@@ -28,5 +30,3 @@ export default class List extends Component {
     );
   }
 }
-
-

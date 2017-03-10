@@ -1,4 +1,4 @@
-export function getOffsetRect(elem) {
+export function getOffsetRect (elem) {
   const box = elem.getBoundingClientRect();
   const body = document.body;
   const doc = document.documentElement;

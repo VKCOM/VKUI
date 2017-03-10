@@ -4,7 +4,7 @@ export const IOS = 'ios';
 let ua;
 let platformName;
 
-export function platform(useragent) {
+export function platform (useragent) {
   if (!ua) {
     ua = useragent || (navigator && navigator.userAgent) || '';
   }

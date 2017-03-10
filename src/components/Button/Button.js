@@ -11,14 +11,16 @@ export default class Button extends Component {
   static propTypes = {
     style: PropTypes.object,
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
-    appearance: PropTypes.oneOf(['primary', 'default', 'danger'])
+    appearance: PropTypes.oneOf(['primary', 'default', 'danger']),
+    children: PropTypes.node
   };
   static defaultProps = {
     style: {},
     alignment: 'left',
-    appearance: 'default'
+    appearance: 'default',
+    children: ''
   };
-  render() {
+  render () {
     const { style, children, alignment, appearance } = this.props;
     const modifiers = {
       'Button--left': alignment === 'left',

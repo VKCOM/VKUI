@@ -1,33 +1,54 @@
 /**
  * Layout
  */
-export View from './components/View/View';
-export ScrollView from './components/ScrollView/ScrollView';
-export Group from './components/Group/Group';
-export List from './components/List/List';
-export ListItem from './components/ListItem/ListItem';
-export FormLayout from './components/FormLayout/FormLayout';
-export Icon from './components/Icon/Icon';
+import View from './components/View/View';
+import ScrollView from './components/ScrollView/ScrollView';
+import Group from './components/Group/Group';
+import List from './components/List/List';
+import ListItem from './components/ListItem/ListItem';
+import FormLayout from './components/FormLayout/FormLayout';
+import Icon from './components/Icon/Icon';
 
 /**
  * Forms
  */
-export Button from './components/Button/Button';
-export Checkbox from './components/Checkbox/Checkbox';
-export File from './components/File/File';
-export Input from './components/Input/Input';
-export Textarea from './components/Textarea/Textarea';
-export Radio from './components/Radio/Radio';
-export Select from './components/Select/Select';
-export Slider from './components/Slider/Slider';
+import Button from './components/Button/Button';
+import Checkbox from './components/Checkbox/Checkbox';
+import File from './components/File/File';
+import Input from './components/Input/Input';
+import Textarea from './components/Textarea/Textarea';
+import Radio from './components/Radio/Radio';
+import Select from './components/Select/Select';
+import Slider from './components/Slider/Slider';
 
 /**
  * Behavior
  */
-export TappableWrapper from './components/TappableWrapper/TappableWrapper';
-export Touch from './components/Touch/Touch';
+import TappableWrapper from './components/TappableWrapper/TappableWrapper';
+import Touch from './components/Touch/Touch';
 
 /**
  * Misc
  */
-export Spinner from './components/Spinner/Spinner';
+import Spinner from './components/Spinner/Spinner';
+
+export default {
+  View,
+  ScrollView,
+  Group,
+  List,
+  ListItem,
+  FormLayout,
+  Icon,
+  Button,
+  Checkbox,
+  File,
+  Input,
+  Textarea,
+  Radio,
+  Select,
+  Slider,
+  TappableWrapper,
+  Touch,
+  Spinner
+};

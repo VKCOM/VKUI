@@ -1,35 +1,44 @@
 import './ScrollView.css';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import Spinner from '../Spinner/Spinner';
 import Touch from '../Touch/Touch';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import { platform, IOS } from '../../lib/platform.js';
 
 const osname = platform();
 const baseClassNames = getClassName('ScrollView');
 const MAXPULL = 60;
 
 export default class ScrollView extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       on: false
     };
   }
 
+  static propTypes = {
+    onPull: PropTypes.func,
+    children: PropTypes.node
+  };
+
+  static defaultProps = {
+    children: ''
+  };
+
   prevScrollTopValue = 0;
   startShift = null;
   pulled = false;
 
   onMove = e => {
-    const { onPullTop } = this.props;
+    const { onPull } = this.props;
 
-    if (!onPullTop || this.pulled) {
+    if (!onPull || this.pulled) {
       return;
     }
 
-    const box = this.container.container
+    const box = this.container.container;
     const scroll = box.scrollTop;
 
     if (this.prevScrollTopValue >= 0 && scroll <= 0 && this.startShift !== null) {
@@ -98,7 +107,7 @@ export default class ScrollView extends Component {
 
       if (on) {
         this.pulled = true;
-        this.props.onPullTop().then(() => {
+        this.props.onPull().then(() => {
           this.setState(initialState);
           this.pulled = false;
         });
@@ -107,13 +116,17 @@ export default class ScrollView extends Component {
       this.started = false;
     }
   }
-  render() {
-    const { onPullTop } = this.props;
+  getRef = (container) => {
+    this.container = container;
+    return;
+  }
+  render () {
+    const { onPull } = this.props;
 
     let Component = 'div';
     let extProps = {};
 
-    if (onPullTop) {
+    if (onPull) {
       Component = Touch;
       extProps = {
         onMove: this.onMove,
@@ -124,11 +137,11 @@ export default class ScrollView extends Component {
     return (
       <Component
         className={baseClassNames}
-        {...removeObjectKeys(this.props, ['header', 'onPullTop'])}
+        {...removeObjectKeys(this.props, ['header', 'onPull'])}
         {...extProps}
-        ref={container => this.container = container}
+        ref={this.getRef}
       >
-        {onPullTop && (
+        {onPull && (
           <div className="ScrollView__top" style={this.state.pullStyles}>
             <Spinner
               size={osname === IOS ? 27 : 25}

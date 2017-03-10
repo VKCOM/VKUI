@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { getSupportedEvents, coordX, coordY } from './TouchUtils';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 
@@ -7,6 +7,24 @@ const events = getSupportedEvents();
 export default class Touch extends Component {
   cancelClick = false;
   gesture = {};
+
+  static propTypes = {
+    onStart: PropTypes.func,
+    onStartX: PropTypes.func,
+    onStartY: PropTypes.func,
+    onMove: PropTypes.func,
+    onMoveX: PropTypes.func,
+    onMoveY: PropTypes.func,
+    onEnd: PropTypes.func,
+    onEndX: PropTypes.func,
+    onEndY: PropTypes.func,
+    tagName: PropTypes.string,
+    children: PropTypes.node
+  };
+  static defaultProps = {
+    tagName: 'div',
+    children: ''
+  };
 
   /**
    * Обработчик событий touchstart
@@ -157,7 +175,7 @@ export default class Touch extends Component {
   onDragStart = (e) => {
     if (e.target.tagName === 'A' || e.target.tagName === 'IMG') {
       return e.preventDefault();
-    }
+    } else return;
   }
 
   /**
@@ -175,13 +193,18 @@ export default class Touch extends Component {
     }
   }
 
-  render() {
+  getRef = (container) => {
+    this.container = container;
+    return;
+  }
+
+  render () {
     const handlers = {
       [events[0]]: this.onStart,
       onDragStart: this.onDragStart,
       onClick: this.onClick
     };
-    const Tag = this.props.tagName || 'div';
+    const Tag = this.props.tagName;
     const nativeProps = removeObjectKeys(Object.assign({}, this.props), [
       'onStart',
       'onStartX',
@@ -196,7 +219,7 @@ export default class Touch extends Component {
     ]);
 
     return (
-      <Tag {...handlers} {...nativeProps} ref={container => this.container = container}>
+      <Tag {...handlers} {...nativeProps} ref={this.getRef}>
         {this.props.children}
       </Tag>
     );

@@ -3,7 +3,7 @@ import classnames from '../lib/classnames';
 
 const osname = platform();
 
-export default function getClassname(base) {
+export default function getClassname (base) {
   return classnames(base, {
     [base + '--ios']: osname === IOS,
     [base + '--android']: osname === ANDROID

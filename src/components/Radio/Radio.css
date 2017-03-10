@@ -38,7 +38,7 @@
     }
 
   .Radio--ios .Radio__self:checked ~ .Radio__icon {
-    background: url('../../../public/checkmark.svg') 0 0/100% no-repeat;
+    background: inline('./assets/checkmark.svg') 0 0/100% no-repeat;
     opacity: 1;
     }
 

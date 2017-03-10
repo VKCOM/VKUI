@@ -1,12 +1,12 @@
 import './Radio.css';
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ListItem from '../ListItem/ListItem';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('Radio');
 
-export default function Radio(props) {
+export default function Radio (props) {
   return (
     <ListItem>
       <label className={baseClassNames}>
@@ -22,3 +22,6 @@ export default function Radio(props) {
   );
 }
 
+Radio.propTypes = {
+  children: PropTypes.node
+};

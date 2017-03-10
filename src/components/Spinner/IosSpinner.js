@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 const IOS_PART_HEIGHT = 0.275;
 
 export default class IosSpinner extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     const c = 0.5 * props.size;
@@ -31,7 +31,7 @@ export default class IosSpinner extends Component {
     size: PropTypes.number,
     duration: PropTypes.number,
     on: PropTypes.bool,
-    progress: PropTypes.number,
+    progress: PropTypes.number
   };
   static defaultProps = {
     color: '#262626',
@@ -40,7 +40,7 @@ export default class IosSpinner extends Component {
     on: true,
     progress: null
   };
-  render() {
+  render () {
     const { on, progress } = this.props;
     const { iosStyles } = this.state;
 

@@ -20,25 +20,25 @@ import {
 } from '../src';
 
 export default class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       activePanel: 'main'
     };
   }
 
-  changePanelHandler(panelId) {
+  changePanelHandler (panelId) {
     return () => {
       document.querySelector('#' + panelId).scrollTop = 0;
-      this.setState({ activePanel: panelId })
+      this.setState({ activePanel: panelId });
     };
   }
 
-  pullHandler() {
+  pullHandler () {
     return new Promise(resolve => setTimeout(resolve, 2000));
   }
 
-  render() {
+  render () {
     return (
       <View activePanel={this.state.activePanel} header={true}>
 
@@ -85,7 +85,7 @@ export default class App extends Component {
 
         </ScrollView>
 
-        <ScrollView id="lists"  header={{ title: 'Lists' }}>
+        <ScrollView id="lists" header={{ title: 'Lists' }}>
 
           <Group title="Simple list">
             <List>
@@ -178,7 +178,7 @@ export default class App extends Component {
 
         </ScrollView>
 
-        <ScrollView id="checkboxes"  header={{ title: 'Checkboxes' }}>
+        <ScrollView id="checkboxes" header={{ title: 'Checkboxes' }}>
 
           <Group title="Checkboxes">
             <List>
@@ -269,7 +269,7 @@ export default class App extends Component {
         <ScrollView
           id="pull2refresh"
           header={{ title: 'pull2refresh' }}
-          onPullTop={this.pullHandler}
+          onPull={this.pullHandler}
         >
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas non incidunt ullam optio. Quam laborum aut amet, nihil illo quas, iste ratione omnis commodi eveniet hic nemo nulla in unde.
           </p>

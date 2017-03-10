@@ -6,7 +6,7 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 const baseClassNames = getClassName('Input');
 
 export default class Input extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       value: props.initialValue || ''
@@ -18,7 +18,8 @@ export default class Input extends Component {
       'date', 'datetime-local', 'time', 'month',
       'email', 'number', 'tel', 'url'
     ]),
-    initialValue: PropTypes.string
+    initialValue: PropTypes.string,
+    onChange: PropTypes.func
   };
   static defaultProps = {
     type: 'text',
@@ -30,7 +31,7 @@ export default class Input extends Component {
       this.props.onChange(e);
     }
   }
-  render() {
+  render () {
     return (
       <input
         className={baseClassNames}

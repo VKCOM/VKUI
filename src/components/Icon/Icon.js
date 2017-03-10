@@ -7,12 +7,14 @@ const baseClassNames = getClassName('Icon');
 
 export default class Icon extends Component {
   static propTypes = {
-    style: PropTypes.object
+    style: PropTypes.object,
+    children: PropTypes.node
   };
   static defaultProps = {
-    style: {}
+    style: {},
+    children: ''
   };
-  render() {
+  render () {
     const { style, children } = this.props;
     const classes = classnames(baseClassNames, {
       'Icon--verbose': !children

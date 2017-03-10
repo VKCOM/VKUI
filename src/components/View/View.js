@@ -6,7 +6,7 @@ import getClassName from '../../helpers/getClassName';
 const baseClassNames = getClassName('View');
 
 export default class View extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       children: [props.children],
@@ -15,12 +15,18 @@ export default class View extends Component {
   }
   static propTypes = {
     style: PropTypes.object,
-    activePanel: PropTypes.string.isRequired
+    activePanel: PropTypes.string.isRequired,
+    header: PropTypes.bool,
+    children: PropTypes.node,
+    popout: PropTypes.node
   };
   static defaultProps = {
-    style: {}
+    style: {},
+    children: null,
+    popout: null,
+    header: false
   };
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (this.state.activePanel !== nextProps.activePanel) {
       this.setState({
         prevPanel: this.state.activePanel,
@@ -36,7 +42,7 @@ export default class View extends Component {
       animated: false
     });
   }
-  render() {
+  render () {
     const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
     const hasPopout = typeof popout !== 'undefined';
@@ -60,7 +66,7 @@ export default class View extends Component {
                     'View__header-item--prev': panel.props.id === prevPanel,
                     'View__header-item--next': panel.props.id === nextPanel
                   })}
-                  key={panel.key || panel.props.id}
+                  key={panel.key || panel.props.id || `panel-header-${i}`}
                 >
                   <div className="View__header-title">{panel.props.header.title}</div>
                 </div>
@@ -81,7 +87,7 @@ export default class View extends Component {
                 'View__panel--next': panel.props.id === nextPanel
               })}
               onTransitionEnd={this.transitionEndHandler}
-              key={panel.key || panel.props.id}
+              key={panel.key || panel.props.id || `panel-${i}`}
             >
               {panel}
             </div>

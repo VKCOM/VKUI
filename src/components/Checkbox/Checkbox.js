@@ -6,25 +6,29 @@ import getClassName from '../../helpers/getClassName';
 const baseClassNames = getClassName('Checkbox');
 
 export default class Checkbox extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       value: !!props.checked
     };
   }
   static propTypes = {
-    style: PropTypes.object
+    style: PropTypes.object,
+    checked: PropTypes.bool,
+    onChange: PropTypes.func
   };
   static defaultProps = {
-    style: {}
+    style: {},
+    checked: false,
+    onChange: () => {}
   };
-  changeHandler(e) {
+  changeHandler (e) {
     this.setState({ checked: e.target.checked });
     if (this.props.onChange) {
       this.props.onChange(e);
     }
   }
-  render() {
+  render () {
     const { style } = this.props;
 
     return (

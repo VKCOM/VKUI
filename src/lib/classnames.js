@@ -1,4 +1,4 @@
-export default function classNames() {
+export default function classNames () {
   let result = [];
 
   [...arguments].forEach(item => {

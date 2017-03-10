@@ -1,5 +1,5 @@
 import './TappableWrapper.css';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Tappable from 'react-tappable';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
@@ -12,13 +12,25 @@ const baseClassNames = getClassName('Tappable');
 const osname = platform();
 
 export default class TappableWrapper extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       clicks: {}
     };
   }
-  getContainer = container => this.container = container;
+  static propTypes = {
+    onClick: PropTypes.func,
+    component: PropTypes.oneOfType([
+      PropTypes.element,
+      PropTypes.string
+    ]),
+    children: PropTypes.node,
+    className: PropTypes.string
+  };
+  getContainer = (container) => {
+    this.container = container;
+    return;
+  };
   onDown = (e) => {
     const { top, left } = getOffsetRect(this.container);
     const x = coordX(e);
@@ -42,9 +54,9 @@ export default class TappableWrapper extends Component {
       });
     }, 225);
   }
-  render() {
+  render () {
     const { clicks } = this.state;
-    const Container = !this.props.onClick ? this.props.component || 'div' : Tappable;
+    const Container = !this.props.onClick ? this.props.component : Tappable;
     const commonProps = {
       className: classnames(baseClassNames, this.props.className)
     };

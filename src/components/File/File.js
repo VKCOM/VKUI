@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 const baseClassNames = getClassName('File');
 
 export default class File extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       value: null
@@ -17,13 +17,15 @@ export default class File extends Component {
     style: PropTypes.object,
     label: PropTypes.string,
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
-    appearance: PropTypes.oneOf(['primary', 'default', 'danger'])
+    appearance: PropTypes.oneOf(['primary', 'default', 'danger']),
+    onChange: PropTypes.func
   };
   static defaultProps = {
     style: {},
     label: 'Choose file',
     alignment: 'left',
-    appearance: 'default'
+    appearance: 'default',
+    onChange: () => {}
   };
   changeHandler = e => {
     this.setState({ value: e.target.value });
@@ -31,7 +33,7 @@ export default class File extends Component {
       this.props.onChange(e);
     }
   }
-  render() {
+  render () {
     const { style, label, alignment, appearance } = this.props;
 
     return (

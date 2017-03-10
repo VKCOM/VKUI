@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import keyframes from '../../lib/keyframes.js';
 
 export default class AndroidSpinner extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     const id = Math.round(Math.random() * 1e6).toString(16);
@@ -19,14 +19,14 @@ export default class AndroidSpinner extends Component {
         },
         '50%': {
           'stroke-dashoffset': Math.round(0.25 * offset),
-          transform: 'rotate(135deg)'
+          'transform': 'rotate(135deg)'
         },
         '100%': {
           'stroke-dashoffset': offset,
-          transform: 'rotate(360deg)'
+          'transform': 'rotate(360deg)'
         }
       })
-    }
+    };
   }
   static propTypes = {
     color: PropTypes.string,
@@ -34,7 +34,7 @@ export default class AndroidSpinner extends Component {
     strokeWidth: PropTypes.number,
     duration: PropTypes.number,
     on: PropTypes.bool,
-    progress: PropTypes.number,
+    progress: PropTypes.number
   };
   static defaultProps = {
     color: '#5181b8',
@@ -44,7 +44,7 @@ export default class AndroidSpinner extends Component {
     on: true,
     progress: null
   };
-  render() {
+  render () {
     const { color, size, on, progress, duration, strokeWidth } = this.props;
     const { id, offset, animation } = this.state;
 

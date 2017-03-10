@@ -6,17 +6,19 @@ import getClassName from '../../helpers/getClassName';
 const baseClassNames = getClassName('Select');
 
 export default class Select extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
-      value: !!props.checked
+      value: null
     };
   }
   static propTypes = {
     style: PropTypes.object,
     label: PropTypes.string,
     options: PropTypes.array,
-    name: PropTypes.string
+    name: PropTypes.string,
+    onChange: PropTypes.func,
+    children: PropTypes.element
   };
   static defaultProps = {
     style: {},
@@ -30,7 +32,7 @@ export default class Select extends Component {
       this.props.onChange(e);
     }
   }
-  render() {
+  render () {
     const { style, label, options } = this.props;
 
     return (

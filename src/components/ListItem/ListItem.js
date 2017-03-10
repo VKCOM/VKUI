@@ -21,15 +21,18 @@ export default class ListItem extends Component {
     ]),
     expandable: PropTypes.bool,
     indented: PropTypes.bool,
+    children: PropTypes.node,
+    onClick: PropTypes.func
   };
   static defaultProps = {
     icon: null,
     indicator: '',
     asideContent: '',
     expandable: false,
-    indented: false
+    indented: false,
+    children: ''
   };
-  render() {
+  render () {
     const { icon, indicator, asideContent, expandable, indented, onClick, children } = this.props;
     const modifiers = {
       'ListItem--expandable': expandable,

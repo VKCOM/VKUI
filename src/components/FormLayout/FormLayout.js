@@ -1,10 +1,10 @@
 import './FormLayout.css';
-import React from 'react';
+import React, { PropTypes } from 'react';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('FormLayout');
 
-export default function FormLayout(props) {
+export default function FormLayout (props) {
   const children = Array.isArray(props.children) ? props.children : [props.children];
 
   return (
@@ -23,3 +23,7 @@ export default function FormLayout(props) {
     </div>
   );
 }
+
+FormLayout.propTypes = {
+  children: PropTypes.node
+};

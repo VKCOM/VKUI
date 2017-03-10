@@ -8,14 +8,16 @@ export default class Group extends Component {
   static propTypes = {
     style: PropTypes.object,
     title: PropTypes.node,
-    description: PropTypes.node
+    description: PropTypes.node,
+    children: PropTypes.node
   };
   static defaultProps = {
     style: {},
     title: '',
-    description: ''
+    description: '',
+    children: ''
   };
-  render() {
+  render () {
     const { style, title, description } = this.props;
 
     return (

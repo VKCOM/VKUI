@@ -26,7 +26,7 @@ export default class Spinner extends Component {
     on: true,
     progress: null
   };
-  render() {
+  render () {
     const { on, progress, size } = this.props;
     const isAnimated = on && progress === null;
     const modifiers = {

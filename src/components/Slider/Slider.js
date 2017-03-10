@@ -7,7 +7,7 @@ import getClassName from '../../helpers/getClassName';
 const baseClassNames = getClassName('Slider');
 
 export default class Slider extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {
       startX: 0,
@@ -56,7 +56,7 @@ export default class Slider extends Component {
       containerWidth: this.container.offsetWidth
     });
   }
-  calculate(pos) {
+  calculate (pos) {
     const { min, max, step } = this.props;
     const { containerWidth } = this.state;
 
@@ -82,20 +82,24 @@ export default class Slider extends Component {
       value: min + (max - min) * relation
     };
   }
-  componentDidMount() {
+  componentDidMount () {
     window.addEventListener('resize', this.onResize);
     this.onResize();
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('resize', this.onResize);
   }
-  render() {
+  getRef = (container) => {
+    this.container = container;
+    return;
+  }
+  render () {
     const modifiers = {
       'Slider--active': this.state.active
     };
 
     return (
-      <div className={classnames(baseClassNames, modifiers)} ref={el => this.container = el}>
+      <div className={classnames(baseClassNames, modifiers)} ref={this.getRef}>
         <Touch onStart={this.onStart} onMove={this.onMove} onEnd={this.onEnd} className="Slider__in">
           <div className="Slider__dragger" style={{ width: this.state.position + '%' }}>
             <span className="Slider__thumb" />
