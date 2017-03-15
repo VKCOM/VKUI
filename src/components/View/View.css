@@ -123,8 +123,8 @@
       }
 
       .View--ios .View__header-item {
-        top: 12px;
-        height: 52px;
+        top: 20px;
+        height: 44px;
         justify-content: center;
         }
 
@@ -156,7 +156,7 @@
         }
 
         .View--ios .View__header-title {
-          font: 500 17px/54px var(--ios-font);
+          font: 500 17px/44px var(--ios-font);
           text-align: center;
           }
 
