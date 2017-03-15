@@ -18,7 +18,10 @@ export default class Select extends Component {
     options: PropTypes.array,
     name: PropTypes.string,
     onChange: PropTypes.func,
-    children: PropTypes.element
+    children: PropTypes.oneOfType([
+      PropTypes.element,
+      PropTypes.arrayOf(PropTypes.element)
+    ])
   };
   static defaultProps = {
     style: {},
