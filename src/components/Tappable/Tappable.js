@@ -97,7 +97,6 @@ export default class Tappable extends Component {
 
     if (this.state.active) {
       this.callback();
-      originalEvent.preventDefault();
 
       if (now - this.state.ts >= 100) {
         // Долгий тап, выключаем подсветку
@@ -108,15 +107,16 @@ export default class Tappable extends Component {
       }
     } else if (!this.isSlide) {
       // Очень короткий тап, включаем подсветку
-      originalEvent.preventDefault();
-
       setTimeout(() => this.callback(), 0);
+
+      this.start();
+
+      const timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY);
 
       if (this.getStorage()) {
         clearTimeout(this.getStorage().activeTimeout);
-        this.getStorage().timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY);
+        this.getStorage().timeout = timeout;
       }
-      this.start();
     }
 
     this.isSlide = false;
@@ -183,7 +183,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   stop = () => {
-    if (this.state.active && this.state.ts !== null) {
+    if (this.state.active) {
       this.setState({
         active: false,
         ts: null
@@ -217,25 +217,31 @@ export default class Tappable extends Component {
 
   render () {
     const { clicks, active } = this.state;
+    const Component = this.props.onClick ? Touch : 'div';
     const classes = classnames(baseClassNames, this.props.className, {
       'Tappable--active': active,
       'Tappable--inactive': !active
     });
+
+    let props = {};
+
+    if (this.props.onClick) {
+      props.component = this.props.component;
+      props.onStart = this.onStart;
+      props.onMove = this.onMove;
+      props.onEnd = this.onEnd;
+      props.ref = this.getContainer;
+    }
+
     const nativeProps = removeObjectKeys(Object.assign({}, this.props), [
       'onClick',
       'children',
-      'className'
+      'className',
+      'component'
     ]);
 
     return (
-      <Touch
-        className={classes}
-        onStart={this.onStart}
-        onMove={this.onMove}
-        onEnd={this.onEnd}
-        ref={this.getContainer}
-        {...nativeProps}
-      >
+      <Component className={classes} {...props} {...nativeProps}>
         {osname === ANDROID && (
           <span className="Tappable__waves" ref={this.getContainer}>
             {Object.keys(clicks).map(k => (
@@ -244,7 +250,7 @@ export default class Tappable extends Component {
           </span>
         )}
         {this.props.children}
-      </Touch>
+      </Component>
     );
   }
 }

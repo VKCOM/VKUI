@@ -9,7 +9,7 @@ export default class Checkbox extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      value: !!props.checked
+      checked: !!props.checked
     };
   }
   static propTypes = {
@@ -22,7 +22,7 @@ export default class Checkbox extends Component {
     checked: false,
     onChange: () => {}
   };
-  changeHandler (e) {
+  changeHandler = (e) => {
     this.setState({ checked: e.target.checked });
     if (this.props.onChange) {
       this.props.onChange(e);
@@ -37,7 +37,7 @@ export default class Checkbox extends Component {
           {...removeObjectKeys(this.props, ['onChange'])}
           type="checkbox"
           className="Checkbox__self"
-          value={this.state.checked}
+          checked={this.state.checked}
           onChange={this.changeHandler}
         />
         <span className="Checkbox__pseudo" />
