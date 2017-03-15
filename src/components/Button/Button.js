@@ -2,7 +2,7 @@ import './Button.css';
 import React, { Component, PropTypes } from 'react';
 import classnames from '../../lib/classnames';
 import removeObjectKeys from '../../lib/removeObjectKeys';
-import TappableWrapper from '../TappableWrapper/TappableWrapper';
+import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('Button');
@@ -33,14 +33,14 @@ export default class Button extends Component {
     const nativeProps = removeObjectKeys(this.props, ['alignment', 'appearance']);
 
     return (
-      <TappableWrapper
+      <Tappable
         component="button"
         className={classnames(baseClassNames, modifiers)}
         style={style}
         {...nativeProps}
       >
         {children}
-      </TappableWrapper>
+      </Tappable>
     );
   }
 }

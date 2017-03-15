@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import classnames from '../../lib/classnames';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
-import TappableWrapper from '../TappableWrapper/TappableWrapper';
+import Tappable from '../Tappable/Tappable';
 
 const baseClassNames = getClassName('ListItem');
 
@@ -49,7 +49,7 @@ export default class ListItem extends Component {
 
     return (
       <li className={classnames(baseClassNames, modifiers)} {...nativeProps}>
-        <TappableWrapper component="div" className="ListItem__in" onClick={onClick}>
+        <Tappable component="div" className="ListItem__in" onClick={onClick}>
           <div className="ListItem__icon">
             {icon && <div className="ListItem__icon-in">{icon}</div>}
           </div>
@@ -60,7 +60,7 @@ export default class ListItem extends Component {
           <div className="ListItem__aside">
             {asideContent}
           </div>
-        </TappableWrapper>
+        </Tappable>
       </li>
     );
   }

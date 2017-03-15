@@ -24,7 +24,7 @@ import Slider from './components/Slider/Slider';
 /**
  * Behavior
  */
-import TappableWrapper from './components/TappableWrapper/TappableWrapper';
+import Tappable from './components/Tappable/Tappable';
 import Touch from './components/Touch/Touch';
 
 /**
@@ -48,7 +48,7 @@ export default {
   Radio,
   Select,
   Slider,
-  TappableWrapper,
+  Tappable,
   Touch,
   Spinner
 };
