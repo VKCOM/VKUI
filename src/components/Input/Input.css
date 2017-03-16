@@ -1,4 +1,5 @@
 .Input {
+  position: relative;
   display: block;
   margin: 0;
   width: 100%;
@@ -9,6 +10,15 @@
   font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
   line-height: 22px;
   min-width: 140px; /* Fix iOS rendering for FormLayout */
+  }
+.Input--left {
+  text-align: left;
+  }
+.Input--center {
+  text-align: center;
+  }
+.Input--right {
+  text-align: right;
   }
 
 .Input--ios {
