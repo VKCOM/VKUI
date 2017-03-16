@@ -16,7 +16,7 @@ export default class View extends Component {
   static propTypes = {
     style: PropTypes.object,
     activePanel: PropTypes.string.isRequired,
-    header: PropTypes.bool,
+    header: PropTypes.object,
     children: PropTypes.node,
     popout: PropTypes.node
   };
@@ -24,7 +24,7 @@ export default class View extends Component {
     style: {},
     children: null,
     popout: undefined,
-    header: false
+    header: null
   };
   componentWillReceiveProps (nextProps) {
     if (this.state.activePanel !== nextProps.activePanel) {
@@ -46,7 +46,7 @@ export default class View extends Component {
     const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
     const hasPopout = typeof popout !== 'undefined';
-    const hasHeader = typeof header !== 'undefined';
+    const hasHeader = header !== null;
     const panels = [].concat(this.props.children).filter(a => !!a);
     const modifiers = {
       'View--header': hasHeader,

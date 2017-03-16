@@ -28,6 +28,7 @@
       left: 0;
       color: #fff;
       z-index: 5;
+      background: var(--vk-color);
       }
 
       .View__header-item {
@@ -40,6 +41,7 @@
         visibility: hidden;
         display: flex;
         align-items: center;
+        background: var(--vk-color);
         }
 
         .View__header-title {
@@ -108,7 +110,9 @@
 /**
  * iOS
  */
-.View--ios {}
+.View--ios {
+  font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
+  }
 
   /**
    * Header
@@ -119,7 +123,6 @@
 
     .View--ios .View__header-in {
       height: 64px;
-      background: var(--vk-color);
       }
 
       .View--ios .View__header-item {
@@ -245,7 +248,9 @@
 /**
  * Android
  */
-.View--android {}
+.View--android {
+  font-family: Roboto, Droid, 'Open Sans', sans-serif;
+  }
 
   /**
    * Header
@@ -256,13 +261,11 @@
 
     .View--android .View__header-in {
       height: 80px;
-      background: var(--vk-color);
       }
 
       .View--android .View__header-item {
         top: 24px;
         height: 56px;
-        background: var(--vk-color);
         }
 
       /**
