@@ -4,7 +4,8 @@ import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import Spinner from '../Spinner/Spinner';
 import Touch from '../Touch/Touch';
-import { platform, IOS } from '../../lib/platform.js';
+import { platform, IOS } from '../../lib/platform';
+import classnames from '../../lib/classnames';
 
 const osname = platform();
 const baseClassNames = getClassName('ScrollView');
@@ -121,7 +122,7 @@ export default class ScrollView extends Component {
     return;
   }
   render () {
-    const { onPull } = this.props;
+    const { onPull, className } = this.props;
 
     let Component = 'div';
     let extProps = {};
@@ -136,8 +137,8 @@ export default class ScrollView extends Component {
 
     return (
       <Component
-        className={baseClassNames}
-        {...removeObjectKeys(this.props, ['header', 'onPull'])}
+        className={classnames(baseClassNames, className)}
+        {...removeObjectKeys(this.props, ['header', 'onPull', 'className'])}
         {...extProps}
         ref={this.getRef}
       >
