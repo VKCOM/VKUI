@@ -1,18 +1,18 @@
-#VKUI
+# VKUI
 
-##Getting started
+## Getting started
 
-###1. Install package.
+### 1. Install package.
 
 ```
 npm i http://github.com/vkcom/vkui --save
 ```
 
-###2. Add styles
+### 2. Add styles
 
 Add styles from `./node_modules/vkui/dist/vkui.css`.
 
-###3. Use it in your application.
+### 3. Use it in your application.
 
 ```jsx
 import React from 'react';
