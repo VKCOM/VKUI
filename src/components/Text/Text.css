@@ -1,0 +1,67 @@
+@import '../../styles/constants.css';
+
+/**
+ * Base
+ */
+.Text {}
+
+  .Text p {
+    margin: 0 0 1em;
+    }
+
+  .Text b,
+  .Text strong {
+    font-weight: bold;
+    }
+
+  .Text i,
+  .Text em {
+    font-style: italic;
+    }
+
+  .Text a {
+    text-decoration: none;
+    color: var(--vk-color);
+    font-weight: bold;
+    }
+
+/**
+ * Modifiers
+ */
+.Text--left {
+  text-align: left;
+  }
+.Text--center {
+  text-align: center;
+  }
+.Text--right {
+  text-align: right;
+  }
+
+/**
+ * iOS version
+ */
+.Text--ios {
+  font-size: 15px;
+  line-height: 20px;
+  color: #2E3033;
+  padding: 8px 15px;
+  }
+
+  .Text--ios p {
+    margin: 0 0 20px;
+    }
+
+/**
+ * Android version
+ */
+.Text--android {
+  color: #2E3033;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 8px 16px;
+  }
+
+  .Text--android p {
+    margin: 0 0 24px;
+    }
