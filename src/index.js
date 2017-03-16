@@ -4,10 +4,12 @@
 import View from './components/View/View';
 import ScrollView from './components/ScrollView/ScrollView';
 import Group from './components/Group/Group';
+import Entity from './components/Entity/Entity';
 import List from './components/List/List';
 import ListItem from './components/ListItem/ListItem';
 import FormLayout from './components/FormLayout/FormLayout';
 import Icon from './components/Icon/Icon';
+import Text from './components/Text/Text';
 
 /**
  * Forms
@@ -36,10 +38,12 @@ export default {
   View,
   ScrollView,
   Group,
+  Entity,
   List,
   ListItem,
   FormLayout,
   Icon,
+  Text,
   Button,
   Checkbox,
   File,
