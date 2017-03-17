@@ -68,13 +68,11 @@ export default class View extends Component {
                   })}
                   key={panel.key || panel.props.id || `panel-header-${i}`}
                 >
+                  <div className="View__header-left">{panel.props.header.left}</div>
                   <div className="View__header-title">{panel.props.header.title}</div>
+                  <div className="View__header-right">{panel.props.header.right}</div>
                 </div>
               ))}
-              {/* Icon */}
-              {/* Left */}
-              {header.title}
-              {/* Left */}
             </div>
           </div>
         )}

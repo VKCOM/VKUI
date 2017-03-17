@@ -44,9 +44,20 @@
         background: var(--vk-color);
         }
 
+        .View__header-left,
+        .View__header-right {
+          flex: 0 0 auto;
+          font-size: 17px;
+          line-height: 20px;
+          }
+        .View__header-right {
+          text-align: right;
+          }
+
         .View__header-title {
+          flex: 1 0 auto;
           margin: 0;
-          padding: 0 12px;
+          padding: 0 6px;
           }
 
   /**
@@ -129,7 +140,14 @@
         top: 20px;
         height: 44px;
         justify-content: center;
+        padding: 0 6px;
         }
+
+        .View--ios .View__header-left,
+        .View--ios .View__header-right {
+          flex: 1 0 10%;
+          padding: 0 2px;
+          }
 
       /**
        * Header transition
@@ -266,7 +284,18 @@
       .View--android .View__header-item {
         top: 24px;
         height: 56px;
+        padding: 0 10px;
         }
+
+        .View--android .View__header-left,
+        .View--android .View__header-right {
+          padding: 0 6px;
+          color: #898A8C;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: 500;
+          text-transform: uppercase;
+          }
 
       /**
        * Header transition
