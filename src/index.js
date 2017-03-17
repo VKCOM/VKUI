@@ -34,6 +34,17 @@ import Touch from './components/Touch/Touch';
  */
 import Spinner from './components/Spinner/Spinner';
 
+/**
+ * Utils
+ */
+import classnames from './lib/classnames';
+import keyframes from './lib/keyframes';
+import * as offset from './lib/offset';
+import * as platform from './lib/platform';
+import removeObjectKeys from './lib/removeObjectKeys';
+import getClassName from './helpers/getClassName';
+import wrapTextNode from './helpers/wrapTextNode';
+
 export default {
   View,
   ScrollView,
@@ -54,5 +65,12 @@ export default {
   Slider,
   Tappable,
   Touch,
-  Spinner
+  Spinner,
+  classnames,
+  keyframes,
+  offset,
+  platform,
+  removeObjectKeys,
+  getClassName,
+  wrapTextNode
 };
