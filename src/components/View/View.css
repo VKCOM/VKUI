@@ -289,7 +289,7 @@
 
         .View--android .View__header-left,
         .View--android .View__header-right {
-          padding: 0 6px;
+          padding: 1px 6px 0;
           color: #898A8C;
           font-size: 14px;
           line-height: 16px;
