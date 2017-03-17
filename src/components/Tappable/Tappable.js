@@ -47,7 +47,14 @@ export default class Tappable extends Component {
   static propTypes = {
     onClick: PropTypes.func,
     className: PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
+    component: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element
+    ])
+  };
+  static defaultProps = {
+    component: 'div'
   };
 
   isSlide = false;
@@ -217,7 +224,7 @@ export default class Tappable extends Component {
 
   render () {
     const { clicks, active } = this.state;
-    const Component = this.props.onClick ? Touch : 'div';
+    const Component = this.props.onClick ? Touch : this.props.component;
     const classes = classnames(baseClassNames, this.props.className, {
       'Tappable--active': active,
       'Tappable--inactive': !active

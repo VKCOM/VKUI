@@ -39,7 +39,7 @@ export default class Input extends Component {
     const modifiers = {
       'Input--left': alignment === 'left',
       'Input--center': alignment === 'center',
-      'Input--right': alignment === 'right',
+      'Input--right': alignment === 'right'
     };
 
     return (

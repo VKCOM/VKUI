@@ -14,7 +14,8 @@ export default class Entity extends Component {
     size: PropTypes.oneOf(['s', 'm']),
     photo: PropTypes.string,
     title: PropTypes.node,
-    description: PropTypes.node
+    description: PropTypes.node,
+    className: PropTypes.string
   };
   static defaultProps = {
     style: {},
@@ -25,7 +26,7 @@ export default class Entity extends Component {
     description: ''
   };
   render () {
-    const { className, style, size, photo, title, description } = this.props
+    const { className, style, size, photo, title, description } = this.props;
     const modifiers = {
       'Entity--small': size === 's',
       'Entity--no-photo': !photo
@@ -43,7 +44,6 @@ export default class Entity extends Component {
           {title && <div className="Entity__title">{title}</div>}
           {description && <div className="Entity__description">{description}</div>}
         </div>
-        {this.props.children}
       </div>
     );
   }

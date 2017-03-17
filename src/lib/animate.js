@@ -1,19 +1,23 @@
 export default function animate (options) {
-  const start = performance.now();
+  if (typeof window === 'undefined') {
+    return;
+  }
 
-  requestAnimationFrame(function animate (time) {
+  const start = window.performance.now();
+
+  window.requestAnimationFrame(function animate (time) {
     let timeFraction = (time - start) / options.duration;
 
     if (timeFraction > 1) {
       timeFraction = 1;
     }
 
-    var progress = options.timing(timeFraction)
+    var progress = options.timing(timeFraction);
 
     options.draw(progress);
 
     if (timeFraction < 1) {
-      requestAnimationFrame(animate);
+      window.requestAnimationFrame(animate);
     }
   });
 }

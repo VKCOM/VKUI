@@ -46,7 +46,6 @@ export default class View extends Component {
   }
   onHeaderClick = () => {
     const { activePanel } = this.state;
-    const { children } = this.props;
 
     if (activePanel) {
       const elem = this.refsStore[activePanel];

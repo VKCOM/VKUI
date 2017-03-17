@@ -6,7 +6,6 @@ import Spinner from '../Spinner/Spinner';
 import Touch from '../Touch/Touch';
 import { platform, IOS } from '../../lib/platform';
 import classnames from '../../lib/classnames';
-import animate from '../../lib/animate';
 
 const osname = platform();
 const baseClassNames = getClassName('ScrollView');
@@ -22,7 +21,8 @@ export default class ScrollView extends Component {
 
   static propTypes = {
     onPull: PropTypes.func,
-    children: PropTypes.node
+    children: PropTypes.node,
+    className: PropTypes.string
   };
 
   static defaultProps = {

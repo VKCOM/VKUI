@@ -10,17 +10,18 @@ export default class Text extends Component {
     style: PropTypes.object,
     className: PropTypes.string,
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
+    children: PropTypes.node
   };
   static defaultProps = {
     style: {},
     alignment: 'left'
   };
   render () {
-    const { alignment, className, style } = this.props
+    const { alignment, className, style } = this.props;
     const modifiers = {
       'Text--left': alignment === 'left',
       'Text--center': alignment === 'center',
-      'Text--right': alignment === 'right',
+      'Text--right': alignment === 'right'
     };
 
     return (
