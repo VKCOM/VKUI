@@ -11,6 +11,7 @@
   left: 0;
   overflow: hidden;
   background: #efeff4;
+  word-wrap: break-word;
   }
 .View--animated {
   pointer-events: none;

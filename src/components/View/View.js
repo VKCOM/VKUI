@@ -1,6 +1,7 @@
 import './View.css';
 import React, { Component, PropTypes } from 'react';
 import classnames from '../../lib/classnames';
+import animate from '../../lib/animate';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('View');
@@ -26,6 +27,7 @@ export default class View extends Component {
     popout: undefined,
     header: null
   };
+  refsStore = {};
   componentWillReceiveProps (nextProps) {
     if (this.state.activePanel !== nextProps.activePanel) {
       this.setState({
@@ -42,6 +44,36 @@ export default class View extends Component {
       animated: false
     });
   }
+  onHeaderClick = () => {
+    const { activePanel } = this.state;
+    const { children } = this.props;
+
+    if (activePanel) {
+      const elem = this.refsStore[activePanel];
+      const scrollTop = elem.scrollTop;
+
+      if (scrollTop) {
+        animate({
+          duration: 200,
+          timing: n => Math.sqrt(n),
+          draw: (val) => {
+            elem.scrollTop = scrollTop - val * scrollTop;
+          }
+        });
+      }
+    }
+  }
+  getRef = (c) => {
+    if (c.container && c.props.id) {
+      let el = c;
+
+      while (el.container) {
+        el = el.container;
+      }
+
+      this.refsStore[c.props.id] = el;
+    }
+  }
   render () {
     const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
@@ -57,7 +89,7 @@ export default class View extends Component {
     return (
       <section className={classnames(baseClassNames, modifiers)} style={style}>
         {hasHeader && (
-          <div className="View__header">
+          <div className="View__header" onClick={this.onHeaderClick}>
             <div className="View__header-in">
               {panels.map((panel, i) => (
                 <div
@@ -87,7 +119,7 @@ export default class View extends Component {
               onTransitionEnd={this.transitionEndHandler}
               key={panel.key || panel.props.id || `panel-${i}`}
             >
-              {panel}
+              {React.cloneElement(panel, { ref: this.getRef })}
             </div>
           ))}
         </div>
