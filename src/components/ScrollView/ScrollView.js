@@ -75,6 +75,7 @@ export default class ScrollView extends Component {
       e.originalEvent.preventDefault();
     }
   };
+
   onEnd = e => {
     if (this.started) {
       const initialState = {
@@ -118,10 +119,20 @@ export default class ScrollView extends Component {
       this.started = false;
     }
   }
+
   getRef = (container) => {
     this.container = container;
     return;
   }
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.activePanel !== nextProps.id) {
+      return false;
+    }
+
+    return true;
+  }
+
   render () {
     const { onPull, className } = this.props;
 
@@ -139,7 +150,7 @@ export default class ScrollView extends Component {
     return (
       <Component
         className={classnames(baseClassNames, className)}
-        {...removeObjectKeys(this.props, ['header', 'onPull', 'className'])}
+        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel'])}
         {...extProps}
         ref={this.getRef}
       >

@@ -10,6 +10,7 @@ export default class View extends Component {
   constructor (props) {
     super(props);
     this.state = {
+      visiblePanels: [props.activePanel],
       children: [props.children],
       activePanel: props.activePanel
     };
@@ -31,15 +32,25 @@ export default class View extends Component {
   componentWillReceiveProps (nextProps) {
     if (this.state.activePanel !== nextProps.activePanel) {
       this.setState({
-        prevPanel: this.state.activePanel,
-        nextPanel: nextProps.activePanel,
-        activePanel: null,
-        animated: true
+        visiblePanels: [this.state.activePanel, nextProps.activePanel]
       });
+    }
+  }
+  componentDidUpdate () {
+    if (this.state.visiblePanels.length === 2 && !this.state.animated) {
+      setTimeout(() => {
+        this.setState({
+          prevPanel: this.state.visiblePanels[0],
+          nextPanel: this.state.visiblePanels[1],
+          activePanel: null,
+          animated: true
+        });
+      }, 0);
     }
   }
   transitionEndHandler = () => {
     this.setState({
+      visiblePanels: [this.props.activePanel],
       activePanel: this.props.activePanel,
       animated: false
     });
@@ -123,12 +134,13 @@ export default class View extends Component {
               className={classnames('View__panel', {
                 'View__panel--active': panel.props.id === activePanel,
                 'View__panel--prev': panel.props.id === prevPanel,
-                'View__panel--next': panel.props.id === nextPanel
+                'View__panel--next': panel.props.id === nextPanel,
+                'View__panel--hidden': this.state.visiblePanels.indexOf(panel.props.id) === -1
               })}
               onTransitionEnd={this.transitionEndHandler}
               key={panel.key || panel.props.id || `panel-${i}`}
             >
-              {React.cloneElement(panel, { ref: this.getRef })}
+              {React.cloneElement(panel, { ref: this.getRef, activePanel })}
             </div>
           ))}
         </div>

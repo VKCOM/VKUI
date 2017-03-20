@@ -85,6 +85,10 @@
       visibility: hidden;
       }
 
+    .View__panel--hidden {
+      display: none;
+      }
+
   /**
    * Mask
    */
@@ -209,6 +213,7 @@
      */
     .View--ios .View__panel--prev,
     .View--ios .View__panel--next {
+      display: block;
       visibility: visible;
       transition:
         transform .6s cubic-bezier(.36, .66, .04, 1),
