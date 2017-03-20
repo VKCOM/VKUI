@@ -10,6 +10,8 @@ import ListItem from './components/ListItem/ListItem';
 import FormLayout from './components/FormLayout/FormLayout';
 import Icon from './components/Icon/Icon';
 import Text from './components/Text/Text';
+import Div from './components/Div/Div';
+import Flex from './components/Flex/Flex';
 
 /**
  * Forms
@@ -55,6 +57,8 @@ export default {
   FormLayout,
   Icon,
   Text,
+  Div,
+  Flex,
   Button,
   Checkbox,
   File,
