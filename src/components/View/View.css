@@ -94,16 +94,10 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 2;
+    z-index: 7;
     background: rgba(0, 0, 0, .6);
-    opacity: 0;
-    transition: opacity .3s ease;
+    animation: animation-full-fade-in .2s ease;
     user-select: none;
-    }
-
-  .View--popout .View__mask {
-    opacity: 1;
-    user-select: auto;
     }
 
   /**
@@ -115,7 +109,10 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 3;
+    z-index: 8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     }
 
 
@@ -405,5 +402,14 @@
     }
   to {
     opacity: 0;
+    }
+  }
+
+@keyframes animation-full-fade-in {
+  from {
+    opacity: 0;
+    }
+  to {
+    opacity: 1;
     }
   }

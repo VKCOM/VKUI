@@ -76,7 +76,7 @@ export default class View extends Component {
   render () {
     const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
-    const hasPopout = typeof popout !== 'undefined';
+    const hasPopout = !!popout;
     const hasHeader = header !== null;
     const panels = [].concat(this.props.children).filter(a => !!a);
     const modifiers = {

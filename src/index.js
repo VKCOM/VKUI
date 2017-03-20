@@ -34,6 +34,7 @@ import Touch from './components/Touch/Touch';
 /**
  * Misc
  */
+import Alert from './components/Alert/Alert';
 import Spinner from './components/Spinner/Spinner';
 
 /**
@@ -69,6 +70,7 @@ export default {
   Slider,
   Tappable,
   Touch,
+  Alert,
   Spinner,
   classnames,
   keyframes,

@@ -149,7 +149,7 @@ export default class Tappable extends Component {
       })
     }));
 
-    setTimeout(() => {
+    this.wavesTimeout = setTimeout(() => {
       this.setState(state => {
         let clicks = Object.assign({}, state.clicks);
         delete clicks[key];
@@ -218,9 +218,22 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   getContainer = (container) => {
-    this.container = container.container;
+    if (container && container.container) {
+      this.container = container.container;
+    }
     return;
   };
+
+  componentWillUnmount() {
+    if (storage[this.id]) {
+      clearTimeout(storage[this.id].timeout);
+      clearTimeout(storage[this.id].activeTimeout);
+
+      delete storage[this.id];
+    }
+
+    clearTimeout(this.wavesTimeout);
+  }
 
   render () {
     const { clicks, active } = this.state;
