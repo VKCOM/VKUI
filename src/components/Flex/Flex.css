@@ -1,0 +1,11 @@
+.Flex {
+  display: flex;
+  margin: 0 -6px;
+  }
+
+  .Flex__item {
+    margin: 0 6px;
+    }
+
+.Flex--ios {}
+.Flex--android {}
