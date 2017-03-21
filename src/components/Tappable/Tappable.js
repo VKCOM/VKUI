@@ -73,7 +73,7 @@ export default class Tappable extends Component {
       this.onDown(originalEvent);
     }
 
-    storage[this.id] = { stop: this.stop };
+    storage[this.id] = {};
     this.getStorage().activeTimeout = setTimeout(this.start, ACTIVE_DELAY);
   }
 
@@ -103,14 +103,19 @@ export default class Tappable extends Component {
     }
 
     if (this.state.active) {
-      this.callback();
+      setTimeout(() => this.callback(), 0);
 
       if (now - this.state.ts >= 100) {
         // Долгий тап, выключаем подсветку
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        this.getStorage().timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY - now + this.state.ts);
+        const timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY - now + this.state.ts)
+        const store = this.getStorage();
+
+        if (store) {
+          store.timeout = timeout;
+        }
       }
     } else if (!this.isSlide) {
       // Очень короткий тап, включаем подсветку
@@ -123,6 +128,8 @@ export default class Tappable extends Component {
       if (this.getStorage()) {
         clearTimeout(this.getStorage().activeTimeout);
         this.getStorage().timeout = timeout;
+      } else {
+        this.timeout = timeout;
       }
     }
 
