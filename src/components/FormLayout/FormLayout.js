@@ -17,7 +17,10 @@ export default function FormLayout (props) {
               <div className="FormLayout__label-in">{field.props.label}</div>
             </div>
           )}
-          <div className="FormLayout__field">{field}</div>
+          <div className="FormLayout__field">
+            {field}
+            <div className="FormLayout__underline" />
+          </div>
         </label>
       ))}
     </div>

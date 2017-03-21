@@ -8,9 +8,8 @@
   border: 0;
   background: #fff;
   text-align: left;
-
   user-select: none;
-}
+  }
 .Button::before,
 .Button::after {
   position: absolute;
@@ -27,6 +26,16 @@
 .Button::after {
   bottom: 0;
   background: #dfdfdf;
+  }
+
+.Button--ios {
+  font: 17px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  padding: 11px 15px 12px;
+  }
+
+.Button--android {
+  font: 16px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  padding: 16px 16px 18px;
   }
 
 /**
@@ -63,22 +72,128 @@
   }
 
 /**
+ * Rich vk button
+ */
+.Button--vk-rich {
+  display: inline-block;
+  background: var(--vk-color);
+  }
+
+/**
+ * VK buttons
+ */
+.Button--vk-primary,
+.Button--vk-secondary,
+.Button--vk-tertiary {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 8px 12px;
+  border-radius: 2px;
+  }
+.Button--ios.Button--vk-rich::before,
+.Button--ios.Button--vk-rich::after,
+.Button--ios.Button--vk-rich.Tappable--active::before,
+.Button--ios.Button--vk-rich.Tappable--active::after,
+.Button--ios.Button--vk-primary::before,
+.Button--ios.Button--vk-primary::after,
+.Button--ios.Button--vk-primary.Tappable--active::before,
+.Button--ios.Button--vk-primary.Tappable--active::after,
+.Button--ios.Button--vk-secondary::before,
+.Button--ios.Button--vk-secondary::after,
+.Button--ios.Button--vk-secondary.Tappable--active::before,
+.Button--ios.Button--vk-secondary.Tappable--active::after,
+.Button--ios.Button--vk-tertiary::before,
+.Button--ios.Button--vk-tertiary::after,
+.Button--ios.Button--vk-tertiary.Tappable--active::before,
+.Button--ios.Button--vk-tertiary.Tappable--active::after {
+  content: none;
+  }
+
+/**
+ * VK rich button
+ */
+.Button--vk-rich {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 14px;
+  background: #5181B8;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 2px rgba(0, 0, 0, .24);
+  border-radius: 2px;
+  color: #fff;
+  }
+.Button--vk-rich:active:not([disabled]),
+.Button--vk-rich.Tappable--active:not([disabled]) {
+  background: #4872a3;
+  }
+.Button--vk-rich[disabled] {
+  color: #fff;
+  background: rgba(81, 129, 184, .4);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .05), 0 2px 2px rgba(0, 0, 0, .1);
+  }
+
+/**
+ * VK primary button
+ */
+.Button--vk-primary {
+  color: #fff;
+  background: #5181b8;
+  }
+.Button--vk-primary:active:not([disabled]),
+.Button--vk-primary.Tappable--active:not([disabled]) {
+  background: #4872a3;
+  }
+.Button--vk-primary[disabled] {
+  color: #fff;
+  background: rgba(81, 129, 184, .4);
+  }
+
+/**
+ * VK secondary button
+ */
+.Button--vk-secondary {
+  color: #4774a8;
+  background: rgba(0, 57, 115, .1);
+  }
+.Button--vk-secondary:active:not([disabled]),
+.Button--vk-secondary.Tappable--active:not([disabled]) {
+  background: rgba(0, 57, 115, .2);
+  }
+.Button--vk-secondary[disabled] {
+  color: rgba(71, 116, 168, .4);
+  background: rgba(0, 57, 115, .05);
+  }
+
+/**
+ * VK tertiary button
+ */
+.Button--vk-tertiary {
+  background: transparent;
+  color: #4774a8;
+  }
+.Button--vk-tertiary:active:not([disabled]),
+.Button--vk-tertiary.Tappable--active:not([disabled]) {
+  background: rgba(0, 57, 115, .1);
+  }
+.Button--vk-tertiary[disabled] {
+  color: rgba(71, 116, 168, .4);
+  background: transparent;
+  }
+
+/**
+ * Wide
+ */
+.Button--wide {
+  width: 100%;
+  }
+
+/**
  * Single separator between two buttons
  */
 .Button + .Button::before {
   content: none;
   }
-
-.Button--ios {
-  font: 17px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-  padding: 11px 15px 12px;
-  }
-
-.Button--android {
-  font: 16px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-  padding: 16px 16px 18px;
-  }
-
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .Button::before,

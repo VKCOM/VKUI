@@ -1,7 +1,6 @@
 @import '../../styles/constants.css';
 
 .FormLayout {
-  /* display: table; */
   width: 100%;
   position: relative;
   margin: 0;
@@ -82,6 +81,9 @@
     .FormLayout__row:last-child .FormLayout__label::before {
       content: none;
       }
+    .FormLayout--android .FormLayout__label {
+      display: none;
+      }
 
       .FormLayout__label-in {
         overflow: hidden;
@@ -96,9 +98,26 @@
 
     .FormLayout__field {
       flex: 1 0 auto;
-      padding: 0 0 0 15px;
+      padding: 0 15px;
       vertical-align: top;
       }
+
+      .FormLayout--ios .FormLayout__underline {
+        display: none;
+        }
+      .FormLayout--android .FormLayout__underline {
+        position: absolute;
+        bottom: 9px;
+        left: 16px;
+        right: 16px;
+        height: 2px;
+        background: linear-gradient(to top, transparent 50%, #d6d6d6 50%);
+        content: '';
+        }
+      .FormLayout--android input:focus + .FormLayout__underline,
+      .FormLayout--android textarea:focus + .FormLayout__underline {
+        background: #518bcc;
+        }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .FormLayout::before,

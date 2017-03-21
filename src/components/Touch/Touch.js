@@ -18,11 +18,11 @@ export default class Touch extends Component {
     onEnd: PropTypes.func,
     onEndX: PropTypes.func,
     onEndY: PropTypes.func,
-    tagName: PropTypes.string,
+    component: PropTypes.string,
     children: PropTypes.node
   };
   static defaultProps = {
-    tagName: 'div',
+    component: 'div',
     children: ''
   };
 
@@ -204,7 +204,7 @@ export default class Touch extends Component {
       onDragStart: this.onDragStart,
       onClick: this.onClick
     };
-    const Tag = this.props.tagName;
+    const ComponentName = this.props.component;
     const nativeProps = removeObjectKeys(Object.assign({}, this.props), [
       'onStart',
       'onStartX',
@@ -215,13 +215,13 @@ export default class Touch extends Component {
       'onEnd',
       'onEndX',
       'onEndY',
-      'tagName'
+      'component'
     ]);
 
     return (
-      <Tag {...handlers} {...nativeProps} ref={this.getRef}>
+      <ComponentName {...handlers} {...nativeProps} ref={this.getRef}>
         {this.props.children}
-      </Tag>
+      </ComponentName>
     );
   }
 }

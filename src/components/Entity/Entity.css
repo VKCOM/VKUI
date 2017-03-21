@@ -1,0 +1,73 @@
+@import '../../styles/constants.css';
+
+.Entity {
+  position: relative;
+  height: 64px;
+  padding: 0 0 0 75px;
+  }
+.Entity--small {
+  height: 48px;
+  padding: 0 0 0 60px;
+  }
+
+  .Entity__aside {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 64px;
+    height: 64px;
+    }
+  .Entity--small .Entity__aside {
+    width: 48px;
+    height: 48px;
+    }
+  .Entity--no-photo .Entity__aside {
+    background: #D4DAE1;
+    border-radius: 50%;
+    }
+
+    .Entity__photo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      }
+    .Entity--small .Entity__photo {
+      width: 48px;
+      height: 48px;
+      }
+
+  .Entity__main {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    }
+
+    .Entity__title,
+    .Entity__description {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 20px;
+      white-space: nowrap;
+      }
+
+    .Entity__title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #2C2D2E;
+      margin: 0 0 3px;
+      }
+
+    .Entity__description {
+      font-size: 14px;
+      color: #909499;
+      }
+
+.Entity--ios {
+  margin: 0 15px;
+  }
+
+.Entity--android {
+  margin: 0 16px;
+  }

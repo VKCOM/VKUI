@@ -4,7 +4,8 @@ import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import Spinner from '../Spinner/Spinner';
 import Touch from '../Touch/Touch';
-import { platform, IOS } from '../../lib/platform.js';
+import { platform, IOS } from '../../lib/platform';
+import classnames from '../../lib/classnames';
 
 const osname = platform();
 const baseClassNames = getClassName('ScrollView');
@@ -20,7 +21,8 @@ export default class ScrollView extends Component {
 
   static propTypes = {
     onPull: PropTypes.func,
-    children: PropTypes.node
+    children: PropTypes.node,
+    className: PropTypes.string
   };
 
   static defaultProps = {
@@ -73,6 +75,7 @@ export default class ScrollView extends Component {
       e.originalEvent.preventDefault();
     }
   };
+
   onEnd = e => {
     if (this.started) {
       const initialState = {
@@ -116,12 +119,22 @@ export default class ScrollView extends Component {
       this.started = false;
     }
   }
+
   getRef = (container) => {
     this.container = container;
     return;
   }
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.activePanel !== nextProps.id) {
+      return false;
+    }
+
+    return true;
+  }
+
   render () {
-    const { onPull } = this.props;
+    const { onPull, className } = this.props;
 
     let Component = 'div';
     let extProps = {};
@@ -136,8 +149,8 @@ export default class ScrollView extends Component {
 
     return (
       <Component
-        className={baseClassNames}
-        {...removeObjectKeys(this.props, ['header', 'onPull'])}
+        className={classnames(baseClassNames, className)}
+        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel'])}
         {...extProps}
         ref={this.getRef}
       >

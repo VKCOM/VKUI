@@ -11,6 +11,7 @@
   left: 0;
   overflow: hidden;
   background: #efeff4;
+  word-wrap: break-word;
   }
 .View--animated {
   pointer-events: none;
@@ -28,6 +29,7 @@
       left: 0;
       color: #fff;
       z-index: 5;
+      background: var(--vk-color);
       }
 
       .View__header-item {
@@ -40,11 +42,23 @@
         visibility: hidden;
         display: flex;
         align-items: center;
+        background: var(--vk-color);
         }
 
+        .View__header-left,
+        .View__header-right {
+          flex: 0 0 auto;
+          font-size: 17px;
+          line-height: 20px;
+          }
+        .View__header-right {
+          text-align: right;
+          }
+
         .View__header-title {
+          flex: 1 0 auto;
           margin: 0;
-          padding: 0 12px;
+          padding: 0 6px;
           }
 
   /**
@@ -71,6 +85,10 @@
       visibility: hidden;
       }
 
+    .View__panel--hidden {
+      display: none;
+      }
+
   /**
    * Mask
    */
@@ -80,16 +98,10 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 2;
+    z-index: 7;
     background: rgba(0, 0, 0, .6);
-    opacity: 0;
-    transition: opacity .3s ease;
+    animation: animation-full-fade-in .2s ease;
     user-select: none;
-    }
-
-  .View--popout .View__mask {
-    opacity: 1;
-    user-select: auto;
     }
 
   /**
@@ -101,14 +113,19 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 3;
+    z-index: 8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     }
 
 
 /**
  * iOS
  */
-.View--ios {}
+.View--ios {
+  font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
+  }
 
   /**
    * Header
@@ -119,14 +136,20 @@
 
     .View--ios .View__header-in {
       height: 64px;
-      background: var(--vk-color);
       }
 
       .View--ios .View__header-item {
-        top: 12px;
-        height: 52px;
+        top: 20px;
+        height: 44px;
         justify-content: center;
+        padding: 0 6px;
         }
+
+        .View--ios .View__header-left,
+        .View--ios .View__header-right {
+          flex: 1 0 10%;
+          padding: 0 2px;
+          }
 
       /**
        * Header transition
@@ -156,7 +179,7 @@
         }
 
         .View--ios .View__header-title {
-          font: 500 17px/54px var(--ios-font);
+          font: 500 17px/44px var(--ios-font);
           text-align: center;
           }
 
@@ -190,6 +213,7 @@
      */
     .View--ios .View__panel--prev,
     .View--ios .View__panel--next {
+      display: block;
       visibility: visible;
       transition:
         transform .6s cubic-bezier(.36, .66, .04, 1),
@@ -245,7 +269,9 @@
 /**
  * Android
  */
-.View--android {}
+.View--android {
+  font-family: Roboto, Droid, 'Open Sans', sans-serif;
+  }
 
   /**
    * Header
@@ -256,14 +282,23 @@
 
     .View--android .View__header-in {
       height: 80px;
-      background: var(--vk-color);
       }
 
       .View--android .View__header-item {
         top: 24px;
         height: 56px;
-        background: var(--vk-color);
+        padding: 0 10px;
         }
+
+        .View--android .View__header-left,
+        .View--android .View__header-right {
+          padding: 1px 6px 0;
+          color: #898A8C;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: 500;
+          text-transform: uppercase;
+          }
 
       /**
        * Header transition
@@ -372,5 +407,14 @@
     }
   to {
     opacity: 0;
+    }
+  }
+
+@keyframes animation-full-fade-in {
+  from {
+    opacity: 0;
+    }
+  to {
+    opacity: 1;
     }
   }

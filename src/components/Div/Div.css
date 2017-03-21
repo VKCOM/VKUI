@@ -1,0 +1,7 @@
+.Div {}
+.Div--ios {
+  padding: 8px 15px;
+  }
+.Div--android {
+  padding: 8px 16px;
+  }

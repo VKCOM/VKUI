@@ -11,9 +11,6 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const cssTransformOptions = [
   {
-    loader: 'style-loader'
-  },
-  {
     loader: 'css-loader',
     options: {
       importLoaders: 1
@@ -34,9 +31,9 @@ const cssTransformOptions = [
   }
 ];
 
-const cssTransform = !isProduction ? cssTransformOptions : ExtractTextPlugin.extract({
+const cssTransform = ExtractTextPlugin.extract({
   fallback: 'style-loader',
-  use: cssTransformOptions.slice(1)
+  use: cssTransformOptions
 });
 
 const config = {

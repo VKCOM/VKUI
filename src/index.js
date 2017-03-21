@@ -4,10 +4,14 @@
 import View from './components/View/View';
 import ScrollView from './components/ScrollView/ScrollView';
 import Group from './components/Group/Group';
+import Entity from './components/Entity/Entity';
 import List from './components/List/List';
 import ListItem from './components/ListItem/ListItem';
 import FormLayout from './components/FormLayout/FormLayout';
 import Icon from './components/Icon/Icon';
+import Text from './components/Text/Text';
+import Div from './components/Div/Div';
+import Flex from './components/Flex/Flex';
 
 /**
  * Forms
@@ -24,22 +28,38 @@ import Slider from './components/Slider/Slider';
 /**
  * Behavior
  */
-import TappableWrapper from './components/TappableWrapper/TappableWrapper';
+import Tappable from './components/Tappable/Tappable';
 import Touch from './components/Touch/Touch';
 
 /**
  * Misc
  */
+import Alert from './components/Alert/Alert';
 import Spinner from './components/Spinner/Spinner';
+
+/**
+ * Utils
+ */
+import classnames from './lib/classnames';
+import keyframes from './lib/keyframes';
+import * as offset from './lib/offset';
+import * as platform from './lib/platform';
+import removeObjectKeys from './lib/removeObjectKeys';
+import getClassName from './helpers/getClassName';
+import wrapTextNode from './helpers/wrapTextNode';
 
 export default {
   View,
   ScrollView,
   Group,
+  Entity,
   List,
   ListItem,
   FormLayout,
   Icon,
+  Text,
+  Div,
+  Flex,
   Button,
   Checkbox,
   File,
@@ -48,7 +68,15 @@ export default {
   Radio,
   Select,
   Slider,
-  TappableWrapper,
+  Tappable,
   Touch,
-  Spinner
+  Alert,
+  Spinner,
+  classnames,
+  keyframes,
+  offset,
+  platform,
+  removeObjectKeys,
+  getClassName,
+  wrapTextNode
 };

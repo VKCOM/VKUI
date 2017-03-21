@@ -40,6 +40,7 @@
     width: 48px;
     height: 28px;
     border: 1px solid #E6E6E6;
+    background: #fff;
     border-radius: 15px;
     transition:
       background-color .1s ease,
