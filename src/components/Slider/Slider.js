@@ -28,6 +28,10 @@ export default class Slider extends Component {
     step: 0
   };
   onStart = (e) => {
+    if (!this.state.containerWidth) {
+      this.onResize();
+    }
+
     if (!e.originalEvent.target.closest('.Slider__thumb')) {
       const coords = this.calculate(e.startX - this.state.containerLeft);
 
