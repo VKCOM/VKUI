@@ -8,7 +8,7 @@
  * iOS version
  */
 .Alert--ios {
-  width: 270px;
+  min-width: 270px;
   flex: 0 0 auto;
   background: rgba(255, 255, 255, .5);
   border-radius: 13px;
@@ -139,7 +139,8 @@
  * Android version
  */
 .Alert--android {
-  width: 280px;
+  min-width: 280px;
+  margin: auto 24px;
   background: #fff;
   box-shadow: 0 0 24px rgba(0, 0, 0, .22), 0 24px 24px rgba(0, 0, 0, .3);
   border-radius: 2px;

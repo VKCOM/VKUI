@@ -3,7 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import classnames from '../../lib/classnames';
 import animate from '../../lib/animate';
 import getClassName from '../../helpers/getClassName';
+import { platform, ANDROID } from '../../lib/platform.js';
 
+const osname = platform();
 const baseClassNames = getClassName('View');
 
 export default class View extends Component {
@@ -45,11 +47,11 @@ export default class View extends Component {
           activePanel: null,
           animated: true
         });
-      }, 50);
+      }, 0);
     }
   }
   transitionEndHandler = (e) => {
-    if (e.propertyName === 'visibility') {
+    if (osname !== ANDROID || e.propertyName === 'visibility') {
       this.setState({
         visiblePanels: [this.props.activePanel],
         activePanel: this.props.activePanel,
