@@ -12,6 +12,7 @@ import Icon from './components/Icon/Icon';
 import Text from './components/Text/Text';
 import Div from './components/Div/Div';
 import Flex from './components/Flex/Flex';
+import BackButton from './components/BackButton/BackButton';
 
 /**
  * Forms
@@ -60,6 +61,7 @@ export default {
   Text,
   Div,
   Flex,
+  BackButton,
   Button,
   Checkbox,
   File,
