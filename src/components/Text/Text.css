@@ -22,7 +22,7 @@
   .Text a {
     text-decoration: none;
     color: var(--vk-color);
-    font-weight: bold;
+    font-weight: 500;
     }
 
 /**
