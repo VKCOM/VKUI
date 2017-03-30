@@ -9,8 +9,8 @@
   list-style: none;
   user-select: none;
   }
-.FormLayout::before,
-.FormLayout::after {
+.FormLayout--ios .FormLayout::before,
+.FormLayout--ios .FormLayout::after {
   position: absolute;
   right: 0;
   left: 0;
@@ -19,10 +19,10 @@
   background: var(--ios-thick-separator-color);
   content: '';
   }
-.FormLayout::before {
+.FormLayout--ios .FormLayout::before {
   bottom: 100%;
   }
-.FormLayout::after {
+.FormLayout--ios .FormLayout::after {
   top: 100%;
   }
 
@@ -45,7 +45,7 @@
       position: relative;
       width: 0px;
       }
-    .FormLayout__separator::before {
+    .FormLayout--ios .FormLayout__separator::before {
       position: absolute;
       bottom: 0;
       width: 100vw;
@@ -69,7 +69,7 @@
       max-width: 100px;
       vertical-align: top;
       }
-    .FormLayout__label::before {
+    .FormLayout--ios .FormLayout__label::before {
       position: absolute;
       bottom: 0;
       left: 15px;
@@ -120,10 +120,10 @@
         }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .FormLayout::before,
-  .FormLayout::after,
-  .FormLayout__separator::before,
-  .FormLayout__label::before {
+  .FormLayout--ios.FormLayout::before,
+  .FormLayout--ios.FormLayout::after,
+  .FormLayout--ios .FormLayout__separator::before,
+  .FormLayout--ios .FormLayout__label::before {
     background: var(--ios-top-border);
     }
   }
