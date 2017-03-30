@@ -45,15 +45,17 @@ export default class View extends Component {
           activePanel: null,
           animated: true
         });
-      }, 0);
+      }, 50);
     }
   }
-  transitionEndHandler = () => {
-    this.setState({
-      visiblePanels: [this.props.activePanel],
-      activePanel: this.props.activePanel,
-      animated: false
-    });
+  transitionEndHandler = (e) => {
+    if (e.propertyName === 'visibility') {
+      this.setState({
+        visiblePanels: [this.props.activePanel],
+        activePanel: this.props.activePanel,
+        animated: false
+      });
+    }
   }
   onHeaderClick = () => {
     const { activePanel } = this.state;
