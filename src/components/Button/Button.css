@@ -34,7 +34,7 @@
   }
 
 .Button--android {
-  font: 16px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  font: 16px/22px Roboto, Droid, 'Open Sans', sans-serif;
   padding: 16px 16px 18px;
   }
 
