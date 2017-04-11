@@ -47,7 +47,7 @@ export default class View extends Component {
           activePanel: null,
           animated: true
         });
-      }, 0);
+      }, 100);
     }
   }
   transitionEndHandler = (e) => {

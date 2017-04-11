@@ -4,6 +4,7 @@
   position: relative;
   height: 64px;
   padding: 0 0 0 75px;
+  text-align: left;
   }
 .Entity--small {
   height: 48px;

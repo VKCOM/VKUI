@@ -8,7 +8,7 @@
  * iOS version
  */
 .Alert--ios {
-  min-width: 270px;
+  width: 270px;
   flex: 0 0 auto;
   background: rgba(255, 255, 255, .5);
   border-radius: 13px;
