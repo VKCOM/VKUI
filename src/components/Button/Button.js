@@ -24,7 +24,7 @@ export default class Button extends Component {
     children: ''
   };
   render () {
-    const { style, children, alignment, appearance, type, wide } = this.props;
+    const { style, children, alignment, appearance, type, wide, className } = this.props;
     const modifiers = {
       'Button--left': alignment === 'left',
       'Button--center': alignment === 'center',
@@ -38,12 +38,12 @@ export default class Button extends Component {
       'Button--vk-tertiary': appearance === 'vk-tertiary',
       'Button--wide': wide
     };
-    const nativeProps = removeObjectKeys(this.props, ['alignment', 'appearance', 'wide']);
+    const nativeProps = removeObjectKeys(this.props, ['alignment', 'appearance', 'wide', 'className']);
 
     return (
       <Tappable
         component="button"
-        className={classnames(baseClassNames, modifiers)}
+        className={classnames(baseClassNames, className, modifiers)}
         style={style}
         {...nativeProps}
       >
