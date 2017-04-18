@@ -5,3 +5,4 @@ build
 .env
 npm-debug.log
 stats.json
+.idea
