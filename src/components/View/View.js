@@ -1,5 +1,6 @@
 import './View.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import animate from '../../lib/animate';
 import getClassName from '../../helpers/getClassName';

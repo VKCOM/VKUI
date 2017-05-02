@@ -1,5 +1,6 @@
 import './Div.css';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { platform, ANDROID, IOS } from '../../lib/platform.js';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
@@ -18,7 +19,7 @@ export default function Div (props) {
     <div
       className={classnames(baseClassNames, modifiers, props.className)}
       style={props.style}
-      {...removeObjectKeys(props, ['className', 'style'])}
+      {...removeObjectKeys(props, ['className', 'style', 'iosBorder', 'androidShadow'])}
     >
       {props.children}
     </div>

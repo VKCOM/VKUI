@@ -1,5 +1,6 @@
 import './Slider.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';

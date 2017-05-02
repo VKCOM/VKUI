@@ -1,5 +1,6 @@
 import './Spinner.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import { platform, ANDROID, IOS } from '../../lib/platform.js';
 import classnames from '../../lib/classnames.js';

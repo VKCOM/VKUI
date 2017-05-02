@@ -20,7 +20,9 @@
     "webpack-merge": "^4.0.0",
     "webpack-stats-plugin": "^0.1.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "prop-types": "^15.5.8"
+  },
   "peerDependencies": {
     "react": "^15.4.2"
   },
