@@ -13,7 +13,8 @@ export default class Button extends Component {
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
     appearance: PropTypes.oneOf(['primary', 'default', 'danger', 'vk-rich', 'vk-primary', 'vk-secondary', 'vk-tertiary']),
     wide: PropTypes.bool,
-    children: PropTypes.node
+    children: PropTypes.node,
+    className: PropTypes.string
   };
   static defaultProps = {
     style: {},
@@ -24,7 +25,7 @@ export default class Button extends Component {
     children: ''
   };
   render () {
-    const { style, children, alignment, appearance, type, wide, className } = this.props;
+    const { style, children, alignment, appearance, wide, className } = this.props;
     const modifiers = {
       'Button--left': alignment === 'left',
       'Button--center': alignment === 'center',

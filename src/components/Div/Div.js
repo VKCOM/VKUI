@@ -1,5 +1,5 @@
 import './Div.css';
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { platform, ANDROID, IOS } from '../../lib/platform.js';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
@@ -27,5 +27,8 @@ export default function Div (props) {
 
 Div.propTypes = {
   style: PropTypes.object,
-  children: PropTypes.node
+  children: PropTypes.node,
+  androidShadow: PropTypes.bool,
+  iosBorder: PropTypes.bool,
+  className: PropTypes.string
 };

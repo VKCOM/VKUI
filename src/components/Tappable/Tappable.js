@@ -110,7 +110,7 @@ export default class Tappable extends Component {
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY - now + this.state.ts)
+        const timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY - now + this.state.ts);
         const store = this.getStorage();
 
         if (store) {
@@ -231,7 +231,7 @@ export default class Tappable extends Component {
     return;
   };
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     if (storage[this.id]) {
       clearTimeout(storage[this.id].timeout);
       clearTimeout(storage[this.id].activeTimeout);

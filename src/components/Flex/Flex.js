@@ -1,5 +1,5 @@
 import './Flex.css';
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
@@ -26,5 +26,6 @@ export default function Flex (props) {
 
 Flex.propTypes = {
   style: PropTypes.object,
-  children: PropTypes.node
+  children: PropTypes.node,
+  className: PropTypes.string
 };

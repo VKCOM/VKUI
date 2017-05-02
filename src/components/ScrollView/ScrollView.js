@@ -125,7 +125,7 @@ export default class ScrollView extends Component {
     return;
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate (nextProps) {
     if (nextProps.activePanel !== nextProps.id) {
       return false;
     }
