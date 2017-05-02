@@ -37,6 +37,7 @@ import Touch from './components/Touch/Touch';
  */
 import Alert from './components/Alert/Alert';
 import Spinner from './components/Spinner/Spinner';
+import ScreenSpinner from './components/ScreenSpinner/ScreenSpinner';
 
 /**
  * Utils
@@ -74,6 +75,7 @@ export default {
   Touch,
   Alert,
   Spinner,
+  ScreenSpinner,
   classnames,
   keyframes,
   offset,
