@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
+const CssoWebpackPlugin = require('csso-webpack-plugin').default
 const assets = require('postcss-assets');
 const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
@@ -85,12 +86,30 @@ const prodConfig = {
     publicPath: '/assets/'
   },
   plugins: [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        warnings: false
-      }
-    })
+        screw_ie8: true,
+        warnings: false,
+        sequences: true,
+        booleans: true,
+        loops: true,
+        unused: true,
+        warnings: false,
+        drop_console: true,
+        unsafe: true
+      },
+      mangle: {
+        screw_ie8: true,
+        keep_fnames: true
+      },
+      comments: false
+    }),
+    new CssoWebpackPlugin()
   ]
 };
 
