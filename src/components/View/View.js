@@ -53,6 +53,8 @@ export default class View extends Component {
   transitionEndHandler = (e) => {
     if (osname !== ANDROID || e.propertyName === 'visibility') {
       this.setState({
+        prevPanel: null,
+        nextPanel: null,
         visiblePanels: [this.props.activePanel],
         activePanel: this.props.activePanel,
         animated: false
