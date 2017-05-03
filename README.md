@@ -17,7 +17,7 @@ Add styles from `./node_modules/vkui/dist/vkui.css`.
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import UI from 'vkui';
+import * as UI from 'vkui';
 
 function App () {
   return (

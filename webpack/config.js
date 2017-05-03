@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
-const CssoWebpackPlugin = require('csso-webpack-plugin').default
+const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const assets = require('postcss-assets');
 const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
@@ -46,13 +46,30 @@ const config = {
     filename: '[name].js',
     libraryTarget: 'umd'
   },
-  target: 'node',
   module: {
     rules: [
       {
         test: /\.js?$/,
         exclude: /node_modules\/(?!vkui)(.+)/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            [
+              'es2015',
+              { modules: false },
+            ],
+            'react'
+          ],
+          plugins: ['transform-class-properties'],
+          env: {
+            production: {
+              plugins: [
+                'transform-react-remove-prop-types',
+                'transform-class-properties'
+              ]
+            }
+          }
+        }
       },
       {
         test: /\.css$/,
@@ -61,7 +78,6 @@ const config = {
     ]
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin('[name].css')
   ],
   externals: {
@@ -86,7 +102,6 @@ const prodConfig = {
     publicPath: '/assets/'
   },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
@@ -99,7 +114,6 @@ const prodConfig = {
         booleans: true,
         loops: true,
         unused: true,
-        warnings: false,
         drop_console: true,
         unsafe: true
       },
