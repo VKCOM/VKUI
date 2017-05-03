@@ -1,5 +1,6 @@
 import './BackButton.css';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import { platform, ANDROID } from '../../lib/platform';
 
@@ -7,7 +8,10 @@ const osname = platform();
 const baseClassNames = getClassName('BackButton');
 
 export default class BackButton extends Component {
-  render() {
+  static propTypes = {
+    onClick: PropTypes.func.isRequired
+  };
+  render () {
     const isAndroid = osname === ANDROID;
     const width = isAndroid ? 16 : 13;
     const height = isAndroid ? 16 : 21;

@@ -1,5 +1,6 @@
 import './FormLayout.css';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('FormLayout');

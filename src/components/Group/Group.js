@@ -1,5 +1,6 @@
 import './Group.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('Group');

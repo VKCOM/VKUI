@@ -1,5 +1,6 @@
 import './Alert.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';

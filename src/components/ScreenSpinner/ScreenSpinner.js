@@ -1,6 +1,7 @@
 import './ScreenSpinner.css';
 
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Spinner from '../Spinner/Spinner';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
@@ -8,7 +9,7 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 
 const baseClassNames = getClassName('ScreenSpinner');
 
-export default function ScreenSpinner(props) {
+export default function ScreenSpinner (props) {
   return (
     <div
       className={classnames(baseClassNames, props.className)}
@@ -18,3 +19,7 @@ export default function ScreenSpinner(props) {
     </div>
   );
 }
+
+ScreenSpinner.propTypes = {
+  className: PropTypes.string
+};

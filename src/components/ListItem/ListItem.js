@@ -1,6 +1,7 @@
 import './ListItem.css';
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';

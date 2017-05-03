@@ -1,5 +1,6 @@
 import './ScrollView.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import Spinner from '../Spinner/Spinner';
@@ -125,7 +126,7 @@ export default class ScrollView extends Component {
     return;
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate (nextProps) {
     if (nextProps.activePanel !== nextProps.id) {
       return false;
     }

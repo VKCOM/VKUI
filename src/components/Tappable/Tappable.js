@@ -1,5 +1,6 @@
 import './Tappable.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
@@ -110,7 +111,7 @@ export default class Tappable extends Component {
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY - now + this.state.ts)
+        const timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY - now + this.state.ts);
         const store = this.getStorage();
 
         if (store) {
@@ -231,7 +232,7 @@ export default class Tappable extends Component {
     return;
   };
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     if (storage[this.id]) {
       clearTimeout(storage[this.id].timeout);
       clearTimeout(storage[this.id].activeTimeout);

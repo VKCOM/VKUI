@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .Button {
   box-sizing: border-box;
   position: relative;

@@ -1,5 +1,6 @@
 import './Text.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 
