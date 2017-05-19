@@ -114,9 +114,21 @@
         background: linear-gradient(to top, transparent 50%, #d6d6d6 50%);
         content: '';
         }
-      .FormLayout--android input:focus + .FormLayout__underline,
-      .FormLayout--android textarea:focus + .FormLayout__underline {
+      .FormLayout--android .FormLayout__underline::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         background: #518bcc;
+        content: '';
+        transform: scaleX(0);
+        transition: transform .1s var(--android-easing);
+        }
+      .FormLayout--android input:focus + .FormLayout__underline::before,
+      .FormLayout--android textarea:focus + .FormLayout__underline::before {
+        transform: scaleX(1);
+        transition: transform .14s var(--android-easing);
         }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
