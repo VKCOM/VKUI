@@ -20,7 +20,9 @@
   /**
    * Header
    */
-  .View__header {}
+  .View__header {
+    white-space: nowrap;
+    }
 
     .View__header-in {
       position: fixed;
@@ -47,7 +49,9 @@
 
         .View__header-left,
         .View__header-right {
-          flex: 0 0 auto;
+          flex: 0 1 22%;
+          overflow: hidden;
+          text-overflow: ellipsis;
           font-size: 17px;
           line-height: 20px;
           }
@@ -56,7 +60,9 @@
           }
 
         .View__header-title {
-          flex: 1 0 auto;
+          flex: 1 1 56%;
+          overflow: hidden;
+          text-overflow: ellipsis;
           margin: 0;
           padding: 0 6px;
           }
@@ -145,9 +151,13 @@
         padding: 0 6px;
         }
 
+        .View--ios .View__header-title {
+          flex-basis: 56%;
+          }
+
         .View--ios .View__header-left,
         .View--ios .View__header-right {
-          flex: 1 0 10%;
+          width: 22%;
           padding: 0 2px;
           }
 
@@ -293,11 +303,26 @@
         .View--android .View__header-left,
         .View--android .View__header-right {
           padding: 1px 6px 0;
-          color: #898A8C;
           font-size: 14px;
           line-height: 16px;
           font-weight: 500;
           text-transform: uppercase;
+          color: #fff;
+          color: rgba(255, 255, 255, .7);
+          }
+        .View--android .View__header-left:active,
+        .View--android .View__header-right:active {
+          color: #fff;
+          color: rgba(255, 255, 255, .9);
+          }
+
+        .View--android .View__header-left {
+          flex: 0 0 auto;
+          max-width: 22%;
+          }
+
+        .View--android .View__header-left:empty {
+          display: none;
           }
 
       /**
