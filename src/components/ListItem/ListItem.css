@@ -91,9 +91,6 @@
       background: var(--ios-thick-separator-color);
       content: '';
       }
-    .ListItem--ios:last-child .ListItem__icon::before {
-      content: none;
-      }
 
     @media
       (-webkit-min-device-pixel-ratio: 2),
@@ -144,4 +141,4 @@
     .ListItem--android .ListItem__indicator,
     .ListItem--android .ListItem__aside {
       padding: 16px 0 17px;
-    }
+      }
