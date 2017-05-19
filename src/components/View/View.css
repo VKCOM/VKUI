@@ -292,6 +292,7 @@
 
     .View--android .View__header-in {
       height: 80px;
+      box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
       }
 
       .View--android .View__header-item {
