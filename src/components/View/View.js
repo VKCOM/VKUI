@@ -117,19 +117,15 @@ export default class View extends Component {
                   })}
                   key={panel.key || panel.props.id || `panel-header-${i}`}
                 >
-                  {panel.props.header.left && (
-                    <div className="View__header-left">
-                      {panel.props.header.left}
-                    </div>
-                  )}
+                  <div className="View__header-left">
+                    {panel.props.header.left}
+                  </div>
                   <div className="View__header-title">
                     {panel.props.header.title}
                   </div>
-                  {panel.props.header.right && (
-                    <div className="View__header-right">
-                      {panel.props.header.right}
-                    </div>
-                  )}
+                  <div className="View__header-right">
+                    {panel.props.header.right}
+                  </div>
                 </div>
               ))}
             </div>
