@@ -75,6 +75,7 @@ export default class Tappable extends Component {
     }
 
     storage[this.id] = {};
+    this.getStorage().stop = this.stop;
     this.getStorage().activeTimeout = setTimeout(this.start, ACTIVE_DELAY);
   }
 
