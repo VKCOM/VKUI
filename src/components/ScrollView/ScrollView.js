@@ -21,6 +21,9 @@ export default class ScrollView extends Component {
   }
 
   static propTypes = {
+    activePanel: PropTypes.string,
+    prevPanel: PropTypes.string,
+    nextPanel: PropTypes.string,
     onPull: PropTypes.func,
     children: PropTypes.node,
     className: PropTypes.string
@@ -126,12 +129,8 @@ export default class ScrollView extends Component {
     return;
   }
 
-  shouldComponentUpdate (nextProps) {
-    if (nextProps.activePanel !== nextProps.id) {
-      return false;
-    }
-
-    return true;
+  shouldComponentUpdate ({ id, activePanel, prevPanel, nextPanel }) {
+    return id === activePanel || id === prevPanel || id === nextPanel;
   }
 
   render () {
@@ -151,7 +150,7 @@ export default class ScrollView extends Component {
     return (
       <Component
         className={classnames(baseClassNames, className)}
-        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel'])}
+        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel'])}
         {...extProps}
         ref={this.getRef}
       >
