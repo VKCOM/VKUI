@@ -2,14 +2,16 @@ import './FormLayout.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
+import removeObjectKeys from '../../lib/removeObjectKeys';
 
 const baseClassNames = getClassName('FormLayout');
 
 export default function FormLayout (props) {
   const children = Array.isArray(props.children) ? props.children : [props.children];
+  const TagName = props.tagName || 'form';
 
   return (
-    <div className={baseClassNames} style={props.style}>
+    <TagName className={baseClassNames} {...removeObjectKeys(props, ['tagName'])}>
       {children.map((field, i) => (
         <label className="FormLayout__row" key={field.key || `row-${i}`}>
           <div className="FormLayout__separator" />
@@ -24,11 +26,12 @@ export default function FormLayout (props) {
           </div>
         </label>
       ))}
-    </div>
+    </TagName>
   );
 }
 
 FormLayout.propTypes = {
   children: PropTypes.node,
-  style: PropTypes.object
+  style: PropTypes.object,
+  tagName: PropTypes.string
 };
