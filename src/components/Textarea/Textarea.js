@@ -23,14 +23,17 @@ export default class Textarea extends Component {
   };
   onChange = (e) => {
     this.setState({ value: e.target.value });
+    if (this.props.onChange) {
+      this.props.onChange(e);
+    }
   }
   render () {
     return (
       <textarea
         className={baseClassNames}
-        onChange={this.onChange}
-        value={this.state.value}
         {...removeObjectKeys(this.props, ['initialValue'])}
+        value={this.state.value}
+        onChange={this.onChange}
       />
     );
   }
