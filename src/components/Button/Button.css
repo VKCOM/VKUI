@@ -72,6 +72,9 @@
 .Button--ios.Button--danger {
   color: #ff3f34;
   }
+.Button--android.Button--primary {
+  color: #518bcc;
+  }
 .Button--android.Button--danger {
   color: #e64646;
   }
