@@ -34,6 +34,8 @@ export default class Button extends Component {
       'Button--primary': appearance === 'primary',
       'Button--default': appearance === 'default',
       'Button--danger': appearance === 'danger',
+      'Button--vk-wide': appearance === 'vk-wide',
+      'Button--vk-wide-primary': appearance === 'vk-wide-primary',
       'Button--vk-rich': appearance === 'vk-rich',
       'Button--vk-primary': appearance === 'vk-primary',
       'Button--vk-secondary': appearance === 'vk-secondary',
