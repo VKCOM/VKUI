@@ -1,0 +1,37 @@
+.AlertInput {
+  position: relative;
+  z-index: 1;
+  }
+.AlertInput--android {
+  margin: 3px -15px 9px;
+  }
+.AlertInput--ios {
+  margin: 11px 0 12px;
+  }
+.AlertInput--ios::before {
+  position: absolute;
+  z-index: -1;
+  background: #9f9f9f;
+  width: 100%;
+  height: 100%;
+  padding: 1px 1px 0 0;
+  transform: translate3d(-.5px, -.5px, 0);
+  content: '';
+  }
+
+  /* iOS only */
+  .AlertInput__self {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    background: #fff;
+    z-index: 1;
+    border: 0;
+    height: 24px;
+    font-size: 13px;
+    line-height: 24px;
+    padding: 0 5px;
+    }
+  .AlertInput__self:focus {
+    outline: 0;
+    }

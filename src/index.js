@@ -36,6 +36,7 @@ export { default as Touch } from './components/Touch/Touch';
  * Misc
  */
 export { default as Alert } from './components/Alert/Alert';
+export { default as AlertInput } from './components/AlertInput/AlertInput';
 export { default as Spinner } from './components/Spinner/Spinner';
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 

@@ -167,12 +167,11 @@
       line-height: 28px;
       color: #2E3033;
       }
-
     .Alert--android .Alert__content p {
-      margin: 0 0 24px;
-      }
-    .Alert--android .Alert__content p:last-child {
       margin: 0;
+      }
+    .Alert--android .Alert__content p + p {
+      margin: 24px 0 0;
       }
 
   /**
