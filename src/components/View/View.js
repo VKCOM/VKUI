@@ -143,7 +143,7 @@ export default class View extends Component {
               onTransitionEnd={this.transitionEndHandler}
               key={panel.key || panel.props.id || `panel-${i}`}
             >
-              {React.cloneElement(panel, { ref: this.getRef, activePanel })}
+              {React.cloneElement(panel, { ref: this.getRef, activePanel, prevPanel, nextPanel })}
             </div>
           ))}
         </div>

@@ -72,6 +72,40 @@
 .Button--ios.Button--danger {
   color: #ff3f34;
   }
+.Button--android.Button--primary {
+  color: #518bcc;
+  }
+.Button--android.Button--danger {
+  color: #e64646;
+  }
+
+/**
+ * Wide vk button
+ */
+.Button--vk-wide-primary,
+.Button--vk-wide {
+  box-shadow: 0 0 2px rgba(0, 0, 0, .03), 0 2px 2px rgba(0, 0, 0, .06);
+  background: #fff;
+  font-weight: 500;
+  }
+.Button--vk-wide-primary {
+  background: #5181b8;
+  color: #fff;
+  }
+.Button--vk-wide-primary:active:not([disabled]),
+.Button--vk-wide-primary.Tappable--active:not([disabled]) {
+  background: #4872a3;
+  }
+.Button--vk-wide-primary::before,
+.Button--vk-wide-primary::after,
+.Button--vk-wide-primary.Tappable--active::before,
+.Button--vk-wide-primary.Tappable--active::after {
+  content: none;
+  }
+.Button--vk-wide-primary[disabled] {
+  color: #fff;
+  background: rgba(81, 129, 184, .4);
+  }
 
 /**
  * Rich vk button

@@ -12,7 +12,7 @@ export default class Button extends Component {
   static propTypes = {
     style: PropTypes.object,
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
-    appearance: PropTypes.oneOf(['primary', 'default', 'danger', 'vk-rich', 'vk-primary', 'vk-secondary', 'vk-tertiary']),
+    appearance: PropTypes.oneOf(['primary', 'default', 'danger', 'vk-wide-primary', 'vk-wide', 'vk-rich', 'vk-primary', 'vk-secondary', 'vk-tertiary']),
     wide: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string
@@ -34,6 +34,8 @@ export default class Button extends Component {
       'Button--primary': appearance === 'primary',
       'Button--default': appearance === 'default',
       'Button--danger': appearance === 'danger',
+      'Button--vk-wide': appearance === 'vk-wide',
+      'Button--vk-wide-primary': appearance === 'vk-wide-primary',
       'Button--vk-rich': appearance === 'vk-rich',
       'Button--vk-primary': appearance === 'vk-primary',
       'Button--vk-secondary': appearance === 'vk-secondary',

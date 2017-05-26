@@ -36,6 +36,7 @@ export { default as Touch } from './components/Touch/Touch';
  * Misc
  */
 export { default as Alert } from './components/Alert/Alert';
+export { default as AlertInput } from './components/AlertInput/AlertInput';
 export { default as Spinner } from './components/Spinner/Spinner';
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 
@@ -49,3 +50,5 @@ export { platform, ANDROID, IOS } from './lib/platform';
 export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { default as getClassName } from './helpers/getClassName';
 export { default as wrapTextNode } from './helpers/wrapTextNode';
+
+export const v = require('../package.json').version;

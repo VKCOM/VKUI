@@ -10,8 +10,8 @@
 .Alert--ios {
   width: 270px;
   flex: 0 0 auto;
-  background: rgba(255, 255, 255, .5);
-  border-radius: 13px;
+  background: #fafafa;
+  border-radius: 12px;
   animation: animation-ios-alert-intro .2s ease;
   }
 
@@ -21,10 +21,17 @@
   .Alert--ios .Alert__content {
     position: relative;
     padding: 19px 16px 20px;
-    border-radius: 13px 13px 0 0;
-    background: rgba(255, 255, 255, .75);
     font: 13px/16px -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
     text-align: center;
+    }
+  .Alert--ios .Alert__content::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    height: 1px;
+    right: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .12);
     }
 
     .Alert--ios .Alert__content h2 {
@@ -54,7 +61,8 @@
      */
     .Alert--ios .Alert__btn {
       position: relative;
-      background: rgba(255, 255, 255, .75);
+      /* background: rgba(255, 255, 255, .75); */
+      background: #fafafa;
       flex: 1 0 auto;
       font-size: 17px;
       line-height: 44px;
@@ -65,6 +73,16 @@
       height: 44px;
       display: block;
       outline: none;
+      }
+    .Alert--ios .Alert__btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 100%;
+      width: 1px;
+      height: auto;
+      background: rgba(0, 0, 0, .12);
       }
     .Alert--ios .Alert__btn.Tappable--active::before,
     .Alert--ios .Alert__btn.Tappable--active::after {
@@ -78,47 +96,34 @@
       margin-right: 1px;
       }
     .Alert--ios.Alert--h .Alert__btn:first-child {
-      border-radius: 0 0 0 13px;
+      border-radius: 0 0 0 12px;
       }
     .Alert--ios.Alert--h .Alert__btn:last-child {
-      border-radius: 0 0 13px 0;
+      border-radius: 0 0 12px 0;
       margin: 0;
       }
     .Alert--ios.Alert--h .Alert__btn:first-child:last-child {
-      border-radius: 0 0 13px 13px;
+      border-radius: 0 0 12px 12px;
       }
 
     .Alert--ios.Alert--v .Alert__btn {
       margin: 0 0 1px;
       }
     .Alert--ios.Alert--v .Alert__btn:last-child {
-      border-radius: 0 0 13px 13px;
+      border-radius: 0 0 12px 12px;
       margin: 0;
       }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .Alert--ios .Alert__content::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    height: 1px;
-    right: 0;
-    left: 0;
-    background: linear-gradient(to top, transparent 50%, rgba(255, 255, 255, .75) 50%);
+    background: linear-gradient(to top, rgba(0, 0, 0, .12) 50%, #fafafa 50%);
     }
 
     .Alert--ios.Alert--h .Alert__btn::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 100%;
-      width: 1px;
-      height: auto;
-      background: linear-gradient(to left, transparent 50%, rgba(255, 255, 255, .75) 50%);
+      background: linear-gradient(to left, rgba(0, 0, 0, .12) 50%, #fafafa 50%);
       }
     .Alert--ios.Alert--h .Alert__btn.Tappable--active::after {
-      background: linear-gradient(to left, transparent 50%, var(--ios-active-color) 50%);
+      background: linear-gradient(to left, rgba(0, 0, 0, .12) 50%, var(--ios-active-color) 50%);
       }
     .Alert--ios.Alert--h .Alert__btn:last-child::after {
       content: none;
@@ -130,7 +135,7 @@
       right: 0;
       left: 0;
       height: 1px;
-      background: linear-gradient(to top, transparent 50%, rgba(255, 255, 255, .75) 50%);
+      background: linear-gradient(to top, rgba(0, 0, 0, .12) 50%, #fafafa 50%);
       content: '';
       }
     .Alert--ios.Alert--v .Alert__btn:last-child::after {
@@ -167,12 +172,11 @@
       line-height: 28px;
       color: #2E3033;
       }
-
     .Alert--android .Alert__content p {
-      margin: 0 0 24px;
-      }
-    .Alert--android .Alert__content p:last-child {
       margin: 0;
+      }
+    .Alert--android .Alert__content p + p {
+      margin: 24px 0 0;
       }
 
   /**

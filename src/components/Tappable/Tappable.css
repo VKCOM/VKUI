@@ -5,7 +5,7 @@
 /**
  * iOS tappable
  */
-.Tappable--ios.Tappable--active:not([disabled]):not(.Button--vk-primary):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich) {
+.Tappable--ios.Tappable--active:not([disabled]):not(.Button--vk-primary):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich):not(.Button--vk-wide-primary) {
   background: var(--ios-active-color) !important;
   }
 
@@ -42,7 +42,7 @@
   position: relative;
   transition: background-color .15s ease-out;
   }
-.Tappable--android.Tappable--active:not([disabled]):not(.Button--vk-primary):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich):not(.Alert__btn--primary) {
+.Tappable--android.Tappable--active:not([disabled]):not(.Button--vk-primary):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich):not(.Alert__btn--primary):not(.Button--vk-wide-primary) {
   background: var(--android-active-color) !important;
   }
 
