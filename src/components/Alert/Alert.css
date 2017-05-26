@@ -61,7 +61,6 @@
      */
     .Alert--ios .Alert__btn {
       position: relative;
-      /* background: rgba(255, 255, 255, .75); */
       background: #fafafa;
       flex: 1 0 auto;
       font-size: 17px;
@@ -166,7 +165,7 @@
     }
 
     .Alert--android .Alert__content h2 {
-      margin: 0 0 12px;
+      margin: 0 0 8px;
       font-weight: 500;
       font-size: 20px;
       line-height: 28px;
@@ -198,7 +197,7 @@
       font-weight: 500;
       font-size: 14px;
       line-height: 16px;
-      padding: 8px 16px;
+      padding: 8px;
       border-radius: 2px;
       margin-left: 12px;
       color: #5181B8;
