@@ -10,9 +10,14 @@ const baseClassNames = getClassName('Input');
 export default class Input extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      value: props.initialValue || ''
-    };
+
+    if (typeof props.value !== 'undefined') {
+      this.isControlledOutside = true;
+    } else {
+      this.state = {
+        value: props.initialValue || ''
+      };
+    }
   }
   static propTypes = {
     type: PropTypes.oneOf([
@@ -30,13 +35,15 @@ export default class Input extends Component {
     alignment: 'left'
   };
   onChange = (e) => {
-    this.setState({ value: e.target.value });
+    if (!this.isControlledOutside) {
+      this.setState({ value: e.target.value });
+    }
     if (this.props.onChange) {
       this.props.onChange(e);
     }
   }
   render () {
-    const { alignment } = this.props;
+    const { alignment, value } = this.props;
     const modifiers = {
       'Input--left': alignment === 'left',
       'Input--center': alignment === 'center',
@@ -47,7 +54,7 @@ export default class Input extends Component {
       <input
         className={classnames(baseClassNames, modifiers)}
         {...removeObjectKeys(this.props, ['onChange', 'initialValue', 'alignment'])}
-        value={this.state.value}
+        value={this.isControlledOutside ? value : this.state.value}
         onChange={this.onChange}
       />
     );
