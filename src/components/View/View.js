@@ -34,6 +34,9 @@ export default class View extends Component {
   refsStore = {};
   componentWillReceiveProps (nextProps) {
     if (this.state.activePanel !== nextProps.activePanel) {
+      if (typeof window !== 'undefined' && document.activeElement) {
+        document.activeElement.blur();
+      }
       this.setState({
         visiblePanels: [this.state.activePanel, nextProps.activePanel]
       });
