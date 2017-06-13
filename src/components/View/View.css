@@ -287,17 +287,17 @@
    * Header
    */
   .View--android .View__header {
-    height: 80px;
+    height: 64px;
     }
 
     .View--android .View__header-in {
-      height: 80px;
+      height: 64px;
       box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
       }
 
       .View--android .View__header-item {
-        top: 24px;
-        height: 56px;
+        top: 0;
+        height: 64px;
         padding: 0 10px;
         }
 
@@ -372,7 +372,7 @@
    */
   .View--android .View__panels {}
   .View--android.View--header .View__panels {
-    top: 80px;
+    top: 64px;
     }
 
     .View--android .View__panel {
