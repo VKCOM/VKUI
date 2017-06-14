@@ -180,7 +180,7 @@ export default class View extends Component {
               key={panel.key || panel.props.id || `panel-${i}`}
             >
               <div className="View__panel-in">
-                {React.cloneElement(panel, { ref: this.getRef, activePanel, prevPanel, nextPanel })}
+                {React.cloneElement(panel, { ref: this.getRef, activePanel, nextPanel })}
               </div>
             </div>
           ))}
