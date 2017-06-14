@@ -10,11 +10,9 @@ const osname = platform();
 const baseClassNames = getClassName('View');
 
 // @TODO
-// 1. Headers
-//   1.1. Is clickable?
-// 2. Android
-// 3. Pull to refresh
-// 4. Infinite scroll
+// 1. Android
+// 2. Pull to refresh
+// 3. Infinite scroll
 
 export default class View extends Component {
   constructor (props) {
@@ -53,8 +51,6 @@ export default class View extends Component {
         visiblePanels: [this.state.activePanel, nextProps.activePanel],
         pageYOffset
       });
-
-      console.log(this.state.activePanel, nextProps.activePanel);
     }
   }
   componentDidUpdate () {
@@ -66,8 +62,6 @@ export default class View extends Component {
           activePanel: null,
           animated: true
         });
-
-        console.log(this.state.pageYOffset, document.querySelector(`#${this.state.visiblePanels[0]}`));
 
         // Delegate scrollTop from window
         // @TODO Переделать по-нормальному
