@@ -283,8 +283,11 @@
   .View--ios.View--header .View__panels {}
 
     .View--ios .View__panel {
-      padding-top: 64px;
       background: #efeff4;
+      }
+
+    .View--ios.View--header .View__panel {
+      padding-top: 64px;
       }
 
       .View--ios .View__panel-in {
@@ -453,8 +456,10 @@
   .View--android.View--header .View__panels {}
 
     .View--android .View__panel {
-      padding-top: 64px;
       background: #fff;
+      }
+    .View--android.View--header .View__panel {
+      padding-top: 64px;
       }
 
       .View--android .View__panel-in {
