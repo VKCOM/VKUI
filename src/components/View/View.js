@@ -11,6 +11,7 @@ const baseClassNames = getClassName('View');
 
 // @TODO
 // 1. Headers
+//   1.1. Is clickable?
 // 2. Android
 // 3. Pull to refresh
 // 4. Infinite scroll
@@ -152,7 +153,8 @@ export default class View extends Component {
                   key={panel.key || panel.props.id || `panel-header-${i}`}
                 >
                   <div className="View__header-left">
-                    {panel.props.header.left}
+                    <div className="View__header-icon">{panel.props.header.icon}</div>
+                    <div className="View__header-left-in">{panel.props.header.left}</div>
                   </div>
                   <div className="View__header-title">
                     {panel.props.header.title}

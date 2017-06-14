@@ -60,6 +60,18 @@
           font-size: 17px;
           line-height: 20px;
           }
+        .View__header-left {
+          display: flex;
+          align-items: center;
+          }
+          .View__header-icon {
+            flex: 0 0 auto;
+            }
+          .View__header-left-in {
+            flex: 0 1 auto;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            }
         .View__header-right {
           text-align: right;
           }
@@ -189,25 +201,7 @@
         left: 0;
         overflow: hidden;
         visibility: visible;
-        transition:
-          transform 6s cubic-bezier(.36, .66, .04, 1),
-          visibility 6s cubic-bezier(.36, .66, .04, 1),
-          opacity 6s cubic-bezier(.36, .66, .04, 1);
-        }
-      .View--ios .View__header-item--prev {
-        opacity: 0;
-        }
-      .View--ios .View__header-item--next {
-        opacity: 1;
-        }
-      .View--ios .View__header-item {
-        transform: translate3d(-50%, 0, 0);
-        }
-      .View--ios .View__header-item--next {
-        transform: translate3d(0, 0, 0);
-        }
-      .View--ios .View__header-item--next ~ .View__header-item {
-        transform: translate3d(50%, 0, 0);
+        transition: visibility .6s cubic-bezier(.36, .66, .04, 1);
         }
 
         .View--ios .View__header-title {
@@ -215,17 +209,89 @@
           text-align: center;
           }
 
+        .View--ios .View__header-title,
+        .View--ios .View__header-title,
+        .View--ios .View__header-icon,
+        .View--ios .View__header-icon,
+        .View--ios .View__header-left-in,
+        .View--ios .View__header-left-in,
+        .View--ios .View__header-right,
+        .View--ios .View__header-right {
+          opacity: 0;
+          }
+        .View--ios .View__header-item--prev .View__header-title,
+        .View--ios .View__header-item--next .View__header-title,
+        .View--ios .View__header-item--prev .View__header-icon,
+        .View--ios .View__header-item--next .View__header-icon,
+        .View--ios .View__header-item--prev .View__header-left-in,
+        .View--ios .View__header-item--next .View__header-left-in,
+        .View--ios .View__header-item--prev .View__header-right,
+        .View--ios .View__header-item--next .View__header-right {
+          transition:
+            transform .6s cubic-bezier(.36, .66, .04, 1),
+            visibility .6s cubic-bezier(.36, .66, .04, 1),
+            opacity .6s cubic-bezier(.36, .66, .04, 1);
+          }
+        .View--ios .View__header-item--prev .View__header-title,
+        .View--ios .View__header-item--prev .View__header-icon,
+        .View--ios .View__header-item--prev .View__header-left-in,
+        .View--ios .View__header-item--prev .View__header-right {
+          opacity: 0;
+          }
+        .View--ios .View__header-item--next .View__header-title,
+        .View--ios .View__header-item--next .View__header-icon,
+        .View--ios .View__header-item--next .View__header-left-in,
+        .View--ios .View__header-item--next .View__header-right {
+          opacity: 1;
+          }
+
+        .View--ios .View__header-item .View__header-left-in {
+          transform: translate3d(-50%, 0, 0);
+          }
+        .View--ios .View__header-item--next .View__header-left-in {
+          transform: translate3d(0, 0, 0);
+          }
+        .View--ios .View__header-item--next ~ .View__header-item .View__header-left-in {
+          transform: translate3d(50%, 0, 0);
+          }
+
+        .View--ios .View__header-item .View__header-title {
+          transform: translate3d(-50%, 0, 0);
+          }
+        .View--ios .View__header-item--next .View__header-title {
+          transform: translate3d(0, 0, 0);
+          }
+        .View--ios .View__header-item--next ~ .View__header-item .View__header-title {
+          transform: translate3d(100%, 0, 0);
+          }
+
       /**
        * Active header
        */
       .View--ios .View__header-item--active {
-        opacity: 1;
         visibility: visible;
+        /*
+        opacity: 1;
         transform: translate3d(0, 0, 0);
+        */
         }
-      .View--ios .View__header-item--active ~ .View__header-item {
+      .View--ios .View__header-item--active ~ .View__header-item .View__header-left-in {
         transform: translate3d(50%, 0, 0);
         }
+      .View--ios .View__header-item--active ~ .View__header-item .View__header-title {
+        transform: translate3d(100%, 0, 0);
+        }
+        .View--ios .View__header-item--active .View__header-icon,
+        .View--ios .View__header-item--active .View__header-right {
+          opacity: 1;
+          visibility: visible;
+          }
+        .View--ios .View__header-item--active .View__header-left-in,
+        .View--ios .View__header-item--active .View__header-title {
+          opacity: 1;
+          visibility: visible;
+          transform: translate3d(0, 0, 0);
+          }
 
   /**
    * Panels
@@ -245,6 +311,7 @@
 
       .View--ios .View__panel-in {
         position: relative;
+        min-height: 100%;
         }
 
     /**
@@ -255,8 +322,8 @@
       display: block;
       visibility: visible;
       transition:
-        transform 6s cubic-bezier(.36, .66, .04, 1),
-        visibility 6s cubic-bezier(.36, .66, .04, 1);
+        transform .6s cubic-bezier(.36, .66, .04, 1),
+        visibility .6s cubic-bezier(.36, .66, .04, 1);
       }
     .View--ios .View__panel {
       transform: translate3d(-50%, 0, 0);
@@ -281,10 +348,10 @@
       pointer-events: none;
       }
     .View--ios .View__panel--prev > .View__panel-in::before {
-      animation: animation-fade-in 6s cubic-bezier(.36, .66, .04, 1);
+      animation: animation-fade-in .6s cubic-bezier(.36, .66, .04, 1);
       }
     .View--ios .View__panel--next > .View__panel-in::before {
-      animation: animation-fade-out 6s cubic-bezier(.36, .66, .04, 1);
+      animation: animation-fade-out .6s cubic-bezier(.36, .66, .04, 1);
       }
     .View--ios .View__panel--prev ~ .View__panel--next > .View__panel-in::before,
     .View--ios .View__panel--next ~ .View__panel--prev > .View__panel-in::before {
