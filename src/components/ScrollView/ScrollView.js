@@ -129,8 +129,8 @@ export default class ScrollView extends Component {
     return;
   }
 
-  shouldComponentUpdate ({ id, activePanel, prevPanel, nextPanel }) {
-    return id === activePanel || id === prevPanel || id === nextPanel;
+  shouldComponentUpdate ({ id, activePanel, nextPanel }) {
+    return id === activePanel || id === nextPanel;
   }
 
   render () {
