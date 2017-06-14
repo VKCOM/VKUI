@@ -100,6 +100,14 @@
       display: none;
       }
 
+    .View--animated .View__panel--prev,
+    .View--animated .View__panel--next {
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      }
+
   /**
    * Mask
    */
@@ -328,14 +336,6 @@
       content: none;
       }
 
-    .View--ios.View--animated .View__panel--prev,
-    .View--ios.View--animated .View__panel--next {
-      position: absolute;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-      }
-
     /**
      * Active panel
      */
@@ -361,6 +361,10 @@
    * Header
    */
   .View--android .View__header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 64px;
     }
 
@@ -446,13 +450,16 @@
    * Panels
    */
   .View--android .View__panels {}
-  .View--android.View--header .View__panels {
-    top: 64px;
-    }
+  .View--android.View--header .View__panels {}
 
     .View--android .View__panel {
+      padding-top: 64px;
       background: #fff;
       }
+
+      .View--android .View__panel-in {
+        background: #fff;
+        }
 
     /**
      * Panel transition
