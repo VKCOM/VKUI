@@ -4,17 +4,23 @@
  * Container
  */
 .View {
+  /*
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   overflow: hidden;
+  */
+  position: relative;
+  height: 100%;
+  width: 100%;
   background: #efeff4;
   word-wrap: break-word;
   }
 .View--animated {
   pointer-events: none;
+  overflow: hidden;
   }
 
   /**
@@ -44,7 +50,6 @@
         visibility: hidden;
         display: flex;
         align-items: center;
-        background: var(--vk-color);
         }
 
         .View__header-left,
@@ -71,22 +76,32 @@
    * Panels list
    */
   .View__panels {
+    height: 100%;
+    width: 100%;
+    /*
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    */
     }
 
     /**
      * Panel
      */
     .View__panel {
+      /*
       position: absolute;
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
+      */
+      position: relative;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
       z-index: 1;
       visibility: hidden;
       }
@@ -99,7 +114,7 @@
    * Mask
    */
   .View__mask {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
@@ -114,7 +129,7 @@
    * Popout
    */
   .View__popout {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
@@ -137,7 +152,10 @@
    * Header
    */
   .View--ios .View__header {
+    position: fixed;
+    width: 100%;
     height: 64px;
+    z-index: 2;
     }
 
     .View--ios .View__header-in {
@@ -166,11 +184,15 @@
        */
       .View--ios .View__header-item--prev,
       .View--ios .View__header-item--next {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        overflow: hidden;
         visibility: visible;
         transition:
-          transform .6s cubic-bezier(.36, .66, .04, 1),
-          visibility .6s cubic-bezier(.36, .66, .04, 1),
-          opacity .6s cubic-bezier(.36, .66, .04, 1);
+          transform 6s cubic-bezier(.36, .66, .04, 1),
+          visibility 6s cubic-bezier(.36, .66, .04, 1),
+          opacity 6s cubic-bezier(.36, .66, .04, 1);
         }
       .View--ios .View__header-item--prev {
         opacity: 0;
@@ -211,12 +233,19 @@
   .View--ios .View__panels {}
 
   .View--ios.View--header .View__panels {
+    /*
     top: 64px;
+    */
     }
 
     .View--ios .View__panel {
+      padding-top: 64px;
       background: #efeff4;
       }
+
+      .View--ios .View__panel-in {
+        position: relative;
+        }
 
     /**
      * Panel transition
@@ -226,8 +255,8 @@
       display: block;
       visibility: visible;
       transition:
-        transform .6s cubic-bezier(.36, .66, .04, 1),
-        visibility .6s cubic-bezier(.36, .66, .04, 1);
+        transform 6s cubic-bezier(.36, .66, .04, 1),
+        visibility 6s cubic-bezier(.36, .66, .04, 1);
       }
     .View--ios .View__panel {
       transform: translate3d(-50%, 0, 0);
@@ -239,27 +268,35 @@
       transform: translate3d(100%, 0, 0);
       }
 
-    .View--ios .View__panel--prev::before,
-    .View--ios .View__panel--next::before {
+    .View--ios .View__panel--prev > .View__panel-in::before,
+    .View--ios .View__panel--next > .View__panel-in::before {
       position: absolute;
       top: 0;
       right: 0;
-      bottom: 0;
       left: 0;
+      bottom: 0;
       z-index: 10;
       background: #000;
       content: '';
       pointer-events: none;
       }
-    .View--ios .View__panel--prev::before {
-      animation: animation-fade-in .6s cubic-bezier(.36, .66, .04, 1);
+    .View--ios .View__panel--prev > .View__panel-in::before {
+      animation: animation-fade-in 6s cubic-bezier(.36, .66, .04, 1);
       }
-    .View--ios .View__panel--next::before {
-      animation: animation-fade-out .6s cubic-bezier(.36, .66, .04, 1);
+    .View--ios .View__panel--next > .View__panel-in::before {
+      animation: animation-fade-out 6s cubic-bezier(.36, .66, .04, 1);
       }
-    .View--ios .View__panel--prev ~ .View__panel--next::before,
-    .View--ios .View__panel--next ~ .View__panel--prev::before {
+    .View--ios .View__panel--prev ~ .View__panel--next > .View__panel-in::before,
+    .View--ios .View__panel--next ~ .View__panel--prev > .View__panel-in::before {
       content: none;
+      }
+
+    .View--ios.View--animated .View__panel--prev,
+    .View--ios.View--animated .View__panel--next {
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
       }
 
     /**
@@ -338,6 +375,7 @@
           visibility .3s var(--android-easing) .2s;
         }
       .View--android .View__header-item {
+        background: var(--vk-color);
         transform: translate3d(0, 0, 0);
         opacity: 0;
         }

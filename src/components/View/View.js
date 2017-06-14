@@ -9,6 +9,12 @@ import { platform, ANDROID } from '../../lib/platform.js';
 const osname = platform();
 const baseClassNames = getClassName('View');
 
+// @TODO
+// 1. Headers
+// 2. Android
+// 3. Pull to refresh
+// 4. Infinite scroll
+
 export default class View extends Component {
   constructor (props) {
     super(props);
@@ -34,12 +40,20 @@ export default class View extends Component {
   refsStore = {};
   componentWillReceiveProps (nextProps) {
     if (this.state.activePanel !== nextProps.activePanel) {
+      const pageYOffset = window.pageYOffset;
+
+      // Blur inputs on panel transition
       if (typeof window !== 'undefined' && document.activeElement) {
         document.activeElement.blur();
       }
+
+      // @TODO Lock overscroll on window
       this.setState({
-        visiblePanels: [this.state.activePanel, nextProps.activePanel]
+        visiblePanels: [this.state.activePanel, nextProps.activePanel],
+        pageYOffset
       });
+
+      console.log(this.state.activePanel, nextProps.activePanel);
     }
   }
   componentDidUpdate () {
@@ -51,6 +65,14 @@ export default class View extends Component {
           activePanel: null,
           animated: true
         });
+
+        console.log(this.state.pageYOffset, document.querySelector(`#${this.state.visiblePanels[0]}`));
+
+        // Delegate scrollTop from window
+        // @TODO Переделать по-нормальному
+        document.querySelector(`#${this.state.visiblePanels[0]}`).parentNode.parentNode.scrollTop = this.state.pageYOffset;
+        document.querySelector(`#${this.state.visiblePanels[1]}`).parentNode.parentNode.scrollTop = 0; // @TODO зависит от направления
+        window.scrollTo(0, 0);
       }, 100);
     }
   }
@@ -62,6 +84,15 @@ export default class View extends Component {
         visiblePanels: [this.props.activePanel],
         activePanel: this.props.activePanel,
         animated: false
+      });
+
+      // reset scrollTop for all panels
+      const panels = document.querySelectorAll('.View__panel');
+
+      Array.prototype.forEach.call(panels, function(panel) {
+        if (!panel.classList.contains('View__panel--active')) {
+          panel.scrollTop = 0;
+        }
       });
     }
   }
@@ -146,7 +177,9 @@ export default class View extends Component {
               onTransitionEnd={this.transitionEndHandler}
               key={panel.key || panel.props.id || `panel-${i}`}
             >
-              {React.cloneElement(panel, { ref: this.getRef, activePanel, prevPanel, nextPanel })}
+              <div className="View__panel-in">
+                {React.cloneElement(panel, { ref: this.getRef, activePanel, prevPanel, nextPanel })}
+              </div>
             </div>
           ))}
         </div>
