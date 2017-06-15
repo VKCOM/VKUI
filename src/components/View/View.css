@@ -227,17 +227,17 @@
           }
 
         .View--ios .View__header-item .View__header-left-in {
-          transform: translate3d(-50%, 0, 0);
+          transform: translate3d(-60%, 0, 0);
           }
         .View--ios .View__header-item--next .View__header-left-in {
           transform: translate3d(0, 0, 0);
           }
         .View--ios .View__header-item--next ~ .View__header-item .View__header-left-in {
-          transform: translate3d(50%, 0, 0);
+          transform: translate3d(60%, 0, 0);
           }
 
         .View--ios .View__header-item .View__header-title {
-          transform: translate3d(-50%, 0, 0);
+          transform: translate3d(-60%, 0, 0);
           }
         .View--ios .View__header-item--next .View__header-title {
           transform: translate3d(0, 0, 0);
