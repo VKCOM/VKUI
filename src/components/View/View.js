@@ -59,14 +59,14 @@ export default class View extends Component {
   }
   componentDidUpdate () {
     if (this.state.visiblePanels.length === 2 && !this.state.animated) {
-      setTimeout(() => {
-        const scrolls = this.state.scrolls;
-        const [ prevPanel, nextPanel ] = this.state.visiblePanels;
-        const firstLayerId = this.props.children.find(panel => {
-          return panel.props.id === prevPanel || panel.props.id === nextPanel;
-        }).props.id;
-        const isBack = firstLayerId === nextPanel;
+      const scrolls = this.state.scrolls;
+      const [ prevPanel, nextPanel ] = this.state.visiblePanels;
+      const firstLayerId = this.props.children.find(panel => {
+        return panel.props.id === prevPanel || panel.props.id === nextPanel;
+      }).props.id;
+      const isBack = firstLayerId === nextPanel;
 
+      setTimeout(() => {
         this.setState({
           prevPanel: prevPanel,
           nextPanel: nextPanel,
@@ -135,7 +135,7 @@ export default class View extends Component {
     }
   }
   getRef = (c) => {
-    if (c.container && c.props.id) {
+    if (c && c.container && c.props.id) {
       let el = c;
 
       while (el.container) {
@@ -150,11 +150,11 @@ export default class View extends Component {
     const { prevPanel, nextPanel, activePanel } = this.state;
     const hasPopout = !!popout;
     const hasHeader = header !== null;
-    const panels = [].concat(this.props.children).filter(a => !!a);
+    const panels = [].concat(this.props.children).filter(panel => this.state.visiblePanels.indexOf(panel.props.id) > -1);
     const modifiers = {
       'View--header': hasHeader,
       'View--popout': hasPopout,
-      'View--animated': this.state.animated
+      'View--animated': this.state.visiblePanels.length === 2
     };
 
     return (
@@ -192,8 +192,7 @@ export default class View extends Component {
               className={classnames('View__panel', {
                 'View__panel--active': panel.props.id === activePanel,
                 'View__panel--prev': panel.props.id === prevPanel,
-                'View__panel--next': panel.props.id === nextPanel,
-                'View__panel--hidden': this.state.visiblePanels.indexOf(panel.props.id) === -1
+                'View__panel--next': panel.props.id === nextPanel
               })}
               onTransitionEnd={this.transitionEndHandler}
               key={panel.key || panel.props.id || `panel-${i}`}
