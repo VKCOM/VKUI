@@ -42,6 +42,13 @@ export default class View extends Component {
 
     if (activePanel !== nextProps.activePanel) {
       const pageYOffset = window.pageYOffset;
+      const firstLayerId = this.props.children.find(panel => {
+        return panel.props.id === activePanel || panel.props.id === nextProps.activePanel;
+      }).props.id;
+      const isBack = firstLayerId === nextProps.activePanel;
+      const scrolls = Object.assign({}, this.state.scrolls, {
+        [activePanel]: pageYOffset
+      });
 
       // Blur inputs on panel transition
       if (typeof window !== 'undefined' && document.activeElement) {
@@ -51,9 +58,14 @@ export default class View extends Component {
       // @TODO Lock overscroll on window
       this.setState({
         visiblePanels: [activePanel, nextProps.activePanel],
-        scrolls: Object.assign({}, this.state.scrolls, {
-          [activePanel]: pageYOffset
-        })
+        scrolls, isBack
+      }, function () {
+        // Delegate scrollTop from window
+        this.pickPanel(activePanel).scrollTop = scrolls[activePanel] || 0;
+
+        if (isBack) {
+          this.pickPanel(nextProps.activePanel).scrollTop = scrolls[nextProps.activePanel] || 0;
+        }
       });
     }
   }
@@ -61,30 +73,18 @@ export default class View extends Component {
     if (this.state.visiblePanels.length === 2 && !this.state.animated) {
       const scrolls = this.state.scrolls;
       const [ prevPanel, nextPanel ] = this.state.visiblePanels;
-      const firstLayerId = this.props.children.find(panel => {
-        return panel.props.id === prevPanel || panel.props.id === nextPanel;
-      }).props.id;
-      const isBack = firstLayerId === nextPanel;
 
-      setTimeout(() => {
+      window.requestAnimationFrame(() => {
         this.setState({
           prevPanel: prevPanel,
           nextPanel: nextPanel,
           activePanel: null,
-          animated: true,
-          isBack: isBack
+          animated: true
         });
-
-        // Delegate scrollTop from window
-        this.pickPanel(prevPanel).scrollTop = scrolls[prevPanel] || 0;
-
-        if (isBack) {
-          this.pickPanel(nextPanel).scrollTop = this.state.scrolls[nextPanel] || 0;
-        }
-      }, 100);
+      });
     }
   }
-  pickPanel(id) {
+  pickPanel (id) {
     return document.querySelector('#' + id).parentNode.parentNode;
   }
   transitionEndHandler = (e) => {
@@ -99,21 +99,21 @@ export default class View extends Component {
         activePanel: activePanel,
         animated: false,
         isBack: undefined
-      });
+      }, function () {
+        // reset scrollTop for all panels
+        const panels = document.querySelectorAll('.View__panel');
 
-      // reset scrollTop for all panels
-      const panels = document.querySelectorAll('.View__panel');
+        Array.prototype.forEach.call(panels, function(panel) {
+          if (!panel.classList.contains('View__panel--active')) {
+            panel.scrollTop = 0;
+          }
+        });
 
-      Array.prototype.forEach.call(panels, function(panel) {
-        if (!panel.classList.contains('View__panel--active')) {
-          panel.scrollTop = 0;
+        // Restore scroll on window if next panel placed before previous panel
+        if (activePanel && isBack) {
+          window.scrollTo(0, this.state.scrolls[activePanel] || 0);
         }
       });
-
-      // Restore scroll on window if next panel placed before previous panel
-      if (activePanel && isBack) {
-        window.requestAnimationFrame(() => window.scrollTo(0, this.state.scrolls[activePanel] || 0));
-      }
     }
   }
   onHeaderClick = () => {

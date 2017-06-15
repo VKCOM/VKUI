@@ -100,8 +100,7 @@
       display: none;
       }
 
-    .View--animated .View__panel--prev,
-    .View--animated .View__panel--next {
+    .View--animated .View__panel {
       position: absolute;
       top: 0;
       left: 0;
