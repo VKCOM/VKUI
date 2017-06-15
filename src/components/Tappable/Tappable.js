@@ -14,7 +14,7 @@ const baseClassNames = getClassName('Tappable');
 const osname = platform();
 
 const ACTIVE_DELAY = 70;
-const ACTIVE_EFFECT_DELAY = 300;
+const ACTIVE_EFFECT_DELAY = 600;
 
 let storage = {};
 

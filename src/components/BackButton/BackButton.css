@@ -1,10 +1,5 @@
 .BackButton {
   vertical-align: top;
-  padding: 0 24px 0 4px;
-  }
-.BackButton--ios {
+  padding: 0 4px 1px;
   color: #fff;
-  }
-.BackButton--android {
-  color: #444547;
   }

@@ -9,13 +9,18 @@ import { platform, ANDROID } from '../../lib/platform.js';
 const osname = platform();
 const baseClassNames = getClassName('View');
 
+// @TODO
+// 2. Pull to refresh
+// 3. Infinite scroll
+
 export default class View extends Component {
   constructor (props) {
     super(props);
     this.state = {
       visiblePanels: [props.activePanel],
       children: [props.children],
-      activePanel: props.activePanel
+      activePanel: props.activePanel,
+      scrolls: {}
     };
   }
   static propTypes = {
@@ -33,35 +38,85 @@ export default class View extends Component {
   };
   refsStore = {};
   componentWillReceiveProps (nextProps) {
-    if (this.state.activePanel !== nextProps.activePanel) {
+    const activePanel = this.state.activePanel;
+
+    if (activePanel !== nextProps.activePanel) {
+      const pageYOffset = window.pageYOffset;
+      const firstLayerId = this.props.children.find(panel => {
+        return panel.props.id === activePanel || panel.props.id === nextProps.activePanel;
+      }).props.id;
+      const isBack = firstLayerId === nextProps.activePanel;
+      const scrolls = Object.assign({}, this.state.scrolls, {
+        [activePanel]: pageYOffset
+      });
+
+      // Blur inputs on panel transition
       if (typeof window !== 'undefined' && document.activeElement) {
         document.activeElement.blur();
       }
+
+      // @TODO Lock overscroll on window
       this.setState({
-        visiblePanels: [this.state.activePanel, nextProps.activePanel]
+        visiblePanels: [activePanel, nextProps.activePanel],
+        scrolls, isBack
+      }, function () {
+        document.body.classList.add('locked');
+
+        // Delegate scrollTop from window
+        this.pickPanel(activePanel).scrollTop = scrolls[activePanel] || 0;
+
+        if (isBack) {
+          this.pickPanel(nextProps.activePanel).scrollTop = scrolls[nextProps.activePanel] || 0;
+        }
       });
     }
   }
   componentDidUpdate () {
     if (this.state.visiblePanels.length === 2 && !this.state.animated) {
-      setTimeout(() => {
+      const scrolls = this.state.scrolls;
+      const [ prevPanel, nextPanel ] = this.state.visiblePanels;
+
+      window.requestAnimationFrame(() => {
         this.setState({
-          prevPanel: this.state.visiblePanels[0],
-          nextPanel: this.state.visiblePanels[1],
+          prevPanel: prevPanel,
+          nextPanel: nextPanel,
           activePanel: null,
           animated: true
         });
-      }, 100);
+      });
     }
+  }
+  pickPanel (id) {
+    return document.querySelector('#' + id).parentNode.parentNode;
   }
   transitionEndHandler = (e) => {
     if (osname !== ANDROID || e.propertyName === 'visibility') {
+      const activePanel = this.props.activePanel;
+      const isBack = this.state.isBack;
+
       this.setState({
         prevPanel: null,
         nextPanel: null,
-        visiblePanels: [this.props.activePanel],
-        activePanel: this.props.activePanel,
-        animated: false
+        visiblePanels: [activePanel],
+        activePanel: activePanel,
+        animated: false,
+        isBack: undefined
+      }, function () {
+        document.body.classList.remove('locked');
+
+        // reset scrollTop for all panels
+        const panels = document.querySelectorAll('.View__panel');
+
+        Array.prototype.forEach.call(panels, function(panel) {
+          if (!panel.classList.contains('View__panel--active')) {
+            panel.scrollTop = 0;
+          }
+        });
+
+        // Restore scroll on window if next panel placed before previous panel
+        if (activePanel && isBack) {
+          window.scrollTo(0, this.state.scrolls[activePanel] || 0);
+        }
       });
     }
   }
@@ -84,7 +139,7 @@ export default class View extends Component {
     }
   }
   getRef = (c) => {
-    if (c.container && c.props.id) {
+    if (c && c.container && c.props.id) {
       let el = c;
 
       while (el.container) {
@@ -99,11 +154,11 @@ export default class View extends Component {
     const { prevPanel, nextPanel, activePanel } = this.state;
     const hasPopout = !!popout;
     const hasHeader = header !== null;
-    const panels = [].concat(this.props.children).filter(a => !!a);
+    const panels = [].concat(this.props.children).filter(panel => this.state.visiblePanels.indexOf(panel.props.id) > -1);
     const modifiers = {
       'View--header': hasHeader,
       'View--popout': hasPopout,
-      'View--animated': this.state.animated
+      'View--animated': this.state.visiblePanels.length === 2
     };
 
     return (
@@ -121,7 +176,8 @@ export default class View extends Component {
                   key={panel.key || panel.props.id || `panel-header-${i}`}
                 >
                   <div className="View__header-left">
-                    {panel.props.header.left}
+                    <div className="View__header-icon">{panel.props.header.icon}</div>
+                    <div className="View__header-left-in">{panel.props.header.left}</div>
                   </div>
                   <div className="View__header-title">
                     {panel.props.header.title}
@@ -140,13 +196,14 @@ export default class View extends Component {
               className={classnames('View__panel', {
                 'View__panel--active': panel.props.id === activePanel,
                 'View__panel--prev': panel.props.id === prevPanel,
-                'View__panel--next': panel.props.id === nextPanel,
-                'View__panel--hidden': this.state.visiblePanels.indexOf(panel.props.id) === -1
+                'View__panel--next': panel.props.id === nextPanel
               })}
               onTransitionEnd={this.transitionEndHandler}
               key={panel.key || panel.props.id || `panel-${i}`}
             >
-              {React.cloneElement(panel, { ref: this.getRef, activePanel, nextPanel })}
+              <div className="View__panel-in">
+                {React.cloneElement(panel, { ref: this.getRef, activePanel, nextPanel })}
+              </div>
             </div>
           ))}
         </div>
