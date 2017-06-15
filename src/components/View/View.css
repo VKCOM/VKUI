@@ -96,10 +96,6 @@
       visibility: hidden;
       }
 
-    .View__panel--hidden {
-      display: none;
-      }
-
     .View--animated .View__panel {
       position: absolute;
       top: 0;
