@@ -10,7 +10,6 @@ const osname = platform();
 const baseClassNames = getClassName('View');
 
 // @TODO
-// 1. Android
 // 2. Pull to refresh
 // 3. Infinite scroll
 
@@ -20,7 +19,8 @@ export default class View extends Component {
     this.state = {
       visiblePanels: [props.activePanel],
       children: [props.children],
-      activePanel: props.activePanel
+      activePanel: props.activePanel,
+      scrolls: {}
     };
   }
   static propTypes = {
@@ -38,7 +38,9 @@ export default class View extends Component {
   };
   refsStore = {};
   componentWillReceiveProps (nextProps) {
-    if (this.state.activePanel !== nextProps.activePanel) {
+    const activePanel = this.state.activePanel;
+
+    if (activePanel !== nextProps.activePanel) {
       const pageYOffset = window.pageYOffset;
 
       // Blur inputs on panel transition
@@ -48,37 +50,55 @@ export default class View extends Component {
 
       // @TODO Lock overscroll on window
       this.setState({
-        visiblePanels: [this.state.activePanel, nextProps.activePanel],
-        pageYOffset
+        visiblePanels: [activePanel, nextProps.activePanel],
+        scrolls: Object.assign({}, this.state.scrolls, {
+          [activePanel]: pageYOffset
+        })
       });
     }
   }
   componentDidUpdate () {
     if (this.state.visiblePanels.length === 2 && !this.state.animated) {
       setTimeout(() => {
+        const scrolls = this.state.scrolls;
+        const [ prevPanel, nextPanel ] = this.state.visiblePanels;
+        const firstLayerId = this.props.children.find(panel => {
+          return panel.props.id === prevPanel || panel.props.id === nextPanel;
+        }).props.id;
+        const isBack = firstLayerId === nextPanel;
+
         this.setState({
-          prevPanel: this.state.visiblePanels[0],
-          nextPanel: this.state.visiblePanels[1],
+          prevPanel: prevPanel,
+          nextPanel: nextPanel,
           activePanel: null,
-          animated: true
+          animated: true,
+          isBack: isBack
         });
 
         // Delegate scrollTop from window
-        // @TODO Переделать по-нормальному
-        document.querySelector(`#${this.state.visiblePanels[0]}`).parentNode.parentNode.scrollTop = this.state.pageYOffset;
-        document.querySelector(`#${this.state.visiblePanels[1]}`).parentNode.parentNode.scrollTop = 0; // @TODO зависит от направления
-        window.scrollTo(0, 0);
+        this.pickPanel(prevPanel).scrollTop = scrolls[prevPanel] || 0;
+
+        if (isBack) {
+          this.pickPanel(nextPanel).scrollTop = this.state.scrolls[nextPanel] || 0;
+        }
       }, 100);
     }
   }
+  pickPanel(id) {
+    return document.querySelector('#' + id).parentNode.parentNode;
+  }
   transitionEndHandler = (e) => {
     if (osname !== ANDROID || e.propertyName === 'visibility') {
+      const activePanel = this.props.activePanel;
+      const isBack = this.state.isBack;
+
       this.setState({
         prevPanel: null,
         nextPanel: null,
-        visiblePanels: [this.props.activePanel],
-        activePanel: this.props.activePanel,
-        animated: false
+        visiblePanels: [activePanel],
+        activePanel: activePanel,
+        animated: false,
+        isBack: undefined
       });
 
       // reset scrollTop for all panels
@@ -89,6 +109,11 @@ export default class View extends Component {
           panel.scrollTop = 0;
         }
       });
+
+      // Restore scroll on window if next panel placed before previous panel
+      if (activePanel && isBack) {
+        window.requestAnimationFrame(() => window.scrollTo(0, this.state.scrolls[activePanel] || 0));
+      }
     }
   }
   onHeaderClick = () => {
