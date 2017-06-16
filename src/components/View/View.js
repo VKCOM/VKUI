@@ -63,9 +63,14 @@ export default class View extends Component {
         // document.body.classList.add('locked');
 
         // Delegate scrollTop from window
-        this.pickPanel(activePanel).scrollTop = scrolls[activePanel] || 0;
+        const prevPanelElement = activePanel && this.pickPanel(activePanel);
+        const nextPanelElement = nextProps.activePanel && this.pickPanel(nextProps.activePanel);
 
-        if (isBack) {
+        if (prevPanelElement) {
+          prevPanelElement.scrollTop = scrolls[activePanel] || 0;
+        }
+
+        if (isBack && nextPanelElement) {
           this.pickPanel(nextProps.activePanel).scrollTop = scrolls[nextProps.activePanel] || 0;
         }
       });
@@ -90,7 +95,7 @@ export default class View extends Component {
     const elem = document.querySelector('#' + id);
 
     if (!elem) {
-      console.warn('Element #' + id + ' not found');
+      console.warn(`Element #${id} not found`);
     }
 
     return elem && elem.parentNode.parentNode;
