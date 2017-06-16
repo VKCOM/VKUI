@@ -1,6 +1,6 @@
 {
   "name": "vkui",
-  "version": "0.7.0rc",
+  "version": "0.7.0",
   "private": true,
   "main": "dist/vkui.js",
   "devDependencies": {
