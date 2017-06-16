@@ -60,7 +60,7 @@ export default class View extends Component {
         visiblePanels: [activePanel, nextProps.activePanel],
         scrolls, isBack
       }, function () {
-        document.body.classList.add('locked');
+        // document.body.classList.add('locked');
 
         // Delegate scrollTop from window
         this.pickPanel(activePanel).scrollTop = scrolls[activePanel] || 0;
@@ -102,7 +102,7 @@ export default class View extends Component {
         animated: false,
         isBack: undefined
       }, function () {
-        document.body.classList.remove('locked');
+        // document.body.classList.remove('locked');
 
         // reset scrollTop for all panels
         const panels = document.querySelectorAll('.View__panel');
