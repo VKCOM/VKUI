@@ -87,7 +87,13 @@ export default class View extends Component {
     }
   }
   pickPanel (id) {
-    return document.querySelector('#' + id).parentNode.parentNode;
+    const elem = document.querySelector('#' + id);
+
+    if (!elem) {
+      console.warn('Element #' + id + ' not found');
+    }
+
+    return elem && elem.parentNode.parentNode;
   }
   transitionEndHandler = (e) => {
     if (osname !== ANDROID || e.propertyName === 'visibility') {
