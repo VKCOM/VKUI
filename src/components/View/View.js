@@ -28,7 +28,8 @@ export default class View extends Component {
     activePanel: PropTypes.string.isRequired,
     header: PropTypes.object,
     children: PropTypes.node,
-    popout: PropTypes.node
+    popout: PropTypes.node,
+    onTransition: PropTypes.func
   };
   static defaultProps = {
     style: {},
@@ -54,6 +55,7 @@ export default class View extends Component {
       if (typeof window !== 'undefined' && document.activeElement) {
         document.activeElement.blur();
       }
+
 
       // @TODO Lock overscroll on window
       this.setState({
@@ -127,6 +129,10 @@ export default class View extends Component {
         // Restore scroll on window if next panel placed before previous panel
         if (activePanel && isBack) {
           window.scrollTo(0, this.state.scrolls[activePanel] || 0);
+        }
+
+        if (this.props.onTransition) {
+          this.props.onTransition();
         }
       });
     }
