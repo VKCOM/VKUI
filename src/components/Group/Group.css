@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .Group {
   margin: 0;
   padding: 15px 0 15px;
@@ -22,6 +24,11 @@
     color: #6D6D72;
     padding: 7px 15px 0;
     }
+
+    .Group__description a {
+      text-decoration: none;
+      color: var(--vk-color);
+      }
 
 /**
  * Android
