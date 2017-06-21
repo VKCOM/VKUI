@@ -56,7 +56,6 @@ export default class View extends Component {
         document.activeElement.blur();
       }
 
-
       // @TODO Lock overscroll on window
       this.setState({
         visiblePanels: [activePanel, nextProps.activePanel],
@@ -215,7 +214,7 @@ export default class View extends Component {
                 'View__panel--prev': panel.props.id === prevPanel,
                 'View__panel--next': panel.props.id === nextPanel
               })}
-              onTransitionEnd={this.transitionEndHandler}
+              onTransitionEnd={panel.props.id === nextPanel ? this.transitionEndHandler : null}
               key={panel.key || panel.props.id || `panel-${i}`}
             >
               <div className="View__panel-in">
