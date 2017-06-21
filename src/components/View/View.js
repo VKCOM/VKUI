@@ -52,9 +52,7 @@ export default class View extends Component {
       });
 
       // Blur inputs on panel transition
-      if (typeof window !== 'undefined' && document.activeElement) {
-        document.activeElement.blur();
-      }
+      this.blurActiveElement();
 
       // @TODO Lock overscroll on window
       this.setState({
@@ -75,6 +73,15 @@ export default class View extends Component {
           this.pickPanel(nextProps.activePanel).scrollTop = scrolls[nextProps.activePanel] || 0;
         }
       });
+    }
+
+    if (!!nextProps.popout && !this.props.popout) {
+      this.blurActiveElement();
+    }
+  }
+  blurActiveElement() {
+    if (typeof window !== 'undefined' && document.activeElement) {
+      document.activeElement.blur();
     }
   }
   componentDidUpdate () {
