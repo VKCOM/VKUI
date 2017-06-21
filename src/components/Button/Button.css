@@ -11,6 +11,7 @@
   background: #fff;
   text-align: left;
   user-select: none;
+  min-height: 22px;
   }
 .Button--ios::before,
 .Button--ios::after {
@@ -44,7 +45,7 @@
  * Disabled
  */
 .Button[disabled] {
-  color: #8E8E93;
+  color: #8e8e93;
   background: #fff;
   }
 
@@ -124,6 +125,7 @@
   display: inline-block;
   font-size: 14px;
   line-height: 16px;
+  min-height: 16px;
   padding: 8px 12px;
   border-radius: 2px;
   }
@@ -153,6 +155,7 @@
   font-size: 16px;
   font-weight: 500;
   line-height: 20px;
+  min-height: 20px;
   padding: 14px;
   background: #5181B8;
   box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 2px rgba(0, 0, 0, .24);
