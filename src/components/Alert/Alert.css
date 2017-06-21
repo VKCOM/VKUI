@@ -87,7 +87,8 @@
       background: #e0e0e0;
       }
     .Alert--ios .Alert__btn.Tappable--active::before,
-    .Alert--ios .Alert__btn.Tappable--active::after {
+    .Alert--ios .Alert__btn.Tappable--active::after,
+    .Alert--ios.Alert--h .Alert__btn:last-child:after {
       content: none;
       }
     .Alert--ios .Alert__btn--primary {
