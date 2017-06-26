@@ -41,13 +41,32 @@ export default class View extends Component {
   componentWillReceiveProps (nextProps) {
     const activePanel = this.state.activePanel;
 
+    let scrolls, pageYOffset;
+
+    // Popout appearance
+    if (!!nextProps.popout && !this.props.popout) {
+      pageYOffset = window.pageYOffset;
+
+      this.blurActiveElement();
+      scrolls = Object.assign({}, this.state.scrolls, {
+        [activePanel]: pageYOffset
+      });
+
+      this.setState({ scrolls }, function () {
+        this.pickPanel(activePanel).scrollTop = scrolls[activePanel];
+      });
+    }
+
+    // Panel transition
     if (activePanel !== nextProps.activePanel) {
-      const pageYOffset = window.pageYOffset;
+      pageYOffset = pageYOffset || window.pageYOffset;
+
       const firstLayerId = this.props.children.find(panel => {
         return panel.props.id === activePanel || panel.props.id === nextProps.activePanel;
       }).props.id;
       const isBack = firstLayerId === nextProps.activePanel;
-      const scrolls = Object.assign({}, this.state.scrolls, {
+
+      scrolls = scrolls || Object.assign({}, this.state.scrolls, {
         [activePanel]: pageYOffset
       });
 
@@ -74,10 +93,6 @@ export default class View extends Component {
         }
       });
     }
-
-    if (!!nextProps.popout && !this.props.popout) {
-      this.blurActiveElement();
-    }
   }
   blurActiveElement() {
     if (typeof window !== 'undefined' && document.activeElement) {
@@ -85,8 +100,9 @@ export default class View extends Component {
     }
   }
   componentDidUpdate () {
+    const scrolls = this.state.scrolls;
+
     if (this.state.visiblePanels.length === 2 && !this.state.animated) {
-      const scrolls = this.state.scrolls;
       const [ prevPanel, nextPanel ] = this.state.visiblePanels;
 
       window.requestAnimationFrame(() => {
@@ -96,6 +112,13 @@ export default class View extends Component {
           activePanel: null,
           animated: true
         });
+      });
+    }
+
+    // Popout disappearance: restore scroll
+    if (!this.props.popout && scrolls[this.state.activePanel]) {
+      window.requestAnimationFrame(() => {
+        window.scrollTo(0, scrolls[this.state.activePanel]);
       });
     }
   }
