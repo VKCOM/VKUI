@@ -1,11 +1,12 @@
 @import '../../styles/constants.css';
 
 .Radio {
+  position: relative;
   display: flex;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-right: -.5em;
   align-items: center;
+  box-sizing: border-box;
+  font-size: 17px;
+  line-height: 22px;
   }
 
   .Radio__self {
@@ -14,6 +15,9 @@
 
   .Radio__label {
     flex: 1 1 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     }
 
   .Radio__icon {
@@ -26,9 +30,29 @@
  * iOS radio
  */
 .Radio--ios {
-  margin: -11px 0 -12px;
-  padding: 11px 0 12px;
+  padding: 11px 15px 12px;
   }
+.Radio--ios::before {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  width: 100vw;
+  height: 1px;
+  background: var(--ios-thick-separator-color);
+  content: '';
+  }
+@media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi),
+  (min-resolution: 2dppx) {
+  .Radio--ios::before {
+    background: linear-gradient(to top, #c8c7cc 50%, transparent 50%);
+    }
+  }
+
+  .Radio--ios .Radio__label {
+    padding-right: .5em;
+    }
 
   .Radio--ios .Radio__icon {
     width: 13px;
@@ -46,8 +70,7 @@
  * Android radio
  */
 .Radio--android {
-  margin: -16px 0 -17px;
-  padding: 16px 0 17px;
+  padding: 16px 16px 17px;
   align-items: center;
   }
 

@@ -51,10 +51,7 @@
       }
 
 /* iOS */
-.ListItem--ios {
-  font-size: 17px;
-  line-height: 22px;
-  }
+.ListItem--ios {}
 .ListItem--ios.ListItem--expandable::before {
   position: absolute;
   top: 50%;
@@ -97,7 +94,7 @@
       (min-resolution: 192dpi),
       (min-resolution: 2dppx) {
       .ListItem--ios .ListItem__icon::before {
-        background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+        background: linear-gradient(to top, #c8c7cc 50%, transparent 50%);
         }
       }
 
