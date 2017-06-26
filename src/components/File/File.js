@@ -38,15 +38,23 @@ export default class File extends Component {
     const { style, label, alignment, appearance } = this.props;
 
     return (
-      <label className={baseClassNames} style={style}>
-        <input
-          className="File__self"
-          type="file"
-          onChange={this.changeHandler}
-          {...removeObjectKeys(this.props, ['onChange', 'style', 'label', 'alignment', 'appearance'])}
-        />
-        <Button alignment={alignment} appearance={appearance}>{label}</Button>
-      </label>
+      <Button
+        alignment={alignment}
+        appearance={appearance}
+        onClick={() => {}}
+        className={baseClassNames}
+        style={style}
+      >
+        <label className="File__in">
+          <input
+            className="File__self"
+            type="file"
+            onChange={this.changeHandler}
+            {...removeObjectKeys(this.props, ['onChange', 'style', 'label', 'alignment', 'appearance'])}
+          />
+        </label>
+        {label}
+      </Button>
     );
   }
 }
