@@ -367,17 +367,17 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 64px;
+    height: 56px;
     }
 
     .View--android .View__header-in {
-      height: 64px;
+      height: 56px;
       box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
       }
 
       .View--android .View__header-item {
         top: 0;
-        height: 64px;
+        height: 56px;
         padding: 0 10px;
         }
 
@@ -458,7 +458,7 @@
       background: #fff;
       }
     .View--android.View--header .View__panel {
-      padding-top: 64px;
+      padding-top: 56px;
       }
 
       .View--android .View__panel-in {
