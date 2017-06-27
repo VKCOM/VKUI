@@ -16,6 +16,10 @@ body {
   overflow-x: hidden;
 }
 
+a:focus {
+  outline: none;
+}
+
 /*
 body.locked {
   position: fixed;
