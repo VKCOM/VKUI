@@ -126,6 +126,9 @@
       border-radius: 0 0 12px 12px;
       margin: 0;
       }
+    .Alert--ios.Alert--v .Alert__btn:last-child::after {
+      content: none;
+      }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .Alert--ios .Alert__content::after {
@@ -156,9 +159,6 @@
       top: auto;
       bottom: 100%;
       background: linear-gradient(to bottom, transparent 50%, #e0e0e0 50%);
-      }
-    .Alert--ios.Alert--v .Alert__btn:last-child::after {
-      content: none;
       }
   }
 

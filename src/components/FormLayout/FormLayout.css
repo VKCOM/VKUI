@@ -23,7 +23,7 @@
   bottom: 100%;
   }
 .FormLayout--ios.FormLayout::after {
-  top: 100%;
+  bottom: 0;
   }
 
   .FormLayout__row {
