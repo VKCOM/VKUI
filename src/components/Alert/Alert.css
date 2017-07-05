@@ -4,6 +4,10 @@
   user-select: none;
   }
 
+  .Alert__btn {
+    white-space: nowrap;
+    }
+
 /**
  * iOS version
  */
@@ -49,6 +53,7 @@
   .Alert__footer {
     display: flex;
     margin-top: 1px;
+    max-width: 100%;
     }
 
   .Alert--ios.Alert--h .Alert__footer {}
@@ -62,16 +67,18 @@
     .Alert--ios .Alert__btn {
       position: relative;
       background: #fafafa;
-      flex: 1 0 auto;
+      flex: 1 1 auto;
       font-size: 17px;
       line-height: 44px;
       color: #007AFF;
       border: 0;
-      padding: 0;
+      padding: 0 6px;
       margin: 0;
       height: 44px;
       display: block;
       outline: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
       }
     .Alert--ios .Alert__btn:active {
       z-index: 1;
@@ -81,7 +88,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 100%;
+      right: 0;
       width: 1px;
       height: auto;
       background: #e0e0e0;
@@ -94,28 +101,29 @@
     .Alert--ios .Alert__btn--primary {
       font-weight: 500;
       }
-
     .Alert--ios.Alert--h .Alert__btn {
-      margin-right: 1px;
+      padding-right: 7px;
       }
     .Alert--ios.Alert--h .Alert__btn:first-child {
       border-radius: 0 0 0 12px;
       }
     .Alert--ios.Alert--h .Alert__btn:last-child {
       border-radius: 0 0 12px 0;
-      margin: 0;
+      padding-right: 6px;
       }
     .Alert--ios.Alert--h .Alert__btn:first-child:last-child {
       border-radius: 0 0 12px 12px;
       }
 
     .Alert--ios.Alert--v .Alert__btn {
-      margin: 0 0 1px;
+      padding-bottom: 1px;
       }
+    .Alert--ios.Alert--v .Alert__btn.Tappable--active::before,
     .Alert--ios.Alert--v .Alert__btn::after {
       content: '';
       position: absolute;
-      top: 100%;
+      top: auto;
+      bottom: 0;
       right: 0;
       left: 0;
       width: 100%;
@@ -124,7 +132,7 @@
       }
     .Alert--ios.Alert--v .Alert__btn:last-child {
       border-radius: 0 0 12px 12px;
-      margin: 0;
+      padding-bottom: 0;
       }
     .Alert--ios.Alert--v .Alert__btn:last-child::after {
       content: none;
@@ -147,13 +155,7 @@
 
     .Alert--ios.Alert--v .Alert__btn.Tappable--active::before,
     .Alert--ios.Alert--v .Alert__btn::after {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      left: 0;
-      height: 1px;
-      background: linear-gradient(to top, transparent 50%, #e0e0e0 50%);
-      content: '';
+      background: linear-gradient(to bottom, transparent 50%, #e0e0e0 50%);
       }
     .Alert--ios.Alert--v .Alert__btn.Tappable--active::before {
       top: auto;
@@ -213,7 +215,7 @@
       padding: 0;
       margin: 0;
       border: 0;
-      flex: 0 0 auto;
+      flex: 0 1 auto;
       text-transform: uppercase;
       font-weight: 500;
       font-size: 14px;
@@ -223,6 +225,8 @@
       margin-left: 12px;
       color: #5181B8;
       outline: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
       }
 
     .Alert--android .Alert__btn--primary {
