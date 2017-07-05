@@ -44,6 +44,7 @@ export default class File extends Component {
         onClick={() => {}}
         className={baseClassNames}
         style={style}
+        component="div"
       >
         <label className="File__in">
           <input
