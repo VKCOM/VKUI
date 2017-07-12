@@ -19,6 +19,14 @@
   }
 
   /**
+   * Pull to refresh
+   */
+  .View__top {
+    position: absolute;
+    z-index: 1;
+    }
+
+  /**
    * Header
    */
   .View__header {
@@ -144,6 +152,28 @@
 .View--ios {
   font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
   }
+
+  /**
+   * Pull to refresh
+   */
+  .View--ios .View__top {
+    right: 0;
+    left: 0;
+    height: 64px;
+    bottom: 100%;
+    z-index: 5;
+    }
+  .View--ios.View--header .View__top {
+    bottom: calc(100% - 64px);
+    }
+  .View--ios .View__top--fixed {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    }
+  .View--ios.View--header .View__top--fixed {
+    top: 64px;
+    }
 
   /**
    * Header
@@ -358,6 +388,21 @@
 .View--android {
   font-family: Roboto, Droid, 'Open Sans', sans-serif;
   }
+
+  /**
+   * Pull to refresh
+   */
+  .View--android .View__top {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    height: 40px;
+    width: 40px;
+    margin: -20px 0 0 -20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+    }
 
   /**
    * Header
