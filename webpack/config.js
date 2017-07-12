@@ -103,9 +103,10 @@ const prodConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.VKUI_RENDERER': JSON.stringify(process.env.VKUI_RENDERER)
     }),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         screw_ie8: true,
