@@ -167,6 +167,10 @@ export default class Gallery extends Component {
       shiftX: this.calculateIndent(targetIndex),
       current: targetIndex
     });
+    if (this.timeout) {
+      this.clearTimeout();
+      this.setTimeout(this.props.autoplay);
+    }
   };
 
   next = () => {
@@ -218,6 +222,11 @@ export default class Gallery extends Component {
       duration: '.24'
     });
 
+    if (this.timeout) {
+      this.clearTimeout();
+      this.setTimeout(this.props.autoplay);
+    }
+
     return true;
   };
 
@@ -231,8 +240,8 @@ export default class Gallery extends Component {
     });
   };
 
-  setInterval = (duration) => {
-    this.interval = setInterval(() => {
+  setTimeout = (duration) => {
+    this.timeout = setTimeout(() => {
       const { slides, current } = this.state;
       const targetIndex = current < slides.length - 1 ? current + 1 : 0;
 
@@ -240,9 +249,9 @@ export default class Gallery extends Component {
     }, duration);
   }
 
-  clearInterval = () => {
-    if (this.interval) {
-      clearInterval(this.interval);
+  clearTimeout = () => {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
     }
   }
 
@@ -259,25 +268,25 @@ export default class Gallery extends Component {
     window.addEventListener('resize', this.onResize);
 
     if (this.props.autoplay) {
-      this.setInterval(this.props.autoplay);
+      this.setTimeout(this.props.autoplay);
     }
   }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.autoplay && !this.props.autoplay) {
       if (nextProps.autoplay) {
-        this.setInterval(nextProps.autoplay);
+        this.setTimeout(nextProps.autoplay);
       }
     }
     if (!nextProps.autoplay && this.props.autoplay) {
-      this.clearInteral();
+      this.clearTimeout();
     }
   }
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.onResize);
 
-    this.clearInterval();
+    this.clearTimeout();
   }
 
   render () {
