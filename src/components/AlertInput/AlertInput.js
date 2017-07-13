@@ -1,7 +1,7 @@
 import './AlertInput.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import { platform, ANDROID } from '../../lib/platform';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
@@ -14,7 +14,10 @@ const osname = platform();
 const baseClassNames = getClassName('AlertInput');
 
 export default class AlertInput extends Component {
-  render() {
+  static propTypes = {
+    className: PropTypes.string
+  };
+  render () {
     const { className } = this.props;
 
     if (osname === ANDROID) {

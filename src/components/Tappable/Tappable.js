@@ -5,7 +5,7 @@ import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
-import { platform, ANDROID } from '../../lib/platform.js';
+import { platform, ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../Touch/TouchUtils';
 

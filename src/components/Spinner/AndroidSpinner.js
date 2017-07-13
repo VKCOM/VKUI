@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import keyframes from '../../lib/keyframes';
-import styles from '../../lib/styles';
 
 export default class AndroidSpinner extends Component {
   constructor (props) {
@@ -65,12 +64,12 @@ export default class AndroidSpinner extends Component {
 
     return (
       <g
-        style={styles({
+        style={{
           width: size,
           height: size,
           transformOrigin: (0.5 * size) + 'px ' + (0.5 * size) + 'px',
           transform: transform
-        })}
+        }}
       >
         <style dangerouslySetInnerHTML={{ __html: animation }} />
         <circle
@@ -80,12 +79,12 @@ export default class AndroidSpinner extends Component {
           strokeDasharray={offset}
           strokeDashoffset={dashoffset}
           strokeWidth={strokeWidth}
-          style={styles({
+          style={{
             animationName: on ? 'dash' + id : 'none',
             animationTimingFunction: 'ease-in-out',
             animationDuration: duration + 's',
             animationIterationCount: 'infinite'
-          })}
+          }}
           cx={0.5 * size}
           cy={0.5 * size}
           r={0.5 * size - 0.5 * strokeWidth}

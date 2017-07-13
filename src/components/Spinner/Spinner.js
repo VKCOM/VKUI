@@ -2,7 +2,7 @@ import './Spinner.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import { platform, ANDROID, IOS } from '../../lib/platform';
 import classnames from '../../lib/classnames.js';
 import AndroidSpinner from './AndroidSpinner';
 import IosSpinner from './IosSpinner';

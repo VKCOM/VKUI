@@ -9,18 +9,21 @@ const baseClassNames = getClassName('Textarea');
 export default class Textarea extends Component {
   constructor (props) {
     super(props);
-    this.state = {};
+    this.state = {
+      value: typeof props.value === 'undefined' ? props.initialValue || '' : undefined
+    };
 
     if (typeof props.value !== 'undefined') {
       this.isControlledOutside = true;
-    } else {
-      this.state.value = props.initialValue || '';
     }
   }
   static propTypes = {
     style: PropTypes.object,
+    value: PropTypes.string,
     initialValue: PropTypes.string,
-    grow: PropTypes.bool
+    grow: PropTypes.bool,
+    onChange: PropTypes.func,
+    height: PropTypes.number
   };
   static defaultProps = {
     style: {},
@@ -40,7 +43,6 @@ export default class Textarea extends Component {
       const paddingBottom = parseInt(style.paddingBottom);
 
       let diff = paddingTop + paddingBottom;
-      let height = 0;
 
       if (scrollHeight + diff <= offsetHeight) {
         diff = 0;

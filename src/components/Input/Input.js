@@ -26,6 +26,7 @@ export default class Input extends Component {
       'email', 'number', 'tel', 'url'
     ]),
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
+    value: PropTypes.string,
     initialValue: PropTypes.string,
     onChange: PropTypes.func
   };

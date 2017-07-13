@@ -56,7 +56,7 @@ const config = {
           presets: [
             [
               'es2015',
-              { modules: false },
+              { modules: false }
             ],
             'react'
           ],

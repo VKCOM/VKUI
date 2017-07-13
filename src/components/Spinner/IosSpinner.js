@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styles from '../../lib/styles';
 
 const IOS_PART_HEIGHT = 0.275;
 
@@ -19,10 +18,10 @@ export default class IosSpinner extends Component {
         transform: `rotate(${i * 30}, ${c}, ${c}) translate(0 ${ty})`,
         rx: r,
         ry: r,
-        style: styles({
+        style: {
           fill: props.color,
           animationDelay: Math.round(props.duration / 12 * 100 * (-11 + i)) / 100 + 's'
-        })
+        }
       });
     }
 

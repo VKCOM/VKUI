@@ -1,7 +1,7 @@
 import './Div.css';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import { platform, ANDROID, IOS } from '../../lib/platform';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';

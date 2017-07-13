@@ -59,7 +59,7 @@ export default class Gallery extends Component {
 
    * @returns {Array} Массив с объектами, описывающими габариты слайда
    */
-  getSlidesCoords() {
+  getSlidesCoords () {
     const children = this.getChildren();
 
     return children.map((item, i) => {
@@ -72,7 +72,6 @@ export default class Gallery extends Component {
       };
     });
   }
-
 
   /**
    * Считает отступ слоя галереи во время драга
@@ -123,7 +122,7 @@ export default class Gallery extends Component {
     return value;
   }
 
-  isDraggable() {
+  isDraggable () {
     return this.state.layerWidth > this.state.containerWidth;
   }
 
@@ -146,7 +145,7 @@ export default class Gallery extends Component {
       return previousValue < currentValue ? val : index;
     }, current);
 
-    if (targetIndex == current) {
+    if (targetIndex === current) {
       let targetSlide = current + direction;
 
       if (targetSlide >= 0 && targetSlide < slides.length) {
@@ -159,7 +158,7 @@ export default class Gallery extends Component {
     return targetIndex;
   }
 
-  getChildren() {
+  getChildren () {
     return [].concat(this.props.children).filter(a => !!a);
   }
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import animate from '../../lib/animate';
 import getClassName from '../../helpers/getClassName';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import { platform, ANDROID, IOS } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import Spinner from '../Spinner/Spinner';
 
@@ -35,7 +35,7 @@ export default class View extends Component {
     children: PropTypes.node,
     popout: PropTypes.node,
     onTransition: PropTypes.func,
-    onPull: PropTypes.func,
+    onPull: PropTypes.func
   };
   static defaultProps = {
     style: {},
@@ -49,7 +49,7 @@ export default class View extends Component {
   pulled = false;
   started = false;
 
-  componentDidMount() {
+  componentDidMount () {
     if (this.props.onPull) {
       window.addEventListener('scroll', this.onScroll);
       this.scrollListener = true;
@@ -94,7 +94,8 @@ export default class View extends Component {
       // @TODO Lock overscroll on window
       this.setState({
         visiblePanels: [activePanel, nextProps.activePanel],
-        scrolls, isBack
+        scrolls,
+        isBack
       }, function () {
         // document.body.classList.add('locked');
 
@@ -147,7 +148,7 @@ export default class View extends Component {
     }
   }
 
-  blurActiveElement() {
+  blurActiveElement () {
     if (typeof window !== 'undefined' && document.activeElement) {
       document.activeElement.blur();
     }
@@ -181,7 +182,7 @@ export default class View extends Component {
         // reset scrollTop for all panels
         const panels = document.querySelectorAll('.View__panel');
 
-        Array.prototype.forEach.call(panels, function(panel) {
+        Array.prototype.forEach.call(panels, function (panel) {
           if (!panel.classList.contains('View__panel--active')) {
             panel.scrollTop = 0;
           }
@@ -309,7 +310,7 @@ export default class View extends Component {
     const { activePanel } = this.state;
 
     if (activePanel) {
-      const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;;
+      const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
 
       if (scrollTop) {
         animate({
