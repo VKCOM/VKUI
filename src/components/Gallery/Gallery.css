@@ -6,7 +6,6 @@
 
   .Gallery__viewport {
     margin: 0;
-    width: 50%;
     height: 100%;
     }
 
@@ -23,3 +22,8 @@
     height: 100%;
     flex: 0 0 auto;
     }
+
+    .Gallery__slide > * {
+      width: 100%;
+      height: 100%;
+      }

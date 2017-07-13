@@ -19,12 +19,14 @@ export default class Touch extends Component {
     onEnd: PropTypes.func,
     onEndX: PropTypes.func,
     onEndY: PropTypes.func,
+    useCapture: PropTypes.bool,
     component: PropTypes.string,
     children: PropTypes.node
   };
   static defaultProps = {
     component: 'div',
-    children: ''
+    children: '',
+    useCapture: true
   };
 
   /**
@@ -59,9 +61,9 @@ export default class Touch extends Component {
       this.props.onStartY(outputEvent);
     }
 
-    document.addEventListener(events[1], this.onMove);
-    document.addEventListener(events[2], this.onEnd);
-    document.addEventListener(events[3], this.onEnd);
+    document.body.addEventListener(events[1], this.onMove, this.props.useCapture);
+    document.body.addEventListener(events[2], this.onEnd, this.props.useCapture);
+    document.body.addEventListener(events[3], this.onEnd, this.props.useCapture);
   }
 
   /**
@@ -216,6 +218,7 @@ export default class Touch extends Component {
       'onEnd',
       'onEndX',
       'onEndY',
+      'useCapture',
       'component'
     ]);
 

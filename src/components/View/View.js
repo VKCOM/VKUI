@@ -206,7 +206,7 @@ export default class View extends Component {
       return;
     }
 
-    const scroll = document.body.scrollTop || document.documentElement.scrollTop;;
+    const scroll = document.body.scrollTop || document.documentElement.scrollTop;
 
     if (this.prevScrollTopValue >= 0 && scroll <= 0 && this.startShift !== null) {
       this.startShift = e.shiftY;
@@ -305,19 +305,18 @@ export default class View extends Component {
     // если уже не вставили в DOM и abs(координата) <= maxpull фиксируем спиннер, вставляем заглушку, скроллим мгновенно до нуля
   }
 
-  onHeaderClick = () => { // @TODO scroll window
+  onHeaderClick = () => {
     const { activePanel } = this.state;
 
     if (activePanel) {
-      const elem = this.refsStore[activePanel];
-      const scrollTop = elem.scrollTop;
+      const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;;
 
       if (scrollTop) {
         animate({
           duration: 200,
           timing: n => Math.sqrt(n),
           draw: (val) => {
-            elem.scrollTop = scrollTop - val * scrollTop;
+            window.scrollTo(0, scrollTop - val * scrollTop);
           }
         });
       }
@@ -388,7 +387,7 @@ export default class View extends Component {
                     <div className="View__header-left-in">{panel.props.header.left}</div>
                   </div>
                   <div className="View__header-title">
-                    {this.state.over}
+                    {panel.props.header.title}
                   </div>
                   <div className="View__header-right">
                     {panel.props.header.right}

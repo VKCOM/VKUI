@@ -27,11 +27,19 @@ export default class Gallery extends Component {
     prevPanel: PropTypes.string,
     nextPanel: PropTypes.string,
     children: PropTypes.node,
-    className: PropTypes.string
+    className: PropTypes.string,
+    style: PropTypes.object,
+    slideWidth: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    autoplay: PropTypes.number
   };
 
   static defaultProps = {
-    children: ''
+    slideWidth: '100%',
+    children: '',
+    autoplay: 0
   };
 
   slidesStore = {};
@@ -76,9 +84,9 @@ export default class Gallery extends Component {
     const indent = shiftX + deltaX;
 
     if (indent > max) {
-      return max + Number((indent - max) / 5);
+      return max + Number((indent - max) / 3);
     } else if (indent < min) {
-      return min + Number((indent - min) / 5);
+      return min + Number((indent - min) / 3);
     }
 
     return indent;
@@ -116,11 +124,8 @@ export default class Gallery extends Component {
   }
 
   isDraggable() {
-    const { layerWidth, containerWidth } = this.state;
-
-    return layerWidth > containerWidth;
+    return this.state.layerWidth > this.state.containerWidth;
   }
-
 
   /**
    * Получает индекс слайда, к которому будет осуществлен переход
@@ -128,8 +133,9 @@ export default class Gallery extends Component {
    * @returns {Number} Индекс слайда
    */
   getTarget () {
-    const { slides, current, deltaX, shiftX } = this.state;
-    const shift = shiftX + deltaX;
+    const { slides, current, deltaX, shiftX, startT } = this.state;
+    const expectDeltaX = deltaX / (new Date() - startT) * 240 * 0.6;
+    const shift = shiftX + deltaX + expectDeltaX;
     const direction = deltaX < 0 ? 1 : -1;
 
     // Находим ближайшую границу слайда к текущему отступу
@@ -157,29 +163,32 @@ export default class Gallery extends Component {
     return [].concat(this.props.children).filter(a => !!a);
   }
 
+  go = (targetIndex) => {
+    this.setState({
+      shiftX: this.calculateIndent(targetIndex),
+      current: targetIndex
+    });
+  };
 
   next = () => {
     const { slides, current } = this.state;
     const targetIndex = current < slides.length - 1 ? current + 1 : current;
 
-    this.setState({
-      shiftX: this.calculateIndent(targetIndex),
-      current: targetIndex
-    });
+    this.go(targetIndex);
   };
 
   prev = () => {
     const { current } = this.state;
     const targetIndex = current > 0 ? current - 1 : current;
 
-    this.setState({
-      shiftX: this.calculateIndent(targetIndex),
-      current: targetIndex
-    });
+    this.go(targetIndex);
   };
 
-  onStart = () => {
-    this.setState({ animation: false });
+  onStart = (e) => {
+    this.setState({
+      animation: false,
+      startT: e.startT
+    });
   };
 
   onMove = (e) => {
@@ -192,6 +201,10 @@ export default class Gallery extends Component {
         deltaX: e.shiftX,
         dragging: e.isSlide
       });
+      e.originalEvent.preventDefault();
+      e.originalEvent.stopPropagation();
+
+      return true;
     }
   };
 
@@ -206,8 +219,7 @@ export default class Gallery extends Component {
       duration: '.24'
     });
 
-    // Костыль для того, чтобы при драге не происходило клика по вложенным ссылкам
-    // setTimeout(() => this.setState({ dragging: false }), 0);
+    return true;
   };
 
   onResize = () => {
@@ -220,6 +232,21 @@ export default class Gallery extends Component {
     });
   };
 
+  setInterval = (duration) => {
+    this.interval = setInterval(() => {
+      const { slides, current } = this.state;
+      const targetIndex = current < slides.length - 1 ? current + 1 : 0;
+
+      this.go(targetIndex);
+    }, duration);
+  }
+
+  clearInterval = () => {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
   getContainerRef = (container) => {
     this.container = container;
   };
@@ -231,16 +258,34 @@ export default class Gallery extends Component {
   componentDidMount () {
     this.initializeSlides();
     window.addEventListener('resize', this.onResize);
+
+    if (this.props.autoplay) {
+      this.setInterval(this.props.autoplay);
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.autoplay && !this.props.autoplay) {
+      if (nextProps.autoplay) {
+        this.setInterval(nextProps.autoplay);
+      }
+    }
+    if (!nextProps.autoplay && this.props.autoplay) {
+      this.clearInteral();
+    }
   }
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.onResize);
+
+    this.clearInterval();
   }
 
   render () {
     const { animation, duration, current, dragging } = this.state;
+    const { className, style, slideWidth } = this.props;
     const indent = dragging ? this.calculateDragIndent() : this.calculateIndent(current);
-    const classname = classnames(baseClassNames, this.props.className, {
+    const classname = classnames(baseClassNames, className, {
       'Gallery--dragging': dragging
     });
     const layerStyle = {
@@ -249,12 +294,14 @@ export default class Gallery extends Component {
     };
 
     return (
-      <div className={classname} ref={this.getContainerRef}>
+      <div className={classname} style={style} ref={this.getContainerRef}>
         <Touch
+          useCapture={true}
           className="Gallery__viewport"
           onStart={this.onStart}
           onMove={this.onMove}
           onEnd={this.onEnd}
+          style={{ width: slideWidth }}
         >
           <div className="Gallery__layer" style={layerStyle}>
             {this.getChildren().map((item, i) => (
