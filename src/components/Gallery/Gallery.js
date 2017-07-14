@@ -19,6 +19,8 @@ export default class Gallery extends Component {
       animation: true,
       duration: 0.24
     };
+
+    this.slides = this.getChildren(props.children);
   }
 
   static propTypes = {
@@ -59,17 +61,20 @@ export default class Gallery extends Component {
    * @returns {Array} Массив с объектами, описывающими габариты слайда
    */
   getSlidesCoords () {
-    const children = this.getChildren();
+    return [].concat(this.props.children).reduce((acc, item, i) => {
+      if (item) {
+        const elem = this.slidesStore[`slide-${i}`];
+        const res = {
+          coordX: elem.offsetLeft,
+          width: elem.offsetWidth,
+          id: item.props.id
+        };
 
-    return children.map((item, i) => {
-      const elem = this.slidesStore[`slide-${i}`];
+        acc.push(res);
+      }
 
-      return {
-        coordX: elem.offsetLeft,
-        width: elem.offsetWidth,
-        id: item.props.id
-      };
-    });
+      return acc;
+    }, []);
   }
 
   /**
@@ -157,10 +162,6 @@ export default class Gallery extends Component {
     return targetIndex;
   }
 
-  getChildren () {
-    return [].concat(this.props.children).filter(a => !!a);
-  }
-
   go = (targetIndex) => {
     this.setState({
       shiftX: this.calculateIndent(targetIndex),
@@ -200,10 +201,12 @@ export default class Gallery extends Component {
     }
 
     if (e.isSlideX) {
-      this.setState({
-        deltaX: e.shiftX,
-        dragging: e.isSlideX
-      });
+      if (this.state.deltaX !== e.shiftX || this.state.dragging !== e.isSlideX) {
+        this.setState({
+          deltaX: e.shiftX,
+          dragging: e.isSlideX
+        });
+      }
       e.originalEvent.preventDefault();
       e.originalEvent.stopPropagation();
 
@@ -259,6 +262,21 @@ export default class Gallery extends Component {
     clearTimeout(this.timeout);
   }
 
+  getChildren (children) {
+    return [].concat(children || this.props.children).reduce(this.reduceChildren, []);
+  }
+
+  reduceChildren = (acc, item, i) => {
+    if (item) {
+      const key = item.props.key || item.props.id || `slide-${i}`;
+      const ref = this.getSlideRef(i);
+
+      acc.push(<div className="Gallery__slide" key={key} ref={ref}>{item}</div>);
+    }
+
+    return acc;
+  }
+
   getContainerRef = (container) => {
     this.container = container;
   };
@@ -276,7 +294,17 @@ export default class Gallery extends Component {
     }
   }
 
+  componentDidUpdate () {
+    if (this.isChildrenDirty) {
+      this.isChildrenDirty = false;
+      this.initializeSlides();
+    }
+  }
+
   componentWillReceiveProps (nextProps) {
+    this.slides = this.getChildren();
+    this.isChildrenDirty = true;
+
     if (nextProps.autoplay && !this.props.autoplay) {
       if (nextProps.autoplay) {
         this.setTimeout(nextProps.autoplay);
@@ -316,14 +344,7 @@ export default class Gallery extends Component {
           style={{ width: slideWidth }}
         >
           <div className="Gallery__layer" style={layerStyle}>
-            {this.getChildren().map((item, i) => (
-              <div className="Gallery__slide"
-                key={item.props.key || item.props.id || `slide-${i}`}
-                ref={this.getSlideRef(i)}
-              >
-                {item}
-              </div>
-            ))}
+            {this.slides}
           </div>
         </Touch>
         {this.isDraggable() ? (
