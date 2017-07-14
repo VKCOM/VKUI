@@ -38,7 +38,7 @@
     "eslint-plugin-standard": "^2.0.0",
     "react-dom": "^15.4.2",
     "stylelint": "^7.2.0",
-    "stylelint-config-standard": "^13.0.0"
+    "stylelint-config-standard": "^16.0.0"
   },
   "scripts": {
     "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack/config.js --bail -p --json > stats.json",
