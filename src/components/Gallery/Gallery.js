@@ -2,7 +2,6 @@ import './Gallery.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-// import removeObjectKeys from '../../lib/removeObjectKeys';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 
@@ -167,6 +166,7 @@ export default class Gallery extends Component {
       shiftX: this.calculateIndent(targetIndex),
       current: targetIndex
     });
+
     if (this.timeout) {
       this.clearTimeout();
       this.setTimeout(this.props.autoplay);
@@ -199,10 +199,10 @@ export default class Gallery extends Component {
       return;
     }
 
-    if (e.isSlide) {
+    if (e.isSlideX) {
       this.setState({
         deltaX: e.shiftX,
-        dragging: e.isSlide
+        dragging: e.isSlideX
       });
       e.originalEvent.preventDefault();
       e.originalEvent.stopPropagation();
@@ -231,12 +231,18 @@ export default class Gallery extends Component {
   };
 
   onResize = () => {
+    this.initializeSlides();
+
     const { layerWidth } = this.state;
-    const newContainerWidth = this.refs.container.offsetWidth;
+    const newContainerWidth = this.container.offsetWidth;
 
     this.setState({
+      shiftX: this.calculateIndent(this.state.current),
       containerWidth: newContainerWidth,
-      min: -layerWidth + newContainerWidth
+      min: -layerWidth + newContainerWidth,
+      animation: false
+    }, () => {
+      window.requestAnimationFrame(() => this.setState({ animation: true }));
     });
   };
 
@@ -250,9 +256,7 @@ export default class Gallery extends Component {
   }
 
   clearTimeout = () => {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
+    clearTimeout(this.timeout);
   }
 
   getContainerRef = (container) => {
@@ -306,8 +310,8 @@ export default class Gallery extends Component {
         <Touch
           useCapture={true}
           className="Gallery__viewport"
-          onStart={this.onStart}
-          onMove={this.onMove}
+          onStartX={this.onStart}
+          onMoveX={this.onMove}
           onEnd={this.onEnd}
           style={{ width: slideWidth }}
         >
