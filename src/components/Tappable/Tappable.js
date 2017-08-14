@@ -8,6 +8,7 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 import { platform, ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../Touch/TouchUtils';
+import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
 const ts = () => +Date.now();
 const baseClassNames = getClassName('Tappable');
@@ -105,7 +106,7 @@ export default class Tappable extends Component {
     }
 
     if (this.state.active) {
-      setTimeout(() => this.callback(), 0);
+      requestAnimationFrame(() => this.callback());
 
       if (now - this.state.ts >= 100) {
         // Долгий тап, выключаем подсветку
@@ -121,7 +122,7 @@ export default class Tappable extends Component {
       }
     } else if (!this.isSlide) {
       // Очень короткий тап, включаем подсветку
-      setTimeout(() => this.callback(), 0);
+      requestAnimationFrame(() => this.callback());
 
       this.start();
 

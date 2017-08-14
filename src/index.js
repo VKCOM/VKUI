@@ -51,5 +51,6 @@ export { platform, ANDROID, IOS } from './lib/platform';
 export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { default as getClassName } from './helpers/getClassName';
 export { default as wrapTextNode } from './helpers/wrapTextNode';
+export { default as requestAnimationFrame } from './lib/requestAnimationFrame';
 
 export const v = require('../package.json').version;
