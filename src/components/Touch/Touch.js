@@ -163,9 +163,9 @@ export default class Touch extends Component {
     this.cancelClick = e.target.tagName === 'A' && isSlide;
     this.gesture = {};
 
-    document.removeEventListener(events[1], this.onMove);
-    document.removeEventListener(events[2], this.onEnd);
-    document.removeEventListener(events[3], this.onEnd);
+    document.body.removeEventListener(events[1], this.onMove, this.props.useCapture);
+    document.body.removeEventListener(events[2], this.onEnd, this.props.useCapture);
+    document.body.removeEventListener(events[3], this.onEnd, this.props.useCapture);
   }
 
   /**
