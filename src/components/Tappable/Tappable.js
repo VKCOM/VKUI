@@ -106,7 +106,7 @@ export default class Tappable extends Component {
     }
 
     if (this.state.active) {
-      requestAnimationFrame(() => this.callback());
+      requestAnimationFrame(this.callback);
 
       if (now - this.state.ts >= 100) {
         // Долгий тап, выключаем подсветку
@@ -122,7 +122,7 @@ export default class Tappable extends Component {
       }
     } else if (!this.isSlide) {
       // Очень короткий тап, включаем подсветку
-      requestAnimationFrame(() => this.callback());
+      requestAnimationFrame(this.callback);
 
       this.start();
 
@@ -173,7 +173,7 @@ export default class Tappable extends Component {
    *
    * @returns {void}
    */
-  callback () {
+  callback = () => {
     if (this.props.onClick) {
       this.props.onClick();
     }
