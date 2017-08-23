@@ -29,7 +29,6 @@ export default class Textarea extends Component {
     grow: PropTypes.bool,
     onChange: PropTypes.func,
     onResize: PropTypes.func,
-    height: PropTypes.number,
   };
   static defaultProps = {
     style: {},
@@ -48,7 +47,6 @@ export default class Textarea extends Component {
       const style = window.getComputedStyle(el);
       const paddingTop = parseInt(style.paddingTop);
       const paddingBottom = parseInt(style.paddingBottom);
-      const maxHeight = parseInt(style.maxHeight) || Infinity;
 
       let diff = paddingTop + paddingBottom;
 
@@ -57,7 +55,7 @@ export default class Textarea extends Component {
       }
 
       if (el.value) {
-        this.setState({ height: Math.min(scrollHeight - diff, maxHeight) });
+        this.setState({ height: scrollHeight - diff });
       }
 
       const top = document.body.scrollTop;
@@ -65,12 +63,12 @@ export default class Textarea extends Component {
       this.setState({ height: 0 });
 
       window.requestAnimationFrame(() => {
-        const height = Math.min(el.scrollHeight - diff, maxHeight);
+        const height = el.scrollHeight - diff;
 
         this.setState({ height });
         document.body.scrollTop = top;
 
-        this.props.onResize(height);
+        this.props.onResize(el);
       });
     }
   }
@@ -90,7 +88,7 @@ export default class Textarea extends Component {
   render () {
     const props = this.props;
     const value = this.isControlledOutside ? props.value : this.state.value;
-    const height = this.state.height || props.style.minHeight || 66;
+    const height = this.state.height;
 
     return (
       <textarea
