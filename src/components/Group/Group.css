@@ -12,7 +12,6 @@
   .Group--ios .Group__title {
     font: 13px/18px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     text-transform: uppercase;
-    letter-spacing: .04em;
     color: #6d6d72;
     padding: 0 15px 7px;
     }
