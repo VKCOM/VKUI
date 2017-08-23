@@ -10,8 +10,7 @@ export default class Textarea extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      value: typeof props.value === 'undefined' ? props.initialValue || '' : undefined,
-      minHeight: typeof props.height === 'undefined' ? 66 : props.height
+      value: typeof props.value === 'undefined' ? props.initialValue || '' : undefined
     };
 
     if (typeof props.value !== 'undefined') {
@@ -31,14 +30,12 @@ export default class Textarea extends Component {
     onChange: PropTypes.func,
     onResize: PropTypes.func,
     height: PropTypes.number,
-    maxHeight: PropTypes.number,
   };
   static defaultProps = {
     style: {},
     initialValue: '',
     grow: true,
     onResize: () => {},
-    maxHeight: Infinity,
   };
   getRef = (element) => {
     this.element = element;
@@ -51,7 +48,7 @@ export default class Textarea extends Component {
       const style = window.getComputedStyle(el);
       const paddingTop = parseInt(style.paddingTop);
       const paddingBottom = parseInt(style.paddingBottom);
-      const maxHeight = this.props.maxHeight;
+      const maxHeight = parseInt(style.maxHeight) || Infinity;
 
       let diff = paddingTop + paddingBottom;
 
@@ -93,12 +90,12 @@ export default class Textarea extends Component {
   render () {
     const props = this.props;
     const value = this.isControlledOutside ? props.value : this.state.value;
-    const height = this.state.height || this.state.minHeight;
+    const height = this.state.height || props.style.minHeight || 66;
 
     return (
       <textarea
         className={baseClassNames}
-        {...removeObjectKeys(props, ['initialValue', 'grow', 'style', 'onResize', 'maxHeight'])}
+        {...removeObjectKeys(props, ['initialValue', 'grow', 'style', 'onResize'])}
         value={value}
         onChange={this.onChange}
         ref={this.getRef}
