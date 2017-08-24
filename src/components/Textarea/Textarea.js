@@ -17,26 +17,32 @@ export default class Textarea extends Component {
       this.isControlledOutside = true;
     }
   }
+  componentDidMount() {
+    if (this.props.grow) {
+      this.resize();
+    }
+  }
   static propTypes = {
     style: PropTypes.object,
     value: PropTypes.string,
     initialValue: PropTypes.string,
     grow: PropTypes.bool,
     onChange: PropTypes.func,
-    height: PropTypes.number
+    onResize: PropTypes.func,
   };
   static defaultProps = {
     style: {},
     initialValue: '',
-    grow: true
+    grow: true,
+    onResize: () => {},
   };
   getRef = (element) => {
     this.element = element;
   }
-  onChange = (e) => {
-    let el = this.element;
+  resize = () => {
+    const el = this.element;
 
-    if (el && this.props.grow) {
+    if (el) {
       const { offsetHeight, scrollHeight } = el;
       const style = window.getComputedStyle(el);
       const paddingTop = parseInt(style.paddingTop);
@@ -57,9 +63,18 @@ export default class Textarea extends Component {
       this.setState({ height: 0 });
 
       window.requestAnimationFrame(() => {
-        this.setState({ height: el.scrollHeight - diff });
+        const height = el.scrollHeight - diff;
+
+        this.setState({ height });
         document.body.scrollTop = top;
+
+        this.props.onResize(el);
       });
+    }
+  }
+  onChange = (e) => {
+    if (this.props.grow) {
+      this.resize();
     }
 
     if (!this.isControlledOutside) {
@@ -73,12 +88,12 @@ export default class Textarea extends Component {
   render () {
     const props = this.props;
     const value = this.isControlledOutside ? props.value : this.state.value;
-    const height = this.state.height || 66;
+    const height = this.state.height || this.props.style.height || 66;
 
     return (
       <textarea
         className={baseClassNames}
-        {...removeObjectKeys(props, ['initialValue', 'grow', 'style'])}
+        {...removeObjectKeys(props, ['initialValue', 'grow', 'style', 'onResize'])}
         value={value}
         onChange={this.onChange}
         ref={this.getRef}
