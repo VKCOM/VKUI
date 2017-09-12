@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -9,6 +10,7 @@ const cssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
 
 const isProduction = process.env.NODE_ENV === 'production';
+const version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf-8')).version;
 
 const cssTransformOptions = [
   {
@@ -103,8 +105,8 @@ const prodConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-      'process.env.VKUI_RENDERER': JSON.stringify(process.env.VKUI_RENDERER)
+      'process.env.NODE_ENV': `"production"`,
+      'process.env.VKUI_VERSION': `"${version}"`
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
