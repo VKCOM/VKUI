@@ -228,8 +228,8 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   getContainer = (container) => {
-    if (container && container.container) {
-      this.container = container.container;
+    if (container) {
+      this.container = container.container || container;
     }
     return;
   };
