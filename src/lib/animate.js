@@ -1,3 +1,5 @@
+import requestAnimationFrame from './requestAnimationFrame';
+
 export default function animate (options) {
   if (typeof window === 'undefined') {
     return;
@@ -5,7 +7,7 @@ export default function animate (options) {
 
   const start = window.performance.now();
 
-  window.requestAnimationFrame(function animate (time) {
+  requestAnimationFrame(function animate (time) {
     let timeFraction = (time - start) / options.duration;
 
     if (timeFraction > 1) {
@@ -17,7 +19,7 @@ export default function animate (options) {
     options.draw(progress);
 
     if (timeFraction < 1) {
-      window.requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
     }
   });
 }

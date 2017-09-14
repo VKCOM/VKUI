@@ -7,6 +7,7 @@ import getClassName from '../../helpers/getClassName';
 import { platform, ANDROID, IOS } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import Spinner from '../Spinner/Spinner';
+import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
 const osname = platform();
 const baseClassNames = getClassName('View');
@@ -120,7 +121,7 @@ export default class View extends Component {
     if (this.state.visiblePanels.length === 2 && !this.state.animated) {
       const [ prevPanel, nextPanel ] = this.state.visiblePanels;
 
-      window.requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         this.setState({
           prevPanel: prevPanel,
           nextPanel: nextPanel,
@@ -132,7 +133,7 @@ export default class View extends Component {
 
     // Popout disappearance: restore scroll
     if (!this.props.popout && scrolls[this.state.activePanel]) {
-      window.requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         window.scrollTo(0, scrolls[this.state.activePanel]);
       });
     }
