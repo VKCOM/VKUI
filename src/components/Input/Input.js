@@ -44,10 +44,15 @@ export default class Input extends Component {
       this.props.onChange(e);
     }
   }
-  getRef = (element) => this.element = element;
-  componentDidUpdate(prevProps) {
+  getRef = (element) => {
+    this.element = element;
+  };
+  componentDidUpdate (prevProps) {
     if (prevProps.value && this.props.value === '') {
-      requestAnimationFrame(() => this.element.value = ''); // Fix iOS extra indent on removing content
+      // Fix iOS extra indent on removing content
+      requestAnimationFrame(() => {
+        this.element.value = '';
+      });
     }
   }
   render () {

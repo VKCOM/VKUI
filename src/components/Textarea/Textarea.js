@@ -18,7 +18,7 @@ export default class Textarea extends Component {
       this.isControlledOutside = true;
     }
   }
-  componentDidMount() {
+  componentDidMount () {
     if (this.props.grow) {
       this.resize();
     }
@@ -29,15 +29,17 @@ export default class Textarea extends Component {
     initialValue: PropTypes.string,
     grow: PropTypes.bool,
     onChange: PropTypes.func,
-    onResize: PropTypes.func,
+    onResize: PropTypes.func
   };
   static defaultProps = {
     style: {},
     initialValue: '',
     grow: true,
-    onResize: () => {},
+    onResize: () => {}
   };
-  getRef = (element) => this.element = element;
+  getRef = (element) => {
+    this.element = element;
+  };
   resize = () => {
     const el = this.element;
 
@@ -84,9 +86,12 @@ export default class Textarea extends Component {
       this.props.onChange(e);
     }
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     if (prevProps.value && this.props.value === '') {
-      requestAnimationFrame(() => this.element.value = ''); // Fix iOS extra indent on removing content
+      // Fix iOS extra indent on removing content
+      requestAnimationFrame(() => {
+        this.element.value = '';
+      });
     }
   }
   render () {
