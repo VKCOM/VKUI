@@ -26,6 +26,7 @@ export default function FormLayout (props) {
           </div>
         </label>
       ))}
+      {TagName === 'form' && <input type="submit" style={{ display: 'none' }} />}
     </TagName>
   );
 }
