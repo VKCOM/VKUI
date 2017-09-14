@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
+import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
 const baseClassNames = getClassName('Textarea');
 
@@ -36,9 +37,7 @@ export default class Textarea extends Component {
     grow: true,
     onResize: () => {},
   };
-  getRef = (element) => {
-    this.element = element;
-  }
+  getRef = (element) => this.element = element;
   resize = () => {
     const el = this.element;
 
@@ -62,7 +61,7 @@ export default class Textarea extends Component {
 
       this.setState({ height: 0 });
 
-      window.requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
         const height = el.scrollHeight - diff;
 
         this.setState({ height });
@@ -83,6 +82,11 @@ export default class Textarea extends Component {
 
     if (this.props.onChange) {
       this.props.onChange(e);
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.value && this.props.value === '') {
+      requestAnimationFrame(() => this.element.value = ''); // Fix iOS extra indent on removing content
     }
   }
   render () {
