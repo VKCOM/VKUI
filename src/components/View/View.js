@@ -80,9 +80,12 @@ export default class View extends Component {
     if (activePanel !== nextProps.activePanel) {
       pageYOffset = pageYOffset || window.pageYOffset;
 
-      const firstLayerId = this.props.children.find(panel => {
-        return panel.props.id === activePanel || panel.props.id === nextProps.activePanel;
-      }).props.id;
+      const firstLayerId = this.props.children
+        .reduce((acc, item) => acc.concat(item), [])
+        .map(this.mapChildren)
+        .find(panel => {
+          return panel.id === activePanel || panel.id === nextProps.activePanel;
+        }).id;
       const isBack = firstLayerId === nextProps.activePanel;
 
       scrolls = scrolls || Object.assign({}, this.state.scrolls, {
@@ -326,28 +329,43 @@ export default class View extends Component {
   }
 
   getRef = (c) => {
-    if (c && c.container && c.props.id) {
+    if (c && c.container && c.id) {
       let el = c;
 
       while (el.container) {
         el = el.container;
       }
 
-      this.refsStore[c.props.id] = el;
+      this.refsStore[c.id] = el;
     }
   }
+
+  mapChildren = (item) => {
+    return Object.assign({}, item, {
+      id: item.props.id || item.key
+    });
+  };
 
   render () {
     const { style, popout, header, onPull } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
     const hasPopout = !!popout;
     const hasHeader = header !== null;
-    const panels = [].concat(this.props.children).filter(panel => this.state.visiblePanels.indexOf(panel.props.id) > -1);
+    const panels = []
+        .concat(this.props.children)
+        .reduce((acc, item) => acc.concat(item), [])
+        .map(this.mapChildren)
+        .filter(panel => this.state.visiblePanels.indexOf(panel.id) > -1);
     const modifiers = {
       'View--header': hasHeader,
       'View--popout': hasPopout,
       'View--animated': this.state.visiblePanels.length === 2
     };
+    const panelActive = panels.filter(panel => panel.id === activePanel)[0];
+    const headerClassName = panelActive &&
+      panelActive.props &&
+      panelActive.props.header &&
+      panelActive.props.header.className;
     let Component = 'section';
     let componentProps = {};
     // let spinnerStyles = {};
@@ -373,16 +391,16 @@ export default class View extends Component {
         {...componentProps}
       >
         {hasHeader && (
-          <div className="View__header" onClick={this.onHeaderClick}>
+          <div className={classnames('View__header', headerClassName)} onClick={this.onHeaderClick}>
             <div className="View__header-in">
               {panels.map((panel, i) => (
                 <div
                   className={classnames('View__header-item', {
-                    'View__header-item--active': panel.props.id === activePanel,
-                    'View__header-item--prev': panel.props.id === prevPanel,
-                    'View__header-item--next': panel.props.id === nextPanel
+                    'View__header-item--active': panel.id === activePanel,
+                    'View__header-item--prev': panel.id === prevPanel,
+                    'View__header-item--next': panel.id === nextPanel
                   })}
-                  key={panel.key || panel.props.id || `panel-header-${i}`}
+                  key={panel.key || panel.id || `panel-header-${i}`}
                 >
                   <div className="View__header-left">
                     <div className="View__header-icon">{panel.props.header.icon}</div>
@@ -403,12 +421,12 @@ export default class View extends Component {
           {panels.map((panel, i) => (
             <div
               className={classnames('View__panel', {
-                'View__panel--active': panel.props.id === activePanel,
-                'View__panel--prev': panel.props.id === prevPanel,
-                'View__panel--next': panel.props.id === nextPanel
+                'View__panel--active': panel.id === activePanel,
+                'View__panel--prev': panel.id === prevPanel,
+                'View__panel--next': panel.id === nextPanel
               })}
-              onTransitionEnd={panel.props.id === nextPanel ? this.transitionEndHandler : null}
-              key={panel.key || panel.props.id || `panel-${i}`}
+              onTransitionEnd={panel.id === nextPanel ? this.transitionEndHandler : null}
+              key={panel.key || panel.id || `panel-${i}`}
             >
               {onPull && (
                 <div className={'View__top'} style={this.state.pullStyles || {}}>
