@@ -28,6 +28,9 @@ export default class View extends Component {
       on: false
     };
     this.panels = this.getPanels(props.children);
+    this.activePanel = this.panels.filter(panel => {
+        return panel.id === props.activePanel;
+    })[0];
   }
 
   static propTypes = {
@@ -85,10 +88,11 @@ export default class View extends Component {
     if (activePanel !== nextProps.activePanel) {
       pageYOffset = pageYOffset || window.pageYOffset;
 
-      const firstLayer = this.panels.filter(panel => {
-        return panel.id === activePanel || panel.id === nextProps.activePanel;
+      this.activePanel = this.panels.filter(panel => {
+          return panel.id === activePanel || panel.id === nextProps.activePanel;
       })[0];
-      const isBack = firstLayer && firstLayer.id === nextProps.activePanel;
+
+      const isBack = this.activePanel && this.activePanel.id === nextProps.activePanel;
 
       scrolls = scrolls || Object.assign({}, this.state.scrolls, {
         [activePanel]: pageYOffset
@@ -362,7 +366,7 @@ export default class View extends Component {
       'View--popout': hasPopout,
       'View--animated': this.state.visiblePanels.length === 2
     };
-    const panelActive = panels.filter(panel => panel.id === activePanel)[0];
+    const panelActive = this.activePanel;
     const headerClassName = panelActive &&
       panelActive.props &&
       panelActive.props.header &&
