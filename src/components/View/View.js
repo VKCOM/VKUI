@@ -27,6 +27,7 @@ export default class View extends Component {
       scrolls: {},
       on: false
     };
+    this.panels = this.getPanels(props.children);
   }
 
   static propTypes = {
@@ -76,17 +77,18 @@ export default class View extends Component {
       });
     }
 
+    if (this.props.children !== nextProps.children) {
+      this.panels = this.getPanels(nextProps.children);
+    }
+
     // Panel transition
     if (activePanel !== nextProps.activePanel) {
       pageYOffset = pageYOffset || window.pageYOffset;
 
-      const firstLayerId = this.props.children
-        .reduce((acc, item) => acc.concat(item), [])
-        .map(this.mapChildren)
-        .find(panel => {
-          return panel.id === activePanel || panel.id === nextProps.activePanel;
-        }).id;
-      const isBack = firstLayerId === nextProps.activePanel;
+      const firstLayer = this.panels.filter(panel => {
+        return panel.id === activePanel || panel.id === nextProps.activePanel;
+      })[0];
+      const isBack = firstLayer && firstLayer.id === nextProps.activePanel;
 
       scrolls = scrolls || Object.assign({}, this.state.scrolls, {
         [activePanel]: pageYOffset
@@ -338,12 +340,15 @@ export default class View extends Component {
 
       this.refsStore[c.id] = el;
     }
-  }
+  };
 
-  mapChildren = (item) => {
-    return Object.assign({}, item, {
-      id: item.props.id || item.key
-    });
+  getPanels = (panels) => {
+    return []
+      .concat(panels)
+      .reduce((acc, item) => acc.concat(item), [])
+      .map((item) => Object.assign({}, item, {
+          id: item.props.id || item.key
+      }));
   };
 
   render () {
@@ -351,11 +356,7 @@ export default class View extends Component {
     const { prevPanel, nextPanel, activePanel } = this.state;
     const hasPopout = !!popout;
     const hasHeader = header !== null;
-    const panels = []
-        .concat(this.props.children)
-        .reduce((acc, item) => acc.concat(item), [])
-        .map(this.mapChildren)
-        .filter(panel => this.state.visiblePanels.indexOf(panel.id) > -1);
+    const panels = this.panels.filter(panel => this.state.visiblePanels.indexOf(panel.id) > -1);
     const modifiers = {
       'View--header': hasHeader,
       'View--popout': hasPopout,
