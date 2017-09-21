@@ -88,11 +88,15 @@ export default class View extends Component {
     if (activePanel !== nextProps.activePanel) {
       pageYOffset = pageYOffset || window.pageYOffset;
 
-      this.activePanel = this.panels.filter(panel => {
-          return panel.id === activePanel || panel.id === nextProps.activePanel;
+      const firstLayer = this.panels.filter(panel => {
+        return panel.id === activePanel || panel.id === nextProps.activePanel;
       })[0];
 
-      const isBack = this.activePanel && this.activePanel.id === nextProps.activePanel;
+      this.activePanel = this.panels.filter(panel => {
+        return panel.id === nextProps.activePanel;
+      })[0];
+
+      const isBack = firstLayer && firstLayer.id === nextProps.activePanel;
 
       scrolls = scrolls || Object.assign({}, this.state.scrolls, {
         [activePanel]: pageYOffset
