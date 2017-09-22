@@ -29,7 +29,7 @@ export default class View extends Component {
     };
     this.panels = this.getPanels(props.children);
     this.activePanel = this.panels.filter(panel => {
-        return panel.id === props.activePanel;
+      return panel.id === props.activePanel;
     })[0];
   }
 
@@ -82,6 +82,10 @@ export default class View extends Component {
 
     if (this.props.children !== nextProps.children) {
       this.panels = this.getPanels(nextProps.children);
+
+      this.activePanel = this.panels.filter(panel => {
+        return panel.id === nextProps.activePanel;
+      })[0];
     }
 
     // Panel transition
@@ -90,10 +94,6 @@ export default class View extends Component {
 
       const firstLayer = this.panels.filter(panel => {
         return panel.id === activePanel || panel.id === nextProps.activePanel;
-      })[0];
-
-      this.activePanel = this.panels.filter(panel => {
-        return panel.id === nextProps.activePanel;
       })[0];
 
       const isBack = firstLayer && firstLayer.id === nextProps.activePanel;
@@ -370,11 +370,10 @@ export default class View extends Component {
       'View--popout': hasPopout,
       'View--animated': this.state.visiblePanels.length === 2
     };
-    const panelActive = this.activePanel;
-    const headerClassName = panelActive &&
-      panelActive.props &&
-      panelActive.props.header &&
-      panelActive.props.header.className;
+    const activePanelClassName = this.activePanel &&
+      this.activePanel.props &&
+      this.activePanel.props.header &&
+      this.activePanel.props.header.className;
     let Component = 'section';
     let componentProps = {};
     // let spinnerStyles = {};
@@ -395,12 +394,12 @@ export default class View extends Component {
 
     return (
       <Component
-        className={classnames(baseClassNames, modifiers)}
+        className={classnames(baseClassNames, modifiers, activePanelClassName)}
         style={style}
         {...componentProps}
       >
         {hasHeader && (
-          <div className={classnames('View__header', headerClassName)} onClick={this.onHeaderClick}>
+          <div className="View__header" onClick={this.onHeaderClick}>
             <div className="View__header-in">
               {panels.map((panel, i) => (
                 <div
