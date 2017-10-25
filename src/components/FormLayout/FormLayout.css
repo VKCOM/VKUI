@@ -27,7 +27,6 @@
   }
 
   .FormLayout__row {
-    display: flex;
     position: relative;
     margin: 0;
     white-space: nowrap;
@@ -35,6 +34,7 @@
     max-width: 100%;
     }
   .FormLayout--ios .FormLayout__row {
+    display: flex;
     font-size: 17px;
     }
   .FormLayout--android .FormLayout__row {
@@ -66,7 +66,6 @@
     .FormLayout__label {
       position: relative;
       flex: 0 0 100px;
-      max-width: 100px;
       vertical-align: top;
       }
     .FormLayout--ios .FormLayout__label::before {
@@ -81,8 +80,8 @@
     .FormLayout__row:last-child .FormLayout__label::before {
       content: none;
       }
-    .FormLayout--android .FormLayout__label {
-      display: none;
+    .FormLayout--ios .FormLayout__label {
+      max-width: 100px;
       }
 
       .FormLayout__label-in {
@@ -93,7 +92,10 @@
         padding: 11px 15px 12px;
         }
       .FormLayout--android .FormLayout__label-in {
-        padding: 16px 15px 18px;
+        color: #71757a;
+        font-size: 14px;
+        line-height: 16px;
+        padding: 14px 15px 10px;
         }
 
     .FormLayout__field {
@@ -101,17 +103,33 @@
       padding: 0 15px;
       vertical-align: top;
       }
+      .FormLayout--android .FormLayout__field {
+        position: relative;
+        padding-top: 14px;
+        }
+      .FormLayout--android .FormLayout__label + .FormLayout__field {
+        padding-top: 0;
+        }
+      .FormLayout__field .Input--android,
+      .FormLayout__field .Textarea--android {
+        border-radius: 4px;
+        background-color: #f3f4f5;
+        padding: 10px 16px 12px;
+        width: calc(100% - 32px);
+        }
 
       .FormLayout--ios .FormLayout__underline {
         display: none;
         }
       .FormLayout--android .FormLayout__underline {
         position: absolute;
-        bottom: 9px;
+        border-radius: 0 0 2px 2px;
+        bottom: 0;
         left: 16px;
         right: 16px;
         height: 2px;
-        background: linear-gradient(to top, transparent 50%, #d6d6d6 50%);
+        overflow: hidden;
+        background: #c9cdd1;
         content: '';
         }
       .FormLayout--android .FormLayout__underline::before {
