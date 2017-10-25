@@ -27,7 +27,6 @@
   }
 
   .FormLayout__row {
-    display: flex;
     position: relative;
     margin: 0;
     white-space: nowrap;
@@ -35,10 +34,10 @@
     max-width: 100%;
     }
   .FormLayout--ios .FormLayout__row {
+    display: flex;
     font-size: 17px;
     }
   .FormLayout--android .FormLayout__row {
-    display: block;
     font-size: 16px;
     }
 
@@ -67,7 +66,6 @@
     .FormLayout__label {
       position: relative;
       flex: 0 0 100px;
-      max-width: 100px;
       vertical-align: top;
       }
     .FormLayout--ios .FormLayout__label::before {
@@ -82,10 +80,8 @@
     .FormLayout__row:last-child .FormLayout__label::before {
       content: none;
       }
-    .FormLayout--android .FormLayout__label {
-      display: block;
-      padding: 0;
-      max-width: none;
+    .FormLayout--ios .FormLayout__label {
+      max-width: 100px;
       }
 
       .FormLayout__label-in {
@@ -108,6 +104,7 @@
       vertical-align: top;
       }
       .FormLayout--android .FormLayout__field {
+        position: relative;
         padding-top: 14px;
         }
       .FormLayout--android .FormLayout__label + .FormLayout__field {
