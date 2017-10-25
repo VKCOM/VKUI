@@ -38,6 +38,7 @@
     font-size: 17px;
     }
   .FormLayout--android .FormLayout__row {
+    display: block;
     font-size: 16px;
     }
 
@@ -82,7 +83,9 @@
       content: none;
       }
     .FormLayout--android .FormLayout__label {
-      display: none;
+      display: block;
+      padding: 0;
+      max-width: none;
       }
 
       .FormLayout__label-in {
@@ -93,7 +96,10 @@
         padding: 11px 15px 12px;
         }
       .FormLayout--android .FormLayout__label-in {
-        padding: 16px 15px 18px;
+        color: #71757a;
+        font-size: 14px;
+        line-height: 16px;
+        padding: 14px 15px 10px;
         }
 
     .FormLayout__field {
@@ -101,17 +107,32 @@
       padding: 0 15px;
       vertical-align: top;
       }
+      .FormLayout--android .FormLayout__field {
+        padding-top: 14px;
+        }
+      .FormLayout--android .FormLayout__label + .FormLayout__field {
+        padding-top: 0;
+        }
+      .FormLayout__field .Input--android,
+      .FormLayout__field .Textarea--android {
+        border-radius: 4px;
+        background-color: #f3f4f5;
+        padding: 10px 16px 12px;
+        width: calc(100% - 32px);
+        }
 
       .FormLayout--ios .FormLayout__underline {
         display: none;
         }
       .FormLayout--android .FormLayout__underline {
         position: absolute;
-        bottom: 9px;
+        border-radius: 0 0 2px 2px;
+        bottom: 0;
         left: 16px;
         right: 16px;
         height: 2px;
-        background: linear-gradient(to top, transparent 50%, #d6d6d6 50%);
+        overflow: hidden;
+        background: #c9cdd1;
         content: '';
         }
       .FormLayout--android .FormLayout__underline::before {
