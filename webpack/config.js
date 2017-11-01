@@ -27,7 +27,7 @@ const cssTransformOptions = [
           assets(),
           cssImport(),
           cssCustomProperties(),
-          autoprefixer({ browsers: ['last 2 versions'] })
+          autoprefixer({ browsers: ['last 2 versions', 'android >= 4'] })
         ];
       }
     }
