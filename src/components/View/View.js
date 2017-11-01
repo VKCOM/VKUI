@@ -4,18 +4,12 @@ import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import animate from '../../lib/animate';
 import getClassName from '../../helpers/getClassName';
-import { platform, ANDROID, IOS } from '../../lib/platform';
+import { platform, ANDROID } from '../../lib/platform';
 import Touch from '../Touch/Touch';
-import Spinner from '../Spinner/Spinner';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
 const osname = platform();
 const baseClassNames = getClassName('View');
-const MAXPULL = 60;
-
-// @TODO
-// 2. Pull to refresh
-// 3. Infinite scroll
 
 export default class View extends Component {
   constructor (props) {
@@ -24,8 +18,7 @@ export default class View extends Component {
       visiblePanels: [props.activePanel],
       children: [props.children],
       activePanel: props.activePanel,
-      scrolls: {},
-      on: false
+      scrolls: {}
     };
   }
 
@@ -35,8 +28,7 @@ export default class View extends Component {
     header: PropTypes.object,
     children: PropTypes.node,
     popout: PropTypes.node,
-    onTransition: PropTypes.func,
-    onPull: PropTypes.func
+    onTransition: PropTypes.func
   };
   static defaultProps = {
     style: {},
@@ -45,17 +37,6 @@ export default class View extends Component {
     header: null
   };
   refsStore = {};
-  prevScrollTopValue = 0;
-  startShift = null;
-  pulled = false;
-  started = false;
-
-  componentDidMount () {
-    if (this.props.onPull) {
-      window.addEventListener('scroll', this.onScroll);
-      this.scrollListener = true;
-    }
-  }
 
   componentWillReceiveProps (nextProps) {
     const activePanel = this.state.activePanel;
@@ -137,16 +118,6 @@ export default class View extends Component {
         window.scrollTo(0, scrolls[this.state.activePanel]);
       });
     }
-
-    if (this.props.onPull && !this.scrollListener) {
-      window.addEventListener('scroll', this.onScroll);
-      this.scrollListener = true;
-    }
-
-    if (!this.props.onPull && this.scrollListener) {
-      window.removeEventListener('scroll', this.onScroll);
-      this.scrollListener = false;
-    }
   }
 
   blurActiveElement () {
@@ -201,112 +172,6 @@ export default class View extends Component {
     }
   }
 
-  onMove = (e) => {
-    const { onPull } = this.props;
-
-    if (!onPull || this.pulled) {
-      return;
-    }
-
-    const scroll = document.body.scrollTop || document.documentElement.scrollTop;
-
-    if (this.prevScrollTopValue >= 0 && scroll <= 0 && this.startShift !== null) {
-      this.startShift = e.shiftY;
-    }
-
-    if (scroll <= 0 && e.shiftY >= 0) {
-      this.started = true;
-
-      const progress = Math.abs(this.startShift - e.shiftY) / MAXPULL;
-      let shift = progress * MAXPULL;
-
-      if (progress >= 1) {
-        shift = Math.min(MAXPULL + (0.2 * MAXPULL * (progress - 1)), 2 * MAXPULL);
-      }
-
-      const state = {
-        shift: shift,
-        progress: Math.min(Math.round(progress * 100), 100),
-        pullStyles: {
-          transform: `translate3d(0, ${shift}px, 0)`,
-          transition: 'none'
-        },
-        styles: osname === IOS ? {
-          transform: `translate3d(0, ${shift}px, 0)`,
-          transition: 'none'
-        } : {}
-      };
-
-      this.setState(state);
-      this.prevScrollTopValue = scroll;
-      e.originalEvent.preventDefault();
-    }
-  }
-
-  onEnd = (e) => {
-    if (this.started) {
-      const initialState = {
-        on: false,
-        shift: undefined,
-        progress: null,
-        pullStyles: {
-          transition: 'transform .24s cubic-bezier(.36, .66, .04, 1)'
-        },
-        styles: osname === IOS ? {
-          transition: 'transform .24s cubic-bezier(.36, .66, .04, 1)'
-        } : {}
-      };
-
-      const progress = Math.abs(this.startShift - e.shiftY) / MAXPULL;
-      const on = progress >= 1;
-
-      this.startShift = null;
-
-      this.setState({
-        on: on,
-        progress: !on ? Math.min(Math.round(progress * 100), 100) : null,
-        pullStyles: {
-          transform: `translate3d(0, ${on ? MAXPULL : 0}px, 0)`,
-          transition: 'transform .24s cubic-bezier(.36, .66, .04, 1)'
-        },
-        styles: osname === IOS ? {
-          transform: `translate3d(0, ${on ? MAXPULL : 0}px, 0)`,
-          transition: 'transform .24s cubic-bezier(.36, .66, .04, 1)'
-        } : {}
-      });
-
-      if (on) {
-        this.pulled = true;
-        this.props.onPull().then(() => {
-          this.setState(initialState);
-          this.pulled = false;
-        });
-      }
-
-      this.started = false;
-    }
-  }
-
-  onScroll = () => {
-    // this.setState({ over: scroll });
-
-    // if (this.props.onPull && !this.pressed && this.pulled) {
-    //   const scroll = document.body.scrollTop || document.documentElement.scrollTop;
-
-    //   if (scroll <= 0 && Math.abs(scroll) <= MAXPULL && !this.state.fixed) {
-    //     console.time('qwe');
-    //     this.setState({
-    //       fixed: true
-    //     });
-    //     window.scrollTo(0, 0);
-    //     console.timeEnd('qwe');
-    //   }
-    // }
-
-    // если отпустили (нет жеста и отрицательный скролл), то смотрим на координату
-    // если уже не вставили в DOM и abs(координата) <= maxpull фиксируем спиннер, вставляем заглушку, скроллим мгновенно до нуля
-  }
-
   onHeaderClick = () => {
     const { activePanel } = this.state;
 
@@ -338,7 +203,7 @@ export default class View extends Component {
   }
 
   render () {
-    const { style, popout, header, onPull } = this.props;
+    const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
     const hasPopout = !!popout;
     const hasHeader = header !== null;
@@ -348,29 +213,12 @@ export default class View extends Component {
       'View--popout': hasPopout,
       'View--animated': this.state.visiblePanels.length === 2
     };
-    let Component = 'section';
-    let componentProps = {};
-    // let spinnerStyles = {};
-    // let spinnerProgress = 0;
-
-    if (onPull) {
-      Component = Touch;
-      componentProps = {
-        onMove: this.onMove,
-        onEnd: this.onEnd,
-        component: 'section'
-      };
-      // spinnerProgress = !pullSpinner.on ? pullSpinner.progress : null;
-      // spinnerStyles = {
-      //   opacity: !pullSpinner.on ? (pullSpinner.progress || 0) / 100 : 1
-      // }
-    }
 
     return (
-      <Component
+      <Touch
         className={classnames(baseClassNames, modifiers)}
         style={style}
-        {...componentProps}
+        component="section"
       >
         {hasHeader && (
           <div className="View__header" onClick={this.onHeaderClick}>
@@ -407,19 +255,9 @@ export default class View extends Component {
                 'View__panel--prev': panel.props.id === prevPanel,
                 'View__panel--next': panel.props.id === nextPanel
               })}
-              onTransitionEnd={panel.props.id === nextPanel ? this.transitionEndHandler : null}
+              ref={panel.props.id === nextPanel ? this.getPanelRef : null}
               key={panel.key || panel.props.id || `panel-${i}`}
             >
-              {onPull && (
-                <div className={'View__top'} style={this.state.pullStyles || {}}>
-                  <Spinner
-                    size={osname === IOS ? 27 : 25}
-                    strokeWidth={3}
-                    on={this.state.on}
-                    progress={!this.state.on ? this.state.progress : null}
-                  />
-                </div>
-              )}
               <div className="View__panel-in" style={this.state.pullStyles}>
                 {React.cloneElement(panel, { ref: this.getRef, activePanel, nextPanel })}
               </div>
@@ -428,7 +266,7 @@ export default class View extends Component {
         </div>
         {hasPopout && <div className="View__mask" />}
         {hasPopout && <div className="View__popout">{popout}</div>}
-      </Component>
+      </Touch>
     );
   }
 }
