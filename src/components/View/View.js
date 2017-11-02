@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import animate from '../../lib/animate';
+import transitionEvents from '../../lib/transitionEvents';
 import getClassName from '../../helpers/getClassName';
 import { platform, ANDROID } from '../../lib/platform';
 import Touch from '../Touch/Touch';
@@ -108,6 +109,17 @@ export default class View extends Component {
           nextPanel: nextPanel,
           activePanel: null,
           animated: true
+        }, () => {
+          const nextPanelElement = this.pickPanel(nextPanel);
+
+          if (transitionEvents.supported) {
+            const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
+
+            nextPanelElement.removeEventListener(eventName, this.transitionEndHandler);
+            nextPanelElement.addEventListener(eventName, this.transitionEndHandler);
+          } else {
+            setTimeout(this.transitionEndHandler, osname === ANDROID ? 300 : 600);
+          }
         });
       });
     }
@@ -137,7 +149,7 @@ export default class View extends Component {
   }
 
   transitionEndHandler = (e) => {
-    if (osname !== ANDROID || e.propertyName === 'visibility') {
+    if (e.propertyName === 'visibility') {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
 
@@ -255,7 +267,6 @@ export default class View extends Component {
                 'View__panel--prev': panel.props.id === prevPanel,
                 'View__panel--next': panel.props.id === nextPanel
               })}
-              ref={panel.props.id === nextPanel ? this.getPanelRef : null}
               key={panel.key || panel.props.id || `panel-${i}`}
             >
               <div className="View__panel-in" style={this.state.pullStyles}>
