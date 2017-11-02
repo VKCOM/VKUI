@@ -61,9 +61,7 @@ export default class Textarea extends Component {
 
       const top = document.body.scrollTop;
 
-      this.setState({ height: 0 });
-
-      requestAnimationFrame(() => {
+      this.setState({ height: 0 }, () => {
         const height = el.scrollHeight - diff;
 
         this.setState({ height });
