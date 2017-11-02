@@ -303,7 +303,7 @@ export default class Gallery extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.slides = this.getChildren();
+    this.slides = this.getChildren(nextProps.children);
     this.isChildrenDirty = true;
 
     if (nextProps.autoplay && !this.props.autoplay) {
