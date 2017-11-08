@@ -40,7 +40,7 @@ export default class View extends Component {
   refsStore = {};
 
   componentWillReceiveProps (nextProps) {
-    const activePanel = this.state.activePanel;
+    const { activePanel, prevPanel, nextPanel } = this.state;
 
     let scrolls, pageYOffset;
 
@@ -73,10 +73,16 @@ export default class View extends Component {
 
       // Blur inputs on panel transition
       this.blurActiveElement();
-
       // @TODO Lock overscroll on window
+      let visiblePanels;
+      if (this.state.animated) {
+        visiblePanels = [nextPanel, nextProps.activePanel]
+      } else {
+        visiblePanels = [activePanel, nextProps.activePanel]
+      }
       this.setState({
-        visiblePanels: [activePanel, nextProps.activePanel],
+        visiblePanels,
+        animated: false,
         scrolls,
         isBack
       }, function () {
@@ -102,7 +108,6 @@ export default class View extends Component {
 
     if (this.state.visiblePanels.length === 2 && !this.state.animated) {
       const [ prevPanel, nextPanel ] = this.state.visiblePanels;
-
       requestAnimationFrame(() => {
         this.setState({
           prevPanel: prevPanel,
@@ -111,7 +116,6 @@ export default class View extends Component {
           animated: true
         }, () => {
           const nextPanelElement = this.pickPanel(nextPanel);
-
           if (transitionEvents.supported) {
             const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
