@@ -112,12 +112,56 @@
         }
       .FormLayout__field .Input--android,
       .FormLayout__field .Textarea--android {
+        width: calc(100% - 32px);
+        }
+      .FormLayout__field .Select--android .Select__self,
+      .FormLayout__field .Input--android,
+      .FormLayout__field .Textarea--android {
         border-radius: 4px;
         background-color: #f3f4f5;
         padding: 10px 16px 12px;
-        width: calc(100% - 32px);
         }
-
+      .FormLayout__field .Input--ios,
+      .FormLayout__field .Textarea--ios {
+        line-height: 21px;
+        padding: 11px 12px 10px;
+        width: calc(100% - 26px);
+        }
+      .FormLayout__field .Select--ios .Select__self,
+      .FormLayout__field .Input--ios,
+      .FormLayout__field .Textarea--ios {
+        border-radius: 10px;
+        background-color: #f3f4f5;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        font-size: 16px;
+        appearance: none;
+        }
+      .FormLayout__field .Select {
+        position: relative;
+        }
+      .FormLayout__field .Select:before {
+        content: '';
+        background: inline('./assets/selectarrow.svg') 0 0/100% no-repeat;
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: 0;
+        right: 10px;
+        bottom: 0;
+        margin: auto;
+        opacity: 0.7;
+        pointer-events: none;
+        }
+      .FormLayout__field .Select__self {
+        width: 100%;
+        }
+      .FormLayout__field .Select--android .Select__self {
+        padding: 11px 44px 11px 16px;
+        }
+      .FormLayout__field .Select--ios .Select__self {
+        line-height: 20px;
+        padding: 11px 44px 11px 12px;
+        }
       .FormLayout--ios .FormLayout__underline {
         display: none;
         }

@@ -23,6 +23,7 @@
     }
 
   .Select--android .Select__self {
+    font-family: Roboto, Droid, 'Open Sans', sans-serif;
     font-size: 16px;
     padding: 16px 0 18px;
     }
