@@ -53,10 +53,5 @@ export { default as getClassName } from './helpers/getClassName';
 export { default as wrapTextNode } from './helpers/wrapTextNode';
 export { default as requestAnimationFrame } from './lib/requestAnimationFrame';
 
-/**
- * Constants
- */
-export { default as modifiers } from './constants/uimodifiers';
-
 
 export const v = process.env.VKUI_VERSION;

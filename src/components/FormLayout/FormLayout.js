@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
-import uimodifiers from '../../constants/uimodifiers';
 
 const baseClassNames = getClassName('FormLayout');
 
@@ -12,7 +11,7 @@ export default function FormLayout (props) {
   const children = Array.isArray(props.children) ? props.children : [props.children];
   const TagName = props.tagName || 'form';
   const modifiers = {
-    [`FormLayout--${uimodifiers.WEB}`]: props.mod === uimodifiers.WEB
+    'FormLayout--web': props.mod === 'web'
   }
 
   return (
@@ -39,5 +38,6 @@ export default function FormLayout (props) {
 FormLayout.propTypes = {
   children: PropTypes.node,
   style: PropTypes.object,
-  tagName: PropTypes.string
+  tagName: PropTypes.string,
+  mod: PropTypes.string
 };
