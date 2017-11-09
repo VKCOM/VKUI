@@ -16,7 +16,7 @@ export default function FormLayout (props) {
   }
 
   return (
-    <TagName className={classnames(baseClassNames, modifiers)} {...removeObjectKeys(props, ['tagName'])}>
+    <TagName className={classnames(baseClassNames, modifiers)} {...removeObjectKeys(props, ['tagName', 'mod'])}>
       {children.map((field, i) => (
         <label className="FormLayout__row" key={field.key || `row-${i}`}>
           <div className="FormLayout__separator" />
