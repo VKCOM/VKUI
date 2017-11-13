@@ -10,8 +10,17 @@
   background: #efeff4;
   word-wrap: break-word;
   }
+.View--swipe-back-touching {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  }
 .View--animated {
   pointer-events: none;
+  overflow: hidden;
+  }
+.View--swiping-back {
   overflow: hidden;
   }
 .View--popout {
@@ -108,6 +117,7 @@
       }
 
     .View--animated .View__panel,
+    .View--swiping-back .View__panel,
     .View--popout .View__panel {
       position: absolute;
       top: 0;
@@ -184,6 +194,9 @@
     height: 64px;
     z-index: 2;
     }
+  .View--swipe-back-touching .View__header {
+    position: static;
+  }
 
     .View--ios .View__header-in {
       height: 64px;
@@ -207,6 +220,73 @@
           }
 
       /**
+       * Header swipe back
+       */
+      .View--ios .View__header-item--swipe-back-next {
+        visibility: visible;
+        }
+
+      .View__header-item--swipe-back-failed,
+      .View__header-item--swipe-back-failed .View__header-title,
+      .View__header-item--swipe-back-failed .View__header-left-in,
+      .View__header-item--swipe-back-failed .View__header-icon,
+      .View__header-item--swipe-back-success,
+      .View__header-item--swipe-back-success .View__header-title,
+      .View__header-item--swipe-back-success .View__header-left-in,
+      .View__header-item--swipe-back-success .View__header-icon {
+        transition:
+          opacity .3s var(--ios-easing),
+          transform .3s var(--ios-easing);
+        }
+
+      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed {
+        opacity: 0;
+        }
+      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed .View__header-title {
+        opacity: 0;
+        transform: translate3d(-30%, 0, 0);
+        }
+      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed .View__header-left-in {
+        opacity: 0;
+        transform: translate3d(-60%, 0, 0);
+        }
+      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed .View__header-icon {
+        opacity: 0;
+        }
+      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-success {
+        opacity: 1;
+        }
+      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-success .View__header-title {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        }
+      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-success .View__header-left-in {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        }
+      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-success .View__header-icon {
+        opacity: 1;
+        }
+      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-failed {
+        opacity: 1;
+        }
+      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-failed .View__header-title {
+        transform: translate3d(0, 0, 0);
+        }
+      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-failed .View__header-left-in {
+        transform: translate3d(0, 0, 0);
+        }
+      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-success {
+        opacity: 0;
+        }
+      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-success .View__header-title {
+        transform: translate3d(30%, 0, 0);
+        }
+      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-success .View__header-left-in {
+        transform: translate3d(60%, 0, 0);
+        }
+
+      /**
        * Header transition
        */
       .View--ios .View__header-item--prev,
@@ -216,7 +296,7 @@
         left: 0;
         overflow: hidden;
         visibility: visible;
-        transition: visibility .6s cubic-bezier(.36, .66, .04, 1);
+        transition: visibility .6s var(--ios-easing);
         }
 
         .View--ios .View__header-title {
@@ -243,9 +323,9 @@
         .View--ios .View__header-item--prev .View__header-right,
         .View--ios .View__header-item--next .View__header-right {
           transition:
-            transform .6s cubic-bezier(.36, .66, .04, 1),
-            visibility .6s cubic-bezier(.36, .66, .04, 1),
-            opacity .6s cubic-bezier(.36, .66, .04, 1);
+            transform .6s var(--ios-easing),
+            visibility .6s var(--ios-easing),
+            opacity .6s var(--ios-easing);
           }
         .View--ios .View__header-item--prev .View__header-title,
         .View--ios .View__header-item--prev .View__header-icon,
@@ -323,6 +403,37 @@
         position: relative;
         min-height: 100%;
         }
+    /**
+     * Panel swipe back
+     */
+
+    .View--ios .View__panel--swipe-back-prev {
+      box-shadow: -2px 0 12px rgba(0, 0, 0, .3);
+      }
+
+    .View--ios .View__panel--swipe-back-next {
+      visibility: visible;
+      }
+
+    .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-success {
+      transition: transform .3s var(--ios-easing);
+      transform: translate3d(100%, 0, 0);
+      }
+
+    .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success {
+      transition: transform .3s var(--ios-easing);
+      transform: translate3d(0, 0, 0);
+      }
+
+    .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-failed {
+      transition: transform .3s var(--ios-easing);
+      transform: translate3d(0, 0, 0);
+      }
+
+    .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed {
+      transition: transform .3s var(--ios-easing);
+      transform: translate3d(-50%, 0, 0);
+      }
 
     /**
      * Panel transition
@@ -332,8 +443,8 @@
       display: block;
       visibility: visible;
       transition:
-        transform .6s cubic-bezier(.36, .66, .04, 1),
-        visibility .6s cubic-bezier(.36, .66, .04, 1);
+        transform .6s var(--ios-easing),
+        visibility .6s var(--ios-easing);
       }
     .View--ios .View__panel {
       transform: translate3d(-50%, 0, 0);
@@ -358,10 +469,10 @@
       pointer-events: none;
       }
     .View--ios .View__panel--prev > .View__panel-in::before {
-      animation: animation-fade-in .6s cubic-bezier(.36, .66, .04, 1);
+      animation: animation-fade-in .6s var(--ios-easing);
       }
     .View--ios .View__panel--next > .View__panel-in::before {
-      animation: animation-fade-out .6s cubic-bezier(.36, .66, .04, 1);
+      animation: animation-fade-out .6s var(--ios-easing);
       }
     .View--ios .View__panel--prev ~ .View__panel--next > .View__panel-in::before,
     .View--ios .View__panel--next ~ .View__panel--prev > .View__panel-in::before {

@@ -5,7 +5,7 @@ import classnames from '../../lib/classnames';
 import animate from '../../lib/animate';
 import transitionEvents from '../../lib/transitionEvents';
 import getClassName from '../../helpers/getClassName';
-import { platform, ANDROID } from '../../lib/platform';
+import { platform, ANDROID, IOS } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
@@ -19,7 +19,14 @@ export default class View extends Component {
       visiblePanels: [props.activePanel],
       children: [props.children],
       activePanel: props.activePanel,
-      scrolls: {}
+      scrolls: {},
+      swipingBack: false,
+      swipebackStartX: 0,
+      swipeBackShift: 0,
+      swipeBackNextPanel: null,
+      swipeBackPrevPanel: null,
+      swipingBackFinish: null,
+      swipeBackHistory: []
     };
   }
 
@@ -29,7 +36,8 @@ export default class View extends Component {
     header: PropTypes.object,
     children: PropTypes.node,
     popout: PropTypes.node,
-    onTransition: PropTypes.func
+    onTransition: PropTypes.func,
+    onSwipeBack: PropTypes.func
   };
   static defaultProps = {
     style: {},
@@ -40,7 +48,7 @@ export default class View extends Component {
   refsStore = {};
 
   componentWillReceiveProps (nextProps) {
-    const { activePanel, prevPanel, nextPanel } = this.state;
+    const { activePanel, nextPanel } = this.state;
 
     let scrolls, pageYOffset;
 
@@ -59,7 +67,7 @@ export default class View extends Component {
     }
 
     // Panel transition
-    if (activePanel !== nextProps.activePanel) {
+    if (activePanel !== nextProps.activePanel && !this.state.swipingBack) {
       pageYOffset = pageYOffset || window.pageYOffset;
 
       const firstLayerId = this.props.children.find(panel => {
@@ -76,9 +84,9 @@ export default class View extends Component {
       // @TODO Lock overscroll on window
       let visiblePanels;
       if (this.state.animated) {
-        visiblePanels = [nextPanel, nextProps.activePanel]
+        visiblePanels = [nextPanel, nextProps.activePanel];
       } else {
-        visiblePanels = [activePanel, nextProps.activePanel]
+        visiblePanels = [activePanel, nextProps.activePanel];
       }
       this.setState({
         visiblePanels,
@@ -101,12 +109,26 @@ export default class View extends Component {
         }
       });
     }
+    // Если панель сменилась из-за свайпа назад в iOS
+    if (activePanel !== nextProps.activePanel && this.state.swipingBack) {
+      this.setState({
+        swipeBackPrevPanel: null,
+        swipeBackNextPanel: null,
+        swipingBack: false,
+        swipingBackFinish: null,
+        swipeBackHistory: this.state.swipeBackHistory.slice(0, -1),
+        swipebackStartX: 0,
+        swipeBackShift: 0,
+        activePanel: nextProps.activePanel,
+        visiblePanels: [nextProps.activePanel]
+      });
+    }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate (prevProps, prevState) {
     const scrolls = this.state.scrolls;
 
-    if (this.state.visiblePanels.length === 2 && !this.state.animated) {
+    if (this.state.visiblePanels.length === 2 && !this.state.animated && !this.state.swipingBack) {
       const [ prevPanel, nextPanel ] = this.state.visiblePanels;
       requestAnimationFrame(() => {
         this.setState({
@@ -115,17 +137,28 @@ export default class View extends Component {
           activePanel: null,
           animated: true
         }, () => {
-          const nextPanelElement = this.pickPanel(nextPanel);
-          if (transitionEvents.supported) {
-            const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
-
-            nextPanelElement.removeEventListener(eventName, this.transitionEndHandler);
-            nextPanelElement.addEventListener(eventName, this.transitionEndHandler);
-          } else {
-            setTimeout(this.transitionEndHandler, osname === ANDROID ? 300 : 600);
-          }
+          this.waitTransitionFinish(this.pickPanel(nextPanel), this.transitionEndHandler);
         });
       });
+    }
+
+    // После начала свайпа назад в iOS, определяем текущую панель как swipeBackPrevPanel,
+    // предыдущую панель, которую надо показать как swipeBackNextPanel
+    if (this.state.swipingBack && !prevState.swipingBack && this.state.swipeBackHistory.length > 0) {
+      const swipeBackNextPanel = this.state.swipeBackHistory.slice(-1)[0];
+      this.setState({
+        swipeBackPrevPanel: this.state.activePanel,
+        swipeBackNextPanel
+      });
+    }
+
+    if (prevState.swipingBack && prevState.swipeBackNextPanel === null && this.state.swipeBackNextPanel) {
+      const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
+      nextPanelElement.scrollTop = scrolls[this.state.swipeBackNextPanel];
+    }
+
+    if (prevState.swipingBackFinish === null && this.state.swipingBackFinish !== null) {
+      this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
     }
 
     // Popout disappearance: restore scroll
@@ -133,6 +166,17 @@ export default class View extends Component {
       requestAnimationFrame(() => {
         window.scrollTo(0, scrolls[this.state.activePanel]);
       });
+    }
+  }
+
+  waitTransitionFinish (elem, eventHandler) {
+    if (transitionEvents.supported) {
+      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
+
+      elem.removeEventListener(eventName, eventHandler);
+      elem.addEventListener(eventName, eventHandler);
+    } else {
+      setTimeout(eventHandler, osname === ANDROID ? 300 : 600);
     }
   }
 
@@ -156,14 +200,20 @@ export default class View extends Component {
     if (e.propertyName === 'visibility') {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
-
+      let swipeBackHistory;
+      if (isBack) {
+        swipeBackHistory = this.state.swipeBackHistory.slice(0, -1);
+      } else {
+        swipeBackHistory = [].concat(this.state.swipeBackHistory, this.state.prevPanel);
+      }
       this.setState({
         prevPanel: null,
         nextPanel: null,
         visiblePanels: [activePanel],
         activePanel: activePanel,
         animated: false,
-        isBack: undefined
+        isBack: undefined,
+        swipeBackHistory
       }, function () {
         // document.body.classList.remove('locked');
 
@@ -186,7 +236,24 @@ export default class View extends Component {
         }
       });
     }
-  }
+  };
+
+  swipingBackTransitionEndHandler = (e) => {
+    if (e.propertyName === 'transform') {
+      if (this.state.swipingBackFinish === true) {
+        this.props.onSwipeBack && this.props.onSwipeBack();
+      } else {
+        this.setState({
+          swipeBackPrevPanel: null,
+          swipeBackNextPanel: null,
+          swipingBack: false,
+          swipingBackFinish: null,
+          swipebackStartX: 0,
+          swipeBackShift: 0
+        });
+      }
+    }
+  };
 
   onHeaderClick = () => {
     const { activePanel } = this.state;
@@ -204,7 +271,41 @@ export default class View extends Component {
         });
       }
     }
-  }
+  };
+
+  onMove = (e) => {
+    if (osname === IOS && this.props.onSwipeBack) {
+      if (e.startX <= 70 && !this.state.swipingBack && this.state.swipeBackHistory.length > 0) {
+        this.setState({
+          swipingBack: true,
+          swipebackStartX: e.startX,
+          startT: e.startT,
+          swipeBackTouching: true
+        });
+      }
+      if (this.state.swipingBack) {
+        let swipeBackShift;
+        if (e.shiftX < 0) {
+          swipeBackShift = 0;
+        } else if (e.shiftX > window.innerWidth - this.state.swipebackStartX) {
+          swipeBackShift = window.innerWidth;
+        } else {
+          swipeBackShift = e.shiftX;
+        }
+        this.setState({ swipeBackShift });
+      }
+    }
+  };
+
+  onEnd = () => {
+    if (this.state.swipingBack) {
+      this.setState({ swipeBackTouching: false });
+      requestAnimationFrame(() => {
+        const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
+        this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > window.innerWidth / 2 });
+      });
+    }
+  };
 
   getRef = (c) => {
     if (c && c.container && c.props.id) {
@@ -216,6 +317,67 @@ export default class View extends Component {
 
       this.refsStore[c.props.id] = el;
     }
+  };
+
+  calcPanelSwipeStyles (panelId) {
+    const isPrev = panelId === this.state.swipeBackPrevPanel;
+    const isNext = panelId === this.state.swipeBackNextPanel;
+
+    let prevPanelTranslate = `${this.state.swipeBackShift}px`;
+    let nextPanelTranslate = `${-50 + (this.state.swipeBackShift * 100 / window.innerWidth) / 2}%`;
+    let prevPanelShadow = 0.3 * (window.innerWidth - this.state.swipeBackShift) / window.innerWidth;
+
+    if (this.state.swipingBackFinish !== null) {
+      return isPrev ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` } : {};
+    }
+
+    if (isNext) {
+      return {
+        transform: `translate3d(${nextPanelTranslate}, 0, 0)`
+      };
+    }
+    if (isPrev) {
+      return {
+        transform: `translate3d(${prevPanelTranslate}, 0, 0)`,
+        boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})`
+      };
+    }
+
+    return {};
+  }
+
+  calcHeaderSwipeStyles (panelId) {
+    const isPrev = panelId === this.state.swipeBackPrevPanel;
+    const isNext = panelId === this.state.swipeBackNextPanel;
+
+    if (!isPrev && !isNext || this.state.swipingBackFinish !== null) {
+      return {
+        title: {},
+        item: {},
+        leftIn: {},
+        leftIcon: {}
+      };
+    }
+
+    let opacity = this.state.swipeBackShift / window.innerWidth;
+    let titleTransform = this.state.swipeBackShift / window.innerWidth * 30;
+    let leftTransform = this.state.swipeBackShift / window.innerWidth * 60;
+
+    if (isNext) {
+      return {
+        title: { transform: `translate3d(${-30 + titleTransform}%, 0, 0)`, opacity },
+        item: { opacity },
+        leftIn: { transform: `translate3d(${-60 + leftTransform}%, 0, 0)`, opacity },
+        leftIcon: { opacity: 1 }
+      };
+    }
+    if (isPrev) {
+      return {
+        title: { transform: `translate3d(${titleTransform}%, 0, 0)` },
+        item: { opacity: 1 - opacity },
+        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` }
+      };
+    }
   }
 
   render () {
@@ -223,18 +385,23 @@ export default class View extends Component {
     const { prevPanel, nextPanel, activePanel } = this.state;
     const hasPopout = !!popout;
     const hasHeader = header !== null;
-    const panels = [].concat(this.props.children).filter(panel => this.state.visiblePanels.indexOf(panel.props.id) > -1);
+    const panels = [].concat(this.props.children).filter(panel => {
+      return this.state.visiblePanels.indexOf(panel.props.id) > -1 ||
+        panel.props.id === this.state.swipeBackPrevPanel ||
+        panel.props.id === this.state.swipeBackNextPanel;
+    });
     const modifiers = {
       'View--header': hasHeader,
       'View--popout': hasPopout,
-      'View--animated': this.state.visiblePanels.length === 2
+      'View--animated': this.state.visiblePanels.length === 2,
+      'View--swiping-back': this.state.swipingBack,
+      'View--swipe-back-touching': this.state.swipeBackTouching
     };
 
     return (
-      <Touch
+      <section
         className={classnames(baseClassNames, modifiers)}
         style={style}
-        component="section"
       >
         {hasHeader && (
           <div className="View__header" onClick={this.onHeaderClick}>
@@ -244,15 +411,33 @@ export default class View extends Component {
                   className={classnames('View__header-item', {
                     'View__header-item--active': panel.props.id === activePanel,
                     'View__header-item--prev': panel.props.id === prevPanel,
-                    'View__header-item--next': panel.props.id === nextPanel
+                    'View__header-item--next': panel.props.id === nextPanel,
+                    'View__header-item--swipe-back-prev': panel.props.id === this.state.swipeBackPrevPanel,
+                    'View__header-item--swipe-back-next': panel.props.id === this.state.swipeBackNextPanel,
+                    'View__header-item--swipe-back-success': this.state.swipingBackFinish === true,
+                    'View__header-item--swipe-back-failed': this.state.swipingBackFinish === false
                   })}
+                  style={this.calcHeaderSwipeStyles(panel.props.id).item}
                   key={panel.key || panel.props.id || `panel-header-${i}`}
                 >
                   <div className="View__header-left">
-                    <div className="View__header-icon">{panel.props.header.icon}</div>
-                    <div className="View__header-left-in">{panel.props.header.left}</div>
+                    <div
+                      className="View__header-icon"
+                      style={this.calcHeaderSwipeStyles(panel.props.id).leftIcon}
+                    >
+                      {panel.props.header.icon}
+                    </div>
+                    <div
+                      className="View__header-left-in"
+                      style={this.calcHeaderSwipeStyles(panel.props.id).leftIn}
+                    >
+                      {panel.props.header.left}
+                    </div>
                   </div>
-                  <div className="View__header-title">
+                  <div
+                    className="View__header-title"
+                    style={this.calcHeaderSwipeStyles(panel.props.id).title}
+                  >
                     {panel.props.header.title}
                   </div>
                   <div className="View__header-right">
@@ -263,25 +448,34 @@ export default class View extends Component {
             </div>
           </div>
         )}
-        <div className="View__panels">
+        <Touch
+          className="View__panels"
+          onMoveX={this.onMove}
+          onEndX={this.onEnd}
+        >
           {panels.map((panel, i) => (
             <div
               className={classnames('View__panel', {
                 'View__panel--active': panel.props.id === activePanel,
                 'View__panel--prev': panel.props.id === prevPanel,
-                'View__panel--next': panel.props.id === nextPanel
+                'View__panel--next': panel.props.id === nextPanel,
+                'View__panel--swipe-back-prev': panel.props.id === this.state.swipeBackPrevPanel,
+                'View__panel--swipe-back-next': panel.props.id === this.state.swipeBackNextPanel,
+                'View__panel--swipe-back-success': this.state.swipingBackFinish === true,
+                'View__panel--swipe-back-failed': this.state.swipingBackFinish === false
               })}
+              style={this.calcPanelSwipeStyles(panel.props.id)}
               key={panel.key || panel.props.id || `panel-${i}`}
             >
-              <div className="View__panel-in" style={this.state.pullStyles}>
+              <div className="View__panel-in">
                 {React.cloneElement(panel, { ref: this.getRef, activePanel, nextPanel })}
               </div>
             </div>
           ))}
-        </div>
+        </Touch>
         {hasPopout && <div className="View__mask" />}
         {hasPopout && <div className="View__popout">{popout}</div>}
-      </Touch>
+      </section>
     );
   }
 }
