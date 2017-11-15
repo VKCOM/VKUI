@@ -176,7 +176,7 @@ export default class View extends Component {
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler, osname === ANDROID ? 300 : 600);
+      setTimeout(eventHandler.bind(this, { manual: true }), osname === ANDROID ? 300 : 600);
     }
   }
 
@@ -197,7 +197,7 @@ export default class View extends Component {
   }
 
   transitionEndHandler = (e) => {
-    if (e.propertyName === 'visibility') {
+    if (e.propertyName === 'visibility' || e.manual) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
       let swipeBackHistory;
