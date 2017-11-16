@@ -162,7 +162,7 @@ export default class View extends Component {
     }
 
     // Popout disappearance: restore scroll
-    if (!this.props.popout && scrolls[this.state.activePanel]) {
+    if (prevProps.popout && !this.props.popout && scrolls[this.state.activePanel]) {
       requestAnimationFrame(() => {
         window.scrollTo(0, scrolls[this.state.activePanel]);
       });
