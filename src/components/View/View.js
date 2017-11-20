@@ -20,6 +20,7 @@ export default class View extends Component {
       children: [props.children],
       activePanel: props.activePanel,
       scrolls: {},
+      nativeSwipingBack: false,
       swipingBack: false,
       swipebackStartX: 0,
       swipeBackShift: 0,
@@ -276,6 +277,9 @@ export default class View extends Component {
 
   onMove = (e) => {
     if (osname === IOS && this.props.onSwipeBack) {
+      if (this.state.animated && e.startX <= 70) {
+        this.transitionEndHandler();
+      }
       if (e.startX <= 70 && !this.state.swipingBack && this.state.swipeBackHistory.length > 0) {
         this.setState({
           swipingBack: true,
