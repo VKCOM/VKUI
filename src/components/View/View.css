@@ -191,7 +191,9 @@
   .View--ios .View__header {
     position: fixed;
     width: 100%;
-    height: 64px;
+    height: 44px;
+    padding-top: 20px;
+    padding-top: constant(safe-area-inset-top);
     z-index: 2;
     }
   .View--swipe-back-touching .View__header {
@@ -199,12 +201,14 @@
   }
 
     .View--ios .View__header-in {
-      height: 64px;
+      height: 44px;
+      padding-top: 20px;
+      padding-top: constant(safe-area-inset-top);
       }
 
       .View--ios .View__header-item {
         top: 20px;
-        height: 44px;
+        top: constant(safe-area-inset-top);
         justify-content: center;
         padding: 0 6px;
         }
@@ -292,7 +296,6 @@
       .View--ios .View__header-item--prev,
       .View--ios .View__header-item--next {
         position: absolute;
-        top: 20px;
         left: 0;
         overflow: hidden;
         visibility: visible;
@@ -397,6 +400,7 @@
 
     .View--ios.View--header .View__panel {
       padding-top: 64px;
+      padding-top: calc(44px + constant(safe-area-inset-top));
       }
 
       .View--ios .View__panel-in {

@@ -84,6 +84,7 @@ export default class View extends Component {
       // @TODO Lock overscroll on window
       let visiblePanels;
       if (this.state.animated) {
+        this.transitionEndHandler();
         visiblePanels = [nextPanel, nextProps.activePanel];
       } else {
         visiblePanels = [activePanel, nextProps.activePanel];
@@ -176,7 +177,7 @@ export default class View extends Component {
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this, { manual: true }), osname === ANDROID ? 300 : 600);
+      setTimeout(eventHandler.bind(this), osname === ANDROID ? 300 : 600);
     }
   }
 
@@ -196,7 +197,7 @@ export default class View extends Component {
     return elem && elem.parentNode.parentNode;
   }
 
-  transitionEndHandler = (e) => {
+  transitionEndHandler = (e = { manual: true }) => {
     if (e.propertyName === 'visibility' || e.manual) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
