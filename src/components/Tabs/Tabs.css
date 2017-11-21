@@ -1,0 +1,82 @@
+@import '../../styles/constants.css';
+
+.Tabs {
+  display: flex;
+  }
+  .Tabs--android .Tabs__tab {
+    font-weight: 500;
+    font-size: 14px;
+    height: 48px;
+    line-height: 48px;
+    opacity: 0.6;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    }
+    .Tabs--android .Tabs__tab .Tappable {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      padding: 14px 0;
+      line-height: 20px;
+      }
+    .Tabs--android .Tabs__tab .Tappable.Tappable--active:not([disabled]):not(.Button--vk-primary):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich):not(.Alert__btn--primary):not(.Button--vk-wide-primary):not(.Actions__menuItem) {
+      background: #5d8bc0 !important;
+      }
+    .Tabs--android .Tabs__tab .Tappable:not(.Actions__menuItem) .Tappable__wave {
+      background: rgba(109, 154, 205, 0.4);
+      opacity: 1;
+      }
+    .Tabs--android .Tabs__tab--active {
+      opacity: 1;
+      }
+    .Tabs--android .Tabs__tab--active:after {
+      background: #fff;
+      bottom: 0;
+      content: "";
+      height: 2px;
+      left: 0;
+      position: absolute;
+      right: 0;
+      }
+
+  .Tabs.Tabs--ios {
+    margin: 8px;
+    height: 28px;
+    border: 1px solid #99a2ad;
+    border-radius: 4px;
+    overflow: hidden;
+    }
+  .Tabs--ios .Tabs__tab {
+    font-size: 13px;
+    height: 28px;
+    line-height: 28px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    color: #878f99;
+    overflow: hidden;
+    }
+  .Tabs--ios .Tabs__tab .Tappable.Tappable--active:not([disabled]):not(.Button--vk-primary):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich):not(.Alert__btn--primary):not(.Button--vk-wide-primary):not(.Actions__menuItem) {
+    background: rgba(153, 162, 173, 0.15) !important;
+    }
+  .Tabs--ios .Tabs__tab .Tappable.Tappable--active::before,
+  .Tabs--ios .Tabs__tab .Tappable.Tappable--active::after {
+    content: none;
+    }
+  .Tabs--ios .Tabs__tab:not(:last-child):after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: #99a2ae;
+    }
+    .Tabs--ios .Tabs__tab--active {
+      background: #99a2ad;
+      color: #fafafa;
+      }

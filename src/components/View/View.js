@@ -425,29 +425,36 @@ export default class View extends Component {
                   style={this.calcHeaderSwipeStyles(panel.props.id).item}
                   key={panel.key || panel.props.id || `panel-header-${i}`}
                 >
-                  <div className="View__header-left">
-                    <div
-                      className="View__header-icon"
-                      style={this.calcHeaderSwipeStyles(panel.props.id).leftIcon}
-                    >
-                      {panel.props.header.icon}
+                  <div className="View__header-row">
+                    <div className="View__header-left">
+                      <div
+                        className="View__header-icon"
+                        style={this.calcHeaderSwipeStyles(panel.props.id).leftIcon}
+                      >
+                        {panel.props.header.icon}
+                      </div>
+                      <div
+                        className="View__header-left-in"
+                        style={this.calcHeaderSwipeStyles(panel.props.id).leftIn}
+                      >
+                        {panel.props.header.left}
+                      </div>
                     </div>
                     <div
-                      className="View__header-left-in"
-                      style={this.calcHeaderSwipeStyles(panel.props.id).leftIn}
+                      className="View__header-title"
+                      style={this.calcHeaderSwipeStyles(panel.props.id).title}
                     >
-                      {panel.props.header.left}
+                      {panel.props.header.title}
+                    </div>
+                    <div className="View__header-right">
+                      {panel.props.header.right}
                     </div>
                   </div>
-                  <div
-                    className="View__header-title"
-                    style={this.calcHeaderSwipeStyles(panel.props.id).title}
-                  >
-                    {panel.props.header.title}
-                  </div>
-                  <div className="View__header-right">
-                    {panel.props.header.right}
-                  </div>
+                  {panel.props.header.bottom && (
+                    <div className="View__header-row">
+                      <div className="View__header-bottom">{panel.props.header.bottom}</div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -467,7 +474,8 @@ export default class View extends Component {
                 'View__panel--swipe-back-prev': panel.props.id === this.state.swipeBackPrevPanel,
                 'View__panel--swipe-back-next': panel.props.id === this.state.swipeBackNextPanel,
                 'View__panel--swipe-back-success': this.state.swipingBackFinish === true,
-                'View__panel--swipe-back-failed': this.state.swipingBackFinish === false
+                'View__panel--swipe-back-failed': this.state.swipingBackFinish === false,
+                'View__panel--hasHeaderBottom': panel.props.header.bottom,
               })}
               style={this.calcPanelSwipeStyles(panel.props.id)}
               key={panel.key || panel.props.id || `panel-${i}`}
