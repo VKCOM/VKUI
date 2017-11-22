@@ -404,9 +404,12 @@ export default class View extends Component {
     };
 
     return (
-      <section
+      <Touch
+        component="section"
         className={classnames(baseClassNames, modifiers)}
         style={style}
+        onMoveX={this.onMove}
+        onEndX={this.onEnd}
       >
         {hasHeader && (
           <div className="View__header" onClick={this.onHeaderClick}>
@@ -453,11 +456,7 @@ export default class View extends Component {
             </div>
           </div>
         )}
-        <Touch
-          className="View__panels"
-          onMoveX={this.onMove}
-          onEndX={this.onEnd}
-        >
+        <div className="View__panels">
           {panels.map((panel, i) => (
             <div
               className={classnames('View__panel', {
@@ -477,10 +476,10 @@ export default class View extends Component {
               </div>
             </div>
           ))}
-        </Touch>
+        </div>
         {hasPopout && <div className="View__mask" />}
         {hasPopout && <div className="View__popout">{popout}</div>}
-      </section>
+      </Touch>
     );
   }
 }
