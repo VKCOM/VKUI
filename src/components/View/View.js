@@ -428,29 +428,39 @@ export default class View extends Component {
                   style={this.calcHeaderSwipeStyles(panel.props.id).item}
                   key={panel.key || panel.props.id || `panel-header-${i}`}
                 >
+                  { (panel.props.header.left || panel.props.header.icon) &&
                   <div className="View__header-left">
+                    { panel.props.header.icon &&
                     <div
                       className="View__header-icon"
                       style={this.calcHeaderSwipeStyles(panel.props.id).leftIcon}
                     >
                       {panel.props.header.icon}
                     </div>
+                    }
+                    { panel.props.header.left &&
                     <div
                       className="View__header-left-in"
                       style={this.calcHeaderSwipeStyles(panel.props.id).leftIn}
                     >
                       {panel.props.header.left}
                     </div>
+                    }
                   </div>
+                  }
+                  { panel.props.header.title &&
                   <div
                     className="View__header-title"
                     style={this.calcHeaderSwipeStyles(panel.props.id).title}
                   >
                     {panel.props.header.title}
                   </div>
+                  }
+                  { panel.props.header.right &&
                   <div className="View__header-right">
                     {panel.props.header.right}
                   </div>
+                  }
                 </div>
               ))}
             </div>
