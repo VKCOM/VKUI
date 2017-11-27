@@ -31,6 +31,7 @@ export { default as Slider } from './components/Slider/Slider';
  */
 export { default as Tappable } from './components/Tappable/Tappable';
 export { default as Touch } from './components/Touch/Touch';
+export { default as ConfigProvider } from './components/ConfigProvider/ConfigProvider';
 
 /**
  * Misc
