@@ -10,7 +10,7 @@
   background: #efeff4;
   word-wrap: break-word;
   }
-.View--swipe-back-touching {
+.View--swiping {
   position: fixed;
   left: 0;
   top: 0;
@@ -117,6 +117,7 @@
 
     .View--animated .View__panel,
     .View--swiping-back .View__panel,
+    .View--swiping .View__panel,
     .View--popout .View__panel {
       position: absolute;
       top: 0;
@@ -196,7 +197,7 @@
     padding-top: env(safe-area-inset-top);
     z-index: 2;
     }
-  .View--swipe-back-touching .View__header {
+  .View--swiping .View__header {
     position: static;
   }
 
