@@ -5,6 +5,10 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 
 const events = getSupportedEvents();
 
+// amazing hack for preventing vertical scroll during horizontal swipe
+// (in View, Slider, Gallery). todo: requires investigation
+window.addEventListener('touchmove', () => {});
+
 export default class Touch extends Component {
   cancelClick = false;
   gesture = {};

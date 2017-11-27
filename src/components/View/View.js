@@ -38,14 +38,12 @@ export default class View extends Component {
     popout: PropTypes.node,
     onTransition: PropTypes.func,
     onSwipeBack: PropTypes.func,
-    externalSwiping: PropTypes.bool
   };
   static defaultProps = {
     style: {},
     children: null,
     popout: undefined,
-    header: null,
-    externalSwiping: false
+    header: null
   };
   refsStore = {};
 
@@ -66,10 +64,6 @@ export default class View extends Component {
       this.setState({ scrolls }, function () {
         this.pickPanel(activePanel).scrollTop = scrolls[activePanel];
       });
-    }
-
-    if (nextProps.externalSwiping !== this.props.externalSwiping) {
-      this.setState({ swiping: nextProps.externalSwiping });
     }
 
     // Panel transition
@@ -259,7 +253,6 @@ export default class View extends Component {
           swipeBackShift: 0
         });
       }
-      this.setState({ swiping: false });
     }
   };
 
@@ -290,8 +283,7 @@ export default class View extends Component {
         this.setState({
           swipingBack: true,
           swipebackStartX: e.startX,
-          startT: e.startT,
-          swiping: true
+          startT: e.startT
         });
       }
       if (this.state.swipingBack) {
@@ -306,11 +298,11 @@ export default class View extends Component {
         this.setState({ swipeBackShift });
       }
     }
+    e.originalEvent.preventDefault();
   };
 
   onEnd = () => {
     if (this.state.swipingBack) {
-      this.setState({ swiping: false });
       requestAnimationFrame(() => {
         const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
         this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > window.innerWidth / 2 });
@@ -406,7 +398,6 @@ export default class View extends Component {
       'View--popout': hasPopout,
       'View--animated': this.state.visiblePanels.length === 2,
       'View--swiping-back': this.state.swipingBack,
-      'View--swiping': this.state.swiping
     };
 
     return (

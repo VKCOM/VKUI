@@ -10,12 +10,6 @@
   background: #efeff4;
   word-wrap: break-word;
   }
-.View--swiping {
-  position: fixed;
-  left: 0;
-  top: 0;
-  overflow: hidden;
-  }
 .View--animated {
   overflow: hidden;
   }
@@ -117,7 +111,6 @@
 
     .View--animated .View__panel,
     .View--swiping-back .View__panel,
-    .View--swiping .View__panel,
     .View--popout .View__panel {
       position: absolute;
       top: 0;
@@ -197,9 +190,6 @@
     padding-top: env(safe-area-inset-top);
     z-index: 2;
     }
-  .View--swiping .View__header {
-    position: static;
-  }
 
     .View--ios .View__header-in {
       height: 44px;
