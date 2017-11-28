@@ -5,6 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
+import transitionEvents from '../../lib/transitionEvents';
 
 const baseClassNames = getClassName('Gallery');
 
@@ -342,9 +343,10 @@ export default class Gallery extends Component {
     const classname = classnames(baseClassNames, className, {
       'Gallery--dragging': dragging
     });
+
     const layerStyle = {
-      transform: `translateX(${indent}px)`,
-      transition: animation ? `transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none'
+      [transitionEvents.prefixify('transform', { camelCase: true })]: `translateX(${indent}px)`,
+      [transitionEvents.prefixify('transition', { camelCase: true })]: animation ? `${transitionEvents.prefixify('transform')} ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none'
     };
 
     return (
