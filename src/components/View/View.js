@@ -39,6 +39,7 @@ export default class View extends Component {
     onSwipeBack: PropTypes.func,
     history: PropTypes.arrayOf(PropTypes.string)
   };
+
   static defaultProps = {
     style: {},
     children: null,
@@ -46,6 +47,16 @@ export default class View extends Component {
     header: null,
     history: []
   };
+
+  static contextTypes = {
+    insets: PropTypes.shape({
+      top: PropTypes.number,
+      right: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+    })
+  };
+
   refsStore = {};
 
   componentWillReceiveProps (nextProps) {
@@ -406,8 +417,8 @@ export default class View extends Component {
         onEndX={this.onEnd}
       >
         {hasHeader && (
-          <div className="View__header" onClick={this.onHeaderClick}>
-            <div className="View__header-in">
+          <div className="View__header" onClick={this.onHeaderClick} style={{ paddingTop: this.context.insets.top }}>
+            <div className="View__header-in" style={{ paddingTop: this.context.insets.top }}>
               {panels.map((panel, i) => (
                 <div
                   className={classnames('View__header-item', {
@@ -419,7 +430,7 @@ export default class View extends Component {
                     'View__header-item--swipe-back-success': this.state.swipingBackFinish === true,
                     'View__header-item--swipe-back-failed': this.state.swipingBackFinish === false
                   })}
-                  style={this.calcHeaderSwipeStyles(panel.props.id).item}
+                  style={Object.assign({}, this.calcHeaderSwipeStyles(panel.props.id).item, { top: this.context.insets.top })}
                   key={panel.key || panel.props.id || `panel-header-${i}`}
                 >
                   <div className="View__header-left">
@@ -466,7 +477,9 @@ export default class View extends Component {
                 'View__panel--swipe-back-success': this.state.swipingBackFinish === true,
                 'View__panel--swipe-back-failed': this.state.swipingBackFinish === false
               })}
-              style={this.calcPanelSwipeStyles(panel.props.id)}
+              style={
+                Object.assign({}, this.calcPanelSwipeStyles(panel.props.id), { paddingTop: hasHeader ? this.context.insets.top + 44 : null })
+              }
               key={panel.key || panel.props.id || `panel-${i}`}
             >
               <div className="View__panel-in">
