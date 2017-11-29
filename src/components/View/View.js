@@ -26,7 +26,6 @@ export default class View extends Component {
       swipeBackNextPanel: null,
       swipeBackPrevPanel: null,
       swipingBackFinish: null,
-      swipeBackHistory: []
     };
   }
 
@@ -38,12 +37,14 @@ export default class View extends Component {
     popout: PropTypes.node,
     onTransition: PropTypes.func,
     onSwipeBack: PropTypes.func,
+    history: PropTypes.arrayOf(PropTypes.string)
   };
   static defaultProps = {
     style: {},
     children: null,
     popout: undefined,
-    header: null
+    header: null,
+    history: []
   };
   refsStore = {};
 
@@ -67,7 +68,7 @@ export default class View extends Component {
     }
 
     // Panel transition
-    if (activePanel !== nextProps.activePanel && !this.state.swipingBack) {
+    if (this.props.activePanel !== nextProps.activePanel && !this.state.swipingBack) {
       pageYOffset = pageYOffset || window.pageYOffset;
 
       const firstLayerId = this.props.children.find(panel => {
@@ -111,25 +112,28 @@ export default class View extends Component {
       });
     }
     // Если панель сменилась из-за свайпа назад в iOS
-    if (activePanel !== nextProps.activePanel && this.state.swipingBack) {
+    if (this.props.activePanel !== nextProps.activePanel && this.state.swipingBack) {
       this.setState({
         swipeBackPrevPanel: null,
         swipeBackNextPanel: null,
         swipingBack: false,
         swipingBackFinish: null,
-        swipeBackHistory: this.state.swipeBackHistory.slice(0, -1),
         swipebackStartX: 0,
         swipeBackShift: 0,
         activePanel: nextProps.activePanel,
         visiblePanels: [nextProps.activePanel]
-      });
+      }, () => this.props.onTransition && this.props.onTransition());
     }
+  }
+
+  transitionRequired(prevState) {
+    return this.state.visiblePanels.length === 2 && this.state.visiblePanels[1] !== prevState.visiblePanels[1] && !this.state.animated
   }
 
   componentDidUpdate (prevProps, prevState) {
     const scrolls = this.state.scrolls;
 
-    if (this.state.visiblePanels.length === 2 && !this.state.animated && !this.state.swipingBack) {
+    if (this.transitionRequired(prevState)) {
       const [ prevPanel, nextPanel ] = this.state.visiblePanels;
       requestAnimationFrame(() => {
         this.setState({
@@ -144,9 +148,9 @@ export default class View extends Component {
     }
 
     // После начала свайпа назад в iOS, определяем текущую панель как swipeBackPrevPanel,
-    // предыдущую панель, которую надо показать как swipeBackNextPanel
-    if (this.state.swipingBack && !prevState.swipingBack && this.state.swipeBackHistory.length > 0) {
-      const swipeBackNextPanel = this.state.swipeBackHistory.slice(-1)[0];
+    // а предыдущую панель, которую надо показать – как swipeBackNextPanel
+    if (this.state.swipingBack && !prevState.swipingBack && this.props.history.length > 1) {
+      const swipeBackNextPanel = this.props.history.slice(-2)[0];
       this.setState({
         swipeBackPrevPanel: this.state.activePanel,
         swipeBackNextPanel
@@ -201,12 +205,6 @@ export default class View extends Component {
     if (e.propertyName === 'visibility' || e.manual) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
-      let swipeBackHistory;
-      if (isBack) {
-        swipeBackHistory = this.state.swipeBackHistory.slice(0, -1);
-      } else {
-        swipeBackHistory = [].concat(this.state.swipeBackHistory, this.state.prevPanel);
-      }
       this.setState({
         prevPanel: null,
         nextPanel: null,
@@ -214,7 +212,6 @@ export default class View extends Component {
         activePanel: activePanel,
         animated: false,
         isBack: undefined,
-        swipeBackHistory
       }, function () {
         // document.body.classList.remove('locked');
 
@@ -240,7 +237,7 @@ export default class View extends Component {
   };
 
   swipingBackTransitionEndHandler = (e) => {
-    if (e.propertyName === 'transform') {
+    if (e.propertyName === 'transform' && e.target.classList.contains('View__panel--swipe-back-next')) {
       if (this.state.swipingBackFinish === true) {
         this.props.onSwipeBack && this.props.onSwipeBack();
       } else {
@@ -279,7 +276,7 @@ export default class View extends Component {
       if (this.state.animated && e.startX <= 70) {
         this.transitionEndHandler();
       }
-      if (e.startX <= 70 && !this.state.swipingBack && this.state.swipeBackHistory.length > 0) {
+      if (e.startX <= 70 && !this.state.swipingBack && this.props.history.length > 1) {
         this.setState({
           swipingBack: true,
           swipebackStartX: e.startX,
