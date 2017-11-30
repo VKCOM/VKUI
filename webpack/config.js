@@ -7,7 +7,9 @@ const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const assets = require('postcss-assets');
 const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
+const cssMaps = require('postcss-map');
 const autoprefixer = require('autoprefixer');
+const colorsMaps = require('../src/helpers/colors');
 
 const isProduction = process.env.NODE_ENV === 'production';
 const version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf-8')).version;
@@ -27,7 +29,16 @@ const cssTransformOptions = [
           assets(),
           cssImport(),
           cssCustomProperties(),
-          autoprefixer({ browsers: ['last 2 versions', 'android >= 4'] })
+          cssMaps({
+            maps: [{ colors: colorsMaps }]
+          }),
+          autoprefixer({ browsers: [
+            '>1%',
+            'last 4 versions',
+            'Firefox ESR',
+            'not ie < 9',
+            'android >= 4'
+          ] })
         ];
       }
     }

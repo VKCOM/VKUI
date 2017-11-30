@@ -16,7 +16,7 @@
   flex: 0 0 auto;
   background: #fafafa;
   border-radius: 12px;
-  animation: animation-ios-alert-intro .2s ease;
+  animation: animation-ios-alert-intro .3s var(--ios-easing);
   }
 
   /**

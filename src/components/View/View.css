@@ -119,21 +119,6 @@
       }
 
   /**
-   * Mask
-   */
-  .View__mask {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 7;
-    background: rgba(0, 0, 0, .4);
-    animation: animation-full-fade-in .2s ease;
-    user-select: none;
-    }
-
-  /**
    * Popout
    */
   .View__popout {
@@ -143,9 +128,6 @@
     bottom: 0;
     left: 0;
     z-index: 8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     }
 
 
@@ -684,14 +666,5 @@
     }
   to {
     opacity: 0;
-    }
-  }
-
-@keyframes animation-full-fade-in {
-  from {
-    opacity: 0;
-    }
-  to {
-    opacity: 1;
     }
   }

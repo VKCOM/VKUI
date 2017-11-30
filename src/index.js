@@ -37,6 +37,7 @@ export { default as ConfigProvider } from './components/ConfigProvider/ConfigPro
  * Misc
  */
 export { default as Alert } from './components/Alert/Alert';
+export { default as ActionSheet, ActionSheetItem } from './components/ActionSheet/ActionSheet';
 export { default as AlertInput } from './components/AlertInput/AlertInput';
 export { default as Gallery } from './components/Gallery/Gallery';
 export { default as Spinner } from './components/Spinner/Spinner';

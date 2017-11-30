@@ -1,0 +1,135 @@
+@import '../../styles/constants.css';
+
+/**
+ * iOS version
+ */
+.ActionSheet--ios {
+  width: 100%;
+  animation: animation-ios-actionsheet-intro .3s var(--ios-easing);
+  }
+
+  .ActionSheet--ios.ActionSheet--closing {
+    transform: translateY(calc(100% + 20px));
+    transition: transform .3s var(--ios-easing);
+    }
+
+  .ActionSheet--ios .ActionSheet__section {
+    border-radius: 14px;
+    background-color: #fff;
+    overflow: hidden;
+    }
+
+  .ActionSheet--ios .ActionSheet__section + .ActionSheet__section {
+    margin-top: 7px;
+    }
+
+  .ActionSheet--ios .ActionSheet__header {
+    box-sizing: border-box;
+    padding: 14px 10px 13px;
+    }
+
+  .ActionSheet--ios .ActionSheet__title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.38;
+    color: #8f8f8f;
+    }
+
+  .ActionSheet--ios .ActionSheet__title + .ActionSheet__text {
+    margin-top: 10px;
+    }
+
+  .ActionSheet--ios .ActionSheet__text {
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #8f8f8f;
+    }
+
+  .ActionSheet--ios .ActionSheet__separator {
+    height: 1px;
+    background-color: rgba(0,0,0,.12);
+  }
+
+.ActionSheet--ios .ActionSheet-Item {
+  padding: 16px 10px 17px;
+  text-align: center;
+  font-size: 20px;
+  }
+
+  .ActionSheet--ios .ActionSheet-Item--primary {
+    color: map(colors, ios, accentBlue)
+    }
+
+  .ActionSheet--ios .ActionSheet-Item--danger {
+    color: map(colors, ios, red)
+    }
+
+  .ActionSheet--ios .ActionSheet-Item[disabled] {
+    color: map(colors, ios, captionGray)
+    }
+
+/**
+ * Android version
+ */
+
+.ActionSheet--android {
+  min-width: 280px;
+  background: #fff;
+  box-shadow: 0 20px 35px 0 rgba(0, 0, 0, 0.3), 0 0 35px 0 rgba(0, 0, 0, 0.22);
+  border-radius: 2px;
+  animation: animation-android-actionsheet-intro .2s ease;
+}
+
+  .ActionSheet--android.ActionSheet--closing {
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform .2s var(--android-easing), opacity .2s var(--android-easing);
+    }
+
+  .ActionSheet--android .ActionSheet__section {
+    padding: 8px;
+    box-sizing: border-box;
+    }
+
+.ActionSheet--android .ActionSheet-Item {
+  padding: 14px 16px;
+  line-height: 1.25;
+  font-size: 16px;
+  }
+
+.ActionSheet--android .ActionSheet-Item--primary {
+  color: map(colors, android, accentBlue)
+  }
+
+.ActionSheet--android .ActionSheet-Item--danger {
+  color: map(colors, android, red)
+  }
+
+.ActionSheet--android .ActionSheet-Item[disabled] {
+  color: map(colors, android, captionGray)
+  }
+
+/**
+* Animations
+*/
+@keyframes animation-ios-actionsheet-intro {
+  from {
+    transform: translateY(calc(100% + 10px));
+    }
+  to {
+    transform: translateY(0);
+    }
+  }
+
+@keyframes animation-android-actionsheet-intro {
+  from {
+    opacity: 0;
+    transform: scale(.95);
+    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    }
+  }
