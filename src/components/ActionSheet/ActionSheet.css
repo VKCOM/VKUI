@@ -59,15 +59,15 @@
   }
 
   .ActionSheet--ios .ActionSheet-Item--primary {
-    color: map(colors, ios, accentBlue)
+    color: map(colors, accentBlue)
     }
 
   .ActionSheet--ios .ActionSheet-Item--danger {
-    color: map(colors, ios, red)
+    color: map(colors, red)
     }
 
   .ActionSheet--ios .ActionSheet-Item[disabled] {
-    color: map(colors, ios, captionGray)
+    color: map(colors, captionGray)
     }
 
 /**
@@ -100,15 +100,15 @@
   }
 
 .ActionSheet--android .ActionSheet-Item--primary {
-  color: map(colors, android, accentBlue)
+  color: map(colors, accentBlue)
   }
 
 .ActionSheet--android .ActionSheet-Item--danger {
-  color: map(colors, android, red)
+  color: map(colors, red)
   }
 
 .ActionSheet--android .ActionSheet-Item[disabled] {
-  color: map(colors, android, captionGray)
+  color: map(colors, captionGray)
   }
 
 /**
