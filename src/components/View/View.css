@@ -137,8 +137,10 @@
   .View--ios.View--animated,
   .View--ios.View--swiping-back,
   .View--ios.View--popout {
-    height: calc(100% + constant(safe-area-inset-top) + constant(safe-area-inset-bottom));
-    height: calc(100% + env(safe-area-inset-top) + env(safe-area-inset-bottom));
+    padding-top: constant(safe-area-inset-top);
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /**

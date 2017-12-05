@@ -10,15 +10,4 @@ if (typeof document !== 'undefined' && document.createElement) {
   }
 }
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-function prefixify(property, { camelCase = false } = {}) {
-  if (prefix) {
-    return camelCase ? capitalizeFirstLetter(prefix) + capitalizeFirstLetter(property) : `-${prefix}-${property}`
-  }
-  return property;
-}
-
-export default { supported, prefix, prefixify };
+export default { supported, prefix };

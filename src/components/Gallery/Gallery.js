@@ -5,7 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
-import transitionEvents from '../../lib/transitionEvents';
+import prefixCSS from 'react-prefixer';
 
 const baseClassNames = getClassName('Gallery');
 
@@ -344,10 +344,10 @@ export default class Gallery extends Component {
       'Gallery--dragging': dragging
     });
 
-    const layerStyle = {
-      [transitionEvents.prefixify('transform', { camelCase: true })]: `translateX(${indent}px)`,
-      [transitionEvents.prefixify('transition', { camelCase: true })]: animation ? `${transitionEvents.prefixify('transform')} ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none'
-    };
+    const layerStyle = prefixCSS({
+      transform: `translateX(${indent}px)`,
+      transition: animation ? `transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none'
+    });
 
     return (
       <div className={classname} style={style} ref={this.getContainerRef}>
