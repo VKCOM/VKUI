@@ -15,8 +15,8 @@ export default class ConfigProvider extends React.Component {
 
   getChildContext() {
     return {
-      isWebView: this.props.isWebView,
-      insets: this.props.insets
+      isWebView: this.props.isWebView || true,
+      insets: this.props.insets || null
     };
   }
 

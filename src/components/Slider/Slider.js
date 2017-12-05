@@ -29,8 +29,6 @@ export default class Slider extends Component {
     step: 0
   };
   onStart = (e) => {
-    // Для того, чтобы событие не провалилвалось до View, где может происходить swipe back
-    e.originalEvent.stopPropagation();
     
     if (!this.state.containerWidth) {
       this.onResize();

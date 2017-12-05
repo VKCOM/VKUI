@@ -206,6 +206,8 @@ export default class Gallery extends Component {
       return;
     }
 
+    e.originalEvent.preventDefault();
+
     if (e.isSlideX) {
       this.props.onDragStart && this.props.onDragStart();
       if (this.state.deltaX !== e.shiftX || this.state.dragging !== e.isSlideX) {
@@ -214,8 +216,6 @@ export default class Gallery extends Component {
           dragging: e.isSlideX
         });
       }
-      e.originalEvent.preventDefault();
-      e.originalEvent.stopPropagation();
 
       return true;
     }
