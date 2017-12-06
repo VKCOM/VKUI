@@ -8,6 +8,7 @@ import getClassName from '../../helpers/getClassName';
 import { platform, ANDROID, IOS } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
+import prefixCSS from 'react-prefixer';
 
 const osname = platform();
 const baseClassNames = getClassName('View');
@@ -246,7 +247,8 @@ export default class View extends Component {
   };
 
   swipingBackTransitionEndHandler = (e) => {
-    if (e.propertyName === 'transform' && e.target.classList.contains('View__panel--swipe-back-next')) {
+    // indexOf because of vendor prefixes in old browsers
+    if (e.propertyName.indexOf('transform') >= 0 && e.target.classList.contains('View__panel--swipe-back-next')) {
       if (this.state.swipingBackFinish === true) {
         this.props.onSwipeBack && this.props.onSwipeBack();
       } else {
@@ -337,19 +339,19 @@ export default class View extends Component {
     let prevPanelShadow = 0.3 * (window.innerWidth - this.state.swipeBackShift) / window.innerWidth;
 
     if (this.state.swipingBackFinish !== null) {
-      return isPrev ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` } : {};
+      return isPrev ? prefixCSS({ boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` }) : {};
     }
 
     if (isNext) {
-      return {
+      return prefixCSS({
         transform: `translate3d(${nextPanelTranslate}, 0, 0)`
-      };
+      });
     }
     if (isPrev) {
-      return {
+      return prefixCSS({
         transform: `translate3d(${prevPanelTranslate}, 0, 0)`,
         boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})`
-      };
+      });
     }
 
     return {};
@@ -373,19 +375,19 @@ export default class View extends Component {
     let leftTransform = this.state.swipeBackShift / window.innerWidth * 60;
 
     if (isNext) {
-      return {
+      return prefixCSS({
         title: { transform: `translate3d(${-30 + titleTransform}%, 0, 0)`, opacity },
         item: { opacity },
         leftIn: { transform: `translate3d(${-60 + leftTransform}%, 0, 0)`, opacity },
         leftIcon: { opacity: 1 }
-      };
+      });
     }
     if (isPrev) {
-      return {
+      return prefixCSS({
         title: { transform: `translate3d(${titleTransform}%, 0, 0)` },
         item: { opacity: 1 - opacity },
         leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` }
-      };
+      });
     }
   }
 
