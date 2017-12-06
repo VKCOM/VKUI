@@ -262,7 +262,7 @@ export default class View extends Component {
     }
   };
 
-  onHeaderClick = () => {
+  onScrollTop = () => {
     const { activePanel } = this.state;
 
     if (activePanel) {
@@ -415,7 +415,8 @@ export default class View extends Component {
         onEndX={this.onEnd}
       >
         {hasHeader && (
-          <div className="View__header" onClick={this.onHeaderClick}>
+          <div className="View__header">
+            { osname === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
             <div className="View__header-in">
               {panels.map((panel, i) => (
                 <div

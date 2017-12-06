@@ -179,6 +179,16 @@
     z-index: 2;
     }
 
+    .View--ios .View__header-scrolltop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      height: constant(safe-area-inset-top);
+      height: env(safe-area-inset-top);
+    }
+
     .View--ios .View__header-in {
       height: 44px;
       padding-top: 20px;
