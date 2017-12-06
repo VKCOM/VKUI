@@ -1,6 +1,7 @@
 /**
  * Layout
  */
+export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export { default as ScrollView } from './components/ScrollView/ScrollView';
 export { default as Group } from './components/Group/Group';
@@ -37,6 +38,7 @@ export { default as ConfigProvider } from './components/ConfigProvider/ConfigPro
  * Misc
  */
 export { default as Alert } from './components/Alert/Alert';
+export { default as AndroidClose } from './components/AndroidClose/AndroidClose';
 export { default as ActionSheet, ActionSheetItem } from './components/ActionSheet/ActionSheet';
 export { default as AlertInput } from './components/AlertInput/AlertInput';
 export { default as Gallery } from './components/Gallery/Gallery';
