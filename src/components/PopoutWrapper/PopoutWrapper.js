@@ -36,10 +36,8 @@ export default class PopoutWrapper extends React.Component {
     return (
       <div className={classNames} onClick={ this.props.onClick } { ...removeObjectKeys(this.props, ['hasMask', 'v', 'h', 'closing', 'style']) }>
         { this.props.hasMask && <div className="PopoutWrapper__mask" /> }
-        <div className="PopoutWrapper__insets">
-          <div className={ containerClassNames } style={ this.props.style }>
-            { this.props.children }
-          </div>
+        <div className={ containerClassNames } style={ this.props.style }>
+          { this.props.children }
         </div>
       </div>
     )

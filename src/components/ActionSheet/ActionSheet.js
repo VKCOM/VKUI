@@ -76,7 +76,6 @@ export default class ActionSheet extends React.Component {
         closing={this.state.closing}
         v={ osname === IOS ? 'bottom' : 'center' }
         h="center"
-        style={{ padding: osname === IOS ? 10 : 20 }}
         onClick={ () => this.state.opened && this.onClose() }
       >
         <div className={classNames} style={style} ref={ el => this.el = el } onClick={ e => e.stopPropagation() }>

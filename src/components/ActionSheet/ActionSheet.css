@@ -6,10 +6,11 @@
 .ActionSheet--ios {
   width: 100%;
   animation: animation-ios-actionsheet-intro .3s var(--ios-easing);
+  padding: 10px;
   }
 
   .ActionSheet--ios.ActionSheet--closing {
-    transform: translateY(calc(100% + 20px));
+    transform: translateY(100%);
     transition: transform .3s var(--ios-easing);
     }
 
@@ -22,6 +23,11 @@
   .ActionSheet--ios .ActionSheet__section + .ActionSheet__section {
     margin-top: 7px;
     }
+
+  .ActionSheet--ios .ActionSheet__section:last-child {
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
+  }
 
   .ActionSheet--ios .ActionSheet__header {
     box-sizing: border-box;
@@ -116,7 +122,7 @@
 */
 @keyframes animation-ios-actionsheet-intro {
   from {
-    transform: translateY(calc(100% + 10px));
+    transform: translateY(100%);
     }
   to {
     transform: translateY(0);
