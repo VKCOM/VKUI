@@ -39,6 +39,13 @@
  * iOS
  */
 
+.Root--ios.Root--transition {
+  padding-top: constant(safe-area-inset-top);
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  }
+
 .Root--ios .Root__view--show-back::after,
 .Root--ios .Root__view--hide-forward::after {
   position: absolute;

@@ -41,24 +41,23 @@ export default class Root extends React.Component {
         nextView: nextProps.activeView,
         prevView: this.props.activeView,
         isBack
-      }, () => {
-
       })
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.nextView !== prevState.nextView && this.state.nextView !== null) {
-
-      (this.state.isBack ? this.prevView : this.nextView).addEventListener('animationend', () => {
-        this.setState({
-          activeView: this.state.nextView,
-          prevView: null,
-          nextView: null
-        })
-      })
+      (this.state.isBack ? this.prevView : this.nextView).addEventListener('animationend', this.onAnimationEnd)
     }
   }
+
+  onAnimationEnd = () => {
+    this.setState({
+      activeView: this.state.nextView,
+      prevView: null,
+      nextView: null
+    })
+  };
 
   render() {
     const transitionState = this.state.nextView;
