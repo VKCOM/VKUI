@@ -6,17 +6,20 @@ import Spinner from '../Spinner/Spinner';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import removeObjectKeys from '../../lib/removeObjectKeys';
+import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 
 const baseClassNames = getClassName('ScreenSpinner');
 
 export default function ScreenSpinner (props) {
   return (
-    <div
-      className={classnames(baseClassNames, props.className)}
-      {...removeObjectKeys(props, ['className'])}
-    >
-      <Spinner color="#fff" />
-    </div>
+    <PopoutWrapper>
+      <div
+        className={classnames(baseClassNames, props.className)}
+        {...removeObjectKeys(props, ['className'])}
+      >
+        <Spinner color="#fff" />
+      </div>
+    </PopoutWrapper>
   );
 }
 
