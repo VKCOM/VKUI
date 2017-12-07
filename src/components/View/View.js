@@ -287,6 +287,7 @@ export default class View extends Component {
       if (this.state.animated && e.startX <= 70) {
         this.transitionEndHandler();
       }
+
       if (e.startX <= 70 && !this.state.swipingBack && this.props.history.length > 1) {
         this.setState({
           swipingBack: true,
@@ -310,6 +311,7 @@ export default class View extends Component {
   };
 
   onEnd = () => {
+    console.log('end')
     if (this.state.swipingBack) {
       requestAnimationFrame(() => {
         const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
@@ -414,7 +416,7 @@ export default class View extends Component {
         className={classnames(baseClassNames, modifiers)}
         style={style}
         onMoveX={this.onMove}
-        onEndX={this.onEnd}
+        onEnd={this.onEnd}
       >
         {hasHeader && (
           <div className="View__header">
