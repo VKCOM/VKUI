@@ -25,8 +25,19 @@
     }
 
   .ActionSheet--ios .ActionSheet__section:last-child {
-    margin-bottom: constant(safe-area-inset-bottom);
-    margin-bottom: env(safe-area-inset-bottom);
+    margin-bottom: calc(constant(safe-area-inset-bottom));
+    margin-bottom: calc(env(safe-area-inset-bottom));
+  }
+
+  /* Because iphonex is so especial */
+  @media only screen
+  and (device-width : 375px)
+  and (device-height : 812px)
+  and (-webkit-device-pixel-ratio : 3) {
+    .ActionSheet--ios .ActionSheet__section:last-child {
+      margin-bottom: calc(constant(safe-area-inset-bottom) - 10px);
+      margin-bottom: calc(env(safe-area-inset-bottom) - 10px);
+    }
   }
 
   .ActionSheet--ios .ActionSheet__header {
