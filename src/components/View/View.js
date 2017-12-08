@@ -159,19 +159,12 @@ export default class View extends Component {
       });
     }
 
-    // После начала свайпа назад в iOS, определяем текущую панель как swipeBackPrevPanel,
-    // а предыдущую панель, которую надо показать – как swipeBackNextPanel
-    if (this.state.swipingBack && !prevState.swipingBack && this.props.history.length > 1) {
-      const swipeBackNextPanel = this.props.history.slice(-2)[0];
-      this.setState({
-        swipeBackPrevPanel: this.state.activePanel,
-        swipeBackNextPanel
-      });
-    }
-
-    if (prevState.swipingBack && prevState.swipeBackNextPanel === null && this.state.swipeBackNextPanel) {
+    if (prevState.swipeBackNextPanel === null && this.state.swipeBackNextPanel) {
       const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
+      const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
+
       nextPanelElement.scrollTop = scrolls[this.state.swipeBackNextPanel];
+      prevPanelElement.scrollTop = scrolls[this.state.swipeBackPrevPanel];
     }
 
     if (prevState.swipingBackFinish === null && this.state.swipingBackFinish !== null) {
@@ -292,7 +285,12 @@ export default class View extends Component {
         this.setState({
           swipingBack: true,
           swipebackStartX: e.startX,
-          startT: e.startT
+          startT: e.startT,
+          swipeBackPrevPanel: this.state.activePanel,
+          swipeBackNextPanel: this.props.history.slice(-2)[0],
+          scrolls: Object.assign({}, this.state.scrolls, {
+            [this.state.activePanel]: window.pageYOffset
+          })
         });
       }
       if (this.state.swipingBack) {
@@ -311,7 +309,6 @@ export default class View extends Component {
   };
 
   onEnd = () => {
-    console.log('end')
     if (this.state.swipingBack) {
       requestAnimationFrame(() => {
         const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
