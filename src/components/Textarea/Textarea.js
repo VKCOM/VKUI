@@ -65,7 +65,8 @@ export default class Textarea extends Component {
         const height = el.scrollHeight - diff;
 
         this.setState({ height });
-        document.body.scrollTop = top;
+        //TODO fix problem with scroll to top
+        // document.body.scrollTop = top;
 
         this.props.onResize(el);
       });
