@@ -2,7 +2,7 @@ import './Spinner.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
+import { platform, ANDROID, IOS } from '../../lib/platform';
 import classnames from '../../lib/classnames.js';
 import AndroidSpinner from './AndroidSpinner';
 import IosSpinner from './IosSpinner';
@@ -28,7 +28,7 @@ export default class Spinner extends Component {
     progress: null
   };
   render () {
-    const { on, progress, size } = this.props;
+    const { on, progress, size, style } = this.props;
     const isAnimated = on && progress === null;
     const modifiers = {
       'Spinner--on': isAnimated
@@ -37,7 +37,7 @@ export default class Spinner extends Component {
     const Component = osname === IOS ? IosSpinner : AndroidSpinner;
 
     return (
-      <div className={classnames(baseClassNames, modifiers)}>
+      <div className={classnames(baseClassNames, modifiers)} style={style}>
         <svg
           className="Spinner__self"
           style={{ width: size, height: size }}

@@ -3,15 +3,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
+import classnames from '../../lib/classnames';
 
 const baseClassNames = getClassName('FormLayout');
 
 export default function FormLayout (props) {
   const children = Array.isArray(props.children) ? props.children : [props.children];
   const TagName = props.tagName || 'form';
+  const modifiers = {
+    'FormLayout--web': props.mod === 'web'
+  }
 
   return (
-    <TagName className={baseClassNames} {...removeObjectKeys(props, ['tagName'])}>
+    <TagName className={classnames(baseClassNames, modifiers)} {...removeObjectKeys(props, ['tagName', 'mod'])}>
       {children.map((field, i) => (
         <label className="FormLayout__row" key={field.key || `row-${i}`}>
           <div className="FormLayout__separator" />
@@ -26,6 +30,7 @@ export default function FormLayout (props) {
           </div>
         </label>
       ))}
+      {TagName === 'form' && <input type="submit" style={{ display: 'none' }} />}
     </TagName>
   );
 }
@@ -33,5 +38,6 @@ export default function FormLayout (props) {
 FormLayout.propTypes = {
   children: PropTypes.node,
   style: PropTypes.object,
-  tagName: PropTypes.string
+  tagName: PropTypes.string,
+  mod: PropTypes.string
 };

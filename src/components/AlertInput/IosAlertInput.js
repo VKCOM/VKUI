@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { platform, ANDROID, IOS } from '../../lib/platform.js';
-import classnames from '../../lib/classnames';
-import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
-
-const osname = platform();
 
 export default class IosAlertInput extends Component {
   constructor (props) {
@@ -24,7 +19,7 @@ export default class IosAlertInput extends Component {
     onChange: PropTypes.func,
     style: PropTypes.object,
     children: PropTypes.node,
-    className: PropTypes.string,
+    className: PropTypes.string
   };
   static defaultProps = {
     type: 'text',
@@ -36,11 +31,9 @@ export default class IosAlertInput extends Component {
       this.props.onChange(e);
     }
   }
-  render() {
-    const { className, style } = this.props;
-
+  render () {
     return (
-      <div className={className}>
+      <div className={this.props.className}>
         <input
           className="AlertInput__self"
           {...removeObjectKeys(this.props, ['className', 'initialValue', 'onChange'])}

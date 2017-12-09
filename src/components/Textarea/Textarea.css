@@ -2,14 +2,15 @@
   display: block;
   margin: 0;
   width: 100%;
-  height: 66px;
+  min-height: 66px;
+  max-height: 198px;
   outline: none;
   border: 0;
   background: transparent;
   font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
   line-height: 22px;
   resize: none;
-}
+  }
 
 .Textarea--ios {
   font-size: 17px;

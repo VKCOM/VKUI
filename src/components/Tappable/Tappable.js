@@ -5,16 +5,17 @@ import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
-import { platform, ANDROID } from '../../lib/platform.js';
+import { platform, ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../Touch/TouchUtils';
+import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
 const ts = () => +Date.now();
 const baseClassNames = getClassName('Tappable');
 const osname = platform();
 
 const ACTIVE_DELAY = 70;
-const ACTIVE_EFFECT_DELAY = 300;
+const ACTIVE_EFFECT_DELAY = 600;
 
 let storage = {};
 
@@ -105,7 +106,7 @@ export default class Tappable extends Component {
     }
 
     if (this.state.active) {
-      setTimeout(() => this.callback(), 0);
+      requestAnimationFrame(this.callback);
 
       if (now - this.state.ts >= 100) {
         // Долгий тап, выключаем подсветку
@@ -121,7 +122,7 @@ export default class Tappable extends Component {
       }
     } else if (!this.isSlide) {
       // Очень короткий тап, включаем подсветку
-      setTimeout(() => this.callback(), 0);
+      requestAnimationFrame(this.callback);
 
       this.start();
 
@@ -172,7 +173,7 @@ export default class Tappable extends Component {
    *
    * @returns {void}
    */
-  callback () {
+  callback = () => {
     if (this.props.onClick) {
       this.props.onClick();
     }
@@ -227,8 +228,8 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   getContainer = (container) => {
-    if (container && container.container) {
-      this.container = container.container;
+    if (container) {
+      this.container = container.container || container;
     }
     return;
   };

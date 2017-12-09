@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
+import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
 const baseClassNames = getClassName('Input');
 
@@ -26,6 +27,7 @@ export default class Input extends Component {
       'email', 'number', 'tel', 'url'
     ]),
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
+    value: PropTypes.string,
     initialValue: PropTypes.string,
     onChange: PropTypes.func
   };
@@ -42,6 +44,17 @@ export default class Input extends Component {
       this.props.onChange(e);
     }
   }
+  getRef = (element) => {
+    this.element = element;
+  };
+  componentDidUpdate (prevProps) {
+    if (prevProps.value && this.props.value === '') {
+      // Fix iOS extra indent on removing content
+      requestAnimationFrame(() => {
+        this.element.value = '';
+      });
+    }
+  }
   render () {
     const { alignment, value } = this.props;
     const modifiers = {
@@ -54,6 +67,7 @@ export default class Input extends Component {
       <input
         className={classnames(baseClassNames, modifiers)}
         {...removeObjectKeys(this.props, ['onChange', 'initialValue', 'alignment'])}
+        ref={this.getRef}
         value={this.isControlledOutside ? value : this.state.value}
         onChange={this.onChange}
       />

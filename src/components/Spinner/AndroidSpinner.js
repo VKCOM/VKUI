@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import keyframes from '../../lib/keyframes.js';
+import keyframes from '../../lib/keyframes';
 
 export default class AndroidSpinner extends Component {
   constructor (props) {

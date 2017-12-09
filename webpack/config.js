@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -6,9 +7,12 @@ const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const assets = require('postcss-assets');
 const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
+const cssMaps = require('postcss-map');
 const autoprefixer = require('autoprefixer');
+const colorsMaps = require('../src/helpers/colors');
 
 const isProduction = process.env.NODE_ENV === 'production';
+const version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf-8')).version;
 
 const cssTransformOptions = [
   {
@@ -25,7 +29,16 @@ const cssTransformOptions = [
           assets(),
           cssImport(),
           cssCustomProperties(),
-          autoprefixer({ browsers: ['last 2 versions'] })
+          cssMaps({
+            maps: [{ colors: colorsMaps }]
+          }),
+          autoprefixer({ browsers: [
+            '>1%',
+            'last 4 versions',
+            'Firefox ESR',
+            'not ie < 9',
+            'android >= 4'
+          ] })
         ];
       }
     }
@@ -56,7 +69,7 @@ const config = {
           presets: [
             [
               'es2015',
-              { modules: false },
+              { modules: false }
             ],
             'react'
           ],
@@ -103,9 +116,10 @@ const prodConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': `"production"`,
+      'process.env.VKUI_VERSION': `"${version}"`
     }),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         screw_ie8: true,

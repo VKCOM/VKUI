@@ -12,10 +12,21 @@ export default class Button extends Component {
   static propTypes = {
     style: PropTypes.object,
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
-    appearance: PropTypes.oneOf(['primary', 'default', 'danger', 'vk-wide-primary', 'vk-wide', 'vk-rich', 'vk-primary', 'vk-secondary', 'vk-tertiary']),
+    appearance: PropTypes.oneOf([
+      'primary',
+      'default',
+      'danger',
+      'vk-wide-primary',
+      'vk-wide',
+      'vk-rich',
+      'vk-primary',
+      'vk-secondary',
+      'vk-tertiary'
+    ]),
     wide: PropTypes.bool,
     children: PropTypes.node,
-    className: PropTypes.string
+    className: PropTypes.string,
+    component: PropTypes.string
   };
   static defaultProps = {
     style: {},
@@ -23,10 +34,11 @@ export default class Button extends Component {
     appearance: 'default',
     type: 'default',
     wide: true,
-    children: ''
+    children: '',
+    component: 'button'
   };
   render () {
-    const { style, children, alignment, appearance, wide, className } = this.props;
+    const { style, children, alignment, appearance, wide, className, component } = this.props;
     const modifiers = {
       'Button--left': alignment === 'left',
       'Button--center': alignment === 'center',
@@ -42,11 +54,17 @@ export default class Button extends Component {
       'Button--vk-tertiary': appearance === 'vk-tertiary',
       'Button--wide': wide
     };
-    const nativeProps = removeObjectKeys(this.props, ['alignment', 'appearance', 'wide', 'className']);
+    const nativeProps = removeObjectKeys(this.props, [
+      'alignment',
+      'appearance',
+      'wide',
+      'className',
+      'component'
+    ]);
 
     return (
       <Tappable
-        component="button"
+        component={component}
         className={classnames(baseClassNames, className, modifiers)}
         style={style}
         {...nativeProps}
