@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .Select {
   display: block;
   margin: 0;
@@ -23,6 +25,7 @@
     }
 
   .Select--android .Select__self {
+    font-family: var(--android-font);
     font-size: 16px;
     padding: 16px 0 18px;
     }

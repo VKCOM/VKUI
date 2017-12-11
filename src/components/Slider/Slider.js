@@ -29,6 +29,7 @@ export default class Slider extends Component {
     step: 0
   };
   onStart = (e) => {
+    
     if (!this.state.containerWidth) {
       this.onResize();
     }

@@ -5,4 +5,9 @@ build
 .env
 npm-debug.log
 stats.json
+<<<<<<< HEAD
 .idea
+=======
+dist/*.hot-update.*
+.idea/
+>>>>>>> v0.7.0rc

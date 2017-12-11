@@ -11,16 +11,18 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "css-loader": "^0.27.1",
-    "csso-webpack-plugin": "^1.0.0-beta.6",
+    "csso-webpack-plugin": "^1.0.0-beta.10",
     "extract-text-webpack-plugin": "^2.1.0",
     "postcss-assets": "^4.1.0",
     "postcss-custom-properties": "^5.0.2",
     "postcss-import": "^9.1.0",
     "postcss-loader": "^1.3.3",
+    "postcss-map": "^0.9.0",
     "style-loader": "^0.13.2",
     "webpack": "^2.2.1",
     "webpack-merge": "^4.0.0",
-    "webpack-stats-plugin": "^0.1.4"
+    "webpack-stats-plugin": "^0.1.4",
+    "react-prefixer": "^2.0.0"
   },
   "dependencies": {
     "prop-types": "^15.5.8"

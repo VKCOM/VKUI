@@ -27,10 +27,10 @@ function getSupportedEvents () {
   const touchEnabled = isClient && 'ontouchstart' in window;
 
   if (touchEnabled) {
-    return ['onTouchStart', 'touchmove', 'touchend', 'touchcancel'];
+    return ['touchstart', 'touchmove', 'touchend', 'touchcancel'];
   }
 
-  return ['onMouseDown', 'mousemove', 'mouseup', 'mouseleave'];
+  return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
 }
 
 export { getSupportedEvents, coordX, coordY };

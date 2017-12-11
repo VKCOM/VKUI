@@ -5,6 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
+import prefixCSS from 'react-prefixer';
 
 const baseClassNames = getClassName('Gallery');
 
@@ -13,11 +14,11 @@ export default class Gallery extends Component {
     super(props);
     this.state = {
       containerWidth: 0,
-      current: 0,
+      current: props.initialSlideIndex,
       deltaX: 0,
       shiftX: 0,
       slides: [],
-      animation: true,
+      animation: false,
       duration: 0.24
     };
 
@@ -35,25 +36,29 @@ export default class Gallery extends Component {
       PropTypes.string,
       PropTypes.number
     ]),
-    autoplay: PropTypes.number
+    autoplay: PropTypes.number,
+    initialSlideIndex: PropTypes.number,
+    onDragStart: PropTypes.func,
+    onDragEnd: PropTypes.func
   };
 
   static defaultProps = {
     slideWidth: '100%',
     children: '',
-    autoplay: 0
+    autoplay: 0,
+    initialSlideIndex: 0
   };
 
   slidesStore = {};
 
-  initializeSlides () {
+  initializeSlides (callback = () => {}) {
     const slides = this.getSlidesCoords();
     const containerWidth = this.container.offsetWidth;
     const layerWidth = slides.reduce((val, slide) => slide.width + val, 0);
     const min = -layerWidth + containerWidth;
     const max = 0;
 
-    this.setState({ min, max, layerWidth, containerWidth, slides });
+    this.setState({ min, max, layerWidth, containerWidth, slides }, callback);
   }
 
   /**
@@ -201,15 +206,16 @@ export default class Gallery extends Component {
       return;
     }
 
+    e.originalEvent.preventDefault();
+
     if (e.isSlideX) {
+      this.props.onDragStart && this.props.onDragStart();
       if (this.state.deltaX !== e.shiftX || this.state.dragging !== e.isSlideX) {
         this.setState({
           deltaX: e.shiftX,
           dragging: e.isSlideX
         });
       }
-      e.originalEvent.preventDefault();
-      e.originalEvent.stopPropagation();
 
       return true;
     }
@@ -217,6 +223,7 @@ export default class Gallery extends Component {
 
   onEnd = (e) => {
     const targetIndex = e.isSlide ? this.getTarget() : this.state.current;
+    this.props.onDragEnd && this.props.onDragEnd();
 
     this.setState({
       shiftX: this.calculateIndent(targetIndex),
@@ -225,6 +232,12 @@ export default class Gallery extends Component {
       current: targetIndex,
       duration: '.24'
     });
+
+    if (this.props.onEnd) {
+      this.props.onEnd({
+        targetIndex
+      });
+    }
 
     if (this.timeout) {
       this.clearTimeout();
@@ -257,11 +270,11 @@ export default class Gallery extends Component {
 
       this.go(targetIndex);
     }, duration);
-  }
+  };
 
   clearTimeout = () => {
     clearTimeout(this.timeout);
-  }
+  };
 
   getChildren (children) {
     return [].concat(children || this.props.children).reduce(this.reduceChildren, []);
@@ -276,7 +289,7 @@ export default class Gallery extends Component {
     }
 
     return acc;
-  }
+  };
 
   getContainerRef = (container) => {
     this.container = container;
@@ -284,10 +297,14 @@ export default class Gallery extends Component {
 
   getSlideRef = (id) => (slide) => {
     this.slidesStore[`slide-${id}`] = slide;
-  }
+  };
 
   componentDidMount () {
-    this.initializeSlides();
+    this.initializeSlides(() => {
+      this.setState({
+        shiftX: this.calculateIndent(this.props.initialSlideIndex)
+      })
+    });
     window.addEventListener('resize', this.onResize);
 
     if (this.props.autoplay) {
@@ -295,15 +312,18 @@ export default class Gallery extends Component {
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate (prevProps, prevState) {
     if (this.isChildrenDirty) {
       this.isChildrenDirty = false;
       this.initializeSlides();
     }
+    if (prevState.current !== this.state.current && this.props.onChange) {
+      this.props.onChange(this.state.current);
+    }
   }
 
   componentWillReceiveProps (nextProps) {
-    this.slides = this.getChildren();
+    this.slides = this.getChildren(nextProps.children);
     this.isChildrenDirty = true;
 
     if (nextProps.autoplay && !this.props.autoplay) {
@@ -329,10 +349,11 @@ export default class Gallery extends Component {
     const classname = classnames(baseClassNames, className, {
       'Gallery--dragging': dragging
     });
-    const layerStyle = {
+
+    const layerStyle = prefixCSS({
       transform: `translateX(${indent}px)`,
       transition: animation ? `transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none'
-    };
+    });
 
     return (
       <div className={classname} style={style} ref={this.getContainerRef}>

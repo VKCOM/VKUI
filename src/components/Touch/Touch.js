@@ -5,6 +5,10 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 
 const events = getSupportedEvents();
 
+// amazing hack for preventing vertical scroll during horizontal swipe
+// (in View, Slider, Gallery). todo: requires investigation
+window.addEventListener('touchmove', () => {});
+
 export default class Touch extends Component {
   cancelClick = false;
   gesture = {};
@@ -28,6 +32,14 @@ export default class Touch extends Component {
     children: '',
     useCapture: true
   };
+
+  componentDidMount() {
+    this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
+  }
+
+  componentWillUnmount() {
+    this.container.removeEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
+  }
 
   /**
    * Обработчик событий touchstart
@@ -61,9 +73,9 @@ export default class Touch extends Component {
       this.props.onStartY(outputEvent);
     }
 
-    document.body.addEventListener(events[1], this.onMove, this.props.useCapture);
-    document.body.addEventListener(events[2], this.onEnd, this.props.useCapture);
-    document.body.addEventListener(events[3], this.onEnd, this.props.useCapture);
+    document.body.addEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
+    document.body.addEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
+    document.body.addEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
   }
 
   /**
@@ -163,9 +175,9 @@ export default class Touch extends Component {
     this.cancelClick = e.target.tagName === 'A' && isSlide;
     this.gesture = {};
 
-    document.body.removeEventListener(events[1], this.onMove, this.props.useCapture);
-    document.body.removeEventListener(events[2], this.onEnd, this.props.useCapture);
-    document.body.removeEventListener(events[3], this.onEnd, this.props.useCapture);
+    document.body.removeEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
+    document.body.removeEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
+    document.body.removeEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
   }
 
   /**
@@ -203,7 +215,6 @@ export default class Touch extends Component {
 
   render () {
     const handlers = {
-      [events[0]]: this.onStart,
       onDragStart: this.onDragStart,
       onClick: this.onClick
     };

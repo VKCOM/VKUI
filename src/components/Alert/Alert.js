@@ -2,6 +2,7 @@ import './Alert.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
+import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 
@@ -31,25 +32,27 @@ export default class Alert extends Component {
     };
 
     return (
-      <div className={classnames(baseClassNames, modifiers)} style={style}>
-        <div className="Alert__content">
-          {this.props.children}
+      <PopoutWrapper v="center" h="center">
+        <div className={classnames(baseClassNames, modifiers)} style={style}>
+          <div className="Alert__content">
+            {this.props.children}
+          </div>
+          <footer className="Alert__footer">
+            {actions.map((button, i) => (
+              <Tappable
+                component="button"
+                className={classnames('Alert__btn', {
+                  'Alert__btn--primary': button.modifier === 'primary'
+                })}
+                onClick={button.action}
+                key={`alert-action-${i}`}
+              >
+                {button.title}
+              </Tappable>
+            ))}
+          </footer>
         </div>
-        <footer className="Alert__footer">
-          {actions.map((button, i) => (
-            <Tappable
-              component="button"
-              className={classnames('Alert__btn', {
-                'Alert__btn--primary': button.modifier === 'primary'
-              })}
-              onClick={button.action}
-              key={`alert-action-${i}`}
-            >
-              {button.title}
-            </Tappable>
-          ))}
-        </footer>
-      </div>
+      </PopoutWrapper>
     );
   }
 }

@@ -4,7 +4,3 @@
   min-height: 100%;
   overflow-x: hidden;
   }
-
-  .ScrollView__in {
-    transform: translate3d(0, 0, 0);
-    }

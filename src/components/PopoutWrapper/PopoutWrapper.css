@@ -1,0 +1,82 @@
+@import '../../styles/constants.css';
+
+.PopoutWrapper {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  }
+
+  .PopoutWrapper--closing .PopoutWrapper__mask {
+    opacity: 0;
+    }
+
+  .PopoutWrapper__mask {
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, .4);
+    animation: animation-full-fade-in .3s ease;
+    user-select: none;
+    }
+
+  .PopoutWrapper__container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    z-index: 2;
+    }
+
+  .PopoutWrapper__container--v-center {
+    align-items: center;
+    }
+
+  .PopoutWrapper__container--v-bottom {
+    align-items: flex-end;
+    }
+
+  .PopoutWrapper__container--v-top {
+    align-items: flex-start;
+    }
+
+  .PopoutWrapper__container--h-center {
+    justify-content: center;
+    }
+
+  .PopoutWrapper__container--h-left {
+    justify-content: flex-start;
+    }
+
+  .PopoutWrapper__container--h-right {
+    justify-content: flex-end;
+    }
+
+/**
+ * iOS version
+ */
+
+.PopoutWrapper--ios.PopoutWrapper--closing .PopoutWrapper__mask {
+  transition: opacity .3s var(--ios-easing)
+  }
+
+/**
+ * Android version
+ */
+
+.PopoutWrapper--android.PopoutWrapper--closing .PopoutWrapper__mask {
+  transition: opacity .2s var(--android-easing)
+  }
+
+@keyframes animation-full-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
