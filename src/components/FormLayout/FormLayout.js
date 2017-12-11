@@ -12,7 +12,7 @@ export default function FormLayout (props) {
   const TagName = props.tagName || 'form';
   const modifiers = {
     'FormLayout--web': props.mod === 'web'
-  }
+  };
 
   return (
     <TagName className={classnames(baseClassNames, modifiers)} {...removeObjectKeys(props, ['tagName', 'mod'])}>
@@ -30,7 +30,7 @@ export default function FormLayout (props) {
           </div>
         </label>
       ))}
-      {TagName === 'form' && <input type="submit" style={{ display: 'none' }} />}
+      {TagName === 'form' && props.allowSubmit && <input type="submit" style={{ display: 'none' }} />}
     </TagName>
   );
 }
@@ -39,5 +39,10 @@ FormLayout.propTypes = {
   children: PropTypes.node,
   style: PropTypes.object,
   tagName: PropTypes.string,
-  mod: PropTypes.string
+  mod: PropTypes.string,
+  allowSubmit: PropTypes.bool
+};
+
+FormLayout.defaultProps = {
+  allowSubmit: true
 };
