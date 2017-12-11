@@ -365,7 +365,8 @@ export default class View extends Component {
         title: {},
         item: {},
         leftIn: {},
-        leftIcon: {}
+        leftIcon: {},
+        right: {}
       };
     }
 
@@ -378,14 +379,15 @@ export default class View extends Component {
         title: { transform: `translate3d(${-30 + titleTransform}%, 0, 0)`, opacity },
         item: { opacity },
         leftIn: { transform: `translate3d(${-60 + leftTransform}%, 0, 0)`, opacity },
-        leftIcon: { opacity: 1 }
+        leftIcon: { opacity: 1 },
+        right: { opacity: 1 }
       });
     }
     if (isPrev) {
       return prefixCSS({
         title: { transform: `translate3d(${titleTransform}%, 0, 0)` },
         item: { opacity: 1 - opacity },
-        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` }
+        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` },
       });
     }
   }
@@ -457,7 +459,10 @@ export default class View extends Component {
                   >
                     {panel.props.header.title}
                   </div>
-                  <div className="View__header-right">
+                  <div
+                    className="View__header-right"
+                    style={this.calcHeaderSwipeStyles(panel.props.id).right}
+                  >
                     {panel.props.header.right}
                   </div>
                 </div>
