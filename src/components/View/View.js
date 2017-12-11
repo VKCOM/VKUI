@@ -399,7 +399,6 @@ export default class View extends Component {
   getPanels = (panels) => {
     return []
       .concat(panels)
-      .reduce((acc, item) => acc.concat(item), [])
       .map((item) => Object.assign({}, item, {
         id: item.props.id || item.key
       }));
