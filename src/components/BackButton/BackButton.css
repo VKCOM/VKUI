@@ -5,12 +5,13 @@
   font: inherit;
   line-height: normal;
   overflow: visible;
-  padding: 0;
   border-radius: 0;
   -webkit-appearance: button;
   outline: none;
+  padding: 0 4px 1px;
+  box-sizing: content-box;
   }
 
   .BackButton svg {
-    fill: #fff;
+    color: #fff;
     }

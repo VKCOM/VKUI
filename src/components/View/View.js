@@ -38,6 +38,7 @@ export default class View extends Component {
     popout: PropTypes.node,
     onTransition: PropTypes.func,
     onSwipeBack: PropTypes.func,
+    onSwipeBackStart: PropTypes.func,
     history: PropTypes.arrayOf(PropTypes.string)
   };
 
@@ -171,6 +172,10 @@ export default class View extends Component {
       this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
     }
 
+    if (prevState.swipingBackFinish === false && this.state.swipingBackFinish === null) {
+      window.scrollTo(0, scrolls[this.state.activePanel]);
+    }
+
     // Popout disappearance: restore scroll
     if (prevProps.popout && !this.props.popout && scrolls[this.state.activePanel]) {
       window.scrollTo(0, scrolls[this.state.activePanel]);
@@ -291,6 +296,8 @@ export default class View extends Component {
           scrolls: Object.assign({}, this.state.scrolls, {
             [this.state.activePanel]: window.pageYOffset
           })
+        }, () => {
+          this.props.onSwipeBackStart && this.props.onSwipeBackStart();
         });
       }
       if (this.state.swipingBack) {
