@@ -400,7 +400,7 @@ export default class View extends Component {
       return prefixCSS({
         title: { transform: `translate3d(${titleTransform}%, 0, 0)` },
         item: { opacity: 1 - opacity },
-        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` },
+        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` }
       });
     }
   }

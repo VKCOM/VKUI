@@ -6,4 +6,4 @@ build
 npm-debug.log
 stats.json
 dist/*.hot-update.*
-.idea/
+.idea

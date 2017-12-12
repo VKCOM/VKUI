@@ -1,5 +1,17 @@
 .BackButton {
   vertical-align: top;
+  background: none;
+  border: 0;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  border-radius: 0;
+  -webkit-appearance: button;
+  outline: none;
   padding: 0 4px 1px;
-  color: #fff;
+  box-sizing: content-box;
   }
+
+  .BackButton svg {
+    color: #fff;
+    }
