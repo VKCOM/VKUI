@@ -39,6 +39,7 @@ export default class View extends Component {
     popout: PropTypes.node,
     onTransition: PropTypes.func,
     onSwipeBack: PropTypes.func,
+    onSwipeBackStart: PropTypes.func,
     history: PropTypes.arrayOf(PropTypes.string)
   };
 
@@ -177,6 +178,10 @@ export default class View extends Component {
       this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
     }
 
+    if (prevState.swipingBackFinish === false && this.state.swipingBackFinish === null) {
+      window.scrollTo(0, scrolls[this.state.activePanel]);
+    }
+
     // Popout disappearance: restore scroll
     if (prevProps.popout && !this.props.popout && scrolls[this.state.activePanel]) {
       window.scrollTo(0, scrolls[this.state.activePanel]);
@@ -297,6 +302,8 @@ export default class View extends Component {
           scrolls: Object.assign({}, this.state.scrolls, {
             [this.state.activePanel]: window.pageYOffset
           })
+        }, () => {
+          this.props.onSwipeBackStart && this.props.onSwipeBackStart();
         });
       }
       if (this.state.swipingBack) {
@@ -371,7 +378,8 @@ export default class View extends Component {
         title: {},
         item: {},
         leftIn: {},
-        leftIcon: {}
+        leftIcon: {},
+        right: {}
       };
     }
 
@@ -384,14 +392,15 @@ export default class View extends Component {
         title: { transform: `translate3d(${-30 + titleTransform}%, 0, 0)`, opacity },
         item: { opacity },
         leftIn: { transform: `translate3d(${-60 + leftTransform}%, 0, 0)`, opacity },
-        leftIcon: { opacity: 1 }
+        leftIcon: { opacity: 1 },
+        right: { opacity: 1 }
       });
     }
     if (isPrev) {
       return prefixCSS({
         title: { transform: `translate3d(${titleTransform}%, 0, 0)` },
         item: { opacity: 1 - opacity },
-        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` }
+        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` },
       });
     }
   }
@@ -471,7 +480,10 @@ export default class View extends Component {
                   >
                     {panel.props.header.title}
                   </div>
-                  <div className="View__header-right">
+                  <div
+                    className="View__header-right"
+                    style={this.calcHeaderSwipeStyles(panel.id).right}
+                  >
                     {panel.props.header.right}
                   </div>
                 </div>
