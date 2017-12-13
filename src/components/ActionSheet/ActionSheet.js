@@ -24,7 +24,9 @@ export default class ActionSheet extends React.Component {
     title: PropTypes.node,
     text: PropTypes.node,
     cancel: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    style: PropTypes.object,
+    children: PropTypes.node
   };
 
   static defaultProps = {
@@ -48,11 +50,11 @@ export default class ActionSheet extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     setTimeout(() => this.setState({ opened: true }), osname === ANDROID ? 200 : 300);
   }
 
-  render() {
+  render () {
     const { style } = this.props;
     const children = [];
     const hasHeader = osname === IOS && (this.props.title || this.props.text);
@@ -68,7 +70,7 @@ export default class ActionSheet extends React.Component {
           this.waitTransitionFinish(this.el, Child.props.onClick);
         }
       }));
-      if (osname === IOS && index < this.props.children.length - 1) children.push(<div key={`separator-${index}`} className="ActionSheet__separator" />)
+      if (osname === IOS && index < this.props.children.length - 1) children.push(<div key={`separator-${index}`} className="ActionSheet__separator" />);
     });
 
     return (
@@ -78,7 +80,7 @@ export default class ActionSheet extends React.Component {
         h="center"
         onClick={ () => this.state.opened && this.onClose() }
       >
-        <div className={classNames} style={style} ref={ el => this.el = el } onClick={ e => e.stopPropagation() }>
+        <div className={classNames} style={style} ref={el => { this.el = el; }} onClick={e => e.stopPropagation()}>
           <div className="ActionSheet__section">
             <div className="ActionSheet__list">
               { hasHeader &&
@@ -103,7 +105,7 @@ export default class ActionSheet extends React.Component {
           }
         </div>
       </PopoutWrapper>
-    )
+    );
   }
 }
 
@@ -111,26 +113,29 @@ export class ActionSheetItem extends React.Component {
 
   static propTypes = {
     theme: PropTypes.oneOf(['primary', 'danger']),
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    children: PropTypes.node,
+    style: PropTypes.object,
+    onClick: PropTypes.func
   };
 
   static defaultProps = {
     theme: 'primary'
   };
 
-  render() {
+  render () {
     const classNames = classnames(itemClassNames, {
       [`ActionSheet-Item--${this.props.theme}`]: !this.props.disabled
     });
     return (
       <Tappable
-        onClick={ this.props.disabled ? null : this.props.onClick }
-        disabled={ this.props.disabled }
-        className={ classNames }
-        style={ this.props.style }
+        onClick={this.props.disabled ? null : this.props.onClick}
+        disabled={this.props.disabled}
+        className={classNames}
+        style={this.props.style}
       >
-        { this.props.children }
+        {this.props.children}
       </Tappable>
-    )
+    );
   }
 }

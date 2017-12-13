@@ -39,7 +39,8 @@ export default class Gallery extends Component {
     autoplay: PropTypes.number,
     initialSlideIndex: PropTypes.number,
     onDragStart: PropTypes.func,
-    onDragEnd: PropTypes.func
+    onDragEnd: PropTypes.func,
+    onChange: PropTypes.func
   };
 
   static defaultProps = {
@@ -297,7 +298,7 @@ export default class Gallery extends Component {
     this.initializeSlides(() => {
       this.setState({
         shiftX: this.calculateIndent(this.props.initialSlideIndex)
-      })
+      });
     });
     window.addEventListener('resize', this.onResize);
 

@@ -13,7 +13,10 @@ export default class PopoutWrapper extends React.Component {
     hasMask: PropTypes.bool,
     v: PropTypes.oneOf(['top', 'center', 'bottom']),
     h: PropTypes.oneOf(['left', 'center', 'right']),
-    closing: PropTypes.bool
+    closing: PropTypes.bool,
+    onClick: PropTypes.func,
+    style: PropTypes.object,
+    children: PropTypes.children
   };
 
   static defaultProps = {
@@ -23,23 +26,23 @@ export default class PopoutWrapper extends React.Component {
     closing: false
   };
 
-  render() {
+  render () {
     const containerClassNames = classnames('PopoutWrapper__container', {
       [`PopoutWrapper__container--v-${this.props.v}`]: true,
       [`PopoutWrapper__container--h-${this.props.h}`]: true
     });
 
     const classNames = classnames(baseClassNames, {
-      ['PopoutWrapper--closing']: this.props.closing
+      'PopoutWrapper--closing': this.props.closing
     });
 
     return (
-      <div className={classNames} onClick={ this.props.onClick } { ...removeObjectKeys(this.props, ['hasMask', 'v', 'h', 'closing', 'style']) }>
+      <div className={classNames} onClick={this.props.onClick} {...removeObjectKeys(this.props, ['hasMask', 'v', 'h', 'closing', 'style'])}>
         { this.props.hasMask && <div className="PopoutWrapper__mask" /> }
-        <div className={ containerClassNames } style={ this.props.style }>
-          { this.props.children }
+        <div className={containerClassNames} style={this.props.style}>
+          {this.props.children}
         </div>
       </div>
-    )
+    );
   }
 }

@@ -26,7 +26,7 @@ export default class View extends Component {
       swipeBackShift: 0,
       swipeBackNextPanel: null,
       swipeBackPrevPanel: null,
-      swipingBackFinish: null,
+      swipingBackFinish: null
     };
   }
 
@@ -139,8 +139,8 @@ export default class View extends Component {
     }
   }
 
-  transitionRequired(prevState) {
-    return this.state.visiblePanels.length === 2 && this.state.visiblePanels[1] !== prevState.visiblePanels[1] && !this.state.animated
+  transitionRequired (prevState) {
+    return this.state.visiblePanels.length === 2 && this.state.visiblePanels[1] !== prevState.visiblePanels[1] && !this.state.animated;
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -219,7 +219,7 @@ export default class View extends Component {
         visiblePanels: [activePanel],
         activePanel: activePanel,
         animated: false,
-        isBack: undefined,
+        isBack: undefined
       }, function () {
         // document.body.classList.remove('locked');
 
@@ -394,7 +394,7 @@ export default class View extends Component {
       return prefixCSS({
         title: { transform: `translate3d(${titleTransform}%, 0, 0)` },
         item: { opacity: 1 - opacity },
-        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` },
+        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` }
       });
     }
   }
@@ -413,7 +413,7 @@ export default class View extends Component {
       'View--header': hasHeader,
       'View--popout': hasPopout,
       'View--animated': this.state.visiblePanels.length === 2,
-      'View--swiping-back': this.state.swipingBack,
+      'View--swiping-back': this.state.swipingBack
     };
 
     return (

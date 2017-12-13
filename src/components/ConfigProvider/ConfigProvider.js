@@ -9,18 +9,29 @@ export default class ConfigProvider extends React.Component {
       top: PropTypes.number,
       right: PropTypes.number,
       bottom: PropTypes.number,
-      left: PropTypes.number,
+      left: PropTypes.number
     })
   };
 
-  getChildContext() {
+  static propTypes = {
+    isWebView: PropTypes.bool,
+    insets: PropTypes.shape({
+      top: PropTypes.number,
+      right: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number
+    }),
+    children: PropTypes.node
+  };
+
+  getChildContext () {
     return {
       isWebView: this.props.isWebView || true,
       insets: this.props.insets || null
     };
   }
 
-  render() {
+  render () {
     return this.props.children;
   }
 }

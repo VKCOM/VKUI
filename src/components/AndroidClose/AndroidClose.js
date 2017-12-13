@@ -1,10 +1,16 @@
 import './AndroidClose.css';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('CloseButton');
 
 export default class AndroidCloseButton extends Component {
+
+  static propTypes = {
+    onClick: PropTypes.func
+  };
+
   render () {
     const width = 14;
     const height = 14;

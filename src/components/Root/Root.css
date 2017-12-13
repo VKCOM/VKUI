@@ -9,72 +9,89 @@
   height: 100%;
   }
 
-.Root--ios {
-
-  }
-
-.Root--transition {
+.Root--transition,
+.Root--popout {
   overflow: hidden;
   }
 
-.Root--transition .Root__view {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  }
+  .Root--transition .Root__view,
+  .Root--popout .Root__view {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    }
 
-.Root__view--show-back,
-.Root__view--hide-forward {
-  z-index: 1;
-  }
+  .Root--transition .Root__view--show-forward {
+    /* Because of strange bug with header. You can comment this rule and look at the result */
+    overflow: initial;
+    }
 
-.Root__view--show-forward,
-.Root__view--hide-back {
-  z-index: 2;
-  }
+  .Root__view--show-back,
+  .Root__view--hide-forward {
+    z-index: 1;
+    }
+
+  .Root__view--show-forward,
+  .Root__view--hide-back {
+    z-index: 2;
+    }
+
+  .Root__popout {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 8;
+    }
 
 /**
  * iOS
  */
 
-.Root--ios.Root--transition {
+.Root--ios {
+  font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
+  }
+
+.Root--ios.Root--transition,
+.Root--ios.Root--popout {
   padding-top: constant(safe-area-inset-top);
   padding-bottom: constant(safe-area-inset-bottom);
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
   }
 
-.Root--ios .Root__view--show-back::after,
-.Root--ios .Root__view--hide-forward::after {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  display: block;
-  content: '';
-  background-color: #000;
-  z-index: 2;
-  }
+  .Root--ios .Root__view--show-back::after,
+  .Root--ios .Root__view--hide-forward::after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: block;
+    content: '';
+    background-color: #000;
+    z-index: 2;
+    }
 
-.Root--ios .Root__view--show-back::after {
-  animation: root-ios-animation-show-back .6s var(--ios-easing);
-  }
+  .Root--ios .Root__view--show-back::after {
+    animation: root-ios-animation-show-back .6s var(--ios-easing);
+    }
 
-.Root--ios .Root__view--hide-forward::after {
-  animation: root-ios-animation-hide-forward .6s var(--ios-easing);
-  }
+  .Root--ios .Root__view--hide-forward::after {
+    animation: root-ios-animation-hide-forward .6s var(--ios-easing);
+    }
 
-.Root--ios .Root__view--show-forward {
-  animation: root-ios-animation-show-forward .6s var(--ios-easing);
-  }
+  .Root--ios .Root__view--show-forward {
+    animation: root-ios-animation-show-forward .6s var(--ios-easing);
+    }
 
-
-.Root--ios .Root__view--hide-back {
-  animation: root-ios-animation-hide-back .6s var(--ios-easing);
-  }
+  .Root--ios .Root__view--hide-back {
+    animation: root-ios-animation-hide-back .6s var(--ios-easing);
+    }
 
 @keyframes root-ios-animation-show-back {
   from {
@@ -116,43 +133,17 @@
  * Android
  */
 
-.Root--android .Root__view--show-back {
-  /*animation: root-android-animation-show-back .3s var(--android-easing);*/
+.Root--android {
+  font-family: Roboto, Droid, 'Open Sans', sans-serif;
   }
 
-.Root--android .Root__view--hide-forward {
-  /*animation: root-android-animation-hide-forward .3s var(--android-easing);*/
-  }
-
-.Root--android .Root__view--show-forward {
-  animation: root-android-animation-show-forward .3s var(--android-easing);
-  }
-
-.Root--android .Root__view--hide-back {
-  animation: root-android-animation-hide-back .3s var(--android-easing);
-  }
-
-@keyframes root-android-animation-show-back {
-  from {
-    /*transform: scale(0.95);*/
-    /*opacity: 0;*/
+  .Root--android .Root__view--show-forward {
+    animation: root-android-animation-show-forward .3s var(--android-easing);
     }
-  to {
-    /*transform: scale(1);*/
-    /*opacity: 1;*/
-    }
-  }
 
-@keyframes root-android-animation-hide-forward {
-  from {
-    /*transform: scale(1);*/
-    /*opacity: 1;*/
+  .Root--android .Root__view--hide-back {
+    animation: root-android-animation-hide-back .3s var(--android-easing);
     }
-  to {
-    /*transform: scale(0.95);*/
-    /*opacity: 0;*/
-    }
-  }
 
 @keyframes root-android-animation-hide-back {
   from {

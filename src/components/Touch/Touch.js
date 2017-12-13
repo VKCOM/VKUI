@@ -33,11 +33,11 @@ export default class Touch extends Component {
     useCapture: true
   };
 
-  componentDidMount() {
+  componentDidMount () {
     this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.container.removeEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
   }
 

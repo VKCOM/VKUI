@@ -29,7 +29,6 @@ export default class Slider extends Component {
     step: 0
   };
   onStart = (e) => {
-    
     if (!this.state.containerWidth) {
       this.onResize();
     }
@@ -44,24 +43,24 @@ export default class Slider extends Component {
     } else {
       this.setState({ active: true });
     }
-  }
+  };
   onMove = e => {
     this.setState(this.calculate(this.state.startX + (e.shiftX || 0)));
     e.originalEvent.preventDefault();
-  }
+  };
   onEnd = () => {
     this.setState({
       startX: this.state.absolutePosition,
       deltaX: 0,
       active: false
     });
-  }
+  };
   onResize = () => {
     this.setState({
       containerLeft: this.container.offsetLeft,
       containerWidth: this.container.offsetWidth
     });
-  }
+  };
   calculate (pos) {
     const { min, max, step } = this.props;
     const { containerWidth } = this.state;

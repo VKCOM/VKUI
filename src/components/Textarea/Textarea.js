@@ -59,19 +59,19 @@ export default class Textarea extends Component {
         this.setState({ height: scrollHeight - diff });
       }
 
-      const top = document.body.scrollTop;
+      // const top = document.body.scrollTop;
 
       this.setState({ height: 0 }, () => {
         const height = el.scrollHeight - diff;
 
         this.setState({ height });
-        //TODO fix problem with scroll to top
+        // TODO fix problem with scroll to top
         // document.body.scrollTop = top;
 
         this.props.onResize(el);
       });
     }
-  }
+  };
   onChange = (e) => {
     if (this.props.grow) {
       this.resize();
@@ -84,7 +84,7 @@ export default class Textarea extends Component {
     if (this.props.onChange) {
       this.props.onChange(e);
     }
-  }
+  };
   componentDidUpdate (prevProps) {
     if (prevProps.value && this.props.value === '') {
       // Fix iOS extra indent on removing content

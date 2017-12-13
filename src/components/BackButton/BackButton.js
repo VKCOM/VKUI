@@ -9,7 +9,7 @@ const baseClassNames = getClassName('BackButton');
 
 export default class BackButton extends Component {
   static propTypes = {
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired
   };
   render () {
     const isAndroid = osname === ANDROID;
@@ -19,7 +19,7 @@ export default class BackButton extends Component {
       width,
       height,
       viewBox: `0 0 ${width} ${height}`,
-      xmlns: 'http://www.w3.org/2000/svg',
+      xmlns: 'http://www.w3.org/2000/svg'
     };
 
     return (
