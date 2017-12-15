@@ -16,6 +16,13 @@
   overflow: hidden;
   }
 
+  .View--animated .View__panel,
+  .View--animated .View__header,
+  .View--swiping-back .View__panel,
+  .View--swiping-back .View__header {
+    pointer-events: none;
+  }
+
   /**
    * Pull to refresh
    */
@@ -387,10 +394,6 @@
    * Panels
    */
   .View--ios .View__panels {}
-
-  .View--ios.View--animated .View__panel {
-    pointer-events: none;
-  }
 
   .View--ios.View--header .View__panels {}
 

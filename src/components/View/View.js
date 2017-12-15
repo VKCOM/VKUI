@@ -9,6 +9,7 @@ import { platform, ANDROID, IOS } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
 import prefixCSS from 'react-prefixer';
+import { isWebView } from '../../lib/webview';
 
 const osname = platform();
 const baseClassNames = getClassName('View');
@@ -26,7 +27,8 @@ export default class View extends Component {
       swipeBackShift: 0,
       swipeBackNextPanel: null,
       swipeBackPrevPanel: null,
-      swipingBackFinish: null
+      swipingBackFinish: null,
+      browserSwipe: false
     };
     this.panels = this.getPanels(props.children);
   }
@@ -86,7 +88,7 @@ export default class View extends Component {
     }
 
     // Panel transition
-    if (this.props.activePanel !== nextProps.activePanel && !this.state.swipingBack) {
+    if (this.props.activePanel !== nextProps.activePanel && !this.state.swipingBack && !this.state.browserSwipe) {
       pageYOffset = pageYOffset || window.pageYOffset;
 
       const firstLayer = this.panels.filter(panel => {
@@ -185,6 +187,18 @@ export default class View extends Component {
     // Popout disappearance: restore scroll
     if (prevProps.popout && !this.props.popout && scrolls[this.state.activePanel]) {
       window.scrollTo(0, scrolls[this.state.activePanel]);
+    }
+
+    // After iOS safari native swipe
+    if (prevProps.activePanel !== this.props.activePanel && this.state.browserSwipe) {
+      this.setState({
+        browserSwipe: false,
+        nextPanel: null,
+        prevPanel: null,
+        animated: false,
+        visiblePanels: [this.props.activePanel],
+        activePanel: this.props.activePanel
+      });
     }
   }
 
@@ -286,10 +300,19 @@ export default class View extends Component {
     }
   };
 
+  swipeBackPrevented (target) {
+    return target && target.closest('.Gallery, .Slider') !== null;
+  };
+
   onMove = (e) => {
-    if (osname === IOS && this.props.onSwipeBack) {
+    if (osname === IOS && !isWebView && (e.startX <= 70 || e.startX >= window.innerWidth - 70) && !this.state.browserSwipe) {
+      this.setState({ browserSwipe: true });
+    }
+
+    if (osname === IOS && isWebView && this.props.onSwipeBack && !this.swipeBackPrevented(e.originalEvent.target)) {
       if (this.state.animated && e.startX <= 70) {
-        this.transitionEndHandler();
+        e.originalEvent.preventDefault();
+        return false;
       }
 
       if (e.startX <= 70 && !this.state.swipingBack && this.props.history.length > 1) {
@@ -323,10 +346,8 @@ export default class View extends Component {
 
   onEnd = () => {
     if (this.state.swipingBack) {
-      requestAnimationFrame(() => {
-        const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
-        this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > window.innerWidth / 2 });
-      });
+      const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
+      this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > window.innerWidth / 2 });
     }
   };
 

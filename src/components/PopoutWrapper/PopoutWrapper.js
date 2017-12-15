@@ -16,7 +16,7 @@ export default class PopoutWrapper extends React.Component {
     closing: PropTypes.bool,
     onClick: PropTypes.func,
     style: PropTypes.object,
-    children: PropTypes.children
+    children: PropTypes.node
   };
 
   static defaultProps = {
