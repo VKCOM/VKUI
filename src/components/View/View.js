@@ -302,7 +302,7 @@ export default class View extends Component {
 
   swipeBackPrevented (target) {
     return target && target.closest('.Gallery, .Slider') !== null;
-  };
+  }
 
   onMove = (e) => {
     if (osname === IOS && !isWebView && (e.startX <= 70 || e.startX >= window.innerWidth - 70) && !this.state.browserSwipe) {

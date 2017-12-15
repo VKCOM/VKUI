@@ -1,7 +1,7 @@
 // Element.prototype.closest
-(function() {
-  if (!Element.prototype.closest) {
-    Element.prototype.closest = function(css) {
+(function () {
+  if (window && !window.Element.prototype.closest) {
+    window.Element.prototype.closest = function (css) {
       let node = this;
       while (node) {
         if (node.matches(css)) return node;

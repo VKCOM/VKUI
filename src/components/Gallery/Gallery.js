@@ -40,7 +40,8 @@ export default class Gallery extends Component {
     initialSlideIndex: PropTypes.number,
     onDragStart: PropTypes.func,
     onDragEnd: PropTypes.func,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    onEnd: PropTypes.func
   };
 
   static defaultProps = {
