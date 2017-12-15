@@ -13,11 +13,14 @@
     display: none;
     }
 
-  .Radio__label {
+  .Radio__container {
     flex: 1 1 auto;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    }
+
+  .Radio__description {
+    font-size: 13px;
+    line-height: 15px;
+    color: #909499;
     }
 
   .Radio__icon {
@@ -50,7 +53,7 @@
     }
   }
 
-  .Radio--ios .Radio__label {
+  .Radio--ios .Radio__container {
     padding-right: .5em;
     }
 
@@ -71,10 +74,9 @@
  */
 .Radio--android {
   padding: 16px 16px 17px;
-  align-items: center;
   }
 
-  .Radio--android .Radio__label {
+  .Radio--android .Radio__container {
     order: 1;
     padding: 0 0 0 18px;
     }

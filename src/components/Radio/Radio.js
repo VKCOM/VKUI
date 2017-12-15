@@ -15,12 +15,20 @@ export default function Radio (props) {
         type="radio"
         className="Radio__self"
       />
-      <span className="Radio__label">{props.children}</span>
+      <div className="Radio__container">
+        <span className="Radio__label">{props.children}</span>
+        {props.description &&
+          <div className="Radio__description">
+            {props.description}
+          </div>
+        }
+      </div>
       <span className="Radio__icon" />
     </Tappable>
   );
 }
 
 Radio.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  description: PropTypes.node
 };
