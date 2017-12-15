@@ -234,6 +234,12 @@ export default class Gallery extends Component {
       duration: '.24'
     });
 
+    if (this.props.onEnd) {
+      this.props.onEnd({
+        targetIndex
+      });
+    }
+
     if (this.timeout) {
       this.clearTimeout();
       this.setTimeout(this.props.autoplay);
