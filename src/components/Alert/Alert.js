@@ -32,7 +32,7 @@ export default class Alert extends Component {
     };
 
     return (
-      <PopoutWrapper v="center" h="center">
+      <PopoutWrapper>
         <div className={classnames(baseClassNames, modifiers)} style={style}>
           <div className="Alert__content">
             {this.props.children}
@@ -42,7 +42,7 @@ export default class Alert extends Component {
               <Tappable
                 component="button"
                 className={classnames('Alert__btn', {
-                  'Alert__btn--primary': button.modifier === 'primary'
+                  [`Alert__btn--${button.style}`]: true
                 })}
                 onClick={button.action}
                 key={`alert-action-${i}`}

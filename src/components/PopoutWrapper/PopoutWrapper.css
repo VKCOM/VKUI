@@ -5,6 +5,8 @@
   height: 100%;
   box-sizing: border-box;
   position: fixed;
+  left: 0;
+  top: 0;
   }
 
   .PopoutWrapper--closing .PopoutWrapper__mask {

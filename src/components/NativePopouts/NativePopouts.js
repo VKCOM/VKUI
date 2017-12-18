@@ -74,6 +74,7 @@ export default class NativePopouts extends React.Component {
         actions={this.actions.map(item =>
           removeObjectKeys(item, ['params'])
         )}
+        actionsLayout={this.actions.length > 2 ? 'vertical' : 'horizontal'}
       >
         {title && <h2>{title}</h2>}
         {text && <p>{text}</p>}

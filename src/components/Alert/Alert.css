@@ -70,7 +70,7 @@
       flex: 1 1 auto;
       font-size: 17px;
       line-height: 44px;
-      color: #007AFF;
+      color: map(colors, accentBlue);
       border: 0;
       padding: 0 6px;
       margin: 0;
@@ -98,8 +98,17 @@
     .Alert--ios.Alert--h .Alert__btn:last-child:after {
       content: none;
       }
-    .Alert--ios .Alert__btn--primary {
+    .Alert--ios .Alert__btn--primary { /* Depcrated. Remove in next version */
       font-weight: 500;
+      }
+    .Alert--ios .Alert__btn--default {
+
+      }
+    .Alert--ios .Alert__btn--cancel {
+      font-weight: 600;
+      }
+    .Alert--ios .Alert__btn--destructive {
+      color: map(colors, red);
       }
     .Alert--ios.Alert--h .Alert__btn {
       padding-right: 7px;
