@@ -25,7 +25,8 @@
     "react-prefixer": "^2.0.0"
   },
   "dependencies": {
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "vkui-connect": "git+ssh://git@bitbucket.mvk.com:2222/vkui/vkui-connect.git"
   },
   "peerDependencies": {
     "react": "15.4.2"

@@ -16,42 +16,44 @@ const itemClassNames = getClassName('ActionSheet-Item');
 export default class ActionSheet extends React.Component {
 
   state = {
-    closing: false,
-    opened: false
+    closing: false
   };
 
   static propTypes = {
     title: PropTypes.node,
     text: PropTypes.node,
-    cancel: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
-    onClose: PropTypes.func,
+    onClose: PropTypes.func.isRequired,
     style: PropTypes.object,
     children: PropTypes.node
   };
 
   static defaultProps = {
-    cancel: 'Отмена',
     onClose: () => {}
   };
 
   onClose = () => {
     this.setState({ closing: true });
-    this.waitTransitionFinish(this.el, this.props.onClose);
+    this.waitTransitionFinish(this.props.onClose);
   };
 
-  waitTransitionFinish (elem, eventHandler) {
+  onItemClick = (hander) => () => {
+    this.setState({closing: true});
+    this.waitTransitionFinish(hander);
+  };
+
+  stopPropagation (e) {
+    e.stopPropagation();
+  }
+
+  waitTransitionFinish (eventHandler) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
-      elem.removeEventListener(eventName, eventHandler);
-      elem.addEventListener(eventName, eventHandler);
+      this.el.removeEventListener(eventName, eventHandler);
+      this.el.addEventListener(eventName, eventHandler);
     } else {
       setTimeout(eventHandler.bind(this), osname === ANDROID ? 200 : 300);
     }
-  }
-
-  componentDidMount () {
-    setTimeout(() => this.setState({ opened: true }), osname === ANDROID ? 200 : 300);
   }
 
   render () {
@@ -62,25 +64,25 @@ export default class ActionSheet extends React.Component {
       'ActionSheet--closing': this.state.closing
     });
 
-    React.Children.forEach(this.props.children, (Child, index) => {
+    const Actions = React.Children.toArray(this.props.children).filter((Child) => Child.props.theme !== 'cancel');
+
+    Actions.forEach((Child, index) => {
       children.push(React.cloneElement(Child, {
-        key: `${index}`,
-        onClick: () => {
-          this.setState({ closing: true });
-          this.waitTransitionFinish(this.el, Child.props.onClick);
-        }
+        onClick: this.onItemClick(Child.props.onClick)
       }));
       if (osname === IOS && index < this.props.children.length - 1) children.push(<div key={`separator-${index}`} className="ActionSheet__separator" />);
     });
+
+    let CancelItem = React.Children.toArray(this.props.children).find(Child => Child.props.theme === 'cancel');
 
     return (
       <PopoutWrapper
         closing={this.state.closing}
         v={ osname === IOS ? 'bottom' : 'center' }
         h="center"
-        onClick={ () => this.state.opened && this.onClose() }
+        onClick={ this.onClose }
       >
-        <div className={classNames} style={style} ref={el => { this.el = el; }} onClick={e => e.stopPropagation()}>
+        <div className={classNames} style={style} ref={el => { this.el = el; }} onClick={this.stopPropagation}>
           <div className="ActionSheet__section">
             <div className="ActionSheet__list">
               { hasHeader &&
@@ -93,14 +95,11 @@ export default class ActionSheet extends React.Component {
               { children }
             </div>
           </div>
-          { osname === IOS && this.props.cancel !== false &&
+          { osname === IOS &&
             <div className="ActionSheet__section">
-              <ActionSheetItem
-                onClick={ this.onClose }
-                style={{ fontWeight: 600 }}
-              >
-                { this.props.cancel }
-              </ActionSheetItem>
+              { React.cloneElement(CancelItem, {
+                onClick: this.onItemClick(CancelItem.props.onClick)
+              })}
             </div>
           }
         </div>
@@ -112,25 +111,23 @@ export default class ActionSheet extends React.Component {
 export class ActionSheetItem extends React.Component {
 
   static propTypes = {
-    theme: PropTypes.oneOf(['primary', 'danger']),
-    disabled: PropTypes.bool,
+    theme: PropTypes.oneOf(['default', 'destructive', 'cancel']),
     children: PropTypes.node,
     style: PropTypes.object,
     onClick: PropTypes.func
   };
 
   static defaultProps = {
-    theme: 'primary'
+    theme: 'default'
   };
 
   render () {
     const classNames = classnames(itemClassNames, {
-      [`ActionSheet-Item--${this.props.theme}`]: !this.props.disabled
+      [`ActionSheet-Item--${this.props.theme}`]: this.props.theme
     });
     return (
       <Tappable
-        onClick={this.props.disabled ? null : this.props.onClick}
-        disabled={this.props.disabled}
+        onClick={this.props.onClick}
         className={classNames}
         style={this.props.style}
       >

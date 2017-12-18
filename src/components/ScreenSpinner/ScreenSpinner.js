@@ -12,10 +12,10 @@ const baseClassNames = getClassName('ScreenSpinner');
 
 export default function ScreenSpinner (props) {
   return (
-    <PopoutWrapper>
+    <PopoutWrapper onClick={props.onClick}>
       <div
         className={classnames(baseClassNames, props.className)}
-        {...removeObjectKeys(props, ['className'])}
+        {...removeObjectKeys(props, ['className', 'onClick'])}
       >
         <Spinner color="#fff" />
       </div>
@@ -24,5 +24,6 @@ export default function ScreenSpinner (props) {
 }
 
 ScreenSpinner.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  onClick: PropTypes.func
 };

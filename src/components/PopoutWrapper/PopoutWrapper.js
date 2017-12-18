@@ -4,10 +4,17 @@ import classnames from '../../lib/classnames';
 import PropTypes from 'prop-types';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import './PopoutWrapper.css';
+import {ANDROID, platform} from '../../lib/platform';
+
+const osname = platform();
 
 const baseClassNames = getClassName('PopoutWrapper');
 
 export default class PopoutWrapper extends React.Component {
+
+  state = {
+    opened: false
+  };
 
   static propTypes = {
     hasMask: PropTypes.bool,
@@ -26,6 +33,17 @@ export default class PopoutWrapper extends React.Component {
     closing: false
   };
 
+  componentDidMount () {
+    // TODO add "animationend" event instead of setTimeout
+    setTimeout(() => this.setState({ opened: true }), osname === ANDROID ? 200 : 300);
+  }
+
+  onClick = (e) => {
+    if (this.state.opened) {
+      this.props.onClick && this.props.onClick(e);
+    }
+  };
+
   render () {
     const containerClassNames = classnames('PopoutWrapper__container', {
       [`PopoutWrapper__container--v-${this.props.v}`]: true,
@@ -37,7 +55,7 @@ export default class PopoutWrapper extends React.Component {
     });
 
     return (
-      <div className={classNames} onClick={this.props.onClick} {...removeObjectKeys(this.props, ['hasMask', 'v', 'h', 'closing', 'style'])}>
+      <div className={classNames} onClick={this.onClick} {...removeObjectKeys(this.props, ['hasMask', 'v', 'h', 'closing', 'style', 'onClick'])}>
         { this.props.hasMask && <div className="PopoutWrapper__mask" /> }
         <div className={containerClassNames} style={this.props.style}>
           {this.props.children}

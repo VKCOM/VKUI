@@ -5,6 +5,7 @@ import './lib/polyfills';
  */
 export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
+export { default as NativePopouts } from './components/NativePopouts/NativePopouts';
 export { default as ScrollView } from './components/ScrollView/ScrollView';
 export { default as Group } from './components/Group/Group';
 export { default as Entity } from './components/Entity/Entity';
@@ -58,5 +59,6 @@ export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { default as getClassName } from './helpers/getClassName';
 export { default as wrapTextNode } from './helpers/wrapTextNode';
 export { default as requestAnimationFrame } from './lib/requestAnimationFrame';
+export { isWebView } from './lib/webview';
 
 export const v = process.env.VKUI_VERSION;
