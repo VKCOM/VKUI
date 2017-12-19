@@ -70,7 +70,7 @@ export default class ActionSheet extends React.Component {
       children.push(React.cloneElement(Child, {
         onClick: this.onItemClick(Child.props.onClick)
       }));
-      if (osname === IOS && index < this.props.children.length - 1) children.push(<div key={`separator-${index}`} className="ActionSheet__separator" />);
+      if (osname === IOS && index < Actions.length - 1) children.push(<div key={`separator-${index}`} className="ActionSheet__separator" />);
     });
 
     let CancelItem = React.Children.toArray(this.props.children).find(Child => Child.props.theme === 'cancel');

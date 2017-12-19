@@ -85,11 +85,10 @@ export default class Root extends React.Component {
 
     // Transition started
     if (this.state.nextView !== prevState.nextView && this.state.nextView !== null) {
-      this.nextViewEl.offsetWidth;
       this.waitAnimationFinish(this.state.isBack ? this.prevViewEl : this.nextViewEl, this.onAnimationEnd);
     }
 
-    // Popout hid
+    // Popout hide
     if (prevProps.popout && !this.props.popout && scrolls[activeView]) {
       window.scrollTo(0, scrolls[activeView]);
     }

@@ -26,9 +26,6 @@ export default class Gallery extends Component {
   }
 
   static propTypes = {
-    activePanel: PropTypes.string,
-    prevPanel: PropTypes.string,
-    nextPanel: PropTypes.string,
     children: PropTypes.node,
     className: PropTypes.string,
     style: PropTypes.object,
@@ -41,14 +38,16 @@ export default class Gallery extends Component {
     onDragStart: PropTypes.func,
     onDragEnd: PropTypes.func,
     onChange: PropTypes.func,
-    onEnd: PropTypes.func
+    onEnd: PropTypes.func,
+    align: PropTypes.oneOf(['left', 'center', 'right'])
   };
 
   static defaultProps = {
     slideWidth: '100%',
     children: '',
     autoplay: 0,
-    initialSlideIndex: 0
+    initialSlideIndex: 0,
+    align: 'left'
   };
 
   slidesStore = {};
@@ -56,11 +55,23 @@ export default class Gallery extends Component {
   initializeSlides (callback = () => {}) {
     const slides = this.getSlidesCoords();
     const containerWidth = this.container.offsetWidth;
+    const viewportWidth = this.viewport.offsetWidth;
     const layerWidth = slides.reduce((val, slide) => slide.width + val, 0);
-    const min = -layerWidth + containerWidth;
+    const min = this.calcMin({ containerWidth, layerWidth, viewportWidth });
     const max = 0;
 
     this.setState({ min, max, layerWidth, containerWidth, slides }, callback);
+  }
+
+  calcMin({ containerWidth, layerWidth, viewportWidth }) {
+    switch (this.props.align) {
+      case 'left':
+        return containerWidth - layerWidth;
+      case 'right':
+        return viewportWidth - layerWidth;
+      case 'center':
+        return viewportWidth - (containerWidth - viewportWidth) / 2 - layerWidth;
+    }
   }
 
   /**
@@ -93,7 +104,6 @@ export default class Gallery extends Component {
   calculateDragIndent () {
     const { shiftX, deltaX, min, max } = this.state;
     const indent = shiftX + deltaX;
-
     if (indent > max) {
       return max + Number((indent - max) / 3);
     } else if (indent < min) {
@@ -117,9 +127,7 @@ export default class Gallery extends Component {
     }
 
     const coordX = slides.length ? slides[targetIndex].coordX : 0;
-    const targetIndent = this.validateIndent(-1 * coordX);
-
-    return targetIndent;
+    return this.validateIndent(-1 * coordX);
   }
 
   validateIndent (value) {
@@ -253,12 +261,13 @@ export default class Gallery extends Component {
     this.initializeSlides();
 
     const { layerWidth } = this.state;
-    const newContainerWidth = this.container.offsetWidth;
+    const containerWidth = this.container.offsetWidth;
+    const viewportWidth = this.viewport.offsetWidth;
 
     this.setState({
       shiftX: this.calculateIndent(this.state.current),
-      containerWidth: newContainerWidth,
-      min: -layerWidth + newContainerWidth,
+      containerWidth,
+      min: this.calcMin({ layerWidth, containerWidth, viewportWidth }),
       animation: false
     }, () => {
       requestAnimationFrame(() => this.setState({ animation: true }));
@@ -295,6 +304,10 @@ export default class Gallery extends Component {
 
   getContainerRef = (container) => {
     this.container = container;
+  };
+
+  getViewportRef = (viewport) => {
+    this.viewport = viewport ? viewport.container : {};
   };
 
   getSlideRef = (id) => (slide) => {
@@ -349,7 +362,8 @@ export default class Gallery extends Component {
     const { className, style, slideWidth } = this.props;
     const indent = dragging ? this.calculateDragIndent() : this.calculateIndent(current);
     const classname = classnames(baseClassNames, className, {
-      'Gallery--dragging': dragging
+      'Gallery--dragging': dragging,
+      [`Gallery--${this.props.align}`]: true
     });
 
     const layerStyle = prefixCSS({
@@ -366,17 +380,12 @@ export default class Gallery extends Component {
           onMoveX={this.onMove}
           onEnd={this.onEnd}
           style={{ width: slideWidth }}
+          ref={this.getViewportRef}
         >
           <div className="Gallery__layer" style={layerStyle}>
             {this.slides}
           </div>
         </Touch>
-        {this.isDraggable() ? (
-          <div className="Gallery__control">
-            <div className="Gallery__prev" onClick={this.prev} />
-            <div className="Gallery__next" onClick={this.next} />
-          </div>
-        ) : null}
       </div>
     );
   }

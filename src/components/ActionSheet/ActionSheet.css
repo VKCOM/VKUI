@@ -7,6 +7,7 @@
   width: 100%;
   animation: animation-ios-actionsheet-intro .3s var(--ios-easing);
   padding: 10px;
+  box-sizing: border-box;
   }
 
   .ActionSheet--ios.ActionSheet--closing {

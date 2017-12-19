@@ -7,7 +7,12 @@
   .Gallery__viewport {
     margin: 0;
     height: 100%;
+    position: relative;
     }
+
+  .Gallery--center .Gallery__viewport {
+    margin: 0 auto;
+  }
 
   .Gallery__layer {
     display: flex;
