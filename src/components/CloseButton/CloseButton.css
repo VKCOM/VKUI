@@ -1,12 +1,8 @@
-.BackButton {
-  color: #fff;
+.CloseButton {
+
   }
 
-.BackButton--ios {
-  height: 21px;
-  }
-
-.BackButton--android {
+.CloseButton--android {
   width: 48px;
   height: 48px;
   display: flex;

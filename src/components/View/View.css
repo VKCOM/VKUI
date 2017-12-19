@@ -224,6 +224,10 @@
           padding: 0 2px;
           }
 
+        .View--ios .View__header-icon + .View__header-left-in {
+          padding-left: 4px;
+        }
+
       /**
        * Header swipe back
        */
@@ -547,10 +551,9 @@
       .View--android .View__header-item {
         top: 0;
         height: 56px;
-        padding: 0 10px;
+        padding: 0 10px 0 0;
         }
 
-        .View--android .View__header-left,
         .View--android .View__header-right {
           padding: 1px 6px 0;
           font-size: 14px;
@@ -559,6 +562,11 @@
           text-transform: uppercase;
           color: #fff;
           color: rgba(255, 255, 255, .7);
+          }
+        .View--android .View__header-left {
+          color: #fff;
+          color: rgba(255, 255, 255, .7);
+          padding: 4px;
           }
         .View--android .View__header-left:active,
         .View--android .View__header-right:active {
@@ -573,6 +581,10 @@
 
         .View--android .View__header-left:empty {
           display: none;
+          }
+
+        .View--android .View__header-left:empty ~ .View__header-title {
+          padding-left: 16px;
           }
 
       /**

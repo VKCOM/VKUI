@@ -23,14 +23,14 @@ export default class BackButton extends Component {
     };
 
     return (
-      <button {...this.props} className={baseClassNames} style={{ height, width }}>
+      <div {...this.props} className={baseClassNames}>
         <svg {...svgProps}>
           {isAndroid
             ? <path fill="currentColor" d="M16 9h-12.2l5.6 5.6-1.4 1.4-8-8 8-8 1.4 1.4-5.6 5.6h12.2z" />
             : <path fill="currentColor" d="M0 10.5l10.5-10.5 2 2-8.5 8.5 8.5 8.5-2 2z" />
           }
         </svg>
-      </button>
+      </div>
     );
   }
 }

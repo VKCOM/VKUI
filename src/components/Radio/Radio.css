@@ -2,32 +2,27 @@
 
 .Radio {
   position: relative;
-  display: flex;
-  align-items: center;
   box-sizing: border-box;
   font-size: 17px;
   line-height: 22px;
+  display: block;
   }
 
   .Radio__self {
     display: none;
     }
 
-  .Radio__container {
-    flex: 1 1 auto;
-    }
+  .Radio__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
 
   .Radio__description {
     font-size: 13px;
     line-height: 15px;
     color: #909499;
     }
-
-  .Radio__icon {
-    flex: 0 0 auto;
-    }
-
-  .Radio__self:checked ~ .Radio__icon {}
 
 /**
  * iOS radio
@@ -55,6 +50,8 @@
 
   .Radio--ios .Radio__container {
     padding-right: .5em;
+    max-width: 100%;
+    flex-grow: 1;
     }
 
   .Radio--ios .Radio__icon {
@@ -64,7 +61,7 @@
     transition: opacity .14s ease;
     }
 
-  .Radio--ios .Radio__self:checked ~ .Radio__icon {
+  .Radio--ios .Radio__self:checked ~ .Radio__wrapper .Radio__icon {
     background: inline('./assets/checkmark.svg') 0 0/100% no-repeat;
     opacity: 1;
     }
@@ -84,11 +81,13 @@
   .Radio--android .Radio__icon {
     order: 0;
     position: relative;
+    display: block;
     width: 16px;
     height: 16px;
     border-radius: 10px;
     border: 2px solid #c4c8cc;
     transition: border-color .14s ease;
+    flex-shrink: 0;
     }
 
   .Radio--android .Radio__icon::before {
@@ -104,10 +103,10 @@
     transition: background-color .14s ease;
     }
 
-  .Radio__self:checked ~ .Radio__icon {
+  .Radio__self:checked ~ .Radio__wrapper .Radio__icon {
     border-color: var(--vk-color);
     }
 
-  .Radio__self:checked ~ .Radio__icon::before {
+  .Radio__self:checked ~ .Radio__wrapper .Radio__icon::before {
     background: var(--vk-color);
     }
