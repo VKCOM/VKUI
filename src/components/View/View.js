@@ -9,7 +9,6 @@ import { platform, ANDROID, IOS } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
 import prefixCSS from 'react-prefixer';
-import { isWebView } from '../../lib/webview';
 
 const osname = platform();
 const baseClassNames = getClassName('View');
@@ -59,7 +58,8 @@ export default class View extends Component {
       right: PropTypes.number,
       bottom: PropTypes.number,
       left: PropTypes.number
-    })
+    }),
+    isWebView: PropTypes.bool
   };
 
   refsStore = {};
@@ -305,11 +305,11 @@ export default class View extends Component {
   }
 
   onMove = (e) => {
-    if (osname === IOS && !isWebView && (e.startX <= 70 || e.startX >= window.innerWidth - 70) && !this.state.browserSwipe) {
+    if (osname === IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= window.innerWidth - 70) && !this.state.browserSwipe) {
       this.setState({ browserSwipe: true });
     }
 
-    if (osname === IOS && isWebView && this.props.onSwipeBack && !this.swipeBackPrevented(e.originalEvent.target)) {
+    if (osname === IOS && this.context.isWebView && this.props.onSwipeBack && !this.swipeBackPrevented(e.originalEvent.target)) {
       if (this.state.animated && e.startX <= 70) {
         e.originalEvent.preventDefault();
         return false;
