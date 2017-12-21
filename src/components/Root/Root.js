@@ -18,6 +18,7 @@ export default class Root extends React.Component {
       activeView: props.activeView,
       prevView: null,
       nextView: null,
+      visibleViews: [props.activeView],
       scrolls: {}
     };
   }
@@ -68,6 +69,7 @@ export default class Root extends React.Component {
         activeView: null,
         nextView: nextProps.activeView,
         prevView: this.props.activeView,
+        visibleViews: [nextProps.activeView, this.props.activeView],
         scrolls,
         isBack
       }, () => {
@@ -111,18 +113,21 @@ export default class Root extends React.Component {
     }
   }
 
-  onAnimationEnd = () => {
-    this.setState({
-      activeView: this.state.nextView,
-      prevView: null,
-      nextView: null
-    }, () => {
-      if (this.state.isBack) {
-        window.scrollTo(0, this.state.scrolls[this.state.activeView] || 0);
-      }
+  onAnimationEnd = (e) => {
+    if (!this.state.isBack && e.target === this.nextViewEl || this.state.isBack && e.target === this.prevViewEl) {
+      this.setState({
+        activeView: this.state.nextView,
+        prevView: null,
+        nextView: null,
+        visibleViews: [this.state.nextView]
+      }, () => {
+        if (this.state.isBack) {
+          window.scrollTo(0, this.state.scrolls[this.state.activeView] || 0);
+        }
 
-      this.props.onTransition && this.props.onTransition(this.state.isBack);
-    });
+        this.props.onTransition && this.props.onTransition(this.state.isBack);
+      });
+    }
   };
 
   static blurActiveElement () {
@@ -135,26 +140,30 @@ export default class Root extends React.Component {
     const transitionState = this.state.nextView !== null;
     const hasPopout = this.props.popout;
 
+    let Views = [].concat(this.props.children).filter((View) => {
+      return this.state.visibleViews.indexOf(View.props.id) >= 0
+    });
+
     return (
       <div className={ classnames(baseClassName, {
         'Root--transition': transitionState,
         'Root--popout': hasPopout
       }) }>
-        { this.state.prevView &&
-          <div className={`Root__view ${this.state.isBack ? 'Root__view--hide-back' : 'Root__view--hide-forward'}`} ref={el => { this.prevViewEl = el; }}>
-            { this.findView(this.state.prevView) }
+        { Views.map(View => (
+          <div key={View.props.id} className={classnames('Root__view', {
+            'Root__view--hide-back': View.props.id === this.state.prevView && this.state.isBack,
+            'Root__view--hide-forward': View.props.id === this.state.prevView && !this.state.isBack,
+            'Root__view--show-back': View.props.id === this.state.nextView && this.state.isBack,
+            'Root__view--show-forward': View.props.id === this.state.nextView && !this.state.isBack,
+            'Root__view--active': View.props.id === this.state.activeView
+          })} ref={ el => {
+            if (View.props.id === this.state.prevView) this.prevViewEl = el;
+            if (View.props.id === this.state.nextView) this.nextViewEl = el;
+            if (View.props.id === this.state.activeView) this.activeViewEl = el;
+          } }>
+            { View }
           </div>
-        }
-        { this.state.nextView &&
-          <div className={`Root__view ${this.state.isBack ? 'Root__view--show-back' : 'Root__view--show-forward'}`} ref={el => { this.nextViewEl = el; }}>
-            { this.findView(this.state.nextView) }
-          </div>
-        }
-        { this.state.activeView &&
-          <div className="Root__view Root__view--active" ref={el => { this.activeViewEl = el; }}>
-            { this.findView(this.state.activeView) }
-          </div>
-        }
+        )) }
         {hasPopout && <div className="Root__popout">{this.props.popout}</div>}
       </div>
     );
