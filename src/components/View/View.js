@@ -405,12 +405,12 @@ export default class View extends Component {
     }
 
     let opacity = this.state.swipeBackShift / window.innerWidth;
-    let titleTransform = this.state.swipeBackShift / window.innerWidth * 30;
+    let titleTransform = this.state.swipeBackShift / window.innerWidth * 60;
     let leftTransform = this.state.swipeBackShift / window.innerWidth * 60;
 
     if (isNext) {
       return prefixCSS({
-        title: { transform: `translate3d(${-30 + titleTransform}%, 0, 0)`, opacity },
+        title: { transform: `translate3d(${-60 + titleTransform}%, 0, 0)`, opacity },
         item: { opacity },
         leftIn: { transform: `translate3d(${-60 + leftTransform}%, 0, 0)`, opacity },
         leftIcon: { opacity: 1 },

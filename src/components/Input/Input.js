@@ -20,6 +20,7 @@ export default class Input extends Component {
       };
     }
   }
+
   static propTypes = {
     type: PropTypes.oneOf([
       'text', 'password',
@@ -31,11 +32,13 @@ export default class Input extends Component {
     initialValue: PropTypes.string,
     onChange: PropTypes.func
   };
+
   static defaultProps = {
     type: 'text',
     initialValue: '',
     alignment: 'left'
   };
+
   onChange = (e) => {
     if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
@@ -43,10 +46,12 @@ export default class Input extends Component {
     if (this.props.onChange) {
       this.props.onChange(e);
     }
-  }
+  };
+
   getRef = (element) => {
     this.element = element;
   };
+
   componentDidUpdate (prevProps) {
     if (prevProps.value && this.props.value === '') {
       // Fix iOS extra indent on removing content
@@ -55,6 +60,7 @@ export default class Input extends Component {
       });
     }
   }
+
   render () {
     const { alignment, value } = this.props;
     const modifiers = {

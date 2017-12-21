@@ -249,7 +249,7 @@
         }
       .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed .View__header-title {
         opacity: 0;
-        transform: translate3d(-30%, 0, 0);
+        transform: translate3d(-60%, 0, 0);
         }
       .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed .View__header-left-in {
         opacity: 0;
@@ -287,7 +287,7 @@
         opacity: 0;
         }
       .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-success .View__header-title {
-        transform: translate3d(30%, 0, 0);
+        transform: translate3d(60%, 0, 0);
         }
       .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-success .View__header-left-in {
         transform: translate3d(60%, 0, 0);
