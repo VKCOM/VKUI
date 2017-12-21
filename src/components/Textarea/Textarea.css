@@ -12,6 +12,11 @@
   resize: none;
   }
 
+  .Textarea::placeholder {
+    color: #00244D;
+    opacity: .24;
+    }
+
 .Textarea--ios {
   font-size: 17px;
   padding: 11px 0 12px;

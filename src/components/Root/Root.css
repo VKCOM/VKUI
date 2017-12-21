@@ -87,6 +87,7 @@
     }
 
   .Root--ios .Root__view--show-forward {
+    transform: translate3d(0, 100%, 0);
     animation: root-ios-animation-show-forward .6s var(--ios-easing);
     }
 
