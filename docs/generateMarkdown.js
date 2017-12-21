@@ -1,23 +1,15 @@
-/**
- * Copyright (c) 2015, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-"use strict";
+let listDeep = 0;
 
 function stringOfLength(string, length) {
-  var newString = '';
-  for (var i = 0; i < length; i++) {
+  let newString = '';
+  for (let i = 0; i < length; i++) {
     newString += string;
   }
   return newString;
 }
 
 function generateTitle(name) {
-  var title = '`' + name + '` (component)';
+  let title = '`' + name + '` (component)';
   return title + '\n' + stringOfLength('=', title.length) + '\n';
 }
 
@@ -26,55 +18,56 @@ function generateDesciption(description) {
 }
 
 function generatePropType(type) {
-  var values;
-  if (Array.isArray(type.value)) {
-    values = '(' +
-      type.value.map(function(typeValue) {
-        return typeValue.name || typeValue.value;
-      }).join('|') +
-      ')';
-  } else {
-    values = type.value;
+  let result = '';
+
+  switch (type.name) {
+    case 'enum':
+      result += `${type.value.map(generatePropType).join('|')}`;
+      break;
+    case 'union':
+      listDeep++;
+      result += 'oneOfType\n' +
+        type.value.map(generatePropType).join('\n');
+      listDeep--;
+      break;
+    case 'arrayOf':
+      result += 'arrayOf\n' +
+        generatePropType(type.value);
+      break;
+    case 'shape':
+      listDeep++;
+      result += 'shape\n' +
+        Object.keys(type.value).map(shapeItem => `${shapeItem}: ${generatePropType(type.value[shapeItem])}`).join(',\n');
+      listDeep--;
+      break;
+    default:
+      result += type.name || type.value;
   }
-
-  return 'type: `' + type.name + (values ? values: '') + '`\n';
-}
-
-function generatePropDefaultValue(value) {
-  return 'defaultValue: `' + value.value + '`\n';
-}
-
-function generateProp(propName, prop) {
-  return (
-    '### `' + propName + '`' + (prop.required ? ' (required)' : '') + '\n' +
-    '\n' +
-    (prop.description ? prop.description + '\n\n' : '') +
-    (prop.type ? generatePropType(prop.type) : '') +
-    (prop.defaultValue ? generatePropDefaultValue(prop.defaultValue) : '') +
-    '\n'
-  );
+  return result;
 }
 
 function generateProps(props) {
-  var title = 'Props';
+  let result = '## Props: \n\n';
 
-  return (
-    title + '\n' +
-    stringOfLength('-', title.length) + '\n' +
-    '\n' +
-    Object.keys(props).sort().map(function(propName) {
-      return generateProp(propName, props[propName]);
-    }).join('\n')
-  );
+  for (let prop in props) {
+    if (props.hasOwnProperty(prop)) {
+      result += `#### ${prop} \n\n`;
+      result += `required: \`${props[prop].required}\` \n\n`;
+      if (props[prop].defaultValue !== undefined) {
+        result += `defaultValue: \`${props[prop].defaultValue.value}\` \n\n`
+      }
+      result += `type: ${generatePropType(props[prop].type)} \n`;
+      result += '\n';
+    }
+  }
+
+  return result;
 }
 
 function generateMarkdown(name, reactAPI) {
-  var markdownString =
-    generateTitle(name) + '\n' +
-    generateDesciption(reactAPI.description) + '\n' +
+  return generateTitle(name) +
+    generateDesciption(reactAPI.description) +
     generateProps(reactAPI.props);
-
-  return markdownString;
 }
 
 module.exports = generateMarkdown;

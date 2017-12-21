@@ -1,18 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 const generateMarkdown = require('./generateMarkdown');
+const jsonDoc = require('./doc.json');
 
-const jsonDoc = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'doc.json')));
-
-for (let filepath in jsonDoc) {
+Object.keys(jsonDoc).forEach((filepath) => {
   const name = getComponentName(filepath);
   const markdown = generateMarkdown(name, jsonDoc[filepath]);
   fs.writeFileSync(path.resolve(__dirname, '../wiki', name + '.md'), markdown);
-}
+});
 
 function getComponentName(filepath) {
-  var name = path.basename(filepath);
-  var ext;
+  let name = path.basename(filepath);
+  let ext;
   while ((ext = path.extname(name))) {
     name = name.substring(0, name.length - ext.length);
   }
