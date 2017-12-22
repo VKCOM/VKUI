@@ -7,27 +7,33 @@
 
 .Root__view {
   height: 100%;
+  position: relative;
   }
 
-.Root--transition,
-.Root--popout {
-  overflow: hidden;
-  }
-
-  .Root--transition .Root__view,
-  .Root--popout .Root__view {
+  .Root__view--show-forward .View__header,
+  .Root__view--show-forward .View__header-in {
     position: absolute;
+    }
+
+  .Root--transition .Root__view--show-forward {
+    position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    pointer-events: none;
+    -webkit-backface-visibility: hidden;
     }
 
-  .Root--transition .Root__view--show-forward {
-    /* Because of strange bug with header. You can comment this rule and look at the result */
-    overflow: initial;
+  .Root--transition .Root__view--hide-back {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    }
+
+  .Root--transition .Root__view--hide-back .View__panels {
+    overflow: hidden;
     }
 
   .Root__view--show-back,
@@ -59,10 +65,7 @@
 
 .Root--ios.Root--transition,
 .Root--ios.Root--popout {
-  padding-top: constant(safe-area-inset-top);
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+  height: 100vh;
   }
 
   .Root--ios .Root__view--show-back::after,
@@ -87,7 +90,6 @@
     }
 
   .Root--ios .Root__view--show-forward {
-    transform: translate3d(0, 100%, 0);
     animation: root-ios-animation-show-forward .6s var(--ios-easing);
     }
 
@@ -118,13 +120,13 @@
     transform: translate3d(0, 0, 0);
     }
   to {
-    transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100vh, 0);
     }
   }
 
 @keyframes root-ios-animation-show-forward {
   from {
-    transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100vh, 0);
     }
   to {
     transform: translate3d(0, 0, 0);
