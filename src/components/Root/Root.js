@@ -73,13 +73,18 @@ export default class Root extends React.Component {
         scrolls,
         isBack
       }, () => {
-        this.prevViewEl.scrollTop = scrolls[this.state.prevView] || 0;
+        window.addEventListener('touchmove', this.preventTouch);
 
         if (isBack) {
-          this.nextViewEl.scrollTop = scrolls[this.state.nextView] || 0;
+          this.prevViewEl.querySelector('.View__panels').scrollTop = scrolls[this.state.prevView] || 0;
+          window.scrollTo(0, scrolls[this.state.nextView]);
         }
       });
     }
+  }
+
+  preventTouch (e) {
+    e.preventDefault();
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -123,7 +128,11 @@ export default class Root extends React.Component {
       }, () => {
         if (this.state.isBack) {
           window.scrollTo(0, this.state.scrolls[this.state.activeView] || 0);
+        } else {
+          window.scrollTo(0,0);
         }
+
+        window.removeEventListener('touchmove', this.preventTouch);
 
         this.props.onTransition && this.props.onTransition(this.state.isBack);
       });

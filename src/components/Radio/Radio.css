@@ -24,6 +24,10 @@
     color: #909499;
     }
 
+  .Radio__icon {
+    flex-shrink: 0;
+  }
+
 /**
  * iOS radio
  */
@@ -87,7 +91,6 @@
     border-radius: 10px;
     border: 2px solid #c4c8cc;
     transition: border-color .14s ease;
-    flex-shrink: 0;
     }
 
   .Radio--android .Radio__icon::before {
