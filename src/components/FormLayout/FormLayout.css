@@ -9,8 +9,8 @@
   list-style: none;
   user-select: none;
   }
-.FormLayout--ios.FormLayout::before,
-.FormLayout--ios.FormLayout::after {
+.FormLayout--ios.FormLayout__container::before,
+.FormLayout--ios.FormLayout__container::after {
   position: absolute;
   right: 0;
   left: 0;
@@ -19,14 +19,14 @@
   background: var(--ios-thick-separator-color);
   content: '';
   }
-.FormLayout--ios.FormLayout::before {
+.FormLayout--ios.FormLayout__container::before {
   bottom: 100%;
   }
-.FormLayout--ios.FormLayout::after {
+.FormLayout--ios.FormLayout__container::after {
   bottom: 0;
   }
-.FormLayout--web.FormLayout::before,
-.FormLayout--web.FormLayout::after {
+.FormLayout--web.FormLayout__container::before,
+.FormLayout--web.FormLayout__container::after {
   content: none;
   }
 
@@ -225,8 +225,8 @@
         }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .FormLayout--ios.FormLayout::before,
-  .FormLayout--ios.FormLayout::after,
+  .FormLayout--ios.FormLayout__container::before,
+  .FormLayout--ios.FormLayout__container::after,
   .FormLayout--ios .FormLayout__separator::before,
   .FormLayout--ios .FormLayout__label::before {
     background: var(--ios-top-border);

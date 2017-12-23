@@ -16,21 +16,23 @@ export default function FormLayout (props) {
 
   return (
     <TagName className={classnames(baseClassNames, modifiers)} {...removeObjectKeys(props, ['tagName', 'mod', 'allowSubmit'])}>
-      {children.map((field, i) => (
-        <label className="FormLayout__row" key={field.key || `row-${i}`}>
-          <div className="FormLayout__separator" />
-          {!!field.props.label && (
-            <div className="FormLayout__label">
-              <div className="FormLayout__label-in">{field.props.label}</div>
+      <div className={'FormLayout__container'}>
+        {children.map((field, i) => (
+          <label className="FormLayout__row" key={field.key || `row-${i}`}>
+            <div className="FormLayout__separator" />
+            {!!field.props.label && (
+              <div className="FormLayout__label">
+                <div className="FormLayout__label-in">{field.props.label}</div>
+              </div>
+            )}
+            <div className="FormLayout__field">
+              {field}
+              <div className="FormLayout__underline" />
             </div>
-          )}
-          <div className="FormLayout__field">
-            {field}
-            <div className="FormLayout__underline" />
-          </div>
-        </label>
-      ))}
-      {TagName === 'form' && props.allowSubmit && <input type="submit" style={{ display: 'none' }} />}
+          </label>
+        ))}
+      </div>
+      {TagName === 'form' && props.allowSubmit && <input type="submit" style={{ position: 'absolute', visibility: 'hidden' }} />}
     </TagName>
   );
 }
