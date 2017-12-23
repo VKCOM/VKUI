@@ -1,8 +1,6 @@
 import React from 'react';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import PropTypes from 'prop-types';
-import {isWebView} from '../../lib/webview';
-import vkuiConnect from 'vkui-connect';
 import Alert from '../Alert/Alert';
 import ActionSheet, {ActionSheetItem} from '../ActionSheet/ActionSheet';
 import View from '../View/View';
@@ -34,17 +32,26 @@ export default class NativePopouts extends React.Component {
       }),
       PropTypes.element
     ]),
+    vkuiConnect: PropTypes.shape({
+      send: PropTypes.func.isRequired,
+      subscribe: PropTypes.func.isRequired,
+      unsubscribe: PropTypes.func.isRequired
+    }),
     component: PropTypes.oneOf([View, Root])
   };
 
+  static contextTypes = {
+    isWebView: PropTypes.bool
+  };
+
   componentDidMount () {
-    vkuiConnect.subscribe(this.vkuiListener);
+    this.props.vkuiConnect.subscribe(this.vkuiListener);
   }
 
   componentWillUnount () {
     this.actions = [];
     this.actionsStore = {};
-    vkuiConnect.unsubscribe(this.vkuiListener);
+    this.props.vkuiConnect.unsubscribe(this.vkuiListener);
   }
 
   vkuiListener = (e) => {
@@ -57,7 +64,7 @@ export default class NativePopouts extends React.Component {
 
   renderNativeAlert (popout) {
     const { style, title, text: message } = popout;
-    vkuiConnect.send('VKWebAppAlert', {
+    this.props.vkuiConnect.send('VKWebAppAlert', {
       style,
       title: brToNl(title),
       message: brToNl(message),
@@ -84,7 +91,7 @@ export default class NativePopouts extends React.Component {
 
   renderNativeSheet (popout) {
     const { style } = popout;
-    vkuiConnect.send('VKWebAppAlert', {
+    this.props.vkuiConnect.send('VKWebAppAlert', {
       style,
       actions: this.actions.map(item =>
         removeObjectKeys(item, ['action'])

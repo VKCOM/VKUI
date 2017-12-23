@@ -4,6 +4,7 @@
   "private": true,
   "main": "dist/vkui.js",
   "devDependencies": {
+    "autoprefixer": "^7.2.3",
     "babel-core": "^6.23.1",
     "babel-loader": "^6.4.0",
     "babel-plugin-transform-class-properties": "^6.23.0",
@@ -26,8 +27,7 @@
     "webpack-stats-plugin": "^0.1.4"
   },
   "dependencies": {
-    "prop-types": "^15.5.8",
-    "vkui-connect": "git+ssh://git@bitbucket.mvk.com:2222/vkui/vkui-connect.git"
+    "prop-types": "^15.5.8"
   },
   "peerDependencies": {
     "react": "15.4.2"

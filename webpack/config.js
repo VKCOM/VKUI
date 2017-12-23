@@ -1,4 +1,3 @@
-const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -10,9 +9,9 @@ const cssImport = require('postcss-import');
 const cssMaps = require('postcss-map');
 const autoprefixer = require('autoprefixer');
 const colorsMaps = require('../src/helpers/colors');
+const pkg = require('../package.json');
 
 const isProduction = process.env.NODE_ENV === 'production';
-const version = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', 'package.json'), 'utf-8')).version;
 
 const cssTransformOptions = [
   {
@@ -117,7 +116,7 @@ const prodConfig = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': `"production"`,
-      'process.env.VKUI_VERSION': `"${version}"`
+      'process.env.VKUI_VERSION': `"${pkg.version}"`
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
