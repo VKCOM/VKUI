@@ -35,7 +35,7 @@ export default class ScrollView extends Component {
     return (
       <div
         className={classnames(baseClassNames, className)}
-        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel'])}
+        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout'])}
         ref={this.getRef}
       >
         <div className="ScrollView__in">

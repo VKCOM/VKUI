@@ -35,7 +35,8 @@ export default class Input extends Component {
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
     value: PropTypes.string,
     initialValue: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    placeholder: PropTypes.string
   };
 
   static contextTypes = {

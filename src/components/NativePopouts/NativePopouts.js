@@ -134,10 +134,10 @@ export default class NativePopouts extends React.Component {
 
         switch (nextProps.popout.style) {
           case 'alert':
-            isWebView ? this.renderNativeAlert(nextProps.popout) : this.renderUIAlert(nextProps.popout);
+            this.context.isWebView ? this.renderNativeAlert(nextProps.popout) : this.renderUIAlert(nextProps.popout);
             break;
           case 'actionSheet':
-            isWebView ? this.renderNativeSheet(nextProps.popout) : this.renderUISheet(nextProps.popout);
+            this.context.isWebView ? this.renderNativeSheet(nextProps.popout) : this.renderUISheet(nextProps.popout);
             break;
         }
       } else {

@@ -35,8 +35,15 @@ export default class PopoutWrapper extends React.Component {
 
   componentDidMount () {
     // TODO add "animationend" event instead of setTimeout
+    window.addEventListener('touchmove', this.preventTouch);
     setTimeout(() => this.setState({ opened: true }), osname === ANDROID ? 200 : 300);
   }
+
+  componentWillUnmount () {
+    window.removeEventListener('touchmove', this.preventTouch);
+  }
+
+  preventTouch = (e) => e.preventDefault();
 
   onClick = (e) => {
     if (this.state.opened) {

@@ -63,7 +63,7 @@ export default class Gallery extends Component {
     this.setState({ min, max, layerWidth, containerWidth, slides }, callback);
   }
 
-  calcMin({ containerWidth, layerWidth, viewportWidth }) {
+  calcMin ({ containerWidth, layerWidth, viewportWidth }) {
     switch (this.props.align) {
       case 'left':
         return containerWidth - layerWidth;

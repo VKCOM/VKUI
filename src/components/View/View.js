@@ -9,6 +9,7 @@ import { platform, ANDROID, IOS } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
 import prefixCSS from 'react-prefixer';
+import removeObjectKeys from '../../lib/removeObjectKeys';
 
 const osname = platform();
 const baseClassNames = getClassName('View');
@@ -68,20 +69,6 @@ export default class View extends Component {
     const { activePanel, nextPanel } = this.state;
 
     let scrolls, pageYOffset;
-
-    // Popout appearance
-    if (!!nextProps.popout && !this.props.popout) {
-      pageYOffset = window.pageYOffset;
-
-      this.blurActiveElement();
-      scrolls = Object.assign({}, this.state.scrolls, {
-        [activePanel]: pageYOffset
-      });
-
-      this.setState({ scrolls }, function () {
-        this.pickPanel(activePanel).scrollTop = scrolls[activePanel];
-      });
-    }
 
     if (this.props.children !== nextProps.children) {
       this.panels = this.getPanels(nextProps.children);
@@ -181,11 +168,6 @@ export default class View extends Component {
     }
 
     if (prevState.swipingBackFinish === false && this.state.swipingBackFinish === null) {
-      window.scrollTo(0, scrolls[this.state.activePanel]);
-    }
-
-    // Popout disappearance: restore scroll
-    if (prevProps.popout && !this.props.popout && scrolls[this.state.activePanel]) {
       window.scrollTo(0, scrolls[this.state.activePanel]);
     }
 
@@ -446,7 +428,6 @@ export default class View extends Component {
     });
     const modifiers = {
       'View--header': hasHeader,
-      'View--popout': hasPopout,
       'View--animated': this.state.visiblePanels.length === 2,
       'View--swiping-back': this.state.swipingBack
     };
@@ -460,7 +441,7 @@ export default class View extends Component {
         onEnd={this.onEnd}
       >
         {hasHeader && (
-          <div className="View__header">
+          <div className="View__header" style={{ zIndex: this.props.children.length + 1 }}>
             { osname === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
             <div className="View__header-in">
               {panels.map((panel, i) => (
@@ -524,13 +505,22 @@ export default class View extends Component {
                 'View__panel--swipe-back-success': this.state.swipingBackFinish === true,
                 'View__panel--swipe-back-failed': this.state.swipingBackFinish === false
               })}
-              style={this.calcPanelSwipeStyles(panel.id)}
+              style={Object.assign(this.calcPanelSwipeStyles(panel.id), { zIndex: i + 1 })}
               key={panel.key || panel.id || `panel-${i}`}
             >
               <div className="View__panel-in">
                 {React.cloneElement(panel, { ref: this.getRef, activePanel, nextPanel })}
               </div>
             </div>
+          ))}
+          {panels.filter(panel => panel.props.fixedLayout).map((panel, i) => (
+            React.cloneElement(panel.props.fixedLayout, {
+              key: panel.key || panel.id || `panel-${i}`,
+              style: Object.assign({}, panel.props.fixedLayout.props.style, removeObjectKeys(this.calcPanelSwipeStyles(panel.id), ['boxShadow']), { zIndex: i + 1 }),
+              isActive: panel.id === activePanel,
+              isPrev: panel.id === prevPanel,
+              isNext: panel.id === nextPanel
+            })
           ))}
         </div>
         {hasPopout && <div className="View__popout">{popout}</div>}

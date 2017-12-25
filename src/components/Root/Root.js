@@ -36,20 +36,10 @@ export default class Root extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     let scrolls, pageYOffset;
-    let { activeView } = this.state;
 
     // Popout appearance
     if (!!nextProps.popout && !this.props.popout) {
-      pageYOffset = window.pageYOffset;
-
       Root.blurActiveElement();
-      scrolls = Object.assign({}, this.state.scrolls, {
-        [activeView]: pageYOffset
-      });
-
-      this.setState({ scrolls }, function () {
-        this.activeViewEl.scrollTop = scrolls[activeView];
-      });
     }
 
     // View changing
@@ -83,21 +73,12 @@ export default class Root extends React.Component {
     }
   }
 
-  preventTouch (e) {
-    e.preventDefault();
-  }
+  preventTouch = (e) => e.preventDefault();
 
   componentDidUpdate (prevProps, prevState) {
-    const { scrolls, activeView } = this.state;
-
     // Transition started
     if (this.state.nextView !== prevState.nextView && this.state.nextView !== null) {
       this.waitAnimationFinish(this.state.isBack ? this.prevViewEl : this.nextViewEl, this.onAnimationEnd);
-    }
-
-    // Popout hide
-    if (prevProps.popout && !this.props.popout && scrolls[activeView]) {
-      window.scrollTo(0, scrolls[activeView]);
     }
   }
 
@@ -129,7 +110,7 @@ export default class Root extends React.Component {
         if (this.state.isBack) {
           window.scrollTo(0, this.state.scrolls[this.state.activeView] || 0);
         } else {
-          window.scrollTo(0,0);
+          window.scrollTo(0, 0);
         }
 
         window.removeEventListener('touchmove', this.preventTouch);
@@ -149,9 +130,7 @@ export default class Root extends React.Component {
     const transitionState = this.state.nextView !== null;
     const hasPopout = this.props.popout;
 
-    let Views = [].concat(this.props.children).filter((View) => {
-      return this.state.visibleViews.indexOf(View.props.id) >= 0
-    });
+    let Views = [].concat(this.props.children).filter((View) => this.state.visibleViews.indexOf(View.props.id) >= 0);
 
     return (
       <div className={ classnames(baseClassName, {

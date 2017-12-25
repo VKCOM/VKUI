@@ -10,7 +10,8 @@
 
   "rules": {
     "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
-    "quote-props": [2, "consistent-as-needed"]
+    "quote-props": [2, "consistent-as-needed"],
+    "no-trailing-spaces": ["error", { "skipBlankLines": true }]
   },
 
   "plugins": [

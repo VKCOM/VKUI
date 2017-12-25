@@ -13,7 +13,9 @@ const baseClassNames = getClassName('CloseButton');
 export default class AndroidCloseButton extends Component {
 
   static propTypes = {
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    className: PropTypes.string,
+    children: PropTypes.element
   };
 
   render () {

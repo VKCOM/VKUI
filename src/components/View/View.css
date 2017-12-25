@@ -11,8 +11,7 @@
   word-wrap: break-word;
   }
 .View--animated,
-.View--swiping-back,
-.View--popout {
+.View--swiping-back {
   overflow: hidden;
   }
 
@@ -22,14 +21,6 @@
   .View--swiping-back .View__header {
     pointer-events: none;
   }
-
-  /**
-   * Pull to refresh
-   */
-  .View__top {
-    position: absolute;
-    z-index: 1;
-    }
 
   /**
    * Header
@@ -113,8 +104,7 @@
       }
 
     .View--animated .View__panel,
-    .View--swiping-back .View__panel,
-    .View--popout .View__panel {
+    .View--swiping-back .View__panel {
       position: absolute;
       top: 0;
       left: 0;
@@ -142,21 +132,10 @@
   }
 
   .View--ios.View--animated,
-  .View--ios.View--swiping-back,
-  .View--ios.View--popout {
+  .View--ios.View--swiping-back {
     height: 100vh;
   }
 
-  /**
-   * Pull to refresh
-   */
-  .View--ios .View__top {
-    right: 0;
-    left: 0;
-    height: 64px;
-    bottom: 100%;
-    z-index: 5;
-    }
   .View--ios.View--header .View__top {
     bottom: calc(100% - 64px);
     }
@@ -180,7 +159,6 @@
     padding-top: constant(safe-area-inset-top);
     padding-top: env(safe-area-inset-top);
     /*insets*/
-    z-index: 2;
     }
 
     .View--ios .View__header-scrolltop {
@@ -452,25 +430,32 @@
      * Panel transition
      */
     .View--ios .View__panel--prev,
-    .View--ios .View__panel--next {
+    .View--ios .View__panel--next,
+    .View--ios .FixedLayout--prev,
+    .View--ios .FixedLayout--next {
       display: block;
       visibility: visible;
       transition:
         transform .6s var(--ios-easing),
         visibility .6s var(--ios-easing);
       }
-    .View--ios .View__panel {
+    .View--ios .View__panel,
+    .View--ios .FixedLayout {
       transform: translate3d(-50%, 0, 0);
       }
-    .View--ios .View__panel--next {
+    .View--ios .View__panel--next,
+    .View--ios .FixedLayout--next {
       transform: translate3d(0, 0, 0);
       }
-    .View--ios .View__panel--next ~ .View__panel {
+    .View--ios .View__panel--next ~ .View__panel,
+    .View--ios .FixedLayout--next ~ .FixedLayout {
       transform: translate3d(100%, 0, 0);
       }
 
     .View--ios .View__panel--prev > .View__panel-in::before,
-    .View--ios .View__panel--next > .View__panel-in::before {
+    .View--ios .View__panel--next > .View__panel-in::before,
+    .View--ios .FixedLayout--prev > .FixedLayout__transition-shadow,
+    .View--ios .FixedLayout--next > .FixedLayout__transition-shadow {
       position: absolute;
       top: 0;
       right: 0;
@@ -481,28 +466,35 @@
       content: '';
       pointer-events: none;
       }
-    .View--ios .View__panel--prev > .View__panel-in::before {
+    .View--ios .View__panel--prev > .View__panel-in::before,
+    .View--ios .FixedLayout--prev > .FixedLayout__transition-shadow {
       animation: animation-fade-in .6s var(--ios-easing);
       }
-    .View--ios .View__panel--next > .View__panel-in::before {
+    .View--ios .View__panel--next > .View__panel-in::before,
+    .View--ios .FixedLayout--next > .FixedLayout__transition-shadow {
       animation: animation-fade-out .6s var(--ios-easing);
       }
     .View--ios .View__panel--prev ~ .View__panel--next > .View__panel-in::before,
-    .View--ios .View__panel--next ~ .View__panel--prev > .View__panel-in::before {
+    .View--ios .View__panel--next ~ .View__panel--prev > .View__panel-in::before,
+    .View--ios .FixedLayout--prev ~ .FixedLayout--next > .FixedLayout__transition-shadow,
+    .View--ios .FixedLayout--next ~ .FixedLayout--prev > .FixedLayout__transition-shadow {
       content: none;
+      display: none;
       }
 
     /**
      * Active panel
      */
-    .View--ios .View__panel--active {
+    .View--ios .View__panel--active,
+    .View--ios .FixedLayout--active {
       visibility: visible;
       transform: translate3d(0, 0, 0);
       }
     .View--ios .View__panel--active::before {
       content: none;
       }
-    .View--ios .View__panel--active ~ .View__panel {
+    .View--ios .View__panel--active ~ .View__panel,
+    .View--ios .FixedLayout--active ~ .FixedLayout {
       transform: translate3d(100%, 0, 0);
       }
 
@@ -646,22 +638,27 @@
      * Panel transition
      */
     .View--android .View__panel--prev,
-    .View--android .View__panel--next {
+    .View--android .View__panel--next,
+    .View--android .FixedLayout--prev,
+    .View--android .FixedLayout--next {
       visibility: visible;
       transition:
         transform .3s var(--android-easing) .2s,
         opacity .3s var(--android-easing) .2s,
         visibility .3s var(--android-easing) .2s;
       }
-    .View--android .View__panel {
+    .View--android .View__panel,
+    .View--android .FixedLayout {
       transform: translate3d(0, 0, 0);
       opacity: 0;
       }
-    .View--android .View__panel--next {
+    .View--android .View__panel--next,
+    .View--android .FixedLayout--next {
       transform: translate3d(0, 0, 0);
       opacity: 1;
       }
-    .View--android .View__panel--next ~ .View__panel {
+    .View--android .View__panel--next ~ .View__panel,
+    .View--android .FixedLayout--next ~ .FixedLayout {
       transform: translate3d(0, 80px, 0);
       opacity: 0;
       visibility: hidden;
@@ -670,7 +667,8 @@
     /**
      * Active panel
      */
-    .View--android .View__panel--active {
+    .View--android .View__panel--active,
+    .View--android .FixedLayout--active {
       visibility: visible;
       transform: translate3d(0, 0, 0);
       opacity: 1;
@@ -678,7 +676,8 @@
     .View--android .View__panel--active::before {
       content: none;
       }
-    .View--android .View__panel--active ~ .View__panel {
+    .View--android .View__panel--active ~ .View__panel,
+    .View--android .FixedLayout--active ~ .FixedLayout {
       transform: translate3d(0, 80px, 0);
       }
 
