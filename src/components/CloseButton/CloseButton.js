@@ -15,7 +15,7 @@ export default class AndroidCloseButton extends Component {
   static propTypes = {
     onClick: PropTypes.func,
     className: PropTypes.string,
-    children: PropTypes.element
+    children: PropTypes.node
   };
 
   render () {
