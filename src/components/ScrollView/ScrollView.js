@@ -18,11 +18,13 @@ export default class ScrollView extends Component {
     prevPanel: PropTypes.string,
     nextPanel: PropTypes.string,
     children: PropTypes.node,
-    className: PropTypes.string
+    className: PropTypes.string,
+    theme: PropTypes.oneOf(['white', 'gray'])
   };
 
   static defaultProps = {
-    children: ''
+    children: '',
+    theme: 'gray'
   };
 
   shouldComponentUpdate ({ id, activePanel, nextPanel }) {
@@ -35,7 +37,7 @@ export default class ScrollView extends Component {
     return (
       <div
         className={classnames(baseClassNames, className)}
-        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout'])}
+        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout', 'theme'])}
         ref={this.getRef}
       >
         <div className="ScrollView__in">

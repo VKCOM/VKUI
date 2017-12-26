@@ -379,8 +379,14 @@
 
   .View--ios.View--header .View__panels {}
 
-    .View--ios .View__panel {
+    .View--ios .View__panel,
+    .View--ios .View__panel-in {
       background: #efeff4;
+      }
+
+    .View--ios .View__panel--theme-white,
+    .View--ios .View__panel--theme-white .View__panel-in {
+      background: #fff;
       }
 
     .View--ios.View--header .View__panel {

@@ -31,6 +31,7 @@ export default class View extends Component {
       browserSwipe: false
     };
     this.panels = this.getPanels(props.children);
+    osname === IOS && this.setPanelBg(props.activePanel);
   }
 
   static propTypes = {
@@ -72,6 +73,10 @@ export default class View extends Component {
 
     if (this.props.children !== nextProps.children) {
       this.panels = this.getPanels(nextProps.children);
+    }
+
+    if (this.props.activePanel !== nextProps.activePanel && osname === IOS) {
+      this.setPanelBg(nextProps.activePanel);
     }
 
     // Panel transition
@@ -198,6 +203,15 @@ export default class View extends Component {
   blurActiveElement () {
     if (typeof window !== 'undefined' && document.activeElement) {
       document.activeElement.blur();
+    }
+  }
+
+  setPanelBg (panelId) {
+    const panel = this.panels.find(panel => panel.id === panelId);
+    if (panel) {
+      document.documentElement.setAttribute('theme', panel.props.theme);
+    } else {
+      document.documentElement.removeAttribute('theme');
     }
   }
 
@@ -503,7 +517,8 @@ export default class View extends Component {
                 'View__panel--swipe-back-prev': panel.id === this.state.swipeBackPrevPanel,
                 'View__panel--swipe-back-next': panel.id === this.state.swipeBackNextPanel,
                 'View__panel--swipe-back-success': this.state.swipingBackFinish === true,
-                'View__panel--swipe-back-failed': this.state.swipingBackFinish === false
+                'View__panel--swipe-back-failed': this.state.swipingBackFinish === false,
+                [`View__panel--theme-${panel.props.theme}`]: true
               })}
               style={Object.assign(this.calcPanelSwipeStyles(panel.id), { zIndex: i + 1 })}
               key={panel.key || panel.id || `panel-${i}`}
