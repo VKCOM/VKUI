@@ -1,10 +1,20 @@
 .BackButton {
   color: #fff;
+  position: relative;
   }
 
 .BackButton--ios {
   height: 21px;
   }
+
+  .BackButton--ios::before {
+    position: absolute;
+    left: -30%;
+    top: -30%;
+    width: 160%;
+    height: 160%;
+    content: '';
+    }
 
 .BackButton--android {
   width: 48px;

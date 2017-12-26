@@ -198,9 +198,13 @@
           padding: 0 2px;
           }
 
+        .View--ios .View__header-left-in {
+          line-height: 44px;
+          }
+
         .View--ios .View__header-icon + .View__header-left-in {
           padding-left: 4px;
-        }
+          }
 
       /**
        * Header swipe back
