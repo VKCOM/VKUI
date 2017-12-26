@@ -100,12 +100,11 @@
       height: 100%;
       box-sizing: border-box;
       z-index: 1;
-      visibility: hidden;
       }
 
     .View--animated .View__panel,
     .View--swiping-back .View__panel {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       overflow: hidden;
@@ -135,18 +134,6 @@
   .View--ios.View--swiping-back {
     height: 100vh;
   }
-
-  .View--ios.View--header .View__top {
-    bottom: calc(100% - 64px);
-    }
-  .View--ios .View__top--fixed {
-    position: relative;
-    top: auto;
-    bottom: auto;
-    }
-  .View--ios.View--header .View__top--fixed {
-    top: 64px;
-    }
 
   /**
    * Header
@@ -440,32 +427,29 @@
      * Panel transition
      */
     .View--ios .View__panel--prev,
-    .View--ios .View__panel--next,
-    .View--ios .FixedLayout--prev,
-    .View--ios .FixedLayout--next {
+    .View--ios .View__panel--next {
       display: block;
-      visibility: visible;
-      transition:
-        transform .6s var(--ios-easing),
-        visibility .6s var(--ios-easing);
       }
-    .View--ios .View__panel,
-    .View--ios .FixedLayout {
-      transform: translate3d(-50%, 0, 0);
+    .View--ios .View__panel {
       }
-    .View--ios .View__panel--next,
-    .View--ios .FixedLayout--next {
-      transform: translate3d(0, 0, 0);
+    .View--ios .View__panel--prev {
+      animation: animation-ios-prev-forward .6s var(--ios-easing);
+    }
+
+    .View--ios .View__panel--next {
+      animation: animation-ios-next-back .6s var(--ios-easing);
+    }
+
+    .View--ios .View__panel--prev ~ .View__panel--next {
+      animation: animation-ios-next-forward .6s var(--ios-easing);
       }
-    .View--ios .View__panel--next ~ .View__panel,
-    .View--ios .FixedLayout--next ~ .FixedLayout {
-      transform: translate3d(100%, 0, 0);
+
+    .View--ios .View__panel--next ~ .View__panel--prev {
+      animation: animation-ios-prev-back .6s var(--ios-easing);
       }
 
     .View--ios .View__panel--prev > .View__panel-in::before,
-    .View--ios .View__panel--next > .View__panel-in::before,
-    .View--ios .FixedLayout--prev > .FixedLayout__transition-shadow,
-    .View--ios .FixedLayout--next > .FixedLayout__transition-shadow {
+    .View--ios .View__panel--next > .View__panel-in::before {
       position: absolute;
       top: 0;
       right: 0;
@@ -498,15 +482,58 @@
     .View--ios .View__panel--active,
     .View--ios .FixedLayout--active {
       visibility: visible;
-      transform: translate3d(0, 0, 0);
       }
     .View--ios .View__panel--active::before {
       content: none;
       }
     .View--ios .View__panel--active ~ .View__panel,
     .View--ios .FixedLayout--active ~ .FixedLayout {
-      transform: translate3d(100%, 0, 0);
+
       }
+
+@keyframes animation-ios-next-forward {
+  from {
+    visibility: hidden;
+    transform: translate3d(100%,0,0);
+  }
+  to {
+    visibility: visible;
+    transform: translate3d(0,0,0);
+  }
+}
+
+@keyframes animation-ios-next-back {
+  from {
+    visibility: hidden;
+    transform: translate3d(-50%,0,0);
+  }
+  to {
+    visibility: visible;
+    transform: translate3d(0,0,0);
+  }
+}
+
+@keyframes animation-ios-prev-forward {
+  from {
+    visibility: visible;
+    transform: translate3d(0,0,0);
+  }
+  to {
+    visibility: hidden;
+    transform: translate3d(-50%,0,0);
+  }
+}
+
+@keyframes animation-ios-prev-back {
+  from {
+    visibility: visible;
+    transform: translate3d(0,0,0);
+  }
+  to {
+    visibility: hidden;
+    transform: translate3d(100%,0,0);
+  }
+}
 
 /**
  * Android
