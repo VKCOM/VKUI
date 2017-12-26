@@ -9,10 +9,10 @@
 
   .BackButton--ios::before {
     position: absolute;
-    left: -30%;
-    top: -30%;
-    width: 160%;
-    height: 160%;
+    left: -8px;
+    top: -12px;
+    width: 44px;
+    height: 44px;
     content: '';
     }
 
