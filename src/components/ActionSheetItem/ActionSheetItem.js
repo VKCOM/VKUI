@@ -12,11 +12,13 @@ export default class ActionSheetItem extends React.Component {
     theme: PropTypes.oneOf(['default', 'destructive', 'cancel']),
     children: PropTypes.node,
     style: PropTypes.object,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    autoclose: PropTypes.bool
   };
 
   static defaultProps = {
-    theme: 'default'
+    theme: 'default',
+    autoclose: true
   };
 
   render () {

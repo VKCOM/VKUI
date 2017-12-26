@@ -31,9 +31,12 @@ export default class ActionSheet extends React.Component {
     this.waitTransitionFinish(this.props.onClose);
   };
 
-  onItemClick = (handler) => () => {
+  onItemClick = (handler, autoclose) => () => {
     this.setState({ closing: true });
-    this.waitTransitionFinish(handler);
+    this.waitTransitionFinish(() => {
+      autoclose && this.props.onClose();
+      handler();
+    });
   };
 
   stopPropagation = (e) => e.stopPropagation();
@@ -61,7 +64,7 @@ export default class ActionSheet extends React.Component {
 
     Actions.forEach((Child, index) => {
       children.push(React.cloneElement(Child, {
-        onClick: this.onItemClick(Child.props.onClick)
+        onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose)
       }));
       if (osname === IOS && index < Actions.length - 1) children.push(<div key={`separator-${index}`} className="ActionSheet__separator" />);
     });

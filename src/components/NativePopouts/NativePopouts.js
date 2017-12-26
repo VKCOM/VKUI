@@ -109,7 +109,7 @@ export default class NativePopouts extends React.Component {
           onClose={onClose}
         >
           { this.actions.map((item, index) => (
-            <ActionSheetItem theme={item.style} onClick={item.action} key={`${index}`}>
+            <ActionSheetItem autoclose={item.autoclose} theme={item.style} onClick={item.action} key={`${index}`}>
               {item.title}
             </ActionSheetItem>
           )) }
