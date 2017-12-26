@@ -134,8 +134,7 @@ export default class Root extends React.Component {
 
     return (
       <div className={ classnames(baseClassName, {
-        'Root--transition': transitionState,
-        'Root--popout': hasPopout
+        'Root--transition': transitionState
       }) }>
         { Views.map(View => (
           <div key={View.props.id} className={classnames('Root__view', {

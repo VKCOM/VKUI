@@ -10,7 +10,7 @@ const osname = platform();
 
 const baseClassNames = getClassName('CloseButton');
 
-export default class AndroidCloseButton extends Component {
+export default class CloseButton extends Component {
 
   static propTypes = {
     onClick: PropTypes.func,

@@ -7,7 +7,7 @@ import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { platform, ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
-import { coordX, coordY } from '../Touch/TouchUtils';
+import { coordX, coordY } from '../../lib/touch';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
 const ts = () => +Date.now();
@@ -53,10 +53,12 @@ export default class Tappable extends Component {
     component: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element
-    ])
+    ]),
+    role: PropTypes.string
   };
   static defaultProps = {
-    component: 'div'
+    component: 'div',
+    role: 'button'
   };
 
   isSlide = false;

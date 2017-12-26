@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getSupportedEvents, coordX, coordY } from './TouchUtils';
+import { getSupportedEvents, coordX, coordY } from '../../lib/touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 
 const events = getSupportedEvents();

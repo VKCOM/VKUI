@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
@@ -11,7 +10,6 @@ import transitionEvents from '../../lib/transitionEvents';
 const osname = platform();
 
 const baseClassNames = getClassName('ActionSheet');
-const itemClassNames = getClassName('ActionSheet-Item');
 
 export default class ActionSheet extends React.Component {
 
@@ -41,9 +39,7 @@ export default class ActionSheet extends React.Component {
     this.waitTransitionFinish(hander);
   };
 
-  stopPropagation (e) {
-    e.stopPropagation();
-  }
+  stopPropagation = (e) => e.stopPropagation();
 
   waitTransitionFinish (eventHandler) {
     if (transitionEvents.supported) {
@@ -104,35 +100,6 @@ export default class ActionSheet extends React.Component {
           }
         </div>
       </PopoutWrapper>
-    );
-  }
-}
-
-export class ActionSheetItem extends React.Component {
-
-  static propTypes = {
-    theme: PropTypes.oneOf(['default', 'destructive', 'cancel']),
-    children: PropTypes.node,
-    style: PropTypes.object,
-    onClick: PropTypes.func
-  };
-
-  static defaultProps = {
-    theme: 'default'
-  };
-
-  render () {
-    const classNames = classnames(itemClassNames, {
-      [`ActionSheet-Item--${this.props.theme}`]: this.props.theme
-    });
-    return (
-      <Tappable
-        onClick={this.props.onClick}
-        className={classNames}
-        style={this.props.style}
-      >
-        {this.props.children}
-      </Tappable>
     );
   }
 }

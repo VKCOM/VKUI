@@ -8,8 +8,8 @@ const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
 const cssMaps = require('postcss-map');
 const autoprefixer = require('autoprefixer');
-const colorsMaps = require('../src/helpers/colors');
-const pkg = require('../package.json');
+const colorsMaps = require('./src/helpers/colors');
+const pkg = require('./package.json');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -32,12 +32,12 @@ const cssTransformOptions = [
             maps: [{ colors: colorsMaps }]
           }),
           autoprefixer({ browsers: [
-            '>1%',
-            'last 4 versions',
-            'Firefox ESR',
-            'not ie < 9',
-            'android >= 4'
-          ] })
+              '>1%',
+              'last 4 versions',
+              'Firefox ESR',
+              'not ie < 9',
+              'android >= 4'
+            ] })
         ];
       }
     }
@@ -91,17 +91,13 @@ const config = {
   },
   plugins: [
     new ExtractTextPlugin('[name].css')
-  ],
-  externals: {
-    'react': 'react',
-    'react-dom': 'react-dom'
-  }
+  ]
 };
 
 const devConfig = {
   devtool: 'source-map',
   devServer: {
-    outputPath: path.resolve(__dirname, '..', 'dist'),
+    outputPath: path.resolve(__dirname, 'dist'),
     contentBase: path.resolve(__dirname, 'dist'),
     stats: 'errors-only'
   }

@@ -2,9 +2,8 @@ import React from 'react';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import PropTypes from 'prop-types';
 import Alert from '../Alert/Alert';
-import ActionSheet, {ActionSheetItem} from '../ActionSheet/ActionSheet';
-import View from '../View/View';
-import Root from '../Root/Root';
+import ActionSheet from '../ActionSheet/ActionSheet';
+import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
 import {brToNl} from '../../lib/string';
 
 let actionId = 0;
@@ -37,7 +36,8 @@ export default class NativePopouts extends React.Component {
       subscribe: PropTypes.func.isRequired,
       unsubscribe: PropTypes.func.isRequired
     }),
-    component: PropTypes.oneOf([View, Root])
+    // It can be either Root or View
+    component: PropTypes.func.isRequired
   };
 
   static contextTypes = {

@@ -43,7 +43,8 @@ export { default as ConfigProvider } from './components/ConfigProvider/ConfigPro
  */
 export { default as Alert } from './components/Alert/Alert';
 export { default as CloseButton } from './components/CloseButton/CloseButton';
-export { default as ActionSheet, ActionSheetItem } from './components/ActionSheet/ActionSheet';
+export { default as ActionSheet } from './components/ActionSheet/ActionSheet';
+export { default as ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export { default as AlertInput } from './components/AlertInput/AlertInput';
 export { default as Gallery } from './components/Gallery/Gallery';
 export { default as Spinner } from './components/Spinner/Spinner';
