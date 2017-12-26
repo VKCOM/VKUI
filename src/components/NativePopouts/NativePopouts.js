@@ -48,7 +48,7 @@ export default class NativePopouts extends React.Component {
     this.props.vkuiConnect.subscribe(this.vkuiListener);
   }
 
-  componentWillUnount () {
+  componentWillUnmount () {
     this.actions = [];
     this.actionsStore = {};
     this.props.vkuiConnect.unsubscribe(this.vkuiListener);
@@ -148,6 +148,6 @@ export default class NativePopouts extends React.Component {
 
   render () {
     let Component = this.props.component;
-    return <Component {...removeObjectKeys(this.props, ['popout', 'onPopoutAction'])} popout={this.state.popout} />;
+    return <Component {...removeObjectKeys(this.props, ['popout'])} popout={this.state.popout} />;
   }
 }

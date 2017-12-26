@@ -6,6 +6,7 @@ import classnames from '../../lib/classnames';
 import './ActionSheet.css';
 import { platform, ANDROID, IOS } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
+import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
 
 const osname = platform();
 
@@ -25,18 +26,14 @@ export default class ActionSheet extends React.Component {
     children: PropTypes.node
   };
 
-  static defaultProps = {
-    onClose: () => {}
-  };
-
   onClose = () => {
     this.setState({ closing: true });
     this.waitTransitionFinish(this.props.onClose);
   };
 
-  onItemClick = (hander) => () => {
-    this.setState({closing: true});
-    this.waitTransitionFinish(hander);
+  onItemClick = (handler) => () => {
+    this.setState({ closing: true });
+    this.waitTransitionFinish(handler);
   };
 
   stopPropagation = (e) => e.stopPropagation();
@@ -69,7 +66,10 @@ export default class ActionSheet extends React.Component {
       if (osname === IOS && index < Actions.length - 1) children.push(<div key={`separator-${index}`} className="ActionSheet__separator" />);
     });
 
-    let CancelItem = React.Children.toArray(this.props.children).find(Child => Child.props.theme === 'cancel');
+    let CancelItem = React.Children.toArray(this.props.children).find(Child => Child.props.theme === 'cancel') ||
+      <ActionSheetItem onClick={this.props.onClose} theme="cancel">
+        Отмена
+      </ActionSheetItem>;
 
     return (
       <PopoutWrapper
