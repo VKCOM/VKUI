@@ -19,6 +19,7 @@ export default class Root extends React.Component {
       prevView: null,
       nextView: null,
       visibleViews: [props.activeView],
+      isBack: undefined,
       scrolls: {}
     };
   }
@@ -35,40 +36,28 @@ export default class Root extends React.Component {
   };
 
   componentWillReceiveProps (nextProps) {
-    let scrolls, pageYOffset;
-
-    // Popout appearance
-    if (!!nextProps.popout && !this.props.popout) {
-      Root.blurActiveElement();
-    }
-
-    // View changing
     if (nextProps.activeView !== this.props.activeView) {
-      pageYOffset = pageYOffset || window.pageYOffset;
+      let pageYOffset = window.pageYOffset;
       const firstLayerId = this.props.children.find(view => {
         return view.props.id === this.props.activeView || view.props.id === nextProps.activeView;
       }).props.id;
       const isBack = firstLayerId === nextProps.activeView;
 
       Root.blurActiveElement();
-      scrolls = scrolls || Object.assign({}, this.state.scrolls, {
-        [this.props.activeView]: pageYOffset
-      });
+
+      const nextView = nextProps.activeView;
+      const prevView = this.props.activeView;
 
       this.setState({
+        scrolls: Object.assign({}, this.state.scrolls, {
+          [this.props.activeView]: pageYOffset
+        }),
+        transition: true,
         activeView: null,
-        nextView: nextProps.activeView,
-        prevView: this.props.activeView,
-        visibleViews: [nextProps.activeView, this.props.activeView],
-        scrolls,
+        nextView,
+        prevView,
+        visibleViews: [nextView, prevView],
         isBack
-      }, () => {
-        window.addEventListener('touchmove', this.preventTouch);
-
-        if (isBack) {
-          this.prevViewEl.querySelector('.View__panels').scrollTop = scrolls[this.state.prevView] || 0;
-          window.scrollTo(0, scrolls[this.state.nextView]);
-        }
       });
     }
   }
@@ -76,16 +65,14 @@ export default class Root extends React.Component {
   preventTouch = (e) => e.preventDefault();
 
   componentDidUpdate (prevProps, prevState) {
-    // Transition started
-    if (this.state.nextView !== prevState.nextView && this.state.nextView !== null) {
+    if (!prevState.transition && this.state.transition) {
+      this.prevViewEl.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.prevView];
+
+      if (this.state.isBack) {
+        this.nextViewEl.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.nextView];
+      }
       this.waitAnimationFinish(this.state.isBack ? this.prevViewEl : this.nextViewEl, this.onAnimationEnd);
     }
-  }
-
-  findView (id) {
-    return React.Children.toArray(this.props.children).find(view => {
-      return view.props.id === id;
-    });
   }
 
   waitAnimationFinish (elem, eventHandler) {
@@ -101,20 +88,17 @@ export default class Root extends React.Component {
 
   onAnimationEnd = (e) => {
     if (!this.state.isBack && e.target === this.nextViewEl || this.state.isBack && e.target === this.prevViewEl) {
+      const isBack = this.state.isBack;
       this.setState({
         activeView: this.state.nextView,
         prevView: null,
         nextView: null,
-        visibleViews: [this.state.nextView]
+        visibleViews: [this.state.nextView],
+        transition: false,
+        isBack: undefined
       }, () => {
-        if (this.state.isBack) {
-          window.scrollTo(0, this.state.scrolls[this.state.activeView] || 0);
-        } else {
-          window.scrollTo(0, 0);
-        }
-
+        isBack ? window.scrollTo(0, this.state.scrolls[this.state.activeView]) : window.scrollTo(0, 0);
         window.removeEventListener('touchmove', this.preventTouch);
-
         this.props.onTransition && this.props.onTransition(this.state.isBack);
       });
     }
@@ -127,14 +111,11 @@ export default class Root extends React.Component {
   }
 
   render () {
-    const transitionState = this.state.nextView !== null;
-    const hasPopout = this.props.popout;
-
-    let Views = [].concat(this.props.children).filter((View) => this.state.visibleViews.indexOf(View.props.id) >= 0);
+    let Views = React.Children.toArray(this.props.children).filter((View) => this.state.visibleViews.indexOf(View.props.id) >= 0);
 
     return (
       <div className={ classnames(baseClassName, {
-        'Root--transition': transitionState
+        'Root--transition': this.state.transition
       }) }>
         { Views.map(View => (
           <div key={View.props.id} className={classnames('Root__view', {
@@ -151,7 +132,7 @@ export default class Root extends React.Component {
             { View }
           </div>
         )) }
-        {hasPopout && <div className="Root__popout">{this.props.popout}</div>}
+        {this.props.popout && <div className="Root__popout">{this.props.popout}</div>}
       </div>
     );
   }

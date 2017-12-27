@@ -5,34 +5,22 @@
   position: relative;
   }
 
-.Root__view {
-  height: 100%;
-  position: relative;
+.Root--transition {
   }
 
-  .Root__view--show-forward .View__header,
-  .Root__view--show-forward .View__header-in {
-    position: absolute;
+  .Root__view {
+    width: 100%;
+    height: 100%;
+    position: relative;
     }
 
-  .Root--transition .Root__view--show-forward {
+  .Root--transition .Root__view:not(.Root__view--hide-forward) {
     position: fixed;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
     }
 
-  .Root--transition .Root__view--hide-back {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    }
-
-  .Root--transition .Root__view--hide-back .View__panels {
+  .Root--transition .Root__view:not(.Root__view--hide-forward) .View__panel {
     overflow: hidden;
     }
 
