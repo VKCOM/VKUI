@@ -1,6 +1,7 @@
 @import '../../styles/constants.css';
 
 .Root {
+  width: 100%;
   height: 100%;
   position: relative;
   }

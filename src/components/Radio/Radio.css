@@ -33,6 +33,7 @@
  */
 .Radio--ios {
   padding: 11px 15px 12px;
+  overflow: hidden;
   }
 .Radio--ios::before {
   position: absolute;

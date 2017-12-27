@@ -37,6 +37,7 @@
     white-space: nowrap;
     line-height: 22px;
     max-width: 100%;
+    overflow: hidden;
     }
   .FormLayout--web .FormLayout__row {
     display: block;
@@ -50,7 +51,7 @@
 
     .FormLayout__separator {
       position: relative;
-      width: 0px;
+      width: 0;
       }
     .FormLayout--web.FormLayout--ios .FormLayout__separator {
       display: none;

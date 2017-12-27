@@ -1,6 +1,11 @@
 .ScrollView {
   position: relative;
   width: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
+  height: 100%;
   }
+
+  .ScrollView__in {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    }
