@@ -57,8 +57,8 @@ export default class NativePopouts extends React.Component {
   vkuiListener = (e) => {
     if (e.type === 'VKWebAppEvent') {
       if (this.actionsStore.hasOwnProperty(e.detail.action)) {
-        this.props.popout.onClose && this.props.popout.onClose();
         this.actionsStore[e.detail.action](e.detail);
+        this.props.popout.onClose && this.props.popout.onClose();
       }
     }
   };

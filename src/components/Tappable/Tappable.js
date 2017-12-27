@@ -54,11 +54,13 @@ export default class Tappable extends Component {
       PropTypes.string,
       PropTypes.element
     ]),
+    propagation: PropTypes.bool,
     role: PropTypes.string
   };
   static defaultProps = {
     component: 'div',
-    role: 'button'
+    role: 'button',
+    propagation: true
   };
 
   isSlide = false;
@@ -170,6 +172,10 @@ export default class Tappable extends Component {
     }, 225);
   }
 
+  onClick = (e) => {
+    if (this.props.propagation === false) e.stopPropagation();
+  };
+
   /**
    * Вызывает колбек, переданный родителем
    *
@@ -269,11 +275,12 @@ export default class Tappable extends Component {
       'onClick',
       'children',
       'className',
+      'propagation',
       'component'
     ]);
 
     return (
-      <Component className={classes} {...props} {...nativeProps}>
+      <Component className={classes} {...props} {...nativeProps} onClick={this.onClick}>
         {osname === ANDROID && (
           <span className="Tappable__waves" ref={this.getContainer}>
             {Object.keys(clicks).map(k => (
