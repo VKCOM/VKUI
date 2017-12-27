@@ -62,8 +62,6 @@ export default class Root extends React.Component {
     }
   }
 
-  preventTouch = (e) => e.preventDefault();
-
   componentDidUpdate (prevProps, prevState) {
     if (!prevState.transition && this.state.transition) {
       this.prevViewEl.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.prevView];
@@ -98,7 +96,6 @@ export default class Root extends React.Component {
         isBack: undefined
       }, () => {
         isBack ? window.scrollTo(0, this.state.scrolls[this.state.activeView]) : window.scrollTo(0, 0);
-        window.removeEventListener('touchmove', this.preventTouch);
         this.props.onTransition && this.props.onTransition(this.state.isBack);
       });
     }
