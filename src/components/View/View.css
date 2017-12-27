@@ -1,8 +1,9 @@
 @import '../../styles/constants.css';
+@import './iOS/Panel.css';
+@import './iOS/Header.css';
+@import './Android/Panel.css';
+@import './Android/Header.css';
 
-/**
- * Container
- */
 .View {
   position: relative;
   height: 100%;
@@ -13,13 +14,7 @@
 .View--animated,
 .View--swiping-back {
   overflow: hidden;
-  }
-
-  .View--animated .View__panel,
-  .View--animated .View__header,
-  .View--swiping-back .View__panel,
-  .View--swiping-back .View__header {
-    pointer-events: none;
+  height: 100vh;
   }
 
   /**
@@ -46,7 +41,6 @@
         bottom: 0;
         left: 0;
         z-index: 1;
-        visibility: hidden;
         display: flex;
         align-items: center;
         }
@@ -84,31 +78,35 @@
           }
 
   /**
-   * Panels list
+   * Panel
    */
+  .View--animated .View__panel,
+  .View--animated .View__header,
+  .View--swiping-back .View__panel,
+  .View--swiping-back .View__header {
+    pointer-events: none;
+    }
+
   .View__panels {
     height: 100%;
     width: 100%;
     }
 
-    /**
-     * Panel
-     */
-    .View__panel {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      box-sizing: border-box;
-      z-index: 1;
-      }
+  .View__panel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 1;
+    }
 
-    .View--animated .View__panel,
-    .View--swiping-back .View__panel {
-      position: fixed;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-      }
+  .View--animated .View__panel,
+  .View--swiping-back .View__panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    }
 
   /**
    * Popout
@@ -130,612 +128,9 @@
   font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
   }
 
-  .View--ios.View--animated,
-  .View--ios.View--swiping-back {
-    height: 100vh;
-  }
-
-  /**
-   * Header
-   */
-  .View--ios .View__header {
-    position: fixed;
-    width: 100%;
-    height: 44px;
-    padding-top: 20px;
-    padding-top: constant(safe-area-inset-top);
-    padding-top: env(safe-area-inset-top);
-    /*insets*/
-    }
-
-    .View--ios .View__header-scrolltop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 20px;
-      height: constant(safe-area-inset-top);
-      height: env(safe-area-inset-top);
-    }
-
-    .View--ios .View__header-in {
-      height: 44px;
-      padding-top: 20px;
-      padding-top: constant(safe-area-inset-top);
-      padding-top: env(safe-area-inset-top);
-      /*insets*/
-      }
-
-      .View--ios .View__header-item {
-        top: 20px;
-        top: constant(safe-area-inset-top);
-        top: env(safe-area-inset-top);
-        /*insets*/
-        justify-content: center;
-        padding: 0 6px;
-        }
-
-        .View--ios .View__header-title {
-          flex-basis: 56%;
-          }
-
-        .View--ios .View__header-left,
-        .View--ios .View__header-right {
-          width: 22%;
-          padding: 0 2px;
-          }
-
-        .View--ios .View__header-left-in {
-          line-height: 44px;
-          }
-
-        .View--ios .View__header-icon + .View__header-left-in {
-          padding-left: 4px;
-          }
-
-      /**
-       * Header swipe back
-       */
-      .View--ios .View__header-item--swipe-back-next {
-        visibility: visible;
-        }
-
-      .View__header-item--swipe-back-failed,
-      .View__header-item--swipe-back-failed .View__header-title,
-      .View__header-item--swipe-back-failed .View__header-left-in,
-      .View__header-item--swipe-back-failed .View__header-icon,
-      .View__header-item--swipe-back-success,
-      .View__header-item--swipe-back-success .View__header-title,
-      .View__header-item--swipe-back-success .View__header-left-in,
-      .View__header-item--swipe-back-success .View__header-icon {
-        transition:
-          opacity .3s var(--ios-easing),
-          transform .3s var(--ios-easing);
-        }
-
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed {
-        opacity: 0;
-        }
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed .View__header-title {
-        opacity: 0;
-        transform: translate3d(-60%, 0, 0);
-        }
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed .View__header-left-in {
-        opacity: 0;
-        transform: translate3d(-60%, 0, 0);
-        }
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed .View__header-icon,
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-failed .View__header-right {
-        opacity: 0;
-        }
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-success {
-        opacity: 1;
-        }
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-success .View__header-title {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-        }
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-success .View__header-left-in {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-        }
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-success .View__header-icon,
-      .View--ios .View__header-item--swipe-back-next.View__header-item--swipe-back-success .View__header-right {
-        opacity: 1;
-        }
-      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-failed {
-        opacity: 1;
-        }
-      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-failed .View__header-title {
-        transform: translate3d(0, 0, 0);
-        }
-      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-failed .View__header-left-in {
-        transform: translate3d(0, 0, 0);
-        }
-      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-success {
-        opacity: 0;
-        }
-      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-success .View__header-title {
-        transform: translate3d(60%, 0, 0);
-        }
-      .View--ios .View__header-item--swipe-back-prev.View__header-item--swipe-back-success .View__header-left-in {
-        transform: translate3d(60%, 0, 0);
-        }
-
-      /**
-       * Header transition
-       */
-      .View--ios .View__header-item--prev,
-      .View--ios .View__header-item--next {
-        position: absolute;
-        left: 0;
-        overflow: hidden;
-        visibility: visible;
-        transition: visibility .6s var(--ios-easing);
-        }
-
-        .View--ios .View__header-title {
-          font: 500 17px/44px var(--ios-font);
-          text-align: center;
-          }
-
-        .View--ios .View__header-title,
-        .View--ios .View__header-title,
-        .View--ios .View__header-icon,
-        .View--ios .View__header-icon,
-        .View--ios .View__header-left-in,
-        .View--ios .View__header-left-in,
-        .View--ios .View__header-right,
-        .View--ios .View__header-right {
-          opacity: 0;
-          }
-        .View--ios .View__header-item--prev .View__header-title,
-        .View--ios .View__header-item--next .View__header-title,
-        .View--ios .View__header-item--prev .View__header-icon,
-        .View--ios .View__header-item--next .View__header-icon,
-        .View--ios .View__header-item--prev .View__header-left-in,
-        .View--ios .View__header-item--next .View__header-left-in,
-        .View--ios .View__header-item--prev .View__header-right,
-        .View--ios .View__header-item--next .View__header-right {
-          transition:
-            transform .6s var(--ios-easing),
-            visibility .6s var(--ios-easing),
-            opacity .6s var(--ios-easing);
-          }
-        .View--ios .View__header-item--prev .View__header-title,
-        .View--ios .View__header-item--prev .View__header-icon,
-        .View--ios .View__header-item--prev .View__header-left-in,
-        .View--ios .View__header-item--prev .View__header-right {
-          opacity: 0;
-          }
-        .View--ios .View__header-item--next .View__header-title,
-        .View--ios .View__header-item--next .View__header-icon,
-        .View--ios .View__header-item--next .View__header-left-in,
-        .View--ios .View__header-item--next .View__header-right {
-          opacity: 1;
-          }
-
-        .View--ios .View__header-item .View__header-left-in {
-          transform: translate3d(-60%, 0, 0);
-          }
-        .View--ios .View__header-item--next .View__header-left-in {
-          transform: translate3d(0, 0, 0);
-          }
-        .View--ios .View__header-item--next ~ .View__header-item .View__header-left-in {
-          transform: translate3d(60%, 0, 0);
-          }
-
-        .View--ios .View__header-item .View__header-title {
-          transform: translate3d(-60%, 0, 0);
-          }
-        .View--ios .View__header-item--next .View__header-title {
-          transform: translate3d(0, 0, 0);
-          }
-        .View--ios .View__header-item--next ~ .View__header-item .View__header-title {
-          transform: translate3d(100%, 0, 0);
-          }
-
-      /**
-       * Active header
-       */
-      .View--ios .View__header-item--active {
-        visibility: visible;
-        }
-      .View--ios .View__header-item--active ~ .View__header-item .View__header-left-in {
-        transform: translate3d(50%, 0, 0);
-        }
-      .View--ios .View__header-item--active ~ .View__header-item .View__header-title {
-        transform: translate3d(100%, 0, 0);
-        }
-        .View--ios .View__header-item--active .View__header-icon,
-        .View--ios .View__header-item--active .View__header-right {
-          opacity: 1;
-          visibility: visible;
-          }
-        .View--ios .View__header-item--active .View__header-left-in,
-        .View--ios .View__header-item--active .View__header-title {
-          opacity: 1;
-          visibility: visible;
-          transform: translate3d(0, 0, 0);
-          }
-
-  /**
-   * Panels
-   */
-  .View--ios .View__panels {}
-
-  .View--ios.View--header .View__panels {}
-
-    .View--ios .View__panel,
-    .View--ios .View__panel-in {
-      background: #efeff4;
-      }
-
-    .View--ios .View__panel--theme-white,
-    .View--ios .View__panel--theme-white .View__panel-in {
-      background: #fff;
-      }
-
-    .View--ios.View--header .View__panel {
-      padding-top: 64px;
-      padding-top: calc(44px + constant(safe-area-inset-top));
-      padding-top: calc(44px + env(safe-area-inset-top));
-      /*insets*/
-      }
-
-      .View--ios .View__panel-in {
-        position: relative;
-        min-height: 100%;
-        box-sizing: border-box;
-        padding-bottom: constant(safe-area-inset-bottom);
-        padding-bottom: env(safe-area-inset-bottom);
-        /*insets*/
-        }
-    /**
-     * Panel swipe back
-     */
-
-    .View--ios .View__panel--swipe-back-prev {
-      box-shadow: -2px 0 12px rgba(0, 0, 0, .3);
-      }
-
-    .View--ios .View__panel--swipe-back-next {
-      visibility: visible;
-      }
-
-    .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-success {
-      transition: transform .3s var(--ios-easing);
-      transform: translate3d(100%, 0, 0);
-      }
-
-    .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success {
-      transition: transform .3s var(--ios-easing);
-      transform: translate3d(0, 0, 0);
-      }
-
-    .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-failed {
-      transition: transform .3s var(--ios-easing);
-      transform: translate3d(0, 0, 0);
-      }
-
-    .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed {
-      transition: transform .3s var(--ios-easing);
-      transform: translate3d(-50%, 0, 0);
-      }
-
-    /**
-     * Panel transition
-     */
-    .View--ios .View__panel--prev,
-    .View--ios .View__panel--next {
-      display: block;
-      }
-    .View--ios .View__panel {
-      }
-    .View--ios .View__panel--prev {
-      animation: animation-ios-prev-forward .6s var(--ios-easing);
-    }
-
-    .View--ios .View__panel--next {
-      animation: animation-ios-next-back .6s var(--ios-easing);
-    }
-
-    .View--ios .View__panel--prev ~ .View__panel--next {
-      animation: animation-ios-next-forward .6s var(--ios-easing);
-      }
-
-    .View--ios .View__panel--next ~ .View__panel--prev {
-      animation: animation-ios-prev-back .6s var(--ios-easing);
-      }
-
-    .View--ios .View__panel--prev > .View__panel-in::before,
-    .View--ios .View__panel--next > .View__panel-in::before {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      z-index: 10;
-      background: #000;
-      content: '';
-      pointer-events: none;
-      }
-    .View--ios .View__panel--prev > .View__panel-in::before,
-    .View--ios .FixedLayout--prev > .FixedLayout__transition-shadow {
-      animation: animation-fade-in .6s var(--ios-easing);
-      }
-    .View--ios .View__panel--next > .View__panel-in::before,
-    .View--ios .FixedLayout--next > .FixedLayout__transition-shadow {
-      animation: animation-fade-out .6s var(--ios-easing);
-      }
-    .View--ios .View__panel--prev ~ .View__panel--next > .View__panel-in::before,
-    .View--ios .View__panel--next ~ .View__panel--prev > .View__panel-in::before,
-    .View--ios .FixedLayout--prev ~ .FixedLayout--next > .FixedLayout__transition-shadow,
-    .View--ios .FixedLayout--next ~ .FixedLayout--prev > .FixedLayout__transition-shadow {
-      content: none;
-      display: none;
-      }
-
-    /**
-     * Active panel
-     */
-    .View--ios .View__panel--active,
-    .View--ios .FixedLayout--active {
-      visibility: visible;
-      }
-    .View--ios .View__panel--active::before {
-      content: none;
-      }
-    .View--ios .View__panel--active ~ .View__panel,
-    .View--ios .FixedLayout--active ~ .FixedLayout {
-
-      }
-
-@keyframes animation-ios-next-forward {
-  from {
-    visibility: hidden;
-    transform: translate3d(100%,0,0);
-  }
-  to {
-    visibility: visible;
-    transform: translate3d(0,0,0);
-  }
-}
-
-@keyframes animation-ios-next-back {
-  from {
-    visibility: hidden;
-    transform: translate3d(-50%,0,0);
-  }
-  to {
-    visibility: visible;
-    transform: translate3d(0,0,0);
-  }
-}
-
-@keyframes animation-ios-prev-forward {
-  from {
-    visibility: visible;
-    transform: translate3d(0,0,0);
-  }
-  to {
-    visibility: hidden;
-    transform: translate3d(-50%,0,0);
-  }
-}
-
-@keyframes animation-ios-prev-back {
-  from {
-    visibility: visible;
-    transform: translate3d(0,0,0);
-  }
-  to {
-    visibility: hidden;
-    transform: translate3d(100%,0,0);
-  }
-}
-
 /**
  * Android
  */
 .View--android {
   font-family: Roboto, Droid, 'Open Sans', sans-serif;
-  }
-
-  /**
-   * Pull to refresh
-   */
-  .View--android .View__top {
-    position: absolute;
-    top: -24px;
-    left: 50%;
-    height: 40px;
-    width: 40px;
-    margin: -20px 0 0 -20px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
-    }
-
-  /**
-   * Header
-   */
-  .View--android .View__header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 56px;
-    }
-
-    .View--android .View__header-in {
-      height: 56px;
-      box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
-      }
-
-      .View--android .View__header-item {
-        top: 0;
-        height: 56px;
-        padding: 0 10px 0 0;
-        }
-
-        .View--android .View__header-right {
-          padding: 1px 6px 0;
-          font-size: 14px;
-          line-height: 16px;
-          font-weight: 500;
-          text-transform: uppercase;
-          color: #fff;
-          color: rgba(255, 255, 255, .7);
-          }
-        .View--android .View__header-left {
-          color: #fff;
-          color: rgba(255, 255, 255, .7);
-          padding: 4px;
-          }
-        .View--android .View__header-left:active,
-        .View--android .View__header-right:active {
-          color: #fff;
-          color: rgba(255, 255, 255, .9);
-          }
-
-        .View--android .View__header-left {
-          flex: 0 0 auto;
-          max-width: 22%;
-          }
-
-        .View--android .View__header-left:empty {
-          display: none;
-          }
-
-        .View--android .View__header-left:empty ~ .View__header-title {
-          padding-left: 16px;
-          }
-
-      /**
-       * Header transition
-       */
-      .View--android .View__header-item--prev,
-      .View--android .View__header-item--next {
-        visibility: visible;
-        transition:
-          transform .3s var(--android-easing) .2s,
-          opacity .3s var(--android-easing) .2s,
-          visibility .3s var(--android-easing) .2s;
-        }
-      .View--android .View__header-item {
-        background: var(--vk-color);
-        transform: translate3d(0, 0, 0);
-        opacity: 0;
-        }
-      .View--android .View__header-item--next {
-        transform: translate3d(0, 0, 0);
-        opacity: 1;
-        }
-      .View--android .View__header-item--next ~ .View__header-item {
-        transform: translate3d(0, 80px, 0);
-        opacity: 0;
-        visibility: hidden;
-        }
-
-      /**
-       * Active header
-       */
-      .View--android .View__header-item--active {
-        visibility: visible;
-        transform: translate3d(0, 0, 0);
-        opacity: 1;
-        }
-      .View--android .View__header-item--active ~ .View__header-item {
-        transform: translate3d(0, 80px, 0);
-        }
-
-        .View--android .View__header-title {
-          font: 500 20px/56px var(--android-font);
-          }
-
-  /**
-   * Panels
-   */
-  .View--android .View__panels {}
-  .View--android.View--header .View__panels {}
-
-    .View--android .View__panel {
-      background: #fff;
-      }
-    .View--android.View--header .View__panel {
-      padding-top: 56px;
-      }
-
-      .View--android .View__panel-in {
-        background: #fff;
-        }
-
-    /**
-     * Panel transition
-     */
-    .View--android .View__panel--prev,
-    .View--android .View__panel--next,
-    .View--android .FixedLayout--prev,
-    .View--android .FixedLayout--next {
-      visibility: visible;
-      transition:
-        transform .3s var(--android-easing) .2s,
-        opacity .3s var(--android-easing) .2s,
-        visibility .3s var(--android-easing) .2s;
-      }
-    .View--android .View__panel,
-    .View--android .FixedLayout {
-      transform: translate3d(0, 0, 0);
-      opacity: 0;
-      }
-    .View--android .View__panel--next,
-    .View--android .FixedLayout--next {
-      transform: translate3d(0, 0, 0);
-      opacity: 1;
-      }
-    .View--android .View__panel--next ~ .View__panel,
-    .View--android .FixedLayout--next ~ .FixedLayout {
-      transform: translate3d(0, 80px, 0);
-      opacity: 0;
-      visibility: hidden;
-      }
-
-    /**
-     * Active panel
-     */
-    .View--android .View__panel--active,
-    .View--android .FixedLayout--active {
-      visibility: visible;
-      transform: translate3d(0, 0, 0);
-      opacity: 1;
-      }
-    .View--android .View__panel--active::before {
-      content: none;
-      }
-    .View--android .View__panel--active ~ .View__panel,
-    .View--android .FixedLayout--active ~ .FixedLayout {
-      transform: translate3d(0, 80px, 0);
-      }
-
-
-/**
- * Animations
- */
-@keyframes animation-fade-in {
-  from {
-    opacity: 0;
-    }
-  to {
-    opacity: .3;
-    }
-  }
-
-@keyframes animation-fade-out {
-  from {
-    opacity: .3;
-    }
-  to {
-    opacity: 0;
-    }
   }
