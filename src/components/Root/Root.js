@@ -88,8 +88,8 @@ export default class Root extends React.Component {
     }
   }
 
-  onAnimationEnd = (e) => {
-    if (!this.state.isBack && e.target === this.nextViewEl || this.state.isBack && e.target === this.prevViewEl) {
+  onAnimationEnd = (e = { manual: true }) => {
+    if (['root-android-animation-hide-back', 'root-android-animation-show-forward', 'root-ios-animation-hide-back', 'root-ios-animation-show-forward'].indexOf(e.animationName) > -1 || e.manual) {
       const isBack = this.state.isBack;
       this.setState({
         activeView: this.state.nextView,

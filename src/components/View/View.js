@@ -228,20 +228,24 @@ export default class View extends Component {
   swipingBackTransitionEndHandler = (e) => {
     // indexOf because of vendor prefixes in old browsers
     if (e.propertyName.indexOf('transform') >= 0 && e.target.classList.contains('View__panel--swipe-back-next')) {
-      if (this.state.swipingBackFinish === true) {
-        this.props.onSwipeBack && this.props.onSwipeBack();
-      } else {
-        this.setState({
-          swipeBackPrevPanel: null,
-          swipeBackNextPanel: null,
-          swipingBack: false,
-          swipingBackFinish: null,
-          swipebackStartX: 0,
-          swipeBackShift: 0
-        });
-      }
+      this.state.swipingBackFinish ? this.onSwipeBackSuccess() : this.onSwipeBackCancel();
     }
   };
+
+  onSwipeBackSuccess () {
+    this.props.onSwipeBack && this.props.onSwipeBack();
+  }
+
+  onSwipeBackCancel () {
+    this.setState({
+      swipeBackPrevPanel: null,
+      swipeBackNextPanel: null,
+      swipingBack: false,
+      swipingBackFinish: null,
+      swipebackStartX: 0,
+      swipeBackShift: 0
+    });
+  }
 
   onScrollTop = () => {
     const { activePanel } = this.state;
@@ -308,7 +312,13 @@ export default class View extends Component {
   onEnd = () => {
     if (this.state.swipingBack) {
       const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
-      this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > window.innerWidth / 2 });
+      if (this.state.swipeBackShift === 0) {
+        this.onSwipeBackCancel();
+      } else if (this.state.swipeBackShift >= window.innerWidth) {
+        this.onSwipeBackSuccess();
+      } else {
+        this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > window.innerWidth / 2 });
+      }
     }
   };
 
