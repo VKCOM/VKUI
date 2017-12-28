@@ -32,21 +32,24 @@
           }
 
     .ListItem__main {
-      flex: 1 1 auto;
+      flex: 1 0 auto;
       overflow: hidden;
       text-overflow: ellipsis;
       }
 
     .ListItem__indicator,
     .ListItem__aside {
-      flex: 0 0 auto;
       overflow: hidden;
       max-width: 75%;
       color: #8e8e93;
       text-align: right;
       text-overflow: ellipsis;
+    }
+    .ListItem__indicator {
+      flex: 0 1 auto;
       }
     .ListItem__aside {
+      flex: 0 0 auto;
       padding: 0;
       overflow: visible;
       }
