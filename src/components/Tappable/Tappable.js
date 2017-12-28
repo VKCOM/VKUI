@@ -173,7 +173,10 @@ export default class Tappable extends Component {
   }
 
   onClick = (e) => {
-    if (this.props.propagation === false) e.stopPropagation();
+    if (this.props.propagation === false) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
   };
 
   /**

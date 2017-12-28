@@ -48,7 +48,7 @@
   "scripts": {
     "styleguide": "NODE_ENV=production styleguidist server",
     "styleguide:build": "NODE_ENV=production styleguidist build",
-    "build": "NODE_ENV=production webpack --bail -p --json > stats.json",
+    "build": "NODE_ENV=production webpack --bail --json > stats.json",
     "dev": "webpack --hot --watch",
     "clear": "rm -rf dist/*",
     "test": "eslint . && ./node_modules/.bin/stylelint ./src/**/*.css"
