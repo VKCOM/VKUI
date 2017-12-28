@@ -73,6 +73,10 @@ export default class View extends Component {
       this.setPanelBg(nextProps.activePanel);
     }
 
+    if (nextProps.popout && !this.props.popout) {
+      View.blurActiveElement();
+    }
+
     // Нужен переход
     if (this.props.activePanel !== nextProps.activePanel && !this.state.swipingBack && !this.state.browserSwipe) {
       const firstLayer = this.panels.find(panel => panel.id === this.props.activePanel || panel.id === nextProps.activePanel);

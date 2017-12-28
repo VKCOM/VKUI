@@ -36,6 +36,10 @@ export default class Root extends React.Component {
   };
 
   componentWillReceiveProps (nextProps) {
+    if (nextProps.popout && !this.props.popout) {
+      Root.blurActiveElement();
+    }
+
     if (nextProps.activeView !== this.props.activeView) {
       let pageYOffset = window.pageYOffset;
       const firstLayerId = this.props.children.find(view => {
