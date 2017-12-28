@@ -1,12 +1,12 @@
 @import '../../../styles/constants.css';
 
 .View--ios .View__panel,
-.View--ios .View__panel-in {
+.View--ios .ScrollView__in {
   background: #efeff4;
   }
 
 .View--ios .View__panel--theme-white,
-.View--ios .View__panel--theme-white .View__panel-in {
+.View--ios .View__panel--theme-white .ScrollView__in {
   background: #fff;
   }
 

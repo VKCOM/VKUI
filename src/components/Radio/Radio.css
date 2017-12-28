@@ -25,8 +25,13 @@
     }
 
   .Radio__icon {
+    display: block;
     flex-shrink: 0;
-  }
+    }
+
+  .Radio__container {
+    box-sizing: border-box;
+    }
 
 /**
  * iOS radio
@@ -55,8 +60,8 @@
 
   .Radio--ios .Radio__container {
     padding-right: .5em;
-    max-width: 100%;
-    flex-grow: 1;
+    width: calc(100% - 13px);
+    max-width: calc(100% - 13px);
     }
 
   .Radio--ios .Radio__icon {
@@ -81,12 +86,12 @@
   .Radio--android .Radio__container {
     order: 1;
     padding: 0 0 0 18px;
+    max-width: calc(100% - 16px);
     }
 
   .Radio--android .Radio__icon {
     order: 0;
     position: relative;
-    display: block;
     width: 16px;
     height: 16px;
     border-radius: 10px;
