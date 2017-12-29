@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
-const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 const assets = require('postcss-assets');
 const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
@@ -89,13 +88,13 @@ const config = {
       }
     ]
   },
+  devtool: 'source-map',
   plugins: [
     new ExtractTextPlugin('[name].css')
   ]
 };
 
 const devConfig = {
-  devtool: 'source-map',
   devServer: {
     outputPath: path.resolve(__dirname, 'dist'),
     contentBase: path.resolve(__dirname, 'dist'),
@@ -114,25 +113,7 @@ const prodConfig = {
       'process.env.NODE_ENV': `"production"`,
       'process.env.VKUI_VERSION': `"${pkg.version}"`
     }),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        screw_ie8: true,
-        warnings: false,
-        sequences: true,
-        booleans: true,
-        loops: true,
-        unused: true,
-        drop_console: true,
-        unsafe: true
-      },
-      mangle: {
-        screw_ie8: true,
-        keep_fnames: true
-      },
-      comments: false
-    }),
-    new CssoWebpackPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ]
 };
 

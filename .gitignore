@@ -5,6 +5,5 @@ build
 .env
 npm-debug.log
 stats.json
-dist/*.hot-update.*
+dist
 .idea
-docs/doc.json

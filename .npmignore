@@ -1,0 +1,16 @@
+node_modules
+coverage
+build
+.DS_Store
+.env
+npm-debug.log
+stats.json
+dist/*.hot-update.*
+.idea
+src
+webpack.config.js
+.eslint
+.eslintignore
+.stylelintrc
+.gitignore
+package-lock.json
