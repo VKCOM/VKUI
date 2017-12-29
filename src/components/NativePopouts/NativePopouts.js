@@ -23,10 +23,11 @@ export default class NativePopouts extends React.Component {
         style: PropTypes.oneOf(['alert', 'actionSheet']).isRequired,
         title: PropTypes.string,
         text: PropTypes.string,
+        onClose: PropTypes.func.isRequired,
         actions: PropTypes.arrayOf(PropTypes.shape({
           style: PropTypes.oneOf(['cancel', 'default', 'destructive']),
           title: PropTypes.string,
-          action: PropTypes.func.isRequired
+          action: PropTypes.func
         }))
       }),
       PropTypes.element
@@ -35,8 +36,8 @@ export default class NativePopouts extends React.Component {
       send: PropTypes.func.isRequired,
       subscribe: PropTypes.func.isRequired,
       unsubscribe: PropTypes.func.isRequired
-    }),
-    // It can be either Root or View
+    }).isRequired,
+    // Root or View
     component: PropTypes.func.isRequired
   };
 
@@ -76,12 +77,13 @@ export default class NativePopouts extends React.Component {
   }
 
   renderUIAlert (popout) {
-    const { title, text } = popout;
+    const { title, text, onClose } = popout;
     this.setState({
       popout: (<Alert
         actions={this.actions.map(item =>
           removeObjectKeys(item, ['params'])
         )}
+        onClose={onClose}
         actionsLayout={this.actions.length > 2 ? 'vertical' : 'horizontal'}
       >
         {title && <h2>{title}</h2>}
@@ -119,15 +121,22 @@ export default class NativePopouts extends React.Component {
     });
   }
 
+  closeUIPopout () {
+    this.setState({ popout: null });
+    this.actions = [];
+    this.actionsStore = {};
+  }
+
   componentWillReceiveProps (nextProps) {
     if (!nextProps.popout && this.props.popout) {
-      this.setState({ popout: null });
-      this.actions = [];
-      this.actionsStore = {};
+      this.closeUIPopout();
     }
     if (nextProps.popout && nextProps.popout !== this.props.popout) {
+      this.context.isWebView && this.closeUIPopout();
       if (nextProps.popout.style) {
         this.actions = nextProps.popout.actions.map((item) => Object.assign({}, item, {
+          autoclose: item.hasOwnProperty('autoclose') ? item.autoclose : true,
+          action: item.action || nextProps.popout.onClose,
           handler: Object.assign({}, item.params, { action: actionId++ })
         }));
 

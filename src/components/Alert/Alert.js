@@ -17,13 +17,21 @@ export default class Alert extends Component {
       title: PropTypes.string.isRequired,
       action: PropTypes.func.isRequired,
       modifier: PropTypes.oneOf(['primary'])
-    }))
+    })),
+    onClose: PropTypes.func.isRequired
   };
+
   static defaultProps = {
     style: {},
     children: '',
     actionsLayout: 'horizontal'
   };
+
+  onItemClick = (item) => () => {
+    item.autoclose && this.props.onClose();
+    item.action();
+  };
+
   render () {
     const { style, actions, actionsLayout } = this.props;
     const modifiers = {
@@ -44,7 +52,7 @@ export default class Alert extends Component {
                 className={classnames('Alert__btn', {
                   [`Alert__btn--${button.style}`]: true
                 })}
-                onClick={button.action}
+                onClick={this.onItemClick(button)}
                 key={`alert-action-${i}`}
               >
                 {button.title}

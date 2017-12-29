@@ -32,11 +32,15 @@ export default class ActionSheet extends React.Component {
   };
 
   onItemClick = (handler, autoclose) => () => {
-    this.setState({ closing: true });
-    this.waitTransitionFinish(() => {
-      autoclose && this.props.onClose();
+    if (autoclose) {
+      this.setState({ closing: true });
+      this.waitTransitionFinish(() => {
+        autoclose && this.props.onClose();
+        handler();
+      });
+    } else {
       handler();
-    });
+    }
   };
 
   stopPropagation = (e) => e.stopPropagation();
@@ -97,7 +101,7 @@ export default class ActionSheet extends React.Component {
           { osname === IOS &&
             <div className="ActionSheet__section">
               { React.cloneElement(CancelItem, {
-                onClick: this.onItemClick(CancelItem.props.onClick)
+                onClick: this.onItemClick(CancelItem.props.onClick, true)
               })}
             </div>
           }

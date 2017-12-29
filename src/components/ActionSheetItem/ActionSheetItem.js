@@ -17,8 +17,7 @@ export default class ActionSheetItem extends React.Component {
   };
 
   static defaultProps = {
-    theme: 'default',
-    autoclose: true
+    theme: 'default'
   };
 
   render () {
