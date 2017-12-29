@@ -6,7 +6,7 @@ import ActionSheet from '../ActionSheet/ActionSheet';
 import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
 import {brToNl} from '../../lib/string';
 
-let actionId = 0;
+let actionId = 1;
 
 export default class NativePopouts extends React.Component {
 
@@ -137,7 +137,7 @@ export default class NativePopouts extends React.Component {
         this.actions = nextProps.popout.actions.map((item) => Object.assign({}, item, {
           autoclose: item.hasOwnProperty('autoclose') ? item.autoclose : true,
           action: item.action || nextProps.popout.onClose,
-          handler: Object.assign({}, item.params, { action: actionId++ })
+          handler: Object.assign({}, item.params, { action: `action-${actionId++}` })
         }));
 
         this.actionsStore = this.actions.reduce((res, item) => { res[item.handler.action] = item.action; return res; }, {});
