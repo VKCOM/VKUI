@@ -9,7 +9,7 @@ dist/*.hot-update.*
 .idea
 src
 webpack.config.js
-.eslint
+.eslintrc
 .eslintignore
 .stylelintrc
 .gitignore
