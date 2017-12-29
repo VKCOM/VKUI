@@ -22,6 +22,15 @@ export default class ScrollView extends Component {
     theme: PropTypes.oneOf(['white', 'gray'])
   };
 
+  static contextTypes = {
+    insets: PropTypes.shape({
+      top: PropTypes.number,
+      right: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number
+    })
+  };
+
   static defaultProps = {
     children: '',
     theme: 'gray'
@@ -40,7 +49,7 @@ export default class ScrollView extends Component {
         {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout', 'theme'])}
         ref={this.getRef}
       >
-        <div className="ScrollView__in">
+        <div className="ScrollView__in" style={{ paddingBottom: this.context.insets && this.context.insets.bottom }}>
           {this.props.children}
         </div>
       </div>

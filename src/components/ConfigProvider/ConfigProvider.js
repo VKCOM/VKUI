@@ -25,10 +25,16 @@ export default class ConfigProvider extends React.Component {
     children: PropTypes.node
   };
 
+  static defaultProps = {
+    insets: {},
+    isWebView
+  };
+
   getChildContext () {
+    let insets = Object.assign({}, this.props.insets, { bottom: this.props.insets.bottom > 100 ? 0 : this.props.insets.bottom });
     return {
-      insets: this.props.insets || null,
-      isWebView: typeof this.props.isWebView === 'boolean' ? this.props.isWebView : isWebView
+      insets,
+      isWebView: this.props.isWebView
     };
   }
 

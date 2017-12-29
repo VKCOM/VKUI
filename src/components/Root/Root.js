@@ -128,7 +128,6 @@ export default class Root extends React.Component {
           })} ref={ el => {
             if (View.props.id === this.state.prevView) this.prevViewEl = el;
             if (View.props.id === this.state.nextView) this.nextViewEl = el;
-            if (View.props.id === this.state.activeView) this.activeViewEl = el;
           } }>
             { View }
           </div>
