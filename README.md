@@ -1,20 +1,12 @@
 # VKUI
 
-## 1. Подключение JS.
-
-
-`import @vkontankte/vkui`
-
-## 2. Подключение стилей
-
-`import @vkontankte/vkui/dist/vkui.css`
-
-## 3. Базовый пример
+## Базовый пример
 
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as UI from 'vkui';
+import * as UI from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
 
 function App () {
   return (
