@@ -13,13 +13,18 @@ export default class ScrollView extends Component {
     this.state = {};
   }
 
+  static childContextTypes = {
+    panel: PropTypes.string
+  };
+
   static propTypes = {
     activePanel: PropTypes.string,
     prevPanel: PropTypes.string,
     nextPanel: PropTypes.string,
     children: PropTypes.node,
     className: PropTypes.string,
-    theme: PropTypes.oneOf(['white', 'gray'])
+    theme: PropTypes.oneOf(['white', 'gray']),
+    id: PropTypes.string.isRequired
   };
 
   static contextTypes = {
@@ -30,6 +35,12 @@ export default class ScrollView extends Component {
       left: PropTypes.number
     })
   };
+
+  getChildContext () {
+    return {
+      panel: this.props.id
+    };
+  }
 
   static defaultProps = {
     children: '',

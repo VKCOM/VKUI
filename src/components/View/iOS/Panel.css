@@ -10,15 +10,24 @@
   background: #fff;
   }
 
-.View--ios.View--header .View__panel {
+.View--ios.View--header .ScrollView__in {
   padding-top: 64px;
   padding-top: calc(44px + constant(safe-area-inset-top));
   padding-top: calc(44px + env(safe-area-inset-top));
   }
 
-.View--ios .View__panel-in {
-  position: relative;
-  box-sizing: border-box;
+.View--ios .ScrollView__in {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  }
+
+.View--ios.View--header .FixedLayout--top {
+  top: 64px;
+  top: calc(44px + constant(safe-area-inset-top));
+  top: calc(44px + env(safe-area-inset-top));
+  }
+
+.View--ios .ScrollView__in {
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
   }
@@ -86,18 +95,14 @@
   content: '';
   pointer-events: none;
   }
-.View--ios .View__panel--prev .ScrollView__in::before,
-.View--ios .FixedLayout--prev > .FixedLayout__transition-shadow {
+.View--ios .View__panel--prev .ScrollView__in::before {
   animation: animation-ios-fade-in .6s var(--ios-easing);
   }
-.View--ios .View__panel--next .ScrollView__in::before,
-.View--ios .FixedLayout--next > .FixedLayout__transition-shadow {
+.View--ios .View__panel--next .ScrollView__in::before {
   animation: animation-ios-fade-out .6s var(--ios-easing);
   }
 .View--ios .View__panel--prev ~ .View__panel--next .ScrollView__in::before,
-.View--ios .View__panel--next ~ .View__panel--prev .ScrollView__in::before,
-.View--ios .FixedLayout--prev ~ .FixedLayout--next > .FixedLayout__transition-shadow,
-.View--ios .FixedLayout--next ~ .FixedLayout--prev > .FixedLayout__transition-shadow {
+.View--ios .View__panel--next ~ .View__panel--prev .ScrollView__in::before {
   content: none;
   display: none;
   }
@@ -105,8 +110,7 @@
 /**
  * Active panel
  */
-.View--ios .View__panel--active .ScrollView__in::before,
-.View--ios .FixedLayout--active > .FixedLayout__transition-shadow {
+.View--ios .View__panel--active .ScrollView__in::before {
   content: none;
   display: none;
   }
