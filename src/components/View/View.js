@@ -13,6 +13,9 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 const osname = platform();
 const baseClassNames = getClassName('View');
 
+export const transitionStartEventName = 'VKUI:View:transition-start';
+export const transitionEndEventName = 'VKUI:View:transition-end';
+
 export default class View extends Component {
   constructor (props) {
     super(props);
@@ -107,8 +110,12 @@ export default class View extends Component {
         swipebackStartX: 0,
         swipeBackShift: 0,
         activePanel: nextProps.activePanel,
-        visiblePanels: [nextProps.activePanel]
-      }, () => this.props.onTransition && this.props.onTransition());
+        visiblePanels: [nextProps.activePanel],
+        scrolls: removeObjectKeys(this.state.scrolls, [this.state.swipeBackPrevPanel])
+      }, () => {
+        document.dispatchEvent(new window.CustomEvent(transitionEndEventName));
+        this.props.onTransition && this.props.onTransition();
+      });
     }
   }
 
@@ -117,6 +124,7 @@ export default class View extends Component {
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
+      document.dispatchEvent(new window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
       const nextPanelElement = View.pickPanel(this.state.nextPanel);
       const prevPanelElement = View.pickPanel(this.state.prevPanel);
 
@@ -130,6 +138,7 @@ export default class View extends Component {
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
+      document.dispatchEvent(new window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
       const nextPanelElement = View.pickPanel(this.state.swipeBackNextPanel);
       const prevPanelElement = View.pickPanel(this.state.swipeBackPrevPanel);
 
@@ -211,13 +220,16 @@ export default class View extends Component {
     if (['animation-ios-next-forward', 'animation-ios-next-back', 'animation-android-next-forward', 'animation-android-prev-back'].indexOf(e.animationName) > -1 || e.manual) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
+      const prevPanel = this.state.prevPanel;
+      document.dispatchEvent(new window.CustomEvent(transitionEndEventName));
       this.setState({
         prevPanel: null,
         nextPanel: null,
         visiblePanels: [activePanel],
         activePanel: activePanel,
         animated: false,
-        isBack: undefined
+        isBack: undefined,
+        scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls
       }, function () {
         isBack && window.scrollTo(0, this.state.scrolls[activePanel]);
         this.props.onTransition && this.props.onTransition();
@@ -244,6 +256,8 @@ export default class View extends Component {
       swipingBackFinish: null,
       swipebackStartX: 0,
       swipeBackShift: 0
+    }, () => {
+      document.dispatchEvent(new window.CustomEvent(transitionEndEventName));
     });
   }
 
@@ -503,15 +517,6 @@ export default class View extends Component {
                 {React.cloneElement(panel, { ref: this.getRef, activePanel, nextPanel })}
               </div>
             </div>
-          ))}
-          {panels.filter(panel => panel.props.fixedLayout).map((panel, i) => (
-            React.cloneElement(panel.props.fixedLayout, {
-              key: panel.key || panel.id || `panel-${i}`,
-              style: Object.assign({}, panel.props.fixedLayout.props.style, removeObjectKeys(this.calcPanelSwipeStyles(panel.id), ['boxShadow']), { zIndex: i + 1 }),
-              isActive: panel.id === activePanel,
-              isPrev: panel.id === prevPanel,
-              isNext: panel.id === nextPanel
-            })
           ))}
         </div>
         {hasPopout && <div className="View__popout">{popout}</div>}

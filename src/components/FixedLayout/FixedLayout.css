@@ -1,3 +1,13 @@
 .FixedLayout {
   position: fixed;
   }
+
+.FixedLayout--top {
+  width: 100%;
+  top: 0;
+  }
+
+.FixedLayout--bottom {
+  width: 100%;
+  bottom: 0;
+  }
