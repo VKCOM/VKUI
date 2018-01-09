@@ -50,8 +50,6 @@ export default class NativePopouts extends React.Component {
   }
 
   componentWillUnmount () {
-    this.actions = [];
-    this.actionsStore = {};
     this.props.vkuiConnect.unsubscribe(this.vkuiListener);
   }
 
@@ -123,8 +121,6 @@ export default class NativePopouts extends React.Component {
 
   closeUIPopout () {
     this.setState({ popout: null });
-    this.actions = [];
-    this.actionsStore = {};
   }
 
   componentWillReceiveProps (nextProps) {
