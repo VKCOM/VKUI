@@ -31,12 +31,12 @@ const cssTransformOptions = [
             maps: [{ colors: colorsMaps }]
           }),
           autoprefixer({ browsers: [
-              '>1%',
-              'last 4 versions',
-              'Firefox ESR',
-              'not ie < 9',
-              'android >= 4'
-            ] })
+            '>1%',
+            'last 4 versions',
+            'Firefox ESR',
+            'not ie < 9',
+            'android >= 4'
+          ] })
         ];
       }
     }
