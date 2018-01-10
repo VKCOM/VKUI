@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "0.7.3",
+  "version": "0.7.6",
   "main": "dist/vkui.js",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
@@ -43,6 +43,7 @@
     "react": "15.4.2"
   },
   "scripts": {
+    "prepare": "npm run build",
     "styleguide": "NODE_ENV=production styleguidist server",
     "styleguide:build": "NODE_ENV=production styleguidist build",
     "build": "NODE_ENV=production webpack --bail --json > stats.json",
