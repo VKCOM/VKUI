@@ -18,6 +18,9 @@ export { default as Div } from './components/Div/Div';
 export { default as Flex } from './components/Flex/Flex';
 export { default as BackButton } from './components/BackButton/BackButton';
 export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
+export { default as Tabs } from './components/Tabs/Tabs';
+export { default as TabsItem } from './components/TabsItem/TabsItem';
+export { default as FixedTabs } from './components/FixedTabs/FixedTabs';
 
 /**
  * Forms

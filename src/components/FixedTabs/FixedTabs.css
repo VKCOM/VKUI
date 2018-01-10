@@ -1,0 +1,42 @@
+.FixedTabs {
+
+  }
+
+.FixedTabs--ios {
+  padding: 6px 8px;
+  box-sizing: border-box;
+  }
+
+.FixedTabs--ios.FixedTabs--gray {
+  background-color: #e6e9ed;
+  }
+
+.FixedTabs--ios.FixedTabs--gray.FixedLayout--top {
+  border-bottom: 1px solid #d1d6dc;
+  }
+
+.FixedTabs--ios.FixedTabs--gray.FixedLayout--bottom {
+  border-top: 1px solid #d1d6dc;
+  }
+
+.FixedTabs--ios.FixedTabs--white {
+  background-color: #fff;
+  }
+
+.FixedTabs--ios.FixedTabs--white.FixedLayout--top {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+.FixedTabs--ios.FixedTabs--white.FixedLayout--bottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .FixedTabs--ios.FixedTabs--gray, .FixedTabs--ios.FixedTabs--white {
+    border-width: 0.5px;
+    }
+  }
+
+.FixedTabs--android.FixedTabs--blue {
+  background-color: map(colors, headerBlue);
+  }

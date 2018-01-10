@@ -22,6 +22,7 @@
    */
   .View__header {
     white-space: nowrap;
+    z-index: 2;
     }
 
     .View__header-in {

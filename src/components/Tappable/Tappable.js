@@ -15,7 +15,7 @@ const baseClassNames = getClassName('Tappable');
 const osname = platform();
 
 const ACTIVE_DELAY = 70;
-const ACTIVE_EFFECT_DELAY = 600;
+export const ACTIVE_EFFECT_DELAY = 600;
 
 let storage = {};
 
@@ -55,12 +55,14 @@ export default class Tappable extends Component {
       PropTypes.element
     ]),
     propagation: PropTypes.bool,
-    role: PropTypes.string
+    role: PropTypes.string,
+    activeEffectDelay: PropTypes.number
   };
   static defaultProps = {
     component: 'div',
     role: 'button',
-    propagation: true
+    propagation: true,
+    activeEffectDelay: ACTIVE_EFFECT_DELAY
   };
 
   isSlide = false;
@@ -82,7 +84,7 @@ export default class Tappable extends Component {
     storage[this.id] = {};
     this.getStorage().stop = this.stop;
     this.getStorage().activeTimeout = setTimeout(this.start, ACTIVE_DELAY);
-  }
+  };
 
   /**
    * Обрабатывает событие touchmove
@@ -94,10 +96,10 @@ export default class Tappable extends Component {
       this.isSlide = true;
       this.stop();
     }
-  }
+  };
 
   /**
-   * Обрабатывает событие touchdown
+   * Обрабатывает событие touchend
    *
    * @returns {void}
    */
@@ -117,7 +119,7 @@ export default class Tappable extends Component {
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY - now + this.state.ts);
+        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - now + this.state.ts);
         const store = this.getStorage();
 
         if (store) {
@@ -130,7 +132,7 @@ export default class Tappable extends Component {
 
       this.start();
 
-      const timeout = setTimeout(this.stop, ACTIVE_EFFECT_DELAY);
+      const timeout = setTimeout(this.stop, this.props.activeEffectDelay);
 
       if (this.getStorage()) {
         clearTimeout(this.getStorage().activeTimeout);
@@ -141,7 +143,7 @@ export default class Tappable extends Component {
     }
 
     this.isSlide = false;
-  }
+  };
 
   /**
    * Реализует эффект при тапе для Андроида
@@ -170,7 +172,7 @@ export default class Tappable extends Component {
         return { clicks };
       });
     }, 225);
-  }
+  };
 
   onClick = (e) => {
     if (this.props.propagation === false) {
@@ -188,7 +190,7 @@ export default class Tappable extends Component {
     if (this.props.onClick) {
       this.props.onClick();
     }
-  }
+  };
 
   /**
    * Устанавливает активное выделение
@@ -203,7 +205,7 @@ export default class Tappable extends Component {
       });
     }
     deactivateOtherInstances(this.id);
-  }
+  };
 
   /**
    * Снимает активное выделение
@@ -221,7 +223,7 @@ export default class Tappable extends Component {
       clearTimeout(this.getStorage().activeTimeout);
       delete storage[this.id];
     }
-  }
+  };
 
   /**
    * Возвращает хранилище для экземпляра компонента
@@ -230,7 +232,7 @@ export default class Tappable extends Component {
    */
   getStorage = () => {
     return storage[this.id];
-  }
+  };
 
   /**
    * Берет ref на DOM-ноду из экземпляра Touch
@@ -242,7 +244,6 @@ export default class Tappable extends Component {
     if (container) {
       this.container = container.container || container;
     }
-    return;
   };
 
   componentWillUnmount () {
@@ -279,7 +280,8 @@ export default class Tappable extends Component {
       'children',
       'className',
       'propagation',
-      'component'
+      'component',
+      'activeEffectDelay'
     ]);
 
     return (
