@@ -133,7 +133,7 @@ export default class View extends Component {
         nextPanelElement.scrollTop = scrolls[this.state.nextPanel];
       }
 
-      this.waitAnimationFinish(View.pickPanel(this.state.nextPanel), this.transitionEndHandler);
+      this.waitAnimationFinish(View.pickPanel(this.state.isBack ? this.state.prevPanel : this.state.nextPanel), this.transitionEndHandler);
     }
 
     // Начался свайп назад
@@ -217,7 +217,14 @@ export default class View extends Component {
   }
 
   transitionEndHandler = (e = { manual: true }) => {
-    if (['animation-ios-next-forward', 'animation-ios-next-back', 'animation-android-next-forward', 'animation-android-prev-back'].indexOf(e.animationName) > -1 || e.manual) {
+    if ([
+      'animation-ios-next-forward',
+      'animation-ios-next-back',
+      'animation-ios-prev-forward',
+      'animation-ios-prev-back',
+      'animation-android-next-forward',
+      'animation-android-prev-back'
+    ].indexOf(e.animationName) > -1 || e.manual) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
       const prevPanel = this.state.prevPanel;
