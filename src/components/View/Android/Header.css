@@ -10,7 +10,6 @@
 
 .View--android .View__header-in {
   height: 56px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
   }
 
 .View--android .View__header-item {
@@ -19,6 +18,11 @@
   background: var(--vk-color);
   font: 500 20px/56px var(--android-font);
   padding: 0 10px 0 0;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
+  }
+
+.View--android .View__header-item--no-shadow {
+  box-shadow: none;
   }
 
 .View--android .View__header-right {

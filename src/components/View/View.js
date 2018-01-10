@@ -452,7 +452,7 @@ export default class View extends Component {
         onEnd={this.onEnd}
       >
         {hasHeader && (
-          <div className="View__header" style={{ zIndex: this.props.children.length + 1 }}>
+          <div className="View__header">
             { osname === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
             <div className="View__header-in">
               {panels.map((panel, i) => (
@@ -464,7 +464,8 @@ export default class View extends Component {
                     'View__header-item--swipe-back-prev': panel.id === this.state.swipeBackPrevPanel,
                     'View__header-item--swipe-back-next': panel.id === this.state.swipeBackNextPanel,
                     'View__header-item--swipe-back-success': this.state.swipingBackFinish === true,
-                    'View__header-item--swipe-back-failed': this.state.swipingBackFinish === false
+                    'View__header-item--swipe-back-failed': this.state.swipingBackFinish === false,
+                    'View__header-item--no-shadow': panel.props.header.noShadow
                   }, panel.props.header.className)}
                   style={this.calcHeaderSwipeStyles(panel.id).item}
                   key={panel.key || panel.id || `panel-header-${i}`}
@@ -517,7 +518,7 @@ export default class View extends Component {
                 'View__panel--swipe-back-failed': this.state.swipingBackFinish === false,
                 [`View__panel--theme-${panel.props.theme}`]: true
               })}
-              style={Object.assign(this.calcPanelSwipeStyles(panel.id), { zIndex: i + 1 })}
+              style={this.calcPanelSwipeStyles(panel.id)}
               key={panel.key || panel.id || `panel-${i}`}
             >
               <div className="View__panel-in">
