@@ -31,7 +31,11 @@ export default class ConfigProvider extends React.Component {
   };
 
   getChildContext () {
-    let insets = Object.assign({}, this.props.insets, { bottom: this.props.insets.bottom > 100 ? 0 : this.props.insets.bottom });
+    let insets = Object.assign(
+      { top: 0, right: 0, bottom: 0, left: 0 },
+      this.props.insets,
+      { bottom: !parseInt(this.props.insets.bottom) || this.props.insets.bottom > 100 ? 0 : this.props.insets.bottom }
+    );
     return {
       insets,
       isWebView: this.props.isWebView

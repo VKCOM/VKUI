@@ -87,7 +87,7 @@
       position: absolute;
       bottom: 0;
       left: 100%;
-      width: 100vw;
+      width: 10000px;
       height: 1px;
       background: var(--ios-thick-separator-color);
       content: '';

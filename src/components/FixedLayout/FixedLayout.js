@@ -12,7 +12,8 @@ export default class FixedLayout extends React.Component {
 
   state = {
     transition: false,
-    topOffset: null
+    topOffset: null,
+    paddings: {}
   };
 
   static propTypes = {
@@ -32,6 +33,10 @@ export default class FixedLayout extends React.Component {
     panel: PropTypes.string
   };
 
+  componentDidMount () {
+    this.setPaddings();
+  }
+
   componentWillMount () {
     document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
     document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
@@ -42,9 +47,21 @@ export default class FixedLayout extends React.Component {
     document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
 
+  setPaddings (callback) {
+    if (this.props.vertical === 'bottom') {
+      let paddingBottom = parseInt(window.getComputedStyle(this.el).padding);
+
+      this.setState({
+        paddings: { paddingBottom: paddingBottom + this.context.insets.bottom }
+      }, () => callback && callback());
+    }
+  }
+
   onViewTransitionStart = (e) => {
     let panelScroll = e.detail.scrolls[this.context.panel] || 0;
-    this.setState({ transition: true, topOffset: this.el.offsetTop + panelScroll });
+    this.setPaddings(() => {
+      this.setState({ transition: true, topOffset: this.el.offsetTop + panelScroll });
+    });
   };
 
   onViewTransitionEnd = () => {
@@ -59,10 +76,7 @@ export default class FixedLayout extends React.Component {
         className={classnames(baseClassNames, {
           [`FixedLayout--${this.props.vertical}`]: true
         }, this.props.className)}
-        style={ Object.assign({
-          marginTop: this.context.insets && this.context.insets.top,
-          marginBottom: this.context.insets && this.context.insets.bottom
-        }, this.props.style, this.state.transition ? { position: 'absolute', top: this.state.topOffset } : {}) }
+        style={ Object.assign({}, this.props.style, this.state.paddings, this.state.transition ? { position: 'absolute', top: this.state.topOffset } : {}) }
       >
         {this.props.children}
       </div>

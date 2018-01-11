@@ -60,7 +60,7 @@ export default class ScrollView extends Component {
         {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout', 'theme'])}
         ref={this.getRef}
       >
-        <div className="ScrollView__in" style={{ paddingBottom: this.context.insets && this.context.insets.bottom }}>
+        <div className="ScrollView__in" style={{ paddingBottom: this.context.insets.bottom > 0 ? this.context.insets.bottom : null }}>
           {this.props.children}
         </div>
       </div>

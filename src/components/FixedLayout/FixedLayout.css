@@ -1,5 +1,6 @@
 .FixedLayout {
   position: fixed;
+  box-sizing: border-box;
   }
 
 .FixedLayout--top {
