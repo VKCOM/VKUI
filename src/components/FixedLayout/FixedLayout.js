@@ -54,6 +54,8 @@ export default class FixedLayout extends React.Component {
       this.setState({
         paddings: { paddingBottom: paddingBottom + this.context.insets.bottom }
       }, () => callback && callback());
+    } else {
+      callback && callback();
     }
   }
 
