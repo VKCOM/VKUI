@@ -34,6 +34,10 @@
       padding: 0 6px;
       }
 
+        .View--ios .View__header-search {
+          width: 100%;
+          }
+
         .View--ios .View__header-title {
           flex-basis: 56%;
           }

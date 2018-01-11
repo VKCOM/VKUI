@@ -470,8 +470,14 @@ export default class View extends Component {
                   style={this.calcHeaderSwipeStyles(panel.id).item}
                   key={panel.key || panel.id || `panel-header-${i}`}
                 >
+                  { panel.props.header.search &&
+                    <div className="View__header-search">
+                      { panel.props.header.search }
+                    </div>
+                  }
+                  {!panel.props.header.search &&
                   <div className="View__header-left">
-                    { panel.props.header.icon &&
+                    {panel.props.header.icon &&
                     <div
                       className="View__header-icon"
                       style={this.calcHeaderSwipeStyles(panel.id).leftIcon}
@@ -479,7 +485,7 @@ export default class View extends Component {
                       {panel.props.header.icon}
                     </div>
                     }
-                    { panel.props.header.left &&
+                    {panel.props.header.left &&
                     <div
                       className="View__header-left-in"
                       style={this.calcHeaderSwipeStyles(panel.id).leftIn}
@@ -488,18 +494,23 @@ export default class View extends Component {
                     </div>
                     }
                   </div>
+                  }
+                  {!panel.props.header.search &&
                   <div
                     className="View__header-title"
                     style={this.calcHeaderSwipeStyles(panel.id).title}
                   >
                     {panel.props.header.title}
                   </div>
+                  }
+                  {!panel.props.header.search &&
                   <div
                     className="View__header-right"
                     style={this.calcHeaderSwipeStyles(panel.id).right}
                   >
                     {panel.props.header.right}
                   </div>
+                  }
                 </div>
               ))}
             </div>

@@ -33,6 +33,7 @@ export { default as Textarea } from './components/Textarea/Textarea';
 export { default as Radio } from './components/Radio/Radio';
 export { default as Select } from './components/Select/Select';
 export { default as Slider } from './components/Slider/Slider';
+export { default as Search } from './components/Search/Search';
 
 /**
  * Behavior
