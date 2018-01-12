@@ -38,7 +38,7 @@ export default class View extends Component {
       browserSwipe: false
     };
     this.panels = this.getPanels(props.children);
-    osname === IOS && this.setPanelBg(props.activePanel);
+    // osname === IOS && this.setPanelBg(props.activePanel);
   }
 
   static propTypes = {
@@ -56,14 +56,24 @@ export default class View extends Component {
   static defaultProps = {
     style: {},
     children: null,
-    popout: undefined,
+    popout: null,
     header: null,
     history: []
   };
 
   static contextTypes = {
-    isWebView: PropTypes.bool
+    isWebView: PropTypes.bool,
+    window: PropTypes.any,
+    document: PropTypes.any
   };
+
+  get document () {
+    return this.context.document || document;
+  }
+
+  get window () {
+    return this.context.window || window;
+  }
 
   refsStore = {};
 
@@ -77,7 +87,7 @@ export default class View extends Component {
     }
 
     if (nextProps.popout && !this.props.popout) {
-      View.blurActiveElement();
+      this.blurActiveElement();
     }
 
     // Нужен переход
@@ -85,7 +95,7 @@ export default class View extends Component {
       const firstLayer = this.panels.find(panel => panel.id === this.props.activePanel || panel.id === nextProps.activePanel);
       const isBack = firstLayer && firstLayer.id === nextProps.activePanel;
 
-      View.blurActiveElement();
+      this.blurActiveElement();
 
       this.setState({
         visiblePanels: [this.props.activePanel, nextProps.activePanel],
@@ -94,7 +104,7 @@ export default class View extends Component {
         activePanel: null,
         animated: true,
         scrolls: Object.assign({}, this.state.scrolls, {
-          [this.props.activePanel]: window.pageYOffset
+          [this.props.activePanel]: this.window.pageYOffset
         }),
         isBack
       });
@@ -113,7 +123,7 @@ export default class View extends Component {
         visiblePanels: [nextProps.activePanel],
         scrolls: removeObjectKeys(this.state.scrolls, [this.state.swipeBackPrevPanel])
       }, () => {
-        document.dispatchEvent(new window.CustomEvent(transitionEndEventName));
+        this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
         this.props.onTransition && this.props.onTransition();
       });
     }
@@ -124,23 +134,22 @@ export default class View extends Component {
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
-      document.dispatchEvent(new window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
-      const nextPanelElement = View.pickPanel(this.state.nextPanel);
-      const prevPanelElement = View.pickPanel(this.state.prevPanel);
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
+      const nextPanelElement = this.pickPanel(this.state.nextPanel);
+      const prevPanelElement = this.pickPanel(this.state.prevPanel);
 
       prevPanelElement.scrollTop = scrolls[this.state.prevPanel];
       if (this.state.isBack) {
         nextPanelElement.scrollTop = scrolls[this.state.nextPanel];
       }
-
-      this.waitAnimationFinish(View.pickPanel(this.state.isBack ? this.state.prevPanel : this.state.nextPanel), this.transitionEndHandler);
+      this.waitAnimationFinish(this.pickPanel(this.state.isBack ? this.state.prevPanel : this.state.nextPanel), this.transitionEndHandler);
     }
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
-      document.dispatchEvent(new window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
-      const nextPanelElement = View.pickPanel(this.state.swipeBackNextPanel);
-      const prevPanelElement = View.pickPanel(this.state.swipeBackPrevPanel);
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
+      const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
+      const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
 
       nextPanelElement.scrollTop = scrolls[this.state.swipeBackNextPanel];
       prevPanelElement.scrollTop = scrolls[this.state.swipeBackPrevPanel];
@@ -148,12 +157,12 @@ export default class View extends Component {
 
     // Началась анимация завершения свайпа назад.
     if (prevState.swipingBackFinish === null && this.state.swipingBackFinish !== null) {
-      this.waitTransitionFinish(View.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
+      this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
     }
 
     // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
     if (prevState.swipingBackFinish === false && this.state.swipingBackFinish === null) {
-      window.scrollTo(0, scrolls[this.state.activePanel]);
+      this.window.scrollTo(0, scrolls[this.state.activePanel]);
     }
 
     // Закончился Safari свайп
@@ -191,23 +200,23 @@ export default class View extends Component {
     }
   }
 
-  static blurActiveElement () {
-    if (typeof window !== 'undefined' && document.activeElement) {
-      document.activeElement.blur();
+  blurActiveElement () {
+    if (typeof this.window !== 'undefined' && this.document.activeElement) {
+      this.document.activeElement.blur();
     }
   }
 
   setPanelBg (panelId) {
     const panel = this.panels.find(panel => panel.id === panelId);
     if (panel) {
-      document.documentElement.setAttribute('theme', panel.props.theme);
+      this.document.documentElement.setAttribute('theme', panel.props.theme);
     } else {
-      document.documentElement.removeAttribute('theme');
+      this.document.documentElement.removeAttribute('theme');
     }
   }
 
-  static pickPanel (id) {
-    const elem = document.querySelector('#' + id);
+  pickPanel (id) {
+    const elem = this.document.querySelector('#' + id);
 
     if (!elem) {
       console.warn(`Element #${id} not found`);
@@ -228,7 +237,7 @@ export default class View extends Component {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
       const prevPanel = this.state.prevPanel;
-      document.dispatchEvent(new window.CustomEvent(transitionEndEventName));
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
       this.setState({
         prevPanel: null,
         nextPanel: null,
@@ -238,7 +247,7 @@ export default class View extends Component {
         isBack: undefined,
         scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls
       }, function () {
-        isBack && window.scrollTo(0, this.state.scrolls[activePanel]);
+        isBack && this.window.scrollTo(0, this.state.scrolls[activePanel]);
         this.props.onTransition && this.props.onTransition();
       });
     }
@@ -264,7 +273,7 @@ export default class View extends Component {
       swipebackStartX: 0,
       swipeBackShift: 0
     }, () => {
-      document.dispatchEvent(new window.CustomEvent(transitionEndEventName));
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
     });
   }
 
@@ -272,14 +281,14 @@ export default class View extends Component {
     const { activePanel } = this.state;
 
     if (activePanel) {
-      const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+      const scrollTop = this.document.body.scrollTop || this.document.this.documentElement.scrollTop;
 
       if (scrollTop) {
         animate({
           duration: 200,
           timing: n => Math.sqrt(n),
           draw: (val) => {
-            window.scrollTo(0, scrollTop - val * scrollTop);
+            this.window.scrollTo(0, scrollTop - val * scrollTop);
           }
         });
       }
@@ -291,7 +300,7 @@ export default class View extends Component {
   }
 
   onMove = (e) => {
-    if (osname === IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= window.innerWidth - 70) && !this.state.browserSwipe) {
+    if (osname === IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
       this.setState({ browserSwipe: true });
     }
 
@@ -309,7 +318,7 @@ export default class View extends Component {
           swipeBackPrevPanel: this.state.activePanel,
           swipeBackNextPanel: this.props.history.slice(-2)[0],
           scrolls: Object.assign({}, this.state.scrolls, {
-            [this.state.activePanel]: window.pageYOffset
+            [this.state.activePanel]: this.window.pageYOffset
           })
         }, () => {
           this.props.onSwipeBackStart && this.props.onSwipeBackStart();
@@ -319,8 +328,8 @@ export default class View extends Component {
         let swipeBackShift;
         if (e.shiftX < 0) {
           swipeBackShift = 0;
-        } else if (e.shiftX > window.innerWidth - this.state.swipebackStartX) {
-          swipeBackShift = window.innerWidth;
+        } else if (e.shiftX > this.window.innerWidth - this.state.swipebackStartX) {
+          swipeBackShift = this.window.innerWidth;
         } else {
           swipeBackShift = e.shiftX;
         }
@@ -335,10 +344,10 @@ export default class View extends Component {
       const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
-      } else if (this.state.swipeBackShift >= window.innerWidth) {
+      } else if (this.state.swipeBackShift >= this.window.innerWidth) {
         this.onSwipeBackSuccess();
       } else {
-        this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > window.innerWidth / 2 });
+        this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > this.window.innerWidth / 2 });
       }
     }
   };
@@ -360,8 +369,8 @@ export default class View extends Component {
     const isNext = panelId === this.state.swipeBackNextPanel;
 
     let prevPanelTranslate = `${this.state.swipeBackShift}px`;
-    let nextPanelTranslate = `${-50 + (this.state.swipeBackShift * 100 / window.innerWidth) / 2}%`;
-    let prevPanelShadow = 0.3 * (window.innerWidth - this.state.swipeBackShift) / window.innerWidth;
+    let nextPanelTranslate = `${-50 + (this.state.swipeBackShift * 100 / this.window.innerWidth) / 2}%`;
+    let prevPanelShadow = 0.3 * (this.window.innerWidth - this.state.swipeBackShift) / this.window.innerWidth;
 
     if (this.state.swipingBackFinish !== null) {
       return isPrev ? prefixCSS({ boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` }) : {};
@@ -396,9 +405,9 @@ export default class View extends Component {
       };
     }
 
-    let opacity = this.state.swipeBackShift / window.innerWidth;
-    let titleTransform = this.state.swipeBackShift / window.innerWidth * 60;
-    let leftTransform = this.state.swipeBackShift / window.innerWidth * 60;
+    let opacity = this.state.swipeBackShift / this.window.innerWidth;
+    let titleTransform = this.state.swipeBackShift / this.window.innerWidth * 60;
+    let leftTransform = this.state.swipeBackShift / this.window.innerWidth * 60;
 
     if (isNext) {
       return prefixCSS({

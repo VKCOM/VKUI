@@ -18,13 +18,30 @@ export default class ScrollView extends Component {
   };
 
   static propTypes = {
+    /**
+     * @ignore
+     */
     activePanel: PropTypes.string,
+    /**
+     * @ignore
+     */
     prevPanel: PropTypes.string,
+    /**
+     * @ignore
+     */
     nextPanel: PropTypes.string,
+    /**
+     * @ignore
+     */
     children: PropTypes.node,
     className: PropTypes.string,
     theme: PropTypes.oneOf(['white', 'gray']),
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    header: PropTypes.shape({
+      left: PropTypes.node,
+      right: PropTypes.node,
+      title: PropTypes.node
+    }).isRequired
   };
 
   static contextTypes = {
@@ -60,7 +77,7 @@ export default class ScrollView extends Component {
         {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout', 'theme'])}
         ref={this.getRef}
       >
-        <div className="ScrollView__in" style={{ paddingBottom: this.context.insets.bottom > 0 ? this.context.insets.bottom : null }}>
+        <div className="ScrollView__in" style={{ paddingBottom: this.context.insets && this.context.insets.bottom > 0 ? this.context.insets.bottom : null }}>
           {this.props.children}
         </div>
       </div>

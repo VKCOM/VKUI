@@ -29,6 +29,7 @@
     "react": "^15.6.2",
     "react-docgen": "^2.20.0",
     "react-dom": "^15.6.2",
+    "react-frame-component": "^2.0.1",
     "react-prefixer": "^2.0.0",
     "react-styleguidist": "^6.1.0",
     "style-loader": "^0.13.2",

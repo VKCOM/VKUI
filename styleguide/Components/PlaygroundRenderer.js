@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Styled from 'react-styleguidist/lib/rsg-components/Styled';
+import ReactFrame from 'react-frame-component';
 
 export const styles = ({ space, color, borderRadius }) => ({
   root: {
@@ -9,7 +10,6 @@ export const styles = ({ space, color, borderRadius }) => ({
   },
   preview: {
     padding: space[2],
-    width: 320,
     border: [[1, color.border, 'solid']],
     borderRadius
   },
@@ -23,27 +23,32 @@ export const styles = ({ space, color, borderRadius }) => ({
   tab: {}
 });
 
-export function PlaygroundRenderer ({
-  classes,
-  name,
-  preview,
-  previewProps,
-  tabButtons,
-  tabBody,
-  toolbar
-}) {
-  return (
-    <div className={classes.root}>
-      <div className={cx(classes.preview, previewProps.className)} {...previewProps} data-preview={name}>
-        {preview}
+class PlaygroundRenderer extends React.Component {
+
+  render () {
+    const {
+      classes,
+      name,
+      preview,
+      previewProps,
+      tabButtons,
+      tabBody,
+      toolbar
+    } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <div className={cx(classes.preview, previewProps.className)} {...previewProps} data-preview={name}>
+          { preview }
+        </div>
+        <div className={classes.controls}>
+          <div className={classes.tabs}>{tabButtons}</div>
+          <div className={classes.toolbar}>{toolbar}</div>
+        </div>
+        <div className={classes.tab}>{tabBody}</div>
       </div>
-      <div className={classes.controls}>
-        <div className={classes.tabs}>{tabButtons}</div>
-        <div className={classes.toolbar}>{toolbar}</div>
-      </div>
-      <div className={classes.tab}>{tabBody}</div>
-    </div>
-  );
+    );
+  }
 }
 
 PlaygroundRenderer.propTypes = {

@@ -35,19 +35,32 @@ export default class Root extends React.Component {
     popout: null
   };
 
+  static contextTypes = {
+    window: PropTypes.any,
+    document: PropTypes.any
+  };
+
+  get document () {
+    return this.context.document || document;
+  }
+
+  get window () {
+    return this.context.window || window;
+  }
+
   componentWillReceiveProps (nextProps) {
     if (nextProps.popout && !this.props.popout) {
-      Root.blurActiveElement();
+      this.blurActiveElement();
     }
 
     if (nextProps.activeView !== this.props.activeView) {
-      let pageYOffset = window.pageYOffset;
+      let pageYOffset = this.window.pageYOffset;
       const firstLayerId = this.props.children.find(view => {
         return view.props.id === this.props.activeView || view.props.id === nextProps.activeView;
       }).props.id;
       const isBack = firstLayerId === nextProps.activeView;
 
-      Root.blurActiveElement();
+      this.blurActiveElement();
 
       const nextView = nextProps.activeView;
       const prevView = this.props.activeView;
@@ -99,25 +112,24 @@ export default class Root extends React.Component {
         transition: false,
         isBack: undefined
       }, () => {
-        isBack ? window.scrollTo(0, this.state.scrolls[this.state.activeView]) : window.scrollTo(0, 0);
+        isBack ? this.window.scrollTo(0, this.state.scrolls[this.state.activeView]) : this.window.scrollTo(0, 0);
         this.props.onTransition && this.props.onTransition(this.state.isBack);
       });
     }
   };
 
-  static blurActiveElement () {
-    if (typeof window !== 'undefined' && document.activeElement) {
-      document.activeElement.blur();
+  blurActiveElement () {
+    if (typeof this.window !== 'undefined' && this.document.activeElement) {
+      this.document.activeElement.blur();
     }
   }
 
   render () {
     let Views = React.Children.toArray(this.props.children).filter((View) => this.state.visibleViews.indexOf(View.props.id) >= 0);
-
     return (
       <div className={ classnames(baseClassName, {
         'Root--transition': this.state.transition
-      }) }>
+      }) } ref={el => this.el = el}>
         { Views.map(View => (
           <div key={View.props.id} className={classnames('Root__view', {
             'Root__view--hide-back': View.props.id === this.state.prevView && this.state.isBack,
