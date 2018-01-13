@@ -38,7 +38,6 @@ export default class View extends Component {
       browserSwipe: false
     };
     this.panels = this.getPanels(props.children);
-    // osname === IOS && this.setPanelBg(props.activePanel);
   }
 
   static propTypes = {
@@ -76,6 +75,10 @@ export default class View extends Component {
   }
 
   refsStore = {};
+
+  componentWillMount () {
+    osname === IOS && this.setPanelBg(this.props.activePanel);
+  }
 
   componentWillReceiveProps (nextProps) {
     if (this.props.children !== nextProps.children) {

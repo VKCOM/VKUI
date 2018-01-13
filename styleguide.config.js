@@ -8,16 +8,16 @@ module.exports = {
   },
   sections: [
     {
-      name: 'Установка',
+      name: 'Installation',
       content: 'styleguide/pages/installation.md'
     }, {
       name: 'Hello World',
       content: 'README.md'
     }, {
-      name: 'Концепция',
+      name: 'The concept',
       content: 'styleguide/pages/concept.md'
     }, {
-      name: 'Компоненты',
+      name: 'Components',
       sections: [{
         name: 'Layout',
         components: () => [
@@ -27,7 +27,7 @@ module.exports = {
           './src/components/FixedLayout/FixedLayout.js'
         ]
       }, {
-        name: 'Всплывающие окна',
+        name: 'Popouts',
         components: () => [
           './src/components/PopoutWrapper/PopoutWrapper.js',
           './src/components/ActionSheet/ActionSheet.js',
@@ -37,7 +37,7 @@ module.exports = {
           './src/components/ScreenSpinner/ScreenSpinner.js'
         ]
       }, {
-        name: 'Элементы',
+        name: 'Elements',
         components: () => [
           './src/components/Button/Button.js',
           './src/components/Tappable/Tappable.js'
