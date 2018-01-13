@@ -1,8 +1,4 @@
-# VKUI
-
-## Базовый пример
-
-```jsx
+```jsx static
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as UI from '@vkontakte/vkui';
@@ -14,8 +10,8 @@ function App () {
       <UI.ScrollView id="main" header={{ title: 'VKUI' }}>
         <UI.Group title="Items">
           <UI.List>
-            <UI.ListItem>One</UI.ListItem>
-            <UI.ListItem>Two</UI.ListItem>
+            <UI.ListItem>Hello</UI.ListItem>
+            <UI.ListItem>World</UI.ListItem>
           </UI.List>
         </UI.Group>
       </UI.ScrollView>

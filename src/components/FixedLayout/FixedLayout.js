@@ -30,21 +30,30 @@ export default class FixedLayout extends React.Component {
       bottom: PropTypes.number,
       left: PropTypes.number
     }),
-    panel: PropTypes.string
+    panel: PropTypes.string,
+    document: PropTypes.any
   };
+
+  get document () {
+    return this.context.document || document;
+  }
+
+  get insets () {
+    return this.context.insets || {};
+  }
 
   componentDidMount () {
     this.setPaddings();
   }
 
   componentWillMount () {
-    document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
-    document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
+    this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
+    this.document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
 
   componentWillUnmount () {
-    document.removeEventListener(transitionStartEventName, this.onViewTransitionStart);
-    document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
+    this.document.removeEventListener(transitionStartEventName, this.onViewTransitionStart);
+    this.document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
 
   setPaddings (callback) {
@@ -52,7 +61,7 @@ export default class FixedLayout extends React.Component {
       let paddingBottom = parseInt(window.getComputedStyle(this.el).padding);
 
       this.setState({
-        paddings: { paddingBottom: paddingBottom + this.context.insets.bottom }
+        paddings: { paddingBottom: paddingBottom + (this.insets.bottom || 0) }
       }, () => callback && callback());
     } else {
       callback && callback();
