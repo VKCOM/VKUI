@@ -129,7 +129,7 @@ export default class Root extends React.Component {
     return (
       <div className={ classnames(baseClassName, {
         'Root--transition': this.state.transition
-      }) } ref={el => this.el = el}>
+      }) }>
         { Views.map(View => (
           <div key={View.props.id} className={classnames('Root__view', {
             'Root__view--hide-back': View.props.id === this.state.prevView && this.state.isBack,
