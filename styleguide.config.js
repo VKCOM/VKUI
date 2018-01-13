@@ -14,6 +14,9 @@ module.exports = {
       name: 'Hello World',
       content: 'README.md'
     }, {
+      name: 'Концепция',
+      content: 'styleguide/pages/concept.md'
+    }, {
       name: 'Компоненты',
       sections: [{
         name: 'Layout',
