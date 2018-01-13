@@ -14,3 +14,6 @@ webpack.config.js
 .stylelintrc
 .gitignore
 package-lock.json
+
+styleguide.config.js
+styleguide
