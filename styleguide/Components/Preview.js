@@ -5,6 +5,31 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ReactFrame from 'react-frame-component';
 
+const frameInitialContent = `
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <link href="/vkui.css" rel="stylesheet"></link>
+      <style>
+        .frame-content {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          height: 100vh;
+          user-select: none;
+          -webkit-font-smoothing: antialiased;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+          -webkit-tap-highlight-color: transparent;
+          -webkit-text-size-adjust: 100%;
+        }
+      </style>
+    </head>
+    <body>
+  
+    </body>
+  </html>
+`;
+
 class PreviewComponent extends React.Component {
   static propTypes = {
     component: PropTypes.func.isRequired
@@ -50,11 +75,12 @@ export default class Preview extends PreviewParent {
     const wrappedComponent = (
       <Wrapper onError={this.handleError}>
         <ReactFrame
-          initialContent="<!DOCTYPE html><html><head><link href='/vkui.css' rel='stylesheet'></link></head><body><div></div></body></html>"
+          initialContent={frameInitialContent}
+          mountTarget="body"
           style={{
             height: 564,
             width: 320,
-            border: 'none',
+            border: '1px solid rgba(0, 0, 0, .12)',
             display: 'block',
             margin: 'auto'
           }}

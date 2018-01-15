@@ -4,7 +4,8 @@ module.exports = {
   title: 'VKUI styleguide',
   assetsDir: path.join(__dirname, 'dist'),
   styleguideComponents: {
-    PlaygroundRenderer: path.join(__dirname, 'styleguide/components/PlaygroundRenderer')
+    PlaygroundRenderer: path.join(__dirname, 'styleguide/components/PlaygroundRenderer'),
+    StyleGuideRenderer: path.join(__dirname, 'styleguide/components/StyleGuideRenderer')
   },
   sections: [
     {
@@ -49,6 +50,7 @@ module.exports = {
     PropTypes: 'prop-types',
     ReactFrame: 'react-frame-component'
   },
+  require: [path.resolve(__dirname, 'styleguide/setup.js')],
   webpackConfig: Object.assign({}, require('./webpack.config'), {
     resolve: {
       alias: {

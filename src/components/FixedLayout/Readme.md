@@ -4,7 +4,7 @@ position: fixed не дружит с transform: translate на родителе,
 
   ```
   <View activePanel="fixedLayout" header={{}}>
-    <ScrollView header={{ title: 'Fixed Layout' }} id="fixedLayout">
+    <ScrollView header={{ title: 'Fixed Layout', noShadow: true }} id="fixedLayout">
       <FixedLayout vertical="top" style={{ padding: 10, background: '#5C9CE6', color: '#fff' }}>
         Sticked to top
       </FixedLayout>
