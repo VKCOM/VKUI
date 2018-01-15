@@ -101,9 +101,6 @@
     .Alert--ios .Alert__btn--primary { /* Depcrated. Remove in next version */
       font-weight: 500;
       }
-    .Alert--ios .Alert__btn--default {
-
-      }
     .Alert--ios .Alert__btn--cancel {
       font-weight: 600;
       }
@@ -235,6 +232,10 @@
       outline: none;
       overflow: hidden;
       text-overflow: ellipsis;
+      }
+
+    .Alert--android .Alert__btn--cancel {
+      color: #909499;
       }
 
     .Alert--android .Alert__btn--primary {

@@ -16,9 +16,9 @@ export default class Alert extends Component {
     actions: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string.isRequired,
       action: PropTypes.func.isRequired,
-      modifier: PropTypes.oneOf(['primary'])
+      style: PropTypes.oneOf(['primary', 'cancel', 'destructive', 'default'])
     })),
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func
   };
 
   static defaultProps = {
@@ -29,7 +29,7 @@ export default class Alert extends Component {
 
   onItemClick = (item) => () => {
     item.autoclose && this.props.onClose();
-    item.action();
+    item.action && item.action();
   };
 
   render () {
@@ -50,12 +50,12 @@ export default class Alert extends Component {
               <Tappable
                 component="button"
                 className={classnames('Alert__btn', {
-                  [`Alert__btn--${button.style}`]: true
+                  [`Alert__btn--${button.style || button.modifier}`]: true
                 })}
                 onClick={this.onItemClick(button)}
                 key={`alert-action-${i}`}
               >
-                {button.title}
+                <span dangerouslySetInnerHTML={{ __html: button.title }} />
               </Tappable>
             ))}
           </footer>

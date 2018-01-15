@@ -3,6 +3,10 @@
   position: relative;
   }
 
+  .BackButton svg {
+    display: block;
+    }
+
 .BackButton--ios {
   height: 21px;
   }

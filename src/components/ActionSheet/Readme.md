@@ -1,3 +1,11 @@
+ActionSheet – имитация [нативного компонента](https://developer.apple.com/ios/human-interface-guidelines/views/action-sheets/). Удобно использовать, когда нужно дать пользователю выбрать одно из множества действий.
+В качестве children принимает коллекцию [ActionSheetItem](#actionsheetitem).
+
+** Важно **
+
+* Нужно обязательно передать onClose для обработки закрытия ActionSheet изнутри.
+* Согласно гайдлайнам, в ActionSheet должен быть элемент для закрытия. В коде примера ниже можно посмотреть, как добавить такой элемент. В противном случае ActionSheet подставит дефолтный.
+
 ```
 
 class Example extends React.Component {
@@ -14,10 +22,17 @@ class Example extends React.Component {
   }
 
   openSheet () {
-    this.setState({ popout: <ActionSheet onClose={ () => this.setState({ popout: null }) }>
-      <ActionSheetItem>Action</ActionSheetItem>
-      <ActionSheetItem>Sheet</ActionSheetItem>
-    </ActionSheet> });
+    this.setState({ popout: 
+      <ActionSheet 
+        onClose={ () => this.setState({ popout: null }) }
+        title="Hi!"
+        text="I am action sheet"
+      >
+        <ActionSheetItem autoclose>Action</ActionSheetItem>
+        <ActionSheetItem autoclose theme="destructive">Sheet</ActionSheetItem>
+        <ActionSheetItem autoclose theme="cancel">Cancel</ActionSheetItem>
+      </ActionSheet> 
+    });
   }
 
   render() {

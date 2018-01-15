@@ -31,15 +31,15 @@ export default class ActionSheet extends React.Component {
     this.waitTransitionFinish(this.props.onClose);
   };
 
-  onItemClick = (handler, autoclose) => () => {
+  onItemClick = (action, autoclose) => () => {
     if (autoclose) {
       this.setState({ closing: true });
       this.waitTransitionFinish(() => {
         autoclose && this.props.onClose();
-        handler();
+        action && action();
       });
     } else {
-      handler();
+      action && action();
     }
   };
 
@@ -85,7 +85,7 @@ export default class ActionSheet extends React.Component {
         h="center"
         onClick={ this.onClose }
       >
-        <div className={classNames} style={style} ref={el => { this.el = el; }} onClick={this.stopPropagation}>
+        <div className={classNames} style={style} ref={el => this.el = el} onClick={this.stopPropagation}>
           <div className="ActionSheet__section">
             <div className="ActionSheet__list">
               { hasHeader &&

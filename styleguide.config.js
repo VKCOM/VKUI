@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   title: 'VKUI styleguide',
   assetsDir: path.join(__dirname, 'dist'),
+  styleguideDir: path.join(__dirname, 'docs'),
   styleguideComponents: {
     PlaygroundRenderer: path.join(__dirname, 'styleguide/components/PlaygroundRenderer'),
     StyleGuideRenderer: path.join(__dirname, 'styleguide/components/StyleGuideRenderer')
@@ -34,14 +35,30 @@ module.exports = {
           './src/components/ActionSheet/ActionSheet.js',
           './src/components/ActionSheetItem/ActionSheetItem.js',
           './src/components/Alert/Alert.js',
-          './src/components/AlertInput/AlertInput.js',
+          // './src/components/AlertInput/AlertInput.js',
           './src/components/ScreenSpinner/ScreenSpinner.js'
         ]
       }, {
-        name: 'Elements',
+        name: 'Blocks',
         components: () => [
           './src/components/Button/Button.js',
-          './src/components/Tappable/Tappable.js'
+          './src/components/Group/Group.js',
+          './src/components/List/List.js',
+          './src/components/ListItem/ListItem.js'
+        ]
+      }, {
+        name: 'Forms',
+        components: () => [
+
+        ]
+      }, {
+        name: 'Helpers',
+        components: () => [
+          './src/components/Div/Div.js',
+          './src/components/Flex/Flex.js',
+          // './src/components/Icon/Icon.js',
+          './src/components/Tappable/Tappable.js',
+          './src/components/BackButton/BackButton.js'
         ]
       }]
     }

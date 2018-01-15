@@ -1,66 +1,36 @@
 .Input {
   position: relative;
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 22px;
+  outline: none;
+  border: 0;
+  background: none;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  line-height: 22px;
+  min-width: 140px; /* Fix iOS rendering for FormLayout */
+  }
+.Input--left {
+  text-align: left;
+  }
+.Input--center {
+  text-align: center;
+  }
+.Input--right {
+  text-align: right;
   }
 
-  .Input__control {
-    position: relative;
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 22px;
-    outline: none;
-    border: 0;
-    background: none;
-    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-    line-height: 22px;
-    min-width: 140px; /* Fix iOS rendering for FormLayout */
-    }
+.Input:-webkit-autofill {
+  -webkit-box-shadow: inset 0 0 0 1000px #fff;
+  }
 
-  .Input--left .Input__control {
-    text-align: left;
-    }
+.Input--ios {
+  font-size: 17px;
+  padding: 11px 0 12px;
+  }
 
-  .Input--center .Input__control {
-    text-align: center;
-    }
-
-  .Input--right .Input__control {
-    text-align: right;
-    }
-
-  .Input__control::placeholder {
-    color: #00244D;
-    opacity: .24;
-    }
-
-  .Input__placeholder {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    color: #00244D;
-    opacity: .24;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    }
-
-  .Input__control:-webkit-autofill {
-    -webkit-box-shadow: inset 0 0 0 1000px #fff;
-    }
-
-  .Input--ios .Input__control,
-  .Input--ios .Input__placeholder {
-    font-size: 17px;
-    padding: 11px 0 12px;
-    }
-
-  .Input--ios .Input__control:focus ~ .Input__placeholder {
-    display: none;
-    }
-
-  .Input--android .Input__control,
-  .Input--android .Input__placeholder {
-    font-size: 16px;
-    padding: 16px 0 18px;
-    }
+.Input--android {
+  font-size: 16px;
+  padding: 16px 0 18px;
+  }
