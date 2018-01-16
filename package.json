@@ -46,7 +46,7 @@
     "react": "15.4.2"
   },
   "scripts": {
-    "prepare": "npm run build",
+    "prepublish": "npm run build",
     "styleguide": "NODE_ENV=production styleguidist server",
     "styleguide:build": "NODE_ENV=production styleguidist build",
     "build": "NODE_ENV=production webpack --bail --json > stats.json",
