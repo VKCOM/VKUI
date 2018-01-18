@@ -7,4 +7,7 @@ Object.defineProperty(navigator, 'userAgent', {
   get: function () { return window.localStorage.getItem('vkui-styleguide:ua') || uaList.ios; }
 });
 
-window.colors = require('../src/helpers/colors');
+import { values as colors, titles as colorTitles } from '../src/helpers/colors'
+
+window.colors = colors;
+window.colorTitles = colorTitles;

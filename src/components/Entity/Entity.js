@@ -16,7 +16,8 @@ export default class Entity extends Component {
     photo: PropTypes.string,
     title: PropTypes.node,
     description: PropTypes.node,
-    className: PropTypes.string
+    className: PropTypes.string,
+    asideStyle: PropTypes.object
   };
   static defaultProps = {
     style: {},
@@ -38,7 +39,7 @@ export default class Entity extends Component {
         className={classnames(baseClassNames, modifiers, className)}
         style={style}
       >
-        <div className="Entity__aside">
+        <div className="Entity__aside" style={this.props.asideStyle}>
           {photo && <img src={photo} alt={title} className="Entity__photo" />}
         </div>
         <div className="Entity__main">

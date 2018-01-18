@@ -1,4 +1,5 @@
 import './lib/polyfills';
+import { values as colors } from './helpers/colors';
 
 /**
  * Layout
@@ -68,6 +69,6 @@ export { default as getClassName } from './helpers/getClassName';
 export { default as wrapTextNode } from './helpers/wrapTextNode';
 export { default as requestAnimationFrame } from './lib/requestAnimationFrame';
 export { isWebView } from './lib/webview';
-export { default as colors } from './helpers/colors';
+export { colors };
 
 export const v = process.env.VKUI_VERSION;

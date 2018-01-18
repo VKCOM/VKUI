@@ -61,6 +61,9 @@ module.exports = {
           './src/components/Tappable/Tappable.js',
           './src/components/BackButton/BackButton.js'
         ]
+      }, {
+        name: 'Colors',
+        content: 'styleguide/pages/colors.md'
       }]
     }
   ],

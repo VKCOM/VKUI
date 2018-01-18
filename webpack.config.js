@@ -28,7 +28,7 @@ const cssTransformOptions = [
           cssImport(),
           cssCustomProperties(),
           cssMaps({
-            maps: [{ colors: colorsMaps }]
+            maps: [{ colors: colorsMaps.values }]
           }),
           autoprefixer({ browsers: [
             '>1%',
