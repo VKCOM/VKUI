@@ -35,7 +35,6 @@ module.exports = {
           './src/components/ActionSheet/ActionSheet.js',
           './src/components/ActionSheetItem/ActionSheetItem.js',
           './src/components/Alert/Alert.js',
-          // './src/components/AlertInput/AlertInput.js',
           './src/components/ScreenSpinner/ScreenSpinner.js'
         ]
       }, {
@@ -44,7 +43,9 @@ module.exports = {
           './src/components/Button/Button.js',
           './src/components/Group/Group.js',
           './src/components/List/List.js',
-          './src/components/ListItem/ListItem.js'
+          './src/components/ListItem/ListItem.js',
+          './src/components/Entity/Entity.js',
+          './src/components/Gallery/Gallery.js'
         ]
       }, {
         name: 'Forms',

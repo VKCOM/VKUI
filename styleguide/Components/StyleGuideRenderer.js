@@ -7,8 +7,6 @@ import cx from 'classnames';
 import {uaList} from '../setup';
 import pkg from '../../package.json';
 
-console.log(pkg.version);
-
 const styles = ({ color, fontFamily, fontSize, sidebarWidth, mq, space, maxWidth }) => ({
   root: {
     backgroundColor: color.baseBackground

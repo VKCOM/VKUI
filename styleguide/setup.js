@@ -6,3 +6,5 @@ export const uaList = {
 Object.defineProperty(navigator, 'userAgent', {
   get: function () { return window.localStorage.getItem('vkui-styleguide:ua') || uaList.ios; }
 });
+
+window.colors = require('../src/helpers/colors');
