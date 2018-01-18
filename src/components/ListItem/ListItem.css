@@ -19,9 +19,16 @@
     overflow: hidden;
     }
 
+    .ListItem__checkbox {
+      display: none;
+      }
+
     .ListItem__icon {
       position: relative;
       flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
       }
 
       .ListItem__icon-in {}
@@ -30,6 +37,12 @@
         .ListItem__icon-in > img {
           vertical-align: top;
           }
+
+      .ListItem__checkbox-marker {
+        display: block;
+        border-radius: 50%;
+        box-sizing: border-box;
+        }
 
     .ListItem__main {
       flex: 1 0 auto;
@@ -92,6 +105,18 @@
       background: var(--ios-thick-separator-color);
       content: '';
       }
+
+      .ListItem--ios .ListItem__checkbox-marker {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #c4c8cc;
+        margin: 7px 15px 9px 0;
+        }
+
+      .ListItem__checkbox:checked ~ .ListItem__icon .ListItem__checkbox-marker {
+        background-color: map(colors, accentBlue);
+        border-color: map(colors, accentBlue);
+        }
 
     @media
       (-webkit-min-device-pixel-ratio: 2),

@@ -10,6 +10,19 @@ import Tappable from '../Tappable/Tappable';
 const baseClassNames = getClassName('ListItem');
 
 export default class ListItem extends Component {
+
+  constructor (props) {
+    super(props);
+
+    this.controled = props.selectable && props.hasOwnProperty('checked') && props.onChange;
+
+    if (!this.controled) {
+      this.state = {
+        checked: props.initialChecked
+      };
+    }
+  }
+
   static propTypes = {
     icon: PropTypes.oneOfType([
       PropTypes.node,
@@ -23,18 +36,37 @@ export default class ListItem extends Component {
     expandable: PropTypes.bool,
     indented: PropTypes.bool,
     children: PropTypes.node,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+
+    selectable: PropTypes.bool,
+    name: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    checked: PropTypes.bool,
+    onChange: PropTypes.func,
+    initialChecked: PropTypes.bool
   };
+
   static defaultProps = {
     icon: null,
     indicator: '',
     asideContent: '',
     expandable: false,
     indented: false,
-    children: ''
+    children: '',
+    selectable: false,
+    initialChecked: false
   };
+
+  onChange = (e) => {
+    if (this.controled) {
+      this.props.onChange(e);
+    } else {
+      this.setState({ checked: !this.state.checked });
+    }
+  };
+
   render () {
-    const { icon, indicator, asideContent, expandable, indented, onClick, children } = this.props;
+    const { icon, indicator, asideContent, expandable, indented, onClick, children, value, name, selectable } = this.props;
     const modifiers = {
       'ListItem--expandable': expandable,
       'ListItem--indented': indented
@@ -45,13 +77,30 @@ export default class ListItem extends Component {
       'asideContent',
       'expandable',
       'indented',
+      'value',
+      'name',
+      'selectable',
+      'checked',
+      'initialChecked',
+      'onChange',
       'onClick'
     ]);
 
     return (
       <li className={classnames(baseClassNames, modifiers)} {...nativeProps}>
-        <Tappable component="div" className="ListItem__in" onClick={onClick}>
+        <Tappable component={selectable ? 'label' : 'div'} className="ListItem__in" onClick={selectable ? () => {} : onClick}>
+          { selectable &&
+            <input
+              type="checkbox"
+              className="ListItem__checkbox"
+              name={name}
+              checked={this.controled ? this.props.checked : this.state.checked}
+              value={value}
+              onChange={this.onChange}
+            />
+          }
           <div className="ListItem__icon">
+            { selectable && <span className="ListItem__checkbox-marker" /> }
             {icon && <div className="ListItem__icon-in">{icon}</div>}
           </div>
           <div className="ListItem__main">
