@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "main": "dist/vkui.js",
   "devDependencies": {
     "autoprefixer": "^7.2.3",

@@ -2,7 +2,7 @@
 
 .View--android .View__panel,
 .View--android .ScrollView__in {
-  background: #ebedf0;
+  background: #fff;
   }
 .View--android.View--header .ScrollView__in {
   padding-top: 56px;
