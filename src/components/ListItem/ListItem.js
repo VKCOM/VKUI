@@ -24,19 +24,13 @@ export default class ListItem extends Component {
   }
 
   static propTypes = {
-    icon: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.element
-    ]),
+    icon: PropTypes.node,
     indicator: PropTypes.string,
-    asideContent: PropTypes.oneOfType([
-      PropTypes.node,
-      PropTypes.element
-    ]),
+    asideContent: PropTypes.node,
     expandable: PropTypes.bool,
-    indented: PropTypes.bool,
     children: PropTypes.node,
     onClick: PropTypes.func,
+    avatar: PropTypes.node,
 
     selectable: PropTypes.bool,
     name: PropTypes.string,
@@ -51,7 +45,6 @@ export default class ListItem extends Component {
     indicator: '',
     asideContent: '',
     expandable: false,
-    indented: false,
     children: '',
     selectable: false,
     initialChecked: false
@@ -65,18 +58,18 @@ export default class ListItem extends Component {
     }
   };
 
+  emptyClickHandler () {}
+
   render () {
-    const { icon, indicator, asideContent, expandable, indented, onClick, children, value, name, selectable } = this.props;
+    const { icon, indicator, asideContent, expandable, onClick, children, value, name, selectable, avatar } = this.props;
     const modifiers = {
-      'ListItem--expandable': expandable,
-      'ListItem--indented': indented
+      'ListItem--expandable': expandable
     };
     const nativeProps = removeObjectKeys(this.props, [
       'icon',
       'indicator',
       'asideContent',
       'expandable',
-      'indented',
       'value',
       'name',
       'selectable',
@@ -88,8 +81,8 @@ export default class ListItem extends Component {
 
     return (
       <li className={classnames(baseClassNames, modifiers)} {...nativeProps}>
-        <Tappable component={selectable ? 'label' : 'div'} className="ListItem__in" onClick={selectable ? () => {} : onClick}>
-          { selectable &&
+        <Tappable component={selectable ? 'label' : 'div'} className="ListItem__in" onClick={selectable ? this.emptyClickHandler : onClick}>
+          {selectable &&
             <input
               type="checkbox"
               className="ListItem__checkbox"
@@ -99,9 +92,10 @@ export default class ListItem extends Component {
               onChange={this.onChange}
             />
           }
-          <div className="ListItem__icon">
-            { selectable && <span className="ListItem__checkbox-marker" /> }
-            {icon && <div className="ListItem__icon-in">{icon}</div>}
+          <div className="ListItem__before">
+            {selectable && <span className="ListItem__checkbox-marker" />}
+            {icon && <div className="ListItem__icon">{icon}</div>}
+            {avatar && <div className="ListItem__avatar">{avatar}</div>}
           </div>
           <div className="ListItem__main">
             {children}

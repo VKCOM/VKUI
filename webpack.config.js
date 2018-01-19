@@ -8,6 +8,7 @@ const cssImport = require('postcss-import');
 const cssMaps = require('postcss-map');
 const autoprefixer = require('autoprefixer');
 const colorsMaps = require('./src/helpers/colors');
+const fontMaps = require('./src/helpers/fonts');
 const pkg = require('./package.json');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -28,7 +29,7 @@ const cssTransformOptions = [
           cssImport(),
           cssCustomProperties(),
           cssMaps({
-            maps: [{ colors: colorsMaps.values }]
+            maps: [{ colors: colorsMaps.values, fontFamilies: fontMaps.families }]
           }),
           autoprefixer({ browsers: [
             '>1%',
@@ -71,7 +72,7 @@ const config = {
             ],
             'react'
           ],
-          plugins: ['transform-class-properties'],
+          plugins: ['transform-class-properties', 'transform-object-rest-spread'],
           env: {
             production: {
               plugins: [

@@ -1,0 +1,15 @@
+.Avatar {
+  border-radius: 50%;
+  background-color: #D4DAE1;
+  border: none;
+  display: block;
+  max-width: 100%;
+  }
+
+.Avatar--ios {
+  font-family: map(fontFamilies, ios)
+  }
+
+.Avatar--android {
+  font-family: map(fontFamilies, android)
+  }

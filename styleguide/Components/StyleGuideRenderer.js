@@ -4,7 +4,6 @@ import Logo from 'react-styleguidist/lib/rsg-components/Logo';
 import Markdown from 'react-styleguidist/lib/rsg-components/Markdown';
 import Styled from 'react-styleguidist/lib/rsg-components/Styled';
 import cx from 'classnames';
-import {uaList} from '../setup';
 import pkg from '../../package.json';
 
 const styles = ({ color, fontFamily, fontSize, sidebarWidth, mq, space, maxWidth }) => ({
@@ -82,8 +81,8 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
               window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
               window.location.reload();
             } }>
-              <option value={uaList.ios} selected={window.navigator.userAgent === uaList.ios}>ios</option>
-              <option value={uaList.android} selected={window.navigator.userAgent === uaList.android}>android</option>
+              <option value={window.uaList.ios} selected={window.navigator.userAgent === window.uaList.ios}>ios</option>
+              <option value={window.uaList.android} selected={window.navigator.userAgent === window.uaList.android}>android</option>
             </select>
             <div style={{ marginTop: 4 }}>
               Version:&nbsp;{ pkg.version }

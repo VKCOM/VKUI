@@ -7,13 +7,28 @@
       <Group title="Small size">
         <List>
           <ListItem>
-            <Entity size="s" title="Karl Heinrich Marx" description="London" />
+            <Entity 
+              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
+              size="s" 
+              title="Karl Heinrich Marx" 
+              description="London" 
+            />
           </ListItem>
           <ListItem>
-            <Entity size="s" title="Friedrich Engels" description="Wuppertal" />
+            <Entity 
+              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
+              size="s" 
+              title="Friedrich Engels" 
+              description="Wuppertal" 
+            />
           </ListItem>
           <ListItem>
-            <Entity size="s" title="Vladimir Ulyanov" description="Simbirsk" />
+            <Entity 
+              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
+              size="s" 
+              title="Vladimir Ulyanov" 
+              description="Simbirsk" 
+            />
           </ListItem>
         </List>
       </Group>
@@ -21,13 +36,28 @@
       <Group title="Medium size">
         <List>
           <ListItem>
-            <Entity size="m" title="Karl Heinrich Marx" description="London" />
+            <Entity 
+              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
+              size="m" 
+              title="Karl Heinrich Marx" 
+              description="London" 
+            />
           </ListItem>
           <ListItem>
-            <Entity size="m" title="Friedrich Engels" description="Wuppertal" />
+            <Entity 
+              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
+              size="m" 
+              title="Friedrich Engels" 
+              description="Wuppertal" 
+            />
           </ListItem>
           <ListItem>
-            <Entity size="m" title="Vladimir Ulyanov" description="Simbirsk" />
+            <Entity 
+              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
+              size="m" 
+              title="Vladimir Ulyanov" 
+              description="Simbirsk" 
+            />
           </ListItem>
         </List>
       </Group>

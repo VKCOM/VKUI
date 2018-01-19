@@ -1,5 +1,6 @@
 import './lib/polyfills';
 import { values as colors } from './helpers/colors';
+import { families as fontFamilies } from './helpers/fonts';
 
 /**
  * Layout
@@ -54,6 +55,7 @@ export { default as AlertInput } from './components/AlertInput/AlertInput';
 export { default as Gallery } from './components/Gallery/Gallery';
 export { default as Spinner } from './components/Spinner/Spinner';
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
+export { default as Avatar } from './components/Avatar/Avatar';
 
 /**
  * Utils
@@ -70,5 +72,6 @@ export { default as wrapTextNode } from './helpers/wrapTextNode';
 export { default as requestAnimationFrame } from './lib/requestAnimationFrame';
 export { isWebView } from './lib/webview';
 export { colors };
+export { fontFamilies };
 
 export const v = process.env.VKUI_VERSION;

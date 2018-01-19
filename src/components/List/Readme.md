@@ -9,7 +9,7 @@
     
     render() {
       return (
-        <View header={{}} activePanel={this.state.activePanel}>
+        <View header activePanel={this.state.activePanel}>
           <ScrollView id="list" header={{ title: 'List' }}>
             <Group title="Simple list">
               <List>
@@ -21,17 +21,33 @@
         
             <Group title="Expandable">
               <List>
-                <ListItem expandable={true} onClick={() => this.setState({ activePanel: 'nothing' })}>Label 1</ListItem>
-                <ListItem expandable={true} onClick={() => this.setState({ activePanel: 'nothing' })}>Label 2</ListItem>
-                <ListItem expandable={true} onClick={() => this.setState({ activePanel: 'nothing' })}>Label 3</ListItem>
+                <ListItem expandable onClick={() => this.setState({ activePanel: 'nothing' })}>Label 1</ListItem>
+                <ListItem expandable onClick={() => this.setState({ activePanel: 'nothing' })}>Label 2</ListItem>
+                <ListItem expandable onClick={() => this.setState({ activePanel: 'nothing' })}>Label 3</ListItem>
               </List>
             </Group>
         
             <Group title="Indicator">
               <List>
-                <ListItem expandable={true} onClick={() => this.setState({ activePanel: 'nothing' })} indicator="Indicator">Feature 1</ListItem>
-                <ListItem expandable={true} onClick={() => this.setState({ activePanel: 'nothing' })} indicator="Off">Feature 2</ListItem>
-                <ListItem expandable={true} onClick={() => this.setState({ activePanel: 'nothing' })} indicator="On">Feature 3</ListItem>
+                <ListItem expandable onClick={() => this.setState({ activePanel: 'nothing' })} indicator="Indicator">Feature 1</ListItem>
+                <ListItem expandable onClick={() => this.setState({ activePanel: 'nothing' })} indicator="Off">Feature 2</ListItem>
+                <ListItem expandable onClick={() => this.setState({ activePanel: 'nothing' })} indicator="On">Feature 3</ListItem>
+              </List>
+            </Group>
+            
+            <Group title="Icons">
+              <List>
+                <ListItem icon={<Icons.info />}>Information</ListItem>
+                <ListItem icon={<Icons.service />}>Services</ListItem>
+                <ListItem icon={<Icons.managers />}>Managers</ListItem>
+              </List>
+            </Group>
+            
+            <Group title="Users list">
+              <List>
+                <ListItem avatar={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Feature 1</ListItem>
+                <ListItem avatar={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Feature 2</ListItem>
+                <ListItem avatar={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Feature 3</ListItem>
               </List>
             </Group>
           </ScrollView>

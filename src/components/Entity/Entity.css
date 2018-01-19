@@ -22,20 +22,6 @@
     width: 48px;
     height: 48px;
     }
-  .Entity--no-photo .Entity__aside {
-    background: #D4DAE1;
-    border-radius: 50%;
-    }
-
-    .Entity__photo {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      }
-    .Entity--small .Entity__photo {
-      width: 48px;
-      height: 48px;
-      }
 
   .Entity__main {
     height: 100%;

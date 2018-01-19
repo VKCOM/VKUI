@@ -16,7 +16,7 @@
               <Entity 
                 title={colors[color]} 
                 description={colorTitles[color]}
-                asideStyle={{ backgroundColor: colors[color] }}
+                avatarProps={{ style: { backgroundColor: colors[color] } }}
               />
             </ListItem>
           )) }

@@ -8,6 +8,7 @@ module.exports = {
     PlaygroundRenderer: path.join(__dirname, 'styleguide/components/PlaygroundRenderer'),
     StyleGuideRenderer: path.join(__dirname, 'styleguide/components/StyleGuideRenderer')
   },
+  template: 'styleguide/index.html',
   sections: [
     {
       name: 'Installation',
@@ -45,7 +46,8 @@ module.exports = {
           './src/components/List/List.js',
           './src/components/ListItem/ListItem.js',
           './src/components/Entity/Entity.js',
-          './src/components/Gallery/Gallery.js'
+          './src/components/Gallery/Gallery.js',
+          './src/components/Avatar/Avatar.js'
         ]
       }, {
         name: 'Forms',
