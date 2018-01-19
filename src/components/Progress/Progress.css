@@ -1,0 +1,10 @@
+.Progress {
+  border-radius: 2px;
+  background-color: map(colors, backgroundBlue);
+  }
+
+  .Progress__in {
+    height: 4px;
+    border-radius: 2px;
+    transition: width .2s ease;
+    }

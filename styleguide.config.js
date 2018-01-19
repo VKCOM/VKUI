@@ -47,7 +47,8 @@ module.exports = {
           './src/components/ListItem/ListItem.js',
           './src/components/Entity/Entity.js',
           './src/components/Gallery/Gallery.js',
-          './src/components/Avatar/Avatar.js'
+          './src/components/Avatar/Avatar.js',
+          './src/components/Progress/Progress.js'
         ]
       }, {
         name: 'Forms',

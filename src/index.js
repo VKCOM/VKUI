@@ -56,6 +56,7 @@ export { default as Gallery } from './components/Gallery/Gallery';
 export { default as Spinner } from './components/Spinner/Spinner';
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 export { default as Avatar } from './components/Avatar/Avatar';
+export { default as Progress } from './components/Progress/Progress';
 
 /**
  * Utils

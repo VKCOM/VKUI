@@ -83,5 +83,5 @@ const values = {
 };
 
 module.exports = {
-  titles, values
+  titles, values, keys
 };
