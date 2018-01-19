@@ -38,12 +38,6 @@
           vertical-align: top;
           }
 
-      .ListItem__checkbox-marker {
-        display: block;
-        border-radius: 50%;
-        box-sizing: border-box;
-        }
-
     .ListItem__main {
       flex: 1 0 auto;
       overflow: hidden;
@@ -110,9 +104,12 @@
         height: 24px;
         border: 2px solid #c4c8cc;
         margin: 10px 16px 10px 0;
+        display: block;
+        border-radius: 50%;
+        box-sizing: border-box;
         }
 
-      .ListItem__checkbox:checked ~ .ListItem__before .ListItem__checkbox-marker {
+      .ListItem--ios .ListItem__checkbox:checked ~ .ListItem__before .ListItem__checkbox-marker {
         background-color: map(colors, accentBlue);
         border-color: map(colors, accentBlue);
         }
@@ -164,6 +161,22 @@
 
     .ListItem--android .ListItem__main {
       padding: 16px .5em 17px 0;
+      }
+
+    .ListItem--android .ListItem__checkbox-marker {
+      width: 18px;
+      height: 18px;
+      top: 2px;
+      position: relative;
+      border: 2px solid #c4c8cc;
+      display: block;
+      border-radius: 3px;
+      box-sizing: border-box;
+      }
+
+    .ListItem--android .ListItem__checkbox:checked ~ .ListItem__aside .ListItem__checkbox-marker {
+      background-color: map(colors, accentBlue);
+      border-color: map(colors, accentBlue);
       }
 
     .ListItem--android .ListItem__indicator,

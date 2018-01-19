@@ -6,6 +6,9 @@ import classnames from '../../lib/classnames';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
+import { platform, IOS, ANDROID } from '../../lib/platform';
+
+let osname = platform();
 
 const baseClassNames = getClassName('ListItem');
 
@@ -93,7 +96,7 @@ export default class ListItem extends Component {
             />
           }
           <div className="ListItem__before">
-            {selectable && <span className="ListItem__checkbox-marker" />}
+            {selectable && osname === IOS && <span className="ListItem__checkbox-marker" />}
             {icon && <div className="ListItem__icon">{icon}</div>}
             {avatar && <div className="ListItem__avatar">{avatar}</div>}
           </div>
@@ -103,6 +106,7 @@ export default class ListItem extends Component {
           <div className="ListItem__indicator">{indicator}</div>
           <div className="ListItem__aside">
             {asideContent}
+            {selectable && osname === ANDROID && <span className="ListItem__checkbox-marker" />}
           </div>
         </Tappable>
       </li>
