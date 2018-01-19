@@ -3,7 +3,7 @@ position: fixed не дружит с transform: translate на родителе,
 Для удобства есть свойство vertical, с помощью которого можно прижать контент к верху или низу. При этому будут учитываться высота шапки, insets и safe-area-insets. В большинстве случаев нужен именно такой тип позиционирования.
 
   ```
-  <View activePanel="fixedLayout" header={{}}>
+  <View activePanel="fixedLayout" header>
     <ScrollView header={{ title: 'Fixed Layout', noShadow: true }} id="fixedLayout">
       <FixedLayout vertical="top" style={{ padding: 10, background: '#5C9CE6', color: '#fff' }}>
         Sticked to top

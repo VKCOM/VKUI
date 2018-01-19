@@ -1,5 +1,5 @@
 ```jsx
-  <View activePanel="button" header={{}}>
+  <View activePanel="button" header>
     <ScrollView id="button" header={{ title: 'Button' }}>
       <Group title="Appearance">
         <Button appearance="default" onClick={() => {}}>Default button</Button>

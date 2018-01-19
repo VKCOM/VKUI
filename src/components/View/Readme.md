@@ -15,7 +15,7 @@ class Example extends React.Component {
 
   render() {
     return (
-      <View header={{}} activePanel={this.state.activePanel}>
+      <View header activePanel={this.state.activePanel}>
         <ScrollView id="panel1" header={{ title: "Panel 1" }}>
           <div style={{ marginTop: 10 }}>
             <Button onClick={ () => this.setState({ activePanel: 'panel2' }) }>
