@@ -1,6 +1,6 @@
 const querystring = {
   parse: (string = '') => {
-    const matches = /^\?(.+)$/ig.exec(string);
+    const matches = /.+\?(.+)$/ig.exec(string);
     const str = matches && matches[1];
 
     return str ? str
