@@ -96,7 +96,7 @@ export default class ListItem extends Component {
             />
           }
           <div className="ListItem__before">
-            {selectable && osname === IOS && <span className="ListItem__checkbox-marker" />}
+            {selectable && osname === IOS && <div className="ListItem__checkbox-marker" />}
             {icon && <div className="ListItem__icon">{icon}</div>}
             {avatar && <div className="ListItem__avatar">{avatar}</div>}
           </div>
@@ -106,7 +106,7 @@ export default class ListItem extends Component {
           <div className="ListItem__indicator">{indicator}</div>
           <div className="ListItem__aside">
             {asideContent}
-            {selectable && osname === ANDROID && <span className="ListItem__checkbox-marker" />}
+            {selectable && osname === ANDROID && <div className="ListItem__checkbox-marker" />}
           </div>
         </Tappable>
       </li>

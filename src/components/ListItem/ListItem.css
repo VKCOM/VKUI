@@ -102,16 +102,12 @@
       .ListItem--ios .ListItem__checkbox-marker {
         width: 24px;
         height: 24px;
-        border: 2px solid #c4c8cc;
         margin: 10px 16px 10px 0;
-        display: block;
-        border-radius: 50%;
-        box-sizing: border-box;
+        background: inline('./assets/check_circle_off_24.svg') 0 0/100% no-repeat;
         }
 
       .ListItem--ios .ListItem__checkbox:checked ~ .ListItem__before .ListItem__checkbox-marker {
-        background-color: map(colors, accentBlue);
-        border-color: map(colors, accentBlue);
+        background: inline('./assets/check_circle_on_24.svg') 0 0/100% no-repeat;
         }
 
     @media
@@ -164,19 +160,13 @@
       }
 
     .ListItem--android .ListItem__checkbox-marker {
-      width: 18px;
-      height: 18px;
-      top: 2px;
-      position: relative;
-      border: 2px solid #c4c8cc;
-      display: block;
-      border-radius: 3px;
-      box-sizing: border-box;
+      width: 24px;
+      height: 24px;
+      background: inline('./assets/check_box_off_24.svg') 0 0/100% no-repeat;
       }
 
     .ListItem--android .ListItem__checkbox:checked ~ .ListItem__aside .ListItem__checkbox-marker {
-      background-color: map(colors, accentBlue);
-      border-color: map(colors, accentBlue);
+      background: inline('./assets/check_box_on_24.svg') 0 0/100% no-repeat;
       }
 
     .ListItem--android .ListItem__indicator,

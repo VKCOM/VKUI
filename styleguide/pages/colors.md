@@ -15,7 +15,7 @@
             <ListItem key={color}>
               <Entity 
                 title={colors[color]} 
-                description={colorTitles[color]}
+                description={colorKeys[color]}
                 avatarProps={{ style: { backgroundColor: colors[color] } }}
               />
             </ListItem>

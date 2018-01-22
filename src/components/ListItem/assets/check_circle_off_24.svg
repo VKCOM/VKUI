@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>check_off_circle_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="VK-iOS-UI-Kit" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1839.000000, -1274.000000)">
+        <g id="Controls" transform="translate(1765.000000, 1068.000000)" fill="#C4C8CC" fill-rule="nonzero">
+            <g id="List-Checkbox-Off" transform="translate(64.000000, 196.000000)">
+                <path d="M22,10 C28.6288742,10 34,15.372583 34,22 C34,28.6288742 28.627417,34 22,34 C15.3711258,34 10,28.627417 10,22 C10,15.3711258 15.372583,10 22,10 Z M22,11.5 C16.2004422,11.5 11.5,16.200048 11.5,22 C11.5,27.7995578 16.200048,32.5 22,32.5 C27.7995578,32.5 32.5,27.799952 32.5,22 C32.5,16.2004422 27.799952,11.5 22,11.5 Z" id="check_off_circle_24"></path>
+            </g>
+        </g>
+    </g>
+</svg>
