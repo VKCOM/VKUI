@@ -4,63 +4,42 @@
       id="entity"
       header={{ title: 'Entity' }}
     >
-      <Group title="Small size">
-        <List>
-          <ListItem>
-            <Entity 
-              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
-              size="s" 
-              title="Karl Heinrich Marx" 
-              description="London" 
-            />
-          </ListItem>
-          <ListItem>
-            <Entity 
-              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
-              size="s" 
-              title="Friedrich Engels" 
-              description="Wuppertal" 
-            />
-          </ListItem>
-          <ListItem>
-            <Entity 
-              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
-              size="s" 
-              title="Vladimir Ulyanov" 
-              description="Simbirsk" 
-            />
-          </ListItem>
-        </List>
+      <Group title="Title and description">
+        <Pane>
+          <Entity 
+            photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
+            size={48} 
+            title="Karl Heinrich Marx" 
+            description="London" 
+          />
+        </Pane>  
       </Group>
       
-      <Group title="Medium size">
-        <List>
-          <ListItem>
-            <Entity 
-              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
-              size="m" 
+      <Group title="Extra content">   
+        <Pane>     
+          <Entity 
+            photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
+            size={64}
+            title="Karl Heinrich Marx" 
+            description="London" 
+          >
+            <Flex>
+              <Button appearance="vk-primary" wide={false}>Добавить</Button>
+              <Button appearance="vk-secondary" wide={false}>Скрыть</Button>
+            </Flex>
+          </Entity>
+        </Pane>  
+      </Group>
+      
+       <Group title="No photo">
+          <Pane>
+            <Entity
+              size={72}
               title="Karl Heinrich Marx" 
               description="London" 
             />
-          </ListItem>
-          <ListItem>
-            <Entity 
-              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
-              size="m" 
-              title="Friedrich Engels" 
-              description="Wuppertal" 
-            />
-          </ListItem>
-          <ListItem>
-            <Entity 
-              photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" 
-              size="m" 
-              title="Vladimir Ulyanov" 
-              description="Simbirsk" 
-            />
-          </ListItem>
-        </List>
-      </Group>
+          </Pane>  
+        </Group>
     </ScrollView>
   </View>
 ```

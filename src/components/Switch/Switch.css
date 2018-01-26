@@ -1,42 +1,42 @@
 @import '../../styles/constants.css';
 
-.Checkbox {
+.Switch {
   display: block;
   margin: -11px -15px;
   padding: 8px 15px;
   }
 
-  .Checkbox__self {
+  .Switch__self {
     display: none;
     }
 
-  .Checkbox__pseudo {
+  .Switch__pseudo {
     position: relative;
     display: block;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-tap-highlight-color: transparent;
     }
-  .Checkbox__self:checked + .Checkbox__pseudo {
+  .Switch__self:checked + .Switch__pseudo {
 
     }
-  .Checkbox__self[disabled] + .Checkbox__pseudo {
+  .Switch__self[disabled] + .Switch__pseudo {
 
     }
-  .Checkbox__pseudo::before {
+  .Switch__pseudo::before {
     position: absolute;
     content: '';
     transition: transform .1s ease;
     }
-  .Checkbox__self:checked + .Checkbox__pseudo::before {
+  .Switch__self:checked + .Switch__pseudo::before {
     transform: translateX(20px);
     }
 
 /**
- * iOS Checkbox
+ * iOS Switch
  */
-.Checkbox--ios {}
+.Switch--ios {}
 
-  .Checkbox--ios .Checkbox__pseudo {
+  .Switch--ios .Switch__pseudo {
     width: 48px;
     height: 28px;
     border: 1px solid #E6E6E6;
@@ -47,15 +47,15 @@
       border-color .1s ease;
     }
 
-  .Checkbox--ios .Checkbox__self:checked + .Checkbox__pseudo {
+  .Switch--ios .Switch__self:checked + .Switch__pseudo {
     border-color: #4CD864;
     background: #4CD864;
     }
-  .Checkbox--ios .Checkbox__self[disabled] + .Checkbox__pseudo {
+  .Switch--ios .Switch__self[disabled] + .Switch__pseudo {
     border-color: #ddd;
     background: #ddd;
     }
-  .Checkbox--ios .Checkbox__pseudo::before {
+  .Switch--ios .Switch__pseudo::before {
     top: 0;
     left: 0;
     width: 28px;
@@ -66,11 +66,11 @@
     }
 
 /**
- * Android Checkbox
+ * Android Switch
  */
-.Checkbox--android {}
+.Switch--android {}
 
-  .Checkbox--android .Checkbox__pseudo {
+  .Switch--android .Switch__pseudo {
     width: 34px;
     height: 14px;
     background: #c6c5c5;
@@ -78,13 +78,13 @@
     transition: background-color .1s ease;
     }
 
-  .Checkbox--android .Checkbox__self:checked + .Checkbox__pseudo {
+  .Switch--android .Switch__self:checked + .Switch__pseudo {
     background: #a8bfdb;
     }
-  .Checkbox--android .Checkbox__self[disabled] + .Checkbox__pseudo {
+  .Switch--android .Switch__self[disabled] + .Switch__pseudo {
     opacity: .5;
     }
-  .Checkbox--android .Checkbox__pseudo::before {
+  .Switch--android .Switch__pseudo::before {
     top: -3px;
     left: -3px;
     width: 20px;
@@ -93,6 +93,6 @@
     border-radius: 10px;
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 2px 2px 0 rgba(0, 0, 0, .24);
     }
-  .Checkbox--android .Checkbox__self:checked + .Checkbox__pseudo::before {
+  .Switch--android .Switch__self:checked + .Switch__pseudo::before {
     background: var(--vk-color);
     }

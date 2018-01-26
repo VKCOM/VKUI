@@ -2,59 +2,31 @@
 
 .Entity {
   position: relative;
-  height: 64px;
-  padding: 0 0 0 75px;
   text-align: left;
-  }
-.Entity--small {
-  height: 48px;
-  padding: 0 0 0 60px;
+  display: flex;
   }
 
   .Entity__aside {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 64px;
-    height: 64px;
-    }
-  .Entity--small .Entity__aside {
-    width: 48px;
-    height: 48px;
+    margin-right: 12px;
     }
 
   .Entity__main {
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     }
-
-    .Entity__title,
-    .Entity__description {
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      line-height: 20px;
-      white-space: nowrap;
-      }
 
     .Entity__title {
       font-size: 15px;
-      font-weight: 500;
-      color: #2C2D2E;
-      margin: -2px 0 1px;
+      line-height: 20px;
+      font-weight: 600;
+      color: map(colors, mutedBlack);
       }
 
     .Entity__description {
       font-size: 14px;
-      color: #909499;
+      line-height: 16px;
+      color: map(colors, subheadGray);
       }
 
-.Entity--ios {
-  margin: 0 15px;
-  }
-
-.Entity--android {
-  margin: 0 16px;
-  }
+    .Entity__content {
+      margin-top: 6px;
+      }

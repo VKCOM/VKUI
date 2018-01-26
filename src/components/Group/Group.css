@@ -1,42 +1,83 @@
 @import '../../styles/constants.css';
 
 .Group {
-  margin: 0;
-  padding: 15px 0 15px;
+
   }
 
   .Group__title {
     margin: 0;
     }
 
+  .Group__description a {
+    text-decoration: none;
+    color: var(--vk-color);
+    }
+
+/**
+ * iOS
+ */
+.Group--ios.Group {
+  margin: 20px 0;
+  }
+
   .Group--ios .Group__title {
-    font: 13px/18px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
     text-transform: uppercase;
-    color: #6d6d72;
-    padding: 0 15px 7px;
+    color: map(colors, subheadGray);
+    padding: 14px 15px 8px;
+    font-weight: 400;
     }
 
-  .Group__content {}
-
-  .Group__description {
-    font: 13px/16px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-    color: #6D6D72;
-    padding: 7px 15px 0;
+  .Group--ios .Group__description {
+    font-size: 14px;
+    line-height: 16px;
+    color: map(colors, subheadGray);
+    padding: 8px 15px;
     }
-
-    .Group__description a {
-      text-decoration: none;
-      color: var(--vk-color);
-      }
 
 /**
  * Android
  */
-.Group--android {}
+
+.View__panel--theme-white {
+
+  }
+
+.Group--android {
+  margin: 8px 0;
+  }
+
+  .Group--android:first-child {
+    margin-top: 0;
+    }
 
   .Group--android .Group__title {
-    font: 500 14px/16px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-    color: #5181b8;
-    padding: 0 16px 17px;
+    font-size: 13px;
+    line-height: 15px;
+    font-weight: 500;
+    color: map(colors, captionGray);
+    padding: 15px 16px 14px;
+    text-transform: uppercase;
+    background-color: #fff;
+    }
+
+  .Group--android .Group__title + .Group__content,
+  .Group--android .Group__title + .Group__content .Pane {
+    padding-top: 0;
+    }
+
+  .Group--android .Group__content {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 0 2px 0 rgba(0, 0, 0, 0.03);
+    }
+
+  .Group--android .Group__description {
+    font-size: 13px;
+    line-height: 16px;
+    color: map(colors, captionGray);
+    padding: 16px 16px 8px;
     }
 

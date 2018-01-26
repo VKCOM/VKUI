@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
-import Avatar from '../Avatar/Avatar';
+import Avatar, {sizes as avatarSizes} from '../Avatar/Avatar';
 
 const baseClassNames = getClassName('Entity');
 
@@ -13,19 +13,17 @@ export default class Entity extends Component {
 
   static propTypes = {
     style: PropTypes.object,
-    alignment: PropTypes.oneOf(['left', 'center', 'right']),
-    size: PropTypes.oneOf(['s', 'm']),
+    size: PropTypes.oneOf(['s', 'm', ...avatarSizes]),
     photo: PropTypes.string,
     title: PropTypes.node,
     description: PropTypes.node,
     className: PropTypes.string,
-    avatarProps: PropTypes.shape(Avatar.propTypes)
+    avatarProps: PropTypes.shape(Avatar.propTypes),
+    children: PropTypes.node
   };
 
   static defaultProps = {
-    style: {},
-    alignment: 'left',
-    size: 's',
+    size: 48,
     photo: '',
     title: '',
     description: ''
@@ -34,21 +32,22 @@ export default class Entity extends Component {
   get avatarSize () {
     switch (this.props.size) {
       case 'm':
+        console.warn('size m is deprecated. Use 64 instead');
         return 64;
       case 's':
+        console.warn('size m is deprecated. Use 48 instead');
         return 48;
+      default:
+        return this.props.size;
     }
   }
 
   render () {
-    const { className, style, size, photo, title, description, avatarProps } = this.props;
-    const modifiers = {
-      'Entity--small': size === 's'
-    };
+    const { className, style, photo, title, description, avatarProps, children } = this.props;
 
     return (
       <div
-        className={classnames(baseClassNames, modifiers, className)}
+        className={classnames(baseClassNames, className)}
         style={style}
       >
         <div className="Entity__aside">
@@ -57,6 +56,11 @@ export default class Entity extends Component {
         <div className="Entity__main">
           {title && <div className="Entity__title">{title}</div>}
           {description && <div className="Entity__description">{description}</div>}
+          {children &&
+            <div className="Entity__content">
+              {children}
+            </div>
+          }
         </div>
       </div>
     );

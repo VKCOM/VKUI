@@ -43,7 +43,7 @@ export { default as Spinner } from './components/Spinner/Spinner';
  * Forms
  */
 export { default as FormLayout } from './components/FormLayout/FormLayout';
-export { default as Checkbox } from './components/Checkbox/Checkbox';
+export { default as Switch } from './components/Switch/Switch';
 export { default as File } from './components/File/File';
 export { default as Input } from './components/Input/Input';
 export { default as Textarea } from './components/Textarea/Textarea';

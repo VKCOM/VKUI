@@ -17,25 +17,25 @@ class Example extends React.Component {
     return (
       <View header activePanel={this.state.activePanel}>
         <ScrollView id="panel1" header={{ title: "Panel 1" }}>
-          <div style={{ marginTop: 10 }}>
+          <Group>
             <Button onClick={ () => this.setState({ activePanel: 'panel2' }) }>
               Go to panel 2
             </Button>
-          </div>
+          </Group>  
         </ScrollView>
         <ScrollView id="panel2" header={{ title: "Panel 2" }}>
-          <div style={{ marginTop: 10 }}>
+          <Group>
             <Button onClick={ () => this.setState({ activePanel: 'panel3' }) }>
               Go to panel 3
             </Button>
-          </div>
+          </Group>  
         </ScrollView>
         <ScrollView id="panel3" header={{ title: "Panel 3" }}>
-          <div style={{ marginTop: 10 }}>
+          <Group>
             <Button onClick={ () => this.setState({ activePanel: 'panel1' }) }>
               Back to panel 1
             </Button>
-          </div>
+          </Group>  
         </ScrollView>
       </View>
     )

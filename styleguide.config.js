@@ -54,7 +54,7 @@ module.exports = {
       }, {
         name: 'Forms',
         components: () => [
-
+          './src/components/Switch/Switch.js'
         ]
       }, {
         name: 'Helpers',

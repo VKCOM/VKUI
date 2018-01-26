@@ -1,12 +1,12 @@
-import './Checkbox.css';
+import './Switch.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 
-const baseClassNames = getClassName('Checkbox');
+const baseClassNames = getClassName('Switch');
 
-export default class Checkbox extends Component {
+export default class Switch extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -37,11 +37,11 @@ export default class Checkbox extends Component {
         <input
           {...removeObjectKeys(this.props, ['onChange'])}
           type="checkbox"
-          className="Checkbox__self"
+          className="Switch__self"
           checked={this.state.checked}
           onChange={this.changeHandler}
         />
-        <span className="Checkbox__pseudo" />
+        <span className="Switch__pseudo" />
       </label>
     );
   }
