@@ -1,4 +1,4 @@
-Палитра используемых цветов
+Палитра используемых цветов.
 
 ```jsx static
   import { colors } from '@vkontakte/vkui';

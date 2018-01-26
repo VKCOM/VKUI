@@ -1,0 +1,10 @@
+.InfoRow {
+
+  }
+
+  .InfoRow__title {
+    font-size: 14px;
+    line-height: 16px;
+    color: map(colors, subheadGray);
+    margin-bottom: 4px;
+    }

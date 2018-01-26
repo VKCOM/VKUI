@@ -19,17 +19,9 @@
       
       <Group>
         <Pane>
-          <div
-            style={{
-              fontSize: 14,
-              lineHeight: '16px',
-              marginBottom: 4,
-              color: colors.captionGray
-            }}
-          >
-            Общий бюджет
-          </div>
-          3000 р.
+          <InfoRow title="Общий бюджет">
+            3000 р.
+          </InfoRow>
         </Pane>
       </Group>
     </ScrollView>

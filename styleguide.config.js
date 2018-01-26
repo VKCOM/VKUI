@@ -46,6 +46,7 @@ module.exports = {
           './src/components/Pane/Pane.js',
           './src/components/List/List.js',
           './src/components/ListItem/ListItem.js',
+          './src/components/InfoRow/InfoRow.js',
           './src/components/Entity/Entity.js',
           './src/components/Gallery/Gallery.js',
           './src/components/Avatar/Avatar.js',
