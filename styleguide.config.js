@@ -43,6 +43,7 @@ module.exports = {
         components: () => [
           './src/components/Button/Button.js',
           './src/components/Group/Group.js',
+          './src/components/Pane/Pane.js',
           './src/components/List/List.js',
           './src/components/ListItem/ListItem.js',
           './src/components/Entity/Entity.js',
@@ -76,6 +77,7 @@ module.exports = {
   },
   require: [path.resolve(__dirname, 'styleguide/setup.js')],
   webpackConfig: Object.assign({}, require('./webpack.config'), {
+    externals: {},
     resolve: {
       alias: {
         'rsg-components/Preview': path.join(__dirname, 'styleguide/Components/Preview')

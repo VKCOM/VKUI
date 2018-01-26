@@ -2,8 +2,14 @@
 
 .View--android .View__panel,
 .View--android .ScrollView__in {
+  background: map(colors, backgroundBlue);
+  }
+
+.View--android .View__panel--theme-white,
+.View--android .View__panel--theme-white .ScrollView__in {
   background: #fff;
   }
+
 .View--android.View--header .ScrollView__in {
   padding-top: 56px;
   }

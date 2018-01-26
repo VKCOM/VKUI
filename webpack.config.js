@@ -10,6 +10,7 @@ const autoprefixer = require('autoprefixer');
 const colorsMaps = require('./src/helpers/colors');
 const fontMaps = require('./src/helpers/fonts');
 const pkg = require('./package.json');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -92,7 +93,11 @@ const config = {
   devtool: 'source-map',
   plugins: [
     new ExtractTextPlugin('[name].css')
-  ]
+  ],
+  externals: {
+    'react': 'react',
+    'prop-types': 'prop-types'
+  }
 };
 
 const devConfig = {
@@ -100,7 +105,8 @@ const devConfig = {
     outputPath: path.resolve(__dirname, 'dist'),
     contentBase: path.resolve(__dirname, 'dist'),
     stats: 'errors-only'
-  }
+  },
+  plugins: [new BundleAnalyzerPlugin()]
 };
 
 const prodConfig = {

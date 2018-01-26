@@ -13,7 +13,7 @@
         <List>
           { Object.keys(colors).map((color) => (
             <ListItem key={color}>
-              <Entity 
+              <Entity
                 title={colors[color]} 
                 description={colorKeys[color]}
                 avatarProps={{ style: { backgroundColor: colors[color] } }}

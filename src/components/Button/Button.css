@@ -126,8 +126,9 @@
   font-size: 14px;
   line-height: 16px;
   min-height: 16px;
-  padding: 8px 12px;
-  border-radius: 2px;
+  padding: 7px 12px;
+  font-weight: 500;
+  border-radius: 4px;
   }
 .Button--ios.Button--vk-rich::before,
 .Button--ios.Button--vk-rich::after,

@@ -35,19 +35,19 @@
               </List>
             </Group>
             
-            <Group title="Selectable (Beta)">
-              <List>
-                <ListItem selectable name="selectable-list" value="Feature 1">Feature 1</ListItem>
-                <ListItem selectable name="selectable-list" value="Feature 2">Feature 2</ListItem>
-                <ListItem selectable name="selectable-list" value="Feature 3">Feature 3</ListItem>
-              </List>
-            </Group>
-            
             <Group title="Icons">
               <List>
                 <ListItem icon={<Icons.info />}>Information</ListItem>
                 <ListItem icon={<Icons.service />}>Services</ListItem>
                 <ListItem icon={<Icons.managers />}>Managers</ListItem>
+              </List>
+            </Group>
+            
+            <Group title="Selectable (Beta)">
+              <List>
+                <ListItem selectable name="selectable-list" value="Feature 1">Feature 1</ListItem>
+                <ListItem selectable name="selectable-list" value="Feature 2">Feature 2</ListItem>
+                <ListItem selectable name="selectable-list" value="Feature 3">Feature 3</ListItem>
               </List>
             </Group>
             

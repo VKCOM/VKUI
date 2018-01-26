@@ -2,7 +2,7 @@
 
 .View--ios .View__panel,
 .View--ios .ScrollView__in {
-  background: #efeff4;
+  background: map(colors, backgroundBlue);
   }
 
 .View--ios .View__panel--theme-white,

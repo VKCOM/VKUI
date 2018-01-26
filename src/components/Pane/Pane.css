@@ -1,0 +1,23 @@
+.NewPane--ios {
+  padding: 13px 15px 12px;
+  border-top: 1px solid map(colors, separator);
+  border-bottom: 1px solid map(colors, separator);
+  background-color: #fff;
+  font-size: 16px;
+  line-height: 1.25;
+  }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .NewPane--ios {
+    border-width: .5px;
+    }
+  }
+
+.NewPane--android {
+  background-color: #fff;
+  padding: 14px 16px 15px;
+  }
+
+.NewPane--entity {
+  padding-left: 12px;
+  }

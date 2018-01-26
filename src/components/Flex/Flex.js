@@ -13,8 +13,12 @@ export default function Flex (props) {
   return (
     <div
       className={classnames(baseClassNames, props.className)}
-      style={props.style}
-      {...removeObjectKeys(props, ['className', 'style', 'alignment'])}
+      style={{
+        ...props.style,
+        alignItems: props.align,
+        justifyContent: props.justify
+      }}
+      {...removeObjectKeys(props, ['className', 'style', 'alignment', 'align', 'justify'])}
     >
       {items.map((item, i) => (
         <div className="Flex__item" key={item.key || item.props.id || `flex-item-${i}`}>
@@ -28,5 +32,7 @@ export default function Flex (props) {
 Flex.propTypes = {
   style: PropTypes.object,
   children: PropTypes.node,
-  className: PropTypes.string
+  className: PropTypes.string,
+  align: PropTypes.string,
+  justify: PropTypes.string
 };

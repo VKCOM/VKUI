@@ -1,10 +1,12 @@
 import React from 'react';
 import { sizes } from '../src/components/Avatar/Avatar';
-import { values as colors, titles as colorTitles } from '../src/helpers/colors'
+import { values as colors, titles as colorTitles, keys as colorKeys } from '../src/helpers/colors'
 
 window.colors = colors;
 
 window.colorTitles = colorTitles;
+
+window.colorKeys = colorKeys;
 
 window.Icons = {
   info: () => <svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"><g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd"><path d="M0 0L24 0 24 24 0 24"/><path d="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 L12,2 Z M11,16 L11,12 L11,12 C11,11.4477153 11.4477153,11 12,11 L12,11 L12,11 C12.5522847,11 13,11.4477153 13,12 L13,16 L13,16 C13,16.5522847 12.5522847,17 12,17 L12,17 L12,17 C11.4477153,17 11,16.5522847 11,16 Z M10.7501552,8.24997827 L10.7501552,7.75019566 L10.7501552,7.75019566 C10.7501552,7.19791091 11.1978704,6.75019566 11.7501552,6.75019566 L12.250039,6.75019566 L12.250039,6.75019566 C12.8023237,6.75019566 13.250039,7.19791091 13.250039,7.75019566 L13.250039,8.24997827 L13.250039,8.24997827 C13.250039,8.80226302 12.8023237,9.24997827 12.250039,9.24997827 L11.7501552,9.24997827 L11.7501552,9.24997827 C11.1978704,9.24997827 10.7501552,8.80226302 10.7501552,8.24997827 Z" fill="#AAAEB3"/></g></svg>,

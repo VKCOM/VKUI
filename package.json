@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "0.11.2",
+  "version": "0.12.0",
   "main": "dist/vkui.js",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
@@ -37,21 +37,20 @@
     "stylelint": "^7.2.0",
     "stylelint-config-standard": "^16.0.0",
     "webpack": "^2.2.1",
+    "webpack-bundle-analyzer": "^2.9.2",
     "webpack-merge": "^4.0.0",
     "webpack-stats-plugin": "^0.1.4"
   },
-  "dependencies": {
-    "prop-types": "^15.5.8"
-  },
   "peerDependencies": {
-    "react": "15.4.2"
+    "react": "15.4.2",
+    "prop-types": "^15.5.8"
   },
   "scripts": {
     "prepublish": "npm run build",
     "styleguide": "NODE_ENV=production styleguidist server",
     "styleguide:build": "NODE_ENV=production styleguidist build",
-    "build": "NODE_ENV=production webpack --bail --json > stats.json",
-    "dev": "webpack --hot --watch",
+    "build": "NODE_ENV=production webpack --bail",
+    "dev": "webpack --watch --hot",
     "clear": "rm -rf dist/*",
     "test": "eslint . && ./node_modules/.bin/stylelint ./src/**/*.css"
   }
