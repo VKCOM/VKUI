@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>poll_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M6,8 C7.1045695,8 8,8.8954305 8,10 L8,18 C8,19.1045695 7.1045695,20 6,20 C4.8954305,20 4,19.1045695 4,18 L4,10 C4,8.8954305 4.8954305,8 6,8 Z M18,11 C19.1045695,11 20,11.8954305 20,13 L20,18 C20,19.1045695 19.1045695,20 18,20 C16.8954305,20 16,19.1045695 16,18 L16,13 C16,11.8954305 16.8954305,11 18,11 Z M12,2 C13.1045695,2 14,2.8954305 14,4 L14,18 C14,19.1045695 13.1045695,20 12,20 C10.8954305,20 10,19.1045695 10,18 L10,4 C10,2.8954305 10.8954305,2 12,2 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-836.000000, -461.000000)">
+        <g id="poll_24" transform="translate(836.000000, 461.000000)">
+            <rect id="Mask" opacity="0.4" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

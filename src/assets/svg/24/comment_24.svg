@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>comment_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M13,16.9985 L9.28040962,20.7192063 C8.98756033,21.0121434 8.5126866,21.0122146 8.21974946,20.7193653 C8.07904851,20.5787066 8,20.3879071 8,20.1889557 L8,16.9985 L6,16.9985 C4.8954305,16.9985 4,16.1030695 4,14.9985 L4,6.99986357 C4,5.89529407 4.8954305,4.99986357 6,4.99986357 L18,4.99986357 C19.1045695,4.99986357 20,5.89529407 20,6.99986357 L20,14.9985 C20,16.1030695 19.1045695,16.9985 18,16.9985 L13,16.9985 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-596.000000, -461.000000)">
+        <g id="comment_24" transform="translate(596.000000, 461.000000)">
+            <rect id="Mask" opacity="0.34" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

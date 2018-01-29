@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>report_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M15.73,3 L21,8.27 L21,15.73 L15.73,21 L8.27,21 L3,15.73 L3,8.27 L8.27,3 L15.73,3 Z M11.75,14.75 C11.1977153,14.75 10.75,15.1977153 10.75,15.75 L10.75,16.25 C10.75,16.8022847 11.1977153,17.25 11.75,17.25 L12.25,17.25 C12.8022847,17.25 13.25,16.8022847 13.25,16.25 L13.25,15.75 C13.25,15.1977153 12.8022847,14.75 12.25,14.75 L11.75,14.75 Z M12,13 C12.5522847,13 13,12.5522847 13,12 L13,8 C13,7.44771525 12.5522847,7 12,7 C11.4477153,7 11,7.44771525 11,8 L11,12 C11,12.5522847 11.4477153,13 12,13 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-836.000000, -317.000000)">
+        <g id="report_24" transform="translate(836.000000, 317.000000)">
+            <polygon id="Mask" points="0 0 24 0 24 24 0 24"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

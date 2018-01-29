@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>discussions_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M19,7 L19,12.985 C19,14.6501385 17.6501385,16 15.985,16 L7,16 L7,17.4925 C7,18.3250693 7.67493074,19 8.5075,19 L18,19 L21.1421788,22.1421788 C21.3384173,22.3384173 21.6565827,22.3384173 21.8528212,22.1421788 C21.9470582,22.0479418 22,21.920129 22,21.7868577 L22,8.5075 C22,7.67493074 21.3250693,7 20.4925,7 L19,7 Z M14.99,3 L3.5075,3 C2.67493074,3 2,3.67493074 2,4.5075 L2,16.7868577 C2,17.0643808 2.22497691,17.2893577 2.5025,17.2893577 C2.63577129,17.2893577 2.76358413,17.2364159 2.85782116,17.1421788 L6,14 L15.4925,14 C16.3250693,14 17,13.3250693 17,12.4925 L17,5.01 C17,3.89990765 16.1000923,3 14.99,3 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-596.000000, -557.000000)">
+        <g id="discussions_24" transform="translate(596.000000, 557.000000)">
+            <polygon id="Mask" points="0 0 24 0 24 24 0 24"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

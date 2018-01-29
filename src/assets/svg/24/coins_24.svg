@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>coins_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M4.04673236,11.4564107 C5.87383172,13.6102991 8.75659251,15 12,15 C15.2434075,15 18.1261683,13.6102991 19.9532676,11.4564107 C19.9841533,11.6349573 20,11.816322 20,12 C20,14.7614237 16.418278,17 12,17 C7.581722,17 4,14.7614237 4,12 C4,11.816322 4.01584674,11.6349573 4.04673236,11.4564107 Z M4.04673236,15.4564107 C5.87383172,17.6102991 8.75659251,19 12,19 C15.2434075,19 18.1261683,17.6102991 19.9532676,15.4564107 C19.9841533,15.6349573 20,15.816322 20,16 C20,18.7614237 16.418278,21 12,21 C7.581722,21 4,18.7614237 4,16 C4,15.816322 4.01584674,15.6349573 4.04673236,15.4564107 Z M12,13 C7.581722,13 4,10.7614237 4,8 C4,5.23857625 7.581722,3 12,3 C16.418278,3 20,5.23857625 20,8 C20,10.7614237 16.418278,13 12,13 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-740.000000, -509.000000)">
+        <g id="coins_24" transform="translate(740.000000, 509.000000)">
+            <rect id="Mask" opacity="0.4" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>
