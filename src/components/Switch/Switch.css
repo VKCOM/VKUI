@@ -2,7 +2,6 @@
 
 .Switch {
   display: block;
-  margin: -11px -15px;
   padding: 8px 15px;
   }
 
@@ -34,7 +33,9 @@
 /**
  * iOS Switch
  */
-.Switch--ios {}
+.Switch--ios {
+  margin: -12px -15px;
+  }
 
   .Switch--ios .Switch__pseudo {
     width: 48px;
@@ -68,7 +69,9 @@
 /**
  * Android Switch
  */
-.Switch--android {}
+.Switch--android {
+  margin: -4px -15px;
+  }
 
   .Switch--android .Switch__pseudo {
     width: 34px;
