@@ -8,7 +8,7 @@ const querystring = {
       .reduce((acc, item) => {
         const param = item.split('=');
 
-        acc[param[0]] = param[1];
+        acc[param[0]] = decodeURIComponent(param[1]);
 
         return acc;
       }, {}) : {};
@@ -18,12 +18,12 @@ const querystring = {
       const type = typeof data[item];
 
       if (type === 'string' || type === 'number' || type === 'boolean') {
-        acc.push(item + '=' + encodeURIComponent(data[item]));
+        acc.push(item + '=' + data[item]);
       }
 
       if (Array.isArray(data[item])) {
         data[item].forEach(value => {
-          acc.push(item + '[]=' + encodeURIComponent(value));
+          acc.push(item + '[]=' + value);
         });
       }
 

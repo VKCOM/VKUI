@@ -79,6 +79,7 @@ export default class ListItem extends Component {
       'checked',
       'initialChecked',
       'onChange',
+      'avatar',
       'onClick'
     ]);
 

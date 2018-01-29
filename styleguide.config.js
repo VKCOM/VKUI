@@ -55,14 +55,19 @@ module.exports = {
       }, {
         name: 'Forms',
         components: () => [
-          './src/components/Switch/Switch.js'
+          './src/components/FormLayout/FormLayout.js',
+          './src/components/Switch/Switch.js',
+          './src/components/Slider/Slider.js',
+          './src/components/Radio/Radio.js',
+          './src/components/Input/Input.js',
+          './src/components/Textarea/Textarea.js',
+          './src/components/File/File.js'
         ]
       }, {
         name: 'Helpers',
         components: () => [
           './src/components/Div/Div.js',
           './src/components/Flex/Flex.js',
-          // './src/components/Icon/Icon.js',
           './src/components/Tappable/Tappable.js',
           './src/components/BackButton/BackButton.js'
         ]
