@@ -38,8 +38,7 @@
             <Group title="Icons">
               <List>
                 <ListItem icon={<Icon24About />}>Information</ListItem>
-                <ListItem icon={<Icons.service />}>Services</ListItem>
-                <ListItem icon={<Icons.managers />}>Managers</ListItem>
+                <ListItem icon={<Icon24Services />}>Services</ListItem>
               </List>
             </Group>
             

@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "1.1.0-rc",
+  "version": "1.1.0-rc1",
   "main": "dist/vkui.js",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
@@ -47,13 +47,16 @@
   },
   "peerDependencies": {
     "react": "15.4.2",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.5.8"
+  },
+  "dependencies": {
     "svg-sprite-loader": "^3.6.2"
   },
   "scripts": {
-    "prepublish": "npm run build",
+    "prepublish": "npm run build && npm run icons",
     "styleguide": "NODE_ENV=production styleguidist server",
     "styleguide:build": "NODE_ENV=production styleguidist build",
+    "icons": "webpack --config=webpack.svg-config.js -p",
     "build": "NODE_ENV=production webpack --bail",
     "dev": "webpack --watch",
     "clear": "rm -rf dist/*",
