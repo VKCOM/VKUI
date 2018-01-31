@@ -9,6 +9,7 @@ dist/*.hot-update.*
 .idea
 src
 webpack.config.js
+webpack.svg-config.js
 .eslintrc
 .eslintignore
 .stylelintrc
