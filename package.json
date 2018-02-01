@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "1.1.0-rc1",
+  "version": "1.1.0-rc2",
   "main": "dist/vkui.js",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
@@ -53,12 +53,15 @@
     "svg-sprite-loader": "^3.6.2"
   },
   "scripts": {
-    "prepublish": "npm run build && npm run icons",
-    "styleguide": "NODE_ENV=production styleguidist server",
+    "prepublish": "npm clear && npm run build && npm run icons",
+
+    "styleguide": "NODE_ENV=production styleguidist server --config=styleguide/config.js",
     "styleguide:build": "NODE_ENV=production styleguidist build",
-    "icons": "webpack --config=webpack.svg-config.js -p",
-    "build": "NODE_ENV=production webpack --bail",
-    "dev": "webpack --watch",
+
+    "icons": "webpack --config=build/webpack.svg-config.js -p",
+    "build": "NODE_ENV=production webpack --config=build/webpack.config.js --bail",
+
+    "dev": "webpack --config=build/webpack.config.js --watch",
     "clear": "rm -rf dist/*",
     "test": "eslint . && ./node_modules/.bin/stylelint ./src/**/*.css"
   }
