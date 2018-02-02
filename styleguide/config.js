@@ -18,7 +18,7 @@ module.exports = {
       content: './pages/installation.md'
     }, {
       name: 'Hello World',
-      content: 'README.md'
+      content: '../README.md'
     }, {
       name: 'The concept',
       content: './pages/concept.md'
