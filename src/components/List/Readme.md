@@ -37,9 +37,8 @@
             
             <Group title="Icons">
               <List>
-                <ListItem icon={<Icons.info />}>Information</ListItem>
-                <ListItem icon={<Icons.service />}>Services</ListItem>
-                <ListItem icon={<Icons.managers />}>Managers</ListItem>
+                <ListItem icon={<Icon.about_24 />}>Information</ListItem>
+                <ListItem icon={<Icon.services_24 />}>Services</ListItem>
               </List>
             </Group>
             

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>comment_outline_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M9.93400559,20.8782955 L13.1296729,17.4038034 C13.3663743,17.1464496 13.7000458,17 14.0497008,17 L18.25,17 C18.9403559,17 19.5,16.4403559 19.5,15.75 L19.5,7.25 C19.5,6.55964406 18.9403559,6 18.25,6 L5.75,6 C5.05964406,6 4.5,6.55964406 4.5,7.25 L4.5,15.75 C4.5,16.4403559 5.05964406,17 5.75,17 L8.749,17 C9.33188292,17.1681171 9.33188292,17.1681171 9.5,17.751 L9.5,20.7090562 C9.5,20.8471274 9.61192881,20.9590562 9.75,20.9590562 C9.81993099,20.9590562 9.88666529,20.9297662 9.93400559,20.8782955 Z M11.0380391,21.8937313 C10.7066571,22.2540268 10.239517,22.4590562 9.75,22.4590562 C8.78350169,22.4590562 8,21.6755545 8,20.7090562 L8,18.5 L5.75,18.5 C4.23121694,18.5 3,17.2687831 3,15.75 L3,7.25 C3,5.73121694 4.23121694,4.5 5.75,4.5 L18.25,4.5 C19.7687831,4.5 21,5.73121694 21,7.25 L21,15.75 C21,17.2687831 19.7687831,18.5 18.25,18.5 L14.1594267,18.5 L11.0380391,21.8937313 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-500.000000, -751.000000)">
+        <g id="comment_outline_24" transform="translate(500.000000, 751.000000)">
+            <rect id="Mask" opacity="0.4" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

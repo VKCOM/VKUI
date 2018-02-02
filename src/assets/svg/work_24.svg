@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>work_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M16,8 L16,6 C16,4.89 15.11,4 14,4 L10,4 C8.89,4 8,4.89 8,6 L8,8 L6,8 C4.8954305,8 4,8.8954305 4,10 L4,17 C4,18.1045695 4.8954305,19 6,19 L18,19 C19.1045695,19 20,18.1045695 20,17 L20,10 C20,8.8954305 19.1045695,8 18,8 L16,8 Z M10,8 L10,6 L14,6 L14,8 L10,8 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-452.000000, -557.000000)">
+        <g id="work_24" transform="translate(452.000000, 557.000000)">
+            <polygon id="Mask" opacity="0.4" points="0 0 24 0 24 24 0 24"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

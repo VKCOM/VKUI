@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>place_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M5,9.5 C5,12.2295634 6.93161531,16.2008794 10.7948459,21.4139482 L10.7948381,21.413954 C11.2880839,22.0795432 12.2275053,22.2192551 12.8930945,21.7260092 C13.0119291,21.6379449 13.1170853,21.5327887 13.2051497,21.4139541 C17.0683832,16.2008825 19,12.2295644 19,9.5 C19,5.63 15.87,2.5 12,2.5 C8.13,2.5 5,5.63 5,9.5 Z M9.5,9.5 C9.5,8.12 10.62,7 12,7 C13.38,7 14.5,8.12 14.5,9.5 C14.5,10.88 13.38,12 12,12 C10.62,12 9.5,10.88 9.5,9.5 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-740.000000, -461.000000)">
+        <g id="place_24" transform="translate(740.000000, 461.000000)">
+            <rect id="Mask" opacity="0.4" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

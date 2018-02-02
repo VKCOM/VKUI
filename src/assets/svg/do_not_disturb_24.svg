@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>do_not_disturb_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M12,20 C7.58,20 4,16.42 4,12 C4,10.15 4.63,8.45 5.69,7.1 L16.9,18.31 C15.55,19.37 13.85,20 12,20 Z M18.31,16.9 L7.1,5.69 C8.45,4.63 10.15,4 12,4 C16.42,4 20,7.58 20,12 C20,13.85 19.37,15.55 18.31,16.9 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-788.000000, -317.000000)">
+        <g id="do_not_disturb_24" transform="translate(788.000000, 317.000000)">
+            <polygon id="Mask" points="0 0 24 0 24 24 0 24"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

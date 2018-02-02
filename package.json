@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "1.0.2",
+  "version": "1.1.0-rc2",
   "main": "dist/vkui.js",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
@@ -22,6 +22,8 @@
     "eslint-plugin-react": "^6.10.0",
     "eslint-plugin-standard": "^2.0.0",
     "extract-text-webpack-plugin": "^2.1.0",
+    "glob": "^7.1.2",
+    "loader-utils": "^1.1.0",
     "postcss-assets": "^4.1.0",
     "postcss-custom-properties": "^5.0.2",
     "postcss-import": "^9.1.0",
@@ -33,24 +35,33 @@
     "react-frame-component": "^2.0.1",
     "react-prefixer": "^2.0.0",
     "react-styleguidist": "^6.1.0",
+    "schema-utils": "^0.4.3",
     "style-loader": "^0.13.2",
     "stylelint": "^7.2.0",
     "stylelint-config-standard": "^16.0.0",
     "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-merge": "^4.0.0",
-    "webpack-stats-plugin": "^0.1.4"
+    "webpack-stats-plugin": "^0.1.4",
+    "xml2js-parser": "^1.1.1"
   },
   "peerDependencies": {
     "react": "15.4.2",
     "prop-types": "^15.5.8"
   },
+  "dependencies": {
+    "svg-sprite-loader": "^3.6.2"
+  },
   "scripts": {
-    "prepublish": "npm run build",
-    "styleguide": "NODE_ENV=production styleguidist server",
+    "prepublish": "npm run clear && npm run build && npm run icons",
+
+    "styleguide": "NODE_ENV=production styleguidist server --config=styleguide/config.js",
     "styleguide:build": "NODE_ENV=production styleguidist build",
-    "build": "NODE_ENV=production webpack --bail",
-    "dev": "webpack --watch --hot",
+
+    "icons": "webpack --config=build/webpack.svg-config.js -p",
+    "build": "NODE_ENV=production webpack --config=build/webpack.config.js --bail",
+
+    "dev": "webpack --config=build/webpack.config.js --watch",
     "clear": "rm -rf dist/*",
     "test": "eslint . && ./node_modules/.bin/stylelint ./src/**/*.css"
   }

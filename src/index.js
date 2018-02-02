@@ -54,7 +54,6 @@ export { default as Select } from './components/Select/Select';
 /**
  * Helpers
  */
-export { default as Icon } from './components/Icon/Icon';
 export { default as Text } from './components/Text/Text';
 export { default as Div } from './components/Div/Div';
 export { default as Flex } from './components/Flex/Flex';

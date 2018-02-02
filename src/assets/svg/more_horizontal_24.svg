@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>more_horizontal_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M18,10 C19.1,10 20,10.9 20,12 C20,13.1 19.1,14 18,14 C16.9,14 16,13.1 16,12 C16,10.9 16.9,10 18,10 L18,10 Z M12,14 C10.9,14 10,13.1 10,12 C10,10.9 10.9,10 12,10 C13.1,10 14,10.9 14,12 C14,13.1 13.1,14 12,14 L12,14 Z M6,14 C4.9,14 4,13.1 4,12 C4,10.9 4.9,10 6,10 C7.1,10 8,10.9 8,12 C8,13.1 7.1,14 6,14 L6,14 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-596.000000, -269.000000)">
+        <g id="more_horizontal_24" transform="translate(596.000000, 269.000000)">
+            <polygon id="Mask" opacity="0.100000001" points="24 0 0 0 0 24 24 24"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

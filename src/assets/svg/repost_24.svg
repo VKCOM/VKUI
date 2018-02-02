@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>repost_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M15,10 L8.5,10 C7.67157288,10 7,10.6715729 7,11.5 L7,15.5 C7,16.3284271 7.67157288,17 8.5,17 L13.5,17 C14.3284271,17 15,17.6715729 15,18.5 C15,19.3284271 14.3284271,20 13.5,20 L8,20 C5.790861,20 4,18.209139 4,16 L4,11 C4,8.790861 5.790861,7 8,7 L15,7 L15,4.65 C15,4.26340068 15.3134007,3.95 15.7,3.95 C15.8514591,3.95 15.9988327,3.99912451 16.12,4.09 L21.2533333,7.94 C21.5626128,8.17195959 21.6252929,8.61072054 21.3933333,8.92 C21.3535354,8.97306397 21.3063973,9.02020203 21.2533333,9.06 L16.12,12.91 C15.8107205,13.1419596 15.3719596,13.0792795 15.14,12.77 C15.0491245,12.6488327 15,12.5014591 15,12.35 L15,10 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-644.000000, -461.000000)">
+        <g id="repost_24" transform="translate(644.000000, 461.000000)">
+            <rect id="Mask" opacity="0.4" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

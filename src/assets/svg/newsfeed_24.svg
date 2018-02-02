@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>newsfeed_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M7,2 L17,2 C19.209139,2 21,3.790861 21,6 L21,18 C21,20.209139 19.209139,22 17,22 L7,22 C4.790861,22 3,20.209139 3,18 L3,6 C3,3.790861 4.790861,2 7,2 Z M7,4 C5.8954305,4 5,4.8954305 5,6 L5,18 C5,19.1045695 5.8954305,20 7,20 L17,20 C18.1045695,20 19,19.1045695 19,18 L19,6 C19,4.8954305 18.1045695,4 17,4 L7,4 Z M8,6 L12,6 C12.5522847,6 13,6.44771525 13,7 C13,7.55228475 12.5522847,8 12,8 L8,8 C7.44771525,8 7,7.55228475 7,7 C7,6.44771525 7.44771525,6 8,6 Z M8,10 L16,10 C16.5522847,10 17,10.4477153 17,11 L17,17 C17,17.5522847 16.5522847,18 16,18 L8,18 C7.44771525,18 7,17.5522847 7,17 L7,11 C7,10.4477153 7.44771525,10 8,10 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-452.000000, -173.000000)">
+        <g id="newsfeed_24" transform="translate(452.000000, 173.000000)">
+            <rect id="Mask" opacity="0.1" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

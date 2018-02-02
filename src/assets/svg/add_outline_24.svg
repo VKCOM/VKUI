@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>add_outline_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M12.5,11.0000409 L19.2500409,11.0000409 C19.6642319,11.0000409 20,11.335809 20,11.75 C20,12.164191 19.6642319,12.4999591 19.2500409,12.4999591 L12.5,12.4999591 L12.5,19.2501196 C12.5,19.6642911 12.1642476,20.0000435 11.7500761,20.0000435 C11.7500616,20.0000435 11.7500471,20.0000435 11.7500326,20.0000435 C11.33583,20.0000195 11.0000652,19.6642352 11.0000652,19.2500326 L11.0000652,12.4999591 L3.74995907,12.4999591 C3.33576811,12.4999591 3,12.164191 3,11.75 C3,11.335809 3.33576811,11.0000409 3.74995907,11.0000409 L11.0000652,11.0000409 L11.0000652,3.74996739 C11.0000652,3.33577184 11.3358371,3 11.7500326,3 C12.1642282,3 12.5,3.33577184 12.5,3.74996739 L12.5,11.0000409 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-740.000000, -751.000000)">
+        <g id="add_outline_24" transform="translate(740.000000, 751.000000)">
+            <rect id="Mask" opacity="0.100000001" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

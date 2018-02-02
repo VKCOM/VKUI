@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>videocam_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M4.5,6 L13.5,6 C14.8807119,6 16,7.11928813 16,8.5 L16,15.5 C16,16.8807119 14.8807119,18 13.5,18 L4.5,18 C3.11928813,18 2,16.8807119 2,15.5 L2,8.5 C2,7.11928813 3.11928813,6 4.5,6 Z M21.9902008,8.05627655 L21.998841,15.9422258 C21.9991739,16.2459822 21.7532004,16.4924953 21.449444,16.4928281 C21.3363938,16.4929519 21.2260515,16.458236 21.1334371,16.393406 L17.2345957,13.664217 C17.087566,13.5612962 17,13.393112 17,13.2136394 L17,10.7860003 C17,10.606728 17.0873718,10.4387054 17.2341313,10.3357481 L21.1243324,7.60662702 C21.3729998,7.43217758 21.7160038,7.49234311 21.8904532,7.7410105 C21.9552537,7.83337974 21.9900771,7.94344409 21.9902008,8.05627655 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-500.000000, -461.000000)">
+        <g id="videocam_24" transform="translate(500.000000, 461.000000)">
+            <polygon id="Mask" points="0 0 24 0 24 24 0 24"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

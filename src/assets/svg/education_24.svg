@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>education_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M21.9956416,8.85998535 L22,8.85998535 L22,15 C22,15.5522847 21.5522847,16 21,16 C20.4477153,16 20,15.5522847 20,15 L20,10.5794228 L12.495627,14.8626505 C12.1884583,15.0379714 11.8115274,15.0379966 11.5043352,14.8627167 L2.5059955,9.72838016 C2.02630427,9.45467454 1.85931995,8.84392571 2.13302558,8.36423448 C2.22172991,8.20877298 2.35053399,8.07996889 2.5059955,7.99126456 L11.5043352,2.85692801 C11.8115274,2.68164813 12.1884583,2.68167331 12.495627,2.85699424 L21.4911742,7.99133078 C21.8141967,8.17570045 21.9953761,8.51291111 21.9956416,8.85998535 Z M18.5,13.7384125 L18.5,16 C18.5,18.7614237 15.5898509,21 12,21 C8.41014913,21 5.5,18.7614237 5.5,16 L5.5,13.7393882 L10.5131594,16.5998323 C11.434736,17.125672 12.5655286,17.1255964 13.4870349,16.5996336 L18.5,13.7384125 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-500.000000, -557.000000)">
+        <g id="education_24" transform="translate(500.000000, 557.000000)">
+            <rect id="Mask" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

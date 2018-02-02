@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>skip_next_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M13,11.2683229 L13,7.45669505 C13,7.06816273 13.3149677,6.75319505 13.7035,6.75319505 C13.8230405,6.75319505 13.9406095,6.78365621 14.0451104,6.84170352 L22.2228501,11.3842068 C22.5625005,11.5728731 22.6848974,12.0011583 22.4962312,12.3408088 C22.432424,12.455679 22.3377203,12.5503827 22.2228501,12.6141899 L14.0451104,17.1566932 C13.70546,17.3453594 13.2771747,17.2229625 13.0885085,16.8833121 C13.0304612,16.7788112 13,16.6612422 13,16.5417017 L13,12.7300738 L5.04552288,17.155546 C4.70599907,17.34444 4.27763179,17.2223305 4.08873777,16.8828067 C4.03054265,16.778205 4,16.6604842 4,16.5407838 L4,7.45761295 C4,7.06908063 4.31496768,6.75411295 4.7035,6.75411295 C4.82320038,6.75411295 4.94092121,6.7846556 5.04552288,6.84285072 L13,11.2683229 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-596.000000, -607.000000)">
+        <g id="skip_next_24" transform="translate(596.000000, 607.000000)">
+            <rect id="Mask" opacity="0.4" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>
