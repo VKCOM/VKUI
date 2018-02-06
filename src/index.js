@@ -8,6 +8,7 @@ import { families as fontFamilies } from './helpers/fonts';
 export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export { default as ScrollView } from './components/ScrollView/ScrollView';
+export { default as HeaderButton } from './components/HeaderButton/HeaderButton';
 export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
 
 /**

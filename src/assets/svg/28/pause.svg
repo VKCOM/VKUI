@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>pause_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M7.29999995,5 L10.7,5 C11.4179702,5 12,5.5820298 12,6.29999995 L12,21.7 C12,22.4179702 11.4179702,23 10.7,23 L7.29999995,23 C6.5820298,23 6,22.4179702 6,21.7 L6,6.29999995 C6,5.5820298 6.5820298,5 7.29999995,5 Z M16.3,5 L19.7,5 C20.4179702,5 21,5.5820298 21,6.29999995 L21,21.7 C21,22.4179702 20.4179702,23 19.7,23 L16.3,23 C15.5820298,23 15,22.4179702 15,21.7 L15,6.29999995 C15,5.5820298 15.5820298,5 16.3,5 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="pause_28">
+            <rect id="Rectangle-737" opacity="0.4" x="0" y="0" width="28" height="28"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

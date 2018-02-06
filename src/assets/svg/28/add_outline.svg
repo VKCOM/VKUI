@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>add_outline_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M15,13 L22,13 C22.5522847,13 23,13.4477153 23,14 C23,14.5522847 22.5522847,15 22,15 L15,15 L15,22 C15,22.5522847 14.5522847,23 14,23 C13.4477153,23 13,22.5522847 13,22 L13,15 L6,15 C5.44771525,15 5,14.5522847 5,14 C5,13.4477153 5.44771525,13 6,13 L13,13 L13,6 C13,5.44771525 13.4477153,5 14,5 C14.5522847,5 15,5.44771525 15,6 L15,13 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="add_outline_28">
+            <rect id="Bounds" opacity="0.100000001" x="0" y="0" width="28" height="28"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

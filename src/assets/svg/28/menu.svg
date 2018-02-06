@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>menu_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M5.25,6.5 L22.75,6.5 C23.4403559,6.5 24,7.05964406 24,7.75 C24,8.44035594 23.4403559,9 22.75,9 L5.25,9 C4.55964406,9 4,8.44035594 4,7.75 C4,7.05964406 4.55964406,6.5 5.25,6.5 Z M5.25,13 L22.75,13 C23.4403559,13 24,13.5596441 24,14.25 C24,14.9403559 23.4403559,15.5 22.75,15.5 L5.25,15.5 C4.55964406,15.5 4,14.9403559 4,14.25 C4,13.5596441 4.55964406,13 5.25,13 Z M5.25,19.5 L22.75,19.5 C23.4403559,19.5 24,20.0596441 24,20.75 C24,21.4403559 23.4403559,22 22.75,22 L5.25,22 C4.55964406,22 4,21.4403559 4,20.75 C4,20.0596441 4.55964406,19.5 5.25,19.5 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="menu_28">
+            <rect id="Bounds" opacity="0.1" x="0" y="0" width="28" height="28"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

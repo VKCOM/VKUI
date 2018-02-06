@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>mention_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 0 28 0 28 28 0 28"></polygon>
+        <path d="M15.26,13.5 L15.71,10.65 C15.47,10.59 15.14,10.53 14.78,10.53 C12.8,10.53 11.24,12.48 11.24,14.79 C11.24,15.93 11.75,16.62 12.71,16.62 C13.85,16.62 15.02,15.24 15.26,13.5 Z M17.84,21.33 L18.35,23.04 C16.55,23.85 14.99,24.12 12.86,24.12 C7.88,24.12 3.5,20.55 3.5,14.67 C3.5,8.55 7.97,3.24 14.72,3.24 C20.03,3.24 23.81,6.87 23.81,11.91 C23.81,16.29 21.35,19.08 18.11,19.08 C16.7,19.08 15.68,18.33 15.53,16.74 L15.47,16.74 C14.51,18.27 13.19,19.08 11.57,19.08 C9.65,19.08 8.21,17.61 8.21,15.12 C8.21,11.46 10.94,8.16 15.26,8.16 C16.58,8.16 18.08,8.49 18.8,8.88 L17.9,14.46 C17.63,16.2 17.84,17.04 18.68,17.07 C19.97,17.13 21.59,15.45 21.59,12 C21.59,8.07 19.07,5.07 14.42,5.07 C9.8,5.07 5.81,8.64 5.81,14.4 C5.81,19.44 8.99,22.26 13.46,22.26 C14.99,22.26 16.64,21.93 17.84,21.33 Z" id="path-3"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="mention_28">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Bounds" opacity="0.4"></g>
+            <mask id="mask-4" fill="white">
+                <use xlink:href="#path-3"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-3"></use>
+        </g>
+    </g>
+</svg>

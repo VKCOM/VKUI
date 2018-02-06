@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>search_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M20.2619588,18.3174151 L24.9722718,23.0277282 C25.5092427,23.5646991 25.5092427,24.4353009 24.9722718,24.9722718 C24.4353009,25.5092427 23.5646991,25.5092427 23.0277282,24.9722718 L18.3174151,20.2619588 C16.8276239,21.3546746 14.9891739,22 13,22 C8.02943725,22 4,17.9705627 4,13 C4,8.02943725 8.02943725,4 13,4 C17.9705627,4 22,8.02943725 22,13 C22,14.9891739 21.3546746,16.8276239 20.2619588,18.3174151 Z M13,19.25 C16.4517797,19.25 19.25,16.4517797 19.25,13 C19.25,9.54822031 16.4517797,6.75 13,6.75 C9.54822031,6.75 6.75,9.54822031 6.75,13 C6.75,16.4517797 9.54822031,19.25 13,19.25 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="search_28">
+            <rect id="Bounds" opacity="0.1" x="0" y="0" width="28" height="28"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

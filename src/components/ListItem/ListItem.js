@@ -28,6 +28,7 @@ export default class ListItem extends Component {
 
   static propTypes = {
     icon: PropTypes.node,
+    iconSize: PropTypes.number,
     indicator: PropTypes.string,
     asideContent: PropTypes.node,
     expandable: PropTypes.bool,
@@ -45,6 +46,7 @@ export default class ListItem extends Component {
 
   static defaultProps = {
     icon: null,
+    iconSize: 24,
     indicator: '',
     asideContent: '',
     expandable: false,
@@ -64,12 +66,13 @@ export default class ListItem extends Component {
   emptyClickHandler () {}
 
   render () {
-    const { icon, indicator, asideContent, expandable, onClick, children, value, name, selectable, avatar } = this.props;
+    const { icon, iconSize, indicator, asideContent, expandable, onClick, children, value, name, selectable, avatar } = this.props;
     const modifiers = {
       'ListItem--expandable': expandable
     };
     const nativeProps = removeObjectKeys(this.props, [
       'icon',
+      'iconSize',
       'indicator',
       'asideContent',
       'expandable',
@@ -98,7 +101,7 @@ export default class ListItem extends Component {
           }
           <div className="ListItem__before">
             {selectable && osname === IOS && <div className="ListItem__checkbox-marker" />}
-            {icon && <div className="ListItem__icon">{icon}</div>}
+            {icon && <div className={`ListItem__icon ListItem__icon--${iconSize}`}>{icon}</div>}
             {avatar && <div className="ListItem__avatar">{avatar}</div>}
           </div>
           <div className="ListItem__main">

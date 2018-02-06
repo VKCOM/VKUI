@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>cancel_outline_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M15.4142136,14 L20.363961,18.9497475 C20.7544853,19.3402718 20.7544853,19.9734367 20.363961,20.363961 C19.9734367,20.7544853 19.3402718,20.7544853 18.9497475,20.363961 L14,15.4142136 L9.05025253,20.363961 C8.65972824,20.7544853 8.02656326,20.7544853 7.63603897,20.363961 C7.24551468,19.9734367 7.24551468,19.3402718 7.63603897,18.9497475 L12.5857864,14 L7.63603897,9.05025253 C7.24551468,8.65972824 7.24551468,8.02656326 7.63603897,7.63603897 C8.02656326,7.24551468 8.65972824,7.24551468 9.05025253,7.63603897 L14,12.5857864 L18.9497475,7.63603897 C19.3402718,7.24551468 19.9734367,7.24551468 20.363961,7.63603897 C20.7544853,8.02656326 20.7544853,8.65972824 20.363961,9.05025253 L15.4142136,14 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cancel_outline_28">
+            <rect id="Bounds" opacity="0.100000001" x="0" y="0" width="28" height="28"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

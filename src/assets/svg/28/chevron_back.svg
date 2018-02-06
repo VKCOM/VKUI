@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="28px" viewBox="0 0 20 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>chevron_back_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M4.56066017,12.9393398 L13,4.5 C13.5522847,3.94771525 14.4477153,3.94771525 15,4.5 L15,4.5 C15.5522847,5.05228475 15.5522847,5.94771525 15,6.5 L7.5,14 L15,21.5 C15.5522847,22.0522847 15.5522847,22.9477153 15,23.5 L15,23.5 C14.4477153,24.0522847 13.5522847,24.0522847 13,23.5 L4.56066017,15.0606602 C3.97487373,14.4748737 3.97487373,13.5251263 4.56066017,12.9393398 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="chevron_back_28">
+            <rect id="Body" x="0" y="0" width="20" height="28"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Chevron" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

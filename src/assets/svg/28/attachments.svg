@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>attachments_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M23,21.9499909 L23,9.4867991 C23,7.92664131 22.8375552,7.36089039 22.5325178,6.79052002 C22.2274804,6.22014965 21.7798504,5.77251964 21.20948,5.46748223 C20.6391096,5.16244482 20.0733587,5 18.5132009,5 L7.05000906,5 C7.28164422,3.85887984 8.29052104,3 9.5,3 L21,3 C23.209139,3 25,4.790861 25,7 L25,19.5 C25,20.709479 24.1411202,21.7183558 23,21.9499909 Z M18.5,7 L4.5,7 C3.11928813,7 2,8.11928813 2,9.5 L2,23.5 C2,24.8807119 3.11928813,26 4.5,26 L18.5,26 C19.8807119,26 21,24.8807119 21,23.5 L21,9.5 C21,8.11928813 19.8807119,7 18.5,7 Z M8,17.5 L10.5,20.51 L14,16 L17.897,21.196 C18.0635139,21.4180185 18.0185185,21.7329861 17.7965,21.8995 C17.7095192,21.9647356 17.603726,22 17.495,22 L5.52743128,22 C5.24990819,22 5.02493128,21.7750231 5.02493128,21.4975 C5.02493128,21.3857561 5.06217769,21.2772001 5.13078179,21.1889948 L8,17.5 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="attachments_28">
+            <polygon id="Bounds" points="0 0 28 0 28 28 0 28"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

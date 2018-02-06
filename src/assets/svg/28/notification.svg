@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>notification_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M14,25.5 C12.3072916,25.5 11,24.625 11,23 L17,23 C17,24.625 15.6927084,25.5 14,25.5 Z M21.4946166,17 C21.4946166,19 24,19.5 24,20.5 C24,21.5 23.5,22 21.5,22 L6.5,22 C4.5,22 4,21.5 4,20.5 C4,19.5 6.5,19 6.5,17 L6.5,13 C6.5,8 9,4 13,4 C13,3.25 13.5,3 14,3 C14.5,3 15,3.25 15,4 C19,4 21.4946166,8 21.4946166,13 L21.4946166,17 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="notification_28">
+            <rect id="Bounds" opacity="0.4" x="0" y="0" width="28" height="28"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

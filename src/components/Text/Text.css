@@ -45,7 +45,6 @@
   font-size: 15px;
   line-height: 20px;
   color: #2E3033;
-  padding: 8px 15px;
   }
 
   .Text--ios p {
@@ -59,7 +58,6 @@
   color: #2E3033;
   font-size: 16px;
   line-height: 24px;
-  padding: 8px 16px;
   }
 
   .Text--android p {

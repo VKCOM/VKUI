@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>story_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M8.025,3 L19.975,3 C22.7502309,3 25,5.24976913 25,8.025 L25,19.975 C25,22.7502309 22.7502309,25 19.975,25 L8.025,25 C5.24976913,25 3,22.7502309 3,19.975 L3,8.025 C3,5.24976913 5.24976913,3 8.025,3 Z M8,14 C8,17.312 10.688,20 14,20 C17.312,20 20,17.312 20,14 C20,10.688 17.312,8 14,8 C10.688,8 8,10.688 8,14 Z M10,14 C10,11.790625 11.790625,10 14,10 C16.209375,10 18,11.790625 18,14 C18,16.209375 16.209375,18 14,18 C11.790625,18 10,16.209375 10,14 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="story_28">
+            <rect id="Bounds" opacity="0.4" x="0" y="0" width="28" height="28"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

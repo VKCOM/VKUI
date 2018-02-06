@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>newsfeed_28</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M8.02,3 L19.98,3 C22.2001847,3 24,4.79981531 24,7.02 L24,20.98 C24,23.2001847 22.2001847,25 19.98,25 L8.02,25 C5.79981531,25 4,23.2001847 4,20.98 L4,7.02 C4,4.79981531 5.79981531,3 8.02,3 Z M8.01,5 C6.89990765,5 6,5.89990765 6,7.01 L6,20.99 C6,22.1000923 6.89990765,23 8.01,23 L19.99,23 C21.1000923,23 22,22.1000923 22,20.99 L22,7.01 C22,5.89990765 21.1000923,5 19.99,5 L8.01,5 Z M9,7 L15,7 C15.5522847,7 16,7.44771525 16,8 C16,8.55228475 15.5522847,9 15,9 L9,9 C8.44771525,9 8,8.55228475 8,8 C8,7.44771525 8.44771525,7 9,7 Z M9.005,11 L18.995,11 C19.5500462,11 20,11.4499538 20,12.005 L20,19.995 C20,20.5500462 19.5500462,21 18.995,21 L9.005,21 C8.44995383,21 8,20.5500462 8,19.995 L8,12.005 C8,11.4499538 8.44995383,11 9.005,11 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="newsfeed_28">
+            <rect id="Bounds" opacity="0.1" x="0" y="0" width="28" height="28"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>
