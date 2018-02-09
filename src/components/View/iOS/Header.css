@@ -38,13 +38,8 @@
           width: 100%;
           }
 
-        .View--ios .View__header-title {
-          flex-basis: 56%;
-          }
-
         .View--ios .View__header-left,
         .View--ios .View__header-right {
-          width: 22%;
           padding: 0 2px;
           }
 

@@ -153,14 +153,14 @@
  * VK rich button
  */
 .Button--vk-rich {
-  font-size: 16px;
+  font-size: 17px;
+  padding: 0 14px;
   font-weight: 500;
-  line-height: 20px;
-  min-height: 20px;
-  padding: 14px;
+  line-height: 44px;
+  height: 44px;
+  text-align: center;
   background: #5181B8;
-  box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 2px rgba(0, 0, 0, .24);
-  border-radius: 2px;
+  border-radius: 10px;
   color: #fff;
   }
 .Button--vk-rich:active:not([disabled]),
@@ -170,7 +170,10 @@
 .Button--vk-rich[disabled] {
   color: #fff;
   background: rgba(81, 129, 184, .4);
-  box-shadow: 0 0 2px rgba(0, 0, 0, .05), 0 2px 2px rgba(0, 0, 0, .1);
+  }
+
+.Button--android.Button--vk-rich {
+  border-radius: 4px;
   }
 
 /**
