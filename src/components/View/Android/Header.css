@@ -12,12 +12,16 @@
   height: 56px;
   }
 
+.View--android .View__header-search {
+  width: 100%;
+  }
+
 .View--android .View__header-item {
   top: 0;
   height: 56px;
   background: var(--vk-color);
   font: 500 20px/56px var(--android-font);
-  padding: 0 10px 0 0;
+  padding: 0;
   box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
   }
 
@@ -26,13 +30,13 @@
   }
 
 .View--android .View__header-right {
-  padding: 1px 6px 0;
   font-size: 14px;
   line-height: 16px;
   font-weight: 500;
   text-transform: uppercase;
   color: #fff;
   color: rgba(255, 255, 255, .7);
+  padding: 4px;
   }
 .View--android .View__header-left {
   color: #fff;
@@ -47,7 +51,6 @@
 
 .View--android .View__header-left {
   flex: 0 0 auto;
-  max-width: 22%;
   }
 
 .View--android .View__header-left:empty {
@@ -56,6 +59,11 @@
 
 .View--android .View__header-left:empty ~ .View__header-title {
   padding-left: 16px;
+  }
+
+.View__header-title {
+  flex-grow: 1;
+  max-width: 100%;
   }
 
 /**

@@ -9,7 +9,7 @@ const frameInitialContent = `
   <!DOCTYPE html>
   <html>
     <head>
-      <link href="/vkui.css" rel="stylesheet"></link>
+      <link href="./vkui.css" rel="stylesheet" id="styles"></link>
       <style>
         .frame-content {
           margin: 0;
@@ -29,6 +29,29 @@ const frameInitialContent = `
     </body>
   </html>
 `;
+
+class LoadStyles extends React.Component {
+
+  state = {
+    loaded: false
+  };
+
+  static contextTypes = {
+    document: PropTypes.any
+  };
+
+  componentDidMount () {
+    let styles = this.context.document.getElementById('styles');
+
+    styles.addEventListener('load', () => {
+      this.setState({ loaded: true });
+    });
+  }
+
+  render () {
+    return this.state.loaded ? this.props.children : null
+  }
+}
 
 class PreviewComponent extends React.Component {
   static propTypes = {
@@ -85,7 +108,9 @@ export default class Preview extends PreviewParent {
             margin: 'auto'
           }}
         >
-          <PreviewComponent component={exampleComponent} />
+          <LoadStyles>
+            <PreviewComponent component={exampleComponent} />
+          </LoadStyles>
         </ReactFrame>
       </Wrapper>
     );

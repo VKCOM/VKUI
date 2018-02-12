@@ -99,3 +99,44 @@
       background-color: #143a66;
       color: #fff;
       }
+
+
+  .Search--android {
+    display: flex;
+    padding: 4px;
+    height: 56px;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+    }
+
+  .Search--android .Search__before {
+    flex-shrink: 0;
+    margin-right: 10px;
+    }
+
+  .Search--android .Search__after {
+    flex-shrink: 0;
+    margin-left: 10px;
+    }
+
+  .Search--android .Search__control {
+    max-width: 100%;
+    flex-grow: 1;
+    }
+
+  .Search--android .Search__input {
+    border: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 16px;
+    background-color: transparent;
+    color: #fff;
+    }
+
+  .Search--android .Search__input::placeholder {
+    color: #fff;
+    opacity: .6;
+    }

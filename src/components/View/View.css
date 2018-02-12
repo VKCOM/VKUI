@@ -48,7 +48,6 @@
 
         .View__header-left,
         .View__header-right {
-          flex: 0 1 18%;
           overflow: hidden;
           text-overflow: ellipsis;
           font-size: 17px;
@@ -71,7 +70,6 @@
           }
 
         .View__header-title {
-          flex: 1 1 64%;
           overflow: hidden;
           text-overflow: ellipsis;
           margin: 0;

@@ -5,4 +5,5 @@ coverage
 npm-debug.log
 stats.json
 dist
+docs
 .idea

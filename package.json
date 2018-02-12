@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "dist/vkui.js",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
@@ -56,7 +56,7 @@
     "prepublish": "npm run clear && npm run build && npm run icons",
 
     "styleguide": "NODE_ENV=production styleguidist server --config=styleguide/config.js",
-    "styleguide:build": "NODE_ENV=production styleguidist build",
+    "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
 
     "icons": "webpack --config=build/webpack.svg-config.js -p",
     "build": "NODE_ENV=production webpack --config=build/webpack.config.js --bail",
