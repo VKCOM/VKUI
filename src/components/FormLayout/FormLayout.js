@@ -50,7 +50,6 @@ export default class FormLayout extends React.Component {
               )}
               <div className="FormLayout__field">
                 {field}
-                <div className="FormLayout__underline" />
               </div>
             </label>
           ))}

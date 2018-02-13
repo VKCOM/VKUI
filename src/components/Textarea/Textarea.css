@@ -1,28 +1,45 @@
+@import '../../styles/constants.css';
+
 .Textarea {
-  display: block;
-  margin: 0;
-  width: 100%;
-  min-height: 66px;
-  max-height: 198px;
-  outline: none;
-  border: 0;
-  background: transparent;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-  line-height: 22px;
-  resize: none;
+  position: relative;
   }
 
-  .Textarea::placeholder {
-    color: #00244D;
-    opacity: .24;
+  .Textarea textarea {
+    display: block;
+    margin: 0;
+    width: 100%;
+    padding: 0;
+    min-height: 66px;
+    max-height: 198px;
+    outline: none;
+    border: 0;
+    background: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+    line-height: 22px;
+    resize: none;
     }
 
+    .Textarea textarea::placeholder {
+      color: map(colors, placeholderForeground)
+      }
+
 .Textarea--ios {
-  font-size: 17px;
   padding: 11px 0 12px;
   }
 
+  .Textarea--ios textarea {
+    font-size: 17px;
+    }
+
 .Textarea--android {
-  font-size: 16px;
   padding: 16px 0 18px;
   }
+
+  .Textarea--android textarea {
+    font-size: 16px;
+    }
+
+  .Textarea--android textarea:focus ~ .Input-underline::before {
+    transform: scaleX(1);
+    transition: transform .14s var(--android-easing);
+    }
