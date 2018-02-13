@@ -32,13 +32,18 @@ export default class Input extends Component {
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
     value: PropTypes.string,
     initialValue: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    placeholder: PropTypes.string
   };
 
   static defaultProps = {
     type: 'text',
     initialValue: '',
     alignment: 'left'
+  };
+
+  static contextTypes = {
+    isWebView: PropTypes.bool
   };
 
   onChange = (e) => {
@@ -49,6 +54,10 @@ export default class Input extends Component {
       this.props.onChange(e);
     }
   };
+
+  get value () {
+    return this.isControlledOutside ? this.props.value : this.state.value;
+  }
 
   getRef = (element) => {
     this.element = element;
@@ -71,16 +80,20 @@ export default class Input extends Component {
       'Input--right': alignment === 'right'
     };
 
+    const customPlaceolder = ['date', 'datetime-local', 'time', 'month'].indexOf(this.props.type) > -1 && this.context.isWebView ? this.props.placeholder : null;
+
     return (
       <div className={classnames(baseClassNames, modifiers)}>
         <input
           className="Input__el"
-          {...removeObjectKeys(this.props, ['onChange', 'initialValue', 'alignment'])}
+          {...removeObjectKeys(this.props, ['onChange', 'initialValue', 'alignment', 'placeholder'])}
           ref={this.getRef}
           value={this.isControlledOutside ? value : this.state.value}
           onChange={this.onChange}
+          placeholder={customPlaceolder ? null : this.props.placeholder}
         />
         {osname === ANDROID && <div className="Input-underline" />}
+        {customPlaceolder && !this.value && <div className="Input__placeholder">{this.props.placeholder}</div>}
       </div>
     );
   }
