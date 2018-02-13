@@ -53,7 +53,7 @@
     "svg-sprite-loader": "^3.6.2"
   },
   "scripts": {
-    "prepublish": "npm run clear && npm run build && npm run icons",
+    "prepublish": "npm run clear && npm run icons && npm run build",
 
     "styleguide": "NODE_ENV=production styleguidist server --config=styleguide/config.js",
     "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
