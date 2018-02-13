@@ -5,7 +5,9 @@ import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
+import {platform, ANDROID} from '../../lib/platform';
 
+const osname = platform();
 const baseClassNames = getClassName('Input');
 
 export default class Input extends Component {
@@ -70,13 +72,16 @@ export default class Input extends Component {
     };
 
     return (
-      <input
-        className={classnames(baseClassNames, modifiers)}
-        {...removeObjectKeys(this.props, ['onChange', 'initialValue', 'alignment'])}
-        ref={this.getRef}
-        value={this.isControlledOutside ? value : this.state.value}
-        onChange={this.onChange}
-      />
+      <div className={classnames(baseClassNames, modifiers)}>
+        <input
+          className="Input__el"
+          {...removeObjectKeys(this.props, ['onChange', 'initialValue', 'alignment'])}
+          ref={this.getRef}
+          value={this.isControlledOutside ? value : this.state.value}
+          onChange={this.onChange}
+        />
+        {osname === ANDROID && <div className="Input-underline" />}
+      </div>
     );
   }
 }

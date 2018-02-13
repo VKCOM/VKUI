@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
+import {ANDROID, platform} from '../../lib/platform';
 
+const osname = platform();
 const baseClassNames = getClassName('Textarea');
 
 export default class Textarea extends Component {
@@ -99,14 +101,16 @@ export default class Textarea extends Component {
     const height = this.state.height || this.props.style.height || 66;
 
     return (
-      <textarea
-        className={baseClassNames}
-        {...removeObjectKeys(props, ['initialValue', 'grow', 'style', 'onResize'])}
-        value={value}
-        onChange={this.onChange}
-        ref={this.getRef}
-        style={Object.assign({}, props.style, { height })}
-      />
+      <div className={baseClassNames}>
+        <textarea
+          {...removeObjectKeys(props, ['initialValue', 'grow', 'style', 'onResize'])}
+          value={value}
+          onChange={this.onChange}
+          ref={this.getRef}
+          style={Object.assign({}, props.style, { height })}
+        />
+        {osname === ANDROID && <div className="Input-underline" />}
+      </div>
     );
   }
 }

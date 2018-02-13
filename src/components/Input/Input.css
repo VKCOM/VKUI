@@ -1,36 +1,79 @@
+@import '../../styles/constants.css';
+
 .Input {
   position: relative;
-  display: block;
-  margin: 0;
-  width: 100%;
-  height: 22px;
-  outline: none;
-  border: 0;
-  background: none;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-  line-height: 22px;
-  min-width: 140px; /* Fix iOS rendering for FormLayout */
-  }
-.Input--left {
-  text-align: left;
-  }
-.Input--center {
-  text-align: center;
-  }
-.Input--right {
-  text-align: right;
   }
 
-.Input:-webkit-autofill {
+  .Input__el {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 22px;
+    outline: none;
+    border: 0;
+    background: none;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+    line-height: 22px;
+    min-width: 140px; /* Fix iOS rendering for FormLayout */
+    }
+
+    .Input__el::placeholder {
+      color: map(colors, placeholderForeground)
+      }
+
+  .Input--left .Input__el {
+    text-align: left;
+    }
+  .Input--center .Input__el {
+    text-align: center;
+    }
+  .Input--right .Input__el {
+    text-align: right;
+    }
+
+.Input-underline {
+  position: absolute;
+  bottom: 9px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to top, transparent 50%, #d6d6d6 50%);
+  }
+
+  .Input-underline::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #518bcc;
+    content: '';
+    transform: scaleX(0);
+    transition: transform .1s var(--android-easing);
+    }
+
+.Input__el:-webkit-autofill {
   -webkit-box-shadow: inset 0 0 0 1000px #fff;
   }
 
 .Input--ios {
-  font-size: 17px;
   padding: 11px 0 12px;
   }
 
+  .Input--ios .Input__el {
+    font-size: 17px;
+    }
+
 .Input--android {
-  font-size: 16px;
   padding: 16px 0 18px;
   }
+
+  .Input--android .Input__el {
+    font-size: 16px;
+    }
+
+  .Input--android .Input__el:focus ~ .Input-underline::before {
+    transform: scaleX(1);
+    transition: transform .14s var(--android-easing);
+    }
