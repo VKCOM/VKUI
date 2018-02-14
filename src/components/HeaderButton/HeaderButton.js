@@ -1,5 +1,4 @@
 import React from 'react';
-import {platform, IOS} from '../../lib/platform';
 import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
@@ -8,22 +7,16 @@ import './HeaderButton.css';
 
 const baseClassName = getClassName('HeaderButton');
 
-const osname = platform();
+const HeaderButton = ({ className, children, ...restProps }) => (
+  <Tappable className={classnames(baseClassName, className)} {...restProps}>
+    <div className="HeaderButton__area" />
+    {children}
+  </Tappable>
+);
 
-export default class HeaderButton extends React.Component {
+HeaderButton.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string
+};
 
-  static propTypes = {
-    children: PropTypes.node,
-    style: PropTypes.object,
-    className: PropTypes.string
-  };
-
-  render () {
-    const { children, style, className, ...restProps } = this.props;
-    return (
-      <Tappable className={classnames(baseClassName, className)} style={{ ...style, padding: osname === IOS ? 0 : 12 }} {...restProps}>
-        {children}
-      </Tappable>
-    );
-  }
-}
+export default HeaderButton;

@@ -1,3 +1,19 @@
 .HeaderButton--android.Tappable--active {
   background-color: rgba(255, 255, 255, .1);
   }
+
+.HeaderButton--android {
+  padding: 12px;
+  }
+
+.HeaderButton--ios {
+  position: relative;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  }
+
+.HeaderButton--ios.Tappable--active::before,
+.HeaderButton--ios.Tappable--active::after {
+  display: none;
+  }

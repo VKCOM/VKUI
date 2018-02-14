@@ -48,23 +48,11 @@
 
         .View__header-left,
         .View__header-right {
-          overflow: hidden;
-          text-overflow: ellipsis;
           font-size: 17px;
           line-height: 20px;
+          position: relative;
+          z-index: 1;
           }
-        .View__header-left {
-          display: flex;
-          align-items: center;
-          }
-          .View__header-icon {
-            flex: 0 0 auto;
-            }
-          .View__header-left-in {
-            flex: 0 1 auto;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            }
         .View__header-right {
           text-align: right;
           }
@@ -74,6 +62,8 @@
           text-overflow: ellipsis;
           margin: 0;
           padding: 0 6px;
+          position: relative;
+          z-index: 2;
           }
 
   /**

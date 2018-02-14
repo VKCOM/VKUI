@@ -438,6 +438,29 @@ export default class View extends Component {
       }));
   };
 
+  renderHeaderLeft (panel) {
+    return (
+      <div className="View__header-left-container">
+        {panel.props.header.icon &&
+        <div
+          className="View__header-icon"
+          style={this.calcHeaderSwipeStyles(panel.id).leftIcon}
+        >
+          {panel.props.header.icon}
+        </div>
+        }
+        {panel.props.header.left &&
+        <div
+          className="View__header-left-in"
+          style={this.calcHeaderSwipeStyles(panel.id).leftIn}
+        >
+          {panel.props.header.left}
+        </div>
+        }
+      </div>
+    );
+  }
+
   render () {
     const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
@@ -489,22 +512,12 @@ export default class View extends Component {
                   }
                   {!panel.props.header.search &&
                   <div className="View__header-left">
-                    {panel.props.header.icon &&
-                    <div
-                      className="View__header-icon"
-                      style={this.calcHeaderSwipeStyles(panel.id).leftIcon}
-                    >
-                      {panel.props.header.icon}
+                    {osname === IOS && panel.props.header.right &&
+                    <div style={{ overflow: 'hidden', height: 0 }}>
+                      {panel.props.header.right}
                     </div>
                     }
-                    {panel.props.header.left &&
-                    <div
-                      className="View__header-left-in"
-                      style={this.calcHeaderSwipeStyles(panel.id).leftIn}
-                    >
-                      {panel.props.header.left}
-                    </div>
-                    }
+                    { (panel.props.header.left || panel.props.header.icon) && this.renderHeaderLeft(panel)}
                   </div>
                   }
                   {!panel.props.header.search &&
@@ -520,6 +533,11 @@ export default class View extends Component {
                     className="View__header-right"
                     style={this.calcHeaderSwipeStyles(panel.id).right}
                   >
+                    {osname === IOS && (panel.props.header.left || panel.props.header.icon) &&
+                      <div style={{ overflow: 'hidden', height: 0 }}>
+                        {this.renderHeaderLeft(panel)}
+                      </div>
+                    }
                     {panel.props.header.right}
                   </div>
                   }

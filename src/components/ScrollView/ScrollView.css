@@ -10,3 +10,10 @@
     width: 100%;
     min-height: 100%;
     }
+
+    .ScrollView__in::after {
+      content: ' ';
+      padding-top: 1px;
+      width: 100%;
+      display: block;
+      }
