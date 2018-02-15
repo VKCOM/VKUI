@@ -125,6 +125,12 @@
         padding: 10px 16px 10px 0;
         }
 
+      .ListItem--ios .ListItem__icon--16 {
+        width: 16px;
+        height: 16px;
+        padding: 18px 20px 18px 0;
+        }
+
       .ListItem--ios .ListItem__icon--28 {
         width: 28px;
         height: 28px;

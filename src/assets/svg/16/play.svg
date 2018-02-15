@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>play_16</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M4.80846825,2.92653927 L12.7981885,7.53307998 C13.056155,7.68181273 13.1447064,8.01150758 12.9959736,8.26947405 C12.9485923,8.3516536 12.880368,8.41987788 12.7981885,8.4672592 L4.80846825,13.0737999 C4.55050178,13.2225327 4.22080693,13.1339812 4.07207418,12.8760148 C4.02485563,12.7941175 4,12.7012447 4,12.6067103 L4,3.39362888 C4,3.09585694 4.24139185,2.85446509 4.53916379,2.85446509 C4.63369819,2.85446509 4.726571,2.87932072 4.80846825,2.92653927 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="play_16">
+            <rect id="Rectangle-737" opacity="0.4" x="0" y="0" width="16" height="16"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

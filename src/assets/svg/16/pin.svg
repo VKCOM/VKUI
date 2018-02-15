@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>pin_16</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M6.68744431,10.6976983 L3.95218507,13.4329575 C3.5605168,13.8246258 2.92914711,13.8282758 2.53590016,13.4350288 C2.14537586,13.0445046 2.13842225,12.4182932 2.53797151,12.0187439 L5.27323075,9.28348469 L2,6.01025395 L7.07143413,6.07106774 L9.00036635,3.99999995 L9.50036625,2 L14.0003663,6.5 L12.0003664,6.99999998 L10.0003663,8.99999993 L9.99462867,14.0048826 L6.68744431,10.6976983 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="pin_16">
+            <rect id="Rectangle-5" x="0" y="0" width="16" height="16"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

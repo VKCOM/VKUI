@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>down_16</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M7,4.91421356 L4.20710678,7.70710678 C3.81658249,8.09763107 3.18341751,8.09763107 2.79289322,7.70710678 C2.40236893,7.31658249 2.40236893,6.68341751 2.79289322,6.29289322 L7.29289322,1.79289322 C7.68341751,1.40236893 8.31658249,1.40236893 8.70710678,1.79289322 L13.2071068,6.29289322 C13.5976311,6.68341751 13.5976311,7.31658249 13.2071068,7.70710678 C12.8165825,8.09763107 12.1834175,8.09763107 11.7928932,7.70710678 L9,4.91421356 L9,13 C9,13.5522847 8.55228475,14 8,14 C7.44771525,14 7,13.5522847 7,13 L7,4.91421356 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="down_16">
+            <rect id="Rectangle-9" x="0" y="0" width="16" height="16"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" transform="translate(8.000000, 7.750000) scale(1, -1) translate(-8.000000, -7.750000) " xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

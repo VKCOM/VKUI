@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>cancel_16</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M8,6.72720779 L11.46361,3.26359779 C11.8150819,2.91212593 12.3849303,2.91212593 12.7364022,3.26359779 C13.0878741,3.61506966 13.0878741,4.18491814 12.7364022,4.53639 L9.27279221,8 L12.7364022,11.46361 C13.0878741,11.8150819 13.0878741,12.3849303 12.7364022,12.7364022 C12.3849303,13.0878741 11.8150819,13.0878741 11.46361,12.7364022 L8,9.27279221 L4.53639,12.7364022 C4.18491814,13.0878741 3.61506966,13.0878741 3.26359779,12.7364022 C2.91212593,12.3849303 2.91212593,11.8150819 3.26359779,11.46361 L6.72720779,8 L3.26359779,4.53639 C2.91212593,4.18491814 2.91212593,3.61506966 3.26359779,3.26359779 C3.61506966,2.91212593 4.18491814,2.91212593 4.53639,3.26359779 L8,6.72720779 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cancel_16">
+            <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

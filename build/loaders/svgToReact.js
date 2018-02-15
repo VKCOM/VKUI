@@ -8,8 +8,9 @@ module.exports = function (source) {
     const height = symbol.viewBox.split(' ')[3];
     
     function SvgIcon (props) {
+      
       return (
-        <div style={{ width: width + 'px', height: height + 'px' }} onClick={props.onClick}>
+        <div style={{ width: width + 'px', height: height + 'px', display: 'inline-block', ...props.style }} onClick={props.onClick}>
           <svg viewBox={symbol.viewBox} width={width} height={height} style={{ display: 'block' }}>
             <use xlinkHref={'#' + symbol.id} style={{ fill: 'currentColor', color: props.fill || '#AAAEB3' }} />
           </svg>

@@ -16,9 +16,13 @@
 /**
  * iOS
  */
-.Group--ios.Group {
+.Group--ios {
   margin: 20px 0;
   }
+
+  .Group--ios .Group__content .Div:first-child {
+    padding-top: 0;
+    }
 
   .Group--ios .Group__title {
     font-size: 13px;

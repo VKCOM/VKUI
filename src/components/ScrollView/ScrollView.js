@@ -41,7 +41,8 @@ export default class ScrollView extends Component {
       left: PropTypes.node,
       right: PropTypes.node,
       title: PropTypes.node
-    }).isRequired
+    }).isRequired,
+    centered: PropTypes.bool
   };
 
   static contextTypes = {
@@ -65,7 +66,8 @@ export default class ScrollView extends Component {
 
   static defaultProps = {
     children: '',
-    theme: 'gray'
+    theme: 'gray',
+    centered: false
   };
 
   shouldComponentUpdate ({ id, activePanel, nextPanel }) {
@@ -77,8 +79,10 @@ export default class ScrollView extends Component {
 
     return (
       <div
-        className={classnames(baseClassNames, className)}
-        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout', 'theme'])}
+        className={classnames(baseClassNames, className, {
+          'ScrollView--centered': this.props.centered
+        })}
+        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout', 'theme', 'centered'])}
         ref={this.getRef}
       >
         <div className="ScrollView__in" style={{ paddingBottom: this.insets.bottom || null }}>

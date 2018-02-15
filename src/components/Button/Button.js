@@ -26,7 +26,9 @@ export default class Button extends Component {
     wide: PropTypes.bool,
     children: PropTypes.node,
     className: PropTypes.string,
-    component: PropTypes.string
+    component: PropTypes.string,
+    before: PropTypes.node,
+    size: PropTypes.oneOf(['m', 'l'])
   };
   static defaultProps = {
     style: {},
@@ -35,10 +37,11 @@ export default class Button extends Component {
     type: 'default',
     wide: true,
     children: '',
-    component: 'button'
+    component: 'button',
+    size: 'm'
   };
   render () {
-    const { style, children, alignment, appearance, wide, className, component } = this.props;
+    const { style, children, alignment, appearance, wide, className, component, size } = this.props;
     const modifiers = {
       'Button--left': alignment === 'left',
       'Button--center': alignment === 'center',
@@ -52,14 +55,18 @@ export default class Button extends Component {
       'Button--vk-primary': appearance === 'vk-primary',
       'Button--vk-secondary': appearance === 'vk-secondary',
       'Button--vk-tertiary': appearance === 'vk-tertiary',
-      'Button--wide': wide
+      'Button--wide': wide,
+      'Button--inline': !wide,
+      [`Button--${size}`]: size
     };
     const nativeProps = removeObjectKeys(this.props, [
       'alignment',
       'appearance',
       'wide',
       'className',
-      'component'
+      'component',
+      'before',
+      'size'
     ]);
 
     return (
@@ -69,6 +76,7 @@ export default class Button extends Component {
         style={style}
         {...nativeProps}
       >
+        {this.props.before && <div className="Button__before">{this.props.before}</div>}
         {children}
       </Tappable>
     );

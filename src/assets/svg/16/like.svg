@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>like_16</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M11.0789474,2.5 C13.2444849,2.5 15,4.25551506 15,6.42105263 C15,8.60798741 14.1237944,9.70447971 10.4072935,12.5950916 L8.71626405,13.9103367 C8.29496848,14.238011 7.70503152,14.238011 7.28373595,13.9103367 L5.59270654,12.5950916 C1.87620556,9.70447971 1,8.60798741 1,6.42105263 C1,4.25551506 2.75551506,2.5 4.92105263,2.5 C6.08128,2.5 7.11221144,3.04618791 8,4.10293291 C8.88778856,3.04618791 9.91872,2.5 11.0789474,2.5 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="like_16">
+            <rect id="Bounds" opacity="0.4" x="0" y="0" width="16" height="16"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

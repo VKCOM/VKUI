@@ -4,6 +4,13 @@
   height: 100%;
   }
 
+  .ScrollView--centered .ScrollView__in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    }
+
   .ScrollView__in {
     position: relative;
     box-sizing: border-box;

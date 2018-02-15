@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>lock_16</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M4,7 L4,5.00156808 C4,2.79156306 5.79535615,1 8,1 C10.209139,1 12,2.78203382 12,5.00138569 L12,6.07470703 L12,7 L12.9975267,7 C13.5511774,7 14,7.45303631 14,7.99703014 L14,14.0029699 C14,14.5536144 13.544239,15 12.9975267,15 L3.00247329,15 C2.44882258,15 2,14.5469637 2,14.0029699 L2,7.99703014 C2,7.4463856 2.45576096,7 3.00247329,7 L4,7 Z M6,5 L6,7 L10,7 L10,5 C10,3.88772964 9.1045695,3 8,3 C6.88772964,3 6,3.8954305 6,5 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-530.000000, -1033.000000)">
+        <g id="lock_16" transform="translate(530.000000, 1033.000000)">
+            <rect id="Body" x="0" y="0" width="16" height="16"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Icon" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>broadcast_16</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M8,1.5 C4.68666667,1.5 2,4.18666667 2,7.5 L2,12 C2,13.1045695 2.8954305,14 4,14 L5,14 C5.55228475,14 6,13.5522847 6,13 L6,10 C6,9.44771525 5.55228475,9 5,9 L3.33333333,9 L3.33333333,7.5 C3.33333333,4.92 5.42,2.83333333 8,2.83333333 C10.58,2.83333333 12.6666667,4.92 12.6666667,7.5 L12.6666667,9 L11,9 C10.4477153,9 10,9.44771525 10,10 L10,13 C10,13.5522847 10.4477153,14 11,14 L12,14 C13.1045695,14 14,13.1045695 14,12 L14,7.5 C14,4.18666667 11.3133333,1.5 8,1.5 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="broadcast_16">
+            <polygon id="Shape" opacity="0.1" points="0 0 16 0 16 16 0 16"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

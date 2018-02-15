@@ -42,8 +42,8 @@ export default class View extends Component {
 
   static propTypes = {
     style: PropTypes.object,
-    activePanel: PropTypes.string.isRequired,
-    header: PropTypes.object,
+    activePanel: PropTypes.string,
+    header: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
     children: PropTypes.node,
     popout: PropTypes.node,
     onTransition: PropTypes.func,

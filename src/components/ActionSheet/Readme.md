@@ -39,9 +39,9 @@ class Example extends React.Component {
     return (
       <View popout={this.state.popout} header activePanel="panel">
         <ScrollView id="panel" header={{ title: "Action Sheet" }}>
-          <div style={{ padding: 10 }}>
-            <Button appearance="vk-primary" wide={false} onClick={this.openSheet.bind(this)}>Open Sheet</Button>
-          </div>
+          <Group>
+            <Button onClick={this.openSheet.bind(this)}>Open Sheet</Button>
+          </Group>  
         </ScrollView>
       </View>
     )
