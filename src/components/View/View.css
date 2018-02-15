@@ -48,8 +48,7 @@
 
         .View__header-left,
         .View__header-right {
-          font-size: 17px;
-          line-height: 20px;
+          flex-shrink: 0;
           position: relative;
           z-index: 1;
           }

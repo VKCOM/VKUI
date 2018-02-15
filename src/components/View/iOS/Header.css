@@ -31,7 +31,6 @@
       top: constant(safe-area-inset-top);
       top: env(safe-area-inset-top);
       justify-content: space-between;
-      padding: 0 6px;
       }
 
         .View--ios .View__header-search {
@@ -40,44 +39,72 @@
 
         .View--ios .View__header-left,
         .View--ios .View__header-right {
-          flex-shrink: 0;
-          padding: 0 2px;
+          font-size: 17px;
           }
 
-        .View--ios .View__header-left:empty,
-        .View--ios .View__header-right:empty {
-          display: none;
-          }
+          .View--ios .View__header-right-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            }
 
           .View--ios .View__header-left-container {
             display: flex;
             align-items: center;
             }
 
-          .View--ios .View__header-icon {
-            flex: 0 0 auto;
-            }
-
-            .View--ios .View__header-icon .HeaderButton__area {
-              position: absolute;
-              height: 100%;
-              width: 75px;
-              left: 0;
-              top: 0;
-              content: '';
-              display: block;
+            .View--ios .View__header-title {
+              font: 500 17px/44px var(--ios-font);
+              text-align: center;
               }
 
-          .View--ios .View__header-left-in {
-            flex: 0 1 auto;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            line-height: 44px;
-            }
+            .View--ios .View__header-icon {
+              flex: 0 0 auto;
+              }
 
-          .View--ios .View__header-icon + .View__header-left-in {
-            padding-left: 4px;
-            }
+            .View--ios .View__header-left-in {
+              flex: 0 1 auto;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              line-height: 44px;
+              }
+
+              .View--ios .View__header-left-in > .HeaderButton--text {
+                margin-left: 12px;
+                }
+
+              .View--ios .View__header-icon > .HeaderButton--icon {
+                margin-left: 2px;
+                }
+
+              .View--ios .View__header-icon > .HeaderButton--ios-back {
+                margin-left: 4px;
+                position: relative;
+                }
+
+                .View--ios .View__header-icon > .HeaderButton--ios-back .HeaderButton__tap-area {
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  height: 100%;
+                  width: 75px;
+                  }
+
+              .View--ios .View__header-right-container > .HeaderButton--icon:last-child {
+                margin-right: 2px;
+                }
+
+              .View--ios .View__header-right-container > .HeaderButton--text {
+                margin-right: 12px;
+                }
+
+            .View--ios .View__header-icon + .View__header-left-in {
+              margin-left: 4px;
+              }
+
+              .View--ios .View__header-icon + .View__header-left-in .HeaderButton {
+                margin-left: 0;
+                }
 
 /**
  * Header swipe back
@@ -153,11 +180,6 @@
   position: absolute;
   left: 0;
   overflow: hidden;
-  }
-
-.View--ios .View__header-title {
-  font: 500 17px/44px var(--ios-font);
-  text-align: center;
   }
 
 .View--ios .View__header-item--prev .View__header-icon {

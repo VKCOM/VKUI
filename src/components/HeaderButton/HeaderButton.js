@@ -7,16 +7,46 @@ import './HeaderButton.css';
 
 const baseClassName = getClassName('HeaderButton');
 
-const HeaderButton = ({ className, children, ...restProps }) => (
-  <Tappable className={classnames(baseClassName, className)} {...restProps}>
-    <div className="HeaderButton__area" />
-    {children}
-  </Tappable>
-);
+const HeaderButton = ({ className, children, primary, ...restProps }) => {
+  const displayName = children.type && children.type.displayName ? children.type.displayName : undefined;
+
+  const resultClassName = classnames(baseClassName, className, {
+    'HeaderButton--text': typeof children === 'string',
+    'HeaderButton--primary': primary,
+    'HeaderButton--icon': displayName && displayName.indexOf('icon-') > -1,
+    'HeaderButton--ios-back': displayName === 'icon-chevron_back'
+  });
+
+  return (
+    <Tappable className={resultClassName} {...restProps}>
+      <div className="HeaderButton__tap-area" />
+      {children}
+    </Tappable>
+  );
+};
 
 HeaderButton.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string
+  children: (props, propName, componentName) => {
+    let children = props[propName];
+
+    const displayName = children.type && children.type.displayName ? children.type.displayName : undefined;
+
+    if (React.Children.count(children) > 1) {
+      return new Error(`${componentName} accepts only single child`);
+    }
+
+    if (typeof children === 'string' || displayName.indexOf('icon-') > -1) {
+      return null;
+    } else {
+      return new Error(`${componentName} child accepts either string or instance of Icon`);
+    }
+  },
+  className: PropTypes.string,
+  primary: PropTypes.bool
+};
+
+HeaderButton.defaultProps = {
+  primary: false
 };
 
 export default HeaderButton;

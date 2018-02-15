@@ -30,6 +30,28 @@ const frameInitialContent = `
   </html>
 `;
 
+class InsertSvgSprite extends React.Component {
+
+  state = {
+    loaded: false
+  };
+
+  static contextTypes = {
+    document: PropTypes.any
+  };
+
+  componentDidMount () {
+    let sprite = document.getElementById('__SVG_SPRITE_NODE__');
+
+    this.context.document.body.appendChild(sprite.cloneNode(true));
+  }
+
+  render () {
+    return null
+  }
+}
+
+
 class LoadStyles extends React.Component {
 
   state = {
@@ -108,6 +130,7 @@ export default class Preview extends PreviewParent {
             margin: 'auto'
           }}
         >
+          <InsertSvgSprite />
           <LoadStyles>
             <PreviewComponent component={exampleComponent} />
           </LoadStyles>

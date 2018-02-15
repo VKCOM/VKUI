@@ -58,8 +58,6 @@ export { default as Select } from './components/Select/Select';
 export { default as Text } from './components/Text/Text';
 export { default as Div } from './components/Div/Div';
 export { default as Flex } from './components/Flex/Flex';
-export { default as BackButton } from './components/BackButton/BackButton';
-export { default as CloseButton } from './components/CloseButton/CloseButton';
 export { default as Tappable } from './components/Tappable/Tappable';
 export { default as Touch } from './components/Touch/Touch';
 export { default as ConfigProvider } from './components/ConfigProvider/ConfigProvider';

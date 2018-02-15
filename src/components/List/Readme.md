@@ -66,7 +66,16 @@
               </List>
             </Group>
           </ScrollView>
-          <ScrollView id="nothing" header={{ title: 'Nothing', icon: <BackButton onClick={() => this.setState({ activePanel: 'list' })} /> }}>
+          <ScrollView 
+            id="nothing" 
+            header={{ 
+              title: 'Nothing', 
+              icon: 
+                <HeaderButton onClick={() => this.setState({ activePanel: 'list' })}>
+                  {osname === ANDROID && <Icon24Back fill="#fff" />}
+                  {osname === IOS && <Icon28Chevron_back fill="#fff" />}
+                </HeaderButton> 
+            }}>
             <div
               style={{
                 padding: '100px 0',

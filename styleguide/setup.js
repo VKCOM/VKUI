@@ -14,8 +14,8 @@ Object.keys(icons).forEach((iconPath) => {
   const iconSize = iconPath.split('/')[0];
   const iconName = 'Icon' + iconSize + iconPath.split('/')[1].charAt(0).toUpperCase() + iconPath.split('/')[1].slice(1);
   if (!window.Icon.hasOwnProperty(iconSize)) window.Icon[iconSize] = {};
-  window[iconName] = (props) => <Icon { ...props } />;
-  window.Icon[iconSize][iconName] = (props) => <Icon { ...props } />;
+  window[iconName] = Icon;
+  window.Icon[iconSize][iconName] = Icon;
 });
 
 window.colors = colors;

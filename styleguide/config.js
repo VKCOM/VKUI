@@ -73,8 +73,7 @@ module.exports = {
         components: () => [
           '../src/components/Div/Div.js',
           '../src/components/Flex/Flex.js',
-          '../src/components/Tappable/Tappable.js',
-          '../src/components/BackButton/BackButton.js'
+          '../src/components/Tappable/Tappable.js'
         ]
       }, {
         name: 'Icons',

@@ -77,7 +77,7 @@ export default class View extends Component {
   refsStore = {};
 
   componentWillMount () {
-    osname === IOS && this.setPanelBg(this.props.activePanel);
+    this.setPanelBg(this.props.activePanel);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -85,7 +85,7 @@ export default class View extends Component {
       this.panels = this.getPanels(nextProps.children);
     }
 
-    if (this.props.activePanel !== nextProps.activePanel && osname === IOS) {
+    if (this.props.activePanel !== nextProps.activePanel) {
       this.setPanelBg(nextProps.activePanel);
     }
 
@@ -461,6 +461,14 @@ export default class View extends Component {
     );
   }
 
+  renderHeaderRight (panel) {
+    return (
+      <div className="View__header-right-container">
+        {panel.props.header.right}
+      </div>
+    );
+  }
+
   render () {
     const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel } = this.state;
@@ -514,7 +522,7 @@ export default class View extends Component {
                   <div className="View__header-left">
                     {osname === IOS && panel.props.header.right &&
                     <div style={{ overflow: 'hidden', height: 0 }}>
-                      {panel.props.header.right}
+                      {this.renderHeaderRight(panel)}
                     </div>
                     }
                     { (panel.props.header.left || panel.props.header.icon) && this.renderHeaderLeft(panel)}
@@ -538,7 +546,7 @@ export default class View extends Component {
                         {this.renderHeaderLeft(panel)}
                       </div>
                     }
-                    {panel.props.header.right}
+                    {panel.props.header.right && this.renderHeaderRight(panel)}
                   </div>
                   }
                 </div>
