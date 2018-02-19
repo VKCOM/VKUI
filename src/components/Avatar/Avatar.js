@@ -12,16 +12,18 @@ const Avatar = ({ src, size, style, className, ...props }) => {
   let Component = src ? 'img' : 'div';
 
   return (
-    <Component
-      className={classnames(baseClassName, className)}
-      src={ src || null }
-      style={{
-        width: size,
-        height: size,
-        ...style
-      }}
-      {...props}
-    />
+    <div className={classnames(baseClassName, className)}>
+      <Component
+        className="Avatar__img"
+        src={ src }
+        style={{
+          width: size,
+          height: size,
+          ...style
+        }}
+        {...props}
+      />
+    </div>
   );
 };
 

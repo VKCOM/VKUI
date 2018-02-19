@@ -48,7 +48,7 @@
   <ScrollView
     header={{
       left: <HeaderButton>{osname === IOS ? 'Cancel' : <Icon24Back/>}</HeaderButton>
-      icon: osname === IOS && <HeaderButton><Icon28Chevron_back/><?HeaderButton>
+      icon: osname === IOS && <HeaderButton><Icon28Chevron_back/></HeaderButton>
     }}
   />
 ```

@@ -1,10 +1,14 @@
 .Avatar {
-  border-radius: 50%;
-  background-color: #D4DAE1;
-  border: none;
-  display: block;
-  max-width: 100%;
+  box-sizing: border-box;
   }
+
+  .Avatar__img {
+    border-radius: 50%;
+    background-color: #D4DAE1;
+    border: none;
+    display: block;
+    max-width: 100%;
+    }
 
 .Avatar--ios {
   font-family: map(fontFamilies, ios)

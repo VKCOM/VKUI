@@ -27,14 +27,16 @@ export default class ListItem extends Component {
   }
 
   static propTypes = {
+    /**
+     * @deprecated since v1.3.4 Use before prop instead
+     */
     icon: PropTypes.node,
-    iconSize: PropTypes.number,
+    before: PropTypes.node,
     indicator: PropTypes.string,
     asideContent: PropTypes.node,
     expandable: PropTypes.bool,
     children: PropTypes.node,
     onClick: PropTypes.func,
-    avatar: PropTypes.node,
 
     selectable: PropTypes.bool,
     name: PropTypes.string,
@@ -46,7 +48,7 @@ export default class ListItem extends Component {
 
   static defaultProps = {
     icon: null,
-    iconSize: 24,
+    before: null,
     indicator: '',
     asideContent: '',
     expandable: false,
@@ -66,13 +68,13 @@ export default class ListItem extends Component {
   emptyClickHandler () {}
 
   render () {
-    const { icon, iconSize, indicator, asideContent, expandable, onClick, children, value, name, selectable, avatar } = this.props;
+    const { before, icon, indicator, asideContent, expandable, onClick, children, value, name, selectable } = this.props;
     const modifiers = {
       'ListItem--expandable': expandable
     };
     const nativeProps = removeObjectKeys(this.props, [
       'icon',
-      'iconSize',
+      'before',
       'indicator',
       'asideContent',
       'expandable',
@@ -82,9 +84,10 @@ export default class ListItem extends Component {
       'checked',
       'initialChecked',
       'onChange',
-      'avatar',
       'onClick'
     ]);
+
+    let beforeContent = before || icon;
 
     return (
       <li className={classnames(baseClassNames, modifiers)} {...nativeProps}>
@@ -101,8 +104,7 @@ export default class ListItem extends Component {
           }
           <div className="ListItem__before">
             {selectable && osname === IOS && <div className="ListItem__checkbox-marker" />}
-            {icon && <div className={`ListItem__icon ListItem__icon--${iconSize}`}>{icon}</div>}
-            {avatar && <div className="ListItem__avatar">{avatar}</div>}
+            {beforeContent && <div className="ListItem__icon">{beforeContent}</div>}
           </div>
           <div className="ListItem__main">
             {children}

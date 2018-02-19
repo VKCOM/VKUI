@@ -52,17 +52,17 @@
             
             <Group title="Users list">
               <List>
-                <ListItem avatar={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</ListItem>
-                <ListItem avatar={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</ListItem>
-                <ListItem avatar={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Влад Анесов</ListItem>
+                <ListItem icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</ListItem>
+                <ListItem icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</ListItem>
+                <ListItem icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Влад Анесов</ListItem>
               </List>
             </Group>
             
             <Group title="Selectable users list">
               <List>
-                <ListItem selectable avatar={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</ListItem>
-                <ListItem selectable avatar={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</ListItem>
-                <ListItem selectable avatar={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Влад Анесов</ListItem>
+                <ListItem selectable icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</ListItem>
+                <ListItem selectable icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</ListItem>
+                <ListItem selectable icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Влад Анесов</ListItem>
               </List>
             </Group>
           </ScrollView>
@@ -72,8 +72,7 @@
               title: 'Nothing', 
               icon: 
                 <HeaderButton onClick={() => this.setState({ activePanel: 'list' })}>
-                  {osname === ANDROID && <Icon24Back/>}
-                  {osname === IOS && <Icon28Chevron_back/>}
+                  {osname === ANDROID ? <Icon24Back/> : <Icon28Chevron_back/>}
                 </HeaderButton> 
             }}>
             <div

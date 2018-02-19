@@ -31,7 +31,10 @@
       justify-content: flex-start;
       }
 
-      .ListItem__icon {}
+      .ListItem__icon {
+        flex-shrink: 0;
+        color: map(colors, lightGray);
+        }
 
         .ListItem__icon > svg,
         .ListItem__icon > img {
@@ -95,7 +98,11 @@
       content: '';
       }
 
-      .ListItem--ios .ListItem__avatar {
+      .ListItem--ios .ListItem__before .Icon {
+        padding: 10px 16px 10px 0;
+        }
+
+      .ListItem--ios .ListItem__before .Avatar {
         padding: 4px 12px 4px 0;
         }
 
@@ -119,25 +126,6 @@
         }
       }
 
-      .ListItem--ios .ListItem__icon {
-        width: 24px;
-        height: 24px;
-        padding: 10px 16px 10px 0;
-        color: #AAAEB3;
-        }
-
-      .ListItem--ios .ListItem__icon--16 {
-        width: 16px;
-        height: 16px;
-        padding: 18px 20px 18px 0;
-        }
-
-      .ListItem--ios .ListItem__icon--28 {
-        width: 28px;
-        height: 28px;
-        padding: 6px 12px 6px 0;
-        }
-
     .ListItem--ios .ListItem__main {
       padding: 11px .5em 12px 0;
       align-self: center;
@@ -158,14 +146,11 @@
     padding: 0 16px;
     }
 
-    .ListItem--android .ListItem__icon {
-      width: 24px;
-      height: 24px;
+    .ListItem--android .ListItem__before .Icon {
       padding: 14px 32px 18px 0;
-      color: #AAAEB3;
       }
 
-    .ListItem--android .ListItem__avatar {
+    .ListItem--android .ListItem__before .Avatar {
       padding: 8px 16px 8px 0;
       }
 
