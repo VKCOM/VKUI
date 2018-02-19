@@ -14,7 +14,7 @@ const HeaderButton = ({ className, children, primary, ...restProps }) => {
     'HeaderButton--text': typeof children === 'string',
     'HeaderButton--primary': primary,
     'HeaderButton--icon': displayName && displayName.indexOf('icon-') > -1,
-    'HeaderButton--ios-back': displayName === 'icon-chevron_back'
+    'HeaderButton--ios-back': displayName === 'icon-chevron_back_28'
   });
 
   return (
