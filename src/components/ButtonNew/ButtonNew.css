@@ -1,0 +1,136 @@
+.ButtonNew {
+  display: inline-block;
+  box-sizing: border-box;
+  }
+
+.ButtonNew--stretched {
+  max-width: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  }
+
+  .ButtonNew__in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    .ButtonNew__before {
+      font-size: 0;
+      }
+
+    .ButtonNew__before .Icon--16 {
+      margin-right: 6px;
+      }
+
+    .ButtonNew__before .Icon--24 {
+      margin-right: 8px;
+      }
+
+  .ButtonNew--app-default::before,
+  .ButtonNew--app-default::after {
+    display: none;
+    }
+
+.ButtonNew--app-default {
+  border: 1px solid transparent;
+  }
+
+.ButtonNew--level-1 {
+  background-color: map(colors, headerBlue);
+  color: #fff;
+  }
+
+.ButtonNew--level-1.Tappable--active {
+  background-color: #4872a3;
+  }
+
+.ButtonNew--level-2 {
+  background-color: rgba(0, 54, 115, .1);
+  color: map(colors, mutedBlue)
+  }
+
+.ButtonNew--level-2.Tappable--active {
+  background-color: rgba(0, 54, 115, .2);
+  }
+
+.ButtonNew--level-3 {
+  background-color: transparent;
+  color: map(colors, headerBlue)
+  }
+
+.ButtonNew--level-3.Tappable--active {
+  background-color: rgba(0, 54, 115, .08);
+  }
+
+.ButtonNew--level-buy {
+  background-color: map(colors, green);
+  color: #fff;
+  }
+
+.ButtonNew--level-buy.Tappable--active {
+  background-color: rgb(66, 158, 66);
+  }
+
+.ButtonNew--level-sell {
+  background-color: transparent;
+  border: 1px solid map(colors, accentBlue);
+  color: map(colors, accentBlue);
+  }
+
+.ButtonNew--level-sell.Tappable--active {
+  background-color: rgba(82, 139, 204, 0.1);
+  }
+
+.ButtonNew--size-m {
+  padding: 0 16px;
+  }
+
+  .ButtonNew--size-m .ButtonNew__content {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 500;
+    padding: 7px 0;
+    }
+
+.ButtonNew--size-l {
+  padding: 0 16px;
+  }
+
+  .ButtonNew--size-l .ButtonNew__content {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 7px 0 9px;
+    }
+
+.ButtonNew--size-xl {
+  width: 100%;
+  padding: 0 16px;
+  }
+
+  .ButtonNew--size-xl .ButtonNew__content {
+    font-size: 17px;
+    font-weight: 500;
+    padding: 10px 0 12px;
+    text-align: center;
+    }
+
+
+
+.ButtonNew--ios.ButtonNew--size-m {
+  border-radius: 15px;
+  }
+
+.ButtonNew--ios.ButtonNew--size-l {
+  border-radius: 18px;
+  }
+
+.ButtonNew--ios.ButtonNew--size-xl {
+  border-radius: 10px;
+  }
+
+
+
+.ButtonNew--android {
+  border-radius: 4px;
+  }

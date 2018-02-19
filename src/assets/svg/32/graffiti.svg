@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>graffiti_32</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M12.0727072,16.1635446 L24.115039,4.58516736 C24.9693675,3.76375352 26.3239275,3.77705528 27.1619603,4.61508807 L27.3822806,4.83540839 C28.2203134,5.67344118 28.2336151,7.02800116 27.4122013,7.88232969 L16.0135472,19.7377367 C15.2861989,18.0425302 13.8483392,16.7268865 12.0727072,16.1635446 Z M10.1299973,17.4644199 C12.7859973,17.4644199 14.9299973,19.6084199 14.9299973,22.2644199 C14.9299973,25.8004199 12.0659973,28.6644199 8.52999725,28.6644199 C6.11399725,28.6644199 3.60199725,27.4164199 2.12999725,25.4644199 C3.47399725,25.4644199 5.32999725,24.3604199 5.32999725,22.2644199 C5.32999725,19.6084199 7.47399725,17.4644199 10.1299973,17.4644199 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1186.000000, -876.000000)">
+        <g id="graffiti_32" transform="translate(1186.000000, 876.000000)">
+            <polygon id="Shape" points="0 0 32 0 32 32 0 32"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

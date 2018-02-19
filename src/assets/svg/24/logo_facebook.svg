@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>logo_facebook_24</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M3,5 L3,19 C3,20.1045695 3.8954305,21 5,21 L10.997,21 L10.997,14.9925 L8.995,14.9925 L8.995,11.991 L10.9975,11.991 L10.9975,9.959 C10.9975,7.763 12.4665356,6.00836182 15.0363598,6.00836182 C15.9743598,6.00836182 17.2635,6.137 17.4985,6.1685 L17.3998015,8.96400023 L15.7698005,8.92498779 C14.7800706,8.96400045 13.9870005,9.72391895 13.9870005,10.4669189 L13.987,11.991 L16.993,11.991 L16.662,14.9925 L13.987,14.9925 L13.987,21 L19,21 C20.1045695,21 21,20.1045695 21,19 L21,5 C21,3.8954305 20.1045695,3 19,3 L5,3 C3.8954305,3 3,3.8954305 3,5 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo_facebook_24">
+            <rect id="Rectangle-530" opacity="0.4" x="0" y="0" width="24" height="24"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

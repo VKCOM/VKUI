@@ -7,14 +7,11 @@ import { platform, IOS } from '../../lib/platform';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import Icon24Back from '../../../dist/icons/24/back';
 import Icon24Cancel from '../../../dist/icons/24/cancel';
+import Icon16Search from '../../../dist/icons/16/search';
 
 const osname = platform();
 
 const baseClassName = getClassName('Search');
-
-const SearchIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" fillRule="evenodd" d="M14.743 13.574L10.91 9.74c.687-.938 1.055-2.07 1.05-3.232-.013-3.034-2.466-5.49-5.5-5.508-1.45-.007-2.845.568-3.87 1.595C1.564 3.622.992 5.017 1 6.468c.013 3.033 2.467 5.49 5.5 5.508 1.167.005 2.304-.367 3.242-1.06l.004-.004 3.83 3.83c.206.218.515.306.805.23.292-.075.518-.302.593-.592.076-.29-.013-.6-.23-.806zm-8.247-2.696c-2.426-.014-4.39-1.98-4.4-4.406-.006-1.16.45-2.276 1.272-3.098.82-.822 1.935-1.28 3.096-1.276 2.427.014 4.39 1.98 4.4 4.406.007 1.16-.45 2.276-1.272 3.098-.82.82-1.935 1.28-3.096 1.276z"/></svg>
-);
 
 class SearchIOS extends React.Component {
 
@@ -123,7 +120,7 @@ class SearchIOS extends React.Component {
               transform: `translateX(${this.state.focused || this.value ? 0 : this.state.placeholderOffset + 'px'})`
             }}
           >
-            <SearchIcon/>
+            <Icon16Search/>
             {!this.value &&
             <div className="Search__placeholder-text">
               {this.props.placeholder}
@@ -234,7 +231,7 @@ class SearchAndroid extends React.Component {
       <div className={className}>
         <div className="Search__before">
           <HeaderButton onClick={this.onClose}>
-            <Icon24Back fill="#fff" />
+            <Icon24Back/>
           </HeaderButton>
         </div>
         <div className="Search__control">
@@ -250,7 +247,7 @@ class SearchAndroid extends React.Component {
         </div>
         <div className="Search__after">
           <HeaderButton onClick={this.onCancel}>
-            <Icon24Cancel fill="#fff" />
+            <Icon24Cancel/>
           </HeaderButton>
         </div>
       </div>

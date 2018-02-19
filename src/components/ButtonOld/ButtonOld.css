@@ -3,10 +3,9 @@
 .Button {
   box-sizing: border-box;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  display: block;
   margin: 0;
+  width: 100%;
   outline: none;
   border: 0;
   background: #fff;
@@ -14,11 +13,6 @@
   user-select: none;
   min-height: 22px;
   }
-
-  .Button__before {
-    flex-shrink: 0;
-    }
-
 .Button--ios::before,
 .Button--ios::after {
   position: absolute;
@@ -41,10 +35,6 @@
   font: 17px/22px -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
   padding: 11px 15px 12px;
   }
-
-  .Button--ios .Button__before {
-    margin-right: 8px;
-    }
 
 .Button--android {
   font: 16px/22px Roboto, Droid, 'Open Sans', sans-serif;
@@ -76,7 +66,7 @@
  * Appearance
  */
 .Button--ios.Button--primary {
-  color: map(colors, headerBlue);
+  color: #007aff;
   font-weight: 500;
   }
 .Button--ios.Button--default {}
@@ -240,21 +230,6 @@
 .Button--wide {
   width: 100%;
   }
-
-/**
- * Inline
- */
-
-.Button--inline {
-  border-radius: 100px;
-  }
-
-.Button--inline.Button--l {
-  padding: 9px 16px;
-  font-size: 15px;
-  line-height: 17px;
-  }
-
 
 /**
  * Single separator between two buttons

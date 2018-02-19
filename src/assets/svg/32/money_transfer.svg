@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>money_transfer_32</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M28,18 L28,14 L4,14 L4,22 C4,22.5522847 4.44771525,23 5,23 L23,23 L23,19.070529 C23,18.7943867 23.2238576,18.570529 23.5,18.570529 C23.6124678,18.570529 23.721651,18.608447 23.8099095,18.6781567 L29.8075693,23.4153199 C30.0242706,23.5864783 30.0611904,23.9009006 29.8900321,24.1176018 C29.8658552,24.1482119 29.8381794,24.1758877 29.8075693,24.2000647 L23.8099095,28.9372279 C23.5932083,29.1083863 23.2787859,29.0714664 23.1076276,28.8547651 C23.0379179,28.7665066 23,28.6573234 23,28.5448556 L23,25 L5,25 C3.34314575,25 2,23.6568542 2,22 L2,8 C2,6.34314575 3.34314575,5 5,5 L27,5 C28.6568542,5 30,6.34314575 30,8 L30,18 L30,18.0494578 C30,18.6017425 29.5522847,19.0494578 29,19.0494578 C28.4477153,19.0494578 28,18.6017425 28,18.0494578 L28,18 Z M28,9 L28,8 C28,7.44771525 27.5522847,7 27,7 L5,7 C4.44771525,7 4,7.44771525 4,8 L4,9 L28,9 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1242.000000, -876.000000)">
+        <g id="money_transfer_32" transform="translate(1242.000000, 876.000000)">
+            <rect id="Rectangle" x="0" y="0" width="32" height="32"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

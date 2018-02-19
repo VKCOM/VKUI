@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>done_36</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M13.5351042,24.9137838 L7.06066017,18.4393398 C6.47487373,17.8535534 5.52512627,17.8535534 4.93933983,18.4393398 C4.35355339,19.0251263 4.35355339,19.9748737 4.93933983,20.5606602 L12.4767465,28.0980669 C13.0634314,28.6847517 14.0149532,28.6837201 14.6003644,28.0957644 L31.8129577,10.8083576 C32.3974725,10.2213023 32.395413,9.27155706 31.8083576,8.68704228 C31.2213023,8.1025275 30.2715571,8.10458703 29.6870423,8.69164236 L13.5351042,24.9137838 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="done_36">
+            <polygon id="Shape" points="0 0 36 0 36 36 0 36"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

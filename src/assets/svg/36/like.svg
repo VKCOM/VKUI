@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>like_36</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M18.9524916,8.44973647 C22.3514119,5.92469503 27.0986775,5.76959211 30.0558563,8.45600134 C30.1732017,8.5626022 30.287711,8.67233285 30.399263,8.78507631 C33.8669123,12.2897626 33.8669123,17.9654478 30.3446458,21.5226156 L19.5134405,31.416606 C18.653827,32.2018379 17.3371556,32.2015925 16.4778348,31.4160402 L5.60073696,21.4701341 C2.13308768,17.9654478 2.13308768,12.2897626 5.60073696,8.78507631 C5.71228895,8.67233285 5.82679827,8.5626022 5.94414369,8.45600134 C8.90132252,5.76959211 13.6485881,5.92469503 17.1205028,8.50756483 C17.4203395,8.76064316 17.7132875,9.03150473 17.9994031,9.32003483 C18.3003951,9.01841004 18.6164159,8.7295752 18.9524916,8.44973647 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="like_36">
+            <rect id="icon-bounds" opacity="0.4" x="0" y="0" width="36" height="36"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" fill-rule="nonzero" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

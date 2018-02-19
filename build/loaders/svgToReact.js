@@ -6,13 +6,15 @@ module.exports = function (source) {
     
     const width = symbol.viewBox.split(' ')[2];
     const height = symbol.viewBox.split(' ')[3];
+    const size = Math.max(width, height); 
     
     function SvgIcon (props) {
+      const className = 'Icon' + ' Icon--' + size + ' Icon--' + symbol.id + ' ' + (props.className || '');
       
       return (
-        <div style={{ width: width + 'px', height: height + 'px', display: 'inline-block', ...props.style }} onClick={props.onClick}>
+        <div className={className} style={{ width: width + 'px', height: height + 'px', ...props.style }} onClick={props.onClick}>
           <svg viewBox={symbol.viewBox} width={width} height={height} style={{ display: 'block' }}>
-            <use xlinkHref={'#' + symbol.id} style={{ fill: 'currentColor', color: props.fill || '#AAAEB3' }} />
+            <use xlinkHref={'#' + symbol.id} style={{ fill: 'currentColor', color: props.fill }} />
           </svg>
         </div>
       );

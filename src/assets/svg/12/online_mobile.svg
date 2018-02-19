@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>online_mobile_12</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M2.01,0 L5.99,0 C7.10009235,-2.03920656e-16 8,0.899907653 8,2.01 L8,9.99 C8,11.1000923 7.10009235,12 5.99,12 L2.01,12 C0.899907653,12 1.12190717e-15,11.1000923 0,9.99 L0,2.01 C-1.35947104e-16,0.899907653 0.899907653,2.03920656e-16 2.01,0 Z M2.0025,3 C1.72497691,3 1.5,3.22497691 1.5,3.5025 L1.5,8.4975 C1.5,8.77502309 1.72497691,9 2.0025,9 L5.9975,9 C6.27502309,9 6.5,8.77502309 6.5,8.4975 L6.5,3.5025 C6.5,3.22497691 6.27502309,3 5.9975,3 L2.0025,3 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1014.000000, -759.000000)">
+        <g id="online_mobile_12" transform="translate(1014.000000, 759.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

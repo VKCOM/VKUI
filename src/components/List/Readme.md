@@ -72,8 +72,8 @@
               title: 'Nothing', 
               icon: 
                 <HeaderButton onClick={() => this.setState({ activePanel: 'list' })}>
-                  {osname === ANDROID && <Icon24Back fill="#fff" />}
-                  {osname === IOS && <Icon28Chevron_back fill="#fff" />}
+                  {osname === ANDROID && <Icon24Back/>}
+                  {osname === IOS && <Icon28Chevron_back/>}
                 </HeaderButton> 
             }}>
             <div

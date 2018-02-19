@@ -34,7 +34,7 @@
         line-height: 16px;
         font-weight: 500;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, .7);
+        color: #fff;
         padding: 4px;
         }
 
@@ -45,7 +45,7 @@
           }
 
       .View--android .View__header-left {
-        color: rgba(255, 255, 255, .7);
+        color: #fff;
         padding: 4px;
         }
 

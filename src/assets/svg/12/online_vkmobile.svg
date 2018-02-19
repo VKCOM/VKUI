@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>online_vkmobile_12</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="8" height="12"></rect>
+        <path d="M2.51664434,10.7453194 C2.17477331,12.1220197 2.6880594,12.407225 3.60628789,11.4021429 L7.46337026,6.97077321 C8.3557754,5.88166774 8.13225647,5.0066278 6.84710784,4.78787199 L4.98739958,4.4435092 C4.87878896,4.42339773 4.80704622,4.31904786 4.82715769,4.21043724 C4.82782188,4.20685031 4.82858409,4.20328222 4.82944345,4.19973698 L5.54509333,1.24736824 C5.88792346,-0.138073759 5.31651667,-0.388975073 4.45940649,0.592832579 C3.22787395,1.98124191 2.29198711,3.03007572 1.65174594,3.73933403 C1.42852951,3.98661291 1.06922997,4.37258486 0.573847314,4.8972499 C-0.511839531,6.10185007 0.0595672555,6.9754635 1.31533816,7.19421931 L3.0926463,7.51278143 C3.2013706,7.53226902 3.27371124,7.63620528 3.25422366,7.74492957 C3.2534729,7.74911816 3.25258866,7.75328171 3.25157228,7.75741388 L2.51664434,10.7453194 Z" id="path-3"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1038.000000, -759.000000)">
+        <g id="online_vkmobile_12" transform="translate(1038.000000, 759.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask"></g>
+            <mask id="mask-4" fill="white">
+                <use xlink:href="#path-3"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-3"></use>
+        </g>
+    </g>
+</svg>

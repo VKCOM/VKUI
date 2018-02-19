@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>add_36</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M19.5,19.5 L19.5,28.5 C19.5,29.3284271 18.8284271,30 18,30 L18,30 C17.1715729,30 16.5,29.3284271 16.5,28.5 L16.5,19.5 L7.5,19.5 C6.67157288,19.5 6,18.8284271 6,18 L6,18 C6,17.1715729 6.67157288,16.5 7.5,16.5 L16.5,16.5 L16.5,7.5 C16.5,6.67157288 17.1715729,6 18,6 L18,6 C18.8284271,6 19.5,6.67157288 19.5,7.5 L19.5,16.5 L28.5,16.5 C29.3284271,16.5 30,17.1715729 30,18 L30,18 C30,18.8284271 29.3284271,19.5 28.5,19.5 L19.5,19.5 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="add_36">
+            <rect id="bounds" opacity="0.4" x="0" y="0" width="36" height="36"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

@@ -1,16 +1,6 @@
 Компонент для отрисовки кнопок в шапке ScrollView. Внутрь компонента передается либо иконка, либо текст. Текстовые кнопки
 чаще всего используются в iOS, но есть исключения для Android.
 
-Иконки должны быть выкрашены в белый цвет:
-
-```jsx static
-  <ScrollView 
-    header={{ 
-      left: <HeaderButton><Icon24Back fill="#fff"/></HeaderButton> 
-    }}
-  />  
-```
-
 Шапки iOS и Android достаточно сильно отличаются внешне, поэтому описание будет разделено на две части.
 
 **Android**
@@ -20,10 +10,10 @@
 ```jsx static
   <ScrollView 
     header={{ 
-      left: <HeaderButton><Icon24Back fill="#fff"/></HeaderButton>, 
-      right: <HeaderButton><Icon24Search fill="#fff"/></HeaderButton> 
+      left: <HeaderButton><Icon24Back/></HeaderButton>, 
+      right: <HeaderButton><Icon24Search/></HeaderButton> 
     }}
-  />  
+  />
 ```
 
 Если нужно несколько кнопок справа или слева, то передаем массив:
@@ -32,8 +22,8 @@
   <ScrollView 
     header={{  
       right: [
-        <HeaderButton key="search"><Icon24Search fill="#fff"/></HeaderButton>, 
-        <HeaderButton key="add"><Icon24Add fill="#fff"/></HeaderButton>
+        <HeaderButton key="search"><Icon24Search/></HeaderButton>, 
+        <HeaderButton key="add"><Icon24Add/></HeaderButton>
       ] 
     }}
   />
@@ -47,7 +37,7 @@
   <ScrollView 
     header={{  
       left: <HeaderButton>Back</HeaderButton>,
-      icon: <HeaderButton><Icon28Chevron_back fill="#fff"/></HeaderButton> 
+      icon: <HeaderButton><Icon28Chevron_back/></HeaderButton> 
     }}
   />
 ```
@@ -57,8 +47,8 @@
 ```jsx static
   <ScrollView
     header={{
-      left: <HeaderButton>{osname === IOS ? 'Cancel' : <Icon24Back fill="#fff"/>}</HeaderButton>
-      icon: osname === IOS && <HeaderButton><Icon28Chevron_back fill="#fff"/><?HeaderButton>
+      left: <HeaderButton>{osname === IOS ? 'Cancel' : <Icon24Back/>}</HeaderButton>
+      icon: osname === IOS && <HeaderButton><Icon28Chevron_back/><?HeaderButton>
     }}
   />
 ```
@@ -68,7 +58,7 @@
 ```jsx static
   <ScrollView
     header={{
-      left: <HeaderButton>{osname === IOS ? 'Close' : <Icon24Cancel fill="#fff"/>}</HeaderButton>
+      left: <HeaderButton>{osname === IOS ? 'Close' : <Icon24Cancel/>}</HeaderButton>
     }}
   />
 ```
@@ -92,14 +82,14 @@ class Example extends React.Component {
             id="panel1" 
             header={{ 
               title: "Стартовый экран",
-              left: <HeaderButton>{osname === IOS ? 'Close' : <Icon24Cancel fill="#fff"/>}</HeaderButton> 
+              left: <HeaderButton>{osname === IOS ? 'Close' : <Icon24Cancel/>}</HeaderButton> 
             }}
           >
             <Group>
               <Pane>
                 Если приложение открывается как модальное окно, то в качестве левой кнопки принято кнопку "закрыть".
-                <br />
-                <br />
+                <br/>
+                <br/>
                 В противном случае показывается кнопка "назад". 
               </Pane>
             </Group>
@@ -113,9 +103,9 @@ class Example extends React.Component {
             id="panel2" 
             header={{ 
               title: "Заголовок",
-              icon: osname === IOS && <HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}><Icon28Chevron_back fill="#fff"/></HeaderButton>,
-              left:  <HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>{osname === IOS ? 'Back' : <Icon24Back fill="#fff"/>}</HeaderButton>,
-              right: <HeaderButton onClick={() => {}}><Icon24Story fill="#fff"/></HeaderButton> 
+              icon: osname === IOS && <HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}><Icon28Chevron_back/></HeaderButton>,
+              left:  <HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>{osname === IOS ? 'Back' : <Icon24Back/>}</HeaderButton>,
+              right: <HeaderButton onClick={() => {}}><Icon24Story/></HeaderButton> 
             }} 
           >
             <Group>
@@ -128,11 +118,11 @@ class Example extends React.Component {
             id="panel3" 
             header={{ 
               title: "Две иконки",
-              icon: osname === IOS && <HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}><Icon28Chevron_back fill="#fff"/></HeaderButton>,
-              left: osname === ANDROID && <HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}><Icon24Back fill="#fff"/></HeaderButton>,
+              icon: osname === IOS && <HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}><Icon28Chevron_back/></HeaderButton>,
+              left: osname === ANDROID && <HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}><Icon24Back/></HeaderButton>,
               right: [
-                <HeaderButton key="add" onClick={() => {}}><Icon24Add fill="#fff"/></HeaderButton>,
-                <HeaderButton key="more" onClick={() => {}}><Icon24More_vertical fill="#fff"/></HeaderButton>
+                <HeaderButton key="add" onClick={() => {}}><Icon24Add/></HeaderButton>,
+                <HeaderButton key="more" onClick={() => {}}><Icon24More_vertical/></HeaderButton>
               ] 
             }}
           >
@@ -147,8 +137,8 @@ class Example extends React.Component {
           <ScrollView 
             id="modal-panel" 
             header={{
-              left: <HeaderButton onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Отмена' : <Icon24Cancel fill="#fff"/>}</HeaderButton>,
-              right: <HeaderButton primary onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Готово' : <Icon24Done fill="#fff"/>}</HeaderButton>,  
+              left: <HeaderButton onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</HeaderButton>,
+              right: <HeaderButton primary onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Готово' : <Icon24Done/>}</HeaderButton>,  
               title: 'Модальное окно' 
             }} 
           />
@@ -158,5 +148,5 @@ class Example extends React.Component {
   }
 }
 
-<Example />
+<Example/>
 ```

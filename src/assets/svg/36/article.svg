@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>article_36</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M28,17 L8,17 C7.44771525,17 7,17.4477153 7,18 L7,18 C7,18.5522847 7.44771525,19 8,19 L28,19 C28.5522847,19 29,18.5522847 29,18 L29,18 C29,17.4477153 28.5522847,17 28,17 Z M28,10 L8,10 C7.44771525,10 7,10.4477153 7,11 L7,11 C7,11.5522847 7.44771525,12 8,12 L28,12 C28.5522847,12 29,11.5522847 29,11 L29,11 C29,10.4477153 28.5522847,10 28,10 Z M8,26 L20,26 C20.5522847,26 21,25.5522847 21,25 L21,25 C21,24.4477153 20.5522847,24 20,24 L8,24 C7.44771525,24 7,24.4477153 7,25 L7,25 C7,25.5522847 7.44771525,26 8,26 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="article_36">
+            <polygon id="Shape" points="0 0 36 0 36 36 0 36"></polygon>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

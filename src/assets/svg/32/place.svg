@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>place_32</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M6,12 C6,16.0237426 8.93827679,21.8230511 14.8148304,29.3979255 L14.8148258,29.3979291 C15.322624,30.0524807 16.2648947,30.1714478 16.9194463,29.6636496 C17.0188083,29.586565 17.1080822,29.4972911 17.1851668,29.3979291 C23.0617223,21.823053 26,16.0237433 26,12 C26,6.47142857 21.5285714,2 16,2 C10.4714286,2 6,6.47142857 6,12 Z M12.5014212,12.0014823 C12.5014212,10.0694823 14.0694212,8.50148228 16.0014212,8.50148228 C17.9334212,8.50148228 19.5014212,10.0694823 19.5014212,12.0014823 C19.5014212,13.9334823 17.9334212,15.5014823 16.0014212,15.5014823 C14.0694212,15.5014823 12.5014212,13.9334823 12.5014212,12.0014823 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1018.000000, -932.000000)">
+        <g id="place_32" transform="translate(1018.000000, 932.000000)">
+            <rect id="Rectangle-2230" opacity="0.4" x="0" y="0" width="32" height="32"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>play_48</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M14.3991767,8.76449581 L38.4208476,22.6143931 C39.1863781,23.0557662 39.4491596,24.0341549 39.0077865,24.7996855 C38.8671797,25.0435581 38.6647202,25.2460176 38.4208476,25.3866244 L14.3991767,39.2365217 C13.6336462,39.6778948 12.6552574,39.4151133 12.2138843,38.6495828 C12.0737605,38.4065479 12,38.1309424 12,37.8504061 L12,10.1506115 C12,9.26695587 12.7163444,8.55061147 13.6,8.55061147 C13.8805363,8.55061147 14.1561418,8.624372 14.3991767,8.76449581 Z" id="path-1"></path>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1090.000000, -1064.000000)">
+        <g id="play_48" transform="translate(1090.000000, 1064.000000)">
+            <rect id="Rectangle-737" opacity="0.4" x="0" y="0" width="48" height="48"></rect>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

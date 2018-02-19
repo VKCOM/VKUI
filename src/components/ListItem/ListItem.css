@@ -123,6 +123,7 @@
         width: 24px;
         height: 24px;
         padding: 10px 16px 10px 0;
+        color: #AAAEB3;
         }
 
       .ListItem--ios .ListItem__icon--16 {
@@ -161,6 +162,7 @@
       width: 24px;
       height: 24px;
       padding: 14px 32px 18px 0;
+      color: #AAAEB3;
       }
 
     .ListItem--android .ListItem__avatar {
