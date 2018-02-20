@@ -5,7 +5,6 @@ import getClassName from '../../helpers/getClassName';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
-import prefixCSS from 'react-prefixer';
 
 const baseClassNames = getClassName('Gallery');
 
@@ -372,10 +371,12 @@ export default class Gallery extends Component {
       [`Gallery--${this.props.align}`]: true
     });
 
-    const layerStyle = prefixCSS({
+    const layerStyle = {
+      WebkitTransform: `translateX(${indent}px)`,
       transform: `translateX(${indent}px)`,
+      WebkitTransition: animation ? `-webkit-transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none',
       transition: animation ? `transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none'
-    });
+    };
 
     return (
       <div className={classname} style={style} ref={this.getContainerRef}>

@@ -7,7 +7,6 @@ import transitionEvents from '../../lib/transitionEvents';
 import getClassName from '../../helpers/getClassName';
 import { platform, ANDROID, IOS } from '../../lib/platform';
 import Touch from '../Touch/Touch';
-import prefixCSS from 'react-prefixer';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 
 const osname = platform();
@@ -376,19 +375,21 @@ export default class View extends Component {
     let prevPanelShadow = 0.3 * (this.window.innerWidth - this.state.swipeBackShift) / this.window.innerWidth;
 
     if (this.state.swipingBackFinish !== null) {
-      return isPrev ? prefixCSS({ boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` }) : {};
+      return isPrev ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` } : {};
     }
 
     if (isNext) {
-      return prefixCSS({
-        transform: `translate3d(${nextPanelTranslate}, 0, 0)`
-      });
+      return {
+        transform: `translate3d(${nextPanelTranslate}, 0, 0)`,
+        WebkitTransform: `translate3d(${nextPanelTranslate}, 0, 0)`
+      };
     }
     if (isPrev) {
-      return prefixCSS({
+      return {
         transform: `translate3d(${prevPanelTranslate}, 0, 0)`,
+        WebkitTransform: `translate3d(${prevPanelTranslate}, 0, 0)`,
         boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})`
-      });
+      };
     }
 
     return {};
@@ -413,20 +414,34 @@ export default class View extends Component {
     let leftTransform = this.state.swipeBackShift / this.window.innerWidth * 60;
 
     if (isNext) {
-      return prefixCSS({
-        title: { transform: `translate3d(${-60 + titleTransform}%, 0, 0)`, opacity },
+      return {
+        title: {
+          transform: `translate3d(${-60 + titleTransform}%, 0, 0)`,
+          WebkitTransform: `translate3d(${-60 + titleTransform}%, 0, 0)`,
+          opacity
+        },
         item: { opacity },
-        leftIn: { transform: `translate3d(${-60 + leftTransform}%, 0, 0)`, opacity },
+        leftIn: {
+          transform: `translate3d(${-60 + leftTransform}%, 0, 0)`,
+          WebkitTransform: `translate3d(${-60 + leftTransform}%, 0, 0)`,
+          opacity
+        },
         leftIcon: { opacity: 1 },
         right: { opacity: 1 }
-      });
+      };
     }
     if (isPrev) {
-      return prefixCSS({
-        title: { transform: `translate3d(${titleTransform}%, 0, 0)` },
+      return {
+        title: {
+          transform: `translate3d(${titleTransform}%, 0, 0)`,
+          WebkitTransform: `translate3d(${titleTransform}%, 0, 0)`
+        },
         item: { opacity: 1 - opacity },
-        leftIn: { transform: `translate3d(${leftTransform}%, 0, 0)` }
-      });
+        leftIn: {
+          transform: `translate3d(${leftTransform}%, 0, 0)`,
+          WebkitTransform: `translate3d(${leftTransform}%, 0, 0)`
+        }
+      };
     }
   }
 
