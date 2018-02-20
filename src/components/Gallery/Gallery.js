@@ -12,9 +12,11 @@ const baseClassNames = getClassName('Gallery');
 export default class Gallery extends Component {
   constructor (props) {
     super(props);
+    const current = typeof props.slideIndex === 'number' ? props.slideIndex : props.initialSlideIndex;
+
     this.state = {
       containerWidth: 0,
-      current: props.initialSlideIndex,
+      current,
       deltaX: 0,
       shiftX: 0,
       slides: [],
@@ -35,6 +37,7 @@ export default class Gallery extends Component {
     ]),
     autoplay: PropTypes.number,
     initialSlideIndex: PropTypes.number,
+    slideIndex: PropTypes.number,
     onDragStart: PropTypes.func,
     onDragEnd: PropTypes.func,
     onChange: PropTypes.func,
@@ -317,7 +320,7 @@ export default class Gallery extends Component {
   componentDidMount () {
     this.initializeSlides(() => {
       this.setState({
-        shiftX: this.calculateIndent(this.props.initialSlideIndex)
+        shiftX: this.calculateIndent(this.state.current)
       });
     });
     window.addEventListener('resize', this.onResize);
@@ -348,6 +351,9 @@ export default class Gallery extends Component {
     }
     if (!nextProps.autoplay && this.props.autoplay) {
       this.clearTimeout();
+    }
+    if (nextProps.slideIndex !== this.props.slideIndex && typeof nextProps.slideIndex === 'number') {
+      this.go(nextProps.slideIndex);
     }
   }
 
