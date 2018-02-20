@@ -1,3 +1,5 @@
+import querystring from './querystring';
+
 const defaultOptions = {
   method: 'GET',
   data: null
@@ -16,6 +18,11 @@ function makeRequest (url, options) {
   const error = new Error('Request was aborted');
   const request = getXMLHttpRequest();
   const opts = Object.assign({}, defaultOptions, options);
+
+  if (opts.method.toLowerCase() === 'get') {
+    url += `?${querystring.create(opts.data)}`;
+  }
+
   const requestPromise = new Promise((resolve, reject) => {
     if (!request) {
       reject(new Error('XMLHttpRequest not supported'));
