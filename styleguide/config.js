@@ -84,12 +84,6 @@ module.exports = {
       }, {
         name: 'Colors',
         content: './pages/colors.md'
-      }, {
-        name: 'Libs',
-        sections: [{
-          name: 'querystring',
-          content: './pages/querystring.md'
-        }]
       }]
     }
   ],
