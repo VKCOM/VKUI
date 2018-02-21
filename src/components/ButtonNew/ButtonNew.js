@@ -10,32 +10,37 @@ const baseClassName = getClassName('ButtonNew');
 export default class ButtonNew extends React.Component {
 
   static propTypes = {
-    level: PropTypes.oneOf([1, 2, 3, 'sell', 'buy']),
+    level: PropTypes.oneOf(['1', '2', '3', 'sell', 'buy', 'primary', 'danger']),
     size: PropTypes.oneOf(['m', 'l', 'xl']),
-    type: PropTypes.oneOf(['default', 'danger']),
-    appearance: PropTypes.oneOf(['default', 'cell']),
+    type: PropTypes.oneOf(['default', 'list']),
     stretched: PropTypes.bool,
+
     children: PropTypes.node,
     before: PropTypes.node,
     className: PropTypes.string
   };
 
   static defaultProps = {
-    level: 1,
-    size: 'm',
-    type: 'default',
-    appearance: 'default',
-    stretched: false
+    type: 'default'
   };
 
   render () {
-    const { className, size, level, type, appearance, stretched, children, before, ...restProps } = this.props;
+    let { className, size, level, type, stretched, children, before, ...restProps } = this.props;
+
+    switch (type) {
+      case 'default':
+        size = size || 'm';
+        level = level || '1';
+        stretched = stretched || false;
+        break;
+      case 'list':
+        level = level || 'primary';
+    }
 
     const classNames = classnames(baseClassName, className, {
-      [`ButtonNew--size-${size}`]: true,
-      [`ButtonNew--level-${level}`]: true,
-      [`ButtonNew--type-${type}`]: true,
-      [`ButtonNew--app-${appearance}`]: true,
+      [`ButtonNew--size-${size}`]: size,
+      [`ButtonNew--level-${level}`]: level,
+      [`ButtonNew--type-${type}`]: type,
       [`ButtonNew--stretched`]: stretched
     });
 

@@ -1,4 +1,12 @@
-Новый дизайн кнопок доступен, если в props передать `v="new"`.
+Появился новый дизайн кнопок. Он доступен, если в Button передать prop v="new":
+
+```jsx static
+  <Button v="new">Click me</Button>
+```
+
+В следующей мажорной версии v="new" будет по-умолчанию. Сейчас по-умолчанию v="old".
+
+Описание props новых кнопок можно посмотреть [тут](#buttonnew). 
 
 ```jsx
 
@@ -7,7 +15,7 @@
       super(props);
   
       this.state = {
-        activePanel: 'button'
+        activePanel: 'new'
       }
     }
   
@@ -176,6 +184,13 @@
                   >Shuffle</Button>
                 </div>  
               </Pane>
+            </Group>
+            <Group title="List">
+              <List>
+                <Button v="new" onClick={() => {}} type="list">List Button</Button>
+                <Button v="new" onClick={() => {}} type="list" before={<Icon24Add />}>With Icon</Button>
+                <Button v="new" onClick={() => {}} type="list" level="danger">Danger</Button>
+              </List>
             </Group>
           </ScrollView>
         </View>
