@@ -23,12 +23,14 @@
     "eslint-plugin-standard": "^2.0.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "glob": "^7.1.2",
+    "jest": "^22.4.0",
     "loader-utils": "^1.1.0",
     "postcss-assets": "^4.1.0",
     "postcss-custom-properties": "^5.0.2",
     "postcss-import": "^9.1.0",
     "postcss-loader": "^1.3.3",
     "postcss-map": "^0.9.0",
+    "pre-commit": "^1.2.2",
     "react": "^15.6.2",
     "react-docgen": "^2.20.0",
     "react-dom": "^15.6.2",
@@ -53,15 +55,13 @@
   },
   "scripts": {
     "prepublish": "npm run clear && npm run icons && npm run build",
-
     "styleguide": "NODE_ENV=production styleguidist server --config=styleguide/config.js",
     "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
-
     "icons": "webpack --config=build/webpack.svg-config.js -p",
     "build": "NODE_ENV=production webpack --config=build/webpack.config.js --bail",
-
     "dev": "webpack --config=build/webpack.config.js --watch",
     "clear": "rm -rf dist/*",
-    "test": "eslint . && ./node_modules/.bin/stylelint ./src/**/*.css"
-  }
+    "test": "eslint . && ./node_modules/.bin/stylelint ./src/**/*.css && jest"
+  },
+  "pre-commit": ["test"]
 }
