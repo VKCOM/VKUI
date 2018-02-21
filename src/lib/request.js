@@ -19,7 +19,7 @@ function makeRequest (url, options) {
   const request = getXMLHttpRequest();
   const opts = Object.assign({}, defaultOptions, options);
 
-  if (opts.method.toLowerCase() === 'get') {
+  if (opts.data && opts.method.toLowerCase() === 'get') {
     url += `?${querystring.create(opts.data)}`;
   }
 

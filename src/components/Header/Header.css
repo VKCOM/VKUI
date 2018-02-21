@@ -1,0 +1,70 @@
+.Header {
+
+  }
+
+  .Header__in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    }
+
+
+.Header--ios {
+  padding: 0 12px;
+  }
+
+  .Header--ios .Header__aside {
+    font-size: 15px;
+    }
+
+.Header--ios.Header--level-1 {}
+
+  .Header--ios.Header--level-1 .Header__content {
+    font-size: 17px;
+    line-height: 20px;
+    color: map(colors, black);
+    font-weight: 600;
+    padding: 14px 0;
+    }
+
+.Header--ios.Header--level-2 {}
+
+  .Header--ios.Header--level-2 .Header__content {
+    font-size: 13px;
+    line-height: 15px;
+    color: map(colors, captionGray);
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 15px 0 14px;
+    }
+
+
+.Header--android {
+  padding: 0 16px;
+  }
+
+  .Header--android .Header__aside {
+    font-size: 14px;
+    font-weight: 500;
+    }
+
+.Header--android.Header--level-1 {}
+
+  .Header--android.Header--level-1 .Header__content {
+    font-size: 17px;
+    line-height: 20px;
+    color: map(colors, black);
+    font-weight: 500;
+    padding: 18px 0;
+    }
+
+.Header--android.Header--level-2 {}
+
+  .Header--android.Header--level-2 .Header__content {
+    font-size: 13px;
+    line-height: 15px;
+    color: map(colors, captionGray);
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 15px 0 14px;
+    }

@@ -1,0 +1,33 @@
+import React from 'react';
+import getClassName from '../../helpers/getClassName';
+import classnames from '../../lib/classnames';
+import PropTypes from 'prop-types';
+import './Header.css';
+
+const baseClassNames = getClassName('Header');
+
+const Header = ({ className, level, children, aside }) => {
+  return (
+    <div className={classnames(baseClassNames, className, {
+      [`Header--level-${level}`]: true
+    })}>
+      <div className="Header__in">
+        <div className="Header__content">{children}</div>
+        {aside && <div className="Header__aside">{aside}</div>}
+      </div>
+    </div>
+  );
+};
+
+Header.propTypes = {
+  className: PropTypes.string,
+  level: PropTypes.oneOf(['1', '2']),
+  aside: PropTypes.node,
+  children: PropTypes.node
+};
+
+Header.defaultProps = {
+  level: '1'
+};
+
+export default Header;

@@ -25,6 +25,7 @@ export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinn
  * Blocks
  */
 export { default as Button } from './components/Button/Button';
+export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
 export { default as Pane } from './components/Pane/Pane';
 export { default as List } from './components/List/List';
