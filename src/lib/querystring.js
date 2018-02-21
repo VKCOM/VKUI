@@ -1,5 +1,7 @@
 const querystring = {
   parse: (string = '') => {
+    if (typeof string !== 'string') return {};
+
     const matches = /\?(.+)$/ig.exec(string);
     const str = matches ? matches[1] : string;
 
@@ -16,7 +18,9 @@ const querystring = {
       }, {});
   },
   create: (data = {}, opts) => {
-    let options = { encode: false, ...opts };
+    if (typeof data !== 'object' || data === null) return '';
+
+    let options = { encode: true, ...opts };
 
     return Object.keys(data).reduce((acc, item) => {
       const type = typeof data[item];
@@ -35,8 +39,5 @@ const querystring = {
     }, []).join('&');
   }
 };
-
-export const parse = querystring.parse;
-export const create = querystring.create;
 
 export default querystring;

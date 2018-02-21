@@ -39,6 +39,7 @@
     "schema-utils": "^0.4.3",
     "style-loader": "^0.13.2",
     "stylelint": "^7.2.0",
+    "prop-types": "^15.5.8",
     "stylelint-config-standard": "^16.0.0",
     "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^2.9.2",
