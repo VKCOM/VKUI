@@ -1,0 +1,32 @@
+.InputNew {
+
+  }
+
+.InputNew__el {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  outline: none;
+  }
+
+
+.InputNew--ios {
+
+  }
+
+.InputNew--ios .InputNew__el {
+  line-height: 20px;
+  font-size: 16px;
+  color: map(colors, black);
+  padding: 12px;
+  border-radius: 10px;
+  background-color: rgb(242, 243, 245);
+  border: solid .5px rgba(0, 0, 0, 0.15);
+  text-overflow: ellipsis;
+  }
+
+  .InputNew--ios .InputNew__el:focus {
+    border-color: map(colors, accentBlue);
+    }

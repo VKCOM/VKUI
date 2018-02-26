@@ -1,11 +1,10 @@
+import './FormLayout.new.css';
 import './FormLayout.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
-
-const baseClassNames = getClassName('FormLayout');
 
 export default class FormLayout extends React.Component {
 
@@ -15,12 +14,16 @@ export default class FormLayout extends React.Component {
     tagName: PropTypes.string,
     mod: PropTypes.string,
     allowSubmit: PropTypes.bool,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    v: PropTypes.oneOfType(['old', 'new'])
   };
 
   static defaultProps = {
-    allowSubmit: true
+    allowSubmit: true,
+    v: 'old'
   };
+
+  get baseClass () { return this.props.v === 'old' ? 'FormLayout' : 'FormLayoutNew'; }
 
   onSubmit = (e) => {
     if (!this.props.allowSubmit) {
@@ -38,17 +41,17 @@ export default class FormLayout extends React.Component {
     };
 
     return (
-      <TagName className={classnames(baseClassNames, modifiers)} {...removeObjectKeys(this.props, ['tagName', 'mod', 'allowSubmit', 'onSubmit'])} onSubmit={this.onSubmit}>
-        <div className={'FormLayout__container'}>
+      <TagName className={classnames(getClassName(this.baseClass), modifiers)} {...removeObjectKeys(this.props, ['tagName', 'mod', 'allowSubmit', 'onSubmit', 'v'])} onSubmit={this.onSubmit}>
+        <div className={`${this.baseClass}__container`}>
           {children.map((field, i) => (
-            <label className="FormLayout__row" key={field.key || `row-${i}`}>
-              <div className="FormLayout__separator" />
+            <label className={`${this.baseClass}__row`} key={field.key || `row-${i}`}>
+              <div className={`${this.baseClass}__separator`} />
               {!!field.props.label && (
-                <div className="FormLayout__label">
-                  <div className="FormLayout__label-in">{field.props.label}</div>
+                <div className={`${this.baseClass}__label`}>
+                  <div className={`${this.baseClass}__label-in`}>{field.props.label}</div>
                 </div>
               )}
-              <div className="FormLayout__field">
+              <div className={`${this.baseClass}__field`}>
                 {field}
               </div>
             </label>

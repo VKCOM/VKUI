@@ -30,200 +30,166 @@
   content: none;
   }
 
-  .FormLayout__row {
-    display: flex;
-    position: relative;
-    margin: 0;
-    white-space: nowrap;
-    line-height: 22px;
-    max-width: 100%;
-    overflow: hidden;
-    }
-  .FormLayout--web .FormLayout__row {
-    display: block;
-    }
-  .FormLayout--ios .FormLayout__row {
-    font-size: 17px;
-    }
-  .FormLayout--android .FormLayout__row {
-    font-size: 16px;
-    }
+.FormLayout__row {
+  display: flex;
+  position: relative;
+  margin: 0;
+  white-space: nowrap;
+  line-height: 22px;
+  max-width: 100%;
+  overflow: hidden;
+  }
+.FormLayout--web .FormLayout__row {
+  display: block;
+  }
+.FormLayout--ios .FormLayout__row {
+  font-size: 17px;
+  }
+.FormLayout--android .FormLayout__row {
+  font-size: 16px;
+  }
 
-    .FormLayout__separator {
-      position: relative;
-      width: 0;
-      }
-    .FormLayout--web.FormLayout--ios .FormLayout__separator {
-      display: none;
-      }
-    .FormLayout--ios .FormLayout__separator::before {
-      position: absolute;
-      bottom: 0;
-      width: 100vw;
-      height: 1px;
-      background: var(--ios-thick-separator-color);
-      content: '';
-      }
-    .FormLayout__row:last-child .FormLayout__separator::before {
-      content: none;
-      }
-    .FormLayout--ios .FormLayout__separator {
-      left: 15px;
-      }
-    .FormLayout--android .FormLayout__separator {
-      left: 0;
-      }
+.FormLayout__separator {
+  position: relative;
+  width: 0;
+  }
+.FormLayout--web.FormLayout--ios .FormLayout__separator {
+  display: none;
+  }
+.FormLayout--ios .FormLayout__separator::before {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 1px;
+  background: var(--ios-thick-separator-color);
+  content: '';
+  }
+.FormLayout__row:last-child .FormLayout__separator::before {
+  content: none;
+  }
+.FormLayout--ios .FormLayout__separator {
+  left: 15px;
+  }
+.FormLayout--android .FormLayout__separator {
+  left: 0;
+  }
 
-    .FormLayout__label {
-      position: relative;
-      flex: 0 0 100px;
-      max-width: 100px;
-      vertical-align: top;
-      }
-    .FormLayout--ios .FormLayout__label::before {
-      position: absolute;
-      bottom: 0;
-      left: 15px;
-      width: 100vw;
-      height: 1px;
-      background: var(--ios-thick-separator-color);
-      content: '';
-      }
-    .FormLayout__row:last-child .FormLayout__label::before {
-      content: none;
-      }
-    .FormLayout--android .FormLayout__label {
-      display: none;
-      }
-    .FormLayout--web .FormLayout__label {
-      display: block;
-      max-width: none;
-      }
-    .FormLayout--web.FormLayout--ios .FormLayout__label:before {
-      content: none;
-      }
+.FormLayout__label {
+  position: relative;
+  flex: 0 0 100px;
+  max-width: 100px;
+  vertical-align: top;
+  }
+.FormLayout--ios .FormLayout__label::before {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  width: 100vw;
+  height: 1px;
+  background: var(--ios-thick-separator-color);
+  content: '';
+  }
+.FormLayout__row:last-child .FormLayout__label::before {
+  content: none;
+  }
+.FormLayout--android .FormLayout__label {
+  display: none;
+  }
+.FormLayout--web .FormLayout__label {
+  display: block;
+  max-width: none;
+  }
+.FormLayout--web.FormLayout--ios .FormLayout__label:before {
+  content: none;
+  }
 
-      .FormLayout__label-in {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        }
-      .FormLayout--ios .FormLayout__label-in {
-        padding: 11px 15px 12px;
-        }
-      .FormLayout--android .FormLayout__label-in {
-        padding: 16px 15px 18px;
-        }
-      .FormLayout--web .FormLayout__label-in {
-        color: #71757a;
-        font-size: 14px;
-        line-height: 16px;
-        padding: 14px 15px 10px;
-        }
-      .FormLayout--web.FormLayout--ios .FormLayout__label-in {
-        padding: 14px 12px 9px;
-        }
+.FormLayout__label-in {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
+.FormLayout--ios .FormLayout__label-in {
+  padding: 11px 15px 12px;
+  }
+.FormLayout--android .FormLayout__label-in {
+  padding: 16px 15px 18px;
+  }
+.FormLayout--web .FormLayout__label-in {
+  color: #71757a;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 14px 15px 10px;
+  }
+.FormLayout--web.FormLayout--ios .FormLayout__label-in {
+  padding: 14px 12px 9px;
+  }
 
-    .FormLayout__field {
-      flex: 1 0 auto;
-      padding: 0 15px;
-      vertical-align: top;
-      }
-      .FormLayout--web .FormLayout__field {
-        position: relative;
-        padding-top: 14px;
-        }
-      .FormLayout--web.FormLayout--ios .FormLayout__field {
-        padding: 0 12px;
-        }
-      .FormLayout--web .FormLayout__label + .FormLayout__field {
-        padding-top: 0;
-        }
-      .FormLayout--web .Input--android,
-      .FormLayout--web .Textarea--android {
-        width: calc(100% - 32px);
-        }
-      .FormLayout--web .Select--android .Select__self,
-      .FormLayout--web .Input--android,
-      .FormLayout--web .Textarea--android {
-        border-radius: 4px;
-        background-color: #f3f4f5;
-        padding: 10px 16px 12px;
-        }
-      .FormLayout--web .Input--ios,
-      .FormLayout--web .Textarea--ios {
-        line-height: 21px;
-        padding: 11px 12px 10px;
-        width: calc(100% - 26px);
-        }
-      .FormLayout--web .Select--ios .Select__self,
-      .FormLayout--web .Input--ios,
-      .FormLayout--web .Textarea--ios {
-        border-radius: 10px;
-        background-color: #f3f4f5;
-        border: 1px solid rgba(0, 0, 0, 0.15);
-        font-size: 16px;
-        appearance: none;
-        }
-      .FormLayout--web .Select {
-        position: relative;
-        }
-      .FormLayout--web .Select:before {
-        content: '';
-        background: inline('./assets/selectarrow.svg') 0 0/100% no-repeat;
-        position: absolute;
-        width: 24px;
-        height: 24px;
-        top: 0;
-        right: 10px;
-        bottom: 0;
-        margin: auto;
-        opacity: 0.7;
-        pointer-events: none;
-        }
-      .FormLayout--web .Select__self {
-        width: 100%;
-        }
-      .FormLayout--web .Select--android .Select__self {
-        padding: 11px 44px 11px 16px;
-        }
-      .FormLayout--web .Select--ios .Select__self {
-        line-height: 20px;
-        padding: 11px 44px 11px 12px;
-        }
-      .FormLayout--web.FormLayout--ios .FormLayout__underline {
-        display: none;
-        }
-      .FormLayout--android .FormLayout__underline {
-        position: absolute;
-        bottom: 9px;
-        left: 16px;
-        right: 16px;
-        height: 2px;
-        background: linear-gradient(to top, transparent 50%, #d6d6d6 50%);
-        content: '';
-        }
-      .FormLayout--web.FormLayout--android .FormLayout__underline {
-        border-radius: 0 0 2px 2px;
-        bottom: 0;
-        overflow: hidden;
-        background: #c9cdd1;
-        }
-      .FormLayout--android .FormLayout__underline::before {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: #518bcc;
-        content: '';
-        transform: scaleX(0);
-        transition: transform .1s var(--android-easing);
-        }
-      .FormLayout--android input:focus + .FormLayout__underline::before,
-      .FormLayout--android textarea:focus + .FormLayout__underline::before {
-        transform: scaleX(1);
-        transition: transform .14s var(--android-easing);
-        }
+.FormLayout__field {
+  flex: 1 0 auto;
+  padding: 0 15px;
+  vertical-align: top;
+  }
+.FormLayout--web .FormLayout__field {
+  position: relative;
+  padding-top: 14px;
+  }
+.FormLayout--web.FormLayout--ios .FormLayout__field {
+  padding: 0 12px;
+  }
+.FormLayout--web .FormLayout__label + .FormLayout__field {
+  padding-top: 0;
+  }
+.FormLayout--web .Input--android,
+.FormLayout--web .Textarea--android {
+  width: calc(100% - 32px);
+  }
+.FormLayout--web .Select--android .Select__self,
+.FormLayout--web .Input--android,
+.FormLayout--web .Textarea--android {
+  border-radius: 4px;
+  background-color: #f3f4f5;
+  padding: 10px 16px 12px;
+  }
+.FormLayout--web .Input--ios,
+.FormLayout--web .Textarea--ios {
+  line-height: 21px;
+  padding: 11px 12px 10px;
+  width: calc(100% - 26px);
+  }
+.FormLayout--web .Select--ios .Select__self,
+.FormLayout--web .Input--ios,
+.FormLayout--web .Textarea--ios {
+  border-radius: 10px;
+  background-color: #f3f4f5;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  appearance: none;
+  }
+.FormLayout--web .Select {
+  position: relative;
+  }
+.FormLayout--web .Select:before {
+  content: '';
+  background: inline('./assets/selectarrow.svg') 0 0/100% no-repeat;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 0;
+  right: 10px;
+  bottom: 0;
+  margin: auto;
+  opacity: 0.7;
+  pointer-events: none;
+  }
+.FormLayout--web .Select__self {
+  width: 100%;
+  }
+.FormLayout--web .Select--android .Select__self {
+  padding: 11px 44px 11px 16px;
+  }
+.FormLayout--web .Select--ios .Select__self {
+  line-height: 20px;
+  padding: 11px 44px 11px 12px;
+  }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .FormLayout--ios .FormLayout__container::before,
