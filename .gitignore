@@ -5,5 +5,8 @@ coverage
 npm-debug.log
 stats.json
 dist
-docs
+docs/vkui.css
+docs/vkui.js
+docs/vkui.css.map
+docs/vkui.js.map
 .idea
