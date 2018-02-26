@@ -536,7 +536,7 @@ export default class View extends Component {
                   {!panel.props.header.search &&
                   <div className="View__header-left">
                     {osname === IOS && panel.props.header.right &&
-                    <div style={{ overflow: 'hidden', height: 0 }}>
+                    <div style={{ overflow: 'hidden', height: 0, visibility: 'hidden' }}>
                       {this.renderHeaderRight(panel)}
                     </div>
                     }
@@ -557,7 +557,7 @@ export default class View extends Component {
                     style={this.calcHeaderSwipeStyles(panel.id).right}
                   >
                     {osname === IOS && (panel.props.header.left || panel.props.header.icon) &&
-                      <div style={{ overflow: 'hidden', height: 0 }}>
+                      <div style={{ overflow: 'hidden', height: 0, visibility: 'hidden' }}>
                         {this.renderHeaderLeft(panel)}
                       </div>
                     }

@@ -89,7 +89,9 @@ export default class FixedLayout extends React.Component {
         }, this.props.className)}
         style={ Object.assign({}, this.props.style, this.state.paddings, this.state.transition ? { position: 'absolute', top: this.state.topOffset } : {}) }
       >
-        {this.props.children}
+        <div className="FixedLayout__in">
+          {this.props.children}
+        </div>
       </div>
     );
   }
