@@ -41,7 +41,7 @@ export default class ScrollView extends Component {
       left: PropTypes.node,
       right: PropTypes.node,
       title: PropTypes.node
-    }).isRequired,
+    }),
     centered: PropTypes.bool
   };
 
