@@ -8,106 +8,150 @@ import getClassName from '../../helpers/getClassName';
 const baseClassNames = getClassName('Slider');
 
 export default class Slider extends Component {
+
   constructor (props) {
     super(props);
     this.state = {
-      startX: 0,
-      deltaX: 0,
-      value: null
+      startX: 0
     };
+
+    this.isControlledOutside = this.props.hasOwnProperty('value');
   }
+
   static propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,
     value: PropTypes.number,
-    step: PropTypes.number
+    step: PropTypes.number,
+    onChange: PropTypes.func,
+    defaultValue: PropTypes.number
   };
+
   static defaultProps = {
     min: 0,
     max: 100,
-    value: 0,
     step: 0
   };
+
   onStart = (e) => {
-    if (!this.state.containerWidth) {
-      this.onResize();
-    }
+    const absolutePosition = this.validateAbsolute(e.startX - this.state.containerLeft);
+    const percentPosition = this.absoluteToPecent(absolutePosition);
 
-    if (!e.originalEvent.target.closest('.Slider__thumb')) {
-      const coords = this.calculate(e.startX - this.state.containerLeft);
+    this.onChange(this.percentToValue(percentPosition));
 
-      this.setState(Object.assign({}, coords, {
-        startX: coords.absolutePosition,
-        deltaX: 0
-      }));
+    if (this.isControlledOutside) {
+      this.setState({startX: absolutePosition});
     } else {
-      this.setState({ active: true });
+      this.setState({
+        startX: absolutePosition,
+        percentPosition
+      });
     }
+
+    this.setState({active: !!e.originalEvent.target.closest('.Slider__thumb')});
   };
+
   onMove = e => {
-    this.setState(this.calculate(this.state.startX + (e.shiftX || 0)));
+    const absolutePosition = this.validateAbsolute(this.state.startX + (e.shiftX || 0));
+    const percentPosition = this.absoluteToPecent(absolutePosition);
+
+    this.onChange(this.percentToValue(percentPosition));
+
+    if (!this.isControlledOutside) {
+      this.setState({percentPosition});
+    }
+
     e.originalEvent.preventDefault();
   };
+
   onEnd = () => {
     this.setState({
-      startX: this.state.absolutePosition,
-      deltaX: 0,
       active: false
     });
   };
-  onResize = () => {
+
+  onResize = (callback) => {
     this.setState({
       containerLeft: this.container.offsetLeft,
       containerWidth: this.container.offsetWidth
+    }, () => {
+      typeof callback === 'function' && callback();
     });
   };
-  calculate (pos) {
-    const { min, max, step } = this.props;
-    const { containerWidth } = this.state;
 
-    pos = Math.max(0, Math.min(pos, containerWidth));
+  onChange (value) {
+    this.props.onChange && this.props.onChange(value);
+  }
 
-    const relation = pos / containerWidth;
-    const absolutePosition = pos;
-    const position = Math.round(relation * 10000) / 100;
+  validateAbsolute (absolute) {
+    let res = Math.max(0, Math.min(absolute, this.state.containerWidth));
 
-    if (step > 0) {
-      const stepCount = Math.round((max - min) / step);
+    if (this.props.step > 0) {
+      const stepCount = (this.props.max - this.props.min) / this.props.step;
+      const absStep = this.state.containerWidth / stepCount;
 
-      return {
-        position: Math.round(relation * stepCount) * step / (max - min) * 100,
-        absolutePosition,
-        value: min + Math.round(relation * stepCount) * step
-      };
+      res = Math.round(res / absStep) * absStep;
     }
 
-    return {
-      position,
-      absolutePosition,
-      value: min + (max - min) * relation
-    };
+    return res;
   }
+
+  validatePercent (percent) { return Math.max(0, Math.min(percent, 100)); }
+
+  absoluteToPecent (absolute) {
+    const res = absolute * 100 / this.state.containerWidth;
+    return this.props.step > 0 ? Math.round(res) : res;
+  }
+
+  percentToValue (percent) { return percent * (this.props.max - this.props.min) / 100 + this.props.min; }
+
+  valueToPercent (value) { return (value - this.props.min) * 100 / (this.props.max - this.props.min); }
+
+  get value () {
+    if (this.isControlledOutside) {
+      return this.props.value;
+    } else if (this.props.hasOwnProperty('defaultValue')) {
+      return this.props.defaultValue;
+    } else {
+      return this.props.min;
+    }
+  }
+
   componentDidMount () {
     window.addEventListener('resize', this.onResize);
-    this.onResize();
+    this.onResize(() => {
+      const percentPosition = this.validatePercent(this.valueToPercent(this.value));
+
+      this.setState({percentPosition});
+    });
   }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.isControlledOutside && nextProps.value !== this.props.value) {
+      const percentPosition = this.validatePercent(this.valueToPercent(nextProps.value));
+
+      this.setState({percentPosition});
+    }
+  }
+
   componentWillUnmount () {
     window.removeEventListener('resize', this.onResize);
   }
+
   getRef = (container) => {
     this.container = container;
-    return;
-  }
-  render () {
-    const modifiers = {
-      'Slider--active': this.state.active
-    };
+  };
 
+  render () {
     return (
-      <div className={classnames(baseClassNames, modifiers)} ref={this.getRef}>
+      <div className={baseClassNames} ref={this.getRef}>
         <Touch onStart={this.onStart} onMove={this.onMove} onEnd={this.onEnd} className="Slider__in">
-          <div className="Slider__dragger" style={{ width: this.state.position + '%' }}>
-            <span className="Slider__thumb" />
+          <div className="Slider__dragger" style={{ width: this.state.percentPosition + '%' }}>
+            <span
+              className={classnames('Slider__thumb', 'Slider__thumb--end', {
+                'Slider__thumb--active': this.state.active
+              })}
+            />
           </div>
         </Touch>
       </div>

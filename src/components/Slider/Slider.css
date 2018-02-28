@@ -28,12 +28,18 @@
   .Slider__thumb {
     position: absolute;
     top: -14px;
-    right: -14px;
     width: 28px;
     height: 28px;
-    content: '';
     transition: transform .1s ease;
     }
+
+    .Slider__thumb--start {
+      left: -14px;
+      }
+
+    .Slider__thumb--end {
+      right: -14px;
+      }
 
 /**
  * iOS
@@ -85,7 +91,7 @@
       border-radius: 6px;
       transition: box-shadow .14s ease, transform .14s ease;
       }
-    .Slider--android.Slider--active .Slider__thumb::before {
+    .Slider--android .Slider__thumb.Slider__thumb--active::before {
       box-shadow: 0 0 0 3px rgba(127, 127, 127, .2);
       transform: scale(1.25);
       }
