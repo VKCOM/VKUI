@@ -6,7 +6,7 @@
       super(props);
       
       this.state = {
-        slideIndex: 1
+        slideIndex: 0
       }
     }
     
@@ -62,7 +62,7 @@
                 <div style={{ height: 150, backgroundColor: colors.green }} />
               </Gallery>
               <Div>
-                <Button v="new" onClick={() => this.setState({slideIndex: 1})}>Second slide</Button>
+                <Button v="new" onClick={() => this.setState({slideIndex: this.state.slideIndex === 2 ? 0 : this.state.slideIndex + 1 })}>Next slide</Button>
               </Div>
             </Group>
           </ScrollView>
