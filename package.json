@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "1.3.8",
+  "version": "1.3.9",
   "main": "dist/vkui.js",
   "repository": "https://github.com/VKCOM/VKUI",
   "description": "VKUI library",
