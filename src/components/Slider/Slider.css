@@ -6,13 +6,24 @@
   margin: 0 14px;
   }
 
+  .Slider::before {
+    position: absolute;
+    left: 0;
+    top: 12px;
+    height: 4px;
+    width: 100%;
+    background-color: map(colors, placeholderBackground);
+    border-radius: 2px;
+    content: '';
+    }
+
   .Slider__in {
     height: 100%;
     }
 
   .Slider__dragger {
     position: absolute;
-    top: 50%;
+    top: 12px;
     left: 0;
     width: 0;
     height: 0;
@@ -22,12 +33,15 @@
     position: absolute;
     top: 0;
     width: 100%;
+    height: 4px;
+    background: map(colors, accentBlue);
+    border-radius: 2px;
     content: '';
     }
 
   .Slider__thumb {
     position: absolute;
-    top: -14px;
+    top: -12px;
     width: 28px;
     height: 28px;
     transition: transform .1s ease;
@@ -45,15 +59,9 @@
  * iOS
  */
 .Slider--ios {
-  background: linear-gradient(to bottom, #b7b7b7 1px, transparent 1px) 0 14px repeat-x;
   }
 
   .Slider--ios .Slider__in {}
-
-    .Slider__dragger::before {
-      height: 1px;
-      background: #0f7afb;
-      }
 
     .Slider--ios .Slider__thumb {
       border-radius: 14px;
@@ -65,33 +73,19 @@
  * Android
  */
 .Slider--android {
-  background: linear-gradient(to bottom, #bfbfbf 2px, transparent 2px) 0 14px repeat-x;
   }
 
   .Slider--ios .Slider__in {}
 
-    .Slider--android .Slider__dragger::before {
-      height: 2px;
-      background: var(--vk-color);
-      }
-
-    .Slider--android .Slider__thumb {
-      top: -13px;
-      }
-
     .Slider--android .Slider__thumb::before {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 12px;
-      height: 12px;
-      margin: -6px 0 0 -6px;
+      top: 4px;
+      left: 4px;
+      width: 20px;
+      height: 20px;
       content: '';
-      background: var(--vk-color);
-      border-radius: 6px;
-      transition: box-shadow .14s ease, transform .14s ease;
-      }
-    .Slider--android .Slider__thumb.Slider__thumb--active::before {
-      box-shadow: 0 0 0 3px rgba(127, 127, 127, .2);
-      transform: scale(1.25);
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 1px 0 rgba(0, 0, 0, 0.12), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 1px 3px 0 map(colors, separator), 0 0 1px 0 map(colors, separator), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
       }
