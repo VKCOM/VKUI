@@ -65,7 +65,9 @@ module.exports = {
         components: () => [
           '../src/components/FormLayout/FormLayout.js',
           '../src/components/Switch/Switch.js',
+          '../src/components/Select/Select.js',
           '../src/components/Slider/Slider.js',
+          '../src/components/RangeSlider/RangeSlider.js',
           '../src/components/Radio/Radio.js',
           '../src/components/Input/Input.js',
           '../src/components/Textarea/Textarea.js',

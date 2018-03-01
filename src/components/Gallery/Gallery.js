@@ -182,6 +182,7 @@ export default class Gallery extends Component {
 
   go = (targetIndex) => {
     this.setState({
+      animation: true,
       shiftX: this.calculateIndent(targetIndex),
       current: targetIndex
     });
@@ -190,20 +191,6 @@ export default class Gallery extends Component {
       this.clearTimeout();
       this.setTimeout(this.props.autoplay);
     }
-  };
-
-  next = () => {
-    const { slides, current } = this.state;
-    const targetIndex = current < slides.length - 1 ? current + 1 : current;
-
-    this.go(targetIndex);
-  };
-
-  prev = () => {
-    const { current } = this.state;
-    const targetIndex = current > 0 ? current - 1 : current;
-
-    this.go(targetIndex);
   };
 
   onStart = (e) => {

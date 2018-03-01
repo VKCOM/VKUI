@@ -7,6 +7,10 @@
   line-height: 1.25;
   }
 
+.NewPane--ios + .NewPane--ios {
+  border-top: none;
+  }
+
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .NewPane--ios {
     border-width: .5px;
