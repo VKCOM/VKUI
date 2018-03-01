@@ -120,17 +120,13 @@ export default class Slider extends Component {
   componentDidMount () {
     window.addEventListener('resize', this.onResize);
     this.onResize(() => {
-      const percentPosition = this.validatePercent(this.valueToPercent(this.value));
-
-      this.setState({percentPosition});
+      this.setState({percentPosition: this.validatePercent(this.valueToPercent(this.value))});
     });
   }
 
   componentWillReceiveProps (nextProps) {
     if (this.isControlledOutside && nextProps.value !== this.props.value) {
-      const percentPosition = this.validatePercent(this.valueToPercent(nextProps.value));
-
-      this.setState({percentPosition});
+      this.setState({percentPosition: this.validatePercent(this.valueToPercent(nextProps.value))});
     }
   }
 
