@@ -65,6 +65,8 @@ class LoadStyles extends React.Component {
   componentDidMount () {
     let styles = this.context.document.getElementById('styles');
 
+    if (styles.sheet) this.setState({ loaded: true });
+
     styles.onload = styles.onreadystatechange = () => {
       this.setState({ loaded: true });
     };
