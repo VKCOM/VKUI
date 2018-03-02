@@ -36,14 +36,16 @@ export default class Input extends Component {
     initialValue: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
-    v: PropTypes.oneOfType(['old', 'new'])
+    v: PropTypes.oneOf(['old', 'new']),
+    status: PropTypes.oneOf(['default', 'error', 'verified'])
   };
 
   static defaultProps = {
     type: 'text',
     initialValue: '',
     alignment: 'left',
-    v: 'old'
+    v: 'old',
+    status: 'default'
   };
 
   static contextTypes = {
@@ -77,12 +79,13 @@ export default class Input extends Component {
   }
 
   render () {
-    const { alignment, value } = this.props;
+    const { alignment } = this.props;
 
     const modifiers = {
       [`${this.baseClass}--left`]: alignment === 'left',
       [`${this.baseClass}--center`]: alignment === 'center',
-      [`${this.baseClass}--right`]: alignment === 'right'
+      [`${this.baseClass}--right`]: alignment === 'right',
+      [`${this.baseClass}--s-${this.props.status}`]: true
     };
 
     const customPlaceolder = ['date', 'datetime-local', 'time', 'month'].indexOf(this.props.type) > -1 && this.context.isWebView ? this.props.placeholder : null;
@@ -92,9 +95,9 @@ export default class Input extends Component {
         <input
           style={{ transition: 'transform ' }}
           className={`${this.baseClass}__el`}
-          {...removeObjectKeys(this.props, ['onChange', 'initialValue', 'alignment', 'placeholder'])}
+          {...removeObjectKeys(this.props, ['onChange', 'initialValue', 'alignment', 'placeholder', 'v', 'value', 'status'])}
           ref={this.getRef}
-          value={this.isControlledOutside ? value : this.state.value}
+          value={this.value}
           onChange={this.onChange}
           placeholder={customPlaceolder ? null : this.props.placeholder}
         />

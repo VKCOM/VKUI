@@ -17,7 +17,7 @@
   }
 
 .InputNew--ios .InputNew__el {
-  line-height: 20px;
+  line-height: 19px;
   font-size: 16px;
   color: map(colors, black);
   padding: 12px;
@@ -26,6 +26,10 @@
   border: solid .5px rgba(0, 0, 0, 0.15);
   text-overflow: ellipsis;
   }
+
+  .InputNew--ios .InputNew__el::placeholder {
+    color: map(colors, captionGray);
+    }
 
   .InputNew--ios .InputNew__el:focus {
     border-color: map(colors, accentBlue);
