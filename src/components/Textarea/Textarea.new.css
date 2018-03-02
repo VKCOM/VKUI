@@ -1,0 +1,39 @@
+.TextareaNew {
+
+  }
+
+  .TextareaNew textarea {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    outline: none;
+    resize: none;
+    }
+
+
+.TextareaNew--ios {
+
+  }
+
+  .TextareaNew--ios textarea {
+    line-height: 19px;
+    font-size: 16px;
+    color: map(colors, black);
+    padding: 12px;
+    min-height: 66px;
+    max-height: 198px;
+    border-radius: 10px;
+    background-color: rgb(242, 243, 245);
+    border: solid .5px rgba(0, 0, 0, 0.15);
+    text-overflow: ellipsis;
+    }
+
+    .TextareaNew--ios textarea::placeholder {
+      color: map(colors, captionGray);
+      }
+
+  .TextareaNew--ios textarea:focus {
+    border-color: map(colors, accentBlue);
+    }
