@@ -94,6 +94,9 @@ const config = {
   plugins: [
     new ExtractTextPlugin('[name].css')
   ],
+  stats: {
+    children: false
+  },
   externals: {
     'react': 'react',
     'prop-types': 'prop-types'
