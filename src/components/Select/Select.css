@@ -8,7 +8,7 @@
   outline: none;
   }
 
-  .Select__self {
+  .Select select {
     display: block;
     font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     line-height: 22px;
@@ -19,12 +19,12 @@
     outline: none;
     }
 
-  .Select--ios .Select__self {
+  .Select--ios select {
     font-size: 17px;
     padding: 11px 0 12px;
     }
 
-  .Select--android .Select__self {
+  .Select--android select {
     font-family: var(--android-font);
     font-size: 16px;
     padding: 16px 0 18px;
