@@ -1,0 +1,33 @@
+.FormLayoutNew {
+
+  }
+
+  .FormLayoutNew__row {
+    display: block;
+    }
+
+.FormLayoutNew--ios {
+  padding: 14px 12px 12px;
+  }
+
+  .FormLayoutNew--ios .FormLayoutNew__row + .FormLayoutNew__row {
+    margin-top: 12px;
+    }
+
+  .FormLayoutNew--ios .FormLayoutNew__addon {
+    color: map(colors, subheadGray);
+    }
+
+  .FormLayoutNew--ios .FormLayoutNew__addon .Icon {
+    display: inline-block;
+    }
+
+  .FormLayoutNew--ios .FormLayoutNew__addon--top {
+    margin-bottom: 8px;
+    font-size: 14px;
+    }
+
+  .FormLayoutNew--ios .FormLayoutNew__addon--bottom {
+    margin-top: 8px;
+    font-size: 13px;
+    }
