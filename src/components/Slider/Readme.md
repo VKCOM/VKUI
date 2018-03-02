@@ -8,7 +8,7 @@
         value1: 24.4234,
         value2: 0.2,
         value3: 20,
-        value4: [20, 30]
+        value4: [10, 20]
       };
     }
   
@@ -58,7 +58,7 @@
               <Pane>
                 <RangeSlider min={10} max={40} value={this.state.value4} onChange={value4 => this.setState({value4})}/>
               </Pane>
-              <Pane>{Math.round(this.state.value4[0])}, {Math.round(this.state.value4[1])}</Pane>
+              <Pane>{this.state.value4[0]}, {this.state.value4[1]}</Pane>
             </Group>
           </ScrollView>
         </View>

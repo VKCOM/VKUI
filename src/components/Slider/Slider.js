@@ -7,6 +7,11 @@ import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('Slider');
 
+function precisionRound (number, precision) {
+  let factor = Math.pow(10, precision || 1);
+  return Math.round(number * factor) / factor;
+}
+
 export default class Slider extends Component {
 
   constructor (props) {
@@ -98,12 +103,16 @@ export default class Slider extends Component {
 
   validatePercent (percent) { return Math.max(0, Math.min(percent, 100)); }
 
-  absoluteToPecent (absolute) {
-    const res = absolute * 100 / this.state.containerWidth;
-    return this.props.step > 0 ? Math.round(res) : res;
-  }
+  absoluteToPecent (absolute) { return absolute * 100 / this.state.containerWidth; }
 
-  percentToValue (percent) { return percent * (this.props.max - this.props.min) / 100 + this.props.min; }
+  percentToValue (percent) {
+    const res = percent * (this.props.max - this.props.min) / 100 + this.props.min;
+    if (this.props.step > 0) {
+      const stepFloatPart = `${this.props.step}`.split('.')[1] || '';
+      return precisionRound(res, stepFloatPart.length);
+    }
+    return res;
+  }
 
   valueToPercent (value) { return (value - this.props.min) * 100 / (this.props.max - this.props.min); }
 
