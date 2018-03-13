@@ -6,12 +6,14 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import Icon24Dropdown from '../../../dist/icons/24/dropdown';
+import {platform, ANDROID} from '../../lib/platform';
+
+const osname = platform();
 
 export default class Select extends Component {
 
   constructor (props) {
     super(props);
-
     if (typeof props.value !== 'undefined') {
       this.isControlledOutside = true;
     } else {
@@ -28,8 +30,8 @@ export default class Select extends Component {
     options: PropTypes.array,
     name: PropTypes.string,
     onChange: PropTypes.func,
-    value: PropTypes.string,
-    defaultValue: PropTypes.string,
+    value: PropTypes.any,
+    defaultValue: PropTypes.any,
     children: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.arrayOf(PropTypes.element)
@@ -97,6 +99,7 @@ export default class Select extends Component {
           {this.props.placeholder && !this.props.options && <option value="">{this.props.placeholder}</option>}
           {this.props.children}
         </select>
+        {this.props.v === 'new' && osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
         {this.props.v === 'new' && <Icon24Dropdown />}
       </label>
     );

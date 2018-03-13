@@ -6,6 +6,10 @@
     display: block;
     }
 
+  .FormLayoutNew__addon .Icon {
+    display: inline-block;
+    }
+
 .FormLayoutNew--ios {
   padding: 14px 12px 12px;
   }
@@ -18,10 +22,6 @@
     color: map(colors, subheadGray);
     }
 
-  .FormLayoutNew--ios .FormLayoutNew__addon .Icon {
-    display: inline-block;
-    }
-
   .FormLayoutNew--ios .FormLayoutNew__addon--top {
     margin-bottom: 8px;
     font-size: 14px;
@@ -31,3 +31,26 @@
     margin-top: 8px;
     font-size: 13px;
     }
+
+
+.FormLayoutNew--android {
+  padding: 8px 16px;
+  }
+
+.FormLayoutNew--android .FormLayoutNew__row + .FormLayoutNew__row {
+  margin-top: 12px;
+  }
+
+.FormLayoutNew--android .FormLayoutNew__addon {
+  color: map(colors, subheadGray);
+  }
+
+.FormLayoutNew--android .FormLayoutNew__addon--top {
+  margin-bottom: 8px;
+  font-size: 14px;
+  }
+
+.FormLayoutNew--android .FormLayoutNew__addon--bottom {
+  margin-top: 8px;
+  font-size: 13px;
+  }

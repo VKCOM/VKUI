@@ -119,7 +119,7 @@ export default class Textarea extends Component {
           ref={this.getRef}
           style={Object.assign({}, props.style, { height })}
         />
-        {osname === ANDROID && <div className="Input-underline" />}
+        {osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
       </div>
     );
   }

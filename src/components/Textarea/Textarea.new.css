@@ -1,15 +1,24 @@
-.TextareaNew {
+@import '../../styles/constants.css';
 
+.TextareaNew {
+  position: relative;
   }
 
   .TextareaNew textarea {
-    padding: 0;
     margin: 0;
     width: 100%;
     display: block;
     box-sizing: border-box;
     outline: none;
     resize: none;
+    appearance: none;
+    line-height: 19px;
+    font-size: 16px;
+    color: map(colors, black);
+    padding: 12px;
+    min-height: 86px;
+    max-height: 198px;
+    border: none;
     }
 
 
@@ -18,16 +27,9 @@
   }
 
   .TextareaNew--ios textarea {
-    line-height: 19px;
-    font-size: 16px;
-    color: map(colors, black);
-    padding: 12px;
-    min-height: 66px;
-    max-height: 198px;
     border-radius: 10px;
     background-color: rgb(242, 243, 245);
     border: solid .5px rgba(0, 0, 0, 0.15);
-    text-overflow: ellipsis;
     }
 
     .TextareaNew--ios textarea::placeholder {
@@ -36,4 +38,27 @@
 
   .TextareaNew--ios textarea:focus {
     border-color: map(colors, accentBlue);
+    }
+
+
+.TextareaNew--android {
+
+  }
+
+  .TextareaNew--android textarea {
+    border-radius: 4px;
+    background-color: #f2f3f5;
+    }
+
+    .TextareaNew--android textarea::placeholder {
+      color: map(colors, captionGray);
+      }
+
+  .TextareaNew--android textarea:focus {
+    border-color: map(colors, accentBlue);
+    }
+
+  .TextareaNew--android textarea:focus ~ .TextareaNew-underline::before {
+    transform: scaleX(1);
+    transition: transform .14s var(--android-easing);
     }
