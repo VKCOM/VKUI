@@ -1,0 +1,72 @@
+@import '../../styles/constants.css';
+
+.SelectNew {
+  display: block;
+  position: relative;
+  }
+
+  .SelectNew select {
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+    appearance: none;
+    border: 0;
+    background: none;
+    width: 100%;
+    outline: none;
+    line-height: 19px;
+    font-size: 16px;
+    color: map(colors, black);
+    padding: 12px;
+    text-overflow: ellipsis;
+    }
+
+  .SelectNew--ios select {
+    border-radius: 10px;
+    background-color: rgb(242, 243, 245);
+    border: solid .5px rgba(0, 0, 0, 0.15);
+    }
+
+  .SelectNew--ios.SelectNew--not-selected select {
+    color: map(colors, captionGray);
+    }
+
+  .SelectNew--ios select:focus {
+    border-color: map(colors, accentBlue);
+    }
+
+  .SelectNew--ios .Icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: map(colors, lightBlueGray)
+    }
+
+.SelectNew--android {
+
+  }
+
+  .SelectNew--android select {
+    border-radius: 4px;
+    background-color: #f2f3f5;
+    }
+
+  .SelectNew--android.SelectNew--not-selected select {
+    color: map(colors, captionGray);
+    }
+
+  .SelectNew--android select:focus {
+    border-color: map(colors, accentBlue);
+    }
+
+  .SelectNew--android .Icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: map(colors, lightBlueGray)
+    }
+
+  .SelectNew--android select:focus ~ .SelectNew-underline::before {
+    transform: scaleX(1);
+    z-index: 0;
+    transition: transform .14s var(--android-easing);
+    }

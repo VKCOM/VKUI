@@ -1,4 +1,5 @@
 import './Textarea.css';
+import './Textarea.new.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import removeObjectKeys from '../../lib/removeObjectKeys';
@@ -7,7 +8,6 @@ import requestAnimationFrame from '../../lib/requestAnimationFrame';
 import {ANDROID, platform} from '../../lib/platform';
 
 const osname = platform();
-const baseClassNames = getClassName('Textarea');
 
 export default class Textarea extends Component {
   constructor (props) {
@@ -20,28 +20,35 @@ export default class Textarea extends Component {
       this.isControlledOutside = true;
     }
   }
+
   componentDidMount () {
     if (this.props.grow) {
       this.resize();
     }
   }
+
   static propTypes = {
     style: PropTypes.object,
     value: PropTypes.string,
     initialValue: PropTypes.string,
     grow: PropTypes.bool,
     onChange: PropTypes.func,
-    onResize: PropTypes.func
+    onResize: PropTypes.func,
+    v: PropTypes.oneOf(['old', 'new'])
   };
+
   static defaultProps = {
     style: {},
     initialValue: '',
     grow: true,
+    v: 'old',
     onResize: () => {}
   };
-  getRef = (element) => {
-    this.element = element;
-  };
+
+  get baseClass () { return this.props.v === 'old' ? 'Textarea' : 'TextareaNew'; }
+
+  getRef = element => this.element = element;
+
   resize = () => {
     const el = this.element;
 
@@ -74,6 +81,7 @@ export default class Textarea extends Component {
       });
     }
   };
+
   onChange = (e) => {
     if (this.props.grow) {
       this.resize();
@@ -87,6 +95,7 @@ export default class Textarea extends Component {
       this.props.onChange(e);
     }
   };
+
   componentDidUpdate (prevProps) {
     if (prevProps.value && this.props.value === '') {
       // Fix iOS extra indent on removing content
@@ -95,21 +104,22 @@ export default class Textarea extends Component {
       });
     }
   }
+
   render () {
     const props = this.props;
     const value = this.isControlledOutside ? props.value : this.state.value;
     const height = this.state.height || this.props.style.height || 66;
 
     return (
-      <div className={baseClassNames}>
+      <div className={getClassName(this.baseClass)}>
         <textarea
-          {...removeObjectKeys(props, ['initialValue', 'grow', 'style', 'onResize'])}
+          {...removeObjectKeys(props, ['initialValue', 'grow', 'style', 'onResize', 'v'])}
           value={value}
           onChange={this.onChange}
           ref={this.getRef}
           style={Object.assign({}, props.style, { height })}
         />
-        {osname === ANDROID && <div className="Input-underline" />}
+        {osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
       </div>
     );
   }

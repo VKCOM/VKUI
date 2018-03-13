@@ -1,0 +1,73 @@
+@import '../../styles/constants.css';
+
+.InputNew {
+  position: relative;
+  line-height: 19px;
+  font-size: 16px;
+  }
+
+  .InputNew__el {
+    margin: 0;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    appearance: none;
+    text-overflow: ellipsis;
+    height: 44px;
+    line-height: 19px;
+    font-size: 16px;
+    color: map(colors, black);
+    padding: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+    }
+
+  .InputNew__el::placeholder {
+    color: map(colors, captionGray);
+    }
+
+  .InputNew__placeholder {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: calc(100% - 20px);
+    color: map(colors, captionGray);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 12px;
+    box-sizing: border-box;
+    }
+
+
+.InputNew--ios {
+
+  }
+
+  .InputNew--ios .InputNew__el {
+    border-radius: 10px;
+    background-color: rgb(242, 243, 245);
+    border: solid .5px rgba(0, 0, 0, 0.15);
+    }
+
+    .InputNew--ios .InputNew__el:focus {
+      border-color: map(colors, accentBlue);
+      }
+
+.InputNew--android {
+  }
+
+  .InputNew--android .InputNew__el {
+    border-radius: 4px;
+    background-color: #f2f3f5;
+    }
+
+    .InputNew--android .InputNew__el:focus ~ .InputNew-underline::before {
+      transform: scaleX(1);
+      transition: transform .14s var(--android-easing);
+      }
+
+
