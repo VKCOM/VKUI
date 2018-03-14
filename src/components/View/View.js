@@ -338,7 +338,6 @@ export default class View extends Component {
         this.setState({ swipeBackShift });
       }
     }
-    e.originalEvent.preventDefault();
   };
 
   onEnd = () => {

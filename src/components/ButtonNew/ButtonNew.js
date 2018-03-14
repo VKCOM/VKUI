@@ -12,7 +12,7 @@ export default class ButtonNew extends React.Component {
   static propTypes = {
     level: PropTypes.oneOf(['1', '2', '3', 'sell', 'buy', 'primary', 'danger']),
     size: PropTypes.oneOf(['m', 'l', 'xl']),
-    type: PropTypes.oneOf(['default', 'list']),
+    type: PropTypes.oneOf(['default', 'cell']),
     stretched: PropTypes.bool,
 
     children: PropTypes.node,
@@ -33,7 +33,7 @@ export default class ButtonNew extends React.Component {
         level = level || '1';
         stretched = stretched || false;
         break;
-      case 'list':
+      case 'cell':
         level = level || 'primary';
     }
 

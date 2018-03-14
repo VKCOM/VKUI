@@ -32,7 +32,7 @@ export default class ListItem extends Component {
      */
     icon: PropTypes.node,
     before: PropTypes.node,
-    indicator: PropTypes.string,
+    indicator: PropTypes.node,
     asideContent: PropTypes.node,
     expandable: PropTypes.bool,
     children: PropTypes.node,

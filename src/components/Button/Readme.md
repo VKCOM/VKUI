@@ -15,7 +15,7 @@
       super(props);
   
       this.state = {
-        activePanel: 'new'
+        activePanel: 'button'
       }
     }
   
@@ -185,12 +185,9 @@
                 </div>  
               </Pane>
             </Group>
-            <Group title="List">
-              <List>
-                <Button v="new" onClick={() => {}} type="list">List Button</Button>
-                <Button v="new" onClick={() => {}} type="list" before={<Icon24Add />}>With Icon</Button>
-                <Button v="new" onClick={() => {}} type="list" level="danger">Danger</Button>
-              </List>
+            <Group title="Cell">
+              <Button v="new" onClick={() => {}} type="cell">Cell Button</Button>
+              <Button v="new" onClick={() => {}} type="cell" level="danger">Danger Button</Button>
             </Group>
           </ScrollView>
         </View>

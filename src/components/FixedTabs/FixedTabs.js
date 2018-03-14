@@ -16,6 +16,7 @@ export default class FixedTabs extends React.Component {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
     vertical: PropTypes.oneOf(['top', 'bottom']),
+    style: PropTypes.object,
     theme: osname === IOS ? PropTypes.oneOf(['white', 'gray']) : PropTypes.oneOf(['white']),
     background: osname === IOS ? PropTypes.oneOf(['transparent', 'gray', 'white']) : PropTypes.oneOf(['blue'])
   };
@@ -30,7 +31,7 @@ export default class FixedTabs extends React.Component {
     return (
       <FixedLayout vertical={this.props.vertical} className={classnames(baseClassName, {
         [`FixedTabs--${this.props.background}`]: true
-      })}>
+      }, this.props.className)} style={this.props.style}>
         <Tabs theme={this.props.theme}>
           {this.props.children}
         </Tabs>
