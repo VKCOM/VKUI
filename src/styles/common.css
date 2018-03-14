@@ -13,7 +13,7 @@ div#root {
 }
 
 html {
-  background: #efeff4;
+  background: map(colors, backgroundBlue);
 }
 
 html[theme="white"] {

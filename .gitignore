@@ -1,12 +1,9 @@
-node_modules
+node_modules/
 coverage
 .DS_Store
 .env
 npm-debug.log
 stats.json
-dist
-docs/vkui.css
-docs/vkui.js
-docs/vkui.css.map
-docs/vkui.js.map
-.idea
+dist/
+docs/
+.idea/

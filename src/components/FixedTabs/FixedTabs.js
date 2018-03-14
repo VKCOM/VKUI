@@ -22,7 +22,7 @@ export default class FixedTabs extends React.Component {
   };
 
   static defaultProps = {
-    background: 'gray',
+    background: osname === IOS ? 'gray' : 'blue',
     theme: osname === IOS ? 'gray' : 'white',
     vertical: 'top'
   };
