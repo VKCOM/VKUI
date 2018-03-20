@@ -27,9 +27,10 @@ export default class Alert extends Component {
     actionsLayout: 'horizontal'
   };
 
-  onItemClick = (item) => () => {
+  onItemClick = (item) => (e) => {
     item.autoclose && this.props.onClose();
     item.action && item.action();
+    e.preventDefault();
   };
 
   render () {
