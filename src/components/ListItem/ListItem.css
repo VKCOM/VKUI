@@ -25,7 +25,7 @@
 
     .ListItem__before {
       position: relative;
-      flex: 0 0 auto;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: flex-start;
@@ -42,9 +42,16 @@
           }
 
     .ListItem__main {
-      flex: 1 0 auto;
+      flex-grow: 1;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 100%;
+      align-self: center;
+      }
+
+    .ListItem--multiline .ListItem__main {
+      white-space: normal;
+      word-wrap: break-word;
       }
 
     .ListItem__indicator,
@@ -54,14 +61,15 @@
       color: #8e8e93;
       text-align: right;
       text-overflow: ellipsis;
+      align-self: center;
     }
-    .ListItem__indicator {
-      flex: 0 1 auto;
-      }
     .ListItem__aside {
-      flex: 0 0 auto;
-      padding: 0;
+      flex-shrink: 0;
       overflow: visible;
+      }
+
+    .ListItem__indicator + .ListItem__aside {
+      padding-left: .5em;
       }
 
 /* iOS */
@@ -128,12 +136,12 @@
 
     .ListItem--ios .ListItem__main {
       padding: 11px .5em 12px 0;
-      align-self: center;
       }
 
     .ListItem--ios .ListItem__indicator,
     .ListItem--ios .ListItem__aside {
-      padding: 11px 0 12px;
+      padding-top: 11px;
+      padding-bottom: 12px;
       }
 
 /* Android */
@@ -170,5 +178,6 @@
 
     .ListItem--android .ListItem__indicator,
     .ListItem--android .ListItem__aside {
-      padding: 16px 0 17px;
+      padding-top: 16px;
+      padding-bottom: 17px;
       }

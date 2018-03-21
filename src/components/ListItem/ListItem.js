@@ -43,7 +43,8 @@ export default class ListItem extends Component {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     checked: PropTypes.bool,
     onChange: PropTypes.func,
-    initialChecked: PropTypes.bool
+    initialChecked: PropTypes.bool,
+    multiline: PropTypes.bool
   };
 
   static defaultProps = {
@@ -54,7 +55,8 @@ export default class ListItem extends Component {
     expandable: false,
     children: '',
     selectable: false,
-    initialChecked: false
+    initialChecked: false,
+    multiline: false
   };
 
   onChange = (e) => {
@@ -68,9 +70,10 @@ export default class ListItem extends Component {
   emptyClickHandler () {}
 
   render () {
-    const { before, icon, indicator, asideContent, expandable, onClick, children, value, name, selectable } = this.props;
+    const { before, icon, indicator, asideContent, expandable, onClick, children, value, name, selectable, multiline } = this.props;
     const modifiers = {
-      'ListItem--expandable': expandable
+      'ListItem--expandable': expandable,
+      'ListItem--multiline': multiline
     };
     const nativeProps = removeObjectKeys(this.props, [
       'icon',
@@ -84,7 +87,8 @@ export default class ListItem extends Component {
       'checked',
       'initialChecked',
       'onChange',
-      'onClick'
+      'onClick',
+      'multiline'
     ]);
 
     let beforeContent = before || icon;
