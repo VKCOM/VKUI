@@ -40,8 +40,8 @@
           </Group>
           <Group title="Colors">
             <List>
-              <ListItem icon={<Icon24About fill={colors.red} />}>Icon24About, {colorKeys.red}</ListItem>
-              <ListItem icon={<Icon24Services fill={colors.green} />}>Icon24Services, {colorKeys.green}</ListItem>
+              <ListItem before={<Icon24About fill={colors.red} />}>Icon24About, {colorKeys.red}</ListItem>
+              <ListItem before={<Icon24Services fill={colors.green} />}>Icon24Services, {colorKeys.green}</ListItem>
             </List>
           </Group>
         </ScrollView>
@@ -52,7 +52,7 @@
             <List>
               { Object.keys(Icon[iconSize]).map((iconName) => {
                 let ListIcon = Icon[iconSize][iconName];
-                return <ListItem icon={<ListIcon />} iconSize={iconSize}>{iconName}</ListItem>
+                return <ListItem before={<ListIcon />} iconSize={iconSize}>{iconName}</ListItem>
               }) }
             </List>
           </Group>
