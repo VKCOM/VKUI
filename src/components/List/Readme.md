@@ -37,8 +37,8 @@
             
             <Group title="Icons">
               <List>
-                <ListItem icon={<Icon24About />}>Information</ListItem>
-                <ListItem icon={<Icon24Services />}>Services</ListItem>
+                <ListItem before={<Icon24About />}>Information</ListItem>
+                <ListItem before={<Icon24Services />}>Services</ListItem>
               </List>
             </Group>
             
@@ -52,17 +52,31 @@
             
             <Group title="Users list">
               <List>
-                <ListItem icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</ListItem>
-                <ListItem icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</ListItem>
-                <ListItem icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Влад Анесов</ListItem>
+                <ListItem before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</ListItem>
+                <ListItem before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</ListItem>
+                <ListItem before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Влад Анесов</ListItem>
               </List>
             </Group>
             
             <Group title="Selectable users list">
               <List>
-                <ListItem selectable icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</ListItem>
-                <ListItem selectable icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</ListItem>
-                <ListItem selectable icon={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Влад Анесов</ListItem>
+                <ListItem selectable before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</ListItem>
+                <ListItem selectable before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</ListItem>
+                <ListItem selectable before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Влад Анесов</ListItem>
+              </List>
+            </Group>
+            
+            <Group title="Multiline">
+              <List>
+                <ListItem multiline>A Series of Unfortunate Events, Archer, Brooklyn Nine-Nine, Doctor Who, Game of Thrones</ListItem>
+                <ListItem multiline>The Avalanches</ListItem>
+              </List>
+            </Group>
+            
+            <Group title="With description">
+              <List>
+                <ListItem description="Depeche Mode">Where’s the Revolution</ListItem>
+                <ListItem description="The Weeknd">I Feel It Coming (Feat. Daft Punk)</ListItem>
               </List>
             </Group>
           </ScrollView>
