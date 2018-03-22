@@ -32,10 +32,7 @@ export default class Select extends Component {
     onChange: PropTypes.func,
     value: PropTypes.any,
     defaultValue: PropTypes.any,
-    children: PropTypes.oneOfType([
-      PropTypes.element,
-      PropTypes.arrayOf(PropTypes.element)
-    ]),
+    children: PropTypes.node,
     v: PropTypes.oneOf(['old', 'new']),
     placeholder: PropTypes.string
   };
@@ -64,8 +61,9 @@ export default class Select extends Component {
   }
 
   get options () {
-    if (!this.props.options) return this.props.options;
-    return this.props.placeholder ? [{ text: this.props.placeholder, value: '' }, ...this.props.options] : this.props.options;
+    const { options, placeholder } = this.props;
+    if (!options) return options;
+    return placeholder ? [{ text: placeholder, value: '' }, ...options] : options;
   }
 
   render () {
@@ -82,8 +80,8 @@ export default class Select extends Component {
       >
         <select
           onChange={this.onChange}
-          {...removeObjectKeys(this.props, ['onChange', 'label', 'options', 'value', 'defaultValue', 'style', 'className', 'v'])}
           value={this.value}
+          {...removeObjectKeys(this.props, ['onChange', 'label', 'options', 'value', 'defaultValue', 'style', 'className', 'v'])}
         >
           {Array.isArray(options) && options.length && options.map((option, i) => {
             const isString = typeof option === 'string';

@@ -9,7 +9,7 @@
   },
 
   "rules": {
-    "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
+    "no-unused-vars": [2, { "vars": "all", "args": "after-used", "ignoreRestSiblings": true }],
     "quote-props": [2, "consistent-as-needed"],
     "no-trailing-spaces": ["error", { "skipBlankLines": true }],
     "no-extend-native": "off",

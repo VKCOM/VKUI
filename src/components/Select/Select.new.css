@@ -15,9 +15,9 @@
     outline: none;
     line-height: 19px;
     font-size: 16px;
-    color: map(colors, black);
-    padding: 12px;
+    padding: 12px 40px 12px 12px;
     text-overflow: ellipsis;
+    color: map(colors, black);
     }
 
   .SelectNew--ios select {

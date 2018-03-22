@@ -2,7 +2,6 @@ import './FormLayoutOld.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
 
 export default class FormLayoutOld extends React.Component {
@@ -10,6 +9,7 @@ export default class FormLayoutOld extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     style: PropTypes.object,
+    className: PropTypes.string,
     tagName: PropTypes.string,
     mod: PropTypes.string,
     allowSubmit: PropTypes.bool,
@@ -17,7 +17,8 @@ export default class FormLayoutOld extends React.Component {
   };
 
   static defaultProps = {
-    allowSubmit: true
+    allowSubmit: true,
+    tagName: 'form'
   };
 
   baseClass = 'FormLayout';
@@ -31,16 +32,20 @@ export default class FormLayoutOld extends React.Component {
   };
 
   render () {
-    const children = Array.isArray(this.props.children) ? this.props.children : [this.props.children];
-    const TagName = this.props.tagName || 'form';
-    const modifiers = {
-      [`${this.baseClass}--web`]: this.props.mod === 'web'
-    };
+    const { children, tagName, mod, allowSubmit, onSubmit, className, ...restProps } = this.props;
+    const arrayChildren = Array.isArray(children) ? children : [children];
+    const TagName = tagName;
 
     return (
-      <TagName className={classnames(getClassName(this.baseClass), modifiers)} {...removeObjectKeys(this.props, ['tagName', 'mod', 'allowSubmit', 'onSubmit'])} onSubmit={this.onSubmit}>
+      <TagName
+        className={classnames(getClassName(this.baseClass), {
+          [`${this.baseClass}--web`]: mod === 'web'
+        }, className)}
+        onSubmit={this.onSubmit}
+        {...restProps}
+      >
         <div className={`${this.baseClass}__container`}>
-          {children.map((field, i) => (
+          {arrayChildren.map((field, i) => (
             <label className={`${this.baseClass}__row`} key={field.key || `row-${i}`}>
               <div className={`${this.baseClass}__separator`} />
               {!!field.props.label && (
@@ -54,7 +59,9 @@ export default class FormLayoutOld extends React.Component {
             </label>
           ))}
         </div>
-        {TagName === 'form' && this.props.allowSubmit && <input type="submit" style={{ position: 'absolute', visibility: 'hidden' }} />}
+        {TagName === 'form' && this.props.allowSubmit &&
+          <input type="submit" style={{ position: 'absolute', visibility: 'hidden' }} />
+        }
       </TagName>
     );
   }

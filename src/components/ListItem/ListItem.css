@@ -54,6 +54,10 @@
       word-wrap: break-word;
       }
 
+      .ListItem__description {
+        color: map(colors, captionGray);
+        }
+
     .ListItem__indicator,
     .ListItem__aside {
       overflow: hidden;
@@ -68,7 +72,7 @@
       overflow: visible;
       }
 
-    .ListItem__indicator + .ListItem__aside {
+    .ListItem__indicator + .ListItem__aside:not(:empty) {
       padding-left: .5em;
       }
 
@@ -138,6 +142,12 @@
       padding: 11px .5em 12px 0;
       }
 
+      .ListItem--ios .ListItem__description {
+        margin-top: 2px;
+        font-size: 13px;
+        line-height: 15px;
+        }
+
     .ListItem--ios .ListItem__indicator,
     .ListItem--ios .ListItem__aside {
       padding-top: 11px;
@@ -152,6 +162,7 @@
 
   .ListItem--android .ListItem__in {
     padding: 0 16px;
+    background: #fff;
     }
 
     .ListItem--android .ListItem__before .Icon {
@@ -165,6 +176,13 @@
     .ListItem--android .ListItem__main {
       padding: 16px .5em 17px 0;
       }
+
+      .ListItem--android .ListItem__description {
+        margin-top: 1px;
+        font-size: 14px;
+        line-height: 18px;
+        }
+
 
     .ListItem--android .ListItem__checkbox-marker {
       width: 24px;

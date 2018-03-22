@@ -3,7 +3,6 @@ import './ListItem.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import { platform, IOS, ANDROID } from '../../lib/platform';
@@ -21,34 +20,34 @@ export default class ListItem extends Component {
 
     if (!this.controled) {
       this.state = {
-        checked: props.initialChecked
+        checked: props.hasOwnProperty('defaultChecked') ? props.defaultChecked : props.initialChecked
       };
     }
   }
 
   static propTypes = {
-    /**
-     * @deprecated since v1.3.4 Use before prop instead
-     */
-    icon: PropTypes.node,
     before: PropTypes.node,
     indicator: PropTypes.node,
     asideContent: PropTypes.node,
     expandable: PropTypes.bool,
     children: PropTypes.node,
     onClick: PropTypes.func,
+    multiline: PropTypes.bool,
+    description: PropTypes.node,
 
     selectable: PropTypes.bool,
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     checked: PropTypes.bool,
     onChange: PropTypes.func,
+    /**
+     * @deprecated since v1.4.3 Use defaultChecked prop instead
+     */
     initialChecked: PropTypes.bool,
-    multiline: PropTypes.bool
+    defaultChecked: PropTypes.bool
   };
 
   static defaultProps = {
-    icon: null,
     before: null,
     indicator: '',
     asideContent: '',
@@ -56,6 +55,7 @@ export default class ListItem extends Component {
     children: '',
     selectable: false,
     initialChecked: false,
+    defaultChecked: false,
     multiline: false
   };
 
@@ -70,48 +70,53 @@ export default class ListItem extends Component {
   emptyClickHandler () {}
 
   render () {
-    const { before, icon, indicator, asideContent, expandable, onClick, children, value, name, selectable, multiline } = this.props;
+    const {
+      before,
+      indicator,
+      asideContent,
+      expandable,
+      onClick,
+      children,
+      description,
+      value,
+      name,
+      checked,
+      defaultChecked,
+      initialChecked,
+      selectable,
+      multiline,
+      onChange,
+      ...restProps
+    } = this.props;
     const modifiers = {
       'ListItem--expandable': expandable,
-      'ListItem--multiline': multiline
+      'ListItem--multiline': multiline || description
     };
-    const nativeProps = removeObjectKeys(this.props, [
-      'icon',
-      'before',
-      'indicator',
-      'asideContent',
-      'expandable',
-      'value',
-      'name',
-      'selectable',
-      'checked',
-      'initialChecked',
-      'onChange',
-      'onClick',
-      'multiline'
-    ]);
-
-    let beforeContent = before || icon;
 
     return (
-      <li className={classnames(baseClassNames, modifiers)} {...nativeProps}>
+      <li className={classnames(baseClassNames, modifiers)} {...restProps}>
         <Tappable component={selectable ? 'label' : 'div'} className="ListItem__in" onClick={selectable ? this.emptyClickHandler : onClick}>
           {selectable &&
             <input
               type="checkbox"
               className="ListItem__checkbox"
               name={name}
-              checked={this.controled ? this.props.checked : this.state.checked}
+              checked={this.controled ? checked : this.state.checked}
               value={value}
               onChange={this.onChange}
             />
           }
           <div className="ListItem__before">
             {selectable && osname === IOS && <div className="ListItem__checkbox-marker" />}
-            {beforeContent && <div className="ListItem__icon">{beforeContent}</div>}
+            {before && <div className="ListItem__icon">{before}</div>}
           </div>
           <div className="ListItem__main">
             {children}
+            {description &&
+            <div className="ListItem__description">
+              {description}
+            </div>
+            }
           </div>
           <div className="ListItem__indicator">{indicator}</div>
           <div className="ListItem__aside">

@@ -28,7 +28,7 @@ const Avatar = ({ src, size, style, className, ...props }) => {
 };
 
 Avatar.propTypes = {
-  size: PropTypes.oneOf(sizes),
+  size: PropTypes.oneOf([80, 72, 64, 56, 48, 40, 36, 32, 28]),
   src: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string

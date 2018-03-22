@@ -43,10 +43,6 @@ export default class FixedLayout extends React.Component {
   }
 
   componentDidMount () {
-    this.setPaddings();
-  }
-
-  componentWillMount () {
     this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
