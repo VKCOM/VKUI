@@ -10,6 +10,7 @@ export { default as View } from './components/View/View';
 export { default as ScrollView } from './components/ScrollView/ScrollView';
 export { default as HeaderButton } from './components/HeaderButton/HeaderButton';
 export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
+export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
 export { default as BottomModal } from './components/BottomModal/BottomModal';
 export { default as InnerScroll } from './components/InnerScroll/InnerScroll';
 

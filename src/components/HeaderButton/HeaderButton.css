@@ -18,20 +18,51 @@
   height: 44px;
   line-height: 44px;
   position: relative;
+  display: flex;
   }
 
-.HeaderButton--ios.HeaderButton--icon:not(.HeaderButton--ios-back) {
-  padding: 0 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  }
-
-.HeaderButton--ios-back {
-  display: inline-flex;
-  align-items: center;
-  }
-
-.HeaderButton--ios.HeaderButton--text.HeaderButton--primary {
+.HeaderButton--ios.HeaderButton--primary {
   font-weight: 600;
+  }
+
+.HeaderButton--ios.HeaderButton--right {
+  justify-content: flex-end;
+  }
+
+  .HeaderButton--ios .Icon {
+    align-self: center;
+    }
+
+  .HeaderButton--ios .Icon--24 {
+    padding: 0 10px;
+    }
+
+  .HeaderButton--ios.HeaderButton--left > *:not(.Icon) {
+    padding-left: 16px;
+    }
+
+  .HeaderButton--ios.HeaderButton--right > *:not(.Icon) {
+    padding-right: 16px;
+    }
+
+  .HeaderButton--ios.HeaderButton--left .Icon--24 {
+    padding-left: 12px
+    }
+
+  .HeaderButton--ios.HeaderButton--right .Icon--24 {
+    padding-right: 12px
+    }
+
+  .HeaderButton--ios .Icon--chevron_back_28 {
+    padding-left: 4px;
+    padding-right: 4px;
+    }
+
+.HeaderButton--ios.Tappable--active::before,
+.HeaderButton--ios.Tappable--active::after {
+  display: none;
+  }
+
+.HeaderButton--ios.Tappable--active {
+  opacity: .7;
   }

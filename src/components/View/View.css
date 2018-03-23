@@ -50,7 +50,7 @@
         .View__header-right {
           flex-shrink: 0;
           position: relative;
-          z-index: 1;
+          z-index: 2;
           }
         .View__header-right {
           text-align: right;
@@ -62,7 +62,9 @@
           margin: 0;
           padding: 0 6px;
           position: relative;
-          z-index: 2;
+          z-index: 1;
+          flex-grow: 1;
+          max-width: 100%;
           }
 
   /**
