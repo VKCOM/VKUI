@@ -58,11 +58,6 @@
         padding-left: 16px;
         }
 
-      .View--android .View__header-title {
-        flex-grow: 1;
-        max-width: 100%;
-        }
-
 /**
  * transition
  */

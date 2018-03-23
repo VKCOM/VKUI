@@ -403,8 +403,8 @@ export default class View extends Component {
       return {
         title: {},
         item: {},
-        leftIn: {},
-        leftIcon: {},
+        left: {},
+        icon: {},
         right: {}
       };
     }
@@ -421,12 +421,12 @@ export default class View extends Component {
           opacity
         },
         item: { opacity },
-        leftIn: {
+        left: {
           transform: `translate3d(${-60 + leftTransform}%, 0, 0)`,
           WebkitTransform: `translate3d(${-60 + leftTransform}%, 0, 0)`,
           opacity
         },
-        leftIcon: { opacity: 1 },
+        icon: { opacity: 1 },
         right: { opacity: 1 }
       };
     }
@@ -437,7 +437,7 @@ export default class View extends Component {
           WebkitTransform: `translate3d(${titleTransform}%, 0, 0)`
         },
         item: { opacity: 1 - opacity },
-        leftIn: {
+        left: {
           transform: `translate3d(${leftTransform}%, 0, 0)`,
           WebkitTransform: `translate3d(${leftTransform}%, 0, 0)`
         }
@@ -452,37 +452,6 @@ export default class View extends Component {
         id: item.props.id || item.key
       }));
   };
-
-  renderHeaderLeft (panel) {
-    return (
-      <div className="View__header-left-container">
-        {panel.props.header.icon &&
-        <div
-          className="View__header-icon"
-          style={this.calcHeaderSwipeStyles(panel.id).leftIcon}
-        >
-          {panel.props.header.icon}
-        </div>
-        }
-        {panel.props.header.left &&
-        <div
-          className="View__header-left-in"
-          style={this.calcHeaderSwipeStyles(panel.id).leftIn}
-        >
-          {panel.props.header.left}
-        </div>
-        }
-      </div>
-    );
-  }
-
-  renderHeaderRight (panel) {
-    return (
-      <div className="View__header-right-container">
-        {panel.props.header.right}
-      </div>
-    );
-  }
 
   render () {
     const { style, popout, header } = this.props;
@@ -522,48 +491,33 @@ export default class View extends Component {
                     'View__header-item--swipe-back-prev': panel.id === this.state.swipeBackPrevPanel,
                     'View__header-item--swipe-back-next': panel.id === this.state.swipeBackNextPanel,
                     'View__header-item--swipe-back-success': this.state.swipingBackFinish === true,
-                    'View__header-item--swipe-back-failed': this.state.swipingBackFinish === false,
-                    'View__header-item--no-shadow': panel.props.header.noShadow
-                  }, panel.props.header.className)}
+                    'View__header-item--swipe-back-failed': this.state.swipingBackFinish === false
+                  })}
                   style={this.calcHeaderSwipeStyles(panel.id).item}
                   key={panel.key || panel.id || `panel-header-${i}`}
                 >
-                  { panel.props.header.search &&
-                    <div className="View__header-search">
-                      { panel.props.header.search }
-                    </div>
-                  }
-                  {!panel.props.header.search &&
                   <div className="View__header-left">
-                    {osname === IOS && panel.props.header.right &&
-                    <div style={{ overflow: 'hidden', height: 0, visibility: 'hidden' }}>
-                      {this.renderHeaderRight(panel)}
-                    </div>
-                    }
-                    { (panel.props.header.left || panel.props.header.icon) && this.renderHeaderLeft(panel)}
+                    <div
+                      className="View__header-icon"
+                      id={`header-icon-${panel.id}`}
+                      style={this.calcHeaderSwipeStyles(panel.id).icon}
+                    />
+                    <div
+                      className="View__header-left-in"
+                      id={`header-left-${panel.id}`}
+                      style={this.calcHeaderSwipeStyles(panel.id).left}
+                    />
                   </div>
-                  }
-                  {!panel.props.header.search &&
                   <div
                     className="View__header-title"
                     style={this.calcHeaderSwipeStyles(panel.id).title}
-                  >
-                    {panel.props.header.title}
-                  </div>
-                  }
-                  {!panel.props.header.search &&
+                    id={`header-title-${panel.id}`}
+                  />
                   <div
                     className="View__header-right"
+                    id={`header-right-${panel.id}`}
                     style={this.calcHeaderSwipeStyles(panel.id).right}
-                  >
-                    {osname === IOS && (panel.props.header.left || panel.props.header.icon) &&
-                      <div style={{ overflow: 'hidden', height: 0, visibility: 'hidden' }}>
-                        {this.renderHeaderLeft(panel)}
-                      </div>
-                    }
-                    {panel.props.header.right && this.renderHeaderRight(panel)}
-                  </div>
-                  }
+                  />
                 </div>
               ))}
             </div>

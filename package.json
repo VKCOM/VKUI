@@ -36,6 +36,7 @@
     "react": "^16.3.2",
     "react-docgen": "^2.20.0",
     "react-dom": "^16.3.2",
+    "react-dev-utils": "^5.0.0",
     "react-frame-component": "^1.1.1",
     "react-styleguidist": "^6.1.0",
     "schema-utils": "^0.4.3",
@@ -50,8 +51,9 @@
     "xml2js-parser": "^1.1.1"
   },
   "peerDependencies": {
-    "react": ">=15.6.2",
-    "prop-types": ">=15.5.8"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "prop-types": "^15.6.1"
   },
   "dependencies": {
     "svg-sprite-loader": "^3.6.2"

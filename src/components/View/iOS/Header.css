@@ -33,78 +33,23 @@
       justify-content: space-between;
       }
 
-        .View--ios .View__header-search {
-          width: 100%;
-          }
+      .View--ios .View__header-search {
+        width: 100%;
+        }
 
-        .View--ios .View__header-left,
-        .View--ios .View__header-right {
-          font-size: 17px;
-          }
+      .View--ios .View__header-left,
+      .View--ios .View__header-right {
+        font-size: 17px;
+        }
 
-          .View--ios .View__header-right-container {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            }
+      .View--ios .View__header-left {
+        display: flex;
+        }
 
-          .View--ios .View__header-left-container {
-            display: flex;
-            align-items: center;
-            }
-
-            .View--ios .View__header-title {
-              font: 500 17px/44px var(--ios-font);
-              text-align: center;
-              }
-
-            .View--ios .View__header-icon {
-              flex: 0 0 auto;
-              }
-
-            .View--ios .View__header-left-in {
-              flex: 0 1 auto;
-              text-overflow: ellipsis;
-              overflow: hidden;
-              line-height: 44px;
-              }
-
-              .View--ios .View__header-left-in > .HeaderButton--text {
-                margin-left: 12px;
-                }
-
-              .View--ios .View__header-icon > .HeaderButton--icon {
-                margin-left: 2px;
-                }
-
-              .View--ios .View__header-icon > .HeaderButton--ios-back {
-                margin-left: 4px;
-                position: relative;
-                }
-
-                .View--ios .View__header-icon > .HeaderButton--ios-back .HeaderButton__tap-area {
-                  position: absolute;
-                  left: 0;
-                  top: 0;
-                  height: 100%;
-                  width: 75px;
-                  }
-
-              .View--ios .View__header-right-container > .HeaderButton--icon:last-child {
-                margin-right: 2px;
-                }
-
-              .View--ios .View__header-right-container > .HeaderButton--text {
-                margin-right: 12px;
-                }
-
-            .View--ios .View__header-icon + .View__header-left-in {
-              margin-left: 4px;
-              }
-
-              .View--ios .View__header-icon + .View__header-left-in .HeaderButton {
-                margin-left: 0;
-                }
+      .View--ios .View__header-title {
+        font: 500 17px/44px var(--ios-font);
+        text-align: center;
+        }
 
 /**
  * Header swipe back
@@ -182,35 +127,33 @@
   overflow: hidden;
   }
 
-.View--ios .View__header-item--prev .View__header-icon {
+.View--ios .View__header-item--prev .View__header-icon,
+.View--ios .View__header-item--prev .View__header-right {
   animation: animation-ios-header-fade-out .6s var(--ios-easing);
   }
 
-.View--ios .View__header-item--next .View__header-icon {
+.View--ios .View__header-item--next .View__header-icon,
+.View--ios .View__header-item--next .View__header-right {
   animation: animation-ios-header-fade-in .6s var(--ios-easing);
   }
 
 .View--ios .View__header-item--prev .View__header-title,
-.View--ios .View__header-item--prev .View__header-left-in,
-.View--ios .View__header-item--prev .View__header-right {
+.View--ios .View__header-item--prev .View__header-left-in {
   animation: animation-ios-header-prev-forward .6s var(--ios-easing);
   }
 
 .View--ios .View__header-item--next .View__header-title,
-.View--ios .View__header-item--next .View__header-left-in,
-.View--ios .View__header-item--next .View__header-right {
+.View--ios .View__header-item--next .View__header-left-in {
   animation: animation-ios-header-next-back .6s var(--ios-easing);
   }
 
 .View--ios .View__header-item--prev ~ .View__header-item--next .View__header-title,
-.View--ios .View__header-item--prev ~ .View__header-item--next .View__header-left-in,
-.View--ios .View__header-item--prev ~ .View__header-item--next .View__header-right {
+.View--ios .View__header-item--prev ~ .View__header-item--next .View__header-left-in {
   animation: animation-ios-header-next-forward .6s var(--ios-easing);
   }
 
 .View--ios .View__header-item--next ~ .View__header-item--prev .View__header-title,
-.View--ios .View__header-item--next ~ .View__header-item--prev .View__header-left-in,
-.View--ios .View__header-item--next ~ .View__header-item--prev .View__header-right {
+.View--ios .View__header-item--next ~ .View__header-item--prev .View__header-left-in {
   animation: animation-ios-header-prev-back .6s var(--ios-easing);
   }
 
