@@ -114,7 +114,7 @@ export default class RangeSlider extends Slider {
   render () {
     return (
       <div className={baseClassNames} ref={this.getRef}>
-        <Touch onStart={this.onStart} onMove={this.onMove} onEnd={this.onEnd} useCapture={false} className="Slider__in">
+        <Touch onStart={this.onStart} onMove={this.onMove} onEnd={this.onEnd} className="Slider__in">
           <div
             className="Slider__dragger"
             style={{

@@ -30,7 +30,7 @@ export default class Touch extends Component {
   static defaultProps = {
     component: 'div',
     children: '',
-    useCapture: true
+    useCapture: false
   };
 
   static contextTypes = {
@@ -214,12 +214,9 @@ export default class Touch extends Component {
 
       return e.preventDefault();
     }
-  }
+  };
 
-  getRef = (container) => {
-    this.container = container;
-    return;
-  }
+  getRef = container => this.container = container;
 
   render () {
     const handlers = {

@@ -368,7 +368,6 @@ export default class Gallery extends Component {
     return (
       <div className={classname} style={style} ref={this.getContainerRef}>
         <Touch
-          useCapture={true}
           className="Gallery__viewport"
           onStartX={this.onStart}
           onMoveX={this.onMove}

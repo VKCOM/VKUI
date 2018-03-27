@@ -44,23 +44,34 @@ class SearchIOS extends React.Component {
     onChange: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
-    placeholder: PropTypes.string,
-    theme: osname === IOS ? PropTypes.oneOf(['header', 'default']) : PropTypes.oneOf(['default'])
+    placeholder: PropTypes.node,
+    theme: PropTypes.oneOf(['header', 'default'])
   };
 
-  componentDidMount () {
-    this.setState({
-      afterWidth: this.afterEl.offsetWidth,
-      controlWidth: this.controlEl.offsetWidth,
-      placeholderOffset: (this.controlEl.offsetWidth - (this.state.showAfter ? this.afterEl.offsetWidth + 12 : 0) - this.placeholderEl.offsetWidth) / 2
-    });
-  }
-
   static defaultProps = {
-    after: osname === IOS ? 'Отменить' : '',
+    after: 'Отменить',
     theme: 'default',
     placeholder: 'Поиск'
   };
+
+  componentDidMount () {
+    this.calcSizes();
+  }
+
+  calcSizes = () => {
+    this.setState({
+      afterWidth: this.afterEl.offsetWidth,
+      placeholderWidth: this.placeholderEl.offsetWidth,
+      controlWidth: this.controlEl.offsetWidth,
+      placeholderOffset: (this.controlEl.offsetWidth - (this.state.showAfter ? this.afterEl.offsetWidth + 12 : 0) - this.placeholderEl.offsetWidth) / 2
+    });
+  };
+
+  componentDidUpdate () {
+    if (this.state.afterWidth !== this.afterEl.offsetWidth || this.state.placeholderWidth !== this.placeholderEl.offsetWidth) {
+      this.calcSizes();
+    }
+  }
 
   get value () {
     return this.isControlledOutside ? this.props.value : this.state.value;
@@ -141,9 +152,7 @@ class SearchIOS extends React.Component {
           ref={el => this.afterEl = el}
           className="Search__after"
           onClick={this.onCancel}
-          style={{
-            marginLeft: 12
-          }}
+          style={{ marginLeft: 12 }}
         >
           {this.props.after}
         </div>
@@ -177,7 +186,7 @@ class SearchAndroid extends React.Component {
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     onClose: PropTypes.func,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.node
   };
 
   static defaultProps = {
