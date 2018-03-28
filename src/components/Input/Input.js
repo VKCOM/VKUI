@@ -3,7 +3,6 @@ import './Input.new.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
 import {platform, ANDROID} from '../../lib/platform';
@@ -18,7 +17,7 @@ export default class Input extends Component {
       this.isControlledOutside = true;
     } else {
       this.state = {
-        value: props.initialValue || ''
+        value: props.defaultValue || props.initialValue || ''
       };
     }
   }
@@ -33,18 +32,25 @@ export default class Input extends Component {
     ]),
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
     value: PropTypes.string,
-    initialValue: PropTypes.string,
+    defaultValue: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
     v: PropTypes.oneOf(['old', 'new']),
-    status: PropTypes.oneOf(['default', 'error', 'verified'])
+    status: PropTypes.oneOf(['default', 'error', 'verified']),
+    getRef: PropTypes.func,
+    className: PropTypes.string,
+
+    /**
+     * @deprecated since v1.5.0 Use defaultValue prop instead
+     */
+    initialValue: PropTypes.string
   };
 
   static defaultProps = {
     type: 'text',
-    initialValue: '',
     alignment: 'left',
     v: 'old',
+    defaultValue: '',
     status: 'default'
   };
 
@@ -61,11 +67,10 @@ export default class Input extends Component {
     }
   };
 
-  get value () {
-    return this.isControlledOutside ? this.props.value : this.state.value;
-  }
+  get value () { return this.isControlledOutside ? this.props.value : this.state.value; }
 
   getRef = (element) => {
+    this.props.getRef && this.props.getRef(element);
     this.element = element;
   };
 
@@ -79,7 +84,7 @@ export default class Input extends Component {
   }
 
   render () {
-    const { alignment } = this.props;
+    const { onChange, initialValue, defaultValue, alignment, placeholder, v, value, status, getRef, className, ...restProps } = this.props;
 
     const modifiers = {
       [`${this.baseClass}--left`]: alignment === 'left',
@@ -91,15 +96,15 @@ export default class Input extends Component {
     const customPlaceolder = ['date', 'datetime-local', 'time', 'month'].indexOf(this.props.type) > -1 && this.context.isWebView ? this.props.placeholder : null;
 
     return (
-      <div className={classnames(getClassName(this.baseClass), modifiers)}>
+      <div className={classnames(getClassName(this.baseClass), modifiers, className)}>
         <input
           style={{ transition: 'transform ' }}
           className={`${this.baseClass}__el`}
-          {...removeObjectKeys(this.props, ['onChange', 'initialValue', 'alignment', 'placeholder', 'v', 'value', 'status'])}
           ref={this.getRef}
           value={this.value}
           onChange={this.onChange}
           placeholder={customPlaceolder ? null : this.props.placeholder}
+          {...restProps}
         />
         {osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
         {customPlaceolder && !this.value && <div className={`${this.baseClass}__placeholder`}>{this.props.placeholder}</div>}

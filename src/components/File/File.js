@@ -14,6 +14,7 @@ export default class File extends Component {
       value: null
     };
   }
+
   static propTypes = {
     style: PropTypes.object,
     label: PropTypes.string,
@@ -21,6 +22,7 @@ export default class File extends Component {
     appearance: PropTypes.oneOf(['primary', 'default', 'danger']),
     onChange: PropTypes.func
   };
+
   static defaultProps = {
     style: {},
     label: 'Choose file',
@@ -28,12 +30,14 @@ export default class File extends Component {
     appearance: 'default',
     onChange: () => {}
   };
+
   changeHandler = e => {
     this.setState({ value: e.target.value });
     if (this.props.onChange) {
       this.props.onChange(e);
     }
-  }
+  };
+
   render () {
     const { style, label, alignment, appearance } = this.props;
 

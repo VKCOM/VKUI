@@ -3,11 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
+import classnames from '../../lib/classnames';
 
 const baseClassNames = getClassName('Radio');
 
-const Radio = ({ children, description, ...restProps }) => (
-  <Tappable component="label" onClick={() => {}} className={baseClassNames}>
+const Radio = ({ children, description, className, ...restProps }) => (
+  <Tappable component="label" onClick={() => {}} className={classnames(baseClassNames, className)}>
     <input
       type="radio"
       className="Radio__self"
@@ -29,7 +30,8 @@ const Radio = ({ children, description, ...restProps }) => (
 
 Radio.propTypes = {
   children: PropTypes.node,
-  description: PropTypes.node
+  description: PropTypes.node,
+  className: PropTypes.string
 };
 
 export default Radio;

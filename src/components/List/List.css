@@ -9,29 +9,28 @@
   padding: 0;
   list-style: none;
   user-select: none;
+  background: #fff;
   }
 
 /* iOS */
-.List--ios {
-  background: #fff;
-  }
-.List--ios::before,
-.List--ios::after {
-  position: absolute;
-  right: 0;
-  left: 0;
-  z-index: 1;
-  height: 1px;
-  content: '';
-  }
-.List--ios::before {
-  bottom: 100%;
-  background: var(--ios-thick-separator-color);
-  }
-.List--ios::after {
-  bottom: 0;
-  background: var(--ios-thick-separator-color);
-  }
+.List--ios {}
+  .List--ios::before,
+  .List--ios::after {
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: 1px;
+    content: '';
+    }
+  .List--ios::before {
+    bottom: 100%;
+    background: var(--ios-thick-separator-color);
+    }
+  .List--ios::after {
+    bottom: 0;
+    background: var(--ios-thick-separator-color);
+    }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .List--ios::before,

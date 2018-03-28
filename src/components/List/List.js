@@ -10,23 +10,19 @@ const baseClassNames = getClassName('List');
 export default class List extends Component {
   static propTypes = {
     style: PropTypes.object,
-    indented: PropTypes.bool,
-    children: PropTypes.node
+    children: PropTypes.node,
+    className: PropTypes.string
   };
   static defaultProps = {
     style: {},
-    indented: false,
     children: ''
   };
   render () {
-    const { style, indented } = this.props;
-    const modifiers = {
-      'List--indented': indented
-    };
+    const { style, className, children } = this.props;
 
     return (
-      <ul className={classnames(baseClassNames, modifiers)} style={{ style }}>
-        {this.props.children}
+      <ul className={classnames(baseClassNames, className)} style={style}>
+        {children}
       </ul>
     );
   }

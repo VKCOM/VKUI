@@ -59,7 +59,7 @@ export default class FormLayoutOld extends React.Component {
             </label>
           ))}
         </div>
-        {TagName === 'form' && this.props.allowSubmit &&
+        {TagName === 'form' && allowSubmit &&
           <input type="submit" style={{ position: 'absolute', visibility: 'hidden' }} />
         }
       </TagName>

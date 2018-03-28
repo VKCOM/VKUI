@@ -6,8 +6,8 @@ import './InfoRow.css';
 
 const baseClassName = getClassName('InfoRow');
 
-const InfoRow = ({ title, className, children }) => (
-  <div className={classnames(baseClassName, className)}>
+const InfoRow = ({ title, className, children, style }) => (
+  <div className={classnames(baseClassName, className)} style={style}>
     <div className="InfoRow__title">{title}</div>
     <div>
       {children}
@@ -18,7 +18,8 @@ const InfoRow = ({ title, className, children }) => (
 InfoRow.propTypes = {
   title: PropTypes.node.isRequired,
   children: PropTypes.node,
-  className: PropTypes.string
+  className: PropTypes.string,
+  style: PropTypes.object
 };
 
 export default InfoRow;

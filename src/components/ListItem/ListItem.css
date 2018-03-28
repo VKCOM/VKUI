@@ -94,7 +94,6 @@
 
   .ListItem--ios .ListItem__in {
     padding: 0 15px;
-    background: #fff;
     }
   .ListItem--ios.ListItem--expandable .ListItem__in {
     padding: 0 35px 0 15px;

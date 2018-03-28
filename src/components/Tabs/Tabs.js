@@ -14,17 +14,16 @@ export default class Tabs extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
-    theme: osname === IOS ? PropTypes.oneOf(['white', 'gray']) : PropTypes.oneOf(['white'])
+    theme: osname === IOS ? PropTypes.oneOf(['white', 'gray']) : PropTypes.oneOf(['white']),
+    style: PropTypes.object
   };
 
   render () {
-    const className = classnames(baseClassName, this.props.className);
+    const {className, children, theme, style} = this.props;
 
     return (
-      <div className={className}>
-        {React.Children.map(this.props.children, Child => React.cloneElement(Child, {
-          theme: this.props.theme
-        }))}
+      <div className={classnames(baseClassName, className)} style={style}>
+        {React.Children.map(children, Child => React.cloneElement(Child, { theme }))}
       </div>
     );
   }

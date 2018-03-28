@@ -29,7 +29,9 @@ export default class Slider extends Component {
     value: PropTypes.number,
     step: PropTypes.number,
     onChange: PropTypes.func,
-    defaultValue: PropTypes.number
+    defaultValue: PropTypes.number,
+    className: PropTypes.string,
+    style: PropTypes.object
   };
 
   static defaultProps = {
@@ -149,7 +151,7 @@ export default class Slider extends Component {
 
   render () {
     return (
-      <div className={baseClassNames} ref={this.getRef}>
+      <div className={classnames(baseClassNames, this.props.className)} ref={this.getRef} style={this.props.style}>
         <Touch onStart={this.onStart} onMove={this.onMove} onEnd={this.onEnd} className="Slider__in">
           <div className="Slider__dragger" style={{ width: this.state.percentPosition + '%' }}>
             <span

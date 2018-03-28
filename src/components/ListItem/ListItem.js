@@ -34,17 +34,19 @@ export default class ListItem extends Component {
     onClick: PropTypes.func,
     multiline: PropTypes.bool,
     description: PropTypes.node,
+    className: PropTypes.string,
 
     selectable: PropTypes.bool,
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     checked: PropTypes.bool,
     onChange: PropTypes.func,
+    defaultChecked: PropTypes.bool,
+
     /**
      * @deprecated since v1.4.3 Use defaultChecked prop instead
      */
-    initialChecked: PropTypes.bool,
-    defaultChecked: PropTypes.bool
+    initialChecked: PropTypes.bool
   };
 
   static defaultProps = {
@@ -86,6 +88,7 @@ export default class ListItem extends Component {
       selectable,
       multiline,
       onChange,
+      className,
       ...restProps
     } = this.props;
     const modifiers = {
@@ -94,7 +97,7 @@ export default class ListItem extends Component {
     };
 
     return (
-      <li className={classnames(baseClassNames, modifiers)} {...restProps}>
+      <li className={classnames(baseClassNames, modifiers, className)} {...restProps}>
         <Tappable component={selectable ? 'label' : 'div'} className="ListItem__in" onClick={selectable ? this.emptyClickHandler : onClick}>
           {selectable &&
             <input
