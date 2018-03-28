@@ -24,18 +24,18 @@ export default class TabsItem extends React.Component {
   };
 
   render () {
-    const className = classnames(baseClassName, {
-      'TabsItem--selected': this.props.selected,
-      [`TabsItem--${this.props.theme}`]: true
-    }, this.props.className);
+    const { onClick, children, selected, className, theme } = this.props;
 
     return (
       <Tappable
-        className={className}
-        onClick={this.props.onClick}
+        className={classnames(baseClassName, {
+          'TabsItem--selected': selected,
+          [`TabsItem--${theme}`]: true
+        }, className)}
+        onClick={onClick}
         activeEffectDelay={osname === IOS ? 0 : ACTIVE_EFFECT_DELAY}
       >
-        {this.props.children}
+        {children}
       </Tappable>
     );
   }

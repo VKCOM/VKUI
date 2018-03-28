@@ -2,7 +2,6 @@ import './Select.css';
 import './Select.new.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import Icon24Dropdown from '../../../dist/icons/24/dropdown';
@@ -34,7 +33,8 @@ export default class Select extends Component {
     defaultValue: PropTypes.any,
     children: PropTypes.node,
     v: PropTypes.oneOf(['old', 'new']),
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    getRef: PropTypes.func
   };
 
   static defaultProps = {
@@ -66,24 +66,27 @@ export default class Select extends Component {
     return placeholder ? [{ text: placeholder, value: '' }, ...options] : options;
   }
 
-  render () {
-    const { style, label } = this.props;
+  getRef = (el) => {
+    this.props.getRef && this.props.getRef(el);
+  };
 
-    const options = this.options;
+  render () {
+    const { style, label, onChange, options, value, defaultValue, placeholder, children, className, v, getRef, ...restProps } = this.props;
 
     return (
       <label
         className={classnames(getClassName(this.baseClass), {
           [`${this.baseClass}--not-selected`]: this.value === ''
-        })}
+        }, className)}
         style={style}
       >
         <select
           onChange={this.onChange}
           value={this.value}
-          {...removeObjectKeys(this.props, ['onChange', 'label', 'options', 'value', 'defaultValue', 'style', 'className', 'v'])}
+          ref={this.getRef}
+          {...restProps}
         >
-          {Array.isArray(options) && options.length && options.map((option, i) => {
+          {Array.isArray(this.options) && this.options.length && this.options.map((option, i) => {
             const isString = typeof option === 'string';
             const value = isString ? option : typeof option.value === 'string' ? option.value : option.text;
             const key = !isString && option.id;
@@ -94,11 +97,11 @@ export default class Select extends Component {
               </option>
             );
           })}
-          {this.props.placeholder && !this.props.options && <option value="">{this.props.placeholder}</option>}
-          {this.props.children}
+          {placeholder && !this.options && <option value="">{placeholder}</option>}
+          {children}
         </select>
-        {this.props.v === 'new' && osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
-        {this.props.v === 'new' && <Icon24Dropdown />}
+        {v === 'new' && osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
+        {v === 'new' && <Icon24Dropdown />}
       </label>
     );
   }

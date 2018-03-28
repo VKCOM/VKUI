@@ -3,7 +3,6 @@ import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
 import './FixedLayout.css';
 import classnames from '../../lib/classnames';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import { transitionEndEventName, transitionStartEventName } from '../View/View';
 
 const baseClassNames = getClassName('FixedLayout');
@@ -76,17 +75,19 @@ export default class FixedLayout extends React.Component {
   };
 
   render () {
+    const { className, children, style, vertical, ...restProps } = this.props;
+
     return (
       <div
         ref={ el => this.el = el }
-        {...removeObjectKeys(this.props, ['className', 'children', 'panel', 'vertical'])}
         className={classnames(baseClassNames, {
-          [`FixedLayout--${this.props.vertical}`]: true
-        }, this.props.className)}
-        style={ Object.assign({}, this.props.style, this.state.paddings, this.state.transition ? { position: 'absolute', top: this.state.topOffset } : {}) }
+          [`FixedLayout--${vertical}`]: true
+        }, className)}
+        style={ Object.assign({}, style, this.state.paddings, this.state.transition ? { position: 'absolute', top: this.state.topOffset } : {}) }
+        {...restProps}
       >
         <div className="FixedLayout__in">
-          {this.props.children}
+          {children}
         </div>
       </div>
     );

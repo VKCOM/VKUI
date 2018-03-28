@@ -2,22 +2,23 @@ import './Textarea.css';
 import './Textarea.new.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 import requestAnimationFrame from '../../lib/requestAnimationFrame';
 import {ANDROID, platform} from '../../lib/platform';
+import classnames from '../../lib/classnames';
 
 const osname = platform();
 
 export default class Textarea extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      value: typeof props.value === 'undefined' ? props.initialValue || '' : undefined
-    };
 
     if (typeof props.value !== 'undefined') {
       this.isControlledOutside = true;
+    } else {
+      this.state = {
+        value: props.defaultValue || props.initialValue || ''
+      };
     }
   }
 
@@ -30,16 +31,23 @@ export default class Textarea extends Component {
   static propTypes = {
     style: PropTypes.object,
     value: PropTypes.string,
-    initialValue: PropTypes.string,
+    defaultValue: PropTypes.string,
     grow: PropTypes.bool,
     onChange: PropTypes.func,
     onResize: PropTypes.func,
-    v: PropTypes.oneOf(['old', 'new'])
+    v: PropTypes.oneOf(['old', 'new']),
+    className: PropTypes.string,
+    getRef: PropTypes.func,
+
+    /**
+     * @deprecated since v1.5.0 Use defaultValue prop instead
+     */
+    initialValue: PropTypes.string
   };
 
   static defaultProps = {
     style: {},
-    initialValue: '',
+    defaultValue: '',
     grow: true,
     v: 'old',
     onResize: () => {}
@@ -47,7 +55,10 @@ export default class Textarea extends Component {
 
   get baseClass () { return this.props.v === 'old' ? 'Textarea' : 'TextareaNew'; }
 
-  getRef = element => this.element = element;
+  getRef = element => {
+    this.element = element;
+    this.props.getRef && this.props.getRef(element);
+  };
 
   resize = () => {
     const el = this.element;
@@ -82,6 +93,8 @@ export default class Textarea extends Component {
     }
   };
 
+  get value () { return this.isControlledOutside ? this.props.value : this.state.value; }
+
   onChange = (e) => {
     if (this.props.grow) {
       this.resize();
@@ -106,18 +119,17 @@ export default class Textarea extends Component {
   }
 
   render () {
-    const props = this.props;
-    const value = this.isControlledOutside ? props.value : this.state.value;
-    const height = this.state.height || this.props.style.height || 66;
+    const { initialValue, defaultValue, grow, style, onResize, v, className, ...restProps } = this.props;
+    const height = this.state.height || style.height || 66;
 
     return (
-      <div className={getClassName(this.baseClass)}>
+      <div className={classnames(getClassName(this.baseClass), className)}>
         <textarea
-          {...removeObjectKeys(props, ['initialValue', 'grow', 'style', 'onResize', 'v'])}
-          value={value}
+          value={this.value}
           onChange={this.onChange}
           ref={this.getRef}
-          style={Object.assign({}, props.style, { height })}
+          style={Object.assign({}, style, { height })}
+          {...restProps}
         />
         {osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
       </div>

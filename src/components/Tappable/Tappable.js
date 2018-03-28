@@ -8,7 +8,6 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 import { platform, ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../../lib/touch';
-import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
 const ts = () => +Date.now();
 const baseClassNames = getClassName('Tappable');
@@ -54,14 +53,13 @@ export default class Tappable extends Component {
       PropTypes.string,
       PropTypes.element
     ]),
-    propagation: PropTypes.bool,
     role: PropTypes.string,
     activeEffectDelay: PropTypes.number
   };
+
   static defaultProps = {
     component: 'div',
     role: 'button',
-    propagation: true,
     activeEffectDelay: ACTIVE_EFFECT_DELAY
   };
 
@@ -112,8 +110,6 @@ export default class Tappable extends Component {
     }
 
     if (this.state.active) {
-      requestAnimationFrame(() => this.callback(originalEvent));
-
       if (now - this.state.ts >= 100) {
         // Долгий тап, выключаем подсветку
         this.stop();
@@ -128,8 +124,6 @@ export default class Tappable extends Component {
       }
     } else if (!this.isSlide) {
       // Очень короткий тап, включаем подсветку
-      requestAnimationFrame(() => this.callback(originalEvent));
-
       this.start();
 
       const timeout = setTimeout(this.stop, this.props.activeEffectDelay);
@@ -175,21 +169,7 @@ export default class Tappable extends Component {
   };
 
   onClick = (e) => {
-    if (this.props.propagation === false) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  };
-
-  /**
-   * Вызывает колбек, переданный родителем
-   *
-   * @returns {void}
-   */
-  callback = (originalEvent) => {
-    if (this.props.onClick) {
-      this.props.onClick(originalEvent);
-    }
+    this.props.onClick && this.props.onClick(e);
   };
 
   /**

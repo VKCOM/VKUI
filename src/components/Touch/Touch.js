@@ -25,7 +25,8 @@ export default class Touch extends Component {
     onEndY: PropTypes.func,
     useCapture: PropTypes.bool,
     component: PropTypes.string,
-    children: PropTypes.node
+    children: PropTypes.node,
+    onClick: PropTypes.func
   };
   static defaultProps = {
     component: 'div',
@@ -214,6 +215,7 @@ export default class Touch extends Component {
 
       return e.preventDefault();
     }
+    this.props.onClick && this.props.onClick(e);
   };
 
   getRef = container => this.container = container;

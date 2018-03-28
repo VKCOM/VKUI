@@ -7,15 +7,15 @@ import { keys as colorKeys, values as colors } from '../../helpers/colors';
 
 const baseClassName = getClassName('Progress');
 
-const Progress = ({ value, style, className, color, ...props }) => {
+const Progress = ({ value, className, color, ...restProps }) => {
   return (
     <div
       className={classnames(baseClassName, className)}
-      {...props}
+      {...restProps}
     >
       <div
         className="Progress__in"
-        style={{ ...style, width: `${value}%`, backgroundColor: color }}
+        style={{ width: `${value}%`, backgroundColor: color }}
       />
     </div>
   );
