@@ -22,7 +22,7 @@ const Progress = ({ value, className, color, ...restProps }) => {
 };
 
 Progress.propTypes = {
-  color: PropTypes.oneOf(Object.keys(colorKeys)),
+  color: PropTypes.oneOf(Object.values(colors)),
   style: PropTypes.object,
   className: PropTypes.string,
   value: PropTypes.number
@@ -34,4 +34,3 @@ Progress.defaultProps = {
 };
 
 export default Progress;
-
