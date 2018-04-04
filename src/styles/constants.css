@@ -3,8 +3,8 @@
 :root {
   --vk-color: #5181b8;
   --ios-font: -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif;
-  --ios-thick-separator-color: #dfdfdf;
-  --ios-thin-separator-color: #c8c7cc;
+  --ios-thick-separator-color: map(colors, separator);
+  --ios-thin-separator-color: map(colors, separator);
   --ios-top-border: linear-gradient(to top, var(--ios-thin-separator-color) 50%, transparent 50%);
   --ios-bottom-border: linear-gradient(to bottom, var(--ios-thin-separator-color) 50%, transparent 50%);
   --ios-active-color: #d9d9d9;

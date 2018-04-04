@@ -126,6 +126,7 @@ export default class View extends Component {
         scrolls: removeObjectKeys(this.state.scrolls, [this.state.swipeBackPrevPanel])
       }, () => {
         this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
+        window.scrollTo(0, this.state.scrolls[this.state.activePanel]);
         this.props.onTransition && this.props.onTransition();
       });
     }

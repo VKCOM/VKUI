@@ -1,21 +1,40 @@
+@import '../../styles/constants.css';
+
 .NewPane--ios {
   padding: 13px 15px 12px;
-  border-top: 1px solid map(colors, separator);
-  border-bottom: 1px solid map(colors, separator);
   background-color: #fff;
   font-size: 16px;
   line-height: 1.25;
+  position: relative;
   }
 
-.NewPane--ios + .NewPane--ios {
-  border-top: none;
-  }
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .NewPane--ios {
-    border-width: .5px;
+  .NewPane--ios::before,
+  .NewPane--ios::after {
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: 1px;
+    content: '';
     }
-  }
+  .NewPane--ios::before {
+    bottom: 100%;
+    background: var(--ios-thick-separator-color);
+    }
+  .NewPane--ios::after {
+    bottom: 0;
+    background: var(--ios-thick-separator-color);
+    }
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+    .NewPane--ios::before {
+      background: var(--ios-top-border);
+      }
+
+    .NewPane--ios::after {
+      background: var(--ios-top-border);
+      }
+    }
 
 .NewPane--android {
   background-color: #fff;
