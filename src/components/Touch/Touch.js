@@ -42,11 +42,11 @@ export default class Touch extends Component {
   }
 
   componentDidMount () {
-    this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
+    this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture });
   }
 
   componentWillUnmount () {
-    this.container.removeEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
+    this.container.removeEventListener(events[0], this.onStart, { capture: this.props.useCapture });
   }
 
   /**
@@ -81,9 +81,9 @@ export default class Touch extends Component {
       this.props.onStartY(outputEvent);
     }
 
-    this.document.addEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
-    this.document.addEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
-    this.document.addEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
+    this.document.addEventListener(events[1], this.onMove, { capture: this.props.useCapture });
+    this.document.addEventListener(events[2], this.onEnd, { capture: this.props.useCapture });
+    this.document.addEventListener(events[3], this.onEnd, { capture: this.props.useCapture });
   }
 
   /**
@@ -183,9 +183,9 @@ export default class Touch extends Component {
     this.cancelClick = e.target.tagName === 'A' && isSlide;
     this.gesture = {};
 
-    this.document.removeEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
-    this.document.removeEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
-    this.document.removeEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
+    this.document.removeEventListener(events[1], this.onMove, { capture: this.props.useCapture });
+    this.document.removeEventListener(events[2], this.onEnd, { capture: this.props.useCapture });
+    this.document.removeEventListener(events[3], this.onEnd, { capture: this.props.useCapture });
   }
 
   /**
