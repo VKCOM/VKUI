@@ -40,21 +40,21 @@
   padding: 11px 15px 12px;
   overflow: hidden;
   }
-.Radio--ios::before {
+.Radio--ios:not(:last-child):not(.Tappable--active)::before {
   position: absolute;
   bottom: 0;
   left: 15px;
   width: 100vw;
   height: 1px;
-  background: var(--ios-thick-separator-color);
+  background: map(colors, separator);
   content: '';
   }
 @media
   (-webkit-min-device-pixel-ratio: 2),
   (min-resolution: 192dpi),
   (min-resolution: 2dppx) {
-  .Radio--ios::before {
-    background: linear-gradient(to top, #c8c7cc 50%, transparent 50%);
+  .Radio--ios:not(:last-child):not(.Tappable--active)::before {
+    background: var(--ios-bottom-border);
     }
   }
 

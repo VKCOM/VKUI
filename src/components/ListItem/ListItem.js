@@ -1,11 +1,11 @@
 import './ListItem.css';
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import { platform, IOS, ANDROID } from '../../lib/platform';
+import Icon24Chevron from '../../../dist/icons/24/chevron';
 
 let osname = platform();
 
@@ -126,6 +126,7 @@ export default class ListItem extends Component {
             {asideContent}
             {selectable && osname === ANDROID && <div className="ListItem__checkbox-marker" />}
           </div>
+          {osname === IOS && expandable && <Icon24Chevron className="ListItem__chevron"/>}
         </Tappable>
       </li>
     );

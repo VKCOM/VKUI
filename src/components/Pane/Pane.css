@@ -18,12 +18,12 @@
     content: '';
     }
   .NewPane--ios::before {
-    bottom: 100%;
-    background: var(--ios-thick-separator-color);
+    top: 0;
+    background: map(colors, separator);
     }
   .NewPane--ios::after {
     bottom: 0;
-    background: var(--ios-thick-separator-color);
+    background: map(colors, separator);
     }
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
@@ -32,7 +32,7 @@
       }
 
     .NewPane--ios::after {
-      background: var(--ios-top-border);
+      background: var(--ios-bottom-border);
       }
     }
 

@@ -15,11 +15,6 @@
   font-size: 14px;
   }
 
-.TabsItem--ios.Tappable.Tappable--active::before,
-.TabsItem--ios.Tappable.Tappable--active::after {
-  content: none;
-  }
-
 .TabsItem--ios:not(:first-child) {
   border-left: none;
   }
