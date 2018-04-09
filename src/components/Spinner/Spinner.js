@@ -17,7 +17,8 @@ export default class Spinner extends Component {
     size: PropTypes.number,
     androidStrokeWidth: PropTypes.number,
     on: PropTypes.bool,
-    progress: PropTypes.number
+    progress: PropTypes.number,
+    className: PropTypes.string
   };
   static defaultProps = {
     color: osname === ANDROID ? '#5181b8' : '#262626',
@@ -28,7 +29,7 @@ export default class Spinner extends Component {
     progress: null
   };
   render () {
-    const { on, progress, size, style } = this.props;
+    const { on, progress, size, style, className } = this.props;
     const isAnimated = on && progress === null;
     const modifiers = {
       'Spinner--on': isAnimated
@@ -37,7 +38,7 @@ export default class Spinner extends Component {
     const Component = osname === IOS ? IosSpinner : AndroidSpinner;
 
     return (
-      <div className={classnames(baseClassNames, modifiers)} style={style}>
+      <div className={classnames(baseClassNames, modifiers, className)} style={style}>
         <svg
           className="Spinner__self"
           style={{ width: size, height: size }}
