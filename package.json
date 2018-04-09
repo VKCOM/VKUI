@@ -50,8 +50,8 @@
     "xml2js-parser": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "^15.6.2",
-    "prop-types": "^15.5.8"
+    "react": ">=15.6.2",
+    "prop-types": ">=15.5.8"
   },
   "dependencies": {
     "svg-sprite-loader": "^3.6.2"
