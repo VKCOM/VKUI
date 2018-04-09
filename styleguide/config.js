@@ -58,7 +58,10 @@ module.exports = {
           '../src/components/Gallery/Gallery.js',
           '../src/components/Avatar/Avatar.js',
           '../src/components/Progress/Progress.js',
-          '../src/components/Search/Search.js'
+          '../src/components/Search/Search.js',
+          '../src/components/FixedTabs/FixedTabs.js',
+          '../src/components/Tabs/Tabs.js',
+          '../src/components/TabsItem/TabsItem.js'
         ]
       }, {
         name: 'Forms',
