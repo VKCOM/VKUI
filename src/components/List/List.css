@@ -12,6 +12,11 @@
   background: #fff;
   }
 
+  .List .ListItem, .List .Radio {
+    position: relative;
+    z-index: 2;
+    }
+
 /* iOS */
 .List--ios {}
   .List--ios::before,
@@ -24,18 +29,21 @@
     content: '';
     }
   .List--ios::before {
-    bottom: 100%;
-    background: var(--ios-thick-separator-color);
+    top: 0;
+    background: map(colors, separator);
     }
   .List--ios::after {
     bottom: 0;
-    background: var(--ios-thick-separator-color);
+    background: map(colors, separator);
     }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .List--ios::before,
-  .List--ios::after {
+  .List--ios::before {
     background: var(--ios-top-border);
+    }
+
+  .List--ios::after {
+    background: var(--ios-bottom-border);
     }
   }
 

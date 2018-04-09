@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "1.5.0-beta.2",
+  "version": "1.5.0",
   "main": "dist/vkui.js",
   "repository": "https://github.com/VKCOM/VKUI",
   "description": "VKUI library",
@@ -50,8 +50,8 @@
     "xml2js-parser": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "^15.6.2",
-    "prop-types": "^15.5.8"
+    "react": ">=15.6.2",
+    "prop-types": ">=15.5.8"
   },
   "dependencies": {
     "svg-sprite-loader": "^3.6.2"

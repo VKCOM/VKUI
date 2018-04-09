@@ -47,6 +47,9 @@ export default class NativePopouts extends React.Component {
 
   componentDidMount () {
     this.props.vkuiConnect.subscribe(this.vkuiListener);
+    if (this.props.popout) {
+      this.renderPopout(this.props);
+    }
   }
 
   componentWillUnmount () {
@@ -82,7 +85,7 @@ export default class NativePopouts extends React.Component {
           removeObjectKeys(item, ['params'])
         )}
         onClose={onClose}
-        actionsLayout={this.actions.length > 2 ? 'vertical' : 'horizontal'}
+        actionsLayout={this.props.popout.actionsLayout}
       >
         {title && <h2>{title}</h2>}
         {text && <p>{text}</p>}
@@ -123,32 +126,36 @@ export default class NativePopouts extends React.Component {
     this.setState({ popout: null });
   }
 
+  renderPopout (props) {
+    if (props.popout.style) {
+      this.actions = props.popout.actions.map((item) => Object.assign({}, item, {
+        autoclose: item.hasOwnProperty('autoclose') ? item.autoclose : true,
+        action: item.action || props.popout.onClose,
+        handler: Object.assign({}, item.params, { action: `action-${actionId++}` })
+      }));
+
+      this.actionsStore = this.actions.reduce((res, item) => { res[item.handler.action] = item.action; return res; }, {});
+
+      switch (props.popout.style) {
+        case 'alert':
+          this.context.isWebView ? this.renderNativeAlert(props.popout) : this.renderUIAlert(props.popout);
+          break;
+        case 'actionSheet':
+          this.context.isWebView ? this.renderNativeSheet(props.popout) : this.renderUISheet(props.popout);
+          break;
+      }
+    } else {
+      this.setState({ popout: props.popout });
+    }
+  }
+
   componentWillReceiveProps (nextProps) {
     if (!nextProps.popout && this.props.popout) {
       this.closeUIPopout();
     }
     if (nextProps.popout && nextProps.popout !== this.props.popout) {
       this.context.isWebView && this.closeUIPopout();
-      if (nextProps.popout.style) {
-        this.actions = nextProps.popout.actions.map((item) => Object.assign({}, item, {
-          autoclose: item.hasOwnProperty('autoclose') ? item.autoclose : true,
-          action: item.action || nextProps.popout.onClose,
-          handler: Object.assign({}, item.params, { action: `action-${actionId++}` })
-        }));
-
-        this.actionsStore = this.actions.reduce((res, item) => { res[item.handler.action] = item.action; return res; }, {});
-
-        switch (nextProps.popout.style) {
-          case 'alert':
-            this.context.isWebView ? this.renderNativeAlert(nextProps.popout) : this.renderUIAlert(nextProps.popout);
-            break;
-          case 'actionSheet':
-            this.context.isWebView ? this.renderNativeSheet(nextProps.popout) : this.renderUISheet(nextProps.popout);
-            break;
-        }
-      } else {
-        this.setState({ popout: nextProps.popout });
-      }
+      this.renderPopout(nextProps);
     }
   }
 

@@ -19,7 +19,7 @@ export default class SearchAndroid extends React.Component {
     if (props.hasOwnProperty('value')) {
       this.isControlledOutside = true;
     } else {
-      state.value = props.initialValue || '';
+      state.value = props.defaultValue || '';
     }
 
     this.state = state;
@@ -27,7 +27,7 @@ export default class SearchAndroid extends React.Component {
 
   static propTypes = {
     className: PropTypes.string,
-    initialValue: PropTypes.string,
+    defaultValue: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
     onFocus: PropTypes.func,

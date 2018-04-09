@@ -78,19 +78,14 @@
 
 /* iOS */
 .ListItem--ios {}
-.ListItem--ios.ListItem--expandable::before {
-  position: absolute;
-  top: 50%;
-  right: 16px;
-  margin-top: -4px;
-  width: 7px;
-  height: 7px;
-  border-top: 2px solid #C7C7CC;
-  border-right: 2px solid #C7C7CC;
-  content: '';
-  transform: rotate(45deg);
-  z-index: 1;
-  }
+
+  .List--ios .ListItem__chevron {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -12px;
+    color: map(colors, separator);
+    }
 
   .ListItem--ios .ListItem__in {
     padding: 0 15px;
@@ -99,13 +94,13 @@
     padding: 0 35px 0 15px;
     }
 
-    .ListItem--ios:not(:last-child) .ListItem__before::before {
+    .ListItem--ios:not(:last-child) .ListItem__in:not(.Tappable--active) .ListItem__before::before {
       position: absolute;
       bottom: 0;
       left: 100%;
       width: 10000px;
       height: 1px;
-      background: var(--ios-thick-separator-color);
+      background: map(colors, separator);
       content: '';
       }
 
@@ -132,8 +127,8 @@
       (-webkit-min-device-pixel-ratio: 2),
       (min-resolution: 192dpi),
       (min-resolution: 2dppx) {
-      .ListItem--ios .ListItem__before::before {
-        background: linear-gradient(to top, #c8c7cc 50%, transparent 50%);
+      .ListItem--ios:not(:last-child) .ListItem__in:not(.Tappable--active) .ListItem__before::before {
+        background: var(--ios-bottom-border);
         }
       }
 

@@ -29,16 +29,20 @@
   content: '';
   }
 .Div--border::before {
-  bottom: 100%;
-  background: var(--ios-thick-separator-color);
+  top: 0;
+  background: map(colors, separator);
   }
 .Div--border::after {
   bottom: 0;
-  background: var(--ios-thick-separator-color);
+  background: map(colors, separator);
   }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .Div--border::before,
+
+  .Div--border::before {
+    background: var(--ios-bottom-border);
+    }
+
   .Div--border::after {
     background: var(--ios-top-border);
     }

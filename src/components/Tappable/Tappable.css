@@ -9,32 +9,6 @@
   background: var(--ios-active-color) !important;
   }
 
-.Tappable--ios.Tappable--active::before,
-.Tappable--ios.Tappable--active::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  left: 0;
-  height: 1px;
-  background: var(--ios-thick-separator-color);
-  z-index: 2;
-  }
-.Tappable--ios.Tappable--active::before {
-  bottom: 100%;
-  }
-.Tappable--ios.Tappable--active::after {
-  bottom: 0;
-  }
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .Tappable--ios.Tappable--active::before {
-    background: linear-gradient(to bottom, var(--ios-thin-separator-color) 50%, #d9d9d9 50%);
-    }
-  .Tappable--ios.Tappable--active::after {
-    background: var(--ios-top-border);
-    }
-  }
-
 /**
  * Android tappable
  */

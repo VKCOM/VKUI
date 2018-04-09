@@ -35,8 +35,3 @@
 .HeaderButton--ios.HeaderButton--text.HeaderButton--primary {
   font-weight: 600;
   }
-
-.HeaderButton--ios.Tappable--active::before,
-.HeaderButton--ios.Tappable--active::after {
-  display: none;
-  }

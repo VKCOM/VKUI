@@ -16,11 +16,11 @@
   left: 0;
   z-index: 1;
   height: 1px;
-  background: var(--ios-thick-separator-color);
+  background: map(colors, separator);
   content: '';
   }
 .FormLayout--ios .FormLayout__container::before {
-  bottom: 100%;
+  top: 0;
   }
 .FormLayout--ios .FormLayout__container::after {
   bottom: 0;
@@ -61,7 +61,7 @@
   bottom: 0;
   width: 100vw;
   height: 1px;
-  background: var(--ios-thick-separator-color);
+  background: map(colors, separator);
   content: '';
   }
 .FormLayout__row:last-child .FormLayout__separator::before {
@@ -86,7 +86,7 @@
   left: 15px;
   width: 100vw;
   height: 1px;
-  background: var(--ios-thick-separator-color);
+  background: map(colors, separator);
   content: '';
   }
 .FormLayout__row:last-child .FormLayout__label::before {
@@ -193,9 +193,12 @@
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .FormLayout--ios .FormLayout__container::before,
-  .FormLayout--ios .FormLayout__container::after,
   .FormLayout--ios .FormLayout__separator::before,
   .FormLayout--ios .FormLayout__label::before {
     background: var(--ios-top-border);
+    }
+
+  .FormLayout--ios .FormLayout__container::after {
+    background: var(--ios-bottom-border);
     }
   }

@@ -47,7 +47,7 @@ export default class FormLayoutOld extends React.Component {
         <div className={`${this.baseClass}__container`}>
           {arrayChildren.map((field, i) => (
             <label className={`${this.baseClass}__row`} key={field.key || `row-${i}`}>
-              <div className={`${this.baseClass}__separator`} />
+              {!field.props.label && <div className={`${this.baseClass}__separator`} />}
               {!!field.props.label && (
                 <div className={`${this.baseClass}__label`}>
                   <div className={`${this.baseClass}__label-in`}>{field.props.label}</div>

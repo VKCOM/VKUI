@@ -23,12 +23,12 @@
   content: '';
   }
 .Button--ios::before {
-  bottom: 100%;
-  background: #dfdfdf;
+  top: 0;
+  background: map(colors, separator);
   }
 .Button--ios::after {
   bottom: 0;
-  background: #dfdfdf;
+  background: map(colors, separator);
   }
 
 .Button--ios {
@@ -130,22 +130,16 @@
   font-weight: 500;
   border-radius: 4px;
   }
+.Button--ios.Tappable--active::before,
+.Button--ios.Tappable--active::after,
 .Button--ios.Button--vk-rich::before,
 .Button--ios.Button--vk-rich::after,
-.Button--ios.Button--vk-rich.Tappable--active::before,
-.Button--ios.Button--vk-rich.Tappable--active::after,
 .Button--ios.Button--vk-primary::before,
 .Button--ios.Button--vk-primary::after,
-.Button--ios.Button--vk-primary.Tappable--active::before,
-.Button--ios.Button--vk-primary.Tappable--active::after,
 .Button--ios.Button--vk-secondary::before,
 .Button--ios.Button--vk-secondary::after,
-.Button--ios.Button--vk-secondary.Tappable--active::before,
-.Button--ios.Button--vk-secondary.Tappable--active::after,
 .Button--ios.Button--vk-tertiary::before,
-.Button--ios.Button--vk-tertiary::after,
-.Button--ios.Button--vk-tertiary.Tappable--active::before,
-.Button--ios.Button--vk-tertiary.Tappable--active::after {
+.Button--ios.Button--vk-tertiary::after {
   content: none;
   }
 
@@ -239,8 +233,10 @@
   }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .Button--ios::before,
+  .Button--ios::before {
+    background: var(--ios-top-border);
+    }
   .Button--ios::after {
-    background: linear-gradient(to top, #C8C7CC 50%, transparent 50%);
+    background: var(--ios-bottom-border);
     }
   }

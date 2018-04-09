@@ -3,10 +3,10 @@
 :root {
   --vk-color: #5181b8;
   --ios-font: -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif;
-  --ios-thick-separator-color: map(colors, separator);
-  --ios-thin-separator-color: map(colors, separator);
-  --ios-top-border: linear-gradient(to top, var(--ios-thin-separator-color) 50%, transparent 50%);
-  --ios-bottom-border: linear-gradient(to bottom, var(--ios-thin-separator-color) 50%, transparent 50%);
+  --ios-top-border: linear-gradient(to bottom, map(colors, separator) 50%, transparent 50%);
+  --ios-bottom-border: linear-gradient(to top, map(colors, separator) 50%, transparent 50%);
+  --ios-left-border: linear-gradient(to right, map(colors, separator) 50%, transparent 50%);
+  --ios-right-border: linear-gradient(to left, map(colors, separator) 50%, transparent 50%);
   --ios-active-color: #d9d9d9;
   --ios-easing: cubic-bezier(.36, .66, .04, 1);
   --android-font: Roboto, Droid, 'Open Sans', sans-serif;
