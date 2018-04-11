@@ -78,14 +78,14 @@ export default class NativePopouts extends React.Component {
   }
 
   renderUIAlert (popout) {
-    const { title, text, onClose } = popout;
+    const { title, text, onClose, actionsLayout } = popout;
     this.setState({
       popout: (<Alert
         actions={this.actions.map(item =>
           removeObjectKeys(item, ['params'])
         )}
         onClose={onClose}
-        actionsLayout={this.props.popout.actionsLayout}
+        actionsLayout={actionsLayout}
       >
         {title && <h2>{title}</h2>}
         {text && <p>{text}</p>}
