@@ -1,8 +1,6 @@
 styleguide
-src
 node_modules
 coverage
-build
 docs
 
 npm-debug.log

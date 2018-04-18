@@ -65,7 +65,6 @@
     .Alert--ios .Alert__btn {
       position: relative;
       background: #fafafa;
-      flex: 1 1 0;
       font-size: 17px;
       line-height: 44px;
       color: map(colors, accentBlue);
@@ -99,6 +98,12 @@
       right: 0;
       width: 1px;
       height: 100%;
+      }
+
+    .Alert--ios.Alert--h .Alert__btn {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0;
       }
 
     .Alert--ios.Alert--h .Alert__btn:first-child {

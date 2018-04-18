@@ -5,6 +5,10 @@
   box-sizing: border-box;
   }
 
+.ButtonNew[disabled] {
+  opacity: .4;
+  }
+
   .ButtonNew__in {
     display: flex;
     align-items: center;
@@ -55,7 +59,7 @@
   color: #fff;
   }
 
-.ButtonNew--level-1.Tappable--active {
+.ButtonNew--level-1.Tappable--active:not([disabled]) {
   background-color: #4872a3;
   }
 
@@ -64,7 +68,7 @@
   color: map(colors, mutedBlue)
   }
 
-.ButtonNew--level-2.Tappable--active {
+.ButtonNew--level-2.Tappable--active:not([disabled]) {
   background-color: rgba(0, 54, 115, .2);
   }
 
@@ -73,7 +77,7 @@
   color: map(colors, headerBlue)
   }
 
-.ButtonNew--level-3.Tappable--active {
+.ButtonNew--level-3.Tappable--active:not([disabled]) {
   background-color: rgba(0, 54, 115, .08);
   }
 
@@ -92,7 +96,7 @@
   color: map(colors, accentBlue);
   }
 
-.ButtonNew--level-sell.Tappable--active {
+.ButtonNew--level-sell.Tappable--active:not([disabled]) {
   background-color: rgba(82, 139, 204, 0.1);
   }
 
