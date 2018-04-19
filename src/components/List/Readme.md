@@ -3,7 +3,8 @@
   
     constructor() {
       this.state = {
-        activePanel: 'list'
+        activePanel: 'list',
+        removeList: ['Feature 1', 'Feature 2', 'Feature 3']
       };
     }
     
@@ -11,6 +12,20 @@
       return (
         <View header activePanel={this.state.activePanel}>
           <ScrollView id="list" header={{ title: 'List' }}>
+            {this.state.removeList.length > 0 &&
+              <Group title="Removable (New)">
+                <List>
+                  {this.state.removeList.map((item, index) => (
+                    <ListItem key={item} removable onRemove={() => {
+                      this.setState({
+                        removeList: [...this.state.removeList.slice(0, index), ...this.state.removeList.slice(index + 1)]
+                      })
+                    }}>{item}</ListItem>
+                  ))}                
+                </List>
+              </Group>
+            }
+          
             <Group title="Simple list">
               <List>
                 <ListItem>Label 1</ListItem>
