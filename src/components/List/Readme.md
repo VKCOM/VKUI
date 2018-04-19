@@ -42,7 +42,7 @@
               </List>
             </Group>
             
-            <Group title="Selectable (Beta)">
+            <Group title="Selectable">
               <List>
                 <ListItem selectable name="selectable-list" value="Feature 1">Feature 1</ListItem>
                 <ListItem selectable name="selectable-list" value="Feature 2">Feature 2</ListItem>
