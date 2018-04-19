@@ -39,7 +39,7 @@
     font-size: 16px;
     }
 
-  .Textarea--android textarea:focus ~ .Input-underline::before {
+  .Textarea--android textarea:focus ~ .Textarea-underline::before {
     transform: scaleX(1);
     transition: transform .14s var(--android-easing);
     }
