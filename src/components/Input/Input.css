@@ -44,7 +44,8 @@
     text-align: right;
     }
 
-.Input-underline {
+.Input-underline,
+.Textarea-underline {
   position: absolute;
   bottom: 9px;
   left: 0;
@@ -53,7 +54,8 @@
   background: linear-gradient(to top, transparent 50%, #d6d6d6 50%);
   }
 
-  .Input-underline::before {
+  .Input-underline::before,
+  .Textarea-underline::before {
     position: absolute;
     top: 0;
     right: 0;
