@@ -41,7 +41,8 @@ export default class Gallery extends Component {
     onDragEnd: PropTypes.func,
     onChange: PropTypes.func,
     onEnd: PropTypes.func,
-    align: PropTypes.oneOf(['left', 'center', 'right'])
+    align: PropTypes.oneOf(['left', 'center', 'right']),
+    bullets: PropTypes.oneOf(['dark', 'light', false])
   };
 
   static defaultProps = {
@@ -49,7 +50,8 @@ export default class Gallery extends Component {
     children: '',
     autoplay: 0,
     initialSlideIndex: 0,
-    align: 'left'
+    align: 'left',
+    bullets: false
   };
 
   slidesStore = {};
@@ -379,6 +381,17 @@ export default class Gallery extends Component {
             {this.slides}
           </div>
         </Touch>
+        {this.props.bullets &&
+          <div className={classnames('Gallery__bullets', {
+            [`Gallery__bullets--${this.props.bullets}`]: true
+          })}>
+            {this.slides.map((item, index) => (
+              <div className={classnames('Gallery__bullet', {
+                'Gallery__bullet--active': index === current
+              })} key={index} />
+            ))}
+          </div>
+        }
       </div>
     );
   }

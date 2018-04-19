@@ -21,6 +21,7 @@
               <Gallery
                 slideWidth="90%"
                 style={{ height: 150 }}
+                bullets="dark"
               >
                 <div style={{ height: 150, backgroundColor: colors.red }} />
                 <div style={{ height: 150, backgroundColor: colors.green }} />
