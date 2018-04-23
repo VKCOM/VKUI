@@ -107,11 +107,11 @@
       }
 
     .Alert--ios.Alert--h .Alert__btn:first-child {
-      border-radius: 0 0 0 12px;
+      border-bottom-left-radius: 12px;
       }
 
     .Alert--ios.Alert--h .Alert__btn:last-child {
-      border-radius: 0 0 12px 0;
+      border-bottom-right-radius: 12px;
       }
 
     .Alert--ios.Alert--v .Alert__btn::after {

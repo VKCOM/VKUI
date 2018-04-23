@@ -27,7 +27,8 @@ export default class ListItem extends Component {
     className: PropTypes.string,
     selectable: PropTypes.bool,
     removable: PropTypes.bool,
-    onRemove: PropTypes.func
+    onRemove: PropTypes.func,
+    removePlaceholder: PropTypes.node
   };
 
   static defaultProps = {
@@ -38,7 +39,8 @@ export default class ListItem extends Component {
     children: '',
     selectable: false,
     multiline: false,
-    removable: false
+    removable: false,
+    removePlaceholder: 'Удалить'
   };
 
   static contextTypes = {
@@ -108,6 +110,7 @@ export default class ListItem extends Component {
       className,
       onRemove,
       removable,
+      removePlaceholder,
       ...restProps
     } = this.props;
 
@@ -161,13 +164,13 @@ export default class ListItem extends Component {
           </div>
           {osname === IOS && expandable && <Icon24Chevron className="ListItem__chevron"/>}
         </Tappable>
-        {this.props.removable && osname === IOS &&
+        {removable && osname === IOS &&
           <div
             ref={this.getRemoveRef}
             className="ListItem__remove"
             onClick={this.onRemoveClick}
             style={{ transform: `translateX(-${this.state.removeOffset}px)` }}
-          >Remove</div>
+          >{removePlaceholder}</div>
         }
       </li>
     );
