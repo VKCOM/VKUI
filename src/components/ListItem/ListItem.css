@@ -125,11 +125,11 @@
       content: '';
       }
 
-      .ListItem--ios .ListItem__before-in .Icon {
+      .ListItem--ios .ListItem__before-in > .Icon {
         padding: 10px 16px 10px 0;
         }
 
-      .ListItem--ios .ListItem__before-in .Avatar {
+      .ListItem--ios .ListItem__before-in > .Avatar {
         padding: 4px 12px 4px 0;
         }
 
@@ -206,11 +206,11 @@
     background: #fff;
     }
 
-    .ListItem--android .ListItem__before-in .Icon {
+    .ListItem--android .ListItem__before-in > .Icon {
       padding: 14px 32px 18px 0;
       }
 
-    .ListItem--android .ListItem__before-in .Avatar {
+    .ListItem--android .ListItem__before-in > .Avatar {
       padding: 8px 16px 8px 0;
       }
 
