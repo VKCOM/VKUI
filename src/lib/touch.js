@@ -15,6 +15,9 @@ const coordX = e => e.clientX || (e.touches && e.touches[0].clientX);
  */
 const coordY = e => e.clientY || (e.touches && e.touches[0].clientY);
 
+const isClient = typeof window !== 'undefined';
+const touchEnabled = isClient && 'ontouchstart' in window;
+
 /**
  * Возвращает массив поддерживаемых событий
  * Если браузер поддерживает pointer events или подключена handjs, вернет события указателя.
@@ -23,9 +26,6 @@ const coordY = e => e.clientY || (e.touches && e.touches[0].clientY);
  * @returns {Array} Массив с названиями событий
  */
 function getSupportedEvents () {
-  const isClient = typeof window !== 'undefined';
-  const touchEnabled = isClient && 'ontouchstart' in window;
-
   if (touchEnabled) {
     return ['touchstart', 'touchmove', 'touchend', 'touchcancel'];
   }
@@ -33,4 +33,4 @@ function getSupportedEvents () {
   return ['mousedown', 'mousemove', 'mouseup', 'mouseleave'];
 }
 
-export { getSupportedEvents, coordX, coordY };
+export { getSupportedEvents, coordX, coordY, touchEnabled };

@@ -42,7 +42,7 @@ export default class RangeSlider extends Slider {
     }
   };
 
-  onMove = e => {
+  onMoveX = e => {
     const absolutePosition = this.validateAbsolute(this.state.startX + (e.shiftX || 0));
     const percentPosition = this.absoluteToPecent(absolutePosition);
     const percentRange = this.calcPercentRange(percentPosition);
@@ -114,7 +114,7 @@ export default class RangeSlider extends Slider {
   render () {
     return (
       <div className={classnames(baseClassNames, this.props.className)} ref={this.getRef} style={this.props.style}>
-        <Touch onStart={this.onStart} onMove={this.onMove} onEnd={this.onEnd} className="Slider__in">
+        <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
           <div
             className="Slider__dragger"
             style={{

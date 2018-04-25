@@ -202,7 +202,7 @@ export default class Gallery extends Component {
     });
   };
 
-  onMove = (e) => {
+  onMoveX = (e) => {
     if (!this.isDraggable()) {
       return;
     }
@@ -372,7 +372,7 @@ export default class Gallery extends Component {
         <Touch
           className="Gallery__viewport"
           onStartX={this.onStart}
-          onMoveX={this.onMove}
+          onMoveX={this.onMoveX}
           onEnd={this.onEnd}
           style={{ width: slideWidth }}
           ref={this.getViewportRef}
