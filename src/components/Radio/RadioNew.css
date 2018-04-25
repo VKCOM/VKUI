@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .RadioNew {
   background-color: #fff;
   display: block;
@@ -50,6 +52,7 @@
     height: 22px;
     border: 2px solid #c4c8cc;
     margin: 11px 13px;
+    transition: border-color .15s var(--ios-easing);
     }
 
     .RadioNew--ios .RadioNew__icon::after {
@@ -57,6 +60,8 @@
       height: 14px;
       left: 2px;
       top: 2px;
+      transform: scale(.3);
+      transition: transform .15s var(--ios-easing);
       }
 
   .RadioNew--ios .RadioNew__self:checked ~ .RadioNew__wrapper .RadioNew__icon {
@@ -65,6 +70,7 @@
 
     .RadioNew--ios .RadioNew__self:checked ~ .RadioNew__wrapper .RadioNew__icon::after {
       background-color: map(colors, accentBlue);
+      transform: scale(1);
       }
 
 
@@ -78,6 +84,7 @@
     height: 20px;
     border: 2px solid #c4c8cc;
     margin: 14px 18px;
+    transition: border-color .5s var(--ios-easing);
     }
 
   .RadioNew--android .RadioNew__icon::after {
@@ -85,6 +92,8 @@
     height: 10px;
     left: 3px;
     top: 3px;
+    transform: scale(.3);
+    transition: transform .5s var(--ios-easing);
     }
 
   .RadioNew--android .RadioNew__self:checked ~ .RadioNew__wrapper .RadioNew__icon {
@@ -93,6 +102,7 @@
 
   .RadioNew--android .RadioNew__self:checked ~ .RadioNew__wrapper .RadioNew__icon::after {
     background-color: map(colors, accentBlue);
+    transform: scale(1);
     }
 
 

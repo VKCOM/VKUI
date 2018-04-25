@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getSupportedEvents, coordX, coordY } from '../../lib/touch';
+import { getSupportedEvents, coordX, coordY, touchEnabled } from '../../lib/touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 
 const events = getSupportedEvents();
-
-// amazing hack for preventing vertical scroll during horizontal swipe
-// (in View, Slider, Gallery). todo: requires investigation
-window.addEventListener('touchmove', () => {});
 
 export default class Touch extends Component {
   cancelClick = false;
@@ -44,10 +40,12 @@ export default class Touch extends Component {
 
   componentDidMount () {
     this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
+    touchEnabled && this.subscribe(this.container);
   }
 
   componentWillUnmount () {
     this.container.removeEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
+    touchEnabled && this.unsubscribe(this.container);
   }
 
   /**
@@ -82,10 +80,8 @@ export default class Touch extends Component {
       this.props.onStartY(outputEvent);
     }
 
-    this.document.addEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
-    this.document.addEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
-    this.document.addEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
-  }
+    !touchEnabled && this.subscribe(this.document);
+  };
 
   /**
    * Обработчик событий touchmove
@@ -149,7 +145,7 @@ export default class Touch extends Component {
         }
       }
     }
-  }
+  };
 
   /**
    * Обработчик событий touchend, touchcancel
@@ -184,9 +180,19 @@ export default class Touch extends Component {
     this.cancelClick = e.target.tagName === 'A' && isSlide;
     this.gesture = {};
 
-    this.document.removeEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
-    this.document.removeEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
-    this.document.removeEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
+    !touchEnabled && this.unsubscribe(this.document);
+  };
+
+  subscribe (element) {
+    element.addEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
+    element.addEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
+    element.addEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
+  }
+
+  unsubscribe (element) {
+    element.removeEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
+    element.removeEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
+    element.removeEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
   }
 
   /**
