@@ -62,6 +62,7 @@ const config = {
   },
   externals: {
     'react': 'react',
+    'react-dom': 'react-dom',
     'prop-types': 'prop-types'
   }
 };
