@@ -33,7 +33,8 @@ export default class SearchAndroid extends React.Component {
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     onClose: PropTypes.func,
-    placeholder: PropTypes.node
+    placeholder: PropTypes.node,
+    getRef: PropTypes.func
   };
 
   static defaultProps = {
@@ -77,6 +78,11 @@ export default class SearchAndroid extends React.Component {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
+  inputRef = (el) => {
+    this.inputEl = el;
+    this.props.getRef && this.props.getRef(el);
+  };
+
   render () {
     const className = classnames(baseClassName, {
       'Search--focused': this.state.focused,
@@ -94,7 +100,7 @@ export default class SearchAndroid extends React.Component {
           <input
             className="Search__input"
             placeholder={this.props.placeholder}
-            ref={el => this.inputEl = el}
+            ref={this.inputRef}
             value={this.value}
             onChange={this.onChange}
             onFocus={this.onFocus}
