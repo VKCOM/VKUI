@@ -12,15 +12,15 @@
     render() {
       return (
         <View header activePanel={this.state.activePanel}>
-          <ScrollView id="button" header={{ title: 'Button' }}>
+          <Panel id="button" header={{ title: 'Button' }}>
             <Group>
               <List>
                 <ListItem expandable onClick={() => this.setState({ activePanel: 'old' })}>Old</ListItem>
                 <ListItem expandable onClick={() => this.setState({ activePanel: 'new' })}>New</ListItem>
               </List>
             </Group>
-          </ScrollView>
-          <ScrollView 
+          </Panel>
+          <Panel 
             id="old" 
             header={{ 
               title: 'Old',
@@ -54,8 +54,8 @@
                 <Input type="number" placeholder="Number" label="Number" />
               </FormLayout>
             </Group>
-          </ScrollView>
-          <ScrollView 
+          </Panel>
+          <Panel 
             id="new" 
             header={{ 
               title: 'New',
@@ -69,7 +69,7 @@
             <FormLayout v="new" allowSubmit={false}>
               <Input v="new" type="text" placeholder="Your login" label="Simple input" />
             </FormLayout>
-          </ScrollView>
+          </Panel>
         </View>
       )
     }

@@ -28,7 +28,7 @@ module.exports = {
         name: 'Layout',
         components: () => [
           '../src/components/View/View.js',
-          '../src/components/ScrollView/ScrollView.js',
+          '../src/components/Panel/Panel.js',
           '../src/components/HeaderButton/HeaderButton.js',
           '../src/components/Root/Root.js',
           '../src/components/FixedLayout/FixedLayout.js'

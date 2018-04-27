@@ -2,7 +2,7 @@
 
 ```jsx
   <View activePanel="panel" header>
-    <ScrollView id="panel" header={{ title: 'Pane' }}>
+    <Panel id="panel" header={{ title: 'Pane' }}>
       <Group title="Simple">
         <Pane>Pane content</Pane>
       </Group>
@@ -26,6 +26,6 @@
           </InfoRow>
         </Pane>
       </Group>
-    </ScrollView>
+    </Panel>
   </View>
 ```

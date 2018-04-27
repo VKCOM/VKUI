@@ -11,7 +11,7 @@
     render() {
       return (
         <View header activePanel={this.state.activePanel}>
-          <ScrollView id="list" header={{ title: 'List' }}>
+          <Panel id="list" header={{ title: 'List' }}>
             {this.state.removeList.length > 0 &&
               <Group title="Removable (New)">
                 <List>
@@ -94,8 +94,8 @@
                 <ListItem description="The Weeknd">I Feel It Coming (Feat. Daft Punk)</ListItem>
               </List>
             </Group>
-          </ScrollView>
-          <ScrollView 
+          </Panel>
+          <Panel 
             id="nothing" 
             header={{ 
               title: 'Nothing', 
@@ -124,7 +124,7 @@
                 <span onClick={() => this.setState({ activePanel: 'list' })} style={{ textDecoration: 'underline' }}>Back to start screen</span>
               </div>
             </div>
-          </ScrollView>
+          </Panel>
         </View>
       )
     }

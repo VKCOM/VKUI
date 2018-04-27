@@ -1,6 +1,6 @@
 ```jsx
   <View activePanel="group" header>
-    <ScrollView id="group" header={{ title: 'Group' }}>
+    <Panel id="group" header={{ title: 'Group' }}>
       <Group title="Group title" description="Group description. Lorem ipsum dolor sit amet, consectetur adipisicing elit.">
         <List>
           <ListItem>
@@ -14,6 +14,6 @@
           </ListItem>
         </List>
       </Group>
-    </ScrollView>
+    </Panel>
   </View>
 ```

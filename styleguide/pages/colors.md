@@ -8,7 +8,7 @@
 
 ```
   <View activePanel="colors">
-    <ScrollView id="colors">
+    <Panel id="colors">
       <Group>
         <List>
           { Object.keys(colors).map((color) => (
@@ -22,6 +22,6 @@
           )) }
         </List>
       </Group>
-    </ScrollView>
+    </Panel>
   </View>
 ```

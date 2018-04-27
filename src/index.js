@@ -7,7 +7,7 @@ import { families as fontFamilies } from './helpers/fonts';
  */
 export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
-export { default as ScrollView } from './components/ScrollView/ScrollView';
+export { default as Panel } from './components/Panel/Panel';
 export { default as HeaderButton } from './components/HeaderButton/HeaderButton';
 export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
 export { default as PanelHeader } from './components/PanelHeader/PanelHeader';

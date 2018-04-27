@@ -1,13 +1,13 @@
-import './ScrollView.css';
+import './Panel.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
 
-const baseClassNames = getClassName('ScrollView');
+const baseClassNames = getClassName('Panel');
 
-export default class ScrollView extends Component {
+export default class Panel extends Component {
   constructor (props) {
     super(props);
     this.state = {};
@@ -80,12 +80,12 @@ export default class ScrollView extends Component {
     return (
       <div
         className={classnames(baseClassNames, className, {
-          'ScrollView--centered': this.props.centered
+          'Panel--centered': this.props.centered
         })}
         {...removeObjectKeys(this.props, ['header', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'theme', 'centered'])}
         ref={this.getRef}
       >
-        <div className="ScrollView__in" style={{ paddingBottom: this.insets.bottom || null }}>
+        <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null }}>
           {this.props.children}
         </div>
       </div>
