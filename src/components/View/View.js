@@ -455,7 +455,7 @@ export default class View extends Component {
 
   render () {
     const { style, popout, header } = this.props;
-    const { prevPanel, nextPanel, activePanel } = this.state;
+    const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel } = this.state;
     const hasPopout = !!popout;
     const hasHeader = header !== null;
     const panels = this.panels.filter(panel => {
@@ -540,7 +540,10 @@ export default class View extends Component {
               key={panel.key || panel.id || `panel-${i}`}
             >
               <div className="View__panel-in">
-                {React.cloneElement(panel, { ref: this.getRef, activePanel, nextPanel })}
+                {React.cloneElement(panel, {
+                  isNext: panel.id === nextPanel || panel.id === swipeBackNextPanel,
+                  isPrev: panel.id === prevPanel || panel.id === swipeBackPrevPanel
+                })}
               </div>
             </div>
           ))}

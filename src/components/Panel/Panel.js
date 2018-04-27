@@ -2,7 +2,6 @@ import './Panel.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
 
 const baseClassNames = getClassName('Panel');
@@ -21,27 +20,17 @@ export default class Panel extends Component {
     /**
      * @ignore
      */
-    activePanel: PropTypes.string,
+    isPrev: PropTypes.bool,
     /**
      * @ignore
      */
-    prevPanel: PropTypes.string,
-    /**
-     * @ignore
-     */
-    nextPanel: PropTypes.string,
-    /**
-     * @ignore
-     */
+    isNext: PropTypes.bool,
+
     children: PropTypes.node,
     className: PropTypes.string,
     theme: PropTypes.oneOf(['white', 'gray']),
     id: PropTypes.string.isRequired,
-    header: PropTypes.shape({
-      left: PropTypes.node,
-      right: PropTypes.node,
-      title: PropTypes.node
-    }),
+    optimized: PropTypes.bool,
     centered: PropTypes.bool
   };
 
@@ -67,23 +56,23 @@ export default class Panel extends Component {
   static defaultProps = {
     children: '',
     theme: 'gray',
-    centered: false
+    centered: false,
+    optimized: false
   };
 
-  shouldComponentUpdate ({ id, activePanel, nextPanel }) {
-    return id === activePanel || id === nextPanel;
+  shouldComponentUpdate ({ optimized, isNext, isPrev }) {
+    return optimized ? !isNext && !isPrev : true;
   }
 
   render () {
-    const { className } = this.props;
+    const { className, id } = this.props;
 
     return (
       <div
         className={classnames(baseClassNames, className, {
           'Panel--centered': this.props.centered
         })}
-        {...removeObjectKeys(this.props, ['header', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'theme', 'centered'])}
-        ref={this.getRef}
+        id={id}
       >
         <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null }}>
           {this.props.children}
