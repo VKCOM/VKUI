@@ -30,7 +30,7 @@
   
     getPanels () {
       const panels = [
-        <ScrollView id="icons" header={{ title: 'Icons' }}>
+        <Panel id="icons" header={{ title: 'Icons' }}>
           <Group title="Sizes">
             <List>
               { Object.keys(Icon).map(iconSize => {
@@ -44,10 +44,10 @@
               <ListItem before={<Icon24Services fill={colors.green} />}>Icon24Services, {colorKeys.green}</ListItem>
             </List>
           </Group>
-        </ScrollView>
+        </Panel>
       ];
       Object.keys(Icon).forEach(iconSize => {
-        panels.push(<ScrollView id={`size_${iconSize}`} header={{ title: `Icons: ${iconSize}`, icon: this.backButton() }}>
+        panels.push(<Panel id={`size_${iconSize}`} header={{ title: `Icons: ${iconSize}`, icon: this.backButton() }}>
           <Group>
             <List>
               { Object.keys(Icon[iconSize]).map((iconName) => {
@@ -56,7 +56,7 @@
               }) }
             </List>
           </Group>
-        </ScrollView>)
+        </Panel>)
       })
       
       return panels;

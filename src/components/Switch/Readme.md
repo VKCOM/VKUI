@@ -1,6 +1,6 @@
 ```
   <View activePanel="switch" header>
-    <ScrollView header={{ title: 'Switch' }} id="switch">
+    <Panel header={{ title: 'Switch' }} id="switch">
       <Group>
         <List>
           <ListItem asideContent={<Switch />}>
@@ -14,6 +14,6 @@
           </ListItem>
         </List>
       </Group>  
-    </ScrollView>
+    </Panel>
   </View>
 ```
