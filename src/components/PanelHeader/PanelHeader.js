@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import './PanelHeader.css';
+import { platform, IOS } from '../../lib/platform';
 
-const leftClass = getClassName('PanelHeader-left');
-const iconClass = getClassName('PanelHeader-icon');
-const rightClass = getClassName('PanelHeader-right');
+const osname = platform();
+
+export const baseClassNames = getClassName('PanelHeader');
 
 export default class PanelHeader extends React.Component {
 
@@ -15,11 +16,17 @@ export default class PanelHeader extends React.Component {
     left: PropTypes.node,
     icon: PropTypes.node,
     right: PropTypes.node,
-    children: PropTypes.node
+    children: PropTypes.node,
+    theme: PropTypes.oneOf(['light', 'brand'])
+  };
+
+  static defaultProps = {
+    theme: 'brand'
   };
 
   static contextTypes = {
-    panel: PropTypes.string
+    panel: PropTypes.string,
+    setHeaderTheme: PropTypes.func
   };
 
   state = {
@@ -28,27 +35,28 @@ export default class PanelHeader extends React.Component {
     leftWidth: null
   };
 
-  node = null;
-
   componentDidMount () {
     this.leftNode = document.getElementById('header-left-' + this.context.panel);
     this.iconNode = document.getElementById('header-icon-' + this.context.panel);
     this.titleNode = document.getElementById('header-title-' + this.context.panel);
     this.rightNode = document.getElementById('header-right-' + this.context.panel);
+    this.context.setHeaderTheme({[this.context.panel]: this.props.theme});
     this.setState({ ready: true });
   }
 
   componentDidUpdate (prevProps, prevState) {
-    if (!prevState.ready && this.state.ready) {
+    if (!prevState.ready && this.state.ready && osname === IOS) {
       this.equalizeWidth();
     }
   }
 
+  get iconWidth () { return this.iconEl ? this.iconEl.offsetWidth : 0; }
+
   equalizeWidth () {
-    if (this.leftEl.offsetWidth + this.iconEl.offsetWidth > this.rightEl.offsetWidth) {
-      this.setState({ rightWidth: this.leftEl.offsetWidth + this.iconEl.offsetWidth });
+    if (this.leftEl.offsetWidth + this.iconWidth > this.rightEl.offsetWidth) {
+      this.setState({ rightWidth: this.leftEl.offsetWidth + this.iconWidth });
     } else {
-      this.setState({ leftWidth: this.rightEl.offsetWidth - this.iconEl.offsetWidth });
+      this.setState({ leftWidth: this.rightEl.offsetWidth - this.iconWidth });
     }
   }
 
@@ -57,19 +65,23 @@ export default class PanelHeader extends React.Component {
 
     return this.state.ready ? [
       ReactDOM.createPortal(
-        <div ref={el => this.leftEl = el} className={classnames(leftClass, {
-          [`PanelHeader-left--with-icon`]: icon
+        <div ref={el => this.leftEl = el} className={classnames('PanelHeader-left-in', {
+          [`PanelHeader-left-in--with-icon`]: icon
         })} style={{ width: this.state.leftWidth }}>
-          { left && React.cloneElement(left, { position: 'left' }) }
+          { left }
         </div>, this.leftNode),
-      ReactDOM.createPortal(
-        <div ref={el => this.iconEl = el} className={iconClass}>
-          { icon && React.cloneElement(icon, { position: 'icon' }) }
+      osname === IOS && ReactDOM.createPortal(
+        <div ref={el => this.iconEl = el} className="PanelHeader-icon">
+          { icon }
         </div>, this.iconNode),
-      ReactDOM.createPortal(children, this.titleNode),
+      ReactDOM.createPortal(<div className="PanelHeader-content">{children}</div>, this.titleNode),
       ReactDOM.createPortal(
-        <div ref={el => this.rightEl = el} className={rightClass} style={{ width: this.state.rightWidth }}>
-          { right && React.cloneElement(right, { position: 'right' }) }
+        <div
+          ref={el => this.rightEl = el}
+          className="PanelHeader-right"
+          style={{ width: this.state.rightWidth }}
+        >
+          { right }
         </div>, this.rightNode)
     ] : null;
   }

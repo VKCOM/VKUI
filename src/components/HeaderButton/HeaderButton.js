@@ -7,11 +7,10 @@ import './HeaderButton.css';
 
 const baseClassName = getClassName('HeaderButton');
 
-const HeaderButton = ({ className, children, primary, position, ...restProps }) => {
+const HeaderButton = ({ className, children, primary, ...restProps }) => {
   return (
     <Tappable className={classnames(baseClassName, className, {
-      'HeaderButton--primary': primary,
-      [`HeaderButton--${position}`]: true
+      'HeaderButton--primary': primary
     })} {...restProps}>
       {typeof children === 'string' ? <span className="HeaderButton__str">{children}</span> : children}
     </Tappable>
@@ -21,8 +20,7 @@ const HeaderButton = ({ className, children, primary, position, ...restProps }) 
 HeaderButton.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   className: PropTypes.string,
-  primary: PropTypes.bool,
-  position: PropTypes.oneOf(['left', 'right', 'icon'])
+  primary: PropTypes.bool
 };
 
 HeaderButton.defaultProps = {

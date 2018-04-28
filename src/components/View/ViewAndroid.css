@@ -1,4 +1,4 @@
-@import '../../../styles/constants.css';
+@import '../../styles/constants.css';
 
 .View--android .View__panel,
 .View--android .Panel__in {
@@ -39,20 +39,20 @@
   from {
     opacity: 1;
     transform: translateY(0);
-  }
+    }
   to {
     opacity: 0;
     transform: translateY(80px);
+    }
   }
-}
 
 @keyframes animation-android-next-forward {
   from {
     opacity: 0;
     transform: translateY(80px);
-  }
+    }
   to {
     opacity: 1;
     transform: translateY(0);
+    }
   }
-}

@@ -34,6 +34,13 @@ export default class Panel extends Component {
     centered: PropTypes.bool
   };
 
+  static defaultProps = {
+    children: '',
+    theme: 'gray',
+    centered: false,
+    optimized: false
+  };
+
   static contextTypes = {
     insets: PropTypes.shape({
       top: PropTypes.number,
@@ -52,13 +59,6 @@ export default class Panel extends Component {
   get insets () {
     return this.context.insets || {};
   }
-
-  static defaultProps = {
-    children: '',
-    theme: 'gray',
-    centered: false,
-    optimized: false
-  };
 
   shouldComponentUpdate ({ optimized, isNext, isPrev }) {
     return optimized ? !isNext && !isPrev : true;
