@@ -1,4 +1,4 @@
-@import '../../../styles/constants.css';
+@import '../../styles/constants.css';
 
 .View--ios .View__panel,
 .View--ios .Panel__in {
@@ -118,53 +118,53 @@
 @keyframes animation-ios-next-forward {
   from {
     transform: translate3d(100%,0,0);
-  }
+    }
   to {
     transform: translate3d(0,0,0);
+    }
   }
-}
 
 @keyframes animation-ios-next-back {
   from {
     transform: translate3d(-50%,0,0);
-  }
+    }
   to {
     transform: translate3d(0,0,0);
+    }
   }
-}
 
 @keyframes animation-ios-prev-forward {
   from {
     transform: translate3d(0,0,0);
-  }
+    }
   to {
     transform: translate3d(-50%,0,0);
+    }
   }
-}
 
 @keyframes animation-ios-prev-back {
   from {
     transform: translate3d(0,0,0);
-  }
+    }
   to {
     transform: translate3d(100%,0,0);
+    }
   }
-}
 
 @keyframes animation-ios-fade-in {
   from {
     opacity: 0;
-  }
+    }
   to {
     opacity: .3;
+    }
   }
-}
 
 @keyframes animation-ios-fade-out {
   from {
     opacity: .3;
-  }
+    }
   to {
     opacity: 0;
+    }
   }
-}

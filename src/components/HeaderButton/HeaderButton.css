@@ -1,19 +1,3 @@
-.HeaderButton--android.Tappable--active {
-  background-color: rgba(255, 255, 255, .1);
-  }
-
-.HeaderButton--android.HeaderButton--icon {
-  padding: 12px;
-  }
-
-.HeaderButton--android.HeaderButton--text {
-  box-sizing: border-box;
-  height: 48px;
-  line-height: 48px;
-  padding-left: 12px;
-  padding-right: 12px;
-  }
-
 .HeaderButton--ios {
   height: 44px;
   line-height: 44px;
@@ -37,32 +21,25 @@
     padding: 0 10px;
     }
 
-  .HeaderButton--ios.HeaderButton--left > *:not(.Icon) {
-    padding-left: 16px;
-    }
-
-  .HeaderButton--ios.HeaderButton--right > *:not(.Icon) {
-    padding-right: 16px;
-    }
-
-  .HeaderButton--ios.HeaderButton--left .Icon--24 {
-    padding-left: 12px
-    }
-
-  .HeaderButton--ios.HeaderButton--right .Icon--24 {
-    padding-right: 12px
-    }
-
   .HeaderButton--ios .Icon--chevron_back_28 {
     padding-left: 4px;
     padding-right: 4px;
     }
 
-.HeaderButton--ios.Tappable--active::before,
-.HeaderButton--ios.Tappable--active::after {
-  display: none;
-  }
-
 .HeaderButton--ios.Tappable--active {
   opacity: .7;
+  }
+
+
+.HeaderButton--android {
+  width: 48px;
+  height: 48px;
+  }
+
+.HeaderButton--android.Tappable--active {
+  background-color: rgba(255, 255, 255, .1);
+  }
+
+.HeaderButton--android .Icon--24 {
+  padding: 12px;
   }
