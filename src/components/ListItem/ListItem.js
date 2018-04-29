@@ -121,14 +121,14 @@ export default class ListItem extends Component {
     };
 
     const rootProps = selectable ? {} : restProps;
-    const inputProps = selectable ? rootProps : {};
+    const inputProps = selectable ? restProps : {};
 
     return (
       <li
         className={classnames(baseClassNames, modifiers, className)}
-        {...rootProps}
         ref={this.getRootRef}
         style={{ height: this.state.height }}
+        {...rootProps}
       >
         <Tappable
           component={selectable ? 'label' : 'div'}
