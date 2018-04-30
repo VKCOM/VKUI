@@ -1,6 +1,6 @@
 ```
   <View activePanel="progress" header>
-    <ScrollView id="progress" header={{ title: 'Progress' }}>
+    <Panel id="progress" header={{ title: 'Progress' }}>
       <Group>
         <Pane>
           <InfoRow title="Default">
@@ -8,6 +8,6 @@
           </InfoRow>
         </Pane>  
       </Group>
-    </ScrollView>
+    </Panel>
   </View>
 ```

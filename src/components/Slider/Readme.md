@@ -23,7 +23,7 @@
     render() {
       return (
         <View activePanel="slider">
-          <ScrollView id="slider">
+          <Panel id="slider">
             <Group title="Simple [10, 30]">
               <Pane>
                 <Slider min={10} max={30} value={Number(this.state.value1)} onChange={value1 => this.setState({value1})}/>
@@ -60,7 +60,7 @@
               </Pane>
               <Pane>{this.state.value4[0]}, {this.state.value4[1]}</Pane>
             </Group>
-          </ScrollView>
+          </Panel>
         </View>
       );
     }

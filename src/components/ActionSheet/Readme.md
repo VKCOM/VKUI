@@ -38,11 +38,11 @@ class Example extends React.Component {
   render() {
     return (
       <View popout={this.state.popout} header activePanel="panel">
-        <ScrollView id="panel" header={{ title: "Action Sheet" }}>
+        <Panel id="panel" header={{ title: "Action Sheet" }}>
           <Group>
             <Button onClick={this.openSheet.bind(this)}>Open Sheet</Button>
           </Group>  
-        </ScrollView>
+        </Panel>
       </View>
     )
   }

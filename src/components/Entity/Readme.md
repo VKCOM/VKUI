@@ -1,6 +1,6 @@
 ```
   <View header activePanel="entity">
-    <ScrollView
+    <Panel
       id="entity"
       header={{ title: 'Entity' }}
     >
@@ -40,6 +40,6 @@
             />
           </Pane>  
         </Group>
-    </ScrollView>
+    </Panel>
   </View>
 ```

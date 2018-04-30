@@ -1,0 +1,6 @@
+.InnerScroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 1px 0;
+  box-sizing: border-box;
+  }

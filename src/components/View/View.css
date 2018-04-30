@@ -1,8 +1,6 @@
 @import '../../styles/constants.css';
-@import './iOS/Panel.css';
-@import './iOS/Header.css';
-@import './Android/Panel.css';
-@import './Android/Header.css';
+@import './ViewIOS.css';
+@import './ViewAndroid.css';
 
 .View {
   position: relative;
@@ -11,63 +9,17 @@
   background: #efeff4;
   word-wrap: break-word;
   }
+
 .View--animated,
 .View--swiping-back {
   overflow: hidden;
   height: 100vh;
   }
 
-  /**
-   * Header
-   */
   .View__header {
-    white-space: nowrap;
     z-index: 2;
     }
 
-    .View__header-in {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      color: #fff;
-      z-index: 5;
-      background: var(--vk-color);
-      }
-
-      .View__header-item {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        }
-
-        .View__header-left,
-        .View__header-right {
-          flex-shrink: 0;
-          position: relative;
-          z-index: 1;
-          }
-        .View__header-right {
-          text-align: right;
-          }
-
-        .View__header-title {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          margin: 0;
-          padding: 0 6px;
-          position: relative;
-          z-index: 2;
-          }
-
-  /**
-   * Panel
-   */
   .View--animated .View__panel,
   .View--animated .View__header,
   .View--swiping-back .View__panel,
@@ -100,9 +52,6 @@
     overflow: hidden;
     }
 
-  /**
-   * Popout
-   */
   .View__popout {
     position: fixed;
     left: 0;
@@ -112,17 +61,16 @@
     height: 100vh;
     }
 
-
 /**
  * iOS
  */
 .View--ios {
-  font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
+  font-family: var(--ios-font);
   }
 
 /**
  * Android
  */
 .View--android {
-  font-family: Roboto, Droid, 'Open Sans', sans-serif;
+  font-family: var(--android-font);
   }

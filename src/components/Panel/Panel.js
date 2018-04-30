@@ -1,13 +1,12 @@
-import './ScrollView.css';
+import './Panel.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import classnames from '../../lib/classnames';
 
-const baseClassNames = getClassName('ScrollView');
+const baseClassNames = getClassName('Panel');
 
-export default class ScrollView extends Component {
+export default class Panel extends Component {
   constructor (props) {
     super(props);
     this.state = {};
@@ -21,28 +20,25 @@ export default class ScrollView extends Component {
     /**
      * @ignore
      */
-    activePanel: PropTypes.string,
+    isPrev: PropTypes.bool,
     /**
      * @ignore
      */
-    prevPanel: PropTypes.string,
-    /**
-     * @ignore
-     */
-    nextPanel: PropTypes.string,
-    /**
-     * @ignore
-     */
+    isNext: PropTypes.bool,
+
     children: PropTypes.node,
     className: PropTypes.string,
     theme: PropTypes.oneOf(['white', 'gray']),
     id: PropTypes.string.isRequired,
-    header: PropTypes.shape({
-      left: PropTypes.node,
-      right: PropTypes.node,
-      title: PropTypes.node
-    }),
+    optimized: PropTypes.bool,
     centered: PropTypes.bool
+  };
+
+  static defaultProps = {
+    children: '',
+    theme: 'gray',
+    centered: false,
+    optimized: false
   };
 
   static contextTypes = {
@@ -64,28 +60,21 @@ export default class ScrollView extends Component {
     return this.context.insets || {};
   }
 
-  static defaultProps = {
-    children: '',
-    theme: 'gray',
-    centered: false
-  };
-
-  shouldComponentUpdate ({ id, activePanel, nextPanel }) {
-    return id === activePanel || id === nextPanel;
+  shouldComponentUpdate ({ optimized, isNext, isPrev }) {
+    return optimized ? !isNext && !isPrev : true;
   }
 
   render () {
-    const { className } = this.props;
+    const { className, id } = this.props;
 
     return (
       <div
         className={classnames(baseClassNames, className, {
-          'ScrollView--centered': this.props.centered
+          'Panel--centered': this.props.centered
         })}
-        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout', 'theme', 'centered'])}
-        ref={this.getRef}
+        id={id}
       >
-        <div className="ScrollView__in" style={{ paddingBottom: this.insets.bottom || null }}>
+        <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null }}>
           {this.props.children}
         </div>
       </div>

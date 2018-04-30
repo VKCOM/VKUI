@@ -13,7 +13,7 @@
     render () {
       return (
         <View header activePanel="gallery">
-          <ScrollView
+          <Panel
             id="gallery"
             header={{ title: 'Gallery' }}
           >
@@ -66,7 +66,7 @@
                 <Button v="new" onClick={() => this.setState({slideIndex: this.state.slideIndex === 2 ? 0 : this.state.slideIndex + 1 })}>Next slide</Button>
               </Div>
             </Group>
-          </ScrollView>
+          </Panel>
         </View>
       )
     }

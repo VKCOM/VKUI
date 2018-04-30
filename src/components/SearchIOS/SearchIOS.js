@@ -38,7 +38,8 @@ export default class SearchIOS extends React.Component {
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     placeholder: PropTypes.node,
-    theme: PropTypes.oneOf(['header', 'default'])
+    theme: PropTypes.oneOf(['header', 'default']),
+    getRef: PropTypes.func
   };
 
   static defaultProps = {
@@ -95,6 +96,11 @@ export default class SearchIOS extends React.Component {
     this.setState({ showAfter: false });
   };
 
+  inputRef = (el) => {
+    this.inputEl = el;
+    this.props.getRef && this.props.getRef(el);
+  };
+
   render () {
     const {
       className,
@@ -107,6 +113,7 @@ export default class SearchIOS extends React.Component {
       placeholder,
       before,
       after,
+      getRef,
       ...inputProps
     } = this.props;
 
@@ -138,7 +145,7 @@ export default class SearchIOS extends React.Component {
             }
           </div>
           <input
-            ref={el => this.inputEl = el}
+            ref={this.inputRef}
             type="text"
             className="Search__input"
             onFocus={this.onFocus}

@@ -1,4 +1,4 @@
-Компонент для отрисовки кнопок в шапке ScrollView. Внутрь компонента передается либо иконка, либо текст. Текстовые кнопки
+Компонент для отрисовки кнопок в шапке Panel. Внутрь компонента передается либо иконка, либо текст. Текстовые кнопки
 чаще всего используются в iOS, но есть исключения для Android.
 
 Шапки iOS и Android достаточно сильно отличаются внешне, поэтому описание будет разделено на две части.
@@ -8,7 +8,7 @@
 Кнопки могут быть переданы в `left` или `right` свойства `header`:
 
 ```jsx static
-  <ScrollView 
+  <Panel 
     header={{ 
       left: <HeaderButton><Icon24Back/></HeaderButton>, 
       right: <HeaderButton><Icon24Search/></HeaderButton> 
@@ -19,7 +19,7 @@
 Если нужно несколько кнопок справа или слева, то передаем массив:
 
 ```jsx static
-  <ScrollView 
+  <Panel 
     header={{  
       right: [
         <HeaderButton key="search"><Icon24Search/></HeaderButton>, 
@@ -34,7 +34,7 @@
 Основное отличие – это составность левой кнопки. Она может состоять из иконки и текста. Пример:
 
 ```jsx static
-  <ScrollView 
+  <Panel 
     header={{  
       left: <HeaderButton>Back</HeaderButton>,
       icon: <HeaderButton><Icon28Chevron_back/></HeaderButton> 
@@ -45,7 +45,7 @@
 **Кнопка "назад"**
 
 ```jsx static
-  <ScrollView
+  <Panel
     header={{
       left: <HeaderButton>{osname === IOS ? 'Cancel' : <Icon24Back/>}</HeaderButton>
       icon: osname === IOS && <HeaderButton><Icon28Chevron_back/></HeaderButton>
@@ -56,7 +56,7 @@
 **Кнопка "закрыть"**
 
 ```jsx static
-  <ScrollView
+  <Panel
     header={{
       left: <HeaderButton>{osname === IOS ? 'Close' : <Icon24Cancel/>}</HeaderButton>
     }}
@@ -78,7 +78,7 @@ class Example extends React.Component {
     return (
       <Root activeView={this.state.activeView}>
         <View id="main" header activePanel={this.state.activePanel}>
-          <ScrollView 
+          <Panel 
             id="panel1" 
             header={{ 
               title: "Стартовый экран",
@@ -98,8 +98,8 @@ class Example extends React.Component {
                 Больше примеров
               </Button>
             </Group>
-          </ScrollView>
-          <ScrollView
+          </Panel>
+          <Panel
             id="panel2" 
             header={{ 
               title: "Заголовок",
@@ -113,8 +113,8 @@ class Example extends React.Component {
                 Несколько иконок
               </Button>
             </Group>
-          </ScrollView>
-          <ScrollView
+          </Panel>
+          <Panel
             id="panel3" 
             header={{ 
               title: "Две иконки",
@@ -131,10 +131,10 @@ class Example extends React.Component {
                 Модальное окно
               </Button>
             </Group>
-          </ScrollView>
+          </Panel>
         </View>
         <View id="modal" header activePanel="modal-panel">
-          <ScrollView 
+          <Panel 
             id="modal-panel" 
             header={{
               left: <HeaderButton onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</HeaderButton>,

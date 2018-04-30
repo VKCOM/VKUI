@@ -3,7 +3,7 @@
 
 ```
   <View activePanel="info-row" header>
-    <ScrollView header={{ title: 'InfoRow' }} id="info-row">
+    <Panel header={{ title: 'InfoRow' }} id="info-row">
       <Group>
         <Pane>
           <InfoRow title="Общий бюджет">
@@ -30,6 +30,6 @@
           </ListItem>
         </List>
       </Group>  
-    </ScrollView>
+    </Panel>
   </View>
 ```
