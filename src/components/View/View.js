@@ -113,7 +113,8 @@ export default class View extends Component {
       const firstLayer = this.panels.find(
         panel => panel.props.id === this.props.activePanel || panel.props.id === nextProps.activePanel
       );
-      const isBack = firstLayer && firstLayer.id === nextProps.activePanel;
+
+      const isBack = firstLayer && firstLayer.props.id === nextProps.activePanel;
 
       this.blurActiveElement();
 
