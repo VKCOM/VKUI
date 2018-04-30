@@ -49,7 +49,7 @@ export default class Input extends Component {
   static defaultProps = {
     type: 'text',
     alignment: 'left',
-    v: 'old',
+    v: 'new',
     defaultValue: '',
     status: 'default'
   };

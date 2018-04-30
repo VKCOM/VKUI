@@ -10,7 +10,7 @@ export default class FormLayout extends React.Component {
   };
 
   static defaultProps = {
-    v: 'old'
+    v: 'new'
   };
 
   render () {

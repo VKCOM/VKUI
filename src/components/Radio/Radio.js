@@ -44,7 +44,7 @@ Radio.propTypes = {
 };
 
 Radio.defaultProps = {
-  v: 'old'
+  v: 'new'
 };
 
 export default Radio;

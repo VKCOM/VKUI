@@ -49,7 +49,7 @@ export default class Textarea extends Component {
     style: {},
     defaultValue: '',
     grow: true,
-    v: 'old',
+    v: 'new',
     onResize: () => {}
   };
 

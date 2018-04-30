@@ -42,7 +42,7 @@ export default class Select extends Component {
     label: '',
     options: null,
     name: '',
-    v: 'old'
+    v: 'new'
   };
 
   get baseClass () { return this.props.v === 'old' ? 'Select' : 'SelectNew'; }

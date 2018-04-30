@@ -8,7 +8,7 @@ export default class Button extends Component {
     v: PropTypes.oneOf(['old', 'new'])
   };
   static defaultProps = {
-    v: 'old'
+    v: 'new'
   };
   render () {
     const {v, ...restProps} = this.props;
