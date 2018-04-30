@@ -3,6 +3,7 @@
 .ButtonNew {
   display: inline-block;
   box-sizing: border-box;
+  outline: none;
   }
 
 .ButtonNew[disabled] {
@@ -16,6 +17,9 @@
 
 .ButtonNew--type-cell {
   display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
   }
 
 .ButtonNew--type-cell.ButtonNew--level-primary {

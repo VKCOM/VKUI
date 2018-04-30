@@ -17,11 +17,13 @@ export default class ButtonNew extends React.Component {
 
     children: PropTypes.node,
     before: PropTypes.node,
-    className: PropTypes.string
+    className: PropTypes.string,
+    component: PropTypes.any
   };
 
   static defaultProps = {
-    type: 'default'
+    type: 'default',
+    component: 'button'
   };
 
   render () {
