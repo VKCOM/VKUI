@@ -76,7 +76,7 @@ export default class Select extends Component {
     return (
       <label
         className={classnames(getClassName(this.baseClass), {
-          [`${this.baseClass}--not-selected`]: this.value === ''
+          [`${this.baseClass}--not-selected`]: placeholder && this.value === ''
         }, className)}
         style={style}
       >
