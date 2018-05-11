@@ -8,6 +8,7 @@
 
   .Entity__aside {
     margin-right: 12px;
+    flex-shrink: 0;
     }
 
   .Entity__main {
