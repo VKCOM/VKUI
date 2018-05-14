@@ -156,6 +156,7 @@
 
 .PanelHeader--no-shadow {
   box-shadow: none;
+  transition: box-shadow .3s var(--android-easing);
   }
 
   .PanelHeader--android .PanelHeader__in--brand {

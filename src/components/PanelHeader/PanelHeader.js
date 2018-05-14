@@ -17,11 +17,13 @@ export default class PanelHeader extends React.Component {
     icon: PropTypes.node,
     right: PropTypes.node,
     children: PropTypes.node,
-    theme: PropTypes.oneOf(['light', 'brand'])
+    theme: PropTypes.oneOf(['light', 'brand']),
+    noShadow: PropTypes.bool
   };
 
   static defaultProps = {
-    theme: 'brand'
+    theme: 'brand',
+    noShadow: false
   };
 
   static contextTypes = {
@@ -40,7 +42,9 @@ export default class PanelHeader extends React.Component {
     this.iconNode = document.getElementById('header-icon-' + this.context.panel);
     this.titleNode = document.getElementById('header-title-' + this.context.panel);
     this.rightNode = document.getElementById('header-right-' + this.context.panel);
-    this.context.setHeaderTheme({[this.context.panel]: this.props.theme});
+    this.context.setHeaderTheme({
+      [this.context.panel]: {theme: this.props.theme, noShadow: this.props.noShadow}
+    });
     this.setState({ ready: true });
   }
 

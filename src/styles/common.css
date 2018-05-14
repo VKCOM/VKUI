@@ -55,8 +55,8 @@ body.locked {
 .SelectNew-underline::after,
 .TextareaNew-underline::after {
   position: absolute;
-  top: 0;
-  height: 6px;
+  top: -1px;
+  height: 7px;
   width: 100%;
   content: '';
   display: block;

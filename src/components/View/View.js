@@ -37,7 +37,9 @@ export default class View extends Component {
 
       browserSwipe: false,
 
-      headerThemes: {}
+      headerThemes: [].concat(props.children).reduce((res, panel) => {
+        res[panel.props.id] = {}; return res;
+      }, {})
     };
   }
 
@@ -495,12 +497,13 @@ export default class View extends Component {
           <div className="View__header">
             { osname === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
             <div className={classnames(panelHeaderClasses, {
-              [`PanelHeader--${activePanelHeaderTheme}`]: true
+              [`PanelHeader--${activePanelHeaderTheme.theme}`]: true,
+              [`PanelHeader--no-shadow`]: activePanelHeaderTheme.noShadow
             })}>
               {panels.map(panel => (
                 <div
                   className={classnames('PanelHeader__in', {
-                    [`PanelHeader__in--${headerThemes[panel.props.id]}`]: true,
+                    [`PanelHeader__in--${headerThemes[panel.props.id].theme}`]: true,
                     'PanelHeader__in--active': panel.props.id === activePanel,
                     'PanelHeader__in--prev': panel.props.id === prevPanel,
                     'PanelHeader__in--next': panel.props.id === nextPanel,
