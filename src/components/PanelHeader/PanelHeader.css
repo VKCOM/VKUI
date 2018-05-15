@@ -41,6 +41,7 @@
       .PanelHeader-right {
         box-sizing: border-box;
         text-align: right;
+        justify-content: flex-end;
         display: flex;
         }
 
@@ -58,7 +59,6 @@
   padding-top: 20px;
   padding-top: constant(safe-area-inset-top);
   padding-top: env(safe-area-inset-top);
-  transition: color .6s var(--ios-easing), background .6s var(--ios-easing);
   }
 
   .PanelHeader--ios::after {

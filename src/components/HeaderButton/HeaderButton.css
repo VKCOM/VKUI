@@ -32,14 +32,18 @@
 
 
 .HeaderButton--android {
-  width: 48px;
+  text-transform: uppercase;
   height: 48px;
+  line-height: 48px;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 0 12px;
   }
+
+  .HeaderButton--android .Icon--24 {
+    padding: 12px 0;
+    }
 
 .HeaderButton--android.Tappable--active {
   background-color: rgba(255, 255, 255, .1);
-  }
-
-.HeaderButton--android .Icon--24 {
-  padding: 12px;
   }
