@@ -23,6 +23,14 @@
     flex-grow: 1;
     }
 
+  .Search--android.Search--has-value .Search__after {
+    display: block;
+  }
+
+  .Search--android .Search__after {
+    display: none;
+  }
+
   .Search--android .Search__input {
     border: none;
     display: block;
