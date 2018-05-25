@@ -67,6 +67,7 @@ export default class ButtonOld extends Component {
         component={component}
         className={classnames(baseClassNames, className, modifiers)}
         style={style}
+        stopPropagation
         {...nativeProps}
       >
         {children}

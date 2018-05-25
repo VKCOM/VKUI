@@ -54,12 +54,14 @@ export default class Tappable extends Component {
       PropTypes.element
     ]),
     role: PropTypes.string,
-    activeEffectDelay: PropTypes.number
+    activeEffectDelay: PropTypes.number,
+    stopPropagation: PropTypes.bool
   };
 
   static defaultProps = {
     component: 'div',
     role: 'button',
+    stopPropagation: false,
     activeEffectDelay: ACTIVE_EFFECT_DELAY
   };
 
@@ -71,6 +73,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onStart = ({ originalEvent }) => {
+    this.props.stopPropagation && originalEvent.stopPropagation();
     if (originalEvent.touches && originalEvent.touches.length > 1) {
       return deactivateOtherInstances();
     }
@@ -89,8 +92,9 @@ export default class Tappable extends Component {
    *
    * @returns {void}
    */
-  onMove = (e) => {
-    if (e.shiftXAbs > 20 || e.shiftYAbs > 20) {
+  onMove = ({ originalEvent, shiftXAbs, shiftYAbs }) => {
+    this.props.stopPropagation && originalEvent.stopPropagation();
+    if (shiftXAbs > 20 || shiftYAbs > 20) {
       this.isSlide = true;
       this.stop();
     }
@@ -102,6 +106,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onEnd = ({ originalEvent }) => {
+    this.props.stopPropagation && originalEvent.stopPropagation();
     const now = ts();
 
     if (originalEvent.touches && originalEvent.touches.length > 0) {
@@ -166,10 +171,6 @@ export default class Tappable extends Component {
         return { clicks };
       });
     }, 225);
-  };
-
-  onClick = (e) => {
-    this.props.onClick && this.props.onClick(e);
   };
 
   /**
@@ -256,16 +257,16 @@ export default class Tappable extends Component {
     }
 
     const nativeProps = removeObjectKeys(Object.assign({}, this.props), [
-      'onClick',
       'children',
       'className',
       'propagation',
       'component',
-      'activeEffectDelay'
+      'activeEffectDelay',
+      'stopPropagation'
     ]);
 
     return (
-      <Component className={classes} {...props} {...nativeProps} onClick={this.onClick}>
+      <Component className={classes} {...props} {...nativeProps}>
         {osname === ANDROID && (
           <span className="Tappable__waves" ref={this.getContainer}>
             {Object.keys(clicks).map(k => (

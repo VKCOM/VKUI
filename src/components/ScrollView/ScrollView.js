@@ -82,7 +82,7 @@ export default class ScrollView extends Component {
         className={classnames(baseClassNames, className, {
           'ScrollView--centered': this.props.centered
         })}
-        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout', 'theme', 'centered'])}
+        {...removeObjectKeys(this.props, ['header', 'onPull', 'className', 'activePanel', 'prevPanel', 'nextPanel', 'fixedLayout', 'theme', 'centered', 'optimized'])}
         ref={this.getRef}
       >
         <div className="ScrollView__in" style={{ paddingBottom: this.insets.bottom || null }}>

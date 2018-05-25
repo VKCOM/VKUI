@@ -55,7 +55,13 @@ export default class ListItem extends Component {
 
   get document () { return this.context.document || document; }
 
-  emptyClickHandler () {}
+  onSelectableClick = (e) => {
+    if (e.target.tagName.toLowerCase() === 'input') {
+      e.stopPropagation();
+    } else {
+      this.props.onClick && this.props.onClick(e);
+    }
+  };
 
   activateRemove = () => {
     this.setState({ isRemoveActivated: true, height: this.rootEl.offsetHeight });
@@ -133,7 +139,7 @@ export default class ListItem extends Component {
         <Tappable
           component={selectable ? 'label' : 'div'}
           className="ListItem__in"
-          onClick={selectable ? this.emptyClickHandler : onClick}
+          onClick={selectable ? this.onSelectableClick : onClick}
           style={{ transform: `translateX(-${this.state.removeOffset}px)` }}
         >
           {selectable &&

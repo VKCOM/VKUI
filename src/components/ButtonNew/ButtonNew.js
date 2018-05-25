@@ -45,7 +45,7 @@ export default class ButtonNew extends React.Component {
     });
 
     return (
-      <Tappable className={classNames} {...restProps}>
+      <Tappable className={classNames} stopPropagation {...restProps}>
         <div className="ButtonNew__in">
           {before && <div className="ButtonNew__before">{before}</div>}
           {children && <div className="ButtonNew__content">{children}</div>}
