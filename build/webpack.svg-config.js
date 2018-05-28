@@ -1,5 +1,6 @@
 const path = require('path');
 const icons = require('./icons');
+const webpack = require('webpack');
 
 const config = {
   entry: icons.entry,
@@ -33,11 +34,16 @@ const config = {
       }
     ]
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'icons.common'
+    })
+  ],
   externals: {
     'react': 'react',
-    'prop-types': 'prop-types',
-    'svg-baker-runtime/browser-symbol': 'svg-baker-runtime/browser-symbol',
-    'svg-sprite-loader/runtime/browser-sprite.build': 'svg-sprite-loader/runtime/browser-sprite.build'
+    'prop-types': 'prop-types'
+    // 'svg-baker-runtime/browser-symbol': 'svg-baker-runtime/browser-symbol',
+    // 'svg-sprite-loader/runtime/browser-sprite.build': 'svg-sprite-loader/runtime/browser-sprite.build'
   }
 };
 

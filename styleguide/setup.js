@@ -10,6 +10,7 @@ window.ANDROID = ANDROID;
 window.Icon = {};
 
 Object.keys(icons).forEach((iconPath) => {
+  console.log('../dist/icons/' + iconPath +'.js');
   let Icon = require('../dist/icons/' + iconPath +'.js').default;
   const iconSize = iconPath.split('/')[0];
   const iconName = 'Icon' + iconSize + iconPath.split('/')[1].charAt(0).toUpperCase() + iconPath.split('/')[1].slice(1);

@@ -1,4 +1,5 @@
 import './lib/polyfills';
+import '../dist/icons/icons.common';
 import { values as colors } from './helpers/colors';
 import { families as fontFamilies } from './helpers/fonts';
 
