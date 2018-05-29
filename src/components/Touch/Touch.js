@@ -52,7 +52,6 @@ export default class Touch extends Component {
    * Обработчик событий touchstart
    *
    * @param {Object} e Браузерное событие
-   * @param {Object} props Component props
    * @returns {void}
    */
   onStart = (e) => {
@@ -87,7 +86,6 @@ export default class Touch extends Component {
    * Обработчик событий touchmove
    *
    * @param {Object} e Браузерное событие
-   * @param {Object} props Component props
    * @returns {void}
    */
   onMove = (e) => {
@@ -151,7 +149,6 @@ export default class Touch extends Component {
    * Обработчик событий touchend, touchcancel
    *
    * @param {Object} e Браузерное событие
-   * @param {Object} props Component props
    * @returns {void}
    */
   onEnd = (e) => {
@@ -204,9 +201,9 @@ export default class Touch extends Component {
    */
   onDragStart = (e) => {
     if (e.target.tagName === 'A' || e.target.tagName === 'IMG') {
-      return e.preventDefault();
-    } else return;
-  }
+      e.preventDefault();
+    }
+  };
 
   /**
    * Обработчик клика по компоненту
