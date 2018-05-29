@@ -28,17 +28,6 @@ a:focus {
   outline: none;
 }
 
-/*
-body.locked {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-}
-*/
-
 .InputNew-underline,
 .SelectNew-underline,
 .TextareaNew-underline {
@@ -49,6 +38,7 @@ body.locked {
   height: 8px;
   border-radius: 4px;
   background-color: map(colors, separator);
+  z-index: 1;
 }
 
 .InputNew-underline::after,
