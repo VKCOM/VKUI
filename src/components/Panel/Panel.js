@@ -31,7 +31,8 @@ export default class Panel extends Component {
     theme: PropTypes.oneOf(['white', 'gray']),
     id: PropTypes.string.isRequired,
     optimized: PropTypes.bool,
-    centered: PropTypes.bool
+    centered: PropTypes.bool,
+    style: PropTypes.object
   };
 
   static defaultProps = {
@@ -65,7 +66,7 @@ export default class Panel extends Component {
   }
 
   render () {
-    const { className, id } = this.props;
+    const { className, id, style } = this.props;
 
     return (
       <div
@@ -73,6 +74,7 @@ export default class Panel extends Component {
           'Panel--centered': this.props.centered
         })}
         id={id}
+        style={style}
       >
         <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null }}>
           {this.props.children}
