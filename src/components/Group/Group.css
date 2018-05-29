@@ -17,20 +17,18 @@
  * iOS
  */
 .Group--ios {
-  margin: 20px 0;
+  margin: 10px 0;
+  background-color: #fff;
+  position: relative;
   }
 
   .Group--ios .Group__content .Div:first-child {
     padding-top: 0;
     }
 
-  .Group--ios .Group__title {
-    font-size: 13px;
-    line-height: 18px;
-    text-transform: uppercase;
-    color: map(colors, subheadGray);
-    padding: 14px 15px 8px;
-    font-weight: 400;
+  .Group--ios .Header + .Group__content .List::before,
+  .Group--ios .Header + .Group__content .List::after {
+    content: none;
     }
 
   .Group--ios .Group__description {
@@ -38,6 +36,34 @@
     line-height: 16px;
     color: map(colors, subheadGray);
     padding: 8px 15px;
+    }
+
+  .Group--ios::before,
+  .Group--ios::after {
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: 1px;
+    content: '';
+    }
+  .Group--ios::before {
+    top: 0;
+    background: map(colors, separator);
+    }
+  .Group--ios::after {
+    bottom: 0;
+    background: map(colors, separator);
+    }
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+    .Group--ios::before {
+      background: var(--ios-top-border);
+      }
+
+    .Group--ios::after {
+      background: var(--ios-bottom-border);
+      }
     }
 
 /**

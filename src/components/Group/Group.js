@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
+import Header from '../Header/Header';
 
 const baseClassNames = getClassName('Group');
 
@@ -25,7 +26,7 @@ export default class Group extends Component {
 
     return (
       <div className={classnames(baseClassNames, className)} style={style}>
-        {title && <h3 className="Group__title">{title}</h3>}
+        {title && <Header level="2">{title}</Header>}
         <div className="Group__content">
           {this.props.children}
         </div>
