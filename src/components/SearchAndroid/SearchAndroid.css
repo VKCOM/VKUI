@@ -1,3 +1,5 @@
+@import "../../styles/constants.css";
+
 .Search--android {
   display: flex;
   padding: 4px;
@@ -6,6 +8,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  background: var(--vk-color);
   }
 
   .Search--android .Search__before {

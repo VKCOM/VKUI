@@ -28,10 +28,17 @@
     transition: width .3s var(--ios-easing);
     }
 
+  .Search--ios .Search__before {
+    padding-right: 12px;
+    flex-shrink: 0;
+    }
+
   .Search--ios .Search__after {
     flex-shrink: 0;
     font-size: 17px;
     white-space: nowrap;
+    font-weight: 400;
+    padding-left: 12px;
     }
 
   .Search--ios.Search--default .Search__after {

@@ -42,19 +42,21 @@ export default class SearchAndroid extends React.Component {
   };
 
   onCancel = () => {
-    if (this.isControlledOutside) {
-      this.props.onChange('');
-    } else {
+    if (!this.isControlledOutside) {
       this.setState({ value: '' });
+    }
+    if (this.props.onChange) {
+      this.props.onChange('');
     }
     this.inputEl.focus();
   };
 
   onChange = (e) => {
-    if (this.isControlledOutside) {
-      this.props.onChange(e.target.value, e);
-    } else {
+    if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
+    }
+    if (this.props.onChange) {
+      this.props.onChange(e.target.value, e);
     }
   };
 
