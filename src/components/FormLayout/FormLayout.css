@@ -1,0 +1,56 @@
+.FormLayout {
+
+  }
+
+  .FormLayout__row {
+    display: block;
+    }
+
+  .FormLayout__addon .Icon {
+    display: inline-block;
+    }
+
+.FormLayout--ios {
+  padding: 14px 12px 12px;
+  }
+
+  .FormLayout--ios .FormLayout__row + .FormLayout__row {
+    margin-top: 12px;
+    }
+
+  .FormLayout--ios .FormLayout__addon {
+    color: map(colors, subheadGray);
+    }
+
+  .FormLayout--ios .FormLayout__addon--top {
+    margin-bottom: 8px;
+    font-size: 14px;
+    }
+
+  .FormLayout--ios .FormLayout__addon--bottom {
+    margin-top: 8px;
+    font-size: 13px;
+    }
+
+
+.FormLayout--android {
+  padding: 8px 16px;
+  }
+
+.FormLayout--android .FormLayout__row + .FormLayout__row {
+  margin-top: 12px;
+  }
+
+.FormLayout--android .FormLayout__addon {
+  color: map(colors, subheadGray);
+  }
+
+.FormLayout--android .FormLayout__addon--top {
+  margin-bottom: 8px;
+  font-size: 14px;
+  }
+
+.FormLayout--android .FormLayout__addon--bottom {
+  margin-top: 8px;
+  font-size: 13px;
+  }
