@@ -80,7 +80,6 @@ module.exports = {
         name: 'Helpers',
         components: () => [
           '../src/components/Div/Div.js',
-          '../src/components/Flex/Flex.js',
           '../src/components/Tappable/Tappable.js'
         ]
       }, {
