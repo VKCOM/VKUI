@@ -18,7 +18,6 @@ export { default as InnerScroll } from './components/InnerScroll/InnerScroll';
  */
 export { default as NativePopouts } from './components/NativePopouts/NativePopouts';
 export { default as Alert } from './components/Alert/Alert';
-export { default as AlertInput } from './components/AlertInput/AlertInput';
 export { default as ActionSheet } from './components/ActionSheet/ActionSheet';
 export { default as ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
