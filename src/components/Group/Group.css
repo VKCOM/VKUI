@@ -22,12 +22,8 @@
   position: relative;
   }
 
-  .Group--ios .Group__content .Div:first-child {
-    padding-top: 0;
-    }
-
-  .Group--ios .Header + .Group__content .List::before,
-  .Group--ios .Header + .Group__content .List::after {
+  .Group--ios .Group__content .List::before,
+  .Group--ios .Group__content .List::after {
     content: none;
     }
 
@@ -35,7 +31,7 @@
     font-size: 14px;
     line-height: 16px;
     color: map(colors, subheadGray);
-    padding: 8px 15px;
+    padding: 8px 12px;
     }
 
   .Group--ios::before,
@@ -69,10 +65,6 @@
 /**
  * Android
  */
-
-.View__panel--theme-white {
-
-  }
 
 .Group--android {
   margin: 8px 0;
