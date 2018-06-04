@@ -2,14 +2,17 @@
 Если таких блоков несколько и они объединены по смыслу, то рекомендуется оборачивать список в `<Group />` с указанием `title`.
 
 ```
-  <View activePanel="info-row" header>
-    <Panel header={{ title: 'InfoRow' }} id="info-row">
+  <View activePanel="info-row">
+    <Panel id="info-row">
+      <PanelHeader>
+        InfoRow
+      </PanelHeader>
       <Group>
-        <Pane>
+        <Div>
           <InfoRow title="Общий бюджет">
             3000 р.
           </InfoRow>
-        </Pane>
+        </Div>
       </Group>
       <Group title="Информация о пользователе">
         <List>

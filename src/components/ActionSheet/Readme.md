@@ -22,8 +22,8 @@ class Example extends React.Component {
   }
 
   openSheet () {
-    this.setState({ popout: 
-      <ActionSheet 
+    this.setState({ popout:
+      <ActionSheet
         onClose={ () => this.setState({ popout: null }) }
         title="Hi!"
         text="I am action sheet"
@@ -31,17 +31,15 @@ class Example extends React.Component {
         <ActionSheetItem autoclose>Action</ActionSheetItem>
         <ActionSheetItem autoclose theme="destructive">Sheet</ActionSheetItem>
         <ActionSheetItem autoclose theme="cancel">Cancel</ActionSheetItem>
-      </ActionSheet> 
+      </ActionSheet>
     });
   }
 
   render() {
     return (
-      <View popout={this.state.popout} header activePanel="panel">
-        <Panel id="panel" header={{ title: "Action Sheet" }}>
-          <Group>
-            <Button onClick={this.openSheet.bind(this)}>Open Sheet</Button>
-          </Group>  
+      <View popout={this.state.popout} header={false} activePanel="panel">
+        <Panel id="panel">
+          <Button type="cell" onClick={this.openSheet.bind(this)}>Open Sheet</Button>
         </Panel>
       </View>
     )

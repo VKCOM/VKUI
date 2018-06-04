@@ -1,12 +1,15 @@
 ```
-  <View activePanel="switch" header>
-    <Panel header={{ title: 'Switch' }} id="switch">
+  <View activePanel="switch">
+    <Panel id="switch">
+      <PanelHeader>
+        Switch
+      </PanelHeader>
       <Group>
         <List>
           <ListItem asideContent={<Switch />}>
             Комментарии к записям
           </ListItem>
-          <ListItem asideContent={<Switch checked />}>
+          <ListItem asideContent={<Switch defaultChecked />}>
             Ссылки
           </ListItem>
           <ListItem asideContent={<Switch disabled />}>

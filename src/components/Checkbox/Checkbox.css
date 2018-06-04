@@ -1,0 +1,65 @@
+@import "../../styles/constants.css";
+
+.Checkbox {
+  display: block;
+  }
+
+  .Checkbox [type="checkbox"] {
+    display: none;
+    }
+
+  .Checkbox__container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    }
+
+    .Checkbox__icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      box-sizing: border-box;
+      margin: 2px 14px 2px 2px;
+      border-radius: 4px;
+      border: 2px solid #c4c8cc;
+      color: transparent;
+      }
+
+    .Checkbox__content {
+      flex-grow: 1;
+      font-size: 16px;
+      line-height: 20px;
+      margin: 2px 0;
+      color: #000;
+      }
+
+  .Checkbox [type="checkbox"]:checked ~ .Checkbox__container .Checkbox__icon {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: #fff;
+    }
+
+.Checkbox--ios {
+  padding: 12px;
+  }
+
+  .Checkbox--ios .Checkbox__container {}
+
+    .Checkbox--ios .Checkbox__content {
+      font-size: 16px;
+      line-height: 20px;
+      }
+
+
+.Checkbox--android {
+  padding: 16px;
+  }
+
+  .Checkbox--android .Checkbox__container {}
+
+    .Checkbox--android .Checkbox__content {
+      font-size: 16px;
+      line-height: 20px;
+      }
+
+

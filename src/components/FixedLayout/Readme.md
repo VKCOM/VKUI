@@ -4,7 +4,10 @@ position: fixed не дружит с transform: translate на родителе,
 
   ```
   <View activePanel="fixedLayout" header>
-    <Panel header={{ title: 'Fixed Layout', noShadow: true }} id="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader noShadow>
+        Fixed layout
+      </PanelHeader>
       <FixedLayout vertical="top" style={{ padding: 10, background: '#5C9CE6', color: '#fff' }}>
         Sticked to top
       </FixedLayout>

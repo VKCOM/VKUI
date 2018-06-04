@@ -11,11 +11,10 @@
     render () {
       return (
         <View activePanel="panel" header>
-          <Panel id="panel" header={{ 
-            title: 'Search', 
-            search: this.state.showSearch ? <Search onClose={() => this.setState({ showSearch: false })} /> : null,
-            right: osname === ANDROID ? <HeaderButton onClick={() => this.setState({ showSearch: true })}><Icon24Search/></HeaderButton> : null
-          }}>
+          <Panel id="panel">
+            <PanelHeader>
+              <Search theme="header" before={<Icon24Users />}/>
+            </PanelHeader>
             {osname === IOS && <Search />}
           </Panel>
         </View>

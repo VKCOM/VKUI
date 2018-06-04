@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import './PanelHeader.css';
-import { platform, IOS } from '../../lib/platform';
+import { platform, IOS, ANDROID } from '../../lib/platform';
 
 const osname = platform();
 
@@ -28,7 +28,8 @@ export default class PanelHeader extends React.Component {
 
   static contextTypes = {
     panel: PropTypes.string,
-    setHeaderTheme: PropTypes.func
+    setHeaderTheme: PropTypes.func,
+    document: PropTypes.any
   };
 
   state = {
@@ -37,11 +38,13 @@ export default class PanelHeader extends React.Component {
     leftWidth: null
   };
 
+  get document () { return this.context.document || document; }
+
   componentDidMount () {
-    this.leftNode = document.getElementById('header-left-' + this.context.panel);
-    this.iconNode = document.getElementById('header-icon-' + this.context.panel);
-    this.titleNode = document.getElementById('header-title-' + this.context.panel);
-    this.rightNode = document.getElementById('header-right-' + this.context.panel);
+    this.leftNode = this.document.getElementById('header-left-' + this.context.panel);
+    this.iconNode = this.document.getElementById('header-icon-' + this.context.panel);
+    this.titleNode = this.document.getElementById('header-title-' + this.context.panel);
+    this.rightNode = this.document.getElementById('header-right-' + this.context.panel);
     this.context.setHeaderTheme({
       [this.context.panel]: {theme: this.props.theme, noShadow: this.props.noShadow}
     });
@@ -65,7 +68,9 @@ export default class PanelHeader extends React.Component {
   }
 
   render () {
-    const { left, icon, children, right } = this.props;
+    let { left, icon, children, right } = this.props;
+
+    if (osname === ANDROID && !left && icon) left = icon;
 
     return this.state.ready ? [
       ReactDOM.createPortal(

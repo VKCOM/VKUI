@@ -11,46 +11,75 @@
     }
 
 .FormLayout--ios {
-  padding: 14px 12px 12px;
+
   }
 
-  .FormLayout--ios .FormLayout__row + .FormLayout__row {
-    margin-top: 12px;
+  .FormLayout--ios .FormLayout__row {
+    padding: 0 12px;
+    margin: 12px 0;
     }
 
-  .FormLayout--ios .FormLayout__addon {
-    color: map(colors, subheadGray);
-    }
+    .FormLayout--ios .FormLayout__row .Radio,
+    .FormLayout--ios .FormLayout__row .Checkbox,
+    .FormLayout--ios .FormLayout__row .Button--type-cell {
+      margin: 0 -12px;
+      }
 
-  .FormLayout--ios .FormLayout__addon--top {
-    margin-bottom: 8px;
-    font-size: 14px;
-    }
+    .FormLayout--ios .FormLayout__row .Button--type-cell {
+      width: calc(100% + 24px);
+      }
 
-  .FormLayout--ios .FormLayout__addon--bottom {
-    margin-top: 8px;
+    .FormLayout--ios .FormLayout__row-top {
+      color: map(colors, subheadGray);
+      padding: 14px 0 8px;
+      font-size: 14px;
+      }
+
+    .FormLayout--ios .FormLayout__row-top ~ .FormLayout__field {
+      margin-top: 0;
+      }
+
+    .FormLayout--ios .FormLayout__field {
+      margin: 12px 0;
+      }
+
+  .FormLayout--ios .FormLayout__row-bottom {
+    padding-top: 8px;
     font-size: 13px;
     }
 
 
 .FormLayout--android {
-  padding: 8px 16px;
+
   }
 
-.FormLayout--android .FormLayout__row + .FormLayout__row {
-  margin-top: 12px;
-  }
+  .FormLayout--android .FormLayout__row {
+    padding: 0 16px;
+    margin: 10px 0;
+    }
 
-.FormLayout--android .FormLayout__addon {
-  color: map(colors, subheadGray);
-  }
+    .FormLayout--android .FormLayout__row-top {
+      color: map(colors, subheadGray);
+      padding: 4px 0 8px;
+      line-height: 18px;
+      font-size: 14px;
+      }
 
-.FormLayout--android .FormLayout__addon--top {
-  margin-bottom: 8px;
-  font-size: 14px;
-  }
+    .FormLayout--android .FormLayout__field {
 
-.FormLayout--android .FormLayout__addon--bottom {
-  margin-top: 8px;
-  font-size: 13px;
-  }
+      }
+
+      .FormLayout--android .FormLayout__field .Radio,
+      .FormLayout--android .FormLayout__field .Checkbox,
+      .FormLayout--android .FormLayout__field .Button--type-cell {
+        margin: 0 -16px;
+        }
+
+      .FormLayout--android .FormLayout__field .Button--type-cell {
+        width: calc(100% + 32px);
+        }
+
+    .FormLayout--android .FormLayout__row-bottom {
+      padding-top: 8px;
+      font-size: 13px;
+      }

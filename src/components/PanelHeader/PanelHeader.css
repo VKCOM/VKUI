@@ -54,6 +54,14 @@
 
       .PanelHeader-content {}
 
+        .PanelHeader-content .Search {
+          position: absolute;
+          width: 100%;
+          left: 0;
+          top: 0;
+          z-index: 2;
+          }
+
 .PanelHeader--ios {
   height: 44px;
   padding-top: 20px;
@@ -143,6 +151,10 @@
         color: #fff;
         }
 
+        .PanelHeader--ios .PanelHeader-content .Search {
+          padding: 0 12px;
+          }
+
       .PanelHeader--ios.PanelHeader--light .PanelHeader-content {
         color: #000;
         }
@@ -150,9 +162,13 @@
 
 
 .PanelHeader--android {
-  height: 56px;
   box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
+  height: 56px;
   }
+
+  .PanelHeader--android .PanelHeader__in {
+    height: 56px;
+    }
 
 .PanelHeader--no-shadow {
   box-shadow: none;

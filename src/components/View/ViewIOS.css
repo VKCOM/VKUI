@@ -1,15 +1,5 @@
 @import '../../styles/constants.css';
 
-.View--ios .View__panel,
-.View--ios .Panel__in {
-  background: map(colors, backgroundBlue);
-  }
-
-.View--ios .View__panel--theme-white,
-.View--ios .View__panel--theme-white .Panel__in {
-  background: #fff;
-  }
-
 .View--ios.View--header .Panel__in {
   padding-top: 64px;
   padding-top: calc(44px + constant(safe-area-inset-top));
@@ -63,10 +53,6 @@
 /**
  * Panel transition
  */
-.View--ios .View__panel--prev,
-.View--ios .View__panel--next {
-  display: block;
-  }
 .View--ios .View__panel--prev {
   animation: animation-ios-prev-forward .6s var(--ios-easing);
   }
@@ -98,9 +84,11 @@
 .View--ios .View__panel--prev .Panel__in::before {
   animation: animation-ios-fade-in .6s var(--ios-easing);
   }
+
 .View--ios .View__panel--next .Panel__in::before {
   animation: animation-ios-fade-out .6s var(--ios-easing);
   }
+
 .View--ios .View__panel--prev ~ .View__panel--next .Panel__in::before,
 .View--ios .View__panel--next ~ .View__panel--prev .Panel__in::before {
   content: none;

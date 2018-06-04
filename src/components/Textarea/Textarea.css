@@ -5,41 +5,69 @@
   }
 
   .Textarea textarea {
-    display: block;
     margin: 0;
     width: 100%;
-    padding: 0;
-    min-height: 66px;
-    max-height: 198px;
+    display: block;
+    box-sizing: border-box;
     outline: none;
-    border: 0;
-    background: transparent;
-    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-    line-height: 22px;
     resize: none;
+    appearance: none;
+    line-height: 19px;
+    font-size: 16px;
+    color: map(colors, black);
+    padding: 12px;
+    min-height: 86px;
+    max-height: 198px;
+    border: none;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     }
 
-    .Textarea textarea::placeholder {
-      color: map(colors, placeholderForeground)
-      }
+  .Textarea textarea:disabled {
+    opacity: .6;
+    }
+
 
 .Textarea--ios {
-  padding: 11px 0 12px;
+
   }
 
   .Textarea--ios textarea {
-    font-size: 17px;
+    border-radius: 10px;
+    background-color: rgb(242, 243, 245);
+    border: solid .5px rgba(0, 0, 0, 0.15);
     }
 
+    .Textarea--ios textarea::placeholder {
+      color: map(colors, captionGray);
+      }
+
+  .Textarea--ios textarea:focus {
+    border-color: map(colors, accentBlue);
+    }
+
+
 .Textarea--android {
-  padding: 16px 0 18px;
+
   }
 
   .Textarea--android textarea {
-    font-size: 16px;
+    border-radius: 4px;
+    background-color: #f2f3f5;
     }
 
-  .Textarea--android textarea:focus ~ .Textarea-underline::before {
-    transform: scaleX(1);
-    transition: transform .14s var(--android-easing);
+    .Textarea--android textarea::placeholder {
+      color: map(colors, captionGray);
+      }
+
+  .Textarea--android textarea:focus {
+    border-color: map(colors, accentBlue);
     }
+
+  .Textarea--android textarea:disabled ~ .Textarea-underline {
+    opacity: .6;
+    }
+
+    .Textarea--android textarea:focus ~ .Textarea-underline::before {
+      transform: scaleX(1);
+      transition: transform .14s var(--android-easing);
+      }

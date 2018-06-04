@@ -18,19 +18,14 @@
       }
     }
     
-    backButton () {
-      let BackIcon = osname === IOS ? Icon28Chevron_back : Icon24Back;
-      
-      return (
-        <HeaderButton onClick={() => this.setState({ activePanel: 'icons' })}>
-          <BackIcon fill="#fff" />
-        </HeaderButton>
-      );
-    }
+    back () { this.setState({ activePanel: 'icons' }) }
   
     getPanels () {
       const panels = [
-        <Panel id="icons" header={{ title: 'Icons' }}>
+        <Panel id="icons">
+          <PanelHeader>
+            Icons
+          </PanelHeader>
           <Group title="Sizes">
             <List>
               { Object.keys(Icon).map(iconSize => {
@@ -47,7 +42,13 @@
         </Panel>
       ];
       Object.keys(Icon).forEach(iconSize => {
-        panels.push(<Panel id={`size_${iconSize}`} header={{ title: `Icons: ${iconSize}`, icon: this.backButton() }}>
+        panels.push(<Panel id={`size_${iconSize}`}>
+          <PanelHeader
+            left={osname === ANDROID && <HeaderButton onClick={this.back.bind(this)}><Icon24Back /></HeaderButton>}
+            icon={osname === IOS && <HeaderButton onClick={this.back.bind(this)}><Icon28Chevron_back /></HeaderButton>}
+          >
+            Icons: {iconSize}
+          </PanelHeader>
           <Group>
             <List>
               { Object.keys(Icon[iconSize]).map((iconName) => {
@@ -64,7 +65,7 @@
   
     render() {
       return (
-        <View activePanel={this.state.activePanel} header>
+        <View activePanel={this.state.activePanel}>
           {this.getPanels()}
         </View>
       )

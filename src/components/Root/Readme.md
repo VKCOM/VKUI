@@ -14,18 +14,20 @@ class Example extends React.Component {
     return (
       <Root activeView={this.state.activeView}>
         <View header activePanel="panel1.1" id="view1">
-          <Panel id="panel1.1" header={{ title: "View 1" }}>
+          <Panel id="panel1.1">
+            <PanelHeader>View 1</PanelHeader>
             <Group>
-              <Button onClick={ () => this.setState({ activeView: 'view2' }) }>
+              <Button type="cell" onClick={ () => this.setState({ activeView: 'view2' }) }>
                 Open View 2
               </Button>
             </Group>
           </Panel>
         </View>
         <View header activePanel="panel2.1" id="view2">
-          <Panel id="panel2.1" header={{ title: "View 2" }}>
+          <Panel id="panel2.1">
+            <PanelHeader>View 2</PanelHeader>
             <Group>
-              <Button onClick={ () => this.setState({ activeView: 'view1' }) }>
+              <Button type="cell" onClick={ () => this.setState({ activeView: 'view1' }) }>
                 Back to View 1
               </Button>
             </Group>

@@ -1,7 +1,6 @@
 import './File.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import getClassName from '../../helpers/getClassName';
 import Button from '../Button/Button';
 
@@ -19,15 +18,12 @@ export default class File extends Component {
     style: PropTypes.object,
     label: PropTypes.string,
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
-    appearance: PropTypes.oneOf(['primary', 'default', 'danger']),
     onChange: PropTypes.func
   };
 
   static defaultProps = {
-    style: {},
     label: 'Choose file',
     alignment: 'left',
-    appearance: 'default',
     onChange: () => {}
   };
 
@@ -39,23 +35,22 @@ export default class File extends Component {
   };
 
   render () {
-    const { style, label, alignment, appearance } = this.props;
+    const { style, label, alignment, ...restProps } = this.props;
 
     return (
       <Button
         alignment={alignment}
-        appearance={appearance}
-        onClick={() => {}}
         className={baseClassNames}
         style={style}
         component="div"
+        type="cell"
       >
         <label className="File__in">
           <input
             className="File__self"
             type="file"
             onChange={this.changeHandler}
-            {...removeObjectKeys(this.props, ['onChange', 'style', 'label', 'alignment', 'appearance'])}
+            {...restProps}
           />
         </label>
         {label}

@@ -1,5 +1,4 @@
 import './Input.css';
-import './Input.new.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
@@ -8,6 +7,7 @@ import requestAnimationFrame from '../../lib/requestAnimationFrame';
 import {platform, ANDROID} from '../../lib/platform';
 
 const osname = platform();
+const baseClassName = getClassName('Input');
 
 export default class Input extends Component {
   constructor (props) {
@@ -17,12 +17,10 @@ export default class Input extends Component {
       this.isControlledOutside = true;
     } else {
       this.state = {
-        value: props.defaultValue || props.initialValue || ''
+        value: props.defaultValue || ''
       };
     }
   }
-
-  get baseClass () { return this.props.v === 'old' ? 'Input' : 'InputNew'; }
 
   static propTypes = {
     type: PropTypes.oneOf([
@@ -35,21 +33,14 @@ export default class Input extends Component {
     defaultValue: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
-    v: PropTypes.oneOf(['old', 'new']),
     status: PropTypes.oneOf(['default', 'error', 'verified']),
     getRef: PropTypes.func,
-    className: PropTypes.string,
-
-    /**
-     * @deprecated since v1.5.0 Use defaultValue prop instead
-     */
-    initialValue: PropTypes.string
+    className: PropTypes.string
   };
 
   static defaultProps = {
     type: 'text',
     alignment: 'left',
-    v: 'new',
     defaultValue: '',
     status: 'default'
   };
@@ -84,30 +75,29 @@ export default class Input extends Component {
   }
 
   render () {
-    const { onChange, initialValue, defaultValue, alignment, placeholder, v, value, status, getRef, className, ...restProps } = this.props;
+    const { onChange, defaultValue, alignment, placeholder, value, status, getRef, className, ...restProps } = this.props;
 
     const modifiers = {
-      [`${this.baseClass}--left`]: alignment === 'left',
-      [`${this.baseClass}--center`]: alignment === 'center',
-      [`${this.baseClass}--right`]: alignment === 'right',
-      [`${this.baseClass}--s-${this.props.status}`]: true
+      'Input--left': alignment === 'left',
+      'Input--center': alignment === 'center',
+      'Input--right': alignment === 'right',
+      [`Input--s-${this.props.status}`]: true
     };
 
     const customPlaceolder = ['date', 'datetime-local', 'time', 'month'].indexOf(this.props.type) > -1 && this.context.isWebView ? this.props.placeholder : null;
 
     return (
-      <div className={classnames(getClassName(this.baseClass), modifiers, className)}>
+      <div className={classnames(baseClassName, modifiers, className)}>
         <input
-          style={{ transition: 'transform ' }}
-          className={`${this.baseClass}__el`}
+          className="Input__el"
           ref={this.getRef}
           value={this.value}
           onChange={this.onChange}
           placeholder={customPlaceolder ? null : this.props.placeholder}
           {...restProps}
         />
-        {osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
-        {customPlaceolder && !this.value && <div className={`${this.baseClass}__placeholder`}>{this.props.placeholder}</div>}
+        {osname === ANDROID && <div className="Input-underline" />}
+        {customPlaceolder && !this.value && <div className="Input__placeholder">{this.props.placeholder}</div>}
       </div>
     );
   }

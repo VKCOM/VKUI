@@ -1,8 +1,10 @@
 ```jsx
-  <View activePanel="panel" header>
-    <Panel id="panel" header={{ title: 'Textarea' }}>
-
-      <Group title="Description">
+  <View activePanel="panel">
+    <Panel id="panel">
+      <PanelHeader>
+        Textarea
+      </PanelHeader>
+      <Group>
         <FormLayout>
           <Textarea placeholder="Textarea" />
         </FormLayout>

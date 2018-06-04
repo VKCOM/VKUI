@@ -1,5 +1,4 @@
 import './Textarea.css';
-import './Textarea.new.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
@@ -8,6 +7,7 @@ import {ANDROID, platform} from '../../lib/platform';
 import classnames from '../../lib/classnames';
 
 const osname = platform();
+const baseClassName = getClassName('Textarea');
 
 export default class Textarea extends Component {
   constructor (props) {
@@ -17,7 +17,7 @@ export default class Textarea extends Component {
       this.isControlledOutside = true;
     } else {
       this.state = {
-        value: props.defaultValue || props.initialValue || ''
+        value: props.defaultValue || ''
       };
     }
   }
@@ -35,25 +35,16 @@ export default class Textarea extends Component {
     grow: PropTypes.bool,
     onChange: PropTypes.func,
     onResize: PropTypes.func,
-    v: PropTypes.oneOf(['old', 'new']),
     className: PropTypes.string,
-    getRef: PropTypes.func,
-
-    /**
-     * @deprecated since v1.5.0 Use defaultValue prop instead
-     */
-    initialValue: PropTypes.string
+    getRef: PropTypes.func
   };
 
   static defaultProps = {
     style: {},
     defaultValue: '',
     grow: true,
-    v: 'new',
     onResize: () => {}
   };
-
-  get baseClass () { return this.props.v === 'old' ? 'Textarea' : 'TextareaNew'; }
 
   getRef = element => {
     this.element = element;
@@ -119,11 +110,11 @@ export default class Textarea extends Component {
   }
 
   render () {
-    const { initialValue, defaultValue, grow, style, onResize, v, className, ...restProps } = this.props;
+    const { defaultValue, grow, style, onResize, className, ...restProps } = this.props;
     const height = this.state.height || style.height || 66;
 
     return (
-      <div className={classnames(getClassName(this.baseClass), className)}>
+      <div className={classnames(baseClassName, className)}>
         <textarea
           value={this.value}
           onChange={this.onChange}
@@ -131,7 +122,7 @@ export default class Textarea extends Component {
           style={Object.assign({}, style, { height })}
           {...restProps}
         />
-        {osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
+        {osname === ANDROID && <div className="Textarea-underline" />}
       </div>
     );
   }

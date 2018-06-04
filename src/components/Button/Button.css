@@ -1,148 +1,148 @@
 @import '../../styles/constants.css';
 
-.ButtonNew {
+.Button {
   display: inline-block;
   box-sizing: border-box;
   outline: none;
   }
 
-.ButtonNew[disabled] {
+.Button[disabled] {
   opacity: .4;
   }
 
-  .ButtonNew__in {
+  .Button__in {
     display: flex;
     align-items: center;
     }
 
-.ButtonNew--type-cell {
+.Button--type-cell {
   display: block;
   width: 100%;
   border: none;
   background: transparent;
   }
 
-.ButtonNew--type-cell.ButtonNew--level-primary {
+.Button--type-cell.Button--level-primary {
   color: map(colors, accentBlue);
   }
 
-.ButtonNew--type-cell.ButtonNew--level-danger {
+.Button--type-cell.Button--level-danger {
   color: map(colors, red);
   }
 
-.ButtonNew--stretched {
+.Button--stretched {
   max-width: 100%;
   flex-grow: 1;
   flex-shrink: 0;
   }
 
-  .ButtonNew--stretched .ButtonNew__in {
+  .Button--stretched .Button__in {
     justify-content: center;
     }
 
-.ButtonNew--type-default {
+.Button--type-default {
   border: 1px solid transparent;
   justify-content: center;
   }
 
-  .ButtonNew--type-default .ButtonNew__before .Icon--16 {
+  .Button--type-default .Button__before .Icon--16 {
       margin-right: 6px;
       }
 
-  .ButtonNew--type-default .ButtonNew__before .Icon--24 {
+  .Button--type-default .Button__before .Icon--24 {
       margin-right: 8px;
       }
 
-  .ButtonNew--type-default::before,
-  .ButtonNew--type-default::after {
+  .Button--type-default::before,
+  .Button--type-default::after {
     display: none;
     }
 
-.ButtonNew--level-1 {
+.Button--level-1 {
   background-color: map(colors, headerBlue);
   color: #fff;
   }
 
-.ButtonNew--level-1.Tappable--active:not([disabled]) {
+.Button--level-1.Tappable--active:not([disabled]) {
   background-color: #4872a3;
   }
 
-.ButtonNew--level-2 {
+.Button--level-2 {
   background-color: rgba(0, 54, 115, .1);
   color: map(colors, mutedBlue)
   }
 
-.ButtonNew--level-2.Tappable--active:not([disabled]) {
+.Button--level-2.Tappable--active:not([disabled]) {
   background-color: rgba(0, 54, 115, .2);
   }
 
-.ButtonNew--level-3 {
+.Button--level-3 {
   background-color: transparent;
   color: map(colors, headerBlue)
   }
 
-.ButtonNew--level-3.Tappable--active:not([disabled]) {
+.Button--level-3.Tappable--active:not([disabled]) {
   background-color: rgba(0, 54, 115, .08);
   }
 
-.ButtonNew--level-buy {
+.Button--level-buy {
   background-color: map(colors, green);
   color: #fff;
   }
 
-.ButtonNew--level-buy.Tappable--active {
+.Button--level-buy.Tappable--active {
   background-color: rgb(66, 158, 66);
   }
 
-.ButtonNew--level-sell {
+.Button--level-sell {
   background-color: transparent;
   border: 1px solid map(colors, accentBlue);
   color: map(colors, accentBlue);
   }
 
-.ButtonNew--level-sell.Tappable--active:not([disabled]) {
+.Button--level-sell.Tappable--active:not([disabled]) {
   background-color: rgba(82, 139, 204, 0.1);
   }
 
-.ButtonNew--size-m {
+.Button--size-m {
   padding: 0 16px;
   }
 
-  .ButtonNew--size-m .ButtonNew__before {
+  .Button--size-m .Button__before {
     margin-left: -4px;
     }
 
-  .ButtonNew--size-m .ButtonNew__content {
+  .Button--size-m .Button__content {
     font-size: 14px;
     line-height: 14px;
     font-weight: 500;
     padding: 7px 0;
     }
 
-.ButtonNew--size-l {
+.Button--size-l {
   padding: 0 16px;
   }
 
-  .ButtonNew--size-l .ButtonNew__before {
+  .Button--size-l .Button__before {
     margin-left: -4px;
     }
 
-  .ButtonNew--size-l .ButtonNew__content {
+  .Button--size-l .Button__content {
     font-size: 15px;
     font-weight: 500;
     padding: 8px 0;
     }
 
-.ButtonNew--size-xl {
+.Button--size-xl {
   width: 100%;
   padding: 0 16px;
   }
 
-  .ButtonNew--size-xl .ButtonNew__in {
+  .Button--size-xl .Button__in {
     justify-content: center;
     }
 
-  .ButtonNew--size-xl .ButtonNew__content {
+  .Button--size-xl .Button__content {
     font-size: 17px;
     font-weight: 500;
     padding: 11px;
@@ -150,49 +150,49 @@
 
 
 
-.ButtonNew--ios.ButtonNew--size-m {
+.Button--ios.Button--size-m {
   border-radius: 15px;
   }
 
-.ButtonNew--ios.ButtonNew--size-l {
+.Button--ios.Button--size-l {
   border-radius: 18px;
   }
 
-.ButtonNew--ios.ButtonNew--size-xl {
+.Button--ios.Button--size-xl {
   border-radius: 10px;
   }
 
-.ButtonNew--ios.ButtonNew--type-cell {
-  padding: 0 15px;
+.Button--ios.Button--type-cell {
+  padding: 0 12px;
   position: relative;
   }
 
-  .ButtonNew--ios.ButtonNew--type-cell .ButtonNew__content {
+  .Button--ios.Button--type-cell .Button__content {
     line-height: 20px;
     font-size: 17px;
     padding: 12px 0;
     }
 
-    .ButtonNew--ios.ButtonNew--type-cell .ButtonNew__before .Icon {
+    .Button--ios.Button--type-cell .Button__before .Icon {
       margin-right: 12px;
       }
 
 
 
-.ButtonNew--android.ButtonNew--type-default {
+.Button--android.Button--type-default {
   border-radius: 4px;
   }
 
-.ButtonNew--android.ButtonNew--type-cell {
+.Button--android.Button--type-cell {
   padding: 0 16px;
   }
 
-  .ButtonNew--android.ButtonNew--type-cell .ButtonNew__content {
+  .Button--android.Button--type-cell .Button__content {
     font-size: 16px;
     line-height: 20px;
     padding: 14px 0;
     }
 
-  .ButtonNew--android.ButtonNew--type-cell .ButtonNew__before .Icon {
+  .Button--android.Button--type-cell .Button__before .Icon {
     margin-right: 12px;
     }

@@ -13,8 +13,6 @@ export default class FormLayout extends React.Component {
     tagName: PropTypes.string,
     allowSubmit: PropTypes.bool,
     onSubmit: PropTypes.func,
-    top: PropTypes.node,
-    bottom: PropTypes.node,
     status: PropTypes.oneOf(['default', 'error', 'verified'])
   };
 
@@ -42,8 +40,6 @@ export default class FormLayout extends React.Component {
       allowSubmit,
       onSubmit,
       className,
-      top,
-      bottom,
       ...restProps
     } = this.props;
     const arrayChildren = Array.isArray(children) ? children : [children];
@@ -58,15 +54,15 @@ export default class FormLayout extends React.Component {
         {...restProps}
       >
         <div className={`${this.baseClass}__container`}>
-          {top && <div className={`${this.baseClass}__addon ${this.baseClass}__addon--top`}>{top}</div>}
           {arrayChildren.map((field, i) => (
-            <label className={`${this.baseClass}__row`} key={field.key || `row-${i}`}>
+            field ? <label className={`${this.baseClass}__row`} key={field.key || `row-${i}`}>
+              {field.props.top && <div className={`${this.baseClass}__row-top`}>{field.props.top}</div>}
               <div className={`${this.baseClass}__field`}>
-                {React.cloneElement(field, { v: 'new' })}
+                {field}
               </div>
-            </label>
+              {field.props.bottom && <div className={`${this.baseClass}__row-bottom`}>{field.props.bottom}</div>}
+            </label> : null
           ))}
-          {bottom && <div className={`${this.baseClass}__addon ${this.baseClass}__addon--bottom`}>{bottom}</div>}
         </div>
         {TagName === 'form' && allowSubmit && <input type="submit" style={{ position: 'absolute', visibility: 'hidden' }} />}
       </TagName>

@@ -12,11 +12,8 @@
     
     render () {
       return (
-        <View header activePanel="gallery">
-          <Panel
-            id="gallery"
-            header={{ title: 'Gallery' }}
-          >
+        <View header={false} activePanel="gallery">
+          <Panel id="gallery">
             <Group title="Sticks right">
               <Gallery
                 slideWidth="90%"

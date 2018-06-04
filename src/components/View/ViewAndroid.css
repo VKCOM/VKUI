@@ -1,15 +1,5 @@
 @import '../../styles/constants.css';
 
-.View--android .View__panel,
-.View--android .Panel__in {
-  background: map(colors, backgroundBlue);
-  }
-
-.View--android .View__panel--theme-white,
-.View--android .View__panel--theme-white .Panel__in {
-  background: #fff;
-  }
-
 .View--android.View--header .Panel__in {
   padding-top: 56px;
   }
@@ -24,6 +14,7 @@
 .View--android .View__panel--next ~ .View__panel--prev {
   animation: animation-android-prev-back .3s var(--android-easing);
   }
+
 .View--android .View__panel--prev ~ .View__panel--next {
   animation: animation-android-next-forward .3s var(--android-easing);
   }

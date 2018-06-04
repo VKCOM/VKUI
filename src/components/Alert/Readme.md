@@ -41,11 +41,9 @@ class Example extends React.Component {
 
   render() {
     return (
-      <View popout={this.state.popout} header activePanel="alert">
-        <Panel id="alert" header={{ title: "Alert" }}>
-          <Group>
-            <Button onClick={this.openSheet.bind(this)}>Open Alert</Button>
-          </Group>
+      <View popout={this.state.popout} header={false} activePanel="alert">
+        <Panel id="alert">
+          <Button type="cell" onClick={this.openSheet.bind(this)}>Open Alert</Button>
         </Panel>
       </View>
     )

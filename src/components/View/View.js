@@ -59,7 +59,7 @@ export default class View extends Component {
     style: {},
     children: null,
     popout: null,
-    header: null,
+    header: true,
     history: []
   };
 
@@ -172,6 +172,7 @@ export default class View extends Component {
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
       this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
+      this.props.onSwipeBackStart && this.props.onSwipeBackStart();
       const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
       const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
 
@@ -240,7 +241,7 @@ export default class View extends Component {
   }
 
   pickPanel (id) {
-    const elem = this.document.querySelector('#' + id);
+    const elem = this.document.getElementById(id);
 
     if (!elem) {
       console.warn(`Element #${id} not found`);
@@ -319,19 +320,16 @@ export default class View extends Component {
     }
   };
 
-  static swipeBackPrevented (target) {
-    return target && target.closest('.Gallery, .Slider') !== null;
-  }
+  onMoveX = (e) => {
+    e.originalEvent.preventDefault();
 
-  onMove = (e) => {
     if (osname === IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
       this.setState({ browserSwipe: true });
     }
 
-    if (osname === IOS && this.context.isWebView && this.props.onSwipeBack && !View.swipeBackPrevented(e.originalEvent.target)) {
+    if (osname === IOS && this.context.isWebView && this.props.onSwipeBack) {
       if (this.state.animated && e.startX <= 70) {
-        e.originalEvent.preventDefault();
-        return false;
+        return;
       }
 
       if (e.startX <= 70 && !this.state.swipingBack && this.props.history.length > 1) {
@@ -344,8 +342,6 @@ export default class View extends Component {
           scrolls: Object.assign({}, this.state.scrolls, {
             [this.state.activePanel]: this.window.pageYOffset
           })
-        }, () => {
-          this.props.onSwipeBackStart && this.props.onSwipeBackStart();
         });
       }
       if (this.state.swipingBack) {
@@ -470,7 +466,6 @@ export default class View extends Component {
     const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, headerThemes } = this.state;
     const hasPopout = !!popout;
-    const hasHeader = header !== null;
     const panels = this.panels.filter(panel => {
       return this.state.visiblePanels.indexOf(panel.props.id) > -1 ||
         panel.props.id === this.state.swipeBackPrevPanel ||
@@ -480,7 +475,7 @@ export default class View extends Component {
     const activePanelHeaderTheme = headerThemes[activePanel || nextPanel];
 
     const modifiers = {
-      'View--header': hasHeader,
+      'View--header': header,
       'View--animated': this.state.animated,
       'View--swiping-back': this.state.swipingBack
     };
@@ -490,10 +485,10 @@ export default class View extends Component {
         component="section"
         className={classnames(baseClassNames, modifiers)}
         style={style}
-        onMoveX={this.onMove}
+        onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
-        {hasHeader && (
+        {header && (
           <div className="View__header">
             { osname === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
             <div className={classnames(panelHeaderClasses, {

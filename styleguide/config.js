@@ -31,7 +31,8 @@ module.exports = {
           '../src/components/Panel/Panel.js',
           '../src/components/HeaderButton/HeaderButton.js',
           '../src/components/Root/Root.js',
-          '../src/components/FixedLayout/FixedLayout.js'
+          '../src/components/FixedLayout/FixedLayout.js',
+          '../src/components/PanelHeader/PanelHeader.js'
         ]
       }, {
         name: 'Popouts',
@@ -46,11 +47,8 @@ module.exports = {
         name: 'Blocks',
         components: () => [
           '../src/components/Button/Button.js',
-          '../src/components/ButtonNew/ButtonNew.js',
-          '../src/components/ButtonOld/ButtonOld.js',
           '../src/components/Header/Header.js',
           '../src/components/Group/Group.js',
-          '../src/components/Pane/Pane.js',
           '../src/components/List/List.js',
           '../src/components/ListItem/ListItem.js',
           '../src/components/InfoRow/InfoRow.js',
@@ -72,6 +70,7 @@ module.exports = {
           '../src/components/Slider/Slider.js',
           '../src/components/RangeSlider/RangeSlider.js',
           '../src/components/Radio/Radio.js',
+          '../src/components/Checkbox/Checkbox.js',
           '../src/components/Input/Input.js',
           '../src/components/Textarea/Textarea.js',
           '../src/components/File/File.js'
@@ -80,6 +79,7 @@ module.exports = {
         name: 'Helpers',
         components: () => [
           '../src/components/Div/Div.js',
+          '../src/components/Link/Link.js',
           '../src/components/Tappable/Tappable.js'
         ]
       }, {

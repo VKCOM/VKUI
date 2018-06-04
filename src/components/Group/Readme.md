@@ -1,6 +1,9 @@
 ```jsx
-  <View activePanel="group" header>
-    <Panel id="group" header={{ title: 'Group' }}>
+  <View activePanel="group">
+    <Panel id="group">
+      <PanelHeader>
+        Group
+      </PanelHeader>
       <Group title="Group title" description="Group description. Lorem ipsum dolor sit amet, consectetur adipisicing elit.">
         <List>
           <ListItem>

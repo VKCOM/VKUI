@@ -28,9 +28,9 @@ a:focus {
   outline: none;
 }
 
-.InputNew-underline,
-.SelectNew-underline,
-.TextareaNew-underline {
+.Input-underline,
+.Select-underline,
+.Textarea-underline {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -41,9 +41,9 @@ a:focus {
   z-index: 1;
 }
 
-.InputNew-underline::after,
-.SelectNew-underline::after,
-.TextareaNew-underline::after {
+.Input-underline::after,
+.Select-underline::after,
+.Textarea-underline::after {
   position: absolute;
   top: -1px;
   height: 7px;
@@ -54,9 +54,9 @@ a:focus {
   z-index: 2;
 }
 
-.InputNew-underline::before,
-.SelectNew-underline::before,
-.TextareaNew-underline::before {
+.Input-underline::before,
+.Select-underline::before,
+.Textarea-underline::before {
   position: absolute;
   height: 8px;
   width: 100%;

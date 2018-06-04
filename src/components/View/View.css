@@ -40,6 +40,16 @@
     z-index: 1;
     }
 
+    .View .View__panel,
+    .View .Panel__in {
+      background: map(colors, backgroundBlue);
+      }
+
+    .View .View__panel--theme-white,
+    .View .View__panel--theme-white .Panel__in {
+      background: #fff;
+      }
+
   .View__panel-in {
     height: 100%;
     }

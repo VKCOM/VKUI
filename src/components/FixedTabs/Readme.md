@@ -12,8 +12,11 @@
     render () {
     
       return (
-        <View activePanel="fixed-tabs" header>
-          <Panel id="fixed-tabs" header={{ title: 'Образование', noShadow: true }} theme="white">
+        <View activePanel="fixed-tabs">
+          <Panel id="fixed-tabs" theme="white">
+            <PanelHeader noShadow>
+              Образование
+            </PanelHeader>
             <FixedTabs>
               <TabsItem
                 onClick={() => this.setState({ activeTab: 'medium' })} 

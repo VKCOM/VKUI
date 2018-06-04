@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import { platform, ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../../lib/touch';
@@ -55,13 +54,15 @@ export default class Tappable extends Component {
     ]),
     role: PropTypes.string,
     activeEffectDelay: PropTypes.number,
-    stopPropagation: PropTypes.bool
+    stopPropagation: PropTypes.bool,
+    disabled: PropTypes.bool
   };
 
   static defaultProps = {
     component: 'div',
     role: 'button',
     stopPropagation: false,
+    disabled: false,
     activeEffectDelay: ACTIVE_EFFECT_DELAY
   };
 
@@ -240,33 +241,25 @@ export default class Tappable extends Component {
 
   render () {
     const { clicks, active } = this.state;
-    const Component = this.props.onClick ? Touch : this.props.component;
-    const classes = classnames(baseClassNames, this.props.className, {
+    const { children, className, component, activeEffectDelay, stopPropagation, ...restProps } = this.props;
+    const Component = !restProps.disabled ? Touch : component;
+    const classes = classnames(baseClassNames, className, {
       'Tappable--active': active,
       'Tappable--inactive': !active
     });
 
     let props = {};
 
-    if (this.props.onClick) {
-      props.component = this.props.component;
+    if (!restProps.disabled) {
+      props.component = component;
       props.onStart = this.onStart;
       props.onMove = this.onMove;
       props.onEnd = this.onEnd;
       props.ref = this.getContainer;
     }
 
-    const nativeProps = removeObjectKeys(Object.assign({}, this.props), [
-      'children',
-      'className',
-      'propagation',
-      'component',
-      'activeEffectDelay',
-      'stopPropagation'
-    ]);
-
     return (
-      <Component className={classes} {...props} {...nativeProps}>
+      <Component className={classes} {...props} {...restProps}>
         {osname === ANDROID && (
           <span className="Tappable__waves" ref={this.getContainer}>
             {Object.keys(clicks).map(k => (
@@ -274,7 +267,7 @@ export default class Tappable extends Component {
             ))}
           </span>
         )}
-        {this.props.children}
+        {children}
       </Component>
     );
   }

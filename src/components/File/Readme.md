@@ -1,6 +1,9 @@
 ```jsx
-  <View activePanel="panel" header>
-    <Panel id="panel" header={{ title: 'File' }}>
+  <View activePanel="panel">
+    <Panel id="panel">
+      <PanelHeader>
+        File
+      </PanelHeader>
       <Group title="Upload your photo">
         <File />
       </Group>

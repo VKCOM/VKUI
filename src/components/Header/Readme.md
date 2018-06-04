@@ -1,6 +1,9 @@
 ```jsx
-  <View header activePanel="header">
-    <Panel header={{ title: 'Header' }} id="header" theme="white">
+  <View activePanel="header">
+    <Panel id="header" theme="white">
+      <PanelHeader>
+        Header
+      </PanelHeader>
       <Header>
         Плейлисты
       </Header>

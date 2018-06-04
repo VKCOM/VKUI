@@ -1,41 +1,39 @@
-import './Radio.css';
+import './Checkbox.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import {platform, IOS} from '../../lib/platform';
+import Icon16Done from '../../../dist/icons/16/done';
 
 const osname = platform();
-const baseClassName = getClassName('Radio');
+const baseClassName = getClassName('Checkbox');
 
-const Radio = ({ children, description, className, ...restProps }) => {
+const Checkbox = ({ children, className, ...restProps }) => {
   return (
     <Tappable
       component="label"
       className={classnames(baseClassName, className)}
       activeEffectDelay={osname === IOS ? 100 : ACTIVE_EFFECT_DELAY }
-      disabled={restProps.disabled}
     >
       <input
-        type="radio"
+        type="checkbox"
+        className="Checkbox__input"
         {...restProps}
       />
-      <div className="Radio__container">
-        <div className="Radio__icon" />
-        <div className="Radio__content">
-          {children}
-          <div className="Radio__description">{description}</div>
-        </div>
+      <div className="Checkbox__container">
+        <div className="Checkbox__icon"><Icon16Done /></div>
+        <div className="Checkbox__content">{children}</div>
       </div>
     </Tappable>
   );
 };
 
-Radio.propTypes = {
+Checkbox.propTypes = {
   children: PropTypes.node,
   description: PropTypes.node,
   className: PropTypes.string
 };
 
-export default Radio;
+export default Checkbox;

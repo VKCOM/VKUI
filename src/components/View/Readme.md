@@ -15,24 +15,27 @@ class Example extends React.Component {
 
   render() {
     return (
-      <View header activePanel={this.state.activePanel}>
-        <Panel id="panel1" header={{ title: "Panel 1" }}>
+      <View activePanel={this.state.activePanel}>
+        <Panel id="panel1">
+          <PanelHeader>Panel 1</PanelHeader>
           <Group>
-            <Button onClick={ () => this.setState({ activePanel: 'panel2' }) }>
+            <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel2' }) }>
               Go to panel 2
             </Button>
           </Group>  
         </Panel>
-        <Panel id="panel2" header={{ title: "Panel 2" }}>
+        <Panel id="panel2">
+          <PanelHeader>Panel 2</PanelHeader>
           <Group>
-            <Button onClick={ () => this.setState({ activePanel: 'panel3' }) }>
+            <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel3' }) }>
               Go to panel 3
             </Button>
           </Group>  
         </Panel>
-        <Panel id="panel3" header={{ title: "Panel 3" }}>
+        <Panel id="panel3">
+          <PanelHeader>Panel 3</PanelHeader>
           <Group>
-            <Button onClick={ () => this.setState({ activePanel: 'panel1' }) }>
+            <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel1' }) }>
               Back to panel 1
             </Button>
           </Group>  

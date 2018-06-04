@@ -22,24 +22,21 @@
   
     render() {
       return (
-        <View activePanel="slider">
+        <View activePanel="slider" header={false}>
           <Panel id="slider">
             <Group title="Simple [10, 30]">
-              <Pane>
+              <Div>
                 <Slider min={10} max={30} value={Number(this.state.value1)} onChange={value1 => this.setState({value1})}/>
-              </Pane>
+              </Div>
               <FormLayout>
                 <Input value={String(this.state.value1)} onChange={e => this.setState({ value1: e.target.value })} />
               </FormLayout>
             </Group>
-            <Group>
-  
-            </Group>
   
             <Group title="Step [0, 1]">
-              <Pane>
+              <Div>
                 <Slider step={0.2} min={0} max={1} value={Number(this.state.value2)} onChange={value2 => this.setState({value2})}/>
-              </Pane>
+              </Div>
               <FormLayout>
                 <Select onChange={e => this.setState({ value2: e.target.value })} value={String(this.state.value2)}>
                   {this.options()}
@@ -48,17 +45,17 @@
             </Group>
   
             <Group title="Uncontrolled">
-              <Pane>
+              <Div>
                 <Slider onChange={value3 => this.setState({value3})} defaultValue={this.state.value3}/>
-              </Pane>
-              <Pane>{this.state.value3}</Pane>
+              </Div>
+              <Div>{this.state.value3}</Div>
             </Group>
   
             <Group title="Range [10, 40]">
-              <Pane>
+              <Div>
                 <RangeSlider min={10} max={40} value={this.state.value4} onChange={value4 => this.setState({value4})}/>
-              </Pane>
-              <Pane>{this.state.value4[0]}, {this.state.value4[1]}</Pane>
+              </Div>
+              <Div>{this.state.value4[0]}, {this.state.value4[1]}</Div>
             </Group>
           </Panel>
         </View>

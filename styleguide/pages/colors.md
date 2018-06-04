@@ -7,7 +7,7 @@
 ```
 
 ```
-  <View activePanel="colors">
+  <View activePanel="colors" header={false}>
     <Panel id="colors">
       <Group>
         <List>

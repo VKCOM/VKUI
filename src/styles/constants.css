@@ -1,6 +1,7 @@
 @import './common.css';
 
 :root {
+  --accent-blue: #528bcc;
   --vk-color: #5181b8;
   --ios-font: -apple-system, BlinkMacSystemFont, Helvetica Neue, sans-serif;
   --ios-top-border: linear-gradient(to bottom, map(colors, separator) 50%, transparent 50%);
