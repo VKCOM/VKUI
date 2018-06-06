@@ -12,12 +12,28 @@
 .Search--ios.Search--default {
   padding: 8px;
   background-color: #e6e9ed;
-  border-bottom: 1px solid #d1d6dc;
+  position: relative;
+  }
+
+.Search--ios.Search--default::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  bottom: 0;
+  background: map(colors, separator);
+  }
+
+.Search--ios + .List::before,
+.Search--ios + .Group::before {
+  content: none;
   }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .Search--ios.Search--default {
-    border-bottom-width: .5px;
+  .Search--ios.Search--default::after {
+    background: var(--ios-bottom-border);
     }
   }
 
@@ -25,12 +41,12 @@
     position: relative;
     flex-shrink: 0;
     width: 100%;
+    box-sizing: border-box;
     transition: width .3s var(--ios-easing);
     }
 
-  .Search--ios .Search__before {
-    padding-right: 12px;
-    flex-shrink: 0;
+  .Search--ios.Search--header {
+    padding-right: 6px;
     }
 
   .Search--ios .Search__after {

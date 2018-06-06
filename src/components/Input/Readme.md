@@ -1,11 +1,11 @@
 ```jsx
-<View header activePanel="input">
+<View activePanel="input">
   <Panel id="input" theme="white">
     <PanelHeader>
       Input
     </PanelHeader>
-    <FormLayout allowSubmit={false}>
-      <Input type="text" placeholder="Your login" />
+    <FormLayout>
+      <Input type="text" defaultValue="Петров" top="Имя" />
     </FormLayout>
   </Panel>
 </View>

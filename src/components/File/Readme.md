@@ -1,12 +1,12 @@
 ```jsx
   <View activePanel="panel">
-    <Panel id="panel">
+    <Panel id="panel" theme="white">
       <PanelHeader>
         File
       </PanelHeader>
-      <Group title="Upload your photo">
-        <File />
-      </Group>
+      <FormLayout>
+        <File top="Upload your photo" />
+      </FormLayout>
     </Panel>
   </View>
 ```

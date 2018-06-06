@@ -4,67 +4,58 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 
+const baseClassName = getClassName('FormLayout');
+
 export default class FormLayout extends React.Component {
 
   static propTypes = {
     children: PropTypes.node,
-    style: PropTypes.object,
     className: PropTypes.string,
-    tagName: PropTypes.string,
-    allowSubmit: PropTypes.bool,
-    onSubmit: PropTypes.func,
-    status: PropTypes.oneOf(['default', 'error', 'verified'])
+    TagName: PropTypes.string,
+    onSubmit: PropTypes.func
   };
 
   static defaultProps = {
     allowSubmit: true,
     status: 'default',
-    tagName: 'form'
+    TagName: 'form'
   };
 
-  baseClass = 'FormLayout';
-
   onSubmit = (e) => {
-    if (!this.props.allowSubmit) {
-      e.preventDefault();
+    if (this.props.onSubmit) {
+      this.props.onSubmit(e);
     } else {
-      this.props.onSubmit && this.props.onSubmit(e);
+      e.preventDefault();
     }
   };
 
   render () {
     const {
       children,
-      tagName,
-      status,
-      allowSubmit,
-      onSubmit,
+      TagName,
       className,
       ...restProps
     } = this.props;
     const arrayChildren = Array.isArray(children) ? children : [children];
-    const TagName = tagName;
 
     return (
       <TagName
-        className={classnames(getClassName(this.baseClass), {
-          [`${this.baseClass}--s-${status}`]: true
-        }, className)}
-        onSubmit={this.onSubmit}
+        className={classnames(baseClassName, className)}
         {...restProps}
+        onSubmit={this.onSubmit}
       >
-        <div className={`${this.baseClass}__container`}>
+        <div className="FormLayout__container">
           {arrayChildren.map((field, i) => (
-            field ? <label className={`${this.baseClass}__row`} key={field.key || `row-${i}`}>
-              {field.props.top && <div className={`${this.baseClass}__row-top`}>{field.props.top}</div>}
-              <div className={`${this.baseClass}__field`}>
+            field ? <label className="FormLayout__row" key={field.key || `row-${i}`}>
+              {field.props.top && <div className="FormLayout__row-top">{field.props.top}</div>}
+              <div className="FormLayout__field">
                 {field}
               </div>
-              {field.props.bottom && <div className={`${this.baseClass}__row-bottom`}>{field.props.bottom}</div>}
+              {field.props.bottom && <div className="FormLayout__row-bottom">{field.props.bottom}</div>}
             </label> : null
           ))}
         </div>
-        {TagName === 'form' && allowSubmit && <input type="submit" style={{ position: 'absolute', visibility: 'hidden' }} />}
+        {TagName === 'form' && <input type="submit" style={{ position: 'absolute', visibility: 'hidden' }} />}
       </TagName>
     );
   }

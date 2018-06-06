@@ -5,7 +5,7 @@
         Textarea
       </PanelHeader>
       <FormLayout>
-        <Textarea placeholder="Textarea" />
+        <Textarea top="Любимая музыка" placeholder="Группы, исполнители, продюссеры" />
       </FormLayout>
     </Panel>
   </View>

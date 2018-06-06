@@ -48,19 +48,12 @@
     .PanelHeader__content {
       overflow: hidden;
       text-overflow: ellipsis;
-      flex-grow: 1;
-      max-width: 100%;
       }
 
-      .PanelHeader-content {}
-
-        .PanelHeader-content .Search {
-          position: absolute;
-          width: 100%;
-          left: 0;
-          top: 0;
-          z-index: 2;
-          }
+      .PanelHeader-content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        }
 
 .PanelHeader--ios {
   height: 44px;
@@ -99,6 +92,8 @@
     .PanelHeader--ios .PanelHeader__left {
       display: flex;
       align-items: center;
+      flex-grow: 1;
+      flex-basis: 0;
       }
 
       .PanelHeader--ios .PanelHeader__icon {}
@@ -124,7 +119,10 @@
             padding-left: 16px;
             }
 
-    .PanelHeader--ios .PanelHeader__right {}
+    .PanelHeader--ios .PanelHeader__right {
+      flex-grow: 1;
+      flex-basis: 0;
+      }
 
       .PanelHeader--ios .PanelHeader-right {
         font-size: 17px;
@@ -151,10 +149,6 @@
         color: #fff;
         }
 
-        .PanelHeader--ios .PanelHeader-content .Search {
-          padding: 0 12px;
-          }
-
       .PanelHeader--ios.PanelHeader--light .PanelHeader-content {
         color: #000;
         }
@@ -174,6 +168,11 @@
   box-shadow: none;
   transition: box-shadow .3s var(--android-easing);
   }
+
+  .PanelHeader--android .PanelHeader__content {
+    max-width: 100%;
+    flex-grow: 2;
+    }
 
   .PanelHeader--android .PanelHeader__in--brand {
     background: var(--vk-color);
@@ -197,3 +196,11 @@
       font: 500 20px/56px var(--android-font);
       padding: 0 12px;
       }
+
+      .PanelHeader--android .Search {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        }

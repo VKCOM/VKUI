@@ -9,7 +9,7 @@ import {platform, ANDROID} from '../../lib/platform';
 const osname = platform();
 const baseClassName = getClassName('Select');
 
-export default class Select extends Component {
+export default class SelectMimicry extends Component {
 
   static propTypes = {
     style: PropTypes.object,
@@ -27,7 +27,7 @@ export default class Select extends Component {
       <div
         className={classnames(baseClassName, {
           'Select--not-selected': !children,
-          'SelectNew--mimicry': true
+          'Select--mimicry': true
         }, className)}
         {...restProps}
         tabIndex={0}

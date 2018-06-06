@@ -30,7 +30,6 @@ export default class SearchIOS extends React.Component {
 
   static propTypes = {
     className: PropTypes.string,
-    before: PropTypes.node,
     after: PropTypes.node,
     defaultValue: PropTypes.string,
     value: PropTypes.string,
@@ -125,7 +124,6 @@ export default class SearchIOS extends React.Component {
       defaultValue,
       value,
       placeholder,
-      before,
       after,
       getRef,
       ...inputProps
@@ -137,7 +135,6 @@ export default class SearchIOS extends React.Component {
         'Search--focused': this.state.focused,
         'Search--has-value': !!this.value
       }, className)}>
-        {before && <div className="Search__before" ref={el => this.beforeEl = el}>{before}</div>}
         <div
           className="Search__control"
           ref={el => this.controlEl = el}

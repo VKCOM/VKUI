@@ -511,18 +511,18 @@ export default class View extends Component {
                   key={panel.props.id}
                 >
                   <div className="PanelHeader__left">
-                    {osname === IOS &&
-                    <div
-                      className="PanelHeader__icon"
-                      id={`header-icon-${panel.props.id}`}
-                      style={this.calcHeaderSwipeStyles(panel.props.id).icon}
-                    />
-                    }
                     <div
                       className="PanelHeader__left-in"
                       id={`header-left-${panel.props.id}`}
                       style={this.calcHeaderSwipeStyles(panel.props.id).left}
                     />
+                    {osname === IOS &&
+                    <div
+                      className="PanelHeader__addon"
+                      id={`header-addon-${panel.props.id}`}
+                      style={this.calcHeaderSwipeStyles(panel.props.id).icon}
+                    />
+                    }
                   </div>
                   <div
                     className="PanelHeader__content"

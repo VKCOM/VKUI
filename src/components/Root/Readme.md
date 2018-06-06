@@ -4,16 +4,16 @@
 class Example extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       activeView: 'view1'
     }
   }
-    
+
   render() {
     return (
       <Root activeView={this.state.activeView}>
-        <View header activePanel="panel1.1" id="view1">
+        <View activePanel="panel1.1" id="view1">
           <Panel id="panel1.1">
             <PanelHeader>View 1</PanelHeader>
             <Group>
@@ -34,7 +34,7 @@ class Example extends React.Component {
           </Panel>
         </View>
       </Root>
-    )       
+    )
   }
 }
 

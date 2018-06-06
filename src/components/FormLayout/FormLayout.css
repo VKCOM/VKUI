@@ -35,14 +35,6 @@
       font-size: 14px;
       }
 
-    .FormLayout--ios .FormLayout__row-top ~ .FormLayout__field {
-      margin-top: 0;
-      }
-
-    .FormLayout--ios .FormLayout__field {
-      margin: 12px 0;
-      }
-
   .FormLayout--ios .FormLayout__row-bottom {
     padding-top: 8px;
     font-size: 13px;

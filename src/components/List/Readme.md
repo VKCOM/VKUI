@@ -100,7 +100,7 @@
           </Panel>
           <Panel id="nothing">
               <PanelHeader
-                icon={
+                left={
                   <HeaderButton onClick={() => this.setState({ activePanel: 'list' })}>
                     {osname === ANDROID ? <Icon24Back/> : <Icon28Chevron_back/>}
                   </HeaderButton>
