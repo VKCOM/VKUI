@@ -15,6 +15,7 @@ export default class Textarea extends Component {
 
     if (typeof props.value !== 'undefined') {
       this.isControlledOutside = true;
+      this.state = {};
     } else {
       this.state = {
         value: props.defaultValue || ''
