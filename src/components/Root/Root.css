@@ -49,10 +49,6 @@
  * iOS
  */
 
-.Root--ios {
-  font-family: -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
-  }
-
 .Root--ios.Root--transition,
 .Root--ios.Root--popout {
   height: 100vh;

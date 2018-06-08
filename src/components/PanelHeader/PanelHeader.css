@@ -142,7 +142,9 @@
       }
 
       .PanelHeader--ios .PanelHeader-content {
-        font: 500 17px/44px var(--ios-font);
+        font-weight: 500;
+        font-size: 17px;
+        line-height: 44px;
         text-align: center;
         padding: 0 6px;
         transition: color .6s var(--ios-easing);
@@ -193,7 +195,8 @@
       }
 
     .PanelHeader--android .PanelHeader-content {
-      font: 500 20px/56px var(--android-font);
+      font-size: 20px;
+      line-height: 56px;
       padding: 0 12px;
       }
 

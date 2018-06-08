@@ -21,7 +21,7 @@
   font-size: 16px;
   color: map(colors, black);
   padding: 12px;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  font-family: var(--font);
   }
 
 .Input__el:disabled {

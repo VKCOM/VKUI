@@ -70,17 +70,3 @@
     width: 100%;
     height: 100vh;
     }
-
-/**
- * iOS
- */
-.View--ios {
-  font-family: var(--ios-font);
-  }
-
-/**
- * Android
- */
-.View--android {
-  font-family: var(--android-font);
-  }
