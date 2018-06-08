@@ -53,6 +53,7 @@ export { default as Slider } from './components/Slider/Slider';
 export { default as RangeSlider } from './components/RangeSlider/RangeSlider';
 export { default as Textarea } from './components/Textarea/Textarea';
 export { default as Radio } from './components/Radio/Radio';
+export { default as Checkbox } from './components/Checkbox/Checkbox';
 export { default as Select } from './components/Select/Select';
 
 /**
