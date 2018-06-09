@@ -24,5 +24,5 @@ iOS и Android. Пример использования:
 ```js static
   import { getClassName } from '@vkonktakte/vkui';
 
-  const baseClassName = getClassName('Tooltip') // ".Tooltip .Tooltip--ios"
+  const baseClassName = getClassName('Tooltip') // "Tooltip Tooltip--ios"
 ```
