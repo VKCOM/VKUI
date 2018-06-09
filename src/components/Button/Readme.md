@@ -4,13 +4,13 @@
     <Group title="Levels">
 
       <Div>
-        <Button onClick={() => {}}>level={1} (default)</Button>
+        <Button onClick={() => {}}>level="1" (default)</Button>
       </Div>
       <Div>
-        <Button onClick={() => {}} level={2}>level={2}</Button>
+        <Button onClick={() => {}} level="2">level="2"</Button>
       </Div>
       <Div>
-        <Button onClick={() => {}} level={3}>level={3}</Button>
+        <Button onClick={() => {}} level="3">level="3"</Button>
       </Div>
       <Div>
         <Button onClick={() => {}} level="buy">level="buy"</Button>
