@@ -7,7 +7,6 @@ import './InnerScroll.css';
 const baseClassName = getClassName('InnerScroll');
 
 export default class InnerScroll extends React.Component {
-
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,

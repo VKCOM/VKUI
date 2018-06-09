@@ -8,7 +8,6 @@ import Icon16Search from '../../../dist/icons/16/search';
 const baseClassName = getClassName('Search');
 
 export default class SearchIOS extends React.Component {
-
   constructor (props) {
     super(props);
 

@@ -1,5 +1,3 @@
-@import './common.css';
-
 :root {
   --font: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
   --ios-top-border: linear-gradient(to bottom, var(--color-separator) 50%, transparent 50%);

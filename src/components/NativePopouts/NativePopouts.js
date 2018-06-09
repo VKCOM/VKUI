@@ -9,7 +9,6 @@ import {brToNl} from '../../lib/string';
 let actionId = 1;
 
 export default class NativePopouts extends React.Component {
-
   state = {
     popout: null
   };

@@ -11,7 +11,6 @@ const osname = platform();
 export const baseClassNames = getClassName('PanelHeader');
 
 export default class PanelHeader extends React.Component {
-
   static propTypes = {
     left: PropTypes.node,
     addon: PropTypes.node,

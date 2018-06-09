@@ -9,7 +9,6 @@ import {platform, ANDROID} from '../../lib/platform';
 const osname = platform();
 
 export default class Select extends Component {
-
   constructor (props) {
     super(props);
     const state = {

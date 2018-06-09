@@ -8,7 +8,6 @@ import './Button.css';
 const baseClassName = getClassName('Button');
 
 export default class Button extends React.Component {
-
   static propTypes = {
     level: PropTypes.oneOf(['1', '2', '3', 'sell', 'buy', 'primary', 'danger']),
     size: PropTypes.oneOf(['m', 'l', 'xl']),

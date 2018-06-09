@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {isWebView} from '../../lib/webview';
 
 export default class ConfigProvider extends React.Component {
-
   static childContextTypes = {
     insets: PropTypes.shape({
       top: PropTypes.number,

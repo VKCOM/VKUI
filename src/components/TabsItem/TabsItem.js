@@ -10,7 +10,6 @@ const osname = platform();
 const baseClassName = getClassName('TabsItem');
 
 export default class TabsItem extends React.Component {
-
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,

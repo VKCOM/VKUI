@@ -2,6 +2,8 @@ import React from 'react';
 import { sizes as avatarSizes } from '../src/components/Avatar/Avatar';
 import { values as colors, titles as colorTitles, keys as colorKeys } from '../src/helpers/colors'
 import {platform, IOS, ANDROID} from '../src/lib/platform';
+import '../dist/icons/icons.common';
+import '../src/styles/common.css';
 
 window.osname = platform();
 window.IOS = IOS;

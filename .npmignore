@@ -12,6 +12,7 @@ dist/*.hot-update.*
 .env
 .eslintrc
 .eslintignore
+.browserslistrc
 .stylelintrc
 .gitignore
 package-lock.json

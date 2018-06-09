@@ -10,7 +10,6 @@ const baseClassNames = getClassName('Entity');
 // @TODO Try to load photo
 
 export default class Entity extends Component {
-
   static propTypes = {
     style: PropTypes.object,
     size: PropTypes.oneOf(['s', 'm', ...avatarSizes]),

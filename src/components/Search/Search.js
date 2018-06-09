@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 const osname = platform();
 
 export default class Search extends React.Component {
-
   static propTypes = {
     onClose: PropTypes.func,
     after: PropTypes.node,

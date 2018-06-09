@@ -7,7 +7,6 @@ import classnames from '../../lib/classnames';
 const baseClassName = getClassName('FormLayout');
 
 export default class FormLayout extends React.Component {
-
   static propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,

@@ -10,7 +10,6 @@ const osname = platform();
 const baseClassName = getClassName('Root');
 
 export default class Root extends React.Component {
-
   constructor (props) {
     super();
 
