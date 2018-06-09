@@ -284,10 +284,8 @@ export default class Gallery extends Component {
 
   reduceChildren = (acc, item, i) => {
     if (item) {
-      const key = item.props.key || item.props.id || `slide-${i}`;
       const ref = this.getSlideRef(i);
-
-      acc.push(<div className="Gallery__slide" key={key} ref={ref}>{item}</div>);
+      acc.push(<div className="Gallery__slide" key={`slide-${i}`} ref={ref}>{item}</div>);
     }
 
     return acc;
