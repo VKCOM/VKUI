@@ -12,8 +12,11 @@
     render () {
     
       return (
-        <View activePanel="fixed-tabs" header>
-          <ScrollView id="fixed-tabs" header={{ title: 'Образование', noShadow: true }} theme="white">
+        <View activePanel="fixed-tabs">
+          <Panel id="fixed-tabs" theme="white">
+            <PanelHeader noShadow>
+              Образование
+            </PanelHeader>
             <FixedTabs>
               <TabsItem
                 onClick={() => this.setState({ activeTab: 'medium' })} 
@@ -28,7 +31,7 @@
                 Высшее
               </TabsItem>
             </FixedTabs>
-          </ScrollView>
+          </Panel>
         </View>
       )
     }

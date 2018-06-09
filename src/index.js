@@ -7,16 +7,17 @@ import { families as fontFamilies } from './helpers/fonts';
  */
 export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
-export { default as ScrollView } from './components/ScrollView/ScrollView';
+export { default as Panel } from './components/Panel/Panel';
 export { default as HeaderButton } from './components/HeaderButton/HeaderButton';
 export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
+export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
+export { default as InnerScroll } from './components/InnerScroll/InnerScroll';
 
 /**
  * Popouts
  */
 export { default as NativePopouts } from './components/NativePopouts/NativePopouts';
 export { default as Alert } from './components/Alert/Alert';
-export { default as AlertInput } from './components/AlertInput/AlertInput';
 export { default as ActionSheet } from './components/ActionSheet/ActionSheet';
 export { default as ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
@@ -27,7 +28,6 @@ export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinn
 export { default as Button } from './components/Button/Button';
 export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
-export { default as Pane } from './components/Pane/Pane';
 export { default as List } from './components/List/List';
 export { default as ListItem } from './components/ListItem/ListItem';
 export { default as InfoRow } from './components/InfoRow/InfoRow';
@@ -53,6 +53,7 @@ export { default as Slider } from './components/Slider/Slider';
 export { default as RangeSlider } from './components/RangeSlider/RangeSlider';
 export { default as Textarea } from './components/Textarea/Textarea';
 export { default as Radio } from './components/Radio/Radio';
+export { default as Checkbox } from './components/Checkbox/Checkbox';
 export { default as Select } from './components/Select/Select';
 
 /**
@@ -60,7 +61,6 @@ export { default as Select } from './components/Select/Select';
  */
 export { default as Text } from './components/Text/Text';
 export { default as Div } from './components/Div/Div';
-export { default as Flex } from './components/Flex/Flex';
 export { default as Tappable } from './components/Tappable/Tappable';
 export { default as Touch } from './components/Touch/Touch';
 export { default as ConfigProvider } from './components/ConfigProvider/ConfigProvider';
@@ -76,7 +76,6 @@ export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { default as request } from './lib/request';
 export { default as querystring } from './lib/querystring';
 export { default as getClassName } from './helpers/getClassName';
-export { default as wrapTextNode } from './helpers/wrapTextNode';
 export { default as requestAnimationFrame } from './lib/requestAnimationFrame';
 export { isWebView } from './lib/webview';
 export { colors };

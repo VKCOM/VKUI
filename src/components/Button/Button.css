@@ -1,0 +1,198 @@
+@import '../../styles/constants.css';
+
+.Button {
+  display: inline-block;
+  box-sizing: border-box;
+  outline: none;
+  }
+
+.Button[disabled] {
+  opacity: .4;
+  }
+
+  .Button__in {
+    display: flex;
+    align-items: center;
+    }
+
+.Button--type-cell {
+  display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
+  }
+
+.Button--type-cell.Button--level-primary {
+  color: map(colors, accentBlue);
+  }
+
+.Button--type-cell.Button--level-danger {
+  color: map(colors, red);
+  }
+
+.Button--stretched {
+  max-width: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  }
+
+  .Button--stretched .Button__in {
+    justify-content: center;
+    }
+
+.Button--type-default {
+  border: 1px solid transparent;
+  justify-content: center;
+  }
+
+  .Button--type-default .Button__before .Icon--16 {
+      margin-right: 6px;
+      }
+
+  .Button--type-default .Button__before .Icon--24 {
+      margin-right: 8px;
+      }
+
+  .Button--type-default::before,
+  .Button--type-default::after {
+    display: none;
+    }
+
+.Button--level-1 {
+  background-color: map(colors, headerBlue);
+  color: #fff;
+  }
+
+.Button--level-1.Tappable--active:not([disabled]) {
+  background-color: #4872a3;
+  }
+
+.Button--level-2 {
+  background-color: rgba(0, 54, 115, .1);
+  color: map(colors, mutedBlue)
+  }
+
+.Button--level-2.Tappable--active:not([disabled]) {
+  background-color: rgba(0, 54, 115, .2);
+  }
+
+.Button--level-3 {
+  background-color: transparent;
+  color: map(colors, headerBlue)
+  }
+
+.Button--level-3.Tappable--active:not([disabled]) {
+  background-color: rgba(0, 54, 115, .08);
+  }
+
+.Button--level-buy {
+  background-color: map(colors, green);
+  color: #fff;
+  }
+
+.Button--level-buy.Tappable--active {
+  background-color: rgb(66, 158, 66);
+  }
+
+.Button--level-sell {
+  background-color: transparent;
+  border: 1px solid map(colors, accentBlue);
+  color: map(colors, accentBlue);
+  }
+
+.Button--level-sell.Tappable--active:not([disabled]) {
+  background-color: rgba(82, 139, 204, 0.1);
+  }
+
+.Button--size-m {
+  padding: 0 16px;
+  }
+
+  .Button--size-m .Button__before {
+    margin-left: -4px;
+    }
+
+  .Button--size-m .Button__content {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 500;
+    padding: 7px 0;
+    }
+
+.Button--size-l {
+  padding: 0 16px;
+  }
+
+  .Button--size-l .Button__before {
+    margin-left: -4px;
+    }
+
+  .Button--size-l .Button__content {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px 0;
+    }
+
+.Button--size-xl {
+  width: 100%;
+  padding: 0 16px;
+  }
+
+  .Button--size-xl .Button__in {
+    justify-content: center;
+    }
+
+  .Button--size-xl .Button__content {
+    font-size: 17px;
+    font-weight: 500;
+    padding: 11px;
+    }
+
+
+
+.Button--ios.Button--size-m {
+  border-radius: 15px;
+  }
+
+.Button--ios.Button--size-l {
+  border-radius: 18px;
+  }
+
+.Button--ios.Button--size-xl {
+  border-radius: 10px;
+  }
+
+.Button--ios.Button--type-cell {
+  padding: 0 12px;
+  position: relative;
+  }
+
+  .Button--ios.Button--type-cell .Button__content {
+    line-height: 20px;
+    font-size: 17px;
+    padding: 12px 0;
+    }
+
+    .Button--ios.Button--type-cell .Button__before .Icon {
+      margin-right: 12px;
+      }
+
+
+
+.Button--android.Button--type-default {
+  border-radius: 4px;
+  }
+
+.Button--android.Button--type-cell {
+  padding: 0 16px;
+  }
+
+  .Button--android.Button--type-cell .Button__content {
+    font-size: 16px;
+    line-height: 20px;
+    padding: 14px 0;
+    }
+
+  .Button--android.Button--type-cell .Button__before .Icon {
+    margin-right: 12px;
+    }

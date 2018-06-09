@@ -1,12 +1,12 @@
 ```jsx
-  <View activePanel="panel" header>
-    <ScrollView id="panel" header={{ title: 'Textarea' }}>
-
-      <Group title="Description">
-        <FormLayout>
-          <Textarea placeholder="Textarea" />
-        </FormLayout>
-      </Group>
-    </ScrollView>
+  <View activePanel="panel">
+    <Panel id="panel" theme="white">
+      <PanelHeader>
+        Textarea
+      </PanelHeader>
+      <FormLayout>
+        <Textarea top="Любимая музыка" placeholder="Группы, исполнители, продюссеры" />
+      </FormLayout>
+    </Panel>
   </View>
 ```

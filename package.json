@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "1.5.8",
+  "version": "2.0.0-rc.3",
   "main": "dist/vkui.js",
   "repository": "https://github.com/VKCOM/VKUI",
   "description": "VKUI library",
@@ -50,15 +50,15 @@
     "xml2js-parser": "^1.1.1"
   },
   "peerDependencies": {
-    "react": ">=15.6.2",
-    "prop-types": ">=15.5.8"
+    "react": "^16.4.0",
+    "prop-types": "^15.6.1"
   },
   "dependencies": {
     "svg-sprite-loader": "^3.6.2"
   },
   "scripts": {
     "prepublishOnly": "npm run clear && npm run icons && npm run build",
-    "styleguide": "NODE_ENV=production styleguidist server --config=styleguide/config.js",
+    "styleguide": "styleguidist server --config=styleguide/config.js",
     "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
     "icons": "webpack --config=build/webpack.svg-config.js -p",
     "build": "NODE_ENV=production webpack --config=build/webpack.config.js --bail",

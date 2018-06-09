@@ -1,10 +1,13 @@
-position: fixed не дружит с transform: translate на родителе, поэтому для позиционирования фиксированных блоков внутри ScrollView, необходимо использовать FixedLayout в качестве обертки.
+position: fixed не дружит с transform: translate на родителе, поэтому для позиционирования фиксированных блоков внутри Panel, необходимо использовать FixedLayout в качестве обертки.
 
 Для удобства есть свойство vertical, с помощью которого можно прижать контент к верху или низу. При этому будут учитываться высота шапки, insets и safe-area-insets. В большинстве случаев нужен именно такой тип позиционирования.
 
   ```
-  <View activePanel="fixedLayout" header>
-    <ScrollView header={{ title: 'Fixed Layout', noShadow: true }} id="fixedLayout">
+  <View activePanel="fixedLayout">
+    <Panel id="fixedLayout">
+      <PanelHeader noShadow>
+        Fixed layout
+      </PanelHeader>
       <FixedLayout vertical="top" style={{ padding: 10, background: '#5C9CE6', color: '#fff' }}>
         Sticked to top
       </FixedLayout>
@@ -26,6 +29,6 @@ position: fixed не дружит с transform: translate на родителе,
       <FixedLayout vertical="bottom" style={{ padding: 10, background: '#E64646', color: '#fff' }}>
         Sticked to bottom
       </FixedLayout>
-    </ScrollView>
+    </Panel>
   </View>
 ```

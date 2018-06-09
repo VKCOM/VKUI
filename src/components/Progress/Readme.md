@@ -1,13 +1,16 @@
 ```
-  <View activePanel="progress" header>
-    <ScrollView id="progress" header={{ title: 'Progress' }}>
+  <View activePanel="progress">
+    <Panel id="progress">
+      <PanelHeader>
+        Progress
+      </PanelHeader>
       <Group>
-        <Pane>
+        <Div>
           <InfoRow title="Default">
             <Progress value={40} />
           </InfoRow>
-        </Pane>  
+        </Div>  
       </Group>
-    </ScrollView>
+    </Panel>
   </View>
 ```

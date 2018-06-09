@@ -1,22 +1,19 @@
 ```
   class Example extends React.Component {
-  
+
     constructor (props) {
-    
+
       super(props);
-      
+
       this.state = {
         slideIndex: 0
       }
     }
-    
+
     render () {
       return (
-        <View header activePanel="gallery">
-          <ScrollView
-            id="gallery"
-            header={{ title: 'Gallery' }}
-          >
+        <View header={false} activePanel="gallery">
+          <Panel id="gallery">
             <Group title="Sticks right">
               <Gallery
                 slideWidth="90%"
@@ -66,11 +63,11 @@
                 <Button v="new" onClick={() => this.setState({slideIndex: this.state.slideIndex === 2 ? 0 : this.state.slideIndex + 1 })}>Next slide</Button>
               </Div>
             </Group>
-          </ScrollView>
+          </Panel>
         </View>
       )
     }
   }
-  
+
   <Example />
 ```

@@ -80,9 +80,9 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
             <select onChange={ (e) => {
               window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
               window.location.reload();
-            } }>
-              <option value={window.uaList.ios} selected={window.navigator.userAgent === window.uaList.ios}>ios</option>
-              <option value={window.uaList.android} selected={window.navigator.userAgent === window.uaList.android}>android</option>
+            } } value={window.navigator.userAgent}>
+              <option value={window.uaList.ios}>ios</option>
+              <option value={window.uaList.android}>android</option>
             </select>
             <div style={{ marginTop: 4 }}>
               Version:&nbsp;{ pkg.version }

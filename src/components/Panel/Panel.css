@@ -1,0 +1,26 @@
+.Panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  }
+
+  .Panel--centered .Panel__in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    }
+
+  .Panel__in {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100%;
+    }
+
+    .Panel__in::after {
+      content: ' ';
+      padding-top: 1px;
+      width: 100%;
+      display: block;
+      }

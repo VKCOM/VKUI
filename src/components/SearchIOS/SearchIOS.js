@@ -13,7 +13,7 @@ export default class SearchIOS extends React.Component {
     super(props);
 
     let state = {
-      showAfter: props.theme === 'header',
+      showAfter: false,
       focused: false,
       placeholderOffset: null,
       afterWidth: null
@@ -30,7 +30,6 @@ export default class SearchIOS extends React.Component {
 
   static propTypes = {
     className: PropTypes.string,
-    before: PropTypes.node,
     after: PropTypes.node,
     defaultValue: PropTypes.string,
     value: PropTypes.string,
@@ -38,7 +37,8 @@ export default class SearchIOS extends React.Component {
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     placeholder: PropTypes.node,
-    theme: PropTypes.oneOf(['header', 'default'])
+    theme: PropTypes.oneOf(['header', 'default']),
+    getRef: PropTypes.func
   };
 
   static defaultProps = {
@@ -52,11 +52,17 @@ export default class SearchIOS extends React.Component {
   }
 
   calcSizes = () => {
+    const afterWidth = this.afterEl.offsetWidth;
+    const placeholderWidth = this.placeholderEl.offsetWidth;
+    const controlWidth = this.controlEl.offsetWidth;
+    const beforeWidth = this.beforeEl ? this.beforeEl.offsetWidth : 0;
+
     this.setState({
-      afterWidth: this.afterEl.offsetWidth,
-      placeholderWidth: this.placeholderEl.offsetWidth,
-      controlWidth: this.controlEl.offsetWidth,
-      placeholderOffset: (this.controlEl.offsetWidth - (this.state.showAfter ? this.afterEl.offsetWidth + 12 : 0) - this.placeholderEl.offsetWidth) / 2
+      afterWidth,
+      placeholderWidth,
+      controlWidth,
+      beforeWidth,
+      placeholderOffset: (controlWidth - beforeWidth - (this.state.showAfter ? afterWidth : 0) - placeholderWidth) / 2
     });
   };
 
@@ -71,28 +77,41 @@ export default class SearchIOS extends React.Component {
   }
 
   onFocus = (e) => {
-    this.setState({ focused: true, showAfter: true }, () => this.props.onFocus && this.props.onFocus(e));
+    this.setState({
+      focused: true,
+      showAfter: true
+    }, () => this.props.onFocus && this.props.onFocus(e));
   };
 
   onBlur = (e) => {
-    this.setState({ focused: false, showAfter: this.value || this.props.theme === 'header' }, () => this.props.onBlur && this.props.onBlur(e));
+    this.setState({
+      focused: false,
+      showAfter: this.value
+    }, () => this.props.onBlur && this.props.onBlur(e));
   };
 
   onChange = (e) => {
-    if (this.isControlledOutside) {
-      this.props.onChange(e.target.value, e);
-    } else {
+    if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
+    }
+    if (this.props.onChange) {
+      this.props.onChange(e.target.value, e);
     }
   };
 
   onCancel = () => {
-    if (this.isControlledOutside) {
-      this.props.onChange('');
-    } else {
+    this.setState({ showAfter: false });
+    if (!this.isControlledOutside) {
       this.setState({ value: '' });
     }
-    this.setState({ showAfter: false });
+    if (this.props.onChange) {
+      this.props.onChange('');
+    }
+  };
+
+  inputRef = (el) => {
+    this.inputEl = el;
+    this.props.getRef && this.props.getRef(el);
   };
 
   render () {
@@ -105,8 +124,8 @@ export default class SearchIOS extends React.Component {
       defaultValue,
       value,
       placeholder,
-      before,
       after,
+      getRef,
       ...inputProps
     } = this.props;
 
@@ -116,12 +135,11 @@ export default class SearchIOS extends React.Component {
         'Search--focused': this.state.focused,
         'Search--has-value': !!this.value
       }, className)}>
-        {before && <div className="Search__before">{before}</div>}
         <div
           className="Search__control"
           ref={el => this.controlEl = el}
           style={{
-            width: `${this.state.controlWidth - (this.state.showAfter ? this.state.afterWidth + 12 : 0)}px`
+            width: `${this.state.controlWidth - this.state.beforeWidth - (this.state.showAfter ? this.state.afterWidth : 0)}px`
           }}
         >
           <div
@@ -138,7 +156,7 @@ export default class SearchIOS extends React.Component {
             }
           </div>
           <input
-            ref={el => this.inputEl = el}
+            ref={this.inputRef}
             type="text"
             className="Search__input"
             onFocus={this.onFocus}
@@ -152,7 +170,6 @@ export default class SearchIOS extends React.Component {
           ref={el => this.afterEl = el}
           className="Search__after"
           onClick={this.onCancel}
-          style={{ marginLeft: 12 }}
         >
           {after}
         </div>

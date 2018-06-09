@@ -1,7 +1,5 @@
 ```
-<View popout={<ScreenSpinner />} activePanel="spinner" header>
-  <ScrollView header={{ title: 'Screen Spinner' }} id="spinner">
-  
-  </ScrollView>
+<View popout={<ScreenSpinner />} header={false} activePanel="spinner">
+  <Panel id="spinner" />
 </View>
 ```

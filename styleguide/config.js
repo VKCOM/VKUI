@@ -20,15 +20,19 @@ module.exports = {
       name: 'Hello World',
       content: '../README.md'
     }, {
-      name: 'The concept',
+      name: 'The Concept',
       content: './pages/concept.md'
+    }, {
+      name: 'Migration',
+      content: './pages/migration.md'
     }, {
       name: 'Components',
       sections: [{
         name: 'Layout',
         components: () => [
           '../src/components/View/View.js',
-          '../src/components/ScrollView/ScrollView.js',
+          '../src/components/Panel/Panel.js',
+          '../src/components/PanelHeader/PanelHeader.js',
           '../src/components/HeaderButton/HeaderButton.js',
           '../src/components/Root/Root.js',
           '../src/components/FixedLayout/FixedLayout.js'
@@ -46,13 +50,13 @@ module.exports = {
         name: 'Blocks',
         components: () => [
           '../src/components/Button/Button.js',
-          '../src/components/ButtonNew/ButtonNew.js',
-          '../src/components/ButtonOld/ButtonOld.js',
+          '../src/components/Div/Div.js',
+          '../src/components/Link/Link.js',
           '../src/components/Header/Header.js',
           '../src/components/Group/Group.js',
-          '../src/components/Pane/Pane.js',
           '../src/components/List/List.js',
           '../src/components/ListItem/ListItem.js',
+          '../src/components/Switch/Switch.js',
           '../src/components/InfoRow/InfoRow.js',
           '../src/components/Entity/Entity.js',
           '../src/components/Gallery/Gallery.js',
@@ -67,21 +71,15 @@ module.exports = {
         name: 'Forms',
         components: () => [
           '../src/components/FormLayout/FormLayout.js',
-          '../src/components/Switch/Switch.js',
-          '../src/components/Select/Select.js',
           '../src/components/Slider/Slider.js',
           '../src/components/RangeSlider/RangeSlider.js',
           '../src/components/Radio/Radio.js',
+          '../src/components/Checkbox/Checkbox.js',
           '../src/components/Input/Input.js',
+          '../src/components/Select/Select.js',
+          '../src/components/Select/SelectMimicry.js',
           '../src/components/Textarea/Textarea.js',
           '../src/components/File/File.js'
-        ]
-      }, {
-        name: 'Helpers',
-        components: () => [
-          '../src/components/Div/Div.js',
-          '../src/components/Flex/Flex.js',
-          '../src/components/Tappable/Tappable.js'
         ]
       }, {
         name: 'Icons',
@@ -89,6 +87,9 @@ module.exports = {
       }, {
         name: 'Colors',
         content: './pages/colors.md'
+      }, {
+        name: 'Utils',
+        content: './pages/utils.md'
       }]
     }
   ],

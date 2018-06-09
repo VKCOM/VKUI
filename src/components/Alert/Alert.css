@@ -25,7 +25,8 @@
   .Alert--ios .Alert__content {
     position: relative;
     padding: 19px 16px 20px;
-    font: 13px/16px -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 16px;
     text-align: center;
     }
   .Alert--ios .Alert__content::after {
@@ -40,7 +41,9 @@
 
     .Alert--ios .Alert__content h2 {
       margin: 0 0 7px;
-      font: 500 17px/22px -apple-system, 'Helvetica Neue', Helvetica, sans-serif;
+      font-weight: bold;
+      font-size: 17px;
+      line-height: 22px;
       }
 
     .Alert--ios .Alert__content p {

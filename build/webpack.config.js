@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
 const pkg = require('../package.json');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const cssTransformOptions = require('./cssTransformOptions');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -62,25 +62,14 @@ const config = {
   },
   externals: {
     'react': 'react',
-    'prop-types': 'prop-types'
+    'prop-types': 'prop-types',
+    'react-dom': 'react-dom'
   }
 };
 
-const devConfig = {
-  devServer: {
-    outputPath: path.resolve(__dirname, '../dist'),
-    contentBase: path.resolve(__dirname, '../dist'),
-    stats: 'errors-only'
-  },
-  plugins: [new BundleAnalyzerPlugin()]
-};
+const devConfig = {};
 
 const prodConfig = {
-  output: {
-    filename: '[name].js',
-    chunkFilename: '[name].js',
-    publicPath: '/assets/'
-  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': `"production"`,

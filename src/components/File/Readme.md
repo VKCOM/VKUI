@@ -1,9 +1,12 @@
 ```jsx
-  <View activePanel="panel" header>
-    <ScrollView id="panel" header={{ title: 'File' }}>
-      <Group title="Upload your photo">
-        <File />
-      </Group>
-    </ScrollView>
+  <View activePanel="panel">
+    <Panel id="panel" theme="white">
+      <PanelHeader>
+        File
+      </PanelHeader>
+      <FormLayout>
+        <File top="Upload your photo" />
+      </FormLayout>
+    </Panel>
   </View>
 ```

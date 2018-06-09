@@ -102,6 +102,8 @@ export default class ListItem extends Component {
 
   getRootRef = el => this.rootEl = el;
 
+  emptyClickHandler = () => {};
+
   render () {
     const {
       before,
@@ -135,11 +137,12 @@ export default class ListItem extends Component {
         ref={this.getRootRef}
         style={{ height: this.state.height }}
         {...rootProps}
+        onClick={selectable ? this.onSelectableClick : onClick}
       >
         <Tappable
           component={selectable ? 'label' : 'div'}
           className="ListItem__in"
-          onClick={selectable ? this.onSelectableClick : onClick}
+          disabled={!selectable && !onClick}
           style={{ transform: `translateX(-${this.state.removeOffset}px)` }}
         >
           {selectable &&

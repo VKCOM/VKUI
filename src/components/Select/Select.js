@@ -1,5 +1,4 @@
 import './Select.css';
-import './Select.new.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
@@ -13,20 +12,22 @@ export default class Select extends Component {
 
   constructor (props) {
     super(props);
+    const state = {
+      title: '',
+      notSelected: false
+    };
     if (typeof props.value !== 'undefined') {
       this.isControlledOutside = true;
     } else {
-      this.state = {
-        value: this.props.defaultValue || ''
-      };
+      state.value = this.props.defaultValue || '';
     }
+    this.state = state;
   }
 
   static propTypes = {
     style: PropTypes.object,
     className: PropTypes.string,
     label: PropTypes.string,
-    options: PropTypes.array,
     name: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.any,
@@ -40,14 +41,14 @@ export default class Select extends Component {
   static defaultProps = {
     style: {},
     label: '',
-    options: null,
     name: '',
-    v: 'old'
+    v: 'new'
   };
 
-  get baseClass () { return this.props.v === 'old' ? 'Select' : 'SelectNew'; }
+  get baseClass () { return 'Select'; }
 
   onChange = (e) => {
+    this.setTitle();
     if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
     }
@@ -56,27 +57,40 @@ export default class Select extends Component {
     }
   };
 
+  setTitle = (el = this.selectEl) => {
+    const selectedOption = el.options[el.selectedIndex];
+    selectedOption && this.setState({
+      title: selectedOption.text,
+      notSelected: selectedOption.value === '' && this.props.hasOwnProperty('placeholder')
+    });
+  };
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.value !== this.props.value || prevProps.children !== this.props.children) {
+      this.setTitle();
+    }
+  }
+
+  componentDidMount () {
+    this.setTitle();
+  }
+
   get value () {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  get options () {
-    const { options, placeholder } = this.props;
-    if (!options) return options;
-    return placeholder ? [{ text: placeholder, value: '' }, ...options] : options;
-  }
-
   getRef = (el) => {
+    this.selectEl = el;
     this.props.getRef && this.props.getRef(el);
   };
 
   render () {
-    const { style, label, onChange, options, value, defaultValue, placeholder, children, className, v, getRef, ...restProps } = this.props;
+    const { style, label, value, defaultValue, onChange, placeholder, children, className, v, getRef, ...restProps } = this.props;
 
     return (
       <label
         className={classnames(getClassName(this.baseClass), {
-          [`${this.baseClass}--not-selected`]: this.value === ''
+          [`${this.baseClass}--not-selected`]: this.state.notSelected
         }, className)}
         style={style}
       >
@@ -86,22 +100,14 @@ export default class Select extends Component {
           ref={this.getRef}
           {...restProps}
         >
-          {Array.isArray(this.options) && this.options.length && this.options.map((option, i) => {
-            const isString = typeof option === 'string';
-            const value = isString ? option : typeof option.value === 'string' ? option.value : option.text;
-            const key = !isString && option.id;
-
-            return (
-              <option value={value} key={key || `option-${i}`}>
-                {isString ? option : option.text}
-              </option>
-            );
-          })}
-          {placeholder && !this.options && <option value="">{placeholder}</option>}
+          {placeholder && <option value="">{placeholder}</option>}
           {children}
         </select>
-        {v === 'new' && osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
-        {v === 'new' && <Icon24Dropdown />}
+        <div className={`${this.baseClass}__container`}>
+          <div className={`${this.baseClass}__title`}>{this.state.title}</div>
+          <Icon24Dropdown />
+        </div>
+        {osname === ANDROID && <div className={`${this.baseClass}-underline`} />}
       </label>
     );
   }

@@ -1,0 +1,209 @@
+@import "../../styles/constants.css";
+@import "./PanelHeaderTransitions.css";
+
+.PanelHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5;
+  }
+
+  .PanelHeader__in {
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    }
+
+    .PanelHeader__left {
+      flex-shrink: 0;
+      }
+
+      .PanelHeader__icon {}
+
+        .PanelHeader-icon {}
+
+      .PanelHeader__left-in {
+        box-sizing: border-box;
+        }
+
+        .PanelHeader-left-in {}
+
+    .PanelHeader__right {
+      flex-shrink: 0;
+      }
+
+      .PanelHeader-right {
+        box-sizing: border-box;
+        text-align: right;
+        justify-content: flex-end;
+        display: flex;
+        }
+
+    .PanelHeader__content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      }
+
+      .PanelHeader-content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        }
+
+.PanelHeader--ios {
+  height: 44px;
+  padding-top: 20px;
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+  }
+
+  .PanelHeader--ios::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--ios-bottom-border);
+    content: '';
+    }
+
+  .PanelHeader--ios.PanelHeader--brand {
+    color: #fff;
+    background: var(--vk-color);
+    }
+
+  .PanelHeader--ios.PanelHeader--light {
+    color: var(--vk-color);
+    background: #fff;
+    }
+
+  .PanelHeader--ios .PanelHeader__in {
+    top: 20px;
+    top: constant(safe-area-inset-top);
+    top: env(safe-area-inset-top);
+    justify-content: space-between;
+    }
+
+    .PanelHeader--ios .PanelHeader__left {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      flex-basis: 0;
+      }
+
+      .PanelHeader--ios .PanelHeader__icon {}
+
+        .PanelHeader--ios .PanelHeader-icon {
+          font-size: 17px;
+          }
+
+      .PanelHeader--ios .PanelHeader__left-in {
+        box-sizing: border-box;
+        }
+
+        .PanelHeader--ios .PanelHeader-left-in {
+          font-size: 17px;
+          }
+
+          .PanelHeader--ios .PanelHeader-left-in .HeaderButton .Icon--24 {
+            padding-left: 12px;
+            }
+
+          .PanelHeader--ios .PanelHeader-left-in:not(.PanelHeader-left-in--with-icon) .HeaderButton > *:not(.Icon),
+          .PanelHeader--ios .PanelHeader-left-in:not(.PanelHeader-left-in--with-icon) .HeaderButton__str {
+            padding-left: 16px;
+            }
+
+    .PanelHeader--ios .PanelHeader__right {
+      flex-grow: 1;
+      flex-basis: 0;
+      }
+
+      .PanelHeader--ios .PanelHeader-right {
+        font-size: 17px;
+        }
+
+        .PanelHeader--ios .PanelHeader-right .HeaderButton .Icon--24 {
+          padding-right: 12px;
+          }
+
+        .PanelHeader--ios .PanelHeader-right .HeaderButton > *:not(.Icon),
+        .PanelHeader--ios .PanelHeader-right .HeaderButton__str {
+          padding-right: 16px;
+          }
+
+    .PanelHeader--ios .PanelHeader__content {
+
+      }
+
+      .PanelHeader--ios .PanelHeader-content {
+        font-weight: 500;
+        font-size: 17px;
+        line-height: 44px;
+        text-align: center;
+        padding: 0 6px;
+        transition: color .6s var(--ios-easing);
+        color: #fff;
+        }
+
+      .PanelHeader--ios.PanelHeader--light .PanelHeader-content {
+        color: #000;
+        }
+
+
+
+.PanelHeader--android {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
+  height: 56px;
+  }
+
+  .PanelHeader--android .PanelHeader__in {
+    height: 56px;
+    }
+
+.PanelHeader--no-shadow {
+  box-shadow: none;
+  transition: box-shadow .3s var(--android-easing);
+  }
+
+  .PanelHeader--android .PanelHeader__content {
+    max-width: 100%;
+    flex-grow: 2;
+    }
+
+  .PanelHeader--android .PanelHeader__in--brand {
+    background: var(--vk-color);
+    color: #fff;
+    }
+
+  .PanelHeader--android .PanelHeader__in--light {
+    background-color: #fff;
+    color: #5a5d61;
+    }
+
+    .PanelHeader--android .PanelHeader-right:not(:empty) {
+      padding-right: 4px;
+      }
+
+    .PanelHeader--android .PanelHeader-left-in {
+      padding-left: 4px;
+      }
+
+    .PanelHeader--android .PanelHeader-content {
+      font-size: 20px;
+      line-height: 56px;
+      padding: 0 12px;
+      }
+
+      .PanelHeader--android .Search {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        }

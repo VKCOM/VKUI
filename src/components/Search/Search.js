@@ -19,7 +19,8 @@ export default class Search extends React.Component {
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     placeholder: PropTypes.node,
-    theme: PropTypes.oneOf(['header', 'default'])
+    theme: PropTypes.oneOf(['header', 'default']),
+    getRef: PropTypes.func
   };
 
   render () {

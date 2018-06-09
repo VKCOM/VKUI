@@ -1,4 +1,4 @@
-Компонент для отрисовки кнопок в шапке ScrollView. Внутрь компонента передается либо иконка, либо текст. Текстовые кнопки
+Компонент для отрисовки кнопок в [PanelHeader](#panelheader). Внутрь компонента передается либо иконка, либо текст. Текстовые кнопки
 чаще всего используются в iOS, но есть исключения для Android.
 
 Шапки iOS и Android достаточно сильно отличаются внешне, поэтому описание будет разделено на две части.
@@ -8,24 +8,20 @@
 Кнопки могут быть переданы в `left` или `right` свойства `header`:
 
 ```jsx static
-  <ScrollView 
-    header={{ 
-      left: <HeaderButton><Icon24Back/></HeaderButton>, 
-      right: <HeaderButton><Icon24Search/></HeaderButton> 
-    }}
+  <PanelHeader
+    left={<HeaderButton><Icon24Back/></HeaderButton>}
+    right={<HeaderButton><Icon24Search/></HeaderButton>}
   />
 ```
 
 Если нужно несколько кнопок справа или слева, то передаем массив:
 
 ```jsx static
-  <ScrollView 
-    header={{  
-      right: [
-        <HeaderButton key="search"><Icon24Search/></HeaderButton>, 
-        <HeaderButton key="add"><Icon24Add/></HeaderButton>
-      ] 
-    }}
+  <PanelHeader
+    right={[
+      <HeaderButton key="search"><Icon24Search/></HeaderButton>,
+      <HeaderButton key="add"><Icon24Add/></HeaderButton>
+    ]}
   />
 ```
 
@@ -34,34 +30,13 @@
 Основное отличие – это составность левой кнопки. Она может состоять из иконки и текста. Пример:
 
 ```jsx static
-  <ScrollView 
-    header={{  
-      left: <HeaderButton>Back</HeaderButton>,
-      icon: <HeaderButton><Icon28Chevron_back/></HeaderButton> 
-    }}
+  <PanelHeader
+    addon={<HeaderButton>Назад</HeaderButton>}
+    left={<HeaderButton>{osname === IOS <Icon28Chevron_back/> ? <Icon24Back/>}</HeaderButton>}
   />
 ```
 
-**Кнопка "назад"**
-
-```jsx static
-  <ScrollView
-    header={{
-      left: <HeaderButton>{osname === IOS ? 'Cancel' : <Icon24Back/>}</HeaderButton>
-      icon: osname === IOS && <HeaderButton><Icon28Chevron_back/></HeaderButton>
-    }}
-  />
-```
-
-**Кнопка "закрыть"**
-
-```jsx static
-  <ScrollView
-    header={{
-      left: <HeaderButton>{osname === IOS ? 'Close' : <Icon24Cancel/>}</HeaderButton>
-    }}
-  />
-```
+В примере выше появляется новое свойство `addon`, актуальное только для iOS версии.
 
 ```
 class Example extends React.Component {
@@ -77,71 +52,66 @@ class Example extends React.Component {
   render() {
     return (
       <Root activeView={this.state.activeView}>
-        <View id="main" header activePanel={this.state.activePanel}>
-          <ScrollView 
-            id="panel1" 
-            header={{ 
-              title: "Стартовый экран",
-              left: <HeaderButton>{osname === IOS ? 'Close' : <Icon24Cancel/>}</HeaderButton> 
-            }}
-          >
+        <View id="main" activePanel={this.state.activePanel}>
+          <Panel id="panel1">
+            <PanelHeader left={<HeaderButton>{osname === IOS ? 'отмена' : <Icon24Cancel/>}</HeaderButton>}>
+              Стартовый экран
+            </PanelHeader>
             <Group>
-              <Pane>
-                Если приложение открывается как модальное окно, то в качестве левой кнопки принято кнопку "закрыть".
+              <Div>
+                Если приложение открывается как модальное окно, то в качестве левой кнопки принято кнопку "отмена".
                 <br/>
                 <br/>
-                В противном случае показывается кнопка "назад". 
-              </Pane>
+                В противном случае показывается кнопка "назад".
+              </Div>
             </Group>
             <Group>
-              <Button onClick={ () => this.setState({ activePanel: 'panel2' }) }>
+              <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel2' }) }>
                 Больше примеров
               </Button>
             </Group>
-          </ScrollView>
-          <ScrollView
-            id="panel2" 
-            header={{ 
-              title: "Заголовок",
-              icon: osname === IOS && <HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}><Icon28Chevron_back/></HeaderButton>,
-              left:  <HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>{osname === IOS ? 'Back' : <Icon24Back/>}</HeaderButton>,
-              right: <HeaderButton onClick={() => {}}><Icon24Story/></HeaderButton> 
-            }} 
-          >
+          </Panel>
+          <Panel id="panel2">
+            <PanelHeader
+              left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>{osname === IOS ? <Icon28Chevron_back/> : <Icon24Back/>}</HeaderButton>}
+              addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>назад</HeaderButton>}
+              right={<HeaderButton onClick={() => {}}><Icon24Story/></HeaderButton>}
+            >
+              Заголовок
+            </PanelHeader>
             <Group>
-              <Button onClick={ () => this.setState({ activePanel: 'panel3' }) }>
+              <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel3' }) }>
                 Несколько иконок
               </Button>
             </Group>
-          </ScrollView>
-          <ScrollView
-            id="panel3" 
-            header={{ 
-              title: "Две иконки",
-              icon: osname === IOS && <HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}><Icon28Chevron_back/></HeaderButton>,
-              left: osname === ANDROID && <HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}><Icon24Back/></HeaderButton>,
-              right: [
+          </Panel>
+          <Panel id="panel3">
+            <PanelHeader
+              left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>{osname === IOS ? <Icon28Chevron_back/> : <Icon24Back/>}</HeaderButton>}
+              addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>назад</HeaderButton>}
+              right={[
                 <HeaderButton key="add" onClick={() => {}}><Icon24Add/></HeaderButton>,
                 <HeaderButton key="more" onClick={() => {}}><Icon24More_vertical/></HeaderButton>
-              ] 
-            }}
-          >
+              ]}
+            >
+              Две иконки
+            </PanelHeader>
             <Group>
-              <Button onClick={ () => this.setState({ activeView: 'modal' }) }>
+              <Button type="cell" onClick={ () => this.setState({ activeView: 'modal' }) }>
                 Модальное окно
               </Button>
             </Group>
-          </ScrollView>
+          </Panel>
         </View>
         <View id="modal" header activePanel="modal-panel">
-          <ScrollView 
-            id="modal-panel" 
-            header={{
-              left: <HeaderButton onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</HeaderButton>,
-              right: <HeaderButton primary onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Готово' : <Icon24Done/>}</HeaderButton>,  
-              title: 'Модальное окно' 
-            }} 
-          />
+          <Panel id="modal-panel">
+            <PanelHeader
+              left={<HeaderButton onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</HeaderButton>}
+              right={<HeaderButton primary onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Готово' : <Icon24Done/>}</HeaderButton>}
+            >
+              Модальное окно
+            </PanelHeader>
+          </Panel>
         </View>
       </Root>
     )

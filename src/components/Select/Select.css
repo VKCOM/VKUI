@@ -2,30 +2,82 @@
 
 .Select {
   display: block;
-  margin: 0;
-  overflow: hidden;
-  min-width: 140px;
+  position: relative;
+  box-sizing: border-box;
+  }
+
+.Select--mimicry:focus {
   outline: none;
   }
 
   .Select select {
     display: block;
-    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
-    line-height: 22px;
+    position: absolute;
     appearance: none;
-    border: 0;
-    background: none;
-    width: 100%;
     outline: none;
-    }
-
-  .Select--ios select {
-    font-size: 17px;
-    padding: 11px 0 12px;
-    }
-
-  .Select--android select {
-    font-family: var(--android-font);
+    border: none;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 2;
     font-size: 16px;
-    padding: 16px 0 18px;
+    }
+
+  .Select__container {
+    line-height: 19px;
+    font-size: 16px;
+    padding: 12px 40px 12px 12px;
+    color: map(colors, black);
+    box-sizing: border-box;
+    height: 44px;
+    }
+
+  .Select select:disabled ~ .Select__container {
+    opacity: .6;
+    }
+
+    .Select__title {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      }
+
+    .Select--not-selected .Select__title {
+      color: map(colors, captionGray);
+      }
+
+    .Select .Icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: map(colors, lightBlueGray)
+      }
+
+.Select--ios {}
+
+  .Select--ios .Select__container {
+    border-radius: 10px;
+    background-color: rgb(242, 243, 245);
+    border: solid .5px rgba(0, 0, 0, 0.15);
+    }
+
+  .Select--ios select:focus ~ .Select__container,
+  .Select--ios.Select--mimicry:focus .Select__container {
+    border-color: map(colors, accentBlue);
+    }
+
+.Select--android {}
+
+  .Select--android .Select__container {
+    border-radius: 4px;
+    background-color: #f2f3f5;
+    }
+
+  .Select--android select:focus ~ .Select-underline::before,
+  .Select--android.Select--mimicry:focus .Select-underline::before {
+    transform: scaleX(1);
+    z-index: 0;
+    transition: transform .14s var(--android-easing);
     }
