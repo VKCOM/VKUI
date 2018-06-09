@@ -1,15 +1,15 @@
 ```
   class Example extends React.Component {
-  
+
     constructor (props) {
-    
+
       super(props);
-      
+
       this.state = {
         slideIndex: 0
       }
     }
-    
+
     render () {
       return (
         <View header={false} activePanel="gallery">
@@ -68,6 +68,6 @@
       )
     }
   }
-  
+
   <Example />
 ```

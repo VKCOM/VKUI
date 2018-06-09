@@ -87,6 +87,9 @@ module.exports = {
       }, {
         name: 'Colors',
         content: './pages/colors.md'
+      }, {
+        name: 'Utils',
+        content: './pages/utils.md'
       }]
     }
   ],

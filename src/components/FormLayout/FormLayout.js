@@ -16,7 +16,6 @@ export default class FormLayout extends React.Component {
   };
 
   static defaultProps = {
-    allowSubmit: true,
     status: 'default',
     TagName: 'form'
   };

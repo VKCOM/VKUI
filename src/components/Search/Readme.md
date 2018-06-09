@@ -73,8 +73,8 @@
         <div>
           <PanelHeader
             right={[
-              osname === ANDROID && <HeaderButton onClick={this.toggleSearch}><Icon24Search /></HeaderButton>,
-              <HeaderButton onClick={this.props.goHeaderSearch}><Icon24Add /></HeaderButton>,
+              osname === ANDROID && <HeaderButton key="search" onClick={this.toggleSearch}><Icon24Search /></HeaderButton>,
+              <HeaderButton onClick={this.props.goHeaderSearch} key="add"><Icon24Add /></HeaderButton>,
             ]}
           >
             {this.state.showSearch ?
