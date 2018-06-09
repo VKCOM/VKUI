@@ -2,6 +2,8 @@ import React from 'react';
 import { sizes as avatarSizes } from '../src/components/Avatar/Avatar';
 import { values as colors, titles as colorTitles, keys as colorKeys } from '../src/helpers/colors'
 import {platform, IOS, ANDROID} from '../src/lib/platform';
+import '../dist/icons/icons.common';
+import '../src/styles/common.css';
 
 window.osname = platform();
 window.IOS = IOS;
@@ -10,7 +12,6 @@ window.ANDROID = ANDROID;
 window.Icon = {};
 
 Object.keys(icons).forEach((iconPath) => {
-  console.log('../dist/icons/' + iconPath +'.js');
   let Icon = require('../dist/icons/' + iconPath +'.js').default;
   const iconSize = iconPath.split('/')[0];
   const iconName = 'Icon' + iconSize + iconPath.split('/')[1].charAt(0).toUpperCase() + iconPath.split('/')[1].slice(1);

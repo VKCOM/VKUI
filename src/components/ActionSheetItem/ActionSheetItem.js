@@ -7,7 +7,6 @@ import Tappable from '../Tappable/Tappable';
 const baseClassNames = getClassName('ActionSheet-Item');
 
 export default class ActionSheetItem extends React.Component {
-
   static propTypes = {
     theme: PropTypes.oneOf(['default', 'destructive', 'cancel']),
     children: PropTypes.node,

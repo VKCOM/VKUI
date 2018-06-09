@@ -8,7 +8,6 @@ import { transitionEndEventName, transitionStartEventName } from '../View/View';
 const baseClassNames = getClassName('FixedLayout');
 
 export default class FixedLayout extends React.Component {
-
   state = {
     transition: false,
     topOffset: null,

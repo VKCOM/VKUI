@@ -13,7 +13,6 @@ const osname = platform();
 const baseClassNames = getClassName('ActionSheet');
 
 export default class ActionSheet extends React.Component {
-
   state = {
     closing: false
   };

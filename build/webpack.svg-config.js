@@ -1,6 +1,5 @@
 const path = require('path');
 const icons = require('./icons');
-const webpack = require('webpack');
 
 const config = {
   entry: icons.entry,
@@ -14,16 +13,7 @@ const config = {
       {
         test: /\.svg$/,
         use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                'es2015'
-              ],
-              'react'
-            ],
-            plugins: ['transform-object-rest-spread']
-          }
+          loader: 'babel-loader'
         }, {
           loader: path.resolve('./build/loaders/svgToReact')
         }, {
@@ -34,16 +24,17 @@ const config = {
       }
     ]
   },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'icons.common'
-    })
-  ],
+  optimization: {
+    splitChunks: {
+      minChunks: 2,
+      name: 'icons.common',
+      chunks: 'all'
+    }
+  },
+  mode: 'production',
   externals: {
     'react': 'react',
     'prop-types': 'prop-types'
-    // 'svg-baker-runtime/browser-symbol': 'svg-baker-runtime/browser-symbol',
-    // 'svg-sprite-loader/runtime/browser-sprite.build': 'svg-sprite-loader/runtime/browser-sprite.build'
   }
 };
 

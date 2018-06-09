@@ -1,17 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const merge = require('webpack-merge');
 const pkg = require('../package.json');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const cssTransformOptions = require('./cssTransformOptions');
 
 const isProduction = process.env.NODE_ENV === 'production';
-
-const cssTransform = ExtractTextPlugin.extract({
-  fallback: 'style-loader',
-  use: cssTransformOptions
-});
 
 const config = {
   entry: {
@@ -27,39 +21,24 @@ const config = {
       {
         test: /\.js?$/,
         exclude: /node_modules\/(?!vkui)(.+)/,
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            [
-              'es2015',
-              { modules: false }
-            ],
-            'react'
-          ],
-          plugins: ['transform-class-properties', 'transform-object-rest-spread'],
-          env: {
-            production: {
-              plugins: [
-                'transform-react-remove-prop-types',
-                'transform-class-properties'
-              ]
-            }
-          }
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
-        use: cssTransform
+        use: [MiniCssExtractPlugin.loader, ...cssTransformOptions]
       }
     ]
   },
   devtool: 'source-map',
   plugins: [
-    new ExtractTextPlugin('[name].css')
+    new MiniCssExtractPlugin({
+      filename: 'vkui.css'
+    })
   ],
   stats: {
     children: false
   },
+  mode: process.env.NODE_ENV || 'development',
   externals: {
     'react': 'react',
     'prop-types': 'prop-types',

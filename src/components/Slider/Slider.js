@@ -13,7 +13,6 @@ function precisionRound (number, precision) {
 }
 
 export default class Slider extends Component {
-
   constructor (props) {
     super(props);
     this.state = {

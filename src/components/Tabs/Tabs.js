@@ -10,7 +10,6 @@ const osname = platform();
 const baseClassName = getClassName('Tabs');
 
 export default class Tabs extends React.Component {
-
   static propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,

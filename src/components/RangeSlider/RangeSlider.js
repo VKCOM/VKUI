@@ -8,7 +8,6 @@ import classnames from '../../lib/classnames';
 const baseClassNames = getClassName('Slider');
 
 export default class RangeSlider extends Slider {
-
   static propTypes = {
     ...Slider.propTypes,
     value: PropTypes.arrayOf(PropTypes.number),

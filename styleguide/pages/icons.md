@@ -45,8 +45,7 @@
         panels.push(
           <Panel id={`size_${iconSize}`} key={`size_${iconSize}`}>
             <PanelHeader
-              left={osname === ANDROID && <HeaderButton onClick={this.back.bind(this)}><Icon24Back /></HeaderButton>}
-              icon={osname === IOS && <HeaderButton onClick={this.back.bind(this)}><Icon28Chevron_back /></HeaderButton>}
+              left={<HeaderButton onClick={this.back.bind(this)}>{osname === IOS ? <Icon28Chevron_back /> : <Icon24Back />}</HeaderButton>}
             >
               Icons: {iconSize}
             </PanelHeader>

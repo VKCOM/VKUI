@@ -10,7 +10,6 @@ const osname = platform();
 const baseClassName = getClassName('Select');
 
 export default class SelectMimicry extends Component {
-
   static propTypes = {
     style: PropTypes.object,
     className: PropTypes.string,

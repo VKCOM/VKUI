@@ -11,7 +11,6 @@ const osname = platform();
 const baseClassNames = getClassName('PopoutWrapper');
 
 export default class PopoutWrapper extends React.Component {
-
   state = {
     opened: false
   };

@@ -14,7 +14,6 @@ let osname = platform();
 const baseClassNames = getClassName('ListItem');
 
 export default class ListItem extends Component {
-
   static propTypes = {
     before: PropTypes.node,
     indicator: PropTypes.node,

@@ -10,7 +10,6 @@ import Icon24Cancel from '../../../dist/icons/24/cancel';
 const baseClassName = getClassName('Search');
 
 export default class SearchAndroid extends React.Component {
-
   constructor (props) {
     super(props);
 

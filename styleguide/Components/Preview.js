@@ -1,6 +1,6 @@
 import React from 'react';
 import PreviewParent from 'react-styleguidist/lib/rsg-components/Preview/Preview';
-import Wrapper from 'react-styleguidist/lib/rsg-components/Wrapper/Wrapper';
+import ReactExample from 'react-styleguidist/lib/rsg-components/ReactExample/ReactExample';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ReactFrame from 'react-frame-component';
@@ -9,7 +9,7 @@ const frameInitialContent = `
   <!DOCTYPE html>
   <html>
     <head>
-      <link href="./main.css" rel="stylesheet" id="styles"></link>
+      <link href="./vkui.css" rel="stylesheet" id="styles"></link>
       <style>
         .frame-content {
           margin: 0;
@@ -32,17 +32,12 @@ const frameInitialContent = `
 
 class InsertSvgSprite extends React.Component {
 
-  state = {
-    loaded: false
-  };
-
   static contextTypes = {
     document: PropTypes.any
   };
 
   componentDidMount () {
     let sprite = document.getElementById('__SVG_SPRITE_NODE__');
-
     this.context.document.body.appendChild(sprite.cloneNode(true));
   }
 
@@ -77,30 +72,6 @@ class LoadStyles extends React.Component {
   }
 }
 
-class PreviewComponent extends React.Component {
-  static propTypes = {
-    component: PropTypes.func.isRequired
-  };
-
-  constructor () {
-    super();
-    this.state = {};
-    this.setState = this.setState.bind(this);
-    this.setInitialState = this.setInitialState.bind(this);
-  }
-
-  // Synchronously set initial state, so it will be ready before first render
-  // Ignore all consequent calls
-  setInitialState (initialState) {
-    Object.assign(this.state, initialState);
-    this.setInitialState = undefined;
-  }
-
-  render () {
-    return this.props.component(this.state, this.setState, this.setInitialState);
-  }
-}
-
 export default class Preview extends PreviewParent {
 
   executeCode () {
@@ -113,14 +84,7 @@ export default class Preview extends PreviewParent {
       return;
     }
 
-    const compiledCode = this.compileCode(code);
-    if (!compiledCode) {
-      return;
-    }
-
-    const exampleComponent = this.evalInContext(compiledCode);
     const wrappedComponent = (
-      <Wrapper onError={this.handleError}>
         <ReactFrame
           initialContent={frameInitialContent}
           mountTarget="body"
@@ -134,10 +98,14 @@ export default class Preview extends PreviewParent {
         >
           <InsertSvgSprite />
           <LoadStyles>
-            <PreviewComponent component={exampleComponent} />
+            <ReactExample
+              code={code}
+              evalInContext={this.props.evalInContext}
+              onError={this.handleError}
+              compilerConfig={this.context.config.compilerConfig}
+            />
           </LoadStyles>
         </ReactFrame>
-      </Wrapper>
     );
 
     window.requestAnimationFrame(() => {

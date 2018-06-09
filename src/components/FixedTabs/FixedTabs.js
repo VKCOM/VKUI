@@ -11,7 +11,6 @@ const osname = platform();
 const baseClassName = getClassName('FixedTabs');
 
 export default class FixedTabs extends React.Component {
-
   static propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
