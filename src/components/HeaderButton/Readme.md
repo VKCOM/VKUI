@@ -32,13 +32,14 @@
 ```jsx static
   <PanelHeader
     addon={<HeaderButton>Назад</HeaderButton>}
-    left={<HeaderButton>{osname === IOS <Icon28Chevron_back/> ? <Icon24Back/>}</HeaderButton>}
+    left={<HeaderButton>{osname === IOS <Icon28ChevronBack/> ? <Icon24Back/>}</HeaderButton>}
   />
 ```
 
 В примере выше появляется новое свойство `addon`, актуальное только для iOS версии.
 
 ```
+
 class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -73,7 +74,7 @@ class Example extends React.Component {
           </Panel>
           <Panel id="panel2">
             <PanelHeader
-              left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>{osname === IOS ? <Icon28Chevron_back/> : <Icon24Back/>}</HeaderButton>}
+              left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</HeaderButton>}
               addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>назад</HeaderButton>}
               right={<HeaderButton onClick={() => {}}><Icon24Story/></HeaderButton>}
             >
@@ -87,11 +88,11 @@ class Example extends React.Component {
           </Panel>
           <Panel id="panel3">
             <PanelHeader
-              left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>{osname === IOS ? <Icon28Chevron_back/> : <Icon24Back/>}</HeaderButton>}
+              left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</HeaderButton>}
               addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>назад</HeaderButton>}
               right={[
                 <HeaderButton key="add" onClick={() => {}}><Icon24Add/></HeaderButton>,
-                <HeaderButton key="more" onClick={() => {}}><Icon24More_vertical/></HeaderButton>
+                <HeaderButton key="more" onClick={() => {}}><Icon24MoreVertical/></HeaderButton>
               ]}
             >
               Две иконки

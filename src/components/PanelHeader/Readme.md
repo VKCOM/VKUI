@@ -6,7 +6,7 @@
 <View activePanel="community-create">
   <Panel id="community-create">
     <PanelHeader
-      left={<HeaderButton>{osname === IOS ? <Icon28Chevron_back /> : <Icon24Back />}</HeaderButton>}
+      left={<HeaderButton>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</HeaderButton>}
       addon={<HeaderButton>Назад</HeaderButton>}
     >
       Настройки

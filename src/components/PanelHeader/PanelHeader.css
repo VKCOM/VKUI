@@ -197,6 +197,7 @@
     .PanelHeader--android .PanelHeader-content {
       font-size: 20px;
       line-height: 56px;
+      font-weight: 500;
       padding: 0 12px;
       }
 

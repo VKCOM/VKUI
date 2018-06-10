@@ -1,7 +1,8 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.0.0-rc.3",
+  "version": "2.0.0",
   "main": "dist/vkui.js",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": "https://github.com/VKCOM/VKUI",
   "description": "VKUI library",
   "devDependencies": {
@@ -14,7 +15,6 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.23.0",
     "css-loader": "^0.27.1",
-    "csso-webpack-plugin": "^1.0.0-beta.10",
     "eslint": "^4.19.1",
     "eslint-config-semistandard": "^7.0.0",
     "eslint-config-standard": "^6.0.1",
@@ -41,25 +41,24 @@
     "style-loader": "^0.13.2",
     "stylelint": "^7.2.0",
     "stylelint-config-standard": "^16.0.0",
-    "svg-sprite-loader": "^3.6.2",
     "webpack": "^4.12.0",
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-cli": "^3.0.3",
     "webpack-merge": "^4.0.0",
     "webpack-stats-plugin": "^0.1.4",
-    "xml2js-parser": "^1.1.1"
+    "@vkontakte/icons": "^1.0.1"
   },
   "peerDependencies": {
     "react": "^16.4.0",
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.6.1",
+    "@vkontakte/icons": "^1.0.1"
   },
   "scripts": {
-    "prepublishOnly": "npm run clear && npm run icons && npm run build",
+    "prepublishOnly": "npm run clear && npm run build",
     "styleguide": "NODE_ENV=development styleguidist server --config=styleguide/config.js",
-    "dev": "NODE_ENV=development webpack --config=build/webpack.config.js --watch",
+    "dev": "NODE_ENV=development webpack --watch",
     "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
-    "icons": "rm -rf dist/icons/* && NODE_ENV=production webpack --config=build/webpack.svg-config.js",
-    "build": "NODE_ENV=production webpack --config=build/webpack.config.js",
+    "build": "NODE_ENV=production webpack",
     "clear": "rm -rf dist/*",
     "test": "./node_modules/.bin/eslint . && ./node_modules/.bin/stylelint ./src/**/*.css && ./node_modules/.bin/jest"
   },

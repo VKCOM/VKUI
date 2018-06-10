@@ -102,7 +102,7 @@
               <PanelHeader
                 left={
                   <HeaderButton onClick={() => this.setState({ activePanel: 'list' })}>
-                    {osname === ANDROID ? <Icon24Back/> : <Icon28Chevron_back/>}
+                    {osname === ANDROID ? <Icon24Back/> : <Icon28ChevronBack/>}
                   </HeaderButton>
                 }
               >

@@ -1,6 +1,5 @@
 import './lib/polyfills';
 import './styles/common.css';
-import '../dist/icons/icons.common';
 import { values as colors } from './helpers/colors';
 import { families as fontFamilies } from './helpers/fonts';
 
@@ -57,6 +56,7 @@ export { default as Textarea } from './components/Textarea/Textarea';
 export { default as Radio } from './components/Radio/Radio';
 export { default as Checkbox } from './components/Checkbox/Checkbox';
 export { default as Select } from './components/Select/Select';
+export { default as SelectMimicry } from './components/Select/SelectMimicry';
 
 /**
  * Helpers

@@ -1,7 +1,5 @@
 const path = require('path');
-const webpackConfig = require('../build/webpack.config');
-const webpack = require('webpack');
-const icons = require('../build/icons');
+const webpackConfig = require('../webpack.config');
 const template = require('./index.html');
 
 module.exports = {
@@ -83,9 +81,6 @@ module.exports = {
           '../src/components/File/File.js'
         ]
       }, {
-        name: 'Icons',
-        content: './pages/icons.md'
-      }, {
         name: 'Colors',
         content: './pages/colors.md'
       }, {
@@ -105,9 +100,6 @@ module.exports = {
       alias: {
         'rsg-components/Preview': path.join(__dirname, './Components/Preview')
       }
-    },
-    plugins: [...webpackConfig.plugins, new webpack.DefinePlugin({
-      icons: JSON.stringify(icons.entry)
-    })]
+    }
   })
 };

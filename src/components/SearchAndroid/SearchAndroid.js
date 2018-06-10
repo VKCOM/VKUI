@@ -4,8 +4,9 @@ import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import './SearchAndroid.css';
 import HeaderButton from '../HeaderButton/HeaderButton';
-import Icon24Back from '../../../dist/icons/24/back';
-import Icon24Cancel from '../../../dist/icons/24/cancel';
+import '@vkontakte/icons';
+import Icon24Back from '@vkontakte/icons/dist/24/back';
+import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 
 const baseClassName = getClassName('Search');
 

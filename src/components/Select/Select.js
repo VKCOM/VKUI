@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
-import Icon24Dropdown from '../../../dist/icons/24/dropdown';
+import '@vkontakte/icons';
+import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import {platform, ANDROID} from '../../lib/platform';
 
 const osname = platform();

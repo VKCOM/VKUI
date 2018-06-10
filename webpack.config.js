@@ -2,17 +2,46 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const merge = require('webpack-merge');
-const pkg = require('../package.json');
-const cssTransformOptions = require('./cssTransformOptions');
+const pkg = require('./package.json');
+const cssCustomProperties = require('postcss-custom-properties');
+const cssImport = require('postcss-import');
+const cssMaps = require('postcss-map');
+const autoprefixer = require('autoprefixer');
+const colorsMaps = require('./src/helpers/colors');
+const fontMaps = require('./src/helpers/fonts');
+
+const cssTransformOptions = [
+  {
+    loader: 'css-loader',
+    options: {
+      importLoaders: 1
+    }
+  },
+  {
+    loader: 'postcss-loader',
+    options: {
+      plugins: () => {
+        return [
+          cssImport(),
+          cssCustomProperties(),
+          cssMaps({
+            maps: [{ colors: colorsMaps.values, fontFamilies: fontMaps.families }]
+          }),
+          autoprefixer()
+        ];
+      }
+    }
+  }
+];
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const config = {
   entry: {
-    vkui: path.resolve(__dirname, '../src/index.js')
+    vkui: path.resolve(__dirname, 'src/index.js')
   },
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     libraryTarget: 'umd'
   },
@@ -29,11 +58,12 @@ const config = {
       }
     ]
   },
+  optimization: {
+    minimize: false
+  },
   devtool: 'source-map',
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'vkui.css'
-    })
+    new MiniCssExtractPlugin('[name].css')
   ],
   stats: {
     children: false
@@ -42,7 +72,8 @@ const config = {
   externals: {
     'react': 'react',
     'prop-types': 'prop-types',
-    'react-dom': 'react-dom'
+    'react-dom': 'react-dom',
+    '@vkontakte/icons': '@vkontakte/icons'
   }
 };
 

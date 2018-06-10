@@ -121,7 +121,7 @@
       return (
         <div>
           <PanelHeader
-            left={<HeaderButton onClick={this.props.goSearch}>{osname === IOS ? <Icon28Chevron_back /> : <Icon24Back />}</HeaderButton>}
+            left={<HeaderButton onClick={this.props.goSearch}>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</HeaderButton>}
             right={osname === ANDROID && <HeaderButton onClick={this.toggleSearch}><Icon24Search /></HeaderButton>}
           >
             {this.state.showSearch ?
