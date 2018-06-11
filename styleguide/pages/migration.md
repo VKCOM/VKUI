@@ -44,7 +44,7 @@
 ```jsx static
 <ScrollView header={{
   left: <HeaderButton>{osname === IOS ? 'Назад' : <Icon24Back />}</HeaderButton>
-  icon: osname === IOS && <HeaderButton><Icon28Chevron_back /></HeaderButton>
+  icon: osname === IOS && <HeaderButton><Icon28ChevronBack /></HeaderButton>
 }} />
 ```
 

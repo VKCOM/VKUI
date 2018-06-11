@@ -5,7 +5,6 @@ import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import {platform, IOS} from '../../lib/platform';
-import '@vkontakte/icons';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 
 const osname = platform();

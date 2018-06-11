@@ -9,7 +9,7 @@ const frameInitialContent = `
   <!DOCTYPE html>
   <html>
     <head>
-      <link href="./vkui.css" rel="stylesheet" id="styles"></link>
+      <link href="./main.css" rel="stylesheet" id="styles"></link>
       <style>
         .frame-content {
           margin: 0;

@@ -31,10 +31,7 @@
     "postcss-loader": "^2.1.5",
     "postcss-map": "^0.9.0",
     "pre-commit": "^1.2.2",
-    "prop-types": "^15.6.1",
-    "react": "^16.4.0",
     "react-docgen": "^2.20.0",
-    "react-dom": "^16.4.0",
     "react-frame-component": "^3.0.0",
     "react-styleguidist": "^7.0.17",
     "schema-utils": "^0.4.3",
@@ -46,12 +43,17 @@
     "webpack-cli": "^3.0.3",
     "webpack-merge": "^4.0.0",
     "webpack-stats-plugin": "^0.1.4",
-    "@vkontakte/icons": "^1.0.1"
+    "react-dom": "^16.4.0",
+    "react": "^16.4.0",
+    "prop-types": "^15.6.1"
   },
   "peerDependencies": {
+    "react-dom": "^16.4.0",
     "react": "^16.4.0",
-    "prop-types": "^15.6.1",
-    "@vkontakte/icons": "^1.0.1"
+    "prop-types": "^15.6.1"
+  },
+  "dependencies": {
+    "@vkontakte/icons": "^1.0.2"
   },
   "scripts": {
     "prepublishOnly": "npm run clear && npm run build",

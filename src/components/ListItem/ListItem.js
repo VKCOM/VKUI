@@ -5,7 +5,6 @@ import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import { platform, IOS, ANDROID } from '../../lib/platform';
-import '@vkontakte/icons';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';

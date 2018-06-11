@@ -4,7 +4,6 @@ const template = require('./index.html');
 
 module.exports = {
   title: 'VKUI styleguide',
-  assetsDir: path.join(__dirname, '../dist'),
   styleguideDir: path.join(__dirname, '../docs'),
   styleguideComponents: {
     PlaygroundRenderer: path.join(__dirname, './components/PlaygroundRenderer'),
@@ -89,13 +88,8 @@ module.exports = {
       }]
     }
   ],
-  context: {
-    PropTypes: 'prop-types',
-    ReactFrame: 'react-frame-component'
-  },
   require: [path.resolve(__dirname, './setup.js')],
   webpackConfig: Object.assign({}, webpackConfig, {
-    externals: {},
     resolve: {
       alias: {
         'rsg-components/Preview': path.join(__dirname, './Components/Preview')

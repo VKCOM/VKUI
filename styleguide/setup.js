@@ -3,7 +3,6 @@ import { sizes as avatarSizes } from '../src/components/Avatar/Avatar';
 import { values as colors, titles as colorTitles, keys as colorKeys } from '../src/helpers/colors';
 import {platform, IOS, ANDROID} from '../src/lib/platform';
 import '../src/styles/common.css';
-import '@vkontakte/icons';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon16Add from '@vkontakte/icons/dist/16/add';
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
