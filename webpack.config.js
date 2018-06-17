@@ -8,7 +8,6 @@ const cssImport = require('postcss-import');
 const cssMaps = require('postcss-map');
 const autoprefixer = require('autoprefixer');
 const colorsMaps = require('./src/helpers/colors');
-const fontMaps = require('./src/helpers/fonts');
 
 const cssTransformOptions = [
   {
@@ -25,7 +24,7 @@ const cssTransformOptions = [
           cssImport(),
           cssCustomProperties(),
           cssMaps({
-            maps: [{ colors: colorsMaps.values, fontFamilies: fontMaps.families }]
+            maps: [{ colors: colorsMaps.values }]
           }),
           autoprefixer()
         ];

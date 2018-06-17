@@ -1,7 +1,6 @@
 import './lib/polyfills';
 import './styles/common.css';
 import { values as colors } from './helpers/colors';
-import { families as fontFamilies } from './helpers/fonts';
 
 /**
  * Layout
@@ -81,6 +80,5 @@ export { default as getClassName } from './helpers/getClassName';
 export { default as requestAnimationFrame } from './lib/requestAnimationFrame';
 export { isWebView } from './lib/webview';
 export { colors };
-export { fontFamilies };
 
 export const v = process.env.VKUI_VERSION;

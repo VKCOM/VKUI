@@ -9,11 +9,3 @@
     display: block;
     max-width: 100%;
     }
-
-.Avatar--ios {
-  font-family: map(fontFamilies, ios)
-  }
-
-.Avatar--android {
-  font-family: map(fontFamilies, android)
-  }
