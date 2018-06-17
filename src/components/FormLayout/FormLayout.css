@@ -6,6 +6,10 @@
     display: block;
     }
 
+  .FormLayout .FormLayout__row + .FormLayout__row {
+    padding-top: 0;
+    }
+
   .FormLayout__addon .Icon {
     display: inline-block;
     }
@@ -15,8 +19,7 @@
   }
 
   .FormLayout--ios .FormLayout__row {
-    padding: 0 12px;
-    margin: 12px 0;
+    padding: 12px;
     }
 
     .FormLayout--ios .FormLayout__row .Radio,
@@ -46,8 +49,7 @@
   }
 
   .FormLayout--android .FormLayout__row {
-    padding: 0 16px;
-    margin: 10px 0;
+    padding: 10px 16px;
     }
 
     .FormLayout--android .FormLayout__row-top {
