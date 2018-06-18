@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .Header {
 
   }
@@ -8,6 +10,21 @@
     justify-content: space-between;
     }
 
+    .Header--level-1 .Header__content {
+      color: var(--black);
+      font-size: 17px;
+      line-height: 20px;
+      font-weight: 500;
+      }
+
+    .Header--level-2 .Header__content {
+      color: var(--caption-gray);
+      font-size: 13px;
+      line-height: 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      }
+
 
 .Header--ios {
   padding: 0 12px;
@@ -17,24 +34,11 @@
     font-size: 15px;
     }
 
-.Header--ios.Header--level-1 {}
-
   .Header--ios.Header--level-1 .Header__content {
-    font-size: 17px;
-    line-height: 20px;
-    color: map(colors, black);
-    font-weight: 600;
     padding: 14px 0;
     }
 
-.Header--ios.Header--level-2 {}
-
   .Header--ios.Header--level-2 .Header__content {
-    font-size: 13px;
-    line-height: 15px;
-    color: map(colors, captionGray);
-    font-weight: 600;
-    text-transform: uppercase;
     padding: 15px 0 14px;
     }
 
@@ -48,23 +52,10 @@
     font-weight: 500;
     }
 
-.Header--android.Header--level-1 {}
-
   .Header--android.Header--level-1 .Header__content {
-    font-size: 17px;
-    line-height: 20px;
-    color: map(colors, black);
-    font-weight: 500;
     padding: 18px 0;
     }
 
-.Header--android.Header--level-2 {}
-
   .Header--android.Header--level-2 .Header__content {
-    font-size: 13px;
-    line-height: 15px;
-    color: map(colors, captionGray);
-    font-weight: 600;
-    text-transform: uppercase;
     padding: 15px 0 14px;
     }

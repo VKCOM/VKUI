@@ -1,4 +1,6 @@
+@import '../../styles/constants.css';
+
 .Link {
-  color: map(colors, accentBlue);
+  color: var(--accent-blue);
   text-decoration: none;
   }

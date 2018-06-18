@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .FormLayout {
 
   }
@@ -33,7 +35,7 @@
       }
 
     .FormLayout--ios .FormLayout__row-top {
-      color: map(colors, subheadGray);
+      color: var(--subhead-gray);
       padding: 14px 0 8px;
       font-size: 14px;
       }
@@ -53,7 +55,7 @@
     }
 
     .FormLayout--android .FormLayout__row-top {
-      color: map(colors, subheadGray);
+      color: var(--subhead-gray);
       padding: 4px 0 8px;
       line-height: 18px;
       font-size: 14px;

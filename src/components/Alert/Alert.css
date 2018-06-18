@@ -70,7 +70,7 @@
       background: #fafafa;
       font-size: 17px;
       line-height: 44px;
-      color: map(colors, accentBlue);
+      color: var(--accent-blue);
       border: 0;
       padding: 0 6px;
       margin: 0;
@@ -88,7 +88,7 @@
     .Alert--ios .Alert__btn::after {
       content: '';
       position: absolute;
-      background: map(colors, separator);
+      background: var(--separator);
       }
 
     .Alert--ios .Alert__btn:last-child::after,
@@ -152,7 +152,7 @@
     font-weight: 600;
     }
   .Alert--ios .Alert__btn--destructive {
-    color: map(colors, red);
+    color: var(--red);
     }
 
 /**
@@ -225,7 +225,7 @@
 
     .Alert--android .Alert__btn--primary {
       color: #fff;
-      background: #5181B8;
+      background-color: var(--header-blue);
       }
     .Alert--android .Alert__btn--primary:active,
     .Alert--android .Alert__btn--primary.Tappable--active {

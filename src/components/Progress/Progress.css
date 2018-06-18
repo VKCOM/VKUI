@@ -1,6 +1,8 @@
+@import '../../styles/constants.css';
+
 .Progress {
   border-radius: 2px;
-  background-color: map(colors, backgroundBlue);
+  background-color: var(--background-blue);
   }
 
   .Progress__in {

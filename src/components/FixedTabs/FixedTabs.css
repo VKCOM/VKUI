@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .FixedTabs {
 
   }
@@ -42,5 +44,5 @@
   }
 
 .FixedTabs--android.FixedTabs--blue {
-  background-color: map(colors, headerBlue);
+  background-color: var(--header-blue);
   }

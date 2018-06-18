@@ -30,11 +30,11 @@
     }
   .List--ios::before {
     top: 0;
-    background: map(colors, separator);
+    background: var(--separator);
     }
   .List--ios::after {
     bottom: 0;
-    background: map(colors, separator);
+    background: var(--separator);
     }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {

@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .TabsItem {
   max-width: 100%;
   flex-grow: 1;
@@ -30,13 +32,13 @@
   }
 
 .TabsItem--ios.TabsItem--gray {
-  border-color: map(colors, mediumBlueGray);
-  color: map(colors, mediumBlueGray);
+  border-color: var(--medium-blue-gray);
+  color: var(--medium-blue-gray);
   }
 
 .TabsItem--ios.TabsItem--gray.TabsItem--selected {
   color: #fff;
-  background-color: map(colors, mediumBlueGray);
+  background-color: var(--medium-blue-gray);
   }
 
 .TabsItem--ios.TabsItem--white.Tappable--active {
@@ -50,7 +52,7 @@
 
 .TabsItem--ios.TabsItem--white.TabsItem--selected {
   background-color: #fff;
-  color: map(colors, headerBlue);
+  color: var(--header-blue);
   }
 
 

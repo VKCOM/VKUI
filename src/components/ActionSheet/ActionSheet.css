@@ -66,16 +66,16 @@
   }
 
   .ActionSheet--ios .ActionSheet-Item--default {
-    color: map(colors, accentBlue)
+    color: var(--accent-blue);
     }
 
   .ActionSheet--ios .ActionSheet-Item--cancel {
-    color: map(colors, accentBlue);
+    color: var(--accent-blue);
     font-weight: 600;
     }
 
   .ActionSheet--ios .ActionSheet-Item--destructive {
-    color: map(colors, red)
+    color: var(--red);
     }
 
 /**
@@ -108,11 +108,11 @@
   }
 
 .ActionSheet--android .ActionSheet-Item--default {
-  color: map(colors, accentBlue)
+  color: var(--accent-blue);
   }
 
 .ActionSheet--android .ActionSheet-Item--destructive {
-  color: map(colors, red)
+  color: var(--red);
   }
 
 /**

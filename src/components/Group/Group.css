@@ -10,7 +10,7 @@
 
   .Group__description a {
     text-decoration: none;
-    color: var(--vk-color);
+    color: var(--header-blue);
     }
 
 /**
@@ -30,7 +30,7 @@
   .Group--ios .Group__description {
     font-size: 14px;
     line-height: 16px;
-    color: map(colors, subheadGray);
+    color: var(--subhead-gray);
     padding: 8px 12px;
     }
 
@@ -45,11 +45,11 @@
     }
   .Group--ios::before {
     top: 0;
-    background: map(colors, separator);
+    background: var(--separator);
     }
   .Group--ios::after {
     bottom: 0;
-    background: map(colors, separator);
+    background: var(--separator);
     }
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
@@ -76,19 +76,10 @@
     margin-top: 0;
     }
 
-  .Group--android .Group__title {
-    font-size: 13px;
-    line-height: 15px;
-    font-weight: 500;
-    color: map(colors, captionGray);
-    padding: 15px 16px 14px;
-    text-transform: uppercase;
-    }
-
   .Group--android .Group__description {
     font-size: 14px;
     line-height: 16px;
-    color: map(colors, captionGray);
+    color: var(--caption-gray);
     padding: 12px 16px 8px;
     }
 

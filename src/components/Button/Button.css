@@ -23,11 +23,11 @@
   }
 
 .Button--type-cell.Button--level-primary {
-  color: map(colors, accentBlue);
+  color: var(--accent-blue);
   }
 
 .Button--type-cell.Button--level-danger {
-  color: map(colors, red);
+  color: var(--red);
   }
 
 .Button--stretched {
@@ -59,7 +59,7 @@
     }
 
 .Button--level-1 {
-  background-color: map(colors, headerBlue);
+  background-color: var(--header-blue);
   color: #fff;
   }
 
@@ -69,7 +69,7 @@
 
 .Button--level-2 {
   background-color: rgba(0, 54, 115, .1);
-  color: map(colors, mutedBlue)
+  color: var(--muted-blue);
   }
 
 .Button--level-2.Tappable--active:not([disabled]) {
@@ -78,7 +78,7 @@
 
 .Button--level-3 {
   background-color: transparent;
-  color: map(colors, headerBlue)
+  color: var(--header-blue);
   }
 
 .Button--level-3.Tappable--active:not([disabled]) {
@@ -86,7 +86,7 @@
   }
 
 .Button--level-buy {
-  background-color: map(colors, green);
+  background-color: var(--green);
   color: #fff;
   }
 
@@ -96,8 +96,8 @@
 
 .Button--level-sell {
   background-color: transparent;
-  border: 1px solid map(colors, accentBlue);
-  color: map(colors, accentBlue);
+  border: 1px solid var(--accent-blue);
+  color: var(--accent-blue);
   }
 
 .Button--level-sell.Tappable--active:not([disabled]) {

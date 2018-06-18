@@ -21,7 +21,7 @@
 
   .Text a {
     text-decoration: none;
-    color: var(--vk-color);
+    color: var(--header-blue);
     }
 
 /**

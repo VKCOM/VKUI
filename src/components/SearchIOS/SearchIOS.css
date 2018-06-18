@@ -23,7 +23,7 @@
   height: 1px;
   content: '';
   bottom: 0;
-  background: map(colors, separator);
+  background: var(--separator)
   }
 
 .Search--ios + .List::before,
@@ -58,7 +58,7 @@
     }
 
   .Search--ios.Search--default .Search__after {
-    color: map(colors, accentBlue);
+    color: var(--accent-blue);
     }
 
   .Search--ios.Search--header .Search__after {

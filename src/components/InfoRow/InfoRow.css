@@ -1,3 +1,5 @@
+@import '../../styles/constants.css';
+
 .InfoRow {
 
   }
@@ -5,6 +7,6 @@
   .InfoRow__title {
     font-size: 14px;
     line-height: 16px;
-    color: map(colors, subheadGray);
+    color: var(--subhead-gray);
     margin-bottom: 4px;
     }

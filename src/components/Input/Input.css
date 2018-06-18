@@ -19,7 +19,7 @@
   height: 44px;
   line-height: 19px;
   font-size: 16px;
-  color: map(colors, black);
+  color: var(--black);
   padding: 12px;
   font-family: var(--font);
   }
@@ -29,7 +29,7 @@
   }
 
 .Input__el::placeholder {
-  color: map(colors, captionGray);
+  color: var(--caption-gray);
   }
 
 .Input__placeholder {
@@ -38,7 +38,7 @@
   top: 0;
   height: 100%;
   width: calc(100% - 20px);
-  color: map(colors, captionGray);
+  color: var(--caption-gray);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -58,7 +58,7 @@
     }
 
   .Input--ios .Input__el:focus {
-    border-color: map(colors, accentBlue);
+    border-color: var(--accent-blue);
     }
 
 .Input--android {

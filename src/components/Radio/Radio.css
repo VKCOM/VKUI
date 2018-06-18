@@ -44,7 +44,7 @@
       .Radio__description {
         font-size: 13px;
         line-height: 15px;
-        color: map(colors, captionGray);
+        color: var(--caption-gray);
         }
 
 .Radio--ios {
@@ -112,11 +112,11 @@
       }
 
     .Radio--android [type="radio"]:checked ~ .Radio__container .Radio__icon {
-      border-color: map(colors, accentBlue);
+      border-color: var(--accent-blue);
       }
 
       .Radio--android [type="radio"]:checked ~ .Radio__container .Radio__icon::after {
-        background-color: map(colors, accentBlue);
+        background-color: var(--accent-blue);
         transform: scale(1);
         }
 

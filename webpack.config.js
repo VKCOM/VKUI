@@ -5,9 +5,7 @@ const merge = require('webpack-merge');
 const pkg = require('./package.json');
 const cssCustomProperties = require('postcss-custom-properties');
 const cssImport = require('postcss-import');
-const cssMaps = require('postcss-map');
 const autoprefixer = require('autoprefixer');
-const colorsMaps = require('./src/helpers/colors');
 
 const cssTransformOptions = [
   {
@@ -23,9 +21,6 @@ const cssTransformOptions = [
         return [
           cssImport(),
           cssCustomProperties(),
-          cssMaps({
-            maps: [{ colors: colorsMaps.values }]
-          }),
           autoprefixer()
         ];
       }

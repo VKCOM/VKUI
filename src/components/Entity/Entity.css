@@ -19,13 +19,13 @@
       font-size: 15px;
       line-height: 20px;
       font-weight: 600;
-      color: map(colors, mutedBlack);
+      color: var(--muted-black);
       }
 
     .Entity__description {
       font-size: 14px;
       line-height: 16px;
-      color: map(colors, subheadGray);
+      color: var(--subhead-gray);
       }
 
     .Entity__content {

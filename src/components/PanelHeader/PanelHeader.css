@@ -1,5 +1,5 @@
-@import "../../styles/constants.css";
-@import "./PanelHeaderTransitions.css";
+@import '../../styles/constants.css';
+@import './PanelHeaderTransitions.css';
 
 .PanelHeader {
   position: fixed;
@@ -74,11 +74,11 @@
 
   .PanelHeader--ios.PanelHeader--brand {
     color: #fff;
-    background: var(--vk-color);
+    background: var(--header-blue);
     }
 
   .PanelHeader--ios.PanelHeader--light {
-    color: var(--vk-color);
+    color: var(--header-blue);
     background: #fff;
     }
 
@@ -177,7 +177,7 @@
     }
 
   .PanelHeader--android .PanelHeader__in--brand {
-    background: var(--vk-color);
+    background: var(--header-blue);
     color: #fff;
     }
 
