@@ -69,6 +69,10 @@
 /**
  * Header transition
  */
+.View--animated .PanelHeader--ios {
+  transition: background-color .3s var(--ios-easing);
+  }
+
 .PanelHeader--ios .PanelHeader__in--prev,
 .PanelHeader--ios .PanelHeader__in--next {
   overflow: hidden;

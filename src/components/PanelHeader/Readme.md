@@ -3,14 +3,39 @@
 кнопках можно почитать [тут](#headerbutton).
 
 ```
-<View activePanel="community-create">
-  <Panel id="community-create">
-    <PanelHeader
-      left={<HeaderButton>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</HeaderButton>}
-      addon={<HeaderButton>Назад</HeaderButton>}
-    >
-      Настройки
-    </PanelHeader>
-  </Panel>
-</View>
+class Example extends React.Component {
+
+  constructor () {
+    this.state = {
+      activePanel: 'brand'
+    }
+  }
+
+  render () {
+
+    return (
+      <View activePanel={this.state.activePanel}>
+        <Panel id="brand">
+          <PanelHeader>
+            Настройки
+          </PanelHeader>
+          <Group>
+            <Button type="cell" onClick={() => this.setState({ activePanel: 'light' })}>Светлая тема</Button>
+          </Group>
+        </Panel>
+        <Panel id="light">
+          <PanelHeader
+            theme="light"
+            left={<HeaderButton onClick={() => this.setState({ activePanel: 'brand' })}>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</HeaderButton>}
+            addon={<HeaderButton onClick={() => this.setState({ activePanel: 'brand' })}>Назад</HeaderButton>}
+          >
+            Котики
+          </PanelHeader>
+        </Panel>
+      </View>
+    )
+  }
+}
+
+<Example />
 ```
