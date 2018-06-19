@@ -112,7 +112,7 @@
     }
 
   .ListItem--ios.ListItem--expandable .ListItem__in {
-    padding: 0 35px 0 15px;
+    padding: 0 35px 0 12px;
     }
 
     .ListItem--ios:not(:last-child) .ListItem__in:not(.Tappable--active) .ListItem__before::before {
@@ -211,7 +211,7 @@
       }
 
     .ListItem--android .ListItem__before-in > .Avatar {
-      padding: 8px 16px 8px 0;
+      padding: 8px 12px 8px 0;
       }
 
     .ListItem--android .ListItem__main {
