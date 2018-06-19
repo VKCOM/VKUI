@@ -3,30 +3,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const merge = require('webpack-merge');
 const pkg = require('./package.json');
-const cssCustomProperties = require('postcss-custom-properties');
-const cssImport = require('postcss-import');
-const autoprefixer = require('autoprefixer');
-
-const cssTransformOptions = [
-  {
-    loader: 'css-loader',
-    options: {
-      importLoaders: 1
-    }
-  },
-  {
-    loader: 'postcss-loader',
-    options: {
-      plugins: () => {
-        return [
-          cssImport(),
-          cssCustomProperties(),
-          autoprefixer()
-        ];
-      }
-    }
-  }
-];
+const cssTransformOptions = require('./postcss.config.js');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
