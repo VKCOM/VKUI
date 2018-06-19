@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "dist/vkui.js",
   "license": "SEE LICENSE IN LICENSE",
   "repository": "https://github.com/VKCOM/VKUI",
@@ -21,7 +21,6 @@
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-react": "^7.9.1",
     "eslint-plugin-standard": "^2.0.0",
-    "glob": "^7.1.2",
     "jest": "^23.1.0",
     "loader-utils": "^1.1.0",
     "mini-css-extract-plugin": "^0.4.0",
