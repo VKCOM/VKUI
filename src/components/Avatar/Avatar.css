@@ -1,11 +1,20 @@
+@import '../../styles/constants.css';
+
 .Avatar {
   box-sizing: border-box;
   }
 
   .Avatar__img {
     border-radius: 50%;
-    background-color: #D4DAE1;
+    background-color: var(--placeholder-background);
+    color: var(--light-gray);
     border: none;
     display: block;
     max-width: 100%;
+    }
+
+  div.Avatar__img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }

@@ -16,6 +16,7 @@ import Icon24MoreVertical from '@vkontakte/icons/dist/24/more_vertical';
 import Icon24Done from '@vkontakte/icons/dist/24/done';
 import Icon24Services from '@vkontakte/icons/dist/24/services';
 import Icon24About from '@vkontakte/icons/dist/24/about';
+import Icon28User from '@vkontakte/icons/dist/24/user';
 
 
 window.osname = platform();
@@ -35,6 +36,7 @@ window.Icon24MoreVertical = Icon24MoreVertical;
 window.Icon24Done = Icon24Done;
 window.Icon24Services = Icon24Services;
 window.Icon24About = Icon24About;
+window.Icon28User = Icon28User;
 
 window.colors = colors;
 
