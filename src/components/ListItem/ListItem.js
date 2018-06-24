@@ -24,10 +24,17 @@ export default class ListItem extends Component {
     multiline: PropTypes.bool,
     description: PropTypes.node,
     className: PropTypes.string,
+
     selectable: PropTypes.bool,
+
     removable: PropTypes.bool,
     onRemove: PropTypes.func,
-    removePlaceholder: PropTypes.node
+    /**
+     * iOS only
+     */
+    removePlaceholder: PropTypes.node,
+
+    href: PropTypes.string
   };
 
   static defaultProps = {
@@ -54,7 +61,7 @@ export default class ListItem extends Component {
 
   get document () { return this.context.document || document; }
 
-  onSelectableClick = (e) => {
+  onSelectableClick = (e) => { // нужен, чтобы предотвращать двойное срабатывание (https://github.com/vuejs/vue/issues/3699#issuecomment-247957931)
     if (e.target.tagName.toLowerCase() === 'input') {
       e.stopPropagation();
     } else {
@@ -118,6 +125,7 @@ export default class ListItem extends Component {
       onRemove,
       removable,
       removePlaceholder,
+      href,
       ...restProps
     } = this.props;
 
@@ -129,6 +137,7 @@ export default class ListItem extends Component {
 
     const rootProps = selectable ? {} : restProps;
     const inputProps = selectable ? restProps : {};
+    const linkProps = href ? restProps : {};
 
     return (
       <li
@@ -136,13 +145,15 @@ export default class ListItem extends Component {
         ref={this.getRootRef}
         style={{ height: this.state.height }}
         {...rootProps}
-        onClick={selectable ? this.onSelectableClick : onClick}
       >
         <Tappable
-          component={selectable ? 'label' : 'div'}
+          component={selectable ? 'label' : href ? 'a' : 'div'}
           className="ListItem__in"
-          disabled={!selectable && !onClick}
+          href={href}
+          {...linkProps}
+          disabled={!selectable && !onClick && !href}
           style={{ transform: `translateX(-${this.state.removeOffset}px)` }}
+          onClick={selectable ? this.onSelectableClick : onClick}
         >
           {selectable &&
             <input
@@ -169,8 +180,8 @@ export default class ListItem extends Component {
                 <Icon24Cancel />
               </div>
             }
+            {osname === IOS && expandable && <Icon24Chevron className="ListItem__chevron"/>}
           </div>
-          {osname === IOS && expandable && <Icon24Chevron className="ListItem__chevron"/>}
         </Tappable>
         {removable && osname === IOS &&
           <div

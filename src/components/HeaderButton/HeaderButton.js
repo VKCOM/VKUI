@@ -9,7 +9,7 @@ const baseClassName = getClassName('HeaderButton');
 
 const HeaderButton = ({ className, children, primary, ...restProps }) => {
   return (
-    <Tappable className={classnames(baseClassName, className, {
+    <Tappable component="button" className={classnames(baseClassName, className, {
       'HeaderButton--primary': primary
     })} {...restProps}>
       {typeof children === 'string' ? <span className="HeaderButton__str">{children}</span> : children}

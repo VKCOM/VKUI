@@ -55,15 +55,15 @@ class Example extends React.Component {
       <Root activeView={this.state.activeView}>
         <View id="main" activePanel={this.state.activePanel}>
           <Panel id="panel1">
-            <PanelHeader left={<HeaderButton>{osname === IOS ? 'отмена' : <Icon24Cancel/>}</HeaderButton>}>
+            <PanelHeader left={<HeaderButton>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</HeaderButton>}>
               Стартовый экран
             </PanelHeader>
             <Group>
               <Div>
-                Если приложение открывается как модальное окно, то в качестве левой кнопки принято кнопку "отмена".
+                Если приложение открывается как модальное окно, то в качестве левой кнопки принято кнопку "Отмена".
                 <br/>
                 <br/>
-                В противном случае показывается кнопка "назад".
+                В противном случае показывается кнопка "Назад".
               </Div>
             </Group>
             <Group>
@@ -75,7 +75,7 @@ class Example extends React.Component {
           <Panel id="panel2">
             <PanelHeader
               left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</HeaderButton>}
-              addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>назад</HeaderButton>}
+              addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>Назад</HeaderButton>}
               right={<HeaderButton onClick={() => {}}><Icon24Story/></HeaderButton>}
             >
               Заголовок
@@ -89,7 +89,7 @@ class Example extends React.Component {
           <Panel id="panel3">
             <PanelHeader
               left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</HeaderButton>}
-              addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>назад</HeaderButton>}
+              addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>Назад</HeaderButton>}
               right={[
                 <HeaderButton key="add" onClick={() => {}}><Icon24Add/></HeaderButton>,
                 <HeaderButton key="more" onClick={() => {}}><Icon24MoreVertical/></HeaderButton>
@@ -108,7 +108,7 @@ class Example extends React.Component {
           <Panel id="modal-panel">
             <PanelHeader
               left={<HeaderButton onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</HeaderButton>}
-              right={<HeaderButton primary onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Готово' : <Icon24Done/>}</HeaderButton>}
+              right={<HeaderButton disabled primary onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Готово' : <Icon24Done/>}</HeaderButton>}
             >
               Модальное окно
             </PanelHeader>

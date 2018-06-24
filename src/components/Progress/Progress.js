@@ -22,7 +22,7 @@ const Progress = ({ value, className, color, ...restProps }) => {
 };
 
 Progress.propTypes = {
-  color: PropTypes.oneOf(Object.values(colors)),
+  color: PropTypes.oneOf(Object.keys(colors).map(colorKey => colors[colorKey])),
   style: PropTypes.object,
   className: PropTypes.string,
   value: PropTypes.number
