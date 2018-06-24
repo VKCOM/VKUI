@@ -17,6 +17,7 @@
     display: flex;
     max-width: 100%;
     overflow: hidden;
+    text-decoration: none;
     }
 
     .ListItem__checkbox {
@@ -46,6 +47,7 @@
       text-overflow: ellipsis;
       max-width: 100%;
       align-self: center;
+      color: #000;
       }
 
     .ListItem--multiline .ListItem__main {
@@ -99,20 +101,12 @@
     }
 
   .List--ios .ListItem__chevron {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    margin-top: -12px;
     color: var(--separator)
     }
 
   .ListItem--ios .ListItem__in {
     padding: 0 12px;
     transition: transform .6s var(--ios-easing);
-    }
-
-  .ListItem--ios.ListItem--expandable .ListItem__in {
-    padding: 0 35px 0 12px;
     }
 
     .ListItem--ios:not(:last-child) .ListItem__in:not(.Tappable--active) .ListItem__before::before {
