@@ -59,18 +59,6 @@ export default class SearchAndroid extends React.Component {
     }
   };
 
-  onFocus = (e) => {
-    this.props.onFocus && this.props.onFocus(e);
-  };
-
-  onBlur = (e) => {
-    this.props.onBlur && this.props.onBlur(e);
-  };
-
-  onClose = () => {
-    this.props.onClose && this.props.onClose();
-  };
-
   componentDidMount () {
     this.inputEl.focus();
   }
@@ -85,6 +73,8 @@ export default class SearchAndroid extends React.Component {
   };
 
   render () {
+    const { getRef, value, defaultValue, onChange, onClose, ...inputProps } = this.props;
+
     const className = classnames(baseClassName, {
       'Search--focused': this.state.focused,
       'Search--has-value': !!this.value
@@ -93,19 +83,17 @@ export default class SearchAndroid extends React.Component {
     return (
       <div className={className}>
         <div className="Search__before">
-          <HeaderButton onClick={this.onClose}>
+          <HeaderButton onClick={onClose}>
             <Icon24Back/>
           </HeaderButton>
         </div>
         <div className="Search__control">
           <input
             className="Search__input"
-            placeholder={this.props.placeholder}
             ref={this.inputRef}
             value={this.value}
             onChange={this.onChange}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
+            {...inputProps}
           />
         </div>
         <div className="Search__after">
