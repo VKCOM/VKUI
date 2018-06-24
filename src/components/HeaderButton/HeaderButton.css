@@ -1,3 +1,23 @@
+@import '../../styles/constants.css';
+
+.HeaderButton {
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  font-family: var(--font);
+  display: block;
+  color: currentColor;
+  padding: 0;
+  margin: 0;
+  font-size: 17px;
+  }
+
+.HeaderButton[disabled] {
+  opacity: .6;
+  }
+
 .HeaderButton--ios {
   height: 44px;
   line-height: 44px;
