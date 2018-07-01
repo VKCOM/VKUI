@@ -8,12 +8,13 @@ import './HeaderButton.css';
 const baseClassName = getClassName('HeaderButton');
 
 const HeaderButton = ({ className, children, primary, ...restProps }) => {
+  const isPrimitive = typeof children === 'string' || typeof children === 'number';
+
   return (
     <Tappable component="button" className={classnames(baseClassName, className, {
-      'HeaderButton--primary': primary,
-      'HeaderButton--icon': children && children.type && children.type.name === 'SvgIcon'
+      'HeaderButton--primary': primary
     })} {...restProps}>
-      {children}
+      {isPrimitive ? <span className="HeaderButton__primitive">{children}</span> : children}
     </Tappable>
   );
 };
