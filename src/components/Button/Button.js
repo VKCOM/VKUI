@@ -12,6 +12,7 @@ export default class Button extends React.Component {
     level: PropTypes.oneOf(['1', '2', '3', 'sell', 'buy', 'primary', 'danger']),
     size: PropTypes.oneOf(['m', 'l', 'xl']),
     type: PropTypes.oneOf(['default', 'cell']),
+    align: PropTypes.oneOf(['left', 'center', 'right']),
     stretched: PropTypes.bool,
 
     children: PropTypes.node,
@@ -22,11 +23,12 @@ export default class Button extends React.Component {
 
   static defaultProps = {
     type: 'default',
-    component: 'button'
+    component: 'button',
+    align: 'left'
   };
 
   render () {
-    let { className, size, level, type, stretched, children, before, ...restProps } = this.props;
+    let { className, size, level, type, stretched, align, children, before, ...restProps } = this.props;
 
     switch (type) {
       case 'default':
@@ -42,6 +44,7 @@ export default class Button extends React.Component {
       [`Button--size-${size}`]: size,
       [`Button--level-${level}`]: level,
       [`Button--type-${type}`]: type,
+      [`Button--align-${align}`]: align,
       [`Button--stretched`]: stretched
     });
 

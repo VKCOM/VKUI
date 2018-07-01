@@ -15,6 +15,18 @@
     align-items: center;
     }
 
+  .Button--align-left .Button__in {
+    justify-content: flex-start;
+    }
+
+  .Button--align-center .Button__in {
+    justify-content: center;
+    }
+
+  .Button--align-right .Button__in {
+    justify-content: flex-end;
+    }
+
 .Button--type-cell {
   display: block;
   width: 100%;
