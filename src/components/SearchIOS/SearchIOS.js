@@ -127,9 +127,7 @@ export default class SearchIOS extends React.Component {
             >
               <div className="Search__placeholder-in">
                 <Icon16Search/>
-                {!this.value &&
                 <div className="Search__placeholder-text" dangerouslySetInnerHTML={{__html: placeholder}} />
-                }
               </div>
             </label>
           </div>

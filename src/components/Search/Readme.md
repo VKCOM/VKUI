@@ -153,7 +153,7 @@
       super(props);
 
       this.state = {
-        activePanel: 'header-search'
+        activePanel: 'search'
       }
 
       this.goSearch = this.goSearch.bind(this);

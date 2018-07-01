@@ -10,15 +10,16 @@ const baseClassName = getClassName('HeaderButton');
 const HeaderButton = ({ className, children, primary, ...restProps }) => {
   return (
     <Tappable component="button" className={classnames(baseClassName, className, {
-      'HeaderButton--primary': primary
+      'HeaderButton--primary': primary,
+      'HeaderButton--icon': children && children.type && children.type.name === 'SvgIcon'
     })} {...restProps}>
-      {typeof children === 'string' ? <span className="HeaderButton__str">{children}</span> : children}
+      {children}
     </Tappable>
   );
 };
 
 HeaderButton.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  children: PropTypes.node,
   className: PropTypes.string,
   primary: PropTypes.bool
 };
