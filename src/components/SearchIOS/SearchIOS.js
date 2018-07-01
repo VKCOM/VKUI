@@ -105,9 +105,7 @@ export default class SearchIOS extends React.Component {
         'Search--has-after': after
       }, className)}>
         <div className="Search__in">
-          <div className="Search__width"> {/* хак для растягивание Search на всю ширину */}
-            oooooooooooooooooooooooooooooooooooooooooooooooooooo
-          </div>
+          <div className="Search__width" />
           <div className="Search__control">
             <input
               id={`search-${searchId}`}

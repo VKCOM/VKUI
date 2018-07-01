@@ -15,91 +15,95 @@
       color: transparent;
       }
 
-      .Search--ios .Search__control {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: calc(100% - 1px);
-        height: 100%;
-        border-radius: 16px;
+      .Search--ios .Search__width::before {
+        content: 'oooooooooooooooooooooooooooooooooooooooooooooooooooo' /* хак для растягивание Search на всю ширину */
         }
 
-        .Search--ios .Search__input {
-          border: none;
-          margin: 0;
-          height: 32px;
-          position: relative;
-          padding: 0 22px 0 34px;
-          box-sizing: border-box;
-          font-size: 15px;
-          outline: none;
-          border-radius: 16px;
-          max-width: 100%;
-          flex-grow: 1;
-          min-width: 0;
-          background-color: transparent;
-          z-index: 2;
-          }
+    .Search--ios .Search__control {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: calc(100% - 1px);
+      height: 100%;
+      border-radius: 16px;
+      }
 
-        .Search--ios.Search--has-after .Search__input {
-          border-radius: 16px 0 0 16px;
-          padding-right: 32px;
-          }
+      .Search--ios .Search__input {
+        border: none;
+        margin: 0;
+        height: 32px;
+        position: relative;
+        padding: 0 22px 0 34px;
+        box-sizing: border-box;
+        font-size: 15px;
+        outline: none;
+        border-radius: 16px;
+        max-width: 100%;
+        flex-grow: 1;
+        min-width: 0;
+        background-color: transparent;
+        z-index: 2;
+        }
 
-        .Search--ios .Search__after-width {
-          font-size: 17px;
-          height: 32px;
-          line-height: 32px;
-          padding-left: 12px;
-          padding-right: 4px;
-          }
+      .Search--ios.Search--has-after .Search__input {
+        border-radius: 16px 0 0 16px;
+        padding-right: 32px;
+        }
 
-        .Search--ios .Search__placeholder {
-          position: absolute;
-          left: 0;
-          transform: translate(50%);
+      .Search--ios .Search__after-width {
+        font-size: 17px;
+        height: 32px;
+        line-height: 32px;
+        padding-left: 12px;
+        padding-right: 4px;
+        }
+
+      .Search--ios .Search__placeholder {
+        position: absolute;
+        left: 0;
+        transform: translate(50%);
+        transition: transform .3s var(--ios-easing);
+        width: 100%;
+        cursor: text;
+        opacity: .5;
+        z-index: 1;
+        text-align: left;
+        display: block;
+        height: 32px;
+        font-size: 0;
+        }
+
+      .Search--ios.Search--focused .Search__placeholder,
+      .Search--ios.Search--has-value .Search__placeholder {
+        transform: translate(0);
+        }
+
+        .Search--ios .Search__placeholder-in {
+          transform: translate(-50%);
           transition: transform .3s var(--ios-easing);
-          width: 100%;
-          cursor: text;
-          opacity: .5;
-          z-index: 1;
-          text-align: left;
-          display: block;
           height: 32px;
-          font-size: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           }
 
-        .Search--ios.Search--focused .Search__placeholder,
-        .Search--ios.Search--has-value .Search__placeholder {
-          transform: translate(0);
+        .Search--ios.Search--focused .Search__placeholder .Search__placeholder-in,
+        .Search--ios.Search--has-value .Search__placeholder .Search__placeholder-in {
+          transform: translate(12px);
           }
 
-          .Search--ios .Search__placeholder-in {
-            transform: translate(-50%);
-            transition: transform .3s var(--ios-easing);
-            height: 32px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+          .Search--ios .Search__placeholder-text {
+            margin-left: 6px;
+            line-height: 32px;
+            font-size: 15px;
             }
 
-          .Search--ios.Search--focused .Search__placeholder .Search__placeholder-in,
-          .Search--ios.Search--has-value .Search__placeholder .Search__placeholder-in {
-            transform: translate(12px);
+          .Search--ios.Search--has-value .Search__placeholder-text {
+            opacity: 0;
             }
-
-            .Search--ios .Search__placeholder-text {
-              margin-left: 6px;
-              line-height: 32px;
-              font-size: 15px;
-              }
-
-            .Search--ios.Search--has-value .Search__placeholder-text {
-              opacity: 0;
-              }
 
     .Search--ios .Search__after {
       position: absolute;
