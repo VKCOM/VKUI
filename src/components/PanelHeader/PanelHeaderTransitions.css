@@ -7,11 +7,11 @@
 .PanelHeader__in--swipe-back-failed,
 .PanelHeader__in--swipe-back-failed .PanelHeader__content,
 .PanelHeader__in--swipe-back-failed .PanelHeader__left-in,
-.PanelHeader__in--swipe-back-failed .PanelHeader__icon,
+.PanelHeader__in--swipe-back-failed .PanelHeader__addon,
 .PanelHeader__in--swipe-back-success,
 .PanelHeader__in--swipe-back-success .PanelHeader__content,
 .PanelHeader__in--swipe-back-success .PanelHeader__left-in,
-.PanelHeader__in--swipe-back-success .PanelHeader__icon {
+.PanelHeader__in--swipe-back-success .PanelHeader__addon {
   transition:
       opacity .3s var(--ios-easing),
       transform .3s var(--ios-easing);
@@ -22,11 +22,11 @@
   }
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__content {
   opacity: 0;
-  transform: translate3d(-60%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
   }
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__addon {
   opacity: 0;
-  transform: translate3d(-60%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
   }
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__left-in,
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__right {
@@ -60,10 +60,10 @@
   opacity: 0;
   }
 .PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__content {
-  transform: translate3d(60%, 0, 0);
+  transform: translate3d(100%, 0, 0);
   }
 .PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__addon {
-  transform: translate3d(60%, 0, 0);
+  transform: translate3d(100%, 0, 0);
   }
 
 /**
@@ -111,7 +111,7 @@
 @keyframes animation-ios-header-next-back {
   from {
     opacity: 0;
-    transform: translateX(-60%);
+    transform: translateX(-100%);
     }
   to {
     opacity: 1;
@@ -122,7 +122,7 @@
 @keyframes animation-ios-header-next-forward {
   from {
     opacity: 0;
-    transform: translateX(60%);
+    transform: translateX(100%);
     }
   to {
     opacity: 1;
@@ -137,7 +137,7 @@
     }
   to {
     opacity: 0;
-    transform: translateX(60%);
+    transform: translateX(100%);
     }
   }
 
@@ -148,7 +148,7 @@
     }
   to {
     opacity: 0;
-    transform: translateX(-60%);
+    transform: translateX(-100%);
     }
   }
 

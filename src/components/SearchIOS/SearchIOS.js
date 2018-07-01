@@ -7,6 +7,8 @@ import Icon16Search from '@vkontakte/icons/dist/16/search';
 
 const baseClassName = getClassName('Search');
 
+let searchId = 0;
+
 export default class SearchIOS extends React.Component {
   constructor (props) {
     super(props);
@@ -23,7 +25,7 @@ export default class SearchIOS extends React.Component {
     } else {
       state.value = props.defaultValue || '';
     }
-
+    searchId++;
     this.state = state;
   }
 
@@ -46,47 +48,18 @@ export default class SearchIOS extends React.Component {
     placeholder: 'Поиск'
   };
 
-  componentDidMount () {
-    this.calcSizes();
-  }
-
-  calcSizes = () => {
-    const afterWidth = this.afterEl.offsetWidth;
-    const placeholderWidth = this.placeholderEl.offsetWidth;
-    const controlWidth = this.controlEl.offsetWidth;
-    const beforeWidth = this.beforeEl ? this.beforeEl.offsetWidth : 0;
-
-    this.setState({
-      afterWidth,
-      placeholderWidth,
-      controlWidth,
-      beforeWidth,
-      placeholderOffset: (controlWidth - beforeWidth - (this.state.showAfter ? afterWidth : 0) - placeholderWidth) / 2
-    });
-  };
-
-  componentDidUpdate () {
-    if (this.state.afterWidth !== this.afterEl.offsetWidth) {
-      this.calcSizes();
-    }
-  }
-
   get value () {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
   onFocus = (e) => {
-    this.setState({
-      focused: true,
-      showAfter: true
-    }, () => this.props.onFocus && this.props.onFocus(e));
+    this.setState({ focused: true });
+    this.props.onFocus && this.props.onFocus(e);
   };
 
   onBlur = (e) => {
-    this.setState({
-      focused: false,
-      showAfter: this.value
-    }, () => this.props.onBlur && this.props.onBlur(e));
+    this.setState({ focused: false });
+    this.props.onBlur && this.props.onBlur(e);
   };
 
   onChange = (e) => {
@@ -99,7 +72,6 @@ export default class SearchIOS extends React.Component {
   };
 
   onCancel = () => {
-    this.setState({ showAfter: false });
     if (!this.isControlledOutside) {
       this.setState({ value: '' });
     }
@@ -108,10 +80,7 @@ export default class SearchIOS extends React.Component {
     }
   };
 
-  inputRef = (el) => {
-    this.inputEl = el;
-    this.props.getRef && this.props.getRef(el);
-  };
+  inputRef = el => this.props.getRef && this.props.getRef(el);
 
   render () {
     const {
@@ -132,45 +101,41 @@ export default class SearchIOS extends React.Component {
       <div className={classnames(baseClassName, {
         [`Search--${theme}`]: true,
         'Search--focused': this.state.focused,
-        'Search--has-value': !!this.value
+        'Search--has-value': this.value,
+        'Search--has-after': after
       }, className)}>
-        <div
-          className="Search__control"
-          ref={el => this.controlEl = el}
-          style={{
-            width: `${this.state.controlWidth - this.state.beforeWidth - (this.state.showAfter ? this.state.afterWidth : 0)}px`
-          }}
-        >
-          <div
-            className="Search__placeholder"
-            onClick={() => this.inputEl.focus()}
-            ref={el => this.placeholderEl = el}
-            style={{
-              transform: `translateX(${this.state.focused || this.value ? 0 : this.state.placeholderOffset + 'px'})`
-            }}
-          >
-            <Icon16Search/>
-            {!this.value &&
-            <div className="Search__placeholder-text" dangerouslySetInnerHTML={{__html: placeholder}} />
-            }
+        <div className="Search__in">
+          <div className="Search__width" />
+          <div className="Search__control">
+            <input
+              id={`search-${searchId}`}
+              ref={this.inputRef}
+              type="text"
+              className="Search__input"
+              onFocus={this.onFocus}
+              onBlur={this.onBlur}
+              onChange={this.onChange}
+              value={this.value}
+              {...inputProps}
+            />
+            {after && <div className="Search__after-width">{after}</div>}
+            <label
+              className="Search__placeholder"
+              htmlFor={`search-${searchId}`}
+            >
+              <div className="Search__placeholder-in">
+                <Icon16Search/>
+                <div className="Search__placeholder-text" dangerouslySetInnerHTML={{__html: placeholder}} />
+              </div>
+            </label>
           </div>
-          <input
-            ref={this.inputRef}
-            type="text"
-            className="Search__input"
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            onChange={this.onChange}
-            value={this.value}
-            {...inputProps}
-          />
-        </div>
-        <div
-          ref={el => this.afterEl = el}
-          className="Search__after"
-          onClick={this.onCancel}
-        >
-          {after}
+          {after &&
+          <div className="Search__after" onClick={this.onCancel}>
+            <div className="Search__after-in">
+              {after}
+            </div>
+          </div>
+          }
         </div>
       </div>
     );

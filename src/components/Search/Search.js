@@ -8,18 +8,26 @@ const osname = platform();
 
 export default class Search extends React.Component {
   static propTypes = {
-    onClose: PropTypes.func,
-    after: PropTypes.node,
-    before: PropTypes.node,
     className: PropTypes.string,
-    defaultValue: PropTypes.string,
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    placeholder: PropTypes.node,
+    getRef: PropTypes.func,
+
+    /**
+     * iOS only
+     */
+    after: PropTypes.node,
+    /**
+     * iOS only
+     */
+    before: PropTypes.node,
+    /**
+     * iOS only
+     */
     theme: PropTypes.oneOf(['header', 'default']),
-    getRef: PropTypes.func
+
+    /**
+     * Android only. Вызывается при клике по стрелку (слева). Этот контрол служит для выхода из режима поиска.
+     */
+    onClose: PropTypes.func
   };
 
   render () {

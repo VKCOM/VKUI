@@ -89,8 +89,8 @@ export default class Preview extends PreviewParent {
           initialContent={frameInitialContent}
           mountTarget="body"
           style={{
-            height: 564,
-            width: 320,
+            height: 667,
+            width: 375,
             border: '1px solid rgba(0, 0, 0, .12)',
             display: 'block',
             margin: 'auto'

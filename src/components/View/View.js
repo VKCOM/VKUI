@@ -421,29 +421,29 @@ export default class View extends Component {
         title: {},
         item: {},
         left: {},
-        icon: {},
+        addon: {},
         right: {}
       };
     }
 
     let opacity = this.state.swipeBackShift / this.window.innerWidth;
-    let titleTransform = this.state.swipeBackShift / this.window.innerWidth * 60;
-    let leftTransform = this.state.swipeBackShift / this.window.innerWidth * 60;
+    let titleTransform = this.state.swipeBackShift / this.window.innerWidth * 100;
+    let leftTransform = this.state.swipeBackShift / this.window.innerWidth * 100;
 
     if (isNext) {
       return {
         title: {
-          transform: `translate3d(${-60 + titleTransform}%, 0, 0)`,
-          WebkitTransform: `translate3d(${-60 + titleTransform}%, 0, 0)`,
+          transform: `translate3d(${-100 + titleTransform}%, 0, 0)`,
+          WebkitTransform: `translate3d(${-100 + titleTransform}%, 0, 0)`,
           opacity
         },
         item: { opacity },
-        left: {
-          transform: `translate3d(${-60 + leftTransform}%, 0, 0)`,
-          WebkitTransform: `translate3d(${-60 + leftTransform}%, 0, 0)`,
-          opacity
+        left: { opacity },
+        addon: {
+          opacity: 1,
+          transform: `translate3d(${-100 + leftTransform}%, 0, 0)`,
+          WebkitTransform: `translate3d(${-100 + leftTransform}%, 0, 0)`
         },
-        icon: { opacity: 1 },
         right: { opacity: 1 }
       };
     }
@@ -454,7 +454,7 @@ export default class View extends Component {
           WebkitTransform: `translate3d(${titleTransform}%, 0, 0)`
         },
         item: { opacity: 1 - opacity },
-        left: {
+        addon: {
           transform: `translate3d(${leftTransform}%, 0, 0)`,
           WebkitTransform: `translate3d(${leftTransform}%, 0, 0)`
         }

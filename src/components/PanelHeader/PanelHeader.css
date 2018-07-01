@@ -24,15 +24,22 @@
       flex-shrink: 0;
       }
 
-      .PanelHeader__icon {}
-
-        .PanelHeader-icon {}
-
       .PanelHeader__left-in {
         box-sizing: border-box;
         }
 
         .PanelHeader-left-in {}
+
+    .PanelHeader__content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 50%;
+      }
+
+      .PanelHeader-content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        }
 
     .PanelHeader__right {
       flex-shrink: 0;
@@ -43,16 +50,6 @@
         text-align: right;
         justify-content: flex-end;
         display: flex;
-        }
-
-    .PanelHeader__content {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      }
-
-      .PanelHeader-content {
-        overflow: hidden;
-        text-overflow: ellipsis;
         }
 
 .PanelHeader--ios {
@@ -96,12 +93,6 @@
       flex-basis: 0;
       }
 
-      .PanelHeader--ios .PanelHeader__icon {}
-
-        .PanelHeader--ios .PanelHeader-icon {
-          font-size: 17px;
-          }
-
       .PanelHeader--ios .PanelHeader__left-in {
         box-sizing: border-box;
         }
@@ -114,28 +105,17 @@
             padding-left: 12px;
             }
 
-          .PanelHeader--ios .PanelHeader-left-in:not(.PanelHeader-left-in--with-icon) .HeaderButton > *:not(.Icon),
-          .PanelHeader--ios .PanelHeader-left-in:not(.PanelHeader-left-in--with-icon) .HeaderButton__str {
+          .PanelHeader--ios .PanelHeader-left-in .HeaderButton:not(.HeaderButton--icon) {
             padding-left: 16px;
             }
 
-    .PanelHeader--ios .PanelHeader__right {
-      flex-grow: 1;
-      flex-basis: 0;
+    .PanelHeader--ios .PanelHeader__addon {
+      padding-right: 12px;
       }
 
-      .PanelHeader--ios .PanelHeader-right {
-        font-size: 17px;
+      .PanelHeader--ios .PanelHeader-addon:not(:empty) {
+        padding-left: 4px;
         }
-
-        .PanelHeader--ios .PanelHeader-right .HeaderButton .Icon--24 {
-          padding-right: 12px;
-          }
-
-        .PanelHeader--ios .PanelHeader-right .HeaderButton > *:not(.Icon),
-        .PanelHeader--ios .PanelHeader-right .HeaderButton__str {
-          padding-right: 16px;
-          }
 
     .PanelHeader--ios .PanelHeader__content {
 
@@ -145,8 +125,8 @@
         font-weight: 500;
         font-size: 17px;
         line-height: 44px;
+        height: 44px;
         text-align: center;
-        padding: 0 6px;
         transition: color .6s var(--ios-easing);
         color: #fff;
         }
@@ -154,6 +134,28 @@
       .PanelHeader--ios.PanelHeader--light .PanelHeader-content {
         color: #000;
         }
+
+    .PanelHeader--ios .PanelHeader__right {
+      flex-grow: 1;
+      flex-basis: 0;
+      }
+
+      .PanelHeader--ios .PanelHeader-right {
+        font-size: 17px;
+        padding-left: 12px;
+        }
+
+        .PanelHeader--ios .PanelHeader-right .HeaderButton:not(.HeaderButton--icon) {
+          padding-right: 16px;
+          }
+
+        .PanelHeader--ios .PanelHeader-right .HeaderButton:not(:first-child) {
+          padding-left: 12px;
+          }
+
+          .PanelHeader--ios .PanelHeader-right .HeaderButton .Icon--24 {
+            padding-right: 12px;
+            }
 
 
 
