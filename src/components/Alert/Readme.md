@@ -2,7 +2,7 @@
 
 * `action` – функция для обработки клика по кнопке.
 * `style` – стилизация кнопки. Более подробно со значениями можно ознакомиться в разделе props & methods.
-* `autoclose` – флаг для автозакрытия алерта при клике на кнопку. ** Важно: ** перед установкой этого флага в `true`, убедитесь, что в `Alert` передано свойство `onClose`.
+* `autoclose` – флаг для автозакрытия алерта при клике на кнопку. **Важно:** перед установкой этого флага в `true`, убедитесь, что в `Alert` передано свойство `onClose`.
 
 ```
 
@@ -20,7 +20,7 @@ class Example extends React.Component {
   }
 
   openSheet () {
-    this.setState({ popout: 
+    this.setState({ popout:
       <Alert
         actions={[{
           title: 'Close',
@@ -35,7 +35,7 @@ class Example extends React.Component {
       >
         <h2>Hi!</h2>
         <p>I am alert</p>
-      </Alert> 
+      </Alert>
     });
   }
 
