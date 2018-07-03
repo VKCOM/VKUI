@@ -85,13 +85,13 @@
 .ActionSheet--android {
   min-width: 280px;
   background: #fff;
-  box-shadow: 0 20px 35px 0 rgba(0, 0, 0, 0.3), 0 0 35px 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 20px 35px 0 rgba(0, 0, 0, .3), 0 0 35px 0 rgba(0, 0, 0, .22);
   border-radius: 2px;
   animation: animation-android-actionsheet-intro .2s ease;
 }
 
   .ActionSheet--android.ActionSheet--closing {
-    transform: scale(0.95);
+    transform: scale(.95);
     opacity: 0;
     transition: transform .2s var(--android-easing), opacity .2s var(--android-easing);
     }

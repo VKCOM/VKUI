@@ -26,16 +26,16 @@
   }
 
 .FixedTabs--ios.FixedTabs--white.FixedLayout--top {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
   }
 
 .FixedTabs--ios.FixedTabs--white.FixedLayout--bottom {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid rgba(0, 0, 0, .12);
   }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .FixedTabs--ios.FixedTabs--gray, .FixedTabs--ios.FixedTabs--white {
-    border-width: 0.5px;
+    border-width: .5px;
     }
   }
 

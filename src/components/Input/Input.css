@@ -54,7 +54,7 @@
   .Input--ios .Input__el {
     border-radius: 10px;
     background-color: rgb(242, 243, 245);
-    border: solid .5px rgba(0, 0, 0, 0.15);
+    border: solid .5px rgba(0, 0, 0, .15);
     }
 
   .Input--ios .Input__el:focus {

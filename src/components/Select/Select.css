@@ -60,7 +60,7 @@
   .Select--ios .Select__container {
     border-radius: 10px;
     background-color: rgb(242, 243, 245);
-    border: solid .5px rgba(0, 0, 0, 0.15);
+    border: solid .5px rgba(0, 0, 0, .15);
     }
 
   .Select--ios select:focus ~ .Select__container,

@@ -86,5 +86,5 @@
       content: '';
       background: #fff;
       border-radius: 10px;
-      box-shadow: 0 1px 3px 0 var(--separator), 0 0 1px 0 var(--separator), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 1px 3px 0 var(--separator), 0 0 1px 0 var(--separator), 0 0 0 .5px rgba(0, 0, 0, .04);
       }
