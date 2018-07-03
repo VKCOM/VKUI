@@ -34,7 +34,7 @@
     "react-styleguidist": "^7.0.17",
     "schema-utils": "^0.4.3",
     "style-loader": "^0.13.2",
-    "stylelint": "^7.2.0",
+    "stylelint": "^9.3.0",
     "stylelint-config-standard": "^16.0.0",
     "webpack": "^4.12.0",
     "webpack-bundle-analyzer": "^2.9.2",
@@ -60,7 +60,7 @@
     "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
     "build": "NODE_ENV=production webpack",
     "clear": "rm -rf dist/*",
-    "test": "./node_modules/.bin/eslint . && ./node_modules/.bin/stylelint ./src/**/*.css && ./node_modules/.bin/jest"
+    "test": "eslint . && stylelint './src/**/*.css' && jest"
   },
   "pre-commit": [
     "test"

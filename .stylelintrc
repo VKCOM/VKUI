@@ -1,6 +1,9 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
-    "number-leading-zero": "never"
+    "indentation": null,
+    "number-leading-zero": "never",
+    "block-no-empty": null,
+    "declaration-block-no-redundant-longhand-properties": null
   }
 }
