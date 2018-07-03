@@ -29,6 +29,7 @@
     line-height: 16px;
     text-align: center;
     }
+
   .Alert--ios .Alert__content::after {
     content: '';
     position: absolute;
@@ -136,6 +137,7 @@
     .Alert--ios.Alert--h .Alert__btn::after {
       background: var(--ios-right-border);
       }
+
     .Alert--ios.Alert--h .Alert__btn:last-child::after {
       content: none;
       }
@@ -148,9 +150,11 @@
   .Alert--ios .Alert__btn--primary { /* Depcrated. Remove in next version */
     font-weight: 500;
     }
+
   .Alert--ios .Alert__btn--cancel {
     font-weight: 600;
     }
+
   .Alert--ios .Alert__btn--destructive {
     color: var(--red);
     }
@@ -174,7 +178,7 @@
     padding: 18px 24px 16px;
     font-size: 16px;
     line-height: 24px;
-    color: #71757A;
+    color: #71757a;
     }
 
     .Alert--android .Alert__content h2 {
@@ -182,11 +186,13 @@
       font-weight: 500;
       font-size: 20px;
       line-height: 28px;
-      color: #2E3033;
+      color: #2e3033;
       }
+
     .Alert--android .Alert__content p {
       margin: 0;
       }
+
     .Alert--android .Alert__content p + p {
       margin: 24px 0 0;
       }
@@ -203,7 +209,7 @@
 
     .Alert--android .Alert__btn {
       background: transparent;
-      margin: 0;
+      margin: 0 0 0 12px;
       border: 0;
       flex: 0 1 auto;
       text-transform: uppercase;
@@ -212,8 +218,7 @@
       line-height: 16px;
       padding: 8px;
       border-radius: 2px;
-      margin-left: 12px;
-      color: #5181B8;
+      color: #5181b8;
       outline: none;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -227,9 +232,10 @@
       color: #fff;
       background-color: var(--header-blue);
       }
+
     .Alert--android .Alert__btn--primary:active,
     .Alert--android .Alert__btn--primary.Tappable--active {
-      background: #4872A3;
+      background: #4872a3;
       }
 
 /**
@@ -240,16 +246,19 @@
     opacity: 0;
     transform: scale(1.05);
     }
+
   to {
     opacity: 1;
     transform: scale(1);
     }
   }
+
 @keyframes animation-android-alert-intro {
   from {
     opacity: 0;
     transform: scale(.95);
     }
+
   to {
     opacity: 1;
     transform: scale(1);

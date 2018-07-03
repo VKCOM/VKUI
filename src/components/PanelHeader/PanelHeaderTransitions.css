@@ -20,48 +20,61 @@
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed {
   opacity: 0;
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__content {
   opacity: 0;
   transform: translate3d(-100%, 0, 0);
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__addon {
   opacity: 0;
   transform: translate3d(-100%, 0, 0);
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__left-in,
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__right {
   opacity: 0;
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success {
   opacity: 1;
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__content {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__addon {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__left-in,
 .PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__right {
   opacity: 1;
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed {
   opacity: 1;
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed .PanelHeader__content {
   transform: translate3d(0, 0, 0);
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed .PanelHeader__addon {
   transform: translate3d(0, 0, 0);
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success {
   opacity: 0;
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__content {
   transform: translate3d(100%, 0, 0);
   }
+
 .PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__addon {
   transform: translate3d(100%, 0, 0);
   }
@@ -113,6 +126,7 @@
     opacity: 0;
     transform: translateX(-100%);
     }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -124,6 +138,7 @@
     opacity: 0;
     transform: translateX(100%);
     }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -135,6 +150,7 @@
     opacity: 1;
     transform: translateX(0);
     }
+
   to {
     opacity: 0;
     transform: translateX(100%);
@@ -146,6 +162,7 @@
     opacity: 1;
     transform: translateX(0);
     }
+
   to {
     opacity: 0;
     transform: translateX(-100%);
@@ -156,6 +173,7 @@
   from {
     opacity: 0;
     }
+
   to {
     opacity: 1;
     }
@@ -165,16 +183,16 @@
   from {
     opacity: 1;
     }
+
   to {
     opacity: 0;
     }
   }
 
-
-
 .PanelHeader--android .PanelHeader__in--next ~ .PanelHeader__in--prev {
   animation: animation-android-prev-back .3s var(--android-easing);
   }
+
 .PanelHeader--android .PanelHeader__in--prev ~ .PanelHeader__in--next {
   animation: animation-android-next-forward .3s var(--android-easing);
   }

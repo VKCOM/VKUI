@@ -25,7 +25,6 @@
       text-transform: uppercase;
       }
 
-
 .Header--ios {
   padding: 0 12px;
   }
@@ -41,7 +40,6 @@
   .Header--ios.Header--level-2 .Header__content {
     padding: 15px 0 14px;
     }
-
 
 .Header--android {
   padding: 0 16px;

@@ -30,9 +30,11 @@
 .Text--left {
   text-align: left;
   }
+
 .Text--center {
   text-align: center;
   }
+
 .Text--right {
   text-align: right;
   }
@@ -43,7 +45,7 @@
 .Text--ios {
   font-size: 15px;
   line-height: 20px;
-  color: #2E3033;
+  color: #2e3033;
   }
 
   .Text--ios p {
@@ -54,7 +56,7 @@
  * Android version
  */
 .Text--android {
-  color: #2E3033;
+  color: #2e3033;
   font-size: 16px;
   line-height: 24px;
   }

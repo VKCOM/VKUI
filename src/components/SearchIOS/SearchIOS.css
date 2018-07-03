@@ -151,9 +151,6 @@
         cursor: text;
         }
 
-
-
-
 .Search--ios.Search--default {
   background: #e6e9ed;
   padding: 8px;
@@ -184,7 +181,6 @@
 .Search--ios.Search--default .Search__after::before {
   background-color: #e6e9ed;
   }
-
 
 .Search--ios.Search--header {
   background: var(--header-blue);

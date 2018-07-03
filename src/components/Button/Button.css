@@ -160,8 +160,6 @@
     padding: 11px;
     }
 
-
-
 .Button--ios.Button--size-m {
   border-radius: 15px;
   }
@@ -188,8 +186,6 @@
     .Button--ios.Button--type-cell .Button__before .Icon {
       margin-right: 12px;
       }
-
-
 
 .Button--android.Button--type-default {
   border-radius: 4px;

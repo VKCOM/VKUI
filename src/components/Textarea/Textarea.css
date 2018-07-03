@@ -26,7 +26,6 @@
     opacity: .6;
     }
 
-
 .Textarea--ios {
 
   }
@@ -44,7 +43,6 @@
   .Textarea--ios textarea:focus {
     border-color: var(--accent-blue);
     }
-
 
 .Textarea--android {
 

@@ -15,17 +15,21 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-tap-highlight-color: transparent;
     }
+
   .Switch__self:checked + .Switch__pseudo {
 
     }
+
   .Switch__self[disabled] + .Switch__pseudo {
 
     }
+
   .Switch__pseudo::before {
     position: absolute;
     content: '';
     transition: transform .1s ease;
     }
+
   .Switch__self:checked + .Switch__pseudo::before {
     transform: translateX(20px);
     }
@@ -40,7 +44,7 @@
   .Switch--ios .Switch__pseudo {
     width: 48px;
     height: 28px;
-    border: 1px solid #E6E6E6;
+    border: 1px solid #e6e6e6;
     background: #fff;
     border-radius: 15px;
     transition:
@@ -49,13 +53,15 @@
     }
 
   .Switch--ios .Switch__self:checked + .Switch__pseudo {
-    border-color: #4CD864;
-    background: #4CD864;
+    border-color: #4cd864;
+    background: #4cd864;
     }
+
   .Switch--ios .Switch__self[disabled] + .Switch__pseudo {
     border-color: #ddd;
     background: #ddd;
     }
+
   .Switch--ios .Switch__pseudo::before {
     top: 0;
     left: 0;
@@ -84,18 +90,21 @@
   .Switch--android .Switch__self:checked + .Switch__pseudo {
     background: #a8bfdb;
     }
+
   .Switch--android .Switch__self[disabled] + .Switch__pseudo {
     opacity: .5;
     }
+
   .Switch--android .Switch__pseudo::before {
     top: -3px;
     left: -3px;
     width: 20px;
     height: 20px;
-    background: #F1F1F1;
+    background: #f1f1f1;
     border-radius: 10px;
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 2px 2px 0 rgba(0, 0, 0, .24);
     }
+
   .Switch--android .Switch__self:checked + .Switch__pseudo::before {
     background: var(--header-blue);
     }

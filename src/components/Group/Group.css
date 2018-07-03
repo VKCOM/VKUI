@@ -43,10 +43,12 @@
     height: 1px;
     content: '';
     }
+
   .Group--ios::before {
     top: 0;
     background: var(--separator);
     }
+
   .Group--ios::after {
     bottom: 0;
     background: var(--separator);

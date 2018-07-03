@@ -18,6 +18,7 @@
     }
 
   .Spinner--android .Spinner__self {}
+
   .Spinner--android.Spinner--on .Spinner__self {
     animation: rotator var(--duration) linear infinite;
     }
@@ -32,6 +33,7 @@
     x: 46.25%;
     y: 36.25%;
     }
+
   .Spinner--ios.Spinner--on .Spinner__part {
     animation: fade var(--duration) linear infinite;
     }
@@ -40,6 +42,7 @@
   0% {
     transform: rotate(0deg);
     }
+
   100% {
     transform: rotate(360deg);
     }
@@ -49,6 +52,7 @@
   from {
     opacity: 1;
     }
+
   to {
     opacity: .1;
     }

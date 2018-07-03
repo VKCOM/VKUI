@@ -62,7 +62,7 @@
  */
 
 .PopoutWrapper--ios.PopoutWrapper--closing .PopoutWrapper__mask {
-  transition: opacity .3s var(--ios-easing)
+  transition: opacity .3s var(--ios-easing);
   }
 
 /**
@@ -70,13 +70,14 @@
  */
 
 .PopoutWrapper--android.PopoutWrapper--closing .PopoutWrapper__mask {
-  transition: opacity .2s var(--android-easing)
+  transition: opacity .2s var(--android-easing);
   }
 
 @keyframes animation-full-fade-in {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

@@ -81,6 +81,7 @@
   content: '';
   pointer-events: none;
   }
+
 .View--ios .View__panel--prev .Panel__in::before {
   animation: animation-ios-fade-in .6s var(--ios-easing);
   }
@@ -105,37 +106,41 @@
 
 @keyframes animation-ios-next-forward {
   from {
-    transform: translate3d(100%,0,0);
+    transform: translate3d(100%, 0, 0);
     }
+
   to {
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     }
   }
 
 @keyframes animation-ios-next-back {
   from {
-    transform: translate3d(-50%,0,0);
+    transform: translate3d(-50%, 0, 0);
     }
+
   to {
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     }
   }
 
 @keyframes animation-ios-prev-forward {
   from {
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     }
+
   to {
-    transform: translate3d(-50%,0,0);
+    transform: translate3d(-50%, 0, 0);
     }
   }
 
 @keyframes animation-ios-prev-back {
   from {
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     }
+
   to {
-    transform: translate3d(100%,0,0);
+    transform: translate3d(100%, 0, 0);
     }
   }
 
@@ -143,6 +148,7 @@
   from {
     opacity: 0;
     }
+
   to {
     opacity: .3;
     }
@@ -152,6 +158,7 @@
   from {
     opacity: .3;
     }
+
   to {
     opacity: 0;
     }

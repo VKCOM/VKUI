@@ -12,13 +12,15 @@
   background: #fff;
   }
 
-  .List .ListItem, .List .Radio {
+  .List .ListItem,
+  .List .Radio {
     position: relative;
     z-index: 2;
     }
 
 /* iOS */
 .List--ios {}
+
   .List--ios::before,
   .List--ios::after {
     position: absolute;
@@ -28,10 +30,12 @@
     height: 1px;
     content: '';
     }
+
   .List--ios::before {
     top: 0;
     background: var(--separator);
     }
+
   .List--ios::after {
     bottom: 0;
     background: var(--separator);
