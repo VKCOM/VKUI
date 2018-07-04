@@ -43,9 +43,8 @@
   }
 
 .Button--stretched {
-  max-width: 100%;
-  flex-grow: 1;
-  flex-shrink: 0;
+  display: block;
+  width: 100%;
   }
 
   .Button--stretched .Button__in {
