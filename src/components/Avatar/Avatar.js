@@ -6,8 +6,6 @@ import './Avatar.css';
 
 const baseClassName = getClassName('Avatar');
 
-export const sizes = [80, 72, 64, 56, 48, 40, 36, 32, 28];
-
 const Avatar = ({ src, size, style, className, children, ...props }) => {
   let Component = src ? 'img' : 'div';
 

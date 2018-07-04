@@ -4,7 +4,7 @@
   display: block;
   }
 
-  .Checkbox [type="checkbox"] {
+  .Checkbox__input {
     display: none;
     }
 
@@ -33,7 +33,7 @@
       color: #000;
       }
 
-  .Checkbox [type="checkbox"]:checked ~ .Checkbox__container .Checkbox__icon {
+  .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon {
     background-color: var(--accent-blue);
     border-color: var(--accent-blue);
     color: #fff;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { sizes as avatarSizes } from '../src/components/Avatar/Avatar';
 import { values as colors, titles as colorTitles, keys as colorKeys } from '../src/helpers/colors';
 import {platform, IOS, ANDROID} from '../src/lib/platform';
 import '../src/styles/common.css';
@@ -43,5 +42,3 @@ window.colors = colors;
 window.colorTitles = colorTitles;
 
 window.colorKeys = colorKeys;
-
-window.avatarSizes = avatarSizes;

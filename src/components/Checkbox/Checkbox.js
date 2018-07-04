@@ -18,9 +18,9 @@ const Checkbox = ({ children, className, ...restProps }) => {
       activeEffectDelay={osname === IOS ? 100 : ACTIVE_EFFECT_DELAY }
     >
       <input
+        {...restProps}
         type="checkbox"
         className="Checkbox__input"
-        {...restProps}
       />
       <div className="Checkbox__container">
         <div className="Checkbox__icon"><Icon16Done /></div>

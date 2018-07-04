@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
-import Avatar, {sizes as avatarSizes} from '../Avatar/Avatar';
+import Avatar from '../Avatar/Avatar';
 
 const baseClassNames = getClassName('Entity');
 
@@ -12,7 +12,11 @@ const baseClassNames = getClassName('Entity');
 export default class Entity extends Component {
   static propTypes = {
     style: PropTypes.object,
-    size: PropTypes.oneOf(['s', 'm', ...avatarSizes]),
+    /**
+     * @deprecated
+     * Use avatarProps.size instead
+     */
+    size: PropTypes.oneOf(['m', 's', 80, 72, 64, 56, 48, 40, 36, 32, 28]),
     photo: PropTypes.string,
     title: PropTypes.node,
     description: PropTypes.node,
@@ -31,10 +35,8 @@ export default class Entity extends Component {
   get avatarSize () {
     switch (this.props.size) {
       case 'm':
-        console.warn('size m is deprecated. Use 64 instead');
         return 64;
       case 's':
-        console.warn('size m is deprecated. Use 48 instead');
         return 48;
       default:
         return this.props.size;
