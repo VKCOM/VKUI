@@ -33,7 +33,8 @@ module.exports = {
           '../src/components/PanelHeader/PanelHeader.js',
           '../src/components/HeaderButton/HeaderButton.js',
           '../src/components/Root/Root.js',
-          '../src/components/FixedLayout/FixedLayout.js'
+          '../src/components/FixedLayout/FixedLayout.js',
+          '../src/components/HorizontalScroll/HorizontalScroll.js',
         ]
       }, {
         name: 'Popouts',

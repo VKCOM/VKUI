@@ -1,0 +1,11 @@
+.HorizontalScroll {
+  position: relative;
+  overflow: hidden;
+  }
+
+  .HorizontalScroll__in {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 20px;
+    margin-bottom: -20px;
+    }
