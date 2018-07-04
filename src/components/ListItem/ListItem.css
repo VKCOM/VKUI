@@ -109,7 +109,7 @@
     transition: transform .6s var(--ios-easing);
     }
 
-    .ListItem--ios:not(:last-child) .ListItem__in:not(.Tappable--active) .ListItem__before::before {
+    .List .ListItem--ios:not(:last-child) .ListItem__in:not(.Tappable--active) .ListItem__before::before {
       position: absolute;
       bottom: 0;
       left: 100%;
@@ -168,7 +168,7 @@
       (-webkit-min-device-pixel-ratio: 2),
       (min-resolution: 192dpi),
       (min-resolution: 2dppx) {
-      .ListItem--ios:not(:last-child) .ListItem__in:not(.Tappable--active) .ListItem__before::before {
+      .List .ListItem--ios:not(:last-child) .ListItem__in:not(.Tappable--active) .ListItem__before::before {
         background: var(--ios-bottom-border);
         }
       }

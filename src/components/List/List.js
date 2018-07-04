@@ -21,9 +21,9 @@ export default class List extends Component {
     const { style, className, children } = this.props;
 
     return (
-      <ul className={classnames(baseClassNames, className)} style={style}>
+      <div className={classnames(baseClassNames, className)} style={style}>
         {children}
-      </ul>
+      </div>
     );
   }
 }

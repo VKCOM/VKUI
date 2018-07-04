@@ -140,7 +140,7 @@ export default class ListItem extends Component {
     const linkProps = href ? restProps : {};
 
     return (
-      <li
+      <div
         className={classnames(baseClassNames, modifiers, className)}
         ref={this.getRootRef}
         style={{ height: this.state.height }}
@@ -191,7 +191,7 @@ export default class ListItem extends Component {
             style={{ transform: `translateX(-${this.state.removeOffset}px)` }}
           >{removePlaceholder}</div>
         }
-      </li>
+      </div>
     );
   }
 }
