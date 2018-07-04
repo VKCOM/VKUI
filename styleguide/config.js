@@ -75,7 +75,7 @@ module.exports = {
           '../src/components/Checkbox/Checkbox.js',
           '../src/components/Input/Input.js',
           '../src/components/Select/Select.js',
-          '../src/components/Select/SelectMimicry.js',
+          '../src/components/SelectMimicry/SelectMimicry.js',
           '../src/components/Textarea/Textarea.js',
           '../src/components/File/File.js'
         ]
