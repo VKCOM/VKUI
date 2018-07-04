@@ -321,8 +321,6 @@ export default class View extends Component {
   };
 
   onMoveX = (e) => {
-    e.originalEvent.preventDefault();
-
     if (osname === IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
       this.setState({ browserSwipe: true });
     }
