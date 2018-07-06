@@ -9,7 +9,7 @@
   transition: background-color .15s ease-out;
   }
 
-.Tappable--ios.Tappable--active:not([disabled]):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich):not(.Button--vk-wide-primary):not(.TabsItem--white):not(.HeaderButton):not(.Button--type-default) {
+.Tappable--ios.Tappable--active:not([disabled]):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich):not(.Button--vk-wide-primary):not(.TabsItem):not(.HeaderButton):not(.Button--type-default) {
   background: var(--ios-active-color) !important;
   transition: none;
   }
@@ -22,7 +22,7 @@
   transition: background-color .15s ease-out;
   }
 
-.Tappable--android.Tappable--active:not([disabled]):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich):not(.Alert__btn--primary):not(.Button--vk-wide-primary):not(.TabsItem--white):not(.HeaderButton):not(.Button--type-default) {
+.Tappable--android.Tappable--active:not([disabled]):not(.Button--vk-secondary):not(.Button--vk-tertiary):not(.Button--vk-rich):not(.Alert__btn--primary):not(.Button--vk-wide-primary):not(.TabsItem):not(.HeaderButton):not(.Button--type-default) {
   background: var(--android-active-color) !important;
   }
 

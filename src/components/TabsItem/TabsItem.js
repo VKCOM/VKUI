@@ -11,11 +11,9 @@ const baseClassName = getClassName('TabsItem');
 
 export default class TabsItem extends React.Component {
   static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     selected: PropTypes.bool,
-    className: PropTypes.string,
-    theme: osname === IOS ? PropTypes.oneOf(['white', 'gray']) : PropTypes.oneOf(['white'])
+    className: PropTypes.string
   };
 
   static defaultProps = {
@@ -23,18 +21,15 @@ export default class TabsItem extends React.Component {
   };
 
   render () {
-    const { onClick, children, selected, className, theme } = this.props;
+    const { children, selected, className, ...restProps } = this.props;
 
     return (
       <Tappable
-        className={classnames(baseClassName, {
-          'TabsItem--selected': selected,
-          [`TabsItem--${theme}`]: true
-        }, className)}
-        onClick={onClick}
+        {...restProps}
+        className={classnames(baseClassName, { 'TabsItem--selected': selected }, className)}
         activeEffectDelay={osname === IOS ? 0 : ACTIVE_EFFECT_DELAY}
       >
-        {children}
+        <div className="TabsItem__in">{children}</div>
       </Tappable>
     );
   }

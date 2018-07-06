@@ -1,38 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import getClassName from '../../helpers/getClassName';
-import './FixedTabs.css';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Tabs from '../Tabs/Tabs';
 import {IOS, platform} from '../../lib/platform';
-import classnames from '../../lib/classnames';
 
 const osname = platform();
-const baseClassName = getClassName('FixedTabs');
 
+/**
+ * @deprecated
+ * Этот компонент устарел и будет удален в следущей мажорной версии.
+ * Для отрисовки фиксированных Tabs используйте связку Tabs и FixedLayout.
+ */
 export default class FixedTabs extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
     vertical: PropTypes.oneOf(['top', 'bottom']),
     style: PropTypes.object,
-    theme: osname === IOS ? PropTypes.oneOf(['white', 'gray']) : PropTypes.oneOf(['white']),
-    background: osname === IOS ? PropTypes.oneOf(['transparent', 'gray', 'white']) : PropTypes.oneOf(['blue'])
+    /**
+     * Значения white и gray устарели. Они будут удалены в следующей мажорной версии.
+     * Для Android актуален только header
+     */
+    theme: PropTypes.oneOf(['light', 'header']),
+    /**
+     * iOS only
+     */
+    type: PropTypes.oneOf(['default', 'buttons'])
   };
 
   static defaultProps = {
-    background: osname === IOS ? 'gray' : 'blue',
-    theme: osname === IOS ? 'gray' : 'white',
+    theme: osname === IOS ? 'light' : 'header',
     vertical: 'top'
   };
 
   render () {
+    const { vertical, className, style, theme, children } = this.props;
+
     return (
-      <FixedLayout vertical={this.props.vertical} className={classnames(baseClassName, {
-        [`FixedTabs--${this.props.background}`]: true
-      }, this.props.className)} style={this.props.style}>
-        <Tabs theme={this.props.theme}>
-          {this.props.children}
+      <FixedLayout vertical={vertical} className={className} style={style}>
+        <Tabs theme={theme}>
+          {children}
         </Tabs>
       </FixedLayout>
     );

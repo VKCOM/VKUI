@@ -1,6 +1,6 @@
 @import '../../styles/constants.css';
 
-.TabsItem {
+.Tabs--default .TabsItem {
   max-width: 100%;
   flex-grow: 1;
   flex-basis: 0;
@@ -10,52 +10,111 @@
   font-weight: 500;
   }
 
-.TabsItem--ios {
+/*
+  iOS
+ */
+.Tabs--ios.Tabs--default .TabsItem {
   height: 32px;
   border: 1px solid;
   line-height: 30px;
   font-size: 14px;
+  padding: 0 12px;
   }
 
-.TabsItem--ios:not(:first-child) {
+.Tabs--ios.Tabs--default .TabsItem:not(:first-child) {
   border-left: none;
   }
 
-.TabsItem--ios:last-child {
+.Tabs--ios.Tabs--default .TabsItem:last-child {
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
   }
 
-.TabsItem--ios:first-child {
+.Tabs--ios.Tabs--default .TabsItem:first-child {
   border-top-left-radius: 16px;
   border-bottom-left-radius: 16px;
   }
 
-.TabsItem--ios.TabsItem--gray {
-  border-color: var(--medium-blue-gray);
-  color: var(--medium-blue-gray);
+.Tabs--ios.Tabs--default.Tabs--light .TabsItem {
+  border-color: var(--light-blue-gray);
+  color: var(--light-blue-gray);
   }
 
-.TabsItem--ios.TabsItem--gray.TabsItem--selected {
+.Tabs--ios.Tabs--default.Tabs--light .TabsItem--selected {
   color: #fff;
-  background-color: var(--medium-blue-gray);
+  background-color: var(--light-blue-gray);
   }
 
-.TabsItem--ios.TabsItem--white.Tappable--active {
+.Tabs--ios.Tabs--default.Tabs--light .TabsItem:not(.TabsItem--selected).Tappable--active {
+  background: var(--separator);
+  }
+
+.Tabs--ios.Tabs--default.Tabs--header .TabsItem:not(.TabsItem--selected).Tappable--active {
   background-color: rgba(255, 255, 255, .1);
   }
 
-.TabsItem--ios.TabsItem--white {
+.Tabs--ios.Tabs--default.Tabs--header .TabsItem {
   border-color: #fff;
   color: #fff;
   }
 
-.TabsItem--ios.TabsItem--white.TabsItem--selected {
+.Tabs--ios.Tabs--default.Tabs--header .TabsItem--selected {
   background-color: #fff;
   color: var(--header-blue);
   }
 
-.TabsItem--android {
+.Tabs--ios.Tabs--buttons .TabsItem {
+  flex-shrink: 0;
+  }
+
+.Tabs--ios.Tabs--buttons.Tabs--header .TabsItem {
+  background-color: var(--header-blue);
+  }
+
+  .Tabs--ios.Tabs--buttons .TabsItem__in {
+    height: 32px;
+    line-height: 32px;
+    border-radius: 16px;
+    box-sizing: border-box;
+    padding: 0 16px;
+    font-size: 16px;
+    font-weight: 500;
+    }
+
+.Tabs--ios.Tabs--buttons .TabsItem {
+  padding: 8px 0;
+  }
+
+.Tabs--ios.Tabs--buttons .TabsItem:first-child {
+  padding-left: 8px;
+  }
+
+.Tabs--ios.Tabs--buttons .TabsItem:last-child {
+  padding-right: 8px;
+  }
+
+  .Tabs--ios.Tabs--buttons.Tabs--light .TabsItem__in {
+    color: var(--subhead-gray);
+    }
+
+  .Tabs--ios.Tabs--buttons.Tabs--light .TabsItem--selected .TabsItem__in {
+    background-color: var(--background-blue);
+    color: #5a5d61;
+    }
+
+  .Tabs--ios.Tabs--buttons.Tabs--header .TabsItem__in {
+    color: #c2deff;
+    }
+
+  .Tabs--ios.Tabs--buttons.Tabs--header .TabsItem--selected .TabsItem__in {
+    background-color: rgba(173, 211, 255, .32);
+    color: #fff;
+    }
+
+/*
+  Android
+ */
+.Tabs--android.Tabs--default .TabsItem {
   height: 48px;
   line-height: 48px;
   color: rgba(255, 255, 255, .5);
@@ -63,15 +122,15 @@
   position: relative;
   }
 
-.TabsItem--android.TabsItem--selected {
+.Tabs--android.Tabs--default .TabsItem--selected {
   color: #fff;
   }
 
-.TabsItem--android.TabsItem--white.Tappable--active {
+.Tabs--android.Tabs--default.Tabs--header .TabsItem.Tappable--active {
   background-color: rgba(255, 255, 255, .1);
   }
 
-.TabsItem--android.TabsItem--selected::after {
+.Tabs--android.Tabs--default .TabsItem--selected::after {
   position: absolute;
   left: 0;
   bottom: 0;

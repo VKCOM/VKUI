@@ -1,5 +1,71 @@
+@import '../../styles/constants.css';
+
 .Tabs {
   display: flex;
   align-items: center;
+  }
+
+.Tabs--default {
   justify-content: center;
+  }
+
+.Tabs--buttons {
+  justify-content: flex-start;
+  }
+
+/*
+ iOS
+ */
+
+.Tabs--ios.Tabs--default.Tabs--light {
+  padding: 8px;
+  background-color: #fafafa;
+  }
+
+.Tabs--ios.Tabs--default.Tabs--header {
+  padding-top: 6px;
+  }
+
+.Tabs--ios.Tabs--buttons.Tabs--header {
+  background-color: var(--header-blue);
+  }
+
+.FixedLayout--ios.FixedLayout--top .Tabs::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  bottom: 0;
+  background: var(--separator);
+  }
+
+.FixedLayout--ios.FixedLayout--bottom .Tabs::before {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  top: 0;
+  background: var(--separator);
+  }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .FixedLayout--ios.FixedLayout--top .Tabs--light::after {
+    background: var(--ios-bottom-border);
+    }
+
+  .FixedLayout--ios.FixedLayout--bottom .Tabs--light::before {
+    background: var(--ios-top-border);
+    }
+  }
+
+/*
+  Android
+ */
+.Tabs--android {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
+  background-color: var(--header-blue);
   }
