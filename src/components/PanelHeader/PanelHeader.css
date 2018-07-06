@@ -69,6 +69,10 @@
     content: '';
     }
 
+  .PanelHeader--no-shadow::after {
+    display: none;
+    }
+
   .PanelHeader--ios.PanelHeader--brand {
     color: #fff;
     background: var(--header-blue);
