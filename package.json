@@ -3,7 +3,6 @@
   "version": "2.0.6",
   "main": "dist/vkui.js",
   "license": "SEE LICENSE IN LICENSE",
-  "repository": "https://github.com/VKCOM/VKUI",
   "description": "VKUI library",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
