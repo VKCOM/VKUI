@@ -11,47 +11,42 @@ const baseClassNames = getClassName('Alert');
 export default class Alert extends Component {
   static propTypes = {
     style: PropTypes.object,
+    className: PropTypes.string,
     children: PropTypes.node,
     actionsLayout: PropTypes.oneOf(['vertical', 'horizontal']),
     actions: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      action: PropTypes.func.isRequired,
+      title: PropTypes.string,
+      action: PropTypes.func,
       style: PropTypes.oneOf(['primary', 'cancel', 'destructive', 'default'])
     })),
     onClose: PropTypes.func
   };
 
   static defaultProps = {
-    style: {},
-    children: '',
-    actionsLayout: 'horizontal'
+    actionsLayout: 'horizontal',
+    actions: []
   };
 
-  onItemClick = (item) => () => {
+  onItemClick = item => () => {
     item.autoclose && this.props.onClose();
     item.action && item.action();
   };
 
   render () {
-    const { style, actions, actionsLayout } = this.props;
-    const modifiers = {
-      'Alert--v': actionsLayout === 'vertical',
-      'Alert--h': actionsLayout === 'horizontal'
-    };
+    const { actions, actionsLayout, children, className, style, ...restProps } = this.props;
 
     return (
-      <PopoutWrapper>
-        <div className={classnames(baseClassNames, modifiers)} style={style}>
-          <div className="Alert__content">
-            {this.props.children}
-          </div>
+      <PopoutWrapper className={className} style={style}>
+        <div {...restProps} className={classnames(baseClassNames, {
+          'Alert--v': actionsLayout === 'vertical',
+          'Alert--h': actionsLayout === 'horizontal'
+        })}>
+          <div className="Alert__content">{children}</div>
           <footer className="Alert__footer">
             {actions.map((button, i) => (
               <Tappable
                 component="button"
-                className={classnames('Alert__btn', {
-                  [`Alert__btn--${button.style || button.modifier}`]: true
-                })}
+                className={classnames('Alert__btn', { [`Alert__btn--${button.style}`]: true })}
                 onClick={this.onItemClick(button)}
                 key={`alert-action-${i}`}
               >
