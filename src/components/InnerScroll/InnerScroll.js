@@ -28,15 +28,17 @@ export default class InnerScroll extends React.Component {
     this.el.scrollTop = 1;
   }
 
+  ref = el => this.el = el;
+
   render () {
     const { className, children, onScroll, ...restProps } = this.props;
 
     return (
       <div
+        {...restProps}
         className={classnames(baseClassName, className)}
         onScroll={this.onScroll}
-        ref={el => this.el = el}
-        {...restProps}
+        ref={this.getRef}
       >
         {children}
       </div>
