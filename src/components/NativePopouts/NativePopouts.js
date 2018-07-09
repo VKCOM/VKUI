@@ -31,12 +31,10 @@ export default class NativePopouts extends React.Component {
       }),
       PropTypes.element
     ]),
-    vkuiConnect: PropTypes.shape({
-      send: PropTypes.func.isRequired,
-      subscribe: PropTypes.func.isRequired,
-      unsubscribe: PropTypes.func.isRequired
-    }).isRequired,
-    // Root or View
+    vkuiConnect: PropTypes.object.isRequired,
+    /**
+     * Root or View
+     */
     component: PropTypes.func.isRequired
   };
 
@@ -80,9 +78,7 @@ export default class NativePopouts extends React.Component {
     const { title, text, onClose, actionsLayout } = popout;
     this.setState({
       popout: (<Alert
-        actions={this.actions.map(item =>
-          removeObjectKeys(item, ['params'])
-        )}
+        actions={this.actions.map(item => removeObjectKeys(item, ['params']))}
         onClose={onClose}
         actionsLayout={actionsLayout}
       >
@@ -96,9 +92,7 @@ export default class NativePopouts extends React.Component {
     const { style } = popout;
     this.props.vkuiConnect.send('VKWebAppAlert', {
       style,
-      actions: this.actions.map(item =>
-        removeObjectKeys(item, ['action'])
-      )
+      actions: this.actions.map(item => removeObjectKeys(item, ['action']))
     });
   }
 
@@ -106,16 +100,12 @@ export default class NativePopouts extends React.Component {
     const { title, text, onClose } = popout;
     this.setState({
       popout: (
-        <ActionSheet
-          title={title}
-          text={text}
-          onClose={onClose}
-        >
-          { this.actions.map((item, index) => (
+        <ActionSheet title={title} text={text} onClose={onClose}>
+          {this.actions.map((item, index) => (
             <ActionSheetItem autoclose={item.autoclose} theme={item.style} onClick={item.action} key={`${index}`}>
               {item.title}
             </ActionSheetItem>
-          )) }
+          ))}
         </ActionSheet>
       )
     });
