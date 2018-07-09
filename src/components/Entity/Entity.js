@@ -47,21 +47,14 @@ export default class Entity extends Component {
     const { className, style, photo, title, description, avatarProps, children } = this.props;
 
     return (
-      <div
-        className={classnames(baseClassNames, className)}
-        style={style}
-      >
+      <div className={classnames(baseClassNames, className)} style={style}>
         <div className="Entity__aside">
           <Avatar src={photo} alt={title} size={this.avatarSize} {...avatarProps} />
         </div>
         <div className="Entity__main">
           {title && <div className="Entity__title">{title}</div>}
           {description && <div className="Entity__description">{description}</div>}
-          {children &&
-            <div className="Entity__content">
-              {children}
-            </div>
-          }
+          {children && <div className="Entity__content">{children}</div>}
         </div>
       </div>
     );
