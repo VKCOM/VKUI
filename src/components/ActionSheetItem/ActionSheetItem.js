@@ -4,33 +4,29 @@ import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 
-const baseClassNames = getClassName('ActionSheet-Item');
+const baseClassNames = getClassName('ActionSheetItem');
 
-export default class ActionSheetItem extends React.Component {
-  static propTypes = {
-    theme: PropTypes.oneOf(['default', 'destructive', 'cancel']),
-    children: PropTypes.node,
-    style: PropTypes.object,
-    onClick: PropTypes.func,
-    autoclose: PropTypes.bool
-  };
+const ActionSheetItem = ({ className, children, autoclose, theme, ...restProps }) => (
+  <Tappable
+    {...restProps}
+    className={classnames(baseClassNames, className, { [`ActionSheetItem--${theme}`]: true })}
+    component={theme === 'cancel' ? 'span' : 'div'}
+  >
+    {children}
+  </Tappable>
+);
 
-  static defaultProps = {
-    theme: 'default'
-  };
+ActionSheetItem.propTypes = {
+  theme: PropTypes.oneOf(['default', 'destructive', 'cancel']),
+  children: PropTypes.node,
+  style: PropTypes.object,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+  autoclose: PropTypes.bool
+};
 
-  render () {
-    const classNames = classnames(baseClassNames, {
-      [`ActionSheet-Item--${this.props.theme}`]: this.props.theme
-    });
-    return (
-      <Tappable
-        onClick={this.props.onClick}
-        className={classNames}
-        style={this.props.style}
-      >
-        {this.props.children}
-      </Tappable>
-    );
-  }
-}
+ActionSheetItem.defaultProps = {
+  theme: 'default'
+};
+
+export default ActionSheetItem;

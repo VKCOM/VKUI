@@ -4,7 +4,7 @@ ActionSheet – имитация [нативного компонента](https
 **Важно**
 
 * Нужно обязательно передать onClose для обработки закрытия ActionSheet изнутри.
-* Согласно гайдлайнам, в ActionSheet должен быть элемент для закрытия. В коде примера ниже можно посмотреть, как добавить такой элемент. В противном случае ActionSheet подставит дефолтный.
+* Согласно гайдлайнам, в ActionSheet должен быть элемент для закрытия. В коде примера ниже можно посмотреть, как добавить такой элемент.
 
 ```
 
@@ -26,13 +26,13 @@ class Example extends React.Component {
   openSheet () {
     this.setState({ popout:
       <ActionSheet
-        onClose={ () => this.setState({ popout: null }) }
+        onClose={() => this.setState({ popout: null })}
         title="Hi!"
         text="I am action sheet"
       >
         <ActionSheetItem autoclose>Action</ActionSheetItem>
         <ActionSheetItem autoclose theme="destructive">Sheet</ActionSheetItem>
-        <ActionSheetItem autoclose theme="cancel">Cancel</ActionSheetItem>
+        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Cancel</ActionSheetItem>}
       </ActionSheet>
     });
   }

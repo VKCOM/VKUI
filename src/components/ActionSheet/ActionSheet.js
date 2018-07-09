@@ -6,7 +6,6 @@ import classnames from '../../lib/classnames';
 import './ActionSheet.css';
 import { platform, ANDROID, IOS } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
-import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
 
 const osname = platform();
 
@@ -22,7 +21,8 @@ export default class ActionSheet extends React.Component {
     text: PropTypes.node,
     onClose: PropTypes.func.isRequired,
     style: PropTypes.object,
-    children: PropTypes.node
+    children: PropTypes.node,
+    className: PropTypes.string
   };
 
   onClose = () => {
@@ -42,7 +42,9 @@ export default class ActionSheet extends React.Component {
     }
   };
 
-  stopPropagation = (e) => e.stopPropagation();
+  getRef = el => this.el = el;
+
+  stopPropagation = e => e.stopPropagation();
 
   waitTransitionFinish (eventHandler) {
     if (transitionEvents.supported) {
@@ -56,54 +58,29 @@ export default class ActionSheet extends React.Component {
   }
 
   render () {
-    const { style } = this.props;
-    const children = [];
-    const hasHeader = osname === IOS && (this.props.title || this.props.text);
-    const classNames = classnames(baseClassNames, {
-      'ActionSheet--closing': this.state.closing
-    });
-
-    const Actions = React.Children.toArray(this.props.children).filter((Child) => Child.props.theme !== 'cancel');
-
-    Actions.forEach((Child, index) => {
-      children.push(React.cloneElement(Child, {
-        onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose)
-      }));
-      if (osname === IOS && index < Actions.length - 1) children.push(<div key={`separator-${index}`} className="ActionSheet__separator" />);
-    });
-
-    let CancelItem = React.Children.toArray(this.props.children).find(Child => Child.props.theme === 'cancel') ||
-      <ActionSheetItem onClick={this.props.onClose} theme="cancel">
-        Отмена
-      </ActionSheetItem>;
+    const { children, className, title, text, style, ...restProps } = this.props;
 
     return (
       <PopoutWrapper
         closing={this.state.closing}
-        v={ osname === IOS ? 'bottom' : 'center' }
+        v={osname === IOS ? 'bottom' : 'center'}
         h="center"
-        onClick={ this.onClose }
+        className={className}
+        style={style}
+        onClick={this.onClose}
       >
-        <div className={classNames} style={style} ref={el => this.el = el} onClick={this.stopPropagation}>
-          <div className="ActionSheet__section">
-            <div className="ActionSheet__list">
-              { hasHeader &&
-                <div className="ActionSheet__header">
-                  { this.props.title && <div className="ActionSheet__title">{ this.props.title }</div> }
-                  { this.props.text && <div className="ActionSheet__text">{ this.props.text }</div> }
-                </div>
-              }
-              { hasHeader && <div className="ActionSheet__separator" /> }
-              { children }
-            </div>
-          </div>
-          { osname === IOS &&
-            <div className="ActionSheet__section">
-              { React.cloneElement(CancelItem, {
-                onClick: this.onItemClick(CancelItem.props.onClick, true)
-              })}
-            </div>
-          }
+        <div {...restProps} ref={this.getRef} onClick={this.stopPropagation} className={classnames(baseClassNames, {
+          'ActionSheet--closing': this.state.closing
+        })}>
+          <header className="ActionSheet__header">
+            {title && <div className="ActionSheet__title">{title}</div>}
+            {text && <div className="ActionSheet__text">{text}</div>}
+          </header>
+          {React.Children.map(children, Child => (
+            Child && React.cloneElement(Child, {
+              onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose)
+            })
+          ), null)}
         </div>
       </PopoutWrapper>
     );
