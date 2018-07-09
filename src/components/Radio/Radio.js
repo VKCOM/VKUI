@@ -18,7 +18,7 @@ const Radio = ({ children, description, style, className, getRef, ...restProps }
       activeEffectDelay={osname === IOS ? 100 : ACTIVE_EFFECT_DELAY }
       disabled={restProps.disabled}
     >
-      <input {...restProps} className="Radio__input" ref={getRef} />
+      <input {...restProps} type="radio" className="Radio__input" ref={getRef} />
       <div className="Radio__container">
         <div className="Radio__icon" />
         <div className="Radio__content">
