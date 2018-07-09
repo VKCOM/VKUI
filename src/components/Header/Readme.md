@@ -10,7 +10,7 @@
       <Header level="2">
         Импорт друзей
       </Header>
-      <Header level="2" aside={<span style={{ color: colors.accentBlue }}>Показать все</span>}>
+      <Header level="2" aside={<Link>Показать все</Link>}>
         Приглашения
       </Header>
     </Panel>
