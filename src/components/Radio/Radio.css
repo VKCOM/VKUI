@@ -5,7 +5,7 @@
   display: block;
   }
 
-  .Radio [type="radio"] {
+  .Radio__input {
     display: none;
     }
 
@@ -15,7 +15,7 @@
     justify-content: flex-start;
     }
 
-  .Radio [type="radio"]:disabled ~ .Radio__container {
+  .Radio__input:disabled ~ .Radio__container {
     opacity: .6;
     }
 
@@ -61,7 +61,7 @@
       transition: border-color .15s var(--ios-easing);
       }
 
-    .Radio--ios [type="radio"]:checked ~ .Radio__container .Radio__icon {
+    .Radio--ios .Radio__input:checked ~ .Radio__container .Radio__icon {
       border-color: var(--accent-blue);
       }
 
@@ -74,7 +74,7 @@
         transition: transform .15s var(--ios-easing);
         }
 
-      .Radio--ios [type="radio"]:checked ~ .Radio__container .Radio__icon::after {
+      .Radio--ios .Radio__input:checked ~ .Radio__container .Radio__icon::after {
         background-color: var(--accent-blue);
         transform: scale(1);
         }
@@ -110,11 +110,11 @@
       margin: 2px 0;
       }
 
-    .Radio--android [type="radio"]:checked ~ .Radio__container .Radio__icon {
+    .Radio--android .Radio__input:checked ~ .Radio__container .Radio__icon {
       border-color: var(--accent-blue);
       }
 
-      .Radio--android [type="radio"]:checked ~ .Radio__container .Radio__icon::after {
+      .Radio--android .Radio__input:checked ~ .Radio__container .Radio__icon::after {
         background-color: var(--accent-blue);
         transform: scale(1);
         }
