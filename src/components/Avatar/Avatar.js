@@ -6,20 +6,20 @@ import './Avatar.css';
 
 const baseClassName = getClassName('Avatar');
 
-const Avatar = ({ src, size, style, className, children, ...props }) => {
+const Avatar = ({ src, size, style, className, children, ...restProps }) => {
   let Component = src ? 'img' : 'div';
 
   return (
     <div className={classnames(baseClassName, className)}>
       <Component
+        {...restProps}
         className="Avatar__img"
-        src={ src }
+        src={src}
         style={{
+          ...style,
           width: size,
-          height: size,
-          ...style
+          height: size
         }}
-        {...props}
       >
         {src ? null : children}
       </Component>
@@ -32,6 +32,10 @@ Avatar.propTypes = {
   src: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
+  /**
+   * children рисуется только в том случае, если не передан src. Такой подход может быть полезен при отрисовке
+   * плейсхолдеров или при использовании backgroundImage вместе src.
+   */
   children: PropTypes.node
 };
 
