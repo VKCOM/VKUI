@@ -61,7 +61,12 @@ export default class ListItem extends Component {
 
   get document () { return this.context.document || document; }
 
-  onSelectableClick = (e) => { // нужен, чтобы предотвращать двойное срабатывание (https://github.com/vuejs/vue/issues/3699#issuecomment-247957931)
+  /**
+   * предотвращает двойное срабатывание в случае с input
+   * (https://github.com/vuejs/vue/issues/3699#issuecomment-247957931)
+   * @param e
+   */
+  onClick = (e) => {
     if (e.target.tagName.toLowerCase() === 'input') {
       e.stopPropagation();
     } else {
@@ -108,8 +113,6 @@ export default class ListItem extends Component {
 
   getRootRef = el => this.rootEl = el;
 
-  emptyClickHandler = () => {};
-
   render () {
     const {
       before,
@@ -129,39 +132,32 @@ export default class ListItem extends Component {
       ...restProps
     } = this.props;
 
-    const modifiers = {
-      'ListItem--expandable': expandable,
-      'ListItem--multiline': multiline || description,
-      'ListItem--removing': this.state.removing
-    };
-
     const rootProps = selectable ? {} : restProps;
     const inputProps = selectable ? restProps : {};
     const linkProps = href ? restProps : {};
 
     return (
       <div
-        className={classnames(baseClassNames, modifiers, className)}
-        ref={this.getRootRef}
-        style={{ height: this.state.height }}
         {...rootProps}
+        onClick={href ? null : this.onClick}
+        className={classnames(baseClassNames, {
+          'ListItem--expandable': expandable,
+          'ListItem--multiline': multiline || description,
+          'ListItem--removing': this.state.removing
+        }, className)}
+        ref={this.getRootRef}
+        style={removable ? { height: this.state.height } : null}
       >
         <Tappable
+          {...linkProps}
+          onClick={href ? this.onClick : null}
           component={selectable ? 'label' : href ? 'a' : 'div'}
           className="ListItem__in"
           href={href}
-          {...linkProps}
           disabled={!selectable && !onClick && !href}
-          style={{ transform: `translateX(-${this.state.removeOffset}px)` }}
-          onClick={selectable ? this.onSelectableClick : onClick}
+          style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
         >
-          {selectable &&
-            <input
-              type="checkbox"
-              className="ListItem__checkbox"
-              {...inputProps}
-            />
-          }
+          {selectable && <input {...inputProps} type="checkbox" className="ListItem__checkbox" />}
           <div className="ListItem__before">
             {selectable && osname === IOS && <div className="ListItem__checkbox-marker"><Icon16Done /></div>}
             {removable && osname === IOS && <div className="ListItem__remove-marker" onClick={this.activateRemove}/>}
@@ -176,20 +172,18 @@ export default class ListItem extends Component {
             {asideContent}
             {selectable && osname === ANDROID && <div className="ListItem__checkbox-marker"><Icon16Done /></div>}
             {removable && osname === ANDROID &&
-              <div className="ListItem__remove-marker" onClick={onRemove}>
-                <Icon24Cancel />
-              </div>
+            <div className="ListItem__remove-marker" onClick={onRemove}><Icon24Cancel /></div>
             }
             {osname === IOS && expandable && <Icon24Chevron className="ListItem__chevron"/>}
           </div>
         </Tappable>
         {removable && osname === IOS &&
-          <div
-            ref={this.getRemoveRef}
-            className="ListItem__remove"
-            onClick={this.onRemoveClick}
-            style={{ transform: `translateX(-${this.state.removeOffset}px)` }}
-          >{removePlaceholder}</div>
+        <div
+          ref={this.getRemoveRef}
+          className="ListItem__remove"
+          onClick={this.onRemoveClick}
+          style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
+        >{removePlaceholder}</div>
         }
       </div>
     );

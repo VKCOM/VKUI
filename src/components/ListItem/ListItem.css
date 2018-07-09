@@ -106,7 +106,7 @@
 
   .ListItem--ios .ListItem__in {
     padding: 0 12px;
-    transition: transform .6s var(--ios-easing);
+    transition: background-color .15s ease-out, transform .6s var(--ios-easing);
     }
 
     .List .ListItem--ios:not(:last-child) .ListItem__in:not(.Tappable--active) .ListItem__before::before {
