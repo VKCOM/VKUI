@@ -7,8 +7,7 @@ import {IOS, platform} from '../../lib/platform';
 const osname = platform();
 
 /**
- * @deprecated
- * Этот компонент устарел и будет удален в следущей мажорной версии.
+ * @deprecated Этот компонент устарел и будет удален в следущей мажорной версии.
  * Для отрисовки фиксированных Tabs используйте связку Tabs и FixedLayout.
  */
 export default class FixedTabs extends React.Component {
