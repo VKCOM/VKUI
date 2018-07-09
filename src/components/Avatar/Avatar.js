@@ -6,16 +6,21 @@ import './Avatar.css';
 
 const baseClassName = getClassName('Avatar');
 
+/**
+ *
+ * Для этого компонента сделано исключение: свойство style применяется к img, а не к корневому элементу.
+ * Сделано для удобства.
+ */
 const Avatar = ({ src, size, style, className, children, ...restProps }) => {
   let Component = src ? 'img' : 'div';
 
   return (
-    <div className={classnames(baseClassName, className)} style={style}>
+    <div className={classnames(baseClassName, className)}>
       <Component
         {...restProps}
         className="Avatar__img"
         src={src}
-        style={{ width: size, height: size }}
+        style={{ ...style, width: size, height: size }}
       >
         {src ? null : children}
       </Component>
