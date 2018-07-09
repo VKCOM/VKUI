@@ -7,9 +7,7 @@ import './Link.css';
 const baseClassName = getClassName('Link');
 
 const Link = ({children, className, Component, ...restProps}) => (
-  <Component className={classnames(baseClassName, className)} {...restProps}>
-    {children}
-  </Component>
+  <Component {...restProps} className={classnames(baseClassName, className)}>{children}</Component>
 );
 
 Link.propTypes = {
