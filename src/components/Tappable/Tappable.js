@@ -259,7 +259,7 @@ export default class Tappable extends Component {
     }
 
     return (
-      <Component className={classes} {...props} {...restProps}>
+      <Component {...restProps} className={classes} {...props}>
         {osname === ANDROID && (
           <span className="Tappable__waves" ref={this.getContainer}>
             {Object.keys(clicks).map(k => (
