@@ -61,7 +61,6 @@ export { default as SelectMimicry } from './components/SelectMimicry/SelectMimic
 /**
  * Helpers
  */
-export { default as Text } from './components/Text/Text';
 export { default as Div } from './components/Div/Div';
 export { default as Tappable } from './components/Tappable/Tappable';
 export { default as Touch } from './components/Touch/Touch';
