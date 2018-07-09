@@ -7,16 +7,18 @@ import classnames from '../../lib/classnames';
 const baseClassNames = getClassName('Panel');
 
 export default class Panel extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {};
-  }
-
   static childContextTypes = {
     panel: PropTypes.string
   };
 
   static propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
+    theme: PropTypes.oneOf(['white', 'gray']),
+    id: PropTypes.string.isRequired,
+    optimized: PropTypes.bool,
+    centered: PropTypes.bool,
+    style: PropTypes.object,
     /**
      * @ignore
      */
@@ -24,15 +26,7 @@ export default class Panel extends Component {
     /**
      * @ignore
      */
-    isNext: PropTypes.bool,
-
-    children: PropTypes.node,
-    className: PropTypes.string,
-    theme: PropTypes.oneOf(['white', 'gray']),
-    id: PropTypes.string.isRequired,
-    optimized: PropTypes.bool,
-    centered: PropTypes.bool,
-    style: PropTypes.object
+    isNext: PropTypes.bool
   };
 
   static defaultProps = {
@@ -66,19 +60,11 @@ export default class Panel extends Component {
   }
 
   render () {
-    const { className, id, style } = this.props;
+    const { className, centered, children, isPrev, isNext, theme, optimized, ...restProps } = this.props;
 
     return (
-      <div
-        className={classnames(baseClassNames, className, {
-          'Panel--centered': this.props.centered
-        })}
-        id={id}
-        style={style}
-      >
-        <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null }}>
-          {this.props.children}
-        </div>
+      <div {...restProps} className={classnames(baseClassNames, className, { 'Panel--centered': centered })}>
+        <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null }}>{children}</div>
       </div>
     );
   }
