@@ -1,29 +1,24 @@
 import './List.css';
 
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('List');
 
-export default class List extends Component {
-  static propTypes = {
-    style: PropTypes.object,
-    children: PropTypes.node,
-    className: PropTypes.string
-  };
-  static defaultProps = {
-    style: {},
-    children: ''
-  };
-  render () {
-    const { style, className, children } = this.props;
+const List = ({ className, children, ...restProps }) => (
+  <div {...restProps} className={classnames(baseClassNames, className)}>{children}</div>
+);
 
-    return (
-      <div className={classnames(baseClassNames, className)} style={style}>
-        {children}
-      </div>
-    );
-  }
-}
+List.propTypes = {
+  style: PropTypes.object,
+  children: PropTypes.node,
+  className: PropTypes.string
+};
+List.defaultProps = {
+  style: {},
+  children: ''
+};
+
+export default List;
