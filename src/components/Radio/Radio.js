@@ -9,18 +9,16 @@ import {platform, IOS} from '../../lib/platform';
 const osname = platform();
 const baseClassName = getClassName('Radio');
 
-const Radio = ({ children, description, className, ...restProps }) => {
+const Radio = ({ children, description, style, className, getRef, ...restProps }) => {
   return (
     <Tappable
       component="label"
+      style={style}
       className={classnames(baseClassName, className)}
       activeEffectDelay={osname === IOS ? 100 : ACTIVE_EFFECT_DELAY }
       disabled={restProps.disabled}
     >
-      <input
-        type="radio"
-        {...restProps}
-      />
+      <input {...restProps} type="radio" className="Radio__input" ref={getRef} />
       <div className="Radio__container">
         <div className="Radio__icon" />
         <div className="Radio__content">
@@ -35,7 +33,9 @@ const Radio = ({ children, description, className, ...restProps }) => {
 Radio.propTypes = {
   children: PropTypes.node,
   description: PropTypes.node,
-  className: PropTypes.string
+  style: PropTypes.object,
+  className: PropTypes.string,
+  getRef: PropTypes.func
 };
 
 export default Radio;

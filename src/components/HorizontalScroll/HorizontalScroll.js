@@ -6,7 +6,8 @@ import './HorizontalScroll.css';
 export default class HorizontalScroll extends React.Component {
   static propTypes = {
     children: PropType.node,
-    className: PropType.string
+    className: PropType.string,
+    style: PropType.object
   };
 
   render () {
@@ -14,9 +15,7 @@ export default class HorizontalScroll extends React.Component {
 
     return (
       <div {...restProps} className={classnames('HorizontalScroll', className)}>
-        <div className="HorizontalScroll__in">
-          {children}
-        </div>
+        <div className="HorizontalScroll__in">{children}</div>
       </div>
     );
   }

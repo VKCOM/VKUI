@@ -13,6 +13,9 @@ export const baseClassNames = getClassName('PanelHeader');
 export default class PanelHeader extends React.Component {
   static propTypes = {
     left: PropTypes.node,
+    /**
+     * iOS only
+     */
     addon: PropTypes.node,
     right: PropTypes.node,
     children: PropTypes.node,

@@ -149,6 +149,15 @@
   padding: 0 16px;
   }
 
+  .Button--size-xl .Button__before {
+    margin-left: -6px;
+    margin-right: 2px;
+    }
+
+  .Button--size-xl .Button__before ~ .Button__content {
+    padding-left: 0;
+    }
+
   .Button--size-xl .Button__in {
     justify-content: center;
     }

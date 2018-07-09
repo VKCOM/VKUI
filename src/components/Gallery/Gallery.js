@@ -345,7 +345,6 @@ export default class Gallery extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.onResize);
-
     this.clearTimeout();
   }
 
@@ -375,18 +374,12 @@ export default class Gallery extends Component {
           style={{ width: slideWidth }}
           ref={this.getViewportRef}
         >
-          <div className="Gallery__layer" style={layerStyle}>
-            {this.slides}
-          </div>
+          <div className="Gallery__layer" style={layerStyle}>{this.slides}</div>
         </Touch>
         {this.props.bullets &&
-          <div className={classnames('Gallery__bullets', {
-            [`Gallery__bullets--${this.props.bullets}`]: true
-          })}>
+          <div className={classnames('Gallery__bullets', { [`Gallery__bullets--${this.props.bullets}`]: true })}>
             {this.slides.map((item, index) => (
-              <div className={classnames('Gallery__bullet', {
-                'Gallery__bullet--active': index === current
-              })} key={index} />
+              <div className={classnames('Gallery__bullet', { 'Gallery__bullet--active': index === current })} key={index} />
             ))}
           </div>
         }

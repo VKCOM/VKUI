@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import Button from '../Button/Button';
+import classnames from '../../lib/classnames';
 
 const baseClassNames = getClassName('File');
 
@@ -16,44 +17,67 @@ export default class File extends Component {
 
   static propTypes = {
     style: PropTypes.object,
+    children: PropTypes.node,
+    className: PropTypes.string,
+    /**
+     * @ignore
+     */
+    level: PropTypes.any,
+    /**
+     * @ignore
+     */
+    size: PropTypes.any,
+    /**
+     * @ignore
+     */
+    type: PropTypes.any,
+    /**
+     * @ignore
+     */
+    align: PropTypes.any,
+    /**
+     * @ignore
+     */
+    stretched: PropTypes.any,
+    /**
+     * @ignore
+     */
+    before: PropTypes.any,
+    getRef: PropTypes.func,
+    /**
+     * @deprecated Используйте children
+     */
     label: PropTypes.string,
-    alignment: PropTypes.oneOf(['left', 'center', 'right']),
-    onChange: PropTypes.func
+    /**
+     * @deprecated Используйте align
+     */
+    alignment: PropTypes.oneOf(['left', 'center', 'right'])
   };
 
   static defaultProps = {
-    label: 'Choose file',
+    label: 'Выберите файл',
+    children: 'Выберите файл',
     alignment: 'left',
-    onChange: () => {}
-  };
-
-  changeHandler = e => {
-    this.setState({ value: e.target.value });
-    if (this.props.onChange) {
-      this.props.onChange(e);
-    }
+    align: 'left'
   };
 
   render () {
-    const { style, label, alignment, ...restProps } = this.props;
+    const { children, label, alignment, align, size, level, type, stretched, before, className, style, getRef, ...restProps } = this.props;
 
     return (
       <Button
-        alignment={alignment}
-        className={baseClassNames}
+        align={align || alignment}
+        className={classnames(baseClassNames, className)}
+        component="label"
+        type={type}
+        stretched={stretched}
+        level={level}
+        size={size}
+        before={before}
         style={style}
-        component="div"
-        type="cell"
       >
-        <label className="File__in">
-          <input
-            className="File__self"
-            type="file"
-            onChange={this.changeHandler}
-            {...restProps}
-          />
-        </label>
-        {label}
+        <input {...restProps} className="File__input" type="file" ref={getRef}/>
+        {children || label}
       </Button>
     );
   }

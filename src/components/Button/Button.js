@@ -14,9 +14,9 @@ export default class Button extends React.Component {
     type: PropTypes.oneOf(['default', 'cell']),
     align: PropTypes.oneOf(['left', 'center', 'right']),
     stretched: PropTypes.bool,
-
-    children: PropTypes.node,
     before: PropTypes.node,
+    children: PropTypes.node,
+    style: PropTypes.object,
     className: PropTypes.string,
     component: PropTypes.any
   };
@@ -24,7 +24,9 @@ export default class Button extends React.Component {
   static defaultProps = {
     type: 'default',
     component: 'button',
-    align: 'left'
+    align: 'left',
+    size: 'm',
+    stretched: false
   };
 
   render () {
@@ -32,24 +34,22 @@ export default class Button extends React.Component {
 
     switch (type) {
       case 'default':
-        size = size || 'm';
         level = level || '1';
-        stretched = stretched || false;
         break;
       case 'cell':
         level = level || 'primary';
     }
 
     const classNames = classnames(baseClassName, className, {
-      [`Button--size-${size}`]: size,
+      [`Button--size-${size}`]: type === 'default' && size,
       [`Button--level-${level}`]: level,
       [`Button--type-${type}`]: type,
-      [`Button--align-${align}`]: align,
-      [`Button--stretched`]: stretched
+      [`Button--align-${align}`]: type === 'cell' && align,
+      [`Button--stretched`]: type === 'default' && stretched
     });
 
     return (
-      <Tappable className={classNames} stopPropagation {...restProps}>
+      <Tappable {...restProps} className={classNames} stopPropagation>
         <div className="Button__in">
           {before && <div className="Button__before">{before}</div>}
           {children && <div className="Button__content">{children}</div>}

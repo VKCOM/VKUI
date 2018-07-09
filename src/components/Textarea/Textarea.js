@@ -111,17 +111,17 @@ export default class Textarea extends Component {
   }
 
   render () {
-    const { defaultValue, grow, style, onResize, className, ...restProps } = this.props;
+    const { defaultValue, value, onChange, grow, style, onResize, className, ...restProps } = this.props;
     const height = this.state.height || style.height || 66;
 
     return (
-      <div className={classnames(baseClassName, className)}>
+      <div className={classnames(baseClassName, className)} style={style}>
         <textarea
+          {...restProps}
           value={this.value}
           onChange={this.onChange}
           ref={this.getRef}
-          style={Object.assign({}, style, { height })}
-          {...restProps}
+          style={{ height }}
         />
         {osname === ANDROID && <div className="Textarea-underline" />}
       </div>

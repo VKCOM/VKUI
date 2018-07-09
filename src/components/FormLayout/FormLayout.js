@@ -11,7 +11,8 @@ export default class FormLayout extends React.Component {
     children: PropTypes.node,
     className: PropTypes.string,
     TagName: PropTypes.string,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    getRef: PropTypes.func
   };
 
   static defaultProps = {
@@ -19,41 +20,35 @@ export default class FormLayout extends React.Component {
     TagName: 'form'
   };
 
-  onSubmit = (e) => {
-    if (this.props.onSubmit) {
-      this.props.onSubmit(e);
-    } else {
-      e.preventDefault();
-    }
-  };
+  onSubmit = (e) => this.props.onSubmit ? this.props.onSubmit(e) : e.preventDefault();
 
   render () {
     const {
       children,
       TagName,
       className,
+      getRef,
       ...restProps
     } = this.props;
     const arrayChildren = Array.isArray(children) ? children : [children];
 
     return (
       <TagName
-        className={classnames(baseClassName, className)}
         {...restProps}
+        className={classnames(baseClassName, className)}
         onSubmit={this.onSubmit}
+        ref={getRef}
       >
         <div className="FormLayout__container">
           {arrayChildren.map((field, i) => (
             field ? <label className="FormLayout__row" key={field.key || `row-${i}`}>
               {field.props.top && <div className="FormLayout__row-top">{field.props.top}</div>}
-              <div className="FormLayout__field">
-                {field}
-              </div>
+              <div className="FormLayout__field">{field}</div>
               {field.props.bottom && <div className="FormLayout__row-bottom">{field.props.bottom}</div>}
             </label> : null
           ))}
         </div>
-        {TagName === 'form' && <input type="submit" style={{ position: 'absolute', visibility: 'hidden' }} />}
+        {TagName === 'form' && <input type="submit" className="FormLayout__submit" value="" />}
       </TagName>
     );
   }

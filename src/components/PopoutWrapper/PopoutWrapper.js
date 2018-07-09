@@ -2,9 +2,9 @@ import React from 'react';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import PropTypes from 'prop-types';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import './PopoutWrapper.css';
-import {ANDROID, platform} from '../../lib/platform';
+import { ANDROID, platform } from '../../lib/platform';
+import transitionEvents from '../../lib/transitionEvents';
 
 const osname = platform();
 
@@ -22,7 +22,8 @@ export default class PopoutWrapper extends React.Component {
     closing: PropTypes.bool,
     onClick: PropTypes.func,
     style: PropTypes.object,
-    children: PropTypes.node
+    children: PropTypes.node,
+    className: PropTypes.string
   };
 
   static defaultProps = {
@@ -33,40 +34,48 @@ export default class PopoutWrapper extends React.Component {
   };
 
   componentDidMount () {
-    // TODO add "animationend" event instead of setTimeout
     window.addEventListener('touchmove', this.preventTouch, { passive: false });
-    this.openTimeout = setTimeout(() => this.setState({ opened: true }), osname === ANDROID ? 200 : 300);
+    this.waitAnimationFinish(this.el, this.onFadeInEnd);
   }
 
   componentWillUnmount () {
-    clearTimeout(this.openTimeout);
-    window.removeEventListener('touchmove', this.preventTouch, { passive: false });
+    window.removeEventListener('touchmove', this.preventTouch);
+    clearTimeout(this.animationFinishTimeout);
   }
 
-  preventTouch = (e) => e.preventDefault();
+  waitAnimationFinish (elem, eventHandler) {
+    if (transitionEvents.supported) {
+      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
+      elem.removeEventListener(eventName, eventHandler);
+      elem.addEventListener(eventName, eventHandler);
+    } else {
+      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), osname === ANDROID ? 300 : 600);
+    }
+  }
 
-  onClick = (e) => {
-    if (this.state.opened) {
-      this.props.onClick && this.props.onClick(e);
+  onFadeInEnd = (e = { manual: true }) => {
+    if (e.animationName === 'animation-full-fade-in' || e.manual) {
+      this.setState({ opened: true });
     }
   };
 
-  render () {
-    const containerClassNames = classnames('PopoutWrapper__container', {
-      [`PopoutWrapper__container--v-${this.props.v}`]: true,
-      [`PopoutWrapper__container--h-${this.props.h}`]: true
-    });
+  preventTouch = e => e.preventDefault();
 
-    const classNames = classnames(baseClassNames, {
-      'PopoutWrapper--closing': this.props.closing
-    });
+  onClick = e => this.state.opened && this.props.onClick && this.props.onClick(e);
+
+  getRef = el => this.el = el;
+
+  render () {
+    const { v, h, closing, children, hasMask, onClick, className, ...restProps } = this.props;
 
     return (
-      <div className={classNames} onClick={this.onClick} {...removeObjectKeys(this.props, ['hasMask', 'v', 'h', 'closing', 'style', 'onClick'])}>
-        { this.props.hasMask && <div className="PopoutWrapper__mask" /> }
-        <div className={containerClassNames} style={this.props.style}>
-          {this.props.children}
-        </div>
+      <div {...restProps} className={classnames(baseClassNames, {
+        [`PopoutWrapper--v-${v}`]: v,
+        [`PopoutWrapper--h-${h}`]: h,
+        'PopoutWrapper--closing': closing
+      }, className)} onClick={this.onClick} ref={this.getRef}>
+        {hasMask && <div className="PopoutWrapper__mask" />}
+        <div className="PopoutWrapper__container">{children}</div>
       </div>
     );
   }

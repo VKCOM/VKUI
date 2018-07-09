@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getSupportedEvents, coordX, coordY, touchEnabled } from '../../lib/touch';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 
 const events = getSupportedEvents();
 
@@ -215,8 +214,7 @@ export default class Touch extends Component {
   onClick = (e) => {
     if (this.cancelClick) {
       this.cancelClick = false;
-
-      return e.preventDefault();
+      e.preventDefault();
     }
     this.props.onClick && this.props.onClick(e);
   };
@@ -224,27 +222,24 @@ export default class Touch extends Component {
   getRef = container => this.container = container;
 
   render () {
-    const handlers = {
-      onDragStart: this.onDragStart,
-      onClick: this.onClick
-    };
-    const ComponentName = this.props.component;
-    const nativeProps = removeObjectKeys(Object.assign({}, this.props), [
-      'onStart',
-      'onStartX',
-      'onStartY',
-      'onMove',
-      'onMoveX',
-      'onMoveY',
-      'onEnd',
-      'onEndX',
-      'onEndY',
-      'useCapture',
-      'component'
-    ]);
+    const {
+      onStart,
+      onStartX,
+      onStartY,
+      onMove,
+      onMoveX,
+      onMoveY,
+      onEnd,
+      onEndX,
+      onEndY,
+      useCapture,
+      component,
+      ...restProps
+    } = this.props;
+    const ComponentName = component;
 
     return (
-      <ComponentName {...handlers} {...nativeProps} ref={this.getRef}>
+      <ComponentName {...restProps} onDragStart={this.onDragStart} onClick={this.onClick} ref={this.getRef}>
         {this.props.children}
       </ComponentName>
     );

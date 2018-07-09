@@ -1,29 +1,22 @@
-import './ScreenSpinner.css';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner/Spinner';
-import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 
-const baseClassNames = getClassName('ScreenSpinner');
-
-export default function ScreenSpinner (props) {
+export default function ScreenSpinner ({ style, className, ...restProps }) {
   return (
-    <PopoutWrapper onClick={props.onClick}>
-      <div
-        className={classnames(baseClassNames, props.className)}
-        {...removeObjectKeys(props, ['className', 'onClick'])}
-      >
-        <Spinner color="#fff" />
-      </div>
+    <PopoutWrapper className={className} style={style}>
+      <Spinner {...restProps} />
     </PopoutWrapper>
   );
 }
 
 ScreenSpinner.propTypes = {
   className: PropTypes.string,
-  onClick: PropTypes.func
+  style: PropTypes.object,
+  color: PropTypes.string
+};
+
+ScreenSpinner.defaultProps = {
+  color: '#fff'
 };

@@ -42,16 +42,15 @@
     z-index: 1;
     height: 1px;
     content: '';
+    background: var(--separator);
     }
 
   .Group--ios::before {
     top: 0;
-    background: var(--separator);
     }
 
   .Group--ios::after {
     bottom: 0;
-    background: var(--separator);
     }
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {

@@ -6,12 +6,10 @@ import './InfoRow.css';
 
 const baseClassName = getClassName('InfoRow');
 
-const InfoRow = ({ title, className, children, style }) => (
-  <div className={classnames(baseClassName, className)} style={style}>
-    <div className="InfoRow__title">{title}</div>
-    <div>
-      {children}
-    </div>
+const InfoRow = ({ title, className, children, ...restProps }) => (
+  <div {...restProps} className={classnames(baseClassName, className)}>
+    {title && <div className="InfoRow__title">{title}</div>}
+    {children && <div>{children}</div>}
   </div>
 );
 

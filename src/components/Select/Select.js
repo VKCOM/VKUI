@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
-import {platform, ANDROID} from '../../lib/platform';
+import { platform, ANDROID } from '../../lib/platform';
 
 const osname = platform();
+const baseClassName = getClassName('Select');
 
 export default class Select extends Component {
   constructor (props) {
@@ -18,7 +19,7 @@ export default class Select extends Component {
     if (typeof props.value !== 'undefined') {
       this.isControlledOutside = true;
     } else {
-      state.value = this.props.defaultValue || '';
+      state.value = props.defaultValue || '';
     }
     this.state = state;
   }
@@ -32,7 +33,6 @@ export default class Select extends Component {
     value: PropTypes.any,
     defaultValue: PropTypes.any,
     children: PropTypes.node,
-    v: PropTypes.oneOf(['old', 'new']),
     placeholder: PropTypes.string,
     getRef: PropTypes.func
   };
@@ -40,11 +40,8 @@ export default class Select extends Component {
   static defaultProps = {
     style: {},
     label: '',
-    name: '',
-    v: 'new'
+    name: ''
   };
-
-  get baseClass () { return 'Select'; }
 
   onChange = (e) => {
     this.setTitle();
@@ -56,8 +53,8 @@ export default class Select extends Component {
     }
   };
 
-  setTitle = (el = this.selectEl) => {
-    const selectedOption = el.options[el.selectedIndex];
+  setTitle = () => {
+    const selectedOption = this.selectEl.options[this.selectEl.selectedIndex];
     selectedOption && this.setState({
       title: selectedOption.text,
       notSelected: selectedOption.value === '' && this.props.hasOwnProperty('placeholder')
@@ -84,13 +81,11 @@ export default class Select extends Component {
   };
 
   render () {
-    const { style, label, value, defaultValue, onChange, placeholder, children, className, v, getRef, ...restProps } = this.props;
+    const { style, label, value, defaultValue, onChange, placeholder, children, className, getRef, ...restProps } = this.props;
 
     return (
       <label
-        className={classnames(getClassName(this.baseClass), {
-          [`${this.baseClass}--not-selected`]: this.state.notSelected
-        }, className)}
+        className={classnames(baseClassName, { [`Select--not-selected`]: this.state.notSelected }, className)}
         style={style}
       >
         <select
@@ -102,8 +97,8 @@ export default class Select extends Component {
           {placeholder && <option value="">{placeholder}</option>}
           {children}
         </select>
-        <div className={`${this.baseClass}__container`}>
-          <div className={`${this.baseClass}__title`}>{this.state.title}</div>
+        <div className="Select__container">
+          <div className="Select__title">{this.state.title}</div>
           <Icon24Dropdown />
         </div>
         {osname === ANDROID && <div className={`${this.baseClass}-underline`} />}

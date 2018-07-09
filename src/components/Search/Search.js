@@ -25,7 +25,7 @@ export default class Search extends React.Component {
     theme: PropTypes.oneOf(['header', 'default']),
 
     /**
-     * Android only. Вызывается при клике по стрелку (слева). Этот контрол служит для выхода из режима поиска.
+     * Android only. Вызывается при клике по стрелке (слева). Этот контрол служит для выхода из режима поиска.
      */
     onClose: PropTypes.func
   };

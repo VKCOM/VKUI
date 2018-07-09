@@ -6,17 +6,17 @@ import classnames from '../../lib/classnames';
 
 const baseClassNames = getClassName('Switch');
 
-const Switch = ({ style, className, ...restProps }) => (
+const Switch = ({ style, className, getRef, ...restProps }) => (
   <label className={classnames(baseClassNames, className)} style={style}>
-    <input type="checkbox" className="Switch__self" {...restProps} />
+    <input {...restProps} type="checkbox" className="Switch__self" ref={getRef} />
     <span className="Switch__pseudo" />
   </label>
 );
 
 Switch.propTypes = {
   style: PropTypes.object,
-  onChange: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  getRef: PropTypes.func
 };
 
 export default Switch;

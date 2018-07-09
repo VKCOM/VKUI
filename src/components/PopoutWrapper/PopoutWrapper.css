@@ -33,27 +33,27 @@
     z-index: 2;
     }
 
-  .PopoutWrapper__container--v-center {
+  .PopoutWrapper--v-center .PopoutWrapper__container {
     align-items: center;
     }
 
-  .PopoutWrapper__container--v-bottom {
+  .PopoutWrapper--v-bottom .PopoutWrapper__container {
     align-items: flex-end;
     }
 
-  .PopoutWrapper__container--v-top {
+  .PopoutWrapper--v-top .PopoutWrapper__container {
     align-items: flex-start;
     }
 
-  .PopoutWrapper__container--h-center {
+  .PopoutWrapper--h-center .PopoutWrapper__container {
     justify-content: center;
     }
 
-  .PopoutWrapper__container--h-left {
+  .PopoutWrapper--h-left .PopoutWrapper__container {
     justify-content: flex-start;
     }
 
-  .PopoutWrapper__container--h-right {
+  .PopoutWrapper--h-right .PopoutWrapper__container {
     justify-content: flex-end;
     }
 

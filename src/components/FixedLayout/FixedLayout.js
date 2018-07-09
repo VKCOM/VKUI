@@ -73,21 +73,23 @@ export default class FixedLayout extends React.Component {
     this.setState({ transition: false, topOffset: null });
   };
 
+  getRef = el => this.el = el;
+
   render () {
     const { className, children, style, vertical, ...restProps } = this.props;
 
     return (
       <div
-        ref={ el => this.el = el }
-        className={classnames(baseClassNames, {
-          [`FixedLayout--${vertical}`]: true
-        }, className)}
-        style={ Object.assign({}, style, this.state.paddings, this.state.transition ? { position: 'absolute', top: this.state.topOffset } : {}) }
         {...restProps}
+        ref={this.getRef}
+        className={classnames(baseClassNames, { [`FixedLayout--${vertical}`]: vertical }, className)}
+        style={{
+          ...style,
+          ...this.state.paddings,
+          ...(this.state.transition ? { position: 'absolute', top: this.state.topOffset } : {})
+        }}
       >
-        <div className="FixedLayout__in">
-          {children}
-        </div>
+        <div className="FixedLayout__in">{children}</div>
       </div>
     );
   }
