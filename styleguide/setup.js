@@ -1,6 +1,6 @@
 import React from 'react';
 import { values as colors, titles as colorTitles, keys as colorKeys } from '../src/helpers/colors';
-import {platform, IOS, ANDROID} from '../src/lib/platform';
+import { platform, IOS, ANDROID } from '../src/lib/platform';
 import '../src/styles/common.css';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon16Add from '@vkontakte/icons/dist/16/add';
@@ -16,6 +16,7 @@ import Icon24Done from '@vkontakte/icons/dist/24/done';
 import Icon24Services from '@vkontakte/icons/dist/24/services';
 import Icon24About from '@vkontakte/icons/dist/24/about';
 import Icon28User from '@vkontakte/icons/dist/24/user';
+import Icon24Document from '@vkontakte/icons/dist/24/document';
 
 
 window.osname = platform();
@@ -36,6 +37,7 @@ window.Icon24Done = Icon24Done;
 window.Icon24Services = Icon24Services;
 window.Icon24About = Icon24About;
 window.Icon28User = Icon28User;
+window.Icon24Document = Icon24Document;
 
 window.colors = colors;
 
