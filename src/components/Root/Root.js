@@ -4,7 +4,7 @@ import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import './Root.css';
 import transitionEvents from '../../lib/transitionEvents';
-import {ANDROID, platform} from '../../lib/platform';
+import { ANDROID, platform } from '../../lib/platform';
 
 const osname = platform();
 const baseClassName = getClassName('Root');
@@ -21,6 +21,8 @@ export default class Root extends React.Component {
       isBack: undefined,
       scrolls: {}
     };
+
+    this.arrayChildren = React.Children.toArray(props.children);
   }
 
   static propTypes = {
@@ -52,6 +54,10 @@ export default class Root extends React.Component {
       this.blurActiveElement();
     }
 
+    if (nextProps.children !== this.props.children) {
+      this.arrayChildren = React.Children.toArray(nextProps.children);
+    }
+
     if (nextProps.activeView !== this.props.activeView) {
       let pageYOffset = this.window.pageYOffset;
       const firstLayerId = this.props.children.find(view => {
@@ -80,12 +86,15 @@ export default class Root extends React.Component {
 
   componentDidUpdate (prevProps, prevState) {
     if (!prevState.transition && this.state.transition) {
-      this.prevViewEl.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.prevView];
+      const prevViewElement = this.document.getElementById(`view-${this.state.prevView}`);
+      const nextViewElement = this.document.getElementById(`view-${this.state.nextView}`);
+
+      prevViewElement.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.prevView];
 
       if (this.state.isBack) {
-        this.nextViewEl.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.nextView];
+        nextViewElement.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.nextView];
       }
-      this.waitAnimationFinish(this.state.isBack ? this.prevViewEl : this.nextViewEl, this.onAnimationEnd);
+      this.waitAnimationFinish(this.state.isBack ? prevViewElement : nextViewElement, this.onAnimationEnd);
     }
   }
 
@@ -101,7 +110,12 @@ export default class Root extends React.Component {
   }
 
   onAnimationEnd = (e = { manual: true }) => {
-    if (['root-android-animation-hide-back', 'root-android-animation-show-forward', 'root-ios-animation-hide-back', 'root-ios-animation-show-forward'].indexOf(e.animationName) > -1 || e.manual) {
+    if ([
+      'root-android-animation-hide-back',
+      'root-android-animation-show-forward',
+      'root-ios-animation-hide-back',
+      'root-ios-animation-show-forward'
+    ].indexOf(e.animationName) > -1 || e.manual) {
       const isBack = this.state.isBack;
       this.setState({
         activeView: this.state.nextView,
@@ -124,25 +138,20 @@ export default class Root extends React.Component {
   }
 
   render () {
-    let Views = React.Children.toArray(this.props.children).filter((View) => this.state.visibleViews.indexOf(View.props.id) >= 0);
+    let Views = this.arrayChildren.filter(View => this.state.visibleViews.indexOf(View.props.id) >= 0);
+    const { transition, isBack, prevView, activeView, nextView } = this.state;
+
     return (
-      <div className={ classnames(baseClassName, {
-        'Root--transition': this.state.transition
-      }) }>
-        { Views.map(View => (
-          <div key={View.props.id} className={classnames('Root__view', {
-            'Root__view--hide-back': View.props.id === this.state.prevView && this.state.isBack,
-            'Root__view--hide-forward': View.props.id === this.state.prevView && !this.state.isBack,
-            'Root__view--show-back': View.props.id === this.state.nextView && this.state.isBack,
-            'Root__view--show-forward': View.props.id === this.state.nextView && !this.state.isBack,
-            'Root__view--active': View.props.id === this.state.activeView
-          })} ref={ el => {
-            if (View.props.id === this.state.prevView) this.prevViewEl = el;
-            if (View.props.id === this.state.nextView) this.nextViewEl = el;
-          } }>
-            { View }
-          </div>
-        )) }
+      <div className={ classnames(baseClassName, { 'Root--transition': transition }) }>
+        {Views.map(View => (
+          <div key={View.props.id} id={`view-${View.props.id}`} className={classnames('Root__view', {
+            'Root__view--hide-back': View.props.id === prevView && isBack,
+            'Root__view--hide-forward': View.props.id === prevView && !isBack,
+            'Root__view--show-back': View.props.id === nextView && isBack,
+            'Root__view--show-forward': View.props.id === nextView && !isBack,
+            'Root__view--active': View.props.id === activeView
+          })}>{View}</div>
+        ))}
         {this.props.popout && <div className="Root__popout">{this.props.popout}</div>}
       </div>
     );
