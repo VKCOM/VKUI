@@ -17,7 +17,13 @@ export default class ActionSheet extends React.Component {
   };
 
   static propTypes = {
+    /**
+     * iOS only
+     */
     title: PropTypes.node,
+    /**
+     * iOS only
+     */
     text: PropTypes.node,
     onClose: PropTypes.func.isRequired,
     style: PropTypes.object,
@@ -72,10 +78,12 @@ export default class ActionSheet extends React.Component {
         <div {...restProps} ref={this.getRef} onClick={this.stopPropagation} className={classnames(baseClassNames, {
           'ActionSheet--closing': this.state.closing
         })}>
+          {osname === IOS &&
           <header className="ActionSheet__header">
             {title && <div className="ActionSheet__title">{title}</div>}
             {text && <div className="ActionSheet__text">{text}</div>}
           </header>
+          }
           {React.Children.map(children, Child => (
             Child && React.cloneElement(Child, {
               onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose)
