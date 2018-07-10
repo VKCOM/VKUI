@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "main": "dist/vkui.js",
   "license": "SEE LICENSE IN LICENSE",
   "description": "VKUI library",
@@ -50,7 +50,7 @@
     "prop-types": "^15.6.1"
   },
   "dependencies": {
-    "@vkontakte/icons": "^1.0.2"
+    "@vkontakte/icons": "^1.1.0"
   },
   "scripts": {
     "prepublishOnly": "npm run clear && npm run build",
