@@ -33,6 +33,7 @@ module.exports = {
           '../src/components/PanelHeader/PanelHeader.js',
           '../src/components/PanelHeaderContent/PanelHeaderContent.js',
           '../src/components/HeaderButton/HeaderButton.js',
+          '../src/components/HeaderContext/HeaderContext.js',
           '../src/components/Root/Root.js',
           '../src/components/FixedLayout/FixedLayout.js',
           '../src/components/HorizontalScroll/HorizontalScroll.js',

@@ -20,6 +20,8 @@ import Icon24Document from '@vkontakte/icons/dist/24/document';
 import Icon16Like from '@vkontakte/icons/dist/16/like';
 import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import Icon24Phone from '@vkontakte/icons/dist/24/phone';
+import Icon24Users from '@vkontakte/icons/dist/24/users';
+import Icon24Settings from '@vkontakte/icons/dist/24/settings';
 
 
 window.osname = platform();
@@ -44,6 +46,8 @@ window.Icon24Document = Icon24Document;
 window.Icon16Like = Icon16Like;
 window.Icon16Dropdown = Icon16Dropdown;
 window.Icon24Phone = Icon24Phone;
+window.Icon24Users = Icon24Users;
+window.Icon24Settings = Icon24Settings;
 
 window.colors = colors;
 
