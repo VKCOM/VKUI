@@ -33,7 +33,7 @@
     .PanelHeader__content {
       overflow: hidden;
       text-overflow: ellipsis;
-      min-width: 50%;
+      min-width: 44%;
       }
 
       .PanelHeader-content {
@@ -95,6 +95,7 @@
       align-items: center;
       flex-grow: 1;
       flex-basis: 0;
+      padding-right: 12px;
       }
 
       .PanelHeader--ios .PanelHeader__left-in {
@@ -142,11 +143,11 @@
     .PanelHeader--ios .PanelHeader__right {
       flex-grow: 1;
       flex-basis: 0;
+      padding-left: 12px;
       }
 
       .PanelHeader--ios .PanelHeader-right {
         font-size: 17px;
-        padding-left: 12px;
         }
 
         .PanelHeader--ios .PanelHeader-right .HeaderButton:not(:first-child) {
@@ -178,6 +179,15 @@
   .PanelHeader--android .PanelHeader__content {
     max-width: 100%;
     flex-grow: 2;
+    height: 100%;
+    }
+
+  .PanelHeader--android .PanelHeader__left {
+    padding-right: 6px;
+    }
+
+  .PanelHeader--android .PanelHeader__right {
+    padding-left: 6px;
     }
 
   .PanelHeader--android .PanelHeader__in--brand {
@@ -194,15 +204,19 @@
       padding-right: 4px;
       }
 
-    .PanelHeader--android .PanelHeader-left-in {
+    .PanelHeader--android .PanelHeader-left-in:not(:empty) {
       padding-left: 4px;
       }
 
     .PanelHeader--android .PanelHeader-content {
       font-size: 20px;
       line-height: 56px;
+      height: 100%;
       font-weight: 500;
-      padding: 0 12px;
+      }
+
+    .PanelHeader--android .PanelHeader-content > *:not(.Search):not(.PanelHeaderContent) {
+      padding: 0 6px;
       }
 
       .PanelHeader--android .Search {

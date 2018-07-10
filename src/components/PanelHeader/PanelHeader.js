@@ -55,11 +55,14 @@ export default class PanelHeader extends React.Component {
 
   render () {
     let { left, addon, children, right } = this.props;
+    const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
     return this.state.ready ? [
       ReactDOM.createPortal(<div className={classnames('PanelHeader-left-in')}>{left}</div>, this.leftNode),
       osname === IOS && ReactDOM.createPortal(<div className="PanelHeader-addon">{addon}</div>, this.addonNode),
-      ReactDOM.createPortal(<div className="PanelHeader-content">{children}</div>, this.titleNode),
+      ReactDOM.createPortal(<div className="PanelHeader-content">
+        {isPrimitive ? <span>{children}</span> : children }
+      </div>, this.titleNode),
       ReactDOM.createPortal(<div className="PanelHeader-right">{right}</div>, this.rightNode)
     ] : null;
   }

@@ -12,6 +12,7 @@ export { default as HeaderButton } from './components/HeaderButton/HeaderButton'
 export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
 export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
 export { default as InnerScroll } from './components/InnerScroll/InnerScroll';
+export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
 export { default as HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll';
 
 /**
