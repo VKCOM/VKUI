@@ -114,9 +114,7 @@
             padding-left: 16px;
             }
 
-    .PanelHeader--ios .PanelHeader__addon {
-      padding-right: 12px;
-      }
+    .PanelHeader--ios .PanelHeader__addon {}
 
       .PanelHeader--ios .PanelHeader-addon:not(:empty) {
         padding-left: 4px;
