@@ -6,6 +6,14 @@
   font-size: 16px;
   }
 
+.Input--center .Input__el {
+  text-align: center;
+  }
+
+.Input--right .Input__el {
+  text-align: right;
+  }
+
 .Input__el {
   margin: 0;
   width: 100%;
