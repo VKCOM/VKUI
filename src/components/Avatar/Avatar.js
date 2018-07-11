@@ -7,23 +7,36 @@ import './Avatar.css';
 const baseClassName = getClassName('Avatar');
 
 /**
- *
  * Для этого компонента сделано исключение: свойство style применяется к img, а не к корневому элементу.
  * Сделано для удобства.
  */
-const Avatar = ({ src, size, style, className, children, ...restProps }) => {
-  let Component = src ? 'img' : 'div';
+const Avatar = ({ src, size, type, style, className, children, ...restProps }) => {
+  const Component = src ? 'img' : 'div';
+  let borderRadius;
+
+  switch (type) {
+    case 'default':
+      borderRadius = '50%';
+      break;
+    case 'image':
+      borderRadius = 4;
+      break;
+    case 'app':
+      borderRadius = Math.floor(size * 10 / 48);
+      break;
+  }
 
   return (
-    <div className={classnames(baseClassName, className)}>
-      <Component
-        {...restProps}
-        className="Avatar__img"
-        src={src}
-        style={{ ...style, width: size, height: size }}
-      >
-        {src ? null : children}
-      </Component>
+    <div className={classnames(baseClassName, className, { [`Avatar--type-${type}`]: true })}>
+      <div className="Avatar__in">
+        <Component
+          {...restProps}
+          className="Avatar__img"
+          src={src}
+          style={{ ...style, width: size, height: size, borderRadius }}
+        />
+        {children && <div className="Avatar__children" style={{ width: size, height: size, borderRadius }}>{children}</div>}
+      </div>
     </div>
   );
 };
@@ -33,15 +46,13 @@ Avatar.propTypes = {
   src: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
-  /**
-   * children рисуется только в том случае, если не передан src. Такой подход может быть полезен при отрисовке
-   * плейсхолдеров или при использовании backgroundImage вместе src.
-   */
+  type: PropTypes.oneOf(['default', 'image', 'app']),
   children: PropTypes.node
 };
 
 Avatar.defaultProps = {
-  size: 48
+  size: 48,
+  type: 'default'
 };
 
 export default Avatar;
