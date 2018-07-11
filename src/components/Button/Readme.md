@@ -63,6 +63,9 @@
       <Button type="cell" align="center">Center</Button>
       <Button type="cell" align="right">Right</Button>
     </Group>
+    <Group title="Links">
+      <Button type="cell" component="a" href="#">I am link</Button>
+    </Group>
   </Panel>
 </View>
 ```
