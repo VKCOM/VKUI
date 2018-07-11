@@ -142,7 +142,7 @@ export default class ListItem extends Component {
         onClick={href ? null : this.onClick}
         className={classnames(baseClassNames, {
           'ListItem--expandable': expandable,
-          'ListItem--multiline': multiline || description,
+          'ListItem--multiline': multiline,
           'ListItem--removing': this.state.removing
         }, className)}
         ref={this.getRootRef}
