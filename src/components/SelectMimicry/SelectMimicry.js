@@ -15,20 +15,26 @@ export default class SelectMimicry extends Component {
     className: PropTypes.string,
     children: PropTypes.node,
     tabIndex: PropTypes.number,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    alignment: PropTypes.oneOf(['left', 'center', 'top'])
   };
 
   static defaultProps = {
-    tabIndex: 0
+    tabIndex: 0,
+    alignment: 'left'
   };
 
   render () {
-    const { className, placeholder, children, ...restProps } = this.props;
+    const { className, placeholder, children, alignment, ...restProps } = this.props;
 
     return (
       <div
         {...restProps}
-        className={classnames(baseClassName, { 'Select--not-selected': !children, 'Select--mimicry': true }, className)}
+        className={classnames(baseClassName, {
+          'Select--not-selected': !children,
+          'Select--mimicry': true,
+          [`Select--align-${alignment}`]: alignment
+        }, className)}
       >
         <div className="Select__container">
           <div className="Select__title">{children || placeholder}</div>

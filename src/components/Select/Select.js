@@ -34,13 +34,12 @@ export default class Select extends Component {
     defaultValue: PropTypes.any,
     children: PropTypes.node,
     placeholder: PropTypes.string,
-    getRef: PropTypes.func
+    getRef: PropTypes.func,
+    alignment: PropTypes.oneOf(['left', 'center', 'top'])
   };
 
   static defaultProps = {
-    style: {},
-    label: '',
-    name: ''
+    alignment: 'left'
   };
 
   onChange = (e) => {
@@ -81,11 +80,14 @@ export default class Select extends Component {
   };
 
   render () {
-    const { style, label, value, defaultValue, onChange, placeholder, children, className, getRef, ...restProps } = this.props;
+    const { style, label, value, defaultValue, onChange, alignment, placeholder, children, className, getRef, ...restProps } = this.props;
 
     return (
       <label
-        className={classnames(baseClassName, { [`Select--not-selected`]: this.state.notSelected }, className)}
+        className={classnames(baseClassName, {
+          [`Select--not-selected`]: this.state.notSelected,
+          [`Select--align-${alignment}`]: alignment
+        }, className)}
         style={style}
       >
         <select

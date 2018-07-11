@@ -48,6 +48,14 @@
       color: var(--caption-gray);
       }
 
+    .Select--align-right .Select__title {
+      text-align: right;
+      }
+
+    .Select--align-center .Select__title {
+      text-align: center;
+      }
+
     .Select .Icon {
       position: absolute;
       top: 10px;
