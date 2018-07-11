@@ -1,5 +1,5 @@
 import React from 'react';
-import { values as colors, titles as colorTitles, keys as colorKeys } from '../src/helpers/colors';
+import colors from '../src/helpers/colors';
 import { platform, IOS, ANDROID } from '../src/lib/platform';
 import '../src/styles/common.css';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
@@ -50,7 +50,3 @@ window.Icon24Users = Icon24Users;
 window.Icon24Settings = Icon24Settings;
 
 window.colors = colors;
-
-window.colorTitles = colorTitles;
-
-window.colorKeys = colorKeys;

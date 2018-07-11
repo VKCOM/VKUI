@@ -2,7 +2,7 @@
 
 ```jsx static
   import { colors } from '@vkontakte/vkui';
-  
+
   let accentBlueBlock = () => (<div style={{ backgroundColor: colors.accentBlue }} />);
 ```
 
@@ -12,12 +12,8 @@
       <Group>
         <List>
           { Object.keys(colors).map((color) => (
-            <ListItem key={color}>
-              <Entity
-                title={colors[color]} 
-                description={colorKeys[color]}
-                avatarProps={{ style: { backgroundColor: colors[color] } }}
-              />
+            <ListItem key={color} description={color} before={<Avatar style={{ backgroundColor: colors[color] }} />}>
+              {colors[color]}
             </ListItem>
           )) }
         </List>
