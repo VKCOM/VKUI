@@ -32,6 +32,7 @@ export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
 export { default as List } from './components/List/List';
 export { default as ListItem } from './components/ListItem/ListItem';
+export { default as Footer } from './components/Footer/Footer';
 export { default as InfoRow } from './components/InfoRow/InfoRow';
 export { default as Entity } from './components/Entity/Entity';
 export { default as Gallery } from './components/Gallery/Gallery';

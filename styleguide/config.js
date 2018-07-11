@@ -57,6 +57,7 @@ module.exports = {
           '../src/components/Group/Group.js',
           '../src/components/List/List.js',
           '../src/components/ListItem/ListItem.js',
+          '../src/components/Footer/Footer.js',
           '../src/components/Switch/Switch.js',
           '../src/components/InfoRow/InfoRow.js',
           '../src/components/Entity/Entity.js',
