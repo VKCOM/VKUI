@@ -7,7 +7,8 @@ import '@vkontakte/vkui/dist/vkui.css';
 function App () {
   return (
     <UI.View activePanel="main" header>
-      <UI.Panel id="main" header={{ title: 'VKUI' }}>
+      <UI.Panel id="main">
+        <UI.PanelHeader>VKUI</UI.PanelHeader>
         <UI.Group title="Items">
           <UI.List>
             <UI.ListItem>Hello</UI.ListItem>
