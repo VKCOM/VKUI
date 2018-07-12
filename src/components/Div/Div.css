@@ -1,9 +1,9 @@
 .Div {}
 
 .Div--ios {
-  padding: 0 12px;
+  padding: 12px;
   }
 
 .Div--android {
-  padding: 0 16px;
+  padding: 12px 16px;
   }
