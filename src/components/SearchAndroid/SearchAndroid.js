@@ -89,11 +89,11 @@ export default class SearchAndroid extends React.Component {
         </div>
         <div className="Search__control">
           <input
+            {...inputProps}
             className="Search__input"
             ref={this.inputRef}
             value={this.value}
             onChange={this.onChange}
-            {...inputProps}
           />
         </div>
         <div className="Search__after">

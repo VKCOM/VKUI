@@ -108,6 +108,7 @@ export default class SearchIOS extends React.Component {
           <div className="Search__width" />
           <div className="Search__control">
             <input
+              {...inputProps}
               id={`search-${searchId}`}
               ref={this.inputRef}
               type="text"
@@ -116,7 +117,6 @@ export default class SearchIOS extends React.Component {
               onBlur={this.onBlur}
               onChange={this.onChange}
               value={this.value}
-              {...inputProps}
             />
             {after && <div className="Search__after-width">{after}</div>}
             <label
@@ -131,9 +131,7 @@ export default class SearchIOS extends React.Component {
           </div>
           {after &&
           <div className="Search__after" onClick={this.onCancel}>
-            <div className="Search__after-in">
-              {after}
-            </div>
+            <div className="Search__after-in">{after}</div>
           </div>
           }
         </div>
