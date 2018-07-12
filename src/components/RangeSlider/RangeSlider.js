@@ -111,8 +111,10 @@ export default class RangeSlider extends Slider {
   }
 
   render () {
+    const { className, min, max, step, value, defaultValue, onChange, ...restProps } = this.props;
+
     return (
-      <div className={classnames(baseClassNames, this.props.className)} ref={this.getRef} style={this.props.style}>
+      <div {...restProps} className={classnames(baseClassNames, className)} ref={this.getRef}>
         <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
           <div
             className="Slider__dragger"

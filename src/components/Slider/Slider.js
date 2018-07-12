@@ -18,7 +18,6 @@ export default class Slider extends Component {
     this.state = {
       startX: 0
     };
-
     this.isControlledOutside = this.props.hasOwnProperty('value');
   }
 
@@ -144,13 +143,13 @@ export default class Slider extends Component {
     window.removeEventListener('resize', this.onResize);
   }
 
-  getRef = (container) => {
-    this.container = container;
-  };
+  getRef = container => this.container = container;
 
   render () {
+    const { className, min, max, step, value, defaultValue, onChange, ...restProps } = this.props;
+
     return (
-      <div className={classnames(baseClassNames, this.props.className)} ref={this.getRef} style={this.props.style}>
+      <div {...restProps} className={classnames(baseClassNames, className)} ref={this.getRef}>
         <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
           <div className="Slider__dragger" style={{ width: this.state.percentPosition + '%' }}>
             <span
