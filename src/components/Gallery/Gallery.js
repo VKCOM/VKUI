@@ -350,13 +350,22 @@ export default class Gallery extends Component {
 
   render () {
     const { animation, duration, current, dragging } = this.state;
-    const { className, style, slideWidth } = this.props;
+    const {
+      children,
+      slideWidth,
+      autoplay,
+      initialSlideIndex,
+      slideIndex,
+      onDragStart,
+      onDragEnd,
+      onChange,
+      onEnd,
+      align,
+      bullets,
+      className,
+      ...restProps
+    } = this.props;
     const indent = dragging ? this.calculateDragIndent() : this.calculateIndent(current);
-    const classname = classnames(baseClassNames, className, {
-      'Gallery--dragging': dragging,
-      [`Gallery--${this.props.align}`]: true
-    });
-
     const layerStyle = {
       WebkitTransform: `translateX(${indent}px)`,
       transform: `translateX(${indent}px)`,
@@ -365,7 +374,10 @@ export default class Gallery extends Component {
     };
 
     return (
-      <div className={classname} style={style} ref={this.getContainerRef}>
+      <div {...restProps} className={classnames(baseClassNames, className, {
+        'Gallery--dragging': dragging,
+        [`Gallery--${this.props.align}`]: true
+      })} ref={this.getContainerRef}>
         <Touch
           className="Gallery__viewport"
           onStartX={this.onStart}
