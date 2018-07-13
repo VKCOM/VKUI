@@ -64,7 +64,11 @@ export default class Panel extends Component {
 
     return (
       <div {...restProps} className={classnames(baseClassNames, className, { 'Panel--centered': centered })}>
-        <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null }}>{children}</div>
+        <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null }}>
+          <div className="Panel__in-before" />
+          {children}
+          <div className="Panel__in-after" />
+        </div>
       </div>
     );
   }

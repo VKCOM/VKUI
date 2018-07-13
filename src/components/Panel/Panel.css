@@ -18,9 +18,12 @@
     min-height: 100%;
     }
 
-    .Panel__in::after {
-      content: ' ';
-      padding-top: 1px;
-      width: 100%;
-      display: block;
+    .Panel__in-before {
+      height: 1px;
+      margin-top: -1px;
+      }
+
+    .Panel__in-after {
+      float: left;
+      height: 1px;
       }
