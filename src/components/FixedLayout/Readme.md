@@ -8,10 +8,12 @@ position: fixed не дружит с transform: translate на родителе,
       <PanelHeader noShadow>
         Fixed layout
       </PanelHeader>
-      <FixedLayout vertical="top" style={{ padding: 10, background: '#5C9CE6', color: '#fff' }}>
-        Sticked to top
+      <FixedLayout vertical="top">
+        <Div style={{ background: '#5C9CE6', color: '#fff' }}>
+          Sticked to top
+        </Div>
       </FixedLayout>
-      <div style={{ padding: '50px 10px', color: 'gray' }}>
+      <Div style={{ paddingTop: 60, paddingBottom: 60, color: 'gray' }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a sollicitudin lectus, a commodo sapien. Vivamus a urna leo. Integer iaculis dignissim urna, sit amet vestibulum diam bibendum a. Donec eu arcu ut augue porttitor faucibus. Vestibulum nec pretium tortor, sit amet congue nunc. Aenean ullamcorper ex sem, sed interdum quam consequat et. Vestibulum a ex non diam fringilla feugiat. Nunc eu tellus sed leo elementum cursus. Mauris blandit porta egestas. Curabitur eget justo elementum, malesuada lacus ut, congue mauris. Integer orci nisi, convallis vitae dapibus sit amet, molestie a risus. Aenean ultricies lacus eros, sit amet condimentum urna malesuada et. Sed quis dolor tempus orci fringilla volutpat in sed velit. Aenean aliquet bibendum pretium.
         <br/>
         <br/>
@@ -25,9 +27,11 @@ position: fixed не дружит с transform: translate на родителе,
         <br/>
         <br/>
         Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam aliquet tempor laoreet. Maecenas eu pulvinar diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas et elit eros. Quisque ullamcorper sodales nisi, eleifend aliquet metus venenatis in. Aliquam ornare a lacus in tincidunt. Cras vel tristique metus. Sed vitae nisl at nisl imperdiet sollicitudin. Sed sit amet enim in lectus imperdiet interdum condimentum et diam. Proin venenatis sit amet diam ac vulputate. Donec mauris orci, semper volutpat nunc ut, efficitur condimentum dolor. Vivamus in quam eget quam lacinia pharetra. Phasellus ipsum magna, aliquet id elit eget, cursus tincidunt ex. In rhoncus turpis turpis, et viverra ex malesuada vel. Donec nisi tellus, mollis et posuere vel, dictum eget neque.
-      </div>
-      <FixedLayout vertical="bottom" style={{ padding: 10, background: '#E64646', color: '#fff' }}>
-        Sticked to bottom
+      </Div>
+      <FixedLayout vertical="bottom">
+        <Div style={{ background: '#E64646', color: '#fff' }}>
+          Sticked to bottom
+        </Div>
       </FixedLayout>
     </Panel>
   </View>
