@@ -49,6 +49,10 @@
  * iOS
  */
 
+.Root--ios {
+  font-family: var(--font-ios);
+  }
+
 .Root--ios.Root--transition,
 .Root--ios.Root--popout {
   height: 100vh;
@@ -128,7 +132,7 @@
  */
 
 .Root--android {
-  font-family: Roboto, Droid, 'Open Sans', sans-serif;
+  font-family: var(--font-android);
   }
 
   .Root--android .Root__view--show-forward {

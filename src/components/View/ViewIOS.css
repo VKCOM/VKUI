@@ -1,5 +1,9 @@
 @import '../../styles/constants.css';
 
+.View--ios {
+  font-family: var(--font-ios);
+  }
+
 .View--ios.View--header .Panel__in {
   padding-top: 64px;
   padding-top: calc(44px + constant(safe-area-inset-top));

@@ -1,5 +1,6 @@
 :root {
-  --font: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
+  --font-ios: -apple-system, Helvetica Neue, Arial;
+  --font-android: Roboto, Arial;
 
   /* borders */
   --ios-top-border: linear-gradient(to bottom, var(--separator) 50%, transparent 50%);

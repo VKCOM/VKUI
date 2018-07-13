@@ -170,6 +170,13 @@
     padding: 11px;
     }
 
+/*
+  iOS
+ */
+.Button--ios {
+  font-family: var(--font-ios);
+  }
+
 .Button--ios.Button--size-m {
   border-radius: 15px;
   }
@@ -196,6 +203,13 @@
     .Button--ios.Button--type-cell .Button__before .Icon {
       margin-right: 12px;
       }
+
+/*
+  Android
+ */
+.Button--android {
+  font-family: var(--font-android);
+  }
 
 .Button--android.Button--type-default {
   border-radius: 4px;

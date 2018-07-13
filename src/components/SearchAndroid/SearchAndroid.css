@@ -43,6 +43,7 @@
     font-size: 16px;
     background-color: transparent;
     color: #fff;
+    font-family: var(--font-android);
     }
 
   .Search--android .Search__input::placeholder {

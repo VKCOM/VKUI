@@ -19,7 +19,6 @@
     min-height: 86px;
     max-height: 198px;
     border: none;
-    font-family: var(--font);
     }
 
   .Textarea textarea:disabled {
@@ -31,6 +30,7 @@
   }
 
   .Textarea--ios textarea {
+    font-family: var(--font-ios);
     border-radius: 10px;
     background-color: rgb(242, 243, 245);
     border: solid .5px rgba(0, 0, 0, .15);
@@ -51,6 +51,7 @@
   .Textarea--android textarea {
     border-radius: 4px;
     background-color: #f2f3f5;
+    font-family: var(--font-android);
     }
 
     .Textarea--android textarea::placeholder {

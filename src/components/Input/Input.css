@@ -29,7 +29,6 @@
   font-size: 16px;
   color: var(--black);
   padding: 12px;
-  font-family: var(--font);
   }
 
 .Input__el:disabled {
@@ -55,7 +54,7 @@
   }
 
 .Input--ios {
-
+  font-family: var(--font-ios);
   }
 
   .Input--ios .Input__el {
@@ -69,6 +68,7 @@
     }
 
 .Input--android {
+  font-family: var(--font-android);
   }
 
   .Input--android .Input__el {
