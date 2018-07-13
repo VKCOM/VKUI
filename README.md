@@ -6,7 +6,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 function App () {
   return (
-    <UI.View activePanel="main" header>
+    <UI.View activePanel="main">
       <UI.Panel id="main">
         <UI.PanelHeader>VKUI</UI.PanelHeader>
         <UI.Group title="Items">
