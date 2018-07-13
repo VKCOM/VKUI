@@ -180,11 +180,15 @@
     height: 100%;
     }
 
-  .PanelHeader--android .PanelHeader__left {
+  .PanelHeader--android .PanelHeader-left-in {
     padding-right: 6px;
     }
 
-  .PanelHeader--android .PanelHeader__right {
+  .PanelHeader--android .PanelHeader-left-in:empty {
+    padding-right: 12px;
+    }
+
+  .PanelHeader--android .PanelHeader-right {
     padding-left: 6px;
     }
 
