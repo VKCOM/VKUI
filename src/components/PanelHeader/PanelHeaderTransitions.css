@@ -91,13 +91,22 @@
   overflow: hidden;
   }
 
+.PanelHeader--ios .PanelHeader__in--next {
+  z-index: 2;
+  }
+
+.PanelHeader--ios .PanelHeader__in--prev {
+  z-index: 1;
+  }
+
 .PanelHeader--ios .PanelHeader__in--prev .PanelHeader__left-in,
 .PanelHeader--ios .PanelHeader__in--prev .PanelHeader__right {
   animation: animation-ios-header-fade-out .6s var(--ios-easing);
   }
 
 .PanelHeader--ios .PanelHeader__in--next .PanelHeader__left-in,
-.PanelHeader--ios .PanelHeader__in--next .PanelHeader__right {
+.PanelHeader--ios .PanelHeader__in--next .PanelHeader__right,
+.PanelHeader--ios .PanelHeader__in--next .PanelHeader__bg {
   animation: animation-ios-header-fade-in .6s var(--ios-easing);
   }
 

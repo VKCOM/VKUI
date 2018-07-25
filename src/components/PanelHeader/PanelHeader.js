@@ -47,23 +47,34 @@ export default class PanelHeader extends React.Component {
     this.addonNode = this.document.getElementById('header-addon-' + this.context.panel);
     this.titleNode = this.document.getElementById('header-title-' + this.context.panel);
     this.rightNode = this.document.getElementById('header-right-' + this.context.panel);
-    this.context.setHeaderTheme({
-      [this.context.panel]: { theme: this.props.theme, noShadow: this.props.noShadow }
-    });
+    this.bgNode = this.document.getElementById('header-bg-' + this.context.panel);
+
     this.setState({ ready: true });
   }
 
   render () {
-    let { left, addon, children, right } = this.props;
+    let { left, addon, children, right, theme, noShadow } = this.props;
     const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
     return this.state.ready ? [
-      ReactDOM.createPortal(<div className={classnames('PanelHeader-left-in')}>{left}</div>, this.leftNode),
-      osname === IOS && ReactDOM.createPortal(<div className="PanelHeader-addon">{addon}</div>, this.addonNode),
-      ReactDOM.createPortal(<div className="PanelHeader-content">
+      ReactDOM.createPortal(<div className={classnames('PanelHeader-bg', {
+        [`PanelHeader-bg--${theme}`]: true,
+        [`PanelHeader-bg--no-shadow`]: noShadow
+      })}/>, this.bgNode),
+      ReactDOM.createPortal(<div className={classnames('PanelHeader-left-in', {
+        [`PanelHeader-left-in--${theme}`]: true
+      })}>{left}</div>, this.leftNode),
+      osname === IOS && ReactDOM.createPortal(<div className={classnames('PanelHeader-addon', {
+        [`PanelHeader-addon--${theme}`]: true
+      })}>{addon}</div>, this.addonNode),
+      ReactDOM.createPortal(<div className={classnames('PanelHeader-content', {
+        [`PanelHeader-content--${theme}`]: true
+      })}>
         {isPrimitive ? <span>{children}</span> : children }
       </div>, this.titleNode),
-      ReactDOM.createPortal(<div className="PanelHeader-right">{right}</div>, this.rightNode)
+      ReactDOM.createPortal(<div className={classnames('PanelHeader-right', {
+        [`PanelHeader-right--${theme}`]: true
+      })}>{right}</div>, this.rightNode)
     ] : null;
   }
 }

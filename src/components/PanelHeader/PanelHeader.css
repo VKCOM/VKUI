@@ -9,6 +9,14 @@
   z-index: 5;
   }
 
+  .PanelHeader__bg {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    }
+
   .PanelHeader__in {
     display: flex;
     white-space: nowrap;
@@ -21,6 +29,7 @@
     }
 
     .PanelHeader__left {
+      z-index: 2;
       flex-shrink: 0;
       }
 
@@ -31,6 +40,7 @@
         .PanelHeader-left-in {}
 
     .PanelHeader__content {
+      z-index: 2;
       overflow: hidden;
       text-overflow: ellipsis;
       min-width: 44%;
@@ -42,6 +52,7 @@
         }
 
     .PanelHeader__right {
+      z-index: 2;
       flex-shrink: 0;
       }
 
@@ -59,36 +70,36 @@
   padding-top: env(safe-area-inset-top);
   }
 
-  .PanelHeader--ios::after {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--ios-bottom-border);
-    content: '';
-    }
-
-  .PanelHeader--no-shadow::after {
-    display: none;
-    }
-
-  .PanelHeader--ios.PanelHeader--brand {
-    color: #fff;
-    background: var(--header-blue);
-    }
-
-  .PanelHeader--ios.PanelHeader--light {
-    color: var(--header-blue);
-    background: #fff;
-    }
-
   .PanelHeader--ios .PanelHeader__in {
-    top: 20px;
-    top: constant(safe-area-inset-top);
-    top: env(safe-area-inset-top);
+    height: 44px;
+    padding-top: 20px;
+    padding-top: constant(safe-area-inset-top);
+    padding-top: env(safe-area-inset-top);
     justify-content: space-between;
     }
+
+    .PanelHeader--ios .PanelHeader__bg {}
+
+      .PanelHeader--ios .PanelHeader-bg {
+        height: 44px;
+        padding-top: 20px;
+        padding-top: constant(safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+        }
+
+      .PanelHeader--ios .PanelHeader-bg::after {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: var(--ios-bottom-border);
+        content: '';
+        }
+
+      .PanelHeader--ios .PanelHeader-bg--no-shadow::after {
+        content: none;
+        }
 
     .PanelHeader--ios .PanelHeader__left {
       display: flex;
@@ -121,7 +132,7 @@
         }
 
     .PanelHeader--ios .PanelHeader__content {
-
+      position: relative;
       }
 
       .PanelHeader--ios .PanelHeader-content {
@@ -131,11 +142,6 @@
         height: 44px;
         text-align: center;
         transition: color .6s var(--ios-easing);
-        color: #fff;
-        }
-
-      .PanelHeader--ios.PanelHeader--light .PanelHeader-content {
-        color: #000;
         }
 
     .PanelHeader--ios .PanelHeader__right {
@@ -161,7 +167,6 @@
             }
 
 .PanelHeader--android {
-  box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
   height: 56px;
   }
 
@@ -169,10 +174,18 @@
     height: 56px;
     }
 
-.PanelHeader--no-shadow {
-  box-shadow: none;
-  transition: box-shadow .3s var(--android-easing);
-  }
+  .PanelHeader--android .PanelHeader__bg {
+    height: 56px;
+    }
+
+    .PanelHeader--android .PanelHeader-bg {
+      height: 56px;
+      box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
+      }
+
+    .PanelHeader--android .PanelHeader-bg--no-shadow {
+      box-shadow: none;
+      }
 
   .PanelHeader--android .PanelHeader__content {
     max-width: 100%;
@@ -190,16 +203,6 @@
 
   .PanelHeader--android .PanelHeader-right {
     padding-left: 6px;
-    }
-
-  .PanelHeader--android .PanelHeader__in--brand {
-    background: var(--header-blue);
-    color: #fff;
-    }
-
-  .PanelHeader--android .PanelHeader__in--light {
-    background-color: #fff;
-    color: #5a5d61;
     }
 
     .PanelHeader--android .PanelHeader-right:not(:empty) {
@@ -228,3 +231,31 @@
         top: 0;
         z-index: 2;
         }
+
+/*
+  Темы
+ */
+.PanelHeader-bg--brand {
+  background: var(--header-blue);
+  }
+
+.PanelHeader-content--brand,
+.PanelHeader-left-in--brand,
+.PanelHeader-addon--brand,
+.PanelHeader-right--brand {
+  color: #fff;
+  }
+
+.PanelHeader-bg--light {
+  background: #fff;
+  }
+
+.PanelHeader-left-in--light,
+.PanelHeader-addon--light,
+.PanelHeader-right--light {
+  color: var(--header-blue);
+  }
+
+.PanelHeader-content--light {
+  color: #000;
+  }

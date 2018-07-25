@@ -35,11 +35,7 @@ export default class View extends Component {
       swipeBackPrevPanel: null,
       swipingBackFinish: null,
 
-      browserSwipe: false,
-
-      headerThemes: [].concat(props.children).reduce((res, panel) => {
-        res[panel.props.id] = {}; return res;
-      }, {})
+      browserSwipe: false
     };
   }
 
@@ -68,20 +64,6 @@ export default class View extends Component {
     window: PropTypes.any,
     document: PropTypes.any
   };
-
-  static childContextTypes = {
-    setHeaderTheme: PropTypes.func
-  };
-
-  getChildContext () {
-    return {
-      setHeaderTheme: (theme) => {
-        this.setState({
-          headerThemes: { ...this.state.headerThemes, ...theme }
-        });
-      }
-    };
-  }
 
   get document () {
     return this.context.document || document;
@@ -462,15 +444,13 @@ export default class View extends Component {
 
   render () {
     const { style, popout, header } = this.props;
-    const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, headerThemes } = this.state;
+    const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel } = this.state;
     const hasPopout = !!popout;
     const panels = this.panels.filter(panel => {
       return this.state.visiblePanels.indexOf(panel.props.id) > -1 ||
         panel.props.id === this.state.swipeBackPrevPanel ||
         panel.props.id === this.state.swipeBackNextPanel;
     });
-
-    const activePanelHeaderTheme = headerThemes[activePanel || nextPanel];
 
     const modifiers = {
       'View--header': header,
@@ -489,14 +469,10 @@ export default class View extends Component {
         {header && (
           <div className="View__header">
             { osname === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
-            <div className={classnames(panelHeaderClasses, {
-              [`PanelHeader--${activePanelHeaderTheme.theme}`]: true,
-              [`PanelHeader--no-shadow`]: activePanelHeaderTheme.noShadow
-            })}>
+            <div className={classnames(panelHeaderClasses)}>
               {panels.map(panel => (
                 <div
                   className={classnames('PanelHeader__in', {
-                    [`PanelHeader__in--${headerThemes[panel.props.id].theme}`]: true,
                     'PanelHeader__in--active': panel.props.id === activePanel,
                     'PanelHeader__in--prev': panel.props.id === prevPanel,
                     'PanelHeader__in--next': panel.props.id === nextPanel,
@@ -508,6 +484,7 @@ export default class View extends Component {
                   style={this.calcHeaderSwipeStyles(panel.props.id).item}
                   key={panel.props.id}
                 >
+                  <div className="PanelHeader__bg" key={panel.props.id} id={`header-bg-${panel.props.id}`} />
                   <div className="PanelHeader__left">
                     <div
                       className="PanelHeader__left-in"
