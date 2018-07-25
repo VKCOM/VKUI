@@ -33,7 +33,7 @@ export default class Panel extends Component {
     children: '',
     theme: 'gray',
     centered: false,
-    optimized: false
+    optimized: true
   };
 
   static contextTypes = {
