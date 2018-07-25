@@ -43,6 +43,10 @@ a:focus {
   z-index: 1;
 }
 
+.Textarea-underline {
+  position: relative;
+  }
+
 .Input-underline::after,
 .Select-underline::after,
 .Textarea-underline::after {
