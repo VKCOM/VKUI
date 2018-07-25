@@ -16,6 +16,7 @@ const Checkbox = ({ children, className, style, ...restProps }) => {
       component="label"
       className={classnames(baseClassName, className)}
       style={style}
+      disabled={restProps.disabled}
       activeEffectDelay={osname === IOS ? 100 : ACTIVE_EFFECT_DELAY }
     >
       <input {...restProps} type="checkbox" className="Checkbox__input" />

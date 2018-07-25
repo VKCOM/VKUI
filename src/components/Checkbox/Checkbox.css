@@ -39,6 +39,10 @@
     color: #fff;
     }
 
+  .Checkbox__input[disabled] ~ .Checkbox__container {
+    opacity: .6;
+    }
+
 .Checkbox--ios {
   padding: 12px;
   }
