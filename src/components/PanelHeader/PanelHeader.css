@@ -40,7 +40,7 @@
         .PanelHeader-left-in {}
 
     .PanelHeader__content {
-      z-index: 2;
+      z-index: 3;
       overflow: hidden;
       text-overflow: ellipsis;
       min-width: 44%;
