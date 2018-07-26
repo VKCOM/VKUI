@@ -1,18 +1,5 @@
 @import '../../styles/constants.css';
 
-.Group {
-
-  }
-
-  .Group__title {
-    margin: 0;
-    }
-
-  .Group__description a {
-    text-decoration: none;
-    color: var(--header-blue);
-    }
-
 /**
  * iOS
  */
@@ -72,10 +59,6 @@
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .06), 0 0 2px 0 rgba(0, 0, 0, .03);
   }
-
-  .Group--android:first-child {
-    margin-top: 0;
-    }
 
   .Group--android .Group__description {
     font-size: 14px;
