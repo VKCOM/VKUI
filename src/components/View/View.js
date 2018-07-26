@@ -48,7 +48,20 @@ export default class View extends Component {
     onTransition: PropTypes.func,
     onSwipeBack: PropTypes.func,
     onSwipeBackStart: PropTypes.func,
-    history: PropTypes.arrayOf(PropTypes.string)
+    history: PropTypes.arrayOf(PropTypes.string),
+
+    /**
+     * @ignore
+     */
+    isNext: PropTypes.bool,
+    /**
+     * @ignore
+     */
+    isPrev: PropTypes.bool,
+    /**
+     * @ignore
+     */
+    inRoot: PropTypes.bool
   };
 
   static defaultProps = {
@@ -442,6 +455,10 @@ export default class View extends Component {
         }
       };
     }
+  }
+
+  shouldComponentUpdate ({ inRoot, isNext, isPrev }) {
+    return inRoot ? !isNext && !isPrev : true;
   }
 
   render () {
