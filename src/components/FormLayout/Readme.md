@@ -15,8 +15,10 @@
       <PanelHeader>Регистрация</PanelHeader>
       <FormLayout>
         <Input type="email" top="E-mail" />
-        <Input type="password" top="Пароль" placeholder="Введите пароль" />
-        <Input type="password" placeholder="Повторите пароль" />
+        <div top="Пароль">
+          <Input type="password" top="Пароль" placeholder="Введите пароль" />
+          <Input type="password" placeholder="Повторите пароль" />
+        </div>
         <Input top="Имя" />
         <Input top="Фамилия" />
         <Select top="Пол" placeholder="Выберите пол">
