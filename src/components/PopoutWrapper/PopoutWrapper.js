@@ -39,7 +39,7 @@ export default class PopoutWrapper extends React.Component {
   }
 
   componentWillUnmount () {
-    window.removeEventListener('touchmove', this.preventTouch);
+    window.removeEventListener('touchmove', this.preventTouch, { passive: false });
     clearTimeout(this.animationFinishTimeout);
   }
 
