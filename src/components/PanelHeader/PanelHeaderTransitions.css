@@ -1,14 +1,13 @@
 @import '../../styles/constants.css';
 
 /**
- * Header swipe back
+ * Header iOS swipe back
  */
-
-.PanelHeader__in--swipe-back-failed,
+.PanelHeader__in--swipe-back-failed .PanelHeader__bg,
 .PanelHeader__in--swipe-back-failed .PanelHeader__content,
 .PanelHeader__in--swipe-back-failed .PanelHeader__left-in,
 .PanelHeader__in--swipe-back-failed .PanelHeader__addon,
-.PanelHeader__in--swipe-back-success,
+.PanelHeader__in--swipe-back-success .PanelHeader__bg,
 .PanelHeader__in--swipe-back-success .PanelHeader__content,
 .PanelHeader__in--swipe-back-success .PanelHeader__left-in,
 .PanelHeader__in--swipe-back-success .PanelHeader__addon {
@@ -17,75 +16,69 @@
       transform .3s var(--ios-easing);
   }
 
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed {
-  opacity: 0;
-  }
+/*
+  next failed
+ */
+.PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__bg {}
 
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__content {
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
-  }
-
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__addon {
+.PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__content,
+.PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__addon {
   opacity: 0;
   transform: translate3d(-100%, 0, 0);
   }
 
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__left-in,
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__right {
+.PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__left-in,
+.PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__right {
   opacity: 0;
   }
 
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success {
-  opacity: 1;
-  }
-
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__content {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  }
-
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__addon {
+/*
+  next success
+ */
+.PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__content,
+.PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__addon {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   }
 
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__left-in,
-.PanelHeader--ios .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__right {
+.PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__left-in,
+.PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-success .PanelHeader__right {
   opacity: 1;
   }
 
-.PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed {
+/*
+  prev failed
+ */
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed .PanelHeader__content,
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed .PanelHeader__addon {
+  transform: translate3d(0, 0, 0);
   opacity: 1;
   }
 
-.PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed .PanelHeader__content {
-  transform: translate3d(0, 0, 0);
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed .PanelHeader__left-in,
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed .PanelHeader__right,
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed .PanelHeader__bg {
+  opacity: 1;
   }
 
-.PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-failed .PanelHeader__addon {
-  transform: translate3d(0, 0, 0);
-  }
-
-.PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success {
+/*
+  prev success
+ */
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__content,
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__addon {
+  transform: translate3d(100%, 0, 0);
   opacity: 0;
   }
 
-.PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__content {
-  transform: translate3d(100%, 0, 0);
-  }
-
-.PanelHeader--ios .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__addon {
-  transform: translate3d(100%, 0, 0);
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__left-in,
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__right,
+.PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__bg {
+  opacity: 0;
   }
 
 /**
  * Header transition
  */
-.View--animated .PanelHeader--ios {
-  transition: background-color .3s var(--ios-easing);
-  }
-
 .PanelHeader--ios .PanelHeader__in--prev,
 .PanelHeader--ios .PanelHeader__in--next {
   overflow: hidden;

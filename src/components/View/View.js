@@ -399,7 +399,7 @@ export default class View extends Component {
     if (!isPrev && !isNext || this.state.swipingBackFinish !== null) {
       return {
         title: {},
-        item: {},
+        bg: {},
         left: {},
         addon: {},
         right: {}
@@ -417,26 +417,28 @@ export default class View extends Component {
           WebkitTransform: `translate3d(${-100 + titleTransform}%, 0, 0)`,
           opacity
         },
-        item: { opacity },
         left: { opacity },
         addon: {
           opacity: 1,
           transform: `translate3d(${-100 + leftTransform}%, 0, 0)`,
           WebkitTransform: `translate3d(${-100 + leftTransform}%, 0, 0)`
         },
-        right: { opacity: 1 }
+        right: { opacity }
       };
     }
     if (isPrev) {
       return {
         title: {
           transform: `translate3d(${titleTransform}%, 0, 0)`,
-          WebkitTransform: `translate3d(${titleTransform}%, 0, 0)`
+          WebkitTransform: `translate3d(${titleTransform}%, 0, 0)`,
+          opacity: 1 - opacity
         },
-        item: { opacity: 1 - opacity },
+        bg: { opacity: 1 - opacity },
+        left: { opacity: 1 - opacity },
         addon: {
           transform: `translate3d(${leftTransform}%, 0, 0)`,
-          WebkitTransform: `translate3d(${leftTransform}%, 0, 0)`
+          WebkitTransform: `translate3d(${leftTransform}%, 0, 0)`,
+          opacity: 1 - opacity
         }
       };
     }
@@ -481,10 +483,14 @@ export default class View extends Component {
                     'PanelHeader__in--swipe-back-success': this.state.swipingBackFinish === true,
                     'PanelHeader__in--swipe-back-failed': this.state.swipingBackFinish === false
                   })}
-                  style={this.calcHeaderSwipeStyles(panel.props.id).item}
                   key={panel.props.id}
                 >
-                  <div className="PanelHeader__bg" key={panel.props.id} id={`header-bg-${panel.props.id}`} />
+                  <div
+                    className="PanelHeader__bg"
+                    key={panel.props.id}
+                    id={`header-bg-${panel.props.id}`}
+                    style={this.calcHeaderSwipeStyles(panel.props.id).bg}
+                  />
                   <div className="PanelHeader__left">
                     <div
                       className="PanelHeader__left-in"
