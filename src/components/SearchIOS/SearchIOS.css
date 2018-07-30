@@ -3,6 +3,7 @@
 .Search--ios {
   overflow: hidden;
   font-weight: normal;
+  transform: translate3d(0, 0, 0);
   }
 
   .Search--ios .Search__in {
@@ -152,6 +153,13 @@
         cursor: text;
         }
 
+/*
+  Themes
+ */
+
+/*
+  default
+ */
 .Search--ios.Search--default {
   background: #e6e9ed;
   padding: 8px;
@@ -183,6 +191,9 @@
   background-color: #e6e9ed;
   }
 
+/*
+  header
+ */
 .Search--ios.Search--header {
   background: var(--header-blue);
   padding-top: 6px;
