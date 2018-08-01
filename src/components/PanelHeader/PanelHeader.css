@@ -2,15 +2,11 @@
 @import './PanelHeaderTransitions.css';
 
 .PanelHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   z-index: 5;
   }
 
   .PanelHeader__in {
-    position: fixed;
+    position: absolute;
     width: 100%;
     left: 0;
     top: 0;
@@ -18,7 +14,7 @@
     }
 
     .PanelHeader__bg {
-      position: fixed;
+      position: absolute;
       width: 100%;
       left: 0;
       top: 0;

@@ -19,6 +19,7 @@
   .View__header {
     z-index: 2;
     position: fixed;
+    width: 100%;
     }
 
   .View--animated .View__panel,
