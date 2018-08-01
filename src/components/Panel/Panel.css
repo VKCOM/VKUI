@@ -20,10 +20,10 @@
 
     .Panel__in-before {
       height: 1px;
-      margin-top: -1px;
+      margin-bottom: -1px;
       }
 
     .Panel__in-after {
-      float: left;
       height: 1px;
+      margin-top: -1px;
       }
