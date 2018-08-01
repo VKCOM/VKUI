@@ -508,30 +508,32 @@ export default class View extends Component {
                     id={`header-bg-${panel.props.id}`}
                     style={this.calcHeaderSwipeStyles(panel.props.id).bg}
                   />
-                  <div className="PanelHeader__left">
+                  <div className="PanelHeader__container">
+                    <div className="PanelHeader__left">
+                      <div
+                        className="PanelHeader__left-in"
+                        id={`header-left-${panel.props.id}`}
+                        style={this.calcHeaderSwipeStyles(panel.props.id).left}
+                      />
+                      {osname === IOS &&
+                      <div
+                        className="PanelHeader__addon"
+                        id={`header-addon-${panel.props.id}`}
+                        style={this.calcHeaderSwipeStyles(panel.props.id).icon}
+                      />
+                      }
+                    </div>
                     <div
-                      className="PanelHeader__left-in"
-                      id={`header-left-${panel.props.id}`}
-                      style={this.calcHeaderSwipeStyles(panel.props.id).left}
+                      className="PanelHeader__content"
+                      style={this.calcHeaderSwipeStyles(panel.props.id).title}
+                      id={`header-title-${panel.props.id}`}
                     />
-                    {osname === IOS &&
                     <div
-                      className="PanelHeader__addon"
-                      id={`header-addon-${panel.props.id}`}
-                      style={this.calcHeaderSwipeStyles(panel.props.id).icon}
+                      className="PanelHeader__right"
+                      id={`header-right-${panel.props.id}`}
+                      style={this.calcHeaderSwipeStyles(panel.props.id).right}
                     />
-                    }
                   </div>
-                  <div
-                    className="PanelHeader__content"
-                    style={this.calcHeaderSwipeStyles(panel.props.id).title}
-                    id={`header-title-${panel.props.id}`}
-                  />
-                  <div
-                    className="PanelHeader__right"
-                    id={`header-right-${panel.props.id}`}
-                    style={this.calcHeaderSwipeStyles(panel.props.id).right}
-                  />
                 </div>
               ))}
             </div>

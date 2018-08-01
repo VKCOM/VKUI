@@ -30,7 +30,6 @@ export default class PanelHeader extends React.Component {
 
   static contextTypes = {
     panel: PropTypes.string,
-    setHeaderTheme: PropTypes.func,
     document: PropTypes.any
   };
 
