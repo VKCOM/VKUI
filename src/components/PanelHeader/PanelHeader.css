@@ -2,7 +2,7 @@
 @import './PanelHeaderTransitions.css';
 
 .PanelHeader {
-  z-index: 5;
+  position: relative;
   }
 
   .PanelHeader__in {
