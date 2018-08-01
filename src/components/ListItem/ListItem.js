@@ -24,6 +24,7 @@ export default class ListItem extends Component {
     multiline: PropTypes.bool,
     description: PropTypes.node,
     className: PropTypes.string,
+    style: PropTypes.object,
 
     selectable: PropTypes.bool,
 
@@ -129,6 +130,7 @@ export default class ListItem extends Component {
       removable,
       removePlaceholder,
       href,
+      style,
       ...restProps
     } = this.props;
 
@@ -146,7 +148,7 @@ export default class ListItem extends Component {
           'ListItem--removing': this.state.removing
         }, className)}
         ref={this.getRootRef}
-        style={removable ? { height: this.state.height } : null}
+        style={removable ? { ...style, height: this.state.height } : style}
       >
         <Tappable
           {...linkProps}
