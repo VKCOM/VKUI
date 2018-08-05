@@ -11,7 +11,7 @@
     .FormLayout__row .Input + .Input,
     .FormLayout__row .Select + .Select,
     .FormLayout__row .SelectMimicry + .SelectMimicry {
-      padding-top: 8px;
+      padding-top: 12px;
       }
 
   .FormLayout__submit {
@@ -38,7 +38,13 @@
     .FormLayout--ios .FormLayout__row .Radio,
     .FormLayout--ios .FormLayout__row .Checkbox,
     .FormLayout--ios .FormLayout__row .Button--type-cell {
-      margin: 0 -12px;
+      margin-left: -12px;
+      margin-right: -12px;
+      }
+
+    .FormLayout--ios .FormLayout__field .ListItem__in {
+      padding-left: 0;
+      padding-right: 0;
       }
 
     .FormLayout--ios .FormLayout__row .Button--type-cell {
@@ -78,11 +84,14 @@
 
       .FormLayout--android .FormLayout__field .Radio,
       .FormLayout--android .FormLayout__field .Checkbox,
-      .FormLayout--android .FormLayout__field .Button--type-cell {
-        margin: 0 -16px;
+      .FormLayout--android .FormLayout__field .Button--type-cell,
+      .FormLayout--android .FormLayout__field .ListItem {
+        margin-left: -16px;
+        margin-right: -16px;
         }
 
-      .FormLayout--android .FormLayout__field .Button--type-cell {
+      .FormLayout--android .FormLayout__field .Button--type-cell,
+      .FormLayout--android .FormLayout__field .ListItem {
         width: calc(100% + 32px);
         }
 
