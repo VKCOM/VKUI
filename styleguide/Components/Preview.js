@@ -9,46 +9,14 @@ const frameInitialContent = `
   <!DOCTYPE html>
   <html>
     <head>
-      <link href="./main.css" rel="stylesheet" id="styles"></link>
-      <style>
-        .frame-content {
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          height: 100vh;
-          user-select: none;
-          -webkit-font-smoothing: antialiased;
-          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-          -webkit-tap-highlight-color: transparent;
-          -webkit-text-size-adjust: 100%;
-        }
-      </style>
+      <link href="./main.css" rel="stylesheet" id="styles" />
     </head>
     <body>
-  
     </body>
   </html>
 `;
 
-class InsertSvgSprite extends React.Component {
-
-  static contextTypes = {
-    document: PropTypes.any
-  };
-
-  componentDidMount () {
-    let sprite = document.getElementById('__SVG_SPRITE_NODE__');
-    this.context.document.body.appendChild(sprite.cloneNode(true));
-  }
-
-  render () {
-    return null
-  }
-}
-
-
-class LoadStyles extends React.Component {
-
+class PrepareFrame extends React.Component {
   state = {
     loaded: false
   };
@@ -58,13 +26,16 @@ class LoadStyles extends React.Component {
   };
 
   componentDidMount () {
+    let sprite = document.getElementById('__SVG_SPRITE_NODE__');
+    this.context.document.body.appendChild(sprite.cloneNode(true));
+
     let styles = this.context.document.getElementById('styles');
-
     if (styles.sheet) this.setState({ loaded: true });
-
     styles.onload = styles.onreadystatechange = () => {
       this.setState({ loaded: true });
     };
+
+    this.context.document.querySelector('.frame-content').setAttribute('id', 'root');
   }
 
   render () {
@@ -96,15 +67,14 @@ export default class Preview extends PreviewParent {
             margin: 'auto'
           }}
         >
-          <InsertSvgSprite />
-          <LoadStyles>
+          <PrepareFrame>
             <ReactExample
               code={code}
               evalInContext={this.props.evalInContext}
               onError={this.handleError}
               compilerConfig={this.context.config.compilerConfig}
             />
-          </LoadStyles>
+          </PrepareFrame>
         </ReactFrame>
     );
 
