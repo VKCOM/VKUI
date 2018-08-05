@@ -36,6 +36,11 @@
   background: transparent;
   }
 
+.Button--type-cell.Tappable--active {
+  position: relative;
+  z-index: 2;
+  }
+
 .Button--type-cell.Button--level-primary {
   color: var(--accent-blue);
   }
