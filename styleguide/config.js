@@ -21,9 +21,6 @@ module.exports = {
       name: 'The Concept',
       content: './pages/concept.md'
     }, {
-      name: 'Migration',
-      content: './pages/migration.md'
-    }, {
       name: 'Components',
       sections: [{
         name: 'Layout',
