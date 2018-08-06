@@ -66,6 +66,17 @@
   Android
  */
 .Tabs--android {
-  box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
+
+  }
+
+.Tabs--android.Tabs--light {
+  background-color: #fff;
+  }
+
+.Tabs--android.Tabs--header {
   background-color: var(--header-blue);
+  }
+
+.FixedLayout--top .Tabs--android {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
   }

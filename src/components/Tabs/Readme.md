@@ -1,3 +1,5 @@
+Табы могут растягиваться на всю ширину, либо занимать только необходимое пространство.
+
 ```jsx
   class Example extends React.Component {
 
@@ -52,7 +54,7 @@
             </PanelHeader>
             {osname === ANDROID &&
             <FixedLayout vertical="top">
-              <Tabs>
+              <Tabs theme="header">
                 <TabsItem
                   onClick={() => this.setState({ activeTab5: 'groups' })}
                   selected={this.state.activeTab5 === 'groups'}
@@ -90,9 +92,8 @@
               </HorizontalScroll>
             </FixedLayout>
             }
-            {osname === IOS &&
             <Group style={{ marginTop: 60 }}>
-              <Tabs>
+              <Tabs theme="light">
                 <TabsItem
                   onClick={() => this.setState({ activeTab4: 'dial' })}
                   selected={this.state.activeTab4 === 'dial'}
@@ -107,8 +108,6 @@
                 </TabsItem>
               </Tabs>
             </Group>
-            }
-            {osname === IOS &&
             <Group title="Вкладки-кнопки">
               <Tabs type="buttons">
                 <TabsItem
@@ -125,8 +124,6 @@
                 </TabsItem>
               </Tabs>
             </Group>
-            }
-            {osname === IOS &&
             <Group title="Много кнопок" description="В случае, когда вкладки не помещаются, оберните Tabs в HorizontalScroll">
               <HorizontalScroll>
                 <Tabs type="buttons">
@@ -157,8 +154,6 @@
                 </Tabs>
               </HorizontalScroll>
             </Group>
-            }
-            {osname === IOS &&
             <FixedLayout vertical="bottom">
               <Tabs>
                 <TabsItem
@@ -171,7 +166,6 @@
                 >9 событий</TabsItem>
               </Tabs>
             </FixedLayout>
-            }
           </Panel>
         </View>
       )

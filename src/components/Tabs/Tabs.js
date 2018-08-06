@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
-import { platform, IOS } from '../../lib/platform';
 import './Tabs.css';
 
-const osname = platform();
 const baseClassName = getClassName('Tabs');
 
 export default class Tabs extends React.Component {
@@ -17,14 +15,14 @@ export default class Tabs extends React.Component {
      */
     theme: PropTypes.oneOf(['light', 'header']),
     /**
-     * iOS only
+     * Свойство отвечает за растягивание табов
      */
     type: PropTypes.oneOf(['default', 'buttons']),
     style: PropTypes.object
   };
 
   static defaultProps = {
-    theme: osname === IOS ? 'light' : 'header',
+    theme: 'light',
     type: 'default'
   };
 
@@ -50,9 +48,7 @@ export default class Tabs extends React.Component {
       <div {...restProps} className={classnames(baseClassName, {
         [`Tabs--${this.theme}`]: true,
         [`Tabs--${type}`]: true
-      }, className)} style={style}>
-        {children}
-      </div>
+      }, className)} style={style}>{children}</div>
     );
   }
 }
