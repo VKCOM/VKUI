@@ -4,6 +4,7 @@
   "main": "dist/vkui.js",
   "license": "SEE LICENSE IN LICENSE",
   "description": "VKUI library",
+  "repository": "https://github.com/VKCOM/VKUI",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
     "babel-core": "^6.23.1",
