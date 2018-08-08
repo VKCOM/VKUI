@@ -28,9 +28,7 @@ export default class TabsItem extends React.Component {
         {...restProps}
         className={classnames(baseClassName, { 'TabsItem--selected': selected }, className)}
         activeEffectDelay={osname === IOS ? 0 : ACTIVE_EFFECT_DELAY}
-      >
-        <div className="TabsItem__in">{children}</div>
-      </Tappable>
+      >{children}</Tappable>
     );
   }
 }

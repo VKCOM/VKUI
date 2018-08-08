@@ -68,52 +68,37 @@
   }
 
 .Tabs--ios.Tabs--buttons .TabsItem {
-  flex-shrink: 0;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  padding: 0 16px;
+  font-size: 16px;
+  font-weight: 500;
+  }
+
+.Tabs--ios.Tabs--buttons > .TabsItem:first-child {
+  margin-left: 8px;
   }
 
 .Tabs--ios.Tabs--buttons.Tabs--header .TabsItem {
   background-color: var(--header-blue);
+  color: #c2deff;
   }
 
-  .Tabs--ios.Tabs--buttons .TabsItem__in {
-    height: 32px;
-    line-height: 32px;
-    border-radius: 16px;
-    box-sizing: border-box;
-    padding: 0 16px;
-    font-size: 16px;
-    font-weight: 500;
-    }
-
-.Tabs--ios.Tabs--buttons .TabsItem {
-  padding: 8px 0;
+.Tabs--ios.Tabs--buttons.Tabs--header .TabsItem--selected {
+  background-color: rgba(173, 211, 255, .32);
+  color: #fff;
   }
 
-.Tabs--ios.Tabs--buttons .TabsItem:first-child {
-  padding-left: 8px;
+.Tabs--ios.Tabs--buttons.Tabs--light .TabsItem {
+  color: var(--subhead-gray);
   }
 
-.Tabs--ios.Tabs--buttons .TabsItem:last-child {
-  padding-right: 8px;
+.Tabs--ios.Tabs--buttons.Tabs--light .TabsItem--selected {
+  background-color: var(--background-blue);
+  color: #5a5d61;
   }
-
-  .Tabs--ios.Tabs--buttons.Tabs--light .TabsItem__in {
-    color: var(--subhead-gray);
-    }
-
-  .Tabs--ios.Tabs--buttons.Tabs--light .TabsItem--selected .TabsItem__in {
-    background-color: var(--background-blue);
-    color: #5a5d61;
-    }
-
-  .Tabs--ios.Tabs--buttons.Tabs--header .TabsItem__in {
-    color: #c2deff;
-    }
-
-  .Tabs--ios.Tabs--buttons.Tabs--header .TabsItem--selected .TabsItem__in {
-    background-color: rgba(173, 211, 255, .32);
-    color: #fff;
-    }
 
 /*
   Android
@@ -122,22 +107,18 @@
   height: 48px;
   line-height: 48px;
   font-size: 16px;
+  position: relative;
   }
 
-  .Tabs--android .TabsItem__in {
-    position: relative;
-    transition: background-color .15s ease-out;
+  .Tabs--android .TabsItem--selected::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    display: block;
+    content: '';
     }
-
-    .Tabs--android .TabsItem--selected .TabsItem__in::after {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 2px;
-      display: block;
-      content: '';
-      }
 
 .Tabs--android.Tabs--light .TabsItem {
   color: var(--caption-gray);
@@ -147,7 +128,7 @@
   color: var(--header-blue);
   }
 
-  .Tabs--android.Tabs--light .TabsItem--selected .TabsItem__in::after {
+  .Tabs--android.Tabs--light .TabsItem--selected::after {
     background-color: var(--header-blue);
     }
 
@@ -159,27 +140,19 @@
   color: #fff;
   }
 
-  .Tabs--android.Tabs--header .TabsItem--selected .TabsItem__in::after {
+  .Tabs--android.Tabs--header .TabsItem--selected::after {
     background-color: #fff;
     }
 
-.Tabs--android.Tabs--header .TabsItem.Tappable--active .TabsItem__in {
+.Tabs--android.Tabs--header .TabsItem.Tappable--active {
   background-color: rgba(255, 255, 255, .1);
   }
 
-.Tabs--android.Tabs--light .TabsItem.Tappable--active .TabsItem__in {
+.Tabs--android.Tabs--light .TabsItem.Tappable--active {
   background-color: var(--android-active-color);
   }
 
-.Tabs--android.Tabs--buttons .TabsItem:first-child {
-  padding-left: 8px;
+.Tabs--android.Tabs--buttons .TabsItem {
+  padding-left: 12px;
+  padding-right: 12px;
   }
-
-.Tabs--android.Tabs--buttons .TabsItem:last-child {
-  padding-right: 8px;
-  }
-
-  .Tabs--android.Tabs--buttons .TabsItem__in {
-    padding-left: 12px;
-    padding-right: 12px;
-    }

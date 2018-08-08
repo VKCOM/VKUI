@@ -1,15 +1,18 @@
 @import '../../styles/constants.css';
 
-.Tabs {
+.Tabs,
+.Tabs .HorizontalScroll__in {
   display: flex;
   align-items: center;
   }
 
-.Tabs--default {
+.Tabs--default,
+.Tabs--default .HorizontalScroll__in {
   justify-content: center;
   }
 
-.Tabs--buttons {
+.Tabs--buttons,
+.Tabs--default .HorizontalScroll__in {
   justify-content: flex-start;
   }
 
@@ -28,6 +31,11 @@
 
 .Tabs--ios.Tabs--buttons.Tabs--header {
   background-color: var(--header-blue);
+  }
+
+.Tabs--ios.Tabs--buttons {
+  padding-top: 8px;
+  padding-bottom: 8px;
   }
 
 .FixedLayout--ios.FixedLayout--top .Tabs::after {
@@ -50,6 +58,15 @@
   content: '';
   top: 0;
   background: var(--separator);
+  }
+
+.Tabs--ios.Tabs--buttons .HorizontalScroll__in::after,
+.Tabs--ios.Tabs--buttons .HorizontalScroll__in::before {
+  display: block;
+  width: 8px;
+  flex-shrink: 0;
+  height: 1px;
+  content: '';
   }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
@@ -77,6 +94,16 @@
   background-color: var(--header-blue);
   }
 
-.FixedLayout--top .Tabs--android {
+.Tabs--android.Tabs--buttons .HorizontalScroll__in::after,
+.Tabs--android.Tabs--buttons .HorizontalScroll__in::before {
+  display: block;
+  width: 8px;
+  flex-shrink: 0;
+  height: 1px;
+  content: '';
+  }
+
+.FixedLayout--top .Tabs--android,
+.FixedLayout--bottom .Tabs--android {
   box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
   }

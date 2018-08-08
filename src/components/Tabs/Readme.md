@@ -52,24 +52,9 @@
                 'Tabs'
               }
             </PanelHeader>
-            {osname === ANDROID &&
             <FixedLayout vertical="top">
-              <Tabs theme="header">
-                <TabsItem
-                  onClick={() => this.setState({ activeTab5: 'groups' })}
-                  selected={this.state.activeTab5 === 'groups'}
-                >176 сообществ</TabsItem>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab5: 'events' })}
-                  selected={this.state.activeTab5 === 'events'}
-                >9 событий</TabsItem>
-              </Tabs>
-            </FixedLayout>
-            }
-            {osname === IOS &&
-            <FixedLayout vertical="top">
-              <HorizontalScroll>
-                <Tabs theme="header" type="buttons">
+              <Tabs theme="header" type="buttons">
+                <HorizontalScroll>
                   <TabsItem
                     onClick={() => this.setState({ activeTab6: 'all' })}
                     selected={this.state.activeTab6 === 'all'}
@@ -88,10 +73,9 @@
                   >
                     Сообщества
                   </TabsItem>
-                </Tabs>
-              </HorizontalScroll>
+                </HorizontalScroll>
+              </Tabs>
             </FixedLayout>
-            }
             <Group style={{ marginTop: 60 }}>
               <Tabs theme="light">
                 <TabsItem
@@ -125,8 +109,8 @@
               </Tabs>
             </Group>
             <Group title="Много кнопок" description="В случае, когда вкладки не помещаются, оберните Tabs в HorizontalScroll">
-              <HorizontalScroll>
-                <Tabs type="buttons">
+              <Tabs type="buttons">
+                <HorizontalScroll>
                   <TabsItem
                     onClick={() => this.setState({ activeTab3: 'all' })}
                     selected={this.state.activeTab3 === 'all'}
@@ -151,8 +135,8 @@
                   >
                     Топ 10 интересных
                   </TabsItem>
-                </Tabs>
-              </HorizontalScroll>
+                </HorizontalScroll>
+              </Tabs>
             </Group>
             <FixedLayout vertical="bottom">
               <Tabs>
