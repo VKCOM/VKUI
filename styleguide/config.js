@@ -1,6 +1,5 @@
 const path = require('path');
 const webpackConfig = require('../webpack.config');
-const template = require('./index.html');
 
 module.exports = {
   title: 'VKUI styleguide',
@@ -9,7 +8,6 @@ module.exports = {
     PlaygroundRenderer: path.join(__dirname, './components/PlaygroundRenderer'),
     StyleGuideRenderer: path.join(__dirname, './components/StyleGuideRenderer')
   },
-  template,
   sections: [
     {
       name: 'Installation',

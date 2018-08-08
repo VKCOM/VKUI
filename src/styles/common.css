@@ -7,7 +7,6 @@ div#root {
   padding: 0;
   height: 100%;
   height: 100vh;
-  user-select: none;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
@@ -25,6 +24,10 @@ html[theme="white"] {
 body {
   overflow-x: hidden;
 }
+
+#root {
+  user-select: none;
+  }
 
 a:focus {
   outline: none;

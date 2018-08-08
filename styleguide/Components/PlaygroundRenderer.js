@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Styled from 'react-styleguidist/lib/rsg-components/Styled';
-import ReactFrame from 'react-frame-component';
 
 export const styles = ({ space, color, borderRadius }) => ({
   root: {
