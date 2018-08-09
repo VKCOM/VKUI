@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Logo from 'react-styleguidist/lib/rsg-components/Logo';
 import Markdown from 'react-styleguidist/lib/rsg-components/Markdown';
 import Styled from 'react-styleguidist/lib/rsg-components/Styled';
+import Link from 'react-styleguidist/lib/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
 
@@ -76,7 +77,7 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
             <Logo>{title}</Logo>
           </div>
           <div className={classes.os}>
-            Platform:&nbsp;
+            Платформа:&nbsp;
             <select onChange={ (e) => {
               window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
               window.location.reload();
@@ -85,7 +86,13 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
               <option value={window.uaList.android}>android</option>
             </select>
             <div style={{ marginTop: 4 }}>
-              Version:&nbsp;{ pkg.version }
+              Версия:&nbsp;<Link href={`https://www.npmjs.com/package/${pkg.name}`}>{ pkg.version }</Link>
+            </div>
+            <div style={{ marginTop: 4 }}>
+              Исходники:&nbsp;<Link href={ pkg.repository }>GitHub</Link>
+            </div>
+            <div style={{ marginTop: 4 }}>
+              Чат:&nbsp;<Link href="https://vk.me/join/AJQ1d8dLkgTUYRPPQ/Wa6Jmd">VK</Link>
             </div>
           </div>
           {toc}

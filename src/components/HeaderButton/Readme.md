@@ -1,28 +1,36 @@
-Компонент для отрисовки кнопок в [PanelHeader](#panelheader). Внутрь компонента передается либо иконка, либо текст. Текстовые кнопки
+Компонент для отрисовки кнопок в PanelHeader. Внутрь компонента передается либо иконка, либо текст. Текстовые кнопки
 чаще всего используются в iOS, но есть исключения для Android.
 
 Шапки iOS и Android достаточно сильно отличаются внешне, поэтому описание будет разделено на две части.
 
 **Android**
 
-Кнопки могут быть переданы в `left` или `right` свойства `header`:
+Кнопки могут быть переданы в left или right компонента PanelHeader:
 
 ```jsx static
-  <PanelHeader
-    left={<HeaderButton><Icon24Back/></HeaderButton>}
-    right={<HeaderButton><Icon24Search/></HeaderButton>}
-  />
+import { PanelHeader, HeaderButton } from '@vkonktakte/vkui';
+import Icon24Back from '@vkontakte/icons/dist/24/back';
+import Icon24Search from '@vkontakte/icons/dist/24/search';
+
+<PanelHeader
+  left={<HeaderButton><Icon24Back/></HeaderButton>}
+  right={<HeaderButton><Icon24Search/></HeaderButton>}
+/>
 ```
 
 Если нужно несколько кнопок справа или слева, то передаем массив:
 
 ```jsx static
-  <PanelHeader
-    right={[
-      <HeaderButton key="search"><Icon24Search/></HeaderButton>,
-      <HeaderButton key="add"><Icon24Add/></HeaderButton>
-    ]}
-  />
+import { PanelHeader, HeaderButton } from '@vkonktakte/vkui';
+import Icon24Add from '@vkontakte/icons/dist/24/add';
+import Icon24Search from '@vkontakte/icons/dist/24/search';
+
+<PanelHeader
+  right={[
+    <HeaderButton key="search"><Icon24Search/></HeaderButton>,
+    <HeaderButton key="add"><Icon24Add/></HeaderButton>
+  ]}
+/>
 ```
 
 **iOS**
@@ -30,13 +38,24 @@
 Основное отличие – это составность левой кнопки. Она может состоять из иконки и текста. Пример:
 
 ```jsx static
-  <PanelHeader
-    addon={<HeaderButton>Назад</HeaderButton>}
-    left={<HeaderButton>{osname === IOS <Icon28ChevronBack/> ? <Icon24Back/>}</HeaderButton>}
-  />
+import { PanelHeader, HeaderButton, platform, IOS } from '@vkonktakte/vkui';
+import Icon24Back from '@vkontakte/icons/dist/24/back';
+import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
+
+const osname = platform();
+
+<PanelHeader
+  addon={<HeaderButton>Назад</HeaderButton>}
+  left={<HeaderButton>{osname === IOS <Icon28ChevronBack/> ? <Icon24Back/>}</HeaderButton>}
+/>
 ```
 
 В примере выше появляется новое свойство `addon`, актуальное только для iOS версии.
+
+**Важно:** кнопки для возврата к предыдущей Panel отличаются.
+В случае с iOS используется иконка [28/chevron_back](https://vkcom.github.io/icons/#28/chevron_back), в случае с
+Android – [24/back](https://vkcom.github.io/icons/#24/back). Так же различаются кнопки для возврата к предыдущей
+View. iOS – текст "Отмена", Android – [24/cancel](https://vkcom.github.io/icons/#24/cancel).
 
 ```
 

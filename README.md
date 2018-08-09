@@ -1,28 +1,25 @@
 ```jsx static
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as UI from '@vkontakte/vkui';
+import { View, Panel, PanelHeader, Group, List, ListItem } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 function App () {
   return (
-    <UI.View activePanel="main">
-      <UI.Panel id="main">
-        <UI.PanelHeader>VKUI</UI.PanelHeader>
-        <UI.Group title="Items">
-          <UI.List>
-            <UI.ListItem>Hello</UI.ListItem>
-            <UI.ListItem>World</UI.ListItem>
-          </UI.List>
-        </UI.Group>
-      </UI.Panel>
-    </UI.View>
+    <View activePanel="main">
+      <Panel id="main">
+        <PanelHeader>VKUI</PanelHeader>
+        <Group title="Items">
+          <List>
+            <ListItem>Hello</ListItem>
+            <ListItem>World</ListItem>
+          </List>
+        </Group>
+      </Panel>
+    </View>
   );
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 

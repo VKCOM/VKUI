@@ -1,4 +1,4 @@
-Визуальная имитация компонента Select
+Визуальная имитация компонента Select.
 
 ```
   class Example extends React.Component {

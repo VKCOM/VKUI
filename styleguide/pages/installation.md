@@ -1,1 +1,1 @@
-`npm install @vkontakte/vkui` || `yarn add @vkontakte/vkui`
+npm install @vkontakte/vkui

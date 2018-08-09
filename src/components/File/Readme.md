@@ -1,5 +1,4 @@
-File под капотом использует [Button](https://vkcom.github.io/vkui-styleguide/#button),
-поэтому в качестве свойств можно пробрасывать все свойства, которые поддерживает Button.
+File под капотом использует Button. То есть все свойства, применимые к Button, применимы и к File.
 
 ```jsx
   <View activePanel="panel">

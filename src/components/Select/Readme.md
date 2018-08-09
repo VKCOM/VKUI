@@ -1,6 +1,8 @@
-В Select можно добавлять `placeholder`:
+В Select можно добавлять placeholder.
 
 ```jsx static
+import { Select } from '@vkontakte/vkui';
+
 <Select placeholder="Выберите пол">
   <option value="m">Мужской</option>
   <option value="f">Женский</option>

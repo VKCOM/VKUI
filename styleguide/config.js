@@ -6,10 +6,14 @@ module.exports = {
   styleguideDir: path.join(__dirname, '../docs'),
   styleguideComponents: {
     PlaygroundRenderer: path.join(__dirname, './components/PlaygroundRenderer'),
-    StyleGuideRenderer: path.join(__dirname, './components/StyleGuideRenderer')
+    StyleGuideRenderer: path.join(__dirname, './components/StyleGuideRenderer'),
+    PathlineRenderer: path.join(__dirname, './components/PathlineRenderer')
   },
   sections: [
     {
+      name: 'Intro',
+      content: './pages/intro.md'
+    }, {
       name: 'Installation',
       content: './pages/installation.md'
     }, {
@@ -23,13 +27,13 @@ module.exports = {
       sections: [{
         name: 'Layout',
         components: () => [
+          '../src/components/Root/Root.js',
           '../src/components/View/View.js',
           '../src/components/Panel/Panel.js',
           '../src/components/PanelHeader/PanelHeader.js',
-          '../src/components/PanelHeaderContent/PanelHeaderContent.js',
           '../src/components/HeaderButton/HeaderButton.js',
+          '../src/components/PanelHeaderContent/PanelHeaderContent.js',
           '../src/components/HeaderContext/HeaderContext.js',
-          '../src/components/Root/Root.js',
           '../src/components/FixedLayout/FixedLayout.js',
           '../src/components/HorizontalScroll/HorizontalScroll.js',
         ]

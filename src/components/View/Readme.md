@@ -1,4 +1,4 @@
-Базовый компонент для создания панелей. В качестве children принимает коллекцию [Panel](#panel). У каждой Panel должен быть уникальный id. Свойство activePanel определяет какая Panel активна.
+Базовый компонент для создания панелей. В качестве children принимает коллекцию Panel. У каждой Panel должен быть уникальный id. Свойство activePanel определяет какая Panel активна.
 
 При смене значения свойства activePanel происходит переход от одной панели к другой. Как только он заканчивается, вызывается свойство-функция onTransition.
 
@@ -22,7 +22,7 @@ class Example extends React.Component {
             <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel2' }) }>
               Go to panel 2
             </Button>
-          </Group>  
+          </Group>
         </Panel>
         <Panel id="panel2">
           <PanelHeader>Panel 2</PanelHeader>
@@ -30,7 +30,7 @@ class Example extends React.Component {
             <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel3' }) }>
               Go to panel 3
             </Button>
-          </Group>  
+          </Group>
         </Panel>
         <Panel id="panel3">
           <PanelHeader>Panel 3</PanelHeader>
@@ -38,7 +38,7 @@ class Example extends React.Component {
             <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel1' }) }>
               Back to panel 1
             </Button>
-          </Group>  
+          </Group>
         </Panel>
       </View>
     )
