@@ -4,19 +4,35 @@ import Link from 'react-styleguidist/lib/rsg-components/Link';
 import pkg from '../../package.json';
 import Styled from 'react-styleguidist/lib/rsg-components/Styled';
 
-export const styles = ({ fontFamily }) => ({
-
+export const styles = ({ fontFamily, fontSize }) => ({
+  pathline: {
+    fontFamily: fontFamily.base,
+    fontSize: fontSize.small
+  },
   link: {
-    fontFamily: fontFamily.base
+    marginTop: 4
   }
 });
 
 export function PathlineRenderer({ classes, children }) {
   return (
-    <div className={classes.link}>
-      <Link target="_blank" href={`${pkg.repository}/tree/v${pkg.version}/${children.replace('../', '')}`}>
-        Sources
-      </Link>
+    <div className={classes.pathline}>
+      <div>
+        Платформа:&nbsp;
+        <select onChange={ (e) => {
+          window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
+          window.location.reload();
+        } } value={window.navigator.userAgent}>
+          <option value={window.uaList.ios}>ios</option>
+          <option value={window.uaList.android}>android</option>
+        </select>
+      </div>
+      <div className={classes.link}>
+        Исходники:&nbsp;
+        <Link target="_blank" href={`${pkg.repository}/tree/v${pkg.version}/${children.replace('../', '')}`}>
+          Github
+        </Link>
+      </div>
     </div>
   );
 }
