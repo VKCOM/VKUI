@@ -20,7 +20,7 @@ module.exports = {
       name: 'Hello World',
       content: '../README.md'
     }, {
-      name: 'The Concept',
+      name: 'Concept',
       content: './pages/concept.md'
     }, {
       name: 'Components',
@@ -91,7 +91,10 @@ module.exports = {
       }]
     }
   ],
-  require: [path.resolve(__dirname, './setup.js')],
+  require: [
+    path.resolve(__dirname, './setup.js'),
+    path.resolve(__dirname, './setup.css')
+  ],
   webpackConfig: Object.assign({}, webpackConfig, {
     resolve: {
       alias: {

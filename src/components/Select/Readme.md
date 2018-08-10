@@ -1,5 +1,3 @@
-В Select можно добавлять placeholder.
-
 ```jsx static
 import { Select } from '@vkontakte/vkui';
 

@@ -1,11 +1,7 @@
-Компонент для отрисовки кнопок в PanelHeader. Внутрь компонента передается либо иконка, либо текст. Текстовые кнопки
-чаще всего используются в iOS, но есть исключения для Android.
+Компонент для отрисовки кнопок в шапке панели. Внутрь компонента передается либо [иконка](https://vkcom.github.io/icons/),
+либо текст. Текстовые кнопки чаще всего используются в iOS, но есть исключения для Android.
 
-Шапки iOS и Android достаточно сильно отличаются внешне, поэтому описание будет разделено на две части.
-
-**Android**
-
-Кнопки могут быть переданы в left или right компонента PanelHeader:
+Кнопки могут быть переданы в `left` или `right` компонента `PanelHeader`:
 
 ```jsx static
 import { PanelHeader, HeaderButton } from '@vkonktakte/vkui';
@@ -33,9 +29,9 @@ import Icon24Search from '@vkontakte/icons/dist/24/search';
 />
 ```
 
-**iOS**
+**Addon для iOS**
 
-Основное отличие – это составность левой кнопки. Она может состоять из иконки и текста. Пример:
+В iOS к левой кнопке может быть добавлена подпись. Пример:
 
 ```jsx static
 import { PanelHeader, HeaderButton, platform, IOS } from '@vkonktakte/vkui';
@@ -50,12 +46,10 @@ const osname = platform();
 />
 ```
 
-В примере выше появляется новое свойство `addon`, актуальное только для iOS версии.
-
-**Важно:** кнопки для возврата к предыдущей Panel отличаются.
+**Важно:** кнопки для возврата к предыдущей панели отличаются.
 В случае с iOS используется иконка [28/chevron_back](https://vkcom.github.io/icons/#28/chevron_back), в случае с
 Android – [24/back](https://vkcom.github.io/icons/#24/back). Так же различаются кнопки для возврата к предыдущей
-View. iOS – текст "Отмена", Android – [24/cancel](https://vkcom.github.io/icons/#24/cancel).
+`View`. iOS – текст "Отмена", Android – иконка [24/cancel](https://vkcom.github.io/icons/#24/cancel).
 
 ```
 

@@ -6,7 +6,7 @@
         <div>
           <Radio name="radio" value="1" description="Lorem ipsum dolor sit amet, consectetur." defaultChecked>First</Radio>
           <Radio name="radio" value="2">Second</Radio>
-          <Radio name="radio" value="3" disabled>Third</Radio>
+          <Radio name="radio" value="3" disabled>Third (disabled)</Radio>
         </div>
       </FormLayout>
     </Panel>
