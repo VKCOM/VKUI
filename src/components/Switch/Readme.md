@@ -6,17 +6,17 @@
       </PanelHeader>
       <Group>
         <List>
-          <ListItem asideContent={<Switch />}>
+          <Cell asideContent={<Switch />}>
             Комментарии к записям
-          </ListItem>
-          <ListItem asideContent={<Switch defaultChecked />}>
+          </Cell>
+          <Cell asideContent={<Switch defaultChecked />}>
             Ссылки
-          </ListItem>
-          <ListItem asideContent={<Switch disabled />}>
+          </Cell>
+          <Cell asideContent={<Switch disabled />}>
             Фотоальбомы
-          </ListItem>
+          </Cell>
         </List>
-      </Group>  
+      </Group>
     </Panel>
   </View>
 ```

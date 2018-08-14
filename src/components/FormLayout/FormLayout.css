@@ -42,7 +42,7 @@
       margin-right: -12px;
       }
 
-    .FormLayout--ios .FormLayout__field .ListItem__in {
+    .FormLayout--ios .FormLayout__field .Cell__in {
       padding-left: 0;
       padding-right: 0;
       }
@@ -85,13 +85,13 @@
       .FormLayout--android .FormLayout__field .Radio,
       .FormLayout--android .FormLayout__field .Checkbox,
       .FormLayout--android .FormLayout__field .Button--type-cell,
-      .FormLayout--android .FormLayout__field .ListItem {
+      .FormLayout--android .FormLayout__field .Cell {
         margin-left: -16px;
         margin-right: -16px;
         }
 
       .FormLayout--android .FormLayout__field .Button--type-cell,
-      .FormLayout--android .FormLayout__field .ListItem {
+      .FormLayout--android .FormLayout__field .Cell {
         width: calc(100% + 32px);
         }
 

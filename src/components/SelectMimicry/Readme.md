@@ -35,24 +35,24 @@
               </PanelHeader>
               <Group>
                 <List>
-                  <ListItem
+                  <Cell
                     onClick={() => this.setState({ country: 'Россия', activeView: 'profile' })}
                     asideContent={this.state.country === 'Россия' ? <Icon24Done fill={colors.accentBlue} /> : null}
                   >
                     Россия
-                  </ListItem>
-                  <ListItem
+                  </Cell>
+                  <Cell
                     onClick={() => this.setState({ country: 'Италия', activeView: 'profile' })}
                     asideContent={this.state.country === 'Италия' ? <Icon24Done fill={colors.accentBlue} /> : null}
                   >
                     Италия
-                  </ListItem>
-                  <ListItem
+                  </Cell>
+                  <Cell
                     onClick={() => this.setState({ country: 'Англия', activeView: 'profile' })}
                     asideContent={this.state.country === 'Англия' ? <Icon24Done fill={colors.accentBlue} /> : null}
                   >
                     Англия
-                  </ListItem>
+                  </Cell>
                 </List>
               </Group>
             </Panel>

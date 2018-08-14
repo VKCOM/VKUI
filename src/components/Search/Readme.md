@@ -86,7 +86,7 @@
           {this.thematics.length > 0 &&
             <List>
               {this.thematics.map((thematic) => (
-                <ListItem key={thematic.id}>{thematic.name}</ListItem>
+                <Cell key={thematic.id}>{thematic.name}</Cell>
               ))}
             </List>
           }
@@ -135,11 +135,11 @@
           </PanelHeader>
           <List>
             {this.users.map((user) => (
-              <ListItem
+              <Cell
                 before={<Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" />}
                 key={user.id}
                 onClick={this.props.goSearch}
-              >{user.name}</ListItem>
+              >{user.name}</Cell>
             ))}
           </List>
         </div>

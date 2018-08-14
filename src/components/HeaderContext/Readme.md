@@ -35,22 +35,22 @@ class Example extends React.Component {
           </PanelHeader>
           <HeaderContext opened={this.state.contextOpened} onClose={this.toggleContext}>
             <List>
-              <ListItem
+              <Cell
                 before={<Icon24Users />}
                 asideContent={this.state.mode === 'all' ? <Icon24Done fill={colors.accentBlue} /> : null}
                 onClick={this.select}
                 data-mode="all"
               >
                 Communities
-              </ListItem>
-              <ListItem
+              </Cell>
+              <Cell
                 before={<Icon24Settings />}
                 asideContent={this.state.mode === 'managed' ? <Icon24Done fill={colors.accentBlue} /> : null}
                 onClick={this.select}
                 data-mode="managed"
               >
                 Managed Communities
-              </ListItem>
+              </Cell>
             </List>
           </HeaderContext>
         </Panel>

@@ -6,15 +6,15 @@
       </PanelHeader>
       <Group title="Group title" description="Group description. Lorem ipsum dolor sit amet, consectetur adipisicing elit.">
         <List>
-          <ListItem>
+          <Cell>
             One
-          </ListItem>
-          <ListItem>
+          </Cell>
+          <Cell>
             Two
-          </ListItem>
-          <ListItem>
+          </Cell>
+          <Cell>
             Three
-          </ListItem>
+          </Cell>
         </List>
       </Group>
     </Panel>

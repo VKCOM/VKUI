@@ -12,9 +12,9 @@
       <Group>
         <List>
           { Object.keys(colors).map((color) => (
-            <ListItem key={color} description={color} before={<Avatar style={{ backgroundColor: colors[color] }} />}>
+            <Cell key={color} description={color} before={<Avatar style={{ backgroundColor: colors[color] }} />}>
               {colors[color]}
-            </ListItem>
+            </Cell>
           )) }
         </List>
       </Group>

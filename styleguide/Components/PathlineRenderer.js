@@ -30,7 +30,7 @@ export function PathlineRenderer({ classes, children }) {
       <div className={classes.link}>
         Исходники:&nbsp;
         <Link target="_blank" href={`${pkg.repository}/tree/v${pkg.version}/${children.replace('../', '')}`}>
-          Github
+          GitHub
         </Link>
       </div>
     </div>

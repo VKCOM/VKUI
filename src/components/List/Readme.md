@@ -1,4 +1,4 @@
-Контейнер для ListItem.
+Контейнер для Cell.
 
 ```jsx
 <View activePanel="list">
@@ -8,9 +8,9 @@
     </PanelHeader>
     <Group>
       <List>
-        <ListItem expandable before={<Icon24User />}>Учетная запись</ListItem>
-        <ListItem expandable before={<Icon24Settings />}>Основные</ListItem>
-        <ListItem expandable before={<Icon24Privacy />}>Приватность</ListItem>
+        <Cell expandable before={<Icon24User />}>Учетная запись</Cell>
+        <Cell expandable before={<Icon24Settings />}>Основные</Cell>
+        <Cell expandable before={<Icon24Privacy />}>Приватность</Cell>
       </List>
     </Group>
   </Panel>

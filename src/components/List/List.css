@@ -8,7 +8,7 @@
   background: #fff;
   }
 
-  .List .ListItem,
+  .List .Cell,
   .List .Radio {
     position: relative;
     z-index: 2;

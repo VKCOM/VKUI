@@ -16,21 +16,21 @@
       </Group>
       <Group title="Информация о пользователе">
         <List>
-          <ListItem>
+          <Cell>
             <InfoRow title="Дата рождения">
               30 января 1993
             </InfoRow>
-          </ListItem>
-          <ListItem>
+          </Cell>
+          <Cell>
             <InfoRow title="Родной город">
               Ереван
             </InfoRow>
-          </ListItem>
-          <ListItem>
+          </Cell>
+          <Cell>
             <InfoRow title="Место работы">
               Команда ВКонтакте
             </InfoRow>
-          </ListItem>
+          </Cell>
         </List>
       </Group>
     </Panel>

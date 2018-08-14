@@ -1,4 +1,4 @@
-import './ListItem.css';
+import './Cell.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
@@ -11,9 +11,9 @@ import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 
 let osname = platform();
 
-const baseClassNames = getClassName('ListItem');
+const baseClassNames = getClassName('Cell');
 
-export default class ListItem extends Component {
+export default class Cell extends Component {
   static propTypes = {
     before: PropTypes.node,
     indicator: PropTypes.node,
@@ -23,8 +23,16 @@ export default class ListItem extends Component {
     onClick: PropTypes.func,
     multiline: PropTypes.bool,
     description: PropTypes.node,
+    /**
+     * Контейнер для произвольного содержимого под `description`. Рисуется только если передать `size="l"`.
+     */
+    bottomContent: PropTypes.node,
     className: PropTypes.string,
     style: PropTypes.object,
+    /**
+     * Размер влияет на выравнивание блоков по-вертикали, виду сепаратора (iOS) и возможности вставлять `bottomContent`.
+     */
+    size: PropTypes.oneOf(['m', 'l']),
 
     selectable: PropTypes.bool,
 
@@ -42,11 +50,13 @@ export default class ListItem extends Component {
     before: null,
     indicator: '',
     asideContent: '',
+    bottomContent: null,
     expandable: false,
     children: '',
     selectable: false,
     multiline: false,
     removable: false,
+    size: 'm',
     removePlaceholder: 'Удалить'
   };
 
@@ -56,7 +66,6 @@ export default class ListItem extends Component {
 
   state = {
     isRemoveActivated: false,
-    height: null,
     removeOffset: 0
   };
 
@@ -76,31 +85,22 @@ export default class ListItem extends Component {
   };
 
   activateRemove = () => {
-    this.setState({ isRemoveActivated: true, height: this.rootEl.offsetHeight });
+    this.setState({ isRemoveActivated: true });
     this.document.addEventListener('click', this.deactivateRemove);
   };
 
   deactivateRemove = () => {
-    this.setState({ isRemoveActivated: false, removeOffset: 0, height: null });
+    this.setState({ isRemoveActivated: false, removeOffset: 0 });
     this.document.removeEventListener('click', this.deactivateRemove);
   };
 
   onRemoveClick = (e) => {
     e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
-    if (!this.state.removing) {
-      this.rootEl.addEventListener('transitionend', this.onRemoveFinish);
-      this.setState({ removing: true, height: 0 });
-    }
-  };
-
-  onRemoveFinish = () => {
-    this.rootEl.removeEventListener('transitionend', this.onRemoveFinish);
-    this.props.onRemove();
+    this.props.onRemove && this.props.onRemove();
   };
 
   componentWillUnmount () {
-    this.rootEl.removeEventListener('transitionend', this.onRemoveFinish);
     this.document.removeEventListener('click', this.deactivateRemove);
   }
 
@@ -130,7 +130,8 @@ export default class ListItem extends Component {
       removable,
       removePlaceholder,
       href,
-      style,
+      size,
+      bottomContent,
       ...restProps
     } = this.props;
 
@@ -143,46 +144,47 @@ export default class ListItem extends Component {
         {...rootProps}
         onClick={href ? null : this.onClick}
         className={classnames(baseClassNames, {
-          'ListItem--expandable': expandable,
-          'ListItem--multiline': multiline,
-          'ListItem--removing': this.state.removing
+          'Cell--expandable': expandable,
+          'Cell--multiline': multiline,
+          [`Cell--${size}`]: size,
+          'Cell--removing': this.state.removing
         }, className)}
         ref={this.getRootRef}
-        style={removable ? { ...style, height: this.state.height } : style}
       >
         <Tappable
           {...linkProps}
           onClick={href ? this.onClick : null}
           component={selectable ? 'label' : href ? 'a' : 'div'}
-          className="ListItem__in"
+          className="Cell__in"
           href={href}
           disabled={!selectable && !onClick && !href}
           style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
         >
-          {selectable && <input {...inputProps} type="checkbox" className="ListItem__checkbox" />}
-          <div className="ListItem__before">
-            {selectable && osname === IOS && <div className="ListItem__checkbox-marker"><Icon16Done /></div>}
-            {removable && osname === IOS && <div className="ListItem__remove-marker" onClick={this.activateRemove}/>}
-            {before && <div className="ListItem__before-in">{before}</div>}
+          {selectable && <input {...inputProps} type="checkbox" className="Cell__checkbox" />}
+          <div className="Cell__before">
+            {selectable && osname === IOS && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
+            {removable && osname === IOS && <div className="Cell__remove-marker" onClick={this.activateRemove}/>}
+            {before && <div className="Cell__before-in">{before}</div>}
           </div>
-          <div className="ListItem__main">
-            {children}
-            <div className="ListItem__description">{description}</div>
+          <div className="Cell__main">
+            <div className="Cell__children">{children}</div>
+            <div className="Cell__description">{description}</div>
+            {size === 'l' && <div className="Cell__bottom">{bottomContent}</div>}
           </div>
-          <div className="ListItem__indicator">{indicator}</div>
-          <div className="ListItem__aside">
+          <div className="Cell__indicator">{indicator}</div>
+          <div className="Cell__aside">
             {asideContent}
-            {selectable && osname === ANDROID && <div className="ListItem__checkbox-marker"><Icon16Done /></div>}
+            {selectable && osname === ANDROID && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
             {removable && osname === ANDROID &&
-            <div className="ListItem__remove-marker" onClick={onRemove}><Icon24Cancel /></div>
+            <div className="Cell__remove-marker" onClick={onRemove}><Icon24Cancel /></div>
             }
-            {osname === IOS && expandable && <Icon24Chevron className="ListItem__chevron"/>}
+            {osname === IOS && expandable && <Icon24Chevron className="Cell__chevron"/>}
           </div>
         </Tappable>
         {removable && osname === IOS &&
         <div
           ref={this.getRemoveRef}
-          className="ListItem__remove"
+          className="Cell__remove"
           onClick={this.onRemoveClick}
           style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
         >{removePlaceholder}</div>
