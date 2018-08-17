@@ -9,8 +9,7 @@ import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 
-let osname = platform();
-
+const osname = platform();
 const baseClassNames = getClassName('Cell');
 
 export default class Cell extends Component {
@@ -168,8 +167,8 @@ export default class Cell extends Component {
           </div>
           <div className="Cell__main">
             <div className="Cell__children">{children}</div>
-            <div className="Cell__description">{description}</div>
-            {size === 'l' && <div className="Cell__bottom">{bottomContent}</div>}
+            {description && <div className="Cell__description">{description}</div>}
+            {size === 'l' && bottomContent && <div className="Cell__bottom">{bottomContent}</div>}
           </div>
           <div className="Cell__indicator">{indicator}</div>
           <div className="Cell__aside">

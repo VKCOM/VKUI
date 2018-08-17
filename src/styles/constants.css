@@ -1,6 +1,8 @@
 :root {
+  /* fonts */
   --font-ios: -apple-system, Helvetica Neue, Arial;
   --font-android: Roboto, Arial;
+  --font-common: -apple-system, Roboto, Helvetica Neue, Arial;
 
   /* borders */
   --ios-top-border: linear-gradient(to bottom, var(--separator) 50%, transparent 50%);

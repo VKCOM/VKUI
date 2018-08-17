@@ -37,6 +37,10 @@
       align-self: stretch;
       }
 
+      .Cell--l .Cell__before-in {
+        align-self: flex-start;
+        }
+
       .Cell__before-in {
         flex-shrink: 0;
         color: var(--light-gray);
@@ -54,18 +58,18 @@
       overflow: hidden;
       }
 
-      .Cell--multiline .Cell__main {
-        white-space: normal;
-        }
+    .Cell--multiline .Cell__main {
+      white-space: normal;
+      }
 
-      .Cell__description:not(:empty) {
+      .Cell__description {
         color: var(--caption-gray);
         margin-top: 2px;
         overflow: hidden;
         text-overflow: ellipsis;
         }
 
-      .Cell--l .Cell__description:not(:empty) {
+      .Cell--l .Cell__description {
         margin-top: 0;
         }
 
@@ -80,7 +84,7 @@
         font-weight: 500;
         }
 
-      .Cell__bottom:not(:empty) {
+      .Cell__bottom {
         margin-top: 8px;
         }
 
@@ -88,7 +92,7 @@
     .Cell__aside {
       overflow: hidden;
       max-width: 75%;
-      color: #8e8e93;
+      color: var(--caption-gray);
       text-align: right;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -97,6 +101,9 @@
     .Cell__aside {
       flex-shrink: 0;
       overflow: visible;
+      }
+
+    .Cell--l .Cell__aside {
       align-self: center;
       }
 

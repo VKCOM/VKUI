@@ -7,12 +7,12 @@ import Link from 'react-styleguidist/lib/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
 
-const styles = ({ color, fontFamily, fontSize, sidebarWidth, mq, space, maxWidth }) => ({
+const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
   root: {
     backgroundColor: color.baseBackground
   },
   hasSidebar: {
-    paddingLeft: sidebarWidth,
+    paddingLeft: 230,
     [mq.small]: {
       paddingLeft: 0
     }
@@ -34,7 +34,7 @@ const styles = ({ color, fontFamily, fontSize, sidebarWidth, mq, space, maxWidth
     top: 0,
     left: 0,
     bottom: 0,
-    width: sidebarWidth,
+    width: 230,
     overflow: 'auto',
     '-webkit-overflow-scrolling': 'touch',
     [mq.small]: {
