@@ -19,6 +19,7 @@ export { default as HorizontalScroll } from './components/HorizontalScroll/Horiz
  * Popouts
  */
 export { default as NativePopouts } from './components/NativePopouts/NativePopouts';
+export { default as PopoutWrapper } from './components/PopoutWrapper/PopoutWrapper';
 export { default as Alert } from './components/Alert/Alert';
 export { default as ActionSheet } from './components/ActionSheet/ActionSheet';
 export { default as ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
