@@ -6,27 +6,25 @@
     <Panel id="avatar">
       <PanelHeader>Avatar</PanelHeader>
       <Group title="Standart size">
-        <Div>
-          <Entity
-            photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg"
-            description="VKonktakte"
-            title="Артур Стамбульцян"
-          >
-            <Button>Добавить</Button>
-          </Entity>
-        </Div>
+        <Cell
+          size="l"
+          description="VKonktakte"
+          before={<Avatar src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg"/>}
+          bottomContent={<Button>Добавить</Button>}
+        >
+          Артур Стамбульцян
+        </Cell>
       </Group>
       <Group title="Big avatar (80px)">
-        <Div>
-          <Entity
-            photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg"
-            description="VKonktakte"
-            title="Артур Стамбульцян"
-            avatarProps={{ size: 80 }}
-          >
-            <Button>Добавить</Button>
-          </Entity>
-        </Div>
+        <Cell
+          photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg"
+          description="VKonktakte"
+          bottomContent={<Button>Добавить</Button>}
+          before={<Avatar src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" size={80}/>}
+          size="l"
+        >
+          Артур Стамбульцян
+        </Cell>
       </Group>
       <Group title="Placeholder">
         <List>
