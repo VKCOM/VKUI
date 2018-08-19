@@ -27,13 +27,6 @@
       transform-origin: center;
       }
 
-  .Spinner--ios .Spinner__part {
-    width: 7.5%;
-    height: 27.5%;
-    x: 46.25%;
-    y: 36.25%;
-    }
-
   .Spinner--ios.Spinner--on .Spinner__part {
     animation: fade var(--duration) linear infinite;
     }

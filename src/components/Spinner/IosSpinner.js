@@ -51,12 +51,16 @@ export default class IosSpinner extends Component {
       parts = iosStyles.slice(0, Math.round(progress / (100 / 12)));
     }
 
-    return (
-      <g>
-        {parts.map((item, i) => (
-          <rect className="Spinner__part" {...item} key={`spinner-part-${i}`} />
-        ))}
-      </g>
-    );
+    return parts.map((item, i) => (
+      <rect
+        x="46.25%"
+        y="36.25%"
+        width="7.5%"
+        height="27.5%"
+        className="Spinner__part"
+        {...item}
+        key={`spinner-part-${i}`}
+      />
+    ));
   }
 }
