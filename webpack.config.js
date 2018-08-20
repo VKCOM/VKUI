@@ -26,6 +26,10 @@ const config = {
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, ...cssTransformOptions]
+      },
+      {
+        test: /\.svg$/,
+        use: 'url-loader'
       }
     ]
   },

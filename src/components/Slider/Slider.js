@@ -29,7 +29,8 @@ export default class Slider extends Component {
     onChange: PropTypes.func,
     defaultValue: PropTypes.number,
     className: PropTypes.string,
-    style: PropTypes.object
+    style: PropTypes.object,
+    getRootRef: PropTypes.func
   };
 
   static defaultProps = {
@@ -143,10 +144,13 @@ export default class Slider extends Component {
     window.removeEventListener('resize', this.onResize);
   }
 
-  getRef = container => this.container = container;
+  getRef = container => {
+    this.container = container;
+    this.props.getRootRef && this.props.getRootRef(container);
+  };
 
   render () {
-    const { className, min, max, step, value, defaultValue, onChange, ...restProps } = this.props;
+    const { className, min, max, step, value, defaultValue, onChange, getRootRef, ...restProps } = this.props;
 
     return (
       <div {...restProps} className={classnames(baseClassNames, className)} ref={this.getRef}>

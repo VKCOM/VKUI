@@ -22,6 +22,7 @@ export default class Cell extends Component {
     onClick: PropTypes.func,
     multiline: PropTypes.bool,
     description: PropTypes.node,
+    getRootRef: PropTypes.func,
     /**
      * Контейнер для произвольного содержимого под `description`. Рисуется только если передать `size="l"`.
      */
@@ -111,7 +112,10 @@ export default class Cell extends Component {
 
   getRemoveRef = el => this.removeButton = el;
 
-  getRootRef = el => this.rootEl = el;
+  getRootRef = el => {
+    this.rootEl = el;
+    this.props.getRootRef && this.props.getRootRef(el);
+  };
 
   render () {
     const {
@@ -121,6 +125,7 @@ export default class Cell extends Component {
       expandable,
       onClick,
       children,
+      getRootRef,
       description,
       selectable,
       multiline,

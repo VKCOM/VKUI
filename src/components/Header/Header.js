@@ -6,9 +6,13 @@ import './Header.css';
 
 const baseClassNames = getClassName('Header');
 
-const Header = ({ className, level, children, aside, ...restProps }) => {
+const Header = ({ className, level, children, aside, getRootRef, ...restProps }) => {
   return (
-    <div {...restProps} className={classnames(baseClassNames, className, { [`Header--level-${level}`]: true })}>
+    <div
+      {...restProps}
+      ref={getRootRef}
+      className={classnames(baseClassNames, className, { [`Header--level-${level}`]: true })}
+    >
       <div className="Header__in">
         <div className="Header__content">{children}</div>
         {aside && <div className="Header__aside">{aside}</div>}
@@ -22,7 +26,8 @@ Header.propTypes = {
   level: PropTypes.oneOf(['1', '2']),
   aside: PropTypes.node,
   children: PropTypes.node,
-  style: PropTypes.object
+  style: PropTypes.object,
+  getRootRef: PropTypes.func
 };
 
 Header.defaultProps = {

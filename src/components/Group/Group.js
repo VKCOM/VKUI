@@ -13,17 +13,18 @@ export default class Group extends Component {
     title: PropTypes.node,
     description: PropTypes.node,
     children: PropTypes.node,
-    className: PropTypes.string
+    className: PropTypes.string,
+    getRootRef: PropTypes.func
   };
   static defaultProps = {
     title: null,
     description: null
   };
   render () {
-    const { title, description, className, children, ...restProps } = this.props;
+    const { title, description, className, children, getRootRef, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames(baseClassNames, className)}>
+      <div {...restProps} ref={getRootRef} className={classnames(baseClassNames, className)}>
         {title && <Header level="2">{title}</Header>}
         {children && <div className="Group__content">{children}</div>}
         {description && <div className="Group__description">{description}</div>}

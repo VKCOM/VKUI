@@ -66,7 +66,8 @@ module.exports = {
           '../src/components/Search/Search.js',
           '../src/components/Tabs/Tabs.js',
           '../src/components/TabsItem/TabsItem.js',
-          '../src/components/FixedTabs/FixedTabs.js'
+          '../src/components/FixedTabs/FixedTabs.js',
+          '../src/components/Tooltip/Tooltip.js'
         ]
       }, {
         name: 'Forms',
