@@ -6,12 +6,13 @@ import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('Div');
 
-export default function Div ({ className, children, ...restProps }) {
-  return <div {...restProps} className={classnames(baseClassNames, className)}>{children}</div>;
+export default function Div ({ className, children, getRootRef, ...restProps }) {
+  return <div {...restProps} ref={getRootRef} className={classnames(baseClassNames, className)}>{children}</div>;
 }
 
 Div.propTypes = {
   style: PropTypes.object,
   children: PropTypes.node,
-  className: PropTypes.string
+  className: PropTypes.string,
+  getRootRef: PropTypes.func
 };

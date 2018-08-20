@@ -6,9 +6,9 @@ import './Progress.css';
 
 const baseClassName = getClassName('Progress');
 
-const Progress = ({ value, className, color, ...restProps }) => {
+const Progress = ({ value, className, color, getRootRef, ...restProps }) => {
   return (
-    <div{...restProps} className={classnames(baseClassName, className)}>
+    <div {...restProps} ref={getRootRef} className={classnames(baseClassName, className)}>
       <div className="Progress__in" style={{ width: `${value}%`, backgroundColor: color }} />
     </div>
   );
@@ -18,7 +18,8 @@ Progress.propTypes = {
   color: PropTypes.string,
   style: PropTypes.object,
   className: PropTypes.string,
-  value: PropTypes.number
+  value: PropTypes.number,
+  getRootRef: PropTypes.func
 };
 
 Progress.defaultProps = {

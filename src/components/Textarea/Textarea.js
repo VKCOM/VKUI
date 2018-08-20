@@ -37,7 +37,8 @@ export default class Textarea extends Component {
     onChange: PropTypes.func,
     onResize: PropTypes.func,
     className: PropTypes.string,
-    getRef: PropTypes.func
+    getRef: PropTypes.func,
+    getRootRef: PropTypes.func
   };
 
   static defaultProps = {
@@ -107,11 +108,11 @@ export default class Textarea extends Component {
   }
 
   render () {
-    const { defaultValue, value, onChange, grow, style, onResize, className, ...restProps } = this.props;
+    const { defaultValue, value, onChange, grow, style, onResize, className, getRootRef, ...restProps } = this.props;
     const height = this.state.height || style.height || 66;
 
     return (
-      <div className={classnames(baseClassName, className)} style={style}>
+      <div className={classnames(baseClassName, className)} style={style} ref={getRootRef}>
         <textarea
           {...restProps}
           value={this.value}

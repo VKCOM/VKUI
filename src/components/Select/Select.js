@@ -35,6 +35,7 @@ export default class Select extends Component {
     children: PropTypes.node,
     placeholder: PropTypes.string,
     getRef: PropTypes.func,
+    getRootRef: PropTypes.func,
     alignment: PropTypes.oneOf(['left', 'center', 'top'])
   };
 
@@ -80,7 +81,8 @@ export default class Select extends Component {
   };
 
   render () {
-    const { style, label, value, defaultValue, onChange, alignment, placeholder, children, className, getRef, ...restProps } = this.props;
+    const { style, label, value, defaultValue, onChange, alignment, placeholder, children, className,
+      getRef, getRootRef, ...restProps } = this.props;
 
     return (
       <label
@@ -89,6 +91,7 @@ export default class Select extends Component {
           [`Select--align-${alignment}`]: alignment
         }, className)}
         style={style}
+        ref={getRootRef}
       >
         <select
           onChange={this.onChange}

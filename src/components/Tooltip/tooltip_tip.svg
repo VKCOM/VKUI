@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="8px" viewBox="0 0 20 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>tooltip_tip</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Master-Kit" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M10,0 C13.5,0 15.5,8 20,8 L0,8 C4.5,8 6.5,0 10,0 Z" id="tooltip_tip" fill="#47a3ff" fill-rule="nonzero"></path>
+    </g>
+</svg>

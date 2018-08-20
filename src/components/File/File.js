@@ -44,6 +44,7 @@ export default class File extends Component {
      */
     before: PropTypes.any,
     getRef: PropTypes.func,
+    getRootRef: PropTypes.func,
     /**
      * @deprecated Используйте children
      */
@@ -62,7 +63,7 @@ export default class File extends Component {
   };
 
   render () {
-    const { children, label, alignment, align, size, level, type, stretched, before, className, style, getRef, ...restProps } = this.props;
+    const { children, label, alignment, align, size, level, type, stretched, before, className, style, getRef, getRootRef, ...restProps } = this.props;
 
     return (
       <Button
@@ -75,6 +76,7 @@ export default class File extends Component {
         size={size}
         before={before}
         style={style}
+        getRootRef={getRootRef}
       >
         <input {...restProps} className="File__input" type="file" ref={getRef}/>
         {children || label}

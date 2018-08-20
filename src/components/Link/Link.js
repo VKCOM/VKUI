@@ -6,14 +6,15 @@ import './Link.css';
 
 const baseClassName = getClassName('Link');
 
-const Link = ({children, className, Component, ...restProps}) => (
-  <Component {...restProps} className={classnames(baseClassName, className)}>{children}</Component>
+const Link = ({children, className, Component, getRootRef, ...restProps}) => (
+  <Component {...restProps} ref={getRootRef} className={classnames(baseClassName, className)}>{children}</Component>
 );
 
 Link.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  Component: PropTypes.any
+  Component: PropTypes.any,
+  getRootRef: PropTypes.func
 };
 
 Link.defaultProps = {
