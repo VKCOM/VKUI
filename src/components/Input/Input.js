@@ -35,6 +35,7 @@ export default class Input extends Component {
     placeholder: PropTypes.string,
     status: PropTypes.oneOf(['default', 'error', 'verified']),
     getRef: PropTypes.func,
+    getRootRef: PropTypes.func,
     className: PropTypes.string
   };
 
@@ -75,7 +76,7 @@ export default class Input extends Component {
   }
 
   render () {
-    const { onChange, defaultValue, alignment, placeholder, value, status, getRef, className, ...restProps } = this.props;
+    const { onChange, defaultValue, alignment, placeholder, value, status, getRef, className, getRootRef, ...restProps } = this.props;
 
     const modifiers = {
       'Input--left': alignment === 'left',
@@ -87,7 +88,7 @@ export default class Input extends Component {
     const customPlaceolder = ['date', 'datetime-local', 'time', 'month'].indexOf(this.props.type) > -1 && this.context.isWebView ? this.props.placeholder : null;
 
     return (
-      <div className={classnames(baseClassName, modifiers, className)}>
+      <div className={classnames(baseClassName, modifiers, className)} ref={getRootRef}>
         <input
           className="Input__el"
           ref={this.getRef}

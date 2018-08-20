@@ -6,7 +6,7 @@ import './Avatar.css';
 
 const baseClassName = getClassName('Avatar');
 
-const Avatar = ({ src, size, type, style, className, children, ...restProps }) => {
+const Avatar = ({ src, size, type, style, className, children, getRootRef, ...restProps }) => {
   const Component = src ? 'img' : 'div';
   let borderRadius;
 
@@ -23,7 +23,7 @@ const Avatar = ({ src, size, type, style, className, children, ...restProps }) =
   }
 
   return (
-    <div className={classnames(baseClassName, className, { [`Avatar--type-${type}`]: true })}>
+    <div className={classnames(baseClassName, className, { [`Avatar--type-${type}`]: true })} ref={getRootRef}>
       <div className="Avatar__in">
         <Component
           {...restProps}
@@ -43,7 +43,8 @@ Avatar.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   type: PropTypes.oneOf(['default', 'image', 'app']),
-  children: PropTypes.node
+  children: PropTypes.node,
+  getRootRef: PropTypes.func
 };
 
 Avatar.defaultProps = {

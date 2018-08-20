@@ -111,7 +111,7 @@ export default class RangeSlider extends Slider {
   }
 
   render () {
-    const { className, min, max, step, value, defaultValue, onChange, ...restProps } = this.props;
+    const { className, min, max, step, value, defaultValue, onChange, getRootRef, ...restProps } = this.props;
 
     return (
       <div {...restProps} className={classnames(baseClassNames, className)} ref={this.getRef}>

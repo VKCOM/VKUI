@@ -1,0 +1,47 @@
+.Tooltip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  }
+
+  .Tooltip__container {
+    position: absolute;
+    }
+
+    .Tooltip__corner {
+      background-image: url("./tooltip_tip.svg");
+      width: 20px;
+      height: 8px;
+      position: absolute;
+      }
+
+    .Tooltip--y-bottom .Tooltip__corner {
+      bottom: 100%;
+      }
+
+    .Tooltip--y-top .Tooltip__corner {
+      transform: rotate(180deg);
+      top: 100%;
+      }
+
+    .Tooltip__content {
+      background-color: #47a3ff;
+      box-shadow: 0 4px 32px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .04);
+      padding: 6px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #fff;
+      line-height: 1.29;
+      max-width: 220px;
+      }
+
+      .Tooltip__title {
+        font-weight: 600;
+        }
+
+      .Tooltip__text {
+
+        }

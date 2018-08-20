@@ -18,7 +18,8 @@ export default class Tabs extends React.Component {
      * Свойство отвечает за растягивание табов
      */
     type: PropTypes.oneOf(['default', 'buttons']),
-    style: PropTypes.object
+    style: PropTypes.object,
+    getRootRef: PropTypes.func
   };
 
   static defaultProps = {
@@ -42,10 +43,10 @@ export default class Tabs extends React.Component {
   }
 
   render () {
-    const { className, children, theme, style, type, ...restProps } = this.props;
+    const { className, children, theme, style, type, getRootRef, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames(baseClassName, {
+      <div {...restProps} ref={getRootRef} className={classnames(baseClassName, {
         [`Tabs--${this.theme}`]: true,
         [`Tabs--${type}`]: true
       }, className)} style={style}>{children}</div>

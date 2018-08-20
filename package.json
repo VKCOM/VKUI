@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.7.1",
+  "version": "2.8.0",
   "main": "dist/vkui.js",
   "license": "MIT",
   "description": "VKUI library",
@@ -30,21 +30,22 @@
     "postcss-import": "^9.1.0",
     "postcss-loader": "^2.1.5",
     "pre-commit": "^1.2.2",
+    "prop-types": "^15.6.1",
+    "react": "^16.4.0",
     "react-docgen": "^2.20.0",
+    "react-dom": "^16.4.0",
     "react-frame-component": "^3.0.0",
     "react-styleguidist": "^7.0.17",
     "schema-utils": "^0.4.3",
     "style-loader": "^0.13.2",
     "stylelint": "^9.3.0",
     "stylelint-config-standard": "^16.0.0",
+    "url-loader": "^1.1.1",
     "webpack": "^4.12.0",
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-cli": "^3.0.3",
     "webpack-merge": "^4.0.0",
-    "webpack-stats-plugin": "^0.1.4",
-    "react-dom": "^16.4.0",
-    "react": "^16.4.0",
-    "prop-types": "^15.6.1"
+    "webpack-stats-plugin": "^0.1.4"
   },
   "peerDependencies": {
     "react-dom": "^16.4.0",
@@ -52,7 +53,7 @@
     "prop-types": "^15.6.1"
   },
   "dependencies": {
-    "@vkontakte/icons": "^1.1.1"
+    "@vkontakte/icons": "^1.2.0"
   },
   "scripts": {
     "prepublishOnly": "npm run clear && npm run build",

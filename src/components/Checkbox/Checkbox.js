@@ -10,7 +10,7 @@ import Icon16Done from '@vkontakte/icons/dist/16/done';
 const osname = platform();
 const baseClassName = getClassName('Checkbox');
 
-const Checkbox = ({ children, className, style, ...restProps }) => {
+const Checkbox = ({ children, className, style, getRootRef, ...restProps }) => {
   return (
     <Tappable
       component="label"
@@ -18,6 +18,7 @@ const Checkbox = ({ children, className, style, ...restProps }) => {
       style={style}
       disabled={restProps.disabled}
       activeEffectDelay={osname === IOS ? 100 : ACTIVE_EFFECT_DELAY }
+      getRootRef={getRootRef}
     >
       <input {...restProps} type="checkbox" className="Checkbox__input" />
       <div className="Checkbox__container">
@@ -31,7 +32,8 @@ const Checkbox = ({ children, className, style, ...restProps }) => {
 Checkbox.propTypes = {
   children: PropTypes.node,
   style: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  getRootRef: PropTypes.func
 };
 
 export default Checkbox;

@@ -55,7 +55,8 @@ export default class Tappable extends Component {
     role: PropTypes.string,
     activeEffectDelay: PropTypes.number,
     stopPropagation: PropTypes.bool,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    getRootRef: PropTypes.func
   };
 
   static defaultProps = {
@@ -151,27 +152,29 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onDown = (e) => {
-    const { top, left } = getOffsetRect(this.container);
-    const x = coordX(e);
-    const y = coordY(e);
-    const key = 'wave' + Date.now().toString();
+    if (osname === ANDROID) {
+      const { top, left } = getOffsetRect(this.container);
+      const x = coordX(e);
+      const y = coordY(e);
+      const key = 'wave' + Date.now().toString();
 
-    this.setState(state => ({
-      clicks: Object.assign({}, state.clicks, {
-        [key]: {
-          x: Math.round(x - left),
-          y: Math.round(y - top)
-        }
-      })
-    }));
+      this.setState(state => ({
+        clicks: Object.assign({}, state.clicks, {
+          [key]: {
+            x: Math.round(x - left),
+            y: Math.round(y - top)
+          }
+        })
+      }));
 
-    this.wavesTimeout = setTimeout(() => {
-      this.setState(state => {
-        let clicks = Object.assign({}, state.clicks);
-        delete clicks[key];
-        return { clicks };
-      });
-    }, 225);
+      this.wavesTimeout = setTimeout(() => {
+        this.setState(state => {
+          let clicks = Object.assign({}, state.clicks);
+          delete clicks[key];
+          return { clicks };
+        });
+      }, 225);
+    }
   };
 
   /**
@@ -220,12 +223,10 @@ export default class Tappable extends Component {
    * Берет ref на DOM-ноду из экземпляра Touch
    *
    * @param {React.Component} container Touch component instance
-   * @returns {void}
    */
-  getContainer = (container) => {
-    if (container) {
-      this.container = container.container || container;
-    }
+  getRef = container => {
+    this.container = container;
+    this.props.getRootRef && this.props.getRootRef(container);
   };
 
   componentWillUnmount () {
@@ -241,7 +242,7 @@ export default class Tappable extends Component {
 
   render () {
     const { clicks, active } = this.state;
-    const { children, className, component, activeEffectDelay, stopPropagation, ...restProps } = this.props;
+    const { children, className, component, activeEffectDelay, stopPropagation, getRootRef, ...restProps } = this.props;
     const Component = !restProps.disabled ? Touch : component;
     const classes = classnames(baseClassNames, className, {
       'Tappable--active': active,
@@ -255,13 +256,18 @@ export default class Tappable extends Component {
       props.onStart = this.onStart;
       props.onMove = this.onMove;
       props.onEnd = this.onEnd;
-      props.ref = this.getContainer;
+    }
+
+    if (typeof Component === 'string') {
+      props.ref = this.getRef;
+    } else {
+      props.getRootRef = this.getRef;
     }
 
     return (
       <Component {...restProps} className={classes} {...props}>
         {osname === ANDROID && (
-          <span className="Tappable__waves" ref={this.getContainer}>
+          <span className="Tappable__waves">
             {Object.keys(clicks).map(k => (
               <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
             ))}
