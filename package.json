@@ -53,7 +53,7 @@
     "prop-types": "^15.6.1"
   },
   "dependencies": {
-    "@vkontakte/icons": "^1.1.1"
+    "@vkontakte/icons": "^1.2.0"
   },
   "scripts": {
     "prepublishOnly": "npm run clear && npm run build",

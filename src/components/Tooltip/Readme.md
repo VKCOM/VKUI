@@ -75,19 +75,19 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                 </HeaderButton>
               }
               right={
-                <Tooltip
-                  isShown={this.state.tooltip2}
-                  onClose={() => this.setState({ tooltip2: false, tooltip3: true })}
-                  alignX="right"
-                  cornerOffset={-10}
-                  offsetX={-5}
-                  text="Обновлённый раздел поможет найти друзей"
-                  title="Рекомендации друзей"
-                >
-                  <HeaderButton>
+                <HeaderButton>
+                  <Tooltip
+                    isShown={this.state.tooltip2}
+                    onClose={() => this.setState({ tooltip2: false, tooltip3: true })}
+                    alignX="right"
+                    cornerOffset={-10}
+                    offsetX={7}
+                    text="Обновлённый раздел поможет найти друзей"
+                    title="Рекомендации друзей"
+                  >
                     <Icon24Add/>
-                  </HeaderButton>
-                </Tooltip>
+                  </Tooltip>
+                </HeaderButton>
               }
             >
               Tooltip
