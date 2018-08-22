@@ -1,24 +1,21 @@
 @import '../../styles/constants.css';
 
 .Search--android {
-  display: flex;
-  padding: 4px;
   height: 56px;
   box-sizing: border-box;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
   background: var(--header-blue);
   }
 
-  .Search--android .Search__before {
-    flex-shrink: 0;
-    margin-right: 10px;
+  .Search--android .Search__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     }
 
+  .Search--android .Search__before,
   .Search--android .Search__after {
     flex-shrink: 0;
-    margin-left: 10px;
     }
 
   .Search--android .Search__control {
@@ -26,27 +23,74 @@
     flex-grow: 1;
     }
 
-  .Search--android.Search--has-value .Search__after {
-    display: block;
+    .Search--android .Search__input {
+      border: none;
+      display: block;
+      width: 100%;
+      padding: 0;
+      box-sizing: border-box;
+      outline: none;
+      font-size: 16px;
+      line-height: 20px;
+      background-color: transparent;
+      font-family: var(--font-android);
+      }
+
+    .Search--android .Search__input::placeholder {
+      color: #fff;
+      opacity: .6;
+      }
+
+/*
+  header theme
+ */
+
+.Search--android.Search--header {
+  padding: 4px;
   }
 
-  .Search--android .Search__after {
-    display: none;
+.Search--android.Search--header .Search__before {
+  margin-right: 12px;
   }
 
-  .Search--android .Search__input {
-    border: none;
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    outline: none;
-    font-size: 16px;
-    background-color: transparent;
-    color: #fff;
-    font-family: var(--font-android);
-    }
+.Search--android.Search--header .Search__after {
+  margin-left: 12px;
+  }
 
-  .Search--android .Search__input::placeholder {
-    color: #fff;
-    opacity: .6;
-    }
+.Search--android.Search--header .Search__input {
+  color: #fff;
+  padding: 14px 0;
+  }
+
+/*
+  default theme
+ */
+
+.Search--android.Search--default {
+  padding: 8px;
+  }
+
+.Search--android.Search--default .Search__container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0 4px;
+  }
+
+.Search--android.Search--default .Search__before {
+  margin-right: 8px;
+  }
+
+.Search--android.Search--default .Search__after {
+  margin-left: 8px;
+  }
+
+.Search--android.Search--default .Search__before .Icon,
+.Search--android.Search--default .Search__after .Icon {
+  padding: 8px;
+  color: var(--caption-gray);
+  }
+
+.Search--android.Search--default .Search__input {
+  padding: 10px 0;
+  color: #000;
+  }
