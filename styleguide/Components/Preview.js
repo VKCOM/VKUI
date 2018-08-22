@@ -25,6 +25,17 @@ class PrepareFrame extends React.Component {
     document: PropTypes.any
   };
 
+  static childContextTypes = {
+    webviewType: PropTypes.oneOf(['vkapps', 'internal'])
+  };
+
+  getChildContext () {
+
+    return {
+      webviewType: 'internal'
+    };
+  }
+
   componentDidMount () {
     let sprite = document.getElementById('__SVG_SPRITE_NODE__');
     this.context.document.body.appendChild(sprite.cloneNode(true));

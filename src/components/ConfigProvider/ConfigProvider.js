@@ -40,7 +40,8 @@ export default class ConfigProvider extends React.Component {
     );
     return {
       insets,
-      isWebView: this.props.isWebView
+      isWebView: this.props.isWebView,
+      webviewType: this.props.webviewType
     };
   }
 
