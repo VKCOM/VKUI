@@ -61,6 +61,10 @@
           display: flex;
           }
 
+        .PanelHeader-right--vkapps {
+          width: 90px;
+          }
+
 .PanelHeader--ios {
   height: 44px;
   padding-top: 20px;

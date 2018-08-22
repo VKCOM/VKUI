@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {isWebView} from '../../lib/webview';
+import { isWebView } from '../../lib/webview';
 
 export default class ConfigProvider extends React.Component {
   static childContextTypes = {
@@ -10,7 +10,8 @@ export default class ConfigProvider extends React.Component {
       bottom: PropTypes.number,
       left: PropTypes.number
     }),
-    isWebView: PropTypes.bool
+    isWebView: PropTypes.bool,
+    webviewType: PropTypes.oneOf(['vkapps', 'internal'])
   };
 
   static propTypes = {
@@ -21,11 +22,13 @@ export default class ConfigProvider extends React.Component {
       left: PropTypes.number
     }),
     isWebView: PropTypes.bool,
+    webviewType: PropTypes.oneOf(['vkapps', 'internal']),
     children: PropTypes.node
   };
 
   static defaultProps = {
     insets: {},
+    webviewType: 'internal',
     isWebView
   };
 
