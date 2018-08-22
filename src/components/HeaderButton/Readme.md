@@ -4,7 +4,7 @@
 Кнопки могут быть переданы в `left` или `right` компонента `PanelHeader`:
 
 ```jsx static
-import { PanelHeader, HeaderButton } from '@vkonktakte/vkui';
+import { PanelHeader, HeaderButton } from '@vkontakte/vkui';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Search from '@vkontakte/icons/dist/24/search';
 
@@ -17,7 +17,7 @@ import Icon24Search from '@vkontakte/icons/dist/24/search';
 Если нужно несколько кнопок справа или слева, то передаем массив:
 
 ```jsx static
-import { PanelHeader, HeaderButton } from '@vkonktakte/vkui';
+import { PanelHeader, HeaderButton } from '@vkontakte/vkui';
 import Icon24Add from '@vkontakte/icons/dist/24/add';
 import Icon24Search from '@vkontakte/icons/dist/24/search';
 
@@ -34,7 +34,7 @@ import Icon24Search from '@vkontakte/icons/dist/24/search';
 В iOS к левой кнопке может быть добавлена подпись. Пример:
 
 ```jsx static
-import { PanelHeader, HeaderButton, platform, IOS } from '@vkonktakte/vkui';
+import { PanelHeader, HeaderButton, platform, IOS } from '@vkontakte/vkui';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 
@@ -42,7 +42,7 @@ const osname = platform();
 
 <PanelHeader
   addon={<HeaderButton>Назад</HeaderButton>}
-  left={<HeaderButton>{osname === IOS <Icon28ChevronBack/> ? <Icon24Back/>}</HeaderButton>}
+  left={<HeaderButton>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</HeaderButton>}
 />
 ```
 
