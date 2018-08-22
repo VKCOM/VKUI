@@ -77,8 +77,6 @@ class TooltipPortal extends React.Component {
     const { offsetY, offsetX, alignX, alignY } = this.props;
     const coords = this.getBoundingTargetRect();
 
-    console.log(this.el.offsetHeight);
-
     this.setState({
       x: coords.x + offsetX + (alignX === 'right' ? coords.width - this.el.offsetWidth : 0),
       y: coords.y + (alignY === 'top' ? -this.el.offsetHeight - offsetY : coords.height + offsetY)

@@ -6,6 +6,7 @@ import './SearchAndroid.css';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
+import Icon24Search from '@vkontakte/icons/dist/24/search';
 
 const baseClassName = getClassName('Search');
 
@@ -33,11 +34,13 @@ export default class SearchAndroid extends React.Component {
     onBlur: PropTypes.func,
     onClose: PropTypes.func,
     placeholder: PropTypes.node,
+    theme: PropTypes.oneOf(['header', 'default']),
     getRef: PropTypes.func
   };
 
   static defaultProps = {
-    placeholder: 'Поиск'
+    placeholder: 'Поиск',
+    theme: 'default'
   };
 
   onCancel = () => {
@@ -60,7 +63,7 @@ export default class SearchAndroid extends React.Component {
   };
 
   componentDidMount () {
-    this.inputEl.focus();
+    this.props.theme === 'header' && this.inputEl.focus();
   }
 
   get value () {
@@ -73,33 +76,36 @@ export default class SearchAndroid extends React.Component {
   };
 
   render () {
-    const { getRef, value, defaultValue, onChange, onClose, ...inputProps } = this.props;
+    const { getRef, value, defaultValue, onChange, onClose, theme, ...inputProps } = this.props;
 
     const className = classnames(baseClassName, {
+      [`Search--${theme}`]: true,
       'Search--focused': this.state.focused,
       'Search--has-value': !!this.value
     }, this.props.className);
 
     return (
       <div className={className}>
-        <div className="Search__before">
-          <HeaderButton onClick={onClose}>
-            <Icon24Back/>
-          </HeaderButton>
-        </div>
-        <div className="Search__control">
-          <input
-            {...inputProps}
-            className="Search__input"
-            ref={this.inputRef}
-            value={this.value}
-            onChange={this.onChange}
-          />
-        </div>
-        <div className="Search__after">
-          <HeaderButton onClick={this.onCancel}>
-            <Icon24Cancel/>
-          </HeaderButton>
+        <div className="Search__container">
+          <div className="Search__before">
+            {theme === 'default' && <Icon24Search/>}
+            {theme === 'header' && <HeaderButton onClick={onClose}><Icon24Back/></HeaderButton>}
+          </div>
+          <div className="Search__control">
+            <input
+              {...inputProps}
+              className="Search__input"
+              ref={this.inputRef}
+              value={this.value}
+              onChange={this.onChange}
+            />
+          </div>
+          {!!this.value &&
+          <div className="Search__after">
+            {theme === 'default' && <Icon24Cancel onClick={this.onCancel}/>}
+            {theme === 'header' && <HeaderButton onClick={this.onCancel}><Icon24Cancel/></HeaderButton>}
+          </div>
+          }
         </div>
       </div>
     );

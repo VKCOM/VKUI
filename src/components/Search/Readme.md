@@ -1,3 +1,10 @@
+Существует два способа разместить поиск – в теле `Panel` и в шапке `PanelHeader`. Расположение поиска влияет на
+его внешний вид. Для правильной отрисовки ему нужно указать свойство `theme`.
+
+**Важно:** нельзя размещать `<Search theme="header" />` внутри панели. Нельзя размещать `<Search theme="default" />`
+в шапке.
+
+
 ```jsx
   const thematics = [
     {id: 3201, name: "Аренда автомобилей"},
@@ -51,15 +58,10 @@
     constructor (props) {
       super(props);
       this.state = {
-        showSearch: false,
         search: ''
       }
-      this.toggleSearch = this.toggleSearch.bind(this);
-
       this.onChange = this.onChange.bind(this);
     }
-
-    toggleSearch () { this.setState({ showSearch: !this.state.showSearch }); }
 
     onChange (search) { this.setState({ search }); }
 
@@ -72,22 +74,15 @@
       return (
         <div>
           <PanelHeader
-            right={[
-              osname === ANDROID && <HeaderButton key="search" onClick={this.toggleSearch}><Icon24Search /></HeaderButton>,
-              <HeaderButton onClick={this.props.goHeaderSearch} key="add"><Icon24Add /></HeaderButton>,
-            ]}
+            noShadow
+            right={<HeaderButton onClick={this.props.goHeaderSearch} key="add"><Icon24Add /></HeaderButton>}
           >
-            {this.state.showSearch ?
-              <Search onClose={this.toggleSearch} value={this.state.search} onChange={this.onChange}/> :
-              'Выбор тематики'
-            }
+            Выбор тематики
           </PanelHeader>
-          {osname === IOS && <Search value={this.state.search} onChange={this.onChange}/>}
+          <Search value={this.state.search} onChange={this.onChange}/>
           {this.thematics.length > 0 &&
             <List>
-              {this.thematics.map((thematic) => (
-                <Cell key={thematic.id}>{thematic.name}</Cell>
-              ))}
+              {this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
             </List>
           }
         </div>

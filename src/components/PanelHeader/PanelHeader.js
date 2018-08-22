@@ -30,7 +30,8 @@ export default class PanelHeader extends React.Component {
 
   static contextTypes = {
     panel: PropTypes.string,
-    document: PropTypes.any
+    document: PropTypes.any,
+    webviewType: PropTypes.oneOf(['vkapps', 'internal'])
   };
 
   state = {
@@ -41,13 +42,14 @@ export default class PanelHeader extends React.Component {
 
   get document () { return this.context.document || document; }
 
+  get webviewType () { return this.context.webviewType || 'vkapps'; }
+
   componentDidMount () {
     this.leftNode = this.document.getElementById('header-left-' + this.context.panel);
     this.addonNode = this.document.getElementById('header-addon-' + this.context.panel);
     this.titleNode = this.document.getElementById('header-title-' + this.context.panel);
     this.rightNode = this.document.getElementById('header-right-' + this.context.panel);
     this.bgNode = this.document.getElementById('header-bg-' + this.context.panel);
-
     this.setState({ ready: true });
   }
 
@@ -69,11 +71,12 @@ export default class PanelHeader extends React.Component {
       ReactDOM.createPortal(<div className={classnames('PanelHeader-content', {
         [`PanelHeader-content--${theme}`]: true
       })}>
-        {isPrimitive ? <span>{children}</span> : children }
+        {isPrimitive ? <span>{children}</span> : children}
       </div>, this.titleNode),
       ReactDOM.createPortal(<div className={classnames('PanelHeader-right', {
-        [`PanelHeader-right--${theme}`]: true
-      })}>{right}</div>, this.rightNode)
+        [`PanelHeader-right--${theme}`]: true,
+        'PanelHeader-right--vkapps': this.webviewType === 'vkapps'
+      })}>{this.webviewType === 'internal' ? right : null}</div>, this.rightNode)
     ] : null;
   }
 }

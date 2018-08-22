@@ -10,29 +10,35 @@ export default class Search extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     getRef: PropTypes.func,
-
     /**
-     * iOS only
+     * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
      */
     after: PropTypes.node,
     /**
      * iOS only
      */
     before: PropTypes.node,
-    /**
-     * iOS only
-     */
     theme: PropTypes.oneOf(['header', 'default']),
 
     /**
      * Android only. Вызывается при клике по стрелке (слева). Этот контрол служит для выхода из режима поиска.
      */
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+
+    /**
+     * **Важно:** в коллбэк первым аргументом прилетает *значение* текстового поля.
+     * Объект события передается вторым аргументом.
+     */
+    onChange: PropTypes.func
+  };
+
+  static defaultProps = {
+    theme: 'default'
   };
 
   render () {
     const { onClose, ...iosProps } = this.props;
-    const { after, before, theme, ...androidProps } = this.props;
+    const { after, before, ...androidProps } = this.props;
     if (osname === IOS) {
       return <SearchIOS {...iosProps} />;
     } else {
