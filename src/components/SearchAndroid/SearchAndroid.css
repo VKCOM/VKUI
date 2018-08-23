@@ -36,11 +36,6 @@
       font-family: var(--font-android);
       }
 
-    .Search--android .Search__input::placeholder {
-      color: #fff;
-      opacity: .6;
-      }
-
 /*
   header theme
  */
@@ -59,7 +54,12 @@
 
 .Search--android.Search--header .Search__input {
   color: #fff;
-  padding: 14px 0;
+  padding: 15px 0 13px;
+  }
+
+.Search--android.Search--header .Search__input::placeholder {
+  color: #fff;
+  opacity: .6;
   }
 
 /*
@@ -91,6 +91,10 @@
   }
 
 .Search--android.Search--default .Search__input {
-  padding: 10px 0;
+  padding: 11px 0 9px;
   color: #000;
+  }
+
+.Search--android.Search--default .Search__input::placeholder {
+  color: var(--light-gray);
   }
