@@ -97,7 +97,7 @@ export default class Cell extends Component {
   onRemoveClick = (e) => {
     e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
-    this.props.onRemove && this.props.onRemove();
+    this.props.onRemove && this.props.onRemove(e, this.rootEl);
   };
 
   componentWillUnmount () {
@@ -180,7 +180,7 @@ export default class Cell extends Component {
             {asideContent}
             {selectable && osname === ANDROID && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
             {removable && osname === ANDROID &&
-            <div className="Cell__remove-marker" onClick={onRemove}><Icon24Cancel /></div>
+            <div className="Cell__remove-marker" onClick={this.onRemoveClick}><Icon24Cancel /></div>
             }
             {osname === IOS && expandable && <Icon24Chevron className="Cell__chevron"/>}
           </div>
@@ -191,7 +191,9 @@ export default class Cell extends Component {
           className="Cell__remove"
           onClick={this.onRemoveClick}
           style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
-        >{removePlaceholder}</div>
+        >
+          <span className="Cell__remove-in">{removePlaceholder}</span>
+        </div>
         }
       </div>
     );

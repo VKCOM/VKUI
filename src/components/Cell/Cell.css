@@ -127,7 +127,14 @@
     line-height: 45px;
     font-size: 15px;
     transition: transform .6s var(--ios-easing);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }
+
+    .Cell--ios .Cell__remove-in {
+      flex-shrink: 0;
+      }
 
   .List--ios .Cell__chevron {
     color: var(--separator);
