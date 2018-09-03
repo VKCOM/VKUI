@@ -41,11 +41,11 @@ export default class FormLayout extends React.Component {
       >
         <div className="FormLayout__container">
           {arrayChildren.map((field, i) => (
-            field ? <label className="FormLayout__row" key={field.key || `row-${i}`}>
+            field ? <div className="FormLayout__row" key={field.key || `row-${i}`}>
               {field.props.top && <div className="FormLayout__row-top">{field.props.top}</div>}
               <div className="FormLayout__field">{field}</div>
               {field.props.bottom && <div className="FormLayout__row-bottom">{field.props.bottom}</div>}
-            </label> : null
+            </div> : null
           ))}
         </div>
         {TagName === 'form' && <input type="submit" className="FormLayout__submit" value="" />}
