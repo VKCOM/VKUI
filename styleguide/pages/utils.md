@@ -3,7 +3,7 @@
 iOS и Android. Пример использования:
 
 ```js static
-  import { platform, IOS, ANDROID } from '@vkonktakte/vkui';
+  import { platform, IOS, ANDROID } from '@vkontakte/vkui';
 
   const osname = platform();
 
@@ -19,10 +19,10 @@ iOS и Android. Пример использования:
 по-разному, в зависимости от платформы (iOS или Android).
 
 Как вариант, на корневой элемент можно навесить модификаторы. Функция `getClassName` инкапсулирует в себе логику
-определения платформы и на выходе выдает строчку, состояющую из css-классов. Пример:
+определения платформы и на выходе выдает строчку, состоящую из css-классов. Пример:
 
 ```js static
-  import { getClassName } from '@vkonktakte/vkui';
+  import { getClassName } from '@vkontakte/vkui';
 
   const baseClassName = getClassName('Tooltip') // "Tooltip Tooltip--ios"
 ```

@@ -8,7 +8,7 @@
       <Group title="Standart size">
         <Cell
           size="l"
-          description="VKonktakte"
+          description="VKontakte"
           before={<Avatar src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg"/>}
           bottomContent={<Button>Добавить</Button>}
         >
@@ -18,7 +18,7 @@
       <Group title="Big avatar (80px)">
         <Cell
           photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg"
-          description="VKonktakte"
+          description="VKontakte"
           bottomContent={<Button>Добавить</Button>}
           before={<Avatar src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" size={80}/>}
           size="l"
@@ -61,7 +61,7 @@
         <List>
           <Cell before={<Avatar type="app" src="https://pp.userapi.com/c844616/v844616889/9ec4a/9Fk-RI7uchQ.jpg" />} description="Ролевая">Шторм онлайн</Cell>
           <Cell before={<Avatar type="app" src="https://pp.userapi.com/c848536/v848536020/18242/ZLjAYM59EqY.jpg" />} description="Настольная" multiline={false}>Шашки - 3 вида: шашки, уголки, поддавки</Cell>
-          <Cell before={<Avatar type="app" src="https://pp.userapi.com/c849028/v849028348/1b353/Na_GRlqgRNM.jpg" />} description="Головолмка">Вега Микс на даче</Cell>
+          <Cell before={<Avatar type="app" src="https://pp.userapi.com/c849028/v849028348/1b353/Na_GRlqgRNM.jpg" />} description="Головоломка">Вега Микс на даче</Cell>
         </List>
       </Group>
       <Group title="image" description="Используется для остальных случаев. Например, для музыки и плейлистов.">

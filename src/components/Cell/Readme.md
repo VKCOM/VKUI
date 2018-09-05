@@ -101,7 +101,7 @@
             <Group title="Иконки">
               <List>
                 <Cell before={<Icon24About />}>Информация</Cell>
-                <Cell before={<Icon24Services />}>Севрисы</Cell>
+                <Cell before={<Icon24Services />}>Сервисы</Cell>
               </List>
             </Group>
 
