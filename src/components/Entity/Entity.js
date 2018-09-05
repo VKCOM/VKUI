@@ -9,7 +9,7 @@ const baseClassNames = getClassName('Entity');
 
 // @TODO Try to load photo
 /**
- * @deprecated этот компонент устарел и будет удален в следущей мажорной версии.
+ * @deprecated этот компонент устарел и будет удален в следующей мажорной версии.
  * Используйте `Cell`.
  */
 export default class Entity extends Component {

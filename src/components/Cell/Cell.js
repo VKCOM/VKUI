@@ -30,7 +30,7 @@ export default class Cell extends Component {
     className: PropTypes.string,
     style: PropTypes.object,
     /**
-     * Размер влияет на выравнивание блоков по-вертикали, виду сепаратора (iOS) и возможности вставлять `bottomContent`.
+     * Размер влияет на выравнивание блоков по вертикали, виду сепаратора (iOS) и возможности вставлять `bottomContent`.
      */
     size: PropTypes.oneOf(['m', 'l']),
 
