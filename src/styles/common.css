@@ -14,14 +14,6 @@ div#root {
   font-family: var(--font-common);
 }
 
-html {
-  background: var(--background-blue);
-}
-
-html[theme="white"] {
-  background: #fff;
-}
-
 body {
   overflow-x: hidden;
 }

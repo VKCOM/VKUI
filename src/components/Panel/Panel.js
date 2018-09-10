@@ -63,7 +63,10 @@ export default class Panel extends Component {
     const { className, centered, children, isPrev, isNext, theme, optimized, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames(baseClassNames, className, { 'Panel--centered': centered })}>
+      <div {...restProps} className={classnames(baseClassNames, className, {
+        'Panel--centered': centered,
+        [`Panel--tm-${theme}`]: theme
+      })}>
         <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null, paddingTop: this.insets.top || null }}>
           <div className="Panel__in-before" />
           {children}
