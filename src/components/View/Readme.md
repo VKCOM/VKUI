@@ -21,25 +21,25 @@ class Example extends React.Component {
         <Panel id="panel1">
           <PanelHeader>Panel 1</PanelHeader>
           <Group>
-            <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel2' }) }>
+            <CellButton onClick={ () => this.setState({ activePanel: 'panel2' }) }>
               Go to panel 2
-            </Button>
+            </CellButton>
           </Group>
         </Panel>
         <Panel id="panel2">
           <PanelHeader>Panel 2</PanelHeader>
           <Group>
-            <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel3' }) }>
+            <CellButton onClick={ () => this.setState({ activePanel: 'panel3' }) }>
               Go to panel 3
-            </Button>
+            </CellButton>
           </Group>
         </Panel>
         <Panel id="panel3">
           <PanelHeader>Panel 3</PanelHeader>
           <Group>
-            <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel1' }) }>
+            <CellButton onClick={ () => this.setState({ activePanel: 'panel1' }) }>
               Back to panel 1
-            </Button>
+            </CellButton>
           </Group>
         </Panel>
       </View>

@@ -21,9 +21,9 @@ class Example extends React.Component {
           <Panel id="panel1.1">
             <PanelHeader>View 1</PanelHeader>
             <Group>
-              <Button type="cell" onClick={ () => this.setState({ activeView: 'view2' }) }>
+              <CellButton onClick={ () => this.setState({ activeView: 'view2' }) }>
                 Open View 2
-              </Button>
+              </CellButton>
             </Group>
           </Panel>
         </View>
@@ -31,9 +31,9 @@ class Example extends React.Component {
           <Panel id="panel2.1">
             <PanelHeader>View 2</PanelHeader>
             <Group>
-              <Button type="cell" onClick={ () => this.setState({ activeView: 'view1' }) }>
+              <CellButton onClick={ () => this.setState({ activeView: 'view1' }) }>
                 Back to View 1
-              </Button>
+              </CellButton>
             </Group>
           </Panel>
         </View>

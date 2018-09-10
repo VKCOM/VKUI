@@ -24,6 +24,7 @@ import Icon24Users from '@vkontakte/icons/dist/24/users';
 import Icon24Settings from '@vkontakte/icons/dist/24/settings';
 import Icon24User from '@vkontakte/icons/dist/24/user';
 import Icon24Privacy from '@vkontakte/icons/dist/24/privacy';
+import Icon24Write from '@vkontakte/icons/dist/24/write';
 import Icon24MoreHorizontal from '@vkontakte/icons/dist/24/more_horizontal';
 
 window.uaList = {
@@ -62,5 +63,6 @@ window.Icon24Settings = Icon24Settings;
 window.Icon24User = Icon24User;
 window.Icon24Privacy = Icon24Privacy;
 window.Icon24MoreHorizontal = Icon24MoreHorizontal;
+window.Icon24Write = Icon24Write;
 
 window.colors = colors;

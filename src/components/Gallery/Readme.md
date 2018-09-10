@@ -60,7 +60,7 @@
                 <div style={{ height: 150, backgroundColor: colors.green }} />
               </Gallery>
               <Div>
-                <Button v="new" onClick={() => this.setState({slideIndex: this.state.slideIndex === 2 ? 0 : this.state.slideIndex + 1 })}>Next slide</Button>
+                <Button onClick={() => this.setState({slideIndex: this.state.slideIndex === 2 ? 0 : this.state.slideIndex + 1 })}>Next slide</Button>
               </Div>
             </Group>
           </Panel>

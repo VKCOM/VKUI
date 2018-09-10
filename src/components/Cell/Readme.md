@@ -64,7 +64,7 @@
                   bottomContent={
                     <div style={{ display: 'flex' }}>
                       <Button size="m">Добавить</Button>
-                      <Button size="m" level="2" style={{ marginLeft: 8 }}>Скрыть</Button>
+                      <Button size="m" level="secondary" style={{ marginLeft: 8 }}>Скрыть</Button>
                     </div>
                   }
                 >
@@ -77,7 +77,7 @@
                   bottomContent={
                     <div style={{ display: 'flex' }}>
                       <Button size="m">Добавить</Button>
-                      <Button size="m" level="2" style={{ marginLeft: 8 }}>Скрыть</Button>
+                      <Button size="m" level="secondary" style={{ marginLeft: 8 }}>Скрыть</Button>
                     </div>
                   }
                 >
@@ -90,7 +90,7 @@
                   bottomContent={
                     <div style={{ display: 'flex' }}>
                       <Button size="m">Добавить</Button>
-                      <Button size="m" level="2" style={{ marginLeft: 8 }}>Скрыть</Button>
+                      <Button size="m" level="secondary" style={{ marginLeft: 8 }}>Скрыть</Button>
                     </div>
                   }
                 >

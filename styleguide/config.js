@@ -50,6 +50,7 @@ module.exports = {
         name: 'Blocks',
         components: () => [
           '../src/components/Button/Button.js',
+          '../src/components/CellButton/CellButton.js',
           '../src/components/Div/Div.js',
           '../src/components/Link/Link.js',
           '../src/components/Header/Header.js',

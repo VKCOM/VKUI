@@ -19,7 +19,7 @@ class Example extends React.Component {
             Настройки
           </PanelHeader>
           <Group>
-            <Button type="cell" onClick={() => this.setState({ activePanel: 'light' })}>Светлая тема</Button>
+            <CellButton onClick={() => this.setState({ activePanel: 'light' })}>Альтернативная тема</CellButton>
           </Group>
         </Panel>
         <Panel id="light">

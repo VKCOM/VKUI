@@ -1,45 +1,44 @@
  ```jsx
 <View activePanel="button" header={false}>
   <Panel id="button">
-    <Group title="Levels">
-
+    <Group title="Типы кнопок">
       <Div>
-        <Button>level="1" (default)</Button>
+        <Button>Primary</Button>
       </Div>
       <Div>
-        <Button level="2">level="2"</Button>
+        <Button level="secondary">Secondary</Button>
       </Div>
       <Div>
-        <Button level="3">level="3"</Button>
+        <Button level="tertiary">Tertiary</Button>
       </Div>
       <Div>
-        <Button level="buy">level="buy"</Button>
+        <Button level="outline">Outline</Button>
       </Div>
       <Div>
-        <Button level="sell">level="sell"</Button>
-      </Div>
-    </Group>
-    <Group title="Sizes">
-      <Div>
-        <Button>size="m" (default)</Button>
-      </Div>
-      <Div>
-        <Button size="l">size="l"</Button>
-      </Div>
-      <Div>
-        <Button size="xl" level="2">size="xl"</Button>
+        <Button level="commerce">Commerce</Button>
       </Div>
     </Group>
-    <Group title="Stretched">
+    <Group title="Допустимые размеры">
+      <Div>
+        <Button>Medium</Button>
+      </Div>
+      <Div>
+        <Button size="l">Large</Button>
+      </Div>
+      <Div>
+        <Button size="xl" level="secondary">Extra large</Button>
+      </Div>
+    </Group>
+    <Group title="Растягивание по ширине">
       <Div>
         <Button size="l">No stretch</Button>
       </Div>
       <Div style={{display: 'flex'}}>
         <Button size="l" stretched style={{ marginRight: 8 }}>Stretched</Button>
-        <Button size="l" stretched level="2">Stretched</Button>
+        <Button size="l" stretched level="secondary">Stretched</Button>
       </Div>
     </Group>
-    <Group title="Icons">
+    <Group title="Кнопки с иконками">
       <Div>
         <Button before={<Icon16Add/>}>Add item</Button>
       </Div>
@@ -47,24 +46,13 @@
         <Button before={<Icon24Camera/>} size="l">Take a photo</Button>
       </Div>
       <Div>
-        <Button
-          level="2"
-          before={<Icon24Shuffle/>}
-          size="l"
-        >Shuffle</Button>
+        <Button level="secondary" before={<Icon24Shuffle/>} size="l">Shuffle</Button>
       </Div>
     </Group>
-    <Group title="Cell">
-      <Button type="cell">Cell Button</Button>
-      <Button type="cell" level="danger">Danger Button</Button>
-    </Group>
-    <Group title="Cell align">
-      <Button type="cell">Left</Button>
-      <Button type="cell" align="center">Center</Button>
-      <Button type="cell" align="right">Right</Button>
-    </Group>
-    <Group title="Links">
-      <Button type="cell" component="a" href="#">I am link</Button>
+    <Group title="Ссылки в виде кнопок">
+      <Div>
+        <Button component="a" href="#">I am link</Button>
+      </Div>
     </Group>
   </Panel>
 </View>
