@@ -1,4 +1,5 @@
 @import '../../styles/constants.css';
+@import '../../styles/scheme.css';
 
 .Cell {
   position: relative;
@@ -53,7 +54,7 @@
     .Cell__main {
       flex-grow: 1;
       max-width: 100%;
-      color: #000;
+      color: var(--text_primary);
       white-space: nowrap;
       overflow: hidden;
       }
@@ -150,7 +151,7 @@
       bottom: 0;
       width: 10000px;
       height: 1px;
-      background: var(--separator);
+      background: var(--separator_common);
       content: '';
       }
 
