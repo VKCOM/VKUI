@@ -12,7 +12,7 @@ const baseClassNames = getClassName('PanelHeaderContent');
 const PanelHeaderContent = ({ className, style, aside, status, before, children, onClick, ...restProps }) => {
   const InComponent = onClick ? Tappable : 'div';
   const rootProps = onClick ? {} : restProps;
-  const inProps = onClick ? restProps : {};
+  const inProps = onClick ? { ...restProps, activeEffectDelay: 200 } : {};
 
   return (
     <div {...rootProps} className={classnames(baseClassNames, className)} style={style}>

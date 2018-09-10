@@ -11,7 +11,7 @@ const HeaderButton = ({ className, children, primary, ...restProps }) => {
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
   return (
-    <Tappable {...restProps} component="button" className={classnames(baseClassName, className, {
+    <Tappable {...restProps} component="button" activeEffectDelay={200} className={classnames(baseClassName, className, {
       'HeaderButton--primary': primary
     })}>
       {isPrimitive ? <span className="HeaderButton__primitive">{children}</span> : children}
