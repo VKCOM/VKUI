@@ -14,11 +14,8 @@
       height: 32px;
       white-space: nowrap;
       color: transparent;
+      width: 10000px;
       }
-
-      .Search--ios .Search__width::before {
-        content: 'oooooooooooooooooooooooooooooooooooooooooooooooooooo' /* хак для растягивание Search на всю ширину */
-        }
 
     .Search--ios .Search__control {
       display: flex;
