@@ -19,7 +19,11 @@ export default class PanelHeader extends React.Component {
     addon: PropTypes.node,
     right: PropTypes.node,
     children: PropTypes.node,
-    theme: PropTypes.oneOf(['light', 'brand']),
+    /**
+     * Вместо `light` используйте `alternate`. Значение `light` устарело и будет удалено в следующей
+     * мажорной версии.
+     */
+    theme: PropTypes.oneOf(['light', 'alternate', 'brand']),
     noShadow: PropTypes.bool
   };
 

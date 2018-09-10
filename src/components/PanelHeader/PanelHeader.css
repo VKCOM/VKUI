@@ -1,4 +1,5 @@
 @import '../../styles/constants.css';
+@import '../../styles/scheme.css';
 @import './PanelHeaderTransitions.css';
 
 .PanelHeader {
@@ -255,7 +256,7 @@
   Темы
  */
 .PanelHeader-bg--brand {
-  background: var(--header-blue);
+  background: var(--header_background_before_blur);
   }
 
 .PanelHeader-content--brand,
@@ -266,17 +267,22 @@
   background: var(--header-blue);
   }
 
-.PanelHeader-bg--light {
-  background: #fff;
+.PanelHeader-bg--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
+.PanelHeader-bg--alternate {
+  background: var(--header_background_before_blur_alternate);
   }
 
-.PanelHeader-left-in--light,
-.PanelHeader-addon--light,
-.PanelHeader-right--light {
+.PanelHeader-left-in--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
+.PanelHeader-addon--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
+.PanelHeader-right--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
+.PanelHeader-left-in--alternate,
+.PanelHeader-addon--alternate,
+.PanelHeader-right--alternate {
   color: var(--header-blue);
   background: #fff;
   }
 
-.PanelHeader-content--light {
-  color: #000;
+.PanelHeader-content--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
+.PanelHeader-content--alternate {
+  color: var(--text_primary);
   }
