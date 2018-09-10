@@ -1,11 +1,19 @@
 @import '../../styles/constants.css';
+@import '../../styles/scheme.css';
+
+.Group {
+  background: var(--background_content);
+  }
+
+  .Group__content {
+    color: var(--text_primary);
+    }
 
 /**
  * iOS
  */
 .Group--ios {
   margin: 10px 0;
-  background-color: #fff;
   position: relative;
   }
 
@@ -29,7 +37,7 @@
     z-index: 1;
     height: 1px;
     content: '';
-    background: var(--separator);
+    background: var(--separator_common);
     }
 
   .Group--ios::before {
@@ -56,7 +64,6 @@
 
 .Group--android {
   margin: 8px 0;
-  background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .06), 0 0 2px 0 rgba(0, 0, 0, .03);
   }
 
