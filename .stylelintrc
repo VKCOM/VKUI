@@ -4,6 +4,8 @@
     "indentation": null,
     "number-leading-zero": "never",
     "block-no-empty": null,
-    "declaration-block-no-redundant-longhand-properties": null
+    "declaration-block-no-redundant-longhand-properties": null,
+    "comment-empty-line-before": null,
+    "comment-whitespace-inside": null
   }
 }
