@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { isWebView } from '../../lib/webview';
 
 export default class ConfigProvider extends React.Component {
+  componentWillMount () {
+    document.body.setAttribute('scheme', this.props.scheme);
+  }
+
   static childContextTypes = {
     insets: PropTypes.shape({
       top: PropTypes.number,
@@ -11,6 +15,7 @@ export default class ConfigProvider extends React.Component {
       left: PropTypes.number
     }),
     isWebView: PropTypes.bool,
+    scheme: PropTypes.string,
     webviewType: PropTypes.oneOf(['vkapps', 'internal'])
   };
 
@@ -21,6 +26,7 @@ export default class ConfigProvider extends React.Component {
       bottom: PropTypes.number,
       left: PropTypes.number
     }),
+    scheme: PropTypes.string,
     isWebView: PropTypes.bool,
     webviewType: PropTypes.oneOf(['vkapps', 'internal']),
     children: PropTypes.node
@@ -29,8 +35,15 @@ export default class ConfigProvider extends React.Component {
   static defaultProps = {
     insets: {},
     webviewType: 'internal',
-    isWebView
+    isWebView,
+    scheme: 'client_light'
   };
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.scheme !== this.props.scheme) {
+      document.body.setAttribute('scheme', nextProps.scheme);
+    }
+  }
 
   getChildContext () {
     let insets = Object.assign(
@@ -41,7 +54,8 @@ export default class ConfigProvider extends React.Component {
     return {
       insets,
       isWebView: this.props.isWebView,
-      webviewType: this.props.webviewType
+      webviewType: this.props.webviewType,
+      scheme: this.props.scheme
     };
   }
 
