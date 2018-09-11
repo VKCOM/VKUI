@@ -11,7 +11,7 @@ export default class FixedLayout extends React.Component {
   state = {
     transition: false,
     topOffset: null,
-    paddings: {}
+    paddingBottom: null
   };
 
   static propTypes = {
@@ -52,11 +52,7 @@ export default class FixedLayout extends React.Component {
 
   setPaddings (callback) {
     if (this.props.vertical === 'bottom') {
-      let paddingBottom = parseInt(window.getComputedStyle(this.el).padding);
-
-      this.setState({
-        paddings: { paddingBottom: paddingBottom + (this.insets.bottom || 0) }
-      }, () => callback && callback());
+      this.setState({ paddingBottom: this.insets.bottom || 0 }, () => callback && callback());
     } else {
       callback && callback();
     }
@@ -85,7 +81,7 @@ export default class FixedLayout extends React.Component {
         className={classnames(baseClassNames, { [`FixedLayout--${vertical}`]: vertical }, className)}
         style={{
           ...style,
-          ...this.state.paddings,
+          ...{ paddingBottom: this.state.paddingBottom },
           ...(this.state.transition ? { position: 'absolute', top: this.state.topOffset } : {})
         }}
       >
