@@ -35,11 +35,13 @@ export default class Cell extends Component {
     size: PropTypes.oneOf(['m', 'l']),
 
     selectable: PropTypes.bool,
-
+    /**
+     * Флаг для перехода в режим удаляемых ячеек. **Важно:** в этом режиме обработчик onClick вызываться не будет.
+     */
     removable: PropTypes.bool,
     onRemove: PropTypes.func,
     /**
-     * iOS only
+     * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
      */
     removePlaceholder: PropTypes.node,
 
@@ -74,13 +76,17 @@ export default class Cell extends Component {
   /**
    * предотвращает двойное срабатывание в случае с input
    * (https://github.com/vuejs/vue/issues/3699#issuecomment-247957931)
+   * предотвращает клик в случае, когда включен режим removable
    * @param e
    */
   onClick = (e) => {
+    const { removable, onClick } = this.props;
     if (e.target.tagName.toLowerCase() === 'input') {
       e.stopPropagation();
+    } else if (removable) {
+      return null;
     } else {
-      this.props.onClick && this.props.onClick(e);
+      onClick && onClick(e);
     }
   };
 
@@ -161,7 +167,7 @@ export default class Cell extends Component {
           component={selectable ? 'label' : href ? 'a' : 'div'}
           className="Cell__in"
           href={href}
-          disabled={!selectable && !onClick && !href}
+          disabled={(!selectable && !onClick && !href || removable)}
           style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
         >
           {selectable && <input {...inputProps} type="checkbox" className="Cell__checkbox" />}
