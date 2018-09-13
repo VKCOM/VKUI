@@ -31,18 +31,26 @@
 
       .PanelHeader__left {
         flex-shrink: 0;
+        display: flex;
+        position: relative;
+        z-index: 2;
         }
 
         .PanelHeader__left-in {
-          box-sizing: border-box;
+          flex-shrink: 0;
           }
 
           .PanelHeader-left-in {}
 
+        .PanelHeader__addon {
+          flex-shrink: 0;
+          }
+
       .PanelHeader__content {
         overflow: hidden;
         text-overflow: ellipsis;
-        min-width: 44%;
+        position: relative;
+        z-index: 1;
         }
 
         .PanelHeader-content {
@@ -52,6 +60,10 @@
 
       .PanelHeader__right {
         flex-shrink: 0;
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        z-index: 2;
         }
 
         .PanelHeader-right {
@@ -59,6 +71,7 @@
           text-align: right;
           justify-content: flex-end;
           display: flex;
+          flex-shrink: 0;
           }
 
         .PanelHeader-right--vkapps {
@@ -131,20 +144,20 @@
               padding-left: 16px;
               }
 
-      .PanelHeader--ios .PanelHeader__addon {}
+        .PanelHeader--ios .PanelHeader__addon {}
 
-        .PanelHeader--ios .PanelHeader-addon:not(:empty) {
-          padding-left: 4px;
-          }
+          .PanelHeader--ios .PanelHeader-addon:not(:empty) {
+            padding-left: 4px;
+            }
 
-        .PanelHeader--ios .PanelHeader-content {
-          font-weight: 500;
-          font-size: 17px;
-          line-height: 44px;
-          height: 44px;
-          text-align: center;
-          transition: color .6s var(--ios-easing);
-          }
+      .PanelHeader--ios .PanelHeader-content {
+        font-weight: 500;
+        font-size: 17px;
+        line-height: 44px;
+        height: 44px;
+        text-align: center;
+        transition: color .6s var(--ios-easing);
+        }
 
       .PanelHeader--ios .PanelHeader__right {
         flex-grow: 1;
@@ -250,6 +263,7 @@
 .PanelHeader-addon--brand,
 .PanelHeader-right--brand {
   color: #fff;
+  background: var(--header-blue);
   }
 
 .PanelHeader-bg--light {
@@ -260,6 +274,7 @@
 .PanelHeader-addon--light,
 .PanelHeader-right--light {
   color: var(--header-blue);
+  background: #fff;
   }
 
 .PanelHeader-content--light {

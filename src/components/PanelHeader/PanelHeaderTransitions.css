@@ -24,7 +24,7 @@
 .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__content,
 .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__addon {
   opacity: 0;
-  transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-30vw, 0, 0);
   }
 
 .PanelHeader__in--swipe-back-next.PanelHeader__in--swipe-back-failed .PanelHeader__left-in,
@@ -66,7 +66,7 @@
  */
 .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__content,
 .PanelHeader__in--swipe-back-prev.PanelHeader__in--swipe-back-success .PanelHeader__addon {
-  transform: translate3d(100%, 0, 0);
+  transform: translate3d(30vw, 0, 0);
   opacity: 0;
   }
 
@@ -126,7 +126,7 @@
 @keyframes animation-ios-header-next-back {
   from {
     opacity: 0;
-    transform: translateX(-100%);
+    transform: translateX(-30vw);
     }
 
   to {
@@ -138,7 +138,7 @@
 @keyframes animation-ios-header-next-forward {
   from {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(30vw);
     }
 
   to {
@@ -155,7 +155,7 @@
 
   to {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(30vw);
     }
   }
 
@@ -167,7 +167,7 @@
 
   to {
     opacity: 0;
-    transform: translateX(-100%);
+    transform: translateX(-30vw);
     }
   }
 

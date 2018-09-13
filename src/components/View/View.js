@@ -420,21 +420,21 @@ export default class View extends Component {
     }
 
     let opacity = this.state.swipeBackShift / this.window.innerWidth;
-    let titleTransform = this.state.swipeBackShift / this.window.innerWidth * 100;
-    let leftTransform = this.state.swipeBackShift / this.window.innerWidth * 100;
+    let titleTransform = this.state.swipeBackShift / this.window.innerWidth * 30;
+    let leftTransform = this.state.swipeBackShift / this.window.innerWidth * 30;
 
     if (isNext) {
       return {
         title: {
-          transform: `translate3d(${-100 + titleTransform}%, 0, 0)`,
-          WebkitTransform: `translate3d(${-100 + titleTransform}%, 0, 0)`,
+          transform: `translate3d(${-30 + titleTransform}vw, 0, 0)`,
+          WebkitTransform: `translate3d(${-30 + titleTransform}vw, 0, 0)`,
           opacity
         },
         left: { opacity },
         addon: {
           opacity: 1,
-          transform: `translate3d(${-100 + leftTransform}%, 0, 0)`,
-          WebkitTransform: `translate3d(${-100 + leftTransform}%, 0, 0)`
+          transform: `translate3d(${-30 + leftTransform}vw, 0, 0)`,
+          WebkitTransform: `translate3d(${-30 + leftTransform}vw, 0, 0)`
         },
         right: { opacity }
       };
@@ -442,15 +442,15 @@ export default class View extends Component {
     if (isPrev) {
       return {
         title: {
-          transform: `translate3d(${titleTransform}%, 0, 0)`,
-          WebkitTransform: `translate3d(${titleTransform}%, 0, 0)`,
+          transform: `translate3d(${titleTransform}vw, 0, 0)`,
+          WebkitTransform: `translate3d(${titleTransform}vw, 0, 0)`,
           opacity: 1 - opacity
         },
         bg: { opacity: 1 - opacity },
         left: { opacity: 1 - opacity },
         addon: {
-          transform: `translate3d(${leftTransform}%, 0, 0)`,
-          WebkitTransform: `translate3d(${leftTransform}%, 0, 0)`,
+          transform: `translate3d(${leftTransform}vw, 0, 0)`,
+          WebkitTransform: `translate3d(${leftTransform}vw, 0, 0)`,
           opacity: 1 - opacity
         }
       };
