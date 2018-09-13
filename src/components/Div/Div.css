@@ -1,4 +1,7 @@
-.Div {}
+
+.Div {
+  user-select: text;
+  }
 
 .Div--ios {
   padding: 12px;

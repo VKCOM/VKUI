@@ -1,7 +1,7 @@
 @import '../../styles/constants.css';
 
 .InfoRow {
-
+  user-select: text;
   }
 
   .InfoRow__title {

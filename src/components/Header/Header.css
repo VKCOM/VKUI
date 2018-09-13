@@ -1,7 +1,7 @@
 @import '../../styles/constants.css';
 
 .Header {
-
+  user-select: text;
   }
 
   .Header__in {
