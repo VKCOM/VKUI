@@ -28,76 +28,77 @@
     border: none;
     }
 
-.FormLayout--ios {
-
-  }
+.FormLayout--ios {}
 
   .FormLayout--ios .FormLayout__row {
-    padding: 12px;
+    padding: 12px 0;
     }
 
-    .FormLayout--ios .FormLayout__row .Radio,
-    .FormLayout--ios .FormLayout__row .Checkbox,
-    .FormLayout--ios .FormLayout__row .Button--type-cell {
-      margin-left: -12px;
-      margin-right: -12px;
+    .FormLayout--ios .FormLayout__field .Input,
+    .FormLayout--ios .FormLayout__field .Textarea,
+    .FormLayout--ios .FormLayout__field .Select,
+    .FormLayout--ios .FormLayout__field .SelectMimicry,
+    .FormLayout--ios .FormLayout__field .Button--type-default {
+      margin-left: 12px;
+      margin-right: 12px;
       }
 
-    .FormLayout--ios .FormLayout__field .Cell__in {
-      padding-left: 0;
-      padding-right: 0;
+    .FormLayout--ios .FormLayout__field .RangeSlider,
+    .FormLayout--ios .FormLayout__field .Slider {
+      margin-left: 26px;
+      margin-right: 26px;
       }
 
-    .FormLayout--ios .FormLayout__row .Button--type-cell {
-      width: calc(100% + 24px);
+    .FormLayout--ios .FormLayout__field .Button--size-xl {
+      width: calc(100% - 24px);
       }
 
     .FormLayout--ios .FormLayout__row-top {
       color: var(--subhead-gray);
-      padding: 2px 0 8px;
+      padding: 2px 12px 8px;
       font-size: 14px;
       }
 
-  .FormLayout--ios .FormLayout__row-bottom {
-    color: var(--subhead-gray);
-    padding-top: 8px;
-    font-size: 13px;
-    }
+    .FormLayout--ios .FormLayout__row-bottom {
+      color: var(--subhead-gray);
+      padding: 8px 12px 0;
+      font-size: 13px;
+      }
 
-.FormLayout--android {
-
-  }
+.FormLayout--android {}
 
   .FormLayout--android .FormLayout__row {
-    padding: 10px 16px;
+    padding: 10px 0;
     }
+
+    .FormLayout--android .FormLayout__field .Textarea,
+    .FormLayout--android .FormLayout__field .Input,
+    .FormLayout--android .FormLayout__field .Select,
+    .FormLayout--android .FormLayout__field .SelectMimicry,
+    .FormLayout--android .FormLayout__field .Button--type-default {
+      margin-left: 16px;
+      margin-right: 16px;
+      }
+
+    .FormLayout--android .FormLayout__field .RangeSlider,
+    .FormLayout--android .FormLayout__field .Slider {
+      margin-left: 30px;
+      margin-right: 30px;
+      }
+
+    .FormLayout--android .FormLayout__field .Button--size-xl {
+      width: calc(100% - 32px);
+      }
 
     .FormLayout--android .FormLayout__row-top {
       color: var(--subhead-gray);
-      padding: 2px 0 8px;
+      padding: 2px 16px 8px;
       line-height: 18px;
       font-size: 14px;
       }
 
-    .FormLayout--android .FormLayout__field {
-
-      }
-
-      .FormLayout--android .FormLayout__field .Radio,
-      .FormLayout--android .FormLayout__field .Checkbox,
-      .FormLayout--android .FormLayout__field .Button--type-cell,
-      .FormLayout--android .FormLayout__field .Cell {
-        margin-left: -16px;
-        margin-right: -16px;
-        }
-
-      .FormLayout--android .FormLayout__field .Button--type-cell,
-      .FormLayout--android .FormLayout__field .Cell {
-        width: calc(100% + 32px);
-        }
-
     .FormLayout--android .FormLayout__row-bottom {
-      padding-top: 8px;
+      padding: 8px 16px 0;
       font-size: 13px;
       color: var(--subhead-gray);
       }
