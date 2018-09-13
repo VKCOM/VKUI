@@ -1,0 +1,3 @@
+.FormLayoutGroup--ios > * ~ * {
+  padding-top: 12px;
+  }

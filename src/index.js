@@ -52,6 +52,7 @@ export { default as Tooltip } from './components/Tooltip/Tooltip';
  * Forms
  */
 export { default as FormLayout } from './components/FormLayout/FormLayout';
+export { default as FormLayoutGroup } from './components/FormLayoutGroup/FormLayoutGroup';
 export { default as Switch } from './components/Switch/Switch';
 export { default as File } from './components/File/File';
 export { default as Input } from './components/Input/Input';

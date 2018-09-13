@@ -8,9 +8,10 @@
     display: block;
     }
 
-    .FormLayout__row .Input + .Input,
-    .FormLayout__row .Select + .Select,
-    .FormLayout__row .SelectMimicry + .SelectMimicry {
+    /* TODO legacy. FormLayoutGroup пришел на замену. Убрать в 3.0.0 */
+    .FormLayout__field .Input + .Input,
+    .FormLayout__field .Select + .Select,
+    .FormLayout__field .SelectMimicry + .SelectMimicry {
       padding-top: 12px;
       }
 
