@@ -1,12 +1,11 @@
-@import '../../styles/constants.css';
-
 .Progress {
   border-radius: 2px;
-  background-color: var(--background-blue);
+  background: var(--placeholder_icon_background);
   }
 
   .Progress__in {
     height: 4px;
     border-radius: 2px;
     transition: width .2s ease;
+    background: var(--accent);
     }

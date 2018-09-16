@@ -1,4 +1,4 @@
-@import '../../styles/constants.css';
+
 
 .Search--ios {
   overflow: hidden;
@@ -158,66 +158,91 @@
   default
  */
 .Search--ios.Search--default {
-  background: #e6e9ed;
+  background: var(--search_bar_background);
   padding: 8px;
   }
 
 .Search--ios.Search--default .Search__control {
-  background-color: #fff;
+  background-color: var(--search_bar_field_background);
   }
 
-.Search--ios.Search--header .Search__input {
-  color: #000;
+.Search--ios.Search--default .Search__input {
+  color: var(--text_primary);
+  }
+
+.Search--ios.Search--default .Search__placeholder {
+  color: var(--search_bar_field_tint);
   }
 
 .Search--ios.Search--default .Search__after-width {
-  background: #fff;
-  color: #fff;
+  background: var(--search_bar_field_background);
+  color: var(--search_bar_field_background);
   }
 
 .Search--ios.Search--default .Search__after {
-  background: #e6e9ed;
-  color: var(--accent-blue);
+  background: var(--search_bar_background);
+  color: var(--accent);
   }
 
 .Search--ios.Search--default .Search__after::after {
-  background-color: #fff;
+  background-color: var(--search_bar_field_background);
   }
 
 .Search--ios.Search--default .Search__after::before {
-  background-color: #e6e9ed;
+  background-color: var(--search_bar_background);
+  }
+
+.FixedLayout--top .Search--ios.Search--default::after {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  left: 0;
+  bottom: 0;
+  background: var(--separator_common);
+  }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .FixedLayout--top .Search--ios.Search--default::after {
+    background: var(--ios-bottom-border);
+    }
   }
 
 /*
   header
  */
 .Search--ios.Search--header {
-  background: var(--header-blue);
+  background: var(--header_background);
   padding-top: 6px;
   }
 
 .Search--ios.Search--header .Search__control {
-  background-color: #143a66;
+  background-color: var(--header_search_field_background);
   }
 
 .Search--ios.Search--header .Search__input {
-  color: #fff;
+  color: var(--header_tint);
+  }
+
+.Search--ios.Search--header .Search__placeholder {
+  color: var(--header_search_field_tint);
   }
 
 .Search--ios.Search--header .Search__after-width {
-  background: #143a66;
-  color: #143a66;
+  background: var(--header_search_field_background);
+  color: var(--header_search_field_background);
   }
 
 .Search--ios.Search--header .Search__after {
-  background: var(--header-blue);
-  color: #fff;
+  background: var(--header_background);
+  color: var(--header_tint);
   }
 
 .Search--ios.Search--header .Search__after::after {
-  background-color: #143a66;
+  background-color: var(--header_search_field_background);
   }
 
 .Search--ios.Search--header .Search__after::before {
-  background-color: var(--header-blue);
+  background-color: var(--header_background);
   }

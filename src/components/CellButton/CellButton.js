@@ -3,7 +3,6 @@ import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
-import './CellButton.css';
 
 const baseClassName = getClassName('CellButton');
 

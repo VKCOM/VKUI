@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
-import './Root.css';
+
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID, platform } from '../../lib/platform';
 

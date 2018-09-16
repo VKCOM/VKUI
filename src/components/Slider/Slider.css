@@ -1,5 +1,3 @@
-@import '../../styles/constants.css';
-
 .Slider {
   position: relative;
   height: 28px;
@@ -12,7 +10,7 @@
     top: 12px;
     height: 4px;
     width: 100%;
-    background-color: var(--placeholder-background);
+    background-color: var(--placeholder_icon_background);
     border-radius: 2px;
     content: '';
     }
@@ -35,7 +33,7 @@
     left: 0;
     width: 100%;
     height: 4px;
-    background: var(--accent-blue);
+    background: var(--accent);
     border-radius: 2px;
     content: '';
     }
@@ -66,7 +64,7 @@
 
     .Slider--ios .Slider__thumb {
       border-radius: 14px;
-      background: #fff;
+      background: var(--white);
       box-shadow: 0 2px 7px rgba(0, 0, 0, .35), 0 1px 1px rgba(0, 0, 0, .15);
       }
 
@@ -85,7 +83,7 @@
       width: 20px;
       height: 20px;
       content: '';
-      background: #fff;
+      background: var(--white);
       border-radius: 10px;
-      box-shadow: 0 1px 3px 0 var(--separator), 0 0 1px 0 var(--separator), 0 0 0 .5px rgba(0, 0, 0, .04);
+      box-shadow: 0 1px 3px 0 var(--separator_common), 0 0 1px 0 var(--separator_common), 0 0 0 .5px rgba(0, 0, 0, .04);
       }

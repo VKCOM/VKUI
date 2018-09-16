@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
-import './PanelHeader.css';
+
 import { platform, IOS } from '../../lib/platform';
 
 const osname = platform();

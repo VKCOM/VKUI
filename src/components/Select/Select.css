@@ -1,4 +1,4 @@
-@import '../../styles/constants.css';
+
 
 .Select {
   display: block;
@@ -29,7 +29,7 @@
     line-height: 19px;
     font-size: 16px;
     padding: 12px 40px 12px 12px;
-    color: var(--black);
+    color: var(--text_primary);
     box-sizing: border-box;
     height: 44px;
     position: relative;
@@ -46,7 +46,7 @@
       }
 
     .Select--not-selected .Select__title {
-      color: var(--caption-gray);
+      color: var(--field_text_placeholder);
       }
 
     .Select--align-right .Select__title {
@@ -61,27 +61,27 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      color: var(--light-blue-gray);
+      color: var(--icon_secondary);
       }
 
 .Select--ios {}
 
   .Select--ios .Select__container {
     border-radius: 10px;
-    background-color: rgb(242, 243, 245);
-    border: solid .5px rgba(0, 0, 0, .15);
+    background-color: var(--field_background);
+    border: solid .5px var(--field_border);
     }
 
   .Select--ios select:focus ~ .Select__container,
   .Select--ios.Select--mimicry:focus .Select__container {
-    border-color: var(--accent-blue);
+    border-color: var(--accent);
     }
 
 .Select--android {}
 
   .Select--android .Select__container {
     border-radius: 4px;
-    background-color: #f2f3f5;
+    background-color: var(--field_background);
     }
 
   .Select--android select:focus ~ .Select-underline::before,

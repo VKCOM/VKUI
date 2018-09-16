@@ -2,7 +2,7 @@ import React from 'react';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import PropTypes from 'prop-types';
-import './PopoutWrapper.css';
+
 import { ANDROID, platform } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 

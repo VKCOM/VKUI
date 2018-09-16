@@ -19,7 +19,6 @@ export default class IosSpinner extends Component {
         rx: r,
         ry: r,
         style: {
-          fill: props.color,
           animationDelay: Math.round(props.duration / 12 * 100 * (-11 + i)) / 100 + 's'
         }
       });
@@ -28,14 +27,12 @@ export default class IosSpinner extends Component {
     this.state = { iosStyles };
   }
   static propTypes = {
-    color: PropTypes.string,
     size: PropTypes.number,
     duration: PropTypes.number,
     on: PropTypes.bool,
     progress: PropTypes.number
   };
   static defaultProps = {
-    color: '#262626',
     size: 20,
     duration: 1.4,
     on: true,

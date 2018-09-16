@@ -1,5 +1,3 @@
-@import '../../styles/constants.css';
-
 .Button {
   display: inline-block;
   box-sizing: border-box;
@@ -157,42 +155,10 @@
   border-radius: 10px;
   }
 
-.Button--ios.Button--type-cell {
-  padding: 0 12px;
-  position: relative;
-  }
-
-  .Button--ios.Button--type-cell .Button__content {
-    line-height: 20px;
-    font-size: 17px;
-    padding: 12px 0;
-    }
-
-    .Button--ios.Button--type-cell .Button__before .Icon {
-      margin-right: 12px;
-      }
-
 /*
   Android
  */
 .Button--android {
   font-family: var(--font-android);
-  }
-
-.Button--android.Button--type-default {
   border-radius: 4px;
   }
-
-.Button--android.Button--type-cell {
-  padding: 0 16px;
-  }
-
-  .Button--android.Button--type-cell .Button__content {
-    font-size: 16px;
-    line-height: 20px;
-    padding: 14px 0;
-    }
-
-  .Button--android.Button--type-cell .Button__before .Icon {
-    margin-right: 12px;
-    }

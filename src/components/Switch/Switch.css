@@ -1,5 +1,3 @@
-@import '../../styles/constants.css';
-
 .Switch {
   display: block;
   padding: 8px 15px;
@@ -16,18 +14,9 @@
     -webkit-tap-highlight-color: transparent;
     }
 
-  .Switch__self:checked + .Switch__pseudo {
-
-    }
-
-  .Switch__self[disabled] + .Switch__pseudo {
-
-    }
-
   .Switch__pseudo::before {
     position: absolute;
     content: '';
-    transition: transform .1s ease;
     }
 
   .Switch__self:checked + .Switch__pseudo::before {
@@ -35,46 +24,54 @@
     }
 
 /**
- * iOS Switch
+ * iOS
  */
 .Switch--ios {
   margin: -12px -15px;
   }
 
   .Switch--ios .Switch__pseudo {
-    width: 48px;
-    height: 28px;
-    border: 1px solid #e6e6e6;
-    background: #fff;
+    width: 50px;
+    height: 30px;
+    border: 2px solid var(--switch_ios_off_border);
+    background: transparent;
     border-radius: 15px;
+    box-sizing: border-box;
     transition:
-      background-color .1s ease,
-      border-color .1s ease;
+      background-color .2s ease,
+      border-color .2s ease;
     }
 
   .Switch--ios .Switch__self:checked + .Switch__pseudo {
-    border-color: #4cd864;
-    background: #4cd864;
+    border-color: var(--accent);
+    background: var(--accent);
     }
 
   .Switch--ios .Switch__self[disabled] + .Switch__pseudo {
-    border-color: #ddd;
-    background: #ddd;
+    opacity: .4;
     }
 
   .Switch--ios .Switch__pseudo::before {
     top: 0;
     left: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: 0 2px 7px rgba(0, 0, 0, .35), 0 1px 1px rgba(0, 0, 0, .15);
+    width: 26px;
+    height: 26px;
+    border-radius: 13px;
+    background: var(--white);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .15), 0 3px 1px rgba(0, 0, 0, .06), inset 0 0 0 .5px rgba(0, 0, 0, .04);
+    transition: transform .2s cubic-bezier(.36, -.24, .26, 1.32);
+    }
+
+  .Switch--ios .Switch__self:checked + .Switch__pseudo::before {
+    transform: translateX(20px);
     }
 
 /**
- * Android Switch
+ * Android
  */
+
+/* TODO поддержкать темы */
+
 .Switch--android {
   margin: -4px -15px;
   }
@@ -92,7 +89,7 @@
     }
 
   .Switch--android .Switch__self[disabled] + .Switch__pseudo {
-    opacity: .5;
+    opacity: .4;
     }
 
   .Switch--android .Switch__pseudo::before {
@@ -103,8 +100,9 @@
     background: #f1f1f1;
     border-radius: 10px;
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 2px 2px 0 rgba(0, 0, 0, .24);
+    transition: transform .1s ease;
     }
 
   .Switch--android .Switch__self:checked + .Switch__pseudo::before {
-    background: var(--header-blue);
+    background: var(--accent);
     }

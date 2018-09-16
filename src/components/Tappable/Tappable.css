@@ -1,5 +1,3 @@
-@import '../../styles/constants.css';
-
 .Tappable {}
 
 /**
@@ -9,8 +7,8 @@
   transition: background-color .15s ease-out;
   }
 
-.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.HeaderButton):not(.Button):not(.CellButton):not(.PanelHeaderContent__in) {
-  background: var(--ios-active-color) !important;
+.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.HeaderButton):not(.Button):not(.PanelHeaderContent__in):not(.ActionSheetItem) {
+  background: var(--separator_common) !important;
   transition: none;
   }
 
@@ -22,8 +20,8 @@
   transition: background-color .15s ease-out;
   }
 
-.Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.HeaderButton):not(.Button):not(.CellButton):not(.PanelHeaderContent__in) {
-  background: var(--android-active-color) !important;
+.Tappable--android.Tappable--active:not([disabled]):not(.HeaderButton):not(.Button):not(.PanelHeaderContent__in) {
+  background: var(--android_active_color) !important;
   }
 
   /**

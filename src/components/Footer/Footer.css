@@ -1,9 +1,9 @@
-@import '../../styles/constants.css';
+
 
 .Footer {
   margin: 24px 0;
   font-size: 13px;
-  color: var(--caption-gray);
+  color: var(--text_secondary);
   line-height: 16px;
   font-weight: normal;
   text-align: center;

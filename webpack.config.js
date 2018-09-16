@@ -4,6 +4,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const merge = require('webpack-merge');
 const pkg = require('./package.json');
 const cssTransformOptions = require('./postcss.config.js');
+const { generatePalette, generateScheme } = require('./src/appearance');
+
+generatePalette();
+generateScheme();
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -26,10 +30,6 @@ const config = {
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, ...cssTransformOptions]
-      },
-      {
-        test: /\.svg$/,
-        use: 'url-loader'
       }
     ]
   },

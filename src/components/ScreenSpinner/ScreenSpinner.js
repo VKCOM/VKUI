@@ -2,10 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner/Spinner';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
+import getClassName from '../../helpers/getClassName';
+import classnames from '../../lib/classnames';
+
+const baseClassName = getClassName('ScreenSpinner');
 
 export default function ScreenSpinner ({ style, className, ...restProps }) {
   return (
-    <PopoutWrapper className={className} style={style}>
+    <PopoutWrapper className={classnames(baseClassName, className)} style={style}>
       <Spinner {...restProps} />
     </PopoutWrapper>
   );
@@ -13,10 +17,7 @@ export default function ScreenSpinner ({ style, className, ...restProps }) {
 
 ScreenSpinner.propTypes = {
   className: PropTypes.string,
-  style: PropTypes.object,
-  color: PropTypes.string
+  style: PropTypes.object
 };
 
-ScreenSpinner.defaultProps = {
-  color: '#fff'
-};
+ScreenSpinner.defaultProps = {};

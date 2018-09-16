@@ -1,27 +1,12 @@
-export default {
-  black: '#000',
-  mutedBlack: '#2c2d2e',
-  subheadGray: '#71757a',
-  captionGray: '#909499',
-  lightGray: '#aaaeb3',
-  backgroundBlue: '#ebedf0',
+import systemPalette from '../appearance/palette';
+import customPalette from '../appearance/custom_palette';
+import { resolveColor } from '../lib/colors';
 
-  mediumBlueGray: '#818c99',
-  lightBlueGray: '#99a2ad',
+const palette = { ...systemPalette, ...customPalette };
 
-  mutedBlue: '#45678f',
-  headerBlue: '#5181b8',
-  accentBlue: '#528bcc',
-  lightBlue: '#74a2d6',
+const colors = Object.keys(palette).reduce((acc, colorId) => {
+  acc[colorId] = resolveColor(palette, colorId);
+  return acc;
+}, {});
 
-  niceRed: '#ff3347',
-  red: '#e64646',
-  fireOrange: '#f05c44',
-  orange: '#ffa000',
-  green: '#4bb34b',
-  blue: '#5c9ce6',
-
-  separator: 'rgba(0, 0, 0, .12)',
-  placeholderBackground: 'rgba(0, 28, 61, .08)',
-  placeholderForeground: 'rgba(0, 36, 77, .25)'
-};
+export default colors;

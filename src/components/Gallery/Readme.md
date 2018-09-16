@@ -22,7 +22,7 @@
               >
                 <div style={{ height: 150, backgroundColor: colors.red }} />
                 <div style={{ height: 150, backgroundColor: colors.green }} />
-                <div style={{ height: 150, backgroundColor: colors.blue }} />
+                <div style={{ height: 150, backgroundColor: colors.blue_300 }} />
               </Gallery>
             </Group>
             <Group title="Sticks left">
@@ -32,7 +32,7 @@
                 style={{ height: 150 }}
               >
                 <div style={{ height: 150, backgroundColor: colors.green }} />
-                <div style={{ height: 150, backgroundColor: colors.blue }} />
+                <div style={{ height: 150, backgroundColor: colors.blue_300 }} />
                 <div style={{ height: 150, backgroundColor: colors.red }} />
               </Gallery>
             </Group>
@@ -42,7 +42,7 @@
                 align="center"
                 style={{ height: 150 }}
               >
-                <div style={{ height: 150, backgroundColor: colors.blue }} />
+                <div style={{ height: 150, backgroundColor: colors.blue_300 }} />
                 <div style={{ height: 150, backgroundColor: colors.red }} />
                 <div style={{ height: 150, backgroundColor: colors.green }} />
               </Gallery>
@@ -55,9 +55,9 @@
                 slideIndex={this.state.slideIndex}
                 onChange={slideIndex => this.setState({slideIndex})}
               >
-                <div style={{ height: 150, backgroundColor: colors.blue }} />
                 <div style={{ height: 150, backgroundColor: colors.red }} />
                 <div style={{ height: 150, backgroundColor: colors.green }} />
+                <div style={{ height: 150, backgroundColor: colors.blue_300 }} />
               </Gallery>
               <Div>
                 <Button onClick={() => this.setState({slideIndex: this.state.slideIndex === 2 ? 0 : this.state.slideIndex + 1 })}>Next slide</Button>

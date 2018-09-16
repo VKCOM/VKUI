@@ -29,13 +29,13 @@
       <Group title="Placeholder">
         <List>
           <Cell
-            before={<Avatar style={{ background: colors.blue }} size={28}><Icon16Add fill="#fff" /></Avatar>}
+            before={<Avatar style={{ background: colors.blue_300 }} size={28}><Icon16Add fill={colors.white} /></Avatar>}
             description="Только от друзей друзей"
           >
             Заявки в друзья
           </Cell>
           <Cell
-            before={<Avatar style={{ background: colors.red }} size={28}><Icon16Like fill="#fff" /></Avatar>}
+            before={<Avatar style={{ background: colors.red }} size={28}><Icon16Like fill={colors.white} /></Avatar>}
             description="Только важные"
           >
             Отметки «Мне нравится»

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isWebView } from '../../lib/webview';
+import pkg from '../../../package';
 
 export default class ConfigProvider extends React.Component {
   componentWillMount () {
@@ -36,7 +37,7 @@ export default class ConfigProvider extends React.Component {
     insets: {},
     webviewType: 'internal',
     isWebView,
-    scheme: 'client_light'
+    scheme: pkg.defaultSchemeId
   };
 
   componentWillReceiveProps (nextProps) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
-import './FixedLayout.css';
+
 import classnames from '../../lib/classnames';
 import { transitionEndEventName, transitionStartEventName } from '../View/View';
 

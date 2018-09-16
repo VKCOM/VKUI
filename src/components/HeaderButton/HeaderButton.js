@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
-import './HeaderButton.css';
 
 const baseClassName = getClassName('HeaderButton');
 

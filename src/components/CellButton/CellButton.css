@@ -1,6 +1,3 @@
-@import '../../styles/constants.css';
-@import '../../styles/scheme.css';
-
 .CellButton {
   display: block;
   box-sizing: border-box;
@@ -13,10 +10,6 @@
   width: 100%;
   background: transparent;
   position: relative;
-  }
-
-.CellButton.Tappable--active {
-  opacity: .6;
   }
 
 .CellButton[disabled] {
@@ -45,11 +38,11 @@
   }
 
 .CellButton--lvl-primary {
-  color: var(--cell_button_foreground);
+  color: var(--accent);
   }
 
 .CellButton--lvl-danger {
-  color: var(--cell_button_destructive_foreground);
+  color: var(--destructive);
   }
 
 /*
@@ -73,17 +66,18 @@
 /*
   Android
  */
-.Button--android {
+.CellButton--android {
   font-family: var(--font-android);
   padding: 0 16px;
   }
 
-.CellButton--android .Button__content {
+.CellButton--android .CellButton__content {
   font-size: 16px;
   line-height: 20px;
   padding: 14px 0;
   }
 
-.CellButton--android .Button__before .Icon {
+.CellButton--android .CellButton__before .Icon {
   margin-right: 12px;
   }
+

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropType from 'prop-types';
 import classnames from '../../lib/classnames';
-import './HorizontalScroll.css';
 
 export default class HorizontalScroll extends React.Component {
   static propTypes = {

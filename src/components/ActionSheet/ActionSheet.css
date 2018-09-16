@@ -1,4 +1,27 @@
-@import '../../styles/constants.css';
+.ActionSheet {
+  position: relative;
+  }
+
+  .ActionSheet--android::before,
+  .ActionSheet--ios .ActionSheet__header::before,
+  .ActionSheet--ios .ActionSheetItem::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal_card_background);
+    opacity: .8;
+    z-index: 1;
+    content: '';
+    transition: background-color .15s ease-out;
+    }
+
+.ActionSheetItem {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  }
 
 /**
  * iOS version
@@ -11,6 +34,7 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow: hidden;
   }
 
   .ActionSheet--ios.ActionSheet--closing {
@@ -21,42 +45,56 @@
   .ActionSheet--ios .ActionSheet__header {
     box-sizing: border-box;
     padding: 14px 10px 13px;
+    position: relative;
+    overflow: hidden;
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
-    background: #fff;
-    position: relative;
     }
 
   .ActionSheet--ios .ActionSheet__header:empty {
     display: none;
     }
 
-  .ActionSheet--ios .ActionSheet__title {
-    text-align: center;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.38;
-    color: #8f8f8f;
-    }
+    .ActionSheet--ios .ActionSheet__title {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.38;
+      color: var(--text_secondary);
+      position: relative;
+      z-index: 2;
+      }
 
-  .ActionSheet--ios .ActionSheet__title + .ActionSheet__text {
-    margin-top: 10px;
-    }
+    .ActionSheet--ios .ActionSheet__title + .ActionSheet__text {
+      margin-top: 10px;
+      }
 
-  .ActionSheet--ios .ActionSheet__text {
-    text-align: center;
-    font-size: 12px;
-    line-height: 1.2;
-    color: #8f8f8f;
-    }
+    .ActionSheet--ios .ActionSheet__text {
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--text_secondary);
+      position: relative;
+      z-index: 2;
+      }
 
 .ActionSheet--ios .ActionSheetItem {
   padding: 16px 10px 17px;
   text-align: center;
   font-size: 20px;
-  background: #fff;
   position: relative;
+  overflow: hidden;
   }
+
+  .ActionSheet--ios .ActionSheetItem.Tappable--active::before {
+    background: var(--separator_common);
+    transition: none;
+    }
+
+  .ActionSheet--ios .ActionSheetItem__in {
+    position: relative;
+    z-index: 2;
+    }
 
 .ActionSheet--ios .ActionSheet__header:empty + .ActionSheetItem {
   border-top-left-radius: 14px;
@@ -69,23 +107,23 @@
   }
 
 .ActionSheet--ios .ActionSheetItem--default {
-  color: var(--accent-blue);
+  color: var(--accent);
   }
 
 .ActionSheet--ios .ActionSheetItem--destructive {
-  color: var(--red);
+  color: var(--destructive);
   }
 
 .ActionSheet--ios .ActionSheetItem--cancel {
   display: block;
   width: auto;
   margin-top: 7px;
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
-  color: var(--accent-blue);
+  color: var(--accent);
   font-weight: 600;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
   order: 1;
   }
 
@@ -98,13 +136,13 @@
   height: 1px;
   content: '';
   bottom: 0;
-  background: var(--separator);
+  background: var(--separator_action_sheet);
   }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .ActionSheet--ios div.ActionSheetItem::after,
   .ActionSheet--ios .ActionSheet__header::after {
-    background: var(--ios-bottom-border);
+    background: linear-gradient(to top, var(--separator_action_sheet) 50%, transparent 50%);
     }
   }
 
@@ -119,7 +157,6 @@
 
 .ActionSheet--android {
   min-width: 280px;
-  background: #fff;
   box-shadow: 0 20px 35px 0 rgba(0, 0, 0, .3), 0 0 35px 0 rgba(0, 0, 0, .22);
   border-radius: 2px;
   animation: animation-android-actionsheet-intro .2s ease;
@@ -138,12 +175,16 @@
   font-size: 16px;
   }
 
+.ActionSheet--android .ActionSheetItem.Tappable--active {
+  background-color: var(--separator_action_sheet);
+  }
+
 .ActionSheet--android .ActionSheetItem--default {
-  color: var(--accent-blue);
+  color: var(--accent);
   }
 
 .ActionSheet--android .ActionSheetItem--destructive {
-  color: var(--red);
+  color: var(--destructive);
   }
 
 /**

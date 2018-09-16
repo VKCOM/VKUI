@@ -30,7 +30,6 @@ export default class AndroidSpinner extends Component {
     };
   }
   static propTypes = {
-    color: PropTypes.string,
     size: PropTypes.number,
     strokeWidth: PropTypes.number,
     duration: PropTypes.number,
@@ -38,7 +37,6 @@ export default class AndroidSpinner extends Component {
     progress: PropTypes.number
   };
   static defaultProps = {
-    color: '#5181b8',
     size: 38,
     strokeWidth: 4,
     duration: 1.4,
@@ -46,7 +44,7 @@ export default class AndroidSpinner extends Component {
     progress: null
   };
   render () {
-    const { color, size, on, progress, duration, strokeWidth } = this.props;
+    const { size, on, progress, duration, strokeWidth } = this.props;
     const { id, offset, animation } = this.state;
 
     let dashoffset = offset;
@@ -75,7 +73,6 @@ export default class AndroidSpinner extends Component {
         <circle
           className="Spinner__path"
           fill="none"
-          stroke={color}
           strokeDasharray={offset}
           strokeDashoffset={dashoffset}
           strokeWidth={strokeWidth}

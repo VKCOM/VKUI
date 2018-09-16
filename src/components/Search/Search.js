@@ -29,11 +29,13 @@ export default class Search extends React.Component {
      * **Важно:** в коллбэк первым аргументом прилетает *значение* текстового поля.
      * Объект события передается вторым аргументом.
      */
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    autoComplete: PropTypes.string
   };
 
   static defaultProps = {
-    theme: 'default'
+    theme: 'default',
+    autoComplete: 'off'
   };
 
   render () {

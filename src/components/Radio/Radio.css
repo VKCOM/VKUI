@@ -1,7 +1,6 @@
-@import '../../styles/constants.css';
+
 
 .Radio {
-  background-color: #fff;
   display: block;
   }
 
@@ -39,12 +38,13 @@
       font-size: 16px;
       flex-grow: 1;
       max-width: 100%;
+      color: var(--text_primary);
       }
 
       .Radio__description {
         font-size: 13px;
         line-height: 15px;
-        color: var(--caption-gray);
+        color: var(--text_secondary);
         }
 
 .Radio--ios {
@@ -56,13 +56,13 @@
     .Radio--ios .Radio__icon {
       width: 22px;
       height: 22px;
-      border: 2px solid #c4c8cc;
+      border: 2px solid var(--icon_secondary);
       margin: 1px 12px 1px 1px;
       transition: border-color .15s var(--ios-easing);
       }
 
     .Radio--ios .Radio__input:checked ~ .Radio__container .Radio__icon {
-      border-color: var(--accent-blue);
+      border-color: var(--accent);
       }
 
       .Radio--ios .Radio__icon::after {
@@ -75,7 +75,7 @@
         }
 
       .Radio--ios .Radio__input:checked ~ .Radio__container .Radio__icon::after {
-        background-color: var(--accent-blue);
+        background-color: var(--accent);
         transform: scale(1);
         }
 
@@ -92,7 +92,7 @@
     .Radio--android .Radio__icon {
       width: 20px;
       height: 20px;
-      border: 2px solid #c4c8cc;
+      border: 2px solid var(--icon_secondary);
       margin: 2px 18px 2px 2px;
       transition: border-color .5s var(--ios-easing);
       }
@@ -111,10 +111,10 @@
       }
 
     .Radio--android .Radio__input:checked ~ .Radio__container .Radio__icon {
-      border-color: var(--accent-blue);
+      border-color: var(--accent);
       }
 
       .Radio--android .Radio__input:checked ~ .Radio__container .Radio__icon::after {
-        background-color: var(--accent-blue);
+        background-color: var(--accent);
         transform: scale(1);
         }

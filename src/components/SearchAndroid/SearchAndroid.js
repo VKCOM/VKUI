@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
-import './SearchAndroid.css';
+
 import HeaderButton from '../HeaderButton/HeaderButton';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';

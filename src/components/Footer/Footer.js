@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
-import './Footer.css';
+
 import Div from '../Div/Div';
 
 const Footer = ({ className, children, ...restProps }) => (

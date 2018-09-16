@@ -1,5 +1,3 @@
-@import '../../styles/constants.css';
-@import '../../styles/scheme.css';
 @import './PanelHeaderTransitions.css';
 
 .PanelHeader {
@@ -50,8 +48,6 @@
       .PanelHeader__content {
         overflow: hidden;
         text-overflow: ellipsis;
-        position: relative;
-        z-index: 1;
         }
 
         .PanelHeader-content {
@@ -87,21 +83,24 @@
   }
 
   .PanelHeader--ios .PanelHeader__in {
-    height: 44px;
+    height: 100%;
     padding-top: 20px;
     padding-top: constant(safe-area-inset-top);
     padding-top: env(safe-area-inset-top);
     }
 
     .PanelHeader--ios .PanelHeader__container {
-      height: 44px;
+      height: 100%;
       justify-content: space-between;
+      align-items: flex-start;
       }
 
-      .PanelHeader--ios .PanelHeader__bg {}
+      .PanelHeader--ios .PanelHeader__bg {
+        height: 100%;
+        }
 
         .PanelHeader--ios .PanelHeader-bg {
-          height: 44px;
+          height: 100%;
           padding-top: 20px;
           padding-top: constant(safe-area-inset-top);
           padding-top: env(safe-area-inset-top);
@@ -113,8 +112,14 @@
           left: 0;
           width: 100%;
           height: 1px;
-          background: var(--ios-bottom-border);
+          background: var(--separator_common);
           content: '';
+          }
+
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+          .PanelHeader--ios .PanelHeader-bg::after {
+            background: var(--ios-bottom-border);
+            }
           }
 
         .PanelHeader--ios .PanelHeader-bg--no-shadow::after {
@@ -127,14 +132,17 @@
         flex-grow: 1;
         flex-basis: 0;
         padding-right: 12px;
+        height: 43px;
         }
 
         .PanelHeader--ios .PanelHeader__left-in {
           box-sizing: border-box;
+          height: 100%;
           }
 
           .PanelHeader--ios .PanelHeader-left-in {
             font-size: 17px;
+            height: 100%;
             }
 
             .PanelHeader--ios .PanelHeader-left-in .HeaderButton .Icon--24 {
@@ -145,29 +153,40 @@
               padding-left: 16px;
               }
 
-        .PanelHeader--ios .PanelHeader__addon {}
+        .PanelHeader--ios .PanelHeader__addon {
+          height: 100%;
+          }
 
           .PanelHeader--ios .PanelHeader-addon:not(:empty) {
             padding-left: 4px;
+            height: 100%;
             }
 
-      .PanelHeader--ios .PanelHeader-content {
-        font-weight: 500;
-        font-size: 17px;
-        line-height: 44px;
-        height: 44px;
-        text-align: center;
-        transition: color .6s var(--ios-easing);
+      .PanelHeader--ios .PanelHeader__content {
+        position: relative;
+        z-index: 1;
+        height: 43px;
         }
+
+        .PanelHeader--ios .PanelHeader-content {
+          font-weight: 500;
+          font-size: 17px;
+          height: 100%;
+          line-height: 43px;
+          text-align: center;
+          transition: color .6s var(--ios-easing);
+          }
 
       .PanelHeader--ios .PanelHeader__right {
         flex-grow: 1;
         flex-basis: 0;
         padding-left: 12px;
+        height: 43px;
         }
 
         .PanelHeader--ios .PanelHeader-right {
           font-size: 17px;
+          height: 100%;
           }
 
           .PanelHeader--ios .PanelHeader-right .HeaderButton:not(:first-child) {
@@ -256,20 +275,20 @@
   Темы
  */
 .PanelHeader-bg--brand {
-  background: var(--header_background_before_blur);
+  background: var(--header_background);
   }
 
 .PanelHeader-content--brand,
 .PanelHeader-left-in--brand,
 .PanelHeader-addon--brand,
 .PanelHeader-right--brand {
-  color: #fff;
-  background: var(--header-blue);
+  color: var(--header_text);
+  background: var(--header_background);
   }
 
 .PanelHeader-bg--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
 .PanelHeader-bg--alternate {
-  background: var(--header_background_before_blur_alternate);
+  background: var(--header_alternate_background);
   }
 
 .PanelHeader-left-in--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
@@ -278,8 +297,8 @@
 .PanelHeader-left-in--alternate,
 .PanelHeader-addon--alternate,
 .PanelHeader-right--alternate {
-  color: var(--header-blue);
-  background: #fff;
+  color: var(--header_tint_alternate);
+  background: var(--header_alternate_background);
   }
 
 .PanelHeader-content--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/

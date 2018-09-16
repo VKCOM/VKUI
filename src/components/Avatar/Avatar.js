@@ -2,7 +2,6 @@ import React from 'react';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import PropTypes from 'prop-types';
-import './Avatar.css';
 
 const baseClassName = getClassName('Avatar');
 

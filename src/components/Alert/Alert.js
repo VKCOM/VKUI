@@ -1,4 +1,4 @@
-import './Alert.css';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';

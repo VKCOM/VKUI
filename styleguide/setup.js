@@ -1,7 +1,7 @@
+import '../src/styles/common.css';
 import React from 'react';
 import colors from '../src/helpers/colors';
 import { platform, IOS, ANDROID } from '../src/lib/platform';
-import '../src/styles/common.css';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon16Add from '@vkontakte/icons/dist/16/add';
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
@@ -26,6 +26,7 @@ import Icon24User from '@vkontakte/icons/dist/24/user';
 import Icon24Privacy from '@vkontakte/icons/dist/24/privacy';
 import Icon24Write from '@vkontakte/icons/dist/24/write';
 import Icon24MoreHorizontal from '@vkontakte/icons/dist/24/more_horizontal';
+import Icon24LogoVk from '@vkontakte/icons/dist/24/logo_vk';
 
 window.uaList = {
   ios: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
@@ -64,5 +65,6 @@ window.Icon24User = Icon24User;
 window.Icon24Privacy = Icon24Privacy;
 window.Icon24MoreHorizontal = Icon24MoreHorizontal;
 window.Icon24Write = Icon24Write;
+window.Icon24LogoVk = Icon24LogoVk;
 
 window.colors = colors;

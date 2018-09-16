@@ -1,16 +1,14 @@
-@import '../../styles/constants.css';
-
 .Avatar {
   box-sizing: border-box;
   }
 
   .Avatar__in {
     position: relative;
-    color: var(--light-gray);
+    color: var(--icon_secondary);
     }
 
     .Avatar__img {
-      background-color: var(--placeholder-background);
+      background: var(--placeholder_icon_background);
       border: none;
       display: block;
       max-width: 100%;
