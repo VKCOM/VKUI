@@ -26,38 +26,9 @@ body[scheme="client_dark"] {
 ```
 
 ### Как с этим работать?
-Пользователь выбирает тему в настройках клиента (iOS, Android). Клиент в свою очередь пробрасывает vkui-приложениям
-специальное событие: `VKWebAppUpdateConfig`. В `e.detail.data` этого события находится свойство `scheme`, которое мы
-должны навесить на `body`.
+Пользователь выбирает тему в настройках клиента (iOS, Android). Клиент, в свою очередь, с помощью
+`@vkontakte/vkui-connect` пробрасывает vkui-приложениям специальное событие: `VKWebAppUpdateConfig`.
+В `e.detail.data` этого события находится свойство `scheme`, которое мы должны навесить на `body`.
 
-Для этого есть специальный компонент, `ConfigProvider`, задачей которого является задание и обновление
-глобальной конфигураций приложения. Достаточно передать ему значение `scheme`, все остальное он сделает сам.
-Важно понимать, что событие `VKWebAppUpdateConfig` будет вызываться каждый раз, когда пользователь меняет тему в
-настройках клиента. Первоначальный вызов этого события происходит сразу после того, как vkui-приложение
-шлет `VKWebAppInit`.
-
-### Пример:
-
-```jsx static
-import { ConfigProvider, isWebView } from '@vkontakte/vkui';
-import connect from '@vkontakte/vkui-connect';
-
-connect.subscribe((e) => {
-  switch (e.detail.type) {
-    case 'VKWebAppUpdateConfig':
-      const { scheme } = e.detail.data;
-      render({ scheme });
-  }
-});
-
-connect.send('VKWebAppInit');
-
-function render (props) {
-  ReactDOM.render(
-    <ConfigProvider {...props}>
-      <App />
-    </ConfigProvider>, document.getElementById('root')
-  )
-}
-
-```
+В скором будущем библиотека инкапсулирует эту логику внутри себя и вам не придется думать об установке схемы,
+соответствующей клиентской.
