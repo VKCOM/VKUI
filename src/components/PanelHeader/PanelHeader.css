@@ -83,24 +83,22 @@
   }
 
   .PanelHeader--ios .PanelHeader__in {
-    height: 100%;
+    height: 44px;
     padding-top: 20px;
     padding-top: constant(safe-area-inset-top);
     padding-top: env(safe-area-inset-top);
     }
 
     .PanelHeader--ios .PanelHeader__container {
-      height: 100%;
+      height: 44px;
       justify-content: space-between;
       align-items: flex-start;
       }
 
-      .PanelHeader--ios .PanelHeader__bg {
-        height: 100%;
-        }
+      .PanelHeader--ios .PanelHeader__bg {}
 
         .PanelHeader--ios .PanelHeader-bg {
-          height: 100%;
+          height: 44px;
           padding-top: 20px;
           padding-top: constant(safe-area-inset-top);
           padding-top: env(safe-area-inset-top);
