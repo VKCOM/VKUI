@@ -134,6 +134,10 @@
   color: var(--text_secondary);
   }
 
+.Tabs--android.Tabs--light .TabsItem.Tappable--active {
+  background: var(--android_active_color);
+  }
+
 .Tabs--android.Tabs--light .TabsItem--selected {
   color: var(--accent);
   }
@@ -144,6 +148,10 @@
 
 .Tabs--android.Tabs--header .TabsItem {
   color: var(--header_tint);
+  }
+
+.Tabs--android.Tabs--header .TabsItem.Tappable--active {
+  background-color: rgba(255, 255, 255, .1);
   }
 
   .Tabs--android.Tabs--header .TabsItem .TabsItem__in {
