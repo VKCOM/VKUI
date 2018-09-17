@@ -6,7 +6,7 @@
   "description": "VKUI library",
   "repository": "https://github.com/VKCOM/VKUI",
   "homepage": "https://vkcom.github.io/vkui-styleguide",
-  "defaultSchemeId": "client_dark",
+  "defaultSchemeId": "client_light",
   "devDependencies": {
     "autoprefixer": "^7.2.3",
     "babel-core": "^6.23.1",
