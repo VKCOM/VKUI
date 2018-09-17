@@ -4,6 +4,17 @@
   height: 100%;
   }
 
+  .Panel::after {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    content: '';
+    }
+
   .Panel--centered .Panel__in {
     display: flex;
     align-items: center;
@@ -16,6 +27,7 @@
     box-sizing: border-box;
     width: 100%;
     min-height: 100%;
+    z-index: 2;
     }
 
     .Panel__in-before {
@@ -27,3 +39,11 @@
       height: 1px;
       margin-top: -1px;
       }
+
+.Panel--tm-gray::after {
+  background-color: var(--background_page);
+  }
+
+.Panel--tm-white::after {
+  background-color: var(--background_content);
+  }

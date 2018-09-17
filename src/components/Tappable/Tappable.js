@@ -1,4 +1,4 @@
-import './Tappable.css';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';

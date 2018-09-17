@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
-import './SearchIOS.css';
+
 import Icon16Search from '@vkontakte/icons/dist/16/search';
 
 const baseClassName = getClassName('Search');

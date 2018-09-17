@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
-import './Tooltip.css';
 
 const isElement = element => React.isValidElement(element);
 const isDOMTypeElement = element => isElement(element) && typeof element.type === 'string';

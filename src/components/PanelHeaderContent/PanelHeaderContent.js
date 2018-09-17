@@ -4,7 +4,6 @@ import classnames from '../../lib/classnames';
 import getClassName from '../../helpers/getClassName';
 import { platform, ANDROID } from '../../lib/platform';
 import Tappable from '../Tappable/Tappable';
-import './PanelHeaderContent.css';
 
 const osname = platform();
 const baseClassNames = getClassName('PanelHeaderContent');

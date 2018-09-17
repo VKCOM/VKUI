@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
-import './Tabs.css';
 
 const baseClassName = getClassName('Tabs');
 

@@ -12,7 +12,7 @@ const ActionSheetItem = ({ className, children, autoclose, theme, ...restProps }
     className={classnames(baseClassNames, className, { [`ActionSheetItem--${theme}`]: true })}
     component={theme === 'cancel' ? 'span' : 'div'}
   >
-    {children}
+    <span className="ActionSheetItem__in">{children}</span>
   </Tappable>
 );
 

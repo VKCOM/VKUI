@@ -1,4 +1,4 @@
-@import '../../styles/constants.css';
+
 
 .Input {
   position: relative;
@@ -27,7 +27,7 @@
   height: 44px;
   line-height: 19px;
   font-size: 16px;
-  color: var(--black);
+  color: var(--text_primary);
   padding: 12px;
   }
 
@@ -36,7 +36,7 @@
   }
 
 .Input__el::placeholder {
-  color: var(--caption-gray);
+  color: var(--field_text_placeholder);
   }
 
 .Input__placeholder {
@@ -45,7 +45,7 @@
   top: 0;
   height: 100%;
   width: calc(100% - 20px);
-  color: var(--caption-gray);
+  color: var(--field_text_placeholder);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -59,12 +59,12 @@
 
   .Input--ios .Input__el {
     border-radius: 10px;
-    background-color: rgb(242, 243, 245);
-    border: solid .5px rgba(0, 0, 0, .15);
+    background-color: var(--field_background);
+    border: solid .5px var(--field_border);
     }
 
   .Input--ios .Input__el:focus {
-    border-color: var(--accent-blue);
+    border-color: var(--accent);
     }
 
 .Input--android {
@@ -73,7 +73,7 @@
 
   .Input--android .Input__el {
     border-radius: 4px;
-    background-color: #f2f3f5;
+    background-color: var(--field_background);
     }
 
   .Input--android .Input__el:disabled ~ .Input-underline {

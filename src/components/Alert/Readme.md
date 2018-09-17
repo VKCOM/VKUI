@@ -37,7 +37,7 @@ class Example extends React.Component {
     return (
       <View popout={this.state.popout} header={false} activePanel="alert">
         <Panel id="alert">
-          <Button type="cell" onClick={this.openSheet.bind(this)}>Open Alert</Button>
+          <CellButton onClick={this.openSheet.bind(this)}>Open Alert</CellButton>
         </Panel>
       </View>
     )

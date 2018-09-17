@@ -1,11 +1,16 @@
-@import '../../styles/constants.css';
+.Group {
+  background: var(--background_content);
+  }
+
+  .Group__content {
+    color: var(--text_primary);
+    }
 
 /**
  * iOS
  */
 .Group--ios {
   margin: 10px 0;
-  background-color: #fff;
   position: relative;
   }
 
@@ -17,7 +22,7 @@
   .Group--ios .Group__description {
     font-size: 14px;
     line-height: 16px;
-    color: var(--subhead-gray);
+    color: var(--text_secondary);
     padding: 8px 12px;
     }
 
@@ -29,7 +34,7 @@
     z-index: 1;
     height: 1px;
     content: '';
-    background: var(--separator);
+    background: var(--separator_common);
     }
 
   .Group--ios::before {
@@ -42,11 +47,11 @@
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
     .Group--ios::before {
-      background: var(--ios-top-border);
+      background: linear-gradient(to bottom, var(--separator_common) 50%, transparent 50%);
       }
 
     .Group--ios::after {
-      background: var(--ios-bottom-border);
+      background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
       }
     }
 
@@ -56,14 +61,13 @@
 
 .Group--android {
   margin: 8px 0;
-  background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .06), 0 0 2px 0 rgba(0, 0, 0, .03);
   }
 
   .Group--android .Group__description {
     font-size: 14px;
     line-height: 16px;
-    color: var(--caption-gray);
+    color: var(--text_secondary);
     padding: 12px 16px 8px;
     }
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
-import './ActionSheet.css';
+
 import { platform, ANDROID, IOS } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 

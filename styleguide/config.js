@@ -50,6 +50,7 @@ module.exports = {
         name: 'Blocks',
         components: () => [
           '../src/components/Button/Button.js',
+          '../src/components/CellButton/CellButton.js',
           '../src/components/Div/Div.js',
           '../src/components/Link/Link.js',
           '../src/components/Header/Header.js',
@@ -84,6 +85,9 @@ module.exports = {
           '../src/components/Textarea/Textarea.js',
           '../src/components/File/File.js'
         ]
+      }, {
+        name: 'Themes',
+        content: './pages/themes.md'
       }, {
         name: 'Colors',
         content: './pages/colors.md'

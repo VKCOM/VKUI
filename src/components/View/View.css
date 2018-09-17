@@ -1,4 +1,4 @@
-@import '../../styles/constants.css';
+
 @import './ViewIOS.css';
 @import './ViewAndroid.css';
 
@@ -6,7 +6,6 @@
   position: relative;
   height: 100%;
   width: 100%;
-  background: #efeff4;
   word-wrap: break-word;
   }
 
@@ -41,16 +40,6 @@
     box-sizing: border-box;
     z-index: 1;
     }
-
-    .View .View__panel,
-    .View .Panel__in {
-      background: var(--background-blue);
-      }
-
-    .View .View__panel--theme-white,
-    .View .View__panel--theme-white .Panel__in {
-      background: #fff;
-      }
 
   .View__panel-in {
     height: 100%;

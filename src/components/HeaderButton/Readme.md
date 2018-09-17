@@ -80,9 +80,9 @@ class Example extends React.Component {
               </Div>
             </Group>
             <Group>
-              <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel2' }) }>
+              <CellButton onClick={ () => this.setState({ activePanel: 'panel2' }) }>
                 Больше примеров
-              </Button>
+              </CellButton>
             </Group>
           </Panel>
           <Panel id="panel2">
@@ -94,9 +94,9 @@ class Example extends React.Component {
               Заголовок
             </PanelHeader>
             <Group>
-              <Button type="cell" onClick={ () => this.setState({ activePanel: 'panel3' }) }>
+              <CellButton onClick={ () => this.setState({ activePanel: 'panel3' }) }>
                 Несколько иконок
-              </Button>
+              </CellButton>
             </Group>
           </Panel>
           <Panel id="panel3">
@@ -111,9 +111,9 @@ class Example extends React.Component {
               Две иконки
             </PanelHeader>
             <Group>
-              <Button type="cell" onClick={ () => this.setState({ activeView: 'modal' }) }>
+              <CellButton onClick={ () => this.setState({ activeView: 'modal' }) }>
                 Модальное окно
-              </Button>
+              </CellButton>
             </Group>
           </Panel>
         </View>

@@ -15,7 +15,7 @@ module.exports = [
       plugins: () => {
         return [
           cssImport(),
-          cssCustomProperties(),
+          cssCustomProperties({ preserve: true }),
           autoprefixer()
         ];
       }

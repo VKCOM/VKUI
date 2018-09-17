@@ -1,5 +1,3 @@
-@import '../../styles/constants.css';
-
 .TabsItem {
   white-space: nowrap;
   text-align: center;
@@ -40,31 +38,38 @@
   }
 
 .Tabs--ios.Tabs--default.Tabs--light .TabsItem {
-  border-color: var(--light-blue-gray);
-  color: var(--light-blue-gray);
+  border-color: var(--segmented_control_tint);
+  color: var(--segmented_control_tint);
   }
 
 .Tabs--ios.Tabs--default.Tabs--light .TabsItem--selected {
-  color: #fff;
-  background-color: var(--light-blue-gray);
+  background-color: var(--segmented_control_tint);
+  }
+
+.Panel--tm-gray .Tabs--ios.Tabs--default.Tabs--light .TabsItem--selected {
+  color: var(--background_page);
+  }
+
+.Panel--tm-white .Tabs--ios.Tabs--default.Tabs--light .TabsItem--selected {
+  color: var(--background_content);
   }
 
 .Tabs--ios.Tabs--default.Tabs--light .TabsItem:not(.TabsItem--selected).Tappable--active {
-  background: var(--separator);
+  background: var(--separator_common);
   }
 
-.Tabs--ios.Tabs--default.Tabs--header .TabsItem:not(.TabsItem--selected).Tappable--active {
-  background-color: rgba(255, 255, 255, .1);
+.Tabs--ios.Tabs--default.Tabs--header .TabsItem:not(.TabsItem--selected).Tappable--active .TabsItem__in {
+  opacity: .7;
   }
 
 .Tabs--ios.Tabs--default.Tabs--header .TabsItem {
-  border-color: #fff;
-  color: #fff;
+  border-color: var(--header_tint);
+  color: var(--header_tint);
   }
 
 .Tabs--ios.Tabs--default.Tabs--header .TabsItem--selected {
-  background-color: #fff;
-  color: var(--header-blue);
+  background-color: var(--header_tint);
+  color: var(--header_background);
   }
 
 .Tabs--ios.Tabs--buttons .TabsItem {
@@ -77,27 +82,32 @@
   font-weight: 500;
   }
 
+/* Для случая, когда внутри Tabs нет HorizontalScroll */
 .Tabs--ios.Tabs--buttons > .TabsItem:first-child {
   margin-left: 8px;
   }
 
+.Tabs--ios.Tabs--buttons .TabsItem:not(:last-child) {
+  margin-right: 8px;
+  }
+
 .Tabs--ios.Tabs--buttons.Tabs--header .TabsItem {
-  background-color: var(--header-blue);
-  color: #c2deff;
+  background-color: var(--header_background);
+  color: var(--header_tint);
   }
 
 .Tabs--ios.Tabs--buttons.Tabs--header .TabsItem--selected {
-  background-color: rgba(173, 211, 255, .32);
-  color: #fff;
+  background-color: var(--header_tint);
+  color: var(--header_background);
   }
 
 .Tabs--ios.Tabs--buttons.Tabs--light .TabsItem {
-  color: var(--subhead-gray);
+  color: var(--panel_tab_inactive_text);
   }
 
 .Tabs--ios.Tabs--buttons.Tabs--light .TabsItem--selected {
-  background-color: var(--background-blue);
-  color: #5a5d61;
+  background-color: var(--panel_tab_active_background);
+  color: var(--panel_tab_active_text);
   }
 
 /*
@@ -121,35 +131,43 @@
     }
 
 .Tabs--android.Tabs--light .TabsItem {
-  color: var(--caption-gray);
+  color: var(--text_secondary);
+  }
+
+.Tabs--android.Tabs--light .TabsItem.Tappable--active {
+  background: var(--android_active_color);
   }
 
 .Tabs--android.Tabs--light .TabsItem--selected {
-  color: var(--header-blue);
+  color: var(--accent);
   }
 
   .Tabs--android.Tabs--light .TabsItem--selected::after {
-    background-color: var(--header-blue);
+    background-color: var(--accent);
     }
 
 .Tabs--android.Tabs--header .TabsItem {
-  color: rgba(255, 255, 255, .5);
+  color: var(--header_tint);
   }
-
-.Tabs--android.Tabs--header .TabsItem--selected {
-  color: #fff;
-  }
-
-  .Tabs--android.Tabs--header .TabsItem--selected::after {
-    background-color: #fff;
-    }
 
 .Tabs--android.Tabs--header .TabsItem.Tappable--active {
   background-color: rgba(255, 255, 255, .1);
   }
 
-.Tabs--android.Tabs--light .TabsItem.Tappable--active {
-  background-color: var(--android-active-color);
+  .Tabs--android.Tabs--header .TabsItem .TabsItem__in {
+    opacity: .7;
+    }
+
+  .Tabs--android.Tabs--header .TabsItem--selected .TabsItem__in {
+    opacity: 1;
+    }
+
+  .Tabs--android.Tabs--header .TabsItem--selected::after {
+    background-color: var(--header_tint);
+    }
+
+.Tabs--android.Tabs--header .TabsItem.Tappable--active {
+  background-color: var(--white_alpha12);
   }
 
 .Tabs--android.Tabs--buttons .TabsItem {

@@ -1,4 +1,4 @@
-import './Spinner.css';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
@@ -13,7 +13,6 @@ const baseClassNames = getClassName('Spinner');
 export default class Spinner extends Component {
   static propTypes = {
     style: PropTypes.object,
-    color: PropTypes.string,
     size: PropTypes.number,
     androidStrokeWidth: PropTypes.number,
     on: PropTypes.bool,
@@ -21,7 +20,7 @@ export default class Spinner extends Component {
     className: PropTypes.string
   };
   static defaultProps = {
-    color: osname === ANDROID ? '#5181b8' : '#262626',
+    // color: osname === ANDROID ? '#5181b8' : '#262626',
     androidStrokeWidth: 4,
     size: osname === ANDROID ? 38 : 20,
     animated: true,

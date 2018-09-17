@@ -1,4 +1,4 @@
-import './View.css';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
@@ -92,18 +92,8 @@ export default class View extends Component {
 
   refsStore = {};
 
-  componentWillMount () {
-    this.setPanelBg(this.props.activePanel);
-  }
-
   componentWillReceiveProps (nextProps) {
-    if (this.props.activePanel !== nextProps.activePanel) {
-      this.setPanelBg(nextProps.activePanel);
-    }
-
-    if (nextProps.popout && !this.props.popout) {
-      this.blurActiveElement();
-    }
+    nextProps.popout && !this.props.popout && this.blurActiveElement();
 
     // Нужен переход
     if (this.props.activePanel !== nextProps.activePanel && !this.state.swipingBack && !this.state.browserSwipe) {
@@ -223,15 +213,6 @@ export default class View extends Component {
   blurActiveElement () {
     if (typeof this.window !== 'undefined' && this.document.activeElement) {
       this.document.activeElement.blur();
-    }
-  }
-
-  setPanelBg (panelId) {
-    const panel = this.panels.find(panel => panel.props.id === panelId);
-    if (panel) {
-      this.document.documentElement.setAttribute('theme', panel.props.theme);
-    } else {
-      this.document.documentElement.removeAttribute('theme');
     }
   }
 
@@ -549,8 +530,7 @@ export default class View extends Component {
                 'View__panel--swipe-back-prev': panel.props.id === this.state.swipeBackPrevPanel,
                 'View__panel--swipe-back-next': panel.props.id === this.state.swipeBackNextPanel,
                 'View__panel--swipe-back-success': this.state.swipingBackFinish === true,
-                'View__panel--swipe-back-failed': this.state.swipingBackFinish === false,
-                [`View__panel--theme-${panel.props.theme}`]: true
+                'View__panel--swipe-back-failed': this.state.swipingBackFinish === false
               })}
               style={this.calcPanelSwipeStyles(panel.props.id)}
               key={panel.props.id}

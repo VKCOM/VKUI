@@ -1,4 +1,4 @@
-@import '../../styles/constants.css';
+
 
 .FormLayout {
   position: relative;
@@ -38,7 +38,7 @@
     .FormLayout--ios .FormLayout__field .Textarea,
     .FormLayout--ios .FormLayout__field .Select,
     .FormLayout--ios .FormLayout__field .SelectMimicry,
-    .FormLayout--ios .FormLayout__field .Button--type-default {
+    .FormLayout--ios .FormLayout__field .Button {
       margin-left: 12px;
       margin-right: 12px;
       }
@@ -49,18 +49,18 @@
       margin-right: 26px;
       }
 
-    .FormLayout--ios .FormLayout__field .Button--size-xl {
+    .FormLayout--ios .FormLayout__field .Button--sz-xl {
       width: calc(100% - 24px);
       }
 
     .FormLayout--ios .FormLayout__row-top {
-      color: var(--subhead-gray);
+      color: var(--text_secondary);
       padding: 2px 12px 8px;
       font-size: 14px;
       }
 
     .FormLayout--ios .FormLayout__row-bottom {
-      color: var(--subhead-gray);
+      color: var(--text_secondary);
       padding: 8px 12px 0;
       font-size: 13px;
       }
@@ -75,7 +75,7 @@
     .FormLayout--android .FormLayout__field .Input,
     .FormLayout--android .FormLayout__field .Select,
     .FormLayout--android .FormLayout__field .SelectMimicry,
-    .FormLayout--android .FormLayout__field .Button--type-default {
+    .FormLayout--android .FormLayout__field .Button {
       margin-left: 16px;
       margin-right: 16px;
       }
@@ -86,12 +86,12 @@
       margin-right: 30px;
       }
 
-    .FormLayout--android .FormLayout__field .Button--size-xl {
+    .FormLayout--android .FormLayout__field .Button--sz-xl {
       width: calc(100% - 32px);
       }
 
     .FormLayout--android .FormLayout__row-top {
-      color: var(--subhead-gray);
+      color: var(--text_secondary);
       padding: 2px 16px 8px;
       line-height: 18px;
       font-size: 14px;
@@ -100,5 +100,5 @@
     .FormLayout--android .FormLayout__row-bottom {
       padding: 8px 16px 0;
       font-size: 13px;
-      color: var(--subhead-gray);
+      color: var(--text_secondary);
       }

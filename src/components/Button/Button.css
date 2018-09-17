@@ -1,15 +1,12 @@
-@import '../../styles/constants.css';
-
 .Button {
   display: inline-block;
   box-sizing: border-box;
   outline: none;
   text-decoration: none;
   cursor: default;
-  }
-
-.Button[disabled] {
-  opacity: .4;
+  border: 1px solid transparent;
+  margin: 0;
+  padding: 0;
   }
 
   .Button__in {
@@ -17,40 +14,33 @@
     align-items: center;
     }
 
-  .Button--align-left .Button__in {
+.Button.Tappable--active {
+  opacity: .6;
+}
+
+.Button[disabled] {
+  opacity: .4;
+  }
+
+  .Button--aln-left .Button__in {
     justify-content: flex-start;
     }
 
-  .Button--align-center .Button__in {
+  .Button--aln-center .Button__in {
     justify-content: center;
     }
 
-  .Button--align-right .Button__in {
+  .Button--aln-right .Button__in {
     justify-content: flex-end;
     }
 
-.Button--type-cell {
+.Button--str {
   display: block;
-  width: 100%;
-  border: none;
-  background: transparent;
+  max-width: 100%;
+  flex-grow: 1;
   }
 
-.Button--type-cell.Tappable--active {
-  position: relative;
-  z-index: 2;
-  }
-
-.Button--type-cell.Button--level-primary {
-  color: var(--accent-blue);
-  }
-
-.Button--type-cell.Button--level-danger {
-  color: var(--red);
-  }
-
-.Button--stretched {
-  display: block;
+.Button--str:first-child:last-child {
   width: 100%;
   }
 
@@ -58,118 +48,93 @@
     justify-content: center;
     }
 
-.Button--type-default {
-  border: 1px solid transparent;
-  justify-content: center;
-  }
-
-  .Button--type-default .Button__before .Icon--16 {
+  .Button__before .Icon--16 {
       margin-right: 6px;
       }
 
-  .Button--type-default .Button__before .Icon--24 {
+  .Button__before .Icon--24 {
       margin-right: 8px;
       }
 
-  .Button--type-default::before,
-  .Button--type-default::after {
+  .Button::before,
+  .Button::after {
     display: none;
     }
 
-.Button--level-1 {
-  background-color: var(--header-blue);
-  color: #fff;
+.Button--lvl-primary {
+  background-color: var(--button_primary_background);
+  color: var(--button_primary_foreground);
   }
 
-.Button--level-1.Tappable--active:not([disabled]) {
-  background-color: #4872a3;
+.Button--lvl-secondary {
+  background-color: var(--button_secondary_background);
+  color: var(--button_secondary_foreground);
   }
 
-.Button--level-2 {
-  background-color: rgba(0, 54, 115, .1);
-  color: var(--muted-blue);
+.Button--lvl-tertiary {
+  background-color: var(--button_tertiary_background);
+  color: var(--button_tertiary_foreground);
   }
 
-.Button--level-2.Tappable--active:not([disabled]) {
-  background-color: rgba(0, 54, 115, .2);
+.Button--lvl-commerce {
+  background-color: var(--button_commerce_background);
+  color: var(--button_commerce_foreground);
   }
 
-.Button--level-3 {
+.Button--lvl-outline {
   background-color: transparent;
-  color: var(--header-blue);
+  border: 1px solid var(--button_outline_border);
+  color: var(--button_outline_foreground);
   }
 
-.Button--level-3.Tappable--active:not([disabled]) {
-  background-color: rgba(0, 54, 115, .08);
-  }
-
-.Button--level-buy {
-  background-color: var(--green);
-  color: #fff;
-  }
-
-.Button--level-buy.Tappable--active {
-  background-color: rgb(66, 158, 66);
-  }
-
-.Button--level-sell {
-  background-color: transparent;
-  border: 1px solid var(--accent-blue);
-  color: var(--accent-blue);
-  }
-
-.Button--level-sell.Tappable--active:not([disabled]) {
-  background-color: rgba(82, 139, 204, .1);
-  }
-
-.Button--size-m {
+.Button--sz-m {
   padding: 0 16px;
   }
 
-  .Button--size-m .Button__before {
+  .Button--sz-m .Button__before {
     margin-left: -4px;
     }
 
-  .Button--size-m .Button__content {
+  .Button--sz-m .Button__content {
     font-size: 14px;
     line-height: 14px;
     font-weight: 500;
     padding: 7px 0;
     }
 
-.Button--size-l {
+.Button--sz-l {
   padding: 0 16px;
   }
 
-  .Button--size-l .Button__before {
+  .Button--sz-l .Button__before {
     margin-left: -4px;
     }
 
-  .Button--size-l .Button__content {
+  .Button--sz-l .Button__content {
     font-size: 15px;
     font-weight: 500;
     padding: 8px 0;
     }
 
-.Button--size-xl {
+.Button--sz-xl {
   width: 100%;
   padding: 0 16px;
   }
 
-  .Button--size-xl .Button__before {
+  .Button--sz-xl .Button__before {
     margin-left: -6px;
     margin-right: 2px;
     }
 
-  .Button--size-xl .Button__before ~ .Button__content {
+  .Button--sz-xl .Button__before ~ .Button__content {
     padding-left: 0;
     }
 
-  .Button--size-xl .Button__in {
+  .Button--sz-xl .Button__in {
     justify-content: center;
     }
 
-  .Button--size-xl .Button__content {
+  .Button--sz-xl .Button__content {
     font-size: 17px;
     font-weight: 500;
     padding: 11px;
@@ -182,54 +147,22 @@
   font-family: var(--font-ios);
   }
 
-.Button--ios.Button--size-m {
+.Button--ios.Button--sz-m {
   border-radius: 15px;
   }
 
-.Button--ios.Button--size-l {
+.Button--ios.Button--sz-l {
   border-radius: 18px;
   }
 
-.Button--ios.Button--size-xl {
+.Button--ios.Button--sz-xl {
   border-radius: 10px;
   }
-
-.Button--ios.Button--type-cell {
-  padding: 0 12px;
-  position: relative;
-  }
-
-  .Button--ios.Button--type-cell .Button__content {
-    line-height: 20px;
-    font-size: 17px;
-    padding: 12px 0;
-    }
-
-    .Button--ios.Button--type-cell .Button__before .Icon {
-      margin-right: 12px;
-      }
 
 /*
   Android
  */
 .Button--android {
   font-family: var(--font-android);
-  }
-
-.Button--android.Button--type-default {
   border-radius: 4px;
   }
-
-.Button--android.Button--type-cell {
-  padding: 0 16px;
-  }
-
-  .Button--android.Button--type-cell .Button__content {
-    font-size: 16px;
-    line-height: 20px;
-    padding: 14px 0;
-    }
-
-  .Button--android.Button--type-cell .Button__before .Icon {
-    margin-right: 12px;
-    }

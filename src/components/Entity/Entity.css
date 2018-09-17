@@ -1,4 +1,4 @@
-@import '../../styles/constants.css';
+
 
 .Entity {
   position: relative;
@@ -19,13 +19,13 @@
       font-size: 15px;
       line-height: 20px;
       font-weight: 600;
-      color: var(--muted-black);
+      color: var(--gray_800);
       }
 
     .Entity__description {
       font-size: 14px;
       line-height: 16px;
-      color: var(--subhead-gray);
+      color: var(--gray_400);
       }
 
     .Entity__content {

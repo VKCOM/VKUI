@@ -1,5 +1,3 @@
-@import '../../styles/constants.css';
-
 .HeaderButton {
   appearance: none;
   background: none;
@@ -19,18 +17,17 @@
   }
 
 .HeaderButton--ios {
-  height: 44px;
-  line-height: 44px;
   position: relative;
   display: flex;
+  height: 100%;
   }
 
 .HeaderButton--ios.HeaderButton--primary {
   font-weight: 600;
   }
 
-  .HeaderButton--ios .Icon {
-    align-self: center;
+  .HeaderButton--ios > * {
+    align-items: center;
     }
 
   .HeaderButton--ios .Icon--chevron_back_28 {

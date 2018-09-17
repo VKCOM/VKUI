@@ -1,4 +1,4 @@
-@import '../../styles/constants.css';
+
 
 :root {
   --offset: 106;
@@ -15,9 +15,20 @@
 
   .Spinner--ios .Spinner__self {
     position: relative;
+    fill: var(--text_primary);
     }
 
-  .Spinner--android .Spinner__self {}
+  .ScreenSpinner--ios .Spinner__self {
+    fill: var(--white);
+    }
+
+  .Spinner--android .Spinner__self {
+    stroke: var(--accent);
+    }
+
+  .ScreenSpinner--android .Spinner__self {
+    stroke: var(--white);
+    }
 
   .Spinner--android.Spinner--on .Spinner__self {
     animation: rotator var(--duration) linear infinite;

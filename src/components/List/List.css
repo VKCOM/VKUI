@@ -1,10 +1,8 @@
-@import '../../styles/constants.css';
-
 .List {
   position: relative;
   margin: 0;
   padding: 0;
-  background: #fff;
+  background: var(--background_content);
   }
 
   .List .Cell,
@@ -28,21 +26,21 @@
 
   .List--ios::before {
     top: 0;
-    background: var(--separator);
+    background: var(--separator_common);
     }
 
   .List--ios::after {
     bottom: 0;
-    background: var(--separator);
+    background: var(--separator_common);
     }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
   .List--ios::before {
-    background: var(--ios-top-border);
+    background: linear-gradient(to bottom, var(--separator_common) 50%, transparent 50%);
     }
 
   .List--ios::after {
-    background: var(--ios-bottom-border);
+    background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
     }
   }
 

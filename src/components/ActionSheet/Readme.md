@@ -44,7 +44,7 @@ class Example extends React.Component {
     return (
       <View popout={this.state.popout} header={false} activePanel="panel">
         <Panel id="panel">
-          <Button type="cell" onClick={this.openSheet}>Open Sheet</Button>
+          <CellButton onClick={this.openSheet}>Open Sheet</CellButton>
         </Panel>
       </View>
     )

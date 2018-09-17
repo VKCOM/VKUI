@@ -3,14 +3,24 @@ import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
-import './Button.css';
+
+import CellButton from '../CellButton/CellButton';
 
 const baseClassName = getClassName('Button');
 
 export default class Button extends React.Component {
   static propTypes = {
-    level: PropTypes.oneOf(['1', '2', '3', 'sell', 'buy', 'primary', 'danger']),
+    /**
+     * Значения `1`, `2`, `3`, `sell`, `buy` устарели. Маппинг на новые значения находится в
+     * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в
+     * следующей мажлорной версии.
+     */
+    level: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'outline', 'commerce', '1', '2', '3', 'sell', 'buy']),
     size: PropTypes.oneOf(['m', 'l', 'xl']),
+    /**
+     * @deprecated Кнопки-ячейки `<Button type="cell" />` переехали в отдельный компонент: `<CellButton />`.
+     * Свойство `type` будет удалено в следующей мажорной версии.
+     */
     type: PropTypes.oneOf(['default', 'cell']),
     align: PropTypes.oneOf(['left', 'center', 'right']),
     stretched: PropTypes.bool,
@@ -21,40 +31,49 @@ export default class Button extends React.Component {
     component: PropTypes.any
   };
 
+  static mapOldLevel (level) {
+    switch (level) {
+      case '1':
+        return 'primary';
+      case '2':
+        return 'secondary';
+      case '3':
+        return 'tertiary';
+      case 'sell':
+        return 'outline';
+      case 'buy':
+        return 'commerce';
+      default:
+        return level;
+    }
+  }
+
   static defaultProps = {
+    level: 'primary',
     type: 'default',
     component: 'button',
-    align: 'left',
     size: 'm',
     stretched: false
   };
 
   render () {
-    let { className, size, level, type, stretched, align, children, before, ...restProps } = this.props;
+    if (this.props.type === 'cell') {
+      const { stretched, size, ...restProps } = this.props;
+      return <CellButton {...restProps} />;
+    } else {
+      const { className, size, level, stretched, align, children, before, ...restProps } = this.props;
 
-    switch (type) {
-      case 'default':
-        level = level || '1';
-        break;
-      case 'cell':
-        level = level || 'primary';
-    }
-
-    const classNames = classnames(baseClassName, className, {
-      [`Button--size-${size}`]: type === 'default' && size,
-      [`Button--level-${level}`]: level,
-      [`Button--type-${type}`]: type,
-      [`Button--align-${align}`]: type === 'cell' && align,
-      [`Button--stretched`]: type === 'default' && stretched
-    });
-
-    return (
-      <Tappable {...restProps} className={classNames} stopPropagation>
+      return <Tappable {...restProps} className={classnames(baseClassName, className, {
+        [`Button--sz-${size}`]: true,
+        [`Button--lvl-${Button.mapOldLevel(level)}`]: true,
+        [`Button--aln-${align || 'center'}`]: true,
+        [`Button--str`]: stretched
+      })} stopPropagation>
         <div className="Button__in">
           {before && <div className="Button__before">{before}</div>}
           {children && <div className="Button__content">{children}</div>}
         </div>
-      </Tappable>
-    );
+      </Tappable>;
+    }
   }
 }
