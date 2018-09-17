@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isWebView } from '../../lib/webview';
-import pkg from '../../../package';
+import pkg from '../../../package.json';
 
 export default class ConfigProvider extends React.Component {
-  componentWillMount () {
-    document.body.setAttribute('scheme', this.props.scheme);
-  }
-
   static childContextTypes = {
     insets: PropTypes.shape({
       top: PropTypes.number,
@@ -40,9 +36,19 @@ export default class ConfigProvider extends React.Component {
     scheme: pkg.defaultSchemeId
   };
 
+  static contextTypes = {
+    document: PropTypes.object
+  };
+
+  get document () { return this.context.document || window.document; }
+
+  componentWillMount () {
+    this.document.body.setAttribute('scheme', this.props.scheme);
+  }
+
   componentWillReceiveProps (nextProps) {
     if (nextProps.scheme !== this.props.scheme) {
-      document.body.setAttribute('scheme', nextProps.scheme);
+      this.document.body.setAttribute('scheme', nextProps.scheme);
     }
   }
 
