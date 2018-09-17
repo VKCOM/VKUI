@@ -214,7 +214,7 @@
       (min-resolution: 192dpi),
       (min-resolution: 2dppx) {
       .List .Cell--ios:not(:last-child) .Cell__in:not(.Tappable--active) .Cell__before::before {
-        background: var(--ios-bottom-border);
+        background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
         }
       }
 

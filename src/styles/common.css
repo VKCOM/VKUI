@@ -1,6 +1,6 @@
-@import 'generated/palette.css';
-@import 'generated/client_light.css';
-@import 'generated/client_dark.css';
+@import './generated/palette.css';
+@import './generated/client_light.css';
+@import './generated/client_dark.css';
 @import './constants.css';
 @import '../components/Checkbox/Checkbox.css';
 @import '../components/Root/Root.css';

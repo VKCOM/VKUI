@@ -118,7 +118,7 @@
 
         @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
           .PanelHeader--ios .PanelHeader-bg::after {
-            background: var(--ios-bottom-border);
+            background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
             }
           }
 
