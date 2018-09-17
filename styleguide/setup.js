@@ -27,6 +27,7 @@ import Icon24Privacy from '@vkontakte/icons/dist/24/privacy';
 import Icon24Write from '@vkontakte/icons/dist/24/write';
 import Icon24MoreHorizontal from '@vkontakte/icons/dist/24/more_horizontal';
 import Icon24LogoVk from '@vkontakte/icons/dist/24/logo_vk';
+import pkg from '../package';
 
 window.uaList = {
   ios: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
@@ -40,6 +41,8 @@ Object.defineProperty(navigator, 'userAgent', {
 window.osname = platform();
 window.IOS = IOS;
 window.ANDROID = ANDROID;
+
+window.schemeId = window.localStorage.getItem('vkui-styleguide:schemeId') || pkg.defaultSchemeId;
 
 window.Icon24Cancel = Icon24Cancel;
 window.Icon16Add = Icon16Add;

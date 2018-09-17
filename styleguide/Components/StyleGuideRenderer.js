@@ -6,6 +6,11 @@ import Styled from 'react-styleguidist/lib/rsg-components/Styled';
 import Link from 'react-styleguidist/lib/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
+import scheme from '../../src/appearance/scheme';
+
+const schemeOptions = Object.keys(scheme).map(scheme_id => (
+  <option value={scheme_id} key={scheme_id}>{scheme_id}</option>
+));
 
 const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
   root: {
@@ -85,6 +90,15 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
               <option value={window.uaList.ios}>ios</option>
               <option value={window.uaList.android}>android</option>
             </select>
+            <div style={{ marginTop: 4 }}>
+              Тема:&nbsp;
+              <select onChange={ (e) => {
+                window.localStorage.setItem('vkui-styleguide:schemeId', e.target.value);
+                window.location.reload();
+              } } value={window.schemeId}>
+                {schemeOptions}
+              </select>
+            </div>
             <div style={{ marginTop: 4 }}>
               Версия:&nbsp;<Link href={`https://www.npmjs.com/package/${pkg.name}`}>{ pkg.version }</Link>
             </div>

@@ -11,7 +11,7 @@ const frameInitialContent = `
     <head>
       <link href="./main.css" rel="stylesheet" id="styles" />
     </head>
-    <body>
+    <body scheme="${window.schemeId}">
     </body>
   </html>
 `;

@@ -11,7 +11,7 @@ const summaryPalette = { ...palette, ...customPalette };
 function generateScheme () {
   Object.keys(scheme).forEach((schemeId) => {
     const colors = {...scheme[schemeId].colors, ...customScheme[schemeId].colors};
-    let css = schemeId === pkg.defaultSchemeId ? ':root {\n' : `.vkui--${schemeId} {\n`;
+    let css = schemeId === pkg.defaultSchemeId ? ':root {\n' : `body[scheme="${schemeId}"] {\n`;
     Object.keys(colors).forEach((schemeItemId) => {
       const colorId = colors[schemeItemId].color_identifier;
       css += `  --${schemeItemId}: ${resolveColor(summaryPalette, colorId)};\n`;
