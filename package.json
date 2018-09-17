@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "main": "dist/vkui.js",
   "license": "MIT",
   "description": "VKUI library",
@@ -27,6 +27,7 @@
     "loader-utils": "^1.1.0",
     "mini-css-extract-plugin": "^0.4.0",
     "mini-html-webpack-plugin": "^0.2.3",
+    "postcss": "^7.0.2",
     "postcss-custom-properties": "^5.0.2",
     "postcss-import": "^9.1.0",
     "postcss-loader": "^2.1.5",
