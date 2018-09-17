@@ -40,6 +40,10 @@
   flex-grow: 1;
   }
 
+.Button--str:first-child:last-child {
+  width: 100%;
+  }
+
   .Button--stretched .Button__in {
     justify-content: center;
     }
