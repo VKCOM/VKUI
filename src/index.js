@@ -4,6 +4,9 @@ import './styles/common.css';
 /**
  * Layout
  */
+export { default as Epic } from './components/Epic/Epic';
+export { default as Tabbar } from './components/Tabbar/Tabbar';
+export { default as TabbarItem } from './components/TabbarItem/TabbarItem';
 export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export { default as Panel } from './components/Panel/Panel';
@@ -34,6 +37,9 @@ export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
 export { default as List } from './components/List/List';
 export { default as Cell } from './components/Cell/Cell';
+/**
+ * @deprecated алиас для Cell. Будет удален в 3.0.0
+ */
 export { default as ListItem } from './components/Cell/Cell';
 export { default as Footer } from './components/Footer/Footer';
 export { default as InfoRow } from './components/InfoRow/InfoRow';

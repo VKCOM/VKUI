@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
@@ -42,7 +41,8 @@ export default class Panel extends Component {
       right: PropTypes.number,
       bottom: PropTypes.number,
       left: PropTypes.number
-    })
+    }),
+    hasTabbar: PropTypes.bool
   };
 
   getChildContext () {
@@ -61,13 +61,16 @@ export default class Panel extends Component {
 
   render () {
     const { className, centered, children, isPrev, isNext, theme, optimized, ...restProps } = this.props;
+    const tabbarPadding = this.context.hasTabbar ? 48 : 0;
 
     return (
       <div {...restProps} className={classnames(baseClassNames, className, {
         'Panel--centered': centered,
         [`Panel--tm-${theme}`]: theme
       })}>
-        <div className="Panel__in" style={{ paddingBottom: this.insets.bottom || null, paddingTop: this.insets.top || null }}>
+        <div className="Panel__in" style={{
+          paddingBottom: this.context.insets ? this.context.insets.bottom + tabbarPadding : null
+        }}>
           <div className="Panel__in-before" />
           {children}
           <div className="Panel__in-after" />

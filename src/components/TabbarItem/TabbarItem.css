@@ -1,0 +1,36 @@
+.TabbarItem {
+  padding: 10px 0;
+  flex-shrink: 0;
+  max-width: 100%;
+  flex-grow: 1;
+  text-align: center;
+  font-size: 0;
+  }
+
+.TabbarItem {
+  color: var(--tabbar_inactive_icon);
+  }
+
+.TabbarItem--selected {
+  color: var(--tabbar_active_icon);
+  }
+
+  .TabbarItem__in {
+    display: inline-block;
+    position: relative;
+    }
+
+    .TabbarItem__label {
+      position: absolute;
+      top: 0;
+      left: calc(100% - 12px);
+      background: var(--destructive);
+      font-size: 12px;
+      color: var(--white);
+      line-height: 14px;
+      border-radius: 9px;
+      min-width: 18px;
+      text-align: center;
+      padding: 2px 4px;
+      box-sizing: border-box;
+      }

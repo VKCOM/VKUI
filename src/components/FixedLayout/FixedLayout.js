@@ -23,13 +23,11 @@ export default class FixedLayout extends React.Component {
 
   static contextTypes = {
     insets: PropTypes.shape({
-      top: PropTypes.number,
-      right: PropTypes.number,
-      bottom: PropTypes.number,
-      left: PropTypes.number
+      bottom: PropTypes.number
     }),
     panel: PropTypes.string,
-    document: PropTypes.any
+    document: PropTypes.any,
+    hasTabbar: PropTypes.bool
   };
 
   get document () {
@@ -50,19 +48,9 @@ export default class FixedLayout extends React.Component {
     this.document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
 
-  setPaddings (callback) {
-    if (this.props.vertical === 'bottom') {
-      this.setState({ paddingBottom: this.insets.bottom || 0 }, () => callback && callback());
-    } else {
-      callback && callback();
-    }
-  }
-
   onViewTransitionStart = (e) => {
     let panelScroll = e.detail.scrolls[this.context.panel] || 0;
-    this.setPaddings(() => {
-      this.setState({ transition: true, topOffset: this.el.offsetTop + panelScroll });
-    });
+    this.setState({ transition: true, topOffset: this.el.offsetTop + panelScroll });
   };
 
   onViewTransitionEnd = () => {
@@ -73,6 +61,7 @@ export default class FixedLayout extends React.Component {
 
   render () {
     const { className, children, style, vertical, ...restProps } = this.props;
+    const tabbarPadding = this.context.hasTabbar ? 48 : 0;
 
     return (
       <div
@@ -81,7 +70,7 @@ export default class FixedLayout extends React.Component {
         className={classnames(baseClassNames, { [`FixedLayout--${vertical}`]: vertical }, className)}
         style={{
           ...style,
-          ...{ paddingBottom: this.state.paddingBottom },
+          ...{ paddingBottom: this.context.insets ? this.context.insets.bottom + tabbarPadding : undefined },
           ...(this.state.transition ? { position: 'absolute', top: this.state.topOffset } : {})
         }}
       >

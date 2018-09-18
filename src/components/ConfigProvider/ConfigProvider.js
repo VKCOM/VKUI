@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import { isWebView } from '../../lib/webview';
 import pkg from '../../../package.json';
 
+function isObject (target) {
+  const typeMatch = Object.prototype.toString.call(target).match(/\[object ([A-Za-z]+)]/i);
+  if (typeMatch === null) {
+    return false;
+  }
+  return typeMatch[1] === 'Object';
+}
+
 export default class ConfigProvider extends React.Component {
   static childContextTypes = {
     insets: PropTypes.shape({
@@ -30,7 +38,6 @@ export default class ConfigProvider extends React.Component {
   };
 
   static defaultProps = {
-    insets: {},
     webviewType: 'internal',
     isWebView,
     scheme: pkg.defaultSchemeId
@@ -53,11 +60,10 @@ export default class ConfigProvider extends React.Component {
   }
 
   getChildContext () {
-    let insets = Object.assign(
-      { top: 0, right: 0, bottom: 0, left: 0 },
-      this.props.insets,
-      { bottom: !parseInt(this.props.insets.bottom) || this.props.insets.bottom > 100 ? 0 : this.props.insets.bottom }
-    );
+    let insets = isObject(this.props.insets) ? {
+      ...this.props.insets,
+      bottom: this.props.insets.bottom > 100 ? 0 : this.props.insets.bottom
+    } : undefined;
     return {
       insets,
       isWebView: this.props.isWebView,

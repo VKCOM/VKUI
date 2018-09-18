@@ -192,7 +192,7 @@
   background-color: var(--search_bar_background);
   }
 
-.FixedLayout--top .Search--ios.Search--default::after {
+.Search--ios.Search--default::after {
   position: absolute;
   width: 100%;
   z-index: 1;
@@ -204,7 +204,7 @@
   }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .FixedLayout--top .Search--ios.Search--default::after {
+  .Search--ios.Search--default::after {
     background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
     }
   }

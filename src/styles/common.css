@@ -48,6 +48,9 @@
 @import '../components/SearchIOS/SearchIOS.css';
 @import '../components/SearchAndroid/SearchAndroid.css';
 @import '../components/Tappable/Tappable.css';
+@import '../components/Tabbar/Tabbar.css';
+@import '../components/TabbarItem/TabbarItem.css';
+@import '../components/Epic/Epic.css';
 
 html,
 body,
