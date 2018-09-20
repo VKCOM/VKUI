@@ -25,17 +25,13 @@ export default class Tabbar extends React.Component {
     })
   };
 
-  get insets () {
-    return this.context.insets || {};
-  }
-
   render () {
     const { className, children, shadow } = this.props;
 
     return (
       <div className={classnames(baseClassName, className, {
         'Tabbar--shadow': shadow
-      })} style={{ paddingBottom: this.insets.bottom }}>
+      })} style={{ paddingBottom: this.context.insets && this.context.insets.bottom || null }}>
         {children}
       </div>
     );

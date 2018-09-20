@@ -14,10 +14,7 @@ export default class Epic extends React.Component {
      * Epic, свойство tabbar является обязательным.
      */
     tabbar: PropTypes.node.isRequired,
-    /**
-     * id активного окна
-     */
-    active: PropTypes.string
+    activeStory: PropTypes.string.isRequired
   };
 
   getChildContext () {
@@ -31,11 +28,11 @@ export default class Epic extends React.Component {
   };
 
   render () {
-    const { className, active, tabbar, children } = this.props;
+    const { className, activeStory, tabbar, children, ...restProps } = this.props;
 
     return (
-      <div className={classnames(baseClassName, className)}>
-        {React.Children.toArray(children).find(item => item.props.id === active)}
+      <div {...restProps} className={classnames(baseClassName, className)}>
+        {React.Children.toArray(children).find(item => item.props.id === activeStory)}
         {tabbar}
       </div>
     );
