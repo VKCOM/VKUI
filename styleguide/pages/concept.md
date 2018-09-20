@@ -31,14 +31,23 @@ import { View, Panel } from '@vkontakte/vkui';
 import { Root, View } from '@vkontakte/vkui';
 
 <Root activeView="main">
-  <View id="main">
-    {* main flow *}
+  <View id="main" activePanel="general">
+    <Panel id="general">
+      {* general *}
+    </Panel>
+    <Panel id="education">
+      {* education *}
+    </Panel>
   </View>
-  <View id="users-search">
-    {* modal window for users search *}
+  <View id="users-search" activePanel="users-search">
+    <Panel id="users-search">
+      {* modal window for users search *}
+    </Panel>
   </View>
-  <View id="check-user-actions">
-    {* modal window for check user actions *}
+  <View id="check-user-actions" activePanel="check-user-actions">
+    <Panel id="check-user-actions">
+      {* modal window for check user actions *}
+    </Panel>
   </View>
 </Root>
 ```
