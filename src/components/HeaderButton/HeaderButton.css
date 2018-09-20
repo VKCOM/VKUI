@@ -42,6 +42,7 @@
   text-transform: uppercase;
   height: 48px;
   line-height: 48px;
+  border-radius: 50%;
   font-weight: 500;
   font-size: 14px;
   padding: 0 12px;
