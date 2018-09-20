@@ -34,9 +34,9 @@
     }
 
   .Epic .Panel__in {
-    padding-bottom: 48px;
-    padding-bottom: calc(constant(safe-area-inset-bottom) + 48px);
-    padding-bottom: calc(env(safe-area-inset-bottom) + 48px);
+    padding-bottom: var(--tabbar_height);
+    padding-bottom: calc(constant(safe-area-inset-bottom) + var(--tabbar_height));
+    padding-bottom: calc(env(safe-area-inset-bottom) + var(--tabbar_height));
     }
 
     .Panel__in-before {

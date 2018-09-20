@@ -3,10 +3,16 @@ import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
 import { transitionEndEventName, transitionStartEventName } from '../View/View';
+import { tabbarHeight } from '../../appearance/constants';
 
 const baseClassNames = getClassName('FixedLayout');
 
 export default class FixedLayout extends React.Component {
+  state = {
+    position: null,
+    top: null
+  };
+
   static propTypes = {
     children: PropTypes.node,
     style: PropTypes.object,
@@ -39,26 +45,34 @@ export default class FixedLayout extends React.Component {
 
   onViewTransitionStart = (e) => {
     let panelScroll = e.detail.scrolls[this.context.panel] || 0;
-    this.el && this.el.setAttribute('style', `position: absolute; top: ${this.el.offsetTop + panelScroll}px`);
+    this.setState({
+      position: 'absolute',
+      top: this.el.offsetTop + panelScroll
+    });
   };
 
-  onViewTransitionEnd = () => this.el && this.el.removeAttribute('style');
+  onViewTransitionEnd = () => {
+    this.setState({
+      position: null,
+      top: null
+    });
+  };
 
   getRef = el => this.el = el;
 
   render () {
     const { className, children, style, vertical, ...restProps } = this.props;
-    const tabbarPadding = this.context.hasTabbar ? 48 : 0;
+    const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
+    const paddingBottom = vertical === 'bottom' && this.context.insets && this.context.insets.bottom
+      ? this.context.insets.bottom + tabbarPadding
+      : null;
 
     return (
       <div
         {...restProps}
         ref={this.getRef}
         className={classnames(baseClassNames, { [`FixedLayout--${vertical}`]: vertical }, className)}
-        style={{
-          ...style,
-          ...{ paddingBottom: vertical === 'bottom' && this.context.insets && this.context.insets.bottom ? this.context.insets.bottom + tabbarPadding : null }
-        }}
+        style={{ ...style, ...this.state, paddingBottom }}
       >
         <div className="FixedLayout__in">{children}</div>
       </div>

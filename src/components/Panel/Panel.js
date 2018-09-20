@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
+import { tabbarHeight } from '../../appearance/constants';
 
 const baseClassNames = getClassName('Panel');
 
@@ -61,7 +62,7 @@ export default class Panel extends Component {
 
   render () {
     const { className, centered, children, isPrev, isNext, theme, optimized, ...restProps } = this.props;
-    const tabbarPadding = this.context.hasTabbar ? 48 : 0;
+    const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
 
     return (
       <div {...restProps} className={classnames(baseClassNames, className, {

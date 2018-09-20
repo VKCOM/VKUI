@@ -9,10 +9,6 @@ export default class Epic extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    /**
-     * Свойство для передачи Tabbar. Так как Tabbar является единственным способом переключаться между экранами в
-     * Epic, свойство tabbar является обязательным.
-     */
     tabbar: PropTypes.node.isRequired,
     activeStory: PropTypes.string.isRequired
   };
