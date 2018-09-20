@@ -69,7 +69,7 @@ export default class Panel extends Component {
         [`Panel--tm-${theme}`]: theme
       })}>
         <div className="Panel__in" style={{
-          paddingBottom: this.context.insets ? this.context.insets.bottom + tabbarPadding : null
+          paddingBottom: this.context.insets && this.context.insets.bottom ? this.context.insets.bottom + tabbarPadding : null
         }}>
           <div className="Panel__in-before" />
           {children}
