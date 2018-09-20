@@ -22,7 +22,7 @@
 
 .Tabs--ios.Tabs--default.Tabs--light {
   padding: 8px;
-  background-color: var(--search_bar_background);
+  background: var(--search_bar_background);
   }
 
 .Tabs--ios.Tabs--default.Tabs--header {
@@ -30,7 +30,7 @@
   }
 
 .Tabs--ios.Tabs--buttons.Tabs--header {
-  background-color: var(--header_background);
+  background: var(--header_background);
   }
 
 .Tabs--ios.Tabs--buttons {
@@ -49,33 +49,35 @@
   background: var(--separator_common);
   }
 
-.FixedLayout--ios.FixedLayout--bottom .Tabs {}
+.FixedLayout--ios.FixedLayout--bottom .Tabs {
+  background: var(--header_alternate_background);
+  }
+
+/* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
+.FixedLayout--ios.FixedLayout--bottom .Tabs--default::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background-color: var(--header_alternate_background);
+  }
+
+.FixedLayout--ios.FixedLayout--bottom .Tabs::before {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  top: 0;
+  background: var(--separator_common);
+  }
 
   .FixedLayout--ios.FixedLayout--bottom .TabsItem {
     position: relative;
     z-index: 2;
-    }
-
-  /* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
-  .FixedLayout--ios.FixedLayout--bottom .Tabs--default::after {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    content: '';
-    background-color: var(--search_bar_background);
-    }
-
-  .FixedLayout--ios.FixedLayout--bottom .Tabs::before {
-    position: absolute;
-    right: 0;
-    left: 0;
-    z-index: 1;
-    height: 1px;
-    content: '';
-    top: 0;
-    background: var(--separator_common);
     }
 
 .Tabs--ios.Tabs--buttons .HorizontalScroll__in::after,
@@ -124,4 +126,8 @@
 .FixedLayout--top .Tabs--android,
 .FixedLayout--bottom .Tabs--android {
   box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
+  }
+
+.FixedLayout--android.FixedLayout--bottom .Tabs {
+  background: var(--header_alternate_background);
   }

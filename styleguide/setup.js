@@ -27,6 +27,11 @@ import Icon24Privacy from '@vkontakte/icons/dist/24/privacy';
 import Icon24Write from '@vkontakte/icons/dist/24/write';
 import Icon24MoreHorizontal from '@vkontakte/icons/dist/24/more_horizontal';
 import Icon24LogoVk from '@vkontakte/icons/dist/24/logo_vk';
+import Icon28Newsfeed from '@vkontakte/icons/dist/28/newsfeed';
+import Icon28Search from '@vkontakte/icons/dist/28/search';
+import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
+import Icon28Messages from '@vkontakte/icons/dist/28/messages';
+import Icon28More from '@vkontakte/icons/dist/28/more';
 import pkg from '../package';
 
 window.uaList = {
@@ -69,5 +74,10 @@ window.Icon24Privacy = Icon24Privacy;
 window.Icon24MoreHorizontal = Icon24MoreHorizontal;
 window.Icon24Write = Icon24Write;
 window.Icon24LogoVk = Icon24LogoVk;
+window.Icon28Newsfeed = Icon28Newsfeed;
+window.Icon28Search = Icon28Search;
+window.Icon28Notifications = Icon28Notifications;
+window.Icon28Messages = Icon28Messages;
+window.Icon28More = Icon28More;
 
 window.colors = colors;

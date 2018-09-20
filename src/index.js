@@ -8,12 +8,15 @@ export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export { default as Panel } from './components/Panel/Panel';
 export { default as HeaderButton } from './components/HeaderButton/HeaderButton';
-export { default as HeaderContext } from './components/HeaderContext/HeaderContext';
-export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
 export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
-export { default as InnerScroll } from './components/InnerScroll/InnerScroll';
 export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
+export { default as HeaderContext } from './components/HeaderContext/HeaderContext';
+export { default as Epic } from './components/Epic/Epic';
+export { default as Tabbar } from './components/Tabbar/Tabbar';
+export { default as TabbarItem } from './components/TabbarItem/TabbarItem';
+export { default as InnerScroll } from './components/InnerScroll/InnerScroll';
 export { default as HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll';
+export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
 
 /**
  * Popouts
@@ -34,6 +37,9 @@ export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
 export { default as List } from './components/List/List';
 export { default as Cell } from './components/Cell/Cell';
+/**
+ * @deprecated алиас для Cell. Будет удален в 3.0.0
+ */
 export { default as ListItem } from './components/Cell/Cell';
 export { default as Footer } from './components/Footer/Footer';
 export { default as InfoRow } from './components/InfoRow/InfoRow';

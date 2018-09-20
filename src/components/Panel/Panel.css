@@ -28,6 +28,15 @@
     width: 100%;
     min-height: 100%;
     z-index: 2;
+    padding-bottom: 0;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+    }
+
+  .Epic .Panel__in {
+    padding-bottom: var(--tabbar_height);
+    padding-bottom: calc(constant(safe-area-inset-bottom) + var(--tabbar_height));
+    padding-bottom: calc(env(safe-area-inset-bottom) + var(--tabbar_height));
     }
 
     .Panel__in-before {
@@ -40,10 +49,12 @@
       margin-top: -1px;
       }
 
+.Panel--tm-gray .Panel__in,
 .Panel--tm-gray::after {
   background-color: var(--background_page);
   }
 
+.Panel--tm-white .Panel__in,
 .Panel--tm-white::after {
   background-color: var(--background_content);
   }
