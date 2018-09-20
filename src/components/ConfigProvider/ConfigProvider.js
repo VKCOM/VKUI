@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { isWebView } from '../../lib/webview';
 import pkg from '../../../package.json';
 
-function isObject (target) {
-  const typeMatch = Object.prototype.toString.call(target).match(/\[object ([A-Za-z]+)]/i);
-  if (typeMatch === null) {
-    return false;
-  }
-  return typeMatch[1] === 'Object';
-}
-
 export default class ConfigProvider extends React.Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      bottomInset: props.insets.bottom > 100 ? 0 : props.insets.bottom
+    };
+  }
+
   static childContextTypes = {
     insets: PropTypes.shape({
       top: PropTypes.number,
@@ -40,7 +40,8 @@ export default class ConfigProvider extends React.Component {
   static defaultProps = {
     webviewType: 'internal',
     isWebView,
-    scheme: pkg.defaultSchemeId
+    scheme: pkg.defaultSchemeId,
+    insets: {}
   };
 
   static contextTypes = {
@@ -57,15 +58,14 @@ export default class ConfigProvider extends React.Component {
     if (nextProps.scheme !== this.props.scheme) {
       this.document.body.setAttribute('scheme', nextProps.scheme);
     }
+    if (nextProps.insets.bottom !== this.props.insets.bottom) {
+      this.setState({ bottomInset: nextProps.insets.bottom > 100 ? this.props.insets.bottom : nextProps.insets.bottom });
+    }
   }
 
   getChildContext () {
-    let insets = isObject(this.props.insets) ? {
-      ...this.props.insets,
-      bottom: this.props.insets.bottom > 100 ? 0 : this.props.insets.bottom
-    } : undefined;
     return {
-      insets,
+      insets: { ...this.props.insets, bottom: this.state.bottomInset },
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
       scheme: this.props.scheme
