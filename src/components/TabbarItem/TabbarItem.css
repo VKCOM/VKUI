@@ -1,10 +1,10 @@
 .TabbarItem {
-  padding: 10px 0;
   flex-shrink: 0;
   max-width: 100%;
   flex-grow: 1;
-  text-align: center;
-  font-size: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   }
 
 .TabbarItem {
@@ -16,7 +16,7 @@
   }
 
   .TabbarItem__in {
-    display: inline-block;
+    align-self: center;
     position: relative;
     }
 

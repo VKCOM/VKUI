@@ -6,7 +6,7 @@
   width: 100%;
   height: var(--tabbar_height);
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   box-sizing: content-box;
   background: var(--header_alternate_background);
