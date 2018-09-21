@@ -1,9 +1,11 @@
-
-
 .Tabs,
 .Tabs .HorizontalScroll__in {
   display: flex;
   align-items: center;
+  }
+
+.Tabs .HorizontalScroll {
+  min-width: 100%;
   }
 
 .Tabs--default,
@@ -38,7 +40,7 @@
   padding-bottom: 8px;
   }
 
-.FixedLayout--ios.FixedLayout--top .Tabs::after {
+.FixedLayout--ios.FixedLayout--top .Tabs::before {
   position: absolute;
   right: 0;
   left: 0;
@@ -47,21 +49,6 @@
   content: '';
   bottom: 0;
   background: var(--separator_common);
-  }
-
-.FixedLayout--ios.FixedLayout--bottom .Tabs {
-  background: var(--header_alternate_background);
-  }
-
-/* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
-.FixedLayout--ios.FixedLayout--bottom .Tabs--default::after {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  content: '';
-  background-color: var(--header_alternate_background);
   }
 
 .FixedLayout--ios.FixedLayout--bottom .Tabs::before {
@@ -73,6 +60,25 @@
   content: '';
   top: 0;
   background: var(--separator_common);
+  }
+
+.FixedLayout--ios.FixedLayout--top .Tabs--light.Tabs--buttons {
+  background: var(--background_content);
+  }
+
+.FixedLayout--ios.FixedLayout--bottom .Tabs {
+  background: var(--header_alternate_background);
+  }
+
+/* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
+.FixedLayout--ios.FixedLayout--bottom .Tabs::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background-color: var(--header_alternate_background);
   }
 
   .FixedLayout--ios.FixedLayout--bottom .TabsItem {
@@ -90,11 +96,11 @@
   }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .FixedLayout--ios.FixedLayout--top .Tabs--light::after {
+  .FixedLayout--ios.FixedLayout--top .Tabs::before {
     background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
     }
 
-  .FixedLayout--ios.FixedLayout--bottom .Tabs--light::before {
+  .FixedLayout--ios.FixedLayout--bottom .Tabs::before {
     background: linear-gradient(to bottom, var(--separator_common) 50%, transparent 50%);
     }
   }
