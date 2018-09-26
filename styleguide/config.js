@@ -61,6 +61,7 @@ module.exports = {
           '../src/components/Cell/Cell.js',
           '../src/components/List/List.js',
           '../src/components/Footer/Footer.js',
+          '../src/components/Spinner/Spinner.js',
           '../src/components/Switch/Switch.js',
           '../src/components/InfoRow/InfoRow.js',
           '../src/components/Avatar/Avatar.js',

@@ -1,8 +1,7 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import { platform, ANDROID, IOS } from '../../lib/platform';
+import { platform, IOS } from '../../lib/platform';
 import classnames from '../../lib/classnames.js';
 import AndroidSpinner from './AndroidSpinner';
 import IosSpinner from './IosSpinner';
@@ -14,30 +13,34 @@ export default class Spinner extends Component {
   static propTypes = {
     style: PropTypes.object,
     size: PropTypes.number,
-    androidStrokeWidth: PropTypes.number,
+    /**
+     * Толщина линии в Android версии
+     */
+    strokeWidth: PropTypes.number,
+    /**
+     * @ignore
+     */
     on: PropTypes.bool,
+    /**
+     * @ignore
+     */
     progress: PropTypes.number,
     className: PropTypes.string
   };
   static defaultProps = {
-    // color: osname === ANDROID ? '#5181b8' : '#262626',
-    androidStrokeWidth: 4,
-    size: osname === ANDROID ? 38 : 20,
-    animated: true,
+    strokeWidth: 4,
     on: true,
     progress: null
   };
   render () {
-    const { on, progress, size, style, className } = this.props;
-    const isAnimated = on && progress === null;
-    const modifiers = {
-      'Spinner--on': isAnimated
-    };
-
+    const { on, progress, className, ...restProps } = this.props;
     const Component = osname === IOS ? IosSpinner : AndroidSpinner;
+    const size = this.props.size || Component.defaultProps.size;
 
     return (
-      <div className={classnames(baseClassNames, modifiers, className)} style={style}>
+      <div {...restProps} className={classnames(baseClassNames, {
+        'Spinner--on': on && progress === null
+      }, className)}>
         <svg
           className="Spinner__self"
           style={{ width: size, height: size }}

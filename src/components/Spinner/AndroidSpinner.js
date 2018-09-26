@@ -29,6 +29,7 @@ export default class AndroidSpinner extends Component {
       })
     };
   }
+
   static propTypes = {
     size: PropTypes.number,
     strokeWidth: PropTypes.number,
@@ -36,6 +37,7 @@ export default class AndroidSpinner extends Component {
     on: PropTypes.bool,
     progress: PropTypes.number
   };
+
   static defaultProps = {
     size: 38,
     strokeWidth: 4,
@@ -43,6 +45,7 @@ export default class AndroidSpinner extends Component {
     on: true,
     progress: null
   };
+
   render () {
     const { size, on, progress, duration, strokeWidth } = this.props;
     const { id, offset, animation } = this.state;

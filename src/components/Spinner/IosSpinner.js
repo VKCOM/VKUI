@@ -26,18 +26,21 @@ export default class IosSpinner extends Component {
 
     this.state = { iosStyles };
   }
+
   static propTypes = {
     size: PropTypes.number,
     duration: PropTypes.number,
     on: PropTypes.bool,
     progress: PropTypes.number
   };
+
   static defaultProps = {
     size: 20,
     duration: 1.4,
     on: true,
     progress: null
   };
+
   render () {
     const { on, progress } = this.props;
     const { iosStyles } = this.state;
