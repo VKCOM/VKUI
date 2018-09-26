@@ -261,7 +261,6 @@
 
     .Cell--android.Cell--l .Cell__main {
       padding: 12px .5em 12px 0;
-      color: var(--text_primary);
       }
 
       .Cell--android .Cell__description:not(:empty) {
