@@ -38,20 +38,20 @@
     }
 
   .Group--ios::before {
-    top: 0;
+    bottom: 100%;
     }
 
   .Group--ios::after {
-    bottom: 0;
+    top: 100%;
     }
 
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
     .Group--ios::before {
-      background: linear-gradient(to bottom, var(--separator_common) 50%, transparent 50%);
+      background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
       }
 
     .Group--ios::after {
-      background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
+      background: linear-gradient(to bottom, var(--separator_common) 50%, transparent 50%);
       }
     }
 
