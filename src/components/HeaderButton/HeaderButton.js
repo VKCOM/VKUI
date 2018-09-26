@@ -8,11 +8,15 @@ const baseClassName = getClassName('HeaderButton');
 
 const HeaderButton = ({ className, children, primary, ...restProps }) => {
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
+  const component = restProps.href ? 'a' : 'button';
 
   return (
-    <Tappable {...restProps} component="button" activeEffectDelay={200} className={classnames(baseClassName, className, {
-      'HeaderButton--primary': primary
-    })}>
+    <Tappable
+      {...restProps}
+      component={component}
+      activeEffectDelay={200}
+      className={classnames(baseClassName, className, { 'HeaderButton--primary': primary })}
+    >
       {isPrimitive ? <span className="HeaderButton__primitive">{children}</span> : children}
     </Tappable>
   );
@@ -21,7 +25,11 @@ const HeaderButton = ({ className, children, primary, ...restProps }) => {
 HeaderButton.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  primary: PropTypes.bool
+  primary: PropTypes.bool,
+  /**
+   * Делает из кнопки ссылку
+   */
+  href: PropTypes.string
 };
 
 HeaderButton.defaultProps = {
