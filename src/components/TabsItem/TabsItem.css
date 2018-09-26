@@ -93,12 +93,12 @@
 
 .Tabs--ios.Tabs--buttons.Tabs--header .TabsItem {
   background-color: var(--header_background);
-  color: var(--header_tint);
+  color: var(--header_tab_inactive_text);
   }
 
 .Tabs--ios.Tabs--buttons.Tabs--header .TabsItem--selected {
-  background-color: var(--header_tint);
-  color: var(--header_background);
+  background-color: var(--header_tab_active_background);
+  color: var(--header_tab_active_text);
   }
 
 .Tabs--ios.Tabs--buttons.Tabs--light .TabsItem {
