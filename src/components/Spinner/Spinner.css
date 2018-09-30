@@ -26,6 +26,14 @@
     stroke: var(--accent);
     }
 
+  .PanelHeader--ios .Spinner__self {
+    fill: currentColor;
+    }
+
+  .PanelHeader--android .Spinner__self {
+    stroke: currentColor;
+    }
+
   .ScreenSpinner--android .Spinner__self {
     stroke: var(--white);
     }
