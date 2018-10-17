@@ -54,6 +54,10 @@
     padding: 12px 0;
     }
 
+  .HeaderButton--android .Tappable__waves {
+    border-radius: 50%;
+    }
+
 .HeaderButton--android.Tappable--active {
   background-color: rgba(255, 255, 255, .1);
   }
