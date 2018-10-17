@@ -24,11 +24,17 @@ export default class PanelHeader extends React.Component {
      * мажорной версии.
      */
     theme: PropTypes.oneOf(['light', 'alternate', 'brand']),
-    noShadow: PropTypes.bool
+    /**
+     * @ignore
+     */
+    transparent: PropTypes.bool,
+    noShadow: PropTypes.bool,
+    getRef: PropTypes.func
   };
 
   static defaultProps = {
     theme: 'brand',
+    transparent: false,
     noShadow: false
   };
 
@@ -39,9 +45,7 @@ export default class PanelHeader extends React.Component {
   };
 
   state = {
-    ready: false,
-    rightWidth: null,
-    leftWidth: null
+    ready: false
   };
 
   get document () { return this.context.document || document; }
@@ -54,31 +58,37 @@ export default class PanelHeader extends React.Component {
     this.titleNode = this.document.getElementById('header-title-' + this.context.panel);
     this.rightNode = this.document.getElementById('header-right-' + this.context.panel);
     this.bgNode = this.document.getElementById('header-bg-' + this.context.panel);
+    this.props.getRef && this.props.getRef(this.document.getElementById('header-' + this.context.panel));
     this.setState({ ready: true });
   }
 
   render () {
-    let { left, addon, children, right, theme, noShadow } = this.props;
+    let { left, addon, children, right, theme, noShadow, transparent } = this.props;
     const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
     return this.state.ready ? [
       ReactDOM.createPortal(<div className={classnames('PanelHeader-bg', {
         [`PanelHeader-bg--${theme}`]: true,
+        'PanelHeader-bg--tp': transparent,
         [`PanelHeader-bg--no-shadow`]: noShadow
       })}/>, this.bgNode),
       ReactDOM.createPortal(<div className={classnames('PanelHeader-left-in', {
-        [`PanelHeader-left-in--${theme}`]: true
+        [`PanelHeader-left-in--${theme}`]: true,
+        'PanelHeader-left-in--tp': transparent
       })}>{left}</div>, this.leftNode),
       osname === IOS && ReactDOM.createPortal(<div className={classnames('PanelHeader-addon', {
-        [`PanelHeader-addon--${theme}`]: true
+        [`PanelHeader-addon--${theme}`]: true,
+        'PanelHeader-addon--tp': transparent
       })}>{addon}</div>, this.addonNode),
       ReactDOM.createPortal(<div className={classnames('PanelHeader-content', {
-        [`PanelHeader-content--${theme}`]: true
+        [`PanelHeader-content--${theme}`]: true,
+        'PanelHeader-content--tp': transparent
       })}>
         {isPrimitive ? <span>{children}</span> : children}
       </div>, this.titleNode),
       ReactDOM.createPortal(<div className={classnames('PanelHeader-right', {
         [`PanelHeader-right--${theme}`]: true,
+        'PanelHeader-right--tp': transparent,
         'PanelHeader-right--vkapps': this.webviewType === 'vkapps'
       })}>{this.webviewType === 'internal' ? right : null}</div>, this.rightNode)
     ] : null;

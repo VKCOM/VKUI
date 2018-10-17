@@ -272,23 +272,17 @@
 /*
   Темы
  */
-.PanelHeader-bg--brand {
-  background: var(--header_background);
-  }
-
 .PanelHeader-content--brand,
 .PanelHeader-left-in--brand,
 .PanelHeader-addon--brand,
-.PanelHeader-right--brand {
+.PanelHeader-right--brand,
+.PanelHeader-bg--brand {
   color: var(--header_text);
   background: var(--header_background);
   }
 
 .PanelHeader-bg--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
-.PanelHeader-bg--alternate {
-  background: var(--header_alternate_background);
-  }
-
+.PanelHeader-bg--alternate,
 .PanelHeader-left-in--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
 .PanelHeader-addon--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
 .PanelHeader-right--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
@@ -302,4 +296,16 @@
 .PanelHeader-content--light, /*TODO deprecated. Alias for alternate. Remove in 3.0.0*/
 .PanelHeader-content--alternate {
   color: var(--text_primary);
+  }
+
+/*
+  Прозрачность
+ */
+
+.PanelHeader-left-in--tp,
+.PanelHeader-addon--tp,
+.PanelHeader-right--tp,
+.PanelHeader-bg--tp,
+.PanelHeader-content--tp {
+  background: transparent;
   }
