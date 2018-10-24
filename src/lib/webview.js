@@ -1,1 +1,3 @@
-export const isWebView = !!(window && (window.AndroidBridge || (window.webkit && window.webkit.messageHandlers)));
+import connect from '@vkontakte/vkui-connect';
+
+export const isWebView = connect.supports('VKWebAppInit');
