@@ -46,8 +46,17 @@ export default class View extends Component {
     children: PropTypes.node,
     popout: PropTypes.node,
     onTransition: PropTypes.func,
+    /**
+     * @ignore
+     */
     onSwipeBack: PropTypes.func,
+    /**
+     * @ignore
+     */
     onSwipeBackStart: PropTypes.func,
+    /**
+     * @ignore
+     */
     history: PropTypes.arrayOf(PropTypes.string),
 
     /**
@@ -120,6 +129,8 @@ export default class View extends Component {
 
     // Закончилась анимация свайпа назад
     if (this.props.activePanel !== nextProps.activePanel && this.state.swipingBack) {
+      const nextPanel = nextProps.activePanel;
+      const prevPanel = this.props.activePanel;
       this.setState({
         swipeBackPrevPanel: null,
         swipeBackNextPanel: null,
@@ -127,13 +138,13 @@ export default class View extends Component {
         swipingBackFinish: null,
         swipebackStartX: 0,
         swipeBackShift: 0,
-        activePanel: nextProps.activePanel,
-        visiblePanels: [nextProps.activePanel],
+        activePanel: nextPanel,
+        visiblePanels: [nextPanel],
         scrolls: removeObjectKeys(this.state.scrolls, [this.state.swipeBackPrevPanel])
       }, () => {
         this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
         window.scrollTo(0, this.state.scrolls[this.state.activePanel]);
-        this.props.onTransition && this.props.onTransition();
+        this.props.onTransition && this.props.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
     }
   }
@@ -249,7 +260,7 @@ export default class View extends Component {
         scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls
       }, function () {
         isBack && this.window.scrollTo(0, this.state.scrolls[activePanel]);
-        this.props.onTransition && this.props.onTransition();
+        this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
       });
     }
   };
