@@ -117,16 +117,18 @@ export default class Root extends React.Component {
       'root-ios-animation-show-forward'
     ].indexOf(e.animationName) > -1 || e.manual) {
       const isBack = this.state.isBack;
+      const prevView = this.state.prevView;
+      const nextView = this.state.nextView;
       this.setState({
-        activeView: this.state.nextView,
+        activeView: nextView,
         prevView: null,
         nextView: null,
-        visibleViews: [this.state.nextView],
+        visibleViews: [nextView],
         transition: false,
         isBack: undefined
       }, () => {
         isBack ? this.window.scrollTo(0, this.state.scrolls[this.state.activeView]) : this.window.scrollTo(0, 0);
-        this.props.onTransition && this.props.onTransition(this.state.isBack);
+        this.props.onTransition && this.props.onTransition({ isBack, from: prevView, to: nextView });
       });
     }
   };
