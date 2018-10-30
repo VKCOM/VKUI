@@ -6,6 +6,17 @@
   line-height: 22px;
   }
 
+.List--dragging .Cell:not(.Cell--dragging) {
+  transition: transform .3s ease;
+  }
+
+.List--dragging .Cell--dragging,
+.Cell--dragging {
+  background-color: var(--background_content);
+  box-shadow: 0 0 5px rgba(0, 0, 0, .25);
+  z-index: 3;
+  }
+
   .Cell__in {
     position: relative;
     display: flex;
@@ -109,6 +120,18 @@
       padding-left: .5em;
       }
 
+      .Cell__dragger {
+        position: relative;
+        color: var(--icon_secondary);
+        }
+
+        .Cell__dragger::after {
+          position: absolute;
+          display: block;
+          box-sizing: border-box;
+          content: '';
+          }
+
 /* iOS */
 .Cell--ios {
   overflow: hidden;
@@ -166,6 +189,13 @@
 
       .Cell--ios.Cell--m .Cell__before-in > .Avatar {
         padding: 4px 12px 4px 0;
+        }
+
+      .Cell--ios .Cell__dragger::after {
+        width: calc(100% + 20px);
+        height: calc(100% + 20px);
+        right: -10px;
+        top: -10px;
         }
 
       .Cell--ios.Cell--l .Cell__before-in > .Avatar {
@@ -242,8 +272,16 @@
     padding: 0 16px;
     }
 
-    .Cell--android .Cell__before-in > .Icon {
+    .Cell--android .Cell__before-in > .Icon,
+    .Cell--android .Cell__dragger > .Icon {
       padding: 12px 16px 12px 0;
+      }
+
+    .Cell--android .Cell__dragger::after {
+      width: calc(100% + 16px);
+      height: 100%;
+      right: 0;
+      top: 0;
       }
 
     .Cell--android .Cell__before-in > .Avatar {

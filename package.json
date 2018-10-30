@@ -34,7 +34,7 @@
     "prop-types": "^15.6.1"
   },
   "dependencies": {
-    "@vkontakte/icons": "^1.2.0",
+    "@vkontakte/icons": "^1.2.1",
     "postcss": "^7.0.2",
     "postcss-custom-properties": "^5.0.2",
     "postcss-import": "^9.1.0",

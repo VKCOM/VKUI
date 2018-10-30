@@ -4,7 +4,8 @@
     constructor() {
       this.state = {
         activePanel: 'list',
-        removeList: ['Михаил Андриевский', 'Вадим Дорохов', 'Саша Колобов']
+        removeList: ['Михаил Андриевский', 'Вадим Дорохов', 'Саша Колобов'],
+        draggingList: ['Say', 'Hello', 'To', 'My', 'Little', 'Friend']
       };
     }
 
@@ -121,6 +122,21 @@
                       this.setState({
                         removeList: [...this.state.removeList.slice(0, index), ...this.state.removeList.slice(index + 1)]
                       })
+                    }}>{item}</Cell>
+                  ))}
+                </List>
+              </Group>
+            }
+            
+            {this.state.removeList.length > 0 &&
+              <Group title="Перетаскивание">
+                <List>
+                  {this.state.draggingList.map((item) => (
+                    <Cell key={item} draggable onDragFinish={({ from, to }) => {
+                      const draggingList = [...this.state.draggingList];
+                      draggingList.splice(from, 1);
+                      draggingList.splice(to, 0, this.state.draggingList[from]);
+                      this.setState({ draggingList });
                     }}>{item}</Cell>
                   ))}
                 </List>
