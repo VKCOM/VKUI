@@ -58,7 +58,7 @@ export default class PanelHeader extends React.Component {
     this.titleNode = this.document.getElementById('header-title-' + this.context.panel);
     this.rightNode = this.document.getElementById('header-right-' + this.context.panel);
     this.bgNode = this.document.getElementById('header-bg-' + this.context.panel);
-    this.props.getRef && this.props.getRef(this.document.getElementById('header-' + this.context.panel));
+    this.props.getRef && this.props.getRef(this.document.getElementById(`panel-header-${this.context.panel}`));
     this.setState({ ready: true });
   }
 

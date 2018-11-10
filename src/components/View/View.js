@@ -497,7 +497,7 @@ export default class View extends Component {
                     'PanelHeader__in--swipe-back-failed': this.state.swipingBackFinish === false
                   })}
                   key={panel.props.id}
-                  id={`header-${panel.props.id}`}
+                  id={`panel-header-${panel.props.id}`}
                 >
                   <div
                     className="PanelHeader__bg"
