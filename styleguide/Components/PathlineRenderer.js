@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'react-styleguidist/lib/rsg-components/Link';
 import pkg from '../../package.json';
 import Styled from 'react-styleguidist/lib/rsg-components/Styled';
-import scheme from '../../src/appearance/scheme';
-
-const schemeOptions = Object.keys(scheme).map(scheme_id => (
-  <option value={scheme_id} key={scheme_id}>{scheme_id}</option>
-));
+import { CLIENT_LIGHT, CLIENT_DARK } from '../../src/appearance/constants';
 
 export const styles = ({ fontFamily, fontSize }) => ({
   pathline: {
@@ -22,7 +18,7 @@ export const styles = ({ fontFamily, fontSize }) => ({
 export function PathlineRenderer({ classes, children }) {
   return (
     <div className={classes.pathline}>
-      <div>
+      <span>
         Платформа:&nbsp;
         <select onChange={ (e) => {
           window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
@@ -31,22 +27,21 @@ export function PathlineRenderer({ classes, children }) {
           <option value={window.uaList.ios}>ios</option>
           <option value={window.uaList.android}>android</option>
         </select>
-      </div>
-      <div style={{ marginTop: 4 }}>
+      </span>&nbsp;|&nbsp;<span>
         Тема:&nbsp;
         <select onChange={ (e) => {
           window.localStorage.setItem('vkui-styleguide:schemeId', e.target.value);
           window.location.reload();
         } } value={window.schemeId}>
-          {schemeOptions}
+          <option value={CLIENT_LIGHT} key={CLIENT_LIGHT}>{CLIENT_LIGHT}</option>
+          <option value={CLIENT_DARK} key={CLIENT_DARK}>{CLIENT_DARK}</option>
         </select>
-      </div>
-      <div className={classes.link}>
+      </span>&nbsp;|&nbsp;<span className={classes.link}>
         Исходники:&nbsp;
         <Link target="_blank" href={`${pkg.repository}/tree/v${pkg.version}/${children.replace('../', '')}`}>
           GitHub
         </Link>
-      </div>
+      </span>
     </div>
   );
 }

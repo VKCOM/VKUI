@@ -29,13 +29,13 @@
       <Group title="Placeholder">
         <List>
           <Cell
-            before={<Avatar style={{ background: colors.blue_300 }} size={28}><Icon16Add fill={colors.white} /></Avatar>}
+            before={<Avatar style={{ background: 'var(--accent)' }} size={28}><Icon16Add fill="var(--white)" /></Avatar>}
             description="Только от друзей друзей"
           >
             Заявки в друзья
           </Cell>
           <Cell
-            before={<Avatar style={{ background: colors.red }} size={28}><Icon16Like fill={colors.white} /></Avatar>}
+            before={<Avatar style={{ background: 'var(--destructive)' }} size={28}><Icon16Like fill="var(--white)" /></Avatar>}
             description="Только важные"
           >
             Отметки «Мне нравится»
@@ -66,9 +66,9 @@
       </Group>
       <Group title="image" description="Используется для остальных случаев. Например, для музыки и плейлистов.">
         <List>
-          <Cell before={<Avatar type="image" src="https://pp.userapi.com/c841025/v841025503/617f7/bkN1Def0s14.jpg" />} description="Arctic Monkeys" asideContent={<Icon24MoreHorizontal fill={colors.accentBlue}/>}>I Wanna Be Yours</Cell>
-          <Cell before={<Avatar type="image" src="https://pp.userapi.com/c845220/v845220642/7cacc/XzhH5b7FSKY.jpg" />} description="Лето (звери)" asideContent={<Icon24MoreHorizontal fill={colors.accentBlue}/>}>6 утра</Cell>
-          <Cell before={<Avatar type="image" src="https://pp.userapi.com/c837628/v837628453/39175/4JRjMaFvCrw.jpg" />} description="Depeche Mode" asideContent={<Icon24MoreHorizontal fill={colors.accentBlue}/>}>Enjoy the Silence</Cell>
+          <Cell before={<Avatar type="image" src="https://pp.userapi.com/c841025/v841025503/617f7/bkN1Def0s14.jpg" />} description="Arctic Monkeys" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>I Wanna Be Yours</Cell>
+          <Cell before={<Avatar type="image" src="https://pp.userapi.com/c845220/v845220642/7cacc/XzhH5b7FSKY.jpg" />} description="Лето (звери)" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>6 утра</Cell>
+          <Cell before={<Avatar type="image" src="https://pp.userapi.com/c837628/v837628453/39175/4JRjMaFvCrw.jpg" />} description="Depeche Mode" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>Enjoy the Silence</Cell>
         </List>
       </Group>
     </Panel>

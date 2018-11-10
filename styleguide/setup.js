@@ -1,6 +1,5 @@
 import '../src/styles/common.css';
 import React from 'react';
-import colors from '../src/helpers/colors';
 import { platform, IOS, ANDROID } from '../src/lib/platform';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon16Add from '@vkontakte/icons/dist/16/add';
@@ -79,5 +78,3 @@ window.Icon28Search = Icon28Search;
 window.Icon28Notifications = Icon28Notifications;
 window.Icon28Messages = Icon28Messages;
 window.Icon28More = Icon28More;
-
-window.colors = colors;

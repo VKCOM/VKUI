@@ -1,11 +1,9 @@
 /**
- * @param {object} palette палитра цветов
- * @param {string} colorId идентификатор цвета из палитры
- * @return {string} color цвет в браузерном представлении
+ * Конвертирует цвет из палитры в валидный браузерный формат (hex или rgba)
+ * @param {string} color
+ * @return {string} цвет в браузерном представлении
  */
-function resolveColor (palette, colorId) {
-  const color = palette[colorId];
-
+function decodeColor (color) {
   if (color.indexOf('#') === 0 && color.length === 9) { // ahex
     return ahex2rgba(color.replace('#', ''));
   }
@@ -13,6 +11,7 @@ function resolveColor (palette, colorId) {
 }
 
 /**
+ * Конвертирует ahex в rgba
  * @param {string} ahex цвет в формате ahex: #00ffffff
  * @return {string} цвет в формате rgba
  */
@@ -23,6 +22,7 @@ function ahex2rgba (ahex) {
 }
 
 /**
+ * Добавляет hex цвету opacity и возвращает цвет в формате rgba
  * @param hex цвет в формате hex: #ffffff
  * @param opacity прозрачность в диапазоне [0, 1]
  * @return {string} цвет в формате rgba
@@ -32,5 +32,5 @@ function opacify (hex, opacity) {
 }
 
 module.exports = {
-  resolveColor
+  decodeColor
 };

@@ -93,9 +93,6 @@ module.exports = {
         name: 'Themes',
         content: './pages/themes.md'
       }, {
-        name: 'Colors',
-        content: './pages/colors.md'
-      }, {
         name: 'Utils',
         content: './pages/utils.md'
       }]

@@ -6,11 +6,7 @@ import Styled from 'react-styleguidist/lib/rsg-components/Styled';
 import Link from 'react-styleguidist/lib/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
-import scheme from '../../src/appearance/scheme';
-
-const schemeOptions = Object.keys(scheme).map(scheme_id => (
-  <option value={scheme_id} key={scheme_id}>{scheme_id}</option>
-));
+import { CLIENT_DARK, CLIENT_LIGHT } from '../../src/appearance/constants';
 
 const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
   root: {
@@ -96,7 +92,8 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
                 window.localStorage.setItem('vkui-styleguide:schemeId', e.target.value);
                 window.location.reload();
               } } value={window.schemeId}>
-                {schemeOptions}
+                <option value={CLIENT_LIGHT} key={CLIENT_LIGHT}>{CLIENT_LIGHT}</option>
+                <option value={CLIENT_DARK} key={CLIENT_DARK}>{CLIENT_DARK}</option>
               </select>
             </div>
             <div style={{ marginTop: 4 }}>

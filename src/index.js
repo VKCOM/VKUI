@@ -92,6 +92,6 @@ export { default as querystring } from './lib/querystring';
 export { default as getClassName } from './helpers/getClassName';
 export { default as requestAnimationFrame } from './lib/requestAnimationFrame';
 export { isWebView } from './lib/webview';
-export { default as colors } from './helpers/colors';
+export const colors = {};
 
 export const v = process.env.VKUI_VERSION;

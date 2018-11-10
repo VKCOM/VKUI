@@ -1,5 +1,3 @@
-
-
 .Entity {
   position: relative;
   text-align: left;
@@ -19,13 +17,13 @@
       font-size: 15px;
       line-height: 20px;
       font-weight: 600;
-      color: var(--gray_800);
+      color: var(--text_primary);
       }
 
     .Entity__description {
       font-size: 14px;
       line-height: 16px;
-      color: var(--gray_400);
+      color: var(--text_secondary);
       }
 
     .Entity__content {
