@@ -90,6 +90,9 @@ module.exports = {
           '../src/components/File/File.js'
         ]
       }, {
+        name: 'Colors',
+        content: './pages/colors.md'
+      }, {
         name: 'Themes',
         content: './pages/themes.md'
       }, {
