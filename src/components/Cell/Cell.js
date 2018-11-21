@@ -282,7 +282,6 @@ export default class Cell extends Component {
               onMoveY={this.onDragMove}
               onEnd={this.onDragEnd}
               className="Cell__dragger"
-              getRootRef={this.getRootRef}
             ><Icon24Reorder/></Touch>
             }
             {before && <div className="Cell__before-in">{before}</div>}
@@ -306,7 +305,6 @@ export default class Cell extends Component {
               onStart={this.onDragStart}
               onMoveY={this.onDragMove}
               onEnd={this.onDragEnd}
-              getRootRef={this.getRootRef}
             ><Icon24ReorderIos/></Touch>
             }
           </div>
