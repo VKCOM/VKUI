@@ -41,6 +41,7 @@ export default class PanelHeader extends React.Component {
   static contextTypes = {
     panel: PropTypes.string,
     document: PropTypes.any,
+    scheme: PropTypes.string,
     webviewType: PropTypes.oneOf(['vkapps', 'internal'])
   };
 
@@ -70,7 +71,7 @@ export default class PanelHeader extends React.Component {
       ReactDOM.createPortal(<div className={classnames('PanelHeader-bg', {
         [`PanelHeader-bg--${theme}`]: true,
         'PanelHeader-bg--tp': transparent,
-        [`PanelHeader-bg--no-shadow`]: noShadow
+        [`PanelHeader-bg--no-shadow`]: noShadow || ['bright_light', 'space_gray'].indexOf(this.context.scheme) >= 0
       })}/>, this.bgNode),
       ReactDOM.createPortal(<div className={classnames('PanelHeader-left-in', {
         [`PanelHeader-left-in--${theme}`]: true,

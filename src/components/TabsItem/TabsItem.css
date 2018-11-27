@@ -135,7 +135,7 @@
   }
 
 .Tabs--android.Tabs--light .TabsItem.Tappable--active {
-  background: var(--android_active_color);
+  background: var(--background_highlighted);
   }
 
 .Tabs--android.Tabs--light .TabsItem--selected {

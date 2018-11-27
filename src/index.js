@@ -1,5 +1,5 @@
 import './lib/polyfills';
-import './styles/common.css';
+import './styles/styles.css';
 
 /**
  * Layout

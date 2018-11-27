@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import Link from 'react-styleguidist/lib/rsg-components/Link';
 import pkg from '../../package.json';
 import Styled from 'react-styleguidist/lib/rsg-components/Styled';
-import { CLIENT_LIGHT, CLIENT_DARK } from '../../src/appearance/constants';
+import scheme from '@vkontakte/appearance/main.valette/scheme';
+
+const schemeOptions = Object.keys(scheme).map(scheme_id => (
+  <option value={scheme_id} key={scheme_id}>{scheme_id}</option>
+));
 
 export const styles = ({ fontFamily, fontSize }) => ({
   pathline: {
@@ -33,8 +37,7 @@ export function PathlineRenderer({ classes, children }) {
           window.localStorage.setItem('vkui-styleguide:schemeId', e.target.value);
           window.location.reload();
         } } value={window.schemeId}>
-          <option value={CLIENT_LIGHT} key={CLIENT_LIGHT}>{CLIENT_LIGHT}</option>
-          <option value={CLIENT_DARK} key={CLIENT_DARK}>{CLIENT_DARK}</option>
+          {schemeOptions}
         </select>
       </span>&nbsp;|&nbsp;<span className={classes.link}>
         Исходники:&nbsp;

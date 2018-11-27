@@ -2,7 +2,7 @@
 /*
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
-body[scheme="client_dark"] {
+body[scheme="space_gray"] {
   --accent: #71aaeb;
   --action_sheet_action_foreground: #ffffff;
   --action_sheet_separator: rgba(255, 255, 255, 0.12);
@@ -41,8 +41,8 @@ body[scheme="client_dark"] {
   --control_foreground: #e1e3e6;
   --control_tint: #19191a;
   --control_tint_muted: #909499;
-  --counter_primary_background: #71aaeb;
-  --counter_primary_text: #ffffff;
+  --counter_primary_background: #ffffff;
+  --counter_primary_text: #19191a;
   --counter_secondary_background: #76787a;
   --counter_secondary_text: #19191a;
   --destructive: #ff4e5f;
@@ -57,13 +57,13 @@ body[scheme="client_dark"] {
   --float_button_border: rgba(0, 0, 0, 0.12);
   --header_alternate_background: #2c2d2e;
   --header_background: #2c2d2e;
-  --header_background_before_blur: #141414;
-  --header_background_before_blur_alternate: #141414;
+  --header_background_before_blur: #070708;
+  --header_background_before_blur_alternate: #070708;
   --header_search_field_background: #454647;
   --header_search_field_tint: #e1e3e6;
   --header_tab_active_background: #5d5f61;
-  --header_tab_active_text: #e1e3e6;
-  --header_tab_active_indicator: #e1e3e6;
+  --header_tab_active_text: #ffffff;
+  --header_tab_active_indicator: #ffffff;
   --header_tab_inactive_text: #76787a;
   --header_text: #e1e3e6;
   --header_text_alternate: #e1e3e6;
@@ -74,7 +74,7 @@ body[scheme="client_dark"] {
   --icon_outline_secondary: #909499;
   --icon_secondary: #76787a;
   --icon_tertiary: #454647;
-  --im_attach_tint: #71aaeb;
+  --im_attach_tint: #ffffff;
   --im_bubble_border_alternate: rgba(0, 0, 0, 0.00);
   --im_bubble_border_alternate_highlighted: rgba(0, 0, 0, 0.00);
   --im_bubble_button_background: #313233;
@@ -97,18 +97,18 @@ body[scheme="client_dark"] {
   --im_toolbar_separator: #aaaeb3;
   --input_background: #454647;
   --input_border: #2c2d2e;
-  --landing_background: #5181b8;
+  --landing_background: #19191a;
   --landing_primary_button_background: #ffffff;
-  --landing_primary_button_foreground: #5181b8;
+  --landing_primary_button_foreground: #19191a;
   --landing_text_title: #ffffff;
-  --landing_text_secondary: rgba(255, 255, 255, 0.60);
-  --landing_snippet_border: rgba(0, 0, 0, 0.00);
+  --landing_text_secondary: #76787a;
+  --landing_snippet_border: rgba(0, 0, 0, 0.15);
   --like_text_tint: #ff4e5f;
-  --link_alternate: #71aaeb;
+  --link_alternate: #ffffff;
   --loader_background: #19191a;
   --loader_tint: #76787a;
   --loader_track_fill: #454647;
-  --loader_track_value_fill: #71aaeb;
+  --loader_track_value_fill: #ffffff;
   --media_overlay_button_background: #ffffff;
   --media_overlay_button_foreground: #2c2d2e;
   --modal_card_background: #2c2d2e;
@@ -124,7 +124,7 @@ body[scheme="client_dark"] {
   --placeholder_icon_foreground_secondary: #5d5f61;
   --placeholder_icon_tint: #ffffff;
   --poll_option_background: #ffffff;
-  --search_bar_background: #19191a;
+  --search_bar_background: rgba(0, 0, 0, 0.00);
   --search_bar_field_background: #454647;
   --search_bar_field_tint: #aaaeb3;
   --search_bar_segmented_control_tint: #76787a;
@@ -159,6 +159,6 @@ body[scheme="client_dark"] {
   --panel_tab_active_background: #454647;
   --panel_tab_active_text: #e1e3e6;
   --panel_tab_inactive_text: #76787a;
-  --im_service_message_text: #818c99;
+  --im_service_message_text: #76787a;
 }
 /* stylelint-enable */

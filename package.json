@@ -25,7 +25,11 @@
     "webpack-cli": "^3.0.3",
     "webpack-merge": "^4.0.0",
     "webpack-stats-plugin": "^0.1.4",
-    "@vkontakte/vkui-connect": "^1.1.2"
+    "@vkontakte/vkui-connect": "^1.1.2",
+    "@vkontakte/appearance": "git@github.com:VKCOM/Appearance.git#2.1.0"
+  },
+  "bin": {
+    "generate_scheme": "./tasks/generate_scheme.js"
   },
   "peerDependencies": {
     "react-dom": "^16.4.0",

@@ -1,4 +1,4 @@
-import '../src/styles/common.css';
+import '../src/styles/styles.css';
 import React from 'react';
 import { platform, IOS, ANDROID } from '../src/lib/platform';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';

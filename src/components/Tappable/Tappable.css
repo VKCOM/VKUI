@@ -21,7 +21,7 @@
   }
 
 .Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.HeaderButton):not(.Button):not(.PanelHeaderContent__in) {
-  background: var(--android_active_color) !important;
+  background: var(--background_highlighted) !important;
   }
 
   /**
