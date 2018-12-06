@@ -21,7 +21,8 @@ export default class ConfigProvider extends React.Component {
     }),
     isWebView: PropTypes.bool,
     scheme: PropTypes.string,
-    webviewType: PropTypes.oneOf(['vkapps', 'internal'])
+    webviewType: PropTypes.oneOf(['vkapps', 'internal']),
+    app: PropTypes.string
   };
 
   static propTypes = {
@@ -34,6 +35,7 @@ export default class ConfigProvider extends React.Component {
     scheme: PropTypes.string,
     isWebView: PropTypes.bool,
     webviewType: PropTypes.oneOf(['vkapps', 'internal']),
+    app: PropTypes.string,
     children: PropTypes.node
   };
 
@@ -68,7 +70,8 @@ export default class ConfigProvider extends React.Component {
       insets: { ...this.props.insets, bottom: this.state.bottomInset },
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
-      scheme: this.props.scheme
+      scheme: this.props.scheme,
+      app: this.props.app
     };
   }
 
