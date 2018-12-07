@@ -83,15 +83,15 @@ export { default as ConfigProvider } from './components/ConfigProvider/ConfigPro
  * Utils
  */
 export { default as classnames } from './lib/classnames';
-export { default as keyframes } from './lib/keyframes';
-export { getOffsetRect } from './lib/offset';
 export { platform, ANDROID, IOS } from './lib/platform';
-export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { default as request } from './lib/request';
 export { default as querystring } from './lib/querystring';
 export { default as getClassName } from './helpers/getClassName';
-export { default as requestAnimationFrame } from './lib/requestAnimationFrame';
 export { isWebView } from './lib/webview';
+/**
+ * @deprecated будет удален в 3.0.0
+ * @type {{}}
+ */
 export const colors = {};
 
 export const v = process.env.VKUI_VERSION;
