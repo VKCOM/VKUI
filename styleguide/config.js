@@ -79,6 +79,7 @@ module.exports = {
         components: () => [
           '../src/components/FormLayout/FormLayout.js',
           '../src/components/FormLayoutGroup/FormLayoutGroup.js',
+          '../src/components/FormStatus/FormStatus.js',
           '../src/components/Slider/Slider.js',
           '../src/components/RangeSlider/RangeSlider.js',
           '../src/components/Radio/Radio.js',

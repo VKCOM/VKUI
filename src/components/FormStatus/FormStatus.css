@@ -1,0 +1,30 @@
+.FormStatus {
+  border-radius: 10px;
+  padding: 12px;
+  background: var(--field_background);
+  color: var(--text_primary);
+  }
+
+.FormStatus--error {
+  background: var(--field_error_background);
+  color: var(--field_error_border);
+  }
+
+  .FormStatus__title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+    }
+
+  .FormStatus__title:not(:last-child) {
+    margin-bottom: 2px;
+    }
+
+  .FormStatus__content {
+    font-size: 13px;
+    line-height: 1.23;
+    }
+
+    .FormStatus__content b {
+      font-weight: 500;
+      }

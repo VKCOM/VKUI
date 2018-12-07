@@ -60,6 +60,7 @@ export { default as Tooltip } from './components/Tooltip/Tooltip';
  */
 export { default as FormLayout } from './components/FormLayout/FormLayout';
 export { default as FormLayoutGroup } from './components/FormLayoutGroup/FormLayoutGroup';
+export { default as FormStatus } from './components/FormStatus/FormStatus';
 export { default as Switch } from './components/Switch/Switch';
 export { default as File } from './components/File/File';
 export { default as Input } from './components/Input/Input';

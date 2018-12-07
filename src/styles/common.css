@@ -53,6 +53,7 @@
 @import '../components/Tabbar/Tabbar.css';
 @import '../components/TabbarItem/TabbarItem.css';
 @import '../components/Epic/Epic.css';
+@import '../components/FormStatus/FormStatus.css';
 
 html,
 body,
