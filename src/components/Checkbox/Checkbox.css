@@ -17,7 +17,7 @@
       width: 20px;
       height: 20px;
       box-sizing: border-box;
-      margin: 2px 14px 2px 2px;
+      margin: 0 14px 0 2px;
       border-radius: 4px;
       border: 2px solid var(--icon_secondary);
       color: transparent;
@@ -27,7 +27,6 @@
       flex-grow: 1;
       font-size: 16px;
       line-height: 20px;
-      margin: 2px 0;
       color: var(--text_primary);
       }
 
