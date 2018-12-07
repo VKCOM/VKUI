@@ -1,5 +1,3 @@
-
-
 .FormLayout {
   position: relative;
   }
@@ -7,13 +5,6 @@
   .FormLayout__row {
     display: block;
     }
-
-    /* TODO legacy. FormLayoutGroup пришел на замену. Убрать в 3.0.0 */
-    .FormLayout__field .Input + .Input,
-    .FormLayout__field .Select + .Select,
-    .FormLayout__field .SelectMimicry + .SelectMimicry {
-      padding-top: 12px;
-      }
 
   .FormLayout__submit {
     position: absolute;
@@ -34,23 +25,38 @@
     padding: 12px 0;
     }
 
-    .FormLayout--ios .FormLayout__field .Input,
-    .FormLayout--ios .FormLayout__field .Textarea,
-    .FormLayout--ios .FormLayout__field .Select,
-    .FormLayout--ios .FormLayout__field .SelectMimicry,
-    .FormLayout--ios .FormLayout__field .Button {
+    .FormLayout--ios .FormLayout__row .Checkbox:first-child,
+    .FormLayout--ios .FormLayout__row .Radio:first-child,
+    .FormLayout--ios .FormLayout__row .Cell:first-child,
+    .FormLayout--ios .FormLayout__row .CellButton:first-child {
+      margin-top: -4px;
+      }
+
+    .FormLayout--ios .FormLayout__row .Checkbox:last-child,
+    .FormLayout--ios .FormLayout__row .Radio:last-child,
+    .FormLayout--ios .FormLayout__row .Cell:last-child,
+    .FormLayout--ios .FormLayout__row .CellButton:last-child {
+      margin-bottom: -4px;
+      }
+
+    .FormLayout--ios .FormLayout__row .Button--sz-xl {
+      width: calc(100% - 2 * 12px);
+      }
+
+    .FormLayout--ios .FormLayout__row .Input,
+    .FormLayout--ios .FormLayout__row .Textarea,
+    .FormLayout--ios .FormLayout__row .Select,
+    .FormLayout--ios .FormLayout__row .SelectMimicry,
+    .FormLayout--ios .FormLayout__row .Button,
+    .FormLayout--ios .FormLayout__row .FormStatus {
       margin-left: 12px;
       margin-right: 12px;
       }
 
-    .FormLayout--ios .FormLayout__field .RangeSlider,
-    .FormLayout--ios .FormLayout__field .Slider {
+    .FormLayout--ios .FormLayout__row .Slider,
+    .FormLayout--ios .FormLayout__row .RangeSlider {
       margin-left: 26px;
       margin-right: 26px;
-      }
-
-    .FormLayout--ios .FormLayout__field .Button--sz-xl {
-      width: calc(100% - 24px);
       }
 
     .FormLayout--ios .FormLayout__row-top {
@@ -71,23 +77,38 @@
     padding: 10px 0;
     }
 
-    .FormLayout--android .FormLayout__field .Textarea,
-    .FormLayout--android .FormLayout__field .Input,
-    .FormLayout--android .FormLayout__field .Select,
-    .FormLayout--android .FormLayout__field .SelectMimicry,
-    .FormLayout--android .FormLayout__field .Button {
+    .FormLayout--android .FormLayout__row .Checkbox:first-child,
+    .FormLayout--android .FormLayout__row .Radio:first-child,
+    .FormLayout--android .FormLayout__row .Cell:first-child,
+    .FormLayout--android .FormLayout__row .CellButton:first-child {
+      margin-top: -4px;
+      }
+
+    .FormLayout--android .FormLayout__row .Checkbox:last-child,
+    .FormLayout--android .FormLayout__row .Radio:last-child,
+    .FormLayout--android .FormLayout__row .Cell:last-child,
+    .FormLayout--android .FormLayout__row .CellButton:last-child {
+      margin-bottom: -4px;
+      }
+
+    .FormLayout--android .FormLayout__row .Button--sz-xl {
+      width: calc(100% - 2 * 16px);
+      }
+
+    .FormLayout--android .FormLayout__row .Input,
+    .FormLayout--android .FormLayout__row .Textarea,
+    .FormLayout--android .FormLayout__row .Select,
+    .FormLayout--android .FormLayout__row .SelectMimicry,
+    .FormLayout--android .FormLayout__row .Button,
+    .FormLayout--android .FormLayout__row .FormStatus {
       margin-left: 16px;
       margin-right: 16px;
       }
 
-    .FormLayout--android .FormLayout__field .RangeSlider,
-    .FormLayout--android .FormLayout__field .Slider {
+    .FormLayout--android .FormLayout__row .Slider,
+    .FormLayout--android .FormLayout__row .RangeSlider {
       margin-left: 30px;
       margin-right: 30px;
-      }
-
-    .FormLayout--android .FormLayout__field .Button--sz-xl {
-      width: calc(100% - 32px);
       }
 
     .FormLayout--android .FormLayout__row-top {

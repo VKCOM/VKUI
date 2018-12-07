@@ -19,17 +19,13 @@
         <option value="m">Мужской</option>
         <option value="f">Женский</option>
       </Select>
-      <div top="Тип документа">
+      <FormLayoutGroup top="Тип документа">
         <Radio name="type">Паспорт</Radio>
         <Radio name="type">Загран</Radio>
-      </div>
-      <Textarea top="О себе" />
-      <FormLayoutGroup>
-        <Checkbox>Согласен со всем <Link>этим</Link></Checkbox>
-        <div>
-          <Button type="cell">Зарегистрироваться</Button>
-        </div>
       </FormLayoutGroup>
+      <Textarea top="О себе" />
+      <Checkbox>Согласен со всем <Link>этим</Link></Checkbox>
+      <Button size="xl">Зарегистрироваться</Button>
     </FormLayout>
   </Panel>
 </View>
