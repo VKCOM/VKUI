@@ -227,7 +227,7 @@
       .PanelHeader--android .PanelHeader__content {
         max-width: 100%;
         flex-grow: 2;
-        height: 100%;
+        height: 56px;
         }
 
       .PanelHeader--android .PanelHeader-left-in {
@@ -253,12 +253,14 @@
         .PanelHeader--android .PanelHeader-content {
           font-size: 20px;
           line-height: 56px;
-          height: 100%;
+          height: 56px;
           font-weight: 500;
           }
 
         .PanelHeader--android .PanelHeader-content > *:not(.Search):not(.PanelHeaderContent) {
           padding: 0 6px;
+          height: 56px;
+          line-height: 56px;
           }
 
           .PanelHeader--android .Search {
