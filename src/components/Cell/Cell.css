@@ -172,7 +172,20 @@
       width: 10000px;
       height: 1px;
       background: var(--separator_common);
+      transform-origin: center center;
       content: '';
+      }
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+      .List .Cell--ios:not(:last-child) .Cell__in:not(.Tappable--active) .Cell__before::before {
+        transform: scaleY(.5);
+        }
+      }
+
+    @media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+      .List .Cell--ios:not(:last-child) .Cell__in:not(.Tappable--active) .Cell__before::before {
+        transform: scaleY(.33);
+        }
       }
 
     .List .Cell--ios.Cell--m .Cell__before::before {
@@ -238,15 +251,6 @@
           content: '';
           display: block;
           }
-
-    @media
-      (-webkit-min-device-pixel-ratio: 2),
-      (min-resolution: 192dpi),
-      (min-resolution: 2dppx) {
-      .List .Cell--ios:not(:last-child) .Cell__in:not(.Tappable--active) .Cell__before::before {
-        background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
-        }
-      }
 
     .Cell--ios .Cell__main {
       padding: 12px .5em 12px 0;

@@ -39,19 +39,25 @@
 
   .Group--ios::before {
     bottom: 100%;
+    transform-origin: center bottom;
     }
 
   .Group--ios::after {
     top: 100%;
+    transform-origin: center top;
     }
 
-  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-    .Group--ios::before {
-      background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
-      }
-
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    .Group--ios::before,
     .Group--ios::after {
-      background: linear-gradient(to bottom, var(--separator_common) 50%, transparent 50%);
+      transform: scaleY(.5);
+      }
+    }
+
+  @media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+    .Group--ios::before,
+    .Group--ios::after {
+      transform: scaleY(.33);
       }
     }
 

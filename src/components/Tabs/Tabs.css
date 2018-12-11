@@ -49,6 +49,7 @@
   content: '';
   bottom: 0;
   background: var(--separator_common);
+  transform-origin: center bottom;
   }
 
 .FixedLayout--ios.FixedLayout--bottom .Tabs::before {
@@ -58,8 +59,23 @@
   z-index: 1;
   height: 1px;
   content: '';
-  top: 0;
+  bottom: 100%;
   background: var(--separator_common);
+  transform-origin: center bottom;
+  }
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .FixedLayout--ios.FixedLayout--top .Tabs::before,
+  .FixedLayout--ios.FixedLayout--bottom .Tabs::before {
+    transform: scaleY(.5);
+    }
+  }
+
+@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+  .FixedLayout--ios.FixedLayout--top .Tabs::before,
+  .FixedLayout--ios.FixedLayout--bottom .Tabs::before {
+    transform: scaleY(.33);
+    }
   }
 
 .FixedLayout--ios.FixedLayout--top .Tabs--light.Tabs--buttons {
@@ -93,16 +109,6 @@
   flex-shrink: 0;
   height: 1px;
   content: '';
-  }
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .FixedLayout--ios.FixedLayout--top .Tabs::before {
-    background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
-    }
-
-  .FixedLayout--ios.FixedLayout--bottom .Tabs::before {
-    background: linear-gradient(to bottom, var(--separator_common) 50%, transparent 50%);
-    }
   }
 
 /*
