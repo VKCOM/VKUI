@@ -154,7 +154,7 @@
       border-radius: 0 0 12px 12px;
       }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+@media (min-resolution: 2dppx) {
   .Alert--ios .Alert__content::after,
   .Alert--ios.Alert--v .Alert__btn::after {
     transform: scaleY(.5);
@@ -165,7 +165,7 @@
       }
   }
 
-@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+@media (min-resolution: 3dppx) {
   .Alert--ios .Alert__content::after,
   .Alert--ios.Alert--v .Alert__btn::after {
     transform: scaleY(.33);

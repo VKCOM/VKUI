@@ -47,14 +47,14 @@
     transform-origin: center top;
     }
 
-  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  @media (min-resolution: 2dppx) {
     .Group--ios::before,
     .Group--ios::after {
       transform: scaleY(.5);
       }
     }
 
-  @media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+  @media (min-resolution: 3dppx) {
     .Group--ios::before,
     .Group--ios::after {
       transform: scaleY(.33);

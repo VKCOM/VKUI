@@ -229,13 +229,13 @@
   transform-origin: center bottom;
   }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+@media (min-resolution: 2dppx) {
   .Search--ios.Search--default::after {
     transform: scaleY(.5);
     }
   }
 
-@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+@media (min-resolution: 3dppx) {
   .Search--ios.Search--default::after {
     transform: scaleY(.33);
     }

@@ -106,17 +106,24 @@
 
         .PanelHeader--ios .PanelHeader-bg::after {
           position: absolute;
-          bottom: 0;
+          top: 100%;
           left: 0;
           width: 100%;
           height: 1px;
           background: var(--separator_common);
+          transform-origin: center top;
           content: '';
           }
 
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+        @media (min-resolution: 2dppx) {
           .PanelHeader--ios .PanelHeader-bg::after {
-            background: linear-gradient(to top, var(--separator_common) 50%, transparent 50%);
+            transform: scaleY(.5);
+            }
+          }
+
+        @media (min-resolution: 3dppx) {
+          .PanelHeader--ios .PanelHeader-bg::after {
+            transform: scaleY(.33);
             }
           }
 

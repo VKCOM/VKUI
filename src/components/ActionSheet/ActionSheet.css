@@ -141,14 +141,14 @@
   transform-origin: center bottom;
   }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+@media (min-resolution: 2dppx) {
   .ActionSheet--ios div.ActionSheetItem::after,
   .ActionSheet--ios .ActionSheet__header::after {
     transform: scaleY(.5);
     }
   }
 
-@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+@media (min-resolution: 3dppx) {
   .ActionSheet--ios div.ActionSheetItem::after,
   .ActionSheet--ios .ActionSheet__header::after {
     transform: scaleY(.33);

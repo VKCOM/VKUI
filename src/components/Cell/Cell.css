@@ -176,13 +176,13 @@
       content: '';
       }
 
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    @media (min-resolution: 2dppx) {
       .List .Cell--ios:not(:last-child) .Cell__in:not(.Tappable--active) .Cell__before::before {
         transform: scaleY(.5);
         }
       }
 
-    @media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+    @media (min-resolution: 3dppx) {
       .List .Cell--ios:not(:last-child) .Cell__in:not(.Tappable--active) .Cell__before::before {
         transform: scaleY(.33);
         }

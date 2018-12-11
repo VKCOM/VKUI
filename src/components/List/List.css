@@ -41,14 +41,14 @@
     content: none;
     }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+@media (min-resolution: 2dppx) {
   .List--ios::before,
   .List--ios::after {
     transform: scaleY(.5);
     }
   }
 
-@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 3dppx) {
+@media (min-resolution: 3dppx) {
   .List--ios::before,
   .List--ios::after {
     transform: scaleY(.33);
