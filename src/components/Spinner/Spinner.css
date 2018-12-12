@@ -1,8 +1,5 @@
-
-
 :root {
-  --offset: 106;
-  --duration: 1.4s;
+  --duration: .7s;
 }
 
 .Spinner {
@@ -13,41 +10,17 @@
   justify-content: center;
   }
 
-  .Spinner--ios .Spinner__self {
-    position: relative;
-    fill: var(--text_primary);
-    }
+.Spinner--ios {
+  color: var(--activity_indicator_tint);
+  }
 
-  .ScreenSpinner--ios .Spinner__self {
-    fill: var(--white);
-    }
+.Spinner--android {
+  color: var(--accent);
+  }
 
-  .Spinner--android .Spinner__self {
-    stroke: var(--accent);
-    }
-
-  .PanelHeader--ios .Spinner__self {
-    fill: currentColor;
-    }
-
-  .PanelHeader--android .Spinner__self {
-    stroke: currentColor;
-    }
-
-  .ScreenSpinner--android .Spinner__self {
-    stroke: var(--white);
-    }
-
-  .Spinner--android.Spinner--on .Spinner__self {
+  .Spinner__self {
     animation: rotator var(--duration) linear infinite;
-    }
-
-    .Spinner--android .Spinner__path {
-      transform-origin: center;
-      }
-
-  .Spinner--ios.Spinner--on .Spinner__part {
-    animation: fade var(--duration) linear infinite;
+    transform-origin: center;
     }
 
 @keyframes rotator {
@@ -57,15 +30,5 @@
 
   100% {
     transform: rotate(360deg);
-    }
-  }
-
-@keyframes fade {
-  from {
-    opacity: 1;
-    }
-
-  to {
-    opacity: .1;
     }
   }

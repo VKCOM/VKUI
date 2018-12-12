@@ -10,7 +10,9 @@ const baseClassName = getClassName('ScreenSpinner');
 export default function ScreenSpinner ({ style, className, ...restProps }) {
   return (
     <PopoutWrapper className={classnames(baseClassName, className)} style={style}>
-      <Spinner {...restProps} />
+      <div className="ScreenSpinner__container">
+        <Spinner size="large" {...restProps} />
+      </div>
     </PopoutWrapper>
   );
 }

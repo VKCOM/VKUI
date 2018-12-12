@@ -1,0 +1,40 @@
+.ScreenSpinner .PopoutWrapper__mask {
+  background: none;
+  }
+
+.ScreenSpinner {
+  animation: screen-spinner-intro .3s ease;
+  }
+
+.ScreenSpinner--ios .ScreenSpinner__container {
+  width: 88px;
+  height: 88px;
+  background: var(--overlay_status_background);
+  border-radius: 10px;
+  }
+
+.ScreenSpinner--ios .ScreenSpinner__container .Spinner {
+  color: var(--overlay_status_icon);
+  }
+
+.ScreenSpinner--android .ScreenSpinner__container {
+  width: 88px;
+  height: 88px;
+  background: var(--tabbar_background);
+  box-shadow: 0 16px 32px 0 rgba(0, 0, 0, .08), 0 0 8px 0 rgba(0, 0, 0, .08);
+  border-radius: 8px;
+  }
+
+.ScreenSpinner--android .ScreenSpinner__container .Spinner {
+  color: var(--icon_outline_secondary);
+  }
+
+@keyframes screen-spinner-intro {
+  from {
+    opacity: 0;
+    }
+
+  to {
+    opacity: 1;
+    }
+  }

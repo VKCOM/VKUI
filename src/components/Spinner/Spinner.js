@@ -1,54 +1,49 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import { platform, IOS } from '../../lib/platform';
 import classnames from '../../lib/classnames.js';
-import AndroidSpinner from './AndroidSpinner';
-import IosSpinner from './IosSpinner';
+import Spinner24 from '@vkontakte/icons/dist/24/spinner';
+import Spinner32 from '@vkontakte/icons/dist/32/spinner';
+import Spinner44 from '@vkontakte/icons/dist/44/spinner';
+import Spinner16 from '@vkontakte/icons/dist/16/spinner';
 
-const osname = platform();
 const baseClassNames = getClassName('Spinner');
 
-export default class Spinner extends Component {
+export default class Spinner extends PureComponent {
   static propTypes = {
     style: PropTypes.object,
-    size: PropTypes.number,
-    /**
-     * Толщина линии в Android версии
-     */
-    strokeWidth: PropTypes.number,
-    /**
-     * @ignore
-     */
-    on: PropTypes.bool,
-    /**
-     * @ignore
-     */
-    progress: PropTypes.number,
+    size: PropTypes.oneOf(['small', 'regular', 'large', 'medium']),
     className: PropTypes.string
   };
+
   static defaultProps = {
-    strokeWidth: 4,
     on: true,
-    progress: null
+    progress: null,
+    size: 'regular'
   };
+
+  get svgSpinner () {
+    switch (this.props.size) {
+      case 'large':
+        return <Spinner44 className="Spinner__self" />;
+      case 'medium':
+        return <Spinner32 className="Spinner__self" />;
+      case 'small':
+        return <Spinner16 className="Spinner__self" />;
+      default:
+        return <Spinner24 className="Spinner__self" />;
+    }
+  }
+
   render () {
-    const { on, progress, className, ...restProps } = this.props;
-    const Component = osname === IOS ? IosSpinner : AndroidSpinner;
-    const size = this.props.size || Component.defaultProps.size;
+    const { className, size, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames(baseClassNames, {
-        'Spinner--on': on && progress === null
-      }, className)}>
-        <svg
-          className="Spinner__self"
-          style={{ width: size, height: size }}
-          viewBox={`0 0 ${size} ${size}`}
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <Component {...this.props} />
-        </svg>
+      <div
+        {...restProps}
+        className={classnames(baseClassNames, className)}
+      >
+        {this.svgSpinner}
       </div>
     );
   }
