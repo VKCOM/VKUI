@@ -17,8 +17,6 @@ export default class Spinner extends PureComponent {
   };
 
   static defaultProps = {
-    on: true,
-    progress: null,
     size: 'regular'
   };
 
