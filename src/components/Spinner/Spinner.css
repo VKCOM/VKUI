@@ -18,6 +18,10 @@
   color: var(--accent);
   }
 
+.PanelHeader .Spinner {
+  color: currentColor;
+  }
+
   .Spinner__self {
     animation: rotator var(--duration) linear infinite;
     transform-origin: center;
