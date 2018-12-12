@@ -1,8 +1,6 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import requestAnimationFrame from '../../lib/requestAnimationFrame';
 import {ANDROID, platform} from '../../lib/platform';
 import classnames from '../../lib/classnames';
 
@@ -101,7 +99,7 @@ export default class Textarea extends Component {
   componentDidUpdate (prevProps) {
     if (prevProps.value && this.props.value === '') {
       // Fix iOS extra indent on removing content
-      requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
         this.element.value = '';
       });
     }

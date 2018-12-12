@@ -1,10 +1,8 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import Touch from '../Touch/Touch';
 import classnames from '../../lib/classnames';
-import requestAnimationFrame from '../../lib/requestAnimationFrame';
 
 const baseClassNames = getClassName('Gallery');
 
@@ -261,7 +259,7 @@ export default class Gallery extends Component {
       min: this.calcMin({ layerWidth, containerWidth, viewportWidth }),
       animation: false
     }, () => {
-      requestAnimationFrame(() => this.setState({ animation: true }));
+      window.requestAnimationFrame(() => this.setState({ animation: true }));
     });
   };
 
