@@ -46,11 +46,11 @@ export default class File extends Component {
     getRef: PropTypes.func,
     getRootRef: PropTypes.func,
     /**
-     * @deprecated Используйте `children`. Свойство `label` будет удалено в следующей мажорной версии.
+     * @deprecated Используйте `children`. Свойство `label` будет удалено в 3.0.0
      */
     label: PropTypes.string,
     /**
-     * @deprecated Используйте `align`. Свойство `alignment` будет удалено в следующей мажорной версии.
+     * @deprecated Используйте `align`. Свойство `alignment` будет удалено в 3.0.0
      */
     alignment: PropTypes.oneOf(['left', 'center', 'right'])
   };

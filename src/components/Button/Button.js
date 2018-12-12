@@ -12,14 +12,13 @@ export default class Button extends React.Component {
   static propTypes = {
     /**
      * Значения `1`, `2`, `3`, `sell`, `buy` устарели. Маппинг на новые значения находится в
-     * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в
-     * следующей мажлорной версии.
+     * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в 3.0.0
      */
     level: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'outline', 'commerce', '1', '2', '3', 'sell', 'buy']),
     size: PropTypes.oneOf(['m', 'l', 'xl']),
     /**
      * @deprecated Кнопки-ячейки `<Button type="cell" />` переехали в отдельный компонент: `<CellButton />`.
-     * Свойство `type` будет удалено в следующей мажорной версии.
+     * Свойство `type` будет удалено в 3.0.0
      */
     type: PropTypes.oneOf(['default', 'cell']),
     align: PropTypes.oneOf(['left', 'center', 'right']),

@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from '../../lib/classnames';
@@ -9,15 +8,13 @@ const baseClassNames = getClassName('Entity');
 
 // @TODO Try to load photo
 /**
- * @deprecated этот компонент устарел и будет удален в следующей мажорной версии.
- * Используйте `Cell`.
+ * @deprecated Используйте `Cell`. Этот компонент устарел и будет удален в 3.0.0
  */
 export default class Entity extends Component {
   static propTypes = {
     style: PropTypes.object,
     /**
-     * @deprecated
-     * Use avatarProps.size instead
+     * @deprecated Используйте `avatarProps.size`
      */
     size: PropTypes.oneOf(['m', 's', 80, 72, 64, 56, 48, 40, 36, 32, 28]),
     photo: PropTypes.string,

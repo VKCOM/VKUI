@@ -8,6 +8,9 @@ import {brToNl} from '../../lib/string';
 
 let actionId = 1;
 
+/**
+ * @deprecated будет удален в 3.0.0
+ */
 export default class NativePopouts extends React.Component {
   state = {
     popout: null
