@@ -1,5 +1,3 @@
-
-
 .Select {
   display: block;
   position: relative;
@@ -84,8 +82,9 @@
     background-color: var(--field_background);
     }
 
-  .Select--android select:focus ~ .Select-underline::before,
-  .Select--android.Select--mimicry:focus .Select-underline::before {
+  .Select--android select:focus ~ .Select__border::before,
+  .Select--android.Select--mimicry:focus .Select__border::before,
+  .Select--android.Select--mimicry:active .Select__border::before {
     transform: scaleX(1);
     z-index: 0;
     transition: transform .14s var(--android-easing);

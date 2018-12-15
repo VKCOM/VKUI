@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import {ANDROID, platform} from '../../lib/platform';
 import classnames from '../../lib/classnames';
 
-const osname = platform();
 const baseClassName = getClassName('Textarea');
 
-export default class Textarea extends Component {
+export default class Textarea extends PureComponent {
   constructor (props) {
     super(props);
 
@@ -118,7 +116,7 @@ export default class Textarea extends Component {
           ref={this.getRef}
           style={{ height }}
         />
-        {osname === ANDROID && <div className="Textarea-underline" />}
+        <div className="Textarea__border" />
       </div>
     );
   }

@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classnames from '../../lib/classnames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
-import { platform, ANDROID } from '../../lib/platform';
 
-const osname = platform();
 const baseClassName = getClassName('Select');
 
 export default class SelectMimicry extends Component {
@@ -20,8 +18,7 @@ export default class SelectMimicry extends Component {
   };
 
   static defaultProps = {
-    tabIndex: 0,
-    alignment: 'left'
+    tabIndex: 0
   };
 
   render () {
@@ -41,7 +38,7 @@ export default class SelectMimicry extends Component {
           <div className="Select__title">{children || placeholder}</div>
           <Icon24Dropdown />
         </div>
-        {osname === ANDROID && <div className="Select-underline" />}
+        <div className="Select__border" />
       </div>
     );
   }
