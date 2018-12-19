@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 import Alert from '../Alert/Alert';
 import ActionSheet from '../ActionSheet/ActionSheet';
 import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
-import {brToNl} from '../../lib/string';
+
+function brToNl (str = '') {
+  const regex = /<br\s*\/?>/gi;
+
+  return str.replace(regex, '\n');
+}
 
 let actionId = 1;
 
