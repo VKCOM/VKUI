@@ -106,7 +106,7 @@ export default class Select extends Component {
           <div className="Select__title">{this.state.title}</div>
           <Icon24Dropdown />
         </div>
-        {osname === ANDROID && <div className="Select-underline" />}
+        {osname === ANDROID && <div className="Select__border" />}
       </label>
     );
   }
