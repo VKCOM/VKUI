@@ -31,6 +31,7 @@
     box-sizing: border-box;
     height: 44px;
     position: relative;
+    z-index: 2;
     }
 
   .Select select:disabled ~ .Select__container {
