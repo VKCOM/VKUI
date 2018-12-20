@@ -1,5 +1,5 @@
 export default function removeObjectKeys (obj = {}, keys = []) {
-  let newObj = Object.assign({}, obj);
+  let newObj = { ...obj };
 
   keys.forEach(key => delete newObj[key]);
 

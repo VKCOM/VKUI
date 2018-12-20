@@ -125,10 +125,11 @@ export default class NativePopouts extends React.Component {
 
   renderPopout (props) {
     if (props.popout.style) {
-      this.actions = props.popout.actions.map((item) => Object.assign({}, item, {
+      this.actions = props.popout.actions.map((item) => ({
+        ...item,
         autoclose: item.hasOwnProperty('autoclose') ? item.autoclose : true,
         action: item.action || props.popout.onClose,
-        handler: Object.assign({}, item.params, { action: `action-${actionId++}` })
+        handler: { ...item.params, action: `action-${actionId++}` }
       }));
 
       this.actionsStore = this.actions.reduce((res, item) => { res[item.handler.action] = item.action; return res; }, {});

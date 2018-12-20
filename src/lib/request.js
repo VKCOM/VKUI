@@ -17,7 +17,7 @@ function makeRequest (url, options) {
 
   const error = new Error('Request was aborted');
   const request = getXMLHttpRequest();
-  const opts = Object.assign({}, defaultOptions, options);
+  const opts = { ...defaultOptions, ...options };
 
   if (opts.data && opts.method.toLowerCase() === 'get') {
     url += `?${querystring.create(opts.data)}`;

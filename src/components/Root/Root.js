@@ -71,9 +71,10 @@ export default class Root extends React.Component {
       const prevView = this.props.activeView;
 
       this.setState({
-        scrolls: Object.assign({}, this.state.scrolls, {
+        scrolls: {
+          ...this.state.scrolls,
           [this.props.activeView]: pageYOffset
-        }),
+        },
         transition: true,
         activeView: null,
         nextView,

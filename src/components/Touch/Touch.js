@@ -63,9 +63,10 @@ export default class Touch extends Component {
     };
 
     // Вызываем нужные колбеки из props
-    const outputEvent = Object.assign({}, this.gesture, {
+    const outputEvent = {
+      ...this.gesture,
       originalEvent: e
-    });
+    };
 
     if (this.props.onStart) {
       this.props.onStart(outputEvent);
@@ -126,9 +127,10 @@ export default class Touch extends Component {
         this.gesture.shiftYAbs = shiftYAbs;
 
         // Вызываем нужные колбеки из props
-        const outputEvent = Object.assign({}, this.gesture, {
+        const outputEvent = {
+          ...this.gesture,
           originalEvent: e
-        });
+        };
 
         if (this.props.onMove) {
           this.props.onMove(outputEvent);
@@ -156,9 +158,10 @@ export default class Touch extends Component {
 
     if (isPressed) {
       // Вызываем нужные колбеки из props
-      const outputEvent = Object.assign({}, this.gesture, {
+      const outputEvent = {
+        ...this.gesture,
         originalEvent: e
-      });
+      };
 
       if (this.props.onEnd) {
         this.props.onEnd(outputEvent);

@@ -159,17 +159,18 @@ export default class Tappable extends Component {
       const key = 'wave' + Date.now().toString();
 
       this.setState(state => ({
-        clicks: Object.assign({}, state.clicks, {
+        clicks: {
+          ...state.clicks,
           [key]: {
             x: Math.round(x - left),
             y: Math.round(y - top)
           }
-        })
+        }
       }));
 
       this.wavesTimeout = setTimeout(() => {
         this.setState(state => {
-          let clicks = Object.assign({}, state.clicks);
+          let clicks = { ...state.clicks };
           delete clicks[key];
           return { clicks };
         });

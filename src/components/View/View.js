@@ -120,9 +120,10 @@ export default class View extends Component {
         nextPanel: nextProps.activePanel,
         activePanel: null,
         animated: true,
-        scrolls: Object.assign({}, this.state.scrolls, {
+        scrolls: {
+          ...this.state.scrolls,
           [this.props.activePanel]: this.window.pageYOffset
-        }),
+        },
         isBack
       });
     }
@@ -324,9 +325,10 @@ export default class View extends Component {
           startT: e.startT,
           swipeBackPrevPanel: this.state.activePanel,
           swipeBackNextPanel: this.props.history.slice(-2)[0],
-          scrolls: Object.assign({}, this.state.scrolls, {
+          scrolls: {
+            ...this.state.scrolls,
             [this.state.activePanel]: this.window.pageYOffset
-          })
+          }
         });
       }
       if (this.state.swipingBack) {
