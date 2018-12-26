@@ -1,10 +1,10 @@
 ```jsx static
-import React from "react";
-import ReactDOM from "react-dom";
-import { View, Panel, PanelHeader, Group, List, Cell } from "@vkontakte/vkui";
-import "@vkontakte/vkui/dist/vkui.css";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { View, Panel, PanelHeader, Group, List, Cell } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
 
-function App() {
+function App () {
   return (
     <View activePanel="main">
       <Panel id="main">
@@ -20,5 +20,5 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
