@@ -1,7 +1,7 @@
 ```jsx static
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { View, Panel, PanelHeader, Group, List, ListItem } from '@vkontakte/vkui';
+import { View, Panel, PanelHeader, Group, List, Cell } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 function App () {
@@ -11,8 +11,8 @@ function App () {
         <PanelHeader>VKUI</PanelHeader>
         <Group title="Items">
           <List>
-            <ListItem>Hello</ListItem>
-            <ListItem>World</ListItem>
+            <Cell>Hello</Cell>
+            <Cell>World</Cell>
           </List>
         </Group>
       </Panel>
