@@ -1,15 +1,13 @@
 const path = require('path');
-const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const merge = require('webpack-merge');
-const pkg = require('./package.json');
 const cssTransformOptions = require('./postcss.config.js');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const config = {
   entry: {
-    vkui: path.resolve(__dirname, 'src/index.js')
+    vkui: './src/index.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -20,7 +18,7 @@ const config = {
     rules: [
       {
         test: /\.js?$/,
-        exclude: /node_modules\/(?!vkui)(.+)/,
+        exclude: /node_modules/,
         loader: 'babel-loader'
       },
       {
@@ -52,15 +50,7 @@ const config = {
 
 const devConfig = {};
 
-const prodConfig = {
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': `"production"`,
-      'process.env.VKUI_VERSION': `"${pkg.version}"`
-    }),
-    new webpack.NoEmitOnErrorsPlugin()
-  ]
-};
+const prodConfig = {};
 
 module.exports = isProduction
   ? merge(config, prodConfig)
