@@ -268,8 +268,6 @@
 
         .PanelHeader--android .PanelHeader-content > *:not(.Search):not(.PanelHeaderContent) {
           padding: 0 6px;
-          height: auto;
-          line-height: auto;
           max-width: 100%;
           flex: 1;
           min-width: 0;
