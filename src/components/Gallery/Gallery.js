@@ -69,7 +69,6 @@ export default class Gallery extends Component {
     const min = this.calcMin({ containerWidth, layerWidth, viewportWidth, slides });
     const max = this.calcMax({ containerWidth, layerWidth, viewportWidth, slides });
 
-    console.log({ slides, min, max });
     this.setState({ min, max, layerWidth, containerWidth, slides }, callback);
   }
 
