@@ -26,6 +26,11 @@ export default class Search extends React.Component {
     onClose: PropTypes.func,
 
     /**
+     * Android only. Определяет, будет ли установлен фокус в поле поиска.
+     */
+    autoFocus: PropTypes.bool,
+
+    /**
      * **Важно:** в коллбэк первым аргументом прилетает *значение* текстового поля.
      * Объект события передается вторым аргументом.
      */
@@ -39,7 +44,7 @@ export default class Search extends React.Component {
   };
 
   render () {
-    const { onClose, ...iosProps } = this.props;
+    const { onClose, autoFocus, ...iosProps } = this.props;
     const { after, before, ...androidProps } = this.props;
     if (osname === IOS) {
       return <SearchIOS {...iosProps} />;
