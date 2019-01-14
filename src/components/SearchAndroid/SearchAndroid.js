@@ -35,12 +35,14 @@ export default class SearchAndroid extends React.Component {
     onClose: PropTypes.func,
     placeholder: PropTypes.node,
     theme: PropTypes.oneOf(['header', 'default']),
-    getRef: PropTypes.func
+    getRef: PropTypes.func,
+    autoFocus: PropTypes.bool
   };
 
   static defaultProps = {
     placeholder: 'Поиск',
-    theme: 'default'
+    theme: 'default',
+    autoFocus: true
   };
 
   onCancel = () => {
@@ -63,7 +65,7 @@ export default class SearchAndroid extends React.Component {
   };
 
   componentDidMount () {
-    this.props.theme === 'header' && this.inputEl.focus();
+    this.props.theme === 'header' && this.props.autoFocus && this.inputEl.focus();
   }
 
   get value () {
@@ -76,14 +78,12 @@ export default class SearchAndroid extends React.Component {
   };
 
   render () {
-    const { getRef, value, defaultValue, onChange, onClose, theme, ...inputProps } = this.props;
+    const { getRef, value, defaultValue, onChange, onClose, theme, autoFocus, ...inputProps } = this.props;
 
-    const className = classnames(baseClassName, {
-      [`Search--${theme}`]: true,
-      'Search--focused': this.state.focused,
+    const className = classnames(baseClassName, `Search--${theme}`, {
       'Search--has-value': !!this.value
     }, this.props.className);
-
+    
     return (
       <div className={className}>
         <div className="Search__container">
