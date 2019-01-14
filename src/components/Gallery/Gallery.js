@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import Touch from '../Touch/Touch';
-import classNames from '../../lib/classnames';
+import classnames from '../../lib/classnames';
 
 const baseClassNames = getClassName('Gallery');
 
@@ -21,9 +21,6 @@ export default class Gallery extends Component {
       animation: false,
       duration: 0.24
     };
-
-    this.isCustomSlideWidth = props.slideWidth === 'custom';
-    this.isCenterWithCustomWidth = props.slideWidth === 'custom' && props.align === 'center';
 
     this.container = React.createRef();
 
@@ -58,6 +55,10 @@ export default class Gallery extends Component {
     align: 'left',
     bullets: false
   };
+
+  get isCenterWithCustomWidth () {
+    return this.props.slideWidth === 'custom' && this.props.align === 'center';
+  }
 
   initializeSlides (callback = () => {}) {
     const slides = this.getSlidesCoords();
@@ -114,7 +115,7 @@ export default class Gallery extends Component {
     if (targetSlide) {
       let { coordX, width } = targetSlide;
 
-      if (this.props.align === 'center' && this.isCustomSlideWidth) {
+      if (this.isCenterWithCustomWidth) {
         const viewportWidth = this.viewport.offsetWidth;
         return (viewportWidth / 2) - coordX - (width / 2);
       }
@@ -401,25 +402,25 @@ export default class Gallery extends Component {
     };
 
     return (
-      <div className={classNames(baseClassNames, className, `Gallery--${align}`, {
+      <div className={classnames(baseClassNames, className, `Gallery--${align}`, {
         'Gallery--dragging': dragging,
-        'Gallery--custom-width': this.isCustomSlideWidth
+        'Gallery--custom-width': slideWidth === 'custom'
       })} {...restProps} ref={this.container}>
         <Touch
           className='Gallery__viewport'
           onStartX={this.onStart}
           onMoveX={this.onMoveX}
           onEnd={this.onEnd}
-          style={{ width: this.isCustomSlideWidth ? '100%' : slideWidth }}
+          style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           ref={this.getViewportRef}
         >
           <div className='Gallery__layer' style={layerStyle}>{this.slides}</div>
         </Touch>
 
         {bullets &&
-          <div className={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
+          <div className={classnames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
             {this.slides.map((item, index) => (
-              <div className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })} key={index} />
+              <div className={classnames('Gallery__bullet', { 'Gallery__bullet--active': index === current })} key={index} />
             ))}
           </div>
         }
