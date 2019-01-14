@@ -83,7 +83,7 @@ export default class SearchAndroid extends React.Component {
     const className = classnames(baseClassName, `Search--${theme}`, {
       'Search--has-value': !!this.value
     }, this.props.className);
-    
+ 
     return (
       <div className={className}>
         <div className="Search__container">
