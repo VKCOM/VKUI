@@ -20,9 +20,9 @@
                 style={{ height: 150 }}
                 bullets="dark"
               >
-                <div style={{ height: 150, backgroundColor: 'var(--destructive)' }} />
-                <div style={{ height: 150, backgroundColor: 'var(--button_commerce_background)' }} />
-                <div style={{ height: 150, backgroundColor: 'var(--accent)' }} />
+                <div style={{ backgroundColor: 'var(--destructive)' }} />
+                <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
+                <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
             <Group title="Sticks left">
@@ -31,9 +31,9 @@
                 align="right"
                 style={{ height: 150 }}
               >
-                <div style={{ height: 150, backgroundColor: 'var(--destructive)' }} />
-                <div style={{ height: 150, backgroundColor: 'var(--button_commerce_background)' }} />
-                <div style={{ height: 150, backgroundColor: 'var(--accent)' }} />
+                <div style={{ backgroundColor: 'var(--destructive)' }} />
+                <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
+                <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
             <Group title="Centered">
@@ -42,9 +42,20 @@
                 align="center"
                 style={{ height: 150 }}
               >
-                <div style={{ height: 150, backgroundColor: 'var(--destructive)' }} />
-                <div style={{ height: 150, backgroundColor: 'var(--button_commerce_background)' }} />
-                <div style={{ height: 150, backgroundColor: 'var(--accent)' }} />
+                <div style={{ backgroundColor: 'var(--destructive)' }} />
+                <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
+                <div style={{ backgroundColor: 'var(--accent)' }} />
+              </Gallery>
+            </Group>
+            <Group title="Custom width">
+              <Gallery
+                slideWidth="custom"
+                style={{ height: 150 }}
+              >
+                <div style={{ width: 200, backgroundColor: 'var(--destructive)' }} />
+                <div style={{ width: 120, backgroundColor: 'var(--button_commerce_background)' }} />
+                <div style={{ width: 70, backgroundColor: 'var(--accent)' }} />
+                <div style={{ width: 220, backgroundColor: 'var(--icon_secondary)' }} />
               </Gallery>
             </Group>
             <Group title="Controled">
@@ -55,9 +66,9 @@
                 slideIndex={this.state.slideIndex}
                 onChange={slideIndex => this.setState({slideIndex})}
               >
-                <div style={{ height: 150, backgroundColor: 'var(--destructive)' }} />
-                <div style={{ height: 150, backgroundColor: 'var(--button_commerce_background)' }} />
-                <div style={{ height: 150, backgroundColor: 'var(--accent)' }} />
+                <div style={{ backgroundColor: 'var(--destructive)' }} />
+                <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
+                <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
               <Div>
                 <Button onClick={() => this.setState({slideIndex: this.state.slideIndex === 2 ? 0 : this.state.slideIndex + 1 })}>Next slide</Button>
