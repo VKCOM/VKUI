@@ -145,7 +145,7 @@ export default class Gallery extends Component {
 
   validateIndent (value) {
     const { min, max } = this.state;
-    
+
     if (value < min) {
       return min;
     } else if (value > max) {
@@ -280,7 +280,8 @@ export default class Gallery extends Component {
     this.initializeSlides();
 
     const { layerWidth, slides } = this.state;
-    const containerWidth = this.container.offsetWidth;
+    const containerWidth = this.container.current.offsetWidth;
+
     const viewportWidth = this.viewport.offsetWidth;
 
     this.setState({
