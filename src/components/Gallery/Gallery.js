@@ -9,6 +9,7 @@ const baseClassNames = getClassName('Gallery');
 export default class Gallery extends Component {
   constructor (props) {
     super(props);
+
     const current = typeof props.slideIndex === 'number' ? props.slideIndex : props.initialSlideIndex;
 
     this.state = {
@@ -21,6 +22,9 @@ export default class Gallery extends Component {
       duration: 0.24
     };
 
+    this.container = React.createRef();
+
+    this.slidesStore = {};
     this.slides = this.getChildren(props.children);
   }
 
@@ -52,72 +56,50 @@ export default class Gallery extends Component {
     bullets: false
   };
 
-  slidesStore = {};
+  get isCenterWithCustomWidth () {
+    return this.props.slideWidth === 'custom' && this.props.align === 'center';
+  }
 
   initializeSlides (callback = () => {}) {
     const slides = this.getSlidesCoords();
-    const containerWidth = this.container.offsetWidth;
+
+    const containerWidth = this.container.current.offsetWidth;
     const viewportWidth = this.viewport.offsetWidth;
     const layerWidth = slides.reduce((val, slide) => slide.width + val, 0);
-    const min = this.calcMin({ containerWidth, layerWidth, viewportWidth });
-    const max = 0;
+
+    const min = this.calcMin({ containerWidth, layerWidth, viewportWidth, slides });
+    const max = this.calcMax({ containerWidth, layerWidth, viewportWidth, slides });
 
     this.setState({ min, max, layerWidth, containerWidth, slides }, callback);
   }
 
-  calcMin ({ containerWidth, layerWidth, viewportWidth }) {
+  calcMin ({ containerWidth, layerWidth, viewportWidth, slides }) {
     switch (this.props.align) {
       case 'left':
         return containerWidth - layerWidth;
       case 'right':
         return viewportWidth - layerWidth;
       case 'center':
-        return viewportWidth - (containerWidth - viewportWidth) / 2 - layerWidth;
+        if (this.isCenterWithCustomWidth && slides.length) {
+          const { coordX, width } = slides[slides.length - 1];
+          return (viewportWidth / 2) - coordX - (width / 2);
+        } else {
+          return viewportWidth - (containerWidth - viewportWidth) / 2 - layerWidth;
+        }
     }
   }
 
-  /**
-   * Получает координаты и размеры каждого слайда
-
-   * @returns {Array} Массив с объектами, описывающими габариты слайда
-   */
-  getSlidesCoords () {
-    return [].concat(this.props.children).reduce((acc, item, i) => {
-      if (item) {
-        const elem = this.slidesStore[`slide-${i}`];
-        const res = {
-          coordX: elem.offsetLeft,
-          width: elem.offsetWidth,
-          id: item.props.id
-        };
-
-        acc.push(res);
-      }
-
-      return acc;
-    }, []);
-  }
-
-  /**
-   * Считает отступ слоя галереи во время драга
-   *
-   * @returns {Number} Значения отступа
-   */
-  calculateDragIndent () {
-    const { shiftX, deltaX, min, max } = this.state;
-    const indent = shiftX + deltaX;
-    if (indent > max) {
-      return max + Number((indent - max) / 3);
-    } else if (indent < min) {
-      return min + Number((indent - min) / 3);
+  calcMax ({ viewportWidth, slides }) {
+    if (this.isCenterWithCustomWidth && slides.length) {
+      const { width, coordX } = slides[0];
+      return (viewportWidth / 2) - coordX - (width / 2);
+    } else {
+      return 0;
     }
-
-    return indent;
   }
 
   /**
    * Считает отступ слоя галереи
-   *
    * @param {Number} targetIndex ID целевого слайда
    * @returns {Number} Значения отступа
    */
@@ -128,8 +110,37 @@ export default class Gallery extends Component {
       return 0;
     }
 
-    const coordX = slides.length ? slides[targetIndex].coordX : 0;
-    return this.validateIndent(-1 * coordX);
+    const targetSlide = slides.length ? slides[targetIndex] : null;
+
+    if (targetSlide) {
+      const { coordX, width } = targetSlide;
+
+      if (this.isCenterWithCustomWidth) {
+        const viewportWidth = this.viewport.offsetWidth;
+        return (viewportWidth / 2) - coordX - (width / 2);
+      }
+
+      return this.validateIndent(-1 * coordX);
+    } else {
+      return 0;
+    }
+  }
+
+  /**
+   * Считает отступ слоя галереи во время драга
+   * @returns {Number} Значения отступа
+   */
+  calculateDragIndent () {
+    const { shiftX, deltaX, min, max } = this.state;
+    const indent = shiftX + deltaX;
+
+    if (indent > max) {
+      return max + Number((indent - max) / 3);
+    } else if (indent < min) {
+      return min + Number((indent - min) / 3);
+    }
+
+    return indent;
   }
 
   validateIndent (value) {
@@ -149,14 +160,33 @@ export default class Gallery extends Component {
   }
 
   /**
+   * Получает координаты и размеры каждого слайда
+   * @returns {Array} Массив с объектами, описывающими габариты слайда
+   */
+  getSlidesCoords () {
+    return [].concat(this.props.children).reduce((acc, item, i) => {
+      if (item) {
+        const elem = this.slidesStore[`slide-${i}`];
+        const res = {
+          coordX: elem.offsetLeft,
+          width: elem.offsetWidth
+        };
+
+        acc.push(res);
+      }
+
+      return acc;
+    }, []);
+  }
+
+  /**
    * Получает индекс слайда, к которому будет осуществлен переход
-   *
    * @returns {Number} Индекс слайда
    */
   getTarget () {
-    const { slides, current, deltaX, shiftX, startT } = this.state;
+    const { slides, current, deltaX, shiftX, startT, max } = this.state;
     const expectDeltaX = deltaX / (new Date() - startT) * 240 * 0.6;
-    const shift = shiftX + deltaX + expectDeltaX;
+    const shift = shiftX + deltaX + expectDeltaX - max;
     const direction = deltaX < 0 ? 1 : -1;
 
     // Находим ближайшую границу слайда к текущему отступу
@@ -198,7 +228,7 @@ export default class Gallery extends Component {
       animation: false,
       startT: e.startT
     });
-  };
+  }
 
   onMoveX = (e) => {
     if (!this.isDraggable()) {
@@ -209,6 +239,7 @@ export default class Gallery extends Component {
 
     if (e.isSlideX) {
       this.props.onDragStart && this.props.onDragStart();
+      
       if (this.state.deltaX !== e.shiftX || this.state.dragging !== e.isSlideX) {
         this.setState({
           deltaX: e.shiftX,
@@ -218,7 +249,7 @@ export default class Gallery extends Component {
 
       return true;
     }
-  };
+  }
 
   onEnd = (e) => {
     const targetIndex = e.isSlide ? this.getTarget() : this.state.current;
@@ -228,8 +259,7 @@ export default class Gallery extends Component {
       shiftX: this.calculateIndent(targetIndex),
       deltaX: 0,
       animation: true,
-      current: targetIndex,
-      duration: '.24'
+      current: targetIndex
     });
 
     if (this.props.onEnd) {
@@ -244,19 +274,21 @@ export default class Gallery extends Component {
     }
 
     return true;
-  };
+  }
 
   onResize = () => {
     this.initializeSlides();
 
-    const { layerWidth } = this.state;
-    const containerWidth = this.container.offsetWidth;
+    const { layerWidth, slides } = this.state;
+    const containerWidth = this.container.current.offsetWidth;
+
     const viewportWidth = this.viewport.offsetWidth;
 
     this.setState({
       shiftX: this.calculateIndent(this.state.current),
       containerWidth,
-      min: this.calcMin({ layerWidth, containerWidth, viewportWidth }),
+      min: this.calcMin({ layerWidth, containerWidth, viewportWidth, slides }),
+      max: this.calcMax({ layerWidth, containerWidth, viewportWidth, slides }),
       animation: false
     }, () => {
       window.requestAnimationFrame(() => this.setState({ animation: true }));
@@ -283,23 +315,19 @@ export default class Gallery extends Component {
   reduceChildren = (acc, item, i) => {
     if (item) {
       const ref = this.getSlideRef(i);
-      acc.push(<div className="Gallery__slide" key={`slide-${i}`} ref={ref}>{item}</div>);
+      acc.push(<div className='Gallery__slide' key={`slide-${i}`} ref={ref}>{item}</div>);
     }
 
     return acc;
-  };
-
-  getContainerRef = (container) => {
-    this.container = container;
-  };
-
-  getViewportRef = (viewport) => {
-    this.viewport = viewport ? viewport.container : {};
-  };
+  }
 
   getSlideRef = (id) => (slide) => {
     this.slidesStore[`slide-${id}`] = slide;
-  };
+  }
+
+  getViewportRef = (viewport) => {
+    this.viewport = viewport ? viewport.container : {};
+  }
 
   componentDidMount () {
     this.initializeSlides(() => {
@@ -307,6 +335,7 @@ export default class Gallery extends Component {
         shiftX: this.calculateIndent(this.state.current)
       });
     });
+
     window.addEventListener('resize', this.onResize);
 
     if (this.props.autoplay) {
@@ -363,7 +392,9 @@ export default class Gallery extends Component {
       className,
       ...restProps
     } = this.props;
+
     const indent = dragging ? this.calculateDragIndent() : this.calculateIndent(current);
+
     const layerStyle = {
       WebkitTransform: `translateX(${indent}px)`,
       transform: `translateX(${indent}px)`,
@@ -372,22 +403,23 @@ export default class Gallery extends Component {
     };
 
     return (
-      <div {...restProps} className={classnames(baseClassNames, className, {
+      <div className={classnames(baseClassNames, className, `Gallery--${align}`, {
         'Gallery--dragging': dragging,
-        [`Gallery--${this.props.align}`]: true
-      })} ref={this.getContainerRef}>
+        'Gallery--custom-width': slideWidth === 'custom'
+      })} {...restProps} ref={this.container}>
         <Touch
-          className="Gallery__viewport"
+          className='Gallery__viewport'
           onStartX={this.onStart}
           onMoveX={this.onMoveX}
           onEnd={this.onEnd}
-          style={{ width: slideWidth }}
+          style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           ref={this.getViewportRef}
         >
-          <div className="Gallery__layer" style={layerStyle}>{this.slides}</div>
+          <div className='Gallery__layer' style={layerStyle}>{this.slides}</div>
         </Touch>
-        {this.props.bullets &&
-          <div className={classnames('Gallery__bullets', { [`Gallery__bullets--${this.props.bullets}`]: true })}>
+
+        {bullets &&
+          <div className={classnames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
             {this.slides.map((item, index) => (
               <div className={classnames('Gallery__bullet', { 'Gallery__bullet--active': index === current })} key={index} />
             ))}
