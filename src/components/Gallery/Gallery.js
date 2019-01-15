@@ -81,7 +81,7 @@ export default class Gallery extends Component {
         return viewportWidth - layerWidth;
       case 'center':
         if (this.isCenterWithCustomWidth && slides.length) {
-          let { coordX, width } = slides[slides.length - 1];
+          const { coordX, width } = slides[slides.length - 1];
           return (viewportWidth / 2) - coordX - (width / 2);
         } else {
           return viewportWidth - (containerWidth - viewportWidth) / 2 - layerWidth;
@@ -91,7 +91,7 @@ export default class Gallery extends Component {
 
   calcMax ({ viewportWidth, slides }) {
     if (this.isCenterWithCustomWidth && slides.length) {
-      let { width, coordX } = slides[0];
+      const { width, coordX } = slides[0];
       return (viewportWidth / 2) - coordX - (width / 2);
     } else {
       return 0;
@@ -110,10 +110,10 @@ export default class Gallery extends Component {
       return 0;
     }
 
-    let targetSlide = slides.length ? slides[targetIndex] : null;
+    const targetSlide = slides.length ? slides[targetIndex] : null;
 
     if (targetSlide) {
-      let { coordX, width } = targetSlide;
+      const { coordX, width } = targetSlide;
 
       if (this.isCenterWithCustomWidth) {
         const viewportWidth = this.viewport.offsetWidth;
@@ -341,7 +341,7 @@ export default class Gallery extends Component {
       this.setTimeout(this.props.autoplay);
     }
   }
-  
+
   componentDidUpdate (prevProps, prevState) {
     if (this.isChildrenDirty) {
       this.isChildrenDirty = false;
