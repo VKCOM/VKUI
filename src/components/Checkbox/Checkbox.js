@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import {platform, IOS} from '../../lib/platform';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 
@@ -14,7 +14,7 @@ const Checkbox = ({ children, className, style, getRootRef, ...restProps }) => {
   return (
     <Tappable
       component="label"
-      className={classnames(baseClassName, className)}
+      className={classNames(baseClassName, className)}
       style={style}
       disabled={restProps.disabled}
       activeEffectDelay={osname === IOS ? 100 : ACTIVE_EFFECT_DELAY }

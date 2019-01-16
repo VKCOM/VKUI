@@ -2,7 +2,7 @@ import React from 'react';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 import CellButton from '../CellButton/CellButton';
 
@@ -62,7 +62,7 @@ export default class Button extends React.Component {
     } else {
       const { className, size, level, stretched, align, children, before, ...restProps } = this.props;
 
-      return <Tappable {...restProps} className={classnames(baseClassName, className, {
+      return <Tappable {...restProps} className={classNames(baseClassName, className, {
         [`Button--sz-${size}`]: true,
         [`Button--lvl-${Button.mapOldLevel(level)}`]: true,
         [`Button--aln-${align || 'center'}`]: true,

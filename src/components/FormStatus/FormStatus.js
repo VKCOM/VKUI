@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassName = getClassName('FormStatus');
 
 const FormStatus = ({ state, title, children, className, dangerouslySetInnerHTML, ...restProps }) => (
-  <div {...restProps} className={classnames(baseClassName, { [`FormStatus--${state}`]: state }, className)}>
+  <div {...restProps} className={classNames(baseClassName, { [`FormStatus--${state}`]: state }, className)}>
     {title && <div className="FormStatus__title">{title}</div>}
     {dangerouslySetInnerHTML &&
       <div className="FormStatus__content" dangerouslySetInnerHTML={dangerouslySetInnerHTML} />

@@ -1,10 +1,10 @@
 import { platform, ANDROID, IOS } from '../lib/platform.js';
-import classnames from '../lib/classnames';
+import classNames from '../lib/classNames';
 
 const osname = platform();
 
 export default function getClassname (base) {
-  return classnames(base, {
+  return classNames(base, {
     [base + '--ios']: osname === IOS,
     [base + '--android']: osname === ANDROID
   });

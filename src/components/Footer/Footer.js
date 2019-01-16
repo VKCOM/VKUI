@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 import Div from '../Div/Div';
 
 const Footer = ({ className, children, ...restProps }) => (
-  <Div {...restProps} className={classnames('Footer', className)}>{children}</Div>
+  <Div {...restProps} className={classNames('Footer', className)}>{children}</Div>
 );
 
 Footer.propTypes = {

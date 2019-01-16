@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { platform, ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
@@ -245,7 +245,7 @@ export default class Tappable extends Component {
     const { clicks, active } = this.state;
     const { children, className, component, activeEffectDelay, stopPropagation, getRootRef, ...restProps } = this.props;
     const Component = !restProps.disabled ? Touch : component;
-    const classes = classnames(baseClassNames, className, {
+    const classes = classNames(baseClassNames, className, {
       'Tappable--active': active,
       'Tappable--inactive': !active
     });

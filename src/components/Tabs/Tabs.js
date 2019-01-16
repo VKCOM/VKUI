@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('Tabs');
 
@@ -45,7 +45,7 @@ export default class Tabs extends React.Component {
     const { className, children, theme, style, type, getRootRef, ...restProps } = this.props;
 
     return (
-      <div {...restProps} ref={getRootRef} className={classnames(baseClassName, {
+      <div {...restProps} ref={getRootRef} className={classNames(baseClassName, {
         [`Tabs--${this.theme}`]: true,
         [`Tabs--${type}`]: true
       }, className)} style={style}>{children}</div>

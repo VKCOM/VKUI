@@ -1,6 +1,6 @@
 import React from 'react';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import PropTypes from 'prop-types';
 
 const baseClassName = getClassName('InnerScroll');
@@ -35,7 +35,7 @@ export default class InnerScroll extends React.Component {
     return (
       <div
         {...restProps}
-        className={classnames(baseClassName, className)}
+        className={classNames(baseClassName, className)}
         onScroll={this.onScroll}
         ref={this.getRef}
       >

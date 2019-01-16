@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 
 import transitionEvents from '../../lib/transitionEvents';
@@ -145,9 +145,9 @@ export default class Root extends React.Component {
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
     return (
-      <div className={ classnames(baseClassName, { 'Root--transition': transition }) }>
+      <div className={ classNames(baseClassName, { 'Root--transition': transition }) }>
         {Views.map(View => (
-          <div key={View.props.id} id={`view-${View.props.id}`} className={classnames('Root__view', {
+          <div key={View.props.id} id={`view-${View.props.id}`} className={classNames('Root__view', {
             'Root__view--hide-back': View.props.id === prevView && isBack,
             'Root__view--hide-forward': View.props.id === prevView && !isBack,
             'Root__view--show-back': View.props.id === nextView && isBack,

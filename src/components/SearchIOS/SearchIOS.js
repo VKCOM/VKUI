@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 import Icon16Search from '@vkontakte/icons/dist/16/search';
 
@@ -98,7 +98,7 @@ export default class SearchIOS extends React.Component {
     } = this.props;
 
     return (
-      <div className={classnames(baseClassName, {
+      <div className={classNames(baseClassName, {
         [`Search--${theme}`]: true,
         'Search--focused': this.state.focused,
         'Search--has-value': this.value,

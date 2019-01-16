@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import FixedLayout from '../FixedLayout/FixedLayout';
 
@@ -58,7 +58,7 @@ export default class HeaderContext extends React.Component {
     const { children, className, opened, onClose, ...restProps } = this.props;
 
     return (
-      <FixedLayout {...restProps} className={classnames(baseClassNames, {
+      <FixedLayout {...restProps} className={classNames(baseClassNames, {
         'HeaderContext--opened': opened,
         'HeaderContext--closing': this.state.closing
       }, className)} vertical="top">

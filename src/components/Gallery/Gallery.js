@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import Touch from '../Touch/Touch';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassNames = getClassName('Gallery');
 
@@ -403,7 +403,7 @@ export default class Gallery extends Component {
     };
 
     return (
-      <div className={classnames(baseClassNames, className, `Gallery--${align}`, {
+      <div className={classNames(baseClassNames, className, `Gallery--${align}`, {
         'Gallery--dragging': dragging,
         'Gallery--custom-width': slideWidth === 'custom'
       })} {...restProps} ref={this.container}>
@@ -419,9 +419,9 @@ export default class Gallery extends Component {
         </Touch>
 
         {bullets &&
-          <div className={classnames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
+          <div className={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
             {this.slides.map((item, index) => (
-              <div className={classnames('Gallery__bullet', { 'Gallery__bullet--active': index === current })} key={index} />
+              <div className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })} key={index} />
             ))}
           </div>
         }

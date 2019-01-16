@@ -3,7 +3,7 @@ import Touch from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import Slider from '../Slider/Slider';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassNames = getClassName('Slider');
 
@@ -114,7 +114,7 @@ export default class RangeSlider extends Slider {
     const { className, min, max, step, value, defaultValue, onChange, getRootRef, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames(baseClassNames, className)} ref={this.getRef}>
+      <div {...restProps} className={classNames(baseClassNames, className)} ref={this.getRef}>
         <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
           <div
             className="Slider__dragger"
@@ -124,13 +124,13 @@ export default class RangeSlider extends Slider {
             }}
           >
             <span
-              className={classnames('Slider__thumb', 'Slider__thumb--start', {
+              className={classNames('Slider__thumb', 'Slider__thumb--start', {
                 'Slider__thumb--active': this.state.active === 'start'
               })}
               ref={el => this.thumbStart = el}
             />
             <span
-              className={classnames('Slider__thumb', 'Slider__thumb--end', {
+              className={classNames('Slider__thumb', 'Slider__thumb--end', {
                 'Slider__thumb--active': this.state.active === 'end'
               })}
               ref={el => this.thumbEnd = el}

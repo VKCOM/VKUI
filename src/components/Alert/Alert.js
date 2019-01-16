@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassNames = getClassName('Alert');
 
@@ -37,7 +37,7 @@ export default class Alert extends Component {
 
     return (
       <PopoutWrapper className={className} style={style}>
-        <div {...restProps} className={classnames(baseClassNames, {
+        <div {...restProps} className={classNames(baseClassNames, {
           'Alert--v': actionsLayout === 'vertical',
           'Alert--h': actionsLayout === 'horizontal'
         })}>
@@ -46,7 +46,7 @@ export default class Alert extends Component {
             {actions.map((button, i) => (
               <Tappable
                 component="button"
-                className={classnames('Alert__btn', { [`Alert__btn--${button.style}`]: true })}
+                className={classNames('Alert__btn', { [`Alert__btn--${button.style}`]: true })}
                 onClick={this.onItemClick(button)}
                 key={`alert-action-${i}`}
               >

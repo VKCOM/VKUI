@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { platform, ANDROID } from '../../lib/platform';
 import Tappable from '../Tappable/Tappable';
@@ -14,7 +14,7 @@ const PanelHeaderContent = ({ className, style, aside, status, before, children,
   const inProps = onClick ? { ...restProps, activeEffectDelay: 200 } : {};
 
   return (
-    <div {...rootProps} className={classnames(baseClassNames, className)} style={style}>
+    <div {...rootProps} className={classNames(baseClassNames, className)} style={style}>
       {osname === ANDROID && before && <div className="PanelHeaderContent__before">{before}</div>}
       <InComponent {...inProps} className="PanelHeaderContent__in" onClick={onClick}>
         {status && <div className="PanelHeaderContent__status">{status}</div>}

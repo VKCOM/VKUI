@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
 import transitionEvents from '../../lib/transitionEvents';
 import getClassName from '../../helpers/getClassName';
@@ -478,7 +478,7 @@ export default class View extends Component {
     return (
       <Touch
         component="section"
-        className={classnames(baseClassNames, modifiers)}
+        className={classNames(baseClassNames, modifiers)}
         style={style}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
@@ -486,10 +486,10 @@ export default class View extends Component {
         {header && (
           <div className="View__header">
             { osname === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
-            <div className={classnames(panelHeaderClasses)}>
+            <div className={classNames(panelHeaderClasses)}>
               {panels.map(panel => (
                 <div
-                  className={classnames('PanelHeader__in', {
+                  className={classNames('PanelHeader__in', {
                     'PanelHeader__in--active': panel.props.id === activePanel,
                     'PanelHeader__in--prev': panel.props.id === prevPanel,
                     'PanelHeader__in--next': panel.props.id === nextPanel,
@@ -541,7 +541,7 @@ export default class View extends Component {
         <div className="View__panels">
           {panels.map(panel => (
             <div
-              className={classnames('View__panel', {
+              className={classNames('View__panel', {
                 'View__panel--active': panel.props.id === activePanel,
                 'View__panel--prev': panel.props.id === prevPanel,
                 'View__panel--next': panel.props.id === nextPanel,

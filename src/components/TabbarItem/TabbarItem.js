@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('TabbarItem');
 
@@ -17,7 +17,7 @@ export default class TabbarItem extends React.Component {
     const { className, children, selected, label, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames(baseClassName, className, {
+      <div {...restProps} className={classNames(baseClassName, className, {
         'TabbarItem--selected': selected
       })}>
         <div className="TabbarItem__in">

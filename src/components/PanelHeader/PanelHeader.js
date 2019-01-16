@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 import { platform, IOS } from '../../lib/platform';
 
@@ -68,26 +68,26 @@ export default class PanelHeader extends React.Component {
     const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
     return this.state.ready ? [
-      ReactDOM.createPortal(<div className={classnames('PanelHeader-bg', {
+      ReactDOM.createPortal(<div className={classNames('PanelHeader-bg', {
         [`PanelHeader-bg--${theme}`]: true,
         'PanelHeader-bg--tp': transparent,
         [`PanelHeader-bg--no-shadow`]: noShadow || ['bright_light', 'space_gray'].indexOf(this.context.scheme) >= 0
       })}/>, this.bgNode),
-      ReactDOM.createPortal(<div className={classnames('PanelHeader-left-in', {
+      ReactDOM.createPortal(<div className={classNames('PanelHeader-left-in', {
         [`PanelHeader-left-in--${theme}`]: true,
         'PanelHeader-left-in--tp': transparent
       })}>{left}</div>, this.leftNode),
-      osname === IOS && ReactDOM.createPortal(<div className={classnames('PanelHeader-addon', {
+      osname === IOS && ReactDOM.createPortal(<div className={classNames('PanelHeader-addon', {
         [`PanelHeader-addon--${theme}`]: true,
         'PanelHeader-addon--tp': transparent
       })}>{addon}</div>, this.addonNode),
-      ReactDOM.createPortal(<div className={classnames('PanelHeader-content', {
+      ReactDOM.createPortal(<div className={classNames('PanelHeader-content', {
         [`PanelHeader-content--${theme}`]: true,
         'PanelHeader-content--tp': transparent
       })}>
         {isPrimitive ? <span>{children}</span> : children}
       </div>, this.titleNode),
-      ReactDOM.createPortal(<div className={classnames('PanelHeader-right', {
+      ReactDOM.createPortal(<div className={classNames('PanelHeader-right', {
         [`PanelHeader-right--${theme}`]: true,
         'PanelHeader-right--tp': transparent,
         'PanelHeader-right--vkapps': this.webviewType === 'vkapps'

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('Input');
 
@@ -27,7 +27,7 @@ export default class Input extends PureComponent {
     const { alignment, status, getRef, className, getRootRef, ...restProps } = this.props;
 
     return (
-      <div className={classnames(baseClassName, {
+      <div className={classNames(baseClassName, {
         [`Input--${alignment}`]: alignment,
         [`Input--s-${status}`]: status
       }, className)} ref={getRootRef}>

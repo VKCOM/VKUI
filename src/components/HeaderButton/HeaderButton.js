@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('HeaderButton');
 
@@ -15,7 +15,7 @@ const HeaderButton = ({ className, children, primary, ...restProps }) => {
       {...restProps}
       component={component}
       activeEffectDelay={200}
-      className={classnames(baseClassName, className, { 'HeaderButton--primary': primary })}
+      className={classNames(baseClassName, className, { 'HeaderButton--primary': primary })}
     >
       {isPrimitive ? <span className="HeaderButton__primitive">{children}</span> : children}
     </Tappable>

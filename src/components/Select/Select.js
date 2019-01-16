@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import { platform, ANDROID } from '../../lib/platform';
 
@@ -86,7 +86,7 @@ export default class Select extends Component {
 
     return (
       <label
-        className={classnames(baseClassName, {
+        className={classNames(baseClassName, {
           [`Select--not-selected`]: this.state.notSelected,
           [`Select--align-${alignment}`]: alignment
         }, className)}

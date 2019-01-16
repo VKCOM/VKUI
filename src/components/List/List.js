@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('List');
 
 const List = ({ className, children, ...restProps }) => (
-  <div {...restProps} className={classnames(baseClassNames, className)}>{children}</div>
+  <div {...restProps} className={classNames(baseClassNames, className)}>{children}</div>
 );
 
 List.propTypes = {

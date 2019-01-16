@@ -1,7 +1,7 @@
 import React from 'react';
 import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import { transitionEndEventName, transitionStartEventName } from '../View/View';
 import { tabbarHeight } from '../../appearance/constants';
 
@@ -71,7 +71,7 @@ export default class FixedLayout extends React.Component {
       <div
         {...restProps}
         ref={this.getRef}
-        className={classnames(baseClassNames, { [`FixedLayout--${vertical}`]: vertical }, className)}
+        className={classNames(baseClassNames, { [`FixedLayout--${vertical}`]: vertical }, className)}
         style={{ ...style, ...this.state, paddingBottom }}
       >
         <div className="FixedLayout__in">{children}</div>

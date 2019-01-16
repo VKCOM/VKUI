@@ -83,7 +83,12 @@ export { default as ConfigProvider } from './components/ConfigProvider/ConfigPro
 /**
  * Utils
  */
-export { default as classnames } from './lib/classnames';
+export { default as classNames } from './lib/classNames';
+
+/**
+ * @deprecated будет удалено в 3.0.0
+ */
+export { default as classnames } from './lib/classNames';
 export { platform, ANDROID, IOS } from './lib/platform';
 export { default as request } from './lib/request';
 export { default as querystring } from './lib/querystring';

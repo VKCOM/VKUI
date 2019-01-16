@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 
@@ -9,7 +9,7 @@ const baseClassNames = getClassName('ActionSheetItem');
 const ActionSheetItem = ({ className, children, autoclose, theme, ...restProps }) => (
   <Tappable
     {...restProps}
-    className={classnames(baseClassNames, className, { [`ActionSheetItem--${theme}`]: true })}
+    className={classNames(baseClassNames, className, { [`ActionSheetItem--${theme}`]: true })}
     component={theme === 'cancel' ? 'span' : 'div'}
   >
     <span className="ActionSheetItem__in">{children}</span>

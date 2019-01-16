@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import { platform, ANDROID, IOS } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 
@@ -78,7 +78,7 @@ export default class ActionSheet extends React.Component {
         style={style}
         onClick={this.onClose}
       >
-        <div {...restProps} ref={this.getRef} onClick={this.stopPropagation} className={classnames(baseClassNames, {
+        <div {...restProps} ref={this.getRef} onClick={this.stopPropagation} className={classNames(baseClassNames, {
           'ActionSheet--closing': this.state.closing
         })}>
           {osname === IOS &&
