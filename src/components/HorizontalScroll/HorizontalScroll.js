@@ -1,6 +1,6 @@
 import React from 'react';
 import PropType from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 export default class HorizontalScroll extends React.Component {
   static propTypes = {
@@ -13,7 +13,7 @@ export default class HorizontalScroll extends React.Component {
     const { children, className, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames('HorizontalScroll', className)}>
+      <div {...restProps} className={classNames('HorizontalScroll', className)}>
         <div className="HorizontalScroll__in">{children}</div>
       </div>
     );

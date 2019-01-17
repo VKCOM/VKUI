@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassNames = getClassName('FormLayoutGroup');
 
 const FormLayoutGroup = ({ children, top, bottom, className, ...restProps }) => (
-  <div className={classnames(baseClassNames, className)} {...restProps}>{children}</div>
+  <div className={classNames(baseClassNames, className)} {...restProps}>{children}</div>
 );
 
 FormLayoutGroup.propTypes = {

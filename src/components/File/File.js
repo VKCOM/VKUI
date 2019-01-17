@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import Button from '../Button/Button';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassNames = getClassName('File');
 
@@ -68,7 +68,7 @@ export default class File extends Component {
     return (
       <Button
         align={align || alignment}
-        className={classnames(baseClassNames, className)}
+        className={classNames(baseClassNames, className)}
         component="label"
         type={type}
         stretched={stretched}

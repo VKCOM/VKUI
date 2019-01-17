@@ -1,6 +1,6 @@
 import React from 'react';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import PropTypes from 'prop-types';
 
 import { ANDROID, platform } from '../../lib/platform';
@@ -69,7 +69,7 @@ export default class PopoutWrapper extends React.Component {
     const { v, h, closing, children, hasMask, onClick, className, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames(baseClassNames, {
+      <div {...restProps} className={classNames(baseClassNames, {
         [`PopoutWrapper--v-${v}`]: v,
         [`PopoutWrapper--h-${h}`]: h,
         'PopoutWrapper--closing': closing

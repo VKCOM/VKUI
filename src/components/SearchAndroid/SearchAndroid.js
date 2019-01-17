@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 import HeaderButton from '../HeaderButton/HeaderButton';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
@@ -80,7 +80,7 @@ export default class SearchAndroid extends React.Component {
   render () {
     const { getRef, value, defaultValue, onChange, onClose, theme, autoFocus, ...inputProps } = this.props;
 
-    const className = classnames(baseClassName, `Search--${theme}`, {
+    const className = classNames(baseClassName, `Search--${theme}`, {
       'Search--has-value': !!this.value
     }, this.props.className);
 

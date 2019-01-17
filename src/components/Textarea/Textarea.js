@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('Textarea');
 
@@ -108,7 +108,7 @@ export default class Textarea extends PureComponent {
     const height = this.state.height || style.height || 66;
 
     return (
-      <div className={classnames(baseClassName, className)} style={style} ref={getRootRef}>
+      <div className={classNames(baseClassName, className)} style={style} ref={getRootRef}>
         <textarea
           {...restProps}
           value={this.value}

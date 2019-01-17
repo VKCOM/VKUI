@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import Touch from '../Touch/Touch';
@@ -254,7 +254,7 @@ export default class Cell extends Component {
       <div
         {...rootProps}
         onClick={href || draggable ? null : this.onClick}
-        className={classnames(baseClassNames, {
+        className={classNames(baseClassNames, {
           'Cell--expandable': expandable,
           'Cell--multiline': multiline,
           [`Cell--${size}`]: size,

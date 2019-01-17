@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('Epic');
 
@@ -27,7 +27,7 @@ export default class Epic extends React.Component {
     const { className, activeStory, tabbar, children, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames(baseClassName, className)}>
+      <div {...restProps} className={classNames(baseClassName, className)}>
         {React.Children.toArray(children).find(item => item.props.id === activeStory)}
         {tabbar}
       </div>

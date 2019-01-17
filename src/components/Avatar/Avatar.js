@@ -1,6 +1,6 @@
 import React from 'react';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import PropTypes from 'prop-types';
 
 const baseClassName = getClassName('Avatar');
@@ -22,7 +22,7 @@ const Avatar = ({ src, size, type, style, className, children, getRootRef, ...re
   }
 
   return (
-    <div className={classnames(baseClassName, className, { [`Avatar--type-${type}`]: true })} ref={getRootRef}>
+    <div className={classNames(baseClassName, className, { [`Avatar--type-${type}`]: true })} ref={getRootRef}>
       <div className="Avatar__in">
         <Component
           {...restProps}

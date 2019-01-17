@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import Header from '../Header/Header';
 
 const baseClassNames = getClassName('Group');
@@ -24,7 +24,7 @@ export default class Group extends Component {
     const { title, description, className, children, getRootRef, ...restProps } = this.props;
 
     return (
-      <div {...restProps} ref={getRootRef} className={classnames(baseClassNames, className)}>
+      <div {...restProps} ref={getRootRef} className={classNames(baseClassNames, className)}>
         {title && <Header level="2">{title}</Header>}
         {children && <div className="Group__content">{children}</div>}
         {description && <div className="Group__description">{description}</div>}

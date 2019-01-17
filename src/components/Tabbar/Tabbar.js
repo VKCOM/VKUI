@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('Tabbar');
 
@@ -29,7 +29,7 @@ export default class Tabbar extends React.Component {
     const { className, children, shadow } = this.props;
 
     return (
-      <div className={classnames(baseClassName, className, {
+      <div className={classNames(baseClassName, className, {
         'Tabbar--shadow': shadow
       })} style={{ paddingBottom: this.context.insets && this.context.insets.bottom || null }}>
         {children}

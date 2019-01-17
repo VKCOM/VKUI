@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Avatar from '../Avatar/Avatar';
 
@@ -47,7 +47,7 @@ export default class Entity extends Component {
     const { className, style, photo, title, description, avatarProps, children } = this.props;
 
     return (
-      <div className={classnames(baseClassNames, className)} style={style}>
+      <div className={classNames(baseClassNames, className)} style={style}>
         <div className="Entity__aside">
           <Avatar src={photo} alt={title} size={this.avatarSize} {...avatarProps} />
         </div>

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('Slider');
@@ -153,11 +153,11 @@ export default class Slider extends Component {
     const { className, min, max, step, value, defaultValue, onChange, getRootRef, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classnames(baseClassNames, className)} ref={this.getRef}>
+      <div {...restProps} className={classNames(baseClassNames, className)} ref={this.getRef}>
         <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
           <div className="Slider__dragger" style={{ width: this.state.percentPosition + '%' }}>
             <span
-              className={classnames('Slider__thumb', 'Slider__thumb--end', {
+              className={classNames('Slider__thumb', 'Slider__thumb--end', {
                 'Slider__thumb--active': this.state.active
               })}
             />

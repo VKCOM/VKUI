@@ -2,12 +2,12 @@ import React from 'react';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('CellButton');
 
 const CellButton = ({ className, align, level, before, children, ...restProps }) => (
-  <Tappable {...restProps} className={classnames(baseClassName, className, {
+  <Tappable {...restProps} className={classNames(baseClassName, className, {
     [`CellButton--lvl-${level}`]: level,
     [`CellButton--aln-${align}`]: align
   })} stopPropagation>

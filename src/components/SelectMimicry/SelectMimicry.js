@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 
 const baseClassName = getClassName('Select');
@@ -27,7 +27,7 @@ export default class SelectMimicry extends Component {
     return (
       <div
         {...restProps}
-        className={classnames(baseClassName, {
+        className={classNames(baseClassName, {
           'Select--not-selected': !children,
           'Select--mimicry': true,
           [`Select--align-${alignment}`]: alignment

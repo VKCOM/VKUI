@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import {platform, IOS} from '../../lib/platform';
 
 const osname = platform();
@@ -14,7 +14,7 @@ const Radio = ({ children, description, style, className, getRef, getRootRef, ..
     <Tappable
       component="label"
       style={style}
-      className={classnames(baseClassName, className)}
+      className={classNames(baseClassName, className)}
       activeEffectDelay={osname === IOS ? 100 : ACTIVE_EFFECT_DELAY }
       disabled={restProps.disabled}
       getRootRef={getRootRef}

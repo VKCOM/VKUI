@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
 
@@ -88,7 +88,7 @@ class TooltipPortal extends React.Component {
     const { title, text, alignX, alignY, cornerOffset } = this.props;
 
     return ReactDOM.createPortal(
-      <div className={classnames(baseClassName, {
+      <div className={classNames(baseClassName, {
         [`Tooltip--x-${alignX}`]: true,
         [`Tooltip--y-${alignY}`]: true,
         'Tooltip--fixed': this.fixedPortal

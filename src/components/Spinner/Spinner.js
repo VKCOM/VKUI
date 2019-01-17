@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames.js';
+import classNames from '../../lib/classNames.js';
 import Spinner24 from '@vkontakte/icons/dist/24/spinner';
 import Spinner32 from '@vkontakte/icons/dist/32/spinner';
 import Spinner44 from '@vkontakte/icons/dist/44/spinner';
@@ -39,7 +39,7 @@ export default class Spinner extends PureComponent {
     return (
       <div
         {...restProps}
-        className={classnames(baseClassNames, className)}
+        className={classNames(baseClassNames, className)}
       >
         {this.svgSpinner}
       </div>

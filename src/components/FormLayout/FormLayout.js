@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import classnames from '../../lib/classnames';
+import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('FormLayout');
 
@@ -35,7 +35,7 @@ export default class FormLayout extends React.Component {
     return (
       <TagName
         {...restProps}
-        className={classnames(baseClassName, className)}
+        className={classNames(baseClassName, className)}
         onSubmit={this.onSubmit}
         ref={getRef}
       >
