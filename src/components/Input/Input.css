@@ -40,17 +40,13 @@
   color: var(--field_text_placeholder);
   }
 
-.Input--ios {
-  font-family: var(--font-ios);
-  }
+.Input--ios {}
 
   .Input--ios .Input__el:focus ~ .Input__border {
     border-color: var(--accent);
     }
 
-.Input--android {
-  font-family: var(--font-android);
-  }
+.Input--android {}
 
   .Input--android .Input__el {
     border-radius: 4px;

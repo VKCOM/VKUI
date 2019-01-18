@@ -144,9 +144,7 @@
 /*
   iOS
  */
-.Button--ios {
-  font-family: var(--font-ios);
-  }
+.Button--ios {}
 
 .Button--ios.Button--sz-m {
   border-radius: 15px;
@@ -164,6 +162,5 @@
   Android
  */
 .Button--android {
-  font-family: var(--font-android);
   border-radius: 4px;
   }

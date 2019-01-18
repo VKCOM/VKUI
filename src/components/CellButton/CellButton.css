@@ -49,7 +49,6 @@
   iOS
  */
 .CellButton--ios {
-  font-family: var(--font-ios);
   padding: 0 12px;
   }
 
@@ -67,7 +66,6 @@
   Android
  */
 .CellButton--android {
-  font-family: var(--font-android);
   padding: 0 16px;
   }
 

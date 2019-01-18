@@ -42,7 +42,6 @@
         min-width: 0;
         background-color: transparent;
         z-index: 2;
-        font-family: var(--font-ios);
         }
 
       .Search--ios.Search--has-after .Search__input {

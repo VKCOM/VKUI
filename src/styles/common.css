@@ -73,6 +73,13 @@ body {
   overflow-x: hidden;
 }
 
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+}
+
 #root {
   user-select: none;
   }
