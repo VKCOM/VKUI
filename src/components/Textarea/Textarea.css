@@ -34,10 +34,6 @@
 
   }
 
-  .Textarea--ios textarea {
-    font-family: var(--font-ios);
-    }
-
   .Textarea--ios textarea:focus ~ .Textarea__border {
     border-color: var(--accent);
     }
@@ -49,7 +45,6 @@
   .Textarea--android textarea {
     border-radius: 4px 0 0 4px;
     background-color: var(--field_background);
-    font-family: var(--font-android);
     padding-bottom: 4px;
     }
 

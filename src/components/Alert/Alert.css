@@ -99,7 +99,6 @@
       outline: none;
       overflow: hidden;
       text-overflow: ellipsis;
-      font-family: var(--font-ios);
       }
 
     .Alert--ios .Alert__btn:active {
@@ -247,7 +246,6 @@
       outline: none;
       overflow: hidden;
       text-overflow: ellipsis;
-      font-family: var(--font-android);
       }
 
     .Alert--android .Alert__btn--cancel {
