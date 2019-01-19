@@ -4,7 +4,6 @@
 При смене значения свойства `activePanel` происходит плавный переход от одной панели к другой.
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
-
 ```
 class Example extends React.Component {
   constructor(props) {
@@ -48,4 +47,66 @@ class Example extends React.Component {
 }
 
 <Example />
+```
+
+### iOS swipe back
+
+В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
+повторить такое поведение в VKUI нужно:
+
+Передать во `View` свойство `onSwipeBack`. Это callback, срабатывающий при завершении анимации свайпа. 
+Как правило в нём прописывают логику, которая выставит нужный `activePanel` и обновит свойство `history`.
+
+Передать во `View` свойство `history`. Это массив, состоящий из id панелей, которые были открыты на текущий момент.
+Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то 
+`history=['main', 'profile', 'education']`.
+
+Убедиться, что приложение открыто внутри webview (так как внутри обычного мобильного браузера
+как правило есть свой swipe back). Для этого достаточно обернуть ваше приложение компонентом `ConfigProvider`. 
+Он внутри себя определяет, открыто приложение внутри webview или в мобильном браузере. Для тестов в браузере 
+можно явно передать в `СonfigProvider` свойство `isWebView={true}`.
+
+Пример:
+
+```jsx static
+import React from 'react';
+import { View, Panel, ConfigProvider } from '@vkontakte/vkui';
+
+class App extends React.Component {
+
+  state = {
+    activePanel: 'main',
+    history: ['main']
+  }
+  
+  goBack = () => {
+    const history = [...this.state.history];
+    history.pop();
+    const activePanel = history[history.length - 1];
+    this.setState({ history, activePanel });
+  }
+  
+  goForward = (activePanel) => {
+    const history = [...this.state.history];
+    history.push(activePanel);
+    this.setState({ history, activePanel });
+  }
+
+  render () {
+    return (
+      <ConfigProvider isWebView={true}>
+        <View 
+          onSwipeBack={this.goBack} 
+          history={this.state.history} 
+          activePanel={this.state.activePanel}
+        >
+          <Panel id="main"/>
+          <Panel id="profile"/>
+          <Panel id="education"/>
+        </View>
+      </ConfigProvider>
+    )
+  }
+}
+
 ```
