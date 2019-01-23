@@ -1,0 +1,96 @@
+.PullToRefresh {
+  height: 100%;
+}
+
+.PullToRefresh--refreshing {
+  touch-action: none;
+  pointer-events: none;
+}
+
+.PullToRefresh__controls {
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.PullToRefresh--ios .PullToRefresh__controls {
+  z-index: -1;
+}
+
+.PullToRefresh__spinner {
+  display: flex;
+  margin: auto;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: transform 300ms cubic-bezier(.1, 0, .25, 1), opacity 220ms ease-out;
+	opacity: 0;
+}
+
+.PullToRefresh--ios .PullToRefresh__spinner {
+  color: var(--activity_indicator_tint);
+}
+
+.PullToRefresh--android .PullToRefresh__spinner {
+  background: var(--background_suggestions);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+  color: var(--accent);
+}
+
+.PullToRefresh--watching .PullToRefresh__spinner {
+	transition: opacity 220ms ease-out;
+}
+
+.PullToRefresh__spinner-self {
+  stroke: currentColor;
+}
+
+.PullToRefresh--refreshing .PullToRefresh__spinner-self {
+  animation: PullToRefreshToRefreshing 380ms ease-out;
+}
+
+.PullToRefresh__spinner-path {
+  transform: rotate(-90deg);
+  transform-origin: center center;
+  transition: stroke-dashoffset 167ms ease-out;
+}
+
+.PullToRefresh--watching .PullToRefresh__spinner-path,
+.PullToRefresh--refreshing .PullToRefresh__spinner-path {
+  transition: none;
+}
+
+.PullToRefresh__spinner--on .PullToRefresh__spinner-path {
+  animation: rotator var(--duration) linear infinite;
+}
+
+.PullToRefresh__content {
+  overflow: hidden;
+  transition: transform 400ms var(--ios-easing);
+}
+
+.PullToRefresh--watching .PullToRefresh__content {
+  transition: none;
+}
+
+@keyframes PullToRefreshToRefreshing {
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(.6);
+  }
+
+  90% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
