@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.16.7",
+  "version": "2.17.0-rc.0",
   "main": "dist/vkui.js",
   "license": "MIT",
   "description": "VKUI library",
@@ -52,10 +52,8 @@
     "react-dom": "^16.4.0",
     "react": "^16.4.0",
     "@vkontakte/vkui-connect": "^1.1.2",
-    "prop-types": "^15.6.1"
-  },
-  "dependencies": {
-    "@vkontakte/icons": "^1.2.3"
+    "prop-types": "^15.6.1",
+    "@vkontakte/icons": "^1.4.0"
   },
   "scripts": {
     "prepublishOnly": "npm run clear && npm run build",

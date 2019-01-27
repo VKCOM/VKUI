@@ -38,14 +38,14 @@ const config = {
     children: false
   },
   mode: process.env.NODE_ENV || 'development',
-  externals: {
-    'react': 'react',
-    'prop-types': 'prop-types',
-    'react-dom': 'react-dom',
-    '@vkontakte/icons': '@vkontakte/icons',
-    'svg-baker-runtime/browser-symbol': 'svg-baker-runtime/browser-symbol',
-    'svg-sprite-loader/runtime/browser-sprite.build': 'svg-sprite-loader/runtime/browser-sprite.build'
-  }
+  externals: [
+    {
+      'react': 'react',
+      'prop-types': 'prop-types',
+      'react-dom': 'react-dom'
+    },
+    /@vkontakte\/icons/i
+  ]
 };
 
 const devConfig = {};
