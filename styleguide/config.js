@@ -91,6 +91,9 @@ module.exports = {
           '../src/components/File/File.js'
         ]
       }, {
+        name: 'Icons',
+        content: './pages/icons.md'
+      }, {
         name: 'Colors',
         content: './pages/colors.md'
       }, {

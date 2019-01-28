@@ -13,7 +13,7 @@ import Icon24Story from '@vkontakte/icons/dist/24/story';
 import Icon24MoreVertical from '@vkontakte/icons/dist/24/more_vertical';
 import Icon24Done from '@vkontakte/icons/dist/24/done';
 import Icon24Services from '@vkontakte/icons/dist/24/services';
-import Icon24About from '@vkontakte/icons/dist/24/about';
+import Icon24About from '@vkontakte/icons/dist/24/info';
 import Icon28User from '@vkontakte/icons/dist/24/user';
 import Icon24Document from '@vkontakte/icons/dist/24/document';
 import Icon16Like from '@vkontakte/icons/dist/16/like';

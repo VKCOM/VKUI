@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.17.0-rc.0",
+  "version": "2.17.0",
   "main": "dist/vkui.js",
   "license": "MIT",
   "description": "VKUI library",
@@ -15,7 +15,6 @@
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
     "@vkontakte/appearance": "git@github.com:VKCOM/Appearance.git#2.1.0",
-    "@vkontakte/vkui-connect": "^1.1.2",
     "autoprefixer": "^7.2.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.4",
@@ -32,10 +31,7 @@
     "postcss-import": "^12.0.1",
     "postcss-loader": "3.0.0",
     "pre-commit": "^1.2.2",
-    "prop-types": "^15.6.1",
-    "react": "^16.4.0",
     "react-docgen": "^2.20.0",
-    "react-dom": "^16.4.0",
     "react-frame-component": "^3.0.0",
     "react-styleguidist": "^7.0.17",
     "stylelint": "^9.3.0",
@@ -43,7 +39,12 @@
     "webpack": "^4.12.0",
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-cli": "^3.0.3",
-    "webpack-merge": "^4.0.0"
+    "webpack-merge": "^4.0.0",
+    "react-dom": "^16.4.0",
+    "react": "^16.4.0",
+    "@vkontakte/vkui-connect": "^1.1.2",
+    "prop-types": "^15.6.1",
+    "@vkontakte/icons": "^1.4.1"
   },
   "bin": {
     "generate_scheme": "./tasks/generate_scheme.js"
@@ -53,7 +54,7 @@
     "react": "^16.4.0",
     "@vkontakte/vkui-connect": "^1.1.2",
     "prop-types": "^15.6.1",
-    "@vkontakte/icons": "^1.4.0"
+    "@vkontakte/icons": "^1.4.1"
   },
   "scripts": {
     "prepublishOnly": "npm run clear && npm run build",
