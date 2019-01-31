@@ -106,7 +106,7 @@ export default class PullToRefresh extends PureComponent {
   };
 
   onWindowTouchMove = (e) => {
-    this.state.refreshing && cancelEvent(e);
+    if (this.state.refreshing) cancelEvent(e);
   };
 
   onTouchMove = (e) => {
