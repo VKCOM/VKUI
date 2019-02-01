@@ -5,16 +5,15 @@ import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('Input');
 
-const Input = ({ alignment, status, getRef, className, getRootRef, ...restProps }) =>
-  (
-    <div className={classNames(baseClassName, {
-      [`Input--${alignment}`]: alignment,
-      [`Input--s-${status}`]: status
-    }, className)} ref={getRootRef}>
-      <input {...restProps} className="Input__el" ref={getRef} />
-      <div className="Input__border" />
-    </div>
-  );
+const Input = ({ alignment, status, getRef, className, getRootRef, ...restProps }) => (
+  <div className={classNames(baseClassName, {
+    [`Input--${alignment}`]: alignment,
+    [`Input--s-${status}`]: status
+  }, className)} ref={getRootRef}>
+    <input {...restProps} className="Input__el" ref={getRef} />
+    <div className="Input__border" />
+  </div>
+);
 
 Input.propTypes = {
   type: PropTypes.string,
