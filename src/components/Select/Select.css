@@ -70,7 +70,7 @@
 
 .Select--multiline .Icon {
   top: 50%;
-  transform: translateY(-50%);
+  margin-top: -12px;
   }
 
 .Select--ios {}
