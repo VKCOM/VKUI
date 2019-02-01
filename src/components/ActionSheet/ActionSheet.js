@@ -39,15 +39,17 @@ export default class ActionSheet extends React.Component {
     this.waitTransitionFinish(this.props.onClose);
   };
 
-  onItemClick = (action, autoclose) => () => {
+  onItemClick = (action, autoclose) => (event) => {
+    event.persist();
+
     if (autoclose) {
       this.setState({ closing: true });
       this.waitTransitionFinish(() => {
         autoclose && this.props.onClose();
-        action && action();
+        action && action(event);
       });
     } else {
-      action && action();
+      action && action(event);
     }
   };
 
