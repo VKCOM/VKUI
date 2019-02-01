@@ -1,39 +1,36 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('Input');
 
-export default class Input extends PureComponent {
-  static propTypes = {
-    type: PropTypes.string,
-    alignment: PropTypes.oneOf(['left', 'center', 'right']),
-    value: PropTypes.string,
-    defaultValue: PropTypes.string,
-    onChange: PropTypes.func,
-    placeholder: PropTypes.string,
-    status: PropTypes.oneOf(['default', 'error', 'verified']),
-    getRef: PropTypes.func,
-    getRootRef: PropTypes.func,
-    className: PropTypes.string
-  };
+const Input = ({ alignment, status, getRef, className, getRootRef, ...restProps }) =>
+  (
+    <div className={classNames(baseClassName, {
+      [`Input--${alignment}`]: alignment,
+      [`Input--s-${status}`]: status
+    }, className)} ref={getRootRef}>
+      <input {...restProps} className="Input__el" ref={getRef} />
+      <div className="Input__border" />
+    </div>
+  );
 
-  static defaultProps = {
-    type: 'text'
-  };
+Input.propTypes = {
+  type: PropTypes.string,
+  alignment: PropTypes.oneOf(['left', 'center', 'right']),
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  status: PropTypes.oneOf(['default', 'error', 'verified']),
+  getRef: PropTypes.func,
+  getRootRef: PropTypes.func,
+  className: PropTypes.string
+};
 
-  render () {
-    const { alignment, status, getRef, className, getRootRef, ...restProps } = this.props;
+Input.defaultProps = {
+  type: 'text'
+};
 
-    return (
-      <div className={classNames(baseClassName, {
-        [`Input--${alignment}`]: alignment,
-        [`Input--s-${status}`]: status
-      }, className)} ref={getRootRef}>
-        <input {...restProps} className="Input__el" ref={getRef} />
-        <div className="Input__border" />
-      </div>
-    );
-  }
-}
+export default Input;
