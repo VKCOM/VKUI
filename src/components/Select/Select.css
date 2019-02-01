@@ -38,7 +38,7 @@
     opacity: .6;
     }
 
-    .Select__title {
+    .Select:not(.Select--multiline) .Select__title {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -62,6 +62,16 @@
       right: 10px;
       color: var(--icon_secondary);
       }
+
+.Select--multiline .Select__container {
+  height: auto;
+  min-height: 44px;
+  }
+
+.Select--multiline .Icon {
+  top: 50%;
+  transform: translateY(-50%);
+  }
 
 .Select--ios {}
 
