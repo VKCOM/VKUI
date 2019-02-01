@@ -44,6 +44,7 @@
 
   .Input--ios .Input__el:focus ~ .Input__border {
     border-color: var(--accent);
+    border-width: 2px;
     }
 
 .Input--android {}
