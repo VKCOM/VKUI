@@ -32,6 +32,7 @@ import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
 import Icon28Messages from '@vkontakte/icons/dist/28/messages';
 import Icon28More from '@vkontakte/icons/dist/28/more';
 import pkg from '../package';
+import { getRandomInt, getRandomUser } from './utils';
 
 window.uaList = {
   ios: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
@@ -78,3 +79,6 @@ window.Icon28Search = Icon28Search;
 window.Icon28Notifications = Icon28Notifications;
 window.Icon28Messages = Icon28Messages;
 window.Icon28More = Icon28More;
+
+window.getRandomInt = getRandomInt;
+window.getRandomUser = getRandomUser;
