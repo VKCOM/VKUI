@@ -17,6 +17,7 @@ export default class FixedLayout extends React.Component {
     children: PropTypes.node,
     style: PropTypes.object,
     className: PropTypes.string,
+    getRootRef: PropTypes.func,
     vertical: PropTypes.oneOf(['top', 'bottom'])
   };
 
@@ -58,10 +59,15 @@ export default class FixedLayout extends React.Component {
     });
   };
 
-  getRef = el => this.el = el;
+  getRef = el => {
+    if (this.props.getRootRef) {
+      this.props.getRootRef(el);
+    }
+    this.el = el;
+  };
 
   render () {
-    const { className, children, style, vertical, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
     const paddingBottom = vertical === 'bottom' && this.context.insets && this.context.insets.bottom
       ? this.context.insets.bottom + tabbarPadding
