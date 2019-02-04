@@ -5,6 +5,8 @@ import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('FormLayout');
 
+const onSubmit = fn => e => fn ? fn(e) : e.preventDefault();
+
 const FormLayout = props => {
   const {
     children,
@@ -13,15 +15,14 @@ const FormLayout = props => {
     getRef,
     ...restProps
   } = props;
-  const arrayChildren = Array.isArray(children) ? children : [children];
 
-  const onSubmit = (e) => props.onSubmit ? props.onSubmit(e) : e.preventDefault();
+  const arrayChildren = Array.isArray(children) ? children : [children];
 
   return (
     <TagName
       {...restProps}
       className={classNames(baseClassName, className)}
-      onSubmit={onSubmit}
+      onSubmit={onSubmit(props.onSubmit)}
       ref={getRef}
     >
       <div className="FormLayout__container">
