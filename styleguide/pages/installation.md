@@ -1,1 +1,1 @@
-npm install @vkontakte/vkui
+`npm install @vkontakte/vkui`

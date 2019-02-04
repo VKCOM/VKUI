@@ -54,23 +54,27 @@ class Example extends React.Component {
 В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
 повторить такое поведение в VKUI нужно:
 
-Передать во `View` свойство `onSwipeBack`. Это callback, срабатывающий при завершении анимации свайпа. 
+* Передать во `View` свойство `onSwipeBack`. Это callback, срабатывающий при завершении анимации свайпа. 
 Как правило в нём прописывают логику, которая выставит нужный `activePanel` и обновит свойство `history`.
 
-Передать во `View` свойство `history`. Это массив, состоящий из id панелей, которые были открыты на текущий момент.
+* Передать во `View` свойство `history`. Это массив, состоящий из id панелей, которые были открыты на текущий момент.
 Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то 
 `history=['main', 'profile', 'education']`.
 
-Убедиться, что приложение открыто внутри webview (так как внутри обычного мобильного браузера
+* Убедиться, что приложение открыто внутри webview (так как внутри обычного мобильного браузера
 как правило есть свой swipe back). Для этого достаточно обернуть ваше приложение компонентом `ConfigProvider`. 
 Он внутри себя определяет, открыто приложение внутри webview или в мобильном браузере. Для тестов в браузере 
 можно явно передать в `СonfigProvider` свойство `isWebView={true}`.
+
+* При попадании на первую панель слать `vkui-сonnect` событие `VKWebAppDisableSwipeBack`. При уходе с первой панели –
+слать `VKWebAppEnableSwipeBack`. Таким образом vkui свайп не будет конфликтовать со свайпом нативного клиента.
 
 Пример:
 
 ```jsx static
 import React from 'react';
 import { View, Panel, ConfigProvider } from '@vkontakte/vkui';
+import vkuiConnect from '@vkontakte/vkui-connect';
 
 class App extends React.Component {
 
@@ -83,12 +87,18 @@ class App extends React.Component {
     const history = [...this.state.history];
     history.pop();
     const activePanel = history[history.length - 1];
+    if (activePanel === 'main') {
+      vkuiConnect.send('VKWebAppDisableSwipeBack');
+    }
     this.setState({ history, activePanel });
   }
   
   goForward = (activePanel) => {
     const history = [...this.state.history];
     history.push(activePanel);
+    if (this.state.activePanel === 'main') {
+      vkuiConnect.send('VKWebAppEnableSwipeBack');
+    }
     this.setState({ history, activePanel });
   }
 
