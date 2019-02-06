@@ -461,12 +461,14 @@ export default class View extends Component {
 
   render () {
     const { style, popout, header } = this.props;
-    const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel } = this.state;
+    const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipingBackFinish } = this.state;
     const hasPopout = !!popout;
     const panels = this.panels.filter(panel => {
-      return this.state.visiblePanels.indexOf(panel.props.id) > -1 ||
-        panel.props.id === this.state.swipeBackPrevPanel ||
-        panel.props.id === this.state.swipeBackNextPanel;
+      const panelId = panel.props.id;
+
+      return this.state.visiblePanels.indexOf(panelId) > -1 ||
+        panelId === swipeBackPrevPanel ||
+        panelId === swipeBackNextPanel;
     });
 
     const modifiers = {
@@ -487,80 +489,89 @@ export default class View extends Component {
           <div className="View__header">
             { osname === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
             <div className={classNames(panelHeaderClasses)}>
-              {panels.map(panel => (
-                <div
-                  className={classNames('PanelHeader__in', {
-                    'PanelHeader__in--active': panel.props.id === activePanel,
-                    'PanelHeader__in--prev': panel.props.id === prevPanel,
-                    'PanelHeader__in--next': panel.props.id === nextPanel,
-                    'PanelHeader__in--swipe-back-prev': panel.props.id === this.state.swipeBackPrevPanel,
-                    'PanelHeader__in--swipe-back-next': panel.props.id === this.state.swipeBackNextPanel,
-                    'PanelHeader__in--swipe-back-success': this.state.swipingBackFinish === true,
-                    'PanelHeader__in--swipe-back-failed': this.state.swipingBackFinish === false
-                  })}
-                  key={panel.props.id}
-                  id={`panel-header-${panel.props.id}`}
-                >
+              {panels.map(panel => {
+                const panelId = panel.props.id;
+                const headerSwipeStyles = this.calcHeaderSwipeStyles(panelId);
+
+                return (
                   <div
-                    className="PanelHeader__bg"
-                    key={panel.props.id}
-                    id={`header-bg-${panel.props.id}`}
-                    style={this.calcHeaderSwipeStyles(panel.props.id).bg}
-                  />
-                  <div className="PanelHeader__container">
-                    <div className="PanelHeader__left">
+                    className={classNames('PanelHeader__in', {
+                      'PanelHeader__in--active': panelId === activePanel,
+                      'PanelHeader__in--prev': panelId === prevPanel,
+                      'PanelHeader__in--next': panelId === nextPanel,
+                      'PanelHeader__in--swipe-back-prev': panelId === swipeBackPrevPanel,
+                      'PanelHeader__in--swipe-back-next': panelId === swipeBackNextPanel,
+                      'PanelHeader__in--swipe-back-success': swipingBackFinish === true,
+                      'PanelHeader__in--swipe-back-failed': swipingBackFinish === false
+                    })}
+                    key={panelId}
+                    id={`panel-header-${panelId}`}
+                  >
+                    <div
+                      className="PanelHeader__bg"
+                      key={panelId}
+                      id={`header-bg-${panelId}`}
+                      style={headerSwipeStyles.bg}
+                    />
+                    <div className="PanelHeader__container">
+                      <div className="PanelHeader__left">
+                        <div
+                          className="PanelHeader__left-in"
+                          id={`header-left-${panelId}`}
+                          style={headerSwipeStyles.left}
+                        />
+                        {osname === IOS &&
+                        <div
+                          className="PanelHeader__addon"
+                          id={`header-addon-${panelId}`}
+                          style={headerSwipeStyles.icon}
+                        />
+                        }
+                      </div>
                       <div
-                        className="PanelHeader__left-in"
-                        id={`header-left-${panel.props.id}`}
-                        style={this.calcHeaderSwipeStyles(panel.props.id).left}
+                        className="PanelHeader__content"
+                        style={headerSwipeStyles.title}
+                        id={`header-title-${panelId}`}
                       />
-                      {osname === IOS &&
                       <div
-                        className="PanelHeader__addon"
-                        id={`header-addon-${panel.props.id}`}
-                        style={this.calcHeaderSwipeStyles(panel.props.id).icon}
+                        className="PanelHeader__right"
+                        id={`header-right-${panelId}`}
+                        style={headerSwipeStyles.right}
                       />
-                      }
                     </div>
-                    <div
-                      className="PanelHeader__content"
-                      style={this.calcHeaderSwipeStyles(panel.props.id).title}
-                      id={`header-title-${panel.props.id}`}
-                    />
-                    <div
-                      className="PanelHeader__right"
-                      id={`header-right-${panel.props.id}`}
-                      style={this.calcHeaderSwipeStyles(panel.props.id).right}
-                    />
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
         <div className="View__panels">
-          {panels.map(panel => (
-            <div
-              className={classNames('View__panel', {
-                'View__panel--active': panel.props.id === activePanel,
-                'View__panel--prev': panel.props.id === prevPanel,
-                'View__panel--next': panel.props.id === nextPanel,
-                'View__panel--swipe-back-prev': panel.props.id === this.state.swipeBackPrevPanel,
-                'View__panel--swipe-back-next': panel.props.id === this.state.swipeBackNextPanel,
-                'View__panel--swipe-back-success': this.state.swipingBackFinish === true,
-                'View__panel--swipe-back-failed': this.state.swipingBackFinish === false
-              })}
-              style={this.calcPanelSwipeStyles(panel.props.id)}
-              key={panel.props.id}
-            >
-              <div className="View__panel-in">
-                {React.cloneElement(panel, {
-                  isNext: panel.props.id === nextPanel || panel.props.id === swipeBackNextPanel,
-                  isPrev: panel.props.id === prevPanel || panel.props.id === swipeBackPrevPanel
+          {panels.map(panel => {
+            const panelId = panel.props.id;
+
+            return (
+              <div
+                className={classNames('View__panel', {
+                  'View__panel--active': panelId === activePanel,
+                  'View__panel--prev': panelId === prevPanel,
+                  'View__panel--next': panelId === nextPanel,
+                  'View__panel--swipe-back-prev': panelId === swipeBackPrevPanel,
+                  'View__panel--swipe-back-next': panelId === swipeBackNextPanel,
+                  'View__panel--swipe-back-success': swipingBackFinish === true,
+                  'View__panel--swipe-back-failed': swipingBackFinish === false
                 })}
+                style={this.calcPanelSwipeStyles(panelId)}
+                key={panelId}
+              >
+                <div className="View__panel-in">
+                  {React.cloneElement(panel, {
+                    isNext: panelId === nextPanel || panelId === swipeBackNextPanel,
+                    isPrev: panelId === prevPanel || panelId === swipeBackPrevPanel
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         {hasPopout && <div className="View__popout">{popout}</div>}
       </Touch>
