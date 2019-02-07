@@ -27,8 +27,7 @@ const mapOldLevel = level => {
 
 const Button = props => {
   if (props.type === 'cell') {
-    const { ...restProps } = this.props;
-    return <CellButton {...restProps} />;
+    return <CellButton {...props} />;
   } else {
     const { className, size, level, stretched, align, children, before, ...restProps } = props;
 
