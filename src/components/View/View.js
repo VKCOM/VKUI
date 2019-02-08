@@ -294,7 +294,7 @@ export default class View extends Component {
     const { activePanel } = this.state;
 
     if (activePanel) {
-      const scrollTop = this.document.body.scrollTop || this.document.this.documentElement.scrollTop;
+      const scrollTop = this.document.body.scrollTop || this.document.documentElement.scrollTop;
 
       if (scrollTop) {
         animate({
