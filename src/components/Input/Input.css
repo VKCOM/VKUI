@@ -32,6 +32,11 @@
   background: transparent;
   }
 
+.Input--s-error > .Input__border {
+  border-color: var(--field_error_border);
+  background: var(--field_error_background);
+}   
+
 .Input__el:disabled {
   opacity: .6;
   }
