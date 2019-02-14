@@ -58,8 +58,8 @@ class TooltipPortal extends React.Component {
     return {
       width: targetBounds.width,
       height: targetBounds.height,
-      x: targetBounds.x - portalBounds.x,
-      y: targetBounds.y - portalBounds.y
+      x: targetBounds.left - portalBounds.left,
+      y: targetBounds.top - portalBounds.top
     };
   }
 
