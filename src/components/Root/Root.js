@@ -154,11 +154,7 @@ export default class Root extends React.Component {
             'Root__view--show-forward': View.props.id === nextView && !isBack,
             'Root__view--active': View.props.id === activeView
           })}>
-            {React.cloneElement(View, {
-              inRoot: true,
-              isNext: View.props.id === nextView,
-              isPrev: View.props.id === prevView
-            })}
+            {View}
           </div>
         ))}
         {this.props.popout && <div className="Root__popout">{this.props.popout}</div>}

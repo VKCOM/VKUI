@@ -57,20 +57,7 @@ export default class View extends Component {
     /**
      * @ignore
      */
-    history: PropTypes.arrayOf(PropTypes.string),
-
-    /**
-     * @ignore
-     */
-    isNext: PropTypes.bool,
-    /**
-     * @ignore
-     */
-    isPrev: PropTypes.bool,
-    /**
-     * @ignore
-     */
-    inRoot: PropTypes.bool
+    history: PropTypes.arrayOf(PropTypes.string)
   };
 
   static defaultProps = {
@@ -241,8 +228,6 @@ export default class View extends Component {
   transitionEndHandler = (e = { manual: true }) => {
     if ([
       'animation-ios-next-forward',
-      'animation-ios-next-back',
-      'animation-ios-prev-forward',
       'animation-ios-prev-back',
       'animation-android-next-forward',
       'animation-android-prev-back'
@@ -455,10 +440,6 @@ export default class View extends Component {
     }
   }
 
-  shouldComponentUpdate ({ inRoot, isNext, isPrev }) {
-    return inRoot ? !isNext && !isPrev : true;
-  }
-
   render () {
     const { style, popout, header } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipingBackFinish } = this.state;
@@ -564,10 +545,7 @@ export default class View extends Component {
                 key={panelId}
               >
                 <div className="View__panel-in">
-                  {React.cloneElement(panel, {
-                    isNext: panelId === nextPanel || panelId === swipeBackNextPanel,
-                    isPrev: panelId === prevPanel || panelId === swipeBackPrevPanel
-                  })}
+                  {panel}
                 </div>
               </div>
             );
