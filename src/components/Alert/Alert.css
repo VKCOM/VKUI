@@ -175,10 +175,6 @@
     }
   }
 
-  .Alert--ios .Alert__btn--primary { /* Depcrated. Remove in next version */
-    font-weight: 500;
-    }
-
   .Alert--ios .Alert__btn--cancel {
     font-weight: 600;
     }
@@ -232,6 +228,11 @@
     flex-flow: wrap;
     }
 
+  .Alert--android.Alert--v .Alert__footer {
+    flex-direction: column;
+    align-items: flex-end;
+    }
+
     .Alert--android .Alert__btn {
       margin: 0 0 0 12px;
       border: 0;
@@ -246,14 +247,6 @@
       outline: none;
       overflow: hidden;
       text-overflow: ellipsis;
-      }
-
-    .Alert--android .Alert__btn--cancel {
-      color: var(--destructive);
-      }
-
-    .Alert--android .Alert__btn--primary {
-      color: var(--accent);
       }
 
 /**

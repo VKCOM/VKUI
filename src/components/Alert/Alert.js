@@ -17,7 +17,10 @@ export default class Alert extends Component {
     actions: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string,
       action: PropTypes.func,
-      style: PropTypes.oneOf(['primary', 'cancel', 'destructive', 'default'])
+      /**
+       * iOS only
+       */
+      style: PropTypes.oneOf(['cancel', 'destructive', 'default'])
     })),
     onClose: PropTypes.func
   };
@@ -46,7 +49,7 @@ export default class Alert extends Component {
             {actions.map((button, i) => (
               <Tappable
                 component="button"
-                className={classNames('Alert__btn', { [`Alert__btn--${button.style}`]: true })}
+                className={classNames('Alert__btn', { [`Alert__btn--${button.style}`]: button.style })}
                 onClick={this.onItemClick(button)}
                 key={`alert-action-${i}`}
               >
