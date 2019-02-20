@@ -20,10 +20,17 @@ class Example extends React.Component {
     }
 
     this.openSheet = this.openSheet.bind(this);
+    this.periodItems = ['По дням', 'По неделям', 'По месяцам'];
   }
 
   componentDidMount() {
     this.openSheet()
+  }
+
+  getPeriodItems() {
+    return this.periodItems.map((name) => (
+      <ActionSheetItem autoclose key={name}>{name}</ActionSheetItem>
+    ));
   }
 
   openSheet () {
@@ -33,8 +40,8 @@ class Example extends React.Component {
         title="Hi!"
         text="I am action sheet"
       >
-        <ActionSheetItem autoclose>Action</ActionSheetItem>
-        <ActionSheetItem autoclose theme="destructive">Sheet</ActionSheetItem>
+        {this.getPeriodItems()}
+        <ActionSheetItem autoclose theme="destructive">Деструктивный пункт</ActionSheetItem>
         {osname === IOS && <ActionSheetItem autoclose theme="cancel">Cancel</ActionSheetItem>}
       </ActionSheet>
     });
