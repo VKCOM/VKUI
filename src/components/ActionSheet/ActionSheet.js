@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
@@ -89,12 +89,12 @@ export default class ActionSheet extends React.Component {
             {text && <div className="ActionSheet__text">{text}</div>}
           </header>
           }
-          {React.Children.map(children, (Child, index) => (
+          {Children.toArray(children).map((Child, index, arr) => (
             Child && React.cloneElement(Child, {
               onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose),
-              style: index === children.length - 1 && this.context.insets ? { marginBottom: this.context.insets.bottom } : null
+              style: index === arr.length - 1 && this.context.insets ? { marginBottom: this.context.insets.bottom } : null
             })
-          ), null)}
+          ))}
         </div>
       </PopoutWrapper>
     );

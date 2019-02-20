@@ -19,6 +19,11 @@
         <option value="m">Мужской</option>
         <option value="f">Женский</option>
       </Select>
+      
+      {['Почтовый индекс', 'Адрес'].map((name) => {
+        return <Input type="text" top={name} key={name} />
+      })}
+
       <FormLayoutGroup top="Тип документа">
         <Radio name="type">Паспорт</Radio>
         <Radio name="type">Загран</Radio>

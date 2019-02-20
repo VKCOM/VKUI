@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -30,7 +30,6 @@ export default class FormLayout extends React.Component {
       getRef,
       ...restProps
     } = this.props;
-    const arrayChildren = Array.isArray(children) ? children : [children];
 
     return (
       <TagName
@@ -40,7 +39,7 @@ export default class FormLayout extends React.Component {
         ref={getRef}
       >
         <div className="FormLayout__container">
-          {arrayChildren.map((field, i) => (
+          {Children.toArray(children).map((field, i) => (
             field ? <div className="FormLayout__row" key={field.key || `row-${i}`}>
               {field.props.top && <div className="FormLayout__row-top">{field.props.top}</div>}
               <div className="FormLayout__field">{field}</div>

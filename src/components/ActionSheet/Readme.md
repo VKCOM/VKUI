@@ -26,6 +26,12 @@ class Example extends React.Component {
     this.openSheet()
   }
 
+  getItems() {
+    return ['Great', 'Component'].map((name) => (
+      <ActionSheetItem autoclose key={name}>{name}</ActionSheetItem>
+    ));
+  }
+
   openSheet () {
     this.setState({ popout:
       <ActionSheet
@@ -35,6 +41,7 @@ class Example extends React.Component {
       >
         <ActionSheetItem autoclose>Action</ActionSheetItem>
         <ActionSheetItem autoclose theme="destructive">Sheet</ActionSheetItem>
+        {this.getItems()}
         {osname === IOS && <ActionSheetItem autoclose theme="cancel">Cancel</ActionSheetItem>}
       </ActionSheet>
     });
