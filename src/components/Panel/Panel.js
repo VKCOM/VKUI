@@ -16,24 +16,14 @@ export default class Panel extends Component {
     className: PropTypes.string,
     theme: PropTypes.oneOf(['white', 'gray']),
     id: PropTypes.string.isRequired,
-    optimized: PropTypes.bool,
     centered: PropTypes.bool,
-    style: PropTypes.object,
-    /**
-     * @ignore
-     */
-    isPrev: PropTypes.bool,
-    /**
-     * @ignore
-     */
-    isNext: PropTypes.bool
+    style: PropTypes.object
   };
 
   static defaultProps = {
     children: '',
     theme: 'gray',
-    centered: false,
-    optimized: true
+    centered: false
   };
 
   static contextTypes = {
@@ -56,12 +46,8 @@ export default class Panel extends Component {
     return this.context.insets || {};
   }
 
-  shouldComponentUpdate ({ optimized, isNext, isPrev }) {
-    return optimized ? !isNext && !isPrev : true;
-  }
-
   render () {
-    const { className, centered, children, isPrev, isNext, theme, optimized, ...restProps } = this.props;
+    const { className, centered, children, theme, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
 
     return (

@@ -6,6 +6,10 @@
     display: block;
     }
 
+  .FormLayout__row-top {
+    line-height: 18px;
+    }
+
   .FormLayout__submit {
     position: absolute;
     visibility: hidden;
@@ -114,7 +118,6 @@
     .FormLayout--android .FormLayout__row-top {
       color: var(--text_secondary);
       padding: 2px 16px 8px;
-      line-height: 18px;
       font-size: 14px;
       }
 

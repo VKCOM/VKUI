@@ -52,6 +52,7 @@ export { default as Tabs } from './components/Tabs/Tabs';
 export { default as TabsItem } from './components/TabsItem/TabsItem';
 export { default as FixedTabs } from './components/FixedTabs/FixedTabs';
 export { default as Spinner } from './components/Spinner/Spinner';
+export { default as PullToRefresh } from './components/PullToRefresh/PullToRefresh';
 export { default as Link } from './components/Link/Link';
 export { default as Tooltip } from './components/Tooltip/Tooltip';
 

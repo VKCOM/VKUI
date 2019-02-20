@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.17.0",
+  "version": "2.18.4",
   "main": "dist/vkui.js",
   "license": "MIT",
   "description": "VKUI library",
@@ -40,8 +40,8 @@
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-cli": "^3.0.3",
     "webpack-merge": "^4.0.0",
-    "react-dom": "^16.4.0",
-    "react": "^16.4.0",
+    "react-dom": "^16.6.0",
+    "react": "^16.6.0",
     "@vkontakte/vkui-connect": "^1.1.2",
     "prop-types": "^15.6.1",
     "@vkontakte/icons": "^1.4.1"
@@ -50,8 +50,8 @@
     "generate_scheme": "./tasks/generate_scheme.js"
   },
   "peerDependencies": {
-    "react-dom": "^16.4.0",
-    "react": "^16.4.0",
+    "react-dom": "^16.6.0",
+    "react": "^16.6.0",
     "@vkontakte/vkui-connect": "^1.1.2",
     "prop-types": "^15.6.1",
     "@vkontakte/icons": "^1.4.1"

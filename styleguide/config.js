@@ -17,6 +17,9 @@ module.exports = {
       name: 'Installation',
       content: './pages/installation.md'
     }, {
+      name: 'HTML',
+      content: './pages/html.md'
+    }, {
       name: 'Hello World',
       content: '../README.md'
     }, {
@@ -72,7 +75,8 @@ module.exports = {
           '../src/components/Tabs/Tabs.js',
           '../src/components/TabsItem/TabsItem.js',
           '../src/components/FixedTabs/FixedTabs.js',
-          '../src/components/Tooltip/Tooltip.js'
+          '../src/components/Tooltip/Tooltip.js',
+          '../src/components/PullToRefresh/PullToRefresh.js'
         ]
       }, {
         name: 'Forms',

@@ -35,6 +35,7 @@
 @import '../components/TabsItem/TabsItem.css';
 @import '../components/Spinner/Spinner.css';
 @import '../components/ScreenSpinner/ScreenSpinner.css';
+@import '../components/PullToRefresh/PullToRefresh.css';
 @import '../components/Link/Link.css';
 @import '../components/Tooltip/Tooltip.css';
 @import '../components/FormLayout/FormLayout.css';
