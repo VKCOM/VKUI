@@ -7,7 +7,7 @@ const baseClassName = getClassName('FormLayout');
 
 const preventDefault = e => e.preventDefault();
 
-export const FormLayout = props => {
+const FormLayout = props => {
   const {
     children,
     TagName,
@@ -61,3 +61,5 @@ FormLayout.defaultProps = {
   TagName: 'form',
   onSubmit: preventDefault
 };
+
+export default FormLayout;
