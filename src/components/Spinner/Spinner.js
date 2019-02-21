@@ -9,8 +9,8 @@ import Spinner16 from '@vkontakte/icons/dist/16/spinner';
 
 const baseClassNames = getClassName('Spinner');
 
-const svgSpinner = () => {
-  switch (this.props.size) {
+const svgSpinner = size => {
+  switch (size) {
     case 'large':
       return <Spinner44 className="Spinner__self" />;
     case 'medium':
@@ -24,7 +24,7 @@ const svgSpinner = () => {
 
 const Spinner = ({ className, size, ...restProps }) => (
   <div {...restProps} className={classNames(baseClassNames, className)}>
-    {svgSpinner}
+    {svgSpinner(size)}
   </div>
 );
 
