@@ -22,11 +22,11 @@ const svgSpinner = size => {
   }
 };
 
-const Spinner = ({ className, size, ...restProps }) => (
+const Spinner = React.memo(({ className, size, ...restProps }) => (
   <div {...restProps} className={classNames(baseClassNames, className)}>
     {svgSpinner(size)}
   </div>
-);
+));
 
 Spinner.propTypes = {
   style: PropTypes.object,
