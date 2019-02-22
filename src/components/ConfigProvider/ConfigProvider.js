@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isWebView } from '../../lib/webview';
 
+const Provider = React.createContext();
+
 export default class ConfigProvider extends React.Component {
   constructor (props) {
     super(props);
@@ -64,17 +66,15 @@ export default class ConfigProvider extends React.Component {
     }
   }
 
-  getChildContext () {
-    return {
-      insets: { ...this.props.insets, bottom: this.state.bottomInset },
-      isWebView: this.props.isWebView,
-      webviewType: this.props.webviewType,
-      scheme: this.props.scheme,
-      app: this.props.app
-    };
-  }
-
   render () {
-    return this.props.children;
+    const { insets, isWebView, webviewType, scheme, app, children } = this.props;
+    const context = {
+      insets: { ...insets, bottom: this.state.bottomInset },
+      isWebView,
+      webviewType,
+      scheme,
+      app
+    };
+    return <Provider value={context}>{children}</Provider>;
   }
 }
