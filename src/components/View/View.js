@@ -16,11 +16,13 @@ const baseClassNames = getClassName('View');
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
 
+let scrollsCache = {};
+
 export default class View extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      scrolls: {},
+      scrolls: scrollsCache[props.id] || {},
 
       visiblePanels: [props.activePanel],
       activePanel: props.activePanel,
@@ -57,7 +59,8 @@ export default class View extends Component {
     /**
      * @ignore
      */
-    history: PropTypes.arrayOf(PropTypes.string)
+    history: PropTypes.arrayOf(PropTypes.string),
+    id: PropTypes.string
   };
 
   static defaultProps = {
@@ -134,6 +137,12 @@ export default class View extends Component {
         window.scrollTo(0, this.state.scrolls[this.state.activePanel]);
         this.props.onTransition && this.props.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
+    }
+  }
+
+  componentWillUnmount () {
+    if (this.props.id) {
+      scrollsCache[this.props.id] = this.state.scrolls;
     }
   }
 
