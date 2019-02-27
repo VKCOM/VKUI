@@ -29,34 +29,3 @@
   .Textarea textarea:disabled {
     opacity: .6;
     }
-
-.Textarea--ios {
-
-  }
-
-  .Textarea--ios textarea:focus ~ .Textarea__border {
-    border-color: var(--accent);
-    }
-
-.Textarea--android {
-
-  }
-
-  .Textarea--android textarea {
-    border-radius: 4px 0 0 4px;
-    background-color: var(--field_background);
-    padding-bottom: 4px;
-    }
-
-  .Textarea--android textarea:focus {
-    border-color: var(--accent);
-    }
-
-  .Textarea--android textarea:disabled ~ .Textarea__border {
-    opacity: .6;
-    }
-
-    .Textarea--android textarea:focus ~ .Textarea__border::before {
-      transform: scaleX(1);
-      transition: transform .14s var(--android-easing);
-      }

@@ -40,6 +40,7 @@
 @import '../components/Tooltip/Tooltip.css';
 @import '../components/FormLayout/FormLayout.css';
 @import '../components/FormLayoutGroup/FormLayoutGroup.css';
+@import '../components/FormField/FormField.css';
 @import '../components/Switch/Switch.css';
 @import '../components/File/File.css';
 @import '../components/Input/Input.css';
@@ -83,92 +84,8 @@ button {
 
 #root {
   user-select: none;
-  }
+}
 
 a:focus {
   outline: none;
 }
-
-.Input--android .Input__border,
-.Select--android .Select__border,
-.Textarea--android .Textarea__border {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 8px;
-  border-radius: 4px;
-  background-color: var(--field_border);
-  z-index: 2;
-}
-
-.Textarea--android .Textarea__border {
-  position: relative;
-  }
-
-.Input--android .Input__border::after,
-.Select--android .Select__border::after,
-.Textarea--android .Textarea__border::after {
-  position: absolute;
-  top: -1px;
-  height: 7px;
-  width: 100%;
-  content: '';
-  display: block;
-  background-color: var(--field_background);
-  z-index: 2;
-}
-
-.Input--android .Input__border::before,
-.Select--android .Select__border::before,
-.Textarea--android .Textarea__border::before {
-  position: absolute;
-  height: 8px;
-  width: 100%;
-  bottom: 0;
-  z-index: 1;
-  border-radius: 4px;
-  background: var(--accent);
-  content: '';
-  transform: scaleX(0);
-  transition: transform .1s var(--android-easing);
-}
-
-.Input--ios .Input__border,
-.Textarea--ios .Textarea__border,
-.Select--ios .Select__border {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border: 1px solid var(--field_border);
-  background: var(--field_background);
-  content: '';
-  border-radius: 10px;
-  box-sizing: border-box;
-  z-index: 1;
-  transform-origin: left top;
-  }
-
-@media (min-resolution: 2dppx) {
-  .Input--ios .Input__border,
-  .Textarea--ios .Textarea__border,
-  .Select--ios .Select__border {
-    transform: scale(.5);
-    border-radius: 20px;
-    width: 200%;
-    height: 200%;
-    }
-  }
-
-@media (min-resolution: 3dppx) {
-  .Input--ios .Input__border,
-  .Textarea--ios .Textarea__border,
-  .Select--ios .Select__border {
-    transform: scale(.32);
-    border-radius: calc(10px * 3.125);
-    width: 312.5%;
-    height: 312.5%;
-    }
-  }

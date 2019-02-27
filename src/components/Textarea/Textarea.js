@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-
-const baseClassName = getClassName('Textarea');
+import FormField from '../FormField/FormField';
 
 export default class Textarea extends PureComponent {
   constructor (props) {
@@ -34,7 +32,8 @@ export default class Textarea extends PureComponent {
     onResize: PropTypes.func,
     className: PropTypes.string,
     getRef: PropTypes.func,
-    getRootRef: PropTypes.func
+    getRootRef: PropTypes.func,
+    status: PropTypes.oneOf(['default', 'error', 'valid'])
   };
 
   static defaultProps = {
@@ -104,20 +103,25 @@ export default class Textarea extends PureComponent {
   }
 
   render () {
-    const { defaultValue, value, onChange, grow, style, onResize, className, getRootRef, getRef, ...restProps } = this.props;
+    const { defaultValue, value, onChange, grow, style, onResize, className, getRootRef, getRef, status, ...restProps } = this.props;
     const height = this.state.height || style.height || 66;
 
     return (
-      <div className={classNames(baseClassName, className)} style={style} ref={getRootRef}>
+      <FormField
+        className={classNames('Textarea', className)}
+        style={style}
+        getRootRef={getRootRef}
+        status={status}
+      >
         <textarea
+          className="Textarea__el"
           {...restProps}
           value={this.value}
           onChange={this.onChange}
           ref={this.getRef}
           style={{ height }}
         />
-        <div className="Textarea__border" />
-      </div>
+      </FormField>
     );
   }
 }

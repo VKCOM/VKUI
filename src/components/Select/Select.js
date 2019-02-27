@@ -1,13 +1,9 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
-import { platform, ANDROID } from '../../lib/platform';
-
-const osname = platform();
-const baseClassName = getClassName('Select');
+import FormField from '../FormField/FormField';
 
 export default class Select extends Component {
   constructor (props) {
@@ -36,7 +32,8 @@ export default class Select extends Component {
     placeholder: PropTypes.string,
     getRef: PropTypes.func,
     getRootRef: PropTypes.func,
-    alignment: PropTypes.oneOf(['left', 'center', 'top'])
+    alignment: PropTypes.oneOf(['left', 'center', 'top']),
+    status: PropTypes.oneOf(['default', 'error', 'valid'])
   };
 
   static defaultProps = {
@@ -81,19 +78,22 @@ export default class Select extends Component {
   };
 
   render () {
-    const { style, label, value, defaultValue, onChange, alignment, placeholder, children, className,
+    const { style, label, value, defaultValue, onChange, alignment, status, placeholder, children, className,
       getRef, getRootRef, ...restProps } = this.props;
 
     return (
-      <label
-        className={classNames(baseClassName, {
+      <FormField
+        TagName="label"
+        className={classNames('Select', {
           [`Select--not-selected`]: this.state.notSelected,
           [`Select--align-${alignment}`]: alignment
         }, className)}
         style={style}
-        ref={getRootRef}
+        getRootRef={getRootRef}
+        status={status}
       >
         <select
+          className="Select__el"
           onChange={this.onChange}
           value={this.value}
           ref={this.getRef}
@@ -106,8 +106,7 @@ export default class Select extends Component {
           <div className="Select__title">{this.state.title}</div>
           <Icon24Dropdown />
         </div>
-        {osname === ANDROID && <div className="Select__border" />}
-      </label>
+      </FormField>
     );
   }
 }

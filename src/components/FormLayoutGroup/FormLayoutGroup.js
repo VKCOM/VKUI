@@ -14,7 +14,8 @@ FormLayoutGroup.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   top: PropTypes.node,
-  bottom: PropTypes.node
+  bottom: PropTypes.node,
+  status: PropTypes.oneOf(['default', 'error', 'valid'])
 };
 
 export default FormLayoutGroup;

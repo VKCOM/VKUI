@@ -25,21 +25,26 @@ const FormLayout = props => {
       ref={getRef}
     >
       <div className="FormLayout__container">
-        {Children.toArray(children).map((field, i) =>
-          field ? (
-            <div className="FormLayout__row" key={field.key || `row-${i}`}>
-              {field.props.top && (
-                <div className="FormLayout__row-top">{field.props.top}</div>
-              )}
-              <div className="FormLayout__field">{field}</div>
-              {field.props.bottom && (
-                <div className="FormLayout__row-bottom">
-                  {field.props.bottom}
-                </div>
-              )}
-            </div>
-          ) : null,
-        )}
+        {Children.toArray(children).map((field, i) => {
+          if (field) {
+            const { status, top, bottom } = field.props;
+
+            return (
+              <div
+                className={classNames('FormLayout__row', {
+                  [`FormLayout__row--s-${status}`]: status
+                })}
+                key={field.key || `row-${i}`}
+              >
+                {top && <div className="FormLayout__row-top">{top}</div>}
+                {field}
+                {bottom && <div className="FormLayout__row-bottom">{bottom}</div>}
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })}
       </div>
       {TagName === 'form' && (
         <input type="submit" className="FormLayout__submit" value="" />

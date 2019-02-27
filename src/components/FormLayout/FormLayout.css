@@ -47,10 +47,7 @@
       width: calc(100% - 2 * 12px);
       }
 
-    .FormLayout--ios .FormLayout__row .Input,
-    .FormLayout--ios .FormLayout__row .Textarea,
-    .FormLayout--ios .FormLayout__row .Select,
-    .FormLayout--ios .FormLayout__row .SelectMimicry,
+    .FormLayout--ios .FormLayout__row .FormField,
     .FormLayout--ios .FormLayout__row .Button,
     .FormLayout--ios .FormLayout__row .FormStatus {
       margin-left: 12px;
@@ -99,10 +96,7 @@
       width: calc(100% - 2 * 16px);
       }
 
-    .FormLayout--android .FormLayout__row .Input,
-    .FormLayout--android .FormLayout__row .Textarea,
-    .FormLayout--android .FormLayout__row .Select,
-    .FormLayout--android .FormLayout__row .SelectMimicry,
+    .FormLayout--android .FormLayout__row .FormField,
     .FormLayout--android .FormLayout__row .Button,
     .FormLayout--android .FormLayout__row .FormStatus {
       margin-left: 16px;
@@ -125,4 +119,12 @@
       padding: 8px 16px 0;
       font-size: 13px;
       color: var(--text_secondary);
+      }
+
+    .FormLayout__row--s-error .FormLayout__row-bottom {
+      color: var(--field_error_border);
+      }
+
+    .FormLayout__row--s-valid .FormLayout__row-bottom {
+      color: var(--field_valid_border);
       }
