@@ -114,8 +114,8 @@ export default class Textarea extends PureComponent {
         status={status}
       >
         <textarea
-          className="Textarea__el"
           {...restProps}
+          className="Textarea__el"
           value={this.value}
           onChange={this.onChange}
           ref={this.getRef}

@@ -8,10 +8,10 @@ const baseClassName = getClassName('FormField');
 const FormField = ({ TagName, className, children, status, getRootRef, ...restProps }) => {
   return (
     <TagName
+      {...restProps}
       className={classNames(baseClassName, {
         [`FormField--s-${status}`]: status !== 'default'
       }, className)}
-      {...restProps}
       ref={getRootRef}
     >
       {children}

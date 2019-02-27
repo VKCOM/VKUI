@@ -24,7 +24,11 @@ Input.propTypes = {
   defaultValue: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-  status: PropTypes.oneOf(['default', 'error', 'valid']),
+
+  /**
+   * Значение `verified` устарело и будет удалено в 3.0.0. Используйте вместо него `valid`
+   */
+  status: PropTypes.oneOf(['default', 'error', 'verified', 'valid']),
   getRef: PropTypes.func,
   getRootRef: PropTypes.func,
   className: PropTypes.string

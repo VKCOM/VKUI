@@ -30,7 +30,8 @@
   border-color: var(--field_error_border);
   }
 
-.FormField--s-valid .FormField__border {
+.FormField--s-valid .FormField__border,
+.FormField--s-verified .FormField__border {
   border-color: var(--field_valid_border);
   }
 
@@ -51,7 +52,7 @@
 
 @media (min-resolution: 3dppx) {
   .FormField--ios .FormField__border {
-    border-radius: calc(10px * 3.125);
+    border-radius: 31.25px;
     transform: scale(.32);
     width: 312.5%;
     height: 312.5%;

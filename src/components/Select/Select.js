@@ -93,11 +93,11 @@ export default class Select extends Component {
         status={status}
       >
         <select
+          {...restProps}
           className="Select__el"
           onChange={this.onChange}
           value={this.value}
           ref={this.getRef}
-          {...restProps}
         >
           {placeholder && <option value="">{placeholder}</option>}
           {children}

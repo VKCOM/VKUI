@@ -125,6 +125,7 @@
       color: var(--field_error_border);
       }
 
-    .FormLayout__row--s-valid .FormLayout__row-bottom {
+    .FormLayout__row--s-valid .FormLayout__row-bottom,
+    .FormLayout__row--s-verified .FormLayout__row-bottom {
       color: var(--field_valid_border);
       }
