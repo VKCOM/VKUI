@@ -49,7 +49,7 @@
   stroke: currentColor;
   }
 
-.PullToRefresh--refreshing .PullToRefresh__spinner-self {
+.PullToRefresh--ios.PullToRefresh--refreshing .PullToRefresh__spinner-self {
   animation: PullToRefreshToRefreshing 380ms ease-out;
   }
 
