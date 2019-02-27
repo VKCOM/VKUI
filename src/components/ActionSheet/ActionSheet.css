@@ -1,5 +1,6 @@
 .ActionSheet {
   position: relative;
+  overflow: hidden;
   }
 
   .ActionSheet--android::before,
@@ -33,7 +34,6 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  overflow: hidden;
   }
 
   .ActionSheet--ios.ActionSheet--closing {
@@ -165,10 +165,10 @@
 
 .ActionSheet--android {
   min-width: 280px;
-  box-shadow: 0 20px 35px 0 rgba(0, 0, 0, .3), 0 0 35px 0 rgba(0, 0, 0, .22);
-  border-radius: 2px;
+  box-shadow: 0 16px 16px 0 rgba(0, 0, 0, .16), 0 0 8px 0 rgba(0, 0, 0, .12);
   animation: animation-android-actionsheet-intro .2s ease;
-  padding: 8px;
+  padding: 8px 0;
+  border-radius: 12px;
 }
 
   .ActionSheet--android.ActionSheet--closing {
@@ -178,7 +178,7 @@
     }
 
 .ActionSheet--android .ActionSheetItem {
-  padding: 14px 16px;
+  padding: 14px 24px;
   line-height: 1.25;
   font-size: 16px;
   }
@@ -188,7 +188,7 @@
   }
 
 .ActionSheet--android .ActionSheetItem--default {
-  color: var(--accent);
+  color: var(--text_primary);
   }
 
 .ActionSheet--android .ActionSheetItem--destructive {
