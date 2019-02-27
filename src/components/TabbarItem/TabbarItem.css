@@ -2,6 +2,7 @@
   flex-shrink: 0;
   max-width: 100%;
   flex-grow: 1;
+  flex-basis: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,8 +18,23 @@
 
   .TabbarItem__in {
     align-self: center;
-    position: relative;
+    display: flex;
     }
+
+  .Tabbar--l-vertical .TabbarItem__in {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    }
+
+  .Tabbar--l-horizontal .TabbarItem__in {
+    flex-direction: row;
+    align-items: center;
+    }
+
+    .TabbarItem__icon {
+      position: relative;
+      }
 
     .TabbarItem__label {
       position: absolute;
@@ -33,4 +49,17 @@
       text-align: center;
       padding: 2px 4px;
       box-sizing: border-box;
+      }
+
+    .Tabbar--l-vertical .TabbarItem__text {
+      font-size: 10px;
+      line-height: 12px;
+      font-weight: 500;
+      margin-top: 2px;
+      }
+
+    .Tabbar--l-horizontal .TabbarItem__text {
+      font-size: 13px;
+      font-weight: 500;
+      margin-left: 8px;
       }

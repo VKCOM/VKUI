@@ -12,7 +12,8 @@ export default class Tabbar extends React.Component {
     /**
      * флаг для показа/скрытия верхней тени (Android) или границы (iOS)
      */
-    shadow: PropTypes.bool
+    shadow: PropTypes.bool,
+    itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto'])
   };
 
   static defaultProps = {
@@ -25,11 +26,23 @@ export default class Tabbar extends React.Component {
     })
   };
 
+  get itemsLayout () {
+    const { children, itemsLayout } = this.props;
+
+    switch (itemsLayout) {
+      case 'horizontal':
+      case 'vertical':
+        return itemsLayout;
+      default:
+        return React.Children.count(children) > 2 ? 'vertical' : 'horizontal';
+    }
+  }
+
   render () {
     const { className, children, shadow } = this.props;
 
     return (
-      <div className={classNames(baseClassName, className, {
+      <div className={classNames(baseClassName, className, `Tabbar--l-${this.itemsLayout}`, {
         'Tabbar--shadow': shadow
       })} style={{ paddingBottom: this.context.insets && this.context.insets.bottom || null }}>
         {children}
