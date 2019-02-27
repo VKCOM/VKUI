@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import FormField from '../FormField/FormField';
 
-const baseClassName = getClassName('Input');
-
-const Input = ({ alignment, status, getRef, className, getRootRef, ...restProps }) => (
-  <div className={classNames(baseClassName, {
-    [`Input--${alignment}`]: alignment,
-    [`Input--s-${status}`]: status
-  }, className)} ref={getRootRef}>
-    <input {...restProps} className="Input__el" ref={getRef} />
-    <div className="Input__border" />
-  </div>
-);
+const Input = ({ alignment, status, getRef, className, getRootRef, ...restProps }) => {
+  return (
+    <FormField
+      className={classNames('Input', className, {
+        [`Input--${alignment}`]: alignment
+      })}
+      status={status}
+      getRootRef={getRootRef}
+    >
+      <input {...restProps} className="Input__el" ref={getRef} />
+    </FormField>
+  );
+};
 
 Input.propTypes = {
   type: PropTypes.string,
@@ -22,7 +24,11 @@ Input.propTypes = {
   defaultValue: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-  status: PropTypes.oneOf(['default', 'error', 'verified']),
+
+  /**
+   * Значение `verified` устарело и будет удалено в 3.0.0. Используйте вместо него `valid`
+   */
+  status: PropTypes.oneOf(['default', 'error', 'verified', 'valid']),
   getRef: PropTypes.func,
   getRootRef: PropTypes.func,
   className: PropTypes.string

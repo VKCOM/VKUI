@@ -1,28 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
+import FormField from '../FormField/FormField';
 
-const baseClassName = getClassName('Select');
-
-const SelectMimicry = ({ className, placeholder, children, alignment, getRootRef, multiline, ...restProps }) => {
+const SelectMimicry = ({ className, placeholder, children, alignment, status, getRootRef, multiline, ...restProps }) => {
   return (
-    <div
+    <FormField
       {...restProps}
-      className={classNames(baseClassName, 'Select--mimicry', {
+      className={classNames('Select', 'Select--mimicry', {
         'Select--not-selected': !children,
         'Select--multiline': multiline,
         [`Select--align-${alignment}`]: alignment
       }, className)}
-      ref={getRootRef}
+      getRootRef={getRootRef}
+      status={status}
     >
       <div className="Select__container">
         <div className="Select__title">{children || placeholder}</div>
         <Icon24Dropdown />
       </div>
-      <div className="Select__border" />
-    </div>
+    </FormField>
   );
 };
 
@@ -34,7 +32,8 @@ SelectMimicry.propTypes = {
   placeholder: PropTypes.string,
   alignment: PropTypes.oneOf(['left', 'center', 'top']),
   getRootRef: PropTypes.func,
-  multiline: PropTypes.bool
+  multiline: PropTypes.bool,
+  status: PropTypes.oneOf(['default', 'error', 'valid'])
 };
 
 SelectMimicry.defaultProps = {

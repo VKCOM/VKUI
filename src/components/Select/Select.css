@@ -26,7 +26,7 @@
   .Select__container {
     line-height: 19px;
     font-size: 16px;
-    padding: 12px 40px 12px 12px;
+    padding: 13px 40px 12px 12px;
     color: var(--text_primary);
     box-sizing: border-box;
     height: 44px;
@@ -58,7 +58,8 @@
 
     .Select .Icon {
       position: absolute;
-      top: 10px;
+      top: 50%;
+      margin-top: -12px;
       right: 10px;
       color: var(--icon_secondary);
       }
@@ -67,36 +68,3 @@
   height: auto;
   min-height: 44px;
   }
-
-.Select--multiline .Icon {
-  top: 50%;
-  margin-top: -12px;
-  }
-
-.Select--ios {}
-
-  .Select--ios .Select__container {
-    border-radius: 10px;
-    background-color: var(--field_background);
-    border: solid .5px var(--field_border);
-    }
-
-  .Select--ios select:focus ~ .Select__container,
-  .Select--ios.Select--mimicry:focus .Select__container {
-    border-color: var(--accent);
-    }
-
-.Select--android {}
-
-  .Select--android .Select__container {
-    border-radius: 4px;
-    background-color: var(--field_background);
-    }
-
-  .Select--android select:focus ~ .Select__border::before,
-  .Select--android.Select--mimicry:focus .Select__border::before,
-  .Select--android.Select--mimicry:active .Select__border::before {
-    transform: scaleX(1);
-    z-index: 0;
-    transition: transform .14s var(--android-easing);
-    }
