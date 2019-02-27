@@ -10,19 +10,29 @@ export default class TabbarItem extends React.Component {
     className: PropTypes.string,
     selected: PropTypes.bool,
     children: PropTypes.node,
+    /**
+     * Тест рядом с иконкой
+     */
+    text: PropTypes.node,
+    /**
+     * Счетчик рядом с иконкой
+     */
     label: PropTypes.node
   };
 
   render () {
-    const { className, children, selected, label, ...restProps } = this.props;
+    const { className, children, selected, label, text, ...restProps } = this.props;
 
     return (
       <div {...restProps} className={classNames(baseClassName, className, {
         'TabbarItem--selected': selected
       })}>
         <div className="TabbarItem__in">
-          {children}
-          {label && <span className="TabbarItem__label">{label}</span>}
+          <div className="TabbarItem__icon">
+            {children}
+            {label && <span className="TabbarItem__label">{label}</span>}
+          </div>
+          {text && <div className="TabbarItem__text">{text}</div>}
         </div>
       </div>
     );
