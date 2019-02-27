@@ -133,7 +133,7 @@ export default class PullToRefresh extends PureComponent {
         contentShift: (currentY + 10) * 2.3
       });
 
-      if (progress > 85 && !refreshing) {
+      if (progress > 85 && !refreshing && isIOS) {
         this.runRefreshing();
       }
     } else if (isY && pageYOffset === 0 && shiftY > 0 && !refreshing && touchDown) {
@@ -172,7 +172,8 @@ export default class PullToRefresh extends PureComponent {
   runRefreshing () {
     if (!this.state.refreshing && this.props.onRefresh) {
       this.setState({
-        refreshing: true
+        refreshing: true,
+        spinnerY: isAndroid ? this.params.refreshing : this.state.spinnerY
       });
 
       this.props.onRefresh();
