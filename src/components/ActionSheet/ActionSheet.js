@@ -89,10 +89,10 @@ export default class ActionSheet extends React.Component {
             {text && <div className="ActionSheet__text">{text}</div>}
           </header>
           }
-          {Children.toArray(children).map((Child, index, arr) => (
+          {Children.map(children, (Child, index) => (
             Child && React.cloneElement(Child, {
               onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose),
-              style: index === arr.length - 1 && this.context.insets ? { marginBottom: this.context.insets.bottom } : null
+              style: index === children.length - 1 && this.context.insets ? { marginBottom: this.context.insets.bottom } : null
             })
           ))}
         </div>
