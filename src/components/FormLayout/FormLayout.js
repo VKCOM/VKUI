@@ -25,7 +25,7 @@ const FormLayout = props => {
       ref={getRef}
     >
       <div className="FormLayout__container">
-        {Children.toArray(children).map((field, i) =>
+        {Children.map(children, (field, i) =>
           field ? (
             <div className="FormLayout__row" key={field.key || `row-${i}`}>
               {field.props.top && (
