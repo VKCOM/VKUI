@@ -134,9 +134,9 @@ export default class Slider extends Component {
     });
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.isControlledOutside && nextProps.value !== this.props.value) {
-      this.setState({percentPosition: this.validatePercent(this.valueToPercent(nextProps.value))});
+  componentDidUpdate (prevProps) {
+    if (this.isControlledOutside && this.props.value !== prevProps.value) {
+      this.setState({percentPosition: this.validatePercent(this.valueToPercent(this.props.value))});
     }
   }
 
