@@ -1,3 +1,15 @@
+## VKUI
+
+VK UI – библиотека React-компонентов, позволяющая создавать сложные интерфейсы на основе имеющегося опыта VK. Мы повторили нативные элементы и решили многие проблемы с которыми вы можете встретиться при построении мобильного интерфейса.
+
+## Установка
+
+Чтобы установить нашу библиотеку компонентов, нужно сделать:
+``npm install @vkontakte/vkui``
+
+## Использование
+
+Пример использования библиотеки:
 ```jsx static
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -23,3 +35,16 @@ function App () {
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
+## Как выглядят компоненты
+
+Мы собрали дополнительную wiki по каждому из компонентов:
+https://vkcom.github.io/vkui-styleguide/
+
+## Contribute
+
+Если вы хотите помочь нам с созданием или нашли баг, то напишите нам issues или отправьте pull request. 
+Мы будем рады ващей помощи и вкладку в open source сообщество!
+
+## Licence
+
+[MIT](https://choosealicense.com/licenses/mit/)
