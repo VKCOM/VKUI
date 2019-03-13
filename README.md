@@ -43,7 +43,7 @@ https://vkcom.github.io/vkui-styleguide/
 ## Contribute
 
 Если вы хотите помочь нам с созданием или нашли баг, то создавайте issues или отправьте pull request. 
-Мы будем рады вашей помощи и вкладку в open source сообщество!
+Мы будем рады вашей помощи и вкладу в open source сообщество!
 
 ## Licence
 
