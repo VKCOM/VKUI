@@ -7,6 +7,7 @@
   border: 1px solid transparent;
   margin: 0;
   padding: 0;
+  user-select: none;
   }
 
   .Button__in {
