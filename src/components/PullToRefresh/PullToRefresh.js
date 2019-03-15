@@ -184,7 +184,7 @@ export default class PullToRefresh extends PureComponent {
     this.setState({
       refreshingFinished: true
     }, () => {
-      !this.state.touchDown && this.resetRefreshingState();
+      this.resetRefreshingState();
     });
   }
 
