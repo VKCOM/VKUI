@@ -65,7 +65,7 @@
     "styleguide": "NODE_ENV=development styleguidist server --config=styleguide/config.js",
     "dev": "NODE_ENV=development webpack --watch",
     "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
-    "build": "NODE_ENV=production webpack && babel src --out-dir dist --source-maps && cp ./src/styles/client_light.css ./dist/default_scheme.css",
+    "build": "NODE_ENV=production webpack && cp ./src/styles/client_light.css ./dist/default_scheme.css",
     "clear": "rm -rf dist/*",
     "test": "eslint . && stylelint './src/**/*.css'"
   },
