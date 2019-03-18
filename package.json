@@ -2,6 +2,10 @@
   "name": "@vkontakte/vkui",
   "version": "2.19.0",
   "main": "dist/vkui.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "license": "MIT",
   "description": "VKUI library",
   "repository": "https://github.com/VKCOM/VKUI",
