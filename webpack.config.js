@@ -12,6 +12,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
+    library: 'vkui',
     libraryTarget: 'umd'
   },
   module: {
@@ -28,7 +29,7 @@ const config = {
     ]
   },
   optimization: {
-    minimize: false
+    minimize: isProduction
   },
   devtool: 'source-map',
   plugins: [
