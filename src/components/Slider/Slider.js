@@ -39,11 +39,11 @@ export default class Slider extends Component {
     step: 0
   };
 
-  onStart = (e) => {
+  onStart = e => {
     const absolutePosition = this.validateAbsolute(e.startX - this.state.containerLeft);
     const percentPosition = this.absoluteToPecent(absolutePosition);
 
-    this.onChange(this.percentToValue(percentPosition));
+    this.onChange(this.percentToValue(percentPosition), e.originalEvent);
 
     if (this.isControlledOutside) {
       this.setState({startX: absolutePosition});
@@ -61,7 +61,7 @@ export default class Slider extends Component {
     const absolutePosition = this.validateAbsolute(this.state.startX + (e.shiftX || 0));
     const percentPosition = this.absoluteToPecent(absolutePosition);
 
-    this.onChange(this.percentToValue(percentPosition));
+    this.onChange(this.percentToValue(percentPosition), e.originalEvent);
 
     if (!this.isControlledOutside) {
       this.setState({percentPosition});
@@ -85,8 +85,8 @@ export default class Slider extends Component {
     });
   };
 
-  onChange (value) {
-    this.props.onChange && this.props.onChange(value);
+  onChange (value, e) {
+    this.props.onChange && this.props.onChange(value, e);
   }
 
   validateAbsolute (absolute) {
