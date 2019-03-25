@@ -2,7 +2,7 @@
 и `ScreenSpinner`. Свойства `v` и `h` служат для удобного позиционирования контента. Пример:
 
 ```jsx static
-import { Popout } from '@vkontakte/vkui';
+import { PopoutWrapper } from '@vkontakte/vkui';
 
 <PopoutWrapper v="center" h="center">
   Some content
