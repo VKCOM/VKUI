@@ -37,6 +37,8 @@ class TooltipPortal extends React.Component {
 
   fixedPortal = false;
 
+  portalTarget = this.findPortalTarget();
+
   findPortalTarget () {
     const { target } = this.props;
     const closestFixed = target.closest('.FixedLayout');
@@ -63,11 +65,6 @@ class TooltipPortal extends React.Component {
     };
   }
 
-  componentWillMount () {
-    this.portalTarget = this.findPortalTarget();
-    this.document.addEventListener('click', this.props.onClose);
-  }
-
   componentWillUnmount () {
     this.document.removeEventListener('click', this.props.onClose);
   }
@@ -75,6 +72,8 @@ class TooltipPortal extends React.Component {
   componentDidMount () {
     const { offsetY, offsetX, alignX, alignY } = this.props;
     const coords = this.getBoundingTargetRect();
+
+    this.document.addEventListener('click', this.props.onClose);
 
     this.setState({
       x: coords.x + offsetX + (alignX === 'right' ? coords.width - this.el.offsetWidth : 0),
