@@ -14,6 +14,7 @@ class Example extends React.Component {
 
     this.state = {
       editing: false,
+      formLoaded: false,
 
       activeView: HOME_VIEW,
       activePanels: {
@@ -36,14 +37,24 @@ class Example extends React.Component {
         [view]: panel
       }
     });
+
+    if (panel === CREATE_PANEL && !this.state.formLoaded) {
+      this.getForm().then(() => {
+        this.setState({ formLoaded: true });
+      });
+    }
   }
 
   onHeaderEditClick() {
     this.setState({ editing: !this.state.editing });
   }
 
+  getForm() {
+    return new Promise((resolve) => setTimeout(() => resolve(), 1000));
+  }
+
   render() {
-    const { activeView, activePanels, editing } = this.state;
+    const { activeView, activePanels, editing, formLoaded } = this.state;
 
     return (
       <Root activeView={activeView}>
@@ -77,17 +88,23 @@ class Example extends React.Component {
 
             <Group>
               <List>
-                {!editing && <CellButton onClick={() => this.go(CREATE_VIEW)}>Добавить группу</CellButton>}
+                {!editing && (
+                  <CellButton
+                    style={{ color: 'var(--accent)' }}
+                    before={<div style={{ width: 60, display: 'flex', justifyContent: 'center' }}><Icon24Add /></div>}
+                    onClick={() => this.go(CREATE_VIEW)}
+                  >
+                    Добавить группу
+                  </CellButton>
+                )}
 
                 <Cell
-                  expandable={!editing}
                   removable={editing}
                   before={<Avatar src="https://pp.userapi.com/c638629/v638629852/2afc2/nlmcXQP0V6c.jpg?ava=1" />}
                   description="Открытая группа"
                 >ВКонтакте API</Cell>
 
                 <Cell
-                  expandable={!editing}
                   removable={editing}
                   before={<Avatar src="https://sun9-34.userapi.com/c846420/v846420985/1526cd/YmiB_KSW1Q8.jpg?ava=1" />}
                   description="Открытая группа"
@@ -98,7 +115,7 @@ class Example extends React.Component {
         </View>
 
         <View id={CREATE_VIEW} activePanel={activePanels[CREATE_VIEW]}>
-          <Panel id={CREATE_PANEL}>
+          <Panel id={CREATE_PANEL} theme="white">
             <PanelHeader
               left={<PanelHeaderClose onClick={() => this.go(HOME_VIEW)} />}
               right={<PanelHeaderSubmit onClick={() => this.go(HOME_VIEW)} />}
@@ -106,7 +123,17 @@ class Example extends React.Component {
               Добавить
             </PanelHeader>
 
-            <PanelSpinner />
+            {!formLoaded ? <PanelSpinner /> : <FormLayout>
+              <Input
+                top="Название сообщества"
+                placeholder="Введите название..."
+              />
+
+              <Textarea
+                top="Описание"
+                placeholder="Введите описание..."
+              />
+            </FormLayout>}
           </Panel>
         </View>
       </Root>
