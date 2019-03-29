@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Tabs from '../Tabs/Tabs';
-import {IOS, platform} from '../../lib/platform';
-
-const osname = platform();
+import { IS_PLATFORM_IOS } from '../../lib/platform';
 
 /**
  * @deprecated Для отрисовки фиксированных табов используйте связку `Tabs` и `FixedLayout`.
@@ -28,7 +26,7 @@ export default class FixedTabs extends React.Component {
   };
 
   static defaultProps = {
-    theme: osname === IOS ? 'light' : 'header',
+    theme: IS_PLATFORM_IOS ? 'light' : 'header',
     vertical: 'top'
   };
 
