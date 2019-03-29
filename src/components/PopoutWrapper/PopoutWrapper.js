@@ -3,10 +3,8 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import PropTypes from 'prop-types';
 
-import { ANDROID, platform } from '../../lib/platform';
+import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
-
-const osname = platform();
 
 const baseClassNames = getClassName('PopoutWrapper');
 
@@ -49,7 +47,7 @@ export default class PopoutWrapper extends React.Component {
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), osname === ANDROID ? 300 : 600);
+      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
     }
   }
 
