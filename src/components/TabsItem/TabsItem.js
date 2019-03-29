@@ -4,9 +4,8 @@ import getClassName from '../../helpers/getClassName';
 import Tappable, {ACTIVE_EFFECT_DELAY} from '../Tappable/Tappable';
 
 import classNames from '../../lib/classNames';
-import {IOS, platform} from '../../lib/platform';
+import { IS_PLATFORM_IOS } from '../../lib/platform';
 
-const osname = platform();
 const baseClassName = getClassName('TabsItem');
 
 export default class TabsItem extends React.Component {
@@ -27,7 +26,7 @@ export default class TabsItem extends React.Component {
       <Tappable
         {...restProps}
         className={classNames(baseClassName, { 'TabsItem--selected': selected }, className)}
-        activeEffectDelay={osname === IOS ? 0 : ACTIVE_EFFECT_DELAY}
+        activeEffectDelay={IS_PLATFORM_IOS ? 0 : ACTIVE_EFFECT_DELAY}
       >
         <span className="TabsItem__in">{children}</span>
       </Tappable>
