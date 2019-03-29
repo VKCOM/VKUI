@@ -4,9 +4,8 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 
 import transitionEvents from '../../lib/transitionEvents';
-import { ANDROID, platform } from '../../lib/platform';
+import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 
-const osname = platform();
 const baseClassName = getClassName('Root');
 
 export default class Root extends React.Component {
@@ -106,7 +105,7 @@ export default class Root extends React.Component {
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), osname === ANDROID ? 300 : 600);
+      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
     }
   }
 
