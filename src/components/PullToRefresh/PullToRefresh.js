@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import classNames from '../../lib/classNames';
-import { platform, ANDROID, IOS } from '../../lib/platform';
+import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
 
 const baseClassName = getClassName('PullToRefresh');
-
-const osname = platform();
-const isAndroid = osname === ANDROID;
-const isIOS = osname === IOS;
 
 function cancelEvent (event) {
   if (!event) return false;
@@ -29,12 +25,12 @@ export default class PullToRefresh extends PureComponent {
     super(props);
 
     this.params = {
-      start: isAndroid ? -40 : -10,
-      max: isAndroid ? 80 : 50,
-      maxY: isAndroid ? 80 : 400,
-      refreshing: isAndroid ? 50 : 36,
+      start: IS_PLATFORM_ANDROID ? -40 : -10,
+      max: IS_PLATFORM_ANDROID ? 80 : 50,
+      maxY: IS_PLATFORM_ANDROID ? 80 : 400,
+      refreshing: IS_PLATFORM_ANDROID ? 50 : 36,
 
-      positionMultiplier: isAndroid ? 1 : 0.21
+      positionMultiplier: IS_PLATFORM_ANDROID ? 1 : 0.21
     };
 
     this.state = {
@@ -133,7 +129,7 @@ export default class PullToRefresh extends PureComponent {
         contentShift: (currentY + 10) * 2.3
       });
 
-      if (progress > 85 && !refreshing && isIOS) {
+      if (progress > 85 && !refreshing && IS_PLATFORM_IOS) {
         this.runRefreshing();
       }
     } else if (isY && pageYOffset === 0 && shiftY > 0 && !refreshing && touchDown) {
@@ -173,7 +169,7 @@ export default class PullToRefresh extends PureComponent {
     if (!this.state.refreshing && this.props.onRefresh) {
       this.setState({
         refreshing: true,
-        spinnerY: isAndroid ? this.params.refreshing : this.state.spinnerY
+        spinnerY: IS_PLATFORM_ANDROID ? this.params.refreshing : this.state.spinnerY
       });
 
       this.props.onRefresh();
@@ -230,7 +226,7 @@ export default class PullToRefresh extends PureComponent {
           className="PullToRefresh__content"
           ref={this._contentElement}
           style={{
-            transform: refreshing && !touchDown && isIOS ? `translate3d(0, 100px, 0)` : isIOS && contentShift ? `translate3d(0, ${contentShift}px, 0)` : ''
+            transform: refreshing && !touchDown && IS_PLATFORM_IOS ? `translate3d(0, 100px, 0)` : IS_PLATFORM_IOS && contentShift ? `translate3d(0, ${contentShift}px, 0)` : ''
           }}
         >
           {children}
