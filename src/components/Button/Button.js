@@ -29,9 +29,9 @@ const Button = props => {
   if (props.type === 'cell') {
     return <CellButton {...props} />;
   } else {
-    const { className, size, level, stretched, align, children, before, type, buttonType, ...restProps } = props;
+    const { className, size, level, stretched, align, children, before, ...restProps } = props;
 
-    return <Tappable {...restProps} type={buttonType} className={classNames(baseClassName, className, {
+    return <Tappable {...restProps} className={classNames(baseClassName, className, {
       [`Button--sz-${size}`]: true,
       [`Button--lvl-${mapOldLevel(level)}`]: true,
       [`Button--aln-${align || 'center'}`]: true,
@@ -57,11 +57,6 @@ Button.propTypes = {
    * Свойство `type` будет удалено в 3.0.0
    */
   type: PropTypes.oneOf(['default', 'cell']),
-
-  /**
-   * Тип кнопки, который устанавливает ее поведение в форме
-   */
-  buttonType: PropTypes.oneOf(['button', 'submit', 'reset']),
   align: PropTypes.oneOf(['left', 'center', 'right']),
   stretched: PropTypes.bool,
   before: PropTypes.node,
@@ -75,7 +70,6 @@ Button.defaultProps = {
   level: 'primary',
   type: 'default',
   component: 'button',
-  buttonType: 'button',
   size: 'm',
   stretched: false
 };
