@@ -29,7 +29,7 @@ const Button = props => {
   if (props.type === 'cell') {
     return <CellButton {...props} />;
   } else {
-    const { className, size, level, stretched, align, children, before, ...restProps } = props;
+    const { className, size, level, stretched, align, children, before, type, ...restProps } = props;
 
     return <Tappable {...restProps} className={classNames(baseClassName, className, {
       [`Button--sz-${size}`]: true,
