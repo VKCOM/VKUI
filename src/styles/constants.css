@@ -13,4 +13,22 @@
 
   /* colors */
   --white: #fff;
+
+  /* iOS insets */
+  --safe-area-inset-top: 0;
+  --safe-area-inset-bottom: 0;
+}
+
+@supports (padding-top: constant(safe-area-inset-top)) {
+  :root {
+    --safe-area-inset-top: constant(safe-area-inset-top);
+    --safe-area-inset-bottom: constant(safe-area-inset-bottom);
+  }
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  :root {
+    --safe-area-inset-top: env(safe-area-inset-top);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  }
 }
