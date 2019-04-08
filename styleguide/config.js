@@ -21,7 +21,7 @@ module.exports = {
       content: './pages/html.md'
     }, {
       name: 'Hello World',
-      content: '../README.md'
+      content: './pages/hello_world.md'
     }, {
       name: 'Concept',
       content: './pages/concept.md'
