@@ -76,7 +76,8 @@ module.exports = {
           '../src/components/TabsItem/TabsItem.js',
           '../src/components/FixedTabs/FixedTabs.js',
           '../src/components/Tooltip/Tooltip.js',
-          '../src/components/PullToRefresh/PullToRefresh.js'
+          '../src/components/PullToRefresh/PullToRefresh.js',
+          '../src/components/Counter/Counter.js'
         ]
       }, {
         name: 'Forms',

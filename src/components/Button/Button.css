@@ -57,6 +57,10 @@
       margin-right: 8px;
       }
 
+  .Button:not(.Button--sz-xl) .Button__after {
+    margin-left: 12px;
+    }
+
   .Button::before,
   .Button::after {
     display: none;
