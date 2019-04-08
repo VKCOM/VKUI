@@ -29,7 +29,7 @@ const Button = props => {
   if (props.type === 'cell') {
     return <CellButton {...props} />;
   } else {
-    const { className, size, level, stretched, align, children, before, ...restProps } = props;
+    const { className, size, level, stretched, align, children, before, after, ...restProps } = props;
 
     return <Tappable {...restProps} className={classNames(baseClassName, className, {
       [`Button--sz-${size}`]: true,
@@ -40,6 +40,7 @@ const Button = props => {
       <div className="Button__in">
         {before && <div className="Button__before">{before}</div>}
         {children && <div className="Button__content">{children}</div>}
+        {after && <div className="Button__after">{after}</div>}
       </div>
     </Tappable>;
   }
@@ -60,6 +61,7 @@ Button.propTypes = {
   align: PropTypes.oneOf(['left', 'center', 'right']),
   stretched: PropTypes.bool,
   before: PropTypes.node,
+  after: PropTypes.node,
   children: PropTypes.node,
   style: PropTypes.object,
   className: PropTypes.string,

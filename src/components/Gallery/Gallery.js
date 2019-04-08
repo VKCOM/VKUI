@@ -36,6 +36,10 @@ export default class Gallery extends Component {
       PropTypes.string,
       PropTypes.number
     ]),
+
+    /**
+     * Время в миллисекундах между автоматическим переключением слайдов
+     */
     autoplay: PropTypes.number,
     initialSlideIndex: PropTypes.number,
     slideIndex: PropTypes.number,

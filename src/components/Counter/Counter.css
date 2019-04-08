@@ -1,0 +1,63 @@
+.Counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+.Counter--ios {
+  min-width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  }
+
+.Counter--android {
+  min-width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  }
+
+.Counter--primary {
+  background: var(--counter_primary_background);
+  color: var(--counter_primary_text);
+  }
+
+.Counter--secondary {
+  background: var(--counter_secondary_background);
+  color: var(--counter_secondary_text);
+  }
+
+  .Counter__in {
+    font-size: 14px;
+    line-height: 1.2;
+    padding: 0 5px;
+    text-align: center;
+    }
+
+  .Counter--android .Counter__in {
+    font-weight: 500;
+    }
+
+.Button--lvl-primary .Counter {
+  background-color: var(--button_primary_foreground);
+  color: var(--button_primary_background);
+  }
+
+.Button--lvl-secondary .Counter {
+  background-color: var(--button_secondary_foreground);
+  color: var(--background_content);
+  }
+
+.Button--lvl-tertiary .Counter {
+  background-color: var(--button_tertiary_foreground);
+  color: var(--background_content);
+  }
+
+.Button--lvl-outline .Counter {
+  background-color: var(--button_outline_foreground);
+  color: var(--background_content);
+  }
+
+.Button--lvl-commerce .Counter {
+  background-color: var(--button_commerce_foreground);
+  color: var(--button_commerce_background);
+  }

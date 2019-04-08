@@ -31,6 +31,8 @@ import Icon28Search from '@vkontakte/icons/dist/28/search';
 import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
 import Icon28Messages from '@vkontakte/icons/dist/28/messages';
 import Icon28More from '@vkontakte/icons/dist/28/more';
+import Icon24Message from '@vkontakte/icons/dist/24/message';
+import Icon24Favorite from '@vkontakte/icons/dist/24/favorite';
 import pkg from '../package';
 import { getRandomInt, getRandomUser } from './utils';
 
@@ -79,6 +81,7 @@ window.Icon28Search = Icon28Search;
 window.Icon28Notifications = Icon28Notifications;
 window.Icon28Messages = Icon28Messages;
 window.Icon28More = Icon28More;
-
+window.Icon24Message = Icon24Message;
+window.Icon24Favorite = Icon24Favorite;
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;
