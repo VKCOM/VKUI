@@ -14,7 +14,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="text/javascript" src={{path/to/js}}></script>
+    <script src={{path/to/js}}></script>
   </body>
 </html>
 ```

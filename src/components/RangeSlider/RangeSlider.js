@@ -16,12 +16,12 @@ export default class RangeSlider extends Slider {
 
   static defaultProps = Slider.defaultProps;
 
-  onStart = (e) => {
+  onStart = e => {
     const absolutePosition = this.validateAbsolute(e.startX - this.state.containerLeft);
     const percentPosition = this.absoluteToPecent(absolutePosition);
     const percentRange = this.calcPercentRange(percentPosition);
 
-    this.onChange(this.percentToValue(percentRange));
+    this.onChange(this.percentToValue(percentRange), e);
 
     if (this.isControlledOutside) {
       this.setState({startX: absolutePosition});
@@ -46,7 +46,7 @@ export default class RangeSlider extends Slider {
     const percentPosition = this.absoluteToPecent(absolutePosition);
     const percentRange = this.calcPercentRange(percentPosition);
 
-    this.onChange(this.percentToValue(percentRange));
+    this.onChange(this.percentToValue(percentRange), e);
 
     if (!this.isControlledOutside) {
       this.setState(percentRange);

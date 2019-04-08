@@ -78,15 +78,13 @@
 .PanelHeader--ios {
   height: 44px;
   padding-top: 20px;
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
+  padding-top: var(--safe-area-inset-top);
   }
 
   .PanelHeader--ios .PanelHeader__in {
     height: 44px;
     padding-top: 20px;
-    padding-top: constant(safe-area-inset-top);
-    padding-top: env(safe-area-inset-top);
+    padding-top: var(--safe-area-inset-top);
     }
 
     .PanelHeader--ios .PanelHeader__container {
@@ -100,8 +98,7 @@
         .PanelHeader--ios .PanelHeader-bg {
           height: 44px;
           padding-top: 20px;
-          padding-top: constant(safe-area-inset-top);
-          padding-top: env(safe-area-inset-top);
+          padding-top: var(--safe-area-inset-top);
           }
 
         .PanelHeader--ios .PanelHeader-bg::after {
