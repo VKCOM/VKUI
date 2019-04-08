@@ -10,8 +10,7 @@
   justify-content: center;
   box-sizing: content-box;
   background: var(--header_alternate_background);
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: var(--safe-area-inset-bottom);
   }
 
 .Tabbar--ios.Tabbar--shadow::before {
