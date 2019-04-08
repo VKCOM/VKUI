@@ -90,7 +90,7 @@ export { default as classNames } from './lib/classNames';
  * @deprecated будет удалено в 3.0.0
  */
 export { default as classnames } from './lib/classNames';
-export { platform, ANDROID, IOS } from './lib/platform';
+export { platform, ANDROID, IOS, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
 export { default as request } from './lib/request';
 export { default as querystring } from './lib/querystring';
 export { default as getClassName } from './helpers/getClassName';

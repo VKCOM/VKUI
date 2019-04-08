@@ -1,6 +1,9 @@
 import '../src/styles/styles.css';
 import React from 'react';
-import { platform, IOS, ANDROID } from '../src/lib/platform';
+
+import { getRandomInt, getRandomUser } from './utils';
+
+import { platform, IOS, ANDROID, IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../src/lib/platform';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon16Add from '@vkontakte/icons/dist/16/add';
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
@@ -34,20 +37,12 @@ import Icon28More from '@vkontakte/icons/dist/28/more';
 import Icon24Message from '@vkontakte/icons/dist/24/message';
 import Icon24Favorite from '@vkontakte/icons/dist/24/favorite';
 import pkg from '../package';
-import { getRandomInt, getRandomUser } from './utils';
-
-window.uaList = {
-  ios: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
-  android: 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Mobile Safari/537.36'
-};
-
-Object.defineProperty(navigator, 'userAgent', {
-  get: function () { return window.localStorage.getItem('vkui-styleguide:ua') || window.uaList.ios; }
-});
 
 window.osname = platform();
 window.IOS = IOS;
 window.ANDROID = ANDROID;
+window.IS_PLATFORM_IOS = IS_PLATFORM_IOS;
+window.IS_PLATFORM_ANDROID = IS_PLATFORM_ANDROID;
 
 window.schemeId = window.localStorage.getItem('vkui-styleguide:schemeId') || pkg.defaultSchemeId;
 

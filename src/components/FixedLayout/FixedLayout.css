@@ -13,23 +13,9 @@
 .FixedLayout--bottom {
   width: 100%;
   bottom: 0;
-  padding-bottom: 0;
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: var(--safe-area-inset-bottom);
   }
 
   .Epic .FixedLayout--bottom {
-    padding-bottom: var(--tabbar_height);
-    }
-
-    @supports (padding-top: constant(safe-area-inset-bottom)) {
-      .Epic .FixedLayout--bottom {
-        padding-bottom: calc(constant(safe-area-inset-bottom) + var(--tabbar_height));
-      }
-    }
-
-    @supports (padding-top: env(safe-area-inset-bottom)) {
-      .Epic .FixedLayout--bottom {
-        padding-bottom: calc(env(safe-area-inset-bottom) + var(--tabbar_height));
-      }
+    padding-bottom: calc(var(--tabbar_height) + var(--safe-area-inset-bottom));
     }

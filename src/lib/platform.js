@@ -14,3 +14,8 @@ export function platform (useragent) {
 
   return platformName;
 }
+
+const osname = platform();
+
+export const IS_PLATFORM_IOS = osname === IOS;
+export const IS_PLATFORM_ANDROID = osname === ANDROID;

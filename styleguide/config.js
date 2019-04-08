@@ -96,6 +96,16 @@ module.exports = {
           '../src/components/File/File.js'
         ]
       }, {
+        name: 'Helpers',
+        content: './pages/helpers.md',
+        components: () => [
+          '../src/components/PanelSpinner/PanelSpinner.js',
+          '../src/components/PanelHeaderBack/PanelHeaderBack.js',
+          '../src/components/PanelHeaderClose/PanelHeaderClose.js',
+          '../src/components/PanelHeaderSubmit/PanelHeaderSubmit.js',
+          '../src/components/PanelHeaderEdit/PanelHeaderEdit.js'
+        ]
+      }, {
         name: 'Icons',
         content: './pages/icons.md'
       }, {
