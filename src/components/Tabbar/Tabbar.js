@@ -5,30 +5,8 @@ import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('Tabbar');
 
-export default class Tabbar extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.node,
-    /**
-     * флаг для показа/скрытия верхней тени (Android) или границы (iOS)
-     */
-    shadow: PropTypes.bool,
-    itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto'])
-  };
-
-  static defaultProps = {
-    shadow: true
-  };
-
-  static contextTypes = {
-    insets: PropTypes.shape({
-      bottom: PropTypes.number
-    })
-  };
-
-  get itemsLayout () {
-    const { children, itemsLayout } = this.props;
-
+const Tabbar = ({ className, children, shadow, itemsLayout }, {insets}) => {
+  const getItemsLayout = () => {
     switch (itemsLayout) {
       case 'horizontal':
       case 'vertical':
@@ -36,17 +14,35 @@ export default class Tabbar extends React.Component {
       default:
         return React.Children.count(children) > 2 ? 'vertical' : 'horizontal';
     }
-  }
+  };
 
-  render () {
-    const { className, children, shadow } = this.props;
+  return (
+    <div className={classNames(baseClassName, className, `Tabbar--l-${getItemsLayout()}`, {
+      'Tabbar--shadow': shadow
+    })} style={{ paddingBottom: insets && insets.bottom || null }}>
+      {children}
+    </div>
+  );
+};
 
-    return (
-      <div className={classNames(baseClassName, className, `Tabbar--l-${this.itemsLayout}`, {
-        'Tabbar--shadow': shadow
-      })} style={{ paddingBottom: this.context.insets && this.context.insets.bottom || null }}>
-        {children}
-      </div>
-    );
-  }
-}
+Tabbar.contextTypes = {
+  insets: PropTypes.shape({
+    bottom: PropTypes.number
+  })
+};
+
+Tabbar.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+  /**
+   * флаг для показа/скрытия верхней тени (Android) или границы (iOS)
+   */
+  shadow: PropTypes.bool,
+  itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto'])
+};
+
+Tabbar.defaultProps = {
+  shadow: true
+};
+
+export default Tabbar;
