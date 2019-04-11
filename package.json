@@ -4,6 +4,7 @@
   "main": "dist/vkui.js",
   "files": [
     "dist",
+    "LICENSE",
     "README.md"
   ],
   "license": "MIT",
