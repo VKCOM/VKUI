@@ -20,7 +20,7 @@ Counter.propTypes = {
    * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
    */
   type: PropTypes.oneOf(['secondary', 'primary', 'prominent']),
-  children: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  children: PropTypes.node
 };
 
 Counter.defaultProps = {
