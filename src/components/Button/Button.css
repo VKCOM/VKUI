@@ -58,7 +58,7 @@
       }
 
   .Button:not(.Button--sz-xl) .Button__after {
-    margin-left: 12px;
+    margin-left: 8px;
     }
 
   .Button::before,
@@ -168,4 +168,32 @@
  */
 .Button--android {
   border-radius: 8px;
+  }
+
+/**
+ * Counter
+ */
+.Button--lvl-primary .Counter {
+  background-color: var(--button_primary_foreground);
+  color: var(--button_primary_background);
+  }
+
+.Button--lvl-secondary .Counter {
+  background-color: var(--button_secondary_foreground);
+  color: var(--background_content);
+  }
+
+.Button--lvl-tertiary .Counter {
+  background-color: var(--button_tertiary_foreground);
+  color: var(--background_content);
+  }
+
+.Button--lvl-outline .Counter {
+  background-color: var(--button_outline_foreground);
+  color: var(--background_content);
+  }
+
+.Button--lvl-commerce .Counter {
+  background-color: var(--button_commerce_foreground);
+  color: var(--button_commerce_background);
   }

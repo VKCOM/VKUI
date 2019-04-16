@@ -17,9 +17,9 @@ function Counter ({ type, children }) {
 
 Counter.propTypes = {
   /**
-   * Тип счетчика: вторичный или первичный. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
+   * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
    */
-  type: PropTypes.oneOf(['secondary', 'primary']),
+  type: PropTypes.oneOf(['secondary', 'primary', 'prominent']),
   children: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 

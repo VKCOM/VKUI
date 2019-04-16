@@ -143,3 +143,56 @@
 .FixedLayout--android.FixedLayout--bottom .Tabs {
   background: var(--header_alternate_background);
   }
+
+/**
+ * Counter inside TabsItem
+ */
+ .TabsItem .Counter {
+  display: inline-flex;
+  margin-left: 8px;
+  }
+
+.Tabs--android.Tabs--light .TabsItem .Counter {
+  background: var(--counter_secondary_background);
+  color: var(--counter_secondary_text);
+  }
+
+.Tabs--android.Tabs--light .TabsItem--selected .Counter {
+  background: var(--counter_primary_background);
+  color: var(--counter_primary_text);
+  }
+
+.Tabs--ios.Tabs--light .TabsItem .Counter {
+  background: var(--segmented_control_tint);
+  color: var(--background_content);
+  }
+
+.Tabs--ios.Tabs--light .TabsItem--selected .Counter {
+  background: var(--background_content);
+  color: var(--segmented_control_tint);
+  }
+
+.Tabs--ios.Tabs--buttons.Tabs--light .TabsItem .Counter {
+  background: var(--panel_tab_inactive_text);
+  color: var(--white);
+  }
+
+.Tabs--ios.Tabs--buttons.Tabs--light .TabsItem--selected .Counter {
+  background: var(--panel_tab_active_text);
+  color: var(--panel_tab_active_background);
+  }
+
+.Tabs--buttons.Tabs--header .TabsItem .Counter {
+  background: var(--header_tab_inactive_text);
+  color: var(--header_background);
+  }
+
+.Tabs--buttons.Tabs--header .TabsItem .Counter {
+  background: var(--header_tab_inactive_text);
+  color: var(--header_background);
+  }
+
+.Tabs--buttons.Tabs--header .TabsItem--selected .Counter {
+  background: var(--header_tab_active_text);
+  color: var(--header_background);
+  }
