@@ -24,7 +24,7 @@
     </Group>
 
     <Group>
-      <Header level="2" aside={<Counter type="prominent">1</Counter>}>
+      <Header level="2" indicator={<Counter type="prominent">1</Counter>} aside={<Link>Подробнее</Link>}>
         Вопросы
       </Header>
     </Group>
