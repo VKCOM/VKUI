@@ -77,13 +77,11 @@
 
 .PanelHeader--ios {
   height: 44px;
-  padding-top: 20px;
   padding-top: var(--safe-area-inset-top);
   }
 
   .PanelHeader--ios .PanelHeader__in {
     height: 44px;
-    padding-top: 20px;
     padding-top: var(--safe-area-inset-top);
     }
 
@@ -97,7 +95,6 @@
 
         .PanelHeader--ios .PanelHeader-bg {
           height: 44px;
-          padding-top: 20px;
           padding-top: var(--safe-area-inset-top);
           }
 
