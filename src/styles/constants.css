@@ -15,7 +15,7 @@
   --white: #fff;
 
   /* iOS insets */
-  --safe-area-inset-top: 0;
+  --safe-area-inset-top: 20px;
   --safe-area-inset-bottom: 0;
 }
 
