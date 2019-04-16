@@ -100,12 +100,14 @@
                 <TabsItem
                   onClick={() => this.setState({ activeTab2: 'all' })}
                   selected={this.state.activeTab2 === 'all'}
+                  after={<Counter>48</Counter>}
                 >
                   Все записи
                 </TabsItem>
                 <TabsItem
                   onClick={() => this.setState({ activeTab2: 'user' })}
                   selected={this.state.activeTab2 === 'user'}
+                  after={<Counter>32</Counter>}
                 >
                   Записи Павла
                 </TabsItem>

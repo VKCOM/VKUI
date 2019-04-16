@@ -13,7 +13,8 @@ export default class TabsItem extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     selected: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    after: PropTypes.node
   };
 
   static defaultProps = {
@@ -21,7 +22,7 @@ export default class TabsItem extends React.Component {
   };
 
   render () {
-    const { children, selected, className, ...restProps } = this.props;
+    const { children, selected, className, after, ...restProps } = this.props;
 
     return (
       <Tappable
@@ -29,7 +30,8 @@ export default class TabsItem extends React.Component {
         className={classNames(baseClassName, { 'TabsItem--selected': selected }, className)}
         activeEffectDelay={osname === IOS ? 0 : ACTIVE_EFFECT_DELAY}
       >
-        <span className="TabsItem__in">{children}</span>
+        <div className="TabsItem__in">{children}</div>
+        {after && <div className="TabsItem__after">{after}</div>}
       </Tappable>
     );
   }

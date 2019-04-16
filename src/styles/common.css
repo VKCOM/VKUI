@@ -57,6 +57,7 @@
 @import '../components/TabbarItem/TabbarItem.css';
 @import '../components/Epic/Epic.css';
 @import '../components/FormStatus/FormStatus.css';
+@import '../components/Counter/Counter.css';
 
 html,
 body,
