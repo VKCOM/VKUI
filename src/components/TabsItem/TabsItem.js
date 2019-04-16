@@ -5,7 +5,6 @@ import Tappable, {ACTIVE_EFFECT_DELAY} from '../Tappable/Tappable';
 
 import classNames from '../../lib/classNames';
 import {IOS, platform} from '../../lib/platform';
-import Counter from '../Counter/Counter';
 
 const osname = platform();
 const baseClassName = getClassName('TabsItem');
@@ -15,7 +14,7 @@ export default class TabsItem extends React.Component {
     children: PropTypes.node,
     selected: PropTypes.bool,
     className: PropTypes.string,
-    counter: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    after: PropTypes.node
   };
 
   static defaultProps = {
@@ -23,7 +22,7 @@ export default class TabsItem extends React.Component {
   };
 
   render () {
-    const { children, selected, className, counter, ...restProps } = this.props;
+    const { children, selected, className, after, ...restProps } = this.props;
 
     return (
       <Tappable
@@ -31,8 +30,8 @@ export default class TabsItem extends React.Component {
         className={classNames(baseClassName, { 'TabsItem--selected': selected }, className)}
         activeEffectDelay={osname === IOS ? 0 : ACTIVE_EFFECT_DELAY}
       >
-        <span className="TabsItem__in">{children}</span>
-        {counter && <Counter>{counter}</Counter>}
+        <div className="TabsItem__in">{children}</div>
+        {after && <div className="TabsItem__after">{after}</div>}
       </Tappable>
     );
   }

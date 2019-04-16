@@ -32,13 +32,13 @@
     <Group>
       <Tabs theme="header" type="buttons">
         <HorizontalScroll>
-          <TabsItem counter={8}>
+          <TabsItem after={<Counter>8</Counter>}>
             Все
           </TabsItem>
-          <TabsItem selected counter="24">
+          <TabsItem selected after={<Counter>24</Counter>}>
             Люди
           </TabsItem>
-          <TabsItem counter={2}>
+          <TabsItem after={<Counter>2</Counter>}>
             Сообщества
           </TabsItem>
           <TabsItem>
@@ -50,10 +50,10 @@
 
     <Group>
       <Tabs theme="light">
-        <TabsItem counter={6}>
+        <TabsItem after={<Counter>6</Counter>}>
           Диалоги
         </TabsItem>
-        <TabsItem selected counter={24}>
+        <TabsItem selected after={<Counter>24</Counter>}>
           Сообщения
         </TabsItem>
       </Tabs>
@@ -61,10 +61,10 @@
 
     <Group>
       <Tabs type="buttons">
-        <TabsItem selected counter={6}>
+        <TabsItem selected after={<Counter>6</Counter>}>
           Диалоги
         </TabsItem>
-        <TabsItem counter={24}>
+        <TabsItem after={<Counter>24</Counter>}>
           Сообщения
         </TabsItem>
       </Tabs>

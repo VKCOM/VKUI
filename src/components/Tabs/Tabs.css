@@ -147,11 +147,6 @@
 /**
  * Counter inside TabsItem
  */
- .TabsItem .Counter {
-  display: inline-flex;
-  margin-left: 8px;
-  }
-
 .Tabs--android.Tabs--light .TabsItem .Counter {
   background: var(--counter_secondary_background);
   color: var(--counter_secondary_text);
