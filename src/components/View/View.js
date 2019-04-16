@@ -5,12 +5,11 @@ import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
 import transitionEvents from '../../lib/transitionEvents';
 import getClassName from '../../helpers/getClassName';
-import { platform, ANDROID, IOS } from '../../lib/platform';
+import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { baseClassNames as panelHeaderClasses } from '../PanelHeader/PanelHeader';
 
-const osname = platform();
 const baseClassNames = getClassName('View');
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
@@ -203,7 +202,7 @@ export default class View extends Component {
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), osname === ANDROID ? 300 : 600);
+      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
     }
   }
 
@@ -214,7 +213,7 @@ export default class View extends Component {
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), osname === ANDROID ? 300 : 600);
+      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
     }
   }
 
@@ -303,11 +302,11 @@ export default class View extends Component {
   };
 
   onMoveX = (e) => {
-    if (osname === IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
+    if (IS_PLATFORM_IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
       this.setState({ browserSwipe: true });
     }
 
-    if (osname === IOS && this.context.isWebView && this.props.onSwipeBack) {
+    if (IS_PLATFORM_IOS && this.context.isWebView && this.props.onSwipeBack) {
       if (this.state.animated && e.startX <= 70) {
         return;
       }
@@ -477,7 +476,7 @@ export default class View extends Component {
       >
         {header && (
           <div className="View__header">
-            { osname === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
+            { IS_PLATFORM_IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
             <div className={classNames(panelHeaderClasses)}>
               {panels.map(panel => {
                 const panelId = panel.props.id;
@@ -510,7 +509,7 @@ export default class View extends Component {
                           id={`header-left-${panelId}`}
                           style={headerSwipeStyles.left}
                         />
-                        {osname === IOS &&
+                        {IS_PLATFORM_IOS &&
                         <div
                           className="PanelHeader__addon"
                           id={`header-addon-${panelId}`}

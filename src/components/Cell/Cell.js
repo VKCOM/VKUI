@@ -4,14 +4,13 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import Touch from '../Touch/Touch';
-import { platform, IOS, ANDROID } from '../../lib/platform';
+import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon24Reorder from '@vkontakte/icons/dist/24/reorder';
 import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
 
-const osname = platform();
 const baseClassNames = getClassName('Cell');
 
 export default class Cell extends Component {
@@ -274,9 +273,9 @@ export default class Cell extends Component {
         >
           {selectable && <input {...inputProps} type="checkbox" className="Cell__checkbox" />}
           <div className="Cell__before">
-            {selectable && osname === IOS && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
-            {removable && osname === IOS && <div className="Cell__remove-marker" onClick={this.activateRemove}/>}
-            {osname === ANDROID && draggable &&
+            {selectable && IS_PLATFORM_IOS && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
+            {removable && IS_PLATFORM_IOS && <div className="Cell__remove-marker" onClick={this.activateRemove}/>}
+            {IS_PLATFORM_ANDROID && draggable &&
             <Touch
               onStart={this.onDragStart}
               onMoveY={this.onDragMove}
@@ -294,12 +293,12 @@ export default class Cell extends Component {
           <div className="Cell__indicator">{indicator}</div>
           <div className="Cell__aside">
             {asideContent}
-            {selectable && osname === ANDROID && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
-            {removable && osname === ANDROID &&
+            {selectable && IS_PLATFORM_ANDROID && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
+            {removable && IS_PLATFORM_ANDROID &&
             <div className="Cell__remove-marker" onClick={this.onRemoveClick}><Icon24Cancel /></div>
             }
-            {osname === IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron"/>}
-            {osname === IOS && draggable &&
+            {IS_PLATFORM_IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron"/>}
+            {IS_PLATFORM_IOS && draggable &&
             <Touch
               className="Cell__dragger"
               onStart={this.onDragStart}
@@ -309,7 +308,7 @@ export default class Cell extends Component {
             }
           </div>
         </Tappable>
-        {removable && osname === IOS &&
+        {removable && IS_PLATFORM_IOS &&
         <div
           ref={this.getRemoveRef}
           className="Cell__remove"
