@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.21.1",
+  "version": "2.21.2-rc.0",
   "main": "dist/vkui.js",
   "license": "MIT",
   "description": "VKUI library",
@@ -60,7 +60,7 @@
     "prepublishOnly": "npm run clear && npm run build",
     "styleguide": "NODE_ENV=development styleguidist server --config=styleguide/config.js",
     "dev": "NODE_ENV=development webpack --watch",
-    "dev:babel":  "babel src --out-dir dist --source-maps --watch",
+    "dev:babel": "babel src --out-dir dist --source-maps --watch",
     "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
     "build": "NODE_ENV=production webpack && babel src --out-dir dist --source-maps && cp ./src/styles/client_light.css ./dist/default_scheme.css",
     "clear": "rm -rf dist/*",
