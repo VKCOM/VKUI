@@ -1,5 +1,2 @@
-/* Файл, который содержит стили со всеми темами */
-
-@import "./common.css";
-@import "./bright_light.css";
-@import "./space_gray.css";
+/* Файл, который содержит стили со всеми темами и компонентами */
+@import './common.css';
