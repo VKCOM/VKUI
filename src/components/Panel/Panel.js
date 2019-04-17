@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import Touch from '../Touch/Touch';
 import { tabbarHeight } from '../../appearance/constants';
 
 const baseClassNames = getClassName('Panel');
@@ -55,13 +56,13 @@ export default class Panel extends Component {
         'Panel--centered': centered,
         [`Panel--tm-${theme}`]: theme
       })}>
-        <div className="Panel__in" style={{
+        <Touch className="Panel__in" style={{
           paddingBottom: this.context.insets && this.context.insets.bottom ? this.context.insets.bottom + tabbarPadding : null
         }}>
           <div className="Panel__in-before" />
           {children}
           <div className="Panel__in-after" />
-        </div>
+        </Touch>
       </div>
     );
   }
