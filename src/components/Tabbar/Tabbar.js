@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import withInsets from '../../hoc/withInsets';
 
 const baseClassName = getClassName('Tabbar');
 
-export default class Tabbar extends React.Component {
+class Tabbar extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
@@ -13,17 +14,12 @@ export default class Tabbar extends React.Component {
      * флаг для показа/скрытия верхней тени (Android) или границы (iOS)
      */
     shadow: PropTypes.bool,
-    itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto'])
+    itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto']),
+    insets: PropTypes.object
   };
 
   static defaultProps = {
     shadow: true
-  };
-
-  static contextTypes = {
-    insets: PropTypes.shape({
-      bottom: PropTypes.number
-    })
   };
 
   get itemsLayout () {
@@ -39,14 +35,16 @@ export default class Tabbar extends React.Component {
   }
 
   render () {
-    const { className, children, shadow } = this.props;
+    const { className, children, shadow, insets } = this.props;
 
     return (
       <div className={classNames(baseClassName, className, `Tabbar--l-${this.itemsLayout}`, {
         'Tabbar--shadow': shadow
-      })} style={{ paddingBottom: this.context.insets && this.context.insets.bottom || null }}>
+      })} style={{ paddingBottom: isNaN(insets.bottom) ? null : insets.bottom }}>
         {children}
       </div>
     );
   }
 }
+
+export default withInsets(Tabbar);

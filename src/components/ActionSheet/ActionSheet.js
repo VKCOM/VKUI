@@ -5,10 +5,11 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
+import withInsets from '../../hoc/withInsets';
 
 const baseClassNames = getClassName('ActionSheet');
 
-export default class ActionSheet extends React.Component {
+class ActionSheet extends React.Component {
   state = {
     closing: false
   };
@@ -25,7 +26,8 @@ export default class ActionSheet extends React.Component {
     onClose: PropTypes.func.isRequired,
     style: PropTypes.object,
     children: PropTypes.node,
-    className: PropTypes.string
+    className: PropTypes.string,
+    insets: PropTypes.object
   };
 
   static contextTypes = {
@@ -67,7 +69,7 @@ export default class ActionSheet extends React.Component {
   }
 
   render () {
-    const { children, className, title, text, style, ...restProps } = this.props;
+    const { children, className, title, text, style, insets, ...restProps } = this.props;
 
     return (
       <PopoutWrapper
@@ -90,7 +92,7 @@ export default class ActionSheet extends React.Component {
           {Children.toArray(children).map((Child, index, arr) => (
             Child && React.cloneElement(Child, {
               onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose),
-              style: index === arr.length - 1 && this.context.insets ? { marginBottom: this.context.insets.bottom } : null
+              style: index === arr.length - 1 && insets.bottom ? { marginBottom: insets.bottom } : null
             })
           ))}
         </div>
@@ -98,3 +100,5 @@ export default class ActionSheet extends React.Component {
     );
   }
 }
+
+export default withInsets(ActionSheet);
