@@ -13,7 +13,9 @@ function resolveInsets (e) {
   switch (type) {
     case 'VKWebAppUpdateConfig':
       const { insets } = data;
-      return { ...insets, bottom: insets.bottom > 100 ? 0 : insets.bottom }; // если больше 100 – значит открылась клава и она сама работает как инсет, то есть наш нужно занулить
+      if (insets) {
+        return { ...insets, bottom: insets.bottom > 100 ? 0 : insets.bottom }; // если больше 100 – значит открылась клава и она сама работает как инсет, то есть наш нужно занулить
+      }
   }
 }
 
