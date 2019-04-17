@@ -20,6 +20,9 @@ class Panel extends Component {
     id: PropTypes.string.isRequired,
     centered: PropTypes.bool,
     style: PropTypes.object,
+    /**
+     * @ignore
+     */
     insets: PropTypes.object
   };
 

@@ -20,6 +20,9 @@ class FixedLayout extends React.Component {
     className: PropTypes.string,
     getRootRef: PropTypes.func,
     vertical: PropTypes.oneOf(['top', 'bottom']),
+    /**
+     * @ignore
+     */
     insets: PropTypes.object
   };
 
@@ -68,9 +71,7 @@ class FixedLayout extends React.Component {
   render () {
     const { className, children, style, vertical, getRootRef, insets, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
-    const paddingBottom = vertical === 'bottom' && !isNaN(insets.bottom)
-      ? insets.bottom + tabbarPadding
-      : null;
+    const paddingBottom = vertical === 'bottom' && !isNaN(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
     return (
       <div

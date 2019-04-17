@@ -15,6 +15,9 @@ class Tabbar extends React.Component {
      */
     shadow: PropTypes.bool,
     itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto']),
+    /**
+     * @ignore
+     */
     insets: PropTypes.object
   };
 

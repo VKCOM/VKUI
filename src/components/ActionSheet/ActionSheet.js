@@ -27,10 +27,9 @@ class ActionSheet extends React.Component {
     style: PropTypes.object,
     children: PropTypes.node,
     className: PropTypes.string,
-    insets: PropTypes.object
-  };
-
-  static contextTypes = {
+    /**
+     * @ignore
+     */
     insets: PropTypes.object
   };
 
