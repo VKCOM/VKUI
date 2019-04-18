@@ -4,16 +4,16 @@ import getClassName from '../../helpers/getClassName';
 import Tappable, {ACTIVE_EFFECT_DELAY} from '../Tappable/Tappable';
 
 import classNames from '../../lib/classNames';
-import {IOS, platform} from '../../lib/platform';
+import { IS_PLATFORM_IOS } from '../../lib/platform';
 
-const osname = platform();
 const baseClassName = getClassName('TabsItem');
 
 export default class TabsItem extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     selected: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    after: PropTypes.node
   };
 
   static defaultProps = {
@@ -21,15 +21,16 @@ export default class TabsItem extends React.Component {
   };
 
   render () {
-    const { children, selected, className, ...restProps } = this.props;
+    const { children, selected, className, after, ...restProps } = this.props;
 
     return (
       <Tappable
         {...restProps}
         className={classNames(baseClassName, { 'TabsItem--selected': selected }, className)}
-        activeEffectDelay={osname === IOS ? 0 : ACTIVE_EFFECT_DELAY}
+        activeEffectDelay={IS_PLATFORM_IOS ? 0 : ACTIVE_EFFECT_DELAY}
       >
-        <span className="TabsItem__in">{children}</span>
+        <div className="TabsItem__in">{children}</div>
+        {after && <div className="TabsItem__after">{after}</div>}
       </Tappable>
     );
   }

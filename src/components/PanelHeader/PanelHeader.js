@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 
-import { platform, IOS } from '../../lib/platform';
-
-const osname = platform();
+import { IS_PLATFORM_IOS } from '../../lib/platform';
 
 export const baseClassNames = getClassName('PanelHeader');
 
@@ -77,7 +75,7 @@ export default class PanelHeader extends React.Component {
         [`PanelHeader-left-in--${theme}`]: true,
         'PanelHeader-left-in--tp': transparent
       })}>{left}</div>, this.leftNode),
-      osname === IOS && ReactDOM.createPortal(<div className={classNames('PanelHeader-addon', {
+      IS_PLATFORM_IOS && ReactDOM.createPortal(<div className={classNames('PanelHeader-addon', {
         [`PanelHeader-addon--${theme}`]: true,
         'PanelHeader-addon--tp': transparent
       })}>{addon}</div>, this.addonNode),

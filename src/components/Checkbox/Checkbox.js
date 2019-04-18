@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import {platform, IOS} from '../../lib/platform';
+import { IS_PLATFORM_IOS } from '../../lib/platform';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 
-const osname = platform();
 const baseClassName = getClassName('Checkbox');
 
 const Checkbox = ({ children, className, style, getRootRef, ...restProps }) => {
@@ -17,7 +16,7 @@ const Checkbox = ({ children, className, style, getRootRef, ...restProps }) => {
       className={classNames(baseClassName, className)}
       style={style}
       disabled={restProps.disabled}
-      activeEffectDelay={osname === IOS ? 100 : ACTIVE_EFFECT_DELAY }
+      activeEffectDelay={IS_PLATFORM_IOS ? 100 : ACTIVE_EFFECT_DELAY }
       getRootRef={getRootRef}
     >
       <input {...restProps} type="checkbox" className="Checkbox__input" />

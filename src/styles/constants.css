@@ -15,8 +15,8 @@
   --white: #fff;
 
   /* iOS insets */
-  --safe-area-inset-top: 0;
-  --safe-area-inset-bottom: 0;
+  --safe-area-inset-top: 20px;
+  --safe-area-inset-bottom: 0px;
 }
 
 @supports (padding-top: constant(safe-area-inset-top)) {

@@ -1,0 +1,43 @@
+.Counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+  .Counter__in {
+    font-size: 14px;
+    line-height: 1.2;
+    padding: 0 5px;
+    text-align: center;
+    }
+
+.Counter--primary {
+  background: var(--counter_primary_background);
+  color: var(--counter_primary_text);
+  }
+
+.Counter--secondary {
+  background: var(--counter_secondary_background);
+  color: var(--counter_secondary_text);
+  }
+
+.Counter--prominent {
+  background: var(--destructive);
+  color: var(--white);
+  }
+
+.Counter--ios {
+  min-width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  }
+
+.Counter--android {
+  min-width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  }
+
+  .Counter--android .Counter__in {
+    font-weight: 500;
+    }

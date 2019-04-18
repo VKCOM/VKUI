@@ -8,6 +8,13 @@
     justify-content: space-between;
     }
 
+    .Header__content {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
     .Header--level-1 .Header__content {
       color: var(--text_primary);
       font-size: 17px;
@@ -21,6 +28,16 @@
       line-height: 15px;
       font-weight: 600;
       text-transform: uppercase;
+      }
+
+    .Header__indicator {
+      margin-left: 10px;
+      margin-right: auto;
+      }
+
+    .Header__aside {
+      white-space: nowrap;
+      margin-left: 12px;
       }
 
 .Header--ios {

@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { platform, ANDROID } from '../../lib/platform';
+import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import Tappable from '../Tappable/Tappable';
 
-const osname = platform();
 const baseClassNames = getClassName('PanelHeaderContent');
 
 const PanelHeaderContent = ({ className, style, aside, status, before, children, onClick, ...restProps }) => {
@@ -15,7 +14,7 @@ const PanelHeaderContent = ({ className, style, aside, status, before, children,
 
   return (
     <div {...rootProps} className={classNames(baseClassNames, className)} style={style}>
-      {osname === ANDROID && before && <div className="PanelHeaderContent__before">{before}</div>}
+      {IS_PLATFORM_ANDROID && before && <div className="PanelHeaderContent__before">{before}</div>}
       <InComponent {...inProps} className="PanelHeaderContent__in" onClick={onClick}>
         {status && <div className="PanelHeaderContent__status">{status}</div>}
         <div className="PanelHeaderContent__children">

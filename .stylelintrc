@@ -6,6 +6,9 @@
     "block-no-empty": null,
     "declaration-block-no-redundant-longhand-properties": null,
     "comment-empty-line-before": null,
-    "comment-whitespace-inside": null
+    "comment-whitespace-inside": null,
+    "length-zero-no-unit": [true, {
+      "ignore": ["custom-properties"]
+    }]
   }
 }

@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, transitionStartEventName } from '../View/View';
 import { tabbarHeight } from '../../appearance/constants';
+import withInsets from '../../hoc/withInsets';
 
 const baseClassNames = getClassName('FixedLayout');
 
-export default class FixedLayout extends React.Component {
+class FixedLayout extends React.Component {
   state = {
     position: null,
     top: null
@@ -18,13 +19,14 @@ export default class FixedLayout extends React.Component {
     style: PropTypes.object,
     className: PropTypes.string,
     getRootRef: PropTypes.func,
-    vertical: PropTypes.oneOf(['top', 'bottom'])
+    vertical: PropTypes.oneOf(['top', 'bottom']),
+    /**
+     * @ignore
+     */
+    insets: PropTypes.object
   };
 
   static contextTypes = {
-    insets: PropTypes.shape({
-      bottom: PropTypes.number
-    }),
     panel: PropTypes.string,
     document: PropTypes.any,
     hasTabbar: PropTypes.bool
@@ -67,11 +69,9 @@ export default class FixedLayout extends React.Component {
   };
 
   render () {
-    const { className, children, style, vertical, getRootRef, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, insets, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
-    const paddingBottom = vertical === 'bottom' && this.context.insets && this.context.insets.bottom
-      ? this.context.insets.bottom + tabbarPadding
-      : null;
+    const paddingBottom = vertical === 'bottom' && !isNaN(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
     return (
       <div
@@ -85,3 +85,5 @@ export default class FixedLayout extends React.Component {
     );
   }
 }
+
+export default withInsets(FixedLayout);

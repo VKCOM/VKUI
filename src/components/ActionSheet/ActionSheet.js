@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { platform, ANDROID, IOS } from '../../lib/platform';
+import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
-
-const osname = platform();
+import withInsets from '../../hoc/withInsets';
 
 const baseClassNames = getClassName('ActionSheet');
 
-export default class ActionSheet extends React.Component {
+class ActionSheet extends React.Component {
   state = {
     closing: false
   };
@@ -27,10 +26,10 @@ export default class ActionSheet extends React.Component {
     onClose: PropTypes.func.isRequired,
     style: PropTypes.object,
     children: PropTypes.node,
-    className: PropTypes.string
-  };
-
-  static contextTypes = {
+    className: PropTypes.string,
+    /**
+     * @ignore
+     */
     insets: PropTypes.object
   };
 
@@ -64,17 +63,17 @@ export default class ActionSheet extends React.Component {
       this.el.removeEventListener(eventName, eventHandler);
       this.el.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), osname === ANDROID ? 200 : 300);
+      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 200 : 300);
     }
   }
 
   render () {
-    const { children, className, title, text, style, ...restProps } = this.props;
+    const { children, className, title, text, style, insets, ...restProps } = this.props;
 
     return (
       <PopoutWrapper
         closing={this.state.closing}
-        v={osname === IOS ? 'bottom' : 'center'}
+        v={IS_PLATFORM_IOS ? 'bottom' : 'center'}
         h="center"
         className={className}
         style={style}
@@ -83,7 +82,7 @@ export default class ActionSheet extends React.Component {
         <div {...restProps} ref={this.getRef} onClick={this.stopPropagation} className={classNames(baseClassNames, {
           'ActionSheet--closing': this.state.closing
         })}>
-          {osname === IOS &&
+          {IS_PLATFORM_IOS &&
           <header className="ActionSheet__header">
             {title && <div className="ActionSheet__title">{title}</div>}
             {text && <div className="ActionSheet__text">{text}</div>}
@@ -92,7 +91,7 @@ export default class ActionSheet extends React.Component {
           {Children.toArray(children).map((Child, index, arr) => (
             Child && React.cloneElement(Child, {
               onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose),
-              style: index === arr.length - 1 && this.context.insets ? { marginBottom: this.context.insets.bottom } : null
+              style: index === arr.length - 1 && insets.bottom ? { marginBottom: insets.bottom } : null
             })
           ))}
         </div>
@@ -100,3 +99,5 @@ export default class ActionSheet extends React.Component {
     );
   }
 }
+
+export default withInsets(ActionSheet);

@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { platform, ANDROID } from '../../lib/platform';
+import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../../lib/touch';
 
 const ts = () => +Date.now();
 const baseClassNames = getClassName('Tappable');
-const osname = platform();
 
 const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
@@ -80,7 +79,7 @@ export default class Tappable extends Component {
       return deactivateOtherInstances();
     }
 
-    if (osname === ANDROID) {
+    if (IS_PLATFORM_ANDROID) {
       this.onDown(originalEvent);
     }
 
@@ -152,7 +151,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onDown = (e) => {
-    if (osname === ANDROID) {
+    if (IS_PLATFORM_ANDROID) {
       const { top, left } = getOffsetRect(this.container);
       const x = coordX(e);
       const y = coordY(e);
@@ -267,7 +266,7 @@ export default class Tappable extends Component {
 
     return (
       <Component {...restProps} className={classes} {...props}>
-        {osname === ANDROID && (
+        {IS_PLATFORM_ANDROID && (
           <span className="Tappable__waves">
             {Object.keys(clicks).map(k => (
               <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />

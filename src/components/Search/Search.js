@@ -1,10 +1,8 @@
 import React from 'react';
-import { platform, IOS } from '../../lib/platform';
+import { IS_PLATFORM_IOS } from '../../lib/platform';
 import SearchIOS from '../SearchIOS/SearchIOS';
 import SearchAndroid from '../SearchAndroid/SearchAndroid';
 import PropTypes from 'prop-types';
-
-const osname = platform();
 
 export default class Search extends React.Component {
   static propTypes = {
@@ -46,7 +44,7 @@ export default class Search extends React.Component {
   render () {
     const { onClose, autoFocus, ...iosProps } = this.props;
     const { after, before, ...androidProps } = this.props;
-    if (osname === IOS) {
+    if (IS_PLATFORM_IOS) {
       return <SearchIOS {...iosProps} />;
     } else {
       return <SearchAndroid {...androidProps} />;

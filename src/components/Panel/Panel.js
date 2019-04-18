@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import Touch from '../Touch/Touch';
 import { tabbarHeight } from '../../appearance/constants';
+import withInsets from '../../hoc/withInsets';
 
 const baseClassNames = getClassName('Panel');
 
-export default class Panel extends Component {
+class Panel extends Component {
   static childContextTypes = {
     panel: PropTypes.string
   };
@@ -17,7 +19,11 @@ export default class Panel extends Component {
     theme: PropTypes.oneOf(['white', 'gray']),
     id: PropTypes.string.isRequired,
     centered: PropTypes.bool,
-    style: PropTypes.object
+    style: PropTypes.object,
+    /**
+     * @ignore
+     */
+    insets: PropTypes.object
   };
 
   static defaultProps = {
@@ -27,12 +33,6 @@ export default class Panel extends Component {
   };
 
   static contextTypes = {
-    insets: PropTypes.shape({
-      top: PropTypes.number,
-      right: PropTypes.number,
-      bottom: PropTypes.number,
-      left: PropTypes.number
-    }),
     hasTabbar: PropTypes.bool
   };
 
@@ -42,12 +42,8 @@ export default class Panel extends Component {
     };
   }
 
-  get insets () {
-    return this.context.insets || {};
-  }
-
   render () {
-    const { className, centered, children, theme, ...restProps } = this.props;
+    const { className, centered, children, theme, insets, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
 
     return (
@@ -55,14 +51,16 @@ export default class Panel extends Component {
         'Panel--centered': centered,
         [`Panel--tm-${theme}`]: theme
       })}>
-        <div className="Panel__in" style={{
-          paddingBottom: this.context.insets && this.context.insets.bottom ? this.context.insets.bottom + tabbarPadding : null
+        <Touch className="Panel__in" style={{
+          paddingBottom: !isNaN(insets.bottom) ? insets.bottom + tabbarPadding : null
         }}>
           <div className="Panel__in-before" />
           {children}
           <div className="Panel__in-after" />
-        </div>
+        </Touch>
       </div>
     );
   }
 }
+
+export default withInsets(Panel);
