@@ -12,7 +12,7 @@ VKUI – это набор React-компонентов, с помощью ко�
 `npm i @vkontakte/vkui` или `yarn add @vkontakte/vkui`
 
 ## Hello World
-<img src="https://github.com/VKCOM/VKUI/blob/master/styleguide/hello_world.png" align="right" height="438" />
+<img src="https://github.com/VKCOM/VKUI/blob/master/styleguide/hello_world.png" align="right" height="450" />
 
 ```jsx static
 import React from 'react';
