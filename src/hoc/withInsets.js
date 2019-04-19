@@ -12,6 +12,7 @@ function resolveInsets (e) {
   const { type, data } = e.detail;
   switch (type) {
     case 'VKWebAppUpdateConfig':
+    case 'VKWebAppUpdateInsets': // Устаревшее событие vkui-connect
       const { insets } = data;
       if (insets) {
         return { ...insets, bottom: insets.bottom > 100 ? 0 : insets.bottom }; // если больше 100 – значит открылась клава и она сама работает как инсет, то есть наш нужно занулить
