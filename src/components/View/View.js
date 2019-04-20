@@ -266,6 +266,10 @@ export default class View extends Component {
     }
   };
 
+  canStartSwipeBack () {
+    return IS_PLATFORM_IOS && this.context.isWebView && this.props.onSwipeBack && !this.props.popout;
+  }
+
   onSwipeBackSuccess () {
     this.props.onSwipeBack && this.props.onSwipeBack();
   }
@@ -306,7 +310,7 @@ export default class View extends Component {
       this.setState({ browserSwipe: true });
     }
 
-    if (IS_PLATFORM_IOS && this.context.isWebView && this.props.onSwipeBack) {
+    if (this.canStartSwipeBack()) {
       if (this.state.animated && e.startX <= 70) {
         return;
       }
