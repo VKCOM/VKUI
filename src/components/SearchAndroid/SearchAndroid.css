@@ -49,6 +49,10 @@
   margin-left: 12px;
   }
 
+.Search--android.Search--header.Search--vkapps .Search__after {
+  margin-right: 90px;
+  }
+
 .Search--android.Search--header .Search__input {
   color: var(--header_tint);
   padding: 15px 0 13px;

@@ -45,6 +45,10 @@ export default class SearchAndroid extends React.Component {
     autoFocus: true
   };
 
+  static contextTypes = {
+    webviewType: PropTypes.oneOf(['vkapps', 'internal'])
+  };
+
   onCancel = () => {
     if (!this.isControlledOutside) {
       this.setState({ value: '' });
@@ -79,9 +83,11 @@ export default class SearchAndroid extends React.Component {
 
   render () {
     const { getRef, value, defaultValue, onChange, onClose, theme, autoFocus, ...inputProps } = this.props;
+    const hasValue = !!this.value;
 
     const className = classNames(baseClassName, `Search--${theme}`, {
-      'Search--has-value': !!this.value
+      'Search--has-value': hasValue,
+      'Search--vkapps': this.context.webviewType === 'vkapps'
     }, this.props.className);
 
     return (
@@ -100,7 +106,7 @@ export default class SearchAndroid extends React.Component {
               onChange={this.onChange}
             />
           </div>
-          {!!this.value &&
+          {hasValue &&
           <div className="Search__after">
             {theme === 'default' && <Icon24Cancel onClick={this.onCancel}/>}
             {theme === 'header' && <HeaderButton onClick={this.onCancel}><Icon24Cancel/></HeaderButton>}
