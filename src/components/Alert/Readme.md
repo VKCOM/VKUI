@@ -1,19 +1,19 @@
-В Алертах особое внимание нужно уделить кнопкам. Всего есть три типа кнопок: 
-`cancel`, `destructive` и `default`. 
+В Алертах особое внимание нужно уделить кнопкам. Всего есть три типа кнопок:
+`cancel`, `destructive` и `default`.
 
 Типом `cancel` нужно подсветить действие, возвращающее пользователя к
 состоянию, когда алерт был закрыт. Пользователь кликнет по нему в случае, когда он открыл алерт для
-совершения какого-то действия и передумал. 
+совершения какого-то действия и передумал.
 
 Стиль `destructive` используется в случае, когда действие влечёт за собой какие-то деструктивные последствия:
 удаление, разжалование и т.д.
 
 Во всех остальных случаях используйте стиль `default`.
 
-**Важно:** 
+**Важно:**
 
 * Кнопка со стилем `cancel` должна быть одна на алерт.
-* Кнопку со стилем `cancel` нужно располагать либо слева, либо снизу, в зависимости от выбранного 
+* Кнопку со стилем `cancel` нужно располагать либо слева, либо снизу, в зависимости от выбранного
 `actionsLayout`.
 * Свойство экшена `style` игнорируется в Android версии. Там жирность и цвет всех кнопок одинковый. При этом
 порядок кнопок должен быть одинаковым на всех платформах (см. пункт 2).
@@ -26,7 +26,7 @@ class Example extends React.Component {
     this.state = {
       popout: null
     };
-    
+
     this.openDefault = this.openDefault.bind(this);
     this.openDestructive = this.openDestructive.bind(this);
     this.closePopout = this.closePopout.bind(this);
@@ -54,9 +54,8 @@ class Example extends React.Component {
       </Alert>
     });
   }
-  
+
   openDestructive () {
-    
     this.setState({ popout:
       <Alert
         actionsLayout="vertical"
@@ -75,8 +74,8 @@ class Example extends React.Component {
         <p>Вы уверены, что хотите лишить пользователя права на модерацию контента?</p>
       </Alert>
     });
-  } 
-  
+  }
+
   closePopout () {
     this.setState({ popout: null });
   }
@@ -86,7 +85,7 @@ class Example extends React.Component {
       <View popout={this.state.popout} header={false} activePanel="alert">
         <Panel id="alert">
           <CellButton onClick={this.openDefault}>Добавить право</CellButton>
-          <CellButton level="danger" onClick={this.openDestructive}>Лишить права</CellButton>  
+          <CellButton level="danger" onClick={this.openDestructive}>Лишить права</CellButton>
         </Panel>
       </View>
     )
