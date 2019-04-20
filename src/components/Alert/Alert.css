@@ -259,6 +259,10 @@
       text-overflow: ellipsis;
       }
 
+    .Alert--android .Alert__btn--destructive {
+      color: var(--destructive);
+      }
+
 /**
  * Animations
  */

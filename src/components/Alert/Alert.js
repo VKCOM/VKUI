@@ -23,7 +23,7 @@ export default class Alert extends Component {
       title: PropTypes.string,
       action: PropTypes.func,
       /**
-       * iOS only
+       * 'cancel' - iOS only
        */
       style: PropTypes.oneOf(['cancel', 'destructive', 'default'])
     })),
