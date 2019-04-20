@@ -45,8 +45,7 @@
 
 .Alert--ios.Alert--closing {
   opacity: 0;
-  transform: scale(1.05);
-  transition: transform .2s var(--ios-easing), opacity .2s var(--ios-easing);
+  transition: opacity .2s var(--ios-easing);
   }
 
   /**
