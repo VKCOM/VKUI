@@ -107,7 +107,7 @@
   }
 
 .ActionSheet--ios .ActionSheetItem--default {
-  color: var(--accent);
+  color: var(--action_sheet_action_foreground);
   }
 
 .ActionSheet--ios .ActionSheetItem--destructive {
