@@ -7,4 +7,7 @@
     line-height: 16px;
     color: var(--text_secondary);
     margin-bottom: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     }
