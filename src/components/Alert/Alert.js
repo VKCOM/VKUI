@@ -5,10 +5,15 @@ import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import transitionEvents from '../../lib/transitionEvents';
+import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 
 const baseClassNames = getClassName('Alert');
 
 export default class Alert extends Component {
+  state = {};
+  element = React.createRef();
+
   static propTypes = {
     style: PropTypes.object,
     className: PropTypes.string,
@@ -18,11 +23,11 @@ export default class Alert extends Component {
       title: PropTypes.string,
       action: PropTypes.func,
       /**
-       * iOS only
+       * 'cancel' - iOS only
        */
       style: PropTypes.oneOf(['cancel', 'destructive', 'default'])
     })),
-    onClose: PropTypes.func
+    onClose: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -31,18 +36,51 @@ export default class Alert extends Component {
   };
 
   onItemClick = item => () => {
-    item.autoclose && this.props.onClose();
-    item.action && item.action();
+    const { action, autoclose } = item;
+
+    if (autoclose) {
+      this.setState({ closing: true });
+      this.waitTransitionFinish(() => {
+        autoclose && this.props.onClose();
+        action && action();
+      });
+    } else {
+      action && action();
+    }
   };
+
+  onClose = () => {
+    this.setState({ closing: true });
+    this.waitTransitionFinish(() => {
+      this.props.onClose();
+    });
+  };
+
+  waitTransitionFinish (eventHandler) {
+    if (transitionEvents.supported) {
+      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
+
+      this.element.current.removeEventListener(eventName, eventHandler);
+      this.element.current.addEventListener(eventName, eventHandler);
+    } else {
+      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 200 : 300);
+    }
+  }
 
   render () {
     const { actions, actionsLayout, children, className, style, ...restProps } = this.props;
+    const { closing } = this.state;
 
     return (
-      <PopoutWrapper className={className} style={style}>
-        <div {...restProps} className={classNames(baseClassNames, {
+      <PopoutWrapper
+        closing={closing}
+        style={style}
+        onClick={this.onClose}
+      >
+        <div {...restProps} ref={this.element} className={classNames(baseClassNames, {
           'Alert--v': actionsLayout === 'vertical',
-          'Alert--h': actionsLayout === 'horizontal'
+          'Alert--h': actionsLayout === 'horizontal',
+          'Alert--closing': closing
         })}>
           <div className="Alert__content">{children}</div>
           <footer className="Alert__footer">

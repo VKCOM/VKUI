@@ -43,6 +43,11 @@
   animation: animation-ios-alert-intro .3s var(--ios-easing);
   }
 
+.Alert--ios.Alert--closing {
+  opacity: 0;
+  transition: opacity .2s var(--ios-easing);
+  }
+
   /**
    * Content container
    */
@@ -189,15 +194,21 @@
   min-width: 280px;
   margin: auto 24px;
   box-shadow: 0 20px 35px 0 rgba(0, 0, 0, .3), 0 0 35px 0 rgba(0, 0, 0, .22);
-  border-radius: 2px;
+  border-radius: 12px;
   animation: animation-android-alert-intro .2s ease;
+  }
+
+.Alert--android.Alert--closing {
+  transform: scale(.95);
+  opacity: 0;
+  transition: transform .2s var(--android-easing), opacity .2s var(--android-easing);
   }
 
   /**
    * Content container
    */
   .Alert--android .Alert__content {
-    padding: 18px 24px 16px;
+    padding: 20px 24px 8px;
     font-size: 16px;
     line-height: 24px;
     }
@@ -221,7 +232,7 @@
    * Footer
    */
   .Alert--android .Alert__footer {
-    padding: 8px;
+    padding: 12px 16px 16px;
     display: flex;
     justify-content: flex-end;
     flex-flow: wrap;
@@ -233,19 +244,23 @@
     }
 
     .Alert--android .Alert__btn {
-      margin: 0 0 0 12px;
+      margin: 4px 0 0 8px;
       border: 0;
       flex: 0 1 auto;
       text-transform: uppercase;
       font-weight: 500;
-      font-size: 14px;
-      line-height: 16px;
-      padding: 8px;
-      border-radius: 2px;
+      font-size: 15px;
+      line-height: 20px;
+      padding: 8px 16px;
+      border-radius: 8px;
       color: var(--accent);
       outline: none;
       overflow: hidden;
       text-overflow: ellipsis;
+      }
+
+    .Alert--android .Alert__btn--destructive {
+      color: var(--destructive);
       }
 
 /**
