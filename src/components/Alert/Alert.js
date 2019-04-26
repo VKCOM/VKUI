@@ -56,6 +56,8 @@ export default class Alert extends Component {
     });
   };
 
+  stopPropagation = e => e.stopPropagation();
+
   waitTransitionFinish (eventHandler) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
@@ -77,7 +79,7 @@ export default class Alert extends Component {
         style={style}
         onClick={this.onClose}
       >
-        <div {...restProps} ref={this.element} className={classNames(baseClassNames, {
+        <div {...restProps} ref={this.element} onClick={this.stopPropagation} className={classNames(baseClassNames, {
           'Alert--v': actionsLayout === 'vertical',
           'Alert--h': actionsLayout === 'horizontal',
           'Alert--closing': closing
