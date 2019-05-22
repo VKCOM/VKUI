@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner/Spinner';
 
-const PanelSpinner = ({ height, ...restProps }) => <Spinner {...restProps} style={{ height }} />;
+const PanelSpinner = React.memo(({ height, ...restProps }) => <Spinner size="small" {...restProps} style={{ height }} />);
 
 PanelSpinner.defaultProps = {
-  height: 100
+  height: 96
 };
 
 PanelSpinner.propTypes = {

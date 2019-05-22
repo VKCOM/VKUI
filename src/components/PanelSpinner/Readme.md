@@ -1,4 +1,4 @@
-Этот компонент - обёртка над `<Spinner />` с высотой 100 пикселей. Удобно использовать его во время загрузки данных.
+Этот компонент - обёртка над `<Spinner />` с заданными отступами и размером. Удобно использовать его во время загрузки данных.
 
 ```js static
 import PanelSpinner from '@vkontakte/vkui/dist/components/PanelSpinner/PanelSpinner';
