@@ -25,6 +25,12 @@
                   placeholder="Не выбрана"
                   onClick={() => this.setState({ activeView: 'countries' })}
                 >{this.state.country}</SelectMimicry>
+
+                <SelectMimicry
+                  top="Выберите город"
+                  placeholder="Не выбран"
+                  disabled
+                />
               </FormLayout>
             </Panel>
           </View>

@@ -4,13 +4,15 @@ import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
 
-const SelectMimicry = ({ className, placeholder, children, alignment, status, getRootRef, multiline, ...restProps }) => {
+const SelectMimicry = ({ className, tabIndex, placeholder, children, alignment, status, getRootRef, multiline, disabled, ...restProps }) => {
   return (
     <FormField
       {...restProps}
+      tabIndex={disabled ? null : tabIndex}
       className={classNames('Select', 'Select--mimicry', {
         'Select--not-selected': !children,
         'Select--multiline': multiline,
+        'Select--disabled': disabled,
         [`Select--align-${alignment}`]: alignment
       }, className)}
       getRootRef={getRootRef}
@@ -33,6 +35,7 @@ SelectMimicry.propTypes = {
   alignment: PropTypes.oneOf(['left', 'center', 'top']),
   getRootRef: PropTypes.func,
   multiline: PropTypes.bool,
+  disabled: PropTypes.bool,
   status: PropTypes.oneOf(['default', 'error', 'valid'])
 };
 
