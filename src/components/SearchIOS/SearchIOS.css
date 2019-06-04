@@ -46,7 +46,7 @@
 
       .Search--ios.Search--has-after .Search__input {
         border-radius: 16px 0 0 16px;
-        padding-right: 32px;
+        padding-right: 0;
         }
 
       .Search--ios .Search__after-width {
@@ -122,7 +122,7 @@
         right: calc(100% - 1px);
         display: block;
         height: 100%;
-        width: 33px;
+        width: 16px;
         content: '';
         pointer-events: none;
         }
@@ -141,7 +141,7 @@
         right: 100%;
         display: block;
         height: 100%;
-        width: 33px;
+        width: 16px;
         content: '';
         top: 0;
         border-radius: 0 16px 16px 0;
