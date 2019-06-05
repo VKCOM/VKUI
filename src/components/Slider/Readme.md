@@ -33,7 +33,7 @@
                 onChange={value1 => this.setState({value1})}
                 top="Simple [10, 30]"
               />
-              <Input value={String(this.state.value1)} onChange={e => this.setState({ value1: e.target.value })} />
+              <Input value={String(this.state.value1)} onChange={e => this.setState({ value1: e.target.value })} type="number"/>
               <Slider
                 step={0.2}
                 min={0}
