@@ -17,6 +17,8 @@ export const transitionEndEventName = 'VKUI:View:transition-end';
 
 let scrollsCache = {};
 
+const swipeBackExcludedTags = ['input', 'textarea'];
+
 export default class View extends Component {
   constructor (props) {
     super(props);
@@ -302,6 +304,10 @@ export default class View extends Component {
   };
 
   onMoveX = (e) => {
+    if (swipeBackExcludedTags.indexOf(e.originalEvent.target.tagName.toLowerCase()) > -1) {
+      return;
+    }
+
     if (IS_PLATFORM_IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
       this.setState({ browserSwipe: true });
     }
