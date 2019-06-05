@@ -34,6 +34,7 @@
     z-index: 2;
     }
 
+  .Select--disabled .Select__container,
   .Select select:disabled ~ .Select__container {
     opacity: .6;
     }
