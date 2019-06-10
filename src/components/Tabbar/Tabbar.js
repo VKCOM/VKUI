@@ -6,28 +6,8 @@ import withInsets from '../../hoc/withInsets';
 
 const baseClassName = getClassName('Tabbar');
 
-class Tabbar extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.node,
-    /**
-     * флаг для показа/скрытия верхней тени (Android) или границы (iOS)
-     */
-    shadow: PropTypes.bool,
-    itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto']),
-    /**
-     * @ignore
-     */
-    insets: PropTypes.object
-  };
-
-  static defaultProps = {
-    shadow: true
-  };
-
-  get itemsLayout () {
-    const { children, itemsLayout } = this.props;
-
+const Tabbar = ({ className, children, shadow, itemsLayout, insets }) => {
+  const getItemsLayout = () => {
     switch (itemsLayout) {
       case 'horizontal':
       case 'vertical':
@@ -35,19 +15,33 @@ class Tabbar extends React.Component {
       default:
         return React.Children.count(children) > 2 ? 'vertical' : 'horizontal';
     }
-  }
+  };
 
-  render () {
-    const { className, children, shadow, insets } = this.props;
+  return (
+    <div className={classNames(baseClassName, className, `Tabbar--l-${getItemsLayout()}`, {
+      'Tabbar--shadow': shadow
+    })} style={{ paddingBottom: isNaN(insets.bottom) ? null : insets.bottom }}>
+      {children}
+    </div>
+  );
+};
 
-    return (
-      <div className={classNames(baseClassName, className, `Tabbar--l-${this.itemsLayout}`, {
-        'Tabbar--shadow': shadow
-      })} style={{ paddingBottom: isNaN(insets.bottom) ? null : insets.bottom }}>
-        {children}
-      </div>
-    );
-  }
-}
+Tabbar.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+  /**
+   * * флаг для показа/скрытия верхней тени (Android) или границы (iOS)
+   */
+  shadow: PropTypes.bool,
+  itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto']),
+  /**
+   * @ignore
+   */
+  insets: PropTypes.object
+};
+
+Tabbar.defaultProps = {
+  shadow: true
+};
 
 export default withInsets(Tabbar);
