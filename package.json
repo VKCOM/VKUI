@@ -56,6 +56,7 @@
     "@vkontakte/icons": "^1.4.1"
   },
   "scripts": {
+    "release": "./tasks/release.sh",
     "prepublishOnly": "npm run clear && npm run build",
     "styleguide": "NODE_ENV=development styleguidist server --config=styleguide/config.js",
     "dev": "NODE_ENV=development webpack --watch",
