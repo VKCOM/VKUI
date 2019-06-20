@@ -5,10 +5,9 @@ import Icon24Back from '@vkontakte/icons/dist/24/back';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 
+// eslint-disable-next-line react/display-name
 const PanelHeaderBack = React.memo(({ ...restProps }) => (
-  <HeaderButton {...restProps}>
-    {IS_PLATFORM_ANDROID ? <Icon24Back /> : <Icon28ChevronBack />}
-  </HeaderButton>
+  <HeaderButton {...restProps}>{IS_PLATFORM_ANDROID ? <Icon24Back /> : <Icon28ChevronBack />}</HeaderButton>
 ));
 
 PanelHeaderBack.propTypes = {

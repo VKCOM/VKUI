@@ -7,7 +7,8 @@ function calcStrokeDashOffset (value, radius) {
   return 2 * Math.PI * radius * (1 - progress);
 }
 
-const PullToRefreshSpinner = React.memo(({on, progress, size, strokeWidth, style}) => {
+// eslint-disable-next-line react/display-name
+const PullToRefreshSpinner = React.memo(({ on, progress, size, strokeWidth, style }) => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
   const dasharray = 2 * Math.PI * radius;
   const circleCenter = 0.5 * size;

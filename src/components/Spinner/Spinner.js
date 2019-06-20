@@ -22,6 +22,7 @@ const svgSpinner = size => {
   }
 };
 
+// eslint-disable-next-line react/display-name
 const Spinner = React.memo(({ className, size, ...restProps }) => (
   <div {...restProps} className={classNames(baseClassNames, className)}>
     {svgSpinner(size)}
