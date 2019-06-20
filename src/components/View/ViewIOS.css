@@ -1,26 +1,24 @@
-
-
 .View--ios {
   font-family: var(--font-ios);
-  }
+}
 
 .View--ios.View--header .Panel__in {
   padding-top: 64px;
   padding-top: calc(44px + var(--safe-area-inset-top));
-  }
+}
 
 .View--ios .Panel__in {
   padding-bottom: var(--safe-area-inset-bottom);
-  }
+}
 
 .View--ios.View--header .FixedLayout--top {
   top: 64px;
   top: calc(44px + var(--safe-area-inset-top));
-  }
+}
 
 .View--ios .Panel__in {
   padding-bottom: var(--safe-area-inset-bottom);
-  }
+}
 
 /**
  * Panel swipe back
@@ -28,46 +26,46 @@
 
 .View--ios .View__panel--swipe-back-prev {
   box-shadow: -2px 0 12px rgba(0, 0, 0, .3);
-  }
+}
 
 .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-success {
   transition: transform .3s var(--ios-easing);
   transform: translate3d(100%, 0, 0);
-  }
+}
 
 .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-success {
   transition: transform .3s var(--ios-easing);
   transform: translate3d(0, 0, 0);
-  }
+}
 
 .View--ios .View__panel--swipe-back-prev.View__panel--swipe-back-failed {
   transition: transform .3s var(--ios-easing);
   transform: translate3d(0, 0, 0);
-  }
+}
 
 .View--ios .View__panel--swipe-back-next.View__panel--swipe-back-failed {
   transition: transform .3s var(--ios-easing);
   transform: translate3d(-50%, 0, 0);
-  }
+}
 
 /**
  * Panel transition
  */
 .View--ios .View__panel--prev {
   animation: animation-ios-prev-forward .6s var(--ios-easing);
-  }
+}
 
 .View--ios .View__panel--next {
   animation: animation-ios-next-back .6s var(--ios-easing);
-  }
+}
 
 .View--ios .View__panel--prev ~ .View__panel--next {
   animation: animation-ios-next-forward .6s var(--ios-easing);
-  }
+}
 
 .View--ios .View__panel--next ~ .View__panel--prev {
   animation: animation-ios-prev-back .6s var(--ios-easing);
-  }
+}
 
 .View--ios .View__panel--prev .Panel__in::before,
 .View--ios .View__panel--next .Panel__in::before {
@@ -80,21 +78,21 @@
   background: #000;
   content: '';
   pointer-events: none;
-  }
+}
 
 .View--ios .View__panel--prev .Panel__in::before {
   animation: animation-ios-fade-in .6s var(--ios-easing);
-  }
+}
 
 .View--ios .View__panel--next .Panel__in::before {
   animation: animation-ios-fade-out .6s var(--ios-easing);
-  }
+}
 
 .View--ios .View__panel--prev ~ .View__panel--next .Panel__in::before,
 .View--ios .View__panel--next ~ .View__panel--prev .Panel__in::before {
   content: none;
   display: none;
-  }
+}
 
 /**
  * Active panel
@@ -102,64 +100,64 @@
 .View--ios .View__panel--active .Panel__in::before {
   content: none;
   display: none;
-  }
+}
 
 @keyframes animation-ios-next-forward {
   from {
     transform: translate3d(100%, 0, 0);
-    }
+  }
 
   to {
     transform: translate3d(0, 0, 0);
-    }
   }
+}
 
 @keyframes animation-ios-next-back {
   from {
     transform: translate3d(-50%, 0, 0);
-    }
+  }
 
   to {
     transform: translate3d(0, 0, 0);
-    }
   }
+}
 
 @keyframes animation-ios-prev-forward {
   from {
     transform: translate3d(0, 0, 0);
-    }
+  }
 
   to {
     transform: translate3d(-50%, 0, 0);
-    }
   }
+}
 
 @keyframes animation-ios-prev-back {
   from {
     transform: translate3d(0, 0, 0);
-    }
+  }
 
   to {
     transform: translate3d(100%, 0, 0);
-    }
   }
+}
 
 @keyframes animation-ios-fade-in {
   from {
     opacity: 0;
-    }
+  }
 
   to {
     opacity: .3;
-    }
   }
+}
 
 @keyframes animation-ios-fade-out {
   from {
     opacity: .3;
-    }
+  }
 
   to {
     opacity: 0;
-    }
   }
+}
