@@ -1,13 +1,12 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const merge = require('webpack-merge');
 const cssTransformOptions = require('./postcss.config.js');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const config = {
   entry: {
-    vkui: './src/index.js'
+    vkui: './src/index.ts'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -17,9 +16,13 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
+        test: /\.(js|tsx?)$/,
+        loader: 'awesome-typescript-loader',
+        options: {
+          useBabel: true,
+          babelOptions: { babelrc: true },
+          babelCore: '@babel/core'
+        }
       },
       {
         test: /\.css$/,
@@ -31,16 +34,14 @@ const config = {
     minimize: false
   },
   devtool: 'source-map',
-  plugins: [
-    new MiniCssExtractPlugin('[name].css')
-  ],
+  plugins: [new MiniCssExtractPlugin({ filename: '[name].css' })],
   stats: {
     children: false
   },
-  mode: process.env.NODE_ENV || 'development',
+  mode: isProduction ? 'production' : 'development',
   externals: [
     {
-      'react': 'react',
+      react: 'react',
       'prop-types': 'prop-types',
       'react-dom': 'react-dom'
     },
@@ -48,10 +49,4 @@ const config = {
   ]
 };
 
-const devConfig = {};
-
-const prodConfig = {};
-
-module.exports = isProduction
-  ? merge(config, prodConfig)
-  : merge(config, devConfig);
+module.exports = config;

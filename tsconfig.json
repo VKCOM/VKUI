@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowJs": true, // TODO: remove to allow generate declarations,
+    // "declaration": true,
+
+    // TODO: Enable strict type checking and remove all implicit statements
+    // "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": false,
+    "alwaysStrict": false,
+
+    "lib": ["dom"]
+  },
+  "exclude": ["./styleguide", "./docs", "./dist", "./tasks"]
+}
