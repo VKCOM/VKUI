@@ -14,7 +14,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
-    "@vkontakte/appearance": "git@github.com:VKCOM/Appearance.git#v2.1.9",
+    "@vkontakte/appearance": "https://github.com/VKCOM/Appearance#v2.1.9",
     "autoprefixer": "^7.2.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.4",
