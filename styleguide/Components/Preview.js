@@ -37,8 +37,11 @@ class PrepareFrame extends React.Component {
   }
 
   componentDidMount () {
-    let sprite = document.getElementById('__SVG_SPRITE_NODE__');
+    const sprite = document.getElementById('__SVG_SPRITE_NODE__');
+    const masks = document.getElementById('__SVG_MASKS_NODE__');
+
     this.context.document.body.appendChild(sprite.cloneNode(true));
+    this.context.document.body.appendChild(masks.cloneNode(true));
 
     let styles = this.context.document.getElementById('styles');
     if (styles.sheet) this.setState({ loaded: true });
