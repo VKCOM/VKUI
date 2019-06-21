@@ -78,7 +78,8 @@ module.exports = {
           '../src/components/Tooltip/Tooltip.js',
           '../src/components/PullToRefresh/PullToRefresh.js',
           '../src/components/Counter/Counter.js',
-          '../src/components/Touch/Touch.js'
+          '../src/components/Touch/Touch.js',
+          '../src/components/UsersStack/UsersStack.js'
         ]
       }, {
         name: 'Forms',
