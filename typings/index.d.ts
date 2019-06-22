@@ -325,7 +325,12 @@ interface TabbarItemProps extends HasClassName, HasChildren {
 
 interface TabsProps extends StyleObject, HasChildren, HasRef {
   theme?: 'light' | 'header';
-  type?: 'default' |'buttons';
+  type?: 'default' | 'buttons';
+}
+
+interface TabsItemProps extends HasChildren, HasClassName {
+  after?: React.ReactNode;
+  selected?: boolean;
 }
 
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
@@ -379,3 +384,4 @@ export const Switch: React.ComponentType<SwitchProps>;
 export const Tabbar: React.ComponentType<TabbarProps>;
 export const TabbarItem: React.ComponentType<TabbarItemProps>;
 export const Tabs: React.ComponentType<TabsProps>;
+export const TabsItem: React.ComponentType<TabsItemProps>;
