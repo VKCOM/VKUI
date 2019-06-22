@@ -263,14 +263,6 @@ interface RootProps extends HasChildren {
   popout?: React.ReactNode;
 }
 
-interface SliderProps extends StyleObject, HasRef {
-  defaultValue?: number;
-  max?: number;
-  min?: number;
-  onChange?: () => {};
-  value?: number;
-}
-
 interface ScreenSpinnerProps extends StyleObject {}
 
 interface SearchProps extends HasClassName {
@@ -303,6 +295,14 @@ interface SelectMimicryProps extends StyleObject, HasRef, HasChildren {
   placeholder?: string;
   status?: StatusTypes;
   tabIndex?: number;
+}
+
+interface SliderProps extends StyleObject, HasRef {
+  defaultValue?: number;
+  max?: number;
+  min?: number;
+  onChange?: () => {};
+  value?: number;
 }
 
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
@@ -350,3 +350,4 @@ export const ScreenSpinner: React.ComponentType<ScreenSpinnerProps>;
 export const Search: React.ComponentType<SearchProps>;
 export const Select: React.ComponentType<SelectProps>;
 export const SelectMimicry: React.ComponentType<SelectMimicryProps>;
+export const Slider: React.ComponentType<SliderProps>;
