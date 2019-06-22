@@ -223,6 +223,10 @@ interface PanelHeaderEditProps extends PanelHeaderBackProps {
 
 interface PanelHeaderSubmitProps extends PanelHeaderCloseProps {}
 
+interface PanelSpinnerProps {
+  height?: number;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -257,3 +261,4 @@ export const PanelHeaderClose: React.ComponentType<PanelHeaderCloseProps>;
 export const PanelHeaderContent: React.ComponentType<PanelHeaderContentProps>;
 export const PanelHeaderEdit: React.ComponentType<PanelHeaderEditProps>;
 export const PanelHeaderSubmit: React.ComponentType<PanelHeaderSubmitProps>;
+export const PanelSpinner: React.ComponentType<PanelSpinnerProps>;
