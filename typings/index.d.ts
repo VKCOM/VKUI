@@ -138,8 +138,14 @@ interface GalleryProps extends StyleObject, HasChildren, HasAlign {
 }
 
 interface GroupProps extends StyleObject, HasChildren, HasRef {
-    description?: React.ReactNode;
-    title?: React.ReactNode;
+  description?: React.ReactNode;
+  title?: React.ReactNode;
+}
+
+interface HeaderProps extends StyleObject, HasChildren, HasRef {
+  aside?: React.ReactNode;
+  indicator?: React.ReactNode;
+  level?: '1' | '2';
 }
 
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
@@ -161,3 +167,4 @@ export const FormLayoutGroup: React.ComponentType<FormLayoutGroupProps>;
 export const FormStatus: React.ComponentType<FormStatusProps>;
 export const Gallery: React.ComponentType<GalleryProps>;
 export const Group: React.ComponentType<GroupProps>;
+export const Header: React.ComponentType<HeaderProps>;
