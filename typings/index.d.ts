@@ -1,4 +1,3 @@
-/* eslint-disable */
 import * as React from 'react';
 
 type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
@@ -313,6 +312,11 @@ interface SwitchProps extends StyleObject, HasRef {
   getRef?: (instance: React.Ref) => void;
 }
 
+interface TabbarProps extends HasClassName, HasChildren {
+  itemsLayout?: 'vertical' | 'horizontal' | 'auto';
+  shadow?: boolean;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -361,3 +365,4 @@ export const SelectMimicry: React.ComponentType<SelectMimicryProps>;
 export const Slider: React.ComponentType<SliderProps>;
 export const Spinner: React.ComponentType<SpinnerProps>;
 export const Switch: React.ComponentType<SwitchProps>;
+export const Tabbar: React.ComponentType<TabbarProps>;
