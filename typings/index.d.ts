@@ -14,6 +14,10 @@ interface HasChildren {
   children?: React.ReactNode;
 }
 
+interface HasAlign {
+  align?: 'left' | 'center' | 'right';
+}
+
 interface ActionSheetProps extends StyleObject, HasChildren {
   onClose: () => void;
   text?: React.ReactNode;
@@ -44,9 +48,8 @@ interface AvatarProps extends StyleObject, HasChildren, HasRef {
   type?: 'default' | 'image' | 'app';
 }
 
-interface ButtonProps extends StyleObject, HasChildren {
+interface ButtonProps extends StyleObject, HasChildren, HasAlign {
   after?: React.ReactNode;
-  align?: 'left' | 'center' | 'right';
   before?: React.ReactNode;
   level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce';
   size?: 'm' | 'l' | 'xl';
@@ -72,8 +75,7 @@ interface CellProps extends StyleObject, HasChildren, HasRef {
   size?: 'm' | 'l';
 }
 
-interface CellButtonProps extends StyleObject, HasChildren {
-  align: 'left' | 'center' | 'right';
+interface CellButtonProps extends StyleObject, HasChildren, HasAlign {
   before?: React.ReactNode;
   level?: 'primary' | 'danger';
 }
@@ -92,8 +94,7 @@ interface EpicProps extends HasChildren {
   className?: string;
 }
 
-interface FileProps extends StyleObject, HasChildren {
-  align?: 'left' | 'center' | 'right';
+interface FileProps extends StyleObject, HasChildren, HasAlign {
   getRef?: (instance: React.Ref) => void;
 }
 
@@ -124,6 +125,18 @@ interface FormStatusProps extends HasChildren {
   title?: React.ReactNode;
 }
 
+interface GalleryProps extends StyleObject, HasChildren, HasAlign {
+  autoplay?: number;
+  bullets?: 'dark' | 'light' | false;
+  initialSlideIndex?: number;
+  onChange?: () => void;
+  onDragEnd?: () => void;
+  onDragStart?: () => void;
+  onEnd?: () => void;
+  slideIndex?: number;
+  slideWidth?: number | string;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -141,3 +154,4 @@ export const Footer: React.ComponentType<FooterProps>;
 export const FormLayout: React.ComponentType<FormLayoutProps>;
 export const FormLayoutGroup: React.ComponentType<FormLayoutGroupProps>;
 export const FormStatus: React.ComponentType<FormStatusProps>;
+export const Gallery: React.ComponentType<GalleryProps>;
