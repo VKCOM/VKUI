@@ -235,6 +235,10 @@ interface PopoutWrapperProps extends StyleObject, HasChildren {
   v?: 'top' | 'center' | 'bottom';
 }
 
+interface ProgressProps extends StyleObject, HasRef {
+  value?: number;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -271,3 +275,4 @@ export const PanelHeaderEdit: React.ComponentType<PanelHeaderEditProps>;
 export const PanelHeaderSubmit: React.ComponentType<PanelHeaderSubmitProps>;
 export const PanelSpinner: React.ComponentType<PanelSpinnerProps>;
 export const PopoutWrapper: React.ComponentType<PopoutWrapperProps>;
+export const Progress: React.ComponentType<ProgressProps>;
