@@ -204,6 +204,10 @@ interface PanelHeaderBackProps {
   onClick: () => void;
 }
 
+interface PanelHeaderCloseProps extends PanelHeaderBackProps {
+  children?: string;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -234,3 +238,4 @@ export const List: React.ComponentType<ListProps>;
 export const Panel: React.ComponentType<PanelProps>;
 export const PanelHeader: React.ComponentType<PanelHeaderProps>;
 export const PanelHeaderBack: React.ComponentType<PanelHeaderBackProps>;
+export const PanelHeaderClose: React.ComponentType<PanelHeaderCloseProps>;
