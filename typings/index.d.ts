@@ -296,6 +296,15 @@ interface SelectProps extends StyleObject, HasRef, HasChildren {
   value?: any;
 }
 
+interface SelectMimicryProps extends StyleObject, HasRef, HasChildren {
+  alignment?: 'left' | 'center' | 'top';
+  disabled?: boolean;
+  multiline?: boolean;
+  placeholder?: string;
+  status?: StatusTypes;
+  tabIndex?: number;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -340,3 +349,4 @@ export const Root: React.ComponentType<RootProps>;
 export const ScreenSpinner: React.ComponentType<ScreenSpinnerProps>;
 export const Search: React.ComponentType<SearchProps>;
 export const Select: React.ComponentType<SelectProps>;
+export const SelectMimicry: React.ComponentType<SelectMimicryProps>;
