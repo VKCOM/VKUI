@@ -84,6 +84,8 @@ interface CounterProps extends HasChildren {
   type: 'secondary' | 'primary' | 'prominent';
 }
 
+interface DivProps extends StyleObject, HasChildren, HasRef {}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -93,3 +95,4 @@ export const Cell: React.ComponentType<CellProps>;
 export const CellButton: React.ComponentType<CellButtonProps>;
 export const CheckBox: React.ComponentType<CheckBoxProps>;
 export const Counter: React.ComponentType<CounterProps>;
+export const Div: React.ComponentType<DivProps>;
