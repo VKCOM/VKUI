@@ -162,7 +162,19 @@ interface HeaderContextProps extends HasChildren, StyleObject {
 interface HorizontalScrollProps extends StyleObject, HasChildren {}
 
 interface InfoRowProps extends StyleObject, HasChildren {
-  title: React.ReactNode
+  title: React.ReactNode;
+}
+
+interface InputProps extends HasRef {
+  alignment?: 'left' | 'center' | 'right';
+  className?: string;
+  defaultValue?: string;
+  getRef?: (instance: React.Ref) => void;
+  onChange?: () => {};
+  placeholder?: string;
+  status?: 'default' | 'error' | 'valid';
+  type?: string;
+  value?: string;
 }
 
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
@@ -189,3 +201,4 @@ export const HeaderButton: React.ComponentType<HeaderButtonProps>;
 export const HeaderContext: React.ComponentType<HeaderContextProps>;
 export const HorizontalScroll: React.ComponentType<HorizontalScrollProps>;
 export const InfoRow: React.ComponentType<InfoRowProps>;
+export const Input: React.ComponentType<InputProps>;
