@@ -333,6 +333,16 @@ interface TabsItemProps extends HasChildren, HasClassName {
   selected?: boolean;
 }
 
+interface TextareaProps extends StyleObject, HasRef {
+  defaultValue?: string;
+  getRef?: (instance: React.Ref) => void;
+  grow?: boolean;
+  onChange?: () => void;
+  onResize?: () => void;
+  status?: StatusTypes;
+  value?: string;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -385,3 +395,4 @@ export const Tabbar: React.ComponentType<TabbarProps>;
 export const TabbarItem: React.ComponentType<TabbarItemProps>;
 export const Tabs: React.ComponentType<TabsProps>;
 export const TabsItem: React.ComponentType<TabsItemProps>;
+export const Textarea: React.ComponentType<TextareaProps>;
