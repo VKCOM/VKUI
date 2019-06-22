@@ -273,6 +273,17 @@ interface SliderProps extends StyleObject, HasRef {
 
 interface ScreenSpinnerProps extends StyleObject {}
 
+interface SearchProps extends HasClassName {
+  after?: React.ReactNode;
+  autoComplete?: string;
+  autoFocus?: boolean;
+  before?: React.ReactNode;
+  getRef?: (instance: React.Ref) => void;
+  onChange?: () => void;
+  onClose?: () => void;
+  theme?: 'header' | 'default';
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -315,3 +326,4 @@ export const Radio: React.ComponentType<RadioProps>;
 export const RangeSlider: React.ComponentType<RangeSliderProps>;
 export const Root: React.ComponentType<RootProps>;
 export const ScreenSpinner: React.ComponentType<ScreenSpinnerProps>;
+export const Search: React.ComponentType<SearchProps>;
