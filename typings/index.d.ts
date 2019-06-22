@@ -343,6 +343,19 @@ interface TextareaProps extends StyleObject, HasRef {
   value?: string;
 }
 
+interface TooltipProps {
+  children: React.ReactNode;
+  isShown?: boolean;
+  onClose: () => void;
+  alignX?: 'left' | 'right';
+  alignY?: 'top' | 'bottom';
+  cornerOffset?: number;
+  offsetX?: number;
+  offsetY?: number;
+  text?: React.ReactNode;
+  title?: React.ReactNode;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -396,3 +409,4 @@ export const TabbarItem: React.ComponentType<TabbarItemProps>;
 export const Tabs: React.ComponentType<TabsProps>;
 export const TabsItem: React.ComponentType<TabsItemProps>;
 export const Textarea: React.ComponentType<TextareaProps>;
+export const Tooltip: React.ComponentType<TooltipProps>;
