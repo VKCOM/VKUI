@@ -50,8 +50,30 @@ interface ButtonProps extends StyleObject {
   stretched?: boolean;
 }
 
+interface CellProps extends StyleObject {
+  asideContent?: React.ReactNode;
+  before?: React.ReactNode;
+  bottomContent?: React.ReactNode;
+  children?: React.ReactNode;
+  description?: React.ReactNode;
+  draggable?: boolean;
+  expandable?: boolean;
+  getRootRef?: (instance: React.Ref) => void;
+  href?: string;
+  indicator?: React.ReactNode;
+  multiline?: boolean;
+  onClick?: () => void;
+  onDragFinish?: () => void;
+  onRemove?: () => void;
+  removable?: boolean;
+  removePlaceholder?: React.ReactNode;
+  selectable?: boolean;
+  size?: 'm' | 'l';
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
 export const Avatar: React.ComponentType<AvatarProps>;
 export const Button: React.ComponentType<ButtonProps>;
+export const Cell: React.ComponentType<CellProps>;
