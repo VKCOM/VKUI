@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as React from 'react';
 
 // Basic interfaces
@@ -249,7 +250,9 @@ interface RadioProps extends StyleObject, HasChildren, HasRef {
   getRef?: (instance: React.Ref) => void;
 }
 
-interface RangeSliderProps extends SliderProps {
+type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
+
+interface RangeSliderProps extends Omit<SliderProps, 'value'|'defaultValue'> {
   defaultValue?: number[];
   value?: number[];
 }
