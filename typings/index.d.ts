@@ -86,6 +86,12 @@ interface CounterProps extends HasChildren {
 
 interface DivProps extends StyleObject, HasChildren, HasRef {}
 
+interface EpicProps extends HasChildren {
+  activeStory: string;
+  tabbar: React.ReactNode;
+  className?: string;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -96,3 +102,4 @@ export const CellButton: React.ComponentType<CellButtonProps>;
 export const CheckBox: React.ComponentType<CheckBoxProps>;
 export const Counter: React.ComponentType<CounterProps>;
 export const Div: React.ComponentType<DivProps>;
+export const Epic: React.ComponentType<EpicProps>;
