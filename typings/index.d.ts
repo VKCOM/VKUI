@@ -323,6 +323,11 @@ interface TabbarItemProps extends HasClassName, HasChildren {
   text?: React.ReactNode;
 }
 
+interface TabsProps extends StyleObject, HasChildren, HasRef {
+  theme?: 'light' | 'header';
+  type?: 'default' |'buttons';
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -373,3 +378,4 @@ export const Spinner: React.ComponentType<SpinnerProps>;
 export const Switch: React.ComponentType<SwitchProps>;
 export const Tabbar: React.ComponentType<TabbarProps>;
 export const TabbarItem: React.ComponentType<TabbarItemProps>;
+export const Tabs: React.ComponentType<TabsProps>;
