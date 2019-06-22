@@ -317,6 +317,12 @@ interface TabbarProps extends HasClassName, HasChildren {
   shadow?: boolean;
 }
 
+interface TabbarItemProps extends HasClassName, HasChildren {
+  label?: React.ReactNode;
+  selected?: boolean;
+  text?: React.ReactNode;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -366,3 +372,4 @@ export const Slider: React.ComponentType<SliderProps>;
 export const Spinner: React.ComponentType<SpinnerProps>;
 export const Switch: React.ComponentType<SwitchProps>;
 export const Tabbar: React.ComponentType<TabbarProps>;
+export const TabbarItem: React.ComponentType<TabbarItemProps>;
