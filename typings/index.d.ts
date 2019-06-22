@@ -183,6 +183,8 @@ interface LinkProps extends HasRef, HasChildren, HasClassName {
   Component?: any;
 }
 
+interface ListProps extends StyleObject, HasChildren {}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -209,3 +211,4 @@ export const HorizontalScroll: React.ComponentType<HorizontalScrollProps>;
 export const InfoRow: React.ComponentType<InfoRowProps>;
 export const Input: React.ComponentType<InputProps>;
 export const Link: React.ComponentType<LinkProps>;
+export const List: React.ComponentType<ListProps>;
