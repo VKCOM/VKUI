@@ -137,6 +137,11 @@ interface GalleryProps extends StyleObject, HasChildren, HasAlign {
   slideWidth?: number | string;
 }
 
+interface GroupProps extends StyleObject, HasChildren, HasRef {
+    description?: React.ReactNode;
+    title?: React.ReactNode;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -155,3 +160,4 @@ export const FormLayout: React.ComponentType<FormLayoutProps>;
 export const FormLayoutGroup: React.ComponentType<FormLayoutGroupProps>;
 export const FormStatus: React.ComponentType<FormStatusProps>;
 export const Gallery: React.ComponentType<GalleryProps>;
+export const Group: React.ComponentType<GroupProps>;
