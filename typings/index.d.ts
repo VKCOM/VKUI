@@ -284,6 +284,18 @@ interface SearchProps extends HasClassName {
   theme?: 'header' | 'default';
 }
 
+interface SelectProps extends StyleObject, HasRef, HasChildren {
+  alignment?: 'left' | 'center' | 'top';
+  defaultValue?: any;
+  getRef?: (instance: React.Ref) => void;
+  label?: string;
+  name?: string;
+  onChange?: () => void;
+  placeholder?: string;
+  status?: StatusTypes;
+  value?: any;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -327,3 +339,4 @@ export const RangeSlider: React.ComponentType<RangeSliderProps>;
 export const Root: React.ComponentType<RootProps>;
 export const ScreenSpinner: React.ComponentType<ScreenSpinnerProps>;
 export const Search: React.ComponentType<SearchProps>;
+export const Select: React.ComponentType<SelectProps>;
