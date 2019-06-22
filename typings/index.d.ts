@@ -185,6 +185,12 @@ interface LinkProps extends HasRef, HasChildren, HasClassName {
 
 interface ListProps extends StyleObject, HasChildren {}
 
+interface PanelProps extends StyleObject, HasChildren {
+  id: string;
+  centered?: boolean;
+  theme?: 'white' | 'gray';
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -212,3 +218,4 @@ export const InfoRow: React.ComponentType<InfoRowProps>;
 export const Input: React.ComponentType<InputProps>;
 export const Link: React.ComponentType<LinkProps>;
 export const List: React.ComponentType<ListProps>;
+export const Panel: React.ComponentType<PanelProps>;
