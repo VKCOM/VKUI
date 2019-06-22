@@ -92,6 +92,11 @@ interface EpicProps extends HasChildren {
   className?: string;
 }
 
+interface FileProps extends StyleObject, HasChildren {
+  align?: 'left' | 'center' | 'right';
+  getRef?: (instance: React.Ref) => void;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -103,3 +108,4 @@ export const CheckBox: React.ComponentType<CheckBoxProps>;
 export const Counter: React.ComponentType<CounterProps>;
 export const Div: React.ComponentType<DivProps>;
 export const Epic: React.ComponentType<EpicProps>;
+export const File: React.ComponentType<FileProps>;
