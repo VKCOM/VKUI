@@ -19,5 +19,19 @@ interface ActionSheetItemProps extends StyleObject {
   theme?: 'default' | 'destructive' | 'cancel';
 }
 
+interface AlertActions {
+  title?: string;
+  action?: () => void;
+  style?: 'cancel' | 'destructive' | 'default';
+}
+
+interface AlertProps extends StyleObject {
+  onClose: () => void;
+  actions?: AlertActions;
+  actionsLayout?: 'vertical' | 'horizontal';
+  children?: React.ReactNode;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
+export const Alert: React.ComponentType<AlertProps>;
