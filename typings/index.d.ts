@@ -371,6 +371,13 @@ interface TouchProps extends HasChildren, HasRef {
   useCapture?: boolean;
 }
 
+interface UsersStackProps extends StyleObject, HasChildren {
+  count?: number;
+  photos?: string[];
+  size?: 's' | 'm';
+  vertical?: boolean;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -426,3 +433,4 @@ export const TabsItem: React.ComponentType<TabsItemProps>;
 export const Textarea: React.ComponentType<TextareaProps>;
 export const Tooltip: React.ComponentType<TooltipProps>;
 export const Touch: React.ComponentType<TouchProps>;
+export const UsersStack: React.ComponentType<UsersStackProps>;
