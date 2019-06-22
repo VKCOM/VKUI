@@ -239,6 +239,11 @@ interface ProgressProps extends StyleObject, HasRef {
   value?: number;
 }
 
+interface PullToRefreshProps extends HasChildren, HasClassName {
+  onRefresh: () => void;
+  isFetching?: boolean;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -276,3 +281,4 @@ export const PanelHeaderSubmit: React.ComponentType<PanelHeaderSubmitProps>;
 export const PanelSpinner: React.ComponentType<PanelSpinnerProps>;
 export const PopoutWrapper: React.ComponentType<PopoutWrapperProps>;
 export const Progress: React.ComponentType<ProgressProps>;
+export const PullToRefresh: React.ComponentType<PullToRefreshProps>;
