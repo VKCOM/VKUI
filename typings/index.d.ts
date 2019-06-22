@@ -1,6 +1,8 @@
 /* eslint-disable */
 import * as React from 'react';
 
+type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
+
 // Basic interfaces
 interface HasClassName {
   className?: React.ReactNode;
@@ -250,11 +252,15 @@ interface RadioProps extends StyleObject, HasChildren, HasRef {
   getRef?: (instance: React.Ref) => void;
 }
 
-type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
-
-interface RangeSliderProps extends Omit<SliderProps, 'value'|'defaultValue'> {
+interface RangeSliderProps extends Omit<SliderProps, 'value' | 'defaultValue'> {
   defaultValue?: number[];
   value?: number[];
+}
+
+interface RootProps extends HasChildren {
+  activeView: string;
+  onTransition: () => {};
+  popout?: React.ReactNode;
 }
 
 interface SliderProps extends StyleObject, HasRef {
@@ -305,3 +311,4 @@ export const Progress: React.ComponentType<ProgressProps>;
 export const PullToRefresh: React.ComponentType<PullToRefreshProps>;
 export const Radio: React.ComponentType<RadioProps>;
 export const RangeSlider: React.ComponentType<RangeSliderProps>;
+export const Root: React.ComponentType<RootProps>;
