@@ -208,6 +208,13 @@ interface PanelHeaderCloseProps extends PanelHeaderBackProps {
   children?: string;
 }
 
+interface PanelHeaderContentProps extends StyleObject, HasChildren {
+  aside?: React.ReactNode;
+  before?: React.ReactNode;
+  onClick?: () => void;
+  status?: React.ReactNode;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -239,3 +246,4 @@ export const Panel: React.ComponentType<PanelProps>;
 export const PanelHeader: React.ComponentType<PanelHeaderProps>;
 export const PanelHeaderBack: React.ComponentType<PanelHeaderBackProps>;
 export const PanelHeaderClose: React.ComponentType<PanelHeaderCloseProps>;
+export const PanelHeaderContent: React.ComponentType<PanelHeaderContentProps>;
