@@ -148,10 +148,15 @@ interface HeaderProps extends StyleObject, HasChildren, HasRef {
   level?: '1' | '2';
 }
 
-interface HeaderButtonGroup extends HasChildren {
+interface HeaderButtonProps extends HasChildren {
   className?: string;
   href?: string;
   primary?: boolean;
+}
+
+interface HeaderContextProps extends HasChildren, StyleObject {
+  onClose: () => void;
+  opened: boolean;
 }
 
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
@@ -174,4 +179,5 @@ export const FormStatus: React.ComponentType<FormStatusProps>;
 export const Gallery: React.ComponentType<GalleryProps>;
 export const Group: React.ComponentType<GroupProps>;
 export const Header: React.ComponentType<HeaderProps>;
-export const HeaderButton: React.ComponentType<HeaderButtonGroup>;
+export const HeaderButton: React.ComponentType<HeaderButtonProps>;
+export const HeaderContext: React.ComponentType<HeaderContextProps>;
