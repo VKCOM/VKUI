@@ -1,20 +1,27 @@
 import * as React from 'react';
 
+// Basic interfaces
 interface StyleObject {
   style?: React.CSSProperties;
   className?: string;
 }
 
-interface ActionSheetProps extends StyleObject {
-  onClose: () => void;
+interface HasRef {
+  getRootRef?: (instance: React.Ref) => void;
+}
+
+interface HasChildren {
   children?: React.ReactNode;
+}
+
+interface ActionSheetProps extends StyleObject, HasChildren {
+  onClose: () => void;
   text?: React.ReactNode;
   title?: React.ReactNode;
 }
 
-interface ActionSheetItemProps extends StyleObject {
+interface ActionSheetItemProps extends StyleObject, HasChildren {
   autoclose?: boolean;
-  children?: React.ReactNode;
   onClick?: () => void;
   theme?: 'default' | 'destructive' | 'cancel';
 }
@@ -25,40 +32,34 @@ interface AlertActions {
   style?: 'cancel' | 'destructive' | 'default';
 }
 
-interface AlertProps extends StyleObject {
+interface AlertProps extends StyleObject, HasChildren {
   onClose: () => void;
   actions?: AlertActions;
   actionsLayout?: 'vertical' | 'horizontal';
-  children?: React.ReactNode;
 }
 
-interface AvatarProps extends StyleObject {
-  children?: React.ReactNode;
-  getRootRef?: (instance: React.Ref) => void;
+interface AvatarProps extends StyleObject, HasChildren, HasRef {
   size?: 80 | 72 | 64 | 56 | 48 | 40 | 36 | 32 | 28;
   src?: string;
   type?: 'default' | 'image' | 'app';
 }
 
-interface ButtonProps extends StyleObject {
+interface ButtonProps extends StyleObject, HasChildren {
   after?: React.ReactNode;
   align?: 'left' | 'center' | 'right';
   before?: React.ReactNode;
-  children?: React.ReactNode;
   level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce';
   size?: 'm' | 'l' | 'xl';
   stretched?: boolean;
 }
 
-interface CellProps extends StyleObject {
+interface CellProps extends StyleObject, HasChildren, HasRef {
   asideContent?: React.ReactNode;
   before?: React.ReactNode;
   bottomContent?: React.ReactNode;
-  children?: React.ReactNode;
   description?: React.ReactNode;
   draggable?: boolean;
   expandable?: boolean;
-  getRootRef?: (instance: React.Ref) => void;
   href?: string;
   indicator?: React.ReactNode;
   multiline?: boolean;
@@ -71,12 +72,13 @@ interface CellProps extends StyleObject {
   size?: 'm' | 'l';
 }
 
-interface CellButtonProps extends StyleObject {
+interface CellButtonProps extends StyleObject, HasChildren {
   align: 'left' | 'center' | 'right';
   before?: React.ReactNode;
-  children?: React.ReactNode;
   level?: 'primary' | 'danger';
 }
+
+interface CheckBoxProps extends StyleObject, HasChildren, HasRef {}
 
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
@@ -85,3 +87,4 @@ export const Avatar: React.ComponentType<AvatarProps>;
 export const Button: React.ComponentType<ButtonProps>;
 export const Cell: React.ComponentType<CellProps>;
 export const CellButton: React.ComponentType<CellButtonProps>;
+export const CheckBox: React.ComponentType<CheckBoxProps>;
