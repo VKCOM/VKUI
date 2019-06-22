@@ -309,6 +309,10 @@ interface SpinnerProps extends StyleObject {
   size?: 'small' | 'regular' | 'large' | 'medium';
 }
 
+interface SwitchProps extends StyleObject, HasRef {
+  getRef?: (instance: React.Ref) => void;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -356,3 +360,4 @@ export const Select: React.ComponentType<SelectProps>;
 export const SelectMimicry: React.ComponentType<SelectMimicryProps>;
 export const Slider: React.ComponentType<SliderProps>;
 export const Spinner: React.ComponentType<SpinnerProps>;
+export const Switch: React.ComponentType<SwitchProps>;
