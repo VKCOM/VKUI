@@ -271,6 +271,8 @@ interface SliderProps extends StyleObject, HasRef {
   value?: number;
 }
 
+interface ScreenSpinnerProps extends StyleObject {}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -312,3 +314,4 @@ export const PullToRefresh: React.ComponentType<PullToRefreshProps>;
 export const Radio: React.ComponentType<RadioProps>;
 export const RangeSlider: React.ComponentType<RangeSliderProps>;
 export const Root: React.ComponentType<RootProps>;
+export const ScreenSpinner: React.ComponentType<ScreenSpinnerProps>;
