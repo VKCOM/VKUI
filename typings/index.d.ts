@@ -1,9 +1,12 @@
 import * as React from 'react';
 
 // Basic interfaces
-interface StyleObject {
+interface HasClassName {
+  className?: React.ReactNode;
+}
+
+interface StyleObject extends HasClassName {
   style?: React.CSSProperties;
-  className?: string;
 }
 
 interface HasRef {
@@ -14,8 +17,11 @@ interface HasChildren {
   children?: React.ReactNode;
 }
 
+type AlignTypes = 'left' | 'center' | 'right';
+type StatusTypes = 'default' | 'error' | 'valid';
+
 interface HasAlign {
-  align?: 'left' | 'center' | 'right';
+  align?: AlignTypes;
 }
 
 interface ActionSheetProps extends StyleObject, HasChildren {
@@ -83,7 +89,7 @@ interface CellButtonProps extends StyleObject, HasChildren, HasAlign {
 interface CheckBoxProps extends StyleObject, HasChildren, HasRef {}
 
 interface CounterProps extends HasChildren {
-  type: 'secondary' | 'primary' | 'prominent';
+  type?: 'secondary' | 'primary' | 'prominent';
 }
 
 interface DivProps extends StyleObject, HasChildren, HasRef {}
@@ -104,22 +110,20 @@ interface FixedLayoutProps extends StyleObject, HasChildren, HasRef {
 
 interface FooterProps extends StyleObject, HasChildren {}
 
-interface FormLayoutProps extends HasChildren {
+interface FormLayoutProps extends HasChildren, HasClassName {
   TagName?: string;
-  className?: string;
   getRef?: (instance: React.Ref) => void;
   onSubmit?: () => void;
-  status?: 'default' | 'error' | 'valid';
+  status?: StatusTypes;
 }
 
 interface FormLayoutGroupProps extends StyleObject, HasChildren {
   bottom?: React.ReactNode;
-  status?: 'default' | 'error' | 'valid';
+  status?: StatusTypes;
   top?: React.ReactNode;
 }
 
-interface FormStatusProps extends HasChildren {
-  className?: string;
+interface FormStatusProps extends HasChildren, HasClassName {
   dangerouslySetInnerHTML?: { __html: string };
   state?: 'default' | 'error';
   title?: React.ReactNode;
@@ -148,8 +152,7 @@ interface HeaderProps extends StyleObject, HasChildren, HasRef {
   level?: '1' | '2';
 }
 
-interface HeaderButtonProps extends HasChildren {
-  className?: string;
+interface HeaderButtonProps extends HasChildren, HasClassName {
   href?: string;
   primary?: boolean;
 }
@@ -165,16 +168,19 @@ interface InfoRowProps extends StyleObject, HasChildren {
   title: React.ReactNode;
 }
 
-interface InputProps extends HasRef {
-  alignment?: 'left' | 'center' | 'right';
-  className?: string;
+interface InputProps extends HasRef, HasClassName {
+  alignment?: AlignTypes;
   defaultValue?: string;
   getRef?: (instance: React.Ref) => void;
   onChange?: () => {};
   placeholder?: string;
-  status?: 'default' | 'error' | 'valid';
+  status?: StatusTypes;
   type?: string;
   value?: string;
+}
+
+interface LinkProps extends HasRef, HasChildren, HasClassName {
+  Component?: any;
 }
 
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
@@ -202,3 +208,4 @@ export const HeaderContext: React.ComponentType<HeaderContextProps>;
 export const HorizontalScroll: React.ComponentType<HorizontalScrollProps>;
 export const InfoRow: React.ComponentType<InfoRowProps>;
 export const Input: React.ComponentType<InputProps>;
+export const Link: React.ComponentType<LinkProps>;
