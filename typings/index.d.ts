@@ -200,6 +200,10 @@ interface PanelHeaderProps extends HasChildren {
   theme?: 'alternate' | 'brand';
 }
 
+interface PanelHeaderBackProps {
+  onClick: () => void;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -229,3 +233,4 @@ export const Link: React.ComponentType<LinkProps>;
 export const List: React.ComponentType<ListProps>;
 export const Panel: React.ComponentType<PanelProps>;
 export const PanelHeader: React.ComponentType<PanelHeaderProps>;
+export const PanelHeaderBack: React.ComponentType<PanelHeaderBackProps>;
