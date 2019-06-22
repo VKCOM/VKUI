@@ -215,6 +215,12 @@ interface PanelHeaderContentProps extends StyleObject, HasChildren {
   status?: React.ReactNode;
 }
 
+interface PanelHeaderEditProps extends PanelHeaderBackProps {
+  doneLabel?: string;
+  editLabel?: string;
+  isActive?: boolean;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -247,3 +253,4 @@ export const PanelHeader: React.ComponentType<PanelHeaderProps>;
 export const PanelHeaderBack: React.ComponentType<PanelHeaderBackProps>;
 export const PanelHeaderClose: React.ComponentType<PanelHeaderCloseProps>;
 export const PanelHeaderContent: React.ComponentType<PanelHeaderContentProps>;
+export const PanelHeaderEdit: React.ComponentType<PanelHeaderEditProps>;
