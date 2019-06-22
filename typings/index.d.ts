@@ -103,6 +103,14 @@ interface FixedLayoutProps extends StyleObject, HasChildren, HasRef {
 
 interface FooterProps extends StyleObject, HasChildren {}
 
+interface FormLayoutProps extends HasChildren {
+  TagName?: string;
+  className?: string;
+  getRef?: (instance: React.Ref) => void;
+  onSubmit?: () => void;
+  status?: 'default' | 'error' | 'valid';
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -117,3 +125,4 @@ export const Epic: React.ComponentType<EpicProps>;
 export const File: React.ComponentType<FileProps>;
 export const FixedLayout: React.ComponentType<FixedLayoutProps>;
 export const Footer: React.ComponentType<FooterProps>;
+export const FormLayout: React.ComponentType<FormLayoutProps>;
