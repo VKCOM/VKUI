@@ -111,6 +111,12 @@ interface FormLayoutProps extends HasChildren {
   status?: 'default' | 'error' | 'valid';
 }
 
+interface FormLayoutGroupProps extends StyleObject, HasChildren {
+  bottom?: React.ReactNode;
+  status?: 'default' | 'error' | 'valid';
+  top?: React.ReactNode;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -126,3 +132,4 @@ export const File: React.ComponentType<FileProps>;
 export const FixedLayout: React.ComponentType<FixedLayoutProps>;
 export const Footer: React.ComponentType<FooterProps>;
 export const FormLayout: React.ComponentType<FormLayoutProps>;
+export const FormLayoutGroup: React.ComponentType<FormLayoutGroupProps>;
