@@ -40,7 +40,18 @@ interface AvatarProps extends StyleObject {
   type?: 'default' | 'image' | 'app';
 }
 
+interface ButtonProps extends StyleObject {
+  after?: React.ReactNode;
+  align?: 'left' | 'center' | 'right';
+  before?: React.ReactNode;
+  children?: React.ReactNode;
+  level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce';
+  size?: 'm' | 'l' | 'xl';
+  stretched?: boolean;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
 export const Avatar: React.ComponentType<AvatarProps>;
+export const Button: React.ComponentType<ButtonProps>;
