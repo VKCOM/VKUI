@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
-
-import HeaderButton from '../HeaderButton/HeaderButton';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon24Search from '@vkontakte/icons/dist/24/search';
+import getClassName from '../../helpers/getClassName';
+import classNames from '../../lib/classNames';
+import HeaderButton from '../HeaderButton/HeaderButton';
 
 const baseClassName = getClassName('Search');
 
@@ -59,7 +58,7 @@ export default class SearchAndroid extends React.Component {
     this.inputEl.focus();
   };
 
-  onChange = (e) => {
+  onChange = e => {
     if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
     }
@@ -76,7 +75,7 @@ export default class SearchAndroid extends React.Component {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  inputRef = (el) => {
+  inputRef = el => {
     this.inputEl = el;
     this.props.getRef && this.props.getRef(el);
   };
@@ -85,17 +84,26 @@ export default class SearchAndroid extends React.Component {
     const { getRef, value, defaultValue, onChange, onClose, theme, autoFocus, ...inputProps } = this.props;
     const hasValue = !!this.value;
 
-    const className = classNames(baseClassName, `Search--${theme}`, {
-      'Search--has-value': hasValue,
-      'Search--vkapps': this.context.webviewType === 'vkapps'
-    }, this.props.className);
+    const className = classNames(
+      baseClassName,
+      `Search--${theme}`,
+      {
+        'Search--has-value': hasValue,
+        'Search--vkapps': this.context.webviewType === 'vkapps'
+      },
+      this.props.className
+    );
 
     return (
       <div className={className}>
         <div className="Search__container">
           <div className="Search__before">
-            {theme === 'default' && <Icon24Search/>}
-            {theme === 'header' && <HeaderButton onClick={onClose}><Icon24Back/></HeaderButton>}
+            {theme === 'default' && <Icon24Search />}
+            {theme === 'header' && (
+              <HeaderButton onClick={onClose}>
+                <Icon24Back />
+              </HeaderButton>
+            )}
           </div>
           <div className="Search__control">
             <input
@@ -106,12 +114,16 @@ export default class SearchAndroid extends React.Component {
               onChange={this.onChange}
             />
           </div>
-          {hasValue &&
-          <div className="Search__after">
-            {theme === 'default' && <Icon24Cancel onClick={this.onCancel}/>}
-            {theme === 'header' && <HeaderButton onClick={this.onCancel}><Icon24Cancel/></HeaderButton>}
-          </div>
-          }
+          {hasValue && (
+            <div className="Search__after">
+              {theme === 'default' && <Icon24Cancel onClick={this.onCancel} />}
+              {theme === 'header' && (
+                <HeaderButton onClick={this.onCancel}>
+                  <Icon24Cancel />
+                </HeaderButton>
+              )}
+            </div>
+          )}
         </div>
       </div>
     );

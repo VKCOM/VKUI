@@ -41,7 +41,7 @@ const config = {
   mode: isProduction ? 'production' : 'development',
   externals: [
     {
-      react: 'react',
+      'react': 'react',
       'prop-types': 'prop-types',
       'react-dom': 'react-dom'
     },

@@ -1,16 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 
 const baseClassName = getClassName('CellButton');
 
 const CellButton = ({ className, align, level, before, children, ...restProps }) => (
-  <Tappable {...restProps} className={classNames(baseClassName, className, {
-    [`CellButton--lvl-${level}`]: level,
-    [`CellButton--aln-${align}`]: align
-  })} stopPropagation>
+  <Tappable
+    {...restProps}
+    className={classNames(baseClassName, className, {
+      [`CellButton--lvl-${level}`]: level,
+      [`CellButton--aln-${align}`]: align
+    })}
+    stopPropagation
+  >
     <div className="CellButton__in">
       {before && <div className="CellButton__before">{before}</div>}
       {children && <div className="CellButton__content">{children}</div>}

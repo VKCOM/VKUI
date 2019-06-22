@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { IS_PLATFORM_IOS } from '../../lib/platform';
 import SearchIOS from '../SearchIOS/SearchIOS';
 import SearchAndroid from '../SearchAndroid/SearchAndroid';
-import PropTypes from 'prop-types';
 
 export default class Search extends React.Component {
   static propTypes = {

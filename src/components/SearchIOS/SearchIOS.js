@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Icon16Search from '@vkontakte/icons/dist/16/search';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-
-import Icon16Search from '@vkontakte/icons/dist/16/search';
 
 const baseClassName = getClassName('Search');
 
@@ -52,17 +51,17 @@ export default class SearchIOS extends React.Component {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  onFocus = (e) => {
+  onFocus = e => {
     this.setState({ focused: true });
     this.props.onFocus && this.props.onFocus(e);
   };
 
-  onBlur = (e) => {
+  onBlur = e => {
     this.setState({ focused: false });
     this.props.onBlur && this.props.onBlur(e);
   };
 
-  onChange = (e) => {
+  onChange = e => {
     if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
     }
@@ -98,12 +97,18 @@ export default class SearchIOS extends React.Component {
     } = this.props;
 
     return (
-      <div className={classNames(baseClassName, {
-        [`Search--${theme}`]: true,
-        'Search--focused': this.state.focused,
-        'Search--has-value': this.value,
-        'Search--has-after': after
-      }, className)}>
+      <div
+        className={classNames(
+          baseClassName,
+          {
+            [`Search--${theme}`]: true,
+            'Search--focused': this.state.focused,
+            'Search--has-value': this.value,
+            'Search--has-after': after
+          },
+          className
+        )}
+      >
         <div className="Search__in">
           <div className="Search__width" />
           <div className="Search__control">
@@ -119,21 +124,18 @@ export default class SearchIOS extends React.Component {
               value={this.value}
             />
             {after && <div className="Search__after-width">{after}</div>}
-            <label
-              className="Search__placeholder"
-              htmlFor={`search-${searchId}`}
-            >
+            <label className="Search__placeholder" htmlFor={`search-${searchId}`}>
               <div className="Search__placeholder-in">
-                <Icon16Search/>
-                <div className="Search__placeholder-text" dangerouslySetInnerHTML={{__html: placeholder}} />
+                <Icon16Search />
+                <div className="Search__placeholder-text" dangerouslySetInnerHTML={{ __html: placeholder }} />
               </div>
             </label>
           </div>
-          {after &&
-          <div className="Search__after" onClick={this.onCancel}>
-            <div className="Search__after-in">{after}</div>
-          </div>
-          }
+          {after && (
+            <div className="Search__after" onClick={this.onCancel}>
+              <div className="Search__after-in">{after}</div>
+            </div>
+          )}
         </div>
       </div>
     );

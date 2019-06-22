@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import HeaderButton from '../HeaderButton/HeaderButton';
 import Icon24Done from '@vkontakte/icons/dist/24/done';
+import HeaderButton from '../HeaderButton/HeaderButton';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 
 const PanelHeaderSubmit = ({ children, ...restProps }) => (

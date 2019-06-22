@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import PropTypes from 'prop-types';
 
 const baseClassName = getClassName('Avatar');
 
@@ -17,7 +17,7 @@ const Avatar = ({ src, size, type, style, className, children, getRootRef, ...re
       borderRadius = 4;
       break;
     case 'app':
-      borderRadius = Math.floor(size * 10 / 48);
+      borderRadius = Math.floor((size * 10) / 48);
       break;
   }
 
@@ -30,7 +30,11 @@ const Avatar = ({ src, size, type, style, className, children, getRootRef, ...re
           src={src}
           style={{ ...style, width: size, height: size, borderRadius }}
         />
-        {children && <div className="Avatar__children" style={{ width: size, height: size, borderRadius }}>{children}</div>}
+        {children && (
+          <div className="Avatar__children" style={{ width: size, height: size, borderRadius }}>
+            {children}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -52,4 +56,3 @@ Avatar.defaultProps = {
 };
 
 export default Avatar;
-

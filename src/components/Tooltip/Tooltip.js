@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import ReactDOM from 'react-dom';
 
 const isElement = element => React.isValidElement(element);
 const isDOMTypeElement = element => isElement(element) && typeof element.type === 'string';
@@ -81,25 +81,29 @@ class TooltipPortal extends React.Component {
     });
   }
 
-  getRef = el => this.el = el;
+  getRef = el => (this.el = el);
 
   render () {
     const { title, text, alignX, alignY, cornerOffset } = this.props;
 
     return ReactDOM.createPortal(
-      <div className={classNames(baseClassName, {
-        [`Tooltip--x-${alignX}`]: true,
-        [`Tooltip--y-${alignY}`]: true,
-        'Tooltip--fixed': this.fixedPortal
-      })}>
+      <div
+        className={classNames(baseClassName, {
+          [`Tooltip--x-${alignX}`]: true,
+          [`Tooltip--y-${alignY}`]: true,
+          'Tooltip--fixed': this.fixedPortal
+        })}
+      >
         <div className="Tooltip__container" style={{ top: this.state.y, left: this.state.x }} ref={this.getRef}>
-          <div className="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }}/>
+          <div className="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }} />
           <div className="Tooltip__content">
             {title && <div className="Tooltip__title">{title}</div>}
             {text && <div className="Tooltip__text">{text}</div>}
           </div>
         </div>
-      </div>, this.portalTarget);
+      </div>,
+      this.portalTarget
+    );
   }
 }
 
@@ -166,13 +170,14 @@ export default class Tooltip extends React.Component {
     this.targetEl && this.setState({ ready: true });
   }
 
-  getRef = el => this.targetEl = el;
+  getRef = el => (this.targetEl = el);
 
   render () {
     const { children, isShown, ...portalProps } = this.props;
 
     const child = React.cloneElement(children, {
-      [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: this.getRef, key: 'c'
+      [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: this.getRef,
+      key: 'c'
     });
 
     if (!isShown || !this.state.ready) {

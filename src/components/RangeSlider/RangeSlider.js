@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import Slider from '../Slider/Slider';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 
 const baseClassNames = getClassName('Slider');
@@ -24,7 +24,7 @@ export default class RangeSlider extends Slider {
     this.onChange(this.percentToValue(percentRange), e);
 
     if (this.isControlledOutside) {
-      this.setState({startX: absolutePosition});
+      this.setState({ startX: absolutePosition });
     } else {
       this.setState({
         startX: absolutePosition,
@@ -56,27 +56,27 @@ export default class RangeSlider extends Slider {
   };
 
   calcPercentRange (percent) {
-    const {percentStart, percentEnd} = this.state;
+    const { percentStart, percentEnd } = this.state;
 
     if (percentStart === 100) {
-      return {percentStart: percent, percentEnd};
+      return { percentStart: percent, percentEnd };
     } else if (percentEnd === 0) {
-      return {percentEnd: percent, percentStart};
+      return { percentEnd: percent, percentStart };
     } else if (Math.abs(percentStart - percent) <= Math.abs(percentEnd - percent)) {
-      return {percentStart: percent, percentEnd};
+      return { percentStart: percent, percentEnd };
     } else {
-      return {percentEnd: percent, percentStart};
+      return { percentEnd: percent, percentStart };
     }
   }
 
-  validatePercent ({percentStart, percentEnd}) {
+  validatePercent ({ percentStart, percentEnd }) {
     return {
       percentStart: super.validatePercent(percentStart),
       percentEnd: super.validatePercent(percentEnd)
     };
   }
 
-  percentToValue ({percentStart, percentEnd}) {
+  percentToValue ({ percentStart, percentEnd }) {
     return [super.percentToValue(percentStart), super.percentToValue(percentEnd)];
   }
 
@@ -127,13 +127,13 @@ export default class RangeSlider extends Slider {
               className={classNames('Slider__thumb', 'Slider__thumb--start', {
                 'Slider__thumb--active': this.state.active === 'start'
               })}
-              ref={el => this.thumbStart = el}
+              ref={el => (this.thumbStart = el)}
             />
             <span
               className={classNames('Slider__thumb', 'Slider__thumb--end', {
                 'Slider__thumb--active': this.state.active === 'end'
               })}
-              ref={el => this.thumbEnd = el}
+              ref={el => (this.thumbEnd = el)}
             />
           </div>
         </Touch>

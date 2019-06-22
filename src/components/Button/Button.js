@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 
 import CellButton from '../CellButton/CellButton';
@@ -31,18 +31,24 @@ const Button = props => {
   } else {
     const { className, size, level, stretched, align, children, before, after, type, ...restProps } = props;
 
-    return <Tappable {...restProps} className={classNames(baseClassName, className, {
-      [`Button--sz-${size}`]: true,
-      [`Button--lvl-${mapOldLevel(level)}`]: true,
-      [`Button--aln-${align || 'center'}`]: true,
-      [`Button--str`]: stretched
-    })} stopPropagation>
-      <div className="Button__in">
-        {before && <div className="Button__before">{before}</div>}
-        {children && <div className="Button__content">{children}</div>}
-        {after && <div className="Button__after">{after}</div>}
-      </div>
-    </Tappable>;
+    return (
+      <Tappable
+        {...restProps}
+        className={classNames(baseClassName, className, {
+          [`Button--sz-${size}`]: true,
+          [`Button--lvl-${mapOldLevel(level)}`]: true,
+          [`Button--aln-${align || 'center'}`]: true,
+          [`Button--str`]: stretched
+        })}
+        stopPropagation
+      >
+        <div className="Button__in">
+          {before && <div className="Button__before">{before}</div>}
+          {children && <div className="Button__content">{children}</div>}
+          {after && <div className="Button__after">{after}</div>}
+        </div>
+      </Tappable>
+    );
   }
 };
 

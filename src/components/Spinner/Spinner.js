@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames.js';
 import Spinner24 from '@vkontakte/icons/dist/24/spinner';
 import Spinner32 from '@vkontakte/icons/dist/32/spinner';
 import Spinner44 from '@vkontakte/icons/dist/44/spinner';
 import Spinner16 from '@vkontakte/icons/dist/16/spinner';
+import classNames from '../../lib/classNames.js';
+import getClassName from '../../helpers/getClassName';
 
 const baseClassNames = getClassName('Spinner');
 

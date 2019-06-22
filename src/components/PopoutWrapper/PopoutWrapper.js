@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import PropTypes from 'prop-types';
 
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
@@ -61,17 +61,26 @@ export default class PopoutWrapper extends React.Component {
 
   onClick = e => this.state.opened && this.props.onClick && this.props.onClick(e);
 
-  getRef = el => this.el = el;
+  getRef = el => (this.el = el);
 
   render () {
     const { v, h, closing, children, hasMask, onClick, className, ...restProps } = this.props;
 
     return (
-      <div {...restProps} className={classNames(baseClassNames, {
-        [`PopoutWrapper--v-${v}`]: v,
-        [`PopoutWrapper--h-${h}`]: h,
-        'PopoutWrapper--closing': closing
-      }, className)} onClick={this.onClick} ref={this.getRef}>
+      <div
+        {...restProps}
+        className={classNames(
+          baseClassNames,
+          {
+            [`PopoutWrapper--v-${v}`]: v,
+            [`PopoutWrapper--h-${h}`]: h,
+            'PopoutWrapper--closing': closing
+          },
+          className
+        )}
+        onClick={this.onClick}
+        ref={this.getRef}
+      >
         {hasMask && <div className="PopoutWrapper__mask" />}
         <div className="PopoutWrapper__container">{children}</div>
       </div>

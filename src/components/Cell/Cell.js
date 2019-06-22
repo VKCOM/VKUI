@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
-import Tappable from '../Tappable/Tappable';
-import Touch from '../Touch/Touch';
-import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon24Reorder from '@vkontakte/icons/dist/24/reorder';
 import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
+import classNames from '../../lib/classNames';
+import getClassName from '../../helpers/getClassName';
+import Tappable from '../Tappable/Tappable';
+import Touch from '../Touch/Touch';
+import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 
 const baseClassNames = getClassName('Cell');
 
@@ -115,7 +115,9 @@ export default class Cell extends Component {
     dragging: false
   };
 
-  get document () { return this.context.document || document; }
+  get document () {
+    return this.context.document || document;
+  }
 
   /**
    * предотвращает двойное срабатывание в случае с input
@@ -123,7 +125,7 @@ export default class Cell extends Component {
    * предотвращает клик в случае, когда включен режим removable
    * @param e
    */
-  onClick = (e) => {
+  onClick = e => {
     const { removable, onClick } = this.props;
     if (e.target.tagName.toLowerCase() === 'input') {
       e.stopPropagation();
@@ -144,7 +146,7 @@ export default class Cell extends Component {
     this.document.removeEventListener('click', this.deactivateRemove);
   };
 
-  onRemoveClick = (e) => {
+  onRemoveClick = e => {
     e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
     this.props.onRemove && this.props.onRemove(e, this.rootEl);
@@ -160,7 +162,7 @@ export default class Cell extends Component {
     }
   }
 
-  getRemoveRef = el => this.removeButton = el;
+  getRemoveRef = el => (this.removeButton = el);
 
   getRootRef = el => {
     this.rootEl = el;
@@ -176,7 +178,7 @@ export default class Cell extends Component {
     this.dragStartIndex = this.siblings.indexOf(this.rootEl);
   };
 
-  onDragMove = (e) => {
+  onDragMove = e => {
     e.originalEvent.preventDefault();
     this.rootEl.style.transform = `translateY(${e.shiftY}px)`;
     const rootGesture = this.rootEl.getBoundingClientRect();
@@ -210,7 +212,7 @@ export default class Cell extends Component {
     this.setState({ dragging: false });
     this.listEl && this.listEl.classList.remove('List--dragging');
     this.props.onDragFinish && this.props.onDragFinish({ from: this.dragStartIndex, to: this.dragEndIndex });
-    this.siblings.forEach(sibling => sibling.style.transform = null);
+    this.siblings.forEach(sibling => (sibling.style.transform = null));
     delete this.dragShift;
     delete this.listEl;
     delete this.siblings;
@@ -253,13 +255,17 @@ export default class Cell extends Component {
       <div
         {...rootProps}
         onClick={href || draggable ? null : this.onClick}
-        className={classNames(baseClassNames, {
-          'Cell--expandable': expandable,
-          'Cell--multiline': multiline,
-          [`Cell--${size}`]: size,
-          'Cell--dragging': this.state.dragging,
-          'Cell--draggable': draggable
-        }, className)}
+        className={classNames(
+          baseClassNames,
+          {
+            'Cell--expandable': expandable,
+            'Cell--multiline': multiline,
+            [`Cell--${size}`]: size,
+            'Cell--dragging': this.state.dragging,
+            'Cell--draggable': draggable
+          },
+          className
+        )}
         ref={this.getRootRef}
       >
         <Tappable
@@ -268,21 +274,27 @@ export default class Cell extends Component {
           component={selectable ? 'label' : href ? 'a' : 'div'}
           className="Cell__in"
           href={href}
-          disabled={(!selectable && !onClick && !href || removable || draggable)}
+          disabled={(!selectable && !onClick && !href) || removable || draggable}
           style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
         >
           {selectable && <input {...inputProps} type="checkbox" className="Cell__checkbox" />}
           <div className="Cell__before">
-            {selectable && IS_PLATFORM_IOS && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
-            {removable && IS_PLATFORM_IOS && <div className="Cell__remove-marker" onClick={this.activateRemove}/>}
-            {IS_PLATFORM_ANDROID && draggable &&
-            <Touch
-              onStart={this.onDragStart}
-              onMoveY={this.onDragMove}
-              onEnd={this.onDragEnd}
-              className="Cell__dragger"
-            ><Icon24Reorder/></Touch>
-            }
+            {selectable && IS_PLATFORM_IOS && (
+              <div className="Cell__checkbox-marker">
+                <Icon16Done />
+              </div>
+            )}
+            {removable && IS_PLATFORM_IOS && <div className="Cell__remove-marker" onClick={this.activateRemove} />}
+            {IS_PLATFORM_ANDROID && draggable && (
+              <Touch
+                onStart={this.onDragStart}
+                onMoveY={this.onDragMove}
+                onEnd={this.onDragEnd}
+                className="Cell__dragger"
+              >
+                <Icon24Reorder />
+              </Touch>
+            )}
             {before && <div className="Cell__before-in">{before}</div>}
           </div>
           <div className="Cell__main">
@@ -293,31 +305,39 @@ export default class Cell extends Component {
           <div className="Cell__indicator">{indicator}</div>
           <div className="Cell__aside">
             {asideContent}
-            {selectable && IS_PLATFORM_ANDROID && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
-            {removable && IS_PLATFORM_ANDROID &&
-            <div className="Cell__remove-marker" onClick={this.onRemoveClick}><Icon24Cancel /></div>
-            }
-            {IS_PLATFORM_IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron"/>}
-            {IS_PLATFORM_IOS && draggable &&
-            <Touch
-              className="Cell__dragger"
-              onStart={this.onDragStart}
-              onMoveY={this.onDragMove}
-              onEnd={this.onDragEnd}
-            ><Icon24ReorderIos/></Touch>
-            }
+            {selectable && IS_PLATFORM_ANDROID && (
+              <div className="Cell__checkbox-marker">
+                <Icon16Done />
+              </div>
+            )}
+            {removable && IS_PLATFORM_ANDROID && (
+              <div className="Cell__remove-marker" onClick={this.onRemoveClick}>
+                <Icon24Cancel />
+              </div>
+            )}
+            {IS_PLATFORM_IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron" />}
+            {IS_PLATFORM_IOS && draggable && (
+              <Touch
+                className="Cell__dragger"
+                onStart={this.onDragStart}
+                onMoveY={this.onDragMove}
+                onEnd={this.onDragEnd}
+              >
+                <Icon24ReorderIos />
+              </Touch>
+            )}
           </div>
         </Tappable>
-        {removable && IS_PLATFORM_IOS &&
-        <div
-          ref={this.getRemoveRef}
-          className="Cell__remove"
-          onClick={this.onRemoveClick}
-          style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
-        >
-          <span className="Cell__remove-in">{removePlaceholder}</span>
-        </div>
-        }
+        {removable && IS_PLATFORM_IOS && (
+          <div
+            ref={this.getRemoveRef}
+            className="Cell__remove"
+            onClick={this.onRemoveClick}
+            style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
+          >
+            <span className="Cell__remove-in">{removePlaceholder}</span>
+          </div>
+        )}
       </div>
     );
   }

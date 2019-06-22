@@ -1,6 +1,6 @@
 import React from 'react';
-import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
+import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, transitionStartEventName } from '../View/View';
 import { tabbarHeight } from '../../appearance/constants';
@@ -46,7 +46,7 @@ class FixedLayout extends React.Component {
     this.document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
 
-  onViewTransitionStart = (e) => {
+  onViewTransitionStart = e => {
     let panelScroll = e.detail.scrolls[this.context.panel] || 0;
     this.setState({
       position: 'absolute',

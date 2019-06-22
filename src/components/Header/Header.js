@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import PropTypes from 'prop-types';
 
 const baseClassNames = getClassName('Header');
 

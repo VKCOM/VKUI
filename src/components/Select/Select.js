@@ -1,8 +1,7 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
+import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 
 export default class Select extends Component {
@@ -40,7 +39,7 @@ export default class Select extends Component {
     alignment: 'left'
   };
 
-  onChange = (e) => {
+  onChange = e => {
     this.setTitle();
     if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
@@ -52,10 +51,11 @@ export default class Select extends Component {
 
   setTitle = () => {
     const selectedOption = this.selectEl.options[this.selectEl.selectedIndex];
-    selectedOption && this.setState({
-      title: selectedOption.text,
-      notSelected: selectedOption.value === '' && this.props.hasOwnProperty('placeholder')
-    });
+    selectedOption &&
+      this.setState({
+        title: selectedOption.text,
+        notSelected: selectedOption.value === '' && this.props.hasOwnProperty('placeholder')
+      });
   };
 
   componentDidUpdate (prevProps) {
@@ -72,33 +72,44 @@ export default class Select extends Component {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  getRef = (el) => {
+  getRef = el => {
     this.selectEl = el;
     this.props.getRef && this.props.getRef(el);
   };
 
   render () {
-    const { style, label, value, defaultValue, onChange, alignment, status, placeholder, children, className,
-      getRef, getRootRef, ...restProps } = this.props;
+    const {
+      style,
+      label,
+      value,
+      defaultValue,
+      onChange,
+      alignment,
+      status,
+      placeholder,
+      children,
+      className,
+      getRef,
+      getRootRef,
+      ...restProps
+    } = this.props;
 
     return (
       <FormField
         TagName="label"
-        className={classNames('Select', {
-          [`Select--not-selected`]: this.state.notSelected,
-          [`Select--align-${alignment}`]: alignment
-        }, className)}
+        className={classNames(
+          'Select',
+          {
+            [`Select--not-selected`]: this.state.notSelected,
+            [`Select--align-${alignment}`]: alignment
+          },
+          className
+        )}
         style={style}
         getRootRef={getRootRef}
         status={status}
       >
-        <select
-          {...restProps}
-          className="Select__el"
-          onChange={this.onChange}
-          value={this.value}
-          ref={this.getRef}
-        >
+        <select {...restProps} className="Select__el" onChange={this.onChange} value={this.value} ref={this.getRef}>
           {placeholder && <option value="">{placeholder}</option>}
           {children}
         </select>

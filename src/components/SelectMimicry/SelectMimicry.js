@@ -1,20 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
+import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 
-const SelectMimicry = ({ className, tabIndex, placeholder, children, alignment, status, getRootRef, multiline, disabled, ...restProps }) => {
+const SelectMimicry = ({
+  className,
+  tabIndex,
+  placeholder,
+  children,
+  alignment,
+  status,
+  getRootRef,
+  multiline,
+  disabled,
+  ...restProps
+}) => {
   return (
     <FormField
       {...restProps}
       tabIndex={disabled ? null : tabIndex}
-      className={classNames('Select', 'Select--mimicry', {
-        'Select--not-selected': !children,
-        'Select--multiline': multiline,
-        'Select--disabled': disabled,
-        [`Select--align-${alignment}`]: alignment
-      }, className)}
+      className={classNames(
+        'Select',
+        'Select--mimicry',
+        {
+          'Select--not-selected': !children,
+          'Select--multiline': multiline,
+          'Select--disabled': disabled,
+          [`Select--align-${alignment}`]: alignment
+        },
+        className
+      )}
       getRootRef={getRootRef}
       status={status}
     >

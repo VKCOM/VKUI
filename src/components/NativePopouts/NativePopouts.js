@@ -1,6 +1,6 @@
 import React from 'react';
-import removeObjectKeys from '../../lib/removeObjectKeys';
 import PropTypes from 'prop-types';
+import removeObjectKeys from '../../lib/removeObjectKeys';
 import Alert from '../Alert/Alert';
 import ActionSheet from '../ActionSheet/ActionSheet';
 import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
@@ -31,11 +31,13 @@ export default class NativePopouts extends React.Component {
         title: PropTypes.string,
         text: PropTypes.string,
         onClose: PropTypes.func.isRequired,
-        actions: PropTypes.arrayOf(PropTypes.shape({
-          style: PropTypes.oneOf(['cancel', 'default', 'destructive']),
-          title: PropTypes.string,
-          action: PropTypes.func
-        }))
+        actions: PropTypes.arrayOf(
+          PropTypes.shape({
+            style: PropTypes.oneOf(['cancel', 'default', 'destructive']),
+            title: PropTypes.string,
+            action: PropTypes.func
+          })
+        )
       }),
       PropTypes.element
     ]),
@@ -61,7 +63,7 @@ export default class NativePopouts extends React.Component {
     this.props.vkuiConnect.unsubscribe(this.vkuiListener);
   }
 
-  vkuiListener = (e) => {
+  vkuiListener = e => {
     if (e.type === 'VKWebAppEvent' && e.detail && e.detail.action) {
       if (this.actionsStore.hasOwnProperty(e.detail.action)) {
         this.actionsStore[e.detail.action](e.detail);
@@ -76,23 +78,23 @@ export default class NativePopouts extends React.Component {
       style,
       title: brToNl(title),
       message: brToNl(message),
-      actions: this.actions.map(item =>
-        removeObjectKeys(item, ['action'])
-      )
+      actions: this.actions.map(item => removeObjectKeys(item, ['action']))
     });
   }
 
   renderUIAlert (popout) {
     const { title, text, onClose, actionsLayout } = popout;
     this.setState({
-      popout: (<Alert
-        actions={this.actions.map(item => removeObjectKeys(item, ['params']))}
-        onClose={onClose}
-        actionsLayout={actionsLayout}
-      >
-        {title && <h2>{title}</h2>}
-        {text && <p>{text}</p>}
-      </Alert>)
+      popout: (
+        <Alert
+          actions={this.actions.map(item => removeObjectKeys(item, ['params']))}
+          onClose={onClose}
+          actionsLayout={actionsLayout}
+        >
+          {title && <h2>{title}</h2>}
+          {text && <p>{text}</p>}
+        </Alert>
+      )
     });
   }
 
@@ -125,14 +127,17 @@ export default class NativePopouts extends React.Component {
 
   renderPopout (props) {
     if (props.popout.style) {
-      this.actions = props.popout.actions.map((item) => ({
+      this.actions = props.popout.actions.map(item => ({
         ...item,
         autoclose: item.hasOwnProperty('autoclose') ? item.autoclose : true,
         action: item.action || props.popout.onClose,
         handler: { ...item.params, action: `action-${actionId++}` }
       }));
 
-      this.actionsStore = this.actions.reduce((res, item) => { res[item.handler.action] = item.action; return res; }, {});
+      this.actionsStore = this.actions.reduce((res, item) => {
+        res[item.handler.action] = item.action;
+        return res;
+      }, {});
 
       switch (props.popout.style) {
         case 'alert':

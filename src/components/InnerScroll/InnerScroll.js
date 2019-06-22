@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import PropTypes from 'prop-types';
 
 const baseClassName = getClassName('InnerScroll');
 
@@ -13,7 +13,7 @@ export default class InnerScroll extends React.Component {
     onScroll: PropTypes.func
   };
 
-  onScroll = (e) => {
+  onScroll = e => {
     if (this.el.scrollTop <= 0) {
       this.el.scrollTop = 1;
     } else if (this.el.scrollTop >= this.el.scrollHeight - this.el.offsetHeight) {
@@ -27,18 +27,13 @@ export default class InnerScroll extends React.Component {
     this.el.scrollTop = 1;
   }
 
-  ref = el => this.el = el;
+  ref = el => (this.el = el);
 
   render () {
     const { className, children, onScroll, ...restProps } = this.props;
 
     return (
-      <div
-        {...restProps}
-        className={classNames(baseClassName, className)}
-        onScroll={this.onScroll}
-        ref={this.getRef}
-      >
+      <div {...restProps} className={classNames(baseClassName, className)} onScroll={this.onScroll} ref={this.getRef}>
         {children}
       </div>
     );
