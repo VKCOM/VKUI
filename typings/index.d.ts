@@ -378,6 +378,15 @@ interface UsersStackProps extends StyleObject, HasChildren {
   vertical?: boolean;
 }
 
+interface ViewProps extends HasChildren {
+  activePanel?: string;
+  header?: object | boolean;
+  id?: string;
+  onTransition?: () => void;
+  popout?: React.ReactNode;
+  style?: React.CSSProperties;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -434,3 +443,4 @@ export const Textarea: React.ComponentType<TextareaProps>;
 export const Tooltip: React.ComponentType<TooltipProps>;
 export const Touch: React.ComponentType<TouchProps>;
 export const UsersStack: React.ComponentType<UsersStackProps>;
+export const View: React.ComponentType<ViewProps>;
