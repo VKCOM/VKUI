@@ -71,9 +71,17 @@ interface CellProps extends StyleObject {
   size?: 'm' | 'l';
 }
 
+interface CellButtonProps extends StyleObject {
+  align: 'left' | 'center' | 'right';
+  before?: React.ReactNode;
+  children?: React.ReactNode;
+  level?: 'primary' | 'danger';
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
 export const Avatar: React.ComponentType<AvatarProps>;
 export const Button: React.ComponentType<ButtonProps>;
 export const Cell: React.ComponentType<CellProps>;
+export const CellButton: React.ComponentType<CellButtonProps>;
