@@ -159,6 +159,8 @@ interface HeaderContextProps extends HasChildren, StyleObject {
   opened: boolean;
 }
 
+interface HorizontalScrollProps extends StyleObject, HasChildren {}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -181,3 +183,4 @@ export const Group: React.ComponentType<GroupProps>;
 export const Header: React.ComponentType<HeaderProps>;
 export const HeaderButton: React.ComponentType<HeaderButtonProps>;
 export const HeaderContext: React.ComponentType<HeaderContextProps>;
+export const HorizontalScroll: React.ComponentType<HorizontalScrollProps>;
