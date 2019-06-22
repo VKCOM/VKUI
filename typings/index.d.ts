@@ -305,6 +305,10 @@ interface SliderProps extends StyleObject, HasRef {
   value?: number;
 }
 
+interface SpinnerProps extends StyleObject {
+  size?: 'small' | 'regular' | 'large' | 'medium';
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -351,3 +355,4 @@ export const Search: React.ComponentType<SearchProps>;
 export const Select: React.ComponentType<SelectProps>;
 export const SelectMimicry: React.ComponentType<SelectMimicryProps>;
 export const Slider: React.ComponentType<SliderProps>;
+export const Spinner: React.ComponentType<SpinnerProps>;
