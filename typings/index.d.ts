@@ -244,6 +244,11 @@ interface PullToRefreshProps extends HasChildren, HasClassName {
   isFetching?: boolean;
 }
 
+interface RadioProps extends StyleObject, HasChildren, HasRef {
+  description?: React.ReactNode;
+  getRef?: (instance: React.Ref) => void;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -282,3 +287,4 @@ export const PanelSpinner: React.ComponentType<PanelSpinnerProps>;
 export const PopoutWrapper: React.ComponentType<PopoutWrapperProps>;
 export const Progress: React.ComponentType<ProgressProps>;
 export const PullToRefresh: React.ComponentType<PullToRefreshProps>;
+export const Radio: React.ComponentType<RadioProps>;
