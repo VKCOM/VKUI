@@ -161,6 +161,10 @@ interface HeaderContextProps extends HasChildren, StyleObject {
 
 interface HorizontalScrollProps extends StyleObject, HasChildren {}
 
+interface InfoRowProps extends StyleObject, HasChildren {
+  title: React.ReactNode
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -184,3 +188,4 @@ export const Header: React.ComponentType<HeaderProps>;
 export const HeaderButton: React.ComponentType<HeaderButtonProps>;
 export const HeaderContext: React.ComponentType<HeaderContextProps>;
 export const HorizontalScroll: React.ComponentType<HorizontalScrollProps>;
+export const InfoRow: React.ComponentType<InfoRowProps>;
