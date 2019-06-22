@@ -101,6 +101,8 @@ interface FixedLayoutProps extends StyleObject, HasChildren, HasRef {
   vertical?: 'top' | 'bottom';
 }
 
+interface FooterProps extends StyleObject, HasChildren {}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -114,3 +116,4 @@ export const Div: React.ComponentType<DivProps>;
 export const Epic: React.ComponentType<EpicProps>;
 export const File: React.ComponentType<FileProps>;
 export const FixedLayout: React.ComponentType<FixedLayoutProps>;
+export const Footer: React.ComponentType<FooterProps>;
