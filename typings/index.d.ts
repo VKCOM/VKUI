@@ -80,6 +80,10 @@ interface CellButtonProps extends StyleObject, HasChildren {
 
 interface CheckBoxProps extends StyleObject, HasChildren, HasRef {}
 
+interface CounterProps extends HasChildren {
+  type: 'secondary' | 'primary' | 'prominent';
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -88,3 +92,4 @@ export const Button: React.ComponentType<ButtonProps>;
 export const Cell: React.ComponentType<CellProps>;
 export const CellButton: React.ComponentType<CellButtonProps>;
 export const CheckBox: React.ComponentType<CheckBoxProps>;
+export const Counter: React.ComponentType<CounterProps>;
