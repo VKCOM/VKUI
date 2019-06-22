@@ -356,6 +356,21 @@ interface TooltipProps {
   title?: React.ReactNode;
 }
 
+interface TouchProps extends HasChildren, HasRef {
+  component?: string;
+  onClick?: () => void;
+  onEnd?: () => void;
+  onEndX?: () => void;
+  onEndY?: () => void;
+  onMove?: () => void;
+  onMoveX?: () => void;
+  onMoveY?: () => void;
+  onStart?: () => void;
+  onStartX?: () => void;
+  onStartY?: () => void;
+  useCapture?: boolean;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -410,3 +425,4 @@ export const Tabs: React.ComponentType<TabsProps>;
 export const TabsItem: React.ComponentType<TabsItemProps>;
 export const Textarea: React.ComponentType<TextareaProps>;
 export const Tooltip: React.ComponentType<TooltipProps>;
+export const Touch: React.ComponentType<TouchProps>;
