@@ -97,6 +97,10 @@ interface FileProps extends StyleObject, HasChildren {
   getRef?: (instance: React.Ref) => void;
 }
 
+interface FixedLayoutProps extends StyleObject, HasChildren, HasRef {
+  vertical?: 'top' | 'bottom';
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -109,3 +113,4 @@ export const Counter: React.ComponentType<CounterProps>;
 export const Div: React.ComponentType<DivProps>;
 export const Epic: React.ComponentType<EpicProps>;
 export const File: React.ComponentType<FileProps>;
+export const FixedLayout: React.ComponentType<FixedLayoutProps>;
