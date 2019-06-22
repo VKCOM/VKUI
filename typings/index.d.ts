@@ -249,6 +249,19 @@ interface RadioProps extends StyleObject, HasChildren, HasRef {
   getRef?: (instance: React.Ref) => void;
 }
 
+interface RangeSliderProps extends SliderProps {
+  defaultValue?: number[];
+  value?: number[];
+}
+
+interface SliderProps extends StyleObject, HasRef {
+  defaultValue?: number;
+  max?: number;
+  min?: number;
+  onChange?: () => {};
+  value?: number;
+}
+
 export const ActionSheet: React.ComponentType<ActionSheetProps>;
 export const ActionSheetItem: React.ComponentType<ActionSheetItemProps>;
 export const Alert: React.ComponentType<AlertProps>;
@@ -288,3 +301,4 @@ export const PopoutWrapper: React.ComponentType<PopoutWrapperProps>;
 export const Progress: React.ComponentType<ProgressProps>;
 export const PullToRefresh: React.ComponentType<PullToRefreshProps>;
 export const Radio: React.ComponentType<RadioProps>;
+export const RangeSlider: React.ComponentType<RangeSliderProps>;
