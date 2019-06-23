@@ -16,13 +16,9 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|tsx?)$/,
-        loader: 'awesome-typescript-loader',
-        options: {
-          useBabel: true,
-          babelOptions: { babelrc: true },
-          babelCore: '@babel/core'
-        }
+        test: /\.(js|tsx?)$/, // TODO: disable .js
+        exclude: /node_modules/,
+        loader: ['ts-loader', 'babel-loader']
       },
       {
         test: /\.css$/,

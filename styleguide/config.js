@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const typescriptDocgen = require('react-docgen-typescript');
 const webpackConfig = require('../webpack.config');
 
