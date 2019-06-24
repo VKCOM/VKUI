@@ -178,6 +178,8 @@ export default class Cell extends Component {
 
   onDragMove = (e) => {
     e.originalEvent.preventDefault();
+    if (this.state.removeOffset) return;
+
     this.rootEl.style.transform = `translateY(${e.shiftY}px)`;
     const rootGesture = this.rootEl.getBoundingClientRect();
     this.dragDirection = this.dragShift - e.shiftY < 0 ? 'down' : 'up';
