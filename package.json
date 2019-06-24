@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.21.7",
+  "version": "2.21.8",
   "main": "dist/vkui.js",
   "license": "MIT",
   "description": "VKUI library",
