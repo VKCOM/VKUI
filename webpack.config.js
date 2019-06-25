@@ -18,7 +18,7 @@ const config = {
       {
         test: /\.(js|tsx?)$/, // TODO: disable .js
         exclude: /node_modules/,
-        loader: ['ts-loader', 'babel-loader']
+        loader: ['babel-loader', 'ts-loader']
       },
       {
         test: /\.css$/,
