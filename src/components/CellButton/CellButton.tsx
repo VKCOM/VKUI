@@ -3,10 +3,16 @@ import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { StyleObject, HasChildren, HasAlign } from '../../types/props';
 
 const baseClassName = getClassName('CellButton');
 
-const CellButton = ({ className, align, level, before, children, ...restProps }) => (
+export interface CellButtonProps extends StyleObject, HasChildren, HasAlign {
+  before?: React.ReactNode;
+  level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce';
+}
+
+const CellButton = ({ className, align, level, before, children, ...restProps }: CellButtonProps) => (
   <Tappable
     {...restProps}
     className={classNames(baseClassName, className, {
