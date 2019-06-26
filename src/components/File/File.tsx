@@ -3,11 +3,64 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import Button from '../Button/Button';
 import classNames from '../../lib/classNames';
+import { StyleObject, HasChildren, HasAlign, HasRef } from '../../types/props';
 
 const baseClassNames = getClassName('File');
 
-const File = props => {
-  const { children, label, alignment, align, size, level, type, stretched, before, className, style, getRef, getRootRef, ...restProps } = props;
+export interface FileProps extends StyleObject, HasChildren, HasAlign {
+  getRef?: (instance: HTMLInputElement) => void;
+  /**
+   * @ignore
+   */
+  level: any;
+  /**
+   * @ignore
+   */
+  size: any;
+  /**
+   * @ignore
+   */
+  type: any;
+  /**
+   * @ignore
+   */
+  align: any;
+  /**
+   * @ignore
+   */
+  stretched: any;
+  /**
+   * @ignore
+   */
+  before: any;
+  /**
+   * @deprecated Используйте `children`. Свойство `label` будет удалено в 3.0.0
+   */
+  label: string;
+  /**
+   * @deprecated Используйте `align`. Свойство `alignment` будет удалено в 3.0.0
+   */
+  alignment: 'left' | 'center' | 'right';
+}
+
+const File = (props: FileProps) => {
+  const {
+    children,
+    label,
+    alignment,
+    align,
+    size,
+    level,
+    type,
+    stretched,
+    before,
+    className,
+    style,
+    getRef,
+    // FIXME
+    // getRootRef,
+    ...restProps
+  } = props;
 
   return (
     <Button
@@ -20,9 +73,10 @@ const File = props => {
       size={size}
       before={before}
       style={style}
-      getRootRef={getRootRef}
+      // FIXME
+      // getRootRef={getRootRef}
     >
-      <input {...restProps} className="File__input" type="file" ref={getRef}/>
+      <input {...restProps} className="File__input" type="file" ref={getRef} />
       {children || label}
     </Button>
   );
