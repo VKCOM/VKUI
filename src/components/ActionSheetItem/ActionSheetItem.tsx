@@ -3,10 +3,17 @@ import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
+import { StyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('ActionSheetItem');
 
-const ActionSheetItem = ({ className, children, autoclose, theme, ...restProps }) => (
+export interface ActionSheetItemProps extends StyleObject, HasChildren {
+  autoclose?: boolean;
+  onClick?: () => void;
+  theme?: 'default' | 'destructive' | 'cancel';
+}
+
+const ActionSheetItem = ({ className, children, autoclose, theme, ...restProps }: ActionSheetItemProps) => (
   <Tappable
     {...restProps}
     className={classNames(baseClassNames, className, { [`ActionSheetItem--${theme}`]: true })}
