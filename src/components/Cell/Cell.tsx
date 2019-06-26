@@ -10,10 +10,84 @@ import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import Touch from '../Touch/Touch';
 import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { StyleObject, HasChildren, HasRef } from '../../types/props';
 
 const baseClassNames = getClassName('Cell');
 
-export default class Cell extends Component {
+export interface CellProps extends StyleObject, HasChildren, HasRef {
+  /**
+   * Контейнер для контента справа от `children` и `indicator`.
+   */
+  asideContent?: React.ReactNode;
+  /**
+   * Контейнер для контента от `children`.
+   */
+  before?: React.ReactNode;
+  /**
+   * Контейнер для произвольного содержимого под `description`. Рисуется только если передать `size="l"`.
+   */
+  bottomContent?: React.ReactNode;
+  /**
+   * Контейнер для дополнительного содержимого под `children`.
+   */
+  description?: React.ReactNode;
+  /**
+   * Флаг для перехода в режим перетаскивания. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
+   */
+  draggable?: boolean;
+  /**
+   * Выставляйте этот флаг, если клик по ячейке вызывает переход на другую панель. Флаг нужен для корректной
+   * стилизации такой ячейки.
+   */
+  expandable?: boolean;
+  /**
+   * При передаче `href`, ячейка становится полноценной ссылкой. Поддерживаются все валидные для этого элемента
+   * атрибуты (`target`, `rel` и т.д.).
+   */
+  href?: string;
+  /**
+   * Контейнер для текста справа от `children`.
+   */
+  indicator?: React.ReactNode;
+  /**
+   * Добавляет возможность переноса содержимого `children` и `description`. Без этого флага текст будет уходить
+   * в троеточие.
+   */
+  multiline?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  /**
+   * Коллбэк срабатывает при завершении перетаскивания.
+   * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
+   * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
+   * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
+   */
+  onDragFinish?: (props: { from: number; to: number }) => void;
+  /**
+   * Коллбэк срабатывает при клике на контрол удаления.
+   */
+  onRemove?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, rootEl: HTMLDivElement) => void;
+  /**
+   * Флаг для перехода в режим удаляемых ячеек. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
+   */
+  removable?: boolean;
+  /**
+   * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
+   */
+  removePlaceholder?: React.ReactNode;
+  /**
+   * Флаг для перехода в режим ячеек-чекбоксов.
+   * **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
+   * **Важно:** этот режим несовместим с `draggable`. В случае истинности двух этих флагов, приоритет отдается
+   * `draggable`.
+   */
+  selectable?: boolean;
+  /**
+   * Размер влияет на выравнивание блоков по вертикали, вид сепаратора (iOS) и возможность вставлять `bottomContent`.
+   */
+  size?: 'm' | 'l';
+}
+
+export default class Cell extends Component<CellProps> {
   static propTypes = {
     /**
      * Контейнер для контента от `children`.
@@ -109,6 +183,22 @@ export default class Cell extends Component {
     document: PropTypes.any
   };
 
+  rootEl: HTMLDivElement;
+
+  removeButton: HTMLDivElement;
+
+  dragShift: number;
+
+  listEl: Element;
+
+  siblings: HTMLElement[];
+
+  dragStartIndex: number;
+
+  dragEndIndex: number;
+
+  dragDirection: 'down' | 'up';
+
   state = {
     isRemoveActivated: false,
     removeOffset: 0,
@@ -125,9 +215,11 @@ export default class Cell extends Component {
    * предотвращает клик в случае, когда включен режим removable
    * @param e
    */
-  onClick = e => {
+  onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const { removable, onClick } = this.props;
-    if (e.target.tagName.toLowerCase() === 'input') {
+    const target = e.target as HTMLDivElement;
+
+    if (target.tagName.toLowerCase() === 'input') {
       e.stopPropagation();
     } else if (removable) {
       return null;
@@ -146,7 +238,7 @@ export default class Cell extends Component {
     this.document.removeEventListener('click', this.deactivateRemove);
   };
 
-  onRemoveClick = e => {
+  onRemoveClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
     this.props.onRemove && this.props.onRemove(e, this.rootEl);
@@ -162,9 +254,9 @@ export default class Cell extends Component {
     }
   }
 
-  getRemoveRef = el => (this.removeButton = el);
+  getRemoveRef: React.LegacyRef<HTMLDivElement> = el => (this.removeButton = el);
 
-  getRootRef = el => {
+  getRootRef: React.LegacyRef<HTMLDivElement> = el => {
     this.rootEl = el;
     this.props.getRootRef && this.props.getRootRef(el);
   };
@@ -173,7 +265,9 @@ export default class Cell extends Component {
     this.setState({ dragging: true });
     this.dragShift = 0;
     this.listEl = this.rootEl.closest('.List');
-    this.listEl && this.listEl.classList.add('List--dragging');
+    if (this.listEl) {
+      this.listEl.classList.add('List--dragging');
+    }
     this.siblings = Array.prototype.slice.call(this.rootEl.parentElement.childNodes);
     this.dragStartIndex = this.siblings.indexOf(this.rootEl);
   };
