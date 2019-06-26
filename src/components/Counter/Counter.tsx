@@ -2,15 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
+import { HasChildren } from '../../types/props';
 
 const baseClassName = getClassName('Counter');
 
-function Counter ({ type, children }) {
+interface CounterProps extends HasChildren {
+  type?: 'secondary' | 'primary' | 'prominent';
+}
+
+function Counter ({ type, children }: CounterProps) {
   return (
     <div className={classNames(baseClassName, `Counter--${type}`)}>
-      <div className="Counter__in">
-        {children}
-      </div>
+      <div className="Counter__in">{children}</div>
     </div>
   );
 }
