@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 
 import Div from '../Div/Div';
-import { StyleObject, HasChildren } from '../../types/props';
+import { HasStyleObject, HasChildren } from '../../types/props';
 
-export interface FooterProps extends StyleObject, HasChildren {}
+export interface FooterProps extends HasStyleObject, HasChildren {}
 
 const Footer = ({ className, children, ...restProps }: FooterProps) => (
   <Div {...restProps} className={classNames('Footer', className)}>

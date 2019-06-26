@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { StyleObject, HasChildren, HasRef } from '../../types/props';
+import { HasStyleObject, HasChildren, HasRef } from '../../types/props';
 
 const baseClassNames = getClassName('Div');
 
-export interface DivProps extends StyleObject, HasChildren, HasRef<HTMLDivElement> {}
+export interface DivProps extends HasStyleObject, HasChildren, HasRef<HTMLDivElement> {}
 
 export default function Div ({ className, children, getRootRef, ...restProps }: DivProps) {
   return (

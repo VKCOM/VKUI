@@ -6,11 +6,11 @@ import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
-import { StyleObject, HasChildren } from '../../types/props';
+import { HasStyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('ActionSheet');
 
-export interface ActionSheetProps extends StyleObject, HasChildren {
+export interface ActionSheetProps extends HasStyleObject, HasChildren {
   onClose: () => void;
   text?: React.ReactNode;
   title?: React.ReactNode;

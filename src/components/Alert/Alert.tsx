@@ -6,7 +6,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
-import { StyleObject, HasChildren } from '../../types/props';
+import { HasStyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('Alert');
 
@@ -16,7 +16,7 @@ export interface AlertActions {
   style?: 'cancel' | 'destructive' | 'default';
 }
 
-export interface AlertProps extends StyleObject, HasChildren {
+export interface AlertProps extends HasStyleObject, HasChildren {
   onClose: () => void;
   actions?: AlertActions[];
   actionsLayout?: 'vertical' | 'horizontal';

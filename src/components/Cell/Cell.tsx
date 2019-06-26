@@ -10,11 +10,11 @@ import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import Touch from '../Touch/Touch';
 import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
-import { StyleObject, HasChildren, HasRef } from '../../types/props';
+import { HasStyleObject, HasChildren, HasRef } from '../../types/props';
 
 const baseClassNames = getClassName('Cell');
 
-export interface CellProps extends StyleObject, HasChildren, HasRef {
+export interface CellProps extends HasStyleObject, HasChildren, HasRef {
   /**
    * Контейнер для контента справа от `children` и `indicator`.
    */

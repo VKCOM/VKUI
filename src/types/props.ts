@@ -5,7 +5,7 @@ export interface HasClassName {
   className?: React.ReactNode;
 }
 
-export interface StyleObject extends HasClassName {
+export interface HasStyleObject extends HasClassName {
   style?: React.CSSProperties;
 }
 

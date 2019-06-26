@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Avatar, { AvatarProps } from '../Avatar/Avatar';
-import { StyleObject, HasChildren } from '../../types/props';
+import { HasStyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('Entity');
 
-export interface EntityProps extends StyleObject, HasChildren {
+export interface EntityProps extends HasStyleObject, HasChildren {
   /**
    * @deprecated Используйте `avatarProps.size`
    */

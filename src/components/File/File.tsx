@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import Button from '../Button/Button';
 import classNames from '../../lib/classNames';
-import { StyleObject, HasChildren, HasAlign, HasRef } from '../../types/props';
+import { HasStyleObject, HasChildren, HasAlign, HasRef } from '../../types/props';
 
 const baseClassNames = getClassName('File');
 
-export interface FileProps extends StyleObject, HasChildren, HasAlign {
+export interface FileProps extends HasStyleObject, HasChildren, HasAlign {
   getRef?: (instance: HTMLInputElement) => void;
   /**
    * @ignore

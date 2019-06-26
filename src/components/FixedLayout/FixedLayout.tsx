@@ -5,11 +5,11 @@ import classNames from '../../lib/classNames';
 import { transitionEndEventName, transitionStartEventName } from '../View/View';
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
-import { StyleObject, HasChildren, HasRef } from '../../types/props';
+import { HasStyleObject, HasChildren, HasRef } from '../../types/props';
 
 const baseClassNames = getClassName('FixedLayout');
 
-export interface FixedLayoutProps extends StyleObject, HasChildren, HasRef<HTMLDivElement> {
+export interface FixedLayoutProps extends HasStyleObject, HasChildren, HasRef<HTMLDivElement> {
   vertical?: 'top' | 'bottom';
   /**
    * @ignore

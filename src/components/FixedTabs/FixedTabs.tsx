@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Tabs from '../Tabs/Tabs';
 import { IS_PLATFORM_IOS } from '../../lib/platform';
-import { StyleObject } from '../../types/props';
+import { HasStyleObject } from '../../types/props';
 
-export interface FixedTabsProps extends StyleObject {
+export interface FixedTabsProps extends HasStyleObject {
   children: React.ReactNode;
   className?: string;
   vertical?: 'top' | 'bottom';

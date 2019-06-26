@@ -5,7 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 
 import CellButton from '../CellButton/CellButton';
-import { StyleObject, HasChildren, HasAlign } from '../../types/props';
+import { HasStyleObject, HasChildren, HasAlign } from '../../types/props';
 
 const baseClassName = getClassName('Button');
 
@@ -26,7 +26,7 @@ const mapOldLevel = level => {
   }
 };
 
-export interface ButtonProps extends StyleObject, HasChildren, HasAlign {
+export interface ButtonProps extends HasStyleObject, HasChildren, HasAlign {
   after?: React.ReactNode;
   before?: React.ReactNode;
   level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce';
