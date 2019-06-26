@@ -9,7 +9,9 @@ export interface StyleObject extends HasClassName {
   style?: React.CSSProperties;
 }
 
-export interface HasRef<T = any> {
+export interface HasRef<
+  T = any // TODO: Remove default "any"
+> {
   getRootRef?: (instance: T) => void;
 }
 
