@@ -6,10 +6,22 @@ import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
+import { StyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('ActionSheet');
 
-class ActionSheet extends React.Component {
+interface ActionSheetProps extends StyleObject, HasChildren {
+  onClose: () => void;
+  text?: React.ReactNode;
+  title?: React.ReactNode;
+  insets?: {
+    bottom: number;
+  };
+}
+
+class ActionSheet extends React.Component<ActionSheetProps> {
+  el: HTMLElement;
+
   state = {
     closing: false
   };
@@ -38,7 +50,7 @@ class ActionSheet extends React.Component {
     this.waitTransitionFinish(this.props.onClose);
   };
 
-  onItemClick = (action, autoclose) => (event) => {
+  onItemClick = (action, autoclose) => event => {
     event.persist();
 
     if (autoclose) {
@@ -52,7 +64,7 @@ class ActionSheet extends React.Component {
     }
   };
 
-  getRef = el => this.el = el;
+  getRef = el => (this.el = el);
 
   stopPropagation = e => e.stopPropagation();
 
@@ -79,21 +91,32 @@ class ActionSheet extends React.Component {
         style={style}
         onClick={this.onClose}
       >
-        <div {...restProps} ref={this.getRef} onClick={this.stopPropagation} className={classNames(baseClassNames, {
-          'ActionSheet--closing': this.state.closing
-        })}>
-          {IS_PLATFORM_IOS &&
-          <header className="ActionSheet__header">
-            {title && <div className="ActionSheet__title">{title}</div>}
-            {text && <div className="ActionSheet__text">{text}</div>}
-          </header>
-          }
-          {Children.toArray(children).map((Child, index, arr) => (
-            Child && React.cloneElement(Child, {
-              onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose),
-              style: index === arr.length - 1 && insets.bottom ? { marginBottom: insets.bottom } : null
-            })
-          ))}
+        <div
+          {...restProps}
+          ref={this.getRef}
+          onClick={this.stopPropagation}
+          className={classNames(baseClassNames, {
+            'ActionSheet--closing': this.state.closing
+          })}
+        >
+          {IS_PLATFORM_IOS && (
+            <header className="ActionSheet__header">
+              {title && <div className="ActionSheet__title">{title}</div>}
+              {text && <div className="ActionSheet__text">{text}</div>}
+            </header>
+          )}
+          {Children.toArray(children).map(
+            (
+              Child: any, // FIXME
+              index,
+              arr
+            ) =>
+              Child &&
+              React.cloneElement(Child, {
+                onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose),
+                style: index === arr.length - 1 && insets.bottom ? { marginBottom: insets.bottom } : null
+              })
+          )}
         </div>
       </PopoutWrapper>
     );
