@@ -5,15 +5,15 @@ import getClassName from '../../helpers/getClassName';
 
 import transitionEvents from '../../lib/transitionEvents';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { HasChildren } from '../../types/props';
 
 const baseClassName = getClassName('Root');
 
-type Props = {
+export interface RootProps extends HasChildren {
   activeView: string;
+  onTransition: (props: { isBack: boolean; from: string | null; to: string | null }) => void;
   popout?: React.ReactNode;
-  onTransition?: Function; // FIXME
-  children?: React.ReactNode;
-};
+}
 
 type State = {
   activeView: string | null;
@@ -25,7 +25,7 @@ type State = {
   scrolls: { [prop: string]: number };
 };
 
-export default class Root extends Component<Props, State> {
+export default class Root extends Component<RootProps, State> {
   arrayChildren: any; // FIXME
 
   constructor (props) {
