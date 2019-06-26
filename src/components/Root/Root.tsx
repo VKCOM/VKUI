@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
@@ -8,9 +8,28 @@ import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 
 const baseClassName = getClassName('Root');
 
-export default class Root extends React.Component {
+type Props = {
+  activeView: string;
+  popout?: React.ReactNode;
+  onTransition?: Function; // FIXME
+  children?: React.ReactNode;
+};
+
+type State = {
+  activeView: string | null;
+  prevView: string | null;
+  nextView: string | null;
+  visibleViews: string[];
+  isBack?: boolean;
+  transition?: boolean;
+  scrolls: { [prop: string]: number };
+};
+
+export default class Root extends Component<Props, State> {
+  arrayChildren: any; // FIXME
+
   constructor (props) {
-    super();
+    super(props);
 
     this.state = {
       activeView: props.activeView,
@@ -18,18 +37,12 @@ export default class Root extends React.Component {
       nextView: null,
       visibleViews: [props.activeView],
       isBack: undefined,
+      transition: undefined,
       scrolls: {}
     };
 
     this.arrayChildren = React.Children.toArray(props.children);
   }
-
-  static propTypes = {
-    activeView: PropTypes.string.isRequired,
-    popout: PropTypes.node,
-    onTransition: PropTypes.func,
-    children: PropTypes.node
-  };
 
   static defaultProps = {
     popout: null
@@ -59,9 +72,8 @@ export default class Root extends React.Component {
 
     if (nextProps.activeView !== this.props.activeView) {
       let pageYOffset = this.window.pageYOffset;
-      const firstLayerId = this.props.children.find(view => {
-        return view.props.id === this.props.activeView || view.props.id === nextProps.activeView;
-      }).props.id;
+      const firstLayerId = (this.props.children as any) // FIXME
+        .find(view => view.props.id === this.props.activeView || view.props.id === nextProps.activeView).props.id;
       const isBack = firstLayerId === nextProps.activeView;
 
       this.blurActiveElement();
@@ -109,27 +121,35 @@ export default class Root extends React.Component {
     }
   }
 
-  onAnimationEnd = (e = { manual: true }) => {
-    if ([
-      'root-android-animation-hide-back',
-      'root-android-animation-show-forward',
-      'root-ios-animation-hide-back',
-      'root-ios-animation-show-forward'
-    ].indexOf(e.animationName) > -1 || e.manual) {
+  onAnimationEnd = (
+    e: any = { manual: true } // FIXME: fix typings
+  ) => {
+    if (
+      [
+        'root-android-animation-hide-back',
+        'root-android-animation-show-forward',
+        'root-ios-animation-hide-back',
+        'root-ios-animation-show-forward'
+      ].indexOf(e.animationName) > -1 ||
+      e.manual
+    ) {
       const isBack = this.state.isBack;
       const prevView = this.state.prevView;
       const nextView = this.state.nextView;
-      this.setState({
-        activeView: nextView,
-        prevView: null,
-        nextView: null,
-        visibleViews: [nextView],
-        transition: false,
-        isBack: undefined
-      }, () => {
-        isBack ? this.window.scrollTo(0, this.state.scrolls[this.state.activeView]) : this.window.scrollTo(0, 0);
-        this.props.onTransition && this.props.onTransition({ isBack, from: prevView, to: nextView });
-      });
+      this.setState(
+        {
+          activeView: nextView,
+          prevView: null,
+          nextView: null,
+          visibleViews: [nextView],
+          transition: false,
+          isBack: undefined
+        },
+        () => {
+          isBack ? this.window.scrollTo(0, this.state.scrolls[this.state.activeView]) : this.window.scrollTo(0, 0);
+          this.props.onTransition && this.props.onTransition({ isBack, from: prevView, to: nextView });
+        }
+      );
     }
   };
 
@@ -144,15 +164,19 @@ export default class Root extends React.Component {
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
     return (
-      <div className={ classNames(baseClassName, { 'Root--transition': transition }) }>
+      <div className={classNames(baseClassName, { 'Root--transition': transition })}>
         {Views.map(View => (
-          <div key={View.props.id} id={`view-${View.props.id}`} className={classNames('Root__view', {
-            'Root__view--hide-back': View.props.id === prevView && isBack,
-            'Root__view--hide-forward': View.props.id === prevView && !isBack,
-            'Root__view--show-back': View.props.id === nextView && isBack,
-            'Root__view--show-forward': View.props.id === nextView && !isBack,
-            'Root__view--active': View.props.id === activeView
-          })}>
+          <div
+            key={View.props.id}
+            id={`view-${View.props.id}`}
+            className={classNames('Root__view', {
+              'Root__view--hide-back': View.props.id === prevView && isBack,
+              'Root__view--hide-forward': View.props.id === prevView && !isBack,
+              'Root__view--show-back': View.props.id === nextView && isBack,
+              'Root__view--show-forward': View.props.id === nextView && !isBack,
+              'Root__view--active': View.props.id === activeView
+            })}
+          >
             {View}
           </div>
         ))}
