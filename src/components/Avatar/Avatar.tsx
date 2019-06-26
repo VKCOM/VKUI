@@ -2,10 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { StyleObject, HasChildren, HasRef } from '../../types/props';
 
 const baseClassName = getClassName('Avatar');
 
-const Avatar = ({ src, size, type, style, className, children, getRootRef, ...restProps }) => {
+export interface AvatarProps extends StyleObject, HasChildren, HasRef<HTMLDivElement> {
+  size?: 80 | 72 | 64 | 56 | 48 | 40 | 36 | 32 | 28;
+  src?: string;
+  type?: 'default' | 'image' | 'app';
+}
+
+const Avatar = ({ src, size, type, style, className, children, getRootRef, ...restProps }: AvatarProps) => {
   const Component = src ? 'img' : 'div';
   let borderRadius;
 
