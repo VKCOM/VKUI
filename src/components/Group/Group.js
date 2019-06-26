@@ -24,7 +24,10 @@ Group.propTypes = {
   description: PropTypes.node,
   children: PropTypes.node,
   className: PropTypes.string,
-  getRootRef: PropTypes.func
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 Group.defaultProps = {

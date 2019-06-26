@@ -31,8 +31,14 @@ export default class Textarea extends PureComponent {
     onChange: PropTypes.func,
     onResize: PropTypes.func,
     className: PropTypes.string,
-    getRef: PropTypes.func,
-    getRootRef: PropTypes.func,
+    getRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
+    getRootRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
     status: PropTypes.oneOf(['default', 'error', 'valid'])
   };
 
@@ -43,9 +49,17 @@ export default class Textarea extends PureComponent {
     onResize: () => {}
   };
 
-  getRef = element => {
+  getRef = (element) => {
     this.element = element;
-    this.props.getRef && this.props.getRef(element);
+
+    const getRef = this.props.getRef;
+    if (getRef) {
+      if (typeof getRef === 'function') {
+        getRef(element);
+      } else {
+        getRef.current = element;
+      }
+    }
   };
 
   resize = () => {

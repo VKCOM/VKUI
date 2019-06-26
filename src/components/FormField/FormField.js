@@ -27,7 +27,10 @@ FormField.propTypes = {
   style: PropTypes.object,
   top: PropTypes.node,
   bottom: PropTypes.node,
-  getRootRef: PropTypes.func,
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]),
   status: PropTypes.oneOf(['default', 'error', 'valid'])
 };
 

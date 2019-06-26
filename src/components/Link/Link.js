@@ -13,7 +13,10 @@ Link.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   Component: PropTypes.any,
-  getRootRef: PropTypes.func
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 Link.defaultProps = {

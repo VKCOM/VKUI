@@ -14,5 +14,8 @@ Div.propTypes = {
   style: PropTypes.object,
   children: PropTypes.node,
   className: PropTypes.string,
-  getRootRef: PropTypes.func
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };

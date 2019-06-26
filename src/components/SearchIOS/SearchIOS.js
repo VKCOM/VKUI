@@ -39,7 +39,10 @@ export default class SearchIOS extends React.Component {
     onBlur: PropTypes.func,
     placeholder: PropTypes.node,
     theme: PropTypes.oneOf(['header', 'default']),
-    getRef: PropTypes.func
+    getRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ])
   };
 
   static defaultProps = {
@@ -80,7 +83,16 @@ export default class SearchIOS extends React.Component {
     }
   };
 
-  inputRef = el => this.props.getRef && this.props.getRef(el);
+  inputRef = (element) => {
+    const getRef = this.props.getRef;
+    if (getRef) {
+      if (typeof getRef === 'function') {
+        getRef(element);
+      } else {
+        getRef.current = element;
+      }
+    }
+  };
 
   render () {
     const {

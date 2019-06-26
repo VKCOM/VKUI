@@ -43,7 +43,10 @@ Avatar.propTypes = {
   className: PropTypes.string,
   type: PropTypes.oneOf(['default', 'image', 'app']),
   children: PropTypes.node,
-  getRootRef: PropTypes.func
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 Avatar.defaultProps = {

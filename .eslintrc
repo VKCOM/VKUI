@@ -17,6 +17,10 @@
     "react/no-deprecated": "off"
   },
 
+  "globals": {
+    "Element": true
+  },
+
   "plugins": [
     "react"
   ],

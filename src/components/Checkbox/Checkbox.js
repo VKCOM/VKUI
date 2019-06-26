@@ -32,7 +32,10 @@ Checkbox.propTypes = {
   children: PropTypes.node,
   style: PropTypes.object,
   className: PropTypes.string,
-  getRootRef: PropTypes.func
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 export default Checkbox;

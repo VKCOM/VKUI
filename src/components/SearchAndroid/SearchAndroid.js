@@ -35,7 +35,10 @@ export default class SearchAndroid extends React.Component {
     onClose: PropTypes.func,
     placeholder: PropTypes.node,
     theme: PropTypes.oneOf(['header', 'default']),
-    getRef: PropTypes.func,
+    getRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
     autoFocus: PropTypes.bool
   };
 
@@ -76,9 +79,18 @@ export default class SearchAndroid extends React.Component {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  inputRef = (el) => {
-    this.inputEl = el;
-    this.props.getRef && this.props.getRef(el);
+  inputRef = (element) => {
+    this.inputEl = element;
+
+    const getRef = this.props.getRef;
+
+    if (getRef) {
+      if (typeof getRef === 'function') {
+        getRef(element);
+      } else {
+        getRef.current = element;
+      }
+    }
   };
 
   render () {
