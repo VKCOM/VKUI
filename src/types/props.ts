@@ -10,7 +10,7 @@ export interface StyleObject extends HasClassName {
 }
 
 export interface HasRef<T = any> {
-  getRootRef?: React.Ref<T> | ((instance: T) => void);
+  getRootRef?: (instance: T) => void;
 }
 
 export interface HasChildren {
