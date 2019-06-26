@@ -5,6 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 
 import CellButton from '../CellButton/CellButton';
+import { StyleObject, HasChildren, HasAlign } from '../../types/props';
 
 const baseClassName = getClassName('Button');
 
@@ -25,7 +26,21 @@ const mapOldLevel = level => {
   }
 };
 
-const Button = props => {
+export interface ButtonProps extends StyleObject, HasChildren, HasAlign {
+  after?: React.ReactNode;
+  before?: React.ReactNode;
+  level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce';
+  size?: 'm' | 'l' | 'xl';
+  stretched?: boolean;
+
+  /**
+   * @deprecated Кнопки-ячейки `<Button type="cell" />` переехали в отдельный компонент: `<CellButton />`.
+   * Свойство `type` будет удалено в 3.0.0
+   */
+  type?: 'default' | 'cell';
+}
+
+const Button = (props: ButtonProps) => {
   if (props.type === 'cell') {
     return <CellButton {...props} />;
   } else {
