@@ -5,10 +5,15 @@ import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS } from '../../lib/platform';
+import { StyleObject, HasChildren, HasRef } from '../../types/props';
 
 const baseClassName = getClassName('Checkbox');
 
-const Checkbox = ({ children, className, style, getRootRef, ...restProps }) => {
+export interface CheckBoxProps extends StyleObject, HasChildren, HasRef {
+  disabled: boolean;
+}
+
+const Checkbox = ({ children, className, style, getRootRef, ...restProps }: CheckBoxProps) => {
   return (
     <Tappable
       component="label"
