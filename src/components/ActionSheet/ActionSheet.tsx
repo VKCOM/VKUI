@@ -10,7 +10,7 @@ import { StyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('ActionSheet');
 
-interface ActionSheetProps extends StyleObject, HasChildren {
+export interface ActionSheetProps extends StyleObject, HasChildren {
   onClose: () => void;
   text?: React.ReactNode;
   title?: React.ReactNode;
