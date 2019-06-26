@@ -30,8 +30,14 @@ export default class Select extends Component {
     defaultValue: PropTypes.any,
     children: PropTypes.node,
     placeholder: PropTypes.string,
-    getRef: PropTypes.func,
-    getRootRef: PropTypes.func,
+    getRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
+    getRootRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
     alignment: PropTypes.oneOf(['left', 'center', 'top']),
     status: PropTypes.oneOf(['default', 'error', 'valid'])
   };
@@ -72,9 +78,17 @@ export default class Select extends Component {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  getRef = (el) => {
-    this.selectEl = el;
-    this.props.getRef && this.props.getRef(el);
+  getRef = (element) => {
+    this.selectEl = element;
+
+    const getRef = this.props.getRef;
+    if (getRef) {
+      if (typeof getRef === 'function') {
+        getRef(element);
+      } else {
+        getRef.current = element;
+      }
+    }
   };
 
   render () {

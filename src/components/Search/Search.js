@@ -7,7 +7,10 @@ import PropTypes from 'prop-types';
 export default class Search extends React.Component {
   static propTypes = {
     className: PropTypes.string,
-    getRef: PropTypes.func,
+    getRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
     /**
      * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
      */

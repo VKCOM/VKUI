@@ -58,7 +58,10 @@ FormLayout.propTypes = {
   className: PropTypes.string,
   TagName: PropTypes.string,
   onSubmit: PropTypes.func,
-  getRef: PropTypes.func
+  getRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 FormLayout.defaultProps = {

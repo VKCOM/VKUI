@@ -18,7 +18,10 @@ Progress.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   value: PropTypes.number,
-  getRootRef: PropTypes.func
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 Progress.defaultProps = {

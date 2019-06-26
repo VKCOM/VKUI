@@ -28,7 +28,10 @@ Header.propTypes = {
   aside: PropTypes.node,
   children: PropTypes.node,
   style: PropTypes.object,
-  getRootRef: PropTypes.func
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 Header.defaultProps = {

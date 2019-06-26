@@ -27,7 +27,10 @@ export default class PanelHeader extends React.Component {
      */
     transparent: PropTypes.bool,
     noShadow: PropTypes.bool,
-    getRef: PropTypes.func
+    getRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ])
   };
 
   static defaultProps = {
@@ -52,12 +55,24 @@ export default class PanelHeader extends React.Component {
   get webviewType () { return this.context.webviewType || 'vkapps'; }
 
   componentDidMount () {
-    this.leftNode = this.document.getElementById('header-left-' + this.context.panel);
-    this.addonNode = this.document.getElementById('header-addon-' + this.context.panel);
-    this.titleNode = this.document.getElementById('header-title-' + this.context.panel);
-    this.rightNode = this.document.getElementById('header-right-' + this.context.panel);
-    this.bgNode = this.document.getElementById('header-bg-' + this.context.panel);
-    this.props.getRef && this.props.getRef(this.document.getElementById(`panel-header-${this.context.panel}`));
+    const panelId = this.context.panel;
+
+    this.leftNode = this.document.getElementById('header-left-' + panelId);
+    this.addonNode = this.document.getElementById('header-addon-' + panelId);
+    this.titleNode = this.document.getElementById('header-title-' + panelId);
+    this.rightNode = this.document.getElementById('header-right-' + panelId);
+    this.bgNode = this.document.getElementById('header-bg-' + panelId);
+
+    const getRef = this.props.getRef;
+    if (getRef) {
+      const element = this.document.getElementById(`panel-header-${panelId}`);
+      if (typeof getRef === 'function') {
+        getRef(element);
+      } else {
+        getRef.current = element;
+      }
+    }
+
     this.setState({ ready: true });
   }
 

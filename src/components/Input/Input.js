@@ -29,8 +29,14 @@ Input.propTypes = {
    * Значение `verified` устарело и будет удалено в 3.0.0. Используйте вместо него `valid`
    */
   status: PropTypes.oneOf(['default', 'error', 'verified', 'valid']),
-  getRef: PropTypes.func,
-  getRootRef: PropTypes.func,
+  getRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]),
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]),
   className: PropTypes.string
 };
 

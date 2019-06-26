@@ -43,7 +43,10 @@ export default class Cell extends Component {
      * Контейнер для дополнительного содержимого под `children`.
      */
     description: PropTypes.node,
-    getRootRef: PropTypes.func,
+    getRootRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
     /**
      * Контейнер для произвольного содержимого под `description`. Рисуется только если передать `size="l"`.
      */
@@ -162,9 +165,17 @@ export default class Cell extends Component {
 
   getRemoveRef = el => this.removeButton = el;
 
-  getRootRef = el => {
-    this.rootEl = el;
-    this.props.getRootRef && this.props.getRootRef(el);
+  getRootRef = (element) => {
+    this.rootEl = element;
+
+    const getRootRef = this.props.getRootRef;
+    if (getRootRef) {
+      if (typeof getRootRef === 'function') {
+        getRootRef(element);
+      } else {
+        getRootRef.current = element;
+      }
+    }
   };
 
   onDragStart = () => {
