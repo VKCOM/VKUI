@@ -3,12 +3,28 @@ import PropTypes from 'prop-types';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Tabs from '../Tabs/Tabs';
 import { IS_PLATFORM_IOS } from '../../lib/platform';
+import { StyleObject } from '../../types/props';
+
+export interface FixedTabsProps extends StyleObject {
+  children: React.ReactNode;
+  className?: string;
+  vertical?: 'top' | 'bottom';
+  /**
+   * Значения white и gray устарели. Они будут удалены в следующей мажорной версии.
+   * Для Android актуален только header
+   */
+  theme?: 'light' | 'header';
+  /**
+   * iOS only
+   */
+  type?: 'default' | 'buttons';
+}
 
 /**
  * @deprecated Для отрисовки фиксированных табов используйте связку `Tabs` и `FixedLayout`.
  * Этот компонент устарел и будет удален в 3.0.0.
  */
-export default class FixedTabs extends React.Component {
+export default class FixedTabs extends React.Component<FixedTabsProps> {
   static propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
@@ -35,9 +51,7 @@ export default class FixedTabs extends React.Component {
 
     return (
       <FixedLayout vertical={vertical} className={className} style={style}>
-        <Tabs theme={theme}>
-          {children}
-        </Tabs>
+        <Tabs theme={theme}>{children}</Tabs>
       </FixedLayout>
     );
   }
