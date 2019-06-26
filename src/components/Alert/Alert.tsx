@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
@@ -7,26 +6,43 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { StyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('Alert');
 
-export default class Alert extends Component {
-  state = {};
-  element = React.createRef();
+export interface AlertActions {
+  title?: string;
+  action?: () => void;
+  style?: 'cancel' | 'destructive' | 'default';
+}
+
+export interface AlertProps extends StyleObject, HasChildren {
+  onClose: () => void;
+  actions?: AlertActions[];
+  actionsLayout?: 'vertical' | 'horizontal';
+}
+
+export default class Alert extends Component<AlertProps> {
+  state = {
+    closing: false
+  };
+  element = React.createRef<HTMLDivElement>();
 
   static propTypes = {
     style: PropTypes.object,
     className: PropTypes.string,
     children: PropTypes.node,
     actionsLayout: PropTypes.oneOf(['vertical', 'horizontal']),
-    actions: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string,
-      action: PropTypes.func,
-      /**
-       * 'cancel' - iOS only
-       */
-      style: PropTypes.oneOf(['cancel', 'destructive', 'default'])
-    })),
+    actions: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string,
+        action: PropTypes.func,
+        /**
+         * 'cancel' - iOS only
+         */
+        style: PropTypes.oneOf(['cancel', 'destructive', 'default'])
+      })
+    ),
     onClose: PropTypes.func.isRequired
   };
 
@@ -74,16 +90,17 @@ export default class Alert extends Component {
     const { closing } = this.state;
 
     return (
-      <PopoutWrapper
-        closing={closing}
-        style={style}
-        onClick={this.onClose}
-      >
-        <div {...restProps} ref={this.element} onClick={this.stopPropagation} className={classNames(baseClassNames, {
-          'Alert--v': actionsLayout === 'vertical',
-          'Alert--h': actionsLayout === 'horizontal',
-          'Alert--closing': closing
-        })}>
+      <PopoutWrapper closing={closing} style={style} onClick={this.onClose}>
+        <div
+          {...restProps}
+          ref={this.element}
+          onClick={this.stopPropagation}
+          className={classNames(baseClassNames, {
+            'Alert--v': actionsLayout === 'vertical',
+            'Alert--h': actionsLayout === 'horizontal',
+            'Alert--closing': closing
+          })}
+        >
           <div className="Alert__content">{children}</div>
           <footer className="Alert__footer">
             {actions.map((button, i) => (
