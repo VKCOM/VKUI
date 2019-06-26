@@ -9,11 +9,8 @@ export interface StyleObject extends HasClassName {
   style?: React.CSSProperties;
 }
 
-export interface HasRef {
-  getRootRef?: (
-    // TODO: resolve "any"
-    instance: React.Ref<any>
-  ) => void;
+export interface HasRef<T = any> {
+  getRootRef?: React.Ref<T> | ((instance: T) => void);
 }
 
 export interface HasChildren {
