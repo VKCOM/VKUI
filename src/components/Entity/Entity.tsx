@@ -2,16 +2,29 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import Avatar from '../Avatar/Avatar';
+import Avatar, { AvatarProps } from '../Avatar/Avatar';
+import { StyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('Entity');
+
+export interface EntityProps extends StyleObject, HasChildren {
+  /**
+   * @deprecated Используйте `avatarProps.size`
+   */
+  size: 'm' | 's' | 80 | 72 | 64 | 56 | 48 | 40 | 36 | 32 | 28;
+  photo: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
+  className: string;
+  avatarProps: AvatarProps;
+}
 
 // @TODO Try to load photo
 /**
  * @deprecated Используйте `Cell`. Этот компонент устарел и будет удален в 3.0.0
  */
-export default class Entity extends Component {
-  static propTypes = {
+export default class Entity extends Component<EntityProps> {
+  static = {
     style: PropTypes.object,
     /**
      * @deprecated Используйте `avatarProps.size`
@@ -49,7 +62,12 @@ export default class Entity extends Component {
     return (
       <div className={classNames(baseClassNames, className)} style={style}>
         <div className="Entity__aside">
-          <Avatar src={photo} alt={title} size={this.avatarSize} {...avatarProps} />
+          <Avatar
+            src={photo}
+            alt={typeof title === 'string' ? title : undefined}
+            size={this.avatarSize}
+            {...avatarProps}
+          />
         </div>
         <div className="Entity__main">
           {title && <div className="Entity__title">{title}</div>}
