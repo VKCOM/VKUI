@@ -2,7 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isWebView } from '../../lib/webview';
 
-export default class ConfigProvider extends React.Component {
+export interface ConfigProviderType {
+  scheme: string;
+  isWebView: boolean;
+  webviewType: 'vkapps' | 'internal';
+  app: string;
+  children: React.ReactNode;
+}
+
+export default class ConfigProvider extends React.Component<ConfigProviderType> {
   static childContextTypes = {
     isWebView: PropTypes.bool,
     scheme: PropTypes.string,
@@ -28,7 +36,9 @@ export default class ConfigProvider extends React.Component {
     document: PropTypes.object
   };
 
-  get document () { return this.context.document || window.document; }
+  get document () {
+    return this.context.document || window.document;
+  }
 
   componentWillMount () {
     this.document.body.setAttribute('scheme', this.props.scheme);
