@@ -4,10 +4,30 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import Tappable from '../Tappable/Tappable';
+import { HasStyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('PanelHeaderContent');
 
-const PanelHeaderContent = ({ className, style, aside, status, before, children, onClick, ...restProps }) => {
+export interface PanelHeaderContentProps extends HasStyleObject, HasChildren {
+  aside?: React.ReactNode;
+  onClick?: () => void;
+  status?: React.ReactNode;
+  /**
+   * Android only
+   */
+  before?: React.ReactNode;
+}
+
+const PanelHeaderContent = ({
+  className,
+  style,
+  aside,
+  status,
+  before,
+  children,
+  onClick,
+  ...restProps
+}: PanelHeaderContentProps) => {
   const InComponent = onClick ? Tappable : 'div';
   const rootProps = onClick ? {} : restProps;
   const inProps = onClick ? { ...restProps, activeEffectDelay: 200 } : {};
