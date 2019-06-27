@@ -12,25 +12,24 @@ export type SpecificTouchEvent<E extends HTMLElement = HTMLElement> = Gesture & 
 };
 
 // eslint-disable-next-line space-infix-ops
-export type TouchProps<TagName extends keyof React.ReactHTML | undefined> = HasChildren &
-  HasRef &
-  GetElementProps<TagName> & {
+export type TouchProps = HasChildren &
+  HasRef & {
     /** @default 'div' */
-    component?: TagName;
-    onClick?: (e?: React.MouseEvent<GetElementByTagName<TagName>>) => void;
-    onEnd?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
-    onEndX?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
-    onEndY?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
-    onMove?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
-    onMoveX?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
-    onMoveY?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
-    onStart?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
-    onStartX?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
-    onStartY?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    component?: keyof React.ReactHTML;
+    onClick?: (e?: React.MouseEvent<HTMLElement>) => void;
+    onEnd?: (e?: SpecificTouchEvent<HTMLElement>) => void;
+    onEndX?: (e?: SpecificTouchEvent<HTMLElement>) => void;
+    onEndY?: (e?: SpecificTouchEvent<HTMLElement>) => void;
+    onMove?: (e?: SpecificTouchEvent<HTMLElement>) => void;
+    onMoveX?: (e?: SpecificTouchEvent<HTMLElement>) => void;
+    onMoveY?: (e?: SpecificTouchEvent<HTMLElement>) => void;
+    onStart?: (e?: SpecificTouchEvent<HTMLElement>) => void;
+    onStartX?: (e?: SpecificTouchEvent<HTMLElement>) => void;
+    onStartY?: (e?: SpecificTouchEvent<HTMLElement>) => void;
     useCapture?: boolean;
   };
 
-export default class Touch<TagName extends keyof React.ReactHTML = 'div'> extends Component<TouchProps<TagName>> {
+export default class Touch extends Component<TouchProps> {
   cancelClick = false;
   gesture: Gesture = {};
 
@@ -96,7 +95,7 @@ export default class Touch<TagName extends keyof React.ReactHTML = 'div'> extend
     };
 
     // Вызываем нужные колбеки из props
-    const outputEvent: SpecificTouchEvent<GetElementByTagName<TagName>> = {
+    const outputEvent: SpecificTouchEvent<HTMLElement> = {
       ...this.gesture,
       originalEvent: e
     };
