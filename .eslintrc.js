@@ -1,11 +1,22 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: ['semistandard', 'plugin:react/recommended'],
+  extends: [
+    // 'semistandard', // FIXME: Temporarily disabled due to troubles with typescript
+    'standard',
+    'plugin:react/recommended'
+  ],
+
   plugins: ['typescript', 'react', 'import', 'react-hooks'],
 
   parserOptions: {
     ecmaFeatures: {
       jsx: true
+    }
+  },
+
+  settings: {
+    react: {
+      version: 'detect'
     }
   },
 
@@ -22,12 +33,9 @@ module.exports = {
     // This rule reports any imports that come after non-import statements
     'import/first': 'error',
     // Tmp
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.tsx'] }]
-  },
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.tsx'] }],
 
-  settings: {
-    react: {
-      version: 'detect'
-    }
+    // Enable semicolons
+    semi: ['error', 'always']
   }
 };
