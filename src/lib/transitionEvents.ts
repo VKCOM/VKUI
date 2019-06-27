@@ -1,4 +1,4 @@
-let supported, prefix;
+let supported: boolean, prefix: string;
 
 if (typeof document !== 'undefined' && document.createElement) {
   const d = document.createElement('div');
