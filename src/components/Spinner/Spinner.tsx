@@ -6,10 +6,13 @@ import Spinner44 from '@vkontakte/icons/dist/44/spinner';
 import Spinner16 from '@vkontakte/icons/dist/16/spinner';
 import classNames from '../../lib/classNames.js';
 import getClassName from '../../helpers/getClassName';
+import { HasStyleObject } from '../../types/props.js';
 
 const baseClassNames = getClassName('Spinner');
 
-const svgSpinner = size => {
+export type SpinnerSize = 'small' | 'regular' | 'large' | 'medium';
+
+const svgSpinner = (size: SpinnerSize) => {
   switch (size) {
     case 'large':
       return <Spinner44 className="Spinner__self" />;
@@ -22,12 +25,16 @@ const svgSpinner = size => {
   }
 };
 
+export interface SpinnerProps extends HasStyleObject {
+  size?: SpinnerSize;
+}
+
 // eslint-disable-next-line react/display-name
-const Spinner = React.memo(({ className, size, ...restProps }) => (
+const Spinner = ({ className, size, ...restProps }: SpinnerProps) => (
   <div {...restProps} className={classNames(baseClassNames, className)}>
     {svgSpinner(size)}
   </div>
-));
+);
 
 Spinner.propTypes = {
   style: PropTypes.object,
@@ -39,4 +46,4 @@ Spinner.defaultProps = {
   size: 'regular'
 };
 
-export default Spinner;
+export default React.memo(Spinner);
