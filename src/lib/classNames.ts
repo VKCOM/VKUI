@@ -1,14 +1,18 @@
-export default function classNames () {
-  let result = [];
+export type ClassValue = string | number | { [className: string]: any } | undefined | null | boolean;
 
-  [...arguments].forEach(item => {
+export default function classNames (...classes: ClassValue[]) {
+  const result = [];
+
+  [...classes].forEach(item => {
     if (!item) {
       return;
     }
+
     switch (typeof item) {
       case 'string':
         result.push(item);
         break;
+
       case 'object':
         Object.keys(item).forEach(key => {
           if (item[key]) {
@@ -16,8 +20,10 @@ export default function classNames () {
           }
         });
         break;
+
       default:
         result.push('' + item);
+        break;
     }
   });
 
