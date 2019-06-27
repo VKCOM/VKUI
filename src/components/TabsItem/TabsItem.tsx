@@ -1,14 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import Tappable, {ACTIVE_EFFECT_DELAY} from '../Tappable/Tappable';
+import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 
 import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS } from '../../lib/platform';
+import { HasChildren, HasClassName } from '../../types/props';
 
 const baseClassName = getClassName('TabsItem');
 
-export default class TabsItem extends React.Component {
+export interface TabsItemProps extends HasChildren, HasClassName {
+  after?: React.ReactNode;
+  selected?: boolean;
+}
+
+export default class TabsItem extends React.Component<TabsItemProps> {
   static propTypes = {
     children: PropTypes.node,
     selected: PropTypes.bool,
