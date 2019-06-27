@@ -4,11 +4,26 @@ import ReactDOM from 'react-dom';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 
-const isElement = element => React.isValidElement(element);
-const isDOMTypeElement = element => isElement(element) && typeof element.type === 'string';
+const isElement = (element: unknown): element is React.ReactElement => React.isValidElement(element);
+const isDOMTypeElement = (
+  element: unknown
+): element is React.ReactElement<React.HTMLAttributes<HTMLElement>, keyof React.ReactHTML> =>
+  isElement(element) && typeof element.type === 'string';
 const baseClassName = getClassName('Tooltip');
 
-class TooltipPortal extends React.Component {
+type TooltipPortalProps = {
+  onClose: () => void;
+  target?: HTMLElement;
+  text?: React.ReactNode;
+  title?: React.ReactNode;
+  alignX?: 'left' | 'right';
+  alignY?: 'top' | 'bottom';
+  offsetX?: number;
+  offsetY?: number;
+  cornerOffset?: number;
+};
+
+class TooltipPortal extends React.Component<TooltipPortalProps> {
   static propTypes = {
     target: PropTypes.object,
     text: PropTypes.node,
@@ -25,6 +40,8 @@ class TooltipPortal extends React.Component {
     document: PropTypes.any,
     panel: PropTypes.string
   };
+
+  el: HTMLDivElement;
 
   state = {
     x: 0,
@@ -81,7 +98,7 @@ class TooltipPortal extends React.Component {
     });
   }
 
-  getRef = el => (this.el = el);
+  getRef = (el: HTMLDivElement) => (this.el = el);
 
   render () {
     const { title, text, alignX, alignY, cornerOffset } = this.props;
@@ -107,7 +124,52 @@ class TooltipPortal extends React.Component {
   }
 }
 
-export default class Tooltip extends React.Component {
+export interface TooltipProps {
+  /**
+   * **Важно**: если в `children` передан React-компонент, то необходимо убедиться в том, что он поддерживает
+   * свойство `getRootRef`, которое должно возвращаться ссылку на корневой DOM-элемент компонента,
+   * иначе тултип показан не будет. Если передан React-element, то такой проблемы нет.
+   */
+  children: React.ReactNode;
+  /**
+   * Callback, который вызывается при клике по любому месту в пределах экрана.
+   */
+  onClose: () => void;
+  /**
+   * Если передан `false`, то рисуется просто `children`.
+   */
+  isShown: boolean;
+  /**
+   * Текст тултипа.
+   */
+  text?: React.ReactNode;
+  /**
+   * Заголовок тултипа.
+   */
+  title?: React.ReactNode;
+  /**
+   * Положение по горизонтали (прижатие к левому или правому краю `children`).
+   */
+  alignX?: 'left' | 'right';
+  /**
+   * Положение по вертикали (расположение над или под `children`).
+   */
+  alignY?: 'top' | 'bottom';
+  /**
+   * Сдвиг по горизонтали (относительно портала, в котором рисуется тултип).
+   */
+  offsetX?: number;
+  /**
+   * Сдвиг по вертикали (относительно портала, в котором рисуется тултип).
+   */
+  offsetY?: number;
+  /**
+   * Сдвиг треугольника (относительно ширины тултипа).
+   */
+  cornerOffset?: number;
+}
+
+export default class Tooltip extends React.Component<TooltipProps> {
   static propTypes = {
     /**
      * **Важно**: если в `children` передан React-компонент, то необходимо убедиться в том, что он поддерживает
@@ -162,6 +224,8 @@ export default class Tooltip extends React.Component {
     isShown: true
   };
 
+  targetEl: HTMLElement;
+
   state = {
     ready: false
   };
@@ -170,15 +234,18 @@ export default class Tooltip extends React.Component {
     this.targetEl && this.setState({ ready: true });
   }
 
-  getRef = el => (this.targetEl = el);
+  getRef = (el: HTMLElement) => (this.targetEl = el);
 
   render () {
     const { children, isShown, ...portalProps } = this.props;
 
-    const child = React.cloneElement(children, {
-      [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: this.getRef,
-      key: 'c'
-    });
+    const child = React.cloneElement(
+      children as any, // FIXME
+      {
+        [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: this.getRef,
+        key: 'c'
+      }
+    );
 
     if (!isShown || !this.state.ready) {
       return child;
