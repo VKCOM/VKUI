@@ -25,3 +25,19 @@ export type StatusTypes = 'default' | 'error' | 'valid';
 export interface HasAlign {
   align?: AlignTypes;
 }
+
+export type Gesture = Partial<{
+  startX: number;
+  startY: number;
+  startT: Date;
+  isX: boolean;
+  isY: boolean;
+  isPressed: boolean;
+  isSlideX: boolean;
+  isSlideY: boolean;
+  isSlide: boolean;
+  shiftX: number;
+  shiftY: number;
+  shiftXAbs: number;
+  shiftYAbs: number;
+}>;
