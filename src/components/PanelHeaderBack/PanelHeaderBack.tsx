@@ -5,13 +5,17 @@ import Icon24Back from '@vkontakte/icons/dist/24/back';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 
+export interface PanelHeaderBackProps {
+  onClick: () => void;
+}
+
 // eslint-disable-next-line react/display-name
-const PanelHeaderBack = React.memo(({ ...restProps }) => (
+const PanelHeaderBack = ({ ...restProps }: PanelHeaderBackProps) => (
   <HeaderButton {...restProps}>{IS_PLATFORM_ANDROID ? <Icon24Back /> : <Icon28ChevronBack />}</HeaderButton>
-));
+);
 
 PanelHeaderBack.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-export default PanelHeaderBack;
+export default React.memo(PanelHeaderBack);
