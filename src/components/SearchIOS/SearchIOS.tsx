@@ -3,29 +3,49 @@ import PropTypes from 'prop-types';
 import Icon16Search from '@vkontakte/icons/dist/16/search';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { HasClassName } from '../../types/props';
 
 const baseClassName = getClassName('Search');
 
 let searchId = 0;
 
-export default class SearchIOS extends React.Component {
+export interface SearchIOSProps extends HasClassName {
+  after?: React.ReactNode;
+  autoComplete?: string;
+  autoFocus?: boolean;
+  before?: React.ReactNode;
+  theme?: 'header' | 'default';
+  defaultValue?: string;
+  value?: string;
+  placeholder?: string;
+  getRef?: (instance: HTMLInputElement) => void;
+  onChange?: (value: string, e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClose?: () => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+}
+
+type State = {
+  showAfter: boolean;
+  focused: boolean;
+  afterWidth: null;
+  value?: string;
+};
+
+export default class SearchIOS extends React.Component<SearchIOSProps, State> {
+  isControlledOutside: boolean = this.props.hasOwnProperty('value');
+
+  state: State = {
+    showAfter: false,
+    focused: false,
+    afterWidth: null,
+    value: this.props.hasOwnProperty('value') ? this.props.defaultValue || '' : undefined
+  };
+
   constructor (props) {
     super(props);
 
-    let state = {
-      showAfter: false,
-      focused: false,
-      placeholderOffset: null,
-      afterWidth: null
-    };
-
-    if (props.hasOwnProperty('value')) {
-      this.isControlledOutside = true;
-    } else {
-      state.value = props.defaultValue || '';
-    }
     searchId++;
-    this.state = state;
   }
 
   static propTypes = {
@@ -36,7 +56,7 @@ export default class SearchIOS extends React.Component {
     onChange: PropTypes.func,
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
-    placeholder: PropTypes.node,
+    placeholder: PropTypes.string,
     theme: PropTypes.oneOf(['header', 'default']),
     getRef: PropTypes.func
   };
@@ -51,20 +71,25 @@ export default class SearchIOS extends React.Component {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  onFocus = e => {
+  onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     this.setState({ focused: true });
-    this.props.onFocus && this.props.onFocus(e);
+    if (this.props.onFocus) {
+      this.props.onFocus(e);
+    }
   };
 
-  onBlur = e => {
+  onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     this.setState({ focused: false });
-    this.props.onBlur && this.props.onBlur(e);
+    if (this.props.onBlur) {
+      this.props.onBlur(e);
+    }
   };
 
-  onChange = e => {
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
     }
+
     if (this.props.onChange) {
       this.props.onChange(e.target.value, e);
     }
@@ -74,12 +99,14 @@ export default class SearchIOS extends React.Component {
     if (!this.isControlledOutside) {
       this.setState({ value: '' });
     }
+
     if (this.props.onChange) {
-      this.props.onChange('');
+      // FIXME: WTF?
+      // this.props.onChange('');
     }
   };
 
-  inputRef = el => this.props.getRef && this.props.getRef(el);
+  inputRef = (el: HTMLInputElement) => this.props.getRef && this.props.getRef(el);
 
   render () {
     const {
