@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
+import { HasStyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('List');
 
-const List = ({ className, children, ...restProps }) => (
-  <div {...restProps} className={classNames(baseClassNames, className)}>{children}</div>
+interface ListProps extends HasStyleObject, HasChildren {}
+
+const List = ({ className, children, ...restProps }: ListProps) => (
+  <div {...restProps} className={classNames(baseClassNames, className)}>
+    {children}
+  </div>
 );
 
 List.propTypes = {
