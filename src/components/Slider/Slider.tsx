@@ -1,26 +1,36 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Touch from '../Touch/Touch';
+import Touch, { SpecificTouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
+import { HasStyleObject, HasRef } from '../../types/props';
 
 const baseClassNames = getClassName('Slider');
 
-function precisionRound (number, precision) {
-  let factor = Math.pow(10, precision || 1);
+function precisionRound (number: number, precision: number) {
+  const factor = Math.pow(10, precision || 1);
+
   return Math.round(number * factor) / factor;
 }
 
-export default class Slider extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      startX: 0
-    };
-    this.isControlledOutside = this.props.hasOwnProperty('value');
-  }
+export interface SliderProps extends HasStyleObject, HasRef {
+  defaultValue?: number;
+  max?: number;
+  min?: number;
+  onChange?: (value: number, e: SpecificTouchEvent<HTMLDivElement>) => void;
+  value?: number;
+  step?: number;
+}
 
+interface SliderState {
+  startX: number;
+  containerLeft?: number;
+  containerWidth?: number;
+  percentPosition?: number;
+  active?: boolean;
+}
+
+export default class Slider extends Component<SliderProps, SliderState> {
   static propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,
@@ -39,14 +49,22 @@ export default class Slider extends Component {
     step: 0
   };
 
-  onStart = e => {
+  isControlledOutside = this.props.hasOwnProperty('value');
+
+  container: HTMLDivElement;
+
+  state: SliderState = {
+    startX: 0
+  };
+
+  onStart = (e: SpecificTouchEvent<HTMLDivElement>) => {
     const absolutePosition = this.validateAbsolute(e.startX - this.state.containerLeft);
     const percentPosition = this.absoluteToPecent(absolutePosition);
 
     this.onChange(this.percentToValue(percentPosition), e);
 
     if (this.isControlledOutside) {
-      this.setState({startX: absolutePosition});
+      this.setState({ startX: absolutePosition });
     } else {
       this.setState({
         startX: absolutePosition,
@@ -54,7 +72,9 @@ export default class Slider extends Component {
       });
     }
 
-    this.setState({active: !!e.originalEvent.target.closest('.Slider__thumb')});
+    this.setState({
+      active: !!(e.originalEvent.target as HTMLElement).closest('.Slider__thumb')
+    });
   };
 
   onMoveX = e => {
@@ -64,7 +84,7 @@ export default class Slider extends Component {
     this.onChange(this.percentToValue(percentPosition), e);
 
     if (!this.isControlledOutside) {
-      this.setState({percentPosition});
+      this.setState({ percentPosition });
     }
 
     e.originalEvent.preventDefault();
@@ -76,17 +96,22 @@ export default class Slider extends Component {
     });
   };
 
-  onResize = (callback) => {
-    this.setState({
-      containerLeft: this.container.offsetLeft,
-      containerWidth: this.container.offsetWidth
-    }, () => {
-      typeof callback === 'function' && callback();
-    });
+  onResize = callback => {
+    this.setState(
+      {
+        containerLeft: this.container.offsetLeft,
+        containerWidth: this.container.offsetWidth
+      },
+      () => {
+        typeof callback === 'function' && callback();
+      }
+    );
   };
 
   onChange (value, e) {
-    this.props.onChange && this.props.onChange(value, e);
+    if (this.props.onChange) {
+      this.props.onChange(value, e);
+    }
   }
 
   validateAbsolute (absolute) {
@@ -102,20 +127,28 @@ export default class Slider extends Component {
     return res;
   }
 
-  validatePercent (percent) { return Math.max(0, Math.min(percent, 100)); }
+  validatePercent (percent) {
+    return Math.max(0, Math.min(percent, 100));
+  }
 
-  absoluteToPecent (absolute) { return absolute * 100 / this.state.containerWidth; }
+  absoluteToPecent (absolute) {
+    return (absolute * 100) / this.state.containerWidth;
+  }
 
   percentToValue (percent) {
-    const res = percent * (this.props.max - this.props.min) / 100 + this.props.min;
+    const res = (percent * (this.props.max - this.props.min)) / 100 + this.props.min;
+
     if (this.props.step > 0) {
       const stepFloatPart = `${this.props.step}`.split('.')[1] || '';
       return precisionRound(res, stepFloatPart.length);
     }
+
     return res;
   }
 
-  valueToPercent (value) { return (value - this.props.min) * 100 / (this.props.max - this.props.min); }
+  valueToPercent (value) {
+    return ((value - this.props.min) * 100) / (this.props.max - this.props.min);
+  }
 
   get value () {
     if (this.isControlledOutside) {
@@ -130,13 +163,13 @@ export default class Slider extends Component {
   componentDidMount () {
     window.addEventListener('resize', this.onResize);
     this.onResize(() => {
-      this.setState({percentPosition: this.validatePercent(this.valueToPercent(this.value))});
+      this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.value)) });
     });
   }
 
   componentDidUpdate (prevProps) {
     if (this.isControlledOutside && this.props.value !== prevProps.value) {
-      this.setState({percentPosition: this.validatePercent(this.valueToPercent(this.props.value))});
+      this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.props.value)) });
     }
   }
 
@@ -144,13 +177,13 @@ export default class Slider extends Component {
     window.removeEventListener('resize', this.onResize);
   }
 
-  getRef = container => {
+  getRef = (container: HTMLDivElement) => {
     this.container = container;
     this.props.getRootRef && this.props.getRootRef(container);
   };
 
   render () {
-    const { className, min, max, step, value, defaultValue, onChange, getRootRef, ...restProps } = this.props;
+    const { className, min, max, value, defaultValue, onChange, getRootRef, ...restProps } = this.props;
 
     return (
       <div {...restProps} className={classNames(baseClassNames, className)} ref={this.getRef}>
