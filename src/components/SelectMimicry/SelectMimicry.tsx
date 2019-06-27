@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
+import { HasStyleObject, HasRef, HasChildren, StatusTypes } from '../../types/props';
+
+export interface SelectMimicryProps extends HasStyleObject, HasRef, HasChildren {
+  alignment?: 'left' | 'center' | 'top';
+  disabled?: boolean;
+  multiline?: boolean;
+  placeholder?: string;
+  status?: StatusTypes;
+  tabIndex?: number;
+}
 
 const SelectMimicry = ({
   className,
@@ -15,7 +25,7 @@ const SelectMimicry = ({
   multiline,
   disabled,
   ...restProps
-}) => {
+}: SelectMimicryProps) => {
   return (
     <FormField
       {...restProps}
