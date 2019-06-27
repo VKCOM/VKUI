@@ -4,6 +4,8 @@ import removeObjectKeys from '../../lib/removeObjectKeys';
 import Alert from '../Alert/Alert';
 import ActionSheet from '../ActionSheet/ActionSheet';
 import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
+import Root from '../Root/Root';
+import View from '../View/View';
 
 function brToNl (str = '') {
   const regex = /<br\s*\/?>/gi;
@@ -13,10 +15,32 @@ function brToNl (str = '') {
 
 let actionId = 1;
 
+export interface NativePopoutsProps {
+  popout:
+    | {
+        style: 'alert' | 'actionSheet';
+        onClose: Function;
+        title?: string;
+        text?: string;
+        actions: ({
+          style: 'cancel' | 'default' | 'destructive';
+          title: string;
+          action: Function;
+        })[];
+      }
+    | React.ReactNode;
+  vkuiConnect: any; // TODO
+
+  /**
+   * Root or View
+   */
+  component: typeof Root | typeof View;
+}
+
 /**
  * @deprecated будет удален в 3.0.0
  */
-export default class NativePopouts extends React.Component {
+export default class NativePopouts extends React.Component<NativePopoutsProps> {
   state = {
     popout: null
   };
@@ -67,7 +91,10 @@ export default class NativePopouts extends React.Component {
     if (e.type === 'VKWebAppEvent' && e.detail && e.detail.action) {
       if (this.actionsStore.hasOwnProperty(e.detail.action)) {
         this.actionsStore[e.detail.action](e.detail);
-        this.props.popout && this.props.popout.onClose && this.props.popout.onClose();
+
+        if (typeof this.props.popout === 'object' && 'onClose' in this.props.popout) {
+          this.props.popout.onClose();
+        }
       }
     }
   };
@@ -163,7 +190,9 @@ export default class NativePopouts extends React.Component {
   }
 
   render () {
-    let Component = this.props.component;
-    return <Component {...removeObjectKeys(this.props, ['popout'])} popout={this.state.popout} />;
+    const Component = this.props.component;
+    const props = removeObjectKeys(this.props, ['popout']);
+
+    return <Component {...props} popout={this.state.popout} />;
   }
 }
