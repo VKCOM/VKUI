@@ -1,4 +1,11 @@
-export function getOffsetRect (elem) {
+export type OffsetRect = {
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+};
+
+export function getOffsetRect (elem: HTMLElement): OffsetRect {
   const box = elem.getBoundingClientRect();
   const body = document.body;
   const doc = document.documentElement;
