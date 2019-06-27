@@ -7,8 +7,15 @@ function calcStrokeDashOffset (value, radius) {
   return 2 * Math.PI * radius * (1 - progress);
 }
 
-// eslint-disable-next-line react/display-name
-const PullToRefreshSpinner = React.memo(({ on, progress, size, strokeWidth, style }) => {
+export interface PullToRefreshSpinnerProps {
+  size?: number;
+  strokeWidth?: number;
+  on?: boolean;
+  progress?: number;
+  style?: object;
+}
+
+const PullToRefreshSpinner = ({ on, progress, size, strokeWidth, style }: PullToRefreshSpinnerProps) => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
   const dasharray = 2 * Math.PI * radius;
   const circleCenter = 0.5 * size;
@@ -53,7 +60,7 @@ const PullToRefreshSpinner = React.memo(({ on, progress, size, strokeWidth, styl
       </svg>
     </div>
   );
-});
+};
 
 PullToRefreshSpinner.propTypes = {
   size: PropTypes.number,
@@ -70,4 +77,4 @@ PullToRefreshSpinner.defaultProps = {
   progress: null
 };
 
-export default PullToRefreshSpinner;
+export default React.memo(PullToRefreshSpinner);

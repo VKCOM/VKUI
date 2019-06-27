@@ -5,50 +5,66 @@ import FixedLayout from '../FixedLayout/FixedLayout';
 import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
+import { HasChildren, HasClassName } from '../../types/props';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
 
 const baseClassName = getClassName('PullToRefresh');
 
 function cancelEvent (event) {
   if (!event) return false;
-  while (event.originalEvent) event = event.originalEvent;
+
+  while (event.originalEvent) {
+    event = event.originalEvent;
+  }
+
   if (event.preventDefault) event.preventDefault();
   if (event.stopPropagation) event.stopPropagation();
   if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+
   event.cancelBubble = true;
   event.returnValue = false;
+
   return false;
 }
 
-export default class PullToRefresh extends PureComponent {
-  constructor (props) {
-    super(props);
+interface PullToRefreshProps extends HasChildren, HasClassName {
+  /**
+   * Будет вызвана для обновления контента
+   */
+  onRefresh: () => void;
 
-    this.params = {
-      start: IS_PLATFORM_ANDROID ? -40 : -10,
-      max: IS_PLATFORM_ANDROID ? 80 : 50,
-      maxY: IS_PLATFORM_ANDROID ? 80 : 400,
-      refreshing: IS_PLATFORM_ANDROID ? 50 : 36,
+  /**
+   * Определяет, выполняется ли обновление. Для скрытия спиннера после
+   * получения контента необходимо передать `false`
+   */
+  isFetching?: boolean;
+}
 
-      positionMultiplier: IS_PLATFORM_ANDROID ? 1 : 0.21
-    };
+export default class PullToRefresh extends PureComponent<PullToRefreshProps> {
+  params = {
+    start: IS_PLATFORM_ANDROID ? -40 : -10,
+    max: IS_PLATFORM_ANDROID ? 80 : 50,
+    maxY: IS_PLATFORM_ANDROID ? 80 : 400,
+    refreshing: IS_PLATFORM_ANDROID ? 50 : 36,
 
-    this.state = {
-      watching: false,
-      refreshing: false,
-      canRefresh: false,
+    positionMultiplier: IS_PLATFORM_ANDROID ? 1 : 0.21
+  };
 
-      touchDown: false,
-      refreshingFinished: false,
+  _contentElement = React.createRef<HTMLDivElement>();
 
-      touchY: 0,
-      spinnerY: this.params.start,
-      spinnerProgress: 0,
-      contentShift: 0
-    };
+  state = {
+    watching: false,
+    refreshing: false,
+    canRefresh: false,
 
-    this._contentElement = React.createRef();
-  }
+    touchDown: false,
+    refreshingFinished: false,
+
+    touchY: 0,
+    spinnerY: this.params.start,
+    spinnerProgress: 0,
+    contentShift: 0
+  };
 
   static propTypes = {
     children: PropTypes.element,
@@ -96,16 +112,16 @@ export default class PullToRefresh extends PureComponent {
     return this.document.scrollingElement.scrollTop;
   }
 
-  onTouchStart = (e) => {
+  onTouchStart = e => {
     if (this.state.refreshing) cancelEvent(e);
     this.setState({ touchDown: true });
   };
 
-  onWindowTouchMove = (e) => {
+  onWindowTouchMove = e => {
     if (this.state.refreshing) cancelEvent(e);
   };
 
-  onTouchMove = (e) => {
+  onTouchMove = e => {
     const { isY, shiftY } = e;
     const { start, max } = this.params;
     const pageYOffset = this.window.pageYOffset;
@@ -119,7 +135,7 @@ export default class PullToRefresh extends PureComponent {
 
       const shift = Math.max(0, shiftY - this.state.touchY);
 
-      const currentY = Math.max(start, Math.min(this.params.maxY, start + (shift * positionMultiplier)));
+      const currentY = Math.max(start, Math.min(this.params.maxY, start + shift * positionMultiplier));
       const progress = currentY > -10 ? Math.abs((currentY + 10) / max) * 80 : 0;
 
       this.setState({
@@ -147,22 +163,25 @@ export default class PullToRefresh extends PureComponent {
   onTouchEnd = () => {
     const { refreshing, canRefresh, refreshingFinished } = this.state;
 
-    this.setState({
-      watching: false,
-      touchDown: false
-    }, () => {
-      if (canRefresh && !refreshing) {
-        this.runRefreshing();
-      } else if (refreshing && refreshingFinished) {
-        this.resetRefreshingState();
-      } else {
-        this.setState({
-          spinnerY: refreshing ? this.params.refreshing : this.params.start,
-          spinnerProgress: 0,
-          contentShift: 0
-        });
+    this.setState(
+      {
+        watching: false,
+        touchDown: false
+      },
+      () => {
+        if (canRefresh && !refreshing) {
+          this.runRefreshing();
+        } else if (refreshing && refreshingFinished) {
+          this.resetRefreshingState();
+        } else {
+          this.setState({
+            spinnerY: refreshing ? this.params.refreshing : this.params.start,
+            spinnerProgress: 0,
+            contentShift: 0
+          });
+        }
       }
-    });
+    );
   };
 
   runRefreshing () {
@@ -177,12 +196,15 @@ export default class PullToRefresh extends PureComponent {
   }
 
   onRefreshingFinish = () => {
-    this.setState({
-      refreshingFinished: true
-    }, () => {
-      !this.state.touchDown && this.resetRefreshingState();
-    });
-  }
+    this.setState(
+      {
+        refreshingFinished: true
+      },
+      () => {
+        !this.state.touchDown && this.resetRefreshingState();
+      }
+    );
+  };
 
   resetRefreshingState () {
     this.setState({
@@ -226,7 +248,12 @@ export default class PullToRefresh extends PureComponent {
           className="PullToRefresh__content"
           ref={this._contentElement}
           style={{
-            transform: refreshing && !touchDown && IS_PLATFORM_IOS ? `translate3d(0, 100px, 0)` : IS_PLATFORM_IOS && contentShift ? `translate3d(0, ${contentShift}px, 0)` : ''
+            transform:
+              refreshing && !touchDown && IS_PLATFORM_IOS
+                ? `translate3d(0, 100px, 0)`
+                : IS_PLATFORM_IOS && contentShift
+                  ? `translate3d(0, ${contentShift}px, 0)`
+                  : ''
           }}
         >
           {children}
