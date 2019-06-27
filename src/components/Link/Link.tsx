@@ -2,10 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { HasRef, HasChildren, HasClassName } from '../../types/props';
 
 const baseClassName = getClassName('Link');
 
-const Link = ({ children, className, Component, getRootRef, ...restProps }) => (
+export interface LinkProps extends HasRef, HasChildren, HasClassName {
+  Component?: any;
+}
+
+const Link = ({ children, className, Component, getRootRef, ...restProps }: LinkProps) => (
   <Component {...restProps} ref={getRootRef} className={classNames(baseClassName, className)}>
     {children}
   </Component>
