@@ -1,12 +1,51 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import Touch from '../Touch/Touch';
+import Touch, { SpecificTouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
+import { HasStyleObject, HasChildren, HasAlign } from '../../types/props';
 
 const baseClassNames = getClassName('Gallery');
 
-export default class Gallery extends Component {
+export interface GalleryProps extends HasStyleObject, HasChildren, HasAlign {
+  autoplay?: number;
+  bullets?: 'dark' | 'light' | false;
+  initialSlideIndex?: number;
+  onChange?: (cur: number) => void;
+  onDragEnd?: (e?: SpecificTouchEvent) => void;
+  onDragStart?: (e?: SpecificTouchEvent) => void;
+  onEnd?: (e?: SpecificTouchEvent) => void;
+  slideIndex?: number;
+  slideWidth?: number | string;
+}
+
+type State = {
+  min?: number;
+  max?: number;
+  startT?: Date;
+  layerWidth?: number;
+  containerWidth: number;
+  current: number;
+  deltaX: number;
+  shiftX: number;
+  slides: { coordX: number; width: number }[];
+  animation: boolean;
+  duration: number;
+  dragging?: boolean;
+};
+
+export default class Gallery extends Component<GalleryProps, State> {
+  container = React.createRef<HTMLDivElement>();
+
+  slidesStore: { [prop: string]: HTMLElement } = {};
+  slides = this.getChildren(this.props.children);
+
+  viewport: any; // FIXME!
+
+  timeout: number = -1;
+
+  isChildrenDirty: boolean;
+
   constructor (props) {
     super(props);
 
@@ -17,25 +56,17 @@ export default class Gallery extends Component {
       current,
       deltaX: 0,
       shiftX: 0,
-      slides: [],
+      slides: [] as { coordX: number; width: number }[],
       animation: false,
       duration: 0.24
     };
-
-    this.container = React.createRef();
-
-    this.slidesStore = {};
-    this.slides = this.getChildren(props.children);
   }
 
   static propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
     style: PropTypes.object,
-    slideWidth: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
+    slideWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     autoplay: PropTypes.number,
     initialSlideIndex: PropTypes.number,
     slideIndex: PropTypes.number,
@@ -68,7 +99,7 @@ export default class Gallery extends Component {
     const layerWidth = slides.reduce((val, slide) => slide.width + val, 0);
 
     const min = this.calcMin({ containerWidth, layerWidth, viewportWidth, slides });
-    const max = this.calcMax({ containerWidth, layerWidth, viewportWidth, slides });
+    const max = this.calcMax({ viewportWidth, slides });
 
     this.setState({ min, max, layerWidth, containerWidth, slides }, callback);
   }
@@ -82,7 +113,7 @@ export default class Gallery extends Component {
       case 'center':
         if (this.isCenterWithCustomWidth && slides.length) {
           const { coordX, width } = slides[slides.length - 1];
-          return (viewportWidth / 2) - coordX - (width / 2);
+          return viewportWidth / 2 - coordX - width / 2;
         } else {
           return viewportWidth - (containerWidth - viewportWidth) / 2 - layerWidth;
         }
@@ -92,7 +123,7 @@ export default class Gallery extends Component {
   calcMax ({ viewportWidth, slides }) {
     if (this.isCenterWithCustomWidth && slides.length) {
       const { width, coordX } = slides[0];
-      return (viewportWidth / 2) - coordX - (width / 2);
+      return viewportWidth / 2 - coordX - width / 2;
     } else {
       return 0;
     }
@@ -117,7 +148,7 @@ export default class Gallery extends Component {
 
       if (this.isCenterWithCustomWidth) {
         const viewportWidth = this.viewport.offsetWidth;
-        return (viewportWidth / 2) - coordX - (width / 2);
+        return viewportWidth / 2 - coordX - width / 2;
       }
 
       return this.validateIndent(-1 * coordX);
@@ -185,7 +216,7 @@ export default class Gallery extends Component {
    */
   getTarget () {
     const { slides, current, deltaX, shiftX, startT, max } = this.state;
-    const expectDeltaX = deltaX / (new Date() - startT) * 240 * 0.6;
+    const expectDeltaX = (deltaX / (Date.now() - Number(startT))) * 240 * 0.6;
     const shift = shiftX + deltaX + expectDeltaX - max;
     const direction = deltaX < 0 ? 1 : -1;
 
@@ -210,7 +241,7 @@ export default class Gallery extends Component {
     return targetIndex;
   }
 
-  go = (targetIndex) => {
+  go = targetIndex => {
     this.setState({
       animation: true,
       shiftX: this.calculateIndent(targetIndex),
@@ -223,14 +254,14 @@ export default class Gallery extends Component {
     }
   };
 
-  onStart = (e) => {
+  onStart = (e: SpecificTouchEvent) => {
     this.setState({
       animation: false,
       startT: e.startT
     });
-  }
+  };
 
-  onMoveX = (e) => {
+  onMoveX = (e: SpecificTouchEvent) => {
     if (!this.isDraggable()) {
       return;
     }
@@ -239,7 +270,7 @@ export default class Gallery extends Component {
 
     if (e.isSlideX) {
       this.props.onDragStart && this.props.onDragStart();
-      
+
       if (this.state.deltaX !== e.shiftX || this.state.dragging !== e.isSlideX) {
         this.setState({
           deltaX: e.shiftX,
@@ -249,9 +280,9 @@ export default class Gallery extends Component {
 
       return true;
     }
-  }
+  };
 
-  onEnd = (e) => {
+  onEnd = (e: SpecificTouchEvent) => {
     const targetIndex = e.isSlide ? this.getTarget() : this.state.current;
     this.props.onDragEnd && this.props.onDragEnd();
 
@@ -274,7 +305,7 @@ export default class Gallery extends Component {
     }
 
     return true;
-  }
+  };
 
   onResize = () => {
     this.initializeSlides();
@@ -284,19 +315,22 @@ export default class Gallery extends Component {
 
     const viewportWidth = this.viewport.offsetWidth;
 
-    this.setState({
-      shiftX: this.calculateIndent(this.state.current),
-      containerWidth,
-      min: this.calcMin({ layerWidth, containerWidth, viewportWidth, slides }),
-      max: this.calcMax({ layerWidth, containerWidth, viewportWidth, slides }),
-      animation: false
-    }, () => {
-      window.requestAnimationFrame(() => this.setState({ animation: true }));
-    });
+    this.setState(
+      {
+        shiftX: this.calculateIndent(this.state.current),
+        containerWidth,
+        min: this.calcMin({ layerWidth, containerWidth, viewportWidth, slides }),
+        max: this.calcMax({ viewportWidth, slides }),
+        animation: false
+      },
+      () => {
+        window.requestAnimationFrame(() => this.setState({ animation: true }));
+      }
+    );
   };
 
-  setTimeout = (duration) => {
-    this.timeout = setTimeout(() => {
+  setTimeout = duration => {
+    this.timeout = window.setTimeout(() => {
       const { slides, current } = this.state;
       const targetIndex = current < slides.length - 1 ? current + 1 : 0;
 
@@ -315,19 +349,23 @@ export default class Gallery extends Component {
   reduceChildren = (acc, item, i) => {
     if (item) {
       const ref = this.getSlideRef(i);
-      acc.push(<div className='Gallery__slide' key={`slide-${i}`} ref={ref}>{item}</div>);
+      acc.push(
+        <div className="Gallery__slide" key={`slide-${i}`} ref={ref}>
+          {item}
+        </div>
+      );
     }
 
     return acc;
-  }
+  };
 
-  getSlideRef = (id) => (slide) => {
+  getSlideRef = id => slide => {
     this.slidesStore[`slide-${id}`] = slide;
-  }
+  };
 
-  getViewportRef = (viewport) => {
+  getViewportRef = (viewport: Touch) => {
     this.viewport = viewport ? viewport.container : {};
-  }
+  };
 
   componentDidMount () {
     this.initializeSlides(() => {
@@ -403,28 +441,37 @@ export default class Gallery extends Component {
     };
 
     return (
-      <div className={classNames(baseClassNames, className, `Gallery--${align}`, {
-        'Gallery--dragging': dragging,
-        'Gallery--custom-width': slideWidth === 'custom'
-      })} {...restProps} ref={this.container}>
+      <div
+        className={classNames(baseClassNames, className, `Gallery--${align}`, {
+          'Gallery--dragging': dragging,
+          'Gallery--custom-width': slideWidth === 'custom'
+        })}
+        {...restProps}
+        ref={this.container}
+      >
         <Touch
-          className='Gallery__viewport'
+          className="Gallery__viewport"
           onStartX={this.onStart}
           onMoveX={this.onMoveX}
           onEnd={this.onEnd}
           style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           ref={this.getViewportRef}
         >
-          <div className='Gallery__layer' style={layerStyle}>{this.slides}</div>
+          <div className="Gallery__layer" style={layerStyle}>
+            {this.slides}
+          </div>
         </Touch>
 
-        {bullets &&
+        {bullets && (
           <div className={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
             {this.slides.map((item, index) => (
-              <div className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })} key={index} />
+              <div
+                className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })}
+                key={index}
+              />
             ))}
           </div>
-        }
+        )}
       </div>
     );
   }
