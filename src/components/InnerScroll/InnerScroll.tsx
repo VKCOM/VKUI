@@ -2,16 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { HasStyleObject, HasChildren } from '../../types/props';
 
 const baseClassName = getClassName('InnerScroll');
 
-export default class InnerScroll extends React.Component {
+export interface InnerScrollProps extends HasStyleObject, HasChildren {
+  className: string;
+  onScroll: (event: React.UIEvent<HTMLDivElement>) => void;
+}
+
+export default class InnerScroll extends React.Component<InnerScrollProps> {
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
     style: PropTypes.object,
     onScroll: PropTypes.func
   };
+
+  el: HTMLDivElement;
 
   onScroll = e => {
     if (this.el.scrollTop <= 0) {
@@ -27,7 +35,7 @@ export default class InnerScroll extends React.Component {
     this.el.scrollTop = 1;
   }
 
-  ref = el => (this.el = el);
+  getRef = (el: HTMLDivElement) => (this.el = el);
 
   render () {
     const { className, children, onScroll, ...restProps } = this.props;
