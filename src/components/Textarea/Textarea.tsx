@@ -2,20 +2,31 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
+import { HasStyleObject, HasRef, StatusTypes } from '../../types/props';
 
-export default class Textarea extends PureComponent {
-  constructor (props) {
-    super(props);
+export interface TextareaProps extends HasStyleObject, HasRef {
+  defaultValue?: string;
+  getRef?: (instance: HTMLTextAreaElement) => void;
+  grow?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onResize?: (element: HTMLTextAreaElement) => void;
+  status?: StatusTypes;
+  value?: string;
+}
 
-    if (typeof props.value !== 'undefined') {
-      this.isControlledOutside = true;
-      this.state = {};
-    } else {
-      this.state = {
-        value: props.defaultValue || ''
-      };
-    }
-  }
+type TextareaState = {
+  value?: string;
+  height?: number;
+};
+
+export default class Textarea extends PureComponent<TextareaProps, TextareaState> {
+  element: HTMLTextAreaElement;
+
+  isControlledOutside = typeof this.props.value !== 'undefined';
+
+  state: TextareaState = {
+    value: typeof this.props.value !== 'undefined' ? undefined : this.props.defaultValue || ''
+  };
 
   componentDidMount () {
     if (this.props.grow) {
@@ -43,7 +54,7 @@ export default class Textarea extends PureComponent {
     onResize: () => {}
   };
 
-  getRef = element => {
+  getRef = (element: HTMLTextAreaElement) => {
     this.element = element;
     this.props.getRef && this.props.getRef(element);
   };
@@ -77,9 +88,11 @@ export default class Textarea extends PureComponent {
     }
   };
 
-  get value () { return this.isControlledOutside ? this.props.value : this.state.value; }
+  get value () {
+    return this.isControlledOutside ? this.props.value : this.state.value;
+  }
 
-  onChange = (e) => {
+  onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (this.props.grow) {
       this.resize();
     }
@@ -103,16 +116,23 @@ export default class Textarea extends PureComponent {
   }
 
   render () {
-    const { defaultValue, value, onChange, grow, style, onResize, className, getRootRef, getRef, status, ...restProps } = this.props;
+    const {
+      defaultValue,
+      value,
+      onChange,
+      grow,
+      style,
+      onResize,
+      className,
+      getRootRef,
+      getRef,
+      status,
+      ...restProps
+    } = this.props;
     const height = this.state.height || style.height || 66;
 
     return (
-      <FormField
-        className={classNames('Textarea', className)}
-        style={style}
-        getRootRef={getRootRef}
-        status={status}
-      >
+      <FormField className={classNames('Textarea', className)} style={style} getRootRef={getRootRef} status={status}>
         <textarea
           {...restProps}
           className="Textarea__el"
