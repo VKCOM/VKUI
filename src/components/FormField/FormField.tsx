@@ -14,6 +14,7 @@ export interface FormFieldProps extends HasRef {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
   status?: 'default' | 'error' | 'valid';
+  tabIndex?: number;
 }
 
 const FormField = ({ TagName, className, children, status, getRootRef, ...restProps }: FormFieldProps) => {
