@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
@@ -7,50 +6,78 @@ import getClassName from '../../helpers/getClassName';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../../lib/touch';
+import { HasChildren } from '../../types/props';
 
-const ts = () => +Date.now();
+const ts = Date.now;
 const baseClassNames = getClassName('Tappable');
 
 const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
 
-let storage = {};
+type Storage = {
+  [id: string]: {
+    activeTimeout?: number;
+    timeout?: number;
+    stop?: () => void;
+  };
+};
+
+const storage: Storage = {};
 
 /**
  * Очищает таймауты и хранилище для всех экземпляров компонента, кроме переданного
  *
  * @param {String} exclude ID экземпляра-исключения
- * @returns {void}
  */
-function deactivateOtherInstances (exclude) {
-  Object.keys(storage).filter(id => id !== exclude).forEach(id => {
-    clearTimeout(storage[id].activeTimeout);
-    clearTimeout(storage[id].timeout);
-    storage[id].stop();
+function deactivateOtherInstances (exclude?: string) {
+  Object.keys(storage)
+    .filter(id => id !== exclude)
+    .forEach(id => {
+      clearTimeout(storage[id].activeTimeout);
+      clearTimeout(storage[id].timeout);
 
-    delete storage[id];
-  });
+      storage[id].stop();
+
+      delete storage[id];
+    });
 }
 
-export default class Tappable extends Component {
-  constructor (props) {
-    super(props);
-    this.id = Math.round(Math.random() * 1e8).toString(16);
-    this.state = {
-      clicks: {},
-      active: false,
-      ts: null
-    };
-  }
+export interface TappableProps extends HasChildren {
+  onClick?: () => void;
+  className?: string;
+  component?: keyof React.ReactHTML | typeof Touch;
+  role?: string;
+  activeEffectDelay?: number;
+  stopPropagation?: boolean;
+  disabled?: boolean;
+  getRootRef?: (ref: HTMLElement | Touch) => void;
+}
+
+type State = {
+  clicks: {};
+  active: boolean;
+  ts: null | number;
+};
+
+export default class Tappable extends Component<TappableProps, State> {
+  id: string = Math.round(Math.random() * 1e8).toString(16);
+
+  timeout: number;
+  wavesTimeout: number;
+
+  container: HTMLElement | Touch;
+
+  state: State = {
+    clicks: {},
+    active: false,
+    ts: null
+  };
 
   static propTypes = {
     onClick: PropTypes.func,
     className: PropTypes.string,
     children: PropTypes.node,
-    component: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element
-    ]),
+    component: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     role: PropTypes.string,
     activeEffectDelay: PropTypes.number,
     stopPropagation: PropTypes.bool,
@@ -85,7 +112,7 @@ export default class Tappable extends Component {
 
     storage[this.id] = {};
     this.getStorage().stop = this.stop;
-    this.getStorage().activeTimeout = setTimeout(this.start, ACTIVE_DELAY);
+    this.getStorage().activeTimeout = window.setTimeout(this.start, ACTIVE_DELAY);
   };
 
   /**
@@ -121,7 +148,7 @@ export default class Tappable extends Component {
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - now + this.state.ts);
+        const timeout = window.setTimeout(this.stop, this.props.activeEffectDelay - now + this.state.ts);
         const store = this.getStorage();
 
         if (store) {
@@ -132,7 +159,7 @@ export default class Tappable extends Component {
       // Очень короткий тап, включаем подсветку
       this.start();
 
-      const timeout = setTimeout(this.stop, this.props.activeEffectDelay);
+      const timeout = window.setTimeout(this.stop, this.props.activeEffectDelay);
 
       if (this.getStorage()) {
         clearTimeout(this.getStorage().activeTimeout);
@@ -150,8 +177,8 @@ export default class Tappable extends Component {
    *
    * @returns {void}
    */
-  onDown = (e) => {
-    if (IS_PLATFORM_ANDROID) {
+  onDown = e => {
+    if (IS_PLATFORM_ANDROID && this.container instanceof HTMLElement) {
       const { top, left } = getOffsetRect(this.container);
       const x = coordX(e);
       const y = coordY(e);
@@ -167,7 +194,7 @@ export default class Tappable extends Component {
         }
       }));
 
-      this.wavesTimeout = setTimeout(() => {
+      this.wavesTimeout = window.setTimeout(() => {
         this.setState(state => {
           let clicks = { ...state.clicks };
           delete clicks[key];
@@ -224,7 +251,7 @@ export default class Tappable extends Component {
    *
    * @param {React.Component} container Touch component instance
    */
-  getRef = container => {
+  getRef = (container: HTMLElement | Touch) => {
     this.container = container;
     this.props.getRootRef && this.props.getRootRef(container);
   };
@@ -243,29 +270,14 @@ export default class Tappable extends Component {
   render () {
     const { clicks, active } = this.state;
     const { children, className, component, activeEffectDelay, stopPropagation, getRootRef, ...restProps } = this.props;
-    const Component = !restProps.disabled ? Touch : component;
     const classes = classNames(baseClassNames, className, {
       'Tappable--active': active,
       'Tappable--inactive': !active
     });
+    const tagName = component as keyof React.ReactHTML;
 
-    let props = {};
-
-    if (!restProps.disabled) {
-      props.component = component;
-      props.onStart = this.onStart;
-      props.onMove = this.onMove;
-      props.onEnd = this.onEnd;
-    }
-
-    if (typeof Component === 'string') {
-      props.ref = this.getRef;
-    } else {
-      props.getRootRef = this.getRef;
-    }
-
-    return (
-      <Component {...restProps} className={classes} {...props}>
+    const content = (
+      <React.Fragment>
         {IS_PLATFORM_ANDROID && (
           <span className="Tappable__waves">
             {Object.keys(clicks).map(k => (
@@ -274,7 +286,29 @@ export default class Tappable extends Component {
           </span>
         )}
         {children}
-      </Component>
+      </React.Fragment>
+    );
+
+    return !restProps.disabled ? (
+      <Touch
+        component={tagName}
+        onStart={this.onStart}
+        onMove={this.onMove}
+        onEnd={this.onEnd}
+        getRootRef={this.getRef}
+      >
+        {content}
+      </Touch>
+    ) : (
+      React.createElement(
+        component as keyof React.ReactHTML,
+        {
+          ...restProps,
+          className: classes,
+          ref: this.getRef
+        },
+        content
+      )
     );
   }
 }
