@@ -1,12 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getSupportedEvents, coordX, coordY, touchEnabled } from '../../lib/touch';
+import { HasChildren, HasRef, Gesture } from '../../types/props';
 
 const events = getSupportedEvents();
 
-export default class Touch extends Component {
+// eslint-disable-next-line space-infix-ops
+export type SpecificTouchEvent<E extends HTMLElement = HTMLElement> = Gesture & {
+  originalEvent: React.TouchEvent<E>;
+};
+
+// eslint-disable-next-line space-infix-ops
+export type TouchProps<TagName extends keyof React.ReactHTML | undefined> = HasChildren &
+  HasRef &
+  GetElementProps<TagName> & {
+    /** @default 'div' */
+    component?: TagName;
+    onClick?: (e?: React.MouseEvent<GetElementByTagName<TagName>>) => void;
+    onEnd?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    onEndX?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    onEndY?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    onMove?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    onMoveX?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    onMoveY?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    onStart?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    onStartX?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    onStartY?: (e?: SpecificTouchEvent<GetElementByTagName<TagName>>) => void;
+    useCapture?: boolean;
+  };
+
+export default class Touch<TagName extends keyof React.ReactHTML = 'div'> extends Component<TouchProps<TagName>> {
   cancelClick = false;
-  gesture = {};
+  gesture: Gesture = {};
 
   static propTypes = {
     onStart: PropTypes.func,
@@ -24,6 +49,7 @@ export default class Touch extends Component {
     onClick: PropTypes.func,
     getRootRef: PropTypes.func
   };
+
   static defaultProps = {
     component: 'div',
     children: '',
@@ -33,6 +59,8 @@ export default class Touch extends Component {
   static contextTypes = {
     document: PropTypes.any
   };
+
+  container: HTMLElement;
 
   get document () {
     return this.context.document || document;
@@ -44,7 +72,11 @@ export default class Touch extends Component {
   }
 
   componentWillUnmount () {
-    this.container.removeEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
+    this.container.removeEventListener(
+      events[0],
+      this.onStart,
+      { capture: this.props.useCapture, passive: false } as any // FIXME
+    );
     touchEnabled && this.unsubscribe(this.container);
   }
 
@@ -54,7 +86,7 @@ export default class Touch extends Component {
    * @param {Object} e Браузерное событие
    * @returns {void}
    */
-  onStart = (e) => {
+  onStart = e => {
     this.gesture = {
       startX: coordX(e),
       startY: coordY(e),
@@ -63,7 +95,7 @@ export default class Touch extends Component {
     };
 
     // Вызываем нужные колбеки из props
-    const outputEvent = {
+    const outputEvent: SpecificTouchEvent<GetElementByTagName<TagName>> = {
       ...this.gesture,
       originalEvent: e
     };
@@ -89,7 +121,7 @@ export default class Touch extends Component {
    * @param {Object} e Браузерное событие
    * @returns {void}
    */
-  onMove = (e) => {
+  onMove = e => {
     const { isPressed, isX, isY, startX, startY } = this.gesture;
 
     if (isPressed) {
@@ -153,7 +185,7 @@ export default class Touch extends Component {
    * @param {Object} e Браузерное событие
    * @returns {void}
    */
-  onEnd = (e) => {
+  onEnd = e => {
     const { isPressed, isSlide, isSlideX, isSlideY } = this.gesture;
 
     if (isPressed) {
@@ -202,7 +234,7 @@ export default class Touch extends Component {
    * @param {Object} e Браузерное событие
    * @returns {void}
    */
-  onDragStart = (e) => {
+  onDragStart = e => {
     if (e.target.tagName === 'A' || e.target.tagName === 'IMG') {
       e.preventDefault();
     }
@@ -215,7 +247,7 @@ export default class Touch extends Component {
    * @param {Object} e Браузерное событие
    * @returns {void}
    */
-  onClick = (e) => {
+  onClick = e => {
     if (this.cancelClick) {
       this.cancelClick = false;
       e.preventDefault();
@@ -244,12 +276,16 @@ export default class Touch extends Component {
       getRootRef,
       ...restProps
     } = this.props;
-    const ComponentName = component;
 
-    return (
-      <ComponentName {...restProps} onDragStart={this.onDragStart} onClick={this.onClick} ref={this.getRef}>
-        {this.props.children}
-      </ComponentName>
+    return React.createElement(
+      component,
+      {
+        ...restProps,
+        onDragStart: this.onDragStart,
+        onClick: this.onClick,
+        ref: this.getRef
+      },
+      this.props.children
     );
   }
 }
