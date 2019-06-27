@@ -3,21 +3,30 @@ import PropTypes from 'prop-types';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
+import { HasStyleObject, HasRef, HasChildren, StatusTypes } from '../../types/props';
 
-export default class Select extends Component {
-  constructor (props) {
-    super(props);
-    const state = {
-      title: '',
-      notSelected: false
-    };
-    if (typeof props.value !== 'undefined') {
-      this.isControlledOutside = true;
-    } else {
-      state.value = props.defaultValue || '';
-    }
-    this.state = state;
-  }
+export interface SelectProps extends HasStyleObject, HasRef, HasChildren {
+  alignment?: 'left' | 'center' | 'top';
+  defaultValue?: string;
+  getRef?: (instance: HTMLSelectElement) => void;
+  label?: string;
+  name?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  placeholder?: string;
+  status?: StatusTypes;
+  value?: string;
+}
+
+export default class Select extends Component<SelectProps> {
+  selectEl: HTMLSelectElement;
+
+  isControlledOutside = typeof this.props.value !== 'undefined';
+
+  state = {
+    title: '',
+    notSelected: false,
+    value: typeof this.props.value !== 'undefined' ? undefined : this.props.defaultValue || ''
+  };
 
   static propTypes = {
     style: PropTypes.object,
@@ -39,7 +48,7 @@ export default class Select extends Component {
     alignment: 'left'
   };
 
-  onChange = e => {
+  onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.setTitle();
     if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
@@ -72,7 +81,7 @@ export default class Select extends Component {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  getRef = el => {
+  getRef = (el: HTMLSelectElement) => {
     this.selectEl = el;
     this.props.getRef && this.props.getRef(el);
   };
