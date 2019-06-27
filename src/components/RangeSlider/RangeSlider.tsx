@@ -7,7 +7,11 @@ import classNames from '../../lib/classNames';
 
 const baseClassNames = getClassName('Slider');
 
-export default class RangeSlider extends Slider {
+// TODO: Get rid of extend
+export default class RangeSlider extends (Slider as any) {
+  thumbStart: HTMLSpanElement;
+  thumbEnd: HTMLSpanElement;
+
   static propTypes = {
     ...Slider.propTypes,
     value: PropTypes.arrayOf(PropTypes.number),
@@ -56,7 +60,7 @@ export default class RangeSlider extends Slider {
   };
 
   calcPercentRange (percent) {
-    const { percentStart, percentEnd } = this.state;
+    const { percentStart, percentEnd } = this.state as any; // FIXME;
 
     if (percentStart === 100) {
       return { percentStart: percent, percentEnd };
