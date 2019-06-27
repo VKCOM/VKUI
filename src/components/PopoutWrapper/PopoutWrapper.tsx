@@ -5,10 +5,23 @@ import classNames from '../../lib/classNames';
 
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
+import { HasStyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('PopoutWrapper');
 
-export default class PopoutWrapper extends React.Component {
+export interface PopoutWrapperProps extends HasStyleObject, HasChildren {
+  closing?: boolean;
+  h?: 'left' | 'center' | 'right';
+  hasMask?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  v?: 'top' | 'center' | 'bottom';
+}
+
+export default class PopoutWrapper extends React.Component<PopoutWrapperProps> {
+  animationFinishTimeout: number;
+
+  el: HTMLDivElement;
+
   state = {
     opened: false
   };
@@ -37,31 +50,41 @@ export default class PopoutWrapper extends React.Component {
   }
 
   componentWillUnmount () {
-    window.removeEventListener('touchmove', this.preventTouch, { passive: false });
+    window.removeEventListener(
+      'touchmove',
+      this.preventTouch,
+      { passive: false } as any // FIXME
+    );
     clearTimeout(this.animationFinishTimeout);
   }
 
-  waitAnimationFinish (elem, eventHandler) {
+  waitAnimationFinish (elem: HTMLElement, eventHandler: EventListener) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
+      this.animationFinishTimeout = window.setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
     }
   }
 
-  onFadeInEnd = (e = { manual: true }) => {
-    if (e.animationName === 'animation-full-fade-in' || e.manual) {
+  onFadeInEnd = (e: Event & { manual: boolean; animationName?: string }) => {
+    const manual = e.manual == null ? true : e.manual;
+
+    if (e.animationName === 'animation-full-fade-in' || manual) {
       this.setState({ opened: true });
     }
   };
 
   preventTouch = e => e.preventDefault();
 
-  onClick = e => this.state.opened && this.props.onClick && this.props.onClick(e);
+  onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (this.state.opened && this.props.onClick) {
+      this.props.onClick(e);
+    }
+  };
 
-  getRef = el => (this.el = el);
+  getRef = (el: HTMLDivElement) => (this.el = el);
 
   render () {
     const { v, h, closing, children, hasMask, onClick, className, ...restProps } = this.props;
