@@ -3,8 +3,20 @@ import PropTypes from 'prop-types';
 import { IS_PLATFORM_IOS } from '../../lib/platform';
 import SearchIOS from '../SearchIOS/SearchIOS';
 import SearchAndroid from '../SearchAndroid/SearchAndroid';
+import { HasClassName } from '../../types/props';
 
-export default class Search extends React.Component {
+export interface SearchProps extends HasClassName {
+  after?: React.ReactNode;
+  autoComplete?: string;
+  autoFocus?: boolean;
+  before?: React.ReactNode;
+  getRef?: (instance: HTMLInputElement) => void;
+  onChange?: () => void;
+  onClose?: () => void;
+  theme?: 'header' | 'default';
+}
+
+export default class Search extends React.Component<SearchProps> {
   static propTypes = {
     className: PropTypes.string,
     getRef: PropTypes.func,
@@ -44,6 +56,7 @@ export default class Search extends React.Component {
   render () {
     const { onClose, autoFocus, ...iosProps } = this.props;
     const { after, before, ...androidProps } = this.props;
+
     if (IS_PLATFORM_IOS) {
       return <SearchIOS {...iosProps} />;
     } else {
