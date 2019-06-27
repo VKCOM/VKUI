@@ -5,10 +5,21 @@ import classNames from '../../lib/classNames';
 import Touch from '../Touch/Touch';
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
+import { HasChildren, HasStyleObject } from '../../types/props';
 
 const baseClassNames = getClassName('Panel');
 
-class Panel extends Component {
+export interface PanelProps extends HasChildren, HasStyleObject {
+  id: string;
+  theme?: 'white' | 'gray';
+  centered?: boolean;
+  /**
+   * @ignore
+   */
+  insets: { bottom: number };
+}
+
+class Panel extends Component<PanelProps> {
   static childContextTypes = {
     panel: PropTypes.string
   };
@@ -47,13 +58,19 @@ class Panel extends Component {
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
 
     return (
-      <div {...restProps} className={classNames(baseClassNames, className, {
-        'Panel--centered': centered,
-        [`Panel--tm-${theme}`]: theme
-      })}>
-        <Touch className="Panel__in" style={{
-          paddingBottom: !isNaN(insets.bottom) ? insets.bottom + tabbarPadding : null
-        }}>
+      <div
+        {...restProps}
+        className={classNames(baseClassNames, className, {
+          'Panel--centered': centered,
+          [`Panel--tm-${theme}`]: theme
+        })}
+      >
+        <Touch
+          className="Panel__in"
+          style={{
+            paddingBottom: !isNaN(insets.bottom) ? insets.bottom + tabbarPadding : null
+          }}
+        >
           <div className="Panel__in-before" />
           {children}
           <div className="Panel__in-after" />
