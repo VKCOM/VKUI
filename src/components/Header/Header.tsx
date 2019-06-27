@@ -2,10 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { HasStyleObject, HasChildren, HasRef } from '../../types/props';
 
 const baseClassNames = getClassName('Header');
 
-const Header = ({ className, level, children, indicator, aside, getRootRef, ...restProps }) => {
+export interface HeaderProps extends HasStyleObject, HasChildren, HasRef {
+  aside?: React.ReactNode;
+  indicator?: React.ReactNode;
+  level?: '1' | '2';
+}
+
+const Header = ({ className, level, children, indicator, aside, getRootRef, ...restProps }: HeaderProps) => {
   return (
     <div
       {...restProps}
@@ -14,6 +21,7 @@ const Header = ({ className, level, children, indicator, aside, getRootRef, ...r
     >
       <div className="Header__in">
         <div className="Header__content">{children}</div>
+
         {indicator && <div className="Header__indicator">{indicator}</div>}
         {aside && <div className="Header__aside">{aside}</div>}
       </div>
