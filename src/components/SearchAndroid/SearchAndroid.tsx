@@ -6,24 +6,31 @@ import Icon24Search from '@vkontakte/icons/dist/24/search';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import HeaderButton from '../HeaderButton/HeaderButton';
+import { HasClassName } from '../../types/props';
 
 const baseClassName = getClassName('Search');
 
-export default class SearchAndroid extends React.Component {
-  constructor (props) {
-    super(props);
+export interface SearchIOSProps extends HasClassName {
+  after?: React.ReactNode;
+  autoComplete?: string;
+  autoFocus?: boolean;
+  before?: React.ReactNode;
+  theme?: 'header' | 'default';
+  defaultValue?: string;
+  value?: string;
+  placeholder?: string;
+  getRef?: (instance: HTMLInputElement) => void;
+  onChange?: (value: string, e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClose?: () => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+}
 
-    let state = {};
+type State = {
+  value?: string;
+};
 
-    if (props.hasOwnProperty('value')) {
-      this.isControlledOutside = true;
-    } else {
-      state.value = props.defaultValue || '';
-    }
-
-    this.state = state;
-  }
-
+export default class SearchAndroid extends React.Component<SearchIOSProps> {
   static propTypes = {
     className: PropTypes.string,
     defaultValue: PropTypes.string,
@@ -48,17 +55,28 @@ export default class SearchAndroid extends React.Component {
     webviewType: PropTypes.oneOf(['vkapps', 'internal'])
   };
 
+  inputEl: HTMLInputElement;
+
+  isControlledOutside: boolean = this.props.hasOwnProperty('value');
+
+  state: State = {
+    value: this.props.hasOwnProperty('value') ? this.props.defaultValue || '' : undefined
+  };
+
   onCancel = () => {
     if (!this.isControlledOutside) {
       this.setState({ value: '' });
     }
+
     if (this.props.onChange) {
-      this.props.onChange('');
+      // FIXME: What did you wanna do?
+      // this.props.onChange('');
     }
+
     this.inputEl.focus();
   };
 
-  onChange = e => {
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
     }
@@ -68,7 +86,9 @@ export default class SearchAndroid extends React.Component {
   };
 
   componentDidMount () {
-    this.props.theme === 'header' && this.props.autoFocus && this.inputEl.focus();
+    if (this.props.theme === 'header' && this.props.autoFocus) {
+      this.inputEl.focus();
+    }
   }
 
   get value () {
