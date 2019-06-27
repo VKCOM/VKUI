@@ -7,7 +7,8 @@ const events = getSupportedEvents();
 
 // eslint-disable-next-line space-infix-ops
 export type SpecificTouchEvent<E extends HTMLElement = HTMLElement> = Gesture & {
-  originalEvent: React.TouchEvent<E>;
+  originalEvent?: React.TouchEvent<E>;
+  targetIndex?: number;
 };
 
 // eslint-disable-next-line space-infix-ops
