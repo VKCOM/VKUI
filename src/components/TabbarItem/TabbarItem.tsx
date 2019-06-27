@@ -2,13 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { HasClassName, HasChildren } from '../../types/props';
 
 const baseClassName = getClassName('TabbarItem');
 
-const TabbarItem = ({ className, children, selected, label, text, ...restProps }) => (
-  <div {...restProps} className={classNames(baseClassName, className, {
-    'TabbarItem--selected': selected
-  })}>
+export interface TabbarItemProps extends HasClassName, HasChildren {
+  selected?: boolean;
+  /**
+   * Счетчик рядом с иконкой
+   */
+  label?: React.ReactNode;
+  /**
+   * Тест рядом с иконкой
+   */
+  text?: React.ReactNode;
+}
+
+const TabbarItem = ({ className, children, selected, label, text, ...restProps }: TabbarItemProps) => (
+  <div
+    {...restProps}
+    className={classNames(baseClassName, className, {
+      'TabbarItem--selected': selected
+    })}
+  >
     <div className="TabbarItem__in">
       <div className="TabbarItem__icon">
         {children}
