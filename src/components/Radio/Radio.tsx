@@ -1,20 +1,26 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS } from '../../lib/platform';
+import { HasStyleObject, HasChildren, HasRef } from '../../types/props';
 
 const baseClassName = getClassName('Radio');
 
-const Radio = ({ children, description, style, className, getRef, getRootRef, ...restProps }) => {
+export interface RadioProps extends HasStyleObject, HasChildren, HasRef {
+  description?: React.ReactNode;
+  disabled: boolean;
+  getRef?: (instance: HTMLInputElement) => void;
+}
+
+const Radio = ({ children, description, style, className, getRef, getRootRef, ...restProps }: RadioProps) => {
   return (
     <Tappable
       component="label"
       style={style}
       className={classNames(baseClassName, className)}
-      activeEffectDelay={IS_PLATFORM_IOS ? 100 : ACTIVE_EFFECT_DELAY }
+      activeEffectDelay={IS_PLATFORM_IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
     >
