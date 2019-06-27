@@ -10,8 +10,8 @@ import { HasChildren } from '../../types/props';
 const baseClassName = getClassName('Root');
 
 export interface RootProps extends HasChildren {
-  activeView: string;
-  onTransition: (props: { isBack: boolean; from: string | null; to: string | null }) => void;
+  activeView?: string;
+  onTransition?: (props: { isBack: boolean; from: string | null; to: string | null }) => void;
   popout?: React.ReactNode;
 }
 
@@ -146,8 +146,15 @@ export default class Root extends Component<RootProps, State> {
           isBack: undefined
         },
         () => {
-          isBack ? this.window.scrollTo(0, this.state.scrolls[this.state.activeView]) : this.window.scrollTo(0, 0);
-          this.props.onTransition && this.props.onTransition({ isBack, from: prevView, to: nextView });
+          if (isBack) {
+            this.window.scrollTo(0, this.state.scrolls[this.state.activeView]);
+          } else {
+            this.window.scrollTo(0, 0);
+          }
+
+          if (this.props.onTransition) {
+            this.props.onTransition({ isBack, from: prevView, to: nextView });
+          }
         }
       );
     }
