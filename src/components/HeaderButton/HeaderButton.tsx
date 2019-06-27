@@ -10,6 +10,7 @@ const baseClassName = getClassName('HeaderButton');
 export interface HeaderButtonProps extends HasChildren, HasClassName {
   href?: string;
   primary?: boolean;
+  onClick: () => void;
 }
 
 const HeaderButton = ({ className, children, primary, ...restProps }: HeaderButtonProps) => {
@@ -19,6 +20,7 @@ const HeaderButton = ({ className, children, primary, ...restProps }: HeaderButt
   return (
     <Tappable
       {...restProps}
+      onClick={restProps.onClick}
       component={component}
       activeEffectDelay={200}
       className={classNames(baseClassName, className, { 'HeaderButton--primary': primary })}
