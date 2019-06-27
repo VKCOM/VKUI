@@ -3,10 +3,16 @@ import PropTypes from 'prop-types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { HasChildren, HasClassName } from '../../types/props';
 
 const baseClassName = getClassName('HeaderButton');
 
-const HeaderButton = ({ className, children, primary, ...restProps }) => {
+export interface HeaderButtonProps extends HasChildren, HasClassName {
+  href?: string;
+  primary?: boolean;
+}
+
+const HeaderButton = ({ className, children, primary, ...restProps }: HeaderButtonProps) => {
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
   const component = restProps.href ? 'a' : 'button';
 
