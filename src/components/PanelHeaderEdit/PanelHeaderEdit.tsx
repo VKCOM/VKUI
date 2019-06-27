@@ -5,7 +5,14 @@ import Icon24Done from '@vkontakte/icons/dist/24/done';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 
-const PanelHeaderEdit = ({ isActive, editLabel, doneLabel, ...restProps }) => {
+interface PanelHeaderEditProps {
+  onClick: () => void;
+  doneLabel?: string;
+  editLabel?: string;
+  isActive?: boolean;
+}
+
+const PanelHeaderEdit = ({ isActive, editLabel, doneLabel, ...restProps }: PanelHeaderEditProps) => {
   const iOSText = isActive ? doneLabel : editLabel;
   const AndroidIcon = isActive ? <Icon24Done /> : <Icon24Write />;
 
