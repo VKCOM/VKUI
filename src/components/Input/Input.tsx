@@ -2,8 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
+import { HasRef, HasClassName, AlignTypes, StatusTypes } from '../../types/props';
 
-const Input = ({ alignment, status, getRef, className, getRootRef, ...restProps }) => {
+export interface InputProps extends HasRef, HasClassName {
+  alignment?: AlignTypes;
+  defaultValue?: string;
+  getRef?: (instance: HTMLInputElement) => void;
+  onChange?: () => {};
+  placeholder?: string;
+  status?: StatusTypes;
+  type?: string;
+  value?: string;
+}
+
+const Input = ({ alignment, status, getRef, className, getRootRef, ...restProps }: InputProps) => {
   return (
     <FormField
       className={classNames('Input', className, {
