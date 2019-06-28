@@ -14,4 +14,6 @@ if (typeof document !== 'undefined' && document.createElement) {
   }
 }
 
-export default { supported, prefix };
+const transitionEndEventName = prefix ? prefix + 'TransitionEnd' : 'transitionend';
+
+export default { supported, prefix, transitionEndEventName };

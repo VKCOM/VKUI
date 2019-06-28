@@ -3,6 +3,7 @@
 @import './bright_light.css';
 @import './space_gray.css';
 @import './constants.css';
+@import './animations.css';
 
 /* Файлы с CSS компонентов подключаются здесь неслучайно. Пока не удалось делать импорты через JS так,
  * чтобы в каждом файле были доступны css переменные без их дублирования.
@@ -27,6 +28,12 @@
 @import '../components/ActionSheet/ActionSheet.css';
 @import '../components/Alert/Alert.css';
 @import '../components/ScreenSpinner/ScreenSpinner.css';
+
+/* Modals */
+@import '../components/ModalRoot/ModalRoot.css';
+@import '../components/ModalCard/ModalCard.css';
+@import '../components/ModalPage/ModalPage.css';
+@import '../components/ModalPageHeader/ModalPageHeader.css';
 
 /* Blocks */
 @import '../components/Tappable/Tappable.css';

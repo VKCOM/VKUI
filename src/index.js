@@ -29,6 +29,14 @@ export { default as ActionSheetItem } from './components/ActionSheetItem/ActionS
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 
 /**
+ * Modals
+ */
+export { default as ModalRoot } from './components/ModalRoot/ModalRoot';
+export { default as ModalPage } from './components/ModalPage/ModalPage';
+export { default as ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
+export { default as ModalCard } from './components/ModalCard/ModalCard';
+
+/**
  * Blocks
  */
 export { default as Button } from './components/Button/Button';
