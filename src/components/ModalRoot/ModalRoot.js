@@ -36,15 +36,11 @@ class ModalRoot extends Component {
       nextModal: null,
       visibleModals: [props.activeModal],
       animated: false,
-      history: [],
+      history: props.activeModal ? [props.activeModal] : [],
 
       touchDown: false,
       dragging: false
     };
-
-    if (props.activeModal) {
-      this.state.history = [props.activeModal];
-    }
 
     this.arrayChildren = React.Children.toArray(props.children);
     this.activeTransitions = 0;
