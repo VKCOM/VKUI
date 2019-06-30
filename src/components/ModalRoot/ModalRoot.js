@@ -500,7 +500,6 @@ class ModalRoot extends Component {
   };
 
   waitTransitionFinish (modalState, eventHandler) {
-    console.log(modalState);
     const eventName = transitionEvents.transitionEndEventName;
 
     const onceHandler = () => {
