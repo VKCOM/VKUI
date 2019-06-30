@@ -69,6 +69,9 @@
 
 .Search--android.Search--default {
   padding: 8px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
+  position: relative;
+  z-index: 2;
   }
 
 .Search--android.Search--default .Search__container {
