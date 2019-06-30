@@ -143,7 +143,7 @@ class ModalRoot extends Component {
     }
 
     if (this.state.switching && !prevState.switching) {
-      this.switchPrevNext();
+      requestAnimationFrame(() => this.switchPrevNext());
     }
 
     if (!this.state.activeModal && !this.state.prevModal && !this.state.nextModal) {
