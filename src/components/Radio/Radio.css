@@ -93,7 +93,7 @@
       width: 20px;
       height: 20px;
       border: 2px solid var(--icon_secondary);
-      margin: 2px 18px 2px 2px;
+      margin: 2px 14px 2px 2px;
       transition: border-color .5s var(--ios-easing);
       }
 
