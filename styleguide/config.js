@@ -53,6 +53,14 @@ module.exports = {
           '../src/components/ScreenSpinner/ScreenSpinner.js'
         ]
       }, {
+        name: 'Modals',
+        components: () => [
+          '../src/components/ModalRoot/ModalRoot.js',
+          '../src/components/ModalPage/ModalPage.js',
+          '../src/components/ModalPageHeader/ModalPageHeader.js',
+          '../src/components/ModalCard/ModalCard.js'
+        ]
+      }, {
         name: 'Blocks',
         components: () => [
           '../src/components/Button/Button.js',

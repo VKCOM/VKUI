@@ -1,7 +1,7 @@
 import '../src/styles/styles.css';
 import React from 'react';
 
-import { getRandomInt, getRandomUser } from './utils';
+import { getRandomInt, getRandomUser, importantCountries } from './utils';
 
 import { platform, IOS, ANDROID, IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../src/lib/platform';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
@@ -36,6 +36,10 @@ import Icon28Messages from '@vkontakte/icons/dist/28/messages';
 import Icon28More from '@vkontakte/icons/dist/28/more';
 import Icon24Message from '@vkontakte/icons/dist/24/message';
 import Icon24Favorite from '@vkontakte/icons/dist/24/favorite';
+import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
+import Icon56NotificationOutline from '@vkontakte/icons/dist/56/notification_outline';
+import Icon56MoneyTransferOutline from '@vkontakte/icons/dist/56/money_transfer_outline';
+
 import pkg from '../package';
 
 window.osname = platform();
@@ -78,6 +82,10 @@ window.Icon28Messages = Icon28Messages;
 window.Icon28More = Icon28More;
 window.Icon24Message = Icon24Message;
 window.Icon24Favorite = Icon24Favorite;
+window.Icon24Dismiss = Icon24Dismiss;
+window.Icon56NotificationOutline = Icon56NotificationOutline;
+window.Icon56MoneyTransferOutline = Icon56MoneyTransferOutline;
 
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;
+window.importantCountries = importantCountries;

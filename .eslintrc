@@ -21,6 +21,10 @@
     "Element": true
   },
 
+  "env": {
+    "browser": true
+  },
+
   "plugins": [
     "react"
   ],

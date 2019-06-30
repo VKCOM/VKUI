@@ -1,0 +1,136 @@
+.ModalCard {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  z-index: 1;
+}
+
+.ModalCard__in {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 480px;
+  padding: 8px;
+  transform: translateY(100%);
+}
+
+.ModalCard--ios .ModalCard__in {
+  transition: transform 340ms var(--ios-easing);
+}
+
+.ModalCard--android .ModalCard__in {
+  transition: transform 340ms var(--android-easing);
+}
+
+.ModalRoot--touched .ModalCard__in {
+  transition: none;
+}
+
+.ModalCard__container {
+  box-sizing: border-box;
+  position: relative;
+  background: var(--modal_card_background);
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: var(--safe-area-inset-bottom);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: initial;
+}
+
+.ModalCard--android .ModalCard__container {
+  border-radius: 12px;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .08);
+}
+
+.ModalCard__dismiss {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 48px;
+  height: 48px;
+  color: var(--placeholder_icon_foreground_primary);
+  justify-content: center;
+}
+
+.ModalCard__title,
+.ModalCard__caption {
+  text-align: center;
+  margin: 0;
+  padding: 0 8px;
+}
+
+.ModalCard__title {
+  color: var(--text_primary);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .3px;
+  text-align: center;
+}
+
+.ModalCard__caption {
+  color: var(--text_secondary);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.ModalCard__title + .ModalCard__caption {
+  margin-top: 8px;
+}
+
+.ModalCard__title + .FormField {
+  margin-top: 16px;
+}
+
+.ModalCard .UsersStack {
+  margin-top: 12px;
+}
+
+.ModalCard__icon {
+  margin: 8px auto 16px;
+  color: var(--accent);
+}
+
+.ModalCard__actions {
+  display: flex;
+  margin-left: -6px;
+  margin-right: -6px;
+  margin-top: 16px;
+}
+
+.ModalCard .UsersStack + .ModalCard__actions {
+  margin-top: 24px;
+}
+
+.ModalCard__title + .ModalCard__actions,
+.ModalCard__caption + .ModalCard__actions {
+  margin-top: 32px;
+}
+
+.ModalCard__actions .Button {
+  flex: 1;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.ModalCard__actions--v {
+  flex-direction: column;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.ModalCard__actions--v .Button {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.ModalCard__actions--v .Button + .Button {
+  margin-top: 12px;
+}

@@ -7,6 +7,7 @@ import getClassName from '../../helpers/getClassName';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../../lib/touch';
+import { ModalRootContext } from '../ModalRoot/ModalRoot';
 
 const ts = () => +Date.now();
 const baseClassNames = getClassName('Tappable');
@@ -77,7 +78,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onStart = ({ originalEvent }) => {
-    this.props.stopPropagation && originalEvent.stopPropagation();
+    !this.insideModalRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     if (originalEvent.touches && originalEvent.touches.length > 1) {
       return deactivateOtherInstances();
     }
@@ -97,7 +98,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onMove = ({ originalEvent, shiftXAbs, shiftYAbs }) => {
-    this.props.stopPropagation && originalEvent.stopPropagation();
+    !this.insideModalRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     if (shiftXAbs > 20 || shiftYAbs > 20) {
       this.isSlide = true;
       this.stop();
@@ -110,7 +111,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onEnd = ({ originalEvent }) => {
-    this.props.stopPropagation && originalEvent.stopPropagation();
+    !this.insideModalRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     const now = ts();
 
     if (originalEvent.touches && originalEvent.touches.length > 0) {
@@ -276,16 +277,24 @@ export default class Tappable extends Component {
     }
 
     return (
-      <Component {...restProps} className={classes} {...props}>
-        {IS_PLATFORM_ANDROID && (
-          <span className="Tappable__waves">
-            {Object.keys(clicks).map(k => (
-              <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
-            ))}
-          </span>
-        )}
-        {children}
-      </Component>
+      <ModalRootContext.Consumer>
+        {insideModalRoot => {
+          this.insideModalRoot = insideModalRoot;
+
+          return (
+            <Component {...restProps} className={classes} {...props}>
+              {IS_PLATFORM_ANDROID && (
+                <span className="Tappable__waves">
+                  {Object.keys(clicks).map(k => (
+                    <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                  ))}
+                </span>
+              )}
+              {children}
+            </Component>
+          );
+        }}
+      </ModalRootContext.Consumer>
     );
   }
 }

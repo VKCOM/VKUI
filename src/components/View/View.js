@@ -48,6 +48,7 @@ export default class View extends Component {
     header: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
     children: PropTypes.node,
     popout: PropTypes.node,
+    modal: PropTypes.node,
     onTransition: PropTypes.func,
     /**
      * @ignore
@@ -94,6 +95,7 @@ export default class View extends Component {
 
   componentWillReceiveProps (nextProps) {
     nextProps.popout && !this.props.popout && this.blurActiveElement();
+    nextProps.modal && !this.props.modal && this.blurActiveElement();
 
     // Нужен переход
     if (this.props.activePanel !== nextProps.activePanel && !this.state.swipingBack && !this.state.browserSwipe) {
@@ -455,9 +457,12 @@ export default class View extends Component {
   }
 
   render () {
-    const { style, popout, header } = this.props;
+    const { style, popout, modal, header } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipingBackFinish } = this.state;
+
     const hasPopout = !!popout;
+    const hasModal = !!modal;
+
     const panels = this.panels.filter(panel => {
       const panelId = panel.props.id;
 
@@ -566,6 +571,7 @@ export default class View extends Component {
           })}
         </div>
         {hasPopout && <div className="View__popout">{popout}</div>}
+        {hasModal && <div className="View__modal">{modal}</div>}
       </Touch>
     );
   }
