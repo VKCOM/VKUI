@@ -18,7 +18,10 @@ class FixedLayout extends React.Component {
     children: PropTypes.node,
     style: PropTypes.object,
     className: PropTypes.string,
-    getRootRef: PropTypes.func,
+    getRootRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
     vertical: PropTypes.oneOf(['top', 'bottom']),
     /**
      * @ignore
@@ -61,11 +64,17 @@ class FixedLayout extends React.Component {
     });
   };
 
-  getRef = el => {
-    if (this.props.getRootRef) {
-      this.props.getRootRef(el);
+  getRef = (element) => {
+    this.el = element;
+
+    const getRootRef = this.props.getRootRef;
+    if (getRootRef) {
+      if (typeof getRootRef === 'function') {
+        getRootRef(element);
+      } else {
+        getRootRef.current = element;
+      }
     }
-    this.el = el;
   };
 
   render () {

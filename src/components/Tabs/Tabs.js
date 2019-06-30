@@ -18,7 +18,10 @@ export default class Tabs extends React.Component {
      */
     type: PropTypes.oneOf(['default', 'buttons']),
     style: PropTypes.object,
-    getRootRef: PropTypes.func
+    getRootRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ])
   };
 
   static defaultProps = {

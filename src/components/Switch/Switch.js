@@ -16,8 +16,14 @@ const Switch = ({ style, className, getRef, getRootRef, ...restProps }) => (
 Switch.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
-  getRef: PropTypes.func,
-  getRootRef: PropTypes.func
+  getRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]),
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ])
 };
 
 export default Switch;

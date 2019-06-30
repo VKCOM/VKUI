@@ -55,7 +55,10 @@ export default class Tappable extends Component {
     activeEffectDelay: PropTypes.number,
     stopPropagation: PropTypes.bool,
     disabled: PropTypes.bool,
-    getRootRef: PropTypes.func
+    getRootRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ])
   };
 
   static defaultProps = {
@@ -226,7 +229,15 @@ export default class Tappable extends Component {
    */
   getRef = container => {
     this.container = container;
-    this.props.getRootRef && this.props.getRootRef(container);
+
+    const getRootRef = this.props.getRootRef;
+    if (getRootRef) {
+      if (typeof getRootRef === 'function') {
+        getRootRef(container);
+      } else {
+        getRootRef.current = container;
+      }
+    }
   };
 
   componentWillUnmount () {

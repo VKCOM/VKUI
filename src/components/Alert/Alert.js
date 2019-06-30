@@ -75,6 +75,7 @@ export default class Alert extends Component {
 
     return (
       <PopoutWrapper
+        className={className}
         closing={closing}
         style={style}
         onClick={this.onClose}

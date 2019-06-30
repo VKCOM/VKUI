@@ -22,7 +22,10 @@ export default class Touch extends Component {
     component: PropTypes.string,
     children: PropTypes.node,
     onClick: PropTypes.func,
-    getRootRef: PropTypes.func
+    getRootRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.node })
+    ])
   };
   static defaultProps = {
     component: 'div',
@@ -223,9 +226,17 @@ export default class Touch extends Component {
     this.props.onClick && this.props.onClick(e);
   };
 
-  getRef = container => {
+  getRef = (container) => {
     this.container = container;
-    this.props.getRootRef && this.props.getRootRef(container);
+
+    const getRootRef = this.props.getRootRef;
+    if (getRootRef) {
+      if (typeof getRootRef === 'function') {
+        getRootRef(container);
+      } else {
+        getRootRef.current = container;
+      }
+    }
   };
 
   render () {

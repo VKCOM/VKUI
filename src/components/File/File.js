@@ -56,8 +56,14 @@ File.propTypes = {
    * @ignore
    */
   before: PropTypes.any,
-  getRef: PropTypes.func,
-  getRootRef: PropTypes.func,
+  getRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]),
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]),
   /**
    * @deprecated Используйте `children`. Свойство `label` будет удалено в 3.0.0
    */

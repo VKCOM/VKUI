@@ -33,7 +33,10 @@ SelectMimicry.propTypes = {
   tabIndex: PropTypes.number,
   placeholder: PropTypes.string,
   alignment: PropTypes.oneOf(['left', 'center', 'top']),
-  getRootRef: PropTypes.func,
+  getRootRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ]),
   multiline: PropTypes.bool,
   disabled: PropTypes.bool,
   status: PropTypes.oneOf(['default', 'error', 'valid'])
