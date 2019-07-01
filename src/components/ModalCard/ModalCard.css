@@ -75,6 +75,11 @@
   text-align: center;
 }
 
+.ModalCard--ios .ModalCard__title:first-child {
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
 .ModalCard__caption {
   color: var(--text_secondary);
   font-size: 14px;
