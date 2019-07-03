@@ -18,7 +18,7 @@ const PanelHeaderContent = ({ className, style, aside, status, before, children,
       <InComponent {...inProps} className="PanelHeaderContent__in" onClick={onClick}>
         {status && <div className="PanelHeaderContent__status">{status}</div>}
         <div className="PanelHeaderContent__children">
-          <span>{children}</span>
+          <span className="PanelHeaderContent__children-in">{children}</span>
           {aside && <div className="PanelHeaderContent__aside">{aside}</div>}
         </div>
       </InComponent>
