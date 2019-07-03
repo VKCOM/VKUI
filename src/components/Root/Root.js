@@ -27,6 +27,7 @@ export default class Root extends React.Component {
   static propTypes = {
     activeView: PropTypes.string.isRequired,
     popout: PropTypes.node,
+    modal: PropTypes.node,
     onTransition: PropTypes.func,
     children: PropTypes.node
   };
@@ -140,8 +141,10 @@ export default class Root extends React.Component {
   }
 
   render () {
-    let Views = this.arrayChildren.filter(View => this.state.visibleViews.indexOf(View.props.id) >= 0);
+    const { popout, modal } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
+
+    let Views = this.arrayChildren.filter(View => this.state.visibleViews.indexOf(View.props.id) >= 0);
 
     return (
       <div className={ classNames(baseClassName, { 'Root--transition': transition }) }>
@@ -156,7 +159,8 @@ export default class Root extends React.Component {
             {View}
           </div>
         ))}
-        {this.props.popout && <div className="Root__popout">{this.props.popout}</div>}
+        {!!popout && <div className="Root__popout">{popout}</div>}
+        {!!modal && <div className="Root__modal">{modal}</div>}
       </div>
     );
   }

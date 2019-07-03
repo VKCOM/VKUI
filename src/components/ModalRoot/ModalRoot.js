@@ -42,7 +42,6 @@ class ModalRoot extends Component {
       dragging: false
     };
 
-    this.arrayChildren = React.Children.toArray(props.children);
     this.activeTransitions = 0;
     this.maskElementRef = React.createRef();
 
@@ -77,8 +76,12 @@ class ModalRoot extends Component {
     return this.context.webviewType || 'vkapps';
   }
 
+  get modals () {
+    return [].concat(this.props.children);
+  }
+
   initModalsState () {
-    this.modalsState = this.arrayChildren.reduce((acc, Modal) => {
+    this.modalsState = this.modals.reduce((acc, Modal) => {
       const modalProps = Modal.props;
       const state = {};
 
@@ -682,7 +685,7 @@ class ModalRoot extends Component {
             ref={this.maskElementRef}
           />
           <div className="ModalRoot__viewport">
-            {this.arrayChildren.map((Modal) => {
+            {this.modals.map((Modal) => {
               const modalId = Modal.props.id;
               if (visibleModals.indexOf(Modal.props.id) === -1) return null;
               const modalState = this.modalsState[modalId];
