@@ -4,6 +4,8 @@
   }
 
   .PanelHeaderContent__in {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -13,6 +15,18 @@
   .PanelHeaderContent__status {
     order: 1;
     }
+
+  .PanelHeaderContent__children {
+    max-width: 100%;
+    }
+
+    .PanelHeaderContent__children-in {
+      flex-grow: 0;
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      }
 
 /*
   iOS
@@ -59,6 +73,7 @@
   Android
  */
 .PanelHeaderContent--android {
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
