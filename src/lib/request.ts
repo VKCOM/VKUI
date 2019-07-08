@@ -12,8 +12,8 @@ function getXMLHttpRequest () {
   }
 }
 
-function makeRequest (url, options) {
-  let isCanceled;
+function makeRequest (url: string, options) {
+  let isCanceled: boolean;
 
   const error = new Error('Request was aborted');
   const request = getXMLHttpRequest();
@@ -45,7 +45,7 @@ function makeRequest (url, options) {
         if (request.status === 200) {
           resolve(request.responseText);
         } else {
-          reject(new Error(request.status));
+          reject(new Error(request.status + ''));
         }
       }
     };
@@ -58,11 +58,17 @@ function makeRequest (url, options) {
   });
 
   return {
-
     promise: new Promise(function (resolve, reject) {
       requestPromise
-        .then(res => isCanceled ? reject(error) : resolve(res))
-        .catch((e) => isCanceled ? console.log(error) || reject(error) : reject(e));
+        .then(res => (isCanceled ? reject(error) : resolve(res)))
+        .catch(e => {
+          if (isCanceled) {
+            console.log(error);
+            reject(error);
+          } else {
+            reject(e);
+          }
+        });
     }),
 
     abort () {
@@ -71,8 +77,7 @@ function makeRequest (url, options) {
         request.abort();
       }
     }
-
   };
 }
 
-export default (url, options) => makeRequest(url, options);
+export default (url: string, options) => makeRequest(url, options);

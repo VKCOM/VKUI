@@ -22,23 +22,24 @@ export const styles = ({ space, color, borderRadius }) => ({
   tab: {}
 });
 
-class PlaygroundRenderer extends React.Component {
+class PlaygroundRenderer extends React.Component<any> {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    name: PropTypes.string.isRequired,
+    preview: PropTypes.node.isRequired,
+    previewProps: PropTypes.object.isRequired,
+    tabButtons: PropTypes.node.isRequired,
+    tabBody: PropTypes.node.isRequired,
+    toolbar: PropTypes.node.isRequired
+  };
 
   render () {
-    const {
-      classes,
-      name,
-      preview,
-      previewProps,
-      tabButtons,
-      tabBody,
-      toolbar
-    } = this.props;
+    const { classes, name, preview, previewProps, tabButtons, tabBody, toolbar } = this.props;
 
     return (
       <div className={classes.root}>
         <div className={cx(classes.preview, previewProps.className)} {...previewProps} data-preview={name}>
-          { preview }
+          {preview}
         </div>
         <div className={classes.controls}>
           <div className={classes.tabs}>{tabButtons}</div>
@@ -49,15 +50,5 @@ class PlaygroundRenderer extends React.Component {
     );
   }
 }
-
-PlaygroundRenderer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
-  preview: PropTypes.node.isRequired,
-  previewProps: PropTypes.object.isRequired,
-  tabButtons: PropTypes.node.isRequired,
-  tabBody: PropTypes.node.isRequired,
-  toolbar: PropTypes.node.isRequired
-};
 
 export default Styled(styles)(PlaygroundRenderer);

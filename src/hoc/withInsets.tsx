@@ -1,14 +1,21 @@
 import React from 'react';
 import vkuiConnect from '@vkontakte/vkui-connect';
 
-let initialState = {
+export type Insets = {
+  bottom: number;
+  top: number;
+  left: number;
+  right: number;
+};
+
+let initialState: Insets = {
   bottom: 0,
   top: 0,
   left: 0,
   right: 0
 };
 
-function resolveInsets (e) {
+function resolveInsets (e): Insets | void {
   const { type, data } = e.detail;
   switch (type) {
     case 'VKWebAppUpdateConfig':
@@ -20,15 +27,15 @@ function resolveInsets (e) {
   }
 }
 
-vkuiConnect.subscribe((e) => {
+vkuiConnect.subscribe(e => {
   const insets = resolveInsets(e);
   if (insets) {
     initialState = insets;
   }
 });
 
-export default function withInsets (Component) {
-  return class WithInsets extends React.Component {
+export default function withInsets<P> (Component: React.ComponentType<P & { insets: Partial<Insets> }>) {
+  return class WithInsets extends React.Component<P> {
     state = initialState;
 
     componentDidMount () {
@@ -39,17 +46,16 @@ export default function withInsets (Component) {
       vkuiConnect.unsubscribe(this.connectListener);
     }
 
-    connectListener = (e) => {
+    connectListener = e => {
       const insets = resolveInsets(e);
+
       if (insets) {
         this.setState(insets);
       }
     };
 
     render () {
-      return (
-        <Component {...this.props} insets={this.state} />
-      );
+      return <Component {...this.props} insets={this.state} />;
     }
   };
 }

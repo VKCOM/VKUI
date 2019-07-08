@@ -1,11 +1,18 @@
 /**
  * Функция для js анимации
- * @param {number} duration
- * @param {function} timing тайминг функция анимации
- * @param {function} draw коллбэк, в который прокидывается прогресс [0, 1]
- * @returns {void}
+ * @param duration
+ * @param timing тайминг функция анимации
+ * @param draw коллбэк, в который прокидывается прогресс [0, 1]
  */
-export default function animate ({ duration, timing, draw }) {
+export default function animate ({
+  duration,
+  timing,
+  draw
+}: {
+duration: number;
+timing: (time: number) => number;
+draw: (progress: number) => void;
+}) {
   if (typeof window === 'undefined') {
     return;
   }

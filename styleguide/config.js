@@ -11,7 +11,7 @@ const webpackConfig = require('../webpack.config');
  *
  * @todo Temporary solution. Get rid of this function
  */
-const getComponentsPaths = (componentNames, ext = ['tsx', 'js']) => {
+const getComponentsPaths = (componentNames, ext = ['tsx', 'ts']) => {
   return componentNames
     .map(
       item =>
@@ -34,7 +34,7 @@ module.exports = {
     PathlineRenderer: path.join(__dirname, './components/PathlineRenderer')
   },
   // TODO
-  // propsParser: typescriptDocgen.withDefaultConfig().parse,
+  propsParser: typescriptDocgen.withDefaultConfig({ propFilter: { skipPropsWithoutDoc: true } }).parse,
   sections: [
     {
       name: 'Intro',

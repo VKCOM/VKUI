@@ -67,4 +67,7 @@ Tabbar.defaultProps = {
   shadow: true
 };
 
-export default withInsets(Tabbar);
+export default withInsets<TabbarProps>(
+  // FIXME
+  Tabbar as any
+);

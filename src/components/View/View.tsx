@@ -1,14 +1,14 @@
-
-import React, { Component } from 'react';
+import React, { Component, EventHandler } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
 import transitionEvents from '../../lib/transitionEvents';
 import getClassName from '../../helpers/getClassName';
 import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
-import Touch from '../Touch/Touch';
+import Touch, { SpecificTouchEvent } from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { baseClassNames as panelHeaderClasses } from '../PanelHeader/PanelHeader';
+import { HasStyleObject, HasChildren } from '../../types/props';
 
 const baseClassNames = getClassName('View');
 
@@ -19,12 +19,49 @@ let scrollsCache = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
-export default class View extends Component {
+export interface ViewProps extends HasStyleObject, HasChildren {
+  activePanel: string;
+  header: boolean | object; // FIXME
+  popout: React.ReactNode;
+  onTransition: (prop: { isBack: boolean; from: string; to: string }) => void;
+  /**
+   * @ignore
+   */
+  onSwipeBack: () => void;
+  /**
+   * @ignore
+   */
+  onSwipeBackStart: () => void;
+  /**
+   * @ignore
+   */
+  history: string[];
+  id: string;
+}
+
+type State = {
+  isBack?: boolean;
+  animated?: boolean;
+  browserSwipe: boolean;
+  prevPanel: string | null;
+  nextPanel: string | null;
+  swipeBackPrevPanel: null | string;
+  swipeBackNextPanel: null | string;
+  swipingBack: boolean;
+  swipingBackFinish: null | boolean;
+  swipebackStartX: number;
+  swipeBackShift: number;
+  activePanel: string;
+  scrolls: any; // FIXME
+  startT?: Date;
+  visiblePanels: [string, string] | [string];
+};
+
+export default class View extends Component<ViewProps, State> {
   constructor (props) {
     super(props);
     this.state = {
       scrolls: scrollsCache[props.id] || {},
-
       visiblePanels: [props.activePanel],
       activePanel: props.activePanel,
       isBack: undefined,
@@ -92,7 +129,7 @@ export default class View extends Component {
 
   refsStore = {};
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps (nextProps: ViewProps) {
     nextProps.popout && !this.props.popout && this.blurActiveElement();
 
     // Нужен переход
@@ -123,21 +160,24 @@ export default class View extends Component {
     if (this.props.activePanel !== nextProps.activePanel && this.state.swipingBack) {
       const nextPanel = nextProps.activePanel;
       const prevPanel = this.props.activePanel;
-      this.setState({
-        swipeBackPrevPanel: null,
-        swipeBackNextPanel: null,
-        swipingBack: false,
-        swipingBackFinish: null,
-        swipebackStartX: 0,
-        swipeBackShift: 0,
-        activePanel: nextPanel,
-        visiblePanels: [nextPanel],
-        scrolls: removeObjectKeys(this.state.scrolls, [this.state.swipeBackPrevPanel])
-      }, () => {
-        this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
-        window.scrollTo(0, this.state.scrolls[this.state.activePanel]);
-        this.props.onTransition && this.props.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
-      });
+      this.setState(
+        {
+          swipeBackPrevPanel: null,
+          swipeBackNextPanel: null,
+          swipingBack: false,
+          swipingBackFinish: null,
+          swipebackStartX: 0,
+          swipeBackShift: 0,
+          activePanel: nextPanel,
+          visiblePanels: [nextPanel],
+          scrolls: removeObjectKeys(this.state.scrolls, [this.state.swipeBackPrevPanel])
+        },
+        () => {
+          this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
+          window.scrollTo(0, this.state.scrolls[this.state.activePanel]);
+          this.props.onTransition && this.props.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
+        }
+      );
     }
   }
 
@@ -160,7 +200,10 @@ export default class View extends Component {
       if (this.state.isBack) {
         nextPanelElement.scrollTop = scrolls[this.state.nextPanel];
       }
-      this.waitAnimationFinish(this.pickPanel(this.state.isBack ? this.state.prevPanel : this.state.nextPanel), this.transitionEndHandler);
+      this.waitAnimationFinish(
+        this.pickPanel(this.state.isBack ? this.state.prevPanel : this.state.nextPanel),
+        this.transitionEndHandler
+      );
     }
 
     // Начался свайп назад
@@ -208,7 +251,7 @@ export default class View extends Component {
     }
   }
 
-  waitAnimationFinish (elem, eventHandler) {
+  waitAnimationFinish (elem: EventTarget, eventHandler: EventListener) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
 
@@ -235,33 +278,42 @@ export default class View extends Component {
     return elem && elem.parentNode.parentNode;
   }
 
-  transitionEndHandler = (e = { manual: true }) => {
-    if ([
-      'animation-ios-next-forward',
-      'animation-ios-prev-back',
-      'animation-android-next-forward',
-      'animation-android-prev-back'
-    ].indexOf(e.animationName) > -1 || e.manual) {
+  transitionEndHandler = (
+    // FIXME
+    e: any = { manual: true }
+  ) => {
+    if (
+      [
+        'animation-ios-next-forward',
+        'animation-ios-prev-back',
+        'animation-android-next-forward',
+        'animation-android-prev-back'
+      ].indexOf(e.animationName) > -1 ||
+      e.manual
+    ) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
       const prevPanel = this.state.prevPanel;
       this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
-      this.setState({
-        prevPanel: null,
-        nextPanel: null,
-        visiblePanels: [activePanel],
-        activePanel: activePanel,
-        animated: false,
-        isBack: undefined,
-        scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls
-      }, function () {
-        isBack && this.window.scrollTo(0, this.state.scrolls[activePanel]);
-        this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
-      });
+      this.setState(
+        {
+          prevPanel: null,
+          nextPanel: null,
+          visiblePanels: [activePanel],
+          activePanel: activePanel,
+          animated: false,
+          isBack: undefined,
+          scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls
+        },
+        function () {
+          isBack && this.window.scrollTo(0, this.state.scrolls[activePanel]);
+          this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
+        }
+      );
     }
   };
 
-  swipingBackTransitionEndHandler = (e) => {
+  swipingBackTransitionEndHandler = e => {
     // indexOf because of vendor prefixes in old browsers
     if (e.propertyName.indexOf('transform') >= 0 && e.target.classList.contains('View__panel--swipe-back-next')) {
       this.state.swipingBackFinish ? this.onSwipeBackSuccess() : this.onSwipeBackCancel();
@@ -273,16 +325,19 @@ export default class View extends Component {
   }
 
   onSwipeBackCancel () {
-    this.setState({
-      swipeBackPrevPanel: null,
-      swipeBackNextPanel: null,
-      swipingBack: false,
-      swipingBackFinish: null,
-      swipebackStartX: 0,
-      swipeBackShift: 0
-    }, () => {
-      this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
-    });
+    this.setState(
+      {
+        swipeBackPrevPanel: null,
+        swipeBackNextPanel: null,
+        swipingBack: false,
+        swipingBackFinish: null,
+        swipebackStartX: 0,
+        swipeBackShift: 0
+      },
+      () => {
+        this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
+      }
+    );
   }
 
   onScrollTop = () => {
@@ -295,7 +350,7 @@ export default class View extends Component {
         animate({
           duration: 200,
           timing: n => Math.sqrt(n),
-          draw: (val) => {
+          draw: val => {
             this.window.scrollTo(0, scrollTop - val * scrollTop);
           }
         });
@@ -303,12 +358,19 @@ export default class View extends Component {
     }
   };
 
-  onMoveX = (e) => {
-    if (swipeBackExcludedTags.indexOf(e.originalEvent.target.tagName.toLowerCase()) > -1) {
+  onMoveX = (e: SpecificTouchEvent<HTMLElement>) => {
+    const target = e.originalEvent.target as EventTarget & HTMLElement;
+
+    if (swipeBackExcludedTags.indexOf(target.tagName.toLowerCase()) > -1) {
       return;
     }
 
-    if (IS_PLATFORM_IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
+    if (
+      IS_PLATFORM_IOS &&
+      !this.context.isWebView &&
+      (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) &&
+      !this.state.browserSwipe
+    ) {
       this.setState({ browserSwipe: true });
     }
 
@@ -346,18 +408,21 @@ export default class View extends Component {
 
   onEnd = () => {
     if (this.state.swipingBack) {
-      const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
+      const speed = (this.state.swipeBackShift / (Date.now() - Number(this.state.startT))) * 1000;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
         this.onSwipeBackSuccess();
       } else {
-        this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > this.window.innerWidth / 2 });
+        this.setState({
+          swipingBackFinish:
+            speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > this.window.innerWidth / 2
+        });
       }
     }
   };
 
-  getRef = (c) => {
+  getRef = c => {
     if (c && c.container && c.id) {
       let el = c;
 
@@ -373,13 +438,13 @@ export default class View extends Component {
     const isPrev = panelId === this.state.swipeBackPrevPanel;
     const isNext = panelId === this.state.swipeBackNextPanel;
 
-    if (!isPrev && !isNext || this.state.swipingBackFinish !== null) {
+    if ((!isPrev && !isNext) || this.state.swipingBackFinish !== null) {
       return {};
     }
 
     let prevPanelTranslate = `${this.state.swipeBackShift}px`;
-    let nextPanelTranslate = `${-50 + (this.state.swipeBackShift * 100 / this.window.innerWidth) / 2}%`;
-    let prevPanelShadow = 0.3 * (this.window.innerWidth - this.state.swipeBackShift) / this.window.innerWidth;
+    let nextPanelTranslate = `${-50 + (this.state.swipeBackShift * 100) / this.window.innerWidth / 2}%`;
+    let prevPanelShadow = (0.3 * (this.window.innerWidth - this.state.swipeBackShift)) / this.window.innerWidth;
 
     if (this.state.swipingBackFinish !== null) {
       return isPrev ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` } : {};
@@ -402,11 +467,11 @@ export default class View extends Component {
     return {};
   }
 
-  calcHeaderSwipeStyles (panelId) {
+  calcHeaderSwipeStyles (panelId: string) {
     const isPrev = panelId === this.state.swipeBackPrevPanel;
     const isNext = panelId === this.state.swipeBackNextPanel;
 
-    if (!isPrev && !isNext || this.state.swipingBackFinish !== null) {
+    if ((!isPrev && !isNext) || this.state.swipingBackFinish !== null) {
       return {
         title: {},
         bg: {},
@@ -417,8 +482,8 @@ export default class View extends Component {
     }
 
     let opacity = this.state.swipeBackShift / this.window.innerWidth;
-    let titleTransform = this.state.swipeBackShift / this.window.innerWidth * 30;
-    let leftTransform = this.state.swipeBackShift / this.window.innerWidth * 30;
+    let titleTransform = (this.state.swipeBackShift / this.window.innerWidth) * 30;
+    let leftTransform = (this.state.swipeBackShift / this.window.innerWidth) * 30;
 
     if (isNext) {
       return {
@@ -461,9 +526,11 @@ export default class View extends Component {
     const panels = this.panels.filter(panel => {
       const panelId = panel.props.id;
 
-      return this.state.visiblePanels.indexOf(panelId) > -1 ||
+      return (
+        this.state.visiblePanels.indexOf(panelId) > -1 ||
         panelId === swipeBackPrevPanel ||
-        panelId === swipeBackNextPanel;
+        panelId === swipeBackNextPanel
+      );
     });
 
     const modifiers = {
@@ -482,7 +549,7 @@ export default class View extends Component {
       >
         {header && (
           <div className="View__header">
-            { IS_PLATFORM_IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
+            {IS_PLATFORM_IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} />}
             <div className={classNames(panelHeaderClasses)}>
               {panels.map(panel => {
                 const panelId = panel.props.id;
@@ -515,13 +582,14 @@ export default class View extends Component {
                           id={`header-left-${panelId}`}
                           style={headerSwipeStyles.left}
                         />
-                        {IS_PLATFORM_IOS &&
-                        <div
-                          className="PanelHeader__addon"
-                          id={`header-addon-${panelId}`}
-                          style={headerSwipeStyles.icon}
-                        />
-                        }
+                        {IS_PLATFORM_IOS && (
+                          <div
+                            className="PanelHeader__addon"
+                            id={`header-addon-${panelId}`}
+                            // FIXME
+                            // style={headerSwipeStyles.icon}
+                          />
+                        )}
                       </div>
                       <div
                         className="PanelHeader__content"
@@ -558,9 +626,7 @@ export default class View extends Component {
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
-                <div className="View__panel-in">
-                  {panel}
-                </div>
+                <div className="View__panel-in">{panel}</div>
               </div>
             );
           })}

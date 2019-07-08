@@ -6,10 +6,14 @@ import Styled from 'react-styleguidist/lib/rsg-components/Styled';
 import Link from 'react-styleguidist/lib/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
-import scheme from '@vkontakte/appearance/main.valette/scheme';
+
+// FIXME
+const scheme = require('@vkontakte/appearance/main.valette/scheme');
 
 const schemeOptions = Object.keys(scheme).map(scheme_id => (
-  <option value={scheme_id} key={scheme_id}>{scheme_id}</option>
+  <option value={scheme_id} key={scheme_id}>
+    {scheme_id}
+  </option>
 ));
 
 const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
@@ -32,22 +36,22 @@ const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
     display: 'block'
   },
   sidebar: {
-    backgroundColor: color.sidebarBackground,
-    border: [[color.border, 'solid']],
-    borderWidth: [[0, 1, 0, 0]],
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    width: 230,
-    overflow: 'auto',
+    'backgroundColor': color.sidebarBackground,
+    'border': [[color.border, 'solid']],
+    'borderWidth': [[0, 1, 0, 0]],
+    'position': 'fixed',
+    'top': 0,
+    'left': 0,
+    'bottom': 0,
+    'width': 230,
+    'overflow': 'auto',
     '-webkit-overflow-scrolling': 'touch',
     [mq.small]: {
       position: 'static',
       width: 'auto',
       borderWidth: [[1, 0, 0, 0]],
       paddingBottom: space[0]
-    },
+    }
   },
   os: {
     fontFamily: fontFamily.base,
@@ -64,12 +68,12 @@ const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
     color: color.light,
     fontFamily: fontFamily.base,
     fontSize: fontSize.small
-  },
+  }
 });
 
-export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
+export function StyleGuideRenderer ({ classes, title, homepageUrl, children, toc, hasSidebar }) {
   return (
-    <div className={cx(classes.root, hasSidebar && classes.hasSidebar)}>
+    <div className={cx(classes.root, { [classes.hasSidebar]: hasSidebar })}>
       <main className={classes.content}>
         {children}
         <footer className={classes.footer}>
@@ -83,27 +87,50 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
           </div>
           <div className={classes.os}>
             Платформа:&nbsp;
-            <select onChange={ (e) => {
-              window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
-              window.location.reload();
-            } } value={window.navigator.userAgent}>
-              <option value={window.uaList.ios}>ios</option>
-              <option value={window.uaList.android}>android</option>
+            <select
+              onChange={e => {
+                window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
+                window.location.reload();
+              }}
+              value={window.navigator.userAgent}
+            >
+              <option
+                value={
+                  // FIXME
+                  (window as any).uaList.ios
+                }
+              >
+                ios
+              </option>
+              <option
+                value={
+                  // FIXME
+                  (window as any).uaList.android
+                }
+              >
+                android
+              </option>
             </select>
             <div style={{ marginTop: 4 }}>
               Тема:&nbsp;
-              <select onChange={ (e) => {
-                window.localStorage.setItem('vkui-styleguide:schemeId', e.target.value);
-                window.location.reload();
-              } } value={window.schemeId}>
+              <select
+                onChange={e => {
+                  window.localStorage.setItem('vkui-styleguide:schemeId', e.target.value);
+                  window.location.reload();
+                }}
+                value={
+                  // FIXME
+                  (window as any).schemeId
+                }
+              >
                 {schemeOptions}
               </select>
             </div>
             <div style={{ marginTop: 4 }}>
-              Версия:&nbsp;<Link href={`https://www.npmjs.com/package/${pkg.name}`}>{ pkg.version }</Link>
+              Версия:&nbsp;<Link href={`https://www.npmjs.com/package/${pkg.name}`}>{pkg.version}</Link>
             </div>
             <div style={{ marginTop: 4 }}>
-              Исходники:&nbsp;<Link href={ pkg.repository }>GitHub</Link>
+              Исходники:&nbsp;<Link href={pkg.repository}>GitHub</Link>
             </div>
             <div style={{ marginTop: 4 }}>
               Чат:&nbsp;<Link href="https://vk.me/join/AJQ1d8dLkgTUYRPPQ/Wa6Jmd">VK</Link>

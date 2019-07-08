@@ -4,7 +4,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Touch from '../Touch/Touch';
 import { tabbarHeight } from '../../appearance/constants';
-import withInsets from '../../hoc/withInsets';
+import withInsets, { Insets } from '../../hoc/withInsets';
 import { HasChildren, HasStyleObject } from '../../types/props';
 
 const baseClassNames = getClassName('Panel');
@@ -16,7 +16,7 @@ export interface PanelProps extends HasChildren, HasStyleObject {
   /**
    * @ignore
    */
-  insets: { bottom: number };
+  insets: Insets;
 }
 
 class Panel extends Component<PanelProps> {
@@ -80,4 +80,7 @@ class Panel extends Component<PanelProps> {
   }
 }
 
-export default withInsets(Panel);
+export default withInsets<PanelProps>(
+  // FIXME
+  Panel as any
+);

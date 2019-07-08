@@ -97,4 +97,7 @@ class FixedLayout extends React.Component<FixedLayoutProps> {
   }
 }
 
-export default withInsets(FixedLayout);
+export default withInsets<FixedLayoutProps>(
+  // FIXME
+  FixedLayout as any
+);

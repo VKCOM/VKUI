@@ -123,4 +123,7 @@ class ActionSheet extends React.Component<ActionSheetProps> {
   }
 }
 
-export default withInsets(ActionSheet);
+export default withInsets<ActionSheetProps>(
+  // FIXME
+  ActionSheet as any
+);

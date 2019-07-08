@@ -4,7 +4,6 @@
     "module": "commonjs",
     "jsx": "react",
     "esModuleInterop": true,
-    "allowJs": true, // TODO: remove to allow generate declarations,
     // "declaration": true,
 
     // TODO: Enable strict type checking and remove all implicit statements
@@ -15,8 +14,10 @@
     "strictPropertyInitialization": false,
     "noImplicitThis": false,
     "alwaysStrict": false,
+    "resolveJsonModule": true,
 
-    "lib": ["dom"]
+    "lib": ["dom", "esnext"]
   },
-  "exclude": ["./styleguide", "./docs", "./dist", "./tasks"]
+  "exclude": ["./docs", "./dist", "./tasks"],
+  "include": ["./styleguide/Components"]
 }

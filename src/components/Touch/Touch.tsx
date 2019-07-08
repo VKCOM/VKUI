@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getSupportedEvents, coordX, coordY, touchEnabled } from '../../lib/touch';
-import { HasChildren, HasRef, Gesture } from '../../types/props';
+import { HasChildren, HasRef, Gesture, HasStyleObject } from '../../types/props';
 
 const events = getSupportedEvents();
 
@@ -13,7 +13,8 @@ export type SpecificTouchEvent<E extends HTMLElement = HTMLElement> = Gesture & 
 
 // eslint-disable-next-line space-infix-ops
 export type TouchProps = HasChildren &
-  HasRef & {
+  HasRef &
+  HasStyleObject & {
     /** @default 'div' */
     component?: keyof React.ReactHTML;
     onClick?: (e?: React.MouseEvent<HTMLElement>) => void;
@@ -27,6 +28,7 @@ export type TouchProps = HasChildren &
     onStartX?: (e?: SpecificTouchEvent<HTMLElement>) => void;
     onStartY?: (e?: SpecificTouchEvent<HTMLElement>) => void;
     useCapture?: boolean;
+    className?: string;
   };
 
 export default class Touch extends Component<TouchProps> {
@@ -274,6 +276,8 @@ export default class Touch extends Component<TouchProps> {
       useCapture,
       component,
       getRootRef,
+      className,
+      style,
       ...restProps
     } = this.props;
 
@@ -281,6 +285,8 @@ export default class Touch extends Component<TouchProps> {
       component,
       {
         ...restProps,
+        style,
+        className,
         onDragStart: this.onDragStart,
         onClick: this.onClick,
         ref: this.getRef

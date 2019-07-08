@@ -16,7 +16,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|tsx?)$/, // TODO: disable .js
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         loader: ['babel-loader', 'ts-loader']
       },
