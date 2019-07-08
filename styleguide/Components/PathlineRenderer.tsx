@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'react-styleguidist/lib/rsg-components/Link';
-import Styled from 'react-styleguidist/lib/rsg-components/Styled';
+import Link from 'react-styleguidist/lib/client/rsg-components/Link';
+import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import pkg from '../../package.json';
 
 const scheme = require('@vkontakte/appearance/main.valette/scheme');
