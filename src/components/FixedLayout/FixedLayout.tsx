@@ -4,7 +4,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, transitionStartEventName } from '../View/View';
 import { tabbarHeight } from '../../appearance/constants';
-import withInsets from '../../hoc/withInsets';
+import withInsets, { Insets } from '../../hoc/withInsets';
 import { HasStyleObject, HasChildren, HasRef } from '../../types/props';
 
 const baseClassNames = getClassName('FixedLayout');
@@ -14,7 +14,7 @@ export interface FixedLayoutProps extends HasStyleObject, HasChildren, HasRef<HT
   /**
    * @ignore
    */
-  insets: { bottom: number };
+  insets?: Insets;
 }
 
 class FixedLayout extends React.Component<FixedLayoutProps> {

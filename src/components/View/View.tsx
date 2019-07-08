@@ -20,23 +20,23 @@ let scrollsCache = {};
 const swipeBackExcludedTags = ['input', 'textarea'];
 
 export interface ViewProps extends HasStyleObject, HasChildren {
-  activePanel: string;
-  header: boolean | object; // FIXME
-  popout: React.ReactNode;
-  onTransition: (prop: { isBack: boolean; from: string; to: string }) => void;
+  activePanel?: string;
+  header?: boolean | object; // FIXME
+  popout?: React.ReactNode;
+  onTransition?: (prop: { isBack: boolean; from: string; to: string }) => void;
   /**
    * @ignore
    */
-  onSwipeBack: () => void;
+  onSwipeBack?: () => void;
   /**
    * @ignore
    */
-  onSwipeBackStart: () => void;
+  onSwipeBackStart?: () => void;
   /**
    * @ignore
    */
-  history: string[];
-  id: string;
+  history?: string[];
+  id?: string;
 }
 
 type State = {

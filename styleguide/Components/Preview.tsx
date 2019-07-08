@@ -5,13 +5,15 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ReactFrame from 'react-frame-component';
 
+const { schemeId } = window as any; // FIXME
+
 const frameInitialContent = `
   <!DOCTYPE html>
   <html>
     <head>
       <link href="./main.css" rel="stylesheet" id="styles" />
     </head>
-    <body scheme="${window.schemeId}">
+    <body scheme="${schemeId}"> 
     </body>
   </html>
 `;
@@ -30,7 +32,6 @@ class PrepareFrame extends React.Component {
   };
 
   getChildContext () {
-
     return {
       webviewType: 'internal'
     };
@@ -50,12 +51,12 @@ class PrepareFrame extends React.Component {
   }
 
   render () {
-    return this.state.loaded ? this.props.children : null
+    return this.state.loaded ? this.props.children : null;
   }
 }
 
-export default class Preview extends PreviewParent {
-
+// FIXME
+export default class Preview extends (PreviewParent as any) {
   executeCode () {
     this.setState({
       error: null
@@ -67,26 +68,26 @@ export default class Preview extends PreviewParent {
     }
 
     const wrappedComponent = (
-        <ReactFrame
-          initialContent={frameInitialContent}
-          mountTarget="body"
-          style={{
-            height: 667,
-            width: 375,
-            border: '1px solid rgba(0, 0, 0, .12)',
-            display: 'block',
-            margin: 'auto'
-          }}
-        >
-          <PrepareFrame>
-            <ReactExample
-              code={code}
-              evalInContext={this.props.evalInContext}
-              onError={this.handleError}
-              compilerConfig={this.context.config.compilerConfig}
-            />
-          </PrepareFrame>
-        </ReactFrame>
+      <ReactFrame
+        initialContent={frameInitialContent}
+        mountTarget="body"
+        style={{
+          height: 667,
+          width: 375,
+          border: '1px solid rgba(0, 0, 0, .12)',
+          display: 'block',
+          margin: 'auto'
+        }}
+      >
+        <PrepareFrame>
+          <ReactExample
+            code={code}
+            evalInContext={this.props.evalInContext}
+            onError={this.handleError}
+            compilerConfig={this.context.config.compilerConfig}
+          />
+        </PrepareFrame>
+      </ReactFrame>
     );
 
     window.requestAnimationFrame(() => {

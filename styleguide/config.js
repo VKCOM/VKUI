@@ -63,91 +63,91 @@ module.exports = {
           name: 'Layout',
           components: () =>
             getComponentsPaths([
-              'Root',
-              'View',
-              'Panel',
-              'PanelHeader',
-              'HeaderButton',
-              'PanelHeaderContent',
-              'HeaderContext',
-              'Epic',
-              'Tabbar',
-              'TabbarItem',
-              'FixedLayout',
-              'HorizontalScroll'
+              'Root'
+              // 'View',
+              // 'Panel',
+              // 'PanelHeader',
+              // 'HeaderButton',
+              // 'PanelHeaderContent',
+              // 'HeaderContext',
+              // 'Epic',
+              // 'Tabbar',
+              // 'TabbarItem',
+              // 'FixedLayout',
+              // 'HorizontalScroll'
             ])
         },
-        {
-          name: 'Popouts',
-          components: () =>
-            getComponentsPaths([
-              'PopoutWrapper', //
-              'ActionSheet',
-              'ActionSheetItem',
-              'Alert',
-              'ScreenSpinner'
-            ])
-        },
-        {
-          name: 'Blocks',
-          components: () =>
-            getComponentsPaths([
-              'Button',
-              'CellButton',
-              'Div',
-              'Link',
-              'Header',
-              'Group',
-              'Cell',
-              'List',
-              'Footer',
-              'Spinner',
-              'Switch',
-              'InfoRow',
-              'Avatar',
-              'Entity',
-              'Gallery',
-              'Progress',
-              'Search',
-              'Tabs',
-              'TabsItem',
-              'FixedTabs',
-              'Tooltip',
-              'PullToRefresh',
-              'Counter',
-              'Touch'
-            ])
-        },
-        {
-          name: 'Forms',
-          components: () =>
-            getComponentsPaths([
-              'FormLayout',
-              'FormLayoutGroup',
-              'FormStatus',
-              'Slider',
-              'RangeSlider',
-              'Radio',
-              'Checkbox',
-              'Input',
-              'Select',
-              'SelectMimicry',
-              'Textarea',
-              'File'
-            ])
-        },
-        {
-          name: 'Helpers',
-          content: './pages/helpers.md',
-          components: () =>
-            getComponentsPaths([
-              'PanelSpinner',
-              'PanelHeaderBack',
-              'PanelHeaderClose',
-              'PanelHeaderSubmit',
-              'PanelHeaderEdit'
-            ])
-        },
+        // {
+        //   name: 'Popouts',
+        //   components: () =>
+        //     getComponentsPaths([
+        //       'PopoutWrapper', //
+        //       'ActionSheet',
+        //       'ActionSheetItem',
+        //       'Alert',
+        //       'ScreenSpinner'
+        //     ])
+        // },
+        // {
+        //   name: 'Blocks',
+        //   components: () =>
+        //     getComponentsPaths([
+        //       'Button',
+        //       'CellButton',
+        //       'Div',
+        //       'Link',
+        //       'Header',
+        //       'Group',
+        //       'Cell',
+        //       'List',
+        //       'Footer',
+        //       'Spinner',
+        //       'Switch',
+        //       'InfoRow',
+        //       'Avatar',
+        //       'Entity',
+        //       'Gallery',
+        //       'Progress',
+        //       'Search',
+        //       'Tabs',
+        //       'TabsItem',
+        //       'FixedTabs',
+        //       'Tooltip',
+        //       'PullToRefresh',
+        //       'Counter',
+        //       'Touch'
+        //     ])
+        // },
+        // {
+        //   name: 'Forms',
+        //   components: () =>
+        //     getComponentsPaths([
+        //       'FormLayout',
+        //       'FormLayoutGroup',
+        //       'FormStatus',
+        //       'Slider',
+        //       'RangeSlider',
+        //       'Radio',
+        //       'Checkbox',
+        //       'Input',
+        //       'Select',
+        //       'SelectMimicry',
+        //       'Textarea',
+        //       'File'
+        //     ])
+        // },
+        // {
+        //   name: 'Helpers',
+        //   content: './pages/helpers.md',
+        //   components: () =>
+        //     getComponentsPaths([
+        //       'PanelSpinner',
+        //       'PanelHeaderBack',
+        //       'PanelHeaderClose',
+        //       'PanelHeaderSubmit',
+        //       'PanelHeaderEdit'
+        //     ])
+        // },
         {
           name: 'Icons',
           content: './pages/icons.md'

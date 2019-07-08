@@ -6,7 +6,7 @@ import getClassName from '../../helpers/getClassName';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../../lib/touch';
-import { HasChildren } from '../../types/props';
+import { HasChildren, HasStyleObject } from '../../types/props';
 
 const ts = Date.now;
 const baseClassNames = getClassName('Tappable');
@@ -42,8 +42,8 @@ function deactivateOtherInstances (exclude?: string) {
     });
 }
 
-export interface TappableProps extends HasChildren {
-  onClick?: () => void;
+export interface TappableProps extends HasChildren, HasStyleObject {
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   className?: string;
   component?: keyof React.ReactHTML | typeof Touch;
   role?: string;
@@ -51,6 +51,7 @@ export interface TappableProps extends HasChildren {
   stopPropagation?: boolean;
   disabled?: boolean;
   getRootRef?: (ref: HTMLElement | Touch) => void;
+  href?: string;
 }
 
 type State = {

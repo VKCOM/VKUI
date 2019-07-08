@@ -95,6 +95,7 @@ export { default as request } from './lib/request';
 export { default as querystring } from './lib/querystring';
 export { default as getClassName } from './helpers/getClassName';
 export { isWebView } from './lib/webview';
+
 /**
  * @deprecated будет удален в 3.0.0
  * @type {{}}

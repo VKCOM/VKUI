@@ -15,9 +15,8 @@
     "noImplicitThis": false,
     "alwaysStrict": false,
     "resolveJsonModule": true,
-
     "lib": ["dom", "esnext"]
-  },
-  "exclude": ["./docs", "./dist", "./tasks"],
-  "include": ["./styleguide/Components"]
+  }
+  // "exclude": ["./docs", "./dist", "./tasks"],
+  // "include": ["./src", "./styleguide/Components"]
 }

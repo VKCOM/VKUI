@@ -1,4 +1,4 @@
-import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../lib/platform.js';
+import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../lib/platform';
 import classNames from '../lib/classNames';
 
 export default function getClassName (base: string): string {

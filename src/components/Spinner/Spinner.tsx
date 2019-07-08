@@ -4,9 +4,9 @@ import Spinner24 from '@vkontakte/icons/dist/24/spinner';
 import Spinner32 from '@vkontakte/icons/dist/32/spinner';
 import Spinner44 from '@vkontakte/icons/dist/44/spinner';
 import Spinner16 from '@vkontakte/icons/dist/16/spinner';
-import classNames from '../../lib/classNames.js';
+import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { HasStyleObject } from '../../types/props.js';
+import { HasStyleObject } from '../../types/props';
 
 const baseClassNames = getClassName('Spinner');
 
