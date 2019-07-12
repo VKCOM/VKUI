@@ -51,7 +51,7 @@ Button.propTypes = {
    * Значения `1`, `2`, `3`, `sell`, `buy` устарели. Маппинг на новые значения находится в
    * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в 3.0.0
    */
-  level: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'outline', 'commerce', '1', '2', '3', 'sell', 'buy']),
+  level: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'outline', 'commerce', 'destructive', '1', '2', '3', 'sell', 'buy']),
   size: PropTypes.oneOf(['m', 'l', 'xl']),
   /**
    * @deprecated Кнопки-ячейки `<Button type="cell" />` переехали в отдельный компонент: `<CellButton />`.

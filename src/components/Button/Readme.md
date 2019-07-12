@@ -17,6 +17,9 @@
       <Div>
         <Button level="commerce">Commerce</Button>
       </Div>
+      <Div>
+        <Button level="destructive">Destructive</Button>
+      </Div>
     </Group>
     <Group title="Допустимые размеры">
       <Div>

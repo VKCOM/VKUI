@@ -92,6 +92,11 @@
   color: var(--button_outline_foreground);
   }
 
+.Button--lvl-destructive {
+  background-color: var(--destructive);
+  color: #fff;
+  }
+
 .Button--sz-m {
   padding: 0 16px;
   }
