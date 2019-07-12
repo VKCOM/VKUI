@@ -1,4 +1,4 @@
-import React, { Component, EventHandler } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';

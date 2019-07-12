@@ -19,7 +19,11 @@ export interface PanelHeaderProps extends HasChildren {
   transparent?: boolean;
 }
 
-export default class PanelHeader extends React.Component<PanelHeaderProps> {
+type PanelHeaderState = {
+  ready: boolean;
+};
+
+export default class PanelHeader extends React.Component<PanelHeaderProps, PanelHeaderState> {
   static propTypes = {
     left: PropTypes.node,
     /**
