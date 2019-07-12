@@ -8,3 +8,4 @@ dist/
 .idea/
 src/styles/generated/
 PUBLISHING.md
+yarn-error.log
