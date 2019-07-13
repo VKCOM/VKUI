@@ -15,5 +15,11 @@ if (typeof document !== 'undefined' && document.createElement) {
 }
 
 const transitionEndEventName = prefix ? prefix + 'TransitionEnd' : 'transitionend';
+const animationEndEventName = prefix ? prefix + 'AnimationEnd' : 'animationend';
 
-export default { supported, prefix, transitionEndEventName };
+export default {
+  supported,
+  prefix,
+  transitionEndEventName,
+  animationEndEventName
+};
