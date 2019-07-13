@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Touch from '../Touch/Touch';
+import Touch, { TouchRootContext } from '../Touch/Touch';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
@@ -14,9 +14,6 @@ function cancelEvent (event) {
   while (event.originalEvent) event = event.originalEvent;
   if (event.preventDefault) event.preventDefault();
   if (event.stopPropagation) event.stopPropagation();
-  if (event.stopImmediatePropagation) event.stopImmediatePropagation();
-  event.cancelBubble = true;
-  event.returnValue = false;
   return false;
 }
 
@@ -25,7 +22,7 @@ export default class PullToRefresh extends PureComponent {
     super(props);
 
     this.params = {
-      start: IS_PLATFORM_ANDROID ? -40 : -10,
+      start: IS_PLATFORM_ANDROID ? -45 : -10,
       max: IS_PLATFORM_ANDROID ? 80 : 50,
       maxY: IS_PLATFORM_ANDROID ? 80 : 400,
       refreshing: IS_PLATFORM_ANDROID ? 50 : 36,
@@ -47,11 +44,11 @@ export default class PullToRefresh extends PureComponent {
       contentShift: 0
     };
 
-    this._contentElement = React.createRef();
+    this.contentRef = React.createRef();
   }
 
   static propTypes = {
-    children: PropTypes.element,
+    children: PropTypes.node,
     className: PropTypes.string,
 
     /**
@@ -86,8 +83,8 @@ export default class PullToRefresh extends PureComponent {
     this.document.removeEventListener('touchmove', this.onWindowTouchMove);
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (!nextProps.isFetching && this.props.isFetching) {
+  componentDidUpdate (prevProps) {
+    if (prevProps.isFetching && !this.props.isFetching) {
       this.onRefreshingFinish();
     }
   }
@@ -200,38 +197,45 @@ export default class PullToRefresh extends PureComponent {
     const { children, className, onRefresh, isFetching, ...restProps } = this.props;
     const { watching, refreshing, spinnerY, spinnerProgress, canRefresh, touchDown, contentShift } = this.state;
 
-    return (
-      <Touch
-        onStart={this.onTouchStart}
-        onMove={this.onTouchMove}
-        onEnd={this.onTouchEnd}
-        className={classNames(baseClassName, className, {
-          'PullToRefresh--watching': watching,
-          'PullToRefresh--refreshing': refreshing
-        })}
-        {...restProps}
-      >
-        <FixedLayout className="PullToRefresh__controls">
-          <PullToRefreshSpinner
-            style={{
-              transform: `translate3d(0, ${spinnerY}px, 0)`,
-              opacity: watching || refreshing || canRefresh ? 1 : 0
-            }}
-            on={refreshing}
-            progress={refreshing ? null : spinnerProgress}
-          />
-        </FixedLayout>
+    const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
+    const contentTransform = refreshing && !touchDown && IS_PLATFORM_IOS ? `translate3d(0, 100px, 0)` : IS_PLATFORM_IOS && contentShift ? `translate3d(0, ${contentShift}px, 0)` : '';
 
-        <div
-          className="PullToRefresh__content"
-          ref={this._contentElement}
-          style={{
-            transform: refreshing && !touchDown && IS_PLATFORM_IOS ? `translate3d(0, 100px, 0)` : IS_PLATFORM_IOS && contentShift ? `translate3d(0, ${contentShift}px, 0)` : ''
-          }}
+    return (
+      <TouchRootContext.Provider value={true}>
+        <Touch
+          {...restProps}
+          onStart={this.onTouchStart}
+          onMove={this.onTouchMove}
+          onEnd={this.onTouchEnd}
+          className={classNames(baseClassName, className, {
+            'PullToRefresh--watching': watching,
+            'PullToRefresh--refreshing': refreshing
+          })}
         >
-          {children}
-        </div>
-      </Touch>
+          <FixedLayout className="PullToRefresh__controls">
+            <PullToRefreshSpinner
+              style={{
+                transform: spinnerTransform,
+                WebkitTransform: spinnerTransform,
+                opacity: watching || refreshing || canRefresh ? 1 : 0
+              }}
+              on={refreshing}
+              progress={refreshing ? null : spinnerProgress}
+            />
+          </FixedLayout>
+
+          <div
+            className="PullToRefresh__content"
+            ref={this.contentRef}
+            style={{
+              transform: contentTransform,
+              WebkitTransform: contentTransform
+            }}
+          >
+            {children}
+          </div>
+        </Touch>
+      </TouchRootContext.Provider>
     );
   }
 }

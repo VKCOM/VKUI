@@ -1,13 +1,12 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Touch from '../Touch/Touch';
+import Touch, { TouchRootContext } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY } from '../../lib/touch';
-import { ModalRootContext } from '../ModalRoot/ModalRoot';
 
 const ts = () => +Date.now();
 const baseClassNames = getClassName('Tappable');
@@ -78,7 +77,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onStart = ({ originalEvent }) => {
-    !this.insideModalRoot && this.props.stopPropagation && originalEvent.stopPropagation();
+    !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     if (originalEvent.touches && originalEvent.touches.length > 1) {
       return deactivateOtherInstances();
     }
@@ -98,7 +97,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onMove = ({ originalEvent, shiftXAbs, shiftYAbs }) => {
-    !this.insideModalRoot && this.props.stopPropagation && originalEvent.stopPropagation();
+    !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     if (shiftXAbs > 20 || shiftYAbs > 20) {
       this.isSlide = true;
       this.stop();
@@ -111,7 +110,7 @@ export default class Tappable extends Component {
    * @returns {void}
    */
   onEnd = ({ originalEvent }) => {
-    !this.insideModalRoot && this.props.stopPropagation && originalEvent.stopPropagation();
+    !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     const now = ts();
 
     if (originalEvent.touches && originalEvent.touches.length > 0) {
@@ -277,9 +276,9 @@ export default class Tappable extends Component {
     }
 
     return (
-      <ModalRootContext.Consumer>
-        {insideModalRoot => {
-          this.insideModalRoot = insideModalRoot;
+      <TouchRootContext.Consumer>
+        {insideTouchRoot => {
+          this.insideTouchRoot = insideTouchRoot;
 
           return (
             <Component {...restProps} className={classes} {...props}>
@@ -294,7 +293,7 @@ export default class Tappable extends Component {
             </Component>
           );
         }}
-      </ModalRootContext.Consumer>
+      </TouchRootContext.Consumer>
     );
   }
 }

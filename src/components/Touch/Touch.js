@@ -4,6 +4,12 @@ import { getSupportedEvents, coordX, coordY, touchEnabled } from '../../lib/touc
 
 const events = getSupportedEvents();
 
+/**
+ * Контекст для компонентов, использующих Touch в качестве корневой обёртки,
+ * и для которых важно не предотвращать вспылие тач-событий от дочерних компонентов
+ */
+export const TouchRootContext = React.createContext(false);
+
 export default class Touch extends Component {
   cancelClick = false;
   gesture = {};

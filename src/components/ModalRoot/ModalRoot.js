@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Touch from '../Touch/Touch';
+import Touch, { TouchRootContext } from '../Touch/Touch';
 import withInsets from '../../hoc/withInsets';
 
 import getClassName from '../../helpers/getClassName';
@@ -23,8 +23,6 @@ function numberInRange (number, range) {
 function rangeTranslate (number) {
   return Math.max(0, Math.min(98, number));
 }
-
-export const ModalRootContext = React.createContext(false);
 
 class ModalRoot extends Component {
   constructor (props) {
@@ -668,7 +666,7 @@ class ModalRoot extends Component {
     if (!activeModal && !prevModal && !nextModal && !animated) return null;
 
     return (
-      <ModalRootContext.Provider value={true}>
+      <TouchRootContext.Provider value={true}>
         <Touch
           className={classNames(baseClassName, {
             'ModalRoot--vkapps': this.webviewType === 'vkapps',
@@ -713,7 +711,7 @@ class ModalRoot extends Component {
             })}
           </div>
         </Touch>
-      </ModalRootContext.Provider>
+      </TouchRootContext.Provider>
     );
   }
 }
