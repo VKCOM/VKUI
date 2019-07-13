@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import FixedLayout from '../FixedLayout/FixedLayout';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import FixedLayout from '../FixedLayout/FixedLayout';
-
 import transitionEvents from '../../lib/transitionEvents';
 
 const baseClassNames = getClassName('HeaderContext');
 
-export default class HeaderContext extends React.Component {
+export default class HeaderContext extends Component {
   static propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
@@ -25,47 +24,44 @@ export default class HeaderContext extends React.Component {
     closing: false
   };
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.opened !== this.props.opened) {
-      if (nextProps.opened === false) {
+  elementRef = React.createRef();
+
+  componentDidUpdate (prevProps) {
+    if (this.props.opened !== prevProps.opened) {
+      if (this.props.opened === false) {
         this.setState({ closing: true });
         this.waitAnimationFinish(this.onAnimationFinish);
-      } else {
-        clearTimeout(this.closeAnimationTimeiout);
       }
     }
   }
 
-  componentWillUnmount () {
-    clearTimeout(this.closeAnimationTimeiout);
-  }
-
   waitAnimationFinish (eventHandler) {
-    if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
-      this.el.removeEventListener(eventName, eventHandler);
-      this.el.addEventListener(eventName, eventHandler);
-    } else {
-      this.closeAnimationTimeiout = setTimeout(eventHandler.bind(this), 200);
+    const eventName = transitionEvents.animationEndEventName;
+    const element = this.elementRef.current;
+
+    if (element) {
+      element.removeEventListener(eventName, eventHandler);
+      element.addEventListener(eventName, eventHandler);
     }
   }
 
-  onAnimationFinish = () => this.setState({ closing: false });
-
-  getRef = el => this.el = el;
+  onAnimationFinish = () => {
+    this.setState({ closing: false });
+  };
 
   render () {
     const { children, className, opened, onClose, ...restProps } = this.props;
+    const { closing } = this.state;
 
     return (
       <FixedLayout {...restProps} className={classNames(baseClassNames, {
         'HeaderContext--opened': opened,
-        'HeaderContext--closing': this.state.closing
+        'HeaderContext--closing': closing
       }, className)} vertical="top">
-        <div className="HeaderContext__in" ref={this.getRef}>
-          {(opened || this.state.closing) && children}
+        <div className="HeaderContext__in" ref={this.elementRef}>
+          {(opened || closing) && children}
         </div>
-        {(opened || this.state.closing) && <div onClick={onClose} className="HeaderContext__fade" />}
+        {(opened || closing) && <div onClick={onClose} className="HeaderContext__fade" />}
       </FixedLayout>
     );
   }
