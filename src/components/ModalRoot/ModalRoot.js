@@ -28,13 +28,15 @@ class ModalRoot extends Component {
   constructor (props) {
     super(props);
 
+    const activeModal = props.activeModal;
+
     this.state = {
-      activeModal: props.activeModal,
+      activeModal: null,
       prevModal: null,
-      nextModal: null,
-      visibleModals: [props.activeModal],
-      animated: false,
-      history: props.activeModal ? [props.activeModal] : [],
+      nextModal: activeModal,
+      visibleModals: activeModal ? [activeModal] : [],
+      animated: !!activeModal,
+      history: activeModal ? [activeModal] : [],
 
       touchDown: false,
       dragging: false
