@@ -43,6 +43,8 @@
   --control_tint_muted: #76787a;
   --counter_primary_background: #528bcc;
   --counter_primary_text: #ffffff;
+  --counter_prominent_background: #ff3347;
+  --counter_prominent_text: #ffffff;
   --counter_secondary_background: #aaaeb3;
   --counter_secondary_text: #ffffff;
   --destructive: #e64646;
@@ -83,8 +85,9 @@
   --im_attach_tint: #5181b8;
   --im_bubble_border_alternate: #e1e3e6;
   --im_bubble_border_alternate_highlighted: #d7d8d9;
-  --im_bubble_button_background: rgba(0, 57, 115, 0.10);
-  --im_bubble_button_foreground: #45678f;
+  --im_bubble_button_background: #f9f9f9;
+  --im_bubble_button_background_highlighted: #d7d8d9;
+  --im_bubble_button_foreground: #000000;
   --im_bubble_incoming: #ebedf0;
   --im_bubble_incoming_alternate: #ffffff;
   --im_bubble_incoming_alternate_highlighted: #f9f9f9;
@@ -96,6 +99,9 @@
   --im_bubble_outgoing_alternate: #ffffff;
   --im_bubble_outgoing_highlighted: #add3ff;
   --im_bubble_outgoing_alternate_highlighted: #f9f9f9;
+  --im_bubble_wallpaper_button_background: #f2f3f5;
+  --im_bubble_wallpaper_button_background_highlighted: #e1e3e6;
+  --im_bubble_wallpaper_button_foreground: #000000;
   --im_bubble_wallpaper_incoming: #ffffff;
   --im_bubble_wallpaper_incoming_highlighted: #ebedf0;
   --im_bubble_wallpaper_incoming_border: rgba(0, 57, 115, 0.10);
@@ -162,7 +168,11 @@
   --snippet_icon_tertiary: #c4c8cc;
   --splashscreen_icon: #e1e3e6;
   --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0.30);
+  --stories_create_button_background_from: #f2f3f5;
+  --stories_create_button_background_to: #e1e3e6;
+  --stories_create_button_foreground: #6d7885;
   --stories_skeleton_loader_background: #c4c8cc;
+  --stories_create_button_icon_background: #ffffff;
   --switch_ios_off_border: #e1e3e6;
   --tabbar_active_icon: #2975cc;
   --tabbar_background: #f9f9f9;
@@ -190,5 +200,11 @@
   --panel_tab_inactive_text: #76787a;
   --im_service_message_text: #818c99;
   --writebar_icon: #99a2ad;
+  --dynamic_blue: #528bcc;
+  --dynamic_gray: #a3adb8;
+  --dynamic_red: #ff3347;
+  --dynamic_green: #4bb34b;
+  --dynamic_orange: #ffa000;
+  --dynamic_violet: #792ec0;
 }
 /* stylelint-enable */

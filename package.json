@@ -14,9 +14,9 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
-    "@vkontakte/appearance": "git@github.com:VKCOM/Appearance.git#v2.1.9",
-    "@vkontakte/icons": "^1.4.5",
-    "@vkontakte/vkui-connect": "^1.1.2",
+    "@vkontakte/appearance": "git@github.com:VKCOM/Appearance.git#2.2",
+    "@vkontakte/icons": "^1.6.0",
+    "@vkontakte/vkui-connect": "^1.3.0",
     "autoprefixer": "^7.2.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^8.0.4",
@@ -51,9 +51,9 @@
   "peerDependencies": {
     "react-dom": "^16.8.6",
     "react": "^16.8.6",
-    "@vkontakte/vkui-connect": "^1.1.2",
+    "@vkontakte/vkui-connect": "^1.3.0",
     "prop-types": "^15.6.1",
-    "@vkontakte/icons": "^1.4.5"
+    "@vkontakte/icons": "^1.6.0"
   },
   "scripts": {
     "release": "./tasks/release.sh",
