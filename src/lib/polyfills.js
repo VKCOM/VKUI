@@ -1,4 +1,6 @@
-if (window) {
+import { canUseDOM } from './dom';
+
+if (canUseDOM) {
   const ElementProto = window.Element.prototype;
 
   // Element.prototype.matches
@@ -30,11 +32,11 @@ if (!Array.prototype.find) {
     } else if (typeof callback !== 'function') {
       throw new TypeError('callback must be a function');
     }
-  
+
     let list = Object(this);
     let length = list.length >>> 0;
     let thisArg = arguments[1];
-  
+
     for (let i = 0; i < length; i++) {
       let element = list[i];
       if (callback.call(thisArg, element, i, list)) {

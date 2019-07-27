@@ -20,7 +20,7 @@ class FixedLayout extends React.Component {
     className: PropTypes.string,
     getRootRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ]),
     vertical: PropTypes.oneOf(['top', 'bottom']),
     /**

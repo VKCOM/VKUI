@@ -1,3 +1,5 @@
+import { canUseDOM } from './dom';
+
 export const ANDROID = 'android';
 export const IOS = 'ios';
 
@@ -6,8 +8,9 @@ let platformName;
 
 export function platform (useragent) {
   if (!ua) {
-    ua = useragent || (navigator && navigator.userAgent) || '';
+    ua = useragent || (canUseDOM && navigator ? navigator.userAgent : '') || '';
   }
+
   if (!platformName) {
     platformName = /android/i.test(ua) ? ANDROID : IOS;
   }

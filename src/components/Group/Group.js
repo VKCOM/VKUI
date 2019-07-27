@@ -26,7 +26,7 @@ Group.propTypes = {
   className: PropTypes.string,
   getRootRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    PropTypes.shape({ current: PropTypes.any })
   ])
 };
 

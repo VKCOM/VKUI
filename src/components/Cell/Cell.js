@@ -45,7 +45,7 @@ export default class Cell extends Component {
     description: PropTypes.node,
     getRootRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ]),
     /**
      * Контейнер для произвольного содержимого под `description`. Рисуется только если передать `size="l"`.

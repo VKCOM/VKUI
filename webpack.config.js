@@ -12,7 +12,8 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    globalObject: `typeof self !== 'undefined' ? self : this`
   },
   module: {
     rules: [

@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { canUseDOM } from '../../lib/dom';
 
 let masksCreated = false;
 
 function createMasks () {
-  if (masksCreated) return;
+  if (!canUseDOM || masksCreated) return;
 
   const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svgElement.setAttributeNS(null, 'id', '__SVG_MASKS_NODE__');
