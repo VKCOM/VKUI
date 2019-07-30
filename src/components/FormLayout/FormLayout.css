@@ -7,7 +7,15 @@
     }
 
   .FormLayout__row-top {
+    font-size: 14px;
     line-height: 18px;
+    color: var(--text_secondary);
+    }
+
+  .FormLayout__row-bottom {
+    font-size: 13px;
+    line-height: 16px;
+    color: var(--text_secondary);
     }
 
   .FormLayout__submit {
@@ -61,15 +69,11 @@
       }
 
     .FormLayout--ios .FormLayout__row-top {
-      color: var(--text_secondary);
       padding: 2px 12px 8px;
-      font-size: 14px;
       }
 
     .FormLayout--ios .FormLayout__row-bottom {
-      color: var(--text_secondary);
       padding: 8px 12px 0;
-      font-size: 13px;
       }
 
 .FormLayout--android {}
@@ -110,15 +114,11 @@
       }
 
     .FormLayout--android .FormLayout__row-top {
-      color: var(--text_secondary);
       padding: 2px 16px 8px;
-      font-size: 14px;
       }
 
     .FormLayout--android .FormLayout__row-bottom {
       padding: 8px 16px 0;
-      font-size: 13px;
-      color: var(--text_secondary);
       }
 
     .FormLayout__row--s-error .FormLayout__row-bottom {
