@@ -61,6 +61,7 @@
 @import '../components/PullToRefresh/PullToRefresh.css';
 @import '../components/Counter/Counter.css';
 @import '../components/UsersStack/UsersStack.css';
+@import '../components/Separator/Separator.css';
 
 /* Forms */
 @import '../components/FormLayout/FormLayout.css';

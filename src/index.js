@@ -65,6 +65,7 @@ export { default as Link } from './components/Link/Link';
 export { default as Tooltip } from './components/Tooltip/Tooltip';
 export { default as Counter } from './components/Counter/Counter';
 export { default as UsersStack } from './components/UsersStack/UsersStack';
+export { default as Separator } from './components/Separator/Separator';
 
 /**
  * Forms
