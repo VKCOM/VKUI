@@ -87,7 +87,8 @@ module.exports = {
           '../src/components/PullToRefresh/PullToRefresh.js',
           '../src/components/Counter/Counter.js',
           '../src/components/Touch/Touch.js',
-          '../src/components/UsersStack/UsersStack.js'
+          '../src/components/UsersStack/UsersStack.js',
+          '../src/components/Separator/Separator.js'
         ]
       }, {
         name: 'Forms',

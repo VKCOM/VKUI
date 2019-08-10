@@ -1,0 +1,29 @@
+.Separator {}
+
+.Separator__in {
+  height: 1px;
+  background: var(--separator_common);
+  transform-origin: center top;
+}
+
+@media (min-resolution: 2dppx) {
+  .Separator__in {
+    transform: scaleY(.5);
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  .Separator__in {
+    transform: scaleY(.32);
+  }
+}
+
+.Separator:not(.Separator--wide).Separator--ios .Separator__in {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.Separator:not(.Separator--wide).Separator--android .Separator__in {
+  margin-left: 16px;
+  margin-right: 16px;
+}
