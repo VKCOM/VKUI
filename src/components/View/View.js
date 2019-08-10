@@ -43,6 +43,7 @@ export default class View extends Component {
   }
 
   static propTypes = {
+    className: PropTypes.string,
     style: PropTypes.object,
     activePanel: PropTypes.string,
     header: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -480,7 +481,7 @@ export default class View extends Component {
     return (
       <Touch
         component="section"
-        className={classNames(baseClassNames, modifiers)}
+        className={classNames(baseClassNames, this.props.className, modifiers)}
         style={style}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
