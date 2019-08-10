@@ -636,10 +636,12 @@ class ModalRoot extends Component {
 
     cancelAnimationFrame(this.maskAnimationFrame);
     this.maskAnimationFrame = requestAnimationFrame(() => {
-      const { translateY, translateYCurrent } = modalState;
+      if (this.maskElementRef.current) {
+        const { translateY, translateYCurrent } = modalState;
 
-      const opacity = forceOpacity === null ? 1 - ((translateYCurrent - translateY) / (100 - translateY)) || 0 : forceOpacity;
-      this.maskElementRef.current.style.opacity = Math.max(0, Math.min(100, opacity));
+        const opacity = forceOpacity === null ? 1 - ((translateYCurrent - translateY) / (100 - translateY)) || 0 : forceOpacity;
+        this.maskElementRef.current.style.opacity = Math.max(0, Math.min(100, opacity));
+      }
     });
   }
 
