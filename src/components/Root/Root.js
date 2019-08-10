@@ -25,6 +25,7 @@ export default class Root extends React.Component {
   }
 
   static propTypes = {
+    className: PropTypes.string,
     activeView: PropTypes.string.isRequired,
     popout: PropTypes.node,
     modal: PropTypes.node,
@@ -147,7 +148,7 @@ export default class Root extends React.Component {
     let Views = this.arrayChildren.filter(View => this.state.visibleViews.indexOf(View.props.id) >= 0);
 
     return (
-      <div className={ classNames(baseClassName, { 'Root--transition': transition }) }>
+      <div className={classNames(baseClassName, this.props.className, { 'Root--transition': transition })}>
         {Views.map(View => (
           <div key={View.props.id} id={`view-${View.props.id}`} className={classNames('Root__view', {
             'Root__view--hide-back': View.props.id === prevView && isBack,
