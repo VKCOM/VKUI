@@ -23,6 +23,11 @@ class ModalPage extends Component {
     settlingHeight: PropTypes.number,
 
     /**
+     * Если высота контента в модальной странице может поменяться, нужно установить это свойство
+     */
+    dynamicContentHeight: PropTypes.bool,
+
+    /**
      * @ignore
      */
     insets: PropTypes.object

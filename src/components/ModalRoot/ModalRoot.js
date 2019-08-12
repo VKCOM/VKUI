@@ -90,6 +90,8 @@ class ModalRoot extends Component {
         state.settlingHeight = modalProps.settlingHeight;
       }
 
+      state.dynamicContentHeight = !!modalProps.dynamicContentHeight;
+
       state.onClose = Modal.props.onClose;
       state.id = Modal.props.id;
       acc[state.id] = state;
@@ -106,6 +108,15 @@ class ModalRoot extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
+    const { activeModal, switching } = this.state;
+
+    if (activeModal && this.modalsState[activeModal] && !switching && this.props.children !== prevProps.children) {
+      const modalState = this.modalsState[activeModal];
+      if (modalState && modalState.type === TYPE_PAGE && modalState.dynamicContentHeight) {
+        this.checkPageContentHeight();
+      }
+    }
+
     if (this.props.activeModal !== prevProps.activeModal && !this.state.switching) {
       const nextModal = this.props.activeModal;
       const prevModal = prevProps.activeModal;
@@ -224,7 +235,7 @@ class ModalRoot extends Component {
     const contentElement = modalElement.querySelector('.ModalPage__content');
     const contentHeight = contentElement.firstChild.offsetHeight;
 
-    modalState.isExpandable = contentHeight > contentElement.clientHeight;
+    modalState.expandable = contentHeight > contentElement.clientHeight;
 
     modalState.modalElement = modalElement;
     modalState.innerElement = modalElement.querySelector('.ModalPage__in-wrap');
@@ -235,12 +246,11 @@ class ModalRoot extends Component {
     let collapsed;
     let translateYFrom;
     let translateY;
-    let translateYAbs;
     let expandedRange;
     let collapsedRange;
     let hiddenRange;
 
-    if (modalState.isExpandable) {
+    if (modalState.expandable) {
       translateYFrom = 100 - modalState.settlingHeight;
 
       const shiftHalf = translateYFrom / 2;
@@ -252,23 +262,18 @@ class ModalRoot extends Component {
 
       collapsed = true;
       translateY = translateYFrom;
-      translateYAbs = translateYFrom;
     } else {
-      translateYFrom = 0;
+      const headerHeight = modalState.headerElement.offsetHeight;
+      const height = contentHeight + headerHeight + (this.props.insets.bottom || 0);
 
-      expandedRange = [0, 25];
-      collapsedRange = [25, 25];
-      hiddenRange = [25, 100];
+      translateYFrom = 100 - (height / modalState.innerElement.parentNode.offsetHeight * 100);
+      translateY = translateYFrom;
+
+      expandedRange = [translateY, translateY + 25];
+      collapsedRange = [translateY + 25, translateY + 25];
+      hiddenRange = [translateY + 25, translateY + 100];
 
       collapsed = false;
-      translateY = 0;
-
-      const headerHeight = modalState.headerElement.offsetHeight;
-      modalState.height = contentHeight + headerHeight + (this.props.insets.bottom || 0);
-      modalState.innerElement.style.height = modalState.height + 'px';
-
-      // Абсолютный сдвиг фиксированной страницы
-      translateYAbs = 100 - (modalState.height / modalState.innerElement.parentNode.offsetHeight * 100);
     }
 
     modalState.expandedRange = expandedRange;
@@ -276,7 +281,6 @@ class ModalRoot extends Component {
     modalState.hiddenRange = hiddenRange;
     modalState.translateY = translateY;
     modalState.translateYFrom = translateYFrom;
-    modalState.translateYAbs = translateYAbs;
     modalState.collapsed = collapsed;
   }
 
@@ -285,6 +289,30 @@ class ModalRoot extends Component {
     modalState.innerElement = modalElement.querySelector('.ModalCard__in');
 
     modalState.translateY = 0;
+  }
+
+  checkPageContentHeight () {
+    const activeModal = this.state.activeModal;
+
+    const modalElement = this.pickModal(activeModal);
+    const modalState = this.modalsState[activeModal];
+
+    const prevModalState = {...modalState};
+    this.initPageModal(modalState, modalElement);
+    const currentModalState = {...modalState};
+
+    const diff = Object.keys(currentModalState).reduce((acc, key) => {
+      if (prevModalState[key] !== currentModalState[key]) {
+        acc[key] = currentModalState[key];
+      }
+
+      return acc;
+    }, {});
+
+    if (Object.keys(diff).length) {
+      this.animateTranslate(modalState);
+      this.animatePageHeader(modalState);
+    }
   }
 
   closeActiveModal () {
@@ -330,7 +358,7 @@ class ModalRoot extends Component {
 
     originalEvent.stopPropagation();
 
-    const { isExpandable, contentScrolled, collapsed, expanded } = modalState;
+    const { expandable, contentScrolled, collapsed, expanded } = modalState;
 
     if (!this.state.touchDown) {
       modalState.touchStartTime = startT;
@@ -345,13 +373,13 @@ class ModalRoot extends Component {
     }
 
     if (
-      !modalState.isExpandable ||
+      !modalState.expandable ||
       collapsed ||
       (expanded && modalState.touchMovePositive && (modalState.touchStartContentScrollTop === 0)) ||
       originalEvent.target.closest('.ModalPage__header')
     ) {
       originalEvent.preventDefault();
-      if (!isExpandable && shiftY < 0) return;
+      if (!expandable && shiftY < 0) return;
 
       !this.state.dragging && this.setState({ dragging: true });
 
@@ -416,7 +444,7 @@ class ModalRoot extends Component {
       translateY = rangeTranslate(translateY + expectTranslateY);
 
       if (numberInRange(translateY, modalState.expandedRange)) {
-        translateY = 0;
+        translateY = modalState.expandedRange[0];
       } else if (numberInRange(translateY, modalState.collapsedRange)) {
         translateY = modalState.translateYFrom;
       } else if (numberInRange(translateY, modalState.hiddenRange)) {
@@ -544,8 +572,8 @@ class ModalRoot extends Component {
       this.activeTransitions += 1;
       this.waitTransitionFinish(prevModalState, this.prevNextSwitchEndHandler);
 
-      if (prevIsPage && prevModalState.translateY <= nextModalState.translateYAbs && !this.state.isBack) {
-        this.animateTranslate(prevModalState, nextModalState.translateYAbs + 10);
+      if (prevIsPage && prevModalState.translateY <= nextModalState.translateYFrom && !this.state.isBack) {
+        this.animateTranslate(prevModalState, nextModalState.translateYFrom + 10);
       } else {
         this.animateTranslate(prevModalState, 100);
       }
@@ -603,7 +631,7 @@ class ModalRoot extends Component {
       }
     });
 
-    if (modalState.type === TYPE_PAGE && modalState.isExpandable) {
+    if (modalState.type === TYPE_PAGE && modalState.expandable) {
       this.animatePageHeader(modalState, currentPercent);
     }
   }
@@ -706,7 +734,7 @@ class ModalRoot extends Component {
 
                     'ModalRoot__modal--dragging': dragging,
 
-                    'ModalRoot__modal--expandable': isPage && modalState.isExpandable,
+                    'ModalRoot__modal--expandable': isPage && modalState.expandable,
                     'ModalRoot__modal--expanded': isPage && modalState.expanded,
                     'ModalRoot__modal--collapsed': isPage && modalState.collapsed
                   })}
