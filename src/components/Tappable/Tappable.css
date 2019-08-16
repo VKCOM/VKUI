@@ -42,33 +42,27 @@
      */
     .Tappable--android .Tappable__wave {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 24px;
-      height: 24px;
-      margin: -12px 0 0 -12px;
+      /*width: 24px;*/
+      /*height: 24px;*/
+      /*margin: -12px 0 0 -12px;*/
       opacity: 0;
       content: '';
-      border-radius: 50%;
-      background: rgba(127, 127, 127, .1);
-      animation: animation-wave .3s var(--android-easing);
+      border-radius: 100%;
+      background: rgba(0,0,0,.25);
+      color: rgba(0,0,0,.25) !important;
+      animation: animation-wave .65s ease-out;
+      transform: scale(0.2);
       }
 
 /**
  * Animations
  */
 @keyframes animation-wave {
-  0% {
-    transform: scale(1);
-    opacity: 1;
+  from {
+    opacity:1;
   }
-
-  30% {
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(8);
+  to {
+    transform: scale(2);
     opacity: 0;
   }
 }

@@ -5,7 +5,9 @@
  * @param {Object} e Браузерное событие
  * @returns {Number} Координата взаимодействия по оси абсцисс
  */
-const coordX = e => e.clientX || (e.touches && e.touches[0].clientX);
+const coordX = e => {
+	return e.pageX || (e.touches && e.touches[0].pageX);
+};
 
 /**
  * Получает кординату по оси ординат из touch- или mouse-события
@@ -13,7 +15,7 @@ const coordX = e => e.clientX || (e.touches && e.touches[0].clientX);
  * @param {Object} e Браузерное событие
  * @returns {Number} Координата взаимодействия по оси ординат
  */
-const coordY = e => e.clientY || (e.touches && e.touches[0].clientY);
+const coordY = e => e.pageY || (e.touches && e.touches[0].pageY);
 
 const isClient = typeof window !== 'undefined';
 const touchEnabled = isClient && 'ontouchstart' in window;

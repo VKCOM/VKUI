@@ -12,6 +12,7 @@ const ts = () => +Date.now();
 const baseClassNames = getClassName('Tappable');
 
 const ACTIVE_DELAY = 70;
+const WAVE_ACTIVE_DELAY = 650;
 export const ACTIVE_EFFECT_DELAY = 600;
 
 let storage = {};
@@ -159,7 +160,6 @@ export default class Tappable extends Component {
       const x = coordX(e);
       const y = coordY(e);
       const key = 'wave' + Date.now().toString();
-
       this.setState(state => ({
         clicks: {
           ...state.clicks,
@@ -176,7 +176,7 @@ export default class Tappable extends Component {
           delete clicks[key];
           return { clicks };
         });
-      }, 225);
+      }, WAVE_ACTIVE_DELAY);
     }
   };
 
@@ -279,13 +279,23 @@ export default class Tappable extends Component {
       <TouchRootContext.Consumer>
         {insideTouchRoot => {
           this.insideTouchRoot = insideTouchRoot;
+          let container = this.container || {};
+          
+          let containerSize = container.getBoundingClientRect ? container.getBoundingClientRect() : {};
+
+          let waveSize = Math.max(containerSize.width, containerSize.height);
 
           return (
             <Component {...restProps} className={classes} {...props}>
               {IS_PLATFORM_ANDROID && (
                 <span className="Tappable__waves">
                   {Object.keys(clicks).map(k => (
-                    <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                    <span className="Tappable__wave" style={{ 
+                        top: clicks[k].y - waveSize / 2, 
+                        left: clicks[k].x - waveSize / 2, 
+                        width: waveSize, 
+                        height: waveSize 
+                      }} key={k} />
                   ))}
                 </span>
               )}
