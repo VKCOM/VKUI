@@ -5,9 +5,7 @@
  * @param {Object} e Браузерное событие
  * @returns {Number} Координата взаимодействия по оси абсцисс
  */
-const coordX = e => {
-	return e.pageX || (e.touches && e.touches[0].pageX);
-};
+const coordX = e => e.pageX || (e.touches && e.touches[0].pageX);
 
 /**
  * Получает кординату по оси ординат из touch- или mouse-события

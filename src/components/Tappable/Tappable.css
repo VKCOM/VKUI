@@ -42,9 +42,6 @@
      */
     .Tappable--android .Tappable__wave {
       position: absolute;
-      /*width: 24px;*/
-      /*height: 24px;*/
-      /*margin: -12px 0 0 -12px;*/
       opacity: 0;
       content: '';
       border-radius: 100%;
