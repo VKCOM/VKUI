@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
+import { isNumeric } from '../../lib/utils';
 
 const baseClassName = getClassName('Tabbar');
 
@@ -20,7 +21,7 @@ const Tabbar = ({ className, children, shadow, itemsLayout, insets }) => {
   return (
     <div className={classNames(baseClassName, className, `Tabbar--l-${getItemsLayout()}`, {
       'Tabbar--shadow': shadow
-    })} style={{ paddingBottom: isNaN(insets.bottom) ? null : insets.bottom }}>
+    })} style={{ paddingBottom: isNumeric(insets.bottom) ? insets.bottom : null }}>
       {children}
     </div>
   );
@@ -30,7 +31,7 @@ Tabbar.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   /**
-   * * флаг для показа/скрытия верхней тени (Android) или границы (iOS)
+   * Флаг для показа/скрытия верхней тени (Android) или границы (iOS)
    */
   shadow: PropTypes.bool,
   itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto']),

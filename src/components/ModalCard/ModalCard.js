@@ -7,6 +7,7 @@ import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import { IS_PLATFORM_IOS } from '../../lib/platform';
+import { isNumeric } from '../../lib/utils';
 
 const baseClassName = getClassName('ModalCard');
 
@@ -80,7 +81,7 @@ class ModalCard extends Component {
     return (
       <div className={classNames(baseClassName)}>
         <div className="ModalCard__in">
-          <div className="ModalCard__container" style={{ marginBottom: !isNaN(insets.bottom) ? insets.bottom : null }}>
+          <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
             {icon && <div className="ModalCard__icon">{icon}</div>}
             {title && <div className="ModalCard__title">{title}</div>}
             {caption && <div className="ModalCard__caption">{caption}</div>}

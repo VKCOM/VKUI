@@ -5,6 +5,7 @@ import classNames from '../../lib/classNames';
 import { transitionEndEventName, transitionStartEventName } from '../View/View';
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
+import { isNumeric } from '../../lib/utils';
 
 const baseClassNames = getClassName('FixedLayout');
 
@@ -80,7 +81,7 @@ class FixedLayout extends React.Component {
   render () {
     const { className, children, style, vertical, getRootRef, insets, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
-    const paddingBottom = vertical === 'bottom' && !isNaN(insets.bottom) ? insets.bottom + tabbarPadding : null;
+    const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
     return (
       <div

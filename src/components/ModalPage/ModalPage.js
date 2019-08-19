@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
+import { isNumeric } from '../../lib/utils';
 
 const baseClassName = getClassName('ModalPage');
 
@@ -49,11 +50,8 @@ class ModalPage extends Component {
               {header}
             </div>
 
-            <div
-              className="ModalPage__content"
-              style={{ paddingBottom: !isNaN(insets.bottom) ? insets.bottom : null }}
-            >
-              <div className="ModalPage__content-in">
+            <div className="ModalPage__content">
+              <div className="ModalPage__content-in" style={isNumeric(insets.bottom) ? { paddingBottom: insets.bottom } : null}>
                 {children}
               </div>
             </div>
