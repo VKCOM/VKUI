@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "declaration": true,
     "jsx": "react",
     "target": "esnext",
     "lib": ["es6", "dom"],
@@ -14,6 +13,6 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node"
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
 }

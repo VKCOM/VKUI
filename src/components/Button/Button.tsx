@@ -22,9 +22,9 @@ export interface ButtonProps extends HasStyleObject, HasChildren, HasClassName {
   type?: 'default' | 'cell',
   align?: 'left' | 'center' | 'right',
   stretched?: boolean,
-  before: React.ReactNode,
-  after: React.ReactNode,
-  component?: string
+  before?: React.ReactNode,
+  after?: React.ReactNode,
+  component?: string | React.Component | React.FunctionComponent
 }
 
 const mapOldLevel = level => {
@@ -44,7 +44,7 @@ const mapOldLevel = level => {
   }
 };
 
-const Button: React.SFC<ButtonProps> = (props: ButtonProps) => {
+const Button: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   if (props.type === 'cell') {
     return <CellButton {...props} />;
   } else {
