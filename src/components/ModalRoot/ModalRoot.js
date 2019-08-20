@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import Touch, { TouchRootContext } from '../Touch/Touch';
-import withInsets from '../../hoc/withInsets';
-
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';
@@ -50,12 +47,7 @@ class ModalRoot extends Component {
 
   static propTypes = {
     activeModal: PropTypes.string,
-    children: PropTypes.node,
-
-    /**
-     * @ignore
-     */
-    insets: PropTypes.object
+    children: PropTypes.node
   };
 
   static contextTypes = {
@@ -264,7 +256,7 @@ class ModalRoot extends Component {
       translateY = translateYFrom;
     } else {
       const headerHeight = modalState.headerElement.offsetHeight;
-      const height = contentHeight + headerHeight + (this.props.insets.bottom || 0);
+      const height = contentHeight + headerHeight;
 
       translateYFrom = 100 - (height / modalState.innerElement.parentNode.offsetHeight * 100);
       translateY = translateYFrom;
@@ -748,4 +740,4 @@ class ModalRoot extends Component {
   }
 }
 
-export default withInsets(ModalRoot);
+export default ModalRoot;

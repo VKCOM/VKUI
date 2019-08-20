@@ -2,10 +2,10 @@ import React from 'react';
 import vkuiConnect from '@vkontakte/vkui-connect';
 
 let initialState = {
-  bottom: 0,
-  top: 0,
-  left: 0,
-  right: 0
+  bottom: null,
+  top: null,
+  left: null,
+  right: null
 };
 
 function resolveInsets (e) {
@@ -15,7 +15,10 @@ function resolveInsets (e) {
     case 'VKWebAppUpdateInsets': // Устаревшее событие vkui-connect
       const { insets } = data;
       if (insets) {
-        return { ...insets, bottom: insets.bottom > 100 ? 0 : insets.bottom }; // если больше 100 – значит открылась клава и она сама работает как инсет, то есть наш нужно занулить
+        return {
+          ...insets,
+          bottom: insets.bottom > 100 ? 0 : insets.bottom // если больше 100 – значит открылась клава и она сама работает как инсет, то есть наш нужно занулить
+        };
       }
   }
 }
