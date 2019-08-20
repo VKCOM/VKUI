@@ -16,7 +16,7 @@
     "@babel/preset-react": "^7.0.0",
     "@vkontakte/appearance": "git@github.com:VKCOM/Appearance.git#2.2",
     "@vkontakte/icons": "^1.7.0",
-    "@vkontakte/vkui-connect": "^1.4.0",
+    "@vkontakte/vk-connect": "^1.5.4",
     "autoprefixer": "^7.2.3",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.4",
@@ -51,7 +51,7 @@
   "peerDependencies": {
     "react-dom": "^16.8.6",
     "react": "^16.8.6",
-    "@vkontakte/vkui-connect": "^1.4.0",
+    "@vkontakte/vk-connect": "^1.5.4",
     "prop-types": "^15.6.1",
     "@vkontakte/icons": "^1.6.0"
   },
