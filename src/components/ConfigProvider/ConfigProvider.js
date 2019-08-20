@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { isWebView } from '../../lib/webview';
 
 export default class ConfigProvider extends React.Component {
-  constructor (props) {
+  constructor (props, context) {
     super(props);
 
-    this.document.body.setAttribute('scheme', props.scheme);
+    (context.document || window.document).body.setAttribute('scheme', props.scheme);
   }
 
   static childContextTypes = {
@@ -34,7 +34,9 @@ export default class ConfigProvider extends React.Component {
     document: PropTypes.object
   };
 
-  get document () { return this.context.document || window.document; }
+  get document () {
+    return this.context.document || window.document;
+  }
 
   componentDidUpdate (prevProps) {
     if (prevProps.scheme !== this.props.scheme) {
