@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import { isWebView } from '../../lib/webview';
 
 export default class ConfigProvider extends React.Component {
+  constructor (props) {
+    super(props);
+
+    this.document.body.setAttribute('scheme', props.scheme);
+  }
+
   static childContextTypes = {
     isWebView: PropTypes.bool,
     scheme: PropTypes.string,
@@ -30,13 +36,9 @@ export default class ConfigProvider extends React.Component {
 
   get document () { return this.context.document || window.document; }
 
-  componentWillMount () {
-    this.document.body.setAttribute('scheme', this.props.scheme);
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.scheme !== this.props.scheme) {
-      this.document.body.setAttribute('scheme', nextProps.scheme);
+  componentDidUpdate (prevProps) {
+    if (prevProps.scheme !== this.props.scheme) {
+      this.document.body.setAttribute('scheme', this.props.scheme);
     }
   }
 
