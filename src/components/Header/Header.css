@@ -15,14 +15,14 @@
       text-overflow: ellipsis;
     }
 
-    .Header--level-1 .Header__content {
+    .Header--level-primary .Header__content {
       color: var(--text_primary);
       font-size: 17px;
       line-height: 20px;
       font-weight: 500;
       }
 
-    .Header--level-2 .Header__content {
+    .Header--level-secondary .Header__content {
       color: var(--text_secondary);
       font-size: 13px;
       line-height: 15px;
@@ -48,11 +48,11 @@
     font-size: 15px;
     }
 
-  .Header--ios.Header--level-1 .Header__content {
+  .Header--ios.Header--level-primary .Header__content {
     padding: 14px 0;
     }
 
-  .Header--ios.Header--level-2 .Header__content {
+  .Header--ios.Header--level-secondary .Header__content {
     padding: 15px 0 14px;
     }
 
@@ -65,10 +65,10 @@
     font-weight: 500;
     }
 
-  .Header--android.Header--level-1 .Header__content {
+  .Header--android.Header--level-primary .Header__content {
     padding: 18px 0;
     }
 
-  .Header--android.Header--level-2 .Header__content {
+  .Header--android.Header--level-secondary .Header__content {
     padding: 15px 0 14px;
     }

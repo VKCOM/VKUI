@@ -12,7 +12,7 @@
         <Cell before={<Icon24Favorite />} indicator={<Counter type="primary">1</Counter>}>Закладки</Cell>
       </List>
     </Group>
-    
+
     <Group title="Счётчики в кнопках">
       <FormLayout>
         <Button level="secondary" size="l" after={<Counter>16</Counter>}>Secondary large</Button>
@@ -24,7 +24,7 @@
     </Group>
 
     <Group>
-      <Header level="2" indicator={<Counter type="prominent">1</Counter>} aside={<Link>Подробнее</Link>}>
+      <Header level="secondary" indicator={<Counter type="prominent">1</Counter>} aside={<Link>Подробнее</Link>}>
         Вопросы
       </Header>
     </Group>

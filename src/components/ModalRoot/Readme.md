@@ -299,11 +299,11 @@ class App extends React.Component {
 
           <Group>
             <FormLayout>
-              <Button size="xl" level="2" onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
+              <Button size="xl" level="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
                   Открыть модальную страницу
               </Button>
 
-              <Button size="xl" level="2" onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
+              <Button size="xl" level="secondary" onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
                   Открыть модальные карточки
               </Button>
             </FormLayout>
