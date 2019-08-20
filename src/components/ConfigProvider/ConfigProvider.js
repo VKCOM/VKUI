@@ -30,13 +30,13 @@ export default class ConfigProvider extends React.Component {
 
   get document () { return this.context.document || window.document; }
 
-  componentWillMount () {
+  componentDidMount () {
     this.document.body.setAttribute('scheme', this.props.scheme);
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.scheme !== this.props.scheme) {
-      this.document.body.setAttribute('scheme', nextProps.scheme);
+  componentDidUpdate (prevProps) {
+    if (prevProps.scheme !== this.props.scheme) {
+      this.document.body.setAttribute('scheme', this.props.scheme);
     }
   }
 
