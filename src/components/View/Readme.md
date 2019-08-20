@@ -74,7 +74,7 @@ class Example extends React.Component {
 ```jsx static
 import React from 'react';
 import { View, Panel, ConfigProvider } from '@vkontakte/vkui';
-import connect from '@vkontakte/vk-connect';
+import vkConnect from '@vkontakte/vk-connect';
 
 class App extends React.Component {
 
@@ -88,7 +88,7 @@ class App extends React.Component {
     history.pop();
     const activePanel = history[history.length - 1];
     if (activePanel === 'main') {
-      connect.send('VKWebAppDisableSwipeBack');
+      vkConnect.send('VKWebAppDisableSwipeBack');
     }
     this.setState({ history, activePanel });
   }
@@ -97,7 +97,7 @@ class App extends React.Component {
     const history = [...this.state.history];
     history.push(activePanel);
     if (this.state.activePanel === 'main') {
-      connect.send('VKWebAppEnableSwipeBack');
+      vkConnect.send('VKWebAppEnableSwipeBack');
     }
     this.setState({ history, activePanel });
   }
