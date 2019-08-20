@@ -51,17 +51,11 @@ export default class View extends Component {
     popout: PropTypes.node,
     modal: PropTypes.node,
     onTransition: PropTypes.func,
-    /**
-     * @ignore
-     */
     onSwipeBack: PropTypes.func,
     /**
      * @ignore
      */
     onSwipeBackStart: PropTypes.func,
-    /**
-     * @ignore
-     */
     history: PropTypes.arrayOf(PropTypes.string),
     id: PropTypes.string
   };
@@ -94,38 +88,44 @@ export default class View extends Component {
 
   refsStore = {};
 
-  componentWillReceiveProps (nextProps) {
-    nextProps.popout && !this.props.popout && this.blurActiveElement();
-    nextProps.modal && !this.props.modal && this.blurActiveElement();
+  componentWillUnmount () {
+    if (this.props.id) {
+      scrollsCache[this.props.id] = this.state.scrolls;
+    }
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    this.props.popout && !prevProps.popout && this.blurActiveElement();
+    this.props.modal && !prevProps.modal && this.blurActiveElement();
 
     // Нужен переход
-    if (this.props.activePanel !== nextProps.activePanel && !this.state.swipingBack && !this.state.browserSwipe) {
+    if (prevProps.activePanel !== this.props.activePanel && !prevState.swipingBack && !prevState.browserSwipe) {
       const firstLayer = this.panels.find(
-        panel => panel.props.id === this.props.activePanel || panel.props.id === nextProps.activePanel
+        panel => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel
       );
 
-      const isBack = firstLayer && firstLayer.props.id === nextProps.activePanel;
+      const isBack = firstLayer && firstLayer.props.id === this.props.activePanel;
 
       this.blurActiveElement();
 
       this.setState({
-        visiblePanels: [this.props.activePanel, nextProps.activePanel],
-        prevPanel: this.props.activePanel,
-        nextPanel: nextProps.activePanel,
+        visiblePanels: [prevProps.activePanel, this.props.activePanel],
+        prevPanel: prevProps.activePanel,
+        nextPanel: this.props.activePanel,
         activePanel: null,
         animated: true,
         scrolls: {
-          ...this.state.scrolls,
-          [this.props.activePanel]: this.window.pageYOffset
+          ...prevState.scrolls,
+          [prevProps.activePanel]: this.window.pageYOffset
         },
         isBack
       });
     }
 
     // Закончилась анимация свайпа назад
-    if (this.props.activePanel !== nextProps.activePanel && this.state.swipingBack) {
-      const nextPanel = nextProps.activePanel;
-      const prevPanel = this.props.activePanel;
+    if (prevProps.activePanel !== this.props.activePanel && prevState.swipingBack) {
+      const nextPanel = this.props.activePanel;
+      const prevPanel = prevProps.activePanel;
       this.setState({
         swipeBackPrevPanel: null,
         swipeBackNextPanel: null,
@@ -135,22 +135,14 @@ export default class View extends Component {
         swipeBackShift: 0,
         activePanel: nextPanel,
         visiblePanels: [nextPanel],
-        scrolls: removeObjectKeys(this.state.scrolls, [this.state.swipeBackPrevPanel])
+        scrolls: removeObjectKeys(prevState.scrolls, [prevState.swipeBackPrevPanel])
       }, () => {
         this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
-        window.scrollTo(0, this.state.scrolls[this.state.activePanel]);
-        this.props.onTransition && this.props.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
+        window.scrollTo(0, prevState.scrolls[prevState.activePanel]);
+        prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
     }
-  }
 
-  componentWillUnmount () {
-    if (this.props.id) {
-      scrollsCache[this.props.id] = this.state.scrolls;
-    }
-  }
-
-  componentDidUpdate (prevProps, prevState) {
     const scrolls = this.state.scrolls;
 
     // Начался переход
