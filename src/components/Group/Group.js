@@ -11,7 +11,7 @@ const Group = props => {
 
   return (
     <div {...restProps} ref={getRootRef} className={classNames(baseClassNames, className)}>
-      {title && <Header level="2">{title}</Header>}
+      {title && <Header level="secondary">{title}</Header>}
       {children && <div className="Group__content">{children}</div>}
       {description && <div className="Group__description">{description}</div>}
     </div>

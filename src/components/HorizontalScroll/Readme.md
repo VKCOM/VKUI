@@ -16,7 +16,7 @@
     <Panel id="horizontal">
       <PanelHeader>HorizontalScroll</PanelHeader>
       <Group style={{ paddingBottom: 8 }}>
-        <Header level="2">Недавние</Header>
+        <Header level="secondary">Недавние</Header>
         <HorizontalScroll>
           <div style={{ display: 'flex' }}>
             <div style={{ ...itemStyle, paddingLeft: 4 }}>
