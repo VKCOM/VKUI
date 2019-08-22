@@ -90,6 +90,10 @@ export { default as Div } from './components/Div/Div';
 export { default as Tappable } from './components/Tappable/Tappable';
 export { default as Touch } from './components/Touch/Touch';
 export { default as ConfigProvider } from './components/ConfigProvider/ConfigProvider';
+export { default as PanelHeaderClose } from './components/PanelHeaderClose/PanelHeaderClose';
+export { default as PanelHeaderBack } from './components/PanelHeaderBack/PanelHeaderBack';
+export { default as PanelHeaderSubmit } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
+export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
 
 /**
  * Utils
