@@ -24,7 +24,7 @@ export interface ButtonProps extends HasStyleObject, HasChildren, HasClassName {
   stretched?: boolean,
   before?: React.ReactNode,
   after?: React.ReactNode,
-  component?: string | React.ComponentType | React.FunctionComponent
+  component?: string | React.ComponentType
 }
 
 const mapOldLevel = level => {
