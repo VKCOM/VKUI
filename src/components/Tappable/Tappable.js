@@ -57,7 +57,7 @@ export default class Tappable extends Component {
     disabled: PropTypes.bool,
     getRootRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ])
   };
 

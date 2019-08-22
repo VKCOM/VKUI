@@ -20,7 +20,7 @@ Progress.propTypes = {
   value: PropTypes.number,
   getRootRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    PropTypes.shape({ current: PropTypes.any })
   ])
 };
 

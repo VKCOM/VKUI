@@ -41,7 +41,7 @@ export default class SearchIOS extends React.Component {
     theme: PropTypes.oneOf(['header', 'default']),
     getRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ])
   };
 
