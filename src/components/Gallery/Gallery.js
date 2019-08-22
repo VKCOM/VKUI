@@ -239,7 +239,7 @@ export default class Gallery extends Component {
 
     if (e.isSlideX) {
       this.props.onDragStart && this.props.onDragStart();
-      
+
       if (this.state.deltaX !== e.shiftX || this.state.dragging !== e.isSlideX) {
         this.setState({
           deltaX: e.shiftX,
@@ -344,6 +344,11 @@ export default class Gallery extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
+    if (this.props.children !== prevProps.children) {
+      this.slides = this.getChildren(this.props.children);
+      this.isChildrenDirty = true;
+    }
+
     if (this.isChildrenDirty) {
       this.isChildrenDirty = false;
       this.initializeSlides();
@@ -351,22 +356,19 @@ export default class Gallery extends Component {
     if (prevState.current !== this.state.current && this.props.onChange) {
       this.props.onChange(this.state.current);
     }
-  }
 
-  componentWillReceiveProps (nextProps) {
-    this.slides = this.getChildren(nextProps.children);
-    this.isChildrenDirty = true;
-
-    if (nextProps.autoplay && !this.props.autoplay) {
-      if (nextProps.autoplay) {
-        this.setTimeout(nextProps.autoplay);
+    if (this.props.autoplay && !prevProps.autoplay) {
+      if (this.props.autoplay) {
+        this.setTimeout(this.props.autoplay);
       }
     }
-    if (!nextProps.autoplay && this.props.autoplay) {
+
+    if (!this.props.autoplay && prevProps.autoplay) {
       this.clearTimeout();
     }
-    if (nextProps.slideIndex !== this.props.slideIndex && typeof nextProps.slideIndex === 'number') {
-      this.go(nextProps.slideIndex);
+
+    if (this.props.slideIndex !== prevProps.slideIndex && typeof this.props.slideIndex === 'number') {
+      this.go(this.props.slideIndex);
     }
   }
 

@@ -1,13 +1,11 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const merge = require('webpack-merge');
-const cssTransformOptions = require('./postcss.config.js');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const config = {
   entry: {
-    vkui: './src/index.js'
+    vkui: './src/vkui.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -23,18 +21,19 @@ const config = {
         loader: 'babel-loader'
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, ...cssTransformOptions]
+        test: /\.(ts|tsx)?$/,
+        exclude: /node_modules/,
+        loader: ['babel-loader', 'ts-loader']
       }
     ]
   },
   optimization: {
     minimize: false
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
   devtool: 'source-map',
-  plugins: [
-    new MiniCssExtractPlugin('[name].css')
-  ],
   stats: {
     children: false
   },

@@ -66,7 +66,6 @@
   overflow-y: hidden;
   overflow-x: hidden;
   box-sizing: border-box;
-  padding-bottom: var(--safe-area-inset-bottom);
 }
 
 .ModalRoot__modal--expandable .ModalPage__content {
@@ -76,6 +75,7 @@
 
 .ModalPage__content-in {
   position: relative;
+  padding-bottom: var(--safe-area-inset-bottom);
 }
 
 .ModalRoot__modal--collapsed .ModalPage__content,

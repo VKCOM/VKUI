@@ -1,12 +1,31 @@
 import React from 'react';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 
 import CellButton from '../CellButton/CellButton';
+import { HasChildren, HasClassName, HasStyleObject } from '../../types/props';
 
 const baseClassName = getClassName('Button');
+
+export interface ButtonProps extends HasStyleObject, HasChildren, HasClassName {
+  /**
+   * Значения `1`, `2`, `3`, `sell`, `buy` устарели. Маппинг на новые значения находится в
+   * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в 3.0.0
+   */
+  level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | '1' | '2' | '3' | 'sell' | 'buy',
+  size?: 'm' | 'l' | 'xl',
+  /**
+   * @deprecated Кнопки-ячейки `<Button type="cell" />` переехали в отдельный компонент: `<CellButton />`.
+   * Свойство `type` будет удалено в 3.0.0
+   */
+  type?: 'default' | 'cell',
+  align?: 'left' | 'center' | 'right',
+  stretched?: boolean,
+  before?: React.ReactNode,
+  after?: React.ReactNode,
+  component?: string | React.ComponentType
+}
 
 const mapOldLevel = level => {
   switch (level) {
@@ -25,7 +44,7 @@ const mapOldLevel = level => {
   }
 };
 
-const Button = props => {
+const Button: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   if (props.type === 'cell') {
     return <CellButton {...props} />;
   } else {
@@ -44,28 +63,6 @@ const Button = props => {
       </div>
     </Tappable>;
   }
-};
-
-Button.propTypes = {
-  /**
-   * Значения `1`, `2`, `3`, `sell`, `buy` устарели. Маппинг на новые значения находится в
-   * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в 3.0.0
-   */
-  level: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'outline', 'commerce', 'destructive', '1', '2', '3', 'sell', 'buy']),
-  size: PropTypes.oneOf(['m', 'l', 'xl']),
-  /**
-   * @deprecated Кнопки-ячейки `<Button type="cell" />` переехали в отдельный компонент: `<CellButton />`.
-   * Свойство `type` будет удалено в 3.0.0
-   */
-  type: PropTypes.oneOf(['default', 'cell']),
-  align: PropTypes.oneOf(['left', 'center', 'right']),
-  stretched: PropTypes.bool,
-  before: PropTypes.node,
-  after: PropTypes.node,
-  children: PropTypes.node,
-  style: PropTypes.object,
-  className: PropTypes.string,
-  component: PropTypes.any
 };
 
 Button.defaultProps = {

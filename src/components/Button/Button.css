@@ -154,26 +154,16 @@
 /*
   iOS
  */
-.Button--ios {}
-
-.Button--ios.Button--sz-m {
-  border-radius: 15px;
-  }
-
-.Button--ios.Button--sz-l {
-  border-radius: 18px;
-  }
-
-.Button--ios.Button--sz-xl {
+.Button--ios {
   border-radius: 10px;
-  }
+}
 
 /*
   Android
  */
 .Button--android {
   border-radius: 8px;
-  }
+}
 
 /**
  * Counter

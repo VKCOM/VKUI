@@ -7,12 +7,12 @@ body[scheme="bright_light"] {
   --action_sheet_action_foreground: #3f8ae0;
   --action_sheet_separator: rgba(0, 0, 0, 0.12);
   --activity_indicator_tint: #aeb7c2;
-  --attach_picker_tab_active_background: #5181b8;
+  --attach_picker_tab_active_background: #4986cc;
   --attach_picker_tab_active_icon: #ffffff;
-  --attach_picker_tab_active_text: #5181b8;
-  --attach_picker_tab_inactive_background: #c4c8cc;
-  --attach_picker_tab_inactive_icon: #ffffff;
-  --attach_picker_tab_inactive_text: #909499;
+  --attach_picker_tab_active_text: #4986cc;
+  --attach_picker_tab_inactive_background: #f2f3f5;
+  --attach_picker_tab_inactive_icon: #818c99;
+  --attach_picker_tab_inactive_text: #818c99;
   --background_content: #ffffff;
   --background_highlighted: rgba(0, 0, 0, 0.12);
   --background_keyboard: #e1e3e6;
@@ -43,6 +43,8 @@ body[scheme="bright_light"] {
   --control_tint_muted: #76787a;
   --counter_primary_background: #3f8ae0;
   --counter_primary_text: #ffffff;
+  --counter_prominent_background: #ff3347;
+  --counter_prominent_text: #ffffff;
   --counter_secondary_background: #a3adb8;
   --counter_secondary_text: #ffffff;
   --destructive: #e64646;
@@ -69,11 +71,11 @@ body[scheme="bright_light"] {
   --header_tab_active_text: #4986cc;
   --header_tab_active_indicator: #4986cc;
   --header_tab_inactive_text: #9099a3;
-  --header_text: #3f8ae0;
-  --header_text_alternate: #3f8ae0;
+  --header_text: #000000;
+  --header_text_alternate: #000000;
   --header_text_secondary: #818c99;
   --header_tint: #3f8ae0;
-  --header_tint_alternate: #528bcc;
+  --header_tint_alternate: #3f8ae0;
   --icon_alpha_placeholder: #ffffff;
   --icon_medium: #818c99;
   --icon_outline_medium: #818c99;
@@ -83,8 +85,9 @@ body[scheme="bright_light"] {
   --im_attach_tint: #4986cc;
   --im_bubble_border_alternate: #e1e3e6;
   --im_bubble_border_alternate_highlighted: #d7d8d9;
-  --im_bubble_button_background: rgba(0, 57, 115, 0.10);
-  --im_bubble_button_foreground: #45678f;
+  --im_bubble_button_background: #f9f9f9;
+  --im_bubble_button_background_highlighted: #d7d8d9;
+  --im_bubble_button_foreground: #000000;
   --im_bubble_incoming: #ebedf0;
   --im_bubble_incoming_alternate: #ffffff;
   --im_bubble_incoming_alternate_highlighted: #f9f9f9;
@@ -96,6 +99,9 @@ body[scheme="bright_light"] {
   --im_bubble_outgoing_alternate: #ffffff;
   --im_bubble_outgoing_highlighted: #add3ff;
   --im_bubble_outgoing_alternate_highlighted: #f9f9f9;
+  --im_bubble_wallpaper_button_background: #f2f3f5;
+  --im_bubble_wallpaper_button_background_highlighted: #e1e3e6;
+  --im_bubble_wallpaper_button_foreground: #000000;
   --im_bubble_wallpaper_incoming: #ffffff;
   --im_bubble_wallpaper_incoming_highlighted: #ebedf0;
   --im_bubble_wallpaper_incoming_border: rgba(0, 57, 115, 0.10);
@@ -162,8 +168,12 @@ body[scheme="bright_light"] {
   --snippet_icon_tertiary: #c4c8cc;
   --splashscreen_icon: #e1e3e6;
   --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0.30);
+  --stories_create_button_background_from: #f2f3f5;
+  --stories_create_button_background_to: #e1e3e6;
+  --stories_create_button_foreground: #6d7885;
   --stories_skeleton_loader_background: #c4c8cc;
   --switch_ios_off_border: #e1e3e6;
+  --stories_create_button_icon_background: #ffffff;
   --tabbar_active_icon: #2975cc;
   --tabbar_background: #f9f9f9;
   --tabbar_inactive_icon: #99a2ad;
@@ -190,5 +200,11 @@ body[scheme="bright_light"] {
   --panel_tab_inactive_text: #76787a;
   --im_service_message_text: #818c99;
   --writebar_icon: #3f8ae0;
+  --dynamic_blue: #3f8ae0;
+  --dynamic_gray: #a3adb8;
+  --dynamic_red: #ff3347;
+  --dynamic_green: #4bb34b;
+  --dynamic_orange: #ffa000;
+  --dynamic_violet: #792ec0;
 }
 /* stylelint-enable */

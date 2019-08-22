@@ -1,3 +1,3 @@
-import connect from '@vkontakte/vkui-connect';
+import vkConnect from '@vkontakte/vk-connect';
 
-export const isWebView = connect.supports('VKWebAppInit');
+export const isWebView = vkConnect.isWebView();

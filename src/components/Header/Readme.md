@@ -7,10 +7,10 @@
       <Header>
         Плейлисты
       </Header>
-      <Header level="2">
+      <Header level="secondary">
         Импорт друзей
       </Header>
-      <Header level="2" aside={<Link>Показать все</Link>}>
+      <Header level="secondary" aside={<Link>Показать все</Link>}>
         Приглашения
       </Header>
     </Panel>

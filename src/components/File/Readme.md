@@ -10,7 +10,7 @@
         <File top="Загрузите ваше фото" before={<Icon24Camera />} size="l">
           Открыть галерею
         </File>
-        <File top="Загрузите документы" before={<Icon24Document />} size="xl" level="2" />
+        <File top="Загрузите документы" before={<Icon24Document />} size="xl" level="secondary" />
       </FormLayout>
     </Panel>
   </View>

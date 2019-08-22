@@ -1,6 +1,6 @@
 .FormStatus {
   border-radius: 10px;
-  padding: 12px;
+  padding: 14px 12px;
   background: var(--field_background);
   color: var(--text_primary);
   }
@@ -14,6 +14,7 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 1.25;
+    margin-top: -2px;
     }
 
   .FormStatus__title:not(:last-child) {
@@ -22,7 +23,7 @@
 
   .FormStatus__content {
     font-size: 13px;
-    line-height: 1.23;
+    line-height: 16px;
     }
 
     .FormStatus__content b {

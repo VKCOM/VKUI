@@ -5,6 +5,7 @@ import classNames from '../../lib/classNames';
 import Touch from '../Touch/Touch';
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
+import { isNumeric } from '../../lib/utils';
 
 const baseClassNames = getClassName('Panel');
 
@@ -52,7 +53,7 @@ class Panel extends Component {
         [`Panel--tm-${theme}`]: theme
       })}>
         <Touch className="Panel__in" style={{
-          paddingBottom: !isNaN(insets.bottom) ? insets.bottom + tabbarPadding : null
+          paddingBottom: isNumeric(insets.bottom) ? (insets.bottom + tabbarPadding) : null
         }}>
           <div className="Panel__in-before" />
           {children}

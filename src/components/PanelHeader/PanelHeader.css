@@ -281,10 +281,15 @@
 /*
   Темы
  */
-.PanelHeader-content--brand,
+
 .PanelHeader-left-in--brand,
 .PanelHeader-addon--brand,
-.PanelHeader-right--brand,
+.PanelHeader-right--brand {
+  color: var(--header_tint);
+  background: var(--header_background);
+}
+
+.PanelHeader-content--brand,
 .PanelHeader-bg--brand {
   color: var(--header_text);
   background: var(--header_background);

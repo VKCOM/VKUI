@@ -5,12 +5,23 @@ import PropTypes from 'prop-types';
 
 const baseClassNames = getClassName('Header');
 
+function mapOldLevel (level) {
+  switch (level) {
+    case '1':
+      return 'primary';
+    case '2':
+      return 'secondary';
+    default:
+      return level;
+  }
+}
+
 const Header = ({ className, level, children, indicator, aside, getRootRef, ...restProps }) => {
   return (
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNames(baseClassNames, className, { [`Header--level-${level}`]: true })}
+      className={classNames(baseClassNames, className, { [`Header--level-${mapOldLevel(level)}`]: true })}
     >
       <div className="Header__in">
         <div className="Header__content">{children}</div>
@@ -21,9 +32,15 @@ const Header = ({ className, level, children, indicator, aside, getRootRef, ...r
   );
 };
 
+Header.mapOldLevel = mapOldLevel;
+
 Header.propTypes = {
   className: PropTypes.string,
-  level: PropTypes.oneOf(['1', '2']),
+  /**
+   * Значения `1` и `2` устарели. Вместо них используйте `primary` и `secondary`. Маппинг на новые значения находится в
+   * статическом методе `Header.mapOldLevel(level)`. Старые значения будут удалены в 3.0.0
+   */
+  level: PropTypes.oneOf(['1', '2', 'primary', 'secondary']),
   indicator: PropTypes.node,
   aside: PropTypes.node,
   children: PropTypes.node,
@@ -35,7 +52,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  level: '1'
+  level: 'primary'
 };
 
 export default Header;

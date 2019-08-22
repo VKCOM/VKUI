@@ -6,6 +6,7 @@ import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
+import { isNumeric } from '../../lib/utils';
 
 const baseClassNames = getClassName('ActionSheet');
 
@@ -91,7 +92,7 @@ class ActionSheet extends React.Component {
           {Children.toArray(children).map((Child, index, arr) => (
             Child && React.cloneElement(Child, {
               onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose),
-              style: index === arr.length - 1 && insets.bottom ? { marginBottom: insets.bottom } : null
+              style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null
             })
           ))}
         </div>

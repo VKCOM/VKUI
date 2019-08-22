@@ -17,6 +17,7 @@
   max-width: 480px;
   padding: 8px;
   transform: translateY(100%);
+  box-sizing: border-box;
 }
 
 .ModalCard--ios .ModalCard__in {
