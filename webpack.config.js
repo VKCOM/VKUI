@@ -26,9 +26,6 @@ const config = {
       }
     ]
   },
-  optimization: {
-    minimize: false
-  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
