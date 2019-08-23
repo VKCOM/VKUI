@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.27.0-rc.3",
+  "version": "2.27.0-rc.4",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "MIT",
@@ -9,7 +9,8 @@
   "homepage": "https://vkcom.github.io/vkui-styleguide",
   "defaultSchemeId": "client_light",
   "sideEffects": [
-    "**/polyfills.js",
+    "./dist/lib/polyfills.js",
+    "./dist/index.js",
     "*.css"
   ],
   "devDependencies": {
