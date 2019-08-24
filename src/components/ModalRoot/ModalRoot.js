@@ -105,7 +105,7 @@ class ModalRoot extends Component {
     if (activeModal && this.modalsState[activeModal] && !switching && this.props.children !== prevProps.children) {
       const modalState = this.modalsState[activeModal];
       if (modalState && modalState.type === TYPE_PAGE && modalState.dynamicContentHeight) {
-        this.checkPageContentHeight();
+        requestAnimationFrame(() => this.checkPageContentHeight());
       }
     }
 
