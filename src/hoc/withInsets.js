@@ -1,5 +1,5 @@
 import React from 'react';
-import vkuiConnect from '@vkontakte/vkui-connect';
+import vkConnect from '@vkontakte/vk-connect';
 
 let initialState = {
   bottom: null,
@@ -12,7 +12,7 @@ function resolveInsets (e) {
   const { type, data } = e.detail;
   switch (type) {
     case 'VKWebAppUpdateConfig':
-    case 'VKWebAppUpdateInsets': // Устаревшее событие vkui-connect
+    case 'VKWebAppUpdateInsets': // Устаревшее событие vk-connect
       const { insets } = data;
       if (insets) {
         return {
@@ -23,7 +23,7 @@ function resolveInsets (e) {
   }
 }
 
-vkuiConnect.subscribe((e) => {
+vkConnect.subscribe((e) => {
   const insets = resolveInsets(e);
   if (insets) {
     initialState = insets;
@@ -35,11 +35,11 @@ export default function withInsets (Component) {
     state = initialState;
 
     componentDidMount () {
-      vkuiConnect.subscribe(this.connectListener);
+      vkConnect.subscribe(this.connectListener);
     }
 
     componentWillUnmount () {
-      vkuiConnect.unsubscribe(this.connectListener);
+      vkConnect.unsubscribe(this.connectListener);
     }
 
     connectListener = (e) => {

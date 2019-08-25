@@ -1,5 +1,8 @@
 const path = require('path');
 const webpackConfig = require('../webpack.config');
+const merge = require('webpack-merge');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const postcssConfig = require('../postcss.config');
 
 module.exports = {
   title: 'VKUI styleguide',
@@ -63,7 +66,7 @@ module.exports = {
       }, {
         name: 'Blocks',
         components: () => [
-          '../src/components/Button/Button.js',
+          '../src/components/Button/Button.tsx',
           '../src/components/CellButton/CellButton.js',
           '../src/components/Div/Div.js',
           '../src/components/Link/Link.js',
@@ -135,7 +138,37 @@ module.exports = {
     path.resolve(__dirname, './setup.js'),
     path.resolve(__dirname, './setup.css')
   ],
-  webpackConfig: Object.assign({}, webpackConfig, {
+  propsParser(filePath, source, resolver, handlers) {
+    if (/.tsx$/.test(filePath)) {
+      return require('react-docgen-typescript').withCustomConfig('./tsconfig.json', {}).parse(filePath)
+    } else {
+      return require('react-docgen').parse(source, resolver, handlers)
+    }
+  },
+  webpackConfig: merge(webpackConfig, {
+    module: {
+      rules: [{
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => postcssConfig.plugins
+            }
+          }
+        ]
+      }]
+    },
+    plugins: [
+      new MiniCssExtractPlugin('[name].css')
+    ],
     resolve: {
       alias: {
         'rsg-components/Preview': path.join(__dirname, './Components/Preview')
