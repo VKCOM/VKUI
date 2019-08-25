@@ -97,6 +97,12 @@ export { default as PanelHeaderSubmit } from './components/PanelHeaderSubmit/Pan
 export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
 
 /**
+ * HOCs
+ */
+
+export { default as withInsets } from './hoc/withInsets';
+
+/**
  * Utils
  */
 export { default as classNames } from './lib/classNames';
