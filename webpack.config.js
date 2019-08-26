@@ -26,9 +26,6 @@ const config = {
       }
     ]
   },
-  optimization: {
-    minimize: false
-  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
@@ -36,7 +33,7 @@ const config = {
   stats: {
     children: false
   },
-  mode: process.env.NODE_ENV || 'development',
+  mode: 'production',
   externals: [
     {
       'react': 'react',

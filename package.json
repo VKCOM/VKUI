@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.26.3-rc.0",
+  "version": "2.28.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "MIT",
@@ -8,14 +8,21 @@
   "repository": "https://github.com/VKCOM/VKUI",
   "homepage": "https://vkcom.github.io/vkui-styleguide",
   "defaultSchemeId": "client_light",
+  "sideEffects": [
+    "./dist/lib/polyfills.js",
+    "./dist/index.js",
+    "*.css"
+  ],
   "devDependencies": {
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.2.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
+    "@babel/runtime": "^7.5.5",
     "@types/node": "^12.7.2",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.8.5",
@@ -38,6 +45,7 @@
     "mini-css-extract-plugin": "^0.4.0",
     "postcss": "^7.0.17",
     "postcss-cli": "^6.1.3",
+    "postcss-csso": "^3.0.0",
     "postcss-custom-properties": "^8.0.9",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
@@ -66,7 +74,8 @@
     "react": "^16.8.6",
     "@vkontakte/vk-connect": "^1.5.5",
     "prop-types": "^15.6.1",
-    "@vkontakte/icons": "^1.6.0"
+    "@vkontakte/icons": "^1.6.0",
+    "@babel/runtime": "^7.5.5"
   },
   "scripts": {
     "release": "./tasks/release.sh",
@@ -78,9 +87,9 @@
     "babel-dev": "babel src/ --out-dir dist/ --extensions .tsx,.jsx,.ts,.js --watch",
     "tsc-dev": "tsc --noEmit --watch --preserveWatchOutput",
     "build": "npm run tsc && npm run babel && webpack && npm run postcss && cp ./src/styles/client_light.css ./dist/default_scheme.css",
-    "postcss": "postcss src/styles/styles.css --output dist/vkui.css",
-    "babel": "babel src/ --out-dir dist/ --source-maps --extensions .tsx,.jsx,.ts,.js",
-    "tsc": "tsc --emitDeclarationOnly --declaration",
+    "postcss": "NODE_ENV=production postcss src/styles/styles.css --output dist/vkui.css --verbose",
+    "babel": "NODE_ENV=production babel src/ --out-dir dist/ --source-maps --extensions .tsx,.jsx,.ts,.js",
+    "tsc": "NODE_ENV=production tsc --emitDeclarationOnly --declaration",
     "clear": "rm -rf dist/*",
     "test": "eslint --ext .tsx,.jsx,.ts,.js src/ && stylelint './src/**/*.css'"
   },
