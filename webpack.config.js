@@ -33,7 +33,7 @@ const config = {
   stats: {
     children: false
   },
-  mode: process.env.NODE_ENV || 'development',
+  mode: 'production',
   externals: [
     {
       'react': 'react',
