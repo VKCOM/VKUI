@@ -106,6 +106,8 @@ export { default as withInsets } from './hoc/withInsets';
  * Utils
  */
 export { default as classNames } from './lib/classNames';
+export { default as animate } from './lib/animate';
+export { default as removeObjectKeys } from './lib/removeObjectKeys';
 
 /**
  * @deprecated будет удалено в 3.0.0
