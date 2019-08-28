@@ -10,7 +10,7 @@ export interface TimingInterface {
 }
 
 export interface DrawInterface {
-  (timeFraction: number): void
+  (progress: number): void
 }
 
 export interface AnimateArgumentsInterface {
