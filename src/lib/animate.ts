@@ -5,14 +5,28 @@
  * @param {function} draw коллбэк, в который прокидывается прогресс [0, 1]
  * @returns {void}
  */
-export default function animate ({ duration, timing, draw }) {
+export interface TimingInterface {
+  (timeFraction: number): number
+}
+
+export interface DrawInterface {
+  (timeFraction: number): void
+}
+
+export interface AnimateArgumentsInterface {
+  duration: number,
+  timing: TimingInterface,
+  draw: DrawInterface
+}
+
+export default function animate({ duration, timing, draw }: AnimateArgumentsInterface): void {
   if (typeof window === 'undefined') {
     return;
   }
 
   const start = window.performance.now();
 
-  window.requestAnimationFrame(function animate (time) {
+  window.requestAnimationFrame(function animate(time: number): void {
     let timeFraction = (time - start) / duration;
 
     if (timeFraction > 1) {

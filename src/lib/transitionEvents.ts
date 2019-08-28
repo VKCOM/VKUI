@@ -1,4 +1,4 @@
-let supported, prefix;
+let supported: boolean, prefix: string;
 
 if (typeof document !== 'undefined' && document.createElement) {
   const d = document.createElement('div');
@@ -14,8 +14,8 @@ if (typeof document !== 'undefined' && document.createElement) {
   }
 }
 
-const transitionEndEventName = prefix ? prefix + 'TransitionEnd' : 'transitionend';
-const animationEndEventName = prefix ? prefix + 'AnimationEnd' : 'animationend';
+const transitionEndEventName: string = prefix ? prefix + 'TransitionEnd' : 'transitionend';
+const animationEndEventName: string = prefix ? prefix + 'AnimationEnd' : 'animationend';
 
 export default {
   supported,

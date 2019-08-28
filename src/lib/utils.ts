@@ -1,7 +1,6 @@
 /**
  * Является ли переданное значение числовым
- * @param {any} value
  */
-export function isNumeric (value) {
+export function isNumeric(value): boolean {
   return !isNaN(parseFloat(value)) && isFinite(value);
 }

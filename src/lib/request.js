@@ -75,4 +75,7 @@ function makeRequest (url, options) {
   };
 }
 
+/**
+ * @deprecated будет удален в версии 3.0.0
+ */
 export default (url, options) => makeRequest(url, options);
