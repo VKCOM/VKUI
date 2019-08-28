@@ -2,7 +2,7 @@ export interface MatchesMethod {
   (css: string): boolean
 }
 
-export interface OldElement extends HTMLElement {
+export interface OldElement extends Element {
   matchesSelector?: MatchesMethod,
   mozMatchesSelector?: MatchesMethod,
   msMatchesSelector?: MatchesMethod,
@@ -21,8 +21,8 @@ if (window) {
 
   // Element.prototype.closest
   if (!ElementProto.closest) {
-    ElementProto.closest = function(css: string): HTMLElement | null {
-      let node: HTMLElement = this;
+    ElementProto.closest = function(css: string): Element | null {
+      let node: Element = this;
       while (node) {
         if (node.matches(css)) return node;
         else node = node.parentElement;
