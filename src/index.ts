@@ -114,7 +114,13 @@ export { default as removeObjectKeys } from './lib/removeObjectKeys';
  */
 export { default as classnames } from './lib/classNames';
 export { platform, ANDROID, IOS, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
+/**
+ * @deprecated будет удален в версии 3.0.0
+ */
 export { default as request } from './lib/request';
+/**
+ * @deprecated будет удален в версии 3.0.0
+ */
 export { default as querystring } from './lib/querystring';
 export { default as getClassName } from './helpers/getClassName';
 export { isWebView } from './lib/webview';
