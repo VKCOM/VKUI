@@ -9,14 +9,14 @@ export interface OldElement extends HTMLElement {
 }
 
 if (window) {
-  const ElementProto = <OldElement>Element.prototype;
+  const ElementProto = Element.prototype;
 
   // Element.prototype.matches
   if (!ElementProto.matches) {
-    ElementProto.matches = ElementProto.matchesSelector ||
+    ElementProto.matches = (ElementProto as OldElement).matchesSelector ||
       ElementProto.webkitMatchesSelector ||
-      ElementProto.mozMatchesSelector ||
-      ElementProto.msMatchesSelector;
+      (ElementProto as OldElement).mozMatchesSelector ||
+        (ElementProto as OldElement).msMatchesSelector;
   }
 
   // Element.prototype.closest
