@@ -91,7 +91,7 @@
     "babel": "NODE_ENV=production babel src/ --out-dir dist/ --source-maps --extensions .tsx,.jsx,.ts,.js",
     "tsc": "NODE_ENV=production tsc --emitDeclarationOnly --declaration",
     "clear": "rm -rf dist/*",
-    "test": "eslint --ext .tsx,.jsx,.ts,.js src/ && stylelint './src/**/*.css'"
+    "test": "tsc --noEmit && eslint --ext .tsx,.jsx,.ts,.js src/ && stylelint './src/**/*.css'"
   },
   "pre-commit": [
     "test"
