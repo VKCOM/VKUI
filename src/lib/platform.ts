@@ -7,9 +7,9 @@ export const ANDROID: OS = OS.ANDROID;
 export const IOS: OS = OS.IOS;
 
 let ua: string;
-let platformName: string;
+let platformName: OS;
 
-export function platform (useragent?: string): string {
+export function platform (useragent?: string): OS {
   if (!ua) {
     ua = useragent || (navigator && navigator.userAgent) || '';
   }
