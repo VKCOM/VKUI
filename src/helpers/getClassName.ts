@@ -1,9 +1,9 @@
-import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../lib/platform';
+import { OS, platform } from '../lib/platform';
 import classNames from '../lib/classNames';
 
-export default function getClassname(base: string): string {
+export default function getClassname(base: string, osname: OS = platform()): string {
   return classNames(base, {
-    [base + '--ios']: IS_PLATFORM_IOS,
-    [base + '--android']: IS_PLATFORM_ANDROID
+    [base + '--ios']: osname === OS.IOS,
+    [base + '--android']: osname === OS.ANDROID
   });
 }

@@ -1,12 +1,11 @@
 import React from 'react';
-import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-
+import Tappable from '../Tappable/Tappable';
 import CellButton from '../CellButton/CellButton';
 import { HasChildren, HasClassName, HasStyleObject } from '../../types/props';
-
-const baseClassName = getClassName('Button');
+import { OS } from '../../lib/platform';
+import withPlatform from '../../hoc/withPlatform';
 
 export interface ButtonProps extends HasStyleObject, HasChildren, HasClassName {
   /**
@@ -24,7 +23,8 @@ export interface ButtonProps extends HasStyleObject, HasChildren, HasClassName {
   stretched?: boolean,
   before?: React.ReactNode,
   after?: React.ReactNode,
-  component?: string | React.ComponentType
+  component?: string | React.ComponentType,
+  platform?: OS
 }
 
 const mapOldLevel = level => {
@@ -48,9 +48,9 @@ const Button: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   if (props.type === 'cell') {
     return <CellButton {...props} />;
   } else {
-    const { className, size, level, stretched, align, children, before, after, type, ...restProps } = props;
+    const { className, size, level, stretched, align, children, before, after, type, platform, ...restProps } = props;
 
-    return <Tappable {...restProps} className={classNames(baseClassName, className, {
+    return <Tappable {...restProps} className={classNames(getClassName('Button', platform), className, {
       [`Button--sz-${size}`]: true,
       [`Button--lvl-${mapOldLevel(level)}`]: true,
       [`Button--aln-${align || 'center'}`]: true,
@@ -73,4 +73,4 @@ Button.defaultProps = {
   stretched: false
 };
 
-export default Button;
+export default withPlatform(Button);
