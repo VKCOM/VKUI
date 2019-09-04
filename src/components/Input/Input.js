@@ -31,11 +31,11 @@ Input.propTypes = {
   status: PropTypes.oneOf(['default', 'error', 'verified', 'valid']),
   getRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    PropTypes.shape({ current: PropTypes.any })
   ]),
   getRootRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    PropTypes.shape({ current: PropTypes.any })
   ]),
   className: PropTypes.string
 };

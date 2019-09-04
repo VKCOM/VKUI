@@ -1,3 +1,5 @@
+import { canUseDOM } from './dom';
+
 export interface MatchesMethod {
   (css: string): boolean
 }
@@ -8,7 +10,7 @@ export interface OldElement extends Element {
   msMatchesSelector?: MatchesMethod,
 }
 
-if (window) {
+if (canUseDOM) {
   const ElementProto = Element.prototype;
 
   // Element.prototype.matches

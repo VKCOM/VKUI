@@ -32,11 +32,11 @@ export default class Select extends Component {
     placeholder: PropTypes.string,
     getRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ]),
     getRootRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ]),
     alignment: PropTypes.oneOf(['left', 'center', 'top']),
     status: PropTypes.oneOf(['default', 'error', 'valid'])

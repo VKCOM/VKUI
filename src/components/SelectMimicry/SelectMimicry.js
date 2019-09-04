@@ -35,7 +35,7 @@ SelectMimicry.propTypes = {
   alignment: PropTypes.oneOf(['left', 'center', 'top']),
   getRootRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    PropTypes.shape({ current: PropTypes.any })
   ]),
   multiline: PropTypes.bool,
   disabled: PropTypes.bool,

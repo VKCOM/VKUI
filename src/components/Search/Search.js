@@ -9,7 +9,7 @@ export default class Search extends React.Component {
     className: PropTypes.string,
     getRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ]),
     /**
      * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.

@@ -33,11 +33,11 @@ export default class Textarea extends PureComponent {
     className: PropTypes.string,
     getRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ]),
     getRootRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ]),
     status: PropTypes.oneOf(['default', 'error', 'valid'])
   };

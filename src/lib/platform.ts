@@ -1,3 +1,5 @@
+import { canUseDOM } from './dom';
+
 enum OS {
   ANDROID = 'android',
   IOS = 'ios'
@@ -11,7 +13,7 @@ let platformName: OS;
 
 export function platform (useragent?: string): OS {
   if (!ua) {
-    ua = useragent || (navigator && navigator.userAgent) || '';
+    ua = useragent || (canUseDOM ? (navigator && navigator.userAgent) : '') || '';
   }
   if (!platformName) {
     platformName = /android/i.test(ua) ? ANDROID : IOS;

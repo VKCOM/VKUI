@@ -20,7 +20,7 @@ export default class Tabs extends React.Component {
     style: PropTypes.object,
     getRootRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+      PropTypes.shape({ current: PropTypes.any })
     ])
   };
 
