@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.29.0-rc.3",
+  "version": "2.29.0-rc.4",
   "main": "dist/index.js",
   "module": "dist/es6/index.js",
   "typings": "dist/index.d.ts",
@@ -12,6 +12,8 @@
   "sideEffects": [
     "./dist/lib/polyfills.js",
     "./dist/index.js",
+    "./dist/es6/lib/polyfills.js",
+    "./dist/es6/index.js",
     "*.css"
   ],
   "devDependencies": {
