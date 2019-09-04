@@ -6,7 +6,7 @@ export enum OS {
 export const ANDROID: OS = OS.ANDROID;
 export const IOS: OS = OS.IOS;
 
-export function platform (useragent?: string): OS {
+export function platform(useragent?: string): OS {
   const ua = useragent || (typeof navigator !== 'undefined' && navigator.userAgent) || '';
 
   return /android/i.test(ua) ? ANDROID : IOS;

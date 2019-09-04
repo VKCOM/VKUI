@@ -100,6 +100,12 @@ export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHe
  * HOCs
  */
 export { default as withInsets } from './hoc/withInsets';
+export { default as withPlatform } from './hoc/withPlatform';
+
+/**
+ * Hooks
+ */
+export { default as usePlatform } from './hooks/usePlatform';
 
 /**
  * Utils

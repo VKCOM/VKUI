@@ -4,7 +4,6 @@ import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
 import CellButton from '../CellButton/CellButton';
 import { HasChildren, HasClassName, HasStyleObject } from '../../types/props';
-import { OS } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 
 export interface ButtonProps extends HasStyleObject, HasChildren, HasClassName {
@@ -23,8 +22,7 @@ export interface ButtonProps extends HasStyleObject, HasChildren, HasClassName {
   stretched?: boolean,
   before?: React.ReactNode,
   after?: React.ReactNode,
-  component?: string | React.ComponentType,
-  platform?: OS
+  component?: string | React.ComponentType
 }
 
 const mapOldLevel = level => {
