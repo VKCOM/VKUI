@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "2.29.0-rc.1",
+  "version": "2.29.0-rc.2",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "MIT",
