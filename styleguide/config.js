@@ -88,7 +88,7 @@ module.exports = {
           '../src/components/FixedTabs/FixedTabs.js',
           '../src/components/Tooltip/Tooltip.js',
           '../src/components/PullToRefresh/PullToRefresh.js',
-          '../src/components/Counter/Counter.js',
+          '../src/components/Counter/Counter.tsx',
           '../src/components/Touch/Touch.js',
           '../src/components/UsersStack/UsersStack.js',
           '../src/components/Separator/Separator.js'

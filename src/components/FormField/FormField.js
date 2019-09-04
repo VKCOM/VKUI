@@ -29,7 +29,7 @@ FormField.propTypes = {
   bottom: PropTypes.node,
   getRootRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    PropTypes.shape({ current: PropTypes.any })
   ]),
   status: PropTypes.oneOf(['default', 'error', 'valid'])
 };
