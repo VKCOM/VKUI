@@ -4,7 +4,7 @@
 либо HOC `withPlatform`.
 
 ```jsx static
-import { usePlatfrom } from '@vkontakte/vkui'
+import { usePlatform } from '@vkontakte/vkui'
 
 const MyComponent = () => {
     const platform = usePlatform();
@@ -12,7 +12,7 @@ const MyComponent = () => {
 }
 ```
 
-```jsx
+```jsx static
 import { withPlatform } from '@vkontakte/vkui'
 
 class MyComponent extends React.Component {
