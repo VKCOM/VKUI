@@ -90,18 +90,37 @@ export { default as Div } from './components/Div/Div';
 export { default as Tappable } from './components/Tappable/Tappable';
 export { default as Touch } from './components/Touch/Touch';
 export { default as ConfigProvider } from './components/ConfigProvider/ConfigProvider';
+export { default as PanelSpinner } from './components/PanelSpinner/PanelSpinner';
+export { default as PanelHeaderClose } from './components/PanelHeaderClose/PanelHeaderClose';
+export { default as PanelHeaderBack } from './components/PanelHeaderBack/PanelHeaderBack';
+export { default as PanelHeaderSubmit } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
+export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
+
+/**
+ * HOCs
+ */
+
+export { default as withInsets } from './hoc/withInsets';
 
 /**
  * Utils
  */
 export { default as classNames } from './lib/classNames';
+export { default as animate } from './lib/animate';
+export { default as removeObjectKeys } from './lib/removeObjectKeys';
 
 /**
  * @deprecated будет удалено в 3.0.0
  */
 export { default as classnames } from './lib/classNames';
 export { platform, ANDROID, IOS, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
+/**
+ * @deprecated будет удален в версии 3.0.0
+ */
 export { default as request } from './lib/request';
+/**
+ * @deprecated будет удален в версии 3.0.0
+ */
 export { default as querystring } from './lib/querystring';
 export { default as getClassName } from './helpers/getClassName';
 export { isWebView } from './lib/webview';

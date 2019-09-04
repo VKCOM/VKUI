@@ -1,3 +1,6 @@
+/**
+ * @deprecated будет удален в версии 3.0.0
+ */
 const querystring = {
   parse: (string = '') => {
     if (typeof string !== 'string') return {};

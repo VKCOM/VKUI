@@ -1,20 +1,30 @@
 import { canUseDOM } from './dom';
 
+export interface MatchesMethod {
+  (css: string): boolean
+}
+
+export interface OldElement extends Element {
+  matchesSelector?: MatchesMethod,
+  mozMatchesSelector?: MatchesMethod,
+  msMatchesSelector?: MatchesMethod,
+}
+
 if (canUseDOM) {
-  const ElementProto = window.Element.prototype;
+  const ElementProto = Element.prototype;
 
   // Element.prototype.matches
   if (!ElementProto.matches) {
-    ElementProto.matches = ElementProto.matchesSelector ||
+    ElementProto.matches = (ElementProto as OldElement).matchesSelector ||
       ElementProto.webkitMatchesSelector ||
-      ElementProto.mozMatchesSelector ||
-      ElementProto.msMatchesSelector;
+      (ElementProto as OldElement).mozMatchesSelector ||
+        (ElementProto as OldElement).msMatchesSelector;
   }
 
   // Element.prototype.closest
   if (!ElementProto.closest) {
-    ElementProto.closest = function (css) {
-      let node = this;
+    ElementProto.closest = function(css: string): Element | null {
+      let node: Element = this;
       while (node) {
         if (node.matches(css)) return node;
         else node = node.parentElement;
@@ -26,7 +36,7 @@ if (canUseDOM) {
 
 // Array.prototype.find
 if (!Array.prototype.find) {
-  Array.prototype.find = function (callback) {
+  Array.prototype.find = function(callback) {
     if (this === null) {
       throw new TypeError('Array.prototype.find called on null or undefined');
     } else if (typeof callback !== 'function') {

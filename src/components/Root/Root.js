@@ -20,8 +20,6 @@ export default class Root extends React.Component {
       isBack: undefined,
       scrolls: {}
     };
-
-    this.arrayChildren = React.Children.toArray(props.children);
   }
 
   static propTypes = {
@@ -50,31 +48,31 @@ export default class Root extends React.Component {
     return this.context.window || window;
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.popout && !this.props.popout) {
+  get arrayChildren () {
+    return [].concat(this.props.children);
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.props.popout && !prevProps.popout) {
       this.blurActiveElement();
     }
 
-    if (nextProps.children !== this.props.children) {
-      this.arrayChildren = React.Children.toArray(nextProps.children);
-    }
-
-    if (nextProps.activeView !== this.props.activeView) {
+    if (this.props.activeView !== prevProps.activeView) {
       let pageYOffset = this.window.pageYOffset;
-      const firstLayerId = this.props.children.find(view => {
-        return view.props.id === this.props.activeView || view.props.id === nextProps.activeView;
+      const firstLayerId = prevProps.children.find(view => {
+        return view.props.id === prevProps.activeView || view.props.id === this.props.activeView;
       }).props.id;
-      const isBack = firstLayerId === nextProps.activeView;
+      const isBack = firstLayerId === this.props.activeView;
 
       this.blurActiveElement();
 
-      const nextView = nextProps.activeView;
-      const prevView = this.props.activeView;
+      const nextView = this.props.activeView;
+      const prevView = prevProps.activeView;
 
       this.setState({
         scrolls: {
           ...this.state.scrolls,
-          [this.props.activeView]: pageYOffset
+          [prevProps.activeView]: pageYOffset
         },
         transition: true,
         activeView: null,
@@ -84,9 +82,7 @@ export default class Root extends React.Component {
         isBack
       });
     }
-  }
 
-  componentDidUpdate (prevProps, prevState) {
     if (!prevState.transition && this.state.transition) {
       const prevViewElement = this.document.getElementById(`view-${this.state.prevView}`);
       const nextViewElement = this.document.getElementById(`view-${this.state.nextView}`);

@@ -105,7 +105,7 @@ class ModalRoot extends Component {
     if (activeModal && this.modalsState[activeModal] && !switching && this.props.children !== prevProps.children) {
       const modalState = this.modalsState[activeModal];
       if (modalState && modalState.type === TYPE_PAGE && modalState.dynamicContentHeight) {
-        this.checkPageContentHeight();
+        requestAnimationFrame(() => this.checkPageContentHeight());
       }
     }
 
@@ -287,23 +287,25 @@ class ModalRoot extends Component {
     const activeModal = this.state.activeModal;
 
     const modalElement = this.pickModal(activeModal);
-    const modalState = this.modalsState[activeModal];
+    if (modalElement) {
+      const modalState = this.modalsState[activeModal];
 
-    const prevModalState = {...modalState};
-    this.initPageModal(modalState, modalElement);
-    const currentModalState = {...modalState};
+      const prevModalState = {...modalState};
+      this.initPageModal(modalState, modalElement);
+      const currentModalState = {...modalState};
 
-    const diff = Object.keys(currentModalState).reduce((acc, key) => {
-      if (prevModalState[key] !== currentModalState[key]) {
-        acc[key] = currentModalState[key];
+      const diff = Object.keys(currentModalState).reduce((acc, key) => {
+        if (prevModalState[key] !== currentModalState[key]) {
+          acc[key] = currentModalState[key];
+        }
+
+        return acc;
+      }, {});
+
+      if (Object.keys(diff).length) {
+        this.animateTranslate(modalState);
+        this.animatePageHeader(modalState);
       }
-
-      return acc;
-    }, {});
-
-    if (Object.keys(diff).length) {
-      this.animateTranslate(modalState);
-      this.animatePageHeader(modalState);
     }
   }
 
