@@ -5,7 +5,7 @@ import Tappable from '../Tappable/Tappable';
 import CellButton from '../CellButton/CellButton';
 import { HasChildren, HasClassName, HasStyleObject } from '../../types/props';
 import { OS } from '../../lib/platform';
-import withPlatform from '../../hoc/withPlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 
 export interface ButtonProps extends HasStyleObject, HasChildren, HasClassName {
   /**
@@ -45,10 +45,11 @@ const mapOldLevel = level => {
 };
 
 const Button: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
+  const platform = usePlatform();
   if (props.type === 'cell') {
     return <CellButton {...props} />;
   } else {
-    const { className, size, level, stretched, align, children, before, after, type, platform, ...restProps } = props;
+    const { className, size, level, stretched, align, children, before, after, type, ...restProps } = props;
 
     return <Tappable {...restProps} className={classNames(getClassName('Button', platform), className, {
       [`Button--sz-${size}`]: true,
@@ -73,4 +74,4 @@ Button.defaultProps = {
   stretched: false
 };
 
-export default withPlatform(Button);
+export default Button;
