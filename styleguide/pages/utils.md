@@ -4,29 +4,30 @@
 либо HOC `withPlatform`.
 
 ```jsx static
-import { usePlatform } from '@vkontakte/vkui'
+import { usePlatform, ANDROID, IOS } from '@vkontakte/vkui'
 
 const MyComponent = () => {
-    const platform = usePlatform();
-    return '...';
+  const platform = usePlatform(); // android или ios
+  return '...';
 }
 ```
 
 ```jsx static
-import { withPlatform } from '@vkontakte/vkui'
+import { withPlatform, ANDROID, IOS } from '@vkontakte/vkui'
 
 class MyComponent extends React.Component {
 
-    render() {
-        const { platform } = this.props;
-        return '...';
-    }
+  render() {
+    const { platform } = this.props; // android или ios
+    return '...';
+  }
 }
 
 withPlatform(withPlatform);
 ```
 
-Способ определения платформы вне компонента устарел, так как мы начинаем поддерживать [SSR](https://reactjs.org/docs/react-dom-server.html).
+Способ определения платформы вне компонента устарел, так как мы начинаем поддерживать 
+[SSR](https://reactjs.org/docs/react-dom-server.html).
 
 ### getClassName
 Допустим, вы решили создать собственный комопонент, внешний вид которого зависит от платформы. Функция `getClassName`
@@ -36,9 +37,8 @@ withPlatform(withPlatform);
 import { usePlatform, getClassName } from '@vkontakte/vkui'
 
 const MyButton = ({ children }) => {
-    const platform = usePlatform();
-    return <button className={getClassName('MyButton', platform)}>{children}</button>;
+  const platform = usePlatform();
+  const baseClassNames = getClassName('MyButton', platform); // 'MyButton MyButton--ios'
+  return <button className={baseClassNames}>{children}</button>;
 }
-
-<MyButton>Click me</MyButton> // <button class="MyButton MyButton--ios">Click me</button>
 ```
