@@ -1,6 +1,6 @@
 import { canUseDOM } from './dom';
 
-enum OS {
+export enum OS {
   ANDROID = 'android',
   IOS = 'ios'
 }
@@ -8,21 +8,24 @@ enum OS {
 export const ANDROID: OS = OS.ANDROID;
 export const IOS: OS = OS.IOS;
 
-let ua: string;
-let platformName: OS;
+export function platform(useragent?: string): OS {
+  const ua = useragent || (canUseDOM && navigator.userAgent) || '';
 
-export function platform (useragent?: string): OS {
-  if (!ua) {
-    ua = useragent || (canUseDOM ? (navigator && navigator.userAgent) : '') || '';
-  }
-  if (!platformName) {
-    platformName = /android/i.test(ua) ? ANDROID : IOS;
-  }
-
-  return platformName;
+  return /android/i.test(ua) ? ANDROID : IOS;
 }
 
+// @TODO выпилить в 3.0.0
+/**
+ * @deprecated будет удалено в 3.0.0, так как для SSR нужно определять osname не один раз при запуске, а на каждый
+ * запрос.
+ */
 const osname = platform();
 
+/**
+ * @deprecated будет удалено в 3.0.0, используйте platform() === OS.IOS
+ */
 export const IS_PLATFORM_IOS: boolean = osname === IOS;
+/**
+ * @deprecated будет удалено в 3.0.0, используйте platform() === OS.ANDROID
+ */
 export const IS_PLATFORM_ANDROID: boolean = osname === ANDROID;

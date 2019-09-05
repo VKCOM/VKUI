@@ -99,8 +99,13 @@ export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHe
 /**
  * HOCs
  */
-
 export { default as withInsets } from './hoc/withInsets';
+export { default as withPlatform } from './hoc/withPlatform';
+
+/**
+ * Hooks
+ */
+export { default as usePlatform } from './hooks/usePlatform';
 
 /**
  * Utils
@@ -108,6 +113,7 @@ export { default as withInsets } from './hoc/withInsets';
 export { default as classNames } from './lib/classNames';
 export { default as animate } from './lib/animate';
 export { default as removeObjectKeys } from './lib/removeObjectKeys';
+export { SSRWrapper } from './lib/SSR';
 
 /**
  * @deprecated будет удалено в 3.0.0

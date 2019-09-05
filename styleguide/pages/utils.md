@@ -1,40 +1,44 @@
-### platform
-Функция `platform` используется для определения платформы на основании user agent. На данный момент библиотека поддерживает
-iOS и Android. Пример использования:
+### usePlatform и withPlatform
+Как уже было сказано ранее, компоненты библиотеки имеют разный внешний вид в зависимости от платформы – iOS или Android.
+Вам может понадобиться определить платформу в коде приложения. Для этого используйте либо Hook `usePlatform`, 
+либо HOC `withPlatform`.
 
-```js static
-  import { platform, IOS, ANDROID } from '@vkontakte/vkui';
+```jsx static
+import { usePlatform, ANDROID, IOS } from '@vkontakte/vkui'
 
-  const osname = platform();
-
-  if (osname === IOS) {
-    console.log('Это iPhone!');
-  } else {
-    console.log('Похоже, что это Android');
-  }
+const MyComponent = () => {
+  const platform = usePlatform(); // android или ios
+  return '...';
+}
 ```
 
-Также вы можете использовать предопределенные константы, определяющие платформу:
+```jsx static
+import { withPlatform, ANDROID, IOS } from '@vkontakte/vkui'
 
-```js static
-  import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '@vkontakte/vkui';
+class MyComponent extends React.Component {
 
-  if (IS_PLATFORM_IOS) {
-    console.log('Это iPhone!');
-  } else if (IS_PLATFORM_ANDROID) {
-    console.log('Это Android!');
+  render() {
+    const { platform } = this.props; // android или ios
+    return '...';
   }
+}
+
+withPlatform(withPlatform);
 ```
+
+Способ определения платформы вне компонента устарел, так как мы начинаем поддерживать 
+[SSR](https://reactjs.org/docs/react-dom-server.html).
 
 ### getClassName
-Допустим, вы решили создать свой собственный компонент. Вероятно, в CSS вам захочется стилизовать ваш компонент
-по-разному, в зависимости от платформы (iOS или Android).
+Допустим, вы решили создать собственный комопонент, внешний вид которого зависит от платформы. Функция `getClassName`
+вернет вам строку, представляющую набор CSS-классов с модификатором платформы:
 
-Как вариант, на корневой элемент можно навесить модификаторы. Функция `getClassName` инкапсулирует в себе логику
-определения платформы и на выходе выдает строчку, состоящую из css-классов. Пример:
+```jsx static
+import { usePlatform, getClassName } from '@vkontakte/vkui'
 
-```js static
-  import { getClassName } from '@vkontakte/vkui';
-
-  const baseClassName = getClassName('Tooltip') // "Tooltip Tooltip--ios"
+const MyButton = ({ children }) => {
+  const platform = usePlatform();
+  const baseClassNames = getClassName('MyButton', platform); // 'MyButton MyButton--ios'
+  return <button className={baseClassNames}>{children}</button>;
+}
 ```
