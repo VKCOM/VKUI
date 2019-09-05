@@ -76,17 +76,17 @@
           }
 
 .PanelHeader--ios {
-  height: 44px;
+  height: var(--panelheader_height_ios);
   padding-top: var(--safe-area-inset-top);
   }
 
   .PanelHeader--ios .PanelHeader__in {
-    height: 44px;
+    height: var(--panelheader_height_ios);
     padding-top: var(--safe-area-inset-top);
     }
 
     .PanelHeader--ios .PanelHeader__container {
-      height: 44px;
+      height: var(--panelheader_height_ios);
       justify-content: space-between;
       align-items: flex-start;
       }
@@ -94,7 +94,7 @@
       .PanelHeader--ios .PanelHeader__bg {}
 
         .PanelHeader--ios .PanelHeader-bg {
-          height: 44px;
+          height: var(--panelheader_height_ios);
           padding-top: var(--safe-area-inset-top);
           }
 
@@ -131,7 +131,7 @@
         flex-grow: 1;
         flex-basis: 0;
         padding-right: 12px;
-        height: 43px;
+        height: calc(var(--panelheader_height_ios) - 1px);
         }
 
         .PanelHeader--ios .PanelHeader__left-in {
@@ -164,14 +164,14 @@
       .PanelHeader--ios .PanelHeader__content {
         position: relative;
         z-index: 1;
-        height: 43px;
+        height: calc(var(--panelheader_height_ios) - 1px);
         }
 
         .PanelHeader--ios .PanelHeader-content {
           font-weight: 500;
           font-size: 17px;
           height: 100%;
-          line-height: 43px;
+          line-height: calc(var(--panelheader_height_ios) - 1px);
           text-align: center;
           transition: color .6s var(--ios-easing);
           }
@@ -180,7 +180,7 @@
         flex-grow: 1;
         flex-basis: 0;
         padding-left: 12px;
-        height: 43px;
+        height: calc(var(--panelheader_height_ios) - 1px);
         }
 
         .PanelHeader--ios .PanelHeader-right {
@@ -201,19 +201,19 @@
               }
 
 .PanelHeader--android {
-  height: 56px;
+  height: var(--panelheader_height_android);
   }
 
   .PanelHeader--android .PanelHeader__in {
-    height: 56px;
+    height: var(--panelheader_height_android);
     }
 
     .PanelHeader--android .PanelHeader__bg {
-      height: 56px;
+      height: var(--panelheader_height_android);
       }
 
       .PanelHeader--android .PanelHeader-bg {
-        height: 56px;
+        height: var(--panelheader_height_android);
         box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
         }
 
@@ -222,13 +222,13 @@
         }
 
     .PanelHeader--android .PanelHeader__container {
-      height: 56px;
+      height: var(--panelheader_height_android);
       }
 
       .PanelHeader--android .PanelHeader__content {
         max-width: 100%;
         flex-grow: 2;
-        height: 56px;
+        height: var(--panelheader_height_android);
         }
 
       .PanelHeader--android .PanelHeader-left-in {
@@ -253,8 +253,8 @@
 
         .PanelHeader--android .PanelHeader-content {
           font-size: 20px;
-          line-height: 56px;
-          height: 56px;
+          line-height: var(--panelheader_height_android);
+          height: var(--panelheader_height_android);
           font-weight: 500;
           display: flex;
           align-items: center;
