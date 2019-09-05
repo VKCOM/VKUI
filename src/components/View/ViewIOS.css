@@ -6,7 +6,7 @@
 
 .View--ios.View--header .Panel__in {
   padding-top: 64px;
-  padding-top: calc(44px + var(--safe-area-inset-top));
+  padding-top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
   }
 
 .View--ios .Panel__in {
@@ -15,7 +15,7 @@
 
 .View--ios.View--header .FixedLayout--top {
   top: 64px;
-  top: calc(44px + var(--safe-area-inset-top));
+  top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
   }
 
 .View--ios .Panel__in {

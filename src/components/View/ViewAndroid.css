@@ -5,11 +5,11 @@
   }
 
 .View--android.View--header .Panel__in {
-  padding-top: 56px;
+  padding-top: var(--panelheader_height_android);
   }
 
 .View--android.View--header .FixedLayout--top {
-  top: 56px;
+  top: var(--panelheader_height_android);
   }
 
 /**
