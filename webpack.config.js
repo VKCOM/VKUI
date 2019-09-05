@@ -34,7 +34,6 @@ const config = {
   stats: {
     children: false
   },
-  mode: 'production',
   externals: [
     {
       'react': 'react',
@@ -45,9 +44,13 @@ const config = {
   ]
 };
 
-const devConfig = {};
+const devConfig = {
+  mode: 'development'
+};
 
-const prodConfig = {};
+const prodConfig = {
+  mode: 'production'
+};
 
 module.exports = isProduction
   ? merge(config, prodConfig)
