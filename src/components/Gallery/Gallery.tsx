@@ -190,7 +190,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
    */
   getTarget () {
     const { slides, current, deltaX, shiftX, startT, max } = this.state;
-    const expectDeltaX = deltaX / (new Date().getTime() - startT) * 240 * 0.6;
+    const expectDeltaX = deltaX / (Date.now() - startT) * 240 * 0.6;
     const shift = shiftX + deltaX + expectDeltaX - max;
     const direction = deltaX < 0 ? 1 : -1;
 
