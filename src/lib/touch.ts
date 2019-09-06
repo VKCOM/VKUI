@@ -1,16 +1,12 @@
+export interface VKUITouchEvent extends MouseEvent, TouchEvent {}
+
 /**
  * Получает кординату по оси абсцисс из touch- или mouse-события
  *
  * @param e Браузерное событие
  * @returns Координата взаимодействия по оси абсцисс
  */
-function coordX (e: MouseEvent | TouchEvent): number | void {
-  if (e instanceof MouseEvent) {
-    return e.clientX;
-  } else if (e instanceof TouchEvent) {
-    return e.touches && e.touches[0].clientX;
-  }
-}
+const coordX = (e: VKUITouchEvent): number => e.clientX || (e.touches && e.touches[0].clientX);
 
 /**
  * Получает кординату по оси ординат из touch- или mouse-события
@@ -18,13 +14,7 @@ function coordX (e: MouseEvent | TouchEvent): number | void {
  * @param e Браузерное событие
  * @returns Координата взаимодействия по оси ординат
  */
-function coordY (e: MouseEvent | TouchEvent): number | void {
-  if (e instanceof MouseEvent) {
-    return e.clientY;
-  } else if (e instanceof TouchEvent) {
-    return e.touches && e.touches[0].clientY;
-  }
-}
+const coordY = (e: VKUITouchEvent): number => e.clientY || (e.touches && e.touches[0].clientY);
 
 const isClient: boolean = typeof window !== 'undefined';
 const touchEnabled: boolean = isClient && 'ontouchstart' in window;
