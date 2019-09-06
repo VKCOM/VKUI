@@ -4,7 +4,7 @@ import Touch from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import { HasClassName, HasChildren, HasStyleObject, HasPlatform } from '../../types/props';
-import {canUseDOM} from '../../lib/dom';
+import { canUseDOM } from '../../lib/dom';
 
 export interface GalleryProps extends HasChildren, HasStyleObject, HasClassName, HasPlatform {
   slideWidth?: string | number;
@@ -58,12 +58,10 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     this.container = React.createRef();
 
     this.slidesStore = {};
-    this.slides = this.getChildren(props.children);
   }
 
   container: React.RefObject<HTMLDivElement>;
   slidesStore: Object;
-  slides: [];
   viewport: HTMLElement;
   timeout: number;
   isChildrenDirty: boolean;
@@ -82,7 +80,13 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   }
 
   initializeSlides (callback = () => {}) {
-    const slides = this.getSlidesCoords();
+    const slides = React.Children.map(this.props.children, (_item, i): GallerySlidesState => {
+      const elem = this.slidesStore[`slide-${i}`];
+      return {
+        coordX: elem.offsetLeft,
+        width: elem.offsetWidth
+      };
+    });
 
     const containerWidth = this.container.current.offsetWidth;
     const viewportWidth = this.viewport.offsetWidth;
@@ -181,26 +185,6 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   }
 
   /**
-   * Получает координаты и размеры каждого слайда
-   * @returns {Array} Массив с объектами, описывающими габариты слайда
-   */
-  getSlidesCoords () {
-    return [].concat(this.props.children).reduce((acc, item, i) => {
-      if (item) {
-        const elem = this.slidesStore[`slide-${i}`];
-        const res: GallerySlidesState = {
-          coordX: elem.offsetLeft,
-          width: elem.offsetWidth
-        };
-
-        acc.push(res);
-      }
-
-      return acc;
-    }, []);
-  }
-
-  /**
    * Получает индекс слайда, к которому будет осуществлен переход
    * @returns {Number} Индекс слайда
    */
@@ -252,7 +236,6 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   }
 
   onMoveX = (e): void => {
-    console.log('sth');
     if (this.isDraggable()) {
       e.originalEvent.preventDefault();
 
@@ -326,19 +309,6 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     clearTimeout(this.timeout);
   };
 
-  getChildren (children) {
-    return [].concat(children || this.props.children).reduce(this.reduceChildren, []);
-  }
-
-  reduceChildren = (acc, item, i) => {
-    if (item) {
-      const ref = this.getSlideRef(i);
-      acc.push(<div className='Gallery__slide' key={`slide-${i}`} ref={ref}>{item}</div>);
-    }
-
-    return acc;
-  }
-
   getSlideRef = (id) => (slide) => {
     this.slidesStore[`slide-${id}`] = slide;
   }
@@ -363,7 +333,6 @@ class Gallery extends Component<GalleryProps, GalleryState> {
 
   componentDidUpdate (prevProps, prevState) {
     if (this.props.children !== prevProps.children) {
-      this.slides = this.getChildren(this.props.children);
       this.isChildrenDirty = true;
     }
 
@@ -436,12 +405,16 @@ class Gallery extends Component<GalleryProps, GalleryState> {
           style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           ref={this.getViewportRef}
         >
-          <div className='Gallery__layer' style={layerStyle}>{this.slides}</div>
+          <div className='Gallery__layer' style={layerStyle}>
+            {React.Children.map(children, (item, i) => (
+              <div className='Gallery__slide' key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>
+            ))}
+          </div>
         </Touch>
 
         {bullets &&
         <div className={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
-          {this.slides.map((_item, index) => (
+          {React.Children.map(children, (_item, index) => (
             <div
               className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })}
               key={index}
