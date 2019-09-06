@@ -15,8 +15,8 @@ export interface GalleryProps extends HasChildren, HasStyleObject, HasClassName,
   onDragEnd?(): void,
   onChange?(current: GalleryState['current']): void,
   onEnd?({ targetIndex }: { targetIndex: GalleryState['current'] }): void,
-  align: 'left' | 'center' | 'right',
-  bullets: 'dark' | 'light' | false
+  align?: 'left' | 'center' | 'right',
+  bullets?: 'dark' | 'light' | false
 }
 
 export interface GalleryState {
