@@ -80,7 +80,7 @@ module.exports = {
           '../src/components/InfoRow/InfoRow.js',
           '../src/components/Avatar/Avatar.js',
           '../src/components/Entity/Entity.js',
-          '../src/components/Gallery/Gallery.js',
+          '../src/components/Gallery/Gallery.tsx',
           '../src/components/Progress/Progress.js',
           '../src/components/Search/Search.js',
           '../src/components/Tabs/Tabs.js',

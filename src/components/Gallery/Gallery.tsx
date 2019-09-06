@@ -1,12 +1,45 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import Touch from '../Touch/Touch';
 import classNames from '../../lib/classNames';
+import withPlatform from '../../hoc/withPlatform';
+import { HasClassName, HasChildren, HasStyleObject, HasPlatform } from '../../types/props';
+import {canUseDOM} from '../../lib/dom';
 
-const baseClassNames = getClassName('Gallery');
+export interface GalleryProps extends HasChildren, HasStyleObject, HasClassName, HasPlatform {
+  slideWidth?: string | number;
+  autoplay?: number;
+  initialSlideIndex?: number;
+  slideIndex?: number;
+  onDragStart?(): void;
+  onDragEnd?(): void,
+  onChange?(current: GalleryState['current']): void,
+  onEnd?({ targetIndex }: { targetIndex: GalleryState['current'] }): void,
+  align: 'left' | 'center' | 'right',
+  bullets: 'dark' | 'light' | false
+}
 
-export default class Gallery extends Component {
+export interface GalleryState {
+  containerWidth: number,
+  layerWidth?: number,
+  min?: number,
+  max?: number,
+  startT?: number,
+  current: number,
+  deltaX: number,
+  shiftX: number,
+  slides: GallerySlidesState[],
+  animation: boolean,
+  duration: number,
+  dragging?: boolean
+}
+
+export interface GallerySlidesState {
+  coordX: number,
+  width: number
+}
+
+class Gallery extends Component<GalleryProps, GalleryState> {
   constructor (props) {
     super(props);
 
@@ -28,24 +61,12 @@ export default class Gallery extends Component {
     this.slides = this.getChildren(props.children);
   }
 
-  static propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    slideWidth: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
-    autoplay: PropTypes.number,
-    initialSlideIndex: PropTypes.number,
-    slideIndex: PropTypes.number,
-    onDragStart: PropTypes.func,
-    onDragEnd: PropTypes.func,
-    onChange: PropTypes.func,
-    onEnd: PropTypes.func,
-    align: PropTypes.oneOf(['left', 'center', 'right']),
-    bullets: PropTypes.oneOf(['dark', 'light', false])
-  };
+  container: React.RefObject<HTMLDivElement>;
+  slidesStore: Object;
+  slides: [];
+  viewport: HTMLElement;
+  timeout: number;
+  isChildrenDirty: boolean;
 
   static defaultProps = {
     slideWidth: '100%',
@@ -68,7 +89,7 @@ export default class Gallery extends Component {
     const layerWidth = slides.reduce((val, slide) => slide.width + val, 0);
 
     const min = this.calcMin({ containerWidth, layerWidth, viewportWidth, slides });
-    const max = this.calcMax({ containerWidth, layerWidth, viewportWidth, slides });
+    const max = this.calcMax({ viewportWidth, slides });
 
     this.setState({ min, max, layerWidth, containerWidth, slides }, callback);
   }
@@ -167,7 +188,7 @@ export default class Gallery extends Component {
     return [].concat(this.props.children).reduce((acc, item, i) => {
       if (item) {
         const elem = this.slidesStore[`slide-${i}`];
-        const res = {
+        const res: GallerySlidesState = {
           coordX: elem.offsetLeft,
           width: elem.offsetWidth
         };
@@ -185,7 +206,7 @@ export default class Gallery extends Component {
    */
   getTarget () {
     const { slides, current, deltaX, shiftX, startT, max } = this.state;
-    const expectDeltaX = deltaX / (new Date() - startT) * 240 * 0.6;
+    const expectDeltaX = deltaX / (new Date().getTime() - startT) * 240 * 0.6;
     const shift = shiftX + deltaX + expectDeltaX - max;
     const direction = deltaX < 0 ? 1 : -1;
 
@@ -230,24 +251,21 @@ export default class Gallery extends Component {
     });
   }
 
-  onMoveX = (e) => {
-    if (!this.isDraggable()) {
-      return;
-    }
+  onMoveX = (e): void => {
+    console.log('sth');
+    if (this.isDraggable()) {
+      e.originalEvent.preventDefault();
 
-    e.originalEvent.preventDefault();
+      if (e.isSlideX) {
+        this.props.onDragStart && this.props.onDragStart();
 
-    if (e.isSlideX) {
-      this.props.onDragStart && this.props.onDragStart();
-
-      if (this.state.deltaX !== e.shiftX || this.state.dragging !== e.isSlideX) {
-        this.setState({
-          deltaX: e.shiftX,
-          dragging: e.isSlideX
-        });
+        if (this.state.deltaX !== e.shiftX || this.state.dragging !== e.isSlideX) {
+          this.setState({
+            deltaX: e.shiftX,
+            dragging: e.isSlideX
+          });
+        }
       }
-
-      return true;
     }
   }
 
@@ -263,9 +281,7 @@ export default class Gallery extends Component {
     });
 
     if (this.props.onEnd) {
-      this.props.onEnd({
-        targetIndex
-      });
+      this.props.onEnd({ targetIndex });
     }
 
     if (this.timeout) {
@@ -288,7 +304,7 @@ export default class Gallery extends Component {
       shiftX: this.calculateIndent(this.state.current),
       containerWidth,
       min: this.calcMin({ layerWidth, containerWidth, viewportWidth, slides }),
-      max: this.calcMax({ layerWidth, containerWidth, viewportWidth, slides }),
+      max: this.calcMax({ viewportWidth, slides }),
       animation: false
     }, () => {
       window.requestAnimationFrame(() => this.setState({ animation: true }));
@@ -296,12 +312,14 @@ export default class Gallery extends Component {
   };
 
   setTimeout = (duration) => {
-    this.timeout = setTimeout(() => {
-      const { slides, current } = this.state;
-      const targetIndex = current < slides.length - 1 ? current + 1 : 0;
+    if (canUseDOM) {
+      this.timeout = window.setTimeout(() => {
+        const { slides, current } = this.state;
+        const targetIndex = current < slides.length - 1 ? current + 1 : 0;
 
-      this.go(targetIndex);
-    }, duration);
+        this.go(targetIndex);
+      }, duration);
+    }
   };
 
   clearTimeout = () => {
@@ -392,6 +410,7 @@ export default class Gallery extends Component {
       align,
       bullets,
       className,
+      platform,
       ...restProps
     } = this.props;
 
@@ -405,7 +424,7 @@ export default class Gallery extends Component {
     };
 
     return (
-      <div className={classNames(baseClassNames, className, `Gallery--${align}`, {
+      <div className={classNames(getClassName('Gallery', platform), className, `Gallery--${align}`, {
         'Gallery--dragging': dragging,
         'Gallery--custom-width': slideWidth === 'custom'
       })} {...restProps} ref={this.container}>
@@ -421,13 +440,18 @@ export default class Gallery extends Component {
         </Touch>
 
         {bullets &&
-          <div className={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
-            {this.slides.map((item, index) => (
-              <div className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })} key={index} />
-            ))}
-          </div>
+        <div className={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
+          {this.slides.map((_item, index) => (
+            <div
+              className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })}
+              key={index}
+            />
+          ))}
+        </div>
         }
       </div>
     );
   }
 }
+
+export default withPlatform(Gallery);
