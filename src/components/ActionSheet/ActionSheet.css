@@ -3,32 +3,39 @@
   overflow: hidden;
   }
 
-  .ActionSheet--android::before,
-  .ActionSheet--ios .ActionSheet__header::before,
-  .ActionSheet--ios .ActionSheetItem::before {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--modal_card_background);
-    z-index: 1;
-    content: '';
-    transition: opacity .15s ease-out, background-color .15s ease-out;
-    }
-
 .ActionSheetItem {
   position: relative;
   z-index: 2;
   overflow: hidden;
+  display: flex;
+  align-items: center;
   }
+
+  .ActionSheetItem__container,
+  .ActionSheetItem__before {
+    position: relative;
+    z-index: 2;
+    }
+
+  .ActionSheetItem__before {
+    flex-shrink: 0;
+    }
+
+  .ActionSheetItem__container {
+    max-width: 100%;
+    flex-grow: 1;
+    }
+
+    /*.ActionSheetItem__descr {*/
+    /*  color: var(--text_secondary);*/
+    /*  }*/
 
 /**
  * iOS version
  */
 .ActionSheet--ios {
   width: 100%;
-  animation: animation-ios-actionsheet-intro .3s var(--ios-easing);
+  animation: animation-actionsheet-intro .3s var(--ios-easing);
   padding: 10px;
   box-sizing: border-box;
   display: flex;
@@ -36,10 +43,10 @@
   align-items: stretch;
   }
 
-  .ActionSheet--ios.ActionSheet--closing {
-    transform: translateY(100%);
-    transition: transform .3s var(--ios-easing);
-    }
+.ActionSheet--ios.ActionSheet--closing {
+  transform: translateY(100%);
+  transition: transform .3s var(--ios-easing);
+  }
 
   .ActionSheet--ios .ActionSheet__header {
     box-sizing: border-box;
@@ -78,23 +85,23 @@
       }
 
 .ActionSheet--ios .ActionSheetItem {
-  padding: 16px 10px 17px;
-  text-align: center;
-  font-size: 20px;
-  position: relative;
-  overflow: hidden;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
   }
 
-  .ActionSheet--ios .ActionSheetItem.Tappable--active::before {
-    background: var(--separator_common);
-    opacity: 1;
-    transition: none;
-    }
-
-  .ActionSheet--ios .ActionSheetItem__in {
-    position: relative;
-    z-index: 2;
-    }
+.ActionSheet--ios .ActionSheet__header::before,
+.ActionSheet--ios .ActionSheetItem::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--modal_card_background);
+  z-index: 1;
+  content: '';
+  transition: opacity .15s ease-out, background-color .15s ease-out;
+  }
 
 .ActionSheet--ios .ActionSheet__header:empty + .ActionSheetItem {
   border-top-left-radius: 14px;
@@ -106,7 +113,34 @@
   border-bottom-right-radius: 14px;
   }
 
-.ActionSheet--ios .ActionSheetItem--default {
+  .ActionSheet--ios .ActionSheetItem.Tappable--active::before {
+    background: var(--separator_common);
+    opacity: 1;
+    transition: none;
+    }
+
+    .ActionSheet--ios .ActionSheetItem__container {
+      font-size: 17px;
+      line-height: 24px;
+      text-align: center;
+      padding: 2px 0;
+      }
+
+    .ActionSheet--ios .ActionSheetItem__before {
+      margin-right: 20px;
+      }
+
+    .ActionSheet--ios .ActionSheetItem__before + .ActionSheetItem__container {
+      text-align: left;
+      }
+
+    /*.ActionSheetItem__descr {*/
+    /*  font-size: 14px;*/
+    /*  line-height: 18px;*/
+    /*  margin-top: 2px;*/
+    /*  }*/
+
+.ActionSheet--ios .ActionSheetItem {
   color: var(--action_sheet_action_foreground);
   }
 
@@ -118,12 +152,13 @@
   display: block;
   width: auto;
   margin-top: 7px;
+  font-size: 17px;
   margin-bottom: var(--safe-area-inset-bottom);
-  color: var(--action_sheet_action_foreground);
-  font-weight: 600;
+  font-weight: 500;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
   order: 1;
+  text-align: center;
   }
 
 .ActionSheet--ios div.ActionSheetItem::after,
@@ -161,23 +196,27 @@
 /**
  * Android version
  */
-
 .ActionSheet--android {
-  min-width: 280px;
-  box-shadow: 0 16px 16px 0 rgba(0, 0, 0, .16), 0 0 8px 0 rgba(0, 0, 0, .12);
-  animation: animation-android-actionsheet-intro .2s ease;
-  padding: 8px 0;
+  width: calc(100% - 20px);
+  margin: 10px;
+  animation: animation-actionsheet-intro .3s var(--android-easing);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   border-radius: 12px;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .08);
+  padding: 8px 0;
+  background: var(--modal_card_background);
 }
 
-  .ActionSheet--android.ActionSheet--closing {
-    transform: scale(.95);
-    opacity: 0;
-    transition: transform .2s var(--android-easing), opacity .2s var(--android-easing);
-    }
+.ActionSheet--android.ActionSheet--closing {
+  transform: translateY(calc(100% + 20px));
+  transition: transform .3s var(--android-easing);
+  }
 
 .ActionSheet--android .ActionSheetItem {
-  padding: 14px 24px;
+  padding: 12px 24px;
   line-height: 1.25;
   font-size: 16px;
   }
@@ -186,7 +225,19 @@
   background-color: var(--action_sheet_separator);
   }
 
-.ActionSheet--android .ActionSheetItem--default {
+  .ActionSheetItem--android .ActionSheetItem__before {
+    margin-right: 18px;
+    }
+
+.ActionSheet--android .ActionSheetItem {
+  color: var(--action_sheet_action_foreground);
+  }
+
+.ActionSheet--android .ActionSheetItem__before {
+  color: var(--action_sheet_action_foreground);
+  }
+
+.ActionSheet--android .ActionSheetItem__before + .ActionSheetItem__container {
   color: var(--text_primary);
   }
 
@@ -197,24 +248,12 @@
 /**
 * Animations
 */
-@keyframes animation-ios-actionsheet-intro {
+@keyframes animation-actionsheet-intro {
   from {
     transform: translateY(100%);
     }
 
   to {
     transform: translateY(0);
-    }
-  }
-
-@keyframes animation-android-actionsheet-intro {
-  from {
-    opacity: 0;
-    transform: scale(.95);
-    }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
     }
   }
