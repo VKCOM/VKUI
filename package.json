@@ -32,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "@vkontakte/appearance": "git@github.com:VKCOM/Appearance.git#2.2",
-    "@vkontakte/icons": "^1.7.0",
+    "@vkontakte/icons": "^1.8.3",
     "@vkontakte/vk-connect": "^1.5.5",
     "autoprefixer": "^7.2.3",
     "babel-loader": "^8.0.4",
@@ -76,7 +76,7 @@
     "react": "^16.8.6",
     "@vkontakte/vk-connect": "^1.5.5",
     "prop-types": "^15.6.1",
-    "@vkontakte/icons": "^1.6.0",
+    "@vkontakte/icons": "^1.8.3",
     "@babel/runtime": "^7.5.5"
   },
   "scripts": {
