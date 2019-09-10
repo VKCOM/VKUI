@@ -146,7 +146,15 @@ module.exports = {
   ],
   propsParser(filePath, source, resolver, handlers) {
     if (/.tsx$/.test(filePath)) {
-      return require('react-docgen-typescript').withCustomConfig('./tsconfig.json', {}).parse(filePath)
+      return require('react-docgen-typescript').withCustomConfig('./tsconfig.json', {
+        propFilter(prop) {
+          if (prop.parent) {
+            return !prop.parent.fileName.includes('node_modules')
+          }
+
+          return true
+        },
+      }).parse(filePath)
     } else {
       return require('react-docgen').parse(source, resolver, handlers)
     }
