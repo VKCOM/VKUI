@@ -68,7 +68,7 @@ module.exports = {
         components: () => [
           '../src/components/Button/Button.tsx',
           '../src/components/CellButton/CellButton.tsx',
-          '../src/components/Div/Div.js',
+          '../src/components/Div/Div.tsx',
           '../src/components/Link/Link.js',
           '../src/components/Header/Header.js',
           '../src/components/Group/Group.js',
