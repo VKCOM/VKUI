@@ -107,7 +107,7 @@ module.exports = {
           '../src/components/Select/Select.js',
           '../src/components/SelectMimicry/SelectMimicry.js',
           '../src/components/Textarea/Textarea.js',
-          '../src/components/File/File.js'
+          '../src/components/File/File.tsx'
         ]
       }, {
         name: 'Helpers',

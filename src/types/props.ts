@@ -31,3 +31,7 @@ export interface OldRef<T> {
 export interface HasRootRef<T> {
   getRootRef?: OldRef<T> | React.RefObject<T>
 }
+
+export interface HasRef<T> {
+  getRef?: OldRef<T> | React.RefObject<T>
+}
