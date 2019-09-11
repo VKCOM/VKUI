@@ -6,7 +6,7 @@ import withPlatform from '../../hoc/withPlatform';
 import { HasClassName, HasChildren, HasStyleObject, HasPlatform } from '../../types/props';
 import { canUseDOM } from '../../lib/dom';
 
-export interface GalleryProps extends HasChildren, HasStyleObject, HasClassName, HasPlatform {
+export interface GalleryProps extends HasStyleObject, HasChildren, HasClassName, HasPlatform {
   slideWidth?: string | number;
   autoplay?: number;
   initialSlideIndex?: number;
@@ -39,7 +39,7 @@ export interface GallerySlidesState {
   width: number
 }
 
-class Gallery extends Component<GalleryProps, GalleryState> {
+export class Gallery extends Component<GalleryProps, GalleryState> {
   constructor (props) {
     super(props);
 

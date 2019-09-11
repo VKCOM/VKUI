@@ -30,13 +30,13 @@ class Example extends React.Component {
   openBase () {
     this.setState({ popout:
       <ActionSheet onClose={() => this.setState({ popout: null })}>
-        <ActionSheetItem>
+        <ActionSheetItem autoclose>
           По дням
         </ActionSheetItem>
-        <ActionSheetItem>
+        <ActionSheetItem autoclose>
           По неделям
         </ActionSheetItem>
-        <ActionSheetItem>
+        <ActionSheetItem autoclose>
           По месяцам
         </ActionSheetItem>
         {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
@@ -47,10 +47,10 @@ class Example extends React.Component {
   openIcons () {
     this.setState({ popout:
       <ActionSheet onClose={() => this.setState({ popout: null })}>
-        <ActionSheetItem before={<Icon28Profile/>}>
+        <ActionSheetItem autoclose before={<Icon28Profile/>}>
           Редактировать профиль
         </ActionSheetItem>
-        <ActionSheetItem before={<Icon28CameraOutline/>}>
+        <ActionSheetItem autoclose before={<Icon28CameraOutline/>}>
           Изменить фотографию
         </ActionSheetItem>
         {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
@@ -61,10 +61,10 @@ class Example extends React.Component {
   openThemes () {
     this.setState({ popout:
       <ActionSheet onClose={() => this.setState({ popout: null })}>
-        <ActionSheetItem>
+        <ActionSheetItem autoclose>
           Редактировать
         </ActionSheetItem>
-        <ActionSheetItem theme="destructive">
+        <ActionSheetItem autoclose theme="destructive">
           Выйти
         </ActionSheetItem>
         {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}

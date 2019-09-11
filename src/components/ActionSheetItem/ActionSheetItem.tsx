@@ -29,7 +29,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
     <Tappable
       {...restProps}
       className={
-        classNames(getClassName('ActionSheetItem', platform), className, {[`ActionSheetItem--${theme}`]: true})
+        classNames(getClassName('ActionSheetItem', platform), className, `ActionSheetItem--${theme}`)
       }
       component={theme === 'cancel' ? 'span' : 'div'}
     >
