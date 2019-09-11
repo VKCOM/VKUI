@@ -3,10 +3,10 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
 import CellButton from '../CellButton/CellButton';
-import { HasChildren, HasClassName, HasStyleObject } from '../../types/props';
+import { HasChildren } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface ButtonProps extends HasStyleObject, HasChildren, HasClassName {
+export interface ButtonProps extends React.HTMLAttributes<HTMLElement>, HasChildren {
   /**
    * Значения `1`, `2`, `3`, `sell`, `buy` устарели. Маппинг на новые значения находится в
    * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в 3.0.0
