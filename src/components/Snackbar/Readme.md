@@ -53,7 +53,7 @@ class SnackBarExample extends React.Component {
     this.setState({ snackbar:
       <Snackbar
         onClose={() => this.setState({ snackbar: null })}
-        action={{ title: 'Добавить метку', onClick: () => {} }}
+        action="Добавить метку"
         before={<Avatar size={24} style={orangeBackground}><Icon24Favorite fill="#fff" width={14} height={14} /></Avatar>}
       >
         Ссылка сохранена в закладки
@@ -67,7 +67,7 @@ class SnackBarExample extends React.Component {
       <Snackbar
         layout="vertical"
         onClose={() => this.setState({ snackbar: null })}
-        action={{ title: 'Подробнее', onClick: () => {} }}
+        action="Подробнее"
         before={<Avatar size={24} style={orangeBackground}><Icon24Favorite fill="#fff" width={14} height={14} /></Avatar>}
       >
         Ссылка сохранена в закладки. Все отметки «Нравится» переместились в новости
@@ -82,7 +82,7 @@ class SnackBarExample extends React.Component {
       <Snackbar
         layout="vertical"
         onClose={() => this.setState({ snackbar: null })}
-        action={{ title: 'Отменить', onClick: () => {} }}
+        action="Отменить"
         after={<Avatar src="https://sun9-20.userapi.com/c846018/v846018136/164bc/XoLIN4P5Kb0.jpg?ava=1" size={32} />}
       >
         Отправлено Ивану Барышеву

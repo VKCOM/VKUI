@@ -11,16 +11,17 @@ import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 
-export interface SnackbarAction {
-  title: string | React.ComponentType,
-  onClick: (e: Event) => {};
-}
-
 export interface SnackbarProps extends HasChildren, HasClassName, HasPlatform {
   /**
-   * Кнопка в уведомлении, `{ title: string, onClick: function }`
+   * Название кнопки действия в уведомлении
    */
-  action?: SnackbarAction,
+  action?: string | React.ComponentType,
+
+  /**
+   * Будет вызвано при клике на кнопку действия
+   */
+  onActionClick?: (e: Event) => {},
+
   /**
    * Цветная иконка 24x24 пикселя
    */
@@ -112,8 +113,9 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   onActionClick = (e) => {
     this.close();
-    if (this.props.action && typeof this.props.action.onClick === 'function') {
-      this.props.action.onClick(e);
+
+    if (this.props.action && typeof this.props.onActionClick === 'function') {
+      this.props.onActionClick(e);
     }
   };
 
@@ -230,7 +232,7 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
               {action &&
               <button className="Snackbar__action" onClick={this.onActionClick}>
-                <div className="Snackbar__action-self">{action.title}</div>
+                <div className="Snackbar__action-self">{action}</div>
               </button>}
             </div>
 
