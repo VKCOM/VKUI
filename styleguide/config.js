@@ -50,8 +50,8 @@ module.exports = {
         name: 'Popouts',
         components: () => [
           '../src/components/PopoutWrapper/PopoutWrapper.js',
-          '../src/components/ActionSheet/ActionSheet.js',
-          '../src/components/ActionSheetItem/ActionSheetItem.js',
+          '../src/components/ActionSheet/ActionSheet.tsx',
+          '../src/components/ActionSheetItem/ActionSheetItem.tsx',
           '../src/components/Alert/Alert.js',
           '../src/components/ScreenSpinner/ScreenSpinner.js',
           '../src/components/Snackbar/Snackbar.tsx'
@@ -68,7 +68,7 @@ module.exports = {
         name: 'Blocks',
         components: () => [
           '../src/components/Button/Button.tsx',
-          '../src/components/CellButton/CellButton.js',
+          '../src/components/CellButton/CellButton.tsx',
           '../src/components/Div/Div.js',
           '../src/components/Link/Link.js',
           '../src/components/Header/Header.js',
@@ -147,7 +147,15 @@ module.exports = {
   ],
   propsParser(filePath, source, resolver, handlers) {
     if (/.tsx$/.test(filePath)) {
-      return require('react-docgen-typescript').withCustomConfig('./tsconfig.json', {}).parse(filePath)
+      return require('react-docgen-typescript').withCustomConfig('./tsconfig.json', {
+        propFilter(prop) {
+          if (prop.parent) {
+            return !prop.parent.fileName.includes('node_modules')
+          }
+
+          return true
+        },
+      }).parse(filePath)
     } else {
       return require('react-docgen').parse(source, resolver, handlers)
     }
