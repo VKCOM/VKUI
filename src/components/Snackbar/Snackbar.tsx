@@ -17,14 +17,29 @@ export interface SnackbarAction {
 }
 
 export interface SnackbarProps extends HasChildren, HasClassName, HasPlatform {
+  /**
+   * Кнопка в уведомлении, `{ title: string, onClick: function }`
+   */
   action?: SnackbarAction,
+  /**
+   * Цветная иконка 24x24 пикселя
+   */
   before?: React.ComponentType,
+  /**
+   * Контент в правой части, может быть `<Avatar size={32} />`
+   */
   after?: React.ComponentType,
+  /**
+   * Варианты расположения кнопки
+   */
   layout?: 'vertical' | 'horizontal',
   /**
    * Время в миллисекундах, через которое плашка скроется
    */
   duration?: number,
+  /**
+   * Обработчик закрытия уведомления
+   */
   onClose: () => {}
 }
 
@@ -50,7 +65,7 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
   }
 
   static defaultProps = {
-    duration: 3000000
+    duration: 4000
   };
 
   static contextTypes = {

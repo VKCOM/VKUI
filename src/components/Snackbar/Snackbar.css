@@ -108,13 +108,3 @@
 .Snackbar--android .Snackbar__body {
   border-radius: 8px;
 }
-
-@keyframes animation-snackbar-intro {
-  from {
-    transform: translateY(100%);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
