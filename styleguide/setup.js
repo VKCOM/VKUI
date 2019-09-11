@@ -42,6 +42,7 @@ import Icon56MoneyTransferOutline from '@vkontakte/icons/dist/56/money_transfer_
 import Icon24Filter from '@vkontakte/icons/dist/24/filter';
 import Icon24Notification from '@vkontakte/icons/dist/24/notification';
 import Icon24DoNotDisturb from '@vkontakte/icons/dist/24/do_not_disturb';
+import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon28CameraOutline from '@vkontakte/icons/dist/28/camera_outline';
 import Icon28Profile from '@vkontakte/icons/dist/28/profile';
 
@@ -93,6 +94,7 @@ window.Icon56MoneyTransferOutline = Icon56MoneyTransferOutline;
 window.Icon24Filter = Icon24Filter;
 window.Icon24Notification = Icon24Notification;
 window.Icon24DoNotDisturb = Icon24DoNotDisturb;
+window.Icon16Done = Icon16Done;
 window.Icon28CameraOutline = Icon28CameraOutline;
 window.Icon28Profile = Icon28Profile;
 

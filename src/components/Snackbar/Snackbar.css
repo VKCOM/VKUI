@@ -1,0 +1,110 @@
+.Snackbar {
+  user-select: none;
+}
+
+.Snackbar__in {
+  padding: 10px;
+  transition: transform 440ms ease-out;
+  transform: translateY(140%);
+}
+
+.Snackbar--ios .Snackbar__in,
+.Snackbar--ios .Snackbar__body {
+  transition: transform 340ms var(--ios-easing), box-shadow 200ms ease-out;
+}
+
+.Snackbar--android .Snackbar__in,
+.Snackbar--android .Snackbar__body {
+  transition: transform 340ms var(--android-easing), box-shadow 200ms ease-out;
+}
+
+.Snackbar--open .Snackbar__in {
+  transition: transform 340ms var(--ios-easing);
+  transform: translateY(0);
+}
+
+.Snackbar__body {
+  box-sizing: border-box;
+  padding: 12px 16px;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  background: var(--modal_card_background);
+  box-shadow: none;
+}
+
+.Snackbar--open .Snackbar__body {
+  box-shadow: 0 0 24px 0 rgba(0, 0, 0, .24), 0 0 2px 0 rgba(0, 0, 0, .08);
+}
+
+.Snackbar--touched .Snackbar__body {
+  transition: none;
+}
+
+.Snackbar__before {
+  margin-left: -4px;
+  margin-right: 12px;
+}
+
+.Snackbar__after {
+  margin-right: -4px;
+  margin-left: 12px;
+}
+
+.Snackbar__content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.Snackbar--l-vertical .Snackbar__content {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Snackbar__content-text {
+  flex: 1;
+}
+
+.Snackbar__content-text {
+  color: var(--text_primary);
+  font-size: 15px;
+  line-height: 19px;
+}
+
+.Snackbar__action {
+  font-family: inherit;
+  display: inline-block;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  user-select: none;
+  font-size: 14px;
+  line-height: 30px;
+  font-weight: 500;
+  color: var(--accent);
+  background: none;
+  padding: 0 16px;
+  margin: 0 -16px;
+  white-space: nowrap;
+}
+
+.Snackbar__action:active {
+  opacity: .4;
+}
+
+.Snackbar--l-vertical .Snackbar__action {
+  margin-top: 2px;
+  margin-bottom: -6px;
+}
+
+/* iOS */
+.Snackbar--ios .Snackbar__body {
+  border-radius: 10px;
+}
+
+/* Android */
+.Snackbar--android .Snackbar__body {
+  border-radius: 8px;
+}
