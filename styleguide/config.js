@@ -74,7 +74,7 @@ module.exports = {
           '../src/components/Group/Group.js',
           '../src/components/Cell/Cell.js',
           '../src/components/List/List.js',
-          '../src/components/Footer/Footer.js',
+          '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.js',
           '../src/components/Switch/Switch.js',
           '../src/components/InfoRow/InfoRow.js',
