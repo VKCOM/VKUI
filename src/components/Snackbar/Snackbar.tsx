@@ -203,15 +203,14 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       after
     } = this.props;
 
-    const forceVerticalLayout = !!after;
+    const resolvedLayout = after ? 'vertical' : layout;
 
     return (
       <FixedLayout
         vertical="bottom"
-        className={classNames(getClassname('Snackbar', platform), className, {
+        className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
           'Snackbar--open': this.state.open,
-          'Snackbar--touched': this.state.touched,
-          'Snackbar--vertical-layout': forceVerticalLayout || layout === 'vertical'
+          'Snackbar--touched': this.state.touched
         })}
       >
         <Touch

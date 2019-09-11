@@ -2,7 +2,7 @@
 
 Плашка с уведомлением автоматически исчезает после какого-то времени (свойств `duration` в миллисекундах), либо же её можно скрыть смахиванием вправо.
 
-Не нужно показывать это уведомление, если в приложении каким-то другим образом видно, что действие совершено. Например, когда заменяется текст в кнопке, или в какой-то список всё добавляется.
+Не нужно показывать это уведомление, если в приложении каким-то другим образом видно, что действие совершено. Например, когда заменяется текст в кнопке, или в список на странице добавился элемент.
 
 После закрытия компонент вызывает обязательное свойство `onClose`, и вам необходимо убрать `Snackbar` со страницы.
 
@@ -21,6 +21,7 @@ class SnackBarExample extends React.Component {
     super(props);
 
     this.state = {
+      text: '',
       snackbar: null
     };
 
@@ -54,6 +55,7 @@ class SnackBarExample extends React.Component {
       <Snackbar
         onClose={() => this.setState({ snackbar: null })}
         action="Добавить метку"
+        onActionClick={() => this.setState({ text: 'Добавляем метку.' })}
         before={<Avatar size={24} style={orangeBackground}><Icon24Favorite fill="#fff" width={14} height={14} /></Avatar>}
       >
         Ссылка сохранена в закладки
@@ -68,6 +70,7 @@ class SnackBarExample extends React.Component {
         layout="vertical"
         onClose={() => this.setState({ snackbar: null })}
         action="Подробнее"
+        onActionClick={() => this.setState({ text: 'Открыта подробная информация.' })}
         before={<Avatar size={24} style={orangeBackground}><Icon24Favorite fill="#fff" width={14} height={14} /></Avatar>}
       >
         Ссылка сохранена в закладки. Все отметки «Нравится» переместились в новости
@@ -83,6 +86,7 @@ class SnackBarExample extends React.Component {
         layout="vertical"
         onClose={() => this.setState({ snackbar: null })}
         action="Отменить"
+        onActionClick={() => this.setState({ text: 'Сообщение Ивану было отменено.' })}
         after={<Avatar src="https://sun9-20.userapi.com/c846018/v846018136/164bc/XoLIN4P5Kb0.jpg?ava=1" size={32} />}
       >
         Отправлено Ивану Барышеву
@@ -100,6 +104,8 @@ class SnackBarExample extends React.Component {
             <CellButton onClick={this.openLongText}>Уведомление с вертикальной разметкой и длинным текстом</CellButton>
             <CellButton onClick={this.openWithAvatar}>Уведомление с аватаркой</CellButton>
           </Group>
+
+          {this.state.text && <Group><Div>{this.state.text}</Div></Group>}
 
           {this.state.snackbar}
         </Panel>

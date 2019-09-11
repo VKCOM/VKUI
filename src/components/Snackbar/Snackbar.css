@@ -57,7 +57,7 @@
   align-items: center;
 }
 
-.Snackbar--vertical-layout .Snackbar__content {
+.Snackbar--l-vertical .Snackbar__content {
   flex-direction: column;
   align-items: flex-start;
 }
@@ -94,7 +94,7 @@
   opacity: .4;
 }
 
-.Snackbar--vertical-layout .Snackbar__action {
+.Snackbar--l-vertical .Snackbar__action {
   margin-top: 2px;
   margin-bottom: -6px;
 }
