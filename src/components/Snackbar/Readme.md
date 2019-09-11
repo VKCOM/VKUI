@@ -8,28 +8,13 @@
 
 ```jsx
 
-const snackbarIconStyle = {
-  width: 24,
-  height: 24,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: 12
-};
-
 const orangeBackground = {
-  backgroundImage: 'linear-gradient(135deg, #ffb73d, #ffa000)',
-  color: '#fff'
+  backgroundImage: 'linear-gradient(135deg, #ffb73d, #ffa000)'
 };
 
 const blueBackground = {
-  backgroundColor: 'var(--accent)',
-  color: '#fff'
+  backgroundColor: 'var(--accent)'
 };
-
-function SnackbarIcon({ style, children }) {
-  return <div style={{ ...snackbarIconStyle, ...style }}>{children}</div>;
-}
 
 class SnackBarExample extends React.Component {
   constructor(props) {
@@ -56,7 +41,7 @@ class SnackBarExample extends React.Component {
       <Snackbar
         layout="vertical"
         onClose={() => this.setState({ snackbar: null })}
-        before={<SnackbarIcon style={blueBackground}><Icon16Done width={14} height={14} /></SnackbarIcon>}
+        before={<Avatar size={24} style={blueBackground}><Icon16Done fill="#fff" width={14} height={14} /></Avatar>}
       >
         Уведомления о подкастах включены
       </Snackbar>
@@ -69,7 +54,7 @@ class SnackBarExample extends React.Component {
       <Snackbar
         onClose={() => this.setState({ snackbar: null })}
         action={{ title: 'Добавить метку', onClick: () => {} }}
-        before={<SnackbarIcon style={orangeBackground}><Icon24Favorite width={14} height={14} /></SnackbarIcon>}
+        before={<Avatar size={24} style={orangeBackground}><Icon24Favorite fill="#fff" width={14} height={14} /></Avatar>}
       >
         Ссылка сохранена в закладки
       </Snackbar>
@@ -83,7 +68,7 @@ class SnackBarExample extends React.Component {
         layout="vertical"
         onClose={() => this.setState({ snackbar: null })}
         action={{ title: 'Подробнее', onClick: () => {} }}
-        before={<SnackbarIcon style={orangeBackground}><Icon24Favorite width={14} height={14} /></SnackbarIcon>}
+        before={<Avatar size={24} style={orangeBackground}><Icon24Favorite fill="#fff" width={14} height={14} /></Avatar>}
       >
         Ссылка сохранена в закладки. Все отметки «Нравится» переместились в новости
         под вкладкой «Понравилось».
