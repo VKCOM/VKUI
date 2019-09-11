@@ -102,7 +102,7 @@ module.exports = {
           '../src/components/Slider/Slider.js',
           '../src/components/RangeSlider/RangeSlider.js',
           '../src/components/Radio/Radio.js',
-          '../src/components/Checkbox/Checkbox.js',
+          '../src/components/Checkbox/Checkbox.tsx',
           '../src/components/Input/Input.js',
           '../src/components/Select/Select.js',
           '../src/components/SelectMimicry/SelectMimicry.js',
