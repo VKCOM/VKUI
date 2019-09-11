@@ -28,6 +28,7 @@
 @import '../components/ActionSheet/ActionSheet.css';
 @import '../components/Alert/Alert.css';
 @import '../components/ScreenSpinner/ScreenSpinner.css';
+@import '../components/Snackbar/Snackbar.css';
 
 /* Modals */
 @import '../components/ModalRoot/ModalRoot.css';

@@ -53,7 +53,8 @@ module.exports = {
           '../src/components/ActionSheet/ActionSheet.js',
           '../src/components/ActionSheetItem/ActionSheetItem.js',
           '../src/components/Alert/Alert.js',
-          '../src/components/ScreenSpinner/ScreenSpinner.js'
+          '../src/components/ScreenSpinner/ScreenSpinner.js',
+          '../src/components/Snackbar/Snackbar.tsx'
         ]
       }, {
         name: 'Modals',

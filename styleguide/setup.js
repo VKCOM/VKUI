@@ -42,6 +42,7 @@ import Icon56MoneyTransferOutline from '@vkontakte/icons/dist/56/money_transfer_
 import Icon24Filter from '@vkontakte/icons/dist/24/filter';
 import Icon24Notification from '@vkontakte/icons/dist/24/notification';
 import Icon24DoNotDisturb from '@vkontakte/icons/dist/24/do_not_disturb';
+import Icon16Done from '@vkontakte/icons/dist/16/done';
 
 import pkg from '../package';
 
@@ -91,6 +92,7 @@ window.Icon56MoneyTransferOutline = Icon56MoneyTransferOutline;
 window.Icon24Filter = Icon24Filter;
 window.Icon24Notification = Icon24Notification;
 window.Icon24DoNotDisturb = Icon24DoNotDisturb;
+window.Icon16Done = Icon16Done;
 
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;
