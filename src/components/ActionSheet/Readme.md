@@ -4,13 +4,12 @@ ActionSheet – имитация [нативного компонента](https
 
 **Важно**
 
-* Нужно обязательно передать onClose для обработки закрытия ActionSheet изнутри.
-* Согласно гайдлайнам Apple, в ActionSheet должен быть элемент для закрытия.
+* Нужно обязательно передать `onClose` для обработки закрытия `ActionSheet` изнутри.
+* Согласно гайдлайнам Apple, в `ActionSheet` должен быть элемент для закрытия.
 В коде примера ниже можно посмотреть, как добавить такой элемент.
-Для Android версии такой элемент не нужен.
+Для Android версии он не нужен.
 
-```
-
+```jsx harmony
 class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -19,39 +18,69 @@ class Example extends React.Component {
       popout: null
     }
 
-    this.openSheet = this.openSheet.bind(this);
-    this.periodItems = ['По дням', 'По неделям', 'По месяцам'];
+    this.openBase = this.openBase.bind(this);
+    this.openIcons = this.openIcons.bind(this);
+    this.openThemes = this.openThemes.bind(this);
   }
 
   componentDidMount() {
-    this.openSheet()
+    this.openBase();
   }
 
-  getPeriodItems() {
-    return this.periodItems.map((name) => (
-      <ActionSheetItem autoclose key={name}>{name}</ActionSheetItem>
-    ));
-  }
-
-  openSheet () {
+  openBase () {
     this.setState({ popout:
-      <ActionSheet
-        onClose={() => this.setState({ popout: null })}
-        title="Hi!"
-        text="I am action sheet"
-      >
-        {this.getPeriodItems()}
-        <ActionSheetItem autoclose theme="destructive">Деструктивный пункт</ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Cancel</ActionSheetItem>}
+      <ActionSheet onClose={() => this.setState({ popout: null })}>
+        <ActionSheetItem autoclose>
+          По дням
+        </ActionSheetItem>
+        <ActionSheetItem autoclose>
+          По неделям
+        </ActionSheetItem>
+        <ActionSheetItem autoclose>
+          По месяцам
+        </ActionSheetItem>
+        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }
+
+  openIcons () {
+    this.setState({ popout:
+      <ActionSheet onClose={() => this.setState({ popout: null })}>
+        <ActionSheetItem autoclose before={<Icon28Profile/>}>
+          Редактировать профиль
+        </ActionSheetItem>
+        <ActionSheetItem autoclose before={<Icon28CameraOutline/>}>
+          Изменить фотографию
+        </ActionSheetItem>
+        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
+      </ActionSheet>
+    });
+  }
+
+  openThemes () {
+    this.setState({ popout:
+      <ActionSheet onClose={() => this.setState({ popout: null })}>
+        <ActionSheetItem autoclose>
+          Редактировать
+        </ActionSheetItem>
+        <ActionSheetItem autoclose theme="destructive">
+          Выйти
+        </ActionSheetItem>
+        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
+      </ActionSheet>
+    });
+  }
+
+
 
   render() {
     return (
       <View popout={this.state.popout} header={false} activePanel="panel">
         <Panel id="panel">
-          <CellButton onClick={this.openSheet}>Open Sheet</CellButton>
+          <CellButton onClick={this.openBase}>Базовый список</CellButton>
+          <CellButton onClick={this.openIcons}>Список с иконками</CellButton>
+          <CellButton onClick={this.openThemes}>Темы</CellButton>
         </Panel>
       </View>
     )

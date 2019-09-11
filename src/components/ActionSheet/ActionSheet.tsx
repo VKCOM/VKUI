@@ -1,38 +1,44 @@
-import React, { Children } from 'react';
-import PropTypes from 'prop-types';
+import React, { Children, Component } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
+import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
+import { HasChildren, HasClassName, HasStyleObject, HasPlatform } from '../../types/props';
+import { ANDROID, IOS } from '../../lib/platform';
 
-const baseClassNames = getClassName('ActionSheet');
+export interface InsetsInterface {
+  bottom?: number
+}
 
-class ActionSheet extends React.Component {
+export interface ActionSheetProps extends HasStyleObject, HasChildren, HasClassName, HasPlatform {
+  /**
+   * iOS only
+   */
+  title?: React.ReactNode,
+  /**
+   * iOS only
+   */
+  text?: React.ReactNode,
+  onClose(): void,
+  /**
+   * @ignore
+   */
+  insets: InsetsInterface
+}
+
+export interface ActionSheetState {
+  closing: boolean
+}
+
+export class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   state = {
     closing: false
   };
 
-  static propTypes = {
-    /**
-     * iOS only
-     */
-    title: PropTypes.node,
-    /**
-     * iOS only
-     */
-    text: PropTypes.node,
-    onClose: PropTypes.func.isRequired,
-    style: PropTypes.object,
-    children: PropTypes.node,
-    className: PropTypes.string,
-    /**
-     * @ignore
-     */
-    insets: PropTypes.object
-  };
+  el: HTMLDivElement
 
   onClose = () => {
     this.setState({ closing: true });
@@ -64,34 +70,39 @@ class ActionSheet extends React.Component {
       this.el.removeEventListener(eventName, eventHandler);
       this.el.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 200 : 300);
+      setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 200 : 300);
     }
   }
 
   render () {
-    const { children, className, title, text, style, insets, ...restProps } = this.props;
+    const { children, className, title, text, style, insets, platform, ...restProps } = this.props;
 
     return (
       <PopoutWrapper
         closing={this.state.closing}
-        v={IS_PLATFORM_IOS ? 'bottom' : 'center'}
+        v="bottom"
         h="center"
         className={className}
         style={style}
         onClick={this.onClose}
       >
-        <div {...restProps} ref={this.getRef} onClick={this.stopPropagation} className={classNames(baseClassNames, {
-          'ActionSheet--closing': this.state.closing
-        })}>
-          {IS_PLATFORM_IOS &&
+        <div
+          {...restProps}
+          ref={this.getRef}
+          onClick={this.stopPropagation}
+          className={classNames(getClassName('ActionSheet', platform), {
+            'ActionSheet--closing': this.state.closing
+          })}
+        >
+          {platform === IOS &&
           <header className="ActionSheet__header">
             {title && <div className="ActionSheet__title">{title}</div>}
             {text && <div className="ActionSheet__text">{text}</div>}
           </header>
           }
-          {Children.toArray(children).map((Child, index, arr) => (
-            Child && React.cloneElement(Child, {
-              onClick: this.onItemClick(Child.props.onClick, Child.props.autoclose),
+          {Children.toArray(children).map((child: React.ReactElement, index, arr) => (
+            child && React.cloneElement(child, {
+              onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
               style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null
             })
           ))}
@@ -101,4 +112,4 @@ class ActionSheet extends React.Component {
   }
 }
 
-export default withInsets(ActionSheet);
+export default withPlatform(withInsets(ActionSheet));

@@ -9,7 +9,7 @@ export interface HasClassName {
   className?: string | number | ObjectClassNames;
 }
 
-export interface HasStyleObject extends HasClassName {
+export interface HasStyleObject {
   style?: React.CSSProperties;
 }
 
@@ -18,5 +18,8 @@ export interface HasChildren {
 }
 
 export interface HasPlatform {
-  platform: OS
+  /**
+   * @ignore
+   */
+  platform?: OS;
 }
