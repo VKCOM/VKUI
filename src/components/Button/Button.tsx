@@ -22,7 +22,8 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLElement>, HasChild
   stretched?: boolean,
   before?: React.ReactNode,
   after?: React.ReactNode,
-  component?: string | React.ComponentType
+  component?: string | React.ComponentType,
+  stopPropagation?: boolean
 }
 
 const mapOldLevel = level => {
@@ -45,7 +46,7 @@ const mapOldLevel = level => {
 const Button: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   if (props.type === 'cell') {
-    return <CellButton {...props} />;
+    return <CellButton {...props} level={props.level === 'destructive' ? 'danger' : 'primary'}/>;
   } else {
     const { className, size, level, stretched, align, children, before, after, type, ...restProps } = props;
 
@@ -54,7 +55,7 @@ const Button: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
       [`Button--lvl-${mapOldLevel(level)}`]: true,
       [`Button--aln-${align || 'center'}`]: true,
       [`Button--str`]: stretched
-    })} stopPropagation>
+    })}>
       <div className="Button__in">
         {before && <div className="Button__before">{before}</div>}
         {children && <div className="Button__content">{children}</div>}
@@ -69,7 +70,8 @@ Button.defaultProps = {
   type: 'default',
   component: 'button',
   size: 'm',
-  stretched: false
+  stretched: false,
+  stopPropagation: true
 };
 
 export default Button;
