@@ -78,7 +78,7 @@ module.exports = {
           '../src/components/Spinner/Spinner.js',
           '../src/components/Switch/Switch.js',
           '../src/components/InfoRow/InfoRow.js',
-          '../src/components/Avatar/Avatar.js',
+          '../src/components/Avatar/Avatar.tsx',
           '../src/components/Entity/Entity.js',
           '../src/components/Gallery/Gallery.tsx',
           '../src/components/Progress/Progress.js',

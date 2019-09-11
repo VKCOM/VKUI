@@ -1,12 +1,27 @@
 import React from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import PropTypes from 'prop-types';
+import usePlatform from '../../hooks/usePlatform';
+import { HasChildren, HasRootRef } from '../../types/props';
 
-const baseClassName = getClassName('Avatar');
+export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement>, HasChildren, HasRootRef<HTMLDivElement> {
+  size?: 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28,
+  src?: string,
+  type?: 'default' | 'image' | 'app'
+}
 
-const Avatar = ({ src, size, type, style, className, children, getRootRef, ...restProps }) => {
+const Avatar: React.FunctionComponent<AvatarProps> = ({
+  src,
+  size,
+  type,
+  style,
+  className,
+  children,
+  getRootRef,
+  ...restProps
+}: AvatarProps) => {
   const Component = src ? 'img' : 'div';
+  const platform = usePlatform();
   let borderRadius;
 
   switch (type) {
@@ -22,7 +37,10 @@ const Avatar = ({ src, size, type, style, className, children, getRootRef, ...re
   }
 
   return (
-    <div className={classNames(baseClassName, className, { [`Avatar--type-${type}`]: true })} ref={getRootRef}>
+    <div
+      className={classNames(getClassName('Avatar', platform), className, `Avatar--type-${type}`)}
+      ref={getRootRef}
+    >
       <div className="Avatar__in">
         <Component
           {...restProps}
@@ -34,19 +52,6 @@ const Avatar = ({ src, size, type, style, className, children, getRootRef, ...re
       </div>
     </div>
   );
-};
-
-Avatar.propTypes = {
-  size: PropTypes.oneOf([80, 72, 64, 56, 48, 44, 40, 36, 32, 28]),
-  src: PropTypes.string,
-  style: PropTypes.object,
-  className: PropTypes.string,
-  type: PropTypes.oneOf(['default', 'image', 'app']),
-  children: PropTypes.node,
-  getRootRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ])
 };
 
 Avatar.defaultProps = {
