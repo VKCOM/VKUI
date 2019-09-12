@@ -88,11 +88,12 @@ div#root {
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   font-family: var(--font-common);
-  }
+  color: var(--text_primary);
+}
 
 body {
   overflow-x: hidden;
-  }
+}
 
 input,
 textarea,
