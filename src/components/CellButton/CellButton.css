@@ -23,14 +23,17 @@
 
 .CellButton--aln-left .CellButton__in {
   justify-content: flex-start;
+  text-align: left;
   }
 
 .CellButton--aln-center .CellButton__in {
   justify-content: center;
+  text-align: center;
   }
 
 .CellButton--aln-right .CellButton__in {
   justify-content: flex-end;
+  text-align: right;
   }
 
 .CellButton.Tappable--active {
