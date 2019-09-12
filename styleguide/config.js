@@ -69,17 +69,17 @@ module.exports = {
         components: () => [
           '../src/components/Button/Button.tsx',
           '../src/components/CellButton/CellButton.tsx',
-          '../src/components/Div/Div.js',
+          '../src/components/Div/Div.tsx',
           '../src/components/Link/Link.js',
           '../src/components/Header/Header.js',
           '../src/components/Group/Group.js',
           '../src/components/Cell/Cell.js',
           '../src/components/List/List.js',
-          '../src/components/Footer/Footer.js',
+          '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.js',
           '../src/components/Switch/Switch.js',
           '../src/components/InfoRow/InfoRow.js',
-          '../src/components/Avatar/Avatar.js',
+          '../src/components/Avatar/Avatar.tsx',
           '../src/components/Entity/Entity.js',
           '../src/components/Gallery/Gallery.tsx',
           '../src/components/Progress/Progress.js',
@@ -103,12 +103,12 @@ module.exports = {
           '../src/components/Slider/Slider.js',
           '../src/components/RangeSlider/RangeSlider.js',
           '../src/components/Radio/Radio.js',
-          '../src/components/Checkbox/Checkbox.js',
+          '../src/components/Checkbox/Checkbox.tsx',
           '../src/components/Input/Input.js',
           '../src/components/Select/Select.js',
           '../src/components/SelectMimicry/SelectMimicry.js',
           '../src/components/Textarea/Textarea.js',
-          '../src/components/File/File.js'
+          '../src/components/File/File.tsx'
         ]
       }, {
         name: 'Helpers',

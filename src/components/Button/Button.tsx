@@ -3,10 +3,10 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
 import CellButton from '../CellButton/CellButton';
-import { HasChildren } from '../../types/props';
+import { HasChildren, HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface ButtonProps extends React.HTMLAttributes<HTMLElement>, HasChildren {
+export interface ButtonProps extends React.HTMLAttributes<HTMLElement>, HasChildren, HasRootRef<HTMLElement> {
   /**
    * Значения `1`, `2`, `3`, `sell`, `buy` устарели. Маппинг на новые значения находится в
    * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в 3.0.0
@@ -48,14 +48,14 @@ const Button: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   if (props.type === 'cell') {
     return <CellButton {...props} level={props.level === 'destructive' ? 'danger' : 'primary'}/>;
   } else {
-    const { className, size, level, stretched, align, children, before, after, type, ...restProps } = props;
+    const { className, size, level, stretched, align, children, before, after, type, getRootRef, ...restProps } = props;
 
     return <Tappable {...restProps} className={classNames(getClassName('Button', platform), className, {
       [`Button--sz-${size}`]: true,
       [`Button--lvl-${mapOldLevel(level)}`]: true,
       [`Button--aln-${align || 'center'}`]: true,
       [`Button--str`]: stretched
-    })}>
+    })} getRootRef={getRootRef}>
       <div className="Button__in">
         {before && <div className="Button__before">{before}</div>}
         {children && <div className="Button__content">{children}</div>}

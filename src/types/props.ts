@@ -23,3 +23,15 @@ export interface HasPlatform {
    */
   platform?: OS;
 }
+
+export interface OldRef<T> {
+  (el: T): void
+}
+
+export interface HasRootRef<T> {
+  getRootRef?: OldRef<T> | React.RefObject<T>
+}
+
+export interface HasRef<T> {
+  getRef?: OldRef<T> | React.RefObject<T>
+}
