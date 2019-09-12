@@ -1,29 +1,88 @@
-
-import React, { Component } from 'react';
+import React, { Component, CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
 import transitionEvents from '../../lib/transitionEvents';
 import getClassName from '../../helpers/getClassName';
-import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { IOS, ANDROID } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { baseClassNames as panelHeaderClasses } from '../PanelHeader/PanelHeader';
-
-const baseClassNames = getClassName('View');
+import { HasChildren, HasPlatform } from '../../types/props';
+import withPlatform from '../../hoc/withPlatform';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
 
-let scrollsCache = {};
+enum SwipeBackResults { fail = 1, success}
+
+interface Scrolls {
+  [index: string]: number
+}
+
+interface ViewsScrolls {
+  [index: string]: Scrolls
+}
+
+interface AnimationEventHandler {
+  (e?: AnimationEvent): void
+}
+
+interface TransitionEventHandler {
+  (e?: TransitionEvent): void
+}
+
+interface HeaderSwipeStyles {
+  title?: CSSProperties;
+  bg?: CSSProperties;
+  left?: CSSProperties;
+  addon?: CSSProperties;
+  right?: CSSProperties;
+}
+
+let scrollsCache:ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
-export default class View extends Component {
+export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform {
+  activePanel: string
+  header?: boolean;
+  popout?: ReactNode;
+  modal?: ReactNode;
+  onTransition?(params: { isBack: boolean, from: string, to: string }): void;
+  onSwipeBack?(): void;
+  onSwipeBackStart?(): void;
+  history?: string[];
+  id?: string;
+}
+
+export interface ViewState {
+  scrolls: Scrolls;
+  animated: boolean;
+  startT?: number,
+
+  visiblePanels: string[];
+  activePanel: string;
+  isBack: boolean;
+  prevPanel: string;
+  nextPanel: string;
+
+  swipingBack: boolean;
+  swipebackStartX: number;
+  swipeBackShift: number;
+  swipeBackNextPanel: string;
+  swipeBackPrevPanel: string;
+  swipeBackResult: SwipeBackResults;
+
+  browserSwipe: boolean;
+}
+
+export class View extends Component<ViewProps, ViewState> {
   constructor (props) {
     super(props);
     this.state = {
       scrolls: scrollsCache[props.id] || {},
+      animated: false,
 
       visiblePanels: [props.activePanel],
       activePanel: props.activePanel,
@@ -36,34 +95,13 @@ export default class View extends Component {
       swipeBackShift: 0,
       swipeBackNextPanel: null,
       swipeBackPrevPanel: null,
-      swipingBackFinish: null,
+      swipeBackResult: null,
 
       browserSwipe: false
     };
   }
 
-  static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-    activePanel: PropTypes.string,
-    header: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-    children: PropTypes.node,
-    popout: PropTypes.node,
-    modal: PropTypes.node,
-    onTransition: PropTypes.func,
-    onSwipeBack: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onSwipeBackStart: PropTypes.func,
-    history: PropTypes.arrayOf(PropTypes.string),
-    id: PropTypes.string
-  };
-
   static defaultProps = {
-    style: {},
-    children: null,
-    popout: null,
     header: true,
     history: []
   };
@@ -130,7 +168,7 @@ export default class View extends Component {
         swipeBackPrevPanel: null,
         swipeBackNextPanel: null,
         swipingBack: false,
-        swipingBackFinish: null,
+        swipeBackResult: null,
         swipebackStartX: 0,
         swipeBackShift: 0,
         activePanel: nextPanel,
@@ -170,12 +208,12 @@ export default class View extends Component {
     }
 
     // Началась анимация завершения свайпа назад.
-    if (prevState.swipingBackFinish === null && this.state.swipingBackFinish !== null) {
+    if (!prevState.swipeBackResult && this.state.swipeBackResult) {
       this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
     }
 
     // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
-    if (prevState.swipingBackFinish === false && this.state.swipingBackFinish === null) {
+    if (prevState.swipeBackResult === SwipeBackResults.fail && !this.state.swipeBackResult) {
       this.window.scrollTo(0, scrolls[this.state.activePanel]);
     }
 
@@ -192,35 +230,35 @@ export default class View extends Component {
     }
   }
 
-  waitTransitionFinish (elem, eventHandler) {
+  waitTransitionFinish(elem: HTMLElement, eventHandler: TransitionEventHandler): void {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
+      setTimeout(() => eventHandler(), this.props.platform === ANDROID ? 300 : 600);
     }
   }
 
-  waitAnimationFinish (elem, eventHandler) {
+  waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEventHandler): void {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
 
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
+      setTimeout(() => eventHandler(), this.props.platform === ANDROID ? 300 : 600);
     }
   }
 
-  blurActiveElement () {
+  blurActiveElement(): void {
     if (typeof this.window !== 'undefined' && this.document.activeElement) {
       this.document.activeElement.blur();
     }
   }
 
-  pickPanel (id) {
+  pickPanel(id: string): HTMLElement {
     const elem = this.document.getElementById(id);
 
     if (!elem) {
@@ -230,13 +268,13 @@ export default class View extends Component {
     return elem && elem.parentNode.parentNode;
   }
 
-  transitionEndHandler = (e = { manual: true }) => {
-    if ([
+  transitionEndHandler = (e?: AnimationEvent): void => {
+    if (!e || [
       'animation-ios-next-forward',
       'animation-ios-prev-back',
       'animation-android-next-forward',
       'animation-android-prev-back'
-    ].indexOf(e.animationName) > -1 || e.manual) {
+    ].indexOf(e.animationName) > -1) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
       const prevPanel = this.state.prevPanel;
@@ -249,30 +287,37 @@ export default class View extends Component {
         animated: false,
         isBack: undefined,
         scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls
-      }, function () {
+      }, () => {
         isBack && this.window.scrollTo(0, this.state.scrolls[activePanel]);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
       });
     }
   };
 
-  swipingBackTransitionEndHandler = (e) => {
+  swipingBackTransitionEndHandler = (e?: TransitionEvent): void => {
     // indexOf because of vendor prefixes in old browsers
-    if (e.propertyName.indexOf('transform') >= 0 && e.target.classList.contains('View__panel--swipe-back-next')) {
-      this.state.swipingBackFinish ? this.onSwipeBackSuccess() : this.onSwipeBackCancel();
+    const target = e.target as HTMLElement;
+    if (e.propertyName.indexOf('transform') >= 0 && target.classList.contains('View__panel--swipe-back-next')) {
+      switch (this.state.swipeBackResult) {
+        case SwipeBackResults.fail:
+          this.onSwipeBackCancel();
+          break;
+        case SwipeBackResults.success:
+          this.onSwipeBackSuccess();
+      }
     }
   };
 
-  onSwipeBackSuccess () {
+  onSwipeBackSuccess(): void {
     this.props.onSwipeBack && this.props.onSwipeBack();
   }
 
-  onSwipeBackCancel () {
+  onSwipeBackCancel(): void {
     this.setState({
       swipeBackPrevPanel: null,
       swipeBackNextPanel: null,
       swipingBack: false,
-      swipingBackFinish: null,
+      swipeBackResult: null,
       swipebackStartX: 0,
       swipeBackShift: 0
     }, () => {
@@ -280,7 +325,7 @@ export default class View extends Component {
     });
   }
 
-  onScrollTop = () => {
+  onScrollTop = (): void => {
     const { activePanel } = this.state;
 
     if (activePanel) {
@@ -298,16 +343,18 @@ export default class View extends Component {
     }
   };
 
-  onMoveX = (e) => {
+  onMoveX = (e): void => {
     if (swipeBackExcludedTags.indexOf(e.originalEvent.target.tagName.toLowerCase()) > -1) {
       return;
     }
 
-    if (IS_PLATFORM_IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
+    const { platform } = this.props;
+
+    if (platform === IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
       this.setState({ browserSwipe: true });
     }
 
-    if (IS_PLATFORM_IOS && this.context.isWebView && this.props.onSwipeBack) {
+    if (platform === IOS && this.context.isWebView && this.props.onSwipeBack) {
       if (this.state.animated && e.startX <= 70) {
         return;
       }
@@ -339,20 +386,22 @@ export default class View extends Component {
     }
   };
 
-  onEnd = () => {
+  onEnd = (): void => {
     if (this.state.swipingBack) {
-      const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
+      const speed = this.state.swipeBackShift / (Date.now() - this.state.startT) * 1000;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
         this.onSwipeBackSuccess();
+      } else if (speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > this.window.innerWidth / 2) {
+        this.setState({ swipeBackResult: SwipeBackResults.success });
       } else {
-        this.setState({ swipingBackFinish: speed > 250 || this.state.swipebackStartX + this.state.swipeBackShift > this.window.innerWidth / 2 });
+        this.setState({ swipeBackResult: SwipeBackResults.fail });
       }
     }
   };
 
-  getRef = (c) => {
+  getRef = (c): void => {
     if (c && c.container && c.id) {
       let el = c;
 
@@ -364,11 +413,11 @@ export default class View extends Component {
     }
   };
 
-  calcPanelSwipeStyles (panelId) {
+  calcPanelSwipeStyles(panelId: string): CSSProperties {
     const isPrev = panelId === this.state.swipeBackPrevPanel;
     const isNext = panelId === this.state.swipeBackNextPanel;
 
-    if (!isPrev && !isNext || this.state.swipingBackFinish !== null) {
+    if (!isPrev && !isNext || this.state.swipeBackResult) {
       return {};
     }
 
@@ -376,7 +425,7 @@ export default class View extends Component {
     let nextPanelTranslate = `${-50 + (this.state.swipeBackShift * 100 / this.window.innerWidth) / 2}%`;
     let prevPanelShadow = 0.3 * (this.window.innerWidth - this.state.swipeBackShift) / this.window.innerWidth;
 
-    if (this.state.swipingBackFinish !== null) {
+    if (this.state.swipeBackResult) {
       return isPrev ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` } : {};
     }
 
@@ -397,11 +446,11 @@ export default class View extends Component {
     return {};
   }
 
-  calcHeaderSwipeStyles (panelId) {
+  calcHeaderSwipeStyles(panelId: string): HeaderSwipeStyles {
     const isPrev = panelId === this.state.swipeBackPrevPanel;
     const isNext = panelId === this.state.swipeBackNextPanel;
 
-    if (!isPrev && !isNext || this.state.swipingBackFinish !== null) {
+    if (!isPrev && !isNext || this.state.swipeBackResult !== null) {
       return {
         title: {},
         bg: {},
@@ -447,11 +496,13 @@ export default class View extends Component {
         }
       };
     }
+
+    return {};
   }
 
-  render () {
-    const { style, popout, modal, header } = this.props;
-    const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipingBackFinish } = this.state;
+  render() {
+    const { style, popout, modal, header, platform } = this.props;
+    const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult } = this.state;
 
     const hasPopout = !!popout;
     const hasModal = !!modal;
@@ -473,14 +524,14 @@ export default class View extends Component {
     return (
       <Touch
         component="section"
-        className={classNames(baseClassNames, this.props.className, modifiers)}
+        className={classNames(getClassName('View', platform), this.props.className, modifiers)}
         style={style}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
         {header && (
           <div className="View__header">
-            { IS_PLATFORM_IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
+            {platform === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} />}
             <div className={classNames(panelHeaderClasses)}>
               {panels.map(panel => {
                 const panelId = panel.props.id;
@@ -494,8 +545,8 @@ export default class View extends Component {
                       'PanelHeader__in--next': panelId === nextPanel,
                       'PanelHeader__in--swipe-back-prev': panelId === swipeBackPrevPanel,
                       'PanelHeader__in--swipe-back-next': panelId === swipeBackNextPanel,
-                      'PanelHeader__in--swipe-back-success': swipingBackFinish === true,
-                      'PanelHeader__in--swipe-back-failed': swipingBackFinish === false
+                      'PanelHeader__in--swipe-back-success': swipeBackResult === SwipeBackResults.success,
+                      'PanelHeader__in--swipe-back-failed': swipeBackResult === SwipeBackResults.fail
                     })}
                     key={panelId}
                     id={`panel-header-${panelId}`}
@@ -513,11 +564,11 @@ export default class View extends Component {
                           id={`header-left-${panelId}`}
                           style={headerSwipeStyles.left}
                         />
-                        {IS_PLATFORM_IOS &&
+                        {platform === IOS &&
                         <div
                           className="PanelHeader__addon"
                           id={`header-addon-${panelId}`}
-                          style={headerSwipeStyles.icon}
+                          style={headerSwipeStyles.addon}
                         />
                         }
                       </div>
@@ -550,8 +601,8 @@ export default class View extends Component {
                   'View__panel--next': panelId === nextPanel,
                   'View__panel--swipe-back-prev': panelId === swipeBackPrevPanel,
                   'View__panel--swipe-back-next': panelId === swipeBackNextPanel,
-                  'View__panel--swipe-back-success': swipingBackFinish === true,
-                  'View__panel--swipe-back-failed': swipingBackFinish === false
+                  'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
+                  'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail
                 })}
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}
@@ -569,3 +620,5 @@ export default class View extends Component {
     );
   }
 }
+
+export default withPlatform(View);

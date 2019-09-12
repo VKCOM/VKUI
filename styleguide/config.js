@@ -34,7 +34,7 @@ module.exports = {
         name: 'Layout',
         components: () => [
           '../src/components/Root/Root.js',
-          '../src/components/View/View.js',
+          '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.js',
           '../src/components/PanelHeader/PanelHeader.js',
           '../src/components/HeaderButton/HeaderButton.js',
