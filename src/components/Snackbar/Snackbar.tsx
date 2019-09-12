@@ -45,7 +45,7 @@ export interface SnackbarProps extends HasChildren, HasClassName, HasPlatform {
 }
 
 export interface SnackbarState {
-  open: boolean,
+  closing: boolean,
   touched: boolean
 }
 
@@ -54,7 +54,7 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     super(props);
 
     this.state = {
-      open: false,
+      closing: false,
       touched: false
     };
 
@@ -84,22 +84,18 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
   private animationFrame: number;
 
   componentDidMount() {
-    if (canUseDOM) {
-      window.requestAnimationFrame(() => this.setState({ open: true }));
-    }
-
-    this.setTimeout();
+    this.setCloseTimeout();
   }
 
   componentWillUnmount() {
-    this.clearTimeout();
+    this.clearCloseTimeout();
   }
 
   get window () {
     return this.context.window || window;
   }
 
-  setTimeout = () => {
+  setCloseTimeout = () => {
     if (canUseDOM) {
       this.closeTimeout = window.setTimeout(() => {
         this.close();
@@ -107,7 +103,7 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     }
   };
 
-  clearTimeout = () => {
+  clearCloseTimeout = () => {
     clearTimeout(this.closeTimeout);
   };
 
@@ -120,7 +116,7 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
   };
 
   close() {
-    this.setState({ open: false });
+    this.setState({ closing: true });
     this.waitTransitionFinish(this.innerEl, () => {
       this.props.onClose();
     });
@@ -138,7 +134,7 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
   getInnerRef = (el) => this.innerEl = el;
 
   onTouchStart = () => {
-    this.clearTimeout();
+    this.clearCloseTimeout();
   };
 
   onTouchMoveX = (event) => {
@@ -169,14 +165,14 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       shiftXReal = shiftXReal + expectTranslateY;
 
       if (shiftXReal >= 50) {
-        this.clearTimeout();
+        this.clearCloseTimeout();
         this.waitTransitionFinish(this.bodyElRef.current, () => {
           this.props.onClose();
         });
         this.setBodyTransform(120);
       } else {
         callback = () => {
-          this.setTimeout();
+          this.setCloseTimeout();
           this.setBodyTransform(0);
         };
       }
@@ -209,7 +205,7 @@ export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       <FixedLayout
         vertical="bottom"
         className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
-          'Snackbar--open': this.state.open,
+          'Snackbar--closing': this.state.closing,
           'Snackbar--touched': this.state.touched
         })}
       >

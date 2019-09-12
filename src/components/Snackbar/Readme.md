@@ -101,7 +101,7 @@ class SnackBarExample extends React.Component {
           <Group>
             <CellButton onClick={this.openBase}>Простое уведомление с иконкой</CellButton>
             <CellButton onClick={this.openBaseWithAction}>Уведомление с иконкой и кнопкой</CellButton>
-            <CellButton onClick={this.openLongText}>Уведомление с вертикальной разметкой и длинным текстом</CellButton>
+            <CellButton onClick={this.openLongText}>Длинный текст</CellButton>
             <CellButton onClick={this.openWithAvatar}>Уведомление с аватаркой</CellButton>
           </Group>
 
