@@ -1,29 +1,70 @@
-
-import React, { Component } from 'react';
+import React, { Component, HTMLAttributes, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
 import transitionEvents from '../../lib/transitionEvents';
 import getClassName from '../../helpers/getClassName';
-import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { IOS, ANDROID } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { baseClassNames as panelHeaderClasses } from '../PanelHeader/PanelHeader';
-
-const baseClassNames = getClassName('View');
+import { HasChildren, HasPlatform } from '../../types/props';
+import withPlatform from '../../hoc/withPlatform';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
 
-let scrollsCache = {};
+interface Scrolls {
+  [index: string]: number
+}
+
+interface ViewsScrolls {
+  [index: string]: Scrolls
+}
+
+let scrollsCache:ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
-export default class View extends Component {
+export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform {
+  activePanel: string
+  header?: boolean;
+  popout?: ReactNode;
+  modal?: ReactNode;
+  onTransition?(params: { isBack: boolean, from: string, to: string }): void;
+  onSwipeBack?(): void;
+  onSwipeBackStart?(): void;
+  history?: string[];
+  id?: string;
+}
+
+export interface ViewState {
+  scrolls: Scrolls;
+  animated: boolean;
+  startT?: number,
+
+  visiblePanels: string[];
+  activePanel: string;
+  isBack: boolean;
+  prevPanel: string;
+  nextPanel: string;
+
+  swipingBack: boolean;
+  swipebackStartX: number;
+  swipeBackShift: number;
+  swipeBackNextPanel: string;
+  swipeBackPrevPanel: string;
+  swipingBackFinish: boolean;
+
+  browserSwipe: boolean;
+}
+
+export class View extends Component<ViewProps, ViewState> {
   constructor (props) {
     super(props);
     this.state = {
       scrolls: scrollsCache[props.id] || {},
+      animated: false,
 
       visiblePanels: [props.activePanel],
       activePanel: props.activePanel,
@@ -42,28 +83,7 @@ export default class View extends Component {
     };
   }
 
-  static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object,
-    activePanel: PropTypes.string,
-    header: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-    children: PropTypes.node,
-    popout: PropTypes.node,
-    modal: PropTypes.node,
-    onTransition: PropTypes.func,
-    onSwipeBack: PropTypes.func,
-    /**
-     * @ignore
-     */
-    onSwipeBackStart: PropTypes.func,
-    history: PropTypes.arrayOf(PropTypes.string),
-    id: PropTypes.string
-  };
-
   static defaultProps = {
-    style: {},
-    children: null,
-    popout: null,
     header: true,
     history: []
   };
@@ -199,7 +219,7 @@ export default class View extends Component {
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
+      setTimeout(() => eventHandler(), this.props.platform === ANDROID ? 300 : 600);
     }
   }
 
@@ -210,7 +230,7 @@ export default class View extends Component {
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
+      setTimeout(() => eventHandler(), this.props.platform === ANDROID ? 300 : 600);
     }
   }
 
@@ -230,13 +250,13 @@ export default class View extends Component {
     return elem && elem.parentNode.parentNode;
   }
 
-  transitionEndHandler = (e = { manual: true }) => {
-    if ([
+  transitionEndHandler = (e?: AnimationEvent) => {
+    if (!e || [
       'animation-ios-next-forward',
       'animation-ios-prev-back',
       'animation-android-next-forward',
       'animation-android-prev-back'
-    ].indexOf(e.animationName) > -1 || e.manual) {
+    ].indexOf(e.animationName) > -1) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
       const prevPanel = this.state.prevPanel;
@@ -249,7 +269,7 @@ export default class View extends Component {
         animated: false,
         isBack: undefined,
         scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls
-      }, function () {
+      }, () => {
         isBack && this.window.scrollTo(0, this.state.scrolls[activePanel]);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
       });
@@ -303,11 +323,13 @@ export default class View extends Component {
       return;
     }
 
-    if (IS_PLATFORM_IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
+    const { platform } = this.props;
+
+    if (platform === IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
       this.setState({ browserSwipe: true });
     }
 
-    if (IS_PLATFORM_IOS && this.context.isWebView && this.props.onSwipeBack) {
+    if (platform === IOS && this.context.isWebView && this.props.onSwipeBack) {
       if (this.state.animated && e.startX <= 70) {
         return;
       }
@@ -341,7 +363,7 @@ export default class View extends Component {
 
   onEnd = () => {
     if (this.state.swipingBack) {
-      const speed = this.state.swipeBackShift / (new Date() - this.state.startT) * 1000;
+      const speed = this.state.swipeBackShift / (Date.now() - this.state.startT) * 1000;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
@@ -447,10 +469,12 @@ export default class View extends Component {
         }
       };
     }
+
+    return {};
   }
 
   render () {
-    const { style, popout, modal, header } = this.props;
+    const { style, popout, modal, header, platform } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipingBackFinish } = this.state;
 
     const hasPopout = !!popout;
@@ -473,14 +497,14 @@ export default class View extends Component {
     return (
       <Touch
         component="section"
-        className={classNames(baseClassNames, this.props.className, modifiers)}
+        className={classNames(getClassName('View', platform), this.props.className, modifiers)}
         style={style}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
         {header && (
           <div className="View__header">
-            { IS_PLATFORM_IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} /> }
+            {platform === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} />}
             <div className={classNames(panelHeaderClasses)}>
               {panels.map(panel => {
                 const panelId = panel.props.id;
@@ -513,11 +537,11 @@ export default class View extends Component {
                           id={`header-left-${panelId}`}
                           style={headerSwipeStyles.left}
                         />
-                        {IS_PLATFORM_IOS &&
+                        {platform === IOS &&
                         <div
                           className="PanelHeader__addon"
                           id={`header-addon-${panelId}`}
-                          style={headerSwipeStyles.icon}
+                          style={headerSwipeStyles.addon}
                         />
                         }
                       </div>
@@ -569,3 +593,5 @@ export default class View extends Component {
     );
   }
 }
+
+export default withPlatform(View);
