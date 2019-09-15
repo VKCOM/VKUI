@@ -26,6 +26,7 @@ export { default as Alert } from './components/Alert/Alert';
 export { default as ActionSheet } from './components/ActionSheet/ActionSheet';
 export { default as ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
+export { default as Snackbar } from './components/Snackbar/Snackbar';
 
 /**
  * Modals
