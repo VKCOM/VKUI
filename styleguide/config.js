@@ -40,7 +40,7 @@ module.exports = {
           '../src/components/HeaderButton/HeaderButton.js',
           '../src/components/PanelHeaderContent/PanelHeaderContent.js',
           '../src/components/HeaderContext/HeaderContext.js',
-          '../src/components/Epic/Epic.js',
+          '../src/components/Epic/Epic.tsx',
           '../src/components/Tabbar/Tabbar.js',
           '../src/components/TabbarItem/TabbarItem.js',
           '../src/components/FixedLayout/FixedLayout.js',
