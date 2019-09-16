@@ -10,7 +10,8 @@ import withPlatform from '../../hoc/withPlatform';
 
 export interface AlertActionsInterface {
   title: string;
-  action(): void;
+  action?(): void;
+  autoclose?: boolean;
   style: 'cancel' | 'destructive' | 'default'
 }
 
