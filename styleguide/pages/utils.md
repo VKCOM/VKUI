@@ -23,7 +23,7 @@ class MyComponent extends React.Component {
   }
 }
 
-withPlatform(withPlatform);
+withPlatform(MyComponent);
 ```
 
 Способ определения платформы вне компонента устарел, так как мы начинаем поддерживать 

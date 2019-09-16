@@ -77,7 +77,7 @@ export interface ViewState {
   browserSwipe: boolean;
 }
 
-export class View extends Component<ViewProps, ViewState> {
+class View extends Component<ViewProps, ViewState> {
   constructor (props) {
     super(props);
     this.state = {

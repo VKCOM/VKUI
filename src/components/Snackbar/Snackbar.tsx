@@ -49,7 +49,7 @@ export interface SnackbarState {
   touched: boolean
 }
 
-export class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
+class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
   constructor(props) {
     super(props);
 

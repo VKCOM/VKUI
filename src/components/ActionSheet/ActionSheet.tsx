@@ -33,7 +33,7 @@ export interface ActionSheetState {
   closing: boolean
 }
 
-export class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
+class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   state = {
     closing: false
   };
