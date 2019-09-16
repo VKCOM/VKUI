@@ -1,34 +1,39 @@
-
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, HTMLAttributes } from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
-import { IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { ANDROID } from '../../lib/platform';
+import { HasChildren, HasPlatform } from '../../types/props';
+import withPlatform from '../../hoc/withPlatform';
 
-const baseClassNames = getClassName('Alert');
+export interface AlertActionsInterface {
+  title: string;
+  action(): void;
+  style: 'cancel' | 'destructive' | 'default'
+}
 
-export default class Alert extends Component {
-  state = {};
-  element = React.createRef();
+export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren {
+  actionsLayout?: 'vertical' | 'horizontal';
+  actions?: AlertActionsInterface[];
+  onClose?(): void
+}
 
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string,
-    children: PropTypes.node,
-    actionsLayout: PropTypes.oneOf(['vertical', 'horizontal']),
-    actions: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string,
-      action: PropTypes.func,
-      /**
-       * 'cancel' - iOS only
-       */
-      style: PropTypes.oneOf(['cancel', 'destructive', 'default'])
-    })),
-    onClose: PropTypes.func.isRequired
-  };
+export interface AlertState {
+  closing: boolean
+}
+
+class Alert extends Component<AlertProps, AlertState> {
+  constructor(props) {
+    super(props);
+    this.element = React.createRef();
+    this.state = {
+      closing: false
+    };
+  }
+
+  element: React.RefObject<HTMLDivElement>
 
   static defaultProps = {
     actionsLayout: 'horizontal',
@@ -65,12 +70,12 @@ export default class Alert extends Component {
       this.element.current.removeEventListener(eventName, eventHandler);
       this.element.current.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 200 : 300);
+      setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 200 : 300);
     }
   }
 
   render () {
-    const { actions, actionsLayout, children, className, style, ...restProps } = this.props;
+    const { actions, actionsLayout, children, className, style, platform, ...restProps } = this.props;
     const { closing } = this.state;
 
     return (
@@ -80,17 +85,22 @@ export default class Alert extends Component {
         style={style}
         onClick={this.onClose}
       >
-        <div {...restProps} ref={this.element} onClick={this.stopPropagation} className={classNames(baseClassNames, {
-          'Alert--v': actionsLayout === 'vertical',
-          'Alert--h': actionsLayout === 'horizontal',
-          'Alert--closing': closing
-        })}>
+        <div
+          {...restProps}
+          ref={this.element}
+          onClick={this.stopPropagation}
+          className={classNames(getClassName('Alert', platform), {
+            'Alert--v': actionsLayout === 'vertical',
+            'Alert--h': actionsLayout === 'horizontal',
+            'Alert--closing': closing
+          })}
+        >
           <div className="Alert__content">{children}</div>
           <footer className="Alert__footer">
             {actions.map((button, i) => (
               <Tappable
                 component="button"
-                className={classNames('Alert__btn', { [`Alert__btn--${button.style}`]: button.style })}
+                className={classNames('Alert__btn', `Alert__btn--${button.style}`)}
                 onClick={this.onItemClick(button)}
                 key={`alert-action-${i}`}
               >
@@ -103,3 +113,5 @@ export default class Alert extends Component {
     );
   }
 }
+
+export default withPlatform(Alert);

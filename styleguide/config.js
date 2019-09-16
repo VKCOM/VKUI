@@ -52,7 +52,7 @@ module.exports = {
           '../src/components/PopoutWrapper/PopoutWrapper.js',
           '../src/components/ActionSheet/ActionSheet.tsx',
           '../src/components/ActionSheetItem/ActionSheetItem.tsx',
-          '../src/components/Alert/Alert.js',
+          '../src/components/Alert/Alert.tsx',
           '../src/components/ScreenSpinner/ScreenSpinner.js',
           '../src/components/Snackbar/Snackbar.tsx'
         ]
