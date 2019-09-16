@@ -176,7 +176,7 @@ class View extends Component<ViewProps, ViewState> {
         scrolls: removeObjectKeys(prevState.scrolls, [prevState.swipeBackPrevPanel])
       }, () => {
         this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
-        window.scrollTo(0, prevState.scrolls[prevState.activePanel]);
+        window.scrollTo(0, prevState.scrolls[this.state.activePanel]);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
     }
