@@ -91,7 +91,7 @@ module.exports = {
           '../src/components/PullToRefresh/PullToRefresh.js',
           '../src/components/Counter/Counter.tsx',
           '../src/components/Touch/Touch.js',
-          '../src/components/UsersStack/UsersStack.js',
+          '../src/components/UsersStack/UsersStack.tsx',
           '../src/components/Separator/Separator.js'
         ]
       }, {
