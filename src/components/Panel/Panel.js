@@ -5,9 +5,8 @@ import classNames from '../../lib/classNames';
 import Touch from '../Touch/Touch';
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
+import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
-
-const baseClassNames = getClassName('Panel');
 
 class Panel extends Component {
   static childContextTypes = {
@@ -24,7 +23,11 @@ class Panel extends Component {
     /**
      * @ignore
      */
-    insets: PropTypes.object
+    insets: PropTypes.object,
+    /**
+     * @ignore
+     */
+    platform: PropTypes.string
   };
 
   static defaultProps = {
@@ -44,11 +47,11 @@ class Panel extends Component {
   }
 
   render () {
-    const { className, centered, children, theme, insets, ...restProps } = this.props;
+    const { className, centered, children, theme, insets, platform, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
 
     return (
-      <div {...restProps} className={classNames(baseClassNames, className, {
+      <div {...restProps} className={classNames(getClassName('Panel', platform), className, {
         'Panel--centered': centered,
         [`Panel--tm-${theme}`]: theme
       })}>
@@ -64,4 +67,4 @@ class Panel extends Component {
   }
 }
 
-export default withInsets(Panel);
+export default withPlatform(withInsets(Panel));

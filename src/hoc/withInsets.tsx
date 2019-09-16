@@ -30,8 +30,8 @@ vkConnect.subscribe((e) => {
   }
 });
 
-export default function withInsets (Component) {
-  return class WithInsets extends React.Component {
+export default function withInsets<T>(Component: T): T {
+  class WithInsets extends React.Component {
     state = initialState;
 
     componentDidMount () {
@@ -51,8 +51,11 @@ export default function withInsets (Component) {
 
     render () {
       return (
+        // @ts-ignore
         <Component {...this.props} insets={this.state} />
       );
     }
-  };
+  }
+
+  return WithInsets as unknown as T;
 }

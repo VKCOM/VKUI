@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'react-styleguidist/lib/rsg-components/Link';
+import Link from 'react-styleguidist/lib/client/rsg-components/Link';
 import pkg from '../../package.json';
-import Styled from 'react-styleguidist/lib/rsg-components/Styled';
+import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import scheme from '@vkontakte/appearance/main.valette/scheme';
 
 const schemeOptions = Object.keys(scheme).map(scheme_id => (

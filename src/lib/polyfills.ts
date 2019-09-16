@@ -55,4 +55,3 @@ if (!Array.prototype.find) {
     }
   };
 }
-

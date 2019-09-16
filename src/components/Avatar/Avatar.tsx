@@ -60,4 +60,3 @@ Avatar.defaultProps = {
 };
 
 export default Avatar;
-

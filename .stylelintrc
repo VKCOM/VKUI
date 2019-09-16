@@ -7,6 +7,8 @@
     "declaration-block-no-redundant-longhand-properties": null,
     "comment-empty-line-before": null,
     "comment-whitespace-inside": null,
+    "no-descending-specificity": null,
+    "no-duplicate-selectors": null,
     "length-zero-no-unit": [true, {
       "ignore": ["custom-properties"]
     }]

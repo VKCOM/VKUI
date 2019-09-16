@@ -152,12 +152,11 @@ module.exports = {
           if (prop.parent) {
             return !prop.parent.fileName.includes('node_modules')
           }
-
           return true
         },
       }).parse(filePath)
     } else {
-      return require('react-docgen').parse(source, resolver, handlers)
+      return require('react-docgen').parse(source, resolver, handlers, { filename: filePath })
     }
   },
   webpackConfig: merge(webpackConfig, {

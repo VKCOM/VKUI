@@ -26,4 +26,3 @@ FormStatus.propTypes = {
 };
 
 export default FormStatus;
-

@@ -3,7 +3,6 @@ import React from 'react';
 
 import { getRandomInt, getRandomUser, importantCountries } from './utils';
 
-import { platform, IOS, ANDROID, IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../src/lib/platform';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon16Add from '@vkontakte/icons/dist/16/add';
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
@@ -45,14 +44,15 @@ import Icon24DoNotDisturb from '@vkontakte/icons/dist/24/do_not_disturb';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon28CameraOutline from '@vkontakte/icons/dist/28/camera_outline';
 import Icon28Profile from '@vkontakte/icons/dist/28/profile';
+import * as VKUI from '../src';
+
+for (let i in VKUI) {
+  window[i] = VKUI[i];
+}
 
 import pkg from '../package';
 
-window.osname = platform();
-window.IOS = IOS;
-window.ANDROID = ANDROID;
-window.IS_PLATFORM_IOS = IS_PLATFORM_IOS;
-window.IS_PLATFORM_ANDROID = IS_PLATFORM_ANDROID;
+window.osname = VKUI.platform();
 
 window.schemeId = window.localStorage.getItem('vkui-styleguide:schemeId') || pkg.defaultSchemeId;
 

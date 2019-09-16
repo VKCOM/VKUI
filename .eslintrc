@@ -16,6 +16,12 @@
     "react/no-deprecated": "off",
     "space-before-function-paren": [0],
     "no-unused-vars": "off",
+    "react/display-name": "off",
+    "prefer-const": "off",
+    "no-prototype-builtins": "off",
+    "object-curly-spacing": "off",
+    "lines-between-class-members": "off",
+    "no-mixed-operators": "off",
     "@typescript-eslint/no-unused-vars": ["error", {
       "vars": "all",
       "args": "after-used",

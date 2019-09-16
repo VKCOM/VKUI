@@ -385,7 +385,6 @@ class ModalRoot extends Component {
 
       this.animateTranslate(modalState, modalState.translateYCurrent);
       this.setMaskOpacity(modalState);
-      return;
     }
   }
 

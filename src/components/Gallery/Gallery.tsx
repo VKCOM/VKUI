@@ -39,7 +39,7 @@ export interface GallerySlidesState {
   width: number
 }
 
-export class Gallery extends Component<GalleryProps, GalleryState> {
+class Gallery extends Component<GalleryProps, GalleryState> {
   constructor (props) {
     super(props);
 
