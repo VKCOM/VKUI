@@ -7,8 +7,8 @@ import { canUseDOM } from '../../lib/dom';
 export interface ConfigProviderProps extends HasChildren {
   scheme?: 'client_light' | 'client_dark' | 'bright_light' | 'space_gray',
   isWebView?: boolean,
-  webviewType: 'vkapps' | 'internal',
-  app: string
+  webviewType?: 'vkapps' | 'internal',
+  app?: string
 }
 
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
