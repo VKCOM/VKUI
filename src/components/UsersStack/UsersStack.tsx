@@ -1,17 +1,17 @@
 import React from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasClassName, HasChildren, HasStyleObject } from '../../types/props';
+import { HasChildren } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 import { createMasks } from './masks';
 
 createMasks();
 
-export interface UsersStackProps extends HasClassName, HasChildren, HasStyleObject {
+export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement>, HasChildren {
   /**
    * Массив ссылок на фотографии
    */
-  photos?:string[],
+  photos?: string[],
   /**
    * Размер аватарок
    */
