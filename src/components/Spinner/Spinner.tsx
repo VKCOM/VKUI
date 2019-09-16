@@ -1,15 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {FunctionComponent} from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Spinner24 from '@vkontakte/icons/dist/24/spinner';
 import Spinner32 from '@vkontakte/icons/dist/32/spinner';
 import Spinner44 from '@vkontakte/icons/dist/44/spinner';
 import Spinner16 from '@vkontakte/icons/dist/16/spinner';
+import usePlatform from '../../hooks/usePlatform';
 
-const baseClassNames = getClassName('Spinner');
+export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
+  size: 'small' | 'regular' | 'large' | 'medium'
+}
 
-const svgSpinner = size => {
+const svgSpinner = (size: SpinnerProps['size']): React.ReactElement => {
   switch (size) {
     case 'large':
       return <Spinner44 className="Spinner__self" />;
@@ -22,17 +24,15 @@ const svgSpinner = size => {
   }
 };
 
-const Spinner = React.memo(({ className, size, ...restProps }) => (
-  <div {...restProps} className={classNames(baseClassNames, className)}>
-    {svgSpinner(size)}
-  </div>
-));
+const Spinner: FunctionComponent<SpinnerProps> = React.memo(({ className, size, ...restProps }: SpinnerProps) => {
+  const platform = usePlatform();
 
-Spinner.propTypes = {
-  style: PropTypes.object,
-  size: PropTypes.oneOf(['small', 'regular', 'large', 'medium']),
-  className: PropTypes.string
-};
+  return (
+    <div {...restProps} className={classNames(getClassName('Spinner', platform), className)}>
+      {svgSpinner(size)}
+    </div>
+  );
+});
 
 Spinner.defaultProps = {
   size: 'regular'

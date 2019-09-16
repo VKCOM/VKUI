@@ -37,7 +37,7 @@ module.exports = {
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.js',
           '../src/components/PanelHeader/PanelHeader.js',
-          '../src/components/HeaderButton/HeaderButton.js',
+          '../src/components/HeaderButton/HeaderButton.tsx',
           '../src/components/PanelHeaderContent/PanelHeaderContent.js',
           '../src/components/HeaderContext/HeaderContext.js',
           '../src/components/Epic/Epic.tsx',
@@ -76,7 +76,7 @@ module.exports = {
           '../src/components/Cell/Cell.js',
           '../src/components/List/List.js',
           '../src/components/Footer/Footer.tsx',
-          '../src/components/Spinner/Spinner.js',
+          '../src/components/Spinner/Spinner.tsx',
           '../src/components/Switch/Switch.js',
           '../src/components/InfoRow/InfoRow.js',
           '../src/components/Avatar/Avatar.tsx',
@@ -114,11 +114,11 @@ module.exports = {
         name: 'Helpers',
         content: './pages/helpers.md',
         components: () => [
-          '../src/components/PanelSpinner/PanelSpinner.js',
-          '../src/components/PanelHeaderBack/PanelHeaderBack.js',
-          '../src/components/PanelHeaderClose/PanelHeaderClose.js',
-          '../src/components/PanelHeaderSubmit/PanelHeaderSubmit.js',
-          '../src/components/PanelHeaderEdit/PanelHeaderEdit.js'
+          '../src/components/PanelSpinner/PanelSpinner.tsx',
+          '../src/components/PanelHeaderBack/PanelHeaderBack.tsx',
+          '../src/components/PanelHeaderClose/PanelHeaderClose.tsx',
+          '../src/components/PanelHeaderSubmit/PanelHeaderSubmit.tsx',
+          '../src/components/PanelHeaderEdit/PanelHeaderEdit.tsx'
         ]
       },
       // @TODO раскоментировать, когда все компоненты станут SSR-friendly
