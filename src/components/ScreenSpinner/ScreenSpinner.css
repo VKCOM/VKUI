@@ -9,7 +9,8 @@
 .ScreenSpinner--ios .ScreenSpinner__container {
   width: 88px;
   height: 88px;
-  background: var(--overlay_status_background);
+  background: var(--modal_card_background);
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 0 96px 0 rgba(0, 0, 0, .16);
   border-radius: 10px;
   }
 
