@@ -1,12 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isWebView } from '../../lib/webview';
+import vkConnect from '@vkontakte/vk-connect';
+import { HasChildren } from '../../types/props';
+import { canUseDOM } from '../../lib/dom';
 
-export default class ConfigProvider extends React.Component {
+export interface ConfigProviderProps extends HasChildren {
+  scheme?: 'client_light' | 'client_dark' | 'bright_light' | 'space_gray',
+  isWebView?: boolean,
+  webviewType?: 'vkapps' | 'internal',
+  app?: string
+}
+
+export default class ConfigProvider extends React.Component<ConfigProviderProps> {
   constructor (props, context) {
     super(props);
-
-    (context.document || window.document).body.setAttribute('scheme', props.scheme);
+    if (canUseDOM) {
+      (context.document || window.document).body.setAttribute('scheme', props.scheme);
+    }
   }
 
   static childContextTypes = {
@@ -16,17 +26,9 @@ export default class ConfigProvider extends React.Component {
     app: PropTypes.string
   };
 
-  static propTypes = {
-    scheme: PropTypes.string,
-    isWebView: PropTypes.bool,
-    webviewType: PropTypes.oneOf(['vkapps', 'internal']),
-    app: PropTypes.string,
-    children: PropTypes.node
-  };
-
   static defaultProps = {
     webviewType: 'internal',
-    isWebView,
+    isWebView: vkConnect.isWebView(),
     scheme: 'client_light'
   };
 
@@ -34,17 +36,17 @@ export default class ConfigProvider extends React.Component {
     document: PropTypes.object
   };
 
-  get document () {
+  get document() {
     return this.context.document || window.document;
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (prevProps.scheme !== this.props.scheme) {
       this.document.body.setAttribute('scheme', this.props.scheme);
     }
   }
 
-  getChildContext () {
+  getChildContext(): ConfigProviderProps {
     return {
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
@@ -53,7 +55,7 @@ export default class ConfigProvider extends React.Component {
     };
   }
 
-  render () {
+  render() {
     return this.props.children;
   }
 }
