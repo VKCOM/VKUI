@@ -6,27 +6,19 @@ import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
-import { HasChildren, HasClassName, HasStyleObject, HasPlatform } from '../../types/props';
+import { HasChildren, HasClassName, HasStyleObject, HasPlatform, HasInsets } from '../../types/props';
 import { ANDROID, IOS } from '../../lib/platform';
 
-export interface InsetsInterface {
-  bottom?: number
-}
-
-export interface ActionSheetProps extends HasStyleObject, HasChildren, HasClassName, HasPlatform {
+export interface ActionSheetProps extends HasStyleObject, HasChildren, HasClassName, HasPlatform, HasInsets {
   /**
    * iOS only
    */
-  title?: React.ReactNode,
+  title?: React.ReactNode;
   /**
    * iOS only
    */
-  text?: React.ReactNode,
-  onClose(): void,
-  /**
-   * @ignore
-   */
-  insets: InsetsInterface
+  text?: React.ReactNode;
+  onClose(): void;
 }
 
 export interface ActionSheetState {

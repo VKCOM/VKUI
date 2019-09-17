@@ -24,6 +24,17 @@ export interface HasPlatform {
   platform?: OS;
 }
 
+export interface InsetsInterface {
+  bottom?: number
+}
+
+export interface HasInsets {
+  /**
+   * @ignore
+   */
+  insets?: InsetsInterface;
+}
+
 export interface OldRef<T> {
   (el: T): void
 }

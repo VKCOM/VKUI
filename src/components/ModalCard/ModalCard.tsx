@@ -1,65 +1,56 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, HTMLAttributes, ReactNode } from 'react';
 import Button from '../Button/Button';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
-import { IS_PLATFORM_IOS } from '../../lib/platform';
+import { IOS } from '../../lib/platform';
 import { isNumeric } from '../../lib/utils';
+import withPlatform from '../../hoc/withPlatform';
+import { HasPlatform, HasChildren, HasInsets } from '../../types/props';
 
-const baseClassName = getClassName('ModalCard');
+export interface ModalCardActionInterface {
+  title: string;
+  action?(): void;
+  type: 'secondary' | 'primary';
+}
 
-class ModalCard extends Component {
-  static propTypes = {
-    /**
-     * Иконка.
-     *
-     * Может быть компонентом иконки, например, `<Icon56MoneyTransferOutline />`, или `<Avatar size={72} src="" />`
-     */
-    icon: PropTypes.node,
+export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, HasInsets {
+  /**
+   * Иконка.
+   *
+   * Может быть компонентом иконки, например, `<Icon56MoneyTransferOutline />`, или `<Avatar size={72} src="" />`
+   */
+  icon?: ReactNode;
 
-    /**
-     * Заголовок карточки
-     */
-    title: PropTypes.string,
+  /**
+   * Заголовок карточки
+   */
+  title?: string,
 
-    /**
-     * Текст, поясняющий заголовок
-     */
-    caption: PropTypes.string,
+  /**
+   * Текст, поясняющий заголовок
+   */
+  caption?: string,
 
-    /**
-     * Дополнительное содержимое, например, поле ввода
-     */
-    children: PropTypes.node,
+  /**
+   * Список кнопок-действий
+   */
+  actions?: ModalCardActionInterface[];
 
-    /**
-     * Список кнопок-действий
-     */
-    actions: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string,
-      action: PropTypes.func,
-      type: PropTypes.oneOf(['secondary', 'primary'])
-    })),
+  /**
+   * Тип отображения кнопок: вертикальный или горизонтальный
+   */
+  actionsLayout?: 'vertical' | 'horizontal';
 
-    /**
-     * Тип отображения кнопок: вертикальный или горизонтальный
-     */
-    actionsLayout: PropTypes.oneOf(['vertical', 'horizontal']),
+  /**
+   * Будет вызван при закрытии карточки жестом
+   */
+  onClose?(): void;
+}
 
-    /**
-     * Будет вызван при закрытии карточки жестом
-     */
-    onClose: PropTypes.func.isRequired,
-
-    /**
-     * @ignore
-     */
-    insets: PropTypes.object
-  };
-
+class ModalCard extends Component<ModalCardProps> {
   static defaultProps = {
     actions: [],
     actionsLayout: 'horizontal',
@@ -67,7 +58,8 @@ class ModalCard extends Component {
   };
 
   onButtonClick = (event) => {
-    const action = this.props.actions[event.currentTarget.dataset.index].action;
+    const target = event.currentTarget as HTMLButtonElement;
+    const action = this.props.actions[target.dataset.index].action;
     event.persist();
 
     if (typeof action === 'function') {
@@ -76,10 +68,10 @@ class ModalCard extends Component {
   };
 
   render () {
-    const { insets, icon, title, caption, children, actions, actionsLayout, onClose } = this.props;
+    const { insets, icon, title, caption, children, actions, actionsLayout, onClose, platform } = this.props;
 
     return (
-      <div className={classNames(baseClassName)}>
+      <div className={classNames(getClassName('ModalCard', platform))}>
         <div className="ModalCard__in">
           <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
             {icon && <div className="ModalCard__icon">{icon}</div>}
@@ -106,7 +98,7 @@ class ModalCard extends Component {
             </div>
             }
 
-            {IS_PLATFORM_IOS &&
+            {platform === IOS &&
             <HeaderButton className="ModalCard__dismiss" onClick={onClose}>
               <Icon24Dismiss />
             </HeaderButton>}
@@ -117,4 +109,4 @@ class ModalCard extends Component {
   }
 }
 
-export default withInsets(ModalCard);
+export default withPlatform(withInsets(ModalCard));
