@@ -62,7 +62,7 @@ module.exports = {
           '../src/components/ModalRoot/ModalRoot.js',
           '../src/components/ModalPage/ModalPage.js',
           '../src/components/ModalPageHeader/ModalPageHeader.js',
-          '../src/components/ModalCard/ModalCard.js'
+          '../src/components/ModalCard/ModalCard.tsx'
         ]
       }, {
         name: 'Blocks',
