@@ -105,7 +105,7 @@ module.exports = {
           '../src/components/Radio/Radio.js',
           '../src/components/Checkbox/Checkbox.tsx',
           '../src/components/Input/Input.tsx',
-          '../src/components/Select/Select.js',
+          '../src/components/Select/Select.tsx',
           '../src/components/SelectMimicry/SelectMimicry.js',
           '../src/components/Textarea/Textarea.js',
           '../src/components/File/File.tsx'
