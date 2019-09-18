@@ -43,7 +43,7 @@ module.exports = {
           '../src/components/Epic/Epic.tsx',
           '../src/components/Tabbar/Tabbar.js',
           '../src/components/TabbarItem/TabbarItem.js',
-          '../src/components/FixedLayout/FixedLayout.js',
+          '../src/components/FixedLayout/FixedLayout.tsx',
           '../src/components/HorizontalScroll/HorizontalScroll.js',
         ]
       }, {
