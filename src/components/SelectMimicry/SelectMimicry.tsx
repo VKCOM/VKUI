@@ -1,10 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
+import { SelectProps } from '../Select/Select';
 
-const SelectMimicry = ({ className, tabIndex, placeholder, children, alignment, status, getRootRef, multiline, disabled, ...restProps }) => {
+export interface SelectMimicryProps extends SelectProps {
+  multiline?: boolean;
+}
+
+const SelectMimicry: FunctionComponent<Omit<SelectMimicryProps, 'value'>> = ({
+  className,
+  tabIndex,
+  placeholder,
+  children,
+  alignment,
+  status,
+  getRootRef,
+  multiline,
+  disabled,
+  ...restProps
+}: SelectMimicryProps) => {
   return (
     <FormField
       {...restProps}
@@ -13,7 +28,7 @@ const SelectMimicry = ({ className, tabIndex, placeholder, children, alignment, 
         'Select--not-selected': !children,
         'Select--multiline': multiline,
         'Select--disabled': disabled,
-        [`Select--align-${alignment}`]: alignment
+        [`Select--align-${alignment}`]: !!alignment
       }, className)}
       getRootRef={getRootRef}
       status={status}
@@ -24,22 +39,6 @@ const SelectMimicry = ({ className, tabIndex, placeholder, children, alignment, 
       </div>
     </FormField>
   );
-};
-
-SelectMimicry.propTypes = {
-  style: PropTypes.object,
-  className: PropTypes.string,
-  children: PropTypes.node,
-  tabIndex: PropTypes.number,
-  placeholder: PropTypes.string,
-  alignment: PropTypes.oneOf(['left', 'center', 'top']),
-  getRootRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ]),
-  multiline: PropTypes.bool,
-  disabled: PropTypes.bool,
-  status: PropTypes.oneOf(['default', 'error', 'valid'])
 };
 
 SelectMimicry.defaultProps = {

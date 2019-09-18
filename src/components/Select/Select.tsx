@@ -2,17 +2,18 @@ import React, { Component, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import {HasChildren, HasRef, HasRootRef} from '../../types/props';
+import { HasChildren, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
 
 export interface SelectProps extends
   HTMLAttributes<HTMLSelectElement>,
   HasRef<HTMLSelectElement>,
   HasRootRef<HTMLLabelElement>,
-  HasChildren {
+  HasChildren,
+  HasFormStatus {
   value?: string;
   placeholder?: string;
   alignment?: 'left' | 'center' | 'top';
-  status?: 'default' | 'error' | 'valid'
+  disabled?: boolean;
 }
 
 export interface SelectState {

@@ -61,3 +61,7 @@ export interface HasRef<T> {
 export interface HasDangerHTML {
   dangerouslySetInnerHTML?: DangerInnerHTML
 }
+
+export interface HasFormStatus {
+  status?: 'default' | 'error' | 'valid'
+}
