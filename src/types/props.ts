@@ -5,6 +5,17 @@ export interface ObjectClassNames {
   [index: string]: boolean;
 }
 
+export interface InsetsInterface {
+  top?: number
+  right?: number
+  bottom?: number
+  left?: number
+}
+
+export interface DangerInnerHTML {
+  __html: string
+}
+
 export interface HasClassName {
   className?: string | number | ObjectClassNames;
 }
@@ -22,13 +33,6 @@ export interface HasPlatform {
    * @ignore
    */
   platform?: OS;
-}
-
-export interface InsetsInterface {
-  top?: number
-  right?: number
-  bottom?: number
-  left?: number
 }
 
 export interface HasInsets {
@@ -52,4 +56,8 @@ export interface HasRootRef<T> {
 
 export interface HasRef<T> {
   getRef?: OldRef<T> | RefWithCurrent<T>
+}
+
+export interface HasDangerHTML {
+  dangerouslySetInnerHTML?: DangerInnerHTML
 }
