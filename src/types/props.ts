@@ -25,7 +25,10 @@ export interface HasPlatform {
 }
 
 export interface InsetsInterface {
+  top?: number
+  right?: number
   bottom?: number
+  left?: number
 }
 
 export interface HasInsets {

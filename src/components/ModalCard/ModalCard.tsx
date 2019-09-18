@@ -13,7 +13,7 @@ import { HasPlatform, HasChildren, HasInsets } from '../../types/props';
 export interface ModalCardActionInterface {
   title: string;
   action?(): void;
-  type: 'secondary' | 'primary';
+  type?: 'secondary' | 'primary';
 }
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, HasInsets {
