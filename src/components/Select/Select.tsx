@@ -9,7 +9,8 @@ export interface SelectProps extends
   HasRef<HTMLSelectElement>,
   HasRootRef<HTMLLabelElement>,
   HasChildren,
-  HasFormStatus {
+  HasFormStatus
+{
   value?: string;
   placeholder?: string;
   alignment?: 'left' | 'center' | 'top';

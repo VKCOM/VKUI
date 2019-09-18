@@ -107,7 +107,7 @@ module.exports = {
           '../src/components/Input/Input.tsx',
           '../src/components/Select/Select.tsx',
           '../src/components/SelectMimicry/SelectMimicry.tsx',
-          '../src/components/Textarea/Textarea.js',
+          '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx'
         ]
       }, {
