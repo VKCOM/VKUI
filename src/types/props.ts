@@ -42,10 +42,14 @@ export interface OldRef<T> {
   (el: T): void
 }
 
+export interface RefWithCurrent<T> {
+  current: T | null
+}
+
 export interface HasRootRef<T> {
-  getRootRef?: OldRef<T> | React.RefObject<T>
+  getRootRef?: OldRef<T> | RefWithCurrent<T>
 }
 
 export interface HasRef<T> {
-  getRef?: OldRef<T> | React.RefObject<T>
+  getRef?: OldRef<T> | RefWithCurrent<T>
 }

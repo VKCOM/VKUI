@@ -73,7 +73,7 @@ module.exports = {
           '../src/components/Link/Link.js',
           '../src/components/Header/Header.js',
           '../src/components/Group/Group.js',
-          '../src/components/Cell/Cell.js',
+          '../src/components/Cell/Cell.tsx',
           '../src/components/List/List.js',
           '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.tsx',
