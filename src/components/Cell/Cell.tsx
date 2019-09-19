@@ -100,9 +100,6 @@ class Cell extends Component<CellProps, CellState> {
       removeOffset: 0,
       dragging: false
     };
-
-    const ref = React.createRef();
-    console.log(ref);
   }
 
   rootEl: HTMLElement
