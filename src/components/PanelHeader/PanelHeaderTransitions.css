@@ -77,10 +77,6 @@
 /**
  * Header transition
  */
-.PanelHeader--ios .PanelHeader__in--prev,
-.PanelHeader--ios .PanelHeader__in--next {
-  overflow: hidden;
-  }
 
 .PanelHeader--ios .PanelHeader__in--next {
   z-index: 2;
