@@ -2,16 +2,17 @@ import React, { HTMLAttributes, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasChildren, HasRootRef } from '../../types/props';
+import { HasChildren, HasFormStatus, HasRootRef } from '../../types/props';
 
-export interface FormFieldProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasChildren {
-  TagName?: string,
-  top?: ReactNode,
-  bottom?: ReactNode,
-  /**
-   * Значение `verified` устарело и будет удалено в 3.0.0. Используйте вместо него `valid`
-   */
-  status?: 'default' | 'error' | 'valid' | 'verified'
+export interface FormFieldProps extends
+  HTMLAttributes<HTMLElement>,
+  HasRootRef<HTMLElement>,
+  HasChildren,
+  HasFormStatus
+{
+  TagName?: string;
+  top?: ReactNode;
+  bottom?: ReactNode;
 }
 
 const FormField: React.FunctionComponent<FormFieldProps> = ({

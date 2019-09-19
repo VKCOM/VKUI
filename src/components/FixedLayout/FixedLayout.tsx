@@ -14,7 +14,8 @@ export interface FixedLayoutProps extends
   HasChildren,
   HasRootRef<HTMLDivElement>,
   HasInsets,
-  HasPlatform {
+  HasPlatform
+{
   vertical?: 'top' | 'bottom';
 }
 

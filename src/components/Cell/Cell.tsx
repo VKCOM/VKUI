@@ -62,7 +62,7 @@ export interface CellProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
-  onRemove(e, rootEl: HTMLElement): void;
+  onRemove?(e, rootEl: HTMLElement): void;
   /**
    * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
    */

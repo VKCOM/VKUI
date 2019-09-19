@@ -37,7 +37,7 @@ const FormLayout: FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) 
 
           return (
             <div
-              className={classNames('FormLayout__row', `FormLayout__row--s-${status}`)}
+              className={classNames('FormLayout__row', { [`FormLayout__row--s-${status}`]: !!status })}
               key={field.key || `row-${i}`}
             >
               {top && <div className="FormLayout__row-top">{top}</div>}

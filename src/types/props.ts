@@ -63,5 +63,8 @@ export interface HasDangerHTML {
 }
 
 export interface HasFormStatus {
-  status?: 'default' | 'error' | 'valid'
+  /**
+   * Значение `verified` устарело и будет удалено в 3.0.0. Используйте вместо него `valid`
+   */
+  status?: 'default' | 'error' | 'valid' | 'verified'
 }

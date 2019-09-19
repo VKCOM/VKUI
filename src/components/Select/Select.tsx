@@ -38,10 +38,6 @@ export default class Select extends Component<SelectProps, SelectState> {
     this.state = state;
   }
 
-  static defaultProps = {
-    alignment: 'left'
-  };
-
   isControlledOutside?: boolean
   selectEl?: HTMLSelectElement
 
@@ -98,8 +94,9 @@ export default class Select extends Component<SelectProps, SelectState> {
       <FormField
         TagName="label"
         className={classNames('Select', {
-          [`Select--not-selected`]: this.state.notSelected
-        }, `Select--align-${alignment}`, className)}
+          [`Select--not-selected`]: this.state.notSelected,
+          [`Select--align-${alignment}`]: !!alignment
+        }, className)}
         style={style}
         getRootRef={getRootRef}
         status={status}

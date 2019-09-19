@@ -1,13 +1,12 @@
-import React, {FunctionComponent, HTMLAttributes, ReactNode} from 'react';
+import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasChildren } from '../../types/props';
+import { HasChildren, HasFormStatus } from '../../types/props';
 
-export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, HasChildren {
+export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasFormStatus {
   top?: ReactNode;
   bottom?: ReactNode;
-  status?: 'default' | 'error' | 'valid'
 }
 
 const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = ({
