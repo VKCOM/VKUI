@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
 import HeaderButton, { HeaderButtonProps } from '../HeaderButton/HeaderButton';
 import { ANDROID } from '../../lib/platform';
 import Icon24Write from '@vkontakte/icons/dist/24/write';

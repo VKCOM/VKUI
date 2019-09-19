@@ -43,7 +43,7 @@ module.exports = {
           '../src/components/Epic/Epic.tsx',
           '../src/components/Tabbar/Tabbar.js',
           '../src/components/TabbarItem/TabbarItem.js',
-          '../src/components/FixedLayout/FixedLayout.js',
+          '../src/components/FixedLayout/FixedLayout.tsx',
           '../src/components/HorizontalScroll/HorizontalScroll.js',
         ]
       }, {
@@ -73,7 +73,7 @@ module.exports = {
           '../src/components/Link/Link.js',
           '../src/components/Header/Header.js',
           '../src/components/Group/Group.js',
-          '../src/components/Cell/Cell.js',
+          '../src/components/Cell/Cell.tsx',
           '../src/components/List/List.js',
           '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.tsx',
@@ -97,17 +97,17 @@ module.exports = {
       }, {
         name: 'Forms',
         components: () => [
-          '../src/components/FormLayout/FormLayout.js',
-          '../src/components/FormLayoutGroup/FormLayoutGroup.js',
-          '../src/components/FormStatus/FormStatus.js',
+          '../src/components/FormLayout/FormLayout.tsx',
+          '../src/components/FormLayoutGroup/FormLayoutGroup.tsx',
+          '../src/components/FormStatus/FormStatus.tsx',
           '../src/components/Slider/Slider.js',
           '../src/components/RangeSlider/RangeSlider.js',
           '../src/components/Radio/Radio.js',
           '../src/components/Checkbox/Checkbox.tsx',
           '../src/components/Input/Input.tsx',
-          '../src/components/Select/Select.js',
-          '../src/components/SelectMimicry/SelectMimicry.js',
-          '../src/components/Textarea/Textarea.js',
+          '../src/components/Select/Select.tsx',
+          '../src/components/SelectMimicry/SelectMimicry.tsx',
+          '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx'
         ]
       }, {

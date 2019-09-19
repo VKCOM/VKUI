@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
@@ -6,29 +6,31 @@ import { transitionEndEventName, transitionStartEventName } from '../View/View';
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
+import { HasChildren, HasInsets, HasPlatform, HasRootRef } from '../../types/props';
+import withPlatform from '../../hoc/withPlatform';
 
-const baseClassNames = getClassName('FixedLayout');
+export interface FixedLayoutProps extends
+  HTMLAttributes<HTMLDivElement>,
+  HasChildren,
+  HasRootRef<HTMLDivElement>,
+  HasInsets,
+  HasPlatform
+{
+  vertical?: 'top' | 'bottom';
+}
 
-class FixedLayout extends React.Component {
+export interface FixedLayoutState {
+  position: 'absolute' | null;
+  top: number;
+}
+
+class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   state = {
     position: null,
     top: null
   };
 
-  static propTypes = {
-    children: PropTypes.node,
-    style: PropTypes.object,
-    className: PropTypes.string,
-    getRootRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
-    ]),
-    vertical: PropTypes.oneOf(['top', 'bottom']),
-    /**
-     * @ignore
-     */
-    insets: PropTypes.object
-  };
+  el: HTMLDivElement
 
   static contextTypes = {
     panel: PropTypes.string,
@@ -79,7 +81,7 @@ class FixedLayout extends React.Component {
   };
 
   render () {
-    const { className, children, style, vertical, getRootRef, insets, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, insets, platform, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
     const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
@@ -87,7 +89,7 @@ class FixedLayout extends React.Component {
       <div
         {...restProps}
         ref={this.getRef}
-        className={classNames(baseClassNames, { [`FixedLayout--${vertical}`]: vertical }, className)}
+        className={classNames(getClassName('FixedLayout', platform), `FixedLayout--${vertical}`, className)}
         style={{ ...style, ...this.state, paddingBottom }}
       >
         <div className="FixedLayout__in">{children}</div>
@@ -96,4 +98,4 @@ class FixedLayout extends React.Component {
   }
 }
 
-export default withInsets(FixedLayout);
+export default withPlatform(withInsets(FixedLayout));

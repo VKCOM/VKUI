@@ -1,98 +1,109 @@
-import React, { Component } from 'react';
+import React, { Component, HTMLAttributes, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import Touch from '../Touch/Touch';
-import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { ANDROID, IOS } from '../../lib/platform';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon24Reorder from '@vkontakte/icons/dist/24/reorder';
 import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
+import { HasChildren, HasPlatform, HasRootRef } from '../../types/props';
+import withPlatform from '../../hoc/withPlatform';
 
-const baseClassNames = getClassName('Cell');
+export interface CellProps extends HTMLAttributes<HTMLElement>, HasChildren, HasRootRef<HTMLElement>, HasPlatform {
+  /**
+   * Контейнер для контента от `children`.
+   */
+  before?: ReactNode;
+  /**
+   * Контейнер для текста справа от `children`.
+   */
+  indicator?: ReactNode;
+  /**
+   * Контейнер для контента справа от `children` и `indicator`.
+   */
+  asideContent?: ReactNode;
+  /**
+   * Выставляйте этот флаг, если клик по ячейке вызывает переход на другую панель. Флаг нужен для корректной
+   * стилизации такой ячейки.
+   */
+  expandable?: boolean;
+  /**
+   * Добавляет возможность переноса содержимого `children` и `description`. Без этого флага текст будет уходить
+   * в троеточие.
+   */
+  multiline?: boolean;
+  /**
+   * Контейнер для дополнительного содержимого под `children`.
+   */
+  description?: ReactNode;
+  /**
+   * Контейнер для произвольного содержимого под `description`. Рисуется только если передать `size="l"`.
+   */
+  bottomContent?: ReactNode;
+  /**
+   * Размер влияет на выравнивание блоков по вертикали, вид сепаратора (iOS) и возможность вставлять `bottomContent`.
+   */
+  size?: 'm' | 'l';
+  /**
+   * Флаг для перехода в режим ячеек-чекбоксов.
+   * **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
+   * **Важно:** этот режим несовместим с `draggable`. В случае истинности двух этих флагов, приоритет отдается
+   * `draggable`.
+   */
+  selectable?: boolean;
+  /**
+   * Флаг для перехода в режим удаляемых ячеек. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
+   */
+  removable?: boolean;
+  /**
+   * Коллбэк срабатывает при клике на контрол удаления.
+   */
+  onRemove?(e, rootEl: HTMLElement): void;
+  /**
+   * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
+   */
+  removePlaceholder?: ReactNode;
+  /**
+   * Флаг для перехода в режим перетаскивания. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
+   */
+  draggable?: boolean;
+  /**
+   * Коллбэк срабатывает при завершении перетаскивания.
+   * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
+   * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
+   * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
+   */
+  onDragFinish?({ from, to }: { from: number, to: number }): void;
+  /**
+   * При передаче `href`, ячейка становится полноценной ссылкой. Поддерживаются все валидные для этого элемента
+   * атрибуты (`target`, `rel` и т.д.).
+   */
+  href?: string;
+}
 
-export default class Cell extends Component {
-  static propTypes = {
-    /**
-     * Контейнер для контента от `children`.
-     */
-    before: PropTypes.node,
-    /**
-     * Контейнер для текста справа от `children`.
-     */
-    indicator: PropTypes.node,
-    /**
-     * Контейнер для контента справа от `children` и `indicator`.
-     */
-    asideContent: PropTypes.node,
-    /**
-     * Выставляйте этот флаг, если клик по ячейке вызывает переход на другую панель. Флаг нужен для корректной
-     * стилизации такой ячейки.
-     */
-    expandable: PropTypes.bool,
-    children: PropTypes.node,
-    onClick: PropTypes.func,
-    /**
-     * Добавляет возможность переноса содержимого `children` и `description`. Без этого флага текст будет уходить
-     * в троеточие.
-     */
-    multiline: PropTypes.bool,
-    /**
-     * Контейнер для дополнительного содержимого под `children`.
-     */
-    description: PropTypes.node,
-    getRootRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
-    ]),
-    /**
-     * Контейнер для произвольного содержимого под `description`. Рисуется только если передать `size="l"`.
-     */
-    bottomContent: PropTypes.node,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    /**
-     * Размер влияет на выравнивание блоков по вертикали, вид сепаратора (iOS) и возможность вставлять `bottomContent`.
-     */
-    size: PropTypes.oneOf(['m', 'l']),
-    /**
-     * Флаг для перехода в режим ячеек-чекбоксов.
-     * **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
-     * **Важно:** этот режим несовместим с `draggable`. В случае истинности двух этих флагов, приоритет отдается
-     * `draggable`.
-     */
-    selectable: PropTypes.bool,
-    /**
-     * Флаг для перехода в режим удаляемых ячеек. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
-     */
-    removable: PropTypes.bool,
-    /**
-     * Коллбэк срабатывает при клике на контрол удаления.
-     */
-    onRemove: PropTypes.func,
-    /**
-     * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
-     */
-    removePlaceholder: PropTypes.node,
-    /**
-     * Флаг для перехода в режим перетаскивания. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
-     */
-    draggable: PropTypes.bool,
-    /**
-     * Коллбэк срабатывает при завершении перетаскивания.
-     * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
-     * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
-     * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
-     */
-    onDragFinish: PropTypes.func,
-    /**
-     * При передаче `href`, ячейка становится полноценной ссылкой. Поддерживаются все валидные для этого элемента
-     * атрибуты (`target`, `rel` и т.д.).
-     */
-    href: PropTypes.string
-  };
+export interface CellState {
+  isRemoveActivated: boolean;
+  removeOffset: number;
+  dragging: boolean;
+}
+
+class Cell extends Component<CellProps, CellState> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isRemoveActivated: false,
+      removeOffset: 0,
+      dragging: false
+    };
+  }
+
+  rootEl: HTMLElement
+  removeButton: HTMLDivElement
 
   static defaultProps = {
     before: null,
@@ -110,12 +121,6 @@ export default class Cell extends Component {
 
   static contextTypes = {
     document: PropTypes.any
-  };
-
-  state = {
-    isRemoveActivated: false,
-    removeOffset: 0,
-    dragging: false
   };
 
   get document () { return this.context.document || document; }
@@ -157,7 +162,7 @@ export default class Cell extends Component {
     this.document.removeEventListener('click', this.deactivateRemove);
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate (_prevProps, prevState) {
     if (prevState.isRemoveActivated !== this.state.isRemoveActivated && this.state.isRemoveActivated) {
       this.setState({ removeOffset: this.removeButton.offsetWidth });
     }
@@ -177,6 +182,13 @@ export default class Cell extends Component {
       }
     }
   };
+
+  dragShift: number
+  listEl: HTMLElement
+  siblings: HTMLElement[]
+  dragStartIndex: number
+  dragEndIndex: number
+  dragDirection: 'down' | 'up'
 
   onDragStart = () => {
     this.setState({ dragging: true });
@@ -253,6 +265,7 @@ export default class Cell extends Component {
       href,
       size,
       bottomContent,
+      platform,
       ...restProps
     } = this.props;
 
@@ -261,18 +274,19 @@ export default class Cell extends Component {
     const rootProps = selectable ? {} : restProps;
     const inputProps = selectable ? restProps : {};
     const linkProps = href ? restProps : {};
+    const IS_PLATFORM_ANDROID = platform === ANDROID;
+    const IS_PLATFORM_IOS = platform === IOS;
 
     return (
       <div
         {...rootProps}
         onClick={href || draggable ? null : this.onClick}
-        className={classNames(baseClassNames, {
+        className={classNames(getClassName('Cell', platform), {
           'Cell--expandable': expandable,
           'Cell--multiline': multiline,
-          [`Cell--${size}`]: size,
           'Cell--dragging': this.state.dragging,
           'Cell--draggable': draggable
-        }, className)}
+        }, `Cell--${size}`, className)}
         ref={this.getRootRef}
       >
         <Tappable
@@ -335,3 +349,5 @@ export default class Cell extends Component {
     );
   }
 }
+
+export default withPlatform(Cell);

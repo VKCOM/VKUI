@@ -1,3 +1,6 @@
+Данный компонент является надстройкой над нативным [select](https://reactjs.org/docs/forms.html#the-select-tag) 
+и принимает все его свойства.
+
 ```jsx static
 import { Select } from '@vkontakte/vkui';
 

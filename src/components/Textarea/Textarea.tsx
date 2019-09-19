@@ -1,9 +1,26 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { HTMLAttributes, PureComponent } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
+import { HasFormStatus, HasRef, HasRootRef } from '../../types/props';
 
-export default class Textarea extends PureComponent {
+export interface TextareaProps extends
+  HTMLAttributes<HTMLTextAreaElement>,
+  HasRef<HTMLTextAreaElement>,
+  HasRootRef<HTMLElement>,
+  HasFormStatus
+{
+  children?: string;
+  grow?: boolean;
+  onResize?(el: HTMLTextAreaElement): void;
+  value?: string;
+}
+
+export interface TextareaState {
+  value?: string;
+  height?: number;
+}
+
+export default class Textarea extends PureComponent<TextareaProps, TextareaState> {
   constructor (props) {
     super(props);
 
@@ -17,30 +34,14 @@ export default class Textarea extends PureComponent {
     }
   }
 
+  isControlledOutside?: boolean
+  element: HTMLTextAreaElement
+
   componentDidMount () {
     if (this.props.grow) {
       this.resize();
     }
   }
-
-  static propTypes = {
-    style: PropTypes.object,
-    value: PropTypes.string,
-    defaultValue: PropTypes.string,
-    grow: PropTypes.bool,
-    onChange: PropTypes.func,
-    onResize: PropTypes.func,
-    className: PropTypes.string,
-    getRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
-    ]),
-    getRootRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
-    ]),
-    status: PropTypes.oneOf(['default', 'error', 'valid'])
-  };
 
   static defaultProps = {
     style: {},
@@ -117,7 +118,9 @@ export default class Textarea extends PureComponent {
   }
 
   render () {
-    const { defaultValue, value, onChange, grow, style, onResize, className, getRootRef, getRef, status, ...restProps } = this.props;
+    const { defaultValue, value, onChange, grow, style, onResize, className,
+      getRootRef, getRef, status, ...restProps } = this.props;
+
     const height = this.state.height || style.height || 66;
 
     return (

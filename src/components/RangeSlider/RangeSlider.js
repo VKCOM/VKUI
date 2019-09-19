@@ -24,7 +24,7 @@ export default class RangeSlider extends Slider {
     this.onChange(this.percentToValue(percentRange), e);
 
     if (this.isControlledOutside) {
-      this.setState({startX: absolutePosition});
+      this.setState({ startX: absolutePosition });
     } else {
       this.setState({
         startX: absolutePosition,
@@ -56,27 +56,27 @@ export default class RangeSlider extends Slider {
   };
 
   calcPercentRange (percent) {
-    const {percentStart, percentEnd} = this.state;
+    const { percentStart, percentEnd } = this.state;
 
     if (percentStart === 100) {
-      return {percentStart: percent, percentEnd};
+      return { percentStart: percent, percentEnd };
     } else if (percentEnd === 0) {
-      return {percentEnd: percent, percentStart};
+      return { percentEnd: percent, percentStart };
     } else if (Math.abs(percentStart - percent) <= Math.abs(percentEnd - percent)) {
-      return {percentStart: percent, percentEnd};
+      return { percentStart: percent, percentEnd };
     } else {
-      return {percentEnd: percent, percentStart};
+      return { percentEnd: percent, percentStart };
     }
   }
 
-  validatePercent ({percentStart, percentEnd}) {
+  validatePercent ({ percentStart, percentEnd }) {
     return {
       percentStart: super.validatePercent(percentStart),
       percentEnd: super.validatePercent(percentEnd)
     };
   }
 
-  percentToValue ({percentStart, percentEnd}) {
+  percentToValue ({ percentStart, percentEnd }) {
     return [super.percentToValue(percentStart), super.percentToValue(percentEnd)];
   }
 

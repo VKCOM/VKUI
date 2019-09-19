@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
-import Tappable, {ACTIVE_EFFECT_DELAY} from '../Tappable/Tappable';
+import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 
 import classNames from '../../lib/classNames';
 import { IS_PLATFORM_IOS } from '../../lib/platform';

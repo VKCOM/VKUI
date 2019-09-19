@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const baseClassName = getClassName('Link');
 
-const Link = ({children, className, Component, getRootRef, ...restProps}) => (
+const Link = ({ children, className, Component, getRootRef, ...restProps }) => (
   <Component {...restProps} ref={getRootRef} className={classNames(baseClassName, className)}>{children}</Component>
 );
 

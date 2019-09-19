@@ -1,14 +1,32 @@
-
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
+import { HasChildren, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
 
-export default class Select extends Component {
+export interface SelectProps extends
+  HTMLAttributes<HTMLSelectElement>,
+  HasRef<HTMLSelectElement>,
+  HasRootRef<HTMLLabelElement>,
+  HasChildren,
+  HasFormStatus
+{
+  value?: string;
+  placeholder?: string;
+  alignment?: 'left' | 'center' | 'top';
+  disabled?: boolean;
+}
+
+export interface SelectState {
+  value?: string,
+  title?: string,
+  notSelected?: boolean,
+}
+
+export default class Select extends Component<SelectProps, SelectState> {
   constructor (props) {
     super(props);
-    const state = {
+    const state: SelectState = {
       title: '',
       notSelected: false
     };
@@ -20,36 +38,13 @@ export default class Select extends Component {
     this.state = state;
   }
 
-  static propTypes = {
-    style: PropTypes.object,
-    className: PropTypes.string,
-    label: PropTypes.string,
-    name: PropTypes.string,
-    onChange: PropTypes.func,
-    value: PropTypes.any,
-    defaultValue: PropTypes.any,
-    children: PropTypes.node,
-    placeholder: PropTypes.string,
-    getRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
-    ]),
-    getRootRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
-    ]),
-    alignment: PropTypes.oneOf(['left', 'center', 'top']),
-    status: PropTypes.oneOf(['default', 'error', 'valid'])
-  };
+  isControlledOutside?: boolean
+  selectEl?: HTMLSelectElement
 
-  static defaultProps = {
-    alignment: 'left'
-  };
-
-  onChange = (e) => {
+  onChange = (e: React.FormEvent<HTMLSelectElement>) => {
     this.setTitle();
     if (!this.isControlledOutside) {
-      this.setState({ value: e.target.value });
+      this.setState({ value: e.currentTarget.value });
     }
     if (this.props.onChange) {
       this.props.onChange(e);
@@ -92,7 +87,7 @@ export default class Select extends Component {
   };
 
   render () {
-    const { style, label, value, defaultValue, onChange, alignment, status, placeholder, children, className,
+    const { style, value, defaultValue, onChange, alignment, status, placeholder, children, className,
       getRef, getRootRef, ...restProps } = this.props;
 
     return (
@@ -100,7 +95,7 @@ export default class Select extends Component {
         TagName="label"
         className={classNames('Select', {
           [`Select--not-selected`]: this.state.notSelected,
-          [`Select--align-${alignment}`]: alignment
+          [`Select--align-${alignment}`]: !!alignment
         }, className)}
         style={style}
         getRootRef={getRootRef}
