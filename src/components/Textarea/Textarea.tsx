@@ -1,4 +1,4 @@
-import React, {HTMLAttributes, PureComponent} from 'react';
+import React, { HTMLAttributes, PureComponent } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 import { HasFormStatus, HasRef, HasRootRef } from '../../types/props';

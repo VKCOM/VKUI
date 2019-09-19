@@ -19,7 +19,7 @@
     "react/display-name": "off",
     "prefer-const": "off",
     "no-prototype-builtins": "off",
-    "object-curly-spacing": "off",
+    "object-curly-spacing": "error",
     "lines-between-class-members": "off",
     "no-mixed-operators": "off",
     "@typescript-eslint/no-unused-vars": ["error", {

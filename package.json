@@ -99,7 +99,7 @@
     "tsc": "NODE_ENV=production tsc --emitDeclarationOnly --declaration",
     "tsc:es6": "NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/es6/",
     "clear": "rm -rf dist/*",
-    "test": "tsc --noEmit && eslint --ext .tsx,.jsx,.ts,.js src/ && stylelint './src/**/*.css'"
+    "test": "tsc --noEmit && eslint --fix --ext .tsx,.jsx,.ts,.js src/ && stylelint './src/**/*.css'"
   },
   "pre-commit": [
     "test"

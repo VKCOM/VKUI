@@ -290,9 +290,9 @@ class ModalRoot extends Component {
     if (modalElement) {
       const modalState = this.modalsState[activeModal];
 
-      const prevModalState = {...modalState};
+      const prevModalState = { ...modalState };
       this.initPageModal(modalState, modalElement);
-      const currentModalState = {...modalState};
+      const currentModalState = { ...modalState };
 
       const diff = Object.keys(currentModalState).reduce((acc, key) => {
         if (prevModalState[key] !== currentModalState[key]) {

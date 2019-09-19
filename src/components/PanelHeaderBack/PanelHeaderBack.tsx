@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import HeaderButton, { HeaderButtonProps } from '../HeaderButton/HeaderButton';

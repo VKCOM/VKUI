@@ -22,7 +22,7 @@ const FormStatus: FunctionComponent<FormStatusProps> = ({
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('FormStatus', platform), {[`FormStatus--${state}`]: !!state}, className)}
+      className={classNames(getClassName('FormStatus', platform), { [`FormStatus--${state}`]: !!state }, className)}
     >
       {title && <div className="FormStatus__title">{title}</div>}
       {dangerouslySetInnerHTML &&

@@ -49,7 +49,7 @@ export default class Slider extends Component {
     this.onChange(this.percentToValue(percentPosition), e);
 
     if (this.isControlledOutside) {
-      this.setState({startX: absolutePosition});
+      this.setState({ startX: absolutePosition });
     } else {
       this.setState({
         startX: absolutePosition,
@@ -57,7 +57,7 @@ export default class Slider extends Component {
       });
     }
 
-    this.setState({active: !!e.originalEvent.target.closest('.Slider__thumb')});
+    this.setState({ active: !!e.originalEvent.target.closest('.Slider__thumb') });
   };
 
   onMoveX = e => {
@@ -67,7 +67,7 @@ export default class Slider extends Component {
     this.onChange(this.percentToValue(percentPosition), e);
 
     if (!this.isControlledOutside) {
-      this.setState({percentPosition});
+      this.setState({ percentPosition });
     }
 
     e.originalEvent.preventDefault();
@@ -133,13 +133,13 @@ export default class Slider extends Component {
   componentDidMount () {
     window.addEventListener('resize', this.onResize);
     this.onResize(() => {
-      this.setState({percentPosition: this.validatePercent(this.valueToPercent(this.value))});
+      this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.value)) });
     });
   }
 
   componentDidUpdate (prevProps) {
     if (this.isControlledOutside && this.props.value !== prevProps.value) {
-      this.setState({percentPosition: this.validatePercent(this.valueToPercent(this.props.value))});
+      this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.props.value)) });
     }
   }
 

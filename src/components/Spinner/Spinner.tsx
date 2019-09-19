@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Spinner24 from '@vkontakte/icons/dist/24/spinner';
