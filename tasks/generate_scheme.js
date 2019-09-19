@@ -8,24 +8,27 @@ const pkg = require('../package.json');
 
 /**
 * @param {object} palette палитра цветов
-* @param {string} colorId идентификатор цвета из палитры
+* @param {Object} clusterData
+* @param {string} clusterData.color_identifier
+* @param {number} clusterData.alpha_multiplier
 * @return {string} color цвет в браузерном представлении
 */
-function resolveColor (palette, colorId) {
-  const color = palette[colorId];
+function resolveColor (palette, clusterData) {
+  const color = palette[clusterData.color_identifier];
 
   if (color.indexOf('#') === 0 && color.length === 9) { // ahex
-    return ahex2rgba(color.replace('#', ''));
+    return ahex2rgba(color.replace('#', ''), clusterData.alpha_multiplier);
   }
   return color;
 }
 
 /**
  * @param {string} ahex цвет в формате ahex: #00ffffff
+ * @param {number} multiplier
  * @return {string} цвет в формате rgba
  */
-function ahex2rgba (ahex) {
-  const opacity = parseInt(ahex.slice(0, 2), 16) / 255;
+function ahex2rgba (ahex, multiplier = 1) {
+  const opacity = parseInt(ahex.slice(0, 2), 16) / 255 * multiplier;
   const colorHex = ahex.slice(2);
   return opacify(colorHex, opacity);
 }
@@ -41,12 +44,11 @@ function opacify (hex, opacity) {
 
 function generateScheme () {
   Object.keys(scheme).forEach((schemeId) => {
-    const colors = scheme[schemeId].colors;
+    const clusters = scheme[schemeId].colors;
     let css = '/* stylelint-disable */\n/*\n* Этот файл сгенерирован автоматически. Не надо править его руками.\n*/\n';
     css += schemeId === pkg.defaultSchemeId ? ':root {\n' : `body[scheme="${schemeId}"] {\n`;
-    Object.keys(colors).forEach((schemeItemId) => {
-      const colorId = colors[schemeItemId].color_identifier;
-      css += `  --${schemeItemId}: ${resolveColor(palette, colorId).toLowerCase()};\n`;
+    Object.keys(clusters).forEach((clusterId) => {
+      css += `  --${clusterId}: ${resolveColor(palette, clusters[clusterId]).toLowerCase()};\n`;
     });
     css += '}\n/* stylelint-enable */';
     fs.writeFileSync(path.resolve(__dirname, '../src/styles', `${schemeId}.css`), css);
