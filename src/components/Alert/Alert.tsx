@@ -12,17 +12,17 @@ export interface AlertActionsInterface {
   title: string;
   action?(): void;
   autoclose?: boolean;
-  style: 'cancel' | 'destructive' | 'default'
+  style: 'cancel' | 'destructive' | 'default';
 }
 
 export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren {
   actionsLayout?: 'vertical' | 'horizontal';
   actions?: AlertActionsInterface[];
-  onClose?(): void
+  onClose?(): void;
 }
 
 export interface AlertState {
-  closing: boolean
+  closing: boolean;
 }
 
 class Alert extends Component<AlertProps, AlertState> {
@@ -34,7 +34,7 @@ class Alert extends Component<AlertProps, AlertState> {
     };
   }
 
-  element: React.RefObject<HTMLDivElement>
+  element: React.RefObject<HTMLDivElement>;
 
   static defaultProps = {
     actionsLayout: 'horizontal',
@@ -64,7 +64,7 @@ class Alert extends Component<AlertProps, AlertState> {
 
   stopPropagation = e => e.stopPropagation();
 
-  waitTransitionFinish (eventHandler) {
+  waitTransitionFinish(eventHandler) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
@@ -75,17 +75,12 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
-  render () {
+  render() {
     const { actions, actionsLayout, children, className, style, platform, ...restProps } = this.props;
     const { closing } = this.state;
 
     return (
-      <PopoutWrapper
-        className={className}
-        closing={closing}
-        style={style}
-        onClick={this.onClose}
-      >
+      <PopoutWrapper className={className} closing={closing} style={style} onClick={this.onClose}>
         <div
           {...restProps}
           ref={this.element}
