@@ -97,6 +97,17 @@
   color: #fff;
   }
 
+.Button--lvl-overlay_primary {
+  background-color: var(--media_overlay_button_background);
+  color: var(--media_overlay_button_foreground);
+}
+
+.Button--lvl-overlay_outline {
+  background-color: transparent;
+  border: 1px solid var(--media_overlay_button_background);
+  color: var(--media_overlay_button_background);
+}
+
 .Button--sz-m {
   padding: 0 16px;
   }
