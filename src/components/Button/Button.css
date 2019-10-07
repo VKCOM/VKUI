@@ -97,6 +97,22 @@
   color: #fff;
   }
 
+.Button--lvl-overlay_primary {
+  background-color: var(--media_overlay_button_background);
+  color: var(--media_overlay_button_foreground);
+}
+
+.Button--lvl-overlay_secondary {
+  background-color: rgba(255, 255, 255, .2);
+  color: #fff;
+}
+
+.Button--lvl-overlay_outline {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
 .Button--sz-m {
   padding: 0 16px;
   }

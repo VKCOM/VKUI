@@ -20,6 +20,15 @@
       <Div>
         <Button level="destructive">Destructive</Button>
       </Div>
+      <Div style={{ background: '#232323' }}>
+        <Button level="overlay_primary">Overlay primary</Button>
+      </Div>
+      <Div style={{ background: '#232323' }}>
+        <Button level="overlay_secondary">Overlay secondary</Button>
+      </Div>
+      <Div style={{ background: '#232323' }}>
+        <Button level="overlay_outline">Overlay outline</Button>
+      </Div>
     </Group>
     <Group title="Допустимые размеры">
       <Div>
