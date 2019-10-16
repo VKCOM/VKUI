@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent, HTMLAttributes, ReactNode, ComponentType } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
@@ -6,7 +6,7 @@ import CellButton from '../CellButton/CellButton';
 import { HasChildren, HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface ButtonProps extends React.HTMLAttributes<HTMLElement>, HasChildren, HasRootRef<HTMLElement> {
+export interface ButtonProps extends HTMLAttributes<HTMLElement>, HasChildren, HasRootRef<HTMLElement> {
   /**
    * Значения `1`, `2`, `3`, `sell`, `buy` устарели. Маппинг на новые значения находится в
    * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в 3.0.0
@@ -20,10 +20,14 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLElement>, HasChild
   type?: 'default' | 'cell',
   align?: 'left' | 'center' | 'right',
   stretched?: boolean,
-  before?: React.ReactNode,
-  after?: React.ReactNode,
-  component?: string | React.ComponentType,
-  stopPropagation?: boolean
+  before?: ReactNode;
+  after?: ReactNode;
+  component?: string | ComponentType;
+  stopPropagation?: boolean;
+  /**
+   * @ignore
+   */
+  disabled?: boolean;
 }
 
 const mapOldLevel = level => {
@@ -43,7 +47,7 @@ const mapOldLevel = level => {
   }
 };
 
-const Button: React.FunctionComponent<ButtonProps> = (props: ButtonProps) => {
+const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   if (props.type === 'cell') {
     return <CellButton {...props} level={props.level === 'destructive' ? 'danger' : 'primary'}/>;
