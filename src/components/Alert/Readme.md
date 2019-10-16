@@ -18,22 +18,30 @@
 * В Android версии игнорируется стиль `cancel`, и жирность всех кнопок одинаковая.
 * Порядок кнопок должен быть одинаковым на всех платформах (см. пункт 2).
 
-```
+```jsx
 class Example extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      popout: null
+      popout: null,
+      actionsLog: [],
     };
 
     this.openDefault = this.openDefault.bind(this);
     this.openDestructive = this.openDestructive.bind(this);
     this.closePopout = this.closePopout.bind(this);
+    this.addActionLogItem = this.addActionLogItem.bind(this);
   }
 
   componentDidMount() {
     this.openDestructive()
+  }
+
+  addActionLogItem(value) {
+    this.setState({
+      actionsLog: [...this.state.actionsLog, value],
+    });
   }
 
   openDefault () {
@@ -46,6 +54,7 @@ class Example extends React.Component {
         }, {
           title: 'Добавить',
           autoclose: true,
+          action: () => this.addActionLogItem('Право на модерацию контента добавлено.'),
         }]}
         onClose={this.closePopout}
       >
@@ -62,7 +71,8 @@ class Example extends React.Component {
         actions={[{
           title: 'Лишить права',
           autoclose: true,
-          style: 'destructive'
+          style: 'destructive',
+          action: () => this.addActionLogItem('Пользователь больше не может модерировать контент.'),
         }, {
           title: 'Отмена',
           autoclose: true,
@@ -83,9 +93,11 @@ class Example extends React.Component {
   render() {
     return (
       <View popout={this.state.popout} header={false} activePanel="alert">
-        <Panel id="alert">
+        <Panel id="alert" theme="white">
           <CellButton onClick={this.openDefault}>Добавить право</CellButton>
           <CellButton level="danger" onClick={this.openDestructive}>Лишить права</CellButton>
+
+          {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
         </Panel>
       </View>
     )
