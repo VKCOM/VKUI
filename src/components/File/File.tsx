@@ -9,11 +9,15 @@ export interface FileProps extends ButtonProps, HasRef<HTMLInputElement> {
   /**
    * @deprecated Используйте `children`. Свойство `label` будет удалено в 3.0.0
    */
-  label: ButtonProps['children']
+  label: ButtonProps['children'];
   /**
    * @deprecated Используйте `align`. Свойство `alignment` будет удалено в 3.0.0
    */
-  alignment: ButtonProps['align']
+  alignment: ButtonProps['align'];
+  /**
+   * @ignore
+   */
+  disabled?: boolean;
 }
 
 const File: FunctionComponent<FileProps> = (props: FileProps) => {
@@ -34,6 +38,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
       before={before}
       style={style}
       getRootRef={getRootRef}
+      disabled={restProps.disabled}
     >
       <input {...restProps} className="File__input" type="file" ref={getRef}/>
       {children || label}
