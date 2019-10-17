@@ -9,7 +9,7 @@
     }
 
     .Search--ios .Search__width {
-      height: 32px;
+      height: var(--search_default_height_ios);
       white-space: nowrap;
       color: transparent;
       width: 10000px;
@@ -24,19 +24,19 @@
       top: 0;
       width: calc(100% - 1px);
       height: 100%;
-      border-radius: 16px;
+      border-radius: 10px;
       }
 
       .Search--ios .Search__input {
         border: none;
         margin: 0;
-        height: 32px;
+        height: var(--search_default_height_ios);
         position: relative;
-        padding: 0 22px 0 34px;
+        padding: 0 22px 0 36px;
         box-sizing: border-box;
-        font-size: 15px;
+        font-size: 17px;
         outline: none;
-        border-radius: 16px;
+        border-radius: 10px;
         max-width: 100%;
         flex-grow: 1;
         min-width: 0;
@@ -45,14 +45,14 @@
         }
 
       .Search--ios.Search--has-after .Search__input {
-        border-radius: 16px 0 0 16px;
-        padding-right: 16px;
+        border-radius: 10px 0 0 10px;
+        padding-right: 10px;
         }
 
       .Search--ios .Search__after-width {
         font-size: 17px;
-        height: 32px;
-        line-height: 32px;
+        height: var(--search_default_height_ios);
+        line-height: var(--search_default_height_ios);
         padding-left: 12px;
         padding-right: 4px;
         }
@@ -60,41 +60,26 @@
       .Search--ios .Search__placeholder {
         position: absolute;
         left: 0;
-        transform: translate(50%);
-        transition: transform .3s var(--ios-easing);
         width: 100%;
         cursor: text;
-        opacity: .5;
         z-index: 1;
         text-align: left;
         display: block;
-        height: 32px;
+        height: var(--search_default_height_ios);
         font-size: 0;
-        }
-
-      .Search--ios.Search--focused .Search__placeholder,
-      .Search--ios.Search--has-value .Search__placeholder {
-        transform: translate(0);
+        padding-left: 12px;
         }
 
         .Search--ios .Search__placeholder-in {
-          transform: translate(-50%);
-          transition: transform .3s var(--ios-easing);
-          height: 32px;
-          display: inline-flex;
+          height: var(--search_default_height_ios);
+          display: flex;
           align-items: center;
-          justify-content: center;
-          }
-
-        .Search--ios.Search--focused .Search__placeholder .Search__placeholder-in,
-        .Search--ios.Search--has-value .Search__placeholder .Search__placeholder-in {
-          transform: translate(12px);
           }
 
           .Search--ios .Search__placeholder-text {
-            margin-left: 6px;
-            line-height: 32px;
-            font-size: 15px;
+            margin-left: 8px;
+            line-height: 22px;
+            font-size: 17px;
             }
 
           .Search--ios.Search--has-value .Search__placeholder-text {
@@ -105,7 +90,7 @@
       position: absolute;
       left: 100%;
       top: 0;
-      line-height: 32px;
+      line-height: var(--search_default_height_ios);
       z-index: 2;
       transform: translate(0);
       transition: transform .3s var(--ios-easing);
@@ -122,7 +107,7 @@
         right: calc(100% - 1px);
         display: block;
         height: 100%;
-        width: 16px;
+        width: 10px;
         content: '';
         pointer-events: none;
         }
@@ -141,10 +126,10 @@
         right: 100%;
         display: block;
         height: 100%;
-        width: 16px;
+        width: 10px;
         content: '';
         top: 0;
-        border-radius: 0 16px 16px 0;
+        border-radius: 0 10px 10px 0;
         cursor: text;
         pointer-events: none;
         }
@@ -157,6 +142,8 @@
   default
  */
 .Search--ios.Search--default {
+  --search_default_height_ios: 36px;
+
   background: var(--search_bar_background);
   padding: 8px;
   }
