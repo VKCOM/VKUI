@@ -197,7 +197,7 @@
 [scheme="bright_light"] .Panel--ios.Panel--tm-gray .Search--default .Search__after::before,
 [scheme="bright_light"] .Panel--ios.Panel--tm-gray .Search--default .Search__after,
 [scheme="bright_light"] .Panel--ios.Panel--tm-gray .Search--default {
-  background-color: var(--background_page);
+  background-color: var(--background_content);
   }
 
 [scheme="bright_light"] .Panel--ios.Panel--tm-white .Search--default .Search__after::before,
@@ -209,7 +209,7 @@
 [scheme="space_gray"] .Panel--ios.Panel--tm-gray .Search--default .Search__after::before,
 [scheme="space_gray"] .Panel--ios.Panel--tm-gray .Search--default .Search__after,
 [scheme="space_gray"] .Panel--ios.Panel--tm-gray .Search--default {
-  background-color: var(--background_page);
+  background-color: var(--background_content);
   }
 
 [scheme="space_gray"] .Panel--ios.Panel--tm-white .Search--default .Search__after::before,

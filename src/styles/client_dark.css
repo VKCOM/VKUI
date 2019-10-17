@@ -14,7 +14,7 @@ body[scheme="client_dark"] {
   --attach_picker_tab_inactive_icon: #e1e3e6;
   --attach_picker_tab_inactive_text: #76787a;
   --background_content: #19191a;
-  --background_highlighted: rgba(255, 255, 255, 0.12);
+  --background_highlighted: rgba(255, 255, 255, 0.08);
   --background_keyboard: #2c2d2e;
   --background_light: #232324;
   --background_page: #0a0a0a;
@@ -65,7 +65,7 @@ body[scheme="client_dark"] {
   --header_background: #2c2d2e;
   --header_background_before_blur: #141414;
   --header_background_before_blur_alternate: #141414;
-  --header_search_field_background: #454647;
+  --header_search_field_background: #363738;
   --header_search_field_tint: #aaaeb3;
   --header_tab_active_background: #5d5f61;
   --header_tab_active_text: #e1e3e6;
@@ -154,7 +154,7 @@ body[scheme="client_dark"] {
   --placeholder_icon_tint: #ffffff;
   --poll_option_background: #ffffff;
   --search_bar_background: #19191a;
-  --search_bar_field_background: #454647;
+  --search_bar_field_background: #363738;
   --search_bar_field_tint: #aaaeb3;
   --search_bar_segmented_control_tint: #909499;
   --segmented_control_bar_background: #19191a;
@@ -162,14 +162,14 @@ body[scheme="client_dark"] {
   --selection_off_icon: #454647;
   --separator_alpha: rgba(255, 255, 255, 0.15);
   --separator_alternate: #232324;
-  --separator_common: #313233;
-  --snippet_background: #2c2d2e;
+  --separator_common: #363738;
+  --snippet_background: #232324;
   --snippet_border: rgba(255, 255, 255, 0.15);
   --snippet_icon_tertiary: #5d5f61;
   --splashscreen_icon: #2c2d2e;
   --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0.00);
-  --stories_create_button_background_from: #313233;
-  --stories_create_button_background_to: #313233;
+  --stories_create_button_background_from: #363738;
+  --stories_create_button_background_to: #363738;
   --stories_create_button_foreground: #c4c8cc;
   --stories_skeleton_loader_background: #454647;
   --stories_create_button_icon_background: #454647;
