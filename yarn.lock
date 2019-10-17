@@ -799,9 +799,9 @@
     lodash.unescape "4.0.1"
     semver "^6.3.0"
 
-"@vkontakte/appearance@https://github.com/VKCOM/Appearance#2.2":
+"@vkontakte/appearance@https://github.com/VKCOM/Appearance#v2.3.4":
   version "1.0.0"
-  resolved "https://github.com/VKCOM/Appearance#a2d20b5df38efd79c25df1a5818f0b369c7d98f9"
+  resolved "https://github.com/VKCOM/Appearance#b16af748410ca624420f86059759d255126f4a87"
 
 "@vkontakte/icons@^1.8.3":
   version "1.8.3"
