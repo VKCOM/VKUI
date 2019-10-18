@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-
-import Icon16Search from '@vkontakte/icons/dist/16/search';
+import Icon16SearchOutline from '@vkontakte/icons/dist/16/search_outline';
 
 const baseClassName = getClassName('Search');
 
@@ -136,7 +135,7 @@ export default class SearchIOS extends React.Component {
               htmlFor={`search-${searchId}`}
             >
               <div className="Search__placeholder-in">
-                <Icon16Search/>
+                <Icon16SearchOutline />
                 <div className="Search__placeholder-text" dangerouslySetInnerHTML={{ __html: placeholder }} />
               </div>
             </label>
