@@ -92,7 +92,8 @@ module.exports = {
           '../src/components/Counter/Counter.tsx',
           '../src/components/Touch/Touch.js',
           '../src/components/UsersStack/UsersStack.tsx',
-          '../src/components/Separator/Separator.js'
+          '../src/components/Separator/Separator.js',
+          '../src/components/Placeholder/Placeholder.tsx',
         ]
       }, {
         name: 'Forms',
