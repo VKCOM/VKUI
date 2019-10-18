@@ -15,15 +15,18 @@ const pkg = require('../package.json');
 */
 function resolveColor (palette, clusterData) {
   const color = palette[clusterData.color_identifier];
+  const alphaMultiplier = clusterData.alpha_multiplier ? Number(clusterData.alpha_multiplier) : 1;
 
   if (color.indexOf('#') === 0 && color.length === 9) { // ahex
-    return ahex2rgba(color.replace('#', ''), clusterData.alpha_multiplier);
+    return ahex2rgba(color.replace('#', ''), alphaMultiplier);
+  } else if (color.indexOf('#') === 0 && clusterData.alpha_multiplier) {
+    return opacify(color.replace('#', ''), alphaMultiplier);
   }
   return color;
 }
 
 /**
- * @param {string} ahex цвет в формате ahex: #00ffffff
+ * @param {string} ahex цвет в формате ahex: 00ffffff
  * @param {number} multiplier
  * @return {string} цвет в формате rgba
  */
@@ -34,8 +37,8 @@ function ahex2rgba (ahex, multiplier = 1) {
 }
 
 /**
- * @param hex цвет в формате hex: #ffffff
- * @param opacity прозрачность в диапазоне [0, 1]
+ * @param {string} hex цвет в формате hex: ffffff
+ * @param {number} opacity прозрачность в диапазоне [0, 1]
  * @return {string} цвет в формате rgba
  */
 function opacify (hex, opacity) {

@@ -28,7 +28,7 @@ body[scheme="bright_light"] {
   --button_outline_foreground: #3f8ae0;
   --button_primary_background: #4986cc;
   --button_primary_foreground: #ffffff;
-  --button_secondary_background: #001d3d;
+  --button_secondary_background: rgba(0, 29, 61, 0.05);
   --button_secondary_foreground: #3f8ae0;
   --button_tertiary_background: rgba(0, 0, 0, 0.00);
   --button_tertiary_foreground: #4986cc;
