@@ -17,7 +17,7 @@ function resolveInsets (e) {
       if (insets) {
         return {
           ...insets,
-          bottom: insets.bottom > 100 ? 0 : insets.bottom // если больше 100 – значит открылась клава и она сама работает как инсет, то есть наш нужно занулить
+          bottom: insets.bottom > 150 ? 0 : insets.bottom // если больше 150 – значит открылась клава и она сама работает как инсет, то есть наш нужно занулить
         };
       }
   }
