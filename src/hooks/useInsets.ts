@@ -9,7 +9,7 @@ let initialState: InsetsInterface = {
   right: null
 };
 
-function resolveInsets(e): InsetsInterface|false {
+function resolveInsets(e): InsetsInterface | null {
   const { type, data } = e.detail;
   switch (type) {
     case 'VKWebAppUpdateConfig':
@@ -22,18 +22,18 @@ function resolveInsets(e): InsetsInterface|false {
         };
       }
   }
-  return false;
+  return null;
 }
 
 vkConnect.subscribe((e) => {
   const insets = resolveInsets(e);
   if (insets) {
-    initialState = insets as InsetsInterface;
+    initialState = insets;
   }
 });
 
 export default function useInsets(): InsetsInterface {
-  const [insets, setInsets] = useState(initialState);
+  const [insets, setInsets] = useState<InsetsInterface>(initialState);
 
   useEffect(() => {
     function connectListener(e) {
@@ -49,5 +49,5 @@ export default function useInsets(): InsetsInterface {
     };
   }, []);
 
-  return insets as InsetsInterface;
+  return insets;
 }
