@@ -47,7 +47,7 @@ export default function useInsets(): InsetsInterface {
     return () => {
       vkConnect.unsubscribe(connectListener);
     };
-  }, [setInsets]);
+  }, []);
 
   return insets as InsetsInterface;
 }
