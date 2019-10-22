@@ -88,6 +88,8 @@
   --im_bubble_button_background: #f9f9f9;
   --im_bubble_button_background_highlighted: #d7d8d9;
   --im_bubble_button_foreground: #000000;
+  --im_bubble_expiring: #d4fde8;
+  --im_bubble_expiring_highlighted: #aee6c9;
   --im_bubble_incoming: #ebedf0;
   --im_bubble_incoming_alternate: #ffffff;
   --im_bubble_incoming_alternate_highlighted: #f9f9f9;
@@ -102,6 +104,7 @@
   --im_bubble_wallpaper_button_background: #f2f3f5;
   --im_bubble_wallpaper_button_background_highlighted: #e1e3e6;
   --im_bubble_wallpaper_button_foreground: #000000;
+  --im_bubble_wallpaper_expiring_border: rgba(0, 103, 50, 0.12);
   --im_bubble_wallpaper_incoming: #ffffff;
   --im_bubble_wallpaper_incoming_highlighted: #ebedf0;
   --im_bubble_wallpaper_incoming_border: rgba(0, 57, 115, 0.10);

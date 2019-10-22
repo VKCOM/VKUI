@@ -88,6 +88,8 @@ body[scheme="bright_light"] {
   --im_bubble_button_background: #f9f9f9;
   --im_bubble_button_background_highlighted: #d7d8d9;
   --im_bubble_button_foreground: #000000;
+  --im_bubble_expiring: #d4fde8;
+  --im_bubble_expiring_highlighted: #aee6c9;
   --im_bubble_incoming: #ebedf0;
   --im_bubble_incoming_alternate: #ffffff;
   --im_bubble_incoming_alternate_highlighted: #f9f9f9;
@@ -102,6 +104,7 @@ body[scheme="bright_light"] {
   --im_bubble_wallpaper_button_background: #f2f3f5;
   --im_bubble_wallpaper_button_background_highlighted: #e1e3e6;
   --im_bubble_wallpaper_button_foreground: #000000;
+  --im_bubble_wallpaper_expiring_border: rgba(0, 103, 50, 0.12);
   --im_bubble_wallpaper_incoming: #ffffff;
   --im_bubble_wallpaper_incoming_highlighted: #ebedf0;
   --im_bubble_wallpaper_incoming_border: rgba(0, 57, 115, 0.10);
@@ -153,7 +156,7 @@ body[scheme="bright_light"] {
   --placeholder_icon_foreground_secondary: #aeb7c2;
   --placeholder_icon_tint: #001d3d;
   --poll_option_background: #45678f;
-  --search_bar_background: rgba(0, 0, 0, 0.00);
+  --search_bar_background: #ffffff;
   --search_bar_field_background: #ebedf0;
   --search_bar_field_tint: #818c99;
   --search_bar_segmented_control_tint: #818c99;
