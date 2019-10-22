@@ -7,31 +7,22 @@ import usePlatform from '../../hooks/usePlatform';
 
 export interface FileProps extends ButtonProps, HasRef<HTMLInputElement> {
   /**
-   * @deprecated Используйте `children`. Свойство `label` будет удалено в 3.0.0
-   */
-  label: ButtonProps['children'];
-  /**
-   * @deprecated Используйте `align`. Свойство `alignment` будет удалено в 3.0.0
-   */
-  alignment: ButtonProps['align'];
-  /**
    * @ignore
    */
   disabled?: boolean;
 }
 
 const File: FunctionComponent<FileProps> = (props: FileProps) => {
-  const { children, label, alignment, align, size, level, type, stretched, before, className,
+  const { children, align, size, level, stretched, before, className,
     style, getRef, getRootRef, ...restProps } = props;
 
   const platform = usePlatform();
 
   return (
     <Button
-      align={align || alignment}
+      align={align}
       className={classNames(getClassName('File', platform), className)}
       component="label"
-      type={type}
       stretched={stretched}
       level={level}
       size={size}
@@ -41,15 +32,13 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
       disabled={restProps.disabled}
     >
       <input {...restProps} className="File__input" type="file" ref={getRef}/>
-      {children || label}
+      {children}
     </Button>
   );
 };
 
 File.defaultProps = {
-  label: 'Выберите файл',
   children: 'Выберите файл',
-  alignment: 'left',
   align: 'left'
 };
 

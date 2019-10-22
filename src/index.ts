@@ -20,7 +20,6 @@ export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
 /**
  * Popouts
  */
-export { default as NativePopouts } from './components/NativePopouts/NativePopouts';
 export { default as PopoutWrapper } from './components/PopoutWrapper/PopoutWrapper';
 export { default as Alert } from './components/Alert/Alert';
 export { default as ActionSheet } from './components/ActionSheet/ActionSheet';
@@ -45,20 +44,14 @@ export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
 export { default as List } from './components/List/List';
 export { default as Cell } from './components/Cell/Cell';
-/**
- * @deprecated алиас для Cell. Будет удален в 3.0.0
- */
-export { default as ListItem } from './components/Cell/Cell';
 export { default as Footer } from './components/Footer/Footer';
 export { default as InfoRow } from './components/InfoRow/InfoRow';
-export { default as Entity } from './components/Entity/Entity';
 export { default as Gallery } from './components/Gallery/Gallery';
 export { default as Avatar } from './components/Avatar/Avatar';
 export { default as Progress } from './components/Progress/Progress';
 export { default as Search } from './components/Search/Search';
 export { default as Tabs } from './components/Tabs/Tabs';
 export { default as TabsItem } from './components/TabsItem/TabsItem';
-export { default as FixedTabs } from './components/FixedTabs/FixedTabs';
 export { default as Spinner } from './components/Spinner/Spinner';
 export { default as PullToRefresh } from './components/PullToRefresh/PullToRefresh';
 export { default as Link } from './components/Link/Link';
@@ -117,25 +110,7 @@ export { default as animate } from './lib/animate';
 export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 
-/**
- * @deprecated будет удалено в 3.0.0
- */
-export { default as classnames } from './lib/classNames';
 export { platform, ANDROID, IOS, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
-/**
- * @deprecated будет удален в версии 3.0.0
- */
-export { default as request } from './lib/request';
-/**
- * @deprecated будет удален в версии 3.0.0
- */
-export { default as querystring } from './lib/querystring';
 export { default as getClassName } from './helpers/getClassName';
-export { isWebView } from './lib/webview';
-/**
- * @deprecated будет удален в 3.0.0
- * @type {{}}
- */
-export const colors = {};
 
 export const v = process.env.VKUI_VERSION;

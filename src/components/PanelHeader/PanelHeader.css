@@ -295,11 +295,7 @@
   background: var(--header_background);
   }
 
-.PanelHeader-bg--light, /*TODO deprecated. Алиас для alternate. Будет удален в 3.0.0*/
 .PanelHeader-bg--alternate,
-.PanelHeader-left-in--light, /*TODO deprecated. Алиас для alternate. Будет удален в 3.0.0*/
-.PanelHeader-addon--light, /*TODO deprecated. Алиас для alternate. Будет удален в 3.0.0*/
-.PanelHeader-right--light, /*TODO deprecated. Алиас для alternate. Будет удален в 3.0.0*/
 .PanelHeader-left-in--alternate,
 .PanelHeader-addon--alternate,
 .PanelHeader-right--alternate {
@@ -307,7 +303,6 @@
   background: var(--header_alternate_background);
   }
 
-.PanelHeader-content--light, /*TODO deprecated. Алиас для alternate. Будет удален в 3.0.0*/
 .PanelHeader-content--alternate {
   color: var(--text_primary);
   }
