@@ -1,13 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
+import usePlatform from '../../hooks/usePlatform';
+import { HasChildren, HasClassName } from '../../types/props';
+import useInsets from '../../hooks/useInsets';
 
-const baseClassName = getClassName('Tabbar');
+export interface TabbarProps extends HasChildren, HasClassName {
+  /**
+   * Флаг для показа/скрытия верхней тени (Android) или границы (iOS)
+   */
+  shadow?: boolean;
+  itemsLayout?: 'vertical' | 'horizontal' | 'auto';
+}
 
-const Tabbar = ({ className, children, shadow, itemsLayout, insets }) => {
+const Tabbar: FunctionComponent<TabbarProps> = (props: TabbarProps) => {
+  const { className, children, shadow, itemsLayout } = props;
+  const platform = usePlatform();
+  const insets = useInsets();
+
   const getItemsLayout = () => {
     switch (itemsLayout) {
       case 'horizontal':
@@ -19,26 +31,15 @@ const Tabbar = ({ className, children, shadow, itemsLayout, insets }) => {
   };
 
   return (
-    <div className={classNames(baseClassName, className, `Tabbar--l-${getItemsLayout()}`, {
-      'Tabbar--shadow': shadow
-    })} style={{ paddingBottom: isNumeric(insets.bottom) ? insets.bottom : null }}>
+    <div
+      className={classNames(getClassName('Tabbar', platform), className, `Tabbar--l-${getItemsLayout()}`, {
+        'Tabbar--shadow': shadow
+      })}
+      style={{ paddingBottom: isNumeric(insets.bottom) ? insets.bottom : null }}
+    >
       {children}
     </div>
   );
-};
-
-Tabbar.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-  /**
-   * Флаг для показа/скрытия верхней тени (Android) или границы (iOS)
-   */
-  shadow: PropTypes.bool,
-  itemsLayout: PropTypes.oneOf(['vertical', 'horizontal', 'auto']),
-  /**
-   * @ignore
-   */
-  insets: PropTypes.object
 };
 
 Tabbar.defaultProps = {

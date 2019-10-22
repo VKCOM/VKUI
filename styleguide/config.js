@@ -41,8 +41,8 @@ module.exports = {
           '../src/components/PanelHeaderContent/PanelHeaderContent.js',
           '../src/components/HeaderContext/HeaderContext.js',
           '../src/components/Epic/Epic.tsx',
-          '../src/components/Tabbar/Tabbar.js',
-          '../src/components/TabbarItem/TabbarItem.js',
+          '../src/components/Tabbar/Tabbar.tsx',
+          '../src/components/TabbarItem/TabbarItem.tsx',
           '../src/components/FixedLayout/FixedLayout.tsx',
           '../src/components/HorizontalScroll/HorizontalScroll.js',
         ]

@@ -1,36 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, ReactNode, HTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import usePlatform from '../../hooks/usePlatform';
 
-const baseClassName = getClassName('TabbarItem');
-
-const TabbarItem = ({ className, children, selected, label, text, ...restProps }) => (
-  <div {...restProps} className={classNames(baseClassName, className, {
-    'TabbarItem--selected': selected
-  })}>
-    <div className="TabbarItem__in">
-      <div className="TabbarItem__icon">
-        {children}
-        {label && <span className="TabbarItem__label">{label}</span>}
-      </div>
-      {text && <div className="TabbarItem__text">{text}</div>}
-    </div>
-  </div>
-);
-
-TabbarItem.propTypes = {
-  className: PropTypes.string,
-  selected: PropTypes.bool,
-  children: PropTypes.node,
+export interface TabbarItemProps extends HTMLAttributes<HTMLDivElement> {
+  selected?: boolean;
   /**
    * Тест рядом с иконкой
    */
-  text: PropTypes.node,
+  text?: ReactNode;
   /**
    * Счетчик рядом с иконкой
    */
-  label: PropTypes.node
+  label?: ReactNode;
+}
+
+const TabbarItem: FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) => {
+  const { className, children, selected, label, text, ...restProps } = props;
+  const platform = usePlatform();
+
+  return (
+    <div {...restProps} className={classNames(getClassName('TabbarItem', platform), className, {
+      'TabbarItem--selected': selected
+    })}>
+      <div className="TabbarItem__in">
+        <div className="TabbarItem__icon">
+          {children}
+          {label && <span className="TabbarItem__label">{label}</span>}
+        </div>
+        {text && <div className="TabbarItem__text">{text}</div>}
+      </div>
+    </div>
+  );
 };
 
 export default TabbarItem;
