@@ -178,33 +178,6 @@
   background-color: var(--search_bar_background);
   }
 
-/* Очень плохой хак для новых тем. В них заливка поиска прозрачная, а при текущей его реализации
- * прозрачность все ломает. Нужно его переделать и убрать хаки.
- */
-[scheme="bright_light"] .Panel--ios.Panel--tm-gray .Search--default .Search__after::before,
-[scheme="bright_light"] .Panel--ios.Panel--tm-gray .Search--default .Search__after,
-[scheme="bright_light"] .Panel--ios.Panel--tm-gray .Search--default {
-  background-color: var(--background_content);
-  }
-
-[scheme="bright_light"] .Panel--ios.Panel--tm-white .Search--default .Search__after::before,
-[scheme="bright_light"] .Panel--ios.Panel--tm-white .Search--default .Search__after,
-[scheme="bright_light"] .Panel--ios.Panel--tm-white .Search--default {
-  background-color: var(--background_content);
-  }
-
-[scheme="space_gray"] .Panel--ios.Panel--tm-gray .Search--default .Search__after::before,
-[scheme="space_gray"] .Panel--ios.Panel--tm-gray .Search--default .Search__after,
-[scheme="space_gray"] .Panel--ios.Panel--tm-gray .Search--default {
-  background-color: var(--background_content);
-  }
-
-[scheme="space_gray"] .Panel--ios.Panel--tm-white .Search--default .Search__after::before,
-[scheme="space_gray"] .Panel--ios.Panel--tm-white .Search--default .Search__after,
-[scheme="space_gray"] .Panel--ios.Panel--tm-white .Search--default {
-  background-color: var(--background_content);
-  }
-
 .Search--ios.Search--default::after {
   position: absolute;
   width: 100%;
