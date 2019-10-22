@@ -59,9 +59,9 @@ module.exports = {
       }, {
         name: 'Modals',
         components: () => [
-          '../src/components/ModalRoot/ModalRoot.js',
-          '../src/components/ModalPage/ModalPage.js',
-          '../src/components/ModalPageHeader/ModalPageHeader.js',
+          '../src/components/ModalRoot/ModalRoot.tsx',
+          '../src/components/ModalPage/ModalPage.tsx',
+          '../src/components/ModalPageHeader/ModalPageHeader.tsx',
           '../src/components/ModalCard/ModalCard.tsx'
         ]
       }, {
