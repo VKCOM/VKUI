@@ -44,7 +44,7 @@ module.exports = {
           '../src/components/Tabbar/Tabbar.js',
           '../src/components/TabbarItem/TabbarItem.js',
           '../src/components/FixedLayout/FixedLayout.tsx',
-          '../src/components/HorizontalScroll/HorizontalScroll.js',
+          '../src/components/HorizontalScroll/HorizontalScroll.tsx',
         ]
       }, {
         name: 'Popouts',
@@ -82,7 +82,7 @@ module.exports = {
           '../src/components/Avatar/Avatar.tsx',
           '../src/components/Entity/Entity.js',
           '../src/components/Gallery/Gallery.tsx',
-          '../src/components/Progress/Progress.js',
+          '../src/components/Progress/Progress.tsx',
           '../src/components/Search/Search.js',
           '../src/components/Tabs/Tabs.js',
           '../src/components/TabsItem/TabsItem.js',
@@ -103,7 +103,7 @@ module.exports = {
           '../src/components/FormStatus/FormStatus.tsx',
           '../src/components/Slider/Slider.js',
           '../src/components/RangeSlider/RangeSlider.js',
-          '../src/components/Radio/Radio.js',
+          '../src/components/Radio/Radio.tsx',
           '../src/components/Checkbox/Checkbox.tsx',
           '../src/components/Input/Input.tsx',
           '../src/components/Select/Select.tsx',

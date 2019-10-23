@@ -6,8 +6,7 @@
     width: 80,
     height: 94,
     display: 'flex',
-    flexDirection:
-    'column',
+    flexDirection: 'column',
     alignItems: 'center',
     fontSize: 12
   };
