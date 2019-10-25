@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
 import usePlatform from '../../hooks/usePlatform';
 import { HasChildren, HasClassName } from '../../types/props';
@@ -46,4 +45,4 @@ Tabbar.defaultProps = {
   shadow: true
 };
 
-export default withInsets(Tabbar);
+export default Tabbar;
