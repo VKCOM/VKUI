@@ -41,10 +41,10 @@ module.exports = {
           '../src/components/PanelHeaderContent/PanelHeaderContent.js',
           '../src/components/HeaderContext/HeaderContext.js',
           '../src/components/Epic/Epic.tsx',
-          '../src/components/Tabbar/Tabbar.js',
-          '../src/components/TabbarItem/TabbarItem.js',
+          '../src/components/Tabbar/Tabbar.tsx',
+          '../src/components/TabbarItem/TabbarItem.tsx',
           '../src/components/FixedLayout/FixedLayout.tsx',
-          '../src/components/HorizontalScroll/HorizontalScroll.js',
+          '../src/components/HorizontalScroll/HorizontalScroll.tsx',
         ]
       }, {
         name: 'Popouts',
@@ -59,9 +59,9 @@ module.exports = {
       }, {
         name: 'Modals',
         components: () => [
-          '../src/components/ModalRoot/ModalRoot.js',
-          '../src/components/ModalPage/ModalPage.js',
-          '../src/components/ModalPageHeader/ModalPageHeader.js',
+          '../src/components/ModalRoot/ModalRoot.tsx',
+          '../src/components/ModalPage/ModalPage.tsx',
+          '../src/components/ModalPageHeader/ModalPageHeader.tsx',
           '../src/components/ModalCard/ModalCard.tsx'
         ]
       }, {
@@ -81,7 +81,7 @@ module.exports = {
           '../src/components/InfoRow/InfoRow.js',
           '../src/components/Avatar/Avatar.tsx',
           '../src/components/Gallery/Gallery.tsx',
-          '../src/components/Progress/Progress.js',
+          '../src/components/Progress/Progress.tsx',
           '../src/components/Search/Search.js',
           '../src/components/Tabs/Tabs.js',
           '../src/components/TabsItem/TabsItem.js',
@@ -101,7 +101,7 @@ module.exports = {
           '../src/components/FormStatus/FormStatus.tsx',
           '../src/components/Slider/Slider.js',
           '../src/components/RangeSlider/RangeSlider.js',
-          '../src/components/Radio/Radio.js',
+          '../src/components/Radio/Radio.tsx',
           '../src/components/Checkbox/Checkbox.tsx',
           '../src/components/Input/Input.tsx',
           '../src/components/Select/Select.tsx',
