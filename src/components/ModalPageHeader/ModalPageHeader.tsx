@@ -1,16 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import usePlatform from '../../hooks/usePlatform';
+import { HasChildren, HasClassName, HasRef } from '../../types/props';
 
-const baseClassName = getClassName('ModalPageHeader');
+export interface ModalPageHeaderProps extends HasChildren, HasClassName, HasRef<HTMLDivElement> {
+  /**
+   * Иконки, отображаемые слева
+   */
+  left?: ReactNode;
+  /**
+   * Иконки, отображаемые справа
+   */
+  right?: ReactNode;
+  noShadow?: boolean;
+}
 
-function ModalPageHeader (props) {
+const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
+  const platform = usePlatform();
   const { className, left, right, children, noShadow, getRef } = props;
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
   return (
-    <div className={classNames(baseClassName, className)} ref={getRef}>
+    <div className={classNames(getClassName('ModalPageHeader', platform), className)} ref={getRef}>
       <div className="ModalPageHeader__in">
         <div className="ModalPageHeader__left">
           {left}
@@ -30,30 +42,6 @@ function ModalPageHeader (props) {
       {!noShadow && <div className="ModalPageHeader__shadow" />}
     </div>
   );
-}
-
-ModalPageHeader.propTypes = {
-  className: PropTypes.string,
-
-  /**
-   * Иконки, отображаемые слева
-   */
-  left: PropTypes.node,
-
-  /**
-   * Иконки, отображаемые справа
-   */
-  right: PropTypes.node,
-  children: PropTypes.node,
-  noShadow: PropTypes.bool,
-  getRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ])
-};
-
-ModalPageHeader.defaultProps = {
-  noShadow: false
 };
 
 export default ModalPageHeader;
