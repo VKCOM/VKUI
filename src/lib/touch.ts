@@ -37,9 +37,9 @@ function getSupportedEvents(): Array<string> {
  */
 function rubber(offset: number, dimension: number, resistanceRate: number, isAndroid: boolean): number {
   if (isAndroid || offset < 0) return offset;
-
-  const result = (resistanceRate * Math.abs(offset) * dimension) / (dimension + resistanceRate * Math.abs(offset));
-  return offset < 0 ? -result : result;
+  
+  const offsettedResistance = offset * resistanceRate;
+  return offsettedResistance * dimension / (offsettedResistance + dimension);
 }
 
 export { getSupportedEvents, coordX, coordY, touchEnabled, rubber };
