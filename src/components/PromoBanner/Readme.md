@@ -1,4 +1,4 @@
-```
+```js
 const promoBannerProps = {
   "title": "Будь в форме",
   "url_types": "external,external_new",

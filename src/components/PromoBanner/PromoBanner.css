@@ -101,3 +101,13 @@
   font-weight: bold;
   font-size: 15px;
 }
+
+.PromoBanner__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  color: var(--placeholder_icon_foreground_primary);
+  justify-content: center;
+}

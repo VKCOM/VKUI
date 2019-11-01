@@ -1,5 +1,6 @@
 import React from 'react';
-// import getClassName from '../../helpers/getClassName';
+import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
+import HeaderButton from '../HeaderButton/HeaderButton';
 
 type BannerData = {
   title: string;
@@ -31,6 +32,10 @@ export interface PromoBannerProps {
   isFixed?: boolean;
   /** Положение блока при фиксированном позиционировании */
   verticalAlign?: 'top' | 'bottom';
+  /** Флаг скрытия кнопки закрытия рекламы */
+  isCloseButtonHidden?: boolean;
+  /** Хандлер закрытия рекламы */
+  onClose: () => void
 }
 
 class PromoBanner extends React.Component<PromoBannerProps> {
@@ -50,6 +55,12 @@ class PromoBanner extends React.Component<PromoBannerProps> {
         <div className="PromoBanner__head">
           {this.props.bannerData.ageRestriction && <span className="PromoBanner__age">14+</span>}
           <span className="PromoBanner__label">{this.props.bannerData.advertisingLabel || 'Advertisement'}</span>
+
+          {!this.props.isCloseButtonHidden && (
+            <HeaderButton className="PromoBanner__close" onClick={this.props.onClose}>
+              <Icon24Dismiss />
+            </HeaderButton>
+          )}
         </div>
         <a
           href={this.props.bannerData.trackingLink}
