@@ -11,6 +11,16 @@
   background: var(--background_content);
 }
 
+.PromoBanner--fixed {
+  position: fixed;
+  top: 0;
+}
+
+.PromoBanner--bottom {
+  top: auto;
+  bottom: 0;
+}
+
 .PromoBanner__head {
   padding: 11px 11px 0 11px;
   height: 38px;
