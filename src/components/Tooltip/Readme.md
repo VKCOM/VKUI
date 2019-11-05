@@ -24,7 +24,7 @@ import { Tooltip, Button } from '@vkontakte/vkui';
 ```
 О возможностях тултипа можно прочитать в описании свойств и методов.
 
-```
+```jsx
   class Example extends React.Component {
 
     constructor () {
@@ -53,6 +53,7 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                 <Cell>Денежные переводы</Cell>
               </List>
             </Group>
+            <Separator />
             <Group>
               <Tooltip
                 text="У нас тут brand new функционал подвезли. Зацените!"

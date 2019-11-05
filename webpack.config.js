@@ -24,6 +24,16 @@ const config = {
         test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,
         loader: ['babel-loader', 'ts-loader']
+      },
+      {
+        test: /\.(jpeg|jpg|png|woff|svg|otf)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            outputPath: 'static/',
+            name: '[name].[hash:8].[ext]'
+          }
+        }
       }
     ]
   },

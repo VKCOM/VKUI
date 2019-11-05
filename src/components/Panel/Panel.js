@@ -7,6 +7,7 @@ import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
+import Separator from '../Separator/Separator';
 
 class Panel extends Component {
   static childContextTypes = {
@@ -16,9 +17,9 @@ class Panel extends Component {
   static propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
-    theme: PropTypes.oneOf(['white', 'gray']),
     id: PropTypes.string.isRequired,
     centered: PropTypes.bool,
+    separator: PropTypes.bool,
     style: PropTypes.object,
     /**
      * @ignore
@@ -32,8 +33,8 @@ class Panel extends Component {
 
   static defaultProps = {
     children: '',
-    theme: 'gray',
-    centered: false
+    centered: false,
+    separator: true
   };
 
   static contextTypes = {
@@ -47,19 +48,19 @@ class Panel extends Component {
   }
 
   render () {
-    const { className, centered, children, theme, insets, platform, ...restProps } = this.props;
+    const { className, centered, children, insets, platform, separator, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
 
     return (
       <div {...restProps} className={classNames(getClassName('Panel', platform), className, {
-        'Panel--centered': centered,
-        [`Panel--tm-${theme}`]: theme
+        'Panel--centered': centered
       })}>
         <Touch className="Panel__in" style={{
           paddingBottom: isNumeric(insets.bottom) ? (insets.bottom + tabbarPadding) : null
         }}>
           <div className="Panel__in-before" />
-          {children}
+          {separator && <Separator />}
+          {centered ? <div className="Panel__centered">{children}</div> : children}
           <div className="Panel__in-after" />
         </Touch>
       </div>

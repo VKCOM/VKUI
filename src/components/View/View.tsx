@@ -34,7 +34,6 @@ interface TransitionEventHandler {
 
 interface HeaderSwipeStyles {
   title?: CSSProperties;
-  bg?: CSSProperties;
   left?: CSSProperties;
   addon?: CSSProperties;
   right?: CSSProperties;
@@ -453,7 +452,6 @@ class View extends Component<ViewProps, ViewState> {
     if (!isPrev && !isNext || this.state.swipeBackResult !== null) {
       return {
         title: {},
-        bg: {},
         left: {},
         addon: {},
         right: {}
@@ -487,7 +485,6 @@ class View extends Component<ViewProps, ViewState> {
           WebkitTransform: `translate3d(${titleTransform}vw, 0, 0)`,
           opacity: 1 - opacity
         },
-        bg: { opacity: 1 - opacity },
         left: { opacity: 1 - opacity },
         addon: {
           transform: `translate3d(${leftTransform}vw, 0, 0)`,
@@ -551,12 +548,6 @@ class View extends Component<ViewProps, ViewState> {
                     key={panelId}
                     id={`panel-header-${panelId}`}
                   >
-                    <div
-                      className="PanelHeader__bg"
-                      key={panelId}
-                      id={`header-bg-${panelId}`}
-                      style={headerSwipeStyles.bg}
-                    />
                     <div className="PanelHeader__container">
                       <div className="PanelHeader__left">
                         <div

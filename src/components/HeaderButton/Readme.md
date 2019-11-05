@@ -84,11 +84,11 @@ class Example extends React.Component {
                 В противном случае показывается кнопка "Назад".
               </Div>
             </Group>
-            <Group>
-              <CellButton onClick={ () => this.setState({ activePanel: 'panel2' }) }>
+            <Div>
+              <Button stretched level="secondary" size="l" onClick={ () => this.setState({ activePanel: 'panel2' }) }>
                 Больше примеров
-              </CellButton>
-            </Group>
+              </Button>
+            </Div>
           </Panel>
           <Panel id="panel2">
             <PanelHeader

@@ -93,7 +93,7 @@ class Example extends React.Component {
   render() {
     return (
       <View popout={this.state.popout} header={false} activePanel="alert">
-        <Panel id="alert" theme="white">
+        <Panel id="alert" theme="white" separator={false}>
           <CellButton onClick={this.openDefault}>Добавить право</CellButton>
           <CellButton level="danger" onClick={this.openDestructive}>Лишить права</CellButton>
 

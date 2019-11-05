@@ -5,12 +5,41 @@
         Header
       </PanelHeader>
       <Header>
+        Рекомендации
+      </Header>
+      <Separator />
+      <Header aside={<Link>Показать все</Link>}>
         Плейлисты
       </Header>
-      <Header level="secondary">
-        Импорт друзей
+      <Separator />
+      <Header aside={<Link>Добавленные<Icon16Dropdown /></Link>} indicator={16}>
+        Мои видео
       </Header>
+      <Separator />
+      <Header aside={<Icon24Dismiss />}>
+        Недавние
+      </Header>
+      <Separator />
+      <Header indicator={<Counter size="s" type="prominent">3</Counter>} aside={<Link>Показать все</Link>}>
+        Заявки в друзья
+      </Header>
+      <Separator />
+      <Header subtitle="SOHN — Conrad" aside={<Link>Показать все</Link>}>
+        Похожее на
+      </Header>
+      <div style={{ marginBottom: 100 }}/>
+      <Separator />
+      <Header level="secondary">Важные</Header>
+      <Separator />
       <Header level="secondary" aside={<Link>Показать все</Link>}>
+        Приглашения
+      </Header>
+      <Separator />
+      <Header level="secondary" indicator="667" aside={<Icon16Chevron />}>
+        Фотографии
+      </Header>
+      <Separator />
+      <Header level="secondary" indicator={<Counter size="s" type="prominent">3</Counter>} aside={<Link>Показать все</Link>}>
         Приглашения
       </Header>
     </Panel>

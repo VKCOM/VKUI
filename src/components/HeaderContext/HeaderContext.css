@@ -47,7 +47,7 @@
     }
 
     .HeaderContext--ios .List {
-      background: var(--content_tint_background);
+      background: var(--header_background);
       }
 
 /*
@@ -55,24 +55,25 @@
  */
 .HeaderContext--android {}
 
-.HeaderContext--android .HeaderContext__in {
-  padding: 8px;
-  box-sizing: border-box;
-  }
+  .HeaderContext--android .HeaderContext__in {
+    padding: 8px;
+    box-sizing: border-box;
+    }
 
-.HeaderContext--android.HeaderContext--opened .HeaderContext__in {
-  animation: animation-headercontext-translate-in .2s ease;
-  }
+  .HeaderContext--android.HeaderContext--opened .HeaderContext__in {
+    animation: animation-headercontext-translate-in .2s ease;
+    }
 
-.HeaderContext--android.HeaderContext--closing .HeaderContext__in {
-  animation: animation-headercontext-translate-out .2s ease;
-  }
+  .HeaderContext--android.HeaderContext--closing .HeaderContext__in {
+    animation: animation-headercontext-translate-out .2s ease;
+    }
 
-.HeaderContext--android .List {
-  overflow: hidden;
-  border-radius: 12px;
-  padding: 8px 0;
-  }
+    .HeaderContext--android .List {
+      overflow: hidden;
+      border-radius: 12px;
+      padding: 8px 0;
+      background: var(--header_background);
+      }
 
 /*
   Animations

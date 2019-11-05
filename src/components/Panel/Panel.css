@@ -15,10 +15,7 @@
     }
 
   .Panel--centered .Panel__in {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    height: 100%;
     }
 
   .Panel__in {
@@ -27,8 +24,19 @@
     width: 100%;
     min-height: 100%;
     z-index: 2;
-    padding-bottom: var(--safe-area-inset-bottom);
     }
+
+    .Panel__centered {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      }
+
+    .Separator ~ .Panel__centered {
+      min-height: calc(100% - 1px);
+      }
 
   .Epic .Panel__in {
     padding-bottom: var(--tabbar_height);
@@ -45,12 +53,7 @@
       margin-top: -1px;
       }
 
-.Panel--tm-gray .Panel__in,
-.Panel--tm-gray::after {
-  background-color: var(--background_page);
-  }
-
-.Panel--tm-white .Panel__in,
-.Panel--tm-white::after {
+.Panel .Panel__in,
+.Panel::after {
   background-color: var(--background_content);
   }

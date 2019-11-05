@@ -17,12 +17,10 @@ export default class PanelHeader extends React.Component {
     addon: PropTypes.node,
     right: PropTypes.node,
     children: PropTypes.node,
-    theme: PropTypes.oneOf(['alternate', 'brand']),
     /**
      * @ignore
      */
     transparent: PropTypes.bool,
-    noShadow: PropTypes.bool,
     getRef: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.shape({ current: PropTypes.any })
@@ -30,9 +28,7 @@ export default class PanelHeader extends React.Component {
   };
 
   static defaultProps = {
-    theme: 'brand',
-    transparent: false,
-    noShadow: false
+    transparent: false
   };
 
   static contextTypes = {
@@ -57,7 +53,6 @@ export default class PanelHeader extends React.Component {
     this.addonNode = this.document.getElementById('header-addon-' + panelId);
     this.titleNode = this.document.getElementById('header-title-' + panelId);
     this.rightNode = this.document.getElementById('header-right-' + panelId);
-    this.bgNode = this.document.getElementById('header-bg-' + panelId);
 
     const getRef = this.props.getRef;
     if (getRef) {
@@ -73,31 +68,22 @@ export default class PanelHeader extends React.Component {
   }
 
   render () {
-    let { left, addon, children, right, theme, noShadow, transparent } = this.props;
+    let { left, addon, children, right, transparent } = this.props;
     const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
     return this.state.ready ? [
-      ReactDOM.createPortal(<div className={classNames('PanelHeader-bg', {
-        [`PanelHeader-bg--${theme}`]: true,
-        'PanelHeader-bg--tp': transparent,
-        [`PanelHeader-bg--no-shadow`]: noShadow || ['bright_light', 'space_gray'].indexOf(this.context.scheme) >= 0
-      })}/>, this.bgNode),
       ReactDOM.createPortal(<div className={classNames('PanelHeader-left-in', {
-        [`PanelHeader-left-in--${theme}`]: true,
         'PanelHeader-left-in--tp': transparent
       })}>{left}</div>, this.leftNode),
       IS_PLATFORM_IOS && ReactDOM.createPortal(<div className={classNames('PanelHeader-addon', {
-        [`PanelHeader-addon--${theme}`]: true,
         'PanelHeader-addon--tp': transparent
       })}>{addon}</div>, this.addonNode),
       ReactDOM.createPortal(<div className={classNames('PanelHeader-content', {
-        [`PanelHeader-content--${theme}`]: true,
         'PanelHeader-content--tp': transparent
       })}>
         {isPrimitive ? <span>{children}</span> : children}
       </div>, this.titleNode),
       ReactDOM.createPortal(<div className={classNames('PanelHeader-right', {
-        [`PanelHeader-right--${theme}`]: true,
         'PanelHeader-right--tp': transparent,
         'PanelHeader-right--vkapps': this.webviewType === 'vkapps'
       })}>{this.webviewType === 'internal' ? right : null}</div>, this.rightNode)

@@ -5,10 +5,8 @@
   }
 
   .Counter__in {
-    font-size: 14px;
-    line-height: 1.2;
-    padding: 0 5px;
     text-align: center;
+    box-sizing: border-box;
     }
 
 .Counter--primary {
@@ -26,18 +24,26 @@
   color: var(--white);
   }
 
-.Counter--ios {
-  min-width: 22px;
-  height: 22px;
-  border-radius: 11px;
-  }
-
-.Counter--android {
-  min-width: 24px;
+.Counter--s-m {
   height: 24px;
   border-radius: 12px;
   }
 
-  .Counter--android .Counter__in {
-    font-weight: 500;
+  .Counter--s-m .Counter__in {
+    min-width: 24px;
+    padding: 2px 5px;
+    font-size: 15px;
+    line-height: 20px;
+    }
+
+.Counter--s-s {
+  height: 18px;
+  border-radius: 9px;
+  }
+
+  .Counter--s-s .Counter__in {
+    min-width: 18px;
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 16px;
     }

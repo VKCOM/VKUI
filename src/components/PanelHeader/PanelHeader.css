@@ -2,6 +2,7 @@
 
 .PanelHeader {
   position: relative;
+  background: var(--header_background);
   }
 
   .PanelHeader__in {
@@ -11,14 +12,6 @@
     top: 0;
     z-index: 1;
     }
-
-    .PanelHeader__bg {
-      position: absolute;
-      width: 100%;
-      left: 0;
-      top: 0;
-      z-index: 1;
-      }
 
     .PanelHeader__container {
       display: flex;
@@ -39,11 +32,17 @@
           flex-shrink: 0;
           }
 
-          .PanelHeader-left-in {}
+          .PanelHeader-left-in {
+            color: var(--header_tint);
+            }
 
         .PanelHeader__addon {
           flex-shrink: 0;
           }
+
+          .PanelHeader-addon {
+            color: var(--header_tint);
+            }
 
       .PanelHeader__content {
         overflow: hidden;
@@ -69,6 +68,7 @@
           justify-content: flex-end;
           display: flex;
           flex-shrink: 0;
+          color: var(--header_tint);
           }
 
         .PanelHeader-right--vkapps {
@@ -88,42 +88,8 @@
     .PanelHeader--ios .PanelHeader__container {
       height: var(--panelheader_height_ios);
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       }
-
-      .PanelHeader--ios .PanelHeader__bg {}
-
-        .PanelHeader--ios .PanelHeader-bg {
-          height: var(--panelheader_height_ios);
-          padding-top: var(--safe-area-inset-top);
-          }
-
-        .PanelHeader--ios .PanelHeader-bg::after {
-          position: absolute;
-          top: 100%;
-          left: 0;
-          width: 100%;
-          height: 1px;
-          background: var(--separator_alpha);
-          transform-origin: center top;
-          content: '';
-          }
-
-        @media (min-resolution: 2dppx) {
-          .PanelHeader--ios .PanelHeader-bg::after {
-            transform: scaleY(.5);
-            }
-          }
-
-        @media (min-resolution: 3dppx) {
-          .PanelHeader--ios .PanelHeader-bg::after {
-            transform: scaleY(.33);
-            }
-          }
-
-        .PanelHeader--ios .PanelHeader-bg--no-shadow::after {
-          content: none;
-          }
 
       .PanelHeader--ios .PanelHeader__left {
         display: flex;
@@ -131,7 +97,7 @@
         flex-grow: 1;
         flex-basis: 0;
         padding-right: 12px;
-        height: calc(var(--panelheader_height_ios) - 1px);
+        height: var(--panelheader_height_ios);
         }
 
         .PanelHeader--ios .PanelHeader__left-in {
@@ -164,23 +130,23 @@
       .PanelHeader--ios .PanelHeader__content {
         position: relative;
         z-index: 1;
-        height: calc(var(--panelheader_height_ios) - 1px);
         }
 
         .PanelHeader--ios .PanelHeader-content {
-          font-weight: 500;
-          font-size: 17px;
-          height: 100%;
-          line-height: calc(var(--panelheader_height_ios) - 1px);
+          font-weight: 800;
+          font-family: var(--font-tt);
+          font-size: 21px;
+          line-height: var(--panelheader_height_ios);
           text-align: center;
           transition: color .6s var(--ios-easing);
+          color: var(--header_text);
           }
 
       .PanelHeader--ios .PanelHeader__right {
         flex-grow: 1;
         flex-basis: 0;
         padding-left: 12px;
-        height: calc(var(--panelheader_height_ios) - 1px);
+        height: var(--panelheader_height_ios);
         }
 
         .PanelHeader--ios .PanelHeader-right {
@@ -207,19 +173,6 @@
   .PanelHeader--android .PanelHeader__in {
     height: var(--panelheader_height_android);
     }
-
-    .PanelHeader--android .PanelHeader__bg {
-      height: var(--panelheader_height_android);
-      }
-
-      .PanelHeader--android .PanelHeader-bg {
-        height: var(--panelheader_height_android);
-        box-shadow: 0 0 4px rgba(0, 0, 0, .08), 0 4px 4px rgba(0, 0, 0, .16);
-        }
-
-      .PanelHeader--android .PanelHeader-bg--no-shadow {
-        box-shadow: none;
-        }
 
     .PanelHeader--android .PanelHeader__container {
       height: var(--panelheader_height_android);
@@ -270,43 +223,6 @@
           text-overflow: ellipsis;
         }
 
-          .PanelHeader--android .Search {
-            position: absolute;
-            width: 100%;
-            left: 0;
-            top: 0;
-            z-index: 3;
-            }
-
-/*
-  Темы
- */
-
-.PanelHeader-left-in--brand,
-.PanelHeader-addon--brand,
-.PanelHeader-right--brand {
-  color: var(--header_tint);
-  background: var(--header_background);
-}
-
-.PanelHeader-content--brand,
-.PanelHeader-bg--brand {
-  color: var(--header_text);
-  background: var(--header_background);
-  }
-
-.PanelHeader-bg--alternate,
-.PanelHeader-left-in--alternate,
-.PanelHeader-addon--alternate,
-.PanelHeader-right--alternate {
-  color: var(--header_tint_alternate);
-  background: var(--header_alternate_background);
-  }
-
-.PanelHeader-content--alternate {
-  color: var(--text_primary);
-  }
-
 /*
   Прозрачность
  */
@@ -314,7 +230,6 @@
 .PanelHeader-left-in--tp,
 .PanelHeader-addon--tp,
 .PanelHeader-right--tp,
-.PanelHeader-bg--tp,
 .PanelHeader-content--tp {
   background: transparent;
   }

@@ -1,7 +1,7 @@
  ```jsx
 <View activePanel="button" header={false}>
-  <Panel id="button">
-    <Group title="Типы кнопок">
+  <Panel id="button" separator={false}>
+    <Group header={<Header level="secondary">Типы кнопок</Header>}>
       <Div>
         <Button>Primary</Button>
       </Div>
@@ -30,7 +30,8 @@
         <Button level="overlay_outline">Overlay Outline</Button>
       </Div>
     </Group>
-    <Group title="Допустимые размеры">
+    <Separator />
+    <Group header={<Header level="secondary">Допустимые размеры</Header>}>
       <Div>
         <Button>Medium</Button>
       </Div>
@@ -41,7 +42,8 @@
         <Button size="xl" level="secondary">Extra large</Button>
       </Div>
     </Group>
-    <Group title="Растягивание по ширине">
+    <Separator />
+    <Group header={<Header level="secondary">Растягивание по ширине</Header>}>
       <Div>
         <Button size="l">No stretch</Button>
       </Div>
@@ -50,7 +52,8 @@
         <Button size="l" stretched level="secondary">Stretched</Button>
       </Div>
     </Group>
-    <Group title="Кнопки с иконками">
+    <Separator />
+    <Group header={<Header level="secondary">Кнопки с иконками</Header>}>
       <Div>
         <Button before={<Icon16Add/>}>Add item</Button>
       </Div>
@@ -61,7 +64,8 @@
         <Button level="secondary" before={<Icon24Shuffle/>} size="l">Shuffle</Button>
       </Div>
     </Group>
-    <Group title="Ссылки в виде кнопок">
+    <Separator />
+    <Group header={<Header level="secondary">Ссылки в виде кнопок</Header>}>
       <Div>
         <Button component="a" href="#">I am link</Button>
       </Div>

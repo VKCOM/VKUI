@@ -10,13 +10,14 @@ export interface CounterProps extends HasChildren {
    * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
    */
   type?: 'secondary' | 'primary' | 'prominent'
+  size?: 's' | 'm'
 }
 
 const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => {
-  const { type, children } = props;
+  const { type, size, children } = props;
 
   return (
-    <div className={classNames(baseClassName, `Counter--${type}`)}>
+    <div className={classNames(baseClassName, `Counter--${type}`, `Counter--s-${size}`)}>
       <div className="Counter__in">
         {children}
       </div>
@@ -25,7 +26,8 @@ const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => 
 };
 
 Counter.defaultProps = {
-  type: 'secondary'
+  type: 'secondary',
+  size: 'm'
 };
 
 export default React.memo(Counter);

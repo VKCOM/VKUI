@@ -77,7 +77,7 @@ class Example extends React.Component {
   render() {
     return (
       <View popout={this.state.popout} header={false} activePanel="panel">
-        <Panel id="panel">
+        <Panel id="panel" separator={false}>
           <CellButton onClick={this.openBase}>Базовый список</CellButton>
           <CellButton onClick={this.openIcons}>Список с иконками</CellButton>
           <CellButton onClick={this.openThemes}>Темы</CellButton>

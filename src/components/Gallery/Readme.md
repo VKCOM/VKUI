@@ -1,4 +1,4 @@
-```
+```jsx
   class Example extends React.Component {
 
     constructor (props) {
@@ -12,9 +12,10 @@
 
     render () {
       return (
-        <View header={false} activePanel="gallery">
+        <View activePanel="gallery">
           <Panel id="gallery">
-            <Group title="Sticks right">
+            <PanelHeader>Gallery</PanelHeader>
+            <Group header={<Header level="secondary">Sticks right</Header>}>
               <Gallery
                 slideWidth="90%"
                 style={{ height: 150 }}
@@ -25,7 +26,8 @@
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
-            <Group title="Sticks left">
+            <Separator />
+            <Group header={<Header level="secondary">Sticks left</Header>}>
               <Gallery
                 slideWidth="90%"
                 align="right"
@@ -36,7 +38,8 @@
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
-            <Group title="Centered">
+            <Separator />
+            <Group header={<Header level="secondary">Centered</Header>}>
               <Gallery
                 slideWidth="90%"
                 align="center"
@@ -47,7 +50,8 @@
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
-            <Group title="Custom width">
+            <Separator />
+            <Group header={<Header level="secondary">Custom width</Header>}>
               <Gallery
                 slideWidth="custom"
                 style={{ height: 150 }}
@@ -58,7 +62,8 @@
                 <div style={{ width: 220, backgroundColor: 'var(--icon_secondary)' }} />
               </Gallery>
             </Group>
-            <Group title="Controled">
+            <Separator />
+            <Group header={<Header level="secondary">Controled</Header>}>
               <Gallery
                 slideWidth="90%"
                 align="center"
