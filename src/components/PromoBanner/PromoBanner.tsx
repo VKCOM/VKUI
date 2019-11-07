@@ -2,6 +2,8 @@ import React from 'react';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import classNames from '../../lib/classNames';
+import Button from '../Button/Button';
+import Cell from '../Cell/Cell';
 
 type BannerData = {
   title?: string;
@@ -64,22 +66,27 @@ class PromoBanner extends React.Component<PromoBannerProps> {
           target="_blank"
           className="PromoBanner__clickable-body"
         >
-          <div className="PromoBanner__icon">
-            <img src={this.props.bannerData.iconLink} alt={this.props.bannerData.title} />
-          </div>
-
           <div className="PromoBanner__content">
-            <div className="PromoBanner__title">{this.props.bannerData.title}</div>
+            <Cell
+              before={
+                <img
+                  className="PromoBanner__icon"
+                  src={this.props.bannerData.iconLink}
+                  alt={this.props.bannerData.title}
+                />
+              }
+              description={
+                <div className="PromoBanner__content-bottom">
+                  <div className="PromoBanner__domain-wrapper">
+                    <div className="PromoBanner__domain">{this.props.bannerData.domain}</div>
+                  </div>
 
-            <div className="PromoBanner__content-bottom">
-              <div className="PromoBanner__domain-wrapper">
-                <div className="PromoBanner__domain">{this.props.bannerData.domain}</div>
-              </div>
-
-              <div className="PromoBanner__button-wrapper">
-                <div className="PromoBanner__button">{this.props.bannerData.ctaText}</div>
-              </div>
-            </div>
+                  <Button level="outline">{this.props.bannerData.ctaText}</Button>
+                </div>
+              }
+            >
+              {this.props.bannerData.title}
+            </Cell>
           </div>
         </a>
       </div>

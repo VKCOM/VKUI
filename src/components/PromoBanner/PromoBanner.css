@@ -49,43 +49,27 @@
   color: var(--text_primary);
   text-decoration: none;
   outline: none;
-  padding-bottom: 11px;
 }
 
 .PromoBanner__icon {
-  margin-left: 13px;
-  width: 50px;
-  flex: 0 0 50px;
-}
-
-.PromoBanner__icon img {
   width: 50px;
   height: 50px;
   border-radius: 3px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  margin-right: 12px;
 }
 
 .PromoBanner__content {
-  padding: 0 10px;
-  display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
+  flex: 0 1 100%;
 }
 
-.PromoBanner__title {
-  font-size: 16px;
-  font-weight: bold;
-  flex: 1 1 auto;
+.PromoBanner__content .Cell__main {
+  padding: 5px 0 11px;
 }
 
 .PromoBanner__domain {
   font-size: 14px;
   color: var(--text_secondary);
-}
-
-.PromoBanner__description {
-  padding-top: 3px;
-  font-size: 14px;
 }
 
 .PromoBanner__content-bottom {
@@ -94,22 +78,6 @@
 
 .PromoBanner__domain-wrapper {
   flex: 1 1 auto;
-}
-
-.PromoBanner__button-wrapper {
-  flex: 0 0 56px;
-  align-self: flex-end;
-}
-
-.PromoBanner__button {
-  width: 100%;
-  border: 1px solid var(--float_button_border);
-  border-radius: 2px;
-  padding: 0 9px;
-  line-height: 27px;
-  color: var(--text_secondary);
-  font-weight: bold;
-  font-size: 15px;
 }
 
 .PromoBanner__close {
