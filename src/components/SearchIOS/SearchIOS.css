@@ -215,7 +215,7 @@
   }
 
 .Search--ios.Search--header .Search__input {
-  color: var(--header_tint);
+  color: var(--header_text);
   }
 
 .Search--ios.Search--header .Search__placeholder {

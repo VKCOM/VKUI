@@ -43,10 +43,12 @@
 
 .Search--android.Search--header .Search__before {
   margin-right: 12px;
+  color: var(--header_tint);
   }
 
 .Search--android.Search--header .Search__after {
   margin-left: 12px;
+  color: var(--header_tint);
   }
 
 .Search--android.Search--header.Search--vkapps .Search__after {
@@ -54,7 +56,7 @@
   }
 
 .Search--android.Search--header .Search__input {
-  color: var(--header_tint);
+  color: var(--header_text);
   padding: 15px 0 13px;
   }
 
