@@ -29,7 +29,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
   static defaultProps = {
     webviewType: 'internal',
     isWebView: vkConnect.isWebView(),
-    scheme: 'client_light'
+    scheme: 'bright_light'
   };
 
   static contextTypes = {

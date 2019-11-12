@@ -76,12 +76,6 @@
 @import '../components/Textarea/Textarea.css';
 @import '../components/File/File.css';
 
-@font-face {
-  font-family: "TT Commons";
-  src: url("../fonts/TTCommons-DemiBold.woff") format("woff");
-  font-weight: 800;
-  }
-
 html,
 body,
 div#root {
