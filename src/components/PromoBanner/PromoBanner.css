@@ -1,29 +1,15 @@
-.PromoBanner,
-.PromoBanner * {
-  box-sizing: border-box;
-}
-
 .PromoBanner {
   width: 100%;
   box-sizing: border-box;
   outline: 1px solid #eee;
   color: var(--text_primary);
   background: var(--background_content);
-}
-
-.PromoBanner--fixed {
-  position: fixed;
-  top: 0;
-}
-
-.PromoBanner--bottom {
-  top: auto;
-  bottom: 0;
+  padding-bottom: 11px;
 }
 
 .PromoBanner__head {
   padding: 11px 11px 0 11px;
-  height: 38px;
+  height: 27px;
 }
 
 .PromoBanner__age {
@@ -49,14 +35,6 @@
   color: var(--text_primary);
   text-decoration: none;
   outline: none;
-}
-
-.PromoBanner__icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 3px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-  margin-right: 12px;
 }
 
 .PromoBanner__content {
@@ -87,5 +65,11 @@
   width: 48px;
   height: 48px;
   color: var(--placeholder_icon_foreground_primary);
+  display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.PromoBanner__close:active {
+  opacity: .7;
 }

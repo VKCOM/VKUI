@@ -1,9 +1,10 @@
 import React from 'react';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
-import HeaderButton from '../HeaderButton/HeaderButton';
 import classNames from '../../lib/classNames';
 import Button from '../Button/Button';
 import Cell from '../Cell/Cell';
+import FixedLayout from '../FixedLayout/FixedLayout';
+import Avatar from '../Avatar/Avatar';
 
 type BannerData = {
   title?: string;
@@ -41,57 +42,53 @@ export interface PromoBannerProps {
   onClose: () => void;
 }
 
-class PromoBanner extends React.Component<PromoBannerProps> {
-  public render() {
-    return (
-      <div
-        className={classNames('PromoBanner', {
-          [this.props.verticalAlign === 'bottom' ? 'PromoBanner--bottom' : 'PromoBanner--top']: this.props.isFixed,
-          'PromoBanner--fixed': this.props.isFixed
-        })}
-      >
-        <div className="PromoBanner__head">
-          {this.props.bannerData.ageRestriction && <span className="PromoBanner__age">14+</span>}
-          <span className="PromoBanner__label">{this.props.bannerData.advertisingLabel || 'Advertisement'}</span>
+const PromoBanner = (props: PromoBannerProps) => {
+  const promoBannerBody = (
+    <div
+      className={classNames('PromoBanner', {
+        [props.verticalAlign === 'bottom' ? 'PromoBanner--bottom' : 'PromoBanner--top']: props.isFixed,
+        'PromoBanner--fixed': props.isFixed
+      })}
+    >
+      <div className="PromoBanner__head">
+        {props.bannerData.ageRestriction && <span className="PromoBanner__age">14+</span>}
+        <span className="PromoBanner__label">{props.bannerData.advertisingLabel || 'Advertisement'}</span>
 
-          {!this.props.isCloseButtonHidden && (
-            <HeaderButton className="PromoBanner__close" onClick={this.props.onClose}>
-              <Icon24Dismiss />
-            </HeaderButton>
-          )}
-        </div>
-        <a
-          href={this.props.bannerData.trackingLink}
-          rel="nofollow noopener noreferrer"
-          target="_blank"
-          className="PromoBanner__clickable-body"
-        >
-          <div className="PromoBanner__content">
-            <Cell
-              before={
-                <img
-                  className="PromoBanner__icon"
-                  src={this.props.bannerData.iconLink}
-                  alt={this.props.bannerData.title}
-                />
-              }
-              description={
-                <div className="PromoBanner__content-bottom">
-                  <div className="PromoBanner__domain-wrapper">
-                    <div className="PromoBanner__domain">{this.props.bannerData.domain}</div>
-                  </div>
-
-                  <Button level="outline">{this.props.bannerData.ctaText}</Button>
-                </div>
-              }
-            >
-              {this.props.bannerData.title}
-            </Cell>
+        {!props.isCloseButtonHidden && (
+          <div className="PromoBanner__close" onClick={props.onClose}>
+            <Icon24Dismiss />
           </div>
-        </a>
+        )}
       </div>
-    );
-  }
-}
+      <a
+        href={props.bannerData.trackingLink}
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        className="PromoBanner__clickable-body"
+      >
+        <div className="PromoBanner__content">
+          <Cell
+            before={
+              // @ts-ignore
+              <Avatar type="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
+            }
+            asideContent={<Button level="outline">{props.bannerData.ctaText}</Button>}
+            description={
+              <div className="PromoBanner__content-bottom">
+                <div className="PromoBanner__domain-wrapper">
+                  <div className="PromoBanner__domain">{props.bannerData.domain}</div>
+                </div>
+              </div>
+            }
+          >
+            {props.bannerData.title}
+          </Cell>
+        </div>
+      </a>
+    </div>
+  );
+
+  return props.isFixed ? <FixedLayout vertical={props.verticalAlign}>{promoBannerBody}</FixedLayout> : promoBannerBody;
+};
 
 export default PromoBanner;
