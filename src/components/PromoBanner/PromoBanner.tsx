@@ -1,6 +1,5 @@
 import React from 'react';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
-import classNames from '../../lib/classNames';
 import Button from '../Button/Button';
 import Cell from '../Cell/Cell';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -44,12 +43,7 @@ export interface PromoBannerProps {
 
 const PromoBanner = (props: PromoBannerProps) => {
   const promoBannerBody = (
-    <div
-      className={classNames('PromoBanner', {
-        [props.verticalAlign === 'bottom' ? 'PromoBanner--bottom' : 'PromoBanner--top']: props.isFixed,
-        'PromoBanner--fixed': props.isFixed
-      })}
-    >
+    <div className="PromoBanner">
       <div className="PromoBanner__head">
         {props.bannerData.ageRestriction && <span className="PromoBanner__age">14+</span>}
         <span className="PromoBanner__label">{props.bannerData.advertisingLabel || 'Advertisement'}</span>
@@ -73,13 +67,7 @@ const PromoBanner = (props: PromoBannerProps) => {
               <Avatar type="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
             }
             asideContent={<Button level="outline">{props.bannerData.ctaText}</Button>}
-            description={
-              <div className="PromoBanner__content-bottom">
-                <div className="PromoBanner__domain-wrapper">
-                  <div className="PromoBanner__domain">{props.bannerData.domain}</div>
-                </div>
-              </div>
-            }
+            description={props.bannerData.domain}
           >
             {props.bannerData.title}
           </Cell>

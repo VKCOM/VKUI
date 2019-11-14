@@ -41,23 +41,6 @@
   flex: 0 1 100%;
 }
 
-.PromoBanner__content .Cell__main {
-  padding: 5px 0 11px;
-}
-
-.PromoBanner__domain {
-  font-size: 14px;
-  color: var(--text_secondary);
-}
-
-.PromoBanner__content-bottom {
-  display: flex;
-}
-
-.PromoBanner__domain-wrapper {
-  flex: 1 1 auto;
-}
-
 .PromoBanner__close {
   position: absolute;
   top: 0;
