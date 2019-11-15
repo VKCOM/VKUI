@@ -30,10 +30,6 @@ type BannerData = {
 export interface PromoBannerProps {
   /** Данные рекламного баннера, полученные из VKWebAppGetAds */
   bannerData: BannerData;
-  /** Фиксированное позиционирование блока (position: fixed) */
-  isFixed?: boolean;
-  /** Положение блока при фиксированном позиционировании */
-  verticalAlign?: 'top' | 'bottom';
   /** Флаг скрытия кнопки закрытия рекламы */
   isCloseButtonHidden?: boolean;
   /** Хандлер закрытия рекламы */

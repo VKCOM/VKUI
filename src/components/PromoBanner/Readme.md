@@ -10,6 +10,6 @@ const promoBannerProps = {
 };
 
 <FixedLayout vertical="bottom">
-  <PromoBanner bannerData={promoBannerProps} isFixed={true} verticalAlign="bottom" />
+  <PromoBanner bannerData={promoBannerProps} />
 </FixedLayout>;
 ```
