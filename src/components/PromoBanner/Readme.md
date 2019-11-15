@@ -9,5 +9,7 @@ const promoBannerProps = {
   ageRestriction: 14
 };
 
-<PromoBanner bannerData={promoBannerProps} isFixed={true} verticalAlign="bottom" />;
+<FixedLayout vertical="bottom">
+  <PromoBanner bannerData={promoBannerProps} isFixed={true} verticalAlign="bottom" />
+</FixedLayout>;
 ```
