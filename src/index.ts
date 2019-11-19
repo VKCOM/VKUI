@@ -99,6 +99,11 @@ export { default as PanelHeaderSubmit } from './components/PanelHeaderSubmit/Pan
 export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
 
 /**
+ * Advertisement
+ */
+export { default as PromoBanner } from './components/PromoBanner/PromoBanner';
+
+/**
  * HOCs
  */
 export { default as withInsets } from './hoc/withInsets';
