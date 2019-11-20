@@ -76,6 +76,9 @@
 @import '../components/Textarea/Textarea.css';
 @import '../components/File/File.css';
 
+/* Advertisement */
+@import '../components/PromoBanner/PromoBanner.css';
+
 html,
 body,
 div#root {
