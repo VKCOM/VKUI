@@ -5,6 +5,7 @@
   color: var(--text_primary);
   background: var(--background_content);
   padding-bottom: 11px;
+  position: relative;
 }
 
 .PromoBanner__head {
