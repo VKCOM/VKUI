@@ -196,6 +196,10 @@
               padding-right: 12px;
               }
 
+            .PanelHeader--ios .PanelHeader-right .HeaderButton .Icon--28 {
+              padding-right: 12px;
+              }
+
             .PanelHeader--ios .PanelHeader-right .HeaderButton > *:not(.Icon) {
               padding-right: 16px;
               }
