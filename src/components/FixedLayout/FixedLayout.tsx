@@ -17,6 +17,11 @@ export interface FixedLayoutProps extends
   HasPlatform
 {
   vertical?: 'top' | 'bottom';
+  /**
+   * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.
+   * Это часто необходимо для фиксированных кнопок в нижней части экрана.
+   */
+  filled?: boolean;
 }
 
 export interface FixedLayoutState {
@@ -81,7 +86,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   render () {
-    const { className, children, style, vertical, getRootRef, insets, platform, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, insets, platform, filled, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
     const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
@@ -89,7 +94,9 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
       <div
         {...restProps}
         ref={this.getRef}
-        className={classNames(getClassName('FixedLayout', platform), `FixedLayout--${vertical}`, className)}
+        className={classNames(getClassName('FixedLayout', platform), {
+          'FixedLayout--filled': filled
+        }, `FixedLayout--${vertical}`, className)}
         style={{ ...style, ...this.state, paddingBottom }}
       >
         <div className="FixedLayout__in">{children}</div>
