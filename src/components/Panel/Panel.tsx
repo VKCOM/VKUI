@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, HTMLAttributes } from 'react';
+import PropTypes, { Requireable } from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Touch from '../Touch/Touch';
@@ -8,36 +8,34 @@ import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
 import Separator from '../Separator/Separator';
+import { HasPlatform, HasInsets } from '../../types/props';
 
-class Panel extends Component {
-  static childContextTypes = {
+export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets {
+  id: string;
+  separator?: boolean;
+  centered?: boolean;
+}
+
+export interface PanelChildContext {
+  panel: Requireable<string>;
+}
+
+export interface PanelContext {
+  hasTabbar: Requireable<boolean>;
+}
+
+class Panel extends Component<PanelProps> {
+  static childContextTypes: PanelChildContext = {
     panel: PropTypes.string,
   };
 
-  static propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
-    id: PropTypes.string.isRequired,
-    centered: PropTypes.bool,
-    separator: PropTypes.bool,
-    style: PropTypes.object,
-    /**
-     * @ignore
-     */
-    insets: PropTypes.object,
-    /**
-     * @ignore
-     */
-    platform: PropTypes.string,
-  };
-
-  static defaultProps = {
+  static defaultProps: Partial<PanelProps> = {
     children: '',
     centered: false,
     separator: true,
   };
 
-  static contextTypes = {
+  static contextTypes: PanelContext = {
     hasTabbar: PropTypes.bool,
   };
 
@@ -56,7 +54,7 @@ class Panel extends Component {
         'Panel--centered': centered,
       })}>
         <Touch className="Panel__in" style={{
-          paddingBottom: isNumeric(insets.bottom) ? (insets.bottom + tabbarPadding) : null,
+          paddingBottom: isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null,
         }}>
           <div className="Panel__in-before" />
           {separator && <Separator />}

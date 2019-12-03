@@ -1,46 +1,49 @@
-import React from 'react';
+import React, { HTMLAttributes, ReactNode, Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import getClassName from '../../helpers/getClassName';
+import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
+import withPlatform from '../../hoc/withPlatform';
+import { HasPlatform, HasRef } from '../../types/props';
+import { IOS } from '../../lib/platform';
 
-import { IS_PLATFORM_IOS } from '../../lib/platform';
+export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasPlatform {
+  left?: ReactNode;
+  addon?: ReactNode;
+  right?: ReactNode;
+  transparent?: boolean;
+}
 
-export const baseClassNames = getClassName('PanelHeader');
+export interface PanelHeaderState {
+  ready: boolean;
+}
 
-export default class PanelHeader extends React.Component {
-  static propTypes = {
-    left: PropTypes.node,
-    /**
-     * iOS only
-     */
-    addon: PropTypes.node,
-    right: PropTypes.node,
-    children: PropTypes.node,
-    /**
-     * @ignore
-     */
-    transparent: PropTypes.bool,
-    getRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any }),
-    ]),
-  };
+export interface PanelHeaderContext {
+  panel: Requireable<string>;
+  document: Requireable<{}>;
+  scheme: Requireable<string>;
+  webviewType: Requireable<'vkapps' | 'internal'>;
+}
 
-  static defaultProps = {
+class PanelHeader extends Component<PanelHeaderProps, PanelHeaderState> {
+  static defaultProps: PanelHeaderProps = {
     transparent: false,
   };
 
-  static contextTypes = {
+  static contextTypes: PanelHeaderContext = {
     panel: PropTypes.string,
     document: PropTypes.any,
     scheme: PropTypes.string,
     webviewType: PropTypes.oneOf(['vkapps', 'internal']),
   };
 
-  state = {
+  state: PanelHeaderState = {
     ready: false,
   };
+
+  leftNode: HTMLDivElement;
+  addonNode: HTMLDivElement;
+  titleNode: HTMLDivElement;
+  rightNode: HTMLDivElement;
 
   get document() {return this.context.document || document;}
 
@@ -49,10 +52,10 @@ export default class PanelHeader extends React.Component {
   componentDidMount() {
     const panelId = this.context.panel;
 
-    this.leftNode = this.document.getElementById('header-left-' + panelId);
-    this.addonNode = this.document.getElementById('header-addon-' + panelId);
-    this.titleNode = this.document.getElementById('header-title-' + panelId);
-    this.rightNode = this.document.getElementById('header-right-' + panelId);
+    this.leftNode = this.document.getElementById(`header-left-${panelId}`);
+    this.addonNode = this.document.getElementById(`header-addon-${panelId}`);
+    this.titleNode = this.document.getElementById(`header-title-${panelId}`);
+    this.rightNode = this.document.getElementById(`header-right-${panelId}`);
 
     const getRef = this.props.getRef;
     if (getRef) {
@@ -68,14 +71,14 @@ export default class PanelHeader extends React.Component {
   }
 
   render() {
-    let { left, addon, children, right, transparent } = this.props;
+    let { left, addon, children, right, transparent, platform } = this.props;
     const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
     return this.state.ready ? [
       ReactDOM.createPortal(<div className={classNames('PanelHeader-left-in', {
         'PanelHeader-left-in--tp': transparent,
       })}>{left}</div>, this.leftNode),
-      IS_PLATFORM_IOS && ReactDOM.createPortal(<div className={classNames('PanelHeader-addon', {
+      platform === IOS && ReactDOM.createPortal(<div className={classNames('PanelHeader-addon', {
         'PanelHeader-addon--tp': transparent,
       })}>{addon}</div>, this.addonNode),
       ReactDOM.createPortal(<div className={classNames('PanelHeader-content', {
@@ -90,3 +93,5 @@ export default class PanelHeader extends React.Component {
     ] : null;
   }
 }
+
+export default withPlatform(PanelHeader);

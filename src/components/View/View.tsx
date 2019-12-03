@@ -9,7 +9,6 @@ import getClassName from '../../helpers/getClassName';
 import { IOS, ANDROID } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
-import { baseClassNames as panelHeaderClasses } from '../PanelHeader/PanelHeader';
 import { HasChildren, HasPlatform } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
 
@@ -513,7 +512,7 @@ class View extends Component<ViewProps, ViewState> {
         {header &&
           <div className="View__header">
             {platform === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} />}
-            <div className={classNames(panelHeaderClasses)}>
+            <div className={classNames(getClassName('PanelHeader', platform))}>
               {panels.map((panel: React.ReactElement) => {
                 const panelId = panel.props.id;
                 const headerSwipeStyles = this.calcHeaderSwipeStyles(panelId);

@@ -35,8 +35,8 @@ module.exports = {
         components: () => [
           '../src/components/Root/Root.js',
           '../src/components/View/View.tsx',
-          '../src/components/Panel/Panel.js',
-          '../src/components/PanelHeader/PanelHeader.js',
+          '../src/components/Panel/Panel.tsx',
+          '../src/components/PanelHeader/PanelHeader.tsx',
           '../src/components/HeaderButton/HeaderButton.tsx',
           '../src/components/PanelHeaderContent/PanelHeaderContent.js',
           '../src/components/HeaderContext/HeaderContext.js',
