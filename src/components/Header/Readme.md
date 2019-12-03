@@ -29,17 +29,17 @@
       </Header>
       <div style={{ marginBottom: 100 }}/>
       <Separator />
-      <Header level="secondary">Важные</Header>
+      <Header mode="secondary">Важные</Header>
       <Separator />
-      <Header level="secondary" aside={<Link>Показать все</Link>}>
+      <Header mode="secondary" aside={<Link>Показать все</Link>}>
         Приглашения
       </Header>
       <Separator />
-      <Header level="secondary" indicator="667" aside={<Icon16Chevron />}>
+      <Header mode="secondary" indicator="667" aside={<Icon16Chevron />}>
         Фотографии
       </Header>
       <Separator />
-      <Header level="secondary" indicator={<Counter size="s" type="prominent">3</Counter>} aside={<Link>Показать все</Link>}>
+      <Header mode="secondary" indicator={<Counter size="s" type="prominent">3</Counter>} aside={<Link>Показать все</Link>}>
         Приглашения
       </Header>
     </Panel>

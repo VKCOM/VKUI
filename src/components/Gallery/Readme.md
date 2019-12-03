@@ -15,7 +15,7 @@
         <View activePanel="gallery">
           <Panel id="gallery">
             <PanelHeader>Gallery</PanelHeader>
-            <Group header={<Header level="secondary">Sticks right</Header>}>
+            <Group header={<Header mode="secondary">Sticks right</Header>}>
               <Gallery
                 slideWidth="90%"
                 style={{ height: 150 }}
@@ -27,7 +27,7 @@
               </Gallery>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Sticks left</Header>}>
+            <Group header={<Header mode="secondary">Sticks left</Header>}>
               <Gallery
                 slideWidth="90%"
                 align="right"
@@ -39,7 +39,7 @@
               </Gallery>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Centered</Header>}>
+            <Group header={<Header mode="secondary">Centered</Header>}>
               <Gallery
                 slideWidth="90%"
                 align="center"
@@ -51,7 +51,7 @@
               </Gallery>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Custom width</Header>}>
+            <Group header={<Header mode="secondary">Custom width</Header>}>
               <Gallery
                 slideWidth="custom"
                 style={{ height: 150 }}
@@ -63,7 +63,7 @@
               </Gallery>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Controled</Header>}>
+            <Group header={<Header mode="secondary">Controled</Header>}>
               <Gallery
                 slideWidth="90%"
                 align="center"

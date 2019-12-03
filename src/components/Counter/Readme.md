@@ -5,7 +5,7 @@
 <View activePanel="counter-demo">
   <Panel id="counter-demo">
     <PanelHeader>Counter</PanelHeader>
-    <Group header={<Header level="secondary">Счётчики в ячейках</Header>}>
+    <Group header={<Header mode="secondary">Счётчики в ячейках</Header>}>
       <List>
         <Cell before={<Icon24User />} indicator={<Counter>4</Counter>}>Друзья</Cell>
         <Cell before={<Icon24Users />} indicator={<Counter type="primary">2</Counter>}>Группы</Cell>
@@ -14,7 +14,7 @@
       </List>
     </Group>
     <Separator />
-    <Group header={<Header level="secondary">Счётчики в кнопках</Header>}>
+    <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
       <FormLayout>
         <Button level="secondary" size="l" after={<Counter>16</Counter>}>Secondary large</Button>
         <Button level="tertiary" after={<Counter>6</Counter>}>Tertiary medium</Button>
@@ -37,7 +37,7 @@
       <Cell before={<Avatar />}>Михаил Зыгарь</Cell>
     </Group>
     <Separator />
-    <Group header={<Header level="secondary">В переключателях</Header>}>
+    <Group header={<Header mode="secondary">В переключателях</Header>}>
       <Tabs type="buttons">
         <HorizontalScroll>
           <TabsItem after={<Counter size="s">8</Counter>}>

@@ -16,7 +16,7 @@
             <PanelHeader>
               Cell
             </PanelHeader>
-            <Group header={<Header level="secondary">Простейший пример</Header>}>
+            <Group header={<Header mode="secondary">Простейший пример</Header>}>
               <List>
                 <Cell>Пятница</Cell>
                 <Cell>Суббота</Cell>
@@ -24,7 +24,7 @@
               </List>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Переходы</Header>}>
+            <Group header={<Header mode="secondary">Переходы</Header>}>
               <List>
                 <Cell expandable onClick={() => this.setState({ activePanel: 'nothing' })}>Учетная запись</Cell>
                 <Cell expandable onClick={() => this.setState({ activePanel: 'nothing' })}>Основные</Cell>
@@ -32,7 +32,7 @@
               </List>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Индикатор</Header>}>
+            <Group header={<Header mode="secondary">Индикатор</Header>}>
               <List>
                 <Cell expandable onClick={() => this.setState({ activePanel: 'nothing' })} indicator="При использовании">Геолокация</Cell>
                 <Cell expandable onClick={() => this.setState({ activePanel: 'nothing' })} indicator="Всегда">Автопроигрывание медиа</Cell>
@@ -40,21 +40,21 @@
               </List>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Многострочность</Header>}>
+            <Group header={<Header mode="secondary">Многострочность</Header>}>
               <List>
                 <Cell multiline>A Series of Unfortunate Events, Archer, Brooklyn Nine-Nine, Doctor Who, Game of Thrones</Cell>
                 <Cell multiline>The Avalanches</Cell>
               </List>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Подпись</Header>}>
+            <Group header={<Header mode="secondary">Подпись</Header>}>
               <List>
                 <Cell description="Depeche Mode">Where’s the Revolution</Cell>
                 <Cell description="The Weeknd">I Feel It Coming (Feat. Daft Punk)</Cell>
               </List>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Большая ячейка</Header>}>
+            <Group header={<Header mode="secondary">Большая ячейка</Header>}>
               <List>
                 <Cell
                   before={<Avatar size={72} />}
@@ -98,14 +98,14 @@
               </List>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Иконки</Header>}>
+            <Group header={<Header mode="secondary">Иконки</Header>}>
               <List>
                 <Cell before={<Icon24About />}>Информация</Cell>
                 <Cell before={<Icon24Services />}>Сервисы</Cell>
               </List>
             </Group>
             <Separator />
-            <Group header={<Header level="secondary">Чекбоксы</Header>}>
+            <Group header={<Header mode="secondary">Чекбоксы</Header>}>
               <List>
                 <Cell selectable before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</Cell>
                 <Cell selectable before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</Cell>
@@ -114,7 +114,7 @@
             </Group>
             <Separator />
             {this.state.removeList.length > 0 &&
-              <Group header={<Header level="secondary">Удаление</Header>}>
+              <Group header={<Header mode="secondary">Удаление</Header>}>
                 <List>
                   {this.state.removeList.map((item, index) => (
                     <Cell key={item} removable onRemove={() => {
@@ -128,7 +128,7 @@
             }
             <Separator />
             {this.state.removeList.length > 0 &&
-              <Group header={<Header level="secondary">Перетаскивание</Header>}>
+              <Group header={<Header mode="secondary">Перетаскивание</Header>}>
                 <List>
                   {this.state.draggingList.map((item) => (
                     <Cell key={item} draggable onDragFinish={({ from, to }) => {
