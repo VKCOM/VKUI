@@ -175,17 +175,17 @@ class App extends React.Component {
         >
           <List>
             <Cell>
-              <InfoRow title="Дата рождения">
+              <InfoRow header="Дата рождения">
                 30 января 1993
               </InfoRow>
             </Cell>
             <Cell>
-              <InfoRow title="Родной город">
+              <InfoRow header="Родной город">
                 Ереван
               </InfoRow>
             </Cell>
             <Cell>
-              <InfoRow title="Место работы">
+              <InfoRow header="Место работы">
                 Команда ВКонтакте
               </InfoRow>
             </Cell>

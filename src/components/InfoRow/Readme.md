@@ -9,7 +9,7 @@
       </PanelHeader>
       <Group>
         <Div>
-          <InfoRow title="Общий бюджет">
+          <InfoRow header="Общий бюджет">
             3000 р.
           </InfoRow>
         </Div>
@@ -18,17 +18,17 @@
       <Group title="Информация о пользователе">
         <List>
           <Cell>
-            <InfoRow title="Дата рождения">
+            <InfoRow header="Дата рождения">
               30 января 1993
             </InfoRow>
           </Cell>
           <Cell>
-            <InfoRow title="Родной город">
+            <InfoRow header="Родной город">
               Ереван
             </InfoRow>
           </Cell>
           <Cell>
-            <InfoRow title="Место работы">
+            <InfoRow header="Место работы">
               Команда ВКонтакте
             </InfoRow>
           </Cell>

@@ -2,7 +2,7 @@
   user-select: text;
   }
 
-  .InfoRow__title {
+  .InfoRow__header {
     font-size: 14px;
     line-height: 16px;
     color: var(--text_secondary);
