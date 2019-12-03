@@ -74,7 +74,7 @@ module.exports = {
           '../src/components/Header/Header.tsx',
           '../src/components/Group/Group.tsx',
           '../src/components/Cell/Cell.tsx',
-          '../src/components/List/List.js',
+          '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.tsx',
           '../src/components/Switch/Switch.js',
