@@ -70,7 +70,7 @@ module.exports = {
           '../src/components/Button/Button.tsx',
           '../src/components/CellButton/CellButton.tsx',
           '../src/components/Div/Div.tsx',
-          '../src/components/Link/Link.js',
+          '../src/components/Link/Link.tsx',
           '../src/components/Header/Header.tsx',
           '../src/components/Group/Group.tsx',
           '../src/components/Cell/Cell.tsx',
