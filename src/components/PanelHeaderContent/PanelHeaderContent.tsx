@@ -1,15 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
+import usePlatform from '../../hooks/usePlatform';
 
-const baseClassNames = getClassName('PanelHeaderContent');
+interface PanelHeaderContentProps extends HTMLAttributes<HTMLDivElement> {
+  aside: ReactNode;
+  before: ReactNode;
+  status: ReactNode;
+}
 
-const PanelHeaderContent = ({ className, style, aside, status, before, children, onClick, ...restProps }) => {
+const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
+  className,
+  style,
+  aside,
+  status,
+  before,
+  children,
+  onClick,
+  ...restProps
+}: PanelHeaderContentProps) => {
   const InComponent = onClick ? Tappable : 'div';
   const rootProps = onClick ? {} : restProps;
   const inProps = onClick ? { ...restProps, activeEffectDelay: 200 } : {};
+  const platform = usePlatform();
+  const baseClassNames = getClassName('PanelHeaderContent', platform);
 
   return (
     <div {...rootProps} className={classNames(baseClassNames, className)} style={style}>
@@ -24,16 +39,6 @@ const PanelHeaderContent = ({ className, style, aside, status, before, children,
       </InComponent>
     </div>
   );
-};
-
-PanelHeaderContent.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  style: PropTypes.object,
-  aside: PropTypes.node,
-  status: PropTypes.node,
-  onClick: PropTypes.func,
-  before: PropTypes.node,
 };
 
 export default PanelHeaderContent;

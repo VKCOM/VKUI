@@ -1,32 +1,34 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, HTMLAttributes, RefObject } from 'react';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import transitionEvents from '../../lib/transitionEvents';
+import withPlatform from '../../hoc/withPlatform';
+import { HasPlatform } from '../../types/props';
 
-const baseClassNames = getClassName('HeaderContext');
+export interface HeaderContextProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+  opened: boolean;
+  onClose(): void;
+}
 
-export default class HeaderContext extends Component {
-  static propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
-    style: PropTypes.object,
-    onClose: PropTypes.func.isRequired,
-    opened: PropTypes.bool.isRequired,
-  };
+export interface HeaderContextState {
+  closing: boolean;
+}
 
-  static defaultProps = {
+type AnimationHandler = () => void;
+
+class HeaderContext extends Component<HeaderContextProps, HeaderContextState> {
+  static defaultProps: Partial<HeaderContextProps> = {
     opened: false,
   };
 
-  state = {
+  state: HeaderContextState = {
     closing: false,
   };
 
-  elementRef = React.createRef();
+  elementRef: RefObject<HTMLDivElement> = React.createRef();
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: HeaderContextProps) {
     if (this.props.opened !== prevProps.opened) {
       if (this.props.opened === false) {
         this.setState({ closing: true });
@@ -35,7 +37,7 @@ export default class HeaderContext extends Component {
     }
   }
 
-  waitAnimationFinish(eventHandler) {
+  waitAnimationFinish(eventHandler: AnimationHandler) {
     const eventName = transitionEvents.animationEndEventName;
     const element = this.elementRef.current;
 
@@ -45,13 +47,14 @@ export default class HeaderContext extends Component {
     }
   }
 
-  onAnimationFinish = () => {
+  onAnimationFinish: AnimationHandler = () => {
     this.setState({ closing: false });
   };
 
   render() {
-    const { children, className, opened, onClose, ...restProps } = this.props;
+    const { children, className, opened, onClose, platform, ...restProps } = this.props;
     const { closing } = this.state;
+    const baseClassNames = getClassName('HeaderContext', platform);
 
     return (
       <FixedLayout {...restProps} className={classNames(baseClassNames, {
@@ -66,3 +69,5 @@ export default class HeaderContext extends Component {
     );
   }
 }
+
+export default withPlatform(HeaderContext);
