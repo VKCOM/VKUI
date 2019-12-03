@@ -1,12 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
+import { HasRootRef } from '../../types/props';
+import usePlatform from '../../hooks/usePlatform';
 
-const baseClassNames = getClassName('Group');
+export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<HTMLDivElement> {
+  header?: ReactNode;
+  description?: ReactNode;
+}
 
-const Group = (props) => {
+const Group: FunctionComponent<GroupProps> = (props: GroupProps) => {
   const { header, description, className, children, getRootRef, ...restProps } = props;
+  const platform = usePlatform();
+  const baseClassNames = getClassName('Group', platform);
 
   return (
     <div {...restProps} ref={getRootRef} className={classNames(baseClassNames, className)}>
@@ -15,18 +21,6 @@ const Group = (props) => {
       {description && <div className="Group__description">{description}</div>}
     </div>
   );
-};
-
-Group.propTypes = {
-  style: PropTypes.object,
-  header: PropTypes.node,
-  description: PropTypes.node,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  getRootRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any }),
-  ]),
 };
 
 export default Group;
