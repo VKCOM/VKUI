@@ -6,14 +6,14 @@ export interface ObjectClassNames {
 }
 
 export interface InsetsInterface {
-  top?: number
-  right?: number
-  bottom?: number
-  left?: number
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
 }
 
 export interface DangerInnerHTML {
-  __html: string
+  __html: string;
 }
 
 export interface HasClassName {
@@ -42,29 +42,27 @@ export interface HasInsets {
   insets?: InsetsInterface;
 }
 
-export interface OldRef<T> {
-  (el: T): void
-}
+export type OldRef<T> = (el: T) => void;
 
 export interface RefWithCurrent<T> {
-  current: T | null
+  current: T | null;
 }
 
 export interface HasRootRef<T> {
-  getRootRef?: OldRef<T> | RefWithCurrent<T>
+  getRootRef?: OldRef<T> | RefWithCurrent<T>;
 }
 
 export interface HasRef<T> {
-  getRef?: OldRef<T> | RefWithCurrent<T>
+  getRef?: OldRef<T> | RefWithCurrent<T>;
 }
 
 export interface HasDangerHTML {
-  dangerouslySetInnerHTML?: DangerInnerHTML
+  dangerouslySetInnerHTML?: DangerInnerHTML;
 }
 
 export interface HasFormStatus {
   /**
    * Значение `verified` устарело и будет удалено в 3.0.0. Используйте вместо него `valid`
    */
-  status?: 'default' | 'error' | 'valid' | 'verified'
+  status?: 'default' | 'error' | 'valid' | 'verified';
 }

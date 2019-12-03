@@ -4,12 +4,10 @@ import Icon24Done from '@vkontakte/icons/dist/24/done';
 import { ANDROID } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface PanelHeaderSubmitProps extends HeaderButtonProps {}
-
-const PanelHeaderSubmit: FunctionComponent<PanelHeaderSubmitProps> = ({
+const PanelHeaderSubmit: FunctionComponent<HeaderButtonProps> = ({
   children,
   ...restProps
-}: PanelHeaderSubmitProps) => {
+}: HeaderButtonProps) => {
   const platform = usePlatform();
 
   return (
@@ -20,7 +18,7 @@ const PanelHeaderSubmit: FunctionComponent<PanelHeaderSubmitProps> = ({
 };
 
 PanelHeaderSubmit.defaultProps = {
-  children: 'Готово'
+  children: 'Готово',
 };
 
 export default PanelHeaderSubmit;

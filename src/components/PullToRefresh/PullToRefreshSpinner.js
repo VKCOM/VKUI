@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 
-function calcStrokeDashOffset (value, radius) {
+function calcStrokeDashOffset(value, radius) {
   const progress = value / 100;
   return 2 * Math.PI * radius * (1 - progress);
 }
@@ -17,7 +17,7 @@ const PullToRefreshSpinner = React.memo(({ on, progress, size, strokeWidth, styl
   return (
     <div
       className={classNames('PullToRefresh__spinner', {
-        'PullToRefresh__spinner--on': on
+        'PullToRefresh__spinner--on': on,
       })}
       style={style}
     >
@@ -25,7 +25,7 @@ const PullToRefreshSpinner = React.memo(({ on, progress, size, strokeWidth, styl
         className="PullToRefresh__spinner-self"
         style={{
           width: size,
-          height: size
+          height: size,
         }}
         viewBox={`0 0 ${size} ${size}`}
         xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ const PullToRefreshSpinner = React.memo(({ on, progress, size, strokeWidth, styl
           style={{
             width: size,
             height: size,
-            transformOrigin: `${circleCenter}px ${circleCenter}px`
+            transformOrigin: `${circleCenter}px ${circleCenter}px`,
           }}
         >
           <circle
@@ -59,14 +59,14 @@ PullToRefreshSpinner.propTypes = {
   strokeWidth: PropTypes.number,
   on: PropTypes.bool,
   progress: PropTypes.number,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 PullToRefreshSpinner.defaultProps = {
   size: 24,
   strokeWidth: 2.5,
   on: true,
-  progress: null
+  progress: null,
 };
 
 export default PullToRefreshSpinner;

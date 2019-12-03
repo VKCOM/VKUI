@@ -9,7 +9,7 @@ export const ANDROID: OS = OS.ANDROID;
 export const IOS: OS = OS.IOS;
 
 export function platform(useragent?: string): OS {
-  const ua = useragent || (canUseDOM && navigator.userAgent) || '';
+  const ua = useragent || canUseDOM && navigator.userAgent || '';
 
   return /android/i.test(ua) ? ANDROID : IOS;
 }

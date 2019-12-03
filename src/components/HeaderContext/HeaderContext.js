@@ -13,20 +13,20 @@ export default class HeaderContext extends Component {
     className: PropTypes.string,
     style: PropTypes.object,
     onClose: PropTypes.func.isRequired,
-    opened: PropTypes.bool.isRequired
+    opened: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
-    opened: false
+    opened: false,
   };
 
   state = {
-    closing: false
+    closing: false,
   };
 
   elementRef = React.createRef();
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.opened !== prevProps.opened) {
       if (this.props.opened === false) {
         this.setState({ closing: true });
@@ -35,7 +35,7 @@ export default class HeaderContext extends Component {
     }
   }
 
-  waitAnimationFinish (eventHandler) {
+  waitAnimationFinish(eventHandler) {
     const eventName = transitionEvents.animationEndEventName;
     const element = this.elementRef.current;
 
@@ -49,14 +49,14 @@ export default class HeaderContext extends Component {
     this.setState({ closing: false });
   };
 
-  render () {
+  render() {
     const { children, className, opened, onClose, ...restProps } = this.props;
     const { closing } = this.state;
 
     return (
       <FixedLayout {...restProps} className={classNames(baseClassNames, {
         'HeaderContext--opened': opened,
-        'HeaderContext--closing': closing
+        'HeaderContext--closing': closing,
       }, className)} vertical="top">
         <div className="HeaderContext__in" ref={this.elementRef}>
           {(opened || closing) && children}

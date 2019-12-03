@@ -4,8 +4,8 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
 
-const isElement = element => React.isValidElement(element);
-const isDOMTypeElement = element => isElement(element) && typeof element.type === 'string';
+const isElement = (element) => React.isValidElement(element);
+const isDOMTypeElement = (element) => isElement(element) && typeof element.type === 'string';
 const baseClassName = getClassName('Tooltip');
 
 class TooltipPortal extends React.Component {
@@ -18,20 +18,20 @@ class TooltipPortal extends React.Component {
     offsetX: PropTypes.number,
     offsetY: PropTypes.number,
     cornerOffset: PropTypes.number,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
     document: PropTypes.any,
-    panel: PropTypes.string
+    panel: PropTypes.string,
   };
 
   state = {
     x: 0,
-    y: 0
+    y: 0,
   };
 
-  get document () {
+  get document() {
     return this.context.document || document;
   }
 
@@ -39,7 +39,7 @@ class TooltipPortal extends React.Component {
 
   portalTarget = this.findPortalTarget();
 
-  findPortalTarget () {
+  findPortalTarget() {
     const { target } = this.props;
     const closestFixed = target.closest('.FixedLayout');
     const closestHeader = target.closest('.PanelHeader__in');
@@ -52,7 +52,7 @@ class TooltipPortal extends React.Component {
     return closestFixed || closestHeader || closestPanel;
   }
 
-  getBoundingTargetRect () {
+  getBoundingTargetRect() {
     const { target } = this.props;
     const targetBounds = target.getBoundingClientRect();
     const portalBounds = this.portalTarget.getBoundingClientRect();
@@ -61,15 +61,15 @@ class TooltipPortal extends React.Component {
       width: targetBounds.width,
       height: targetBounds.height,
       x: targetBounds.left - portalBounds.left,
-      y: targetBounds.top - portalBounds.top
+      y: targetBounds.top - portalBounds.top,
     };
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.document.removeEventListener('click', this.props.onClose);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const { offsetY, offsetX, alignX, alignY } = this.props;
     const coords = this.getBoundingTargetRect();
 
@@ -77,20 +77,20 @@ class TooltipPortal extends React.Component {
 
     this.setState({
       x: coords.x + offsetX + (alignX === 'right' ? coords.width - this.el.offsetWidth : 0),
-      y: coords.y + (alignY === 'top' ? -this.el.offsetHeight - offsetY : coords.height + offsetY)
+      y: coords.y + (alignY === 'top' ? -this.el.offsetHeight - offsetY : coords.height + offsetY),
     });
   }
 
-  getRef = el => this.el = el;
+  getRef = (el) => this.el = el;
 
-  render () {
+  render() {
     const { title, text, alignX, alignY, cornerOffset } = this.props;
 
     return ReactDOM.createPortal(
       <div className={classNames(baseClassName, {
         [`Tooltip--x-${alignX}`]: true,
         [`Tooltip--y-${alignY}`]: true,
-        'Tooltip--fixed': this.fixedPortal
+        'Tooltip--fixed': this.fixedPortal,
       })}>
         <div className="Tooltip__container" style={{ top: this.state.y, left: this.state.x }} ref={this.getRef}>
           <div className="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }}/>
@@ -146,7 +146,7 @@ export default class Tooltip extends React.Component {
     /**
      * Callback, который вызывается при клике по любому месту в пределах экрана.
      */
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -155,24 +155,24 @@ export default class Tooltip extends React.Component {
     alignX: 'left',
     alignY: 'bottom',
     cornerOffset: 0,
-    isShown: true
+    isShown: true,
   };
 
   state = {
-    ready: false
+    ready: false,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.targetEl && this.setState({ ready: true });
   }
 
-  getRef = el => this.targetEl = el;
+  getRef = (el) => this.targetEl = el;
 
-  render () {
+  render() {
     const { children, isShown, ...portalProps } = this.props;
 
     const child = React.cloneElement(children, {
-      [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: this.getRef, key: 'c'
+      [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: this.getRef, key: 'c',
     });
 
     if (!isShown || !this.state.ready) {

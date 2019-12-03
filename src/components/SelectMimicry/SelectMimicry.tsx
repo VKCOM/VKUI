@@ -28,7 +28,7 @@ const SelectMimicry: FunctionComponent<Omit<SelectMimicryProps, 'value'>> = ({
         'Select--not-selected': !children,
         'Select--multiline': multiline,
         'Select--disabled': disabled,
-        [`Select--align-${alignment}`]: !!alignment
+        [`Select--align-${alignment}`]: !!alignment,
       }, className)}
       getRootRef={getRootRef}
       status={status}
@@ -42,7 +42,7 @@ const SelectMimicry: FunctionComponent<Omit<SelectMimicryProps, 'value'>> = ({
 };
 
 SelectMimicry.defaultProps = {
-  tabIndex: 0
+  tabIndex: 0,
 };
 
 export default SelectMimicry;

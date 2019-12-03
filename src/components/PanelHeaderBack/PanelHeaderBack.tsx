@@ -5,9 +5,7 @@ import HeaderButton, { HeaderButtonProps } from '../HeaderButton/HeaderButton';
 import { ANDROID } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface PanelHeaderBackProps extends HeaderButtonProps {}
-
-const PanelHeaderBack: FunctionComponent<PanelHeaderBackProps> = React.memo((props: PanelHeaderBackProps) => {
+const PanelHeaderBack: FunctionComponent<HeaderButtonProps> = (props: HeaderButtonProps) => {
   const platform = usePlatform();
 
   return (
@@ -15,6 +13,6 @@ const PanelHeaderBack: FunctionComponent<PanelHeaderBackProps> = React.memo((pro
       {platform === ANDROID ? <Icon24Back/> : <Icon28ChevronBack/>}
     </HeaderButton>
   );
-});
+};
 
-export default PanelHeaderBack;
+export default React.memo(PanelHeaderBack);

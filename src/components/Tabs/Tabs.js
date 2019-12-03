@@ -16,15 +16,15 @@ export default class Tabs extends React.Component {
     style: PropTypes.object,
     getRootRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
-    ])
+      PropTypes.shape({ current: PropTypes.any }),
+    ]),
   };
 
   static defaultProps = {
-    type: 'default'
+    type: 'default',
   };
 
-  render () {
+  render() {
     const { className, children, style, type, getRootRef, ...restProps } = this.props;
 
     return (

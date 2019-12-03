@@ -25,7 +25,7 @@ const Progress: FunctionComponent<ProgressProps> = (props: ProgressProps) => {
 };
 
 Progress.defaultProps = {
-  value: 0
+  value: 0,
 };
 
 export default Progress;

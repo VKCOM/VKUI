@@ -5,7 +5,7 @@ import classNames from '../../lib/classNames';
 
 const baseClassNames = getClassName('Group');
 
-const Group = props => {
+const Group = (props) => {
   const { header, description, className, children, getRootRef, ...restProps } = props;
 
   return (
@@ -25,8 +25,8 @@ Group.propTypes = {
   className: PropTypes.string,
   getRootRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ])
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
 };
 
 export default Group;

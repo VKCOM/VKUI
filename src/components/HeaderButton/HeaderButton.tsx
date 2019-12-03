@@ -6,11 +6,11 @@ import { HasChildren } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface HeaderButtonProps extends HTMLAttributes<HTMLLinkElement | HTMLButtonElement>, HasChildren {
-  primary?: boolean,
+  primary?: boolean;
   /**
    * Делает из кнопки ссылку
    */
-  href?: string
+  href?: string;
 }
 
 const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
@@ -40,7 +40,7 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
 };
 
 HeaderButton.defaultProps = {
-  primary: false
+  primary: false,
 };
 
 export default HeaderButton;

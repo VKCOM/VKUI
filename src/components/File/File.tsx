@@ -39,7 +39,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
 
 File.defaultProps = {
   children: 'Выберите файл',
-  align: 'left'
+  align: 'left',
 };
 
 export default File;

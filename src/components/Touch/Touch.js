@@ -30,29 +30,29 @@ export default class Touch extends Component {
     onClick: PropTypes.func,
     getRootRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.node })
-    ])
+      PropTypes.shape({ current: PropTypes.node }),
+    ]),
   };
   static defaultProps = {
     component: 'div',
     children: '',
-    useCapture: false
+    useCapture: false,
   };
 
   static contextTypes = {
-    document: PropTypes.any
+    document: PropTypes.any,
   };
 
-  get document () {
+  get document() {
     return this.context.document || document;
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
     touchEnabled && this.subscribe(this.container);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.container.removeEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
     touchEnabled && this.unsubscribe(this.container);
   }
@@ -61,20 +61,20 @@ export default class Touch extends Component {
    * Обработчик событий touchstart
    *
    * @param {Object} e Браузерное событие
-   * @returns {void}
+   * @return {void}
    */
   onStart = (e) => {
     this.gesture = {
       startX: coordX(e),
       startY: coordY(e),
       startT: new Date(),
-      isPressed: true
+      isPressed: true,
     };
 
     // Вызываем нужные колбеки из props
     const outputEvent = {
       ...this.gesture,
-      originalEvent: e
+      originalEvent: e,
     };
 
     if (this.props.onStart) {
@@ -96,7 +96,7 @@ export default class Touch extends Component {
    * Обработчик событий touchmove
    *
    * @param {Object} e Браузерное событие
-   * @returns {void}
+   * @return {void}
    */
   onMove = (e) => {
     const { isPressed, isX, isY, startX, startY } = this.gesture;
@@ -138,7 +138,7 @@ export default class Touch extends Component {
         // Вызываем нужные колбеки из props
         const outputEvent = {
           ...this.gesture,
-          originalEvent: e
+          originalEvent: e,
         };
 
         if (this.props.onMove) {
@@ -160,7 +160,7 @@ export default class Touch extends Component {
    * Обработчик событий touchend, touchcancel
    *
    * @param {Object} e Браузерное событие
-   * @returns {void}
+   * @return {void}
    */
   onEnd = (e) => {
     const { isPressed, isSlide, isSlideX, isSlideY } = this.gesture;
@@ -169,7 +169,7 @@ export default class Touch extends Component {
       // Вызываем нужные колбеки из props
       const outputEvent = {
         ...this.gesture,
-        originalEvent: e
+        originalEvent: e,
       };
 
       if (this.props.onEnd) {
@@ -192,13 +192,13 @@ export default class Touch extends Component {
     !touchEnabled && this.unsubscribe(this.document);
   };
 
-  subscribe (element) {
+  subscribe(element) {
     element.addEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
     element.addEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
     element.addEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
   }
 
-  unsubscribe (element) {
+  unsubscribe(element) {
     element.removeEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
     element.removeEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
     element.removeEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
@@ -209,7 +209,7 @@ export default class Touch extends Component {
    * Отменяет нативное браузерное поведение для вложенных ссылок и изображений
    *
    * @param {Object} e Браузерное событие
-   * @returns {void}
+   * @return {void}
    */
   onDragStart = (e) => {
     if (e.target.tagName === 'A' || e.target.tagName === 'IMG') {
@@ -222,7 +222,7 @@ export default class Touch extends Component {
    * Отменяет переход по вложенной ссылке, если был зафиксирован свайп
    *
    * @param {Object} e Браузерное событие
-   * @returns {void}
+   * @return {void}
    */
   onClick = (e) => {
     if (this.cancelClick) {
@@ -245,7 +245,7 @@ export default class Touch extends Component {
     }
   };
 
-  render () {
+  render() {
     const {
       onStart,
       onStartX,

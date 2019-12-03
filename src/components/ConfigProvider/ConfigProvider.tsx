@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import vkConnect from '@vkontakte/vk-connect';
@@ -5,14 +7,14 @@ import { HasChildren } from '../../types/props';
 import { canUseDOM } from '../../lib/dom';
 
 export interface ConfigProviderProps extends HasChildren {
-  scheme?: 'client_light' | 'client_dark' | 'bright_light' | 'space_gray',
-  isWebView?: boolean,
-  webviewType?: 'vkapps' | 'internal',
-  app?: string
+  scheme?: 'client_light' | 'client_dark' | 'bright_light' | 'space_gray';
+  isWebView?: boolean;
+  webviewType?: 'vkapps' | 'internal';
+  app?: string;
 }
 
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
-  constructor (props, context) {
+  constructor(props, context) {
     super(props);
     if (canUseDOM) {
       (context.document || window.document).body.setAttribute('scheme', props.scheme);
@@ -23,17 +25,17 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     isWebView: PropTypes.bool,
     scheme: PropTypes.string,
     webviewType: PropTypes.oneOf(['vkapps', 'internal']),
-    app: PropTypes.string
+    app: PropTypes.string,
   };
 
   static defaultProps = {
     webviewType: 'internal',
     isWebView: vkConnect.isWebView(),
-    scheme: 'bright_light'
+    scheme: 'bright_light',
   };
 
   static contextTypes = {
-    document: PropTypes.object
+    document: PropTypes.object,
   };
 
   get document() {
@@ -51,7 +53,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
       scheme: this.props.scheme,
-      app: this.props.app
+      app: this.props.app,
     };
   }
 

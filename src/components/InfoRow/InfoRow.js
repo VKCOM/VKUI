@@ -16,7 +16,7 @@ InfoRow.propTypes = {
   title: PropTypes.node.isRequired,
   children: PropTypes.node,
   className: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
 export default InfoRow;

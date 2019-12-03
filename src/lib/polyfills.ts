@@ -1,13 +1,12 @@
+/* eslint-disable */
 import { canUseDOM } from './dom';
 
-export interface MatchesMethod {
-  (css: string): boolean
-}
+export type MatchesMethod = (css: string) => boolean;
 
 export interface OldElement extends Element {
-  matchesSelector?: MatchesMethod,
-  mozMatchesSelector?: MatchesMethod,
-  msMatchesSelector?: MatchesMethod,
+  matchesSelector?: MatchesMethod;
+  mozMatchesSelector?: MatchesMethod;
+  msMatchesSelector?: MatchesMethod;
 }
 
 if (canUseDOM) {
@@ -26,8 +25,7 @@ if (canUseDOM) {
     ElementProto.closest = function(css: string): Element | null {
       let node: Element = this;
       while (node) {
-        if (node.matches(css)) return node;
-        else node = node.parentElement;
+        if (node.matches(css)) {return node;} else {node = node.parentElement;}
       }
       return null;
     };

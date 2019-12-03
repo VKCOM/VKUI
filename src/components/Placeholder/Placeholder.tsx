@@ -27,7 +27,7 @@ const Placeholder: FunctionComponent<PlaceholderProps> = (props: PlaceholderProp
   return (
     <div
       className={classNames('Placeholder', {
-        'Placeholder--stretched': stretched
+        'Placeholder--stretched': stretched,
       }, className)}
     >
       <div className="Placeholder__in">

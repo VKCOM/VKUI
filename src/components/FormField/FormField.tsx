@@ -8,8 +8,7 @@ export interface FormFieldProps extends
   HTMLAttributes<HTMLElement>,
   HasRootRef<HTMLElement>,
   HasChildren,
-  HasFormStatus
-{
+  HasFormStatus {
   TagName?: string;
   top?: ReactNode;
   bottom?: ReactNode;
@@ -29,14 +28,14 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
     ...restProps,
     ref: getRootRef,
     className: classNames(getClassName('FormField', platform), {
-      [`FormField--s-${status}`]: status !== 'default'
-    }, className)
+      [`FormField--s-${status}`]: status !== 'default',
+    }, className),
   }, <React.Fragment>{children}<div className="FormField__border" /></React.Fragment>);
 };
 
 FormField.defaultProps = {
   status: 'default',
-  TagName: 'div'
+  TagName: 'div',
 };
 
 export default FormField;

@@ -33,7 +33,7 @@ PanelHeaderContent.propTypes = {
   aside: PropTypes.node,
   status: PropTypes.node,
   onClick: PropTypes.func,
-  before: PropTypes.node
+  before: PropTypes.node,
 };
 
 export default PanelHeaderContent;

@@ -14,7 +14,7 @@ export interface RadioProps extends HTMLAttributes<HTMLInputElement>, HasChildre
   /**
    * @ignore
    */
-  disabled?: boolean
+  disabled?: boolean;
 }
 
 const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {

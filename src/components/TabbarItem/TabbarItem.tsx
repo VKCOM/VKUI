@@ -21,7 +21,7 @@ const TabbarItem: FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) 
 
   return (
     <div {...restProps} className={classNames(getClassName('TabbarItem', platform), className, {
-      'TabbarItem--selected': selected
+      'TabbarItem--selected': selected,
     })}>
       <div className="TabbarItem__in">
         <div className="TabbarItem__icon">

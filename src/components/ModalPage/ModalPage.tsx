@@ -48,7 +48,7 @@ const ModalPage: FunctionComponent<ModalPageProps> = (props: ModalPageProps) => 
 
 ModalPage.defaultProps = {
   settlingHeight: 75,
-  insets: {}
+  insets: {},
 };
 
 export default withInsets(ModalPage);

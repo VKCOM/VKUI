@@ -15,12 +15,12 @@ Link.propTypes = {
   Component: PropTypes.any,
   getRootRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ])
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
 };
 
 Link.defaultProps = {
-  Component: 'a'
+  Component: 'a',
 };
 
 export default Link;

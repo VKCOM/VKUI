@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { HTMLAttributes, PureComponent } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
@@ -7,12 +9,12 @@ export interface TextareaProps extends
   HTMLAttributes<HTMLTextAreaElement>,
   HasRef<HTMLTextAreaElement>,
   HasRootRef<HTMLElement>,
-  HasFormStatus
-{
+  HasFormStatus {
   children?: string;
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   value?: string;
+  defaultValue?: string;
 }
 
 export interface TextareaState {
@@ -21,7 +23,7 @@ export interface TextareaState {
 }
 
 export default class Textarea extends PureComponent<TextareaProps, TextareaState> {
-  constructor (props) {
+  constructor(props: TextareaProps) {
     super(props);
 
     if (typeof props.value !== 'undefined') {
@@ -29,28 +31,28 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
       this.state = {};
     } else {
       this.state = {
-        value: props.defaultValue || ''
+        value: props.defaultValue || '',
       };
     }
   }
 
-  isControlledOutside?: boolean
-  element: HTMLTextAreaElement
+  isControlledOutside?: boolean;
+  element: HTMLTextAreaElement;
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.grow) {
       this.resize();
     }
   }
 
-  static defaultProps = {
+  static defaultProps: TextareaProps = {
     style: {},
     defaultValue: '',
     grow: true,
-    onResize: () => {}
+    onResize: () => {},
   };
 
-  getRef = (element) => {
+  getRef = (element: HTMLTextAreaElement) => {
     this.element = element;
 
     const getRef = this.props.getRef;
@@ -92,7 +94,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     }
   };
 
-  get value () { return this.isControlledOutside ? this.props.value : this.state.value; }
+  get value() {return this.isControlledOutside ? this.props.value : this.state.value;}
 
   onChange = (e) => {
     if (this.props.grow) {
@@ -108,7 +110,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     }
   };
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps: TextareaProps) {
     if (prevProps.value && this.props.value === '') {
       // Fix iOS extra indent on removing content
       window.requestAnimationFrame(() => {
@@ -117,7 +119,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     }
   }
 
-  render () {
+  render() {
     const { defaultValue, value, onChange, grow, style, onResize, className,
       getRootRef, getRef, status, ...restProps } = this.props;
 

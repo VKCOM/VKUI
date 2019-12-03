@@ -23,30 +23,30 @@ export default class PanelHeader extends React.Component {
     transparent: PropTypes.bool,
     getRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
-    ])
+      PropTypes.shape({ current: PropTypes.any }),
+    ]),
   };
 
   static defaultProps = {
-    transparent: false
+    transparent: false,
   };
 
   static contextTypes = {
     panel: PropTypes.string,
     document: PropTypes.any,
     scheme: PropTypes.string,
-    webviewType: PropTypes.oneOf(['vkapps', 'internal'])
+    webviewType: PropTypes.oneOf(['vkapps', 'internal']),
   };
 
   state = {
-    ready: false
+    ready: false,
   };
 
-  get document () { return this.context.document || document; }
+  get document() {return this.context.document || document;}
 
-  get webviewType () { return this.context.webviewType || 'vkapps'; }
+  get webviewType() {return this.context.webviewType || 'vkapps';}
 
-  componentDidMount () {
+  componentDidMount() {
     const panelId = this.context.panel;
 
     this.leftNode = this.document.getElementById('header-left-' + panelId);
@@ -67,26 +67,26 @@ export default class PanelHeader extends React.Component {
     this.setState({ ready: true });
   }
 
-  render () {
+  render() {
     let { left, addon, children, right, transparent } = this.props;
     const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
     return this.state.ready ? [
       ReactDOM.createPortal(<div className={classNames('PanelHeader-left-in', {
-        'PanelHeader-left-in--tp': transparent
+        'PanelHeader-left-in--tp': transparent,
       })}>{left}</div>, this.leftNode),
       IS_PLATFORM_IOS && ReactDOM.createPortal(<div className={classNames('PanelHeader-addon', {
-        'PanelHeader-addon--tp': transparent
+        'PanelHeader-addon--tp': transparent,
       })}>{addon}</div>, this.addonNode),
       ReactDOM.createPortal(<div className={classNames('PanelHeader-content', {
-        'PanelHeader-content--tp': transparent
+        'PanelHeader-content--tp': transparent,
       })}>
         {isPrimitive ? <span>{children}</span> : children}
       </div>, this.titleNode),
       ReactDOM.createPortal(<div className={classNames('PanelHeader-right', {
         'PanelHeader-right--tp': transparent,
-        'PanelHeader-right--vkapps': this.webviewType === 'vkapps'
-      })}>{this.webviewType === 'internal' ? right : null}</div>, this.rightNode)
+        'PanelHeader-right--vkapps': this.webviewType === 'vkapps',
+      })}>{this.webviewType === 'internal' ? right : null}</div>, this.rightNode),
     ] : null;
   }
 }

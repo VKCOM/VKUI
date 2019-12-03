@@ -6,10 +6,10 @@ import { HasChildren, HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface ButtonProps extends HTMLAttributes<HTMLElement>, HasChildren, HasRootRef<HTMLElement> {
-  level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline',
-  size?: 'm' | 'l' | 'xl',
-  align?: 'left' | 'center' | 'right',
-  stretched?: boolean,
+  level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
+  size?: 'm' | 'l' | 'xl';
+  align?: 'left' | 'center' | 'right';
+  stretched?: boolean;
   before?: ReactNode;
   after?: ReactNode;
   component?: string | ComponentType;
@@ -28,7 +28,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     [`Button--sz-${size}`]: true,
     [`Button--lvl-${level}`]: true,
     [`Button--aln-${align || 'center'}`]: true,
-    [`Button--str`]: stretched
+    ['Button--str']: stretched,
   })} getRootRef={getRootRef}>
     <div className="Button__in">
       {before && <div className="Button__before">{before}</div>}
@@ -43,7 +43,7 @@ Button.defaultProps = {
   component: 'button',
   size: 'm',
   stretched: false,
-  stopPropagation: true
+  stopPropagation: true,
 };
 
 export default Button;

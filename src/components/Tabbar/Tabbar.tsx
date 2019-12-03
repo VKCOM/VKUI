@@ -32,7 +32,7 @@ const Tabbar: FunctionComponent<TabbarProps> = (props: TabbarProps) => {
   return (
     <div
       className={classNames(getClassName('Tabbar', platform), className, `Tabbar--l-${getItemsLayout()}`, {
-        'Tabbar--shadow': shadow
+        'Tabbar--shadow': shadow,
       })}
       style={{ paddingBottom: isNumeric(insets.bottom) ? insets.bottom : null }}
     >
@@ -42,7 +42,7 @@ const Tabbar: FunctionComponent<TabbarProps> = (props: TabbarProps) => {
 };
 
 Tabbar.defaultProps = {
-  shadow: true
+  shadow: true,
 };
 
 export default Tabbar;

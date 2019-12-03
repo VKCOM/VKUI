@@ -20,10 +20,10 @@ let storage = {};
  * Очищает таймауты и хранилище для всех экземпляров компонента, кроме переданного
  *
  * @param {String} exclude ID экземпляра-исключения
- * @returns {void}
+ * @return {void}
  */
-function deactivateOtherInstances (exclude) {
-  Object.keys(storage).filter(id => id !== exclude).forEach(id => {
+function deactivateOtherInstances(exclude) {
+  Object.keys(storage).filter((id) => id !== exclude).forEach((id) => {
     clearTimeout(storage[id].activeTimeout);
     clearTimeout(storage[id].timeout);
     storage[id].stop();
@@ -33,13 +33,13 @@ function deactivateOtherInstances (exclude) {
 }
 
 export default class Tappable extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.id = Math.round(Math.random() * 1e8).toString(16);
     this.state = {
       clicks: {},
       active: false,
-      ts: null
+      ts: null,
     };
   }
 
@@ -49,7 +49,7 @@ export default class Tappable extends Component {
     children: PropTypes.node,
     component: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.element
+      PropTypes.element,
     ]),
     role: PropTypes.string,
     activeEffectDelay: PropTypes.number,
@@ -57,8 +57,8 @@ export default class Tappable extends Component {
     disabled: PropTypes.bool,
     getRootRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
-    ])
+      PropTypes.shape({ current: PropTypes.any }),
+    ]),
   };
 
   static defaultProps = {
@@ -66,7 +66,7 @@ export default class Tappable extends Component {
     role: 'button',
     stopPropagation: false,
     disabled: false,
-    activeEffectDelay: ACTIVE_EFFECT_DELAY
+    activeEffectDelay: ACTIVE_EFFECT_DELAY,
   };
 
   isSlide = false;
@@ -74,7 +74,7 @@ export default class Tappable extends Component {
   /**
    * Обрабатывает событие touchstart
    *
-   * @returns {void}
+   * @return {void}
    */
   onStart = ({ originalEvent }) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
@@ -94,7 +94,7 @@ export default class Tappable extends Component {
   /**
    * Обрабатывает событие touchmove
    *
-   * @returns {void}
+   * @return {void}
    */
   onMove = ({ originalEvent, shiftXAbs, shiftYAbs }) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
@@ -107,7 +107,7 @@ export default class Tappable extends Component {
   /**
    * Обрабатывает событие touchend
    *
-   * @returns {void}
+   * @return {void}
    */
   onEnd = ({ originalEvent }) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
@@ -148,10 +148,8 @@ export default class Tappable extends Component {
     this.isSlide = false;
   };
 
-  /**
+  /*
    * Реализует эффект при тапе для Андроида
-   *
-   * @returns {void}
    */
   onDown = (e) => {
     if (IS_PLATFORM_ANDROID) {
@@ -160,18 +158,18 @@ export default class Tappable extends Component {
       const y = coordY(e);
       const key = 'wave' + Date.now().toString();
 
-      this.setState(state => ({
+      this.setState((state) => ({
         clicks: {
           ...state.clicks,
           [key]: {
             x: Math.round(x - left),
-            y: Math.round(y - top)
-          }
-        }
+            y: Math.round(y - top),
+          },
+        },
       }));
 
       this.wavesTimeout = setTimeout(() => {
-        this.setState(state => {
+        this.setState((state) => {
           let clicks = { ...state.clicks };
           delete clicks[key];
           return { clicks };
@@ -183,13 +181,13 @@ export default class Tappable extends Component {
   /**
    * Устанавливает активное выделение
    *
-   * @returns {void}
+   * @return {void}
    */
   start = () => {
     if (!this.state.active) {
       this.setState({
         active: true,
-        ts: ts()
+        ts: ts(),
       });
     }
     deactivateOtherInstances(this.id);
@@ -198,13 +196,13 @@ export default class Tappable extends Component {
   /**
    * Снимает активное выделение
    *
-   * @returns {void}
+   * @return {void}
    */
   stop = () => {
     if (this.state.active) {
       this.setState({
         active: false,
-        ts: null
+        ts: null,
       });
     }
     if (this.getStorage()) {
@@ -216,7 +214,7 @@ export default class Tappable extends Component {
   /**
    * Возвращает хранилище для экземпляра компонента
    *
-   * @returns {Object} Хранилище для текущего экземпляра компонента
+   * @return {Object} Хранилище для текущего экземпляра компонента
    */
   getStorage = () => {
     return storage[this.id];
@@ -227,7 +225,7 @@ export default class Tappable extends Component {
    *
    * @param {React.Component} container Touch component instance
    */
-  getRef = container => {
+  getRef = (container) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;
@@ -240,7 +238,7 @@ export default class Tappable extends Component {
     }
   };
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     if (storage[this.id]) {
       clearTimeout(storage[this.id].timeout);
       clearTimeout(storage[this.id].activeTimeout);
@@ -251,13 +249,13 @@ export default class Tappable extends Component {
     clearTimeout(this.wavesTimeout);
   }
 
-  render () {
+  render() {
     const { clicks, active } = this.state;
     const { children, className, component, activeEffectDelay, stopPropagation, getRootRef, ...restProps } = this.props;
     const Component = !restProps.disabled ? Touch : component;
     const classes = classNames(baseClassNames, className, {
       'Tappable--active': active,
-      'Tappable--inactive': !active
+      'Tappable--inactive': !active,
     });
 
     let props = {};
@@ -277,14 +275,14 @@ export default class Tappable extends Component {
 
     return (
       <TouchRootContext.Consumer>
-        {insideTouchRoot => {
+        {(insideTouchRoot) => {
           this.insideTouchRoot = insideTouchRoot;
 
           return (
             <Component {...restProps} className={classes} {...props}>
               {IS_PLATFORM_ANDROID && (
                 <span className="Tappable__waves">
-                  {Object.keys(clicks).map(k => (
+                  {Object.keys(clicks).map((k) => (
                     <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
                   ))}
                 </span>

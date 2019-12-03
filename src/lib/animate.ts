@@ -5,18 +5,14 @@
  * @param {function} draw коллбэк, в который прокидывается прогресс [0, 1]
  * @returns {void}
  */
-export interface TimingInterface {
-  (timeFraction: number): number
-}
+export type TimingInterface = (timeFraction: number) => number;
 
-export interface DrawInterface {
-  (progress: number): void
-}
+export type DrawInterface = (progress: number) => void;
 
 export interface AnimateArgumentsInterface {
-  duration: number,
-  timing: TimingInterface,
-  draw: DrawInterface
+  duration: number;
+  timing: TimingInterface;
+  draw: DrawInterface;
 }
 
 export default function animate({ duration, timing, draw }: AnimateArgumentsInterface): void {

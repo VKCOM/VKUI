@@ -10,7 +10,7 @@ const baseClassNames = getClassName('PopoutWrapper');
 
 export default class PopoutWrapper extends React.Component {
   state = {
-    opened: false
+    opened: false,
   };
 
   static propTypes = {
@@ -21,27 +21,27 @@ export default class PopoutWrapper extends React.Component {
     onClick: PropTypes.func,
     style: PropTypes.object,
     children: PropTypes.node,
-    className: PropTypes.string
+    className: PropTypes.string,
   };
 
   static defaultProps = {
     hasMask: true,
     v: 'center',
     h: 'center',
-    closing: false
+    closing: false,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('touchmove', this.preventTouch, { passive: false });
     this.waitAnimationFinish(this.el, this.onFadeInEnd);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('touchmove', this.preventTouch, { passive: false });
     clearTimeout(this.animationFinishTimeout);
   }
 
-  waitAnimationFinish (elem, eventHandler) {
+  waitAnimationFinish(elem, eventHandler) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
       elem.removeEventListener(eventName, eventHandler);
@@ -57,20 +57,20 @@ export default class PopoutWrapper extends React.Component {
     }
   };
 
-  preventTouch = e => e.preventDefault();
+  preventTouch = (e) => e.preventDefault();
 
-  onClick = e => this.state.opened && this.props.onClick && this.props.onClick(e);
+  onClick = (e) => this.state.opened && this.props.onClick && this.props.onClick(e);
 
-  getRef = el => this.el = el;
+  getRef = (el) => this.el = el;
 
-  render () {
+  render() {
     const { v, h, closing, children, hasMask, onClick, className, ...restProps } = this.props;
 
     return (
       <div {...restProps} className={classNames(baseClassNames, {
         [`PopoutWrapper--v-${v}`]: v,
         [`PopoutWrapper--h-${h}`]: h,
-        'PopoutWrapper--closing': closing
+        'PopoutWrapper--closing': closing,
       }, className)} onClick={this.onClick} ref={this.getRef}>
         {hasMask && <div className="PopoutWrapper__mask" />}
         <div className="PopoutWrapper__container">{children}</div>

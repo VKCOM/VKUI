@@ -5,9 +5,9 @@ import usePlatform from '../../hooks/usePlatform';
 import { HasChildren, HasRootRef } from '../../types/props';
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement>, HasChildren, HasRootRef<HTMLDivElement> {
-  size?: 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24,
-  src?: string,
-  type?: 'default' | 'image' | 'app'
+  size?: 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24;
+  src?: string;
+  type?: 'default' | 'image' | 'app';
 }
 
 const Avatar: React.FunctionComponent<AvatarProps> = ({
@@ -56,7 +56,7 @@ const Avatar: React.FunctionComponent<AvatarProps> = ({
 
 Avatar.defaultProps = {
   size: 48,
-  type: 'default'
+  type: 'default',
 };
 
 export default Avatar;

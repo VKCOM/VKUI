@@ -11,7 +11,7 @@ import Separator from '../Separator/Separator';
 
 class Panel extends Component {
   static childContextTypes = {
-    panel: PropTypes.string
+    panel: PropTypes.string,
   };
 
   static propTypes = {
@@ -28,35 +28,35 @@ class Panel extends Component {
     /**
      * @ignore
      */
-    platform: PropTypes.string
+    platform: PropTypes.string,
   };
 
   static defaultProps = {
     children: '',
     centered: false,
-    separator: true
+    separator: true,
   };
 
   static contextTypes = {
-    hasTabbar: PropTypes.bool
+    hasTabbar: PropTypes.bool,
   };
 
-  getChildContext () {
+  getChildContext() {
     return {
-      panel: this.props.id
+      panel: this.props.id,
     };
   }
 
-  render () {
+  render() {
     const { className, centered, children, insets, platform, separator, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
 
     return (
       <div {...restProps} className={classNames(getClassName('Panel', platform), className, {
-        'Panel--centered': centered
+        'Panel--centered': centered,
       })}>
         <Touch className="Panel__in" style={{
-          paddingBottom: isNumeric(insets.bottom) ? (insets.bottom + tabbarPadding) : null
+          paddingBottom: isNumeric(insets.bottom) ? (insets.bottom + tabbarPadding) : null,
         }}>
           <div className="Panel__in-before" />
           {separator && <Separator />}

@@ -29,22 +29,22 @@ class Search extends React.Component {
     placeholder: PropTypes.node,
     getRef: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any })
+      PropTypes.shape({ current: PropTypes.any }),
     ]),
-    platform: PropTypes.string
+    platform: PropTypes.string,
   };
 
   static defaultProps = {
     autoComplete: 'off',
     placeholder: 'Поиск',
-    after: 'Отмена'
+    after: 'Отмена',
   };
 
   constructor(props) {
     super(props);
 
     let state = {
-      focused: false
+      focused: false,
     };
 
     if (props.hasOwnProperty('value')) {
@@ -56,7 +56,7 @@ class Search extends React.Component {
     this.state = state;
   }
 
-  get value () {
+  get value() {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
@@ -99,7 +99,7 @@ class Search extends React.Component {
     }
   };
 
-  render () {
+  render() {
     const {
       className,
       onFocus,
@@ -118,7 +118,7 @@ class Search extends React.Component {
       <div className={classNames(getClassname('Search', platform), {
         'Search--focused': this.state.focused,
         'Search--has-value': this.value,
-        'Search--has-after': after
+        'Search--has-after': after,
       }, className)}>
         <div className="Search__in">
           <div className="Search__width" />

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component, HTMLAttributes, ReactNode } from 'react';
 import Button from '../Button/Button';
 import HeaderButton from '../HeaderButton/HeaderButton';
@@ -27,12 +29,12 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   /**
    * Заголовок карточки
    */
-  title?: string,
+  title?: string;
 
   /**
    * Текст, поясняющий заголовок
    */
-  caption?: string,
+  caption?: string;
 
   /**
    * Список кнопок-действий
@@ -54,7 +56,7 @@ class ModalCard extends Component<ModalCardProps> {
   static defaultProps = {
     actions: [],
     actionsLayout: 'horizontal',
-    insets: {}
+    insets: {},
   };
 
   onButtonClick = (event) => {
@@ -67,7 +69,7 @@ class ModalCard extends Component<ModalCardProps> {
     }
   };
 
-  render () {
+  render() {
     const { insets, icon, title, caption, children, actions, actionsLayout, onClose, platform } = this.props;
 
     return (
@@ -82,9 +84,9 @@ class ModalCard extends Component<ModalCardProps> {
 
             {actions.length > 0 &&
             <div className={classNames('ModalCard__actions', {
-              'ModalCard__actions--v': actionsLayout === 'vertical'
+              'ModalCard__actions--v': actionsLayout === 'vertical',
             })}>
-              {actions.map(({ title, type }, i) => (
+              {actions.map(({ title, type }, i) =>
                 <Button
                   key={i}
                   data-index={i}
@@ -94,7 +96,7 @@ class ModalCard extends Component<ModalCardProps> {
                 >
                   {title}
                 </Button>
-              ))}
+              )}
             </div>
             }
 

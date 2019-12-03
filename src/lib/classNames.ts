@@ -12,14 +12,14 @@ export default function classNames(...classnames: Array<number | string | Object
         result.push(item);
         break;
       case 'object':
-        Object.keys(item).forEach(key => {
+        Object.keys(item).forEach((key: string) => {
           if (item[key]) {
             result.push(key);
           }
         });
         break;
       default:
-        result.push('' + item);
+        result.push(`${item}`);
     }
   });
 

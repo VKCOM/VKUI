@@ -9,16 +9,16 @@ import PullToRefreshSpinner from './PullToRefreshSpinner';
 
 const baseClassName = getClassName('PullToRefresh');
 
-function cancelEvent (event) {
-  if (!event) return false;
-  while (event.originalEvent) event = event.originalEvent;
-  if (event.preventDefault) event.preventDefault();
-  if (event.stopPropagation) event.stopPropagation();
+function cancelEvent(event) {
+  if (!event) {return false;}
+  while (event.originalEvent) {event = event.originalEvent;}
+  if (event.preventDefault) {event.preventDefault();}
+  if (event.stopPropagation) {event.stopPropagation();}
   return false;
 }
 
 export default class PullToRefresh extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.params = {
@@ -27,7 +27,7 @@ export default class PullToRefresh extends PureComponent {
       maxY: IS_PLATFORM_ANDROID ? 80 : 400,
       refreshing: IS_PLATFORM_ANDROID ? 50 : 36,
 
-      positionMultiplier: IS_PLATFORM_ANDROID ? 1 : 0.21
+      positionMultiplier: IS_PLATFORM_ANDROID ? 1 : 0.21,
     };
 
     this.state = {
@@ -41,7 +41,7 @@ export default class PullToRefresh extends PureComponent {
       touchY: 0,
       spinnerY: this.params.start,
       spinnerProgress: 0,
-      contentShift: 0
+      contentShift: 0,
     };
 
     this.contentRef = React.createRef();
@@ -59,47 +59,47 @@ export default class PullToRefresh extends PureComponent {
     /**
      * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`
      */
-    isFetching: PropTypes.bool
+    isFetching: PropTypes.bool,
   };
 
   static contextTypes = {
     window: PropTypes.any,
-    document: PropTypes.any
+    document: PropTypes.any,
   };
 
-  get document () {
+  get document() {
     return this.context.document || document;
   }
 
-  get window () {
+  get window() {
     return this.context.window || window;
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.document.addEventListener('touchmove', this.onWindowTouchMove, { cancelable: true, passive: false });
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.document.removeEventListener('touchmove', this.onWindowTouchMove);
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (prevProps.isFetching && !this.props.isFetching) {
       this.onRefreshingFinish();
     }
   }
 
-  get scrollTop () {
+  get scrollTop() {
     return this.document.scrollingElement.scrollTop;
   }
 
   onTouchStart = (e) => {
-    if (this.state.refreshing) cancelEvent(e);
+    if (this.state.refreshing) {cancelEvent(e);}
     this.setState({ touchDown: true });
   };
 
   onWindowTouchMove = (e) => {
-    if (this.state.refreshing) cancelEvent(e);
+    if (this.state.refreshing) {cancelEvent(e);}
   };
 
   onTouchMove = (e) => {
@@ -123,7 +123,7 @@ export default class PullToRefresh extends PureComponent {
         spinnerY: currentY,
         spinnerProgress: Math.min(80, Math.max(0, progress)),
         canRefresh: progress > 80,
-        contentShift: (currentY + 10) * 2.3
+        contentShift: (currentY + 10) * 2.3,
       });
 
       if (progress > 85 && !refreshing && IS_PLATFORM_IOS) {
@@ -136,7 +136,7 @@ export default class PullToRefresh extends PureComponent {
         watching: true,
         touchY: shiftY,
         spinnerY: start,
-        spinnerProgress: 0
+        spinnerProgress: 0,
       });
     }
   };
@@ -146,7 +146,7 @@ export default class PullToRefresh extends PureComponent {
 
     this.setState({
       watching: false,
-      touchDown: false
+      touchDown: false,
     }, () => {
       if (canRefresh && !refreshing) {
         this.runRefreshing();
@@ -156,17 +156,17 @@ export default class PullToRefresh extends PureComponent {
         this.setState({
           spinnerY: refreshing ? this.params.refreshing : this.params.start,
           spinnerProgress: 0,
-          contentShift: 0
+          contentShift: 0,
         });
       }
     });
   };
 
-  runRefreshing () {
+  runRefreshing() {
     if (!this.state.refreshing && this.props.onRefresh) {
       this.setState({
         refreshing: true,
-        spinnerY: IS_PLATFORM_ANDROID ? this.params.refreshing : this.state.spinnerY
+        spinnerY: IS_PLATFORM_ANDROID ? this.params.refreshing : this.state.spinnerY,
       });
 
       this.props.onRefresh();
@@ -175,13 +175,13 @@ export default class PullToRefresh extends PureComponent {
 
   onRefreshingFinish = () => {
     this.setState({
-      refreshingFinished: true
+      refreshingFinished: true,
     }, () => {
       !this.state.touchDown && this.resetRefreshingState();
     });
   }
 
-  resetRefreshingState () {
+  resetRefreshingState() {
     this.setState({
       watching: false,
       canRefresh: false,
@@ -189,11 +189,11 @@ export default class PullToRefresh extends PureComponent {
       refreshingFinished: false,
       spinnerY: this.params.start,
       spinnerProgress: 0,
-      contentShift: 0
+      contentShift: 0,
     });
   }
 
-  render () {
+  render() {
     const { children, className, onRefresh, isFetching, ...restProps } = this.props;
     const { watching, refreshing, spinnerY, spinnerProgress, canRefresh, touchDown, contentShift } = this.state;
 
@@ -209,7 +209,7 @@ export default class PullToRefresh extends PureComponent {
           onEnd={this.onTouchEnd}
           className={classNames(baseClassName, className, {
             'PullToRefresh--watching': watching,
-            'PullToRefresh--refreshing': refreshing
+            'PullToRefresh--refreshing': refreshing,
           })}
         >
           <FixedLayout className="PullToRefresh__controls">
@@ -217,7 +217,7 @@ export default class PullToRefresh extends PureComponent {
               style={{
                 transform: spinnerTransform,
                 WebkitTransform: spinnerTransform,
-                opacity: watching || refreshing || canRefresh ? 1 : 0
+                opacity: watching || refreshing || canRefresh ? 1 : 0,
               }}
               on={refreshing}
               progress={refreshing ? null : spinnerProgress}
@@ -229,7 +229,7 @@ export default class PullToRefresh extends PureComponent {
             ref={this.contentRef}
             style={{
               transform: contentTransform,
-              WebkitTransform: contentTransform
+              WebkitTransform: contentTransform,
             }}
           >
             {children}

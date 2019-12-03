@@ -6,12 +6,12 @@ import usePlatform from '../../hooks/usePlatform';
 import { HasChildren, HasClassName, HasStyleObject } from '../../types/props';
 
 export interface ActionSheetItemProps extends HasClassName, HasChildren, HasStyleObject {
-  theme?: 'default' | 'destructive' | 'cancel',
-  before?: React.ReactNode,
+  theme?: 'default' | 'destructive' | 'cancel';
+  before?: React.ReactNode;
   // meta?: React.ReactNode,
   // subtitle?: React.ReactNode,
-  onClick?(): void,
-  autoclose?: boolean
+  onClick?(): void;
+  autoclose?: boolean;
 }
 
 const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
@@ -46,7 +46,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
 };
 
 ActionSheetItem.defaultProps = {
-  theme: 'default'
+  theme: 'default',
 };
 
 export default ActionSheetItem;

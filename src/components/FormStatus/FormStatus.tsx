@@ -5,8 +5,8 @@ import { HasChildren, HasDangerHTML } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface FormStatusProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasDangerHTML {
-  state?: 'default' | 'error',
-  title?: string
+  state?: 'default' | 'error';
+  title?: string;
 }
 
 const FormStatus: FunctionComponent<FormStatusProps> = ({

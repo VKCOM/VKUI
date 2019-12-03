@@ -4,9 +4,7 @@ import HeaderButton, { HeaderButtonProps } from '../HeaderButton/HeaderButton';
 import { ANDROID } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface PanelHeaderCloseProps extends HeaderButtonProps {}
-
-const PanelHeaderClose: FunctionComponent<PanelHeaderCloseProps> = ({ children, ...restProps }: PanelHeaderCloseProps) => {
+const PanelHeaderClose: FunctionComponent<HeaderButtonProps> = ({ children, ...restProps }: HeaderButtonProps) => {
   const platform = usePlatform();
   return (
     <HeaderButton {...restProps}>
@@ -16,7 +14,7 @@ const PanelHeaderClose: FunctionComponent<PanelHeaderCloseProps> = ({ children, 
 };
 
 PanelHeaderClose.defaultProps = {
-  children: 'Отмена'
+  children: 'Отмена',
 };
 
 export default PanelHeaderClose;

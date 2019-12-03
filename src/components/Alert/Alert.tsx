@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component, HTMLAttributes } from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
@@ -12,17 +14,17 @@ export interface AlertActionsInterface {
   title: string;
   action?(): void;
   autoclose?: boolean;
-  style: 'cancel' | 'destructive' | 'default'
+  style: 'cancel' | 'destructive' | 'default';
 }
 
 export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren {
   actionsLayout?: 'vertical' | 'horizontal';
   actions?: AlertActionsInterface[];
-  onClose?(): void
+  onClose?(): void;
 }
 
 export interface AlertState {
-  closing: boolean
+  closing: boolean;
 }
 
 class Alert extends Component<AlertProps, AlertState> {
@@ -30,18 +32,18 @@ class Alert extends Component<AlertProps, AlertState> {
     super(props);
     this.element = React.createRef();
     this.state = {
-      closing: false
+      closing: false,
     };
   }
 
-  element: React.RefObject<HTMLDivElement>
+  element: React.RefObject<HTMLDivElement>;
 
   static defaultProps = {
     actionsLayout: 'horizontal',
-    actions: []
+    actions: [],
   };
 
-  onItemClick = item => () => {
+  onItemClick = (item) => () => {
     const { action, autoclose } = item;
 
     if (autoclose) {
@@ -62,9 +64,9 @@ class Alert extends Component<AlertProps, AlertState> {
     });
   };
 
-  stopPropagation = e => e.stopPropagation();
+  stopPropagation = (e) => e.stopPropagation();
 
-  waitTransitionFinish (eventHandler) {
+  waitTransitionFinish(eventHandler) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
@@ -75,7 +77,7 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
-  render () {
+  render() {
     const { actions, actionsLayout, children, className, style, platform, ...restProps } = this.props;
     const { closing } = this.state;
 
@@ -93,12 +95,12 @@ class Alert extends Component<AlertProps, AlertState> {
           className={classNames(getClassName('Alert', platform), {
             'Alert--v': actionsLayout === 'vertical',
             'Alert--h': actionsLayout === 'horizontal',
-            'Alert--closing': closing
+            'Alert--closing': closing,
           })}
         >
           <div className="Alert__content">{children}</div>
           <footer className="Alert__footer">
-            {actions.map((button, i) => (
+            {actions.map((button, i) =>
               <Tappable
                 component="button"
                 className={classNames('Alert__btn', `Alert__btn--${button.style}`)}
@@ -107,7 +109,7 @@ class Alert extends Component<AlertProps, AlertState> {
               >
                 <span dangerouslySetInnerHTML={{ __html: button.title }} />
               </Tappable>
-            ))}
+            )}
           </footer>
         </div>
       </PopoutWrapper>

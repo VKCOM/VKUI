@@ -13,14 +13,14 @@ export default class TabsItem extends React.Component {
     children: PropTypes.node,
     selected: PropTypes.bool,
     className: PropTypes.string,
-    after: PropTypes.node
+    after: PropTypes.node,
   };
 
   static defaultProps = {
-    selected: false
+    selected: false,
   };
 
-  render () {
+  render() {
     const { children, selected, className, after, ...restProps } = this.props;
 
     return (

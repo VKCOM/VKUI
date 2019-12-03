@@ -5,9 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface ScreenSpinnerProps extends SpinnerProps {}
-
-const ScreenSpinner: FunctionComponent<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
+const ScreenSpinner: FunctionComponent<SpinnerProps> = (props: SpinnerProps) => {
   const { style, className, ...restProps } = props;
   const platform = usePlatform();
 

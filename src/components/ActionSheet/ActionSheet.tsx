@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Children, Component } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
@@ -22,15 +24,15 @@ export interface ActionSheetProps extends HasStyleObject, HasChildren, HasClassN
 }
 
 export interface ActionSheetState {
-  closing: boolean
+  closing: boolean;
 }
 
 class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
-  state = {
-    closing: false
+  state: ActionSheetState = {
+    closing: false,
   };
 
-  el: HTMLDivElement
+  el: HTMLDivElement;
 
   onClose = () => {
     this.setState({ closing: true });
@@ -51,11 +53,11 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   };
 
-  getRef = el => this.el = el;
+  getRef = (el) => this.el = el;
 
-  stopPropagation = e => e.stopPropagation();
+  stopPropagation = (e) => e.stopPropagation();
 
-  waitTransitionFinish (eventHandler) {
+  waitTransitionFinish(eventHandler) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
@@ -66,7 +68,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   }
 
-  render () {
+  render() {
     const { children, className, title, text, style, insets, platform, ...restProps } = this.props;
 
     return (
@@ -83,7 +85,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
           ref={this.getRef}
           onClick={this.stopPropagation}
           className={classNames(getClassName('ActionSheet', platform), {
-            'ActionSheet--closing': this.state.closing
+            'ActionSheet--closing': this.state.closing,
           })}
         >
           {platform === IOS &&
@@ -92,12 +94,12 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
             {text && <div className="ActionSheet__text">{text}</div>}
           </header>
           }
-          {Children.toArray(children).map((child: React.ReactElement, index, arr) => (
+          {Children.toArray(children).map((child: React.ReactElement, index, arr) =>
             child && React.cloneElement(child, {
               onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
-              style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null
+              style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null,
             })
-          ))}
+          )}
         </div>
       </PopoutWrapper>
     );

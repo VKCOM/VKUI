@@ -18,7 +18,7 @@ type BannerData = {
   ctaText?: string;
   advertisingLabel?: string;
   iconLink?: string;
-  statistics?: { type: string; url: string }[];
+  statistics?: Array<{ type: string; url: string }>;
   openInBrowser?: boolean;
   iconHeight?: number;
   directLink?: boolean;
@@ -36,17 +36,17 @@ export interface PromoBannerProps {
   onClose: () => void;
 }
 
-const PromoBanner = (props: PromoBannerProps) => (
+const PromoBanner = (props: PromoBannerProps) =>
   <div className="PromoBanner">
     <div className="PromoBanner__head">
       {props.bannerData.ageRestriction && <span className="PromoBanner__age">14+</span>}
       <span className="PromoBanner__label">{props.bannerData.advertisingLabel || 'Advertisement'}</span>
 
-      {!props.isCloseButtonHidden && (
+      {!props.isCloseButtonHidden &&
         <div className="PromoBanner__close" onClick={props.onClose}>
           <Icon24Dismiss />
         </div>
-      )}
+      }
     </div>
     <a
       href={props.bannerData.trackingLink}
@@ -68,6 +68,6 @@ const PromoBanner = (props: PromoBannerProps) => (
       </div>
     </a>
   </div>
-);
+;
 
 export default PromoBanner;

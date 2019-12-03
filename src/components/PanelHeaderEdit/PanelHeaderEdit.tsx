@@ -9,15 +9,15 @@ export interface PanelHeaderEditProps extends HeaderButtonProps {
   /**
    * Включен ли режим редактирования
    */
-  isActive?: boolean,
+  isActive?: boolean;
   /**
    * iOS only. Текст кнопки, когда режим редактирования не активен
    */
-  editLabel?: string,
+  editLabel?: string;
   /**
    * iOS only. Текст кнопки при активном режиме редактирования для выхода из него
    */
-  doneLabel?: string
+  doneLabel?: string;
 }
 
 const PanelHeaderEdit: FunctionComponent<PanelHeaderEditProps> = ({
@@ -40,7 +40,7 @@ const PanelHeaderEdit: FunctionComponent<PanelHeaderEditProps> = ({
 PanelHeaderEdit.defaultProps = {
   isActive: false,
   editLabel: 'Редактировать',
-  doneLabel: 'Готово'
+  doneLabel: 'Готово',
 };
 
 export default PanelHeaderEdit;

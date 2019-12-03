@@ -1,8 +1,8 @@
 export interface OffsetRectInterface {
-  top: number,
-  left: number,
-  width: number,
-  height: number
+  top: number;
+  left: number;
+  width: number;
+  height: number;
 }
 
 export function getOffsetRect(elem: HTMLElement): OffsetRectInterface {
@@ -18,6 +18,6 @@ export function getOffsetRect(elem: HTMLElement): OffsetRectInterface {
     top: Math.round(box.top + scrollTop - clientTop),
     left: Math.round(box.left + scrollLeft - clientLeft),
     width: elem.offsetWidth,
-    height: elem.offsetHeight
+    height: elem.offsetHeight,
   };
 }

@@ -11,7 +11,7 @@ export interface CheckboxProps extends HTMLAttributes<HTMLInputElement>, HasRoot
   /**
    * @ignore
    */
-  disabled?: boolean
+  disabled?: boolean;
 }
 
 export const Checkbox: React.FunctionComponent<CheckboxProps> = ({

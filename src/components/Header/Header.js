@@ -11,7 +11,7 @@ const Header = ({ className, level, children, subtitle, indicator, aside, getRoo
       {...restProps}
       ref={getRootRef}
       className={classNames(baseClassNames, className, `Header--level-${level}`, {
-        'Header--pi': typeof indicator === 'string' || typeof indicator === 'number'
+        'Header--pi': typeof indicator === 'string' || typeof indicator === 'number',
       })}
     >
       <div className="Header__in">
@@ -36,12 +36,12 @@ Header.propTypes = {
   style: PropTypes.object,
   getRootRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.any })
-  ])
+    PropTypes.shape({ current: PropTypes.any }),
+  ]),
 };
 
 Header.defaultProps = {
-  level: 'primary'
+  level: 'primary',
 };
 
 export default Header;

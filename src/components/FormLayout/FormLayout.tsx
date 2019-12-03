@@ -1,10 +1,10 @@
-import React, { Children, FunctionComponent, HTMLAttributes, ReactElement, Fragment } from 'react';
+import React, { Children, FunctionComponent, HTMLAttributes, ReactElement, Fragment, FormEvent } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasChildren, HasRef } from '../../types/props';
 
-const preventDefault = e => e.preventDefault();
+const preventDefault = (e: FormEvent) => e.preventDefault();
 
 export interface FormLayoutProps extends HTMLAttributes<HTMLElement>, HasRef<HTMLElement>, HasChildren {
   TagName?: string;
@@ -27,11 +27,11 @@ const FormLayout: FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) 
     ...restProps,
     className: classNames(getClassName('FormLayout', platform), className),
     onSubmit,
-    ref: getRef
+    ref: getRef,
   },
   <Fragment>
     <div className="FormLayout__container">
-      {Children.toArray(children).map((field: ReactElement, i) => {
+      {Children.toArray(children).map((field: ReactElement, i: number) => {
         if (field) {
           const { status, top, bottom } = field.props;
 
@@ -50,15 +50,15 @@ const FormLayout: FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) 
         }
       })}
     </div>
-    {TagName === 'form' && (
+    {TagName === 'form' &&
       <input type="submit" className="FormLayout__submit" value="" />
-    )}
+    }
   </Fragment>);
 };
 
 FormLayout.defaultProps = {
   TagName: 'form',
-  onSubmit: preventDefault
+  onSubmit: preventDefault,
 };
 
 export default FormLayout;

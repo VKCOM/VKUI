@@ -10,7 +10,7 @@ export default class InnerScroll extends React.Component {
     className: PropTypes.string,
     children: PropTypes.node,
     style: PropTypes.object,
-    onScroll: PropTypes.func
+    onScroll: PropTypes.func,
   };
 
   onScroll = (e) => {
@@ -23,13 +23,13 @@ export default class InnerScroll extends React.Component {
     this.props.onScroll && this.props.onScroll(e);
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this.el.scrollTop = 1;
   }
 
-  ref = el => this.el = el;
+  ref = (el) => this.el = el;
 
-  render () {
+  render() {
     const { className, children, onScroll, ...restProps } = this.props;
 
     return (

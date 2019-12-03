@@ -11,12 +11,12 @@ export default class RangeSlider extends Slider {
   static propTypes = {
     ...Slider.propTypes,
     value: PropTypes.arrayOf(PropTypes.number),
-    defaultValue: PropTypes.arrayOf(PropTypes.number)
+    defaultValue: PropTypes.arrayOf(PropTypes.number),
   };
 
   static defaultProps = Slider.defaultProps;
 
-  onStart = e => {
+  onStart = (e) => {
     const absolutePosition = this.validateAbsolute(e.startX - this.state.containerLeft);
     const percentPosition = this.absoluteToPecent(absolutePosition);
     const percentRange = this.calcPercentRange(percentPosition);
@@ -28,7 +28,7 @@ export default class RangeSlider extends Slider {
     } else {
       this.setState({
         startX: absolutePosition,
-        ...percentRange
+        ...percentRange,
       });
     }
 
@@ -41,7 +41,7 @@ export default class RangeSlider extends Slider {
     }
   };
 
-  onMoveX = e => {
+  onMoveX = (e) => {
     const absolutePosition = this.validateAbsolute(this.state.startX + (e.shiftX || 0));
     const percentPosition = this.absoluteToPecent(absolutePosition);
     const percentRange = this.calcPercentRange(percentPosition);
@@ -55,7 +55,7 @@ export default class RangeSlider extends Slider {
     e.originalEvent.preventDefault();
   };
 
-  calcPercentRange (percent) {
+  calcPercentRange(percent) {
     const { percentStart, percentEnd } = this.state;
 
     if (percentStart === 100) {
@@ -69,25 +69,25 @@ export default class RangeSlider extends Slider {
     }
   }
 
-  validatePercent ({ percentStart, percentEnd }) {
+  validatePercent({ percentStart, percentEnd }) {
     return {
       percentStart: super.validatePercent(percentStart),
-      percentEnd: super.validatePercent(percentEnd)
+      percentEnd: super.validatePercent(percentEnd),
     };
   }
 
-  percentToValue ({ percentStart, percentEnd }) {
+  percentToValue({ percentStart, percentEnd }) {
     return [super.percentToValue(percentStart), super.percentToValue(percentEnd)];
   }
 
-  valueToPercent ([valueStart, valueEnd]) {
+  valueToPercent([valueStart, valueEnd]) {
     return {
       percentStart: super.valueToPercent(valueStart),
-      percentEnd: super.valueToPercent(valueEnd)
+      percentEnd: super.valueToPercent(valueEnd),
     };
   }
 
-  get value () {
+  get value() {
     if (this.isControlledOutside) {
       return this.props.value;
     } else if (this.props.hasOwnProperty('defaultValue')) {
@@ -97,20 +97,20 @@ export default class RangeSlider extends Slider {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('resize', this.onResize);
     this.onResize(() => {
       this.setState(this.validatePercent(this.valueToPercent(this.value)));
     });
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.isControlledOutside && nextProps.value !== this.props.value) {
       this.setState(this.validatePercent(this.valueToPercent(nextProps.value)));
     }
   }
 
-  render () {
+  render() {
     const { className, min, max, step, value, defaultValue, onChange, getRootRef, ...restProps } = this.props;
 
     return (
@@ -120,20 +120,20 @@ export default class RangeSlider extends Slider {
             className="Slider__dragger"
             style={{
               width: this.state.percentEnd - this.state.percentStart + '%',
-              left: this.state.percentStart + '%'
+              left: this.state.percentStart + '%',
             }}
           >
             <span
               className={classNames('Slider__thumb', 'Slider__thumb--start', {
-                'Slider__thumb--active': this.state.active === 'start'
+                'Slider__thumb--active': this.state.active === 'start',
               })}
-              ref={el => this.thumbStart = el}
+              ref={(el) => this.thumbStart = el}
             />
             <span
               className={classNames('Slider__thumb', 'Slider__thumb--end', {
-                'Slider__thumb--active': this.state.active === 'end'
+                'Slider__thumb--active': this.state.active === 'end',
               })}
-              ref={el => this.thumbEnd = el}
+              ref={(el) => this.thumbEnd = el}
             />
           </div>
         </Touch>

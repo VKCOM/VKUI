@@ -12,11 +12,11 @@ const List = ({ className, children, ...restProps }) => (
 List.propTypes = {
   style: PropTypes.object,
   children: PropTypes.node,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 List.defaultProps = {
   style: {},
-  children: ''
+  children: '',
 };
 
 export default List;

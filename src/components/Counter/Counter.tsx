@@ -9,8 +9,8 @@ export interface CounterProps extends HasChildren {
   /**
    * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
    */
-  type?: 'secondary' | 'primary' | 'prominent'
-  size?: 's' | 'm'
+  type?: 'secondary' | 'primary' | 'prominent';
+  size?: 's' | 'm';
 }
 
 const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => {
@@ -27,7 +27,7 @@ const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => 
 
 Counter.defaultProps = {
   type: 'secondary',
-  size: 'm'
+  size: 'm',
 };
 
 export default React.memo(Counter);
