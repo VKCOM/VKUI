@@ -5,6 +5,10 @@
   z-index: 3;
   }
 
+.FixedLayout--filled {
+  background: var(--background_content);
+}
+
 .FixedLayout--top {
   width: 100%;
   top: 0;
