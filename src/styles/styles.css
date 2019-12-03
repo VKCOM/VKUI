@@ -21,7 +21,6 @@
 @import '../components/TabbarItem/TabbarItem.css';
 @import '../components/FixedLayout/FixedLayout.css';
 @import '../components/HorizontalScroll/HorizontalScroll.css';
-@import '../components/InnerScroll/InnerScroll.css';
 
 /* Popouts */
 @import '../components/PopoutWrapper/PopoutWrapper.css';

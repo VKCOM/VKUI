@@ -3,7 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 
-interface InfoRowProps extends HTMLAttributes<HTMLDivElement> {
+export interface InfoRowProps extends HTMLAttributes<HTMLDivElement> {
   header: ReactNode;
 }
 

@@ -13,7 +13,6 @@ export { default as HeaderContext } from './components/HeaderContext/HeaderConte
 export { default as Epic } from './components/Epic/Epic';
 export { default as Tabbar } from './components/Tabbar/Tabbar';
 export { default as TabbarItem } from './components/TabbarItem/TabbarItem';
-export { default as InnerScroll } from './components/InnerScroll/InnerScroll';
 export { default as HorizontalScroll } from './components/HorizontalScroll/HorizontalScroll';
 export { default as FixedLayout } from './components/FixedLayout/FixedLayout';
 
