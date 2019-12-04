@@ -1,16 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
+import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-
 import transitionEvents from '../../lib/transitionEvents';
-import { IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { ANDROID } from '../../lib/platform';
+import withPlatform from '../../hoc/withPlatform';
+import { HasPlatform } from '../../types/props';
 
-const baseClassName = getClassName('Root');
+export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+  activeView: string;
+  onTransition(params: { isBack: boolean; from: string; to: string }): void;
+  popout: ReactNode;
+  modal: ReactNode;
+}
 
-export default class Root extends React.Component {
-  constructor(props) {
-    super();
+export type AnimationEndCallback = (e?: AnimationEvent) => void;
+
+export interface RootState {
+  activeView: string;
+  prevView: string;
+  nextView: string;
+  visibleViews: [string] | [string, string];
+  isBack: boolean;
+  scrolls: {
+    [index: string]: number;
+  };
+  transition: boolean;
+}
+
+export interface RootContext {
+  document: Requireable<object>;
+  window: Requireable<object>;
+}
+
+class Root extends Component<RootProps, RootState> {
+  constructor(props: RootProps) {
+    super(props);
 
     this.state = {
       activeView: props.activeView,
@@ -19,23 +44,15 @@ export default class Root extends React.Component {
       visibleViews: [props.activeView],
       isBack: undefined,
       scrolls: {},
+      transition: false,
     };
   }
 
-  static propTypes = {
-    className: PropTypes.string,
-    activeView: PropTypes.string.isRequired,
-    popout: PropTypes.node,
-    modal: PropTypes.node,
-    onTransition: PropTypes.func,
-    children: PropTypes.node,
-  };
-
-  static defaultProps = {
+  static defaultProps: Partial<RootProps> = {
     popout: null,
   };
 
-  static contextTypes = {
+  static contextTypes: RootContext = {
     window: PropTypes.any,
     document: PropTypes.any,
   };
@@ -52,14 +69,14 @@ export default class Root extends React.Component {
     return [].concat(this.props.children);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: RootProps, prevState: RootState) {
     if (this.props.popout && !prevProps.popout) {
       this.blurActiveElement();
     }
 
     if (this.props.activeView !== prevProps.activeView) {
       let pageYOffset = this.window.pageYOffset;
-      const firstLayerId = prevProps.children.find((view) => {
+      const firstLayerId = [].concat(prevProps.children).find((view: ReactElement) => {
         return view.props.id === prevProps.activeView || view.props.id === this.props.activeView;
       }).props.id;
       const isBack = firstLayerId === this.props.activeView;
@@ -96,24 +113,24 @@ export default class Root extends React.Component {
     }
   }
 
-  waitAnimationFinish(elem, eventHandler) {
+  waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEndCallback) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
 
       elem.removeEventListener(eventName, eventHandler);
       elem.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), IS_PLATFORM_ANDROID ? 300 : 600);
+      setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 300 : 600);
     }
   }
 
-  onAnimationEnd = (e = { manual: true }) => {
-    if ([
+  onAnimationEnd: AnimationEndCallback = (e?: AnimationEvent) => {
+    if (!e || [
       'root-android-animation-hide-back',
       'root-android-animation-show-forward',
       'root-ios-animation-hide-back',
       'root-ios-animation-show-forward',
-    ].indexOf(e.animationName) > -1 || e.manual) {
+    ].includes(e.animationName)) {
       const isBack = this.state.isBack;
       const prevView = this.state.prevView;
       const nextView = this.state.nextView;
@@ -125,7 +142,7 @@ export default class Root extends React.Component {
         transition: false,
         isBack: undefined,
       }, () => {
-        isBack ? this.window.scrollTo(0, this.state.scrolls[this.state.activeView]) : this.window.scrollTo(0, 0);
+        this.window.scrollTo(0, isBack ? this.state.scrolls[this.state.activeView] : 0);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevView, to: nextView });
       });
     }
@@ -138,27 +155,33 @@ export default class Root extends React.Component {
   }
 
   render() {
-    const { popout, modal } = this.props;
+    const { popout, modal, platform } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
-    let Views = this.arrayChildren.filter((View) => this.state.visibleViews.indexOf(View.props.id) >= 0);
+    const Views = this.arrayChildren.filter((view: ReactElement) => {
+      return this.state.visibleViews.includes(view.props.id);
+    });
+
+    const baseClassName = getClassName('Root', platform);
 
     return (
       <div className={classNames(baseClassName, this.props.className, { 'Root--transition': transition })}>
-        {Views.map((View) => (
-          <div key={View.props.id} id={`view-${View.props.id}`} className={classNames('Root__view', {
-            'Root__view--hide-back': View.props.id === prevView && isBack,
-            'Root__view--hide-forward': View.props.id === prevView && !isBack,
-            'Root__view--show-back': View.props.id === nextView && isBack,
-            'Root__view--show-forward': View.props.id === nextView && !isBack,
-            'Root__view--active': View.props.id === activeView,
+        {Views.map((view: ReactElement) =>
+          <div key={view.props.id} id={`view-${view.props.id}`} className={classNames('Root__view', {
+            'Root__view--hide-back': view.props.id === prevView && isBack,
+            'Root__view--hide-forward': view.props.id === prevView && !isBack,
+            'Root__view--show-back': view.props.id === nextView && isBack,
+            'Root__view--show-forward': view.props.id === nextView && !isBack,
+            'Root__view--active': view.props.id === activeView,
           })}>
-            {View}
+            {view}
           </div>
-        ))}
+        )}
         {!!popout && <div className="Root__popout">{popout}</div>}
         {!!modal && <div className="Root__modal">{modal}</div>}
       </div>
     );
   }
 }
+
+export default withPlatform(Root);
