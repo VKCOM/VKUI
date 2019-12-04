@@ -33,7 +33,7 @@ module.exports = {
       sections: [{
         name: 'Layout',
         components: () => [
-          '../src/components/Root/Root.js',
+          '../src/components/Root/Root.tsx',
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.tsx',
           '../src/components/PanelHeader/PanelHeader.tsx',
