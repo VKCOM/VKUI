@@ -1,6 +1,4 @@
-/* eslint-disable */
-
-import React, { Children, Component } from 'react';
+import React, { Children, Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -8,14 +6,14 @@ import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
-import { HasChildren, HasClassName, HasStyleObject, HasPlatform, HasInsets } from '../../types/props';
+import { HasPlatform, HasInsets } from '../../types/props';
 import { ANDROID, IOS } from '../../lib/platform';
 
-export interface ActionSheetProps extends HasStyleObject, HasChildren, HasClassName, HasPlatform, HasInsets {
+export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets {
   /**
    * iOS only
    */
-  title?: React.ReactNode;
+  header?: React.ReactNode;
   /**
    * iOS only
    */
@@ -27,19 +25,34 @@ export interface ActionSheetState {
   closing: boolean;
 }
 
+export type CloseCallback = () => void;
+
+export type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
+
+export type ActionType = (event: React.MouseEvent) => void;
+
+export type ItemClickHandler = (action: ActionType, autoclose: boolean) => (event: React.MouseEvent) => void;
+
+export type AnimationEndCallback = (e?: AnimationEvent) => void;
+
 class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
+  constructor(props: ActionSheetProps) {
+    super(props);
+    this.elRef = React.createRef();
+  }
+
   state: ActionSheetState = {
     closing: false,
   };
 
-  el: HTMLDivElement;
+  elRef: React.RefObject<HTMLDivElement>;
 
-  onClose = () => {
+  onClose: CloseCallback = () => {
     this.setState({ closing: true });
     this.waitTransitionFinish(this.props.onClose);
   };
 
-  onItemClick = (action, autoclose) => (event) => {
+  onItemClick: ItemClickHandler = (action: ActionType, autoclose: boolean) => (event: React.MouseEvent) => {
     event.persist();
 
     if (autoclose) {
@@ -53,23 +66,21 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   };
 
-  getRef = (el) => this.el = el;
+  stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
-  stopPropagation = (e) => e.stopPropagation();
-
-  waitTransitionFinish(eventHandler) {
+  waitTransitionFinish(eventHandler: AnimationEndCallback) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
-      this.el.removeEventListener(eventName, eventHandler);
-      this.el.addEventListener(eventName, eventHandler);
+      this.elRef.current.removeEventListener(eventName, eventHandler);
+      this.elRef.current.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 200 : 300);
+      setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
     }
   }
 
   render() {
-    const { children, className, title, text, style, insets, platform, ...restProps } = this.props;
+    const { children, className, header, text, style, insets, platform, ...restProps } = this.props;
 
     return (
       <PopoutWrapper
@@ -82,7 +93,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       >
         <div
           {...restProps}
-          ref={this.getRef}
+          ref={this.elRef}
           onClick={this.stopPropagation}
           className={classNames(getClassName('ActionSheet', platform), {
             'ActionSheet--closing': this.state.closing,
@@ -90,11 +101,11 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
         >
           {platform === IOS &&
           <header className="ActionSheet__header">
-            {title && <div className="ActionSheet__title">{title}</div>}
+            {header && <div className="ActionSheet__title">{header}</div>}
             {text && <div className="ActionSheet__text">{text}</div>}
           </header>
           }
-          {Children.toArray(children).map((child: React.ReactElement, index, arr) =>
+          {Children.toArray(children).map((child: React.ReactElement, index: number, arr: []) =>
             child && React.cloneElement(child, {
               onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
               style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null,

@@ -49,7 +49,7 @@ module.exports = {
       }, {
         name: 'Popouts',
         components: () => [
-          '../src/components/PopoutWrapper/PopoutWrapper.js',
+          '../src/components/PopoutWrapper/PopoutWrapper.tsx',
           '../src/components/ActionSheet/ActionSheet.tsx',
           '../src/components/ActionSheetItem/ActionSheetItem.tsx',
           '../src/components/Alert/Alert.tsx',
