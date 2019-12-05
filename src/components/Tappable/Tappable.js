@@ -1,7 +1,7 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Touch, { TouchRootContext } from '../Touch/Touch';
+import Touch from '../Touch/Touch';
+import TouchRootContext from '../Touch/TouchContext';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { IS_PLATFORM_ANDROID } from '../../lib/platform';

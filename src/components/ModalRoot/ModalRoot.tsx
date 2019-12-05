@@ -2,7 +2,8 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Touch, { TouchRootContext } from '../Touch/Touch';
+import Touch from '../Touch/Touch';
+import TouchRootContext from '../Touch/TouchContext';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';

@@ -503,7 +503,7 @@ class View extends Component<ViewProps, ViewState> {
 
     return (
       <Touch
-        component="section"
+        Component="section"
         className={classNames(getClassName('View', platform), this.props.className, modifiers)}
         style={style}
         onMoveX={this.onMoveX}

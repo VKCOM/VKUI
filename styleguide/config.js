@@ -88,9 +88,9 @@ module.exports = {
           '../src/components/Tooltip/Tooltip.js',
           '../src/components/PullToRefresh/PullToRefresh.js',
           '../src/components/Counter/Counter.tsx',
-          '../src/components/Touch/Touch.js',
+          '../src/components/Touch/Touch.tsx',
           '../src/components/UsersStack/UsersStack.tsx',
-          '../src/components/Separator/Separator.js',
+          '../src/components/Separator/Separator.tsx',
           '../src/components/Placeholder/Placeholder.tsx',
         ]
       }, {
