@@ -1,49 +1,57 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {
+  Component,
+  FormEvent,
+  FormEventHandler,
+  HTMLAttributes,
+  ReactNode,
+  FocusEvent,
+  FocusEventHandler,
+} from 'react';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import getClassname from '../../helpers/getClassName';
 import Icon16SearchOutline from '@vkontakte/icons/dist/16/search_outline';
 import { IOS } from '../../lib/platform';
+import { HasPlatform, HasRef } from '../../types/props';
 
 let searchId = 0;
 
-class Search extends React.Component {
-  static propTypes = {
-    /**
-     * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
-     */
-    after: PropTypes.node,
-    autoFocus: PropTypes.bool,
-    /**
-     * **Важно:** в коллбэк первым аргументом прилетает *значение* текстового поля.
-     * Объект события передается вторым аргументом.
-     */
-    onChange: PropTypes.func,
-    autoComplete: PropTypes.string,
-    className: PropTypes.string,
-    defaultValue: PropTypes.string,
-    value: PropTypes.string,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
-    placeholder: PropTypes.node,
-    getRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any }),
-    ]),
-    platform: PropTypes.string,
-  };
+export type InputRef = (element: HTMLInputElement) => void;
 
-  static defaultProps = {
+export type CancelHandler = () => void;
+
+export interface SearchProps extends HTMLAttributes<HTMLInputElement>, HasRef<HTMLInputElement>, HasPlatform {
+  /**
+   * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
+   */
+  after?: ReactNode;
+  autoFocus?: boolean;
+  autoComplete?: string;
+  value?: string;
+  defaultValue?: string;
+  placeholder?: string;
+}
+
+export interface SearchState {
+  value?: string;
+  focused?: boolean;
+}
+
+class Search extends Component<SearchProps, SearchState> {
+  static defaultProps: SearchProps = {
     autoComplete: 'off',
     placeholder: 'Поиск',
     after: 'Отмена',
   };
 
-  constructor(props) {
+  isControlledOutside: boolean;
+
+  inputEl: HTMLInputElement;
+
+  constructor(props: SearchProps) {
     super(props);
 
-    let state = {
+    const state: SearchState = {
       focused: false,
     };
 
@@ -60,36 +68,38 @@ class Search extends React.Component {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  onFocus = (e) => {
+  onFocus: FocusEventHandler = (e: FocusEvent<HTMLInputElement>) => {
     this.setState({ focused: true });
     this.props.onFocus && this.props.onFocus(e);
   };
 
-  onBlur = (e) => {
+  onBlur: FocusEventHandler = (e: FocusEvent<HTMLInputElement>) => {
     this.setState({ focused: false });
     this.props.onBlur && this.props.onBlur(e);
   };
 
-  onChange = (e) => {
+  onChange: FormEventHandler = (e?: FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
     if (!this.isControlledOutside) {
-      this.setState({ value: e.target.value });
+      this.setState({ value: target.value });
     }
     if (this.props.onChange) {
-      this.props.onChange(e.target.value, e);
+      this.props.onChange(e);
     }
   };
 
-  onCancel = () => {
-    if (!this.isControlledOutside) {
-      this.setState({ value: '' });
-    }
-    if (this.props.onChange) {
-      this.props.onChange('');
-    }
+  onCancel: CancelHandler = () => {
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    nativeInputValueSetter.call(this.inputEl, '');
+
+    const ev2 = new Event('input', { bubbles: true });
+    this.inputEl.dispatchEvent(ev2);
   };
 
-  inputRef = (element) => {
+  inputRef: InputRef = (element: HTMLInputElement) => {
     const getRef = this.props.getRef;
+    this.inputEl = element;
     if (getRef) {
       if (typeof getRef === 'function') {
         getRef(element);
@@ -117,8 +127,8 @@ class Search extends React.Component {
     return (
       <div className={classNames(getClassname('Search', platform), {
         'Search--focused': this.state.focused,
-        'Search--has-value': this.value,
-        'Search--has-after': after,
+        'Search--has-value': !!this.value,
+        'Search--has-after': !!after,
       }, className)}>
         <div className="Search__in">
           <div className="Search__width" />

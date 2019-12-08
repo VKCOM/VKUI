@@ -56,7 +56,7 @@
       this.onChange = this.onChange.bind(this);
     }
 
-    onChange (search) { this.setState({ search }); }
+    onChange (e) { this.setState({ search: e.target.value }); }
 
     get thematics () {
       const search = this.state.search.toLowerCase();
@@ -93,7 +93,7 @@
       this.onChange = this.onChange.bind(this);
     }
 
-    onChange (search) { this.setState({ search }); }
+    onChange (e) { this.setState({ search: e.target.value }); }
 
     get users () {
       const search = this.state.search.toLowerCase();
