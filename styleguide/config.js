@@ -77,7 +77,7 @@ module.exports = {
           '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.tsx',
-          '../src/components/Switch/Switch.js',
+          '../src/components/Switch/Switch.tsx',
           '../src/components/InfoRow/InfoRow.tsx',
           '../src/components/Avatar/Avatar.tsx',
           '../src/components/Gallery/Gallery.tsx',
