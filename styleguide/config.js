@@ -83,7 +83,7 @@ module.exports = {
           '../src/components/Gallery/Gallery.tsx',
           '../src/components/Progress/Progress.tsx',
           '../src/components/Search/Search.tsx',
-          '../src/components/Tabs/Tabs.js',
+          '../src/components/Tabs/Tabs.tsx',
           '../src/components/TabsItem/TabsItem.js',
           '../src/components/Tooltip/Tooltip.js',
           '../src/components/PullToRefresh/PullToRefresh.js',
