@@ -1,34 +1,84 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import Touch from '../Touch/Touch';
+import React, { PureComponent, RefObject } from 'react';
+import PropTypes, { Requireable } from 'prop-types';
+import Touch, { TouchProps, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import classNames from '../../lib/classNames';
-import { IS_PLATFORM_IOS, IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { IOS, ANDROID } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
+import withPlatform from '../../hoc/withPlatform';
+import { HasPlatform } from '../../types/props';
+import { canUseDOM } from '../../lib/dom';
 
-const baseClassName = getClassName('PullToRefresh');
+export interface PullToRefreshProps extends TouchProps, HasPlatform {
+  /**
+   * Будет вызвана для обновления контента
+   */
+  onRefresh(): void;
+  /**
+   * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`
+   */
+  isFetching?: boolean;
+}
 
-function cancelEvent(event) {
-  if (!event) {return false;}
-  while (event.originalEvent) {event = event.originalEvent;}
-  if (event.preventDefault) {event.preventDefault();}
-  if (event.stopPropagation) {event.stopPropagation();}
+export interface PullToRefreshState {
+  watching: boolean;
+  refreshing: boolean;
+  canRefresh: boolean;
+
+  touchDown: boolean;
+  refreshingFinished: boolean;
+
+  touchY: number;
+  spinnerY: PullToRefreshParams['start'];
+  spinnerProgress: number;
+  contentShift: number;
+}
+
+export interface PullToRefreshContext {
+  document: Requireable<{}>;
+  window: Requireable<{}>;
+}
+
+export interface PullToRefreshParams {
+  start: number;
+  max: number;
+  maxY: number;
+  refreshing: number;
+  positionMultiplier: number;
+}
+
+export type TouchEventHandler = (event: TouchEvent) => void;
+
+function cancelEvent(event: TouchEvent) {
+  if (!event) {
+    return false;
+  }
+  let originalEvent;
+  while (event.originalEvent) {
+    originalEvent = event.originalEvent;
+  }
+  if (originalEvent.preventDefault) {
+    originalEvent.preventDefault();
+  }
+  if (originalEvent.stopPropagation) {
+    originalEvent.stopPropagation();
+  }
   return false;
 }
 
-export default class PullToRefresh extends PureComponent {
-  constructor(props) {
+class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState> {
+  constructor(props: PullToRefreshProps) {
     super(props);
 
     this.params = {
-      start: IS_PLATFORM_ANDROID ? -45 : -10,
-      max: IS_PLATFORM_ANDROID ? 80 : 50,
-      maxY: IS_PLATFORM_ANDROID ? 80 : 400,
-      refreshing: IS_PLATFORM_ANDROID ? 50 : 36,
+      start: props.platform === ANDROID ? -45 : -10,
+      max: props.platform === ANDROID ? 80 : 50,
+      maxY: props.platform === ANDROID ? 80 : 400,
+      refreshing: props.platform === ANDROID ? 50 : 36,
 
-      positionMultiplier: IS_PLATFORM_ANDROID ? 1 : 0.21,
+      positionMultiplier: props.platform === ANDROID ? 1 : 0.21,
     };
 
     this.state = {
@@ -48,22 +98,11 @@ export default class PullToRefresh extends PureComponent {
     this.contentRef = React.createRef();
   }
 
-  static propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
+  params: PullToRefreshParams;
 
-    /**
-     * Будет вызвана для обновления контента
-     */
-    onRefresh: PropTypes.func.isRequired,
+  contentRef: RefObject<HTMLDivElement>;
 
-    /**
-     * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`
-     */
-    isFetching: PropTypes.bool,
-  };
-
-  static contextTypes = {
+  static contextTypes: PullToRefreshContext = {
     window: PropTypes.any,
     document: PropTypes.any,
   };
@@ -77,33 +116,39 @@ export default class PullToRefresh extends PureComponent {
   }
 
   componentDidMount() {
-    this.document.addEventListener('touchmove', this.onWindowTouchMove, { cancelable: true, passive: false });
+    if (canUseDOM) {
+      this.document.addEventListener('touchmove', this.onWindowTouchMove, {
+        cancelable: true,
+        passive: false,
+      });
+    }
   }
 
   componentWillUnmount() {
     this.document.removeEventListener('touchmove', this.onWindowTouchMove);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: PullToRefreshProps) {
     if (prevProps.isFetching && !this.props.isFetching) {
       this.onRefreshingFinish();
     }
   }
 
-  get scrollTop() {
-    return this.document.scrollingElement.scrollTop;
-  }
-
-  onTouchStart = (e) => {
-    if (this.state.refreshing) {cancelEvent(e);}
+  onTouchStart: TouchEventHandler = (e: TouchEvent) => {
+    if (this.state.refreshing) {
+      cancelEvent(e);
+    }
     this.setState({ touchDown: true });
   };
 
-  onWindowTouchMove = (e) => {
-    if (this.state.refreshing) {cancelEvent(e);}
+  onWindowTouchMove: EventListener = (event: Event) => {
+    if (this.state.refreshing) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
   };
 
-  onTouchMove = (e) => {
+  onTouchMove: TouchEventHandler = (e: TouchEvent) => {
     const { isY, shiftY } = e;
     const { start, max } = this.params;
     const pageYOffset = this.window.pageYOffset;
@@ -117,7 +162,7 @@ export default class PullToRefresh extends PureComponent {
 
       const shift = Math.max(0, shiftY - this.state.touchY);
 
-      const currentY = Math.max(start, Math.min(this.params.maxY, start + (shift * positionMultiplier)));
+      const currentY = Math.max(start, Math.min(this.params.maxY, start + shift * positionMultiplier));
       const progress = currentY > -10 ? Math.abs((currentY + 10) / max) * 80 : 0;
 
       this.setState({
@@ -127,7 +172,7 @@ export default class PullToRefresh extends PureComponent {
         contentShift: (currentY + 10) * 2.3,
       });
 
-      if (progress > 85 && !refreshing && IS_PLATFORM_IOS) {
+      if (progress > 85 && !refreshing && this.props.platform === IOS) {
         this.runRefreshing();
       }
     } else if (isY && pageYOffset === 0 && shiftY > 0 && !refreshing && touchDown) {
@@ -142,7 +187,7 @@ export default class PullToRefresh extends PureComponent {
     }
   };
 
-  onTouchEnd = () => {
+  onTouchEnd: VoidFunction = () => {
     const { refreshing, canRefresh, refreshingFinished } = this.state;
 
     this.setState({
@@ -167,20 +212,20 @@ export default class PullToRefresh extends PureComponent {
     if (!this.state.refreshing && this.props.onRefresh) {
       this.setState({
         refreshing: true,
-        spinnerY: IS_PLATFORM_ANDROID ? this.params.refreshing : this.state.spinnerY,
+        spinnerY: this.props.platform === ANDROID ? this.params.refreshing : this.state.spinnerY,
       });
 
       this.props.onRefresh();
     }
   }
 
-  onRefreshingFinish = () => {
+  onRefreshingFinish: VoidFunction = () => {
     this.setState({
       refreshingFinished: true,
     }, () => {
       !this.state.touchDown && this.resetRefreshingState();
     });
-  }
+  };
 
   resetRefreshingState() {
     this.setState({
@@ -195,11 +240,17 @@ export default class PullToRefresh extends PureComponent {
   }
 
   render() {
-    const { children, className, onRefresh, isFetching, ...restProps } = this.props;
+    const { children, className, onRefresh, isFetching, platform, ...restProps } = this.props;
     const { watching, refreshing, spinnerY, spinnerProgress, canRefresh, touchDown, contentShift } = this.state;
 
     const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
-    const contentTransform = refreshing && !touchDown && IS_PLATFORM_IOS ? `translate3d(0, 100px, 0)` : IS_PLATFORM_IOS && contentShift ? `translate3d(0, ${contentShift}px, 0)` : '';
+    let contentTransform = '';
+
+    if (platform === IOS && refreshing && !touchDown) {
+      contentTransform = 'translate3d(0, 100px, 0)';
+    } else if (platform === IOS && contentShift) {
+      contentTransform = `translate3d(0, ${contentShift}px, 0)`;
+    }
 
     return (
       <TouchRootContext.Provider value={true}>
@@ -208,7 +259,7 @@ export default class PullToRefresh extends PureComponent {
           onStart={this.onTouchStart}
           onMove={this.onTouchMove}
           onEnd={this.onTouchEnd}
-          className={classNames(baseClassName, className, {
+          className={classNames(getClassName('PullToRefresh', platform), className, {
             'PullToRefresh--watching': watching,
             'PullToRefresh--refreshing': refreshing,
           })}
@@ -240,3 +291,5 @@ export default class PullToRefresh extends PureComponent {
     );
   }
 }
+
+export default withPlatform(PullToRefresh);

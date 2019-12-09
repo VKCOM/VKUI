@@ -1,13 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 
-function calcStrokeDashOffset(value, radius) {
+function calcStrokeDashOffset(value: number, radius: number) {
   const progress = value / 100;
   return 2 * Math.PI * radius * (1 - progress);
 }
 
-const PullToRefreshSpinner = React.memo(({ on, progress, size, strokeWidth, style }) => {
+export interface PullToRefreshSpinnerProps extends HTMLAttributes<HTMLDivElement> {
+  size?: number;
+  strokeWidth?: number;
+  on?: boolean;
+  progress?: number;
+}
+
+const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
+  on,
+  progress,
+  size,
+  strokeWidth,
+  style,
+}: PullToRefreshSpinnerProps) => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
   const dasharray = 2 * Math.PI * radius;
   const circleCenter = 0.5 * size;
@@ -52,14 +64,6 @@ const PullToRefreshSpinner = React.memo(({ on, progress, size, strokeWidth, styl
       </svg>
     </div>
   );
-});
-
-PullToRefreshSpinner.propTypes = {
-  size: PropTypes.number,
-  strokeWidth: PropTypes.number,
-  on: PropTypes.bool,
-  progress: PropTypes.number,
-  style: PropTypes.object,
 };
 
 PullToRefreshSpinner.defaultProps = {
@@ -69,4 +73,4 @@ PullToRefreshSpinner.defaultProps = {
   progress: null,
 };
 
-export default PullToRefreshSpinner;
+export default React.memo(PullToRefreshSpinner);

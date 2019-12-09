@@ -86,7 +86,7 @@ module.exports = {
           '../src/components/Tabs/Tabs.tsx',
           '../src/components/TabsItem/TabsItem.js',
           '../src/components/Tooltip/Tooltip.js',
-          '../src/components/PullToRefresh/PullToRefresh.js',
+          '../src/components/PullToRefresh/PullToRefresh.tsx',
           '../src/components/Counter/Counter.tsx',
           '../src/components/Touch/Touch.tsx',
           '../src/components/UsersStack/UsersStack.tsx',
