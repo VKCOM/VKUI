@@ -1,4 +1,5 @@
 export interface VKUITouchEvent extends MouseEvent, TouchEvent {}
+export type VKUITouchEventHander = (e: VKUITouchEvent) => void;
 
 /*
  * Получает кординату по оси абсцисс из touch- или mouse-события

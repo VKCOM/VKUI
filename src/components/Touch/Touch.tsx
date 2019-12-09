@@ -1,19 +1,27 @@
 import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
-import { getSupportedEvents, coordX, coordY, touchEnabled, VKUITouchEvent } from '../../lib/touch';
+import {
+  getSupportedEvents,
+  coordX,
+  coordY,
+  touchEnabled,
+  VKUITouchEvent,
+  VKUITouchEventHander,
+} from '../../lib/touch';
 import { HasRootRef } from '../../types/props';
 import { canUseDOM } from '../../lib/dom';
+import { GetRef } from '../../types/common';
 
 export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
-  onStart?(outputEvent: OutputEvent): void;
-  onStartX?(outputEvent: OutputEvent): void;
-  onStartY?(outputEvent: OutputEvent): void;
-  onMove?(outputEvent: OutputEvent): void;
-  onMoveX?(outputEvent: OutputEvent): void;
-  onMoveY?(outputEvent: OutputEvent): void;
-  onEnd?(outputEvent: OutputEvent): void;
-  onEndX?(outputEvent: OutputEvent): void;
-  onEndY?(outputEvent: OutputEvent): void;
+  onStart?(outputEvent: TouchEvent): void;
+  onStartX?(outputEvent: TouchEvent): void;
+  onStartY?(outputEvent: TouchEvent): void;
+  onMove?(outputEvent: TouchEvent): void;
+  onMoveX?(outputEvent: TouchEvent): void;
+  onMoveY?(outputEvent: TouchEvent): void;
+  onEnd?(outputEvent: TouchEvent): void;
+  onEndX?(outputEvent: TouchEvent): void;
+  onEndY?(outputEvent: TouchEvent): void;
   useCapture?: boolean;
   Component?: ElementType;
 }
@@ -38,14 +46,13 @@ export interface Gesture {
   shiftYAbs?: number;
 }
 
-export interface OutputEvent extends Gesture {
+export interface TouchEvent extends Gesture {
   originalEvent: VKUITouchEvent;
 }
 
-export type EventHandler = (e: VKUITouchEvent) => void;
+export type TouchEventHandler = (e: TouchEvent) => void;
 export type ClickHandler = (e: MouseEvent<HTMLElement>) => void;
 export type DragHandler = (e: DragEvent<HTMLElement>) => void;
-export type GetRef = (container: HTMLElement) => void;
 
 const events = getSupportedEvents();
 
@@ -91,7 +98,7 @@ export default class Touch extends Component<TouchProps> {
    * @param {Object} e Браузерное событие
    * @return {void}
    */
-  onStart: EventHandler = (e: VKUITouchEvent) => {
+  onStart: VKUITouchEventHander = (e: VKUITouchEvent) => {
     this.gesture = {
       startX: coordX(e),
       startY: coordY(e),
@@ -126,7 +133,7 @@ export default class Touch extends Component<TouchProps> {
    * @param {Object} e Браузерное событие
    * @return {void}
    */
-  onMove: EventHandler = (e: VKUITouchEvent) => {
+  onMove: VKUITouchEventHander = (e: VKUITouchEvent) => {
     const { isPressed, isX, isY, startX, startY } = this.gesture;
 
     if (isPressed) {
@@ -164,7 +171,7 @@ export default class Touch extends Component<TouchProps> {
         this.gesture.shiftYAbs = shiftYAbs;
 
         // Вызываем нужные колбеки из props
-        const outputEvent: OutputEvent = {
+        const outputEvent: TouchEvent = {
           ...this.gesture,
           originalEvent: e,
         };
@@ -190,12 +197,12 @@ export default class Touch extends Component<TouchProps> {
    * @param {Object} e Браузерное событие
    * @return {void}
    */
-  onEnd: EventHandler = (e: VKUITouchEvent) => {
+  onEnd: VKUITouchEventHander = (e: VKUITouchEvent) => {
     const { isPressed, isSlide, isSlideX, isSlideY } = this.gesture;
 
     if (isPressed) {
       // Вызываем нужные колбеки из props
-      const outputEvent: OutputEvent = {
+      const outputEvent: TouchEvent = {
         ...this.gesture,
         originalEvent: e,
       };
