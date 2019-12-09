@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import usePlatform from '../../hooks/usePlatform';
-import { HasChildren, HasClassName, HasStyleObject } from '../../types/props';
 
-export interface ActionSheetItemProps extends HasClassName, HasChildren, HasStyleObject {
+export interface ActionSheetItemProps extends HTMLAttributes<HTMLElement> {
   theme?: 'default' | 'destructive' | 'cancel';
   before?: React.ReactNode;
   // meta?: React.ReactNode,
   // subtitle?: React.ReactNode,
-  onClick?(): void;
   autoclose?: boolean;
 }
 
