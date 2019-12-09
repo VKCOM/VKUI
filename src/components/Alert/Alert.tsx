@@ -102,7 +102,7 @@ class Alert extends Component<AlertProps, AlertState> {
           <footer className="Alert__footer">
             {actions.map((button, i) =>
               <Tappable
-                component="button"
+                Component="button"
                 className={classNames('Alert__btn', `Alert__btn--${button.style}`)}
                 onClick={this.onItemClick(button)}
                 key={`alert-action-${i}`}

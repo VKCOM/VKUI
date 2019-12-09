@@ -38,7 +38,7 @@
     </Group>
     <Separator />
     <Group header={<Header mode="secondary">В переключателях</Header>}>
-      <Tabs type="buttons">
+      <Tabs mode="buttons">
         <HorizontalScroll>
           <TabsItem after={<Counter size="s">8</Counter>}>
             Все

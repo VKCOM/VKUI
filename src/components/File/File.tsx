@@ -22,7 +22,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
     <Button
       align={align}
       className={classNames(getClassName('File', platform), className)}
-      component="label"
+      Component="label"
       stretched={stretched}
       level={level}
       size={size}

@@ -294,7 +294,7 @@ class Cell extends Component<CellProps, CellState> {
         <Tappable
           {...linkProps}
           onClick={href ? this.onClick : null}
-          component={selectable ? 'label' : href ? 'a' : 'div'}
+          Component={selectable ? 'label' : href ? 'a' : 'div'}
           className="Cell__in"
           href={href}
           disabled={(!selectable && !onClick && !href || removable || draggable)}

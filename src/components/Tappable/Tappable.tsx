@@ -1,29 +1,62 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Touch from '../Touch/Touch';
+import React, { Component, ElementType, HTMLAttributes } from 'react';
+import Touch, { TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
-import { coordX, coordY } from '../../lib/touch';
+import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
+import { HasPlatform, HasRootRef, OldRef, RefWithCurrent } from '../../types/props';
+import { GetRef } from '../../types/common';
+
+export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
+  Component: ElementType;
+  activeEffectDelay?: number;
+  disabled?: boolean;
+  stopPropagation?: boolean;
+  href?: string;
+}
+
+export interface TappableState {
+  clicks?: {
+    [index: string]: {
+      x: number;
+      y: number;
+    };
+  };
+  active?: boolean;
+  ts?: number;
+}
+
+export interface RootComponentProps extends TouchProps {
+  ref?: OldRef<HTMLElement> | RefWithCurrent<HTMLElement>;
+}
+
+export interface StorageItem {
+  activeTimeout: number;
+  timeout?: number;
+  stop(): void;
+}
+
+export interface Storage {
+  [index: string]: StorageItem;
+}
+
+export type GetStorage = () => StorageItem;
 
 const ts = () => +Date.now();
 const baseClassNames = getClassName('Tappable');
 
-const ACTIVE_DELAY = 70;
+export const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
 
-let storage = {};
+let storage: Storage = {};
 
-/**
+/*
  * Очищает таймауты и хранилище для всех экземпляров компонента, кроме переданного
- *
- * @param {String} exclude ID экземпляра-исключения
- * @return {void}
  */
-function deactivateOtherInstances(exclude) {
-  Object.keys(storage).filter((id) => id !== exclude).forEach((id) => {
+function deactivateOtherInstances(exclude?: string) {
+  Object.keys(storage).filter((id: string) => id !== exclude).forEach((id: string) => {
     clearTimeout(storage[id].activeTimeout);
     clearTimeout(storage[id].timeout);
     storage[id].stop();
@@ -32,8 +65,8 @@ function deactivateOtherInstances(exclude) {
   });
 }
 
-export default class Tappable extends Component {
-  constructor(props) {
+export default class Tappable extends Component<TappableProps, TappableState> {
+  constructor(props: TappableProps) {
     super(props);
     this.id = Math.round(Math.random() * 1e8).toString(16);
     this.state = {
@@ -41,62 +74,53 @@ export default class Tappable extends Component {
       active: false,
       ts: null,
     };
+    this.isSlide = false;
   }
 
-  static propTypes = {
-    onClick: PropTypes.func,
-    className: PropTypes.string,
-    children: PropTypes.node,
-    component: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element,
-    ]),
-    role: PropTypes.string,
-    activeEffectDelay: PropTypes.number,
-    stopPropagation: PropTypes.bool,
-    disabled: PropTypes.bool,
-    getRootRef: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.shape({ current: PropTypes.any }),
-    ]),
-  };
+  id: string;
 
-  static defaultProps = {
-    component: 'div',
+  isSlide: boolean;
+
+  insideTouchRoot: boolean;
+
+  container: HTMLElement;
+
+  timeout: number;
+
+  wavesTimeout: number;
+
+  static defaultProps: TappableProps = {
+    Component: 'div',
     role: 'button',
     stopPropagation: false,
     disabled: false,
     activeEffectDelay: ACTIVE_EFFECT_DELAY,
   };
 
-  isSlide = false;
-
-  /**
+  /*
    * Обрабатывает событие touchstart
-   *
-   * @return {void}
    */
-  onStart = ({ originalEvent }) => {
+  onStart: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     if (originalEvent.touches && originalEvent.touches.length > 1) {
-      return deactivateOtherInstances();
+      deactivateOtherInstances();
+      return;
     }
 
-    if (IS_PLATFORM_ANDROID) {
+    if (this.props.platform === ANDROID) {
       this.onDown(originalEvent);
     }
 
-    storage[this.id] = {};
-    this.getStorage().stop = this.stop;
-    this.getStorage().activeTimeout = setTimeout(this.start, ACTIVE_DELAY);
+    storage[this.id] = {
+      stop: this.stop,
+      activeTimeout: window.setTimeout(this.start, ACTIVE_DELAY),
+    };
   };
 
-  /**
+  /*
    * Обрабатывает событие touchmove
-   *
-   * @return {void}
    */
-  onMove = ({ originalEvent, shiftXAbs, shiftYAbs }) => {
+  onMove: TouchEventHandler = ({ originalEvent, shiftXAbs, shiftYAbs }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     if (shiftXAbs > 20 || shiftYAbs > 20) {
       this.isSlide = true;
@@ -104,12 +128,10 @@ export default class Tappable extends Component {
     }
   };
 
-  /**
+  /*
    * Обрабатывает событие touchend
-   *
-   * @return {void}
    */
-  onEnd = ({ originalEvent }) => {
+  onEnd: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     const now = ts();
 
@@ -124,7 +146,7 @@ export default class Tappable extends Component {
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - now + this.state.ts);
+        const timeout = window.setTimeout(this.stop, this.props.activeEffectDelay - now + this.state.ts);
         const store = this.getStorage();
 
         if (store) {
@@ -135,7 +157,7 @@ export default class Tappable extends Component {
       // Очень короткий тап, включаем подсветку
       this.start();
 
-      const timeout = setTimeout(this.stop, this.props.activeEffectDelay);
+      const timeout = window.setTimeout(this.stop, this.props.activeEffectDelay);
 
       if (this.getStorage()) {
         clearTimeout(this.getStorage().activeTimeout);
@@ -151,25 +173,27 @@ export default class Tappable extends Component {
   /*
    * Реализует эффект при тапе для Андроида
    */
-  onDown = (e) => {
-    if (IS_PLATFORM_ANDROID) {
+  onDown: VKUITouchEventHander = (e: VKUITouchEvent) => {
+    if (this.props.platform === ANDROID) {
       const { top, left } = getOffsetRect(this.container);
       const x = coordX(e);
       const y = coordY(e);
       const key = 'wave' + Date.now().toString();
 
-      this.setState((state) => ({
-        clicks: {
-          ...state.clicks,
-          [key]: {
-            x: Math.round(x - left),
-            y: Math.round(y - top),
+      this.setState((state: TappableState): TappableState => {
+        return {
+          clicks: {
+            ...state.clicks,
+            [key]: {
+              x: Math.round(x - left),
+              y: Math.round(y - top),
+            },
           },
-        },
-      }));
+        };
+      });
 
-      this.wavesTimeout = setTimeout(() => {
-        this.setState((state) => {
+      this.wavesTimeout = window.setTimeout(() => {
+        this.setState((state: TappableState): TappableState => {
           let clicks = { ...state.clicks };
           delete clicks[key];
           return { clicks };
@@ -178,12 +202,10 @@ export default class Tappable extends Component {
     }
   };
 
-  /**
+  /*
    * Устанавливает активное выделение
-   *
-   * @return {void}
    */
-  start = () => {
+  start: VoidFunction = () => {
     if (!this.state.active) {
       this.setState({
         active: true,
@@ -193,12 +215,10 @@ export default class Tappable extends Component {
     deactivateOtherInstances(this.id);
   };
 
-  /**
+  /*
    * Снимает активное выделение
-   *
-   * @return {void}
    */
-  stop = () => {
+  stop: VoidFunction = () => {
     if (this.state.active) {
       this.setState({
         active: false,
@@ -211,21 +231,17 @@ export default class Tappable extends Component {
     }
   };
 
-  /**
+  /*
    * Возвращает хранилище для экземпляра компонента
-   *
-   * @return {Object} Хранилище для текущего экземпляра компонента
    */
-  getStorage = () => {
+  getStorage: GetStorage = () => {
     return storage[this.id];
   };
 
-  /**
+  /*
    * Берет ref на DOM-ноду из экземпляра Touch
-   *
-   * @param {React.Component} container Touch component instance
    */
-  getRef = (container) => {
+  getRef: GetRef = (container: HTMLElement) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;
@@ -251,44 +267,44 @@ export default class Tappable extends Component {
 
   render() {
     const { clicks, active } = this.state;
-    const { children, className, component, activeEffectDelay, stopPropagation, getRootRef, ...restProps } = this.props;
-    const Component = !restProps.disabled ? Touch : component;
+    const { children, className, Component, activeEffectDelay,
+      stopPropagation, getRootRef, platform, ...restProps } = this.props;
+
     const classes = classNames(baseClassNames, className, {
       'Tappable--active': active,
       'Tappable--inactive': !active,
     });
 
-    let props = {};
-
+    const RootComponent = !restProps.disabled ? Touch : Component;
+    let props: RootComponentProps = {};
     if (!restProps.disabled) {
-      props.component = component;
+      props.Component = Component;
+      /* eslint-disable */
       props.onStart = this.onStart;
       props.onMove = this.onMove;
       props.onEnd = this.onEnd;
-    }
-
-    if (typeof Component === 'string') {
-      props.ref = this.getRef;
-    } else {
+      /* eslint-enable */
       props.getRootRef = this.getRef;
+    } else {
+      props.ref = this.getRef;
     }
 
     return (
       <TouchRootContext.Consumer>
-        {(insideTouchRoot) => {
+        {(insideTouchRoot: boolean) => {
           this.insideTouchRoot = insideTouchRoot;
 
           return (
-            <Component {...restProps} className={classes} {...props}>
-              {IS_PLATFORM_ANDROID && (
-                <span className="Tappable__waves">
-                  {Object.keys(clicks).map((k) => (
-                    <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
-                  ))}
-                </span>
-              )}
+            <RootComponent {...restProps} className={classes} {...props}>
+              {platform === ANDROID &&
+              <span className="Tappable__waves">
+                {Object.keys(clicks).map((k: string) =>
+                  <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                )}
+              </span>
+              }
               {children}
-            </Component>
+            </RootComponent>
           );
         }}
       </TouchRootContext.Consumer>

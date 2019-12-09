@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode, ComponentType } from 'react';
+import React, { FunctionComponent, HTMLAttributes, ReactNode, ElementType } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
@@ -12,7 +12,7 @@ export interface ButtonProps extends HTMLAttributes<HTMLElement>, HasChildren, H
   stretched?: boolean;
   before?: ReactNode;
   after?: ReactNode;
-  component?: string | ComponentType;
+  Component?: ElementType;
   stopPropagation?: boolean;
   /**
    * @ignore
@@ -40,7 +40,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
 
 Button.defaultProps = {
   level: 'primary',
-  component: 'button',
+  Component: 'button',
   size: 'm',
   stretched: false,
   stopPropagation: true,

@@ -25,7 +25,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
 
   return (
     <Tappable
-      component="label"
+      Component="label"
       className={classNames(getClassName('Checkbox', platform), className)}
       style={style}
       disabled={restProps.disabled}

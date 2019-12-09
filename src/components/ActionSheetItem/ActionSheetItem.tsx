@@ -29,7 +29,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
       className={
         classNames(getClassName('ActionSheetItem', platform), className, `ActionSheetItem--${theme}`)
       }
-      component={theme === 'cancel' ? 'span' : 'div'}
+      Component={theme === 'cancel' ? 'span' : 'div'}
     >
       {before && <div className="ActionSheetItem__before">{before}</div>}
       <div className="ActionSheetItem__container">

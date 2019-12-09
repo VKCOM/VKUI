@@ -20,13 +20,13 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
   ...restProps
 }: HeaderButtonProps) => {
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
-  const component = restProps.href ? 'a' : 'button';
+  const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
 
   return (
     <Tappable
       {...restProps}
-      component={component}
+      Component={Component}
       activeEffectDelay={200}
       className={classNames(
         getClassName('HeaderButton', platform),

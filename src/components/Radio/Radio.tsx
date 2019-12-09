@@ -23,7 +23,7 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
 
   return (
     <Tappable
-      component="label"
+      Component="label"
       style={style}
       className={classNames(baseClassName, className)}
       activeEffectDelay={platform === OS.IOS ? 100 : ACTIVE_EFFECT_DELAY}
