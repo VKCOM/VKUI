@@ -158,7 +158,7 @@
             >
               Кнопки
             </PanelHeader>
-            <Tabs type="buttons">
+            <Tabs mode="buttons">
               <TabsItem
                 onClick={() => this.setState({ activeTab4: 'all' })}
                 selected={this.state.activeTab4 === 'all'}
@@ -182,7 +182,7 @@
             >
               <Search />
             </PanelHeader>
-            <Tabs type="segmented">
+            <Tabs mode="segmented">
               <TabsItem
                 onClick={() => this.setState({ activeTab5: 'all' })}
                 selected={this.state.activeTab5 === 'all'}
