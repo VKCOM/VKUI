@@ -104,6 +104,7 @@ export { default as withPlatform } from './hoc/withPlatform';
 /**
  * Hooks
  */
+export { default as useInsets } from './hooks/useInsets';
 export { default as usePlatform } from './hooks/usePlatform';
 
 /**
