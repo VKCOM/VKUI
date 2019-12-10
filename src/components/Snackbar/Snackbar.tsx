@@ -178,6 +178,8 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
           this.setBodyTransform(0);
         };
       }
+    } else {
+      this.setCloseTimeout();
     }
 
     this.setState(newState, callback);
