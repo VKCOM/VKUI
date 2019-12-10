@@ -15,21 +15,21 @@ export interface SnackbarProps extends HasChildren, HasClassName, HasPlatform {
   /**
    * Название кнопки действия в уведомлении
    */
-  action?: string | React.ComponentType,
+  action?: string | React.ComponentType;
 
   /**
    * Будет вызвано при клике на кнопку действия
    */
-  onActionClick?: (e: Event) => {},
+  onActionClick?: (e: Event) => {};
 
   /**
    * Цветная иконка 24x24 пикселя
    */
-  before?: React.ComponentType,
+  before?: React.ComponentType;
   /**
    * Контент в правой части, может быть `<Avatar size={32} />`
    */
-  after?: React.ComponentType,
+  after?: React.ComponentType;
   /**
    * Варианты расположения кнопки
    */
@@ -37,11 +37,11 @@ export interface SnackbarProps extends HasChildren, HasClassName, HasPlatform {
   /**
    * Время в миллисекундах, через которое плашка скроется
    */
-  duration?: number,
+  duration?: number;
   /**
    * Обработчик закрытия уведомления
    */
-  onClose: () => {}
+  onClose: () => {};
 }
 
 export interface SnackbarState {
@@ -176,6 +176,8 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
           this.setBodyTransform(0);
         };
       }
+    } else {
+      this.setCloseTimeout();
     }
 
     this.setState(newState, callback);
