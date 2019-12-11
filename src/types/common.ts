@@ -1,1 +1,1 @@
-export type GetRef = (element: HTMLElement) => void;
+export type GetRef<T = HTMLElement> = (element: T) => void;
