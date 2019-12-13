@@ -6,7 +6,7 @@ import usePlatform from '../../hooks/usePlatform';
 import { HasChildren } from '../../types/props';
 
 export interface CellButtonProps extends React.HTMLAttributes<HTMLElement>, HasChildren {
-  level?: 'primary' | 'danger';
+  mode?: 'primary' | 'danger';
   align?: 'left' | 'center' | 'right';
   before?: React.ReactNode;
   component?: string | React.ComponentType;
@@ -16,7 +16,7 @@ export interface CellButtonProps extends React.HTMLAttributes<HTMLElement>, HasC
 const CellButton: React.FunctionComponent<CellButtonProps> = ({
   className,
   align,
-  level,
+  mode,
   before,
   children,
   stopPropagation,
@@ -30,7 +30,7 @@ const CellButton: React.FunctionComponent<CellButtonProps> = ({
       className={classNames(
         getClassName('CellButton', platform),
         className,
-        `CellButton--lvl-${level}`,
+        `CellButton--lvl-${mode}`,
         `CellButton--aln-${align}`
       )}
     >
@@ -43,7 +43,7 @@ const CellButton: React.FunctionComponent<CellButtonProps> = ({
 };
 
 CellButton.defaultProps = {
-  level: 'primary',
+  mode: 'primary',
   component: 'button',
   align: 'left',
   stopPropagation: true,

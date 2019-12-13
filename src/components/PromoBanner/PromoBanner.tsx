@@ -61,7 +61,7 @@ const PromoBanner = (props: PromoBannerProps) =>
             // @ts-ignore
             <Avatar type="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
           }
-          asideContent={<Button level="outline">{props.bannerData.ctaText}</Button>}
+          asideContent={<Button mode="outline">{props.bannerData.ctaText}</Button>}
           description={props.bannerData.domain}
         >
           {props.bannerData.title}

@@ -16,10 +16,10 @@
     <Separator />
     <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
       <FormLayout>
-        <Button level="secondary" size="l" after={<Counter>16</Counter>}>Secondary large</Button>
-        <Button level="tertiary" after={<Counter>6</Counter>}>Tertiary medium</Button>
-        <Button level="outline" size="l" after={<Counter>20</Counter>}>Outline large</Button>
-        <Button level="commerce" size="l" after={<Counter>4</Counter>}>Commerce large</Button>
+        <Button mode="secondary" size="l" after={<Counter>16</Counter>}>Secondary large</Button>
+        <Button mode="tertiary" after={<Counter>6</Counter>}>Tertiary medium</Button>
+        <Button mode="outline" size="l" after={<Counter>20</Counter>}>Outline large</Button>
+        <Button mode="commerce" size="l" after={<Counter>4</Counter>}>Commerce large</Button>
         <Button size="xl" after={<Counter>8</Counter>}>Primary extra large</Button>
       </FormLayout>
     </Group>

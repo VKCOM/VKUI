@@ -75,9 +75,9 @@ class App extends React.Component {
         >
           <FormLayout>
             <FormLayoutGroup>
-              <Button level="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} size="xl">Выбор страны</Button>
-              <Button level="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)} size="xl">Просмотры истории</Button>
-              <Button level="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="xl">Информация о пользователе</Button>
+              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} size="xl">Выбор страны</Button>
+              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)} size="xl">Просмотры истории</Button>
+              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="xl">Информация о пользователе</Button>
             </FormLayoutGroup>
 
             <SelectMimicry top="Страна" placeholder="Выбрать страну" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} />
@@ -124,7 +124,7 @@ class App extends React.Component {
           settlingHeight={80}
         >
           <FormLayout>
-            <Button level="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="xl">Информация о пользователе</Button>
+            <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="xl">Информация о пользователе</Button>
 
             <FormLayoutGroup>
               {importantCountries.map(({ id, title }) => {
@@ -196,11 +196,11 @@ class App extends React.Component {
           id={MODAL_CARD_MONEY_SEND}
           onClose={() => this.setActiveModal(null)}
           icon={<Icon56MoneyTransferOutline />}
-          title="Отправляйте деньги друзьям, используя банковскую карту"
+          header="Отправляйте деньги друзьям, используя банковскую карту"
           caption="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
           actions={[{
             title: 'Попробовать',
-            type: 'primary',
+            mode: 'primary',
             action: () => {
               this.setActiveModal(MODAL_CARD_APP_TO_MENU);
             }
@@ -213,11 +213,11 @@ class App extends React.Component {
           id={MODAL_CARD_APP_TO_MENU}
           onClose={() => this.setActiveModal(null)}
           icon={<Avatar type="app" src="https://pp.userapi.com/c639222/v639222699/5e1d8/2wtUaVn4Pho.jpg" size={72} />}
-          title="Добавить игру «Загадки детства» в меню?"
+          header="Добавить игру «Загадки детства» в меню?"
           caption="Игра появится под списком разделов на экране меню и будет всегда под рукой."
           actions={[{
             title: 'Добавить в меню',
-            type: 'primary',
+            mode: 'primary',
             action: () => {
               this.setActiveModal(MODAL_CARD_ABOUT);
             }
@@ -228,11 +228,11 @@ class App extends React.Component {
         <ModalCard
           id={MODAL_CARD_ABOUT}
           onClose={() => this.setActiveModal(null)}
-          title="Расскажите о себе"
+          header="Расскажите о себе"
           actions={[
             {
               title: 'Сохранить',
-              type: 'primary',
+              mode: 'primary',
               action: () => {
                 this.setActiveModal(MODAL_CARD_NOTIFICATIONS);
               }
@@ -246,14 +246,14 @@ class App extends React.Component {
           id={MODAL_CARD_NOTIFICATIONS}
           onClose={() => this.setActiveModal(null)}
           icon={<Icon56NotificationOutline />}
-          title="Приложение запрашивает разрешение на отправку Вам уведомлений"
+          header="Приложение запрашивает разрешение на отправку Вам уведомлений"
           actions={[{
             title: 'Запретить',
-            type: 'secondary',
+            mode: 'secondary',
             action: () => this.setActiveModal(MODAL_CARD_CHAT_INVITE)
           }, {
             title: 'Разрешить',
-            type: 'primary',
+            mode: 'primary',
             action: () => this.setActiveModal(MODAL_CARD_CHAT_INVITE)
           }]}
         />
@@ -262,15 +262,15 @@ class App extends React.Component {
           id={MODAL_CARD_CHAT_INVITE}
           onClose={() => this.setActiveModal(null)}
           icon={<Avatar src="https://pp.userapi.com/c849324/v849324409/1cacfa/MLy1Lzz_q6E.jpg" size={72} />}
-          title="Баскетбол на выходных"
+          header="Баскетбол на выходных"
           caption="Приглашение в беседу"
           actions={[{
             title: 'Присоединиться',
-            type: 'primary',
+            mode: 'primary',
             action: () => this.setActiveModal(null)
           }, {
             title: 'Скопировать приглашение',
-            type: 'secondary',
+            mode: 'secondary',
             action: () => this.setActiveModal(null)
           }]}
           actionsLayout="vertical"
@@ -299,11 +299,11 @@ class App extends React.Component {
 
           <Group>
             <FormLayout>
-              <Button size="xl" level="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
+              <Button size="xl" mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
                   Открыть модальную страницу
               </Button>
 
-              <Button size="xl" level="secondary" onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
+              <Button size="xl" mode="secondary" onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
                   Открыть модальные карточки
               </Button>
             </FormLayout>

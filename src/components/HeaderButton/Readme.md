@@ -85,7 +85,7 @@ class Example extends React.Component {
               </Div>
             </Group>
             <Div>
-              <Button stretched level="secondary" size="l" onClick={ () => this.setState({ activePanel: 'panel2' }) }>
+              <Button stretched mode="secondary" size="l" onClick={ () => this.setState({ activePanel: 'panel2' }) }>
                 Больше примеров
               </Button>
             </Div>

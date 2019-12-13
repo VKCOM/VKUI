@@ -13,7 +13,7 @@ export interface FileProps extends ButtonProps, HasRef<HTMLInputElement> {
 }
 
 const File: FunctionComponent<FileProps> = (props: FileProps) => {
-  const { children, align, size, level, stretched, before, className,
+  const { children, align, size, mode, stretched, before, className,
     style, getRef, getRootRef, ...restProps } = props;
 
   const platform = usePlatform();
@@ -24,7 +24,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
       className={classNames(getClassName('File', platform), className)}
       Component="label"
       stretched={stretched}
-      level={level}
+      mode={mode}
       size={size}
       before={before}
       style={style}

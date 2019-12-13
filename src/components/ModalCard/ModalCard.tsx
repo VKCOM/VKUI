@@ -1,6 +1,4 @@
-/* eslint-disable */
-
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
+import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
 import Button from '../Button/Button';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import getClassName from '../../helpers/getClassName';
@@ -15,7 +13,7 @@ import { HasPlatform, HasChildren, HasInsets } from '../../types/props';
 export interface ModalCardActionInterface {
   title: string;
   action?(): void;
-  type?: 'secondary' | 'primary';
+  mode?: 'secondary' | 'primary';
 }
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, HasInsets {
@@ -29,7 +27,7 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   /**
    * Заголовок карточки
    */
-  title?: string;
+  header?: string;
 
   /**
    * Текст, поясняющий заголовок
@@ -53,13 +51,13 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
 }
 
 class ModalCard extends Component<ModalCardProps> {
-  static defaultProps = {
+  static defaultProps: ModalCardProps = {
     actions: [],
     actionsLayout: 'horizontal',
     insets: {},
   };
 
-  onButtonClick = (event) => {
+  onButtonClick: MouseEventHandler = (event: SyntheticEvent) => {
     const target = event.currentTarget as HTMLButtonElement;
     const action = this.props.actions[target.dataset.index].action;
     event.persist();
@@ -70,14 +68,14 @@ class ModalCard extends Component<ModalCardProps> {
   };
 
   render() {
-    const { insets, icon, title, caption, children, actions, actionsLayout, onClose, platform } = this.props;
+    const { insets, icon, header, caption, children, actions, actionsLayout, onClose, platform } = this.props;
 
     return (
       <div className={classNames(getClassName('ModalCard', platform))}>
         <div className="ModalCard__in">
           <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
             {icon && <div className="ModalCard__icon">{icon}</div>}
-            {title && <div className="ModalCard__title">{title}</div>}
+            {header && <div className="ModalCard__title">{header}</div>}
             {caption && <div className="ModalCard__caption">{caption}</div>}
 
             {children}
@@ -86,12 +84,12 @@ class ModalCard extends Component<ModalCardProps> {
             <div className={classNames('ModalCard__actions', {
               'ModalCard__actions--v': actionsLayout === 'vertical',
             })}>
-              {actions.map(({ title, type }, i) =>
+              {actions.map(({ title, mode }: ModalCardActionInterface, i: number) =>
                 <Button
                   key={i}
                   data-index={i}
                   size="xl"
-                  level={type}
+                  mode={mode}
                   onClick={this.onButtonClick}
                 >
                   {title}

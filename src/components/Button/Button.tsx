@@ -6,7 +6,7 @@ import { HasChildren, HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface ButtonProps extends HTMLAttributes<HTMLElement>, HasChildren, HasRootRef<HTMLElement> {
-  level?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
+  mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
   size?: 'm' | 'l' | 'xl';
   align?: 'left' | 'center' | 'right';
   stretched?: boolean;
@@ -22,11 +22,11 @@ export interface ButtonProps extends HTMLAttributes<HTMLElement>, HasChildren, H
 
 const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
-  const { className, size, level, stretched, align, children, before, after, getRootRef, ...restProps } = props;
+  const { className, size, mode, stretched, align, children, before, after, getRootRef, ...restProps } = props;
 
   return <Tappable {...restProps} className={classNames(getClassName('Button', platform), className, {
     [`Button--sz-${size}`]: true,
-    [`Button--lvl-${level}`]: true,
+    [`Button--lvl-${mode}`]: true,
     [`Button--aln-${align || 'center'}`]: true,
     ['Button--str']: stretched,
   })} getRootRef={getRootRef}>
@@ -39,7 +39,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
 };
 
 Button.defaultProps = {
-  level: 'primary',
+  mode: 'primary',
   Component: 'button',
   size: 'm',
   stretched: false,
