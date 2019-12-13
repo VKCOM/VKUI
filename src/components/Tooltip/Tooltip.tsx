@@ -103,7 +103,7 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
   getRef: GetRef<HTMLDivElement> = (el: HTMLDivElement) => this.el = el;
 
   render() {
-    const { title, text, alignX, alignY, cornerOffset } = this.props;
+    const { header, text, alignX, alignY, cornerOffset } = this.props;
 
     return ReactDOM.createPortal(
       <div className={classNames(baseClassName, {
@@ -114,7 +114,7 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
         <div className="Tooltip__container" style={{ top: this.state.y, left: this.state.x }} ref={this.getRef}>
           <div className="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }}/>
           <div className="Tooltip__content">
-            {title && <div className="Tooltip__title">{title}</div>}
+            {header && <div className="Tooltip__title">{header}</div>}
             {text && <div className="Tooltip__text">{text}</div>}
           </div>
         </div>
@@ -140,7 +140,7 @@ export interface TooltipProps {
   /**
    * Заголовок тултипа.
    */
-  title?: ReactNode;
+  header?: ReactNode;
   /**
    * Положение по горизонтали (прижатие к левому или правому краю `children`).
    */

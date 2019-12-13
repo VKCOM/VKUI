@@ -82,7 +82,7 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                     cornerOffset={-10}
                     offsetX={7}
                     text="Обновлённый раздел поможет найти друзей"
-                    title="Рекомендации друзей"
+                    header="Рекомендации друзей"
                   >
                     <Icon24Add/>
                   </Tooltip>
