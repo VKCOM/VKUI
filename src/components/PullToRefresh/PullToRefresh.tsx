@@ -51,19 +51,18 @@ export interface PullToRefreshParams {
 
 export type TouchEventHandler = (event: TouchEvent) => void;
 
-function cancelEvent(event: TouchEvent) {
+function cancelEvent(event: any) {
   if (!event) {
     return false;
   }
-  let originalEvent;
   while (event.originalEvent) {
-    originalEvent = event.originalEvent;
+    event = event.originalEvent;
   }
-  if (originalEvent.preventDefault) {
-    originalEvent.preventDefault();
+  if (event.preventDefault) {
+    event.preventDefault();
   }
-  if (originalEvent.stopPropagation) {
-    originalEvent.stopPropagation();
+  if (event.stopPropagation) {
+    event.stopPropagation();
   }
   return false;
 }
