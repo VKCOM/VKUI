@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode } from 'react';
+import React, { ElementType, HTMLAttributes, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
@@ -9,13 +9,13 @@ export interface FormFieldProps extends
   HasRootRef<HTMLElement>,
   HasChildren,
   HasFormStatus {
-  TagName?: string;
+  Component?: ElementType;
   top?: ReactNode;
   bottom?: ReactNode;
 }
 
 const FormField: React.FunctionComponent<FormFieldProps> = ({
-  TagName,
+  Component,
   className,
   children,
   status,
@@ -23,19 +23,23 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
   ...restProps
 }: FormFieldProps) => {
   const platform = usePlatform();
-  // Не используем тут JSX из-за этой проблемы: https://github.com/Microsoft/TypeScript/issues/28892
-  return React.createElement(TagName, {
-    ...restProps,
-    ref: getRootRef,
-    className: classNames(getClassName('FormField', platform), {
-      [`FormField--s-${status}`]: status !== 'default',
-    }, className),
-  }, <React.Fragment>{children}<div className="FormField__border" /></React.Fragment>);
+  return (
+    <Component
+      {...restProps}
+      ref={getRootRef}
+      className={classNames(getClassName('FormField', platform), {
+        [`FormField--s-${status}`]: status !== 'default',
+      }, className)}
+    >
+      {children}
+      <div className="FormField__border" />
+    </Component>
+  );
 };
 
 FormField.defaultProps = {
   status: 'default',
-  TagName: 'div',
+  Component: 'div',
 };
 
 export default FormField;

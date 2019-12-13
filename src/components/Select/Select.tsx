@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, { Component, HTMLAttributes } from 'react';
+import React, { HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
@@ -24,7 +24,7 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
-export default class Select extends Component<SelectProps, SelectState> {
+export default class Select extends React.Component<SelectProps, SelectState> {
   constructor(props) {
     super(props);
     const state: SelectState = {
@@ -93,7 +93,7 @@ export default class Select extends Component<SelectProps, SelectState> {
 
     return (
       <FormField
-        TagName="label"
+        Component="label"
         className={classNames('Select', {
           ['Select--not-selected']: this.state.notSelected,
           [`Select--align-${alignment}`]: !!alignment,
