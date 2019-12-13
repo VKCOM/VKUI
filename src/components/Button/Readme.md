@@ -30,7 +30,6 @@
         <Button mode="overlay_outline">Overlay Outline</Button>
       </Div>
     </Group>
-    <Separator />
     <Group header={<Header mode="secondary">Допустимые размеры</Header>}>
       <Div>
         <Button>Medium</Button>
@@ -42,7 +41,6 @@
         <Button size="xl" mode="secondary">Extra large</Button>
       </Div>
     </Group>
-    <Separator />
     <Group header={<Header mode="secondary">Растягивание по ширине</Header>}>
       <Div>
         <Button size="l">No stretch</Button>
@@ -52,7 +50,6 @@
         <Button size="l" stretched mode="secondary">Stretched</Button>
       </Div>
     </Group>
-    <Separator />
     <Group header={<Header mode="secondary">Кнопки с иконками</Header>}>
       <Div>
         <Button before={<Icon16Add/>}>Add item</Button>
@@ -64,7 +61,6 @@
         <Button mode="secondary" before={<Icon24Shuffle/>} size="l">Shuffle</Button>
       </Div>
     </Group>
-    <Separator />
     <Group header={<Header mode="secondary">Ссылки в виде кнопок</Header>}>
       <Div>
         <Button Component="a" href="#">I am link</Button>

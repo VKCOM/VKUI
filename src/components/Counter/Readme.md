@@ -13,7 +13,6 @@
         <Cell before={<Icon24Favorite />} indicator={<Counter type="primary">1</Counter>}>Закладки</Cell>
       </List>
     </Group>
-    <Separator />
     <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
       <FormLayout>
         <Button mode="secondary" size="l" after={<Counter>16</Counter>}>Secondary large</Button>
@@ -23,7 +22,6 @@
         <Button size="xl" after={<Counter>8</Counter>}>Primary extra large</Button>
       </FormLayout>
     </Group>
-    <Separator />
     <Group header={
       <Header
         indicator={<Counter size="s" type="prominent">5</Counter>}
@@ -36,7 +34,6 @@
       <Cell before={<Avatar />}>Виктор Пелевин</Cell>
       <Cell before={<Avatar />}>Михаил Зыгарь</Cell>
     </Group>
-    <Separator />
     <Group header={<Header mode="secondary">В переключателях</Header>}>
       <Tabs mode="buttons">
         <HorizontalScroll>

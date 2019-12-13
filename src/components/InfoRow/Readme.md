@@ -14,7 +14,6 @@
           </InfoRow>
         </Div>
       </Group>
-      <Separator />
       <Group title="Информация о пользователе">
         <List>
           <Cell>

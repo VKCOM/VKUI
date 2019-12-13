@@ -26,7 +26,6 @@
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
-            <Separator />
             <Group header={<Header mode="secondary">Sticks left</Header>}>
               <Gallery
                 slideWidth="90%"
@@ -38,7 +37,6 @@
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
-            <Separator />
             <Group header={<Header mode="secondary">Centered</Header>}>
               <Gallery
                 slideWidth="90%"
@@ -50,7 +48,6 @@
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
-            <Separator />
             <Group header={<Header mode="secondary">Custom width</Header>}>
               <Gallery
                 slideWidth="custom"
@@ -62,7 +59,6 @@
                 <div style={{ width: 220, backgroundColor: 'var(--icon_secondary)' }} />
               </Gallery>
             </Group>
-            <Separator />
             <Group header={<Header mode="secondary">Controled</Header>}>
               <Gallery
                 slideWidth="90%"

@@ -15,7 +15,6 @@
           Артур Стамбульцян
         </Cell>
       </Group>
-      <Separator />
       <Group header={<Header mode="secondary">Big avatar (80px)</Header>}>
         <Cell
           photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg"
@@ -27,7 +26,6 @@
           Артур Стамбульцян
         </Cell>
       </Group>
-      <Separator />
       <Group header={<Header mode="secondary">Placeholder</Header>}>
         <List>
           <Cell
@@ -44,7 +42,6 @@
           </Cell>
         </List>
       </Group>
-      <Separator />
       <Group header={<Header mode="secondary">Using in Cell</Header>}>
         <List>
           <Cell before={<Avatar><Icon28User /></Avatar>}>Артур Стамбульцян</Cell>
@@ -52,7 +49,6 @@
           <Cell before={<Avatar src="https://pp.userapi.com/c834100/v834100961/4f8f1/hjsBzq433co.jpg?ava=1" />}>Влад Анесов</Cell>
         </List>
       </Group>
-      <Separator />
       <Group header={<Header mode="secondary">default type</Header>} description="Дефолтный стиль аватарки. Используется для юзеров, групп.">
         <List>
           <Cell before={<Avatar src="https://pp.userapi.com/c625316/v625316293/347b7/DmD1VKYbwwI.jpg?ava=1" />}>Евгений Авсиевич</Cell>
@@ -60,7 +56,6 @@
           <Cell before={<Avatar src="https://pp.userapi.com/c841629/v841629884/290ab/STZCXV5wZbg.jpg?ava=1" />}>Олег Илларианов</Cell>
         </List>
       </Group>
-      <Separator />
       <Group header={<Header mode="secondary">app type</Header>} description="Аватарки для приложений. Радиус скургления зависит от значения свойства size.">
         <List>
           <Cell before={<Avatar type="app" src="https://pp.userapi.com/c844616/v844616889/9ec4a/9Fk-RI7uchQ.jpg" />} description="Ролевая">Шторм онлайн</Cell>
@@ -68,7 +63,6 @@
           <Cell before={<Avatar type="app" src="https://pp.userapi.com/c849028/v849028348/1b353/Na_GRlqgRNM.jpg" />} description="Головоломка">Вега Микс на даче</Cell>
         </List>
       </Group>
-      <Separator />
       <Group header={<Header mode="secondary">image type</Header>} description="Используется для остальных случаев. Например, для музыки и плейлистов.">
         <List>
           <Cell before={<Avatar type="image" src="https://pp.userapi.com/c841025/v841025503/617f7/bkN1Def0s14.jpg" />} description="Arctic Monkeys" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>I Wanna Be Yours</Cell>

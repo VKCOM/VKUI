@@ -53,7 +53,6 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                 <Cell>Денежные переводы</Cell>
               </List>
             </Group>
-            <Separator />
             <Group>
               <Tooltip
                 text="У нас тут brand new функционал подвезли. Зацените!"

@@ -16,6 +16,22 @@
     color: var(--text_secondary);
     }
 
+  .Group__separator {
+    margin-top: 12px;
+    }
+
+  .Group:last-of-type .Group__separator {
+    display: none;
+    }
+
+  .Group:last-of-type .Group__separator--force {
+    display: block;
+    }
+
+  .Group + .Group > .Header {
+    margin-top: -12px;
+    }
+
   .Group--ios .Group__description {
     padding: 4px 12px 24px;
     }
