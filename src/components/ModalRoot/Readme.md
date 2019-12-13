@@ -286,7 +286,7 @@ class App extends React.Component {
             ]}
             size="m"
             count={3}
-            vertical
+            layout="vertical"
           >Алексей, Илья, Михаил<br />и ещё 3 человека</UsersStack>
         </ModalCard>
       </ModalRoot>
