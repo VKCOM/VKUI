@@ -8,7 +8,7 @@
       Статус формы
     </PanelHeader>
     <FormLayout>
-      <FormStatus title="Некорректный мобильный номер" state="error">
+      <FormStatus header="Некорректный мобильный номер" mode="error">
         Необходимо корректно ввести номер в международном формате
       </FormStatus>
       <Input top="Мобильный телефон" defaultValue="+7 12 344 15 48" />
