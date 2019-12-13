@@ -10,16 +10,16 @@ import { ANDROID } from '../../lib/platform';
 import { HasChildren, HasPlatform } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
 
-export interface AlertActionsInterface {
+export interface AlertActionInterface {
   title: string;
   action?(): void;
   autoclose?: boolean;
-  style: 'cancel' | 'destructive' | 'default';
+  mode: 'cancel' | 'destructive' | 'default';
 }
 
 export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren {
   actionsLayout?: 'vertical' | 'horizontal';
-  actions?: AlertActionsInterface[];
+  actions?: AlertActionInterface[];
   onClose?(): void;
 }
 
@@ -100,14 +100,14 @@ class Alert extends Component<AlertProps, AlertState> {
         >
           <div className="Alert__content">{children}</div>
           <footer className="Alert__footer">
-            {actions.map((button, i) =>
+            {actions.map((action: AlertActionInterface, i: number) =>
               <Tappable
                 Component="button"
-                className={classNames('Alert__btn', `Alert__btn--${button.style}`)}
-                onClick={this.onItemClick(button)}
+                className={classNames('Alert__btn', `Alert__btn--${action.mode}`)}
+                onClick={this.onItemClick(action)}
                 key={`alert-action-${i}`}
               >
-                <span dangerouslySetInnerHTML={{ __html: button.title }} />
+                <span dangerouslySetInnerHTML={{ __html: action.title }} />
               </Tappable>
             )}
           </footer>

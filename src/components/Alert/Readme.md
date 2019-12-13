@@ -50,7 +50,7 @@ class Example extends React.Component {
         actions={[{
           title: 'Отмена',
           autoclose: true,
-          style: 'cancel'
+          mode: 'cancel'
         }, {
           title: 'Добавить',
           autoclose: true,
@@ -71,12 +71,12 @@ class Example extends React.Component {
         actions={[{
           title: 'Лишить права',
           autoclose: true,
-          style: 'destructive',
+          mode: 'destructive',
           action: () => this.addActionLogItem('Пользователь больше не может модерировать контент.'),
         }, {
           title: 'Отмена',
           autoclose: true,
-          style: 'cancel'
+          mode: 'cancel'
         }]}
         onClose={this.closePopout}
       >
