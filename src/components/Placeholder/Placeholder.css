@@ -29,7 +29,7 @@
   color: var(--placeholder_icon_foreground_secondary);
 }
 
-.Placeholder__title {
+.Placeholder__header {
   font-size: 20px;
   line-height: 24px;
   font-weight: 500;
@@ -42,7 +42,7 @@
   color: var(--text_placeholder);
 }
 
-.Placeholder__title + .Placeholder__text {
+.Placeholder__header + .Placeholder__text {
   margin-top: 8px;
 }
 

@@ -29,7 +29,7 @@ class PlaceholderExample extends React.Component {
           <PanelHeader>Плейсхолдеры</PanelHeader>
           <Placeholder
             icon={<Icon56UsersOutline />}
-            title="Уведомления от сообществ"
+            header="Уведомления от сообществ"
             action={<Button size="l">Подключить сообщества</Button>}
           >
             Подключите сообщества, от которых Вы хотите получать уведомления
@@ -57,7 +57,7 @@ class PlaceholderExample extends React.Component {
           <Separator wide />
 
           <Placeholder
-            title="Находите друзей"
+            header="Находите друзей"
             action={<Button size="l">Найти друзей</Button>}
           >
             Здесь будут отображаться люди, которых вы добавите в друзья
@@ -76,7 +76,7 @@ class PlaceholderExample extends React.Component {
 
           <Placeholder
             icon={<Icon56MessageReadOutline />}
-            action={<Button size="l" level="tertiary">Показать все сообщения</Button>}
+            action={<Button size="l" mode="tertiary">Показать все сообщения</Button>}
             stretched
           >
             Нет непрочитанных<br />сообщений
