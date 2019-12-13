@@ -5,10 +5,10 @@ import usePlatform from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types/props';
 
 export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
-  mode: 'primary' | 'secondary';
-  subtitle: ReactNode;
-  aside: ReactNode;
-  indicator: ReactNode;
+  mode?: 'primary' | 'secondary';
+  subtitle?: ReactNode;
+  aside?: ReactNode;
+  indicator?: ReactNode;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
