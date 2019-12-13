@@ -39,7 +39,7 @@ class Example extends React.Component {
         <ActionSheetItem autoclose>
           По месяцам
         </ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
+        {osname === IOS && <ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }
@@ -53,7 +53,7 @@ class Example extends React.Component {
         <ActionSheetItem autoclose before={<Icon28CameraOutline/>}>
           Изменить фотографию
         </ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
+        {osname === IOS && <ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }
@@ -64,10 +64,10 @@ class Example extends React.Component {
         <ActionSheetItem autoclose>
           Редактировать
         </ActionSheetItem>
-        <ActionSheetItem autoclose theme="destructive">
+        <ActionSheetItem autoclose mode="destructive">
           Выйти
         </ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
+        {osname === IOS && <ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }

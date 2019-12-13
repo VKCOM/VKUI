@@ -5,7 +5,7 @@ import Tappable from '../Tappable/Tappable';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface ActionSheetItemProps extends HTMLAttributes<HTMLElement> {
-  theme?: 'default' | 'destructive' | 'cancel';
+  mode?: 'default' | 'destructive' | 'cancel';
   before?: React.ReactNode;
   // meta?: React.ReactNode,
   // subtitle?: React.ReactNode,
@@ -16,7 +16,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   className,
   children,
   autoclose,
-  theme,
+  mode,
   // meta,
   // subtitle,
   before,
@@ -27,9 +27,9 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
     <Tappable
       {...restProps}
       className={
-        classNames(getClassName('ActionSheetItem', platform), className, `ActionSheetItem--${theme}`)
+        classNames(getClassName('ActionSheetItem', platform), className, `ActionSheetItem--${mode}`)
       }
-      Component={theme === 'cancel' ? 'span' : 'div'}
+      Component={mode === 'cancel' ? 'span' : 'div'}
     >
       {before && <div className="ActionSheetItem__before">{before}</div>}
       <div className="ActionSheetItem__container">
@@ -44,7 +44,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
 };
 
 ActionSheetItem.defaultProps = {
-  theme: 'default',
+  mode: 'default',
 };
 
 export default ActionSheetItem;
