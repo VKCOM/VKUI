@@ -85,8 +85,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     return (
       <PopoutWrapper
         closing={this.state.closing}
-        v="bottom"
-        h="center"
+        alignY="bottom"
         className={className}
         style={style}
         onClick={this.onClose}

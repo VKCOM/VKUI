@@ -9,8 +9,8 @@ import { canUseDOM } from '../../lib/dom';
 
 export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   hasMask?: boolean;
-  v?: 'top' | 'center' | 'bottom';
-  h?: 'left' | 'center' | 'right';
+  alignY?: 'top' | 'center' | 'bottom';
+  alignX?: 'left' | 'center' | 'right';
   closing?: boolean;
 }
 
@@ -35,8 +35,8 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
   static defaultProps: PopoutWrapperProps = {
     hasMask: true,
-    v: 'center',
-    h: 'center',
+    alignY: 'center',
+    alignX: 'center',
     closing: false,
   };
 
@@ -82,13 +82,18 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   };
 
   render() {
-    const { v, h, closing, children, hasMask, onClick, className, platform, ...restProps } = this.props;
+    const { alignY, alignX, closing, children, hasMask, onClick, className, platform, ...restProps } = this.props;
     const baseClassNames = getClassName('PopoutWrapper', platform);
 
     return (
-      <div {...restProps} className={classNames(baseClassNames, `PopoutWrapper--v-${v}`, `PopoutWrapper--h-${h}`, {
-        'PopoutWrapper--closing': closing,
-      }, className)} onClick={this.onClick} ref={this.elRef}>
+      <div
+        {...restProps}
+        className={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
+          'PopoutWrapper--closing': closing,
+        }, className)}
+        onClick={this.onClick}
+        ref={this.elRef}
+      >
         {hasMask && <div className="PopoutWrapper__mask" />}
         <div className="PopoutWrapper__container">{children}</div>
       </div>
