@@ -10,7 +10,7 @@ import { canUseDOM } from '../../lib/dom';
 
 export interface GalleryProps extends HasStyleObject, HasChildren, HasClassName, HasPlatform {
   slideWidth?: string | number;
-  autoplay?: number;
+  timeout?: number;
   initialSlideIndex?: number;
   slideIndex?: number;
   onDragStart?(): void;
@@ -71,7 +71,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   static defaultProps = {
     slideWidth: '100%',
     children: '',
-    autoplay: 0,
+    timeout: 0,
     initialSlideIndex: 0,
     align: 'left',
     bullets: false,
@@ -226,7 +226,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
 
     if (this.timeout) {
       this.clearTimeout();
-      this.setTimeout(this.props.autoplay);
+      this.setTimeout(this.props.timeout);
     }
   };
 
@@ -271,7 +271,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
 
     if (this.timeout) {
       this.clearTimeout();
-      this.setTimeout(this.props.autoplay);
+      this.setTimeout(this.props.timeout);
     }
 
     return true;
@@ -328,8 +328,8 @@ class Gallery extends Component<GalleryProps, GalleryState> {
 
     window.addEventListener('resize', this.onResize);
 
-    if (this.props.autoplay) {
-      this.setTimeout(this.props.autoplay);
+    if (this.props.timeout) {
+      this.setTimeout(this.props.timeout);
     }
   }
 
@@ -346,13 +346,11 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       this.props.onChange(this.state.current);
     }
 
-    if (this.props.autoplay && !prevProps.autoplay) {
-      if (this.props.autoplay) {
-        this.setTimeout(this.props.autoplay);
-      }
+    if (this.props.timeout && !prevProps.timeout) {
+      this.setTimeout(this.props.timeout);
     }
 
-    if (!this.props.autoplay && prevProps.autoplay) {
+    if (!this.props.timeout && prevProps.timeout) {
       this.clearTimeout();
     }
 
@@ -371,7 +369,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     const {
       children,
       slideWidth,
-      autoplay,
+      timeout,
       initialSlideIndex,
       slideIndex,
       onDragStart,
