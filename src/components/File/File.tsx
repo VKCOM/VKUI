@@ -5,15 +5,15 @@ import classNames from '../../lib/classNames';
 import { HasRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface FileProps extends ButtonProps, HasRef<HTMLInputElement> {
+export interface FileProps extends ButtonProps<HTMLInputElement>, HasRef<HTMLInputElement> {
   /**
    * @deprecated Используйте `children`. Свойство `label` будет удалено в 3.0.0
    */
-  label: ButtonProps['children'];
+  label?: ButtonProps['children'];
   /**
    * @deprecated Используйте `align`. Свойство `alignment` будет удалено в 3.0.0
    */
-  alignment: ButtonProps['align'];
+  alignment?: ButtonProps['align'];
   /**
    * @ignore
    */
