@@ -6,7 +6,7 @@ import CellButton from '../CellButton/CellButton';
 import { HasChildren, HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface ButtonProps extends HTMLAttributes<HTMLElement>, HasChildren, HasRootRef<HTMLElement> {
+export interface ButtonProps<T = HTMLElement> extends HTMLAttributes<T>, HasChildren, HasRootRef<T> {
   /**
    * Значения `1`, `2`, `3`, `sell`, `buy` устарели. Маппинг на новые значения находится в
    * статическом методе `Button.mapOldLevel(level)`. Старые значения будут удалены в 3.0.0
