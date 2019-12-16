@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ElementType } from 'react';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -9,7 +9,7 @@ export interface CellButtonProps extends React.HTMLAttributes<HTMLElement>, HasC
   mode?: 'primary' | 'danger';
   align?: 'left' | 'center' | 'right';
   before?: React.ReactNode;
-  component?: string | React.ComponentType;
+  Component?: ElementType;
   stopPropagation?: boolean;
 }
 
@@ -44,7 +44,7 @@ const CellButton: React.FunctionComponent<CellButtonProps> = ({
 
 CellButton.defaultProps = {
   mode: 'primary',
-  component: 'button',
+  Component: 'button',
   align: 'left',
   stopPropagation: true,
 };
