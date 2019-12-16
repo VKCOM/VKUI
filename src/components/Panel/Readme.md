@@ -8,7 +8,7 @@
 
 В таких случаях передавайте в `Panel` свойство `separator={false}`.
 
-```jsx harmony
+```jsx
 class Example extends React.Component {
   constructor(props) {
     super(props);

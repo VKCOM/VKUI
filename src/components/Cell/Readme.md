@@ -1,4 +1,4 @@
-```jsx harmony
+```jsx
   class Example extends React.Component {
 
     constructor() {

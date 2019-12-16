@@ -107,7 +107,6 @@
             left={<PanelHeaderBack onClick={this.props.goSearch} />}
           >
             <Search
-              theme="header"
               value={this.state.search}
               onChange={this.onChange}
             />

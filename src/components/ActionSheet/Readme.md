@@ -9,7 +9,7 @@ ActionSheet – имитация [нативного компонента](https
 В коде примера ниже можно посмотреть, как добавить такой элемент.
 Для Android версии он не нужен.
 
-```jsx harmony
+```jsx
 class Example extends React.Component {
   constructor(props) {
     super(props);

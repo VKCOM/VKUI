@@ -1,4 +1,4 @@
-Данный компонент является надстройкой над нативным [select](https://reactjs.org/docs/forms.html#the-select-tag) 
+Данный компонент является надстройкой над нативным [select](https://reactjs.org/docs/forms.html#the-select-tag)
 и принимает все его свойства.
 
 ```jsx static
@@ -10,9 +10,9 @@ import { Select } from '@vkontakte/vkui';
 </Select>
 ```
 
-```
+```jsx
 <View activePanel="select">
-  <Panel id="select" theme="white">
+  <Panel id="select">
     <PanelHeader>
       Select
     </PanelHeader>

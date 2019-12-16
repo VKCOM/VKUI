@@ -1,4 +1,4 @@
-```jsx harmony
+```jsx
   <View activePanel="switch">
     <Panel id="switch">
       <PanelHeader>

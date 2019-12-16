@@ -1,9 +1,9 @@
 Компонент используется для отображения статуса формы. Например, когда в форме допущена ошибка, и нет возможности
 указать на конкретное поле. Заголовок и текст опциональны.
 
-```
+```jsx
 <View activePanel="form-status">
-  <Panel id="form-status" theme="white">
+  <Panel id="form-status">
     <PanelHeader>
       Статус формы
     </PanelHeader>

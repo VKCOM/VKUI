@@ -1,7 +1,7 @@
 Визуальная имитация компонента [Select](https://vkcom.github.io/vkui-styleguide/#!/Select). У него нет свойства `value`, а `children` вместо массива `options` принимает
 любой `ReactNode`, отображая его без изменений.
 
-```
+```jsx
   class Example extends React.Component {
 
     constructor(props) {
@@ -16,7 +16,7 @@
       return (
         <Root activeView={this.state.activeView}>
           <View activePanel="profile" id="profile">
-            <Panel id="profile" theme="white">
+            <Panel id="profile">
               <PanelHeader>
                 Профиль
               </PanelHeader>

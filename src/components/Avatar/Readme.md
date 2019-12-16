@@ -1,7 +1,7 @@
 **Важно**: свойство `style` применяется к `img`, а не к корневому элементу. Чаще всего требуется стилизовать именно
 изображение, а не обертку.
 
-```jsx harmony
+```jsx
   <View activePanel="avatar">
     <Panel id="avatar">
       <PanelHeader>Avatar</PanelHeader>

@@ -1,9 +1,9 @@
 Компонент для отрисовки шапки внутри панели. В качестве `children` принимает то, что будет являться заголовком панели.
-По бокам располагаются управляющие кнопки [`HeaderButton`](https://vkcom.github.io/vkui-styleguide/#!/HeaderButton). 
-Так же в секции [Helpers](https://vkcom.github.io/vkui-styleguide/#!/Helpers) вы найдете вспомогательные компоненты, 
+По бокам располагаются управляющие кнопки [`HeaderButton`](https://vkcom.github.io/vkui-styleguide/#!/HeaderButton).
+Так же в секции [Helpers](https://vkcom.github.io/vkui-styleguide/#!/Helpers) вы найдете вспомогательные компоненты,
 которые упростят работу с боковыми контролами шапки.
 
-```jsx harmony
+```jsx
   <View activePanel="panelheader">
     <Panel id="panelheader">
       <PanelHeader

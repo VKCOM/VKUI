@@ -1,6 +1,6 @@
 ```jsx
 <View activePanel="input">
-  <Panel id="input" theme="white">
+  <Panel id="input">
     <PanelHeader>
       Input
     </PanelHeader>

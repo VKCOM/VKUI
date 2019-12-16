@@ -2,7 +2,7 @@
 
 ```jsx
   <View activePanel="panel">
-    <Panel id="panel" theme="white">
+    <Panel id="panel">
       <PanelHeader>
         File
       </PanelHeader>

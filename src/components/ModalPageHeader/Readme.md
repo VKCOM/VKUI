@@ -11,24 +11,27 @@
 Также на Android могут быть какие-то дополнительные кнопки-иконки, справа, а на iOS – слева.
 
 ```js static
-import ModalPageHeader from '@vkontakte/vkui/dist/components/ModalPageHeader/ModalPageHeader';
-import { IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from '@vkontakte/vkui/dist/lib/platform';
+import { ModalPageHeader, ANDROID, IOS, usePlatform } from '@vkontakte/vkui';
 
-<ModalPageHeader
-  left={(
-    <Fragment>
-      {IS_PLATFORM_ANDROID && <HeaderButton onClick={this.backModal}><Icon24Cancel /></HeaderButton>}
-    </Fragment>
-  )}
-  right={(
-    <Fragment>
-      {IS_PLATFORM_ANDROID && <HeaderButton onClick={this.backModal}><Icon24Done /></HeaderButton>}
-      {IS_PLATFORM_IOS && <HeaderButton onClick={this.backModal}>Готово</HeaderButton>}
-    </Fragment>
-  )}
->
-  Заголовок модальной страницы
-</ModalPageHeader>
+const platform = usePlatform();
+
+return (
+  <ModalPageHeader
+    left={(
+      <Fragment>
+        {platform === ANDROID && <HeaderButton onClick={this.backModal}><Icon24Cancel /></HeaderButton>}
+      </Fragment>
+    )}
+    right={(
+      <Fragment>
+        {platform === ANDROID && <HeaderButton onClick={this.backModal}><Icon24Done /></HeaderButton>}
+        {platform === IOS && <HeaderButton onClick={this.backModal}>Готово</HeaderButton>}
+      </Fragment>
+    )}
+  >
+    Заголовок модальной страницы
+  </ModalPageHeader>
+)
 ```
 
 Пример использования показан в компоненте `ModalRoot`.
