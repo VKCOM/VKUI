@@ -1,6 +1,6 @@
 import { ObjectClassNames } from '../types/props';
 
-export default function classNames(...classnames: Array<number | string | ObjectClassNames>) {
+export default function classNames(...classnames: Array<number | string | ObjectClassNames | false | null | undefined>) {
   let result: string[] = [];
 
   classnames.forEach((item: number | string | ObjectClassNames): void => {
