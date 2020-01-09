@@ -57,7 +57,7 @@ class Panel extends Component<PanelProps> {
           paddingBottom: isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null,
         }}>
           <div className="Panel__in-before" />
-          {separator && <Separator />}
+          {separator && <Separator className="Panel__separator" />}
           {centered ? <div className="Panel__centered">{children}</div> : children}
           <div className="Panel__in-after" />
         </Touch>
