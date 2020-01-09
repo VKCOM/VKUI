@@ -1,15 +1,11 @@
-import React, { ComponentType, FunctionComponent, HTMLAttributes } from 'react';
+import React, { ElementType, FunctionComponent, LinkHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasRef, HasRootRef, OldRef, RefWithCurrent } from '../../types/props';
+import { HasRootRef } from '../../types/props';
 
-export interface InnerComponentProps extends HTMLAttributes<HTMLElement>, HasRef<HTMLElement> {
-  ref: OldRef<HTMLElement> | RefWithCurrent<HTMLElement>;
-}
-
-export interface LinkProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
-  Component: string | ComponentType<InnerComponentProps>;
+export interface LinkProps extends LinkHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+  Component?: ElementType;
 }
 
 const Link: FunctionComponent<LinkProps> = ({
