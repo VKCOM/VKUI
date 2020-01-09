@@ -1,11 +1,11 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import React, { FunctionComponent, InputHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types/props';
 
 export interface SwitchProps extends
-  HTMLAttributes<HTMLInputElement>,
+  InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   HasRef<HTMLInputElement> {}
 
