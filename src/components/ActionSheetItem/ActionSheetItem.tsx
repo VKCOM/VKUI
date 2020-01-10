@@ -10,6 +10,12 @@ export interface ActionSheetItemProps extends HTMLAttributes<HTMLElement> {
   // meta?: React.ReactNode,
   // subtitle?: React.ReactNode,
   autoclose?: boolean;
+  href?: string;
+  target?: string;
+  /**
+   * @ignore
+   */
+  isLast?: boolean;
 }
 
 const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
@@ -20,16 +26,23 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   // meta,
   // subtitle,
   before,
+  isLast,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
+
   return (
     <Tappable
       {...restProps}
       className={
-        classNames(getClassName('ActionSheetItem', platform), className, `ActionSheetItem--${mode}`)
+        classNames(
+          getClassName('ActionSheetItem', platform),
+          className,
+          `ActionSheetItem--${mode}`,
+          { ['ActionSheetItem--last']: isLast },
+        )
       }
-      Component={mode === 'cancel' ? 'span' : 'div'}
+      Component={restProps.href ? 'a' : 'div'}
     >
       {before && <div className="ActionSheetItem__before">{before}</div>}
       <div className="ActionSheetItem__container">

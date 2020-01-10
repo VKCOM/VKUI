@@ -1,4 +1,4 @@
-import React, { Children, Component, HTMLAttributes } from 'react';
+import React, { Children, Component, HTMLAttributes, ReactElement } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -34,6 +34,8 @@ export type ActionType = (event: React.MouseEvent) => void;
 export type ItemClickHandler = (action: ActionType, autoclose: boolean) => (event: React.MouseEvent) => void;
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
+
+export type IsItemLast = (index: number) => boolean;
 
 class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   constructor(props: ActionSheetProps) {
@@ -79,6 +81,19 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   }
 
+  isItemLast: IsItemLast = (index: number) => {
+    const childrenArray = Children.toArray(this.props.children);
+    const lastElement = childrenArray[childrenArray.length - 1] as ReactElement;
+
+    if (index === childrenArray.length - 1) {
+      return true;
+    } else if (index === childrenArray.length - 2 && lastElement.props.mode === 'cancel') {
+      return true;
+    }
+
+    return false;
+  };
+
   render() {
     const { children, className, header, text, style, insets, platform, ...restProps } = this.props;
 
@@ -108,6 +123,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
             child && React.cloneElement(child, {
               onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
               style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null,
+              isLast: this.isItemLast(index),
             })
           )}
         </div>
