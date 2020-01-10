@@ -80,11 +80,8 @@ export interface CellProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
   onDragFinish?({ from, to }: { from: number; to: number }): void;
-  /**
-   * При передаче `href`, ячейка становится полноценной ссылкой. Поддерживаются все валидные для этого элемента
-   * атрибуты (`target`, `rel` и т.д.).
-   */
   href?: string;
+  target?: string;
 }
 
 export interface CellState {
