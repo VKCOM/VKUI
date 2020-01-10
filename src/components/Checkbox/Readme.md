@@ -1,3 +1,5 @@
+Надстройка над `<input type="checkbox" />`. Компонент принимает все валидные для этого элемента свойства.
+
 ```jsx
   <View activePanel="panel">
     <Panel id="panel">

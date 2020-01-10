@@ -1,3 +1,5 @@
+Надстройка над `<input type="text" />`. Компонент принимает все валидные для этого элемента свойства.
+
 ```jsx
 <View activePanel="input">
   <Panel id="input">
