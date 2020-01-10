@@ -4,18 +4,20 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IOS } from '../../lib/platform';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
-import { HasRootRef } from '../../types/props';
+import { HasRootRef, HasRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface CheckboxProps extends
   InputHTMLAttributes<HTMLInputElement>,
-  HasRootRef<HTMLLabelElement> {}
+  HasRootRef<HTMLLabelElement>,
+  HasRef<HTMLInputElement> {}
 
 export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,
   className,
   style,
   getRootRef,
+  getRef,
   ...restProps
 }: CheckboxProps) => {
   const platform = usePlatform();
@@ -29,7 +31,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
       activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY }
       getRootRef={getRootRef}
     >
-      <input {...restProps} type="checkbox" className="Checkbox__input" />
+      <input {...restProps} type="checkbox" className="Checkbox__input" ref={getRef} />
       <div className="Checkbox__container">
         <div className="Checkbox__icon"><Icon16Done /></div>
         <div className="Checkbox__content">{children}</div>
