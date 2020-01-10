@@ -1,16 +1,13 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import React, { ButtonHTMLAttributes, FunctionComponent } from 'react';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasChildren } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface HeaderButtonProps extends HTMLAttributes<HTMLLinkElement | HTMLButtonElement>, HasChildren {
+export interface HeaderButtonProps extends ButtonHTMLAttributes<HTMLElement> {
   primary?: boolean;
-  /**
-   * Делает из кнопки ссылку
-   */
   href?: string;
+  target?: string;
 }
 
 const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
