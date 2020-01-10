@@ -1,19 +1,20 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, InputHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
-import Button, { ButtonProps } from '../Button/Button';
+import Button, { VKUIButtonProps } from '../Button/Button';
 import classNames from '../../lib/classNames';
-import { HasRef } from '../../types/props';
+import { HasRef, HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface FileProps extends ButtonProps, HasRef<HTMLInputElement> {
-  /**
-   * @ignore
-   */
-  disabled?: boolean;
+export interface FileProps extends
+  Omit<VKUIButtonProps, 'size'>,
+  InputHTMLAttributes<HTMLInputElement>,
+  HasRef<HTMLInputElement>,
+  HasRootRef<HTMLElement> {
+  controlSize?: VKUIButtonProps['size'];
 }
 
 const File: FunctionComponent<FileProps> = (props: FileProps) => {
-  const { children, align, size, mode, stretched, before, className,
+  const { children, align, controlSize, mode, stretched, before, className,
     style, getRef, getRootRef, ...restProps } = props;
 
   const platform = usePlatform();
@@ -25,7 +26,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
       Component="label"
       stretched={stretched}
       mode={mode}
-      size={size}
+      size={controlSize}
       before={before}
       style={style}
       getRootRef={getRootRef}
