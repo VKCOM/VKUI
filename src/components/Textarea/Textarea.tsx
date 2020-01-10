@@ -1,19 +1,16 @@
-/* eslint-disable */
-
-import React, { HTMLAttributes, PureComponent } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 import { HasFormStatus, HasRef, HasRootRef } from '../../types/props';
+import { GetRef } from '../../types/common';
 
 export interface TextareaProps extends
-  HTMLAttributes<HTMLTextAreaElement>,
+  TextareaHTMLAttributes<HTMLTextAreaElement>,
   HasRef<HTMLTextAreaElement>,
   HasRootRef<HTMLElement>,
   HasFormStatus {
-  children?: string;
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
-  value?: string;
   defaultValue?: string;
 }
 
@@ -52,7 +49,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     onResize: () => {},
   };
 
-  getRef = (element: HTMLTextAreaElement) => {
+  getRef: GetRef<HTMLTextAreaElement> = (element: HTMLTextAreaElement) => {
     this.element = element;
 
     const getRef = this.props.getRef;
@@ -65,7 +62,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     }
   };
 
-  resize = () => {
+  resize: VoidFunction = () => {
     const el = this.element;
 
     if (el) {
@@ -96,7 +93,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
 
   get value() {return this.isControlledOutside ? this.props.value : this.state.value;}
 
-  onChange = (e) => {
+  onChange: ChangeEventHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (this.props.grow) {
       this.resize();
     }

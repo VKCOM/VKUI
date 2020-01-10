@@ -1,11 +1,11 @@
 import React, {
   Component,
-  FormEvent,
-  FormEventHandler,
-  HTMLAttributes,
   ReactNode,
   FocusEvent,
   FocusEventHandler,
+  InputHTMLAttributes,
+  ChangeEvent,
+  ChangeEventHandler,
 } from 'react';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
@@ -20,16 +20,12 @@ export type InputRef = (element: HTMLInputElement) => void;
 
 export type CancelHandler = () => void;
 
-export interface SearchProps extends HTMLAttributes<HTMLInputElement>, HasRef<HTMLInputElement>, HasPlatform {
+export interface SearchProps extends InputHTMLAttributes<HTMLInputElement>, HasRef<HTMLInputElement>, HasPlatform {
   /**
    * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
   after?: ReactNode;
-  autoFocus?: boolean;
-  autoComplete?: string;
-  value?: string;
   defaultValue?: string;
-  placeholder?: string;
 }
 
 export interface SearchState {
@@ -78,7 +74,7 @@ class Search extends Component<SearchProps, SearchState> {
     this.props.onBlur && this.props.onBlur(e);
   };
 
-  onChange: FormEventHandler = (e?: FormEvent<HTMLInputElement>) => {
+  onChange: ChangeEventHandler = (e?: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     if (!this.isControlledOutside) {
       this.setState({ value: target.value });

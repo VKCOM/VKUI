@@ -1,19 +1,17 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import React, { FunctionComponent, InputHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
-import FormField, { FormFieldProps } from '../FormField/FormField';
-import { HasRef, HasRootRef } from '../../types/props';
+import FormField from '../FormField/FormField';
+import { HasAlign, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
 
-export interface InputProps extends HTMLAttributes<HTMLInputElement>, HasRef<HTMLInputElement>, HasRootRef<HTMLDivElement> {
-  alignment?: 'left' | 'center' | 'right';
-  /**
-   * Значение `verified` устарело и будет удалено в 3.0.0. Используйте вместо него `valid`
-   */
-  status?: FormFieldProps['status'];
-  type?: string;
-}
+export interface InputProps extends
+  InputHTMLAttributes<HTMLInputElement>,
+  HasRef<HTMLInputElement>,
+  HasRootRef<HTMLDivElement>,
+  HasFormStatus,
+  HasAlign {}
 
 const Input: FunctionComponent<InputProps> = ({
-  alignment,
+  align,
   status,
   getRef,
   className,
@@ -22,7 +20,7 @@ const Input: FunctionComponent<InputProps> = ({
 }: InputProps) => {
   return (
     <FormField
-      className={classNames('Input', className, { [`Input--${alignment}`]: !!alignment })}
+      className={classNames('Input', className, { [`Input--${align}`]: !!align })}
       status={status}
       getRootRef={getRootRef}
     >

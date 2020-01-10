@@ -1,18 +1,15 @@
-import React, { HTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IOS } from '../../lib/platform';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
-import { HasChildren, HasRootRef } from '../../types/props';
+import { HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface CheckboxProps extends HTMLAttributes<HTMLInputElement>, HasRootRef<HTMLLabelElement>, HasChildren {
-  /**
-   * @ignore
-   */
-  disabled?: boolean;
-}
+export interface CheckboxProps extends
+  InputHTMLAttributes<HTMLInputElement>,
+  HasRootRef<HTMLLabelElement> {}
 
 export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,
