@@ -63,7 +63,7 @@
     </Group>
     <Group header={<Header mode="secondary">Ссылки в виде кнопок</Header>}>
       <Div>
-        <Button Component="a" href="#">I am link</Button>
+        <Button href="#">I am link</Button>
       </Div>
     </Group>
   </Panel>
