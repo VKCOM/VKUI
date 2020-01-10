@@ -1,8 +1,6 @@
 import React from 'react';
 import { OS } from '../lib/platform';
 
-export type HorizontalAlign = 'left' | 'center' | 'right';
-
 export interface ObjectClassNames {
   [index: string]: boolean;
 }
@@ -70,5 +68,5 @@ export interface HasFormStatus {
 }
 
 export interface HasAlign {
-  align?: HorizontalAlign;
+  align?: 'left' | 'center' | 'right';
 }
