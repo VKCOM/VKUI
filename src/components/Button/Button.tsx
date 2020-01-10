@@ -2,23 +2,22 @@ import React, { FunctionComponent, ReactNode, ElementType, ButtonHTMLAttributes 
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
-import { HasRootRef } from '../../types/props';
+import { HasAlign, HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface VKUIButtonProps {
+export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
   size?: 'm' | 'l' | 'xl';
-  align?: 'left' | 'center' | 'right';
   stretched?: boolean;
   before?: ReactNode;
   after?: ReactNode;
-  href?: string;
-  target?: string;
 }
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, VKUIButtonProps {
   Component?: ElementType;
   stopPropagation?: boolean;
+  href?: string;
+  target?: string;
 }
 
 const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {

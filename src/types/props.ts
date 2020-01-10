@@ -1,6 +1,8 @@
 import React from 'react';
 import { OS } from '../lib/platform';
 
+export type HorizontalAlign = 'left' | 'center' | 'right';
+
 export interface ObjectClassNames {
   [index: string]: boolean;
 }
@@ -16,14 +18,17 @@ export interface DangerInnerHTML {
   __html: string;
 }
 
+/* TODO: избавиться от этого интерфейса, className уже есть в HTMLAttributes */
 export interface HasClassName {
   className?: string | number | ObjectClassNames;
 }
 
+/* TODO: избавиться от этого интерфейса, className уже есть в HTMLAttributes */
 export interface HasStyleObject {
   style?: React.CSSProperties;
 }
 
+/* TODO: избавиться от этого интерфейса, className уже есть в HTMLAttributes */
 export interface HasChildren {
   children?: React.ReactNode;
 }
@@ -61,8 +66,9 @@ export interface HasDangerHTML {
 }
 
 export interface HasFormStatus {
-  /**
-   * Значение `verified` устарело и будет удалено в 3.0.0. Используйте вместо него `valid`
-   */
-  status?: 'default' | 'error' | 'valid' | 'verified';
+  status?: 'default' | 'error' | 'valid';
+}
+
+export interface HasAlign {
+  align?: HorizontalAlign;
 }
