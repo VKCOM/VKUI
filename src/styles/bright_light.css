@@ -2,7 +2,7 @@
 /*
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
-body[scheme="bright_light"] {
+:root {
   --accent: #3f8ae0;
   --action_sheet_action_foreground: #3f8ae0;
   --action_sheet_separator: rgba(0, 0, 0, 0.12);
