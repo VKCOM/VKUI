@@ -1,6 +1,6 @@
 import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
 import Button from '../Button/Button';
-import HeaderButton from '../HeaderButton/HeaderButton';
+import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
@@ -99,9 +99,9 @@ class ModalCard extends Component<ModalCardProps> {
             }
 
             {platform === IOS &&
-            <HeaderButton className="ModalCard__dismiss" onClick={onClose}>
+            <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
               <Icon24Dismiss />
-            </HeaderButton>}
+            </PanelHeaderButton>}
           </div>
         </div>
       </div>

@@ -69,7 +69,7 @@
       return (
         <React.Fragment>
           <PanelHeader
-            right={<HeaderButton onClick={this.props.goHeaderSearch} key="add"><Icon24Add /></HeaderButton>}
+            right={<PanelHeaderButton onClick={this.props.goHeaderSearch} key="add"><Icon24Add /></PanelHeaderButton>}
           >
             Выбор тематики
           </PanelHeader>

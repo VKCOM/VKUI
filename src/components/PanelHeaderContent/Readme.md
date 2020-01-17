@@ -4,8 +4,8 @@
 <View activePanel="brand">
   <Panel id="brand">
     <PanelHeader
-      left={<HeaderButton>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</HeaderButton>}
-      right={<HeaderButton>{<Icon24Phone />}</HeaderButton>}
+      left={<PanelHeaderButton>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</PanelHeaderButton>}
+      right={<PanelHeaderButton>{<Icon24Phone />}</PanelHeaderButton>}
     >
       <PanelHeaderContent
         status="был в сети сегодня, в 18:46"

@@ -6,7 +6,7 @@ import './lib/polyfills';
 export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export { default as Panel } from './components/Panel/Panel';
-export { default as HeaderButton } from './components/HeaderButton/HeaderButton';
+export { default as PanelHeaderButton } from './components/PanelHeaderButton/PanelHeaderButton';
 export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
 export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
 export { default as HeaderContext } from './components/HeaderContext/HeaderContext';

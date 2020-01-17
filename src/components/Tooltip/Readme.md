@@ -68,12 +68,12 @@ import { Tooltip, Button } from '@vkontakte/vkui';
           <Panel id="tooltip2">
             <PanelHeader
               left={
-                <HeaderButton onClick={() => this.setState({ activePanel: 'tooltip' })}>
+                <PanelHeaderButton onClick={() => this.setState({ activePanel: 'tooltip' })}>
                   {osname === ANDROID ? <Icon24Back/> : <Icon28ChevronBack/>}
-                </HeaderButton>
+                </PanelHeaderButton>
               }
               right={
-                <HeaderButton>
+                <PanelHeaderButton>
                   <Tooltip
                     isShown={this.state.tooltip2}
                     onClose={() => this.setState({ tooltip2: false, tooltip3: true })}
@@ -85,7 +85,7 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                   >
                     <Icon24Add/>
                   </Tooltip>
-                </HeaderButton>
+                </PanelHeaderButton>
               }
             >
               Tooltip

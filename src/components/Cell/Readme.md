@@ -136,9 +136,9 @@
           <Panel id="nothing">
               <PanelHeader
                 left={
-                  <HeaderButton onClick={() => this.setState({ activePanel: 'list' })}>
+                  <PanelHeaderButton onClick={() => this.setState({ activePanel: 'list' })}>
                     {osname === ANDROID ? <Icon24Back/> : <Icon28ChevronBack/>}
-                  </HeaderButton>
+                  </PanelHeaderButton>
                 }
               >
                 Ничего

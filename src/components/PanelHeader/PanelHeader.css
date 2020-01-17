@@ -110,11 +110,11 @@
             height: 100%;
             }
 
-            .PanelHeader--ios .PanelHeader-left-in .HeaderButton .Icon--24 {
+            .PanelHeader--ios .PanelHeader-left-in .PanelHeaderButton .Icon--24 {
               padding-left: 12px;
               }
 
-            .PanelHeader--ios .PanelHeader-left-in .HeaderButton > *:not(.Icon) {
+            .PanelHeader--ios .PanelHeader-left-in .PanelHeaderButton > *:not(.Icon) {
               padding-left: 16px;
               }
 
@@ -154,19 +154,19 @@
           height: 100%;
           }
 
-          .PanelHeader--ios .PanelHeader-right .HeaderButton:not(:first-child) {
+          .PanelHeader--ios .PanelHeader-right .PanelHeaderButton:not(:first-child) {
             padding-left: 12px;
             }
 
-            .PanelHeader--ios .PanelHeader-right .HeaderButton .Icon--24 {
+            .PanelHeader--ios .PanelHeader-right .PanelHeaderButton .Icon--24 {
               padding-right: 12px;
               }
 
-            .PanelHeader--ios .PanelHeader-right .HeaderButton .Icon--28 {
+            .PanelHeader--ios .PanelHeader-right .PanelHeaderButton .Icon--28 {
               padding-right: 12px;
               }
 
-            .PanelHeader--ios .PanelHeader-right .HeaderButton > *:not(.Icon) {
+            .PanelHeader--ios .PanelHeader-right .PanelHeaderButton > *:not(.Icon) {
               padding-right: 16px;
               }
 

@@ -4,18 +4,18 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface HeaderButtonProps extends ButtonHTMLAttributes<HTMLElement> {
+export interface PanelHeaderButtonProps extends ButtonHTMLAttributes<HTMLElement> {
   primary?: boolean;
   href?: string;
   target?: string;
 }
 
-const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
+const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   className,
   children,
   primary,
   ...restProps
-}: HeaderButtonProps) => {
+}: PanelHeaderButtonProps) => {
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
   const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
@@ -26,18 +26,18 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
       Component={Component}
       activeEffectDelay={200}
       className={classNames(
-        getClassName('HeaderButton', platform),
+        getClassName('PanelHeaderButton', platform),
         className,
-        { 'HeaderButton--primary': primary }
+        { 'PanelHeaderButton--primary': primary }
       )}
     >
-      {isPrimitive ? <span className="HeaderButton__primitive">{children}</span> : children}
+      {isPrimitive ? <span className="PanelHeaderButton__primitive">{children}</span> : children}
     </Tappable>
   );
 };
 
-HeaderButton.defaultProps = {
+PanelHeaderButton.defaultProps = {
   primary: false,
 };
 
-export default HeaderButton;
+export default PanelHeaderButton;

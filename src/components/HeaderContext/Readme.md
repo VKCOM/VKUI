@@ -26,8 +26,8 @@ class Example extends React.Component {
       <View activePanel="context">
         <Panel id="context">
           <PanelHeader
-            left={<HeaderButton>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</HeaderButton>}
-            right={<HeaderButton>{<Icon24Add />}</HeaderButton>}
+            left={<PanelHeaderButton>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</PanelHeaderButton>}
+            right={<PanelHeaderButton>{<Icon24Add />}</PanelHeaderButton>}
           >
             <PanelHeaderContent aside={<Icon16Dropdown />} onClick={this.toggleContext}>
               Communities

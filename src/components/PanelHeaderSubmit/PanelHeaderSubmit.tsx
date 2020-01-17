@@ -1,19 +1,19 @@
 import React, { FunctionComponent } from 'react';
-import HeaderButton, { HeaderButtonProps } from '../HeaderButton/HeaderButton';
+import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import Icon24Done from '@vkontakte/icons/dist/24/done';
 import { ANDROID } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 
-const PanelHeaderSubmit: FunctionComponent<HeaderButtonProps> = ({
+const PanelHeaderSubmit: FunctionComponent<PanelHeaderButtonProps> = ({
   children,
   ...restProps
-}: HeaderButtonProps) => {
+}: PanelHeaderButtonProps) => {
   const platform = usePlatform();
 
   return (
-    <HeaderButton primary {...restProps}>
+    <PanelHeaderButton primary {...restProps}>
       {platform === ANDROID ? <Icon24Done/> : children}
-    </HeaderButton>
+    </PanelHeaderButton>
   );
 };
 

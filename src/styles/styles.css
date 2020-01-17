@@ -13,7 +13,7 @@
 @import '../components/View/View.css';
 @import '../components/Panel/Panel.css';
 @import '../components/PanelHeader/PanelHeader.css';
-@import '../components/HeaderButton/HeaderButton.css';
+@import '../components/PanelHeaderButton/PanelHeaderButton.css';
 @import '../components/PanelHeaderContent/PanelHeaderContent.css';
 @import '../components/HeaderContext/HeaderContext.css';
 @import '../components/Epic/Epic.css';

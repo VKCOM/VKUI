@@ -7,7 +7,7 @@
   transition: background-color .15s ease-out;
   }
 
-.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.HeaderButton):not(.Button):not(.PanelHeaderContent__in):not(.ActionSheetItem) {
+.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.Button):not(.PanelHeaderContent__in):not(.ActionSheetItem) {
   background: var(--separator_common) !important;
   transition: none;
   }
@@ -20,7 +20,7 @@
   transition: background-color .15s ease-out;
   }
 
-.Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.HeaderButton):not(.Button):not(.PanelHeaderContent__in) {
+.Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.Button):not(.PanelHeaderContent__in) {
   background: var(--background_highlighted) !important;
   }
 

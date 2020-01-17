@@ -4,27 +4,27 @@
 Кнопки могут быть переданы в `left` или `right` компонента `PanelHeader`:
 
 ```jsx static
-import { PanelHeader, HeaderButton } from '@vkontakte/vkui';
+import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Search from '@vkontakte/icons/dist/24/search';
 
 <PanelHeader
-  left={<HeaderButton><Icon24Back/></HeaderButton>}
-  right={<HeaderButton><Icon24Search/></HeaderButton>}
+  left={<PanelHeaderButton><Icon24Back/></PanelHeaderButton>}
+  right={<PanelHeaderButton><Icon24Search/></PanelHeaderButton>}
 />
 ```
 
 Если нужно несколько кнопок справа или слева, то передаем массив:
 
 ```jsx static
-import { PanelHeader, HeaderButton } from '@vkontakte/vkui';
+import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
 import Icon24Add from '@vkontakte/icons/dist/24/add';
 import Icon24Search from '@vkontakte/icons/dist/24/search';
 
 <PanelHeader
   right={[
-    <HeaderButton key="search"><Icon24Search/></HeaderButton>,
-    <HeaderButton key="add"><Icon24Add/></HeaderButton>
+    <PanelHeaderButton key="search"><Icon24Search/></PanelHeaderButton>,
+    <PanelHeaderButton key="add"><Icon24Add/></PanelHeaderButton>
   ]}
 />
 ```
@@ -39,15 +39,15 @@ import Icon24Search from '@vkontakte/icons/dist/24/search';
 В iOS к левой кнопке может быть добавлена подпись. Пример:
 
 ```jsx static
-import { PanelHeader, HeaderButton, platform, IOS } from '@vkontakte/vkui';
+import { PanelHeader, PanelHeaderButton, platform, IOS } from '@vkontakte/vkui';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 
 const osname = platform();
 
 <PanelHeader
-  addon={<HeaderButton>Назад</HeaderButton>}
-  left={<HeaderButton>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</HeaderButton>}
+  addon={<PanelHeaderButton>Назад</PanelHeaderButton>}
+  left={<PanelHeaderButton>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</PanelHeaderButton>}
 />
 ```
 
@@ -73,7 +73,7 @@ class Example extends React.Component {
       <Root activeView={this.state.activeView}>
         <View id="main" activePanel={this.state.activePanel}>
           <Panel id="panel1">
-            <PanelHeader left={<HeaderButton>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</HeaderButton>}>
+            <PanelHeader left={<PanelHeaderButton>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</PanelHeaderButton>}>
               Стартовый экран
             </PanelHeader>
             <Group>
@@ -92,9 +92,9 @@ class Example extends React.Component {
           </Panel>
           <Panel id="panel2">
             <PanelHeader
-              left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</HeaderButton>}
-              addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>Назад</HeaderButton>}
-              right={<HeaderButton onClick={() => {}}><Icon24Story/></HeaderButton>}
+              left={<PanelHeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</PanelHeaderButton>}
+              addon={<PanelHeaderButton onClick={() => this.setState({ activePanel: 'panel1' })}>Назад</PanelHeaderButton>}
+              right={<PanelHeaderButton onClick={() => {}}><Icon24Story/></PanelHeaderButton>}
             >
               Заголовок
             </PanelHeader>
@@ -106,11 +106,11 @@ class Example extends React.Component {
           </Panel>
           <Panel id="panel3">
             <PanelHeader
-              left={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</HeaderButton>}
-              addon={<HeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>Назад</HeaderButton>}
+              left={<PanelHeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}</PanelHeaderButton>}
+              addon={<PanelHeaderButton onClick={() => this.setState({ activePanel: 'panel2' })}>Назад</PanelHeaderButton>}
               right={[
-                <HeaderButton key="add" onClick={() => {}}><Icon24Add/></HeaderButton>,
-                <HeaderButton key="more" onClick={() => {}}><Icon24MoreVertical/></HeaderButton>
+                <PanelHeaderButton key="add" onClick={() => {}}><Icon24Add/></PanelHeaderButton>,
+                <PanelHeaderButton key="more" onClick={() => {}}><Icon24MoreVertical/></PanelHeaderButton>
               ]}
             >
               Две иконки
@@ -125,8 +125,8 @@ class Example extends React.Component {
         <View id="modal" header activePanel="modal-panel">
           <Panel id="modal-panel">
             <PanelHeader
-              left={<HeaderButton onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</HeaderButton>}
-              right={<HeaderButton disabled primary onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Готово' : <Icon24Done/>}</HeaderButton>}
+              left={<PanelHeaderButton onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Отмена' : <Icon24Cancel/>}</PanelHeaderButton>}
+              right={<PanelHeaderButton disabled primary onClick={() => this.setState({ activeView: 'main' })}>{osname === IOS ? 'Готово' : <Icon24Done/>}</PanelHeaderButton>}
             >
               Модальное окно
             </PanelHeader>

@@ -29,8 +29,8 @@
         <View activePanel={this.state.activePanel}>
           <Panel id="panel1" separator={false}>
             <PanelHeader
-              left={<HeaderButton><Icon24CameraOutline /></HeaderButton>}
-              right={<HeaderButton><Icon24Add /></HeaderButton>}
+              left={<PanelHeaderButton><Icon24CameraOutline /></PanelHeaderButton>}
+              right={<PanelHeaderButton><Icon24Add /></PanelHeaderButton>}
             >
               <Tabs>
                 <TabsItem
