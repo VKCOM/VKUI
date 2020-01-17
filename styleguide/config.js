@@ -39,7 +39,7 @@ module.exports = {
           '../src/components/PanelHeader/PanelHeader.tsx',
           '../src/components/PanelHeaderButton/PanelHeaderButton.tsx',
           '../src/components/PanelHeaderContent/PanelHeaderContent.tsx',
-          '../src/components/HeaderContext/HeaderContext.tsx',
+          '../src/components/PanelHeaderContext/PanelHeaderContext.tsx',
           '../src/components/Epic/Epic.tsx',
           '../src/components/Tabbar/Tabbar.tsx',
           '../src/components/TabbarItem/TabbarItem.tsx',

@@ -15,7 +15,7 @@
 @import '../components/PanelHeader/PanelHeader.css';
 @import '../components/PanelHeaderButton/PanelHeaderButton.css';
 @import '../components/PanelHeaderContent/PanelHeaderContent.css';
-@import '../components/HeaderContext/HeaderContext.css';
+@import '../components/PanelHeaderContext/PanelHeaderContext.css';
 @import '../components/Epic/Epic.css';
 @import '../components/Tabbar/Tabbar.css';
 @import '../components/TabbarItem/TabbarItem.css';

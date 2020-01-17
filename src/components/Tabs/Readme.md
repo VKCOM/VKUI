@@ -57,7 +57,7 @@
                 </TabsItem>
               </Tabs>
             </PanelHeader>
-            <HeaderContext
+            <PanelHeaderContext
               opened={this.state.contextOpened}
               onClose={() => { this.setState({ contextOpened: false }) }}
             >
@@ -79,7 +79,7 @@
                   Managed Communities
                 </Cell>
               </List>
-            </HeaderContext>
+            </PanelHeaderContext>
             <CellButton onClick={() => this.setState({ activePanel: 'panel2' })}>Под шапкой</CellButton>
           </Panel>
           <Panel id="panel2" separator={false}>

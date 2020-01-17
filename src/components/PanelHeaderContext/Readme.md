@@ -29,11 +29,14 @@ class Example extends React.Component {
             left={<PanelHeaderButton>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</PanelHeaderButton>}
             right={<PanelHeaderButton>{<Icon24Add />}</PanelHeaderButton>}
           >
-            <PanelHeaderContent aside={<Icon16Dropdown />} onClick={this.toggleContext}>
+            <PanelHeaderContent
+              aside={<Icon16Dropdown style={{ transform: `rotate(${this.state.contextOpened ? '180deg' : '0'})` }} />}
+              onClick={this.toggleContext}
+            >
               Communities
             </PanelHeaderContent>
           </PanelHeader>
-          <HeaderContext opened={this.state.contextOpened} onClose={this.toggleContext}>
+          <PanelHeaderContext opened={this.state.contextOpened} onClose={this.toggleContext}>
             <List>
               <Cell
                 before={<Icon24Users />}
@@ -52,7 +55,7 @@ class Example extends React.Component {
                 Managed Communities
               </Cell>
             </List>
-          </HeaderContext>
+          </PanelHeaderContext>
         </Panel>
       </View>
     )
