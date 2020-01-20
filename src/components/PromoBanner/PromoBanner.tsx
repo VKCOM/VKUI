@@ -58,8 +58,7 @@ const PromoBanner = (props: PromoBannerProps) =>
       <div className="PromoBanner__content">
         <Cell
           before={
-            // @ts-ignore
-            <Avatar type="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
+            <Avatar mode="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
           }
           asideContent={<Button mode="outline">{props.bannerData.ctaText}</Button>}
           description={props.bannerData.domain}

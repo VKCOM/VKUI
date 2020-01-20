@@ -212,7 +212,7 @@ class App extends React.Component {
         <ModalCard
           id={MODAL_CARD_APP_TO_MENU}
           onClose={() => this.setActiveModal(null)}
-          icon={<Avatar type="app" src="https://pp.userapi.com/c639222/v639222699/5e1d8/2wtUaVn4Pho.jpg" size={72} />}
+          icon={<Avatar mode="app" src="https://pp.userapi.com/c639222/v639222699/5e1d8/2wtUaVn4Pho.jpg" size={72} />}
           header="Добавить игру «Загадки детства» в меню?"
           caption="Игра появится под списком разделов на экране меню и будет всегда под рукой."
           actions={[{
