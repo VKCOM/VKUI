@@ -14,7 +14,6 @@ export function platform(useragent?: string): OS {
   return /android/i.test(ua) ? ANDROID : IOS;
 }
 
-// @TODO после перехода на usePlatform или withPlatform
 const osname = platform();
 
 /**
