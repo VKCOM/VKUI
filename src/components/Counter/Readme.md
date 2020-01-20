@@ -8,9 +8,9 @@
     <Group header={<Header mode="secondary">Счётчики в ячейках</Header>}>
       <List>
         <Cell before={<Icon24User />} indicator={<Counter>4</Counter>}>Друзья</Cell>
-        <Cell before={<Icon24Users />} indicator={<Counter type="primary">2</Counter>}>Группы</Cell>
+        <Cell before={<Icon24Users />} indicator={<Counter mode="primary">2</Counter>}>Группы</Cell>
         <Cell before={<Icon24Message />} indicator={<Counter>224</Counter>}>Сообщения</Cell>
-        <Cell before={<Icon24Favorite />} indicator={<Counter type="primary">1</Counter>}>Закладки</Cell>
+        <Cell before={<Icon24Favorite />} indicator={<Counter mode="primary">1</Counter>}>Закладки</Cell>
       </List>
     </Group>
     <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
@@ -24,7 +24,7 @@
     </Group>
     <Group header={
       <Header
-        indicator={<Counter size="s" type="prominent">5</Counter>}
+        indicator={<Counter size="s" mode="prominent">5</Counter>}
         aside={<Link>Посмотреть все</Link>}
       >
         Заявки в друзья

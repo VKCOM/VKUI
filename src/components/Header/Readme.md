@@ -20,7 +20,7 @@
         Недавние
       </Header>
       <Separator />
-      <Header indicator={<Counter size="s" type="prominent">3</Counter>} aside={<Link>Показать все</Link>}>
+      <Header indicator={<Counter size="s" mode="prominent">3</Counter>} aside={<Link>Показать все</Link>}>
         Заявки в друзья
       </Header>
       <Separator />
@@ -39,7 +39,7 @@
         Фотографии
       </Header>
       <Separator />
-      <Header mode="secondary" indicator={<Counter size="s" type="prominent">3</Counter>} aside={<Link>Показать все</Link>}>
+      <Header mode="secondary" indicator={<Counter size="s" mode="prominent">3</Counter>} aside={<Link>Показать все</Link>}>
         Приглашения
       </Header>
     </Panel>
