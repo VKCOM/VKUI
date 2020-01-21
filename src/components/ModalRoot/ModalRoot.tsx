@@ -235,7 +235,10 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.documentScrolling = enabled;
 
     if (enabled) {
-      this.window.removeEventListener('touchmove', this.preventTouch);
+      // Здесь нужен последний аргумент с такими же параметрами, потому что
+      // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
+      // https://github.com/VKCOM/VKUI/issues/444
+      this.window.removeEventListener('touchmove', this.preventTouch, { passive: false });
     } else {
       this.window.addEventListener('touchmove', this.preventTouch, { passive: false });
     }

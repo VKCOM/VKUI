@@ -230,15 +230,20 @@ export default class Touch extends Component<TouchProps> {
   };
 
   subscribe(element: HTMLElement) {
-    element.addEventListener(events[1], this.onMove, { capture: this.props.useCapture, passive: false });
-    element.addEventListener(events[2], this.onEnd, { capture: this.props.useCapture, passive: false });
-    element.addEventListener(events[3], this.onEnd, { capture: this.props.useCapture, passive: false });
+    const listenerParams = { capture: this.props.useCapture, passive: false };
+    element.addEventListener(events[1], this.onMove, listenerParams);
+    element.addEventListener(events[2], this.onEnd, listenerParams);
+    element.addEventListener(events[3], this.onEnd, listenerParams);
   }
 
   unsubscribe(element: HTMLElement) {
-    element.removeEventListener(events[1], this.onMove);
-    element.removeEventListener(events[2], this.onEnd);
-    element.removeEventListener(events[3], this.onEnd);
+    // Здесь нужен последний аргумент с такими же параметрами, потому что
+    // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
+    // https://github.com/VKCOM/VKUI/issues/444
+    const listenerParams = { capture: this.props.useCapture, passive: false };
+    element.removeEventListener(events[1], this.onMove, listenerParams);
+    element.removeEventListener(events[2], this.onEnd, listenerParams);
+    element.removeEventListener(events[3], this.onEnd, listenerParams);
   }
 
   /**
