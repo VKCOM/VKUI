@@ -68,7 +68,9 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   }
 
   container: React.RefObject<HTMLDivElement>;
-  slidesStore: {};
+  slidesStore: {
+    [index: string]: HTMLElement;
+  };
   viewport: HTMLElement;
   timeout: number;
   isChildrenDirty: boolean;
@@ -139,7 +141,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   calculateIndent(targetIndex: number) {
     const { slides } = this.state;
 
-    if (!this.isDraggable()) {
+    if (!this.isDraggable) {
       return 0;
     }
 
@@ -187,7 +189,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     return value;
   }
 
-  isDraggable() {
+  get isDraggable() {
     return this.state.layerWidth > this.state.containerWidth;
   }
 
@@ -242,7 +244,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
-    if (this.isDraggable()) {
+    if (this.isDraggable) {
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
