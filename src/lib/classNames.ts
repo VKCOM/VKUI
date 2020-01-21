@@ -1,6 +1,8 @@
-import { ObjectClassNames } from '../types/props';
+export interface ObjectClassNames {
+  [index: string]: boolean;
+}
 
-type ClassName = number | string | ObjectClassNames | false | null | undefined;
+export type ClassName = number | string | ObjectClassNames | false | null | undefined;
 
 export default function classNames(...classnames: ClassName[]) {
   let result: string[] = [];

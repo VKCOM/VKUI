@@ -1,12 +1,12 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
-import { HasChildren, HasClassName, HasInsets } from '../../types/props';
+import { HasInsets } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface ModalPageProps extends HasChildren, HasClassName, HasInsets {
+export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInsets {
   id: string;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`

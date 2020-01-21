@@ -1,19 +1,19 @@
 /* eslint-disable */
 
-import React, { PureComponent } from 'react';
+import React, { HTMLAttributes, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Touch from '../Touch/Touch';
 import classNames from '../../lib/classNames';
-import { HasChildren, HasClassName, HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types/props';
 import getClassname from '../../helpers/getClassName';
 import { canUseDOM } from '../../lib/dom';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 
-export interface SnackbarProps extends HasChildren, HasClassName, HasPlatform {
+export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform {
   /**
    * Название кнопки действия в уведомлении
    */
