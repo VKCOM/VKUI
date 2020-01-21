@@ -232,7 +232,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.documentScrolling = enabled;
 
     if (enabled) {
-      this.window.removeEventListener('touchmove', this.preventTouch);
+      this.window.removeEventListener('touchmove', this.preventTouch, { passive: false });
     } else {
       this.window.addEventListener('touchmove', this.preventTouch, { passive: false });
     }
@@ -240,7 +240,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   preventTouch = (event) => {
     if (event) {
-      while (event.originalEvent) event = event.originalEvent;
+      while (event.originalEvent) {
+        event = event.originalEvent;
+      }
       event.preventDefault();
     }
   };
