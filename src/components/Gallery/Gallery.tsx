@@ -52,6 +52,10 @@ class Gallery extends Component<GalleryProps, GalleryState> {
 
     const current = typeof props.slideIndex === 'number' ? props.slideIndex : props.initialSlideIndex;
 
+    if (!this.props.onChange && typeof this.props.slideIndex === 'number') {
+      this.logControlledError();
+    }
+
     this.state = {
       containerWidth: 0,
       current,
@@ -83,6 +87,10 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     align: 'left',
     bullets: false,
   };
+
+  logControlledError() {
+    console.error('Failed prop type: You provided a `slideIndex` prop to `Gallery` without an `onChange` handler.');
+  }
 
   get isCenterWithCustomWidth() {
     return this.props.slideWidth === 'custom' && this.props.align === 'center';
@@ -224,15 +232,25 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   }
 
   go(targetIndex: number) {
-    this.setState({
-      animation: true,
-      shiftX: this.calculateIndent(targetIndex),
-      current: targetIndex,
-    });
+    if (typeof this.props.slideIndex === 'number' && !this.props.onChange) {
+      this.logControlledError();
+      this.setState({
+        animation: true,
+        deltaX: 0,
+        shiftX: this.calculateIndent(this.state.current),
+      });
+    } else {
+      this.setState({
+        animation: true,
+        deltaX: 0,
+        shiftX: this.calculateIndent(targetIndex),
+        current: targetIndex,
+      });
 
-    if (this.timeout) {
-      this.clearTimeout();
-      this.setTimeout(this.props.timeout);
+      if (this.timeout) {
+        this.clearTimeout();
+        this.setTimeout(this.props.timeout);
+      }
     }
   };
 
@@ -263,24 +281,11 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   onEnd: TouchEventHandler = (e: TouchEvent) => {
     const targetIndex = e.isSlide ? this.getTarget() : this.state.current;
     this.props.onDragEnd && this.props.onDragEnd(e);
-
-    this.setState({
-      shiftX: this.calculateIndent(targetIndex),
-      deltaX: 0,
-      animation: true,
-      current: targetIndex,
-    });
+    this.go(targetIndex);
 
     if (this.props.onEnd) {
       this.props.onEnd({ targetIndex });
     }
-
-    if (this.timeout) {
-      this.clearTimeout();
-      this.setTimeout(this.props.timeout);
-    }
-
-    return true;
   };
 
   onResize: VoidFunction = () => {
