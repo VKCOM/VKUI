@@ -5,13 +5,24 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ReactFrame from 'react-frame-component';
 
+function mapOldScheme(scheme) {
+  switch (scheme) {
+    case 'client_light':
+      return 'bright_light';
+    case 'client_dark':
+      return 'space_gray';
+    default:
+      return scheme;
+  }
+}
+
 const frameInitialContent = `
   <!DOCTYPE html>
   <html>
     <head>
       <link href="./main.css" rel="stylesheet" id="styles" />
     </head>
-    <body scheme="${window.schemeId}">
+    <body scheme="${mapOldScheme(window.schemeId)}">
     </body>
   </html>
 `;
@@ -44,7 +55,6 @@ class PrepareFrame extends React.Component {
     this.context.document.body.appendChild(masks.cloneNode(true));
 
     let styles = this.context.document.getElementById('styles');
-    if (styles.sheet) this.setState({ loaded: true });
     styles.onload = styles.onreadystatechange = () => {
       this.setState({ loaded: true });
     };
