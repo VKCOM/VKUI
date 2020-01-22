@@ -47,7 +47,7 @@ const UsersStack: React.FunctionComponent<UsersStackProps> = (props: UsersStackP
           `UsersStack--l-${layout}`,
           {
             'UsersStack--with-others': canShowOthers,
-          }
+          },
         )}
     >
       <div className="UsersStack__photos">

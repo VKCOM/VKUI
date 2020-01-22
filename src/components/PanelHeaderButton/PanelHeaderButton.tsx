@@ -28,7 +28,7 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
       className={classNames(
         getClassName('PanelHeaderButton', platform),
         className,
-        { 'PanelHeaderButton--primary': primary }
+        { 'PanelHeaderButton--primary': primary },
       )}
     >
       {isPrimitive ? <span className="PanelHeaderButton__primitive">{children}</span> : children}

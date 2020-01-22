@@ -124,7 +124,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
               onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
               style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null,
               isLast: this.isItemLast(index),
-            })
+            }),
           )}
         </div>
       </PopoutWrapper>

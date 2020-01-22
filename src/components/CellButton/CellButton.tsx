@@ -33,7 +33,7 @@ const CellButton: React.FunctionComponent<CellButtonProps> = ({
         getClassName('CellButton', platform),
         className,
         `CellButton--lvl-${mode}`,
-        `CellButton--aln-${align}`
+        `CellButton--aln-${align}`,
       )}
       Component={restProps.href ? 'a' : Component}
     >
