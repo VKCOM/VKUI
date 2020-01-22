@@ -17,7 +17,7 @@
     "*.css"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.2.0",
+    "@babel/cli": "^7.7.5",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.2.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
@@ -57,15 +57,15 @@
     "react-docgen-typescript": "^1.14.1",
     "react-dom": "^16.8.6",
     "react-frame-component": "^3.0.0",
-    "react-styleguidist": "^9.1.16",
+    "react-styleguidist": "^10.2.1",
     "source-map-loader": "^0.2.4",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
-    "webpack": "^4.12.0",
-    "webpack-cli": "^3.0.3",
-    "webpack-merge": "^4.0.0"
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-merge": "^4.2.2"
   },
   "bin": {
     "generate_scheme": "./tasks/generate_scheme.js"
