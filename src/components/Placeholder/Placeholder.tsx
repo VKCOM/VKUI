@@ -1,8 +1,7 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
-import { HasClassName, HasChildren } from '../../types/props';
 
-export interface PlaceholderProps extends HasClassName, HasChildren {
+export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Иконка
    */

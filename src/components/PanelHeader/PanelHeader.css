@@ -212,7 +212,8 @@
           font-size: 20px;
           line-height: var(--panelheader_height_android);
           height: var(--panelheader_height_android);
-          font-weight: 500;
+          font-weight: 800;
+          font-family: var(--font-tt);
           display: flex;
           align-items: center;
         }

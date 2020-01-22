@@ -1,10 +1,6 @@
 import React from 'react';
 import { OS } from '../lib/platform';
 
-export interface ObjectClassNames {
-  [index: string]: boolean;
-}
-
 export interface InsetsInterface {
   top?: number;
   right?: number;
@@ -16,17 +12,9 @@ export interface DangerInnerHTML {
   __html: string;
 }
 
-/* TODO: избавиться от этого интерфейса, className уже есть в HTMLAttributes */
-export interface HasClassName {
-  className?: string | number | ObjectClassNames;
-}
-
-/* TODO: избавиться от этого интерфейса, className уже есть в HTMLAttributes */
-export interface HasStyleObject {
-  style?: React.CSSProperties;
-}
-
-/* TODO: избавиться от этого интерфейса, className уже есть в HTMLAttributes */
+/**
+ * @deprecated использовать HTMLAttributes
+ */
 export interface HasChildren {
   children?: React.ReactNode;
 }

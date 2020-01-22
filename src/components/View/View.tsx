@@ -338,7 +338,11 @@ class View extends Component<ViewProps, ViewState> {
   };
 
   onMoveX = (e): void => {
-    if (swipeBackExcludedTags.includes(e.originalEvent.target.tagName.toLowerCase())) {
+    if (
+      e.originalEvent.target &&
+      typeof e.originalEvent.target.tagName === 'string' &&
+      swipeBackExcludedTags.includes(e.originalEvent.target.tagName.toLowerCase())
+    ) {
       return;
     }
 

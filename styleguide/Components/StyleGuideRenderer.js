@@ -6,11 +6,7 @@ import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import Link from 'react-styleguidist/lib/client/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
-import scheme from '@vkontakte/appearance/main.valette/scheme';
-
-const schemeOptions = Object.keys(scheme).map(scheme_id => (
-  <option value={scheme_id} key={scheme_id}>{scheme_id}</option>
-));
+import { schemeOptions } from '../utils';
 
 const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
   root: {
