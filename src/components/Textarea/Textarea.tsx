@@ -46,7 +46,6 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     style: {},
     defaultValue: '',
     grow: true,
-    onResize: () => {},
   };
 
   getRef: GetRef<HTMLTextAreaElement> = (element: HTMLTextAreaElement) => {
@@ -86,7 +85,9 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
 
         this.setState({ height });
 
-        this.props.onResize(el);
+        if (this.props.onResize) {
+          this.props.onResize(el);
+        }
       });
     }
   };
