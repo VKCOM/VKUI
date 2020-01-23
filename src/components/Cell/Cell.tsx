@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
+import React, {Component, InputHTMLAttributes, ReactNode} from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
@@ -15,7 +15,9 @@ import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
 import { HasChildren, HasPlatform, HasRootRef } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
 
-export interface CellProps extends HTMLAttributes<HTMLElement>, HasChildren, HasRootRef<HTMLElement>, HasPlatform {
+type ProxyInputHTMLAttributes = Omit<InputHTMLAttributes<HTMLElement>, 'size'>
+
+export interface CellProps extends ProxyInputHTMLAttributes, HasChildren, HasRootRef<HTMLElement>, HasPlatform {
   /**
    * Контейнер для контента от `children`.
    */
@@ -57,10 +59,6 @@ export interface CellProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
    * `draggable`.
    */
   selectable?: boolean;
-  /**
-   * Флаг определяет состояние ячейки-чекбокса: отмечен или не отмечен
-   */
-  checked?: boolean;
   /**
    * Флаг для перехода в режим удаляемых ячеек. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
    */
@@ -272,13 +270,14 @@ class Cell extends Component<CellProps, CellState> {
       size,
       bottomContent,
       platform,
+      onChange,
       ...restProps
     } = this.props;
 
     selectable = selectable && !draggable;
 
     const rootProps = selectable ? {} : restProps;
-    const inputProps = selectable ? restProps : {};
+    const inputProps = selectable ? {...restProps, onChange} : {};
     const linkProps = href ? restProps : {};
     const IS_PLATFORM_ANDROID = platform === ANDROID;
     const IS_PLATFORM_IOS = platform === IOS;
