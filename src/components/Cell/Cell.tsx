@@ -58,6 +58,10 @@ export interface CellProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
    */
   selectable?: boolean;
   /**
+   * Флаг определяет состояние ячейки-чекбокса: отмечен или не отмечен
+   */
+  checked?: boolean;
+  /**
    * Флаг для перехода в режим удаляемых ячеек. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
    */
   removable?: boolean;
