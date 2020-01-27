@@ -52,8 +52,14 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('touchmove', this.preventTouch);
-    window.clearTimeout(this.animationFinishTimeout);
+    // Здесь нужен последний аргумент с такими же параметрами, потому что
+    // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
+    // https://github.com/VKCOM/VKUI/issues/444
+    if (canUseDOM) {
+      // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
+      window.removeEventListener('touchmove', this.preventTouch, { passive: false });
+      window.clearTimeout(this.animationFinishTimeout);
+    }
   }
 
   waitAnimationFinish(elem: HTMLDivElement, eventHandler: AnimationEndCallback) {
