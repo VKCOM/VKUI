@@ -124,7 +124,15 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
   }
 
   componentWillUnmount() {
-    this.document.removeEventListener('touchmove', this.onWindowTouchMove);
+    // Здесь нужен последний аргумент с такими же параметрами, потому что
+    // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
+    // https://github.com/VKCOM/VKUI/issues/444
+    if (canUseDOM) {
+      this.document.removeEventListener('touchmove', this.onWindowTouchMove, {
+        cancelable: true,
+        passive: false,
+      });
+    }
   }
 
   componentDidUpdate(prevProps: PullToRefreshProps) {
