@@ -1,7 +1,7 @@
 Этот компонент - обёртка над `<Spinner />` с заданными отступами и размером. Удобно использовать его во время загрузки данных.
 
 ```jsx static
-import PanelSpinner from '@vkontakte/vkui/dist/components/PanelSpinner/PanelSpinner';
+import { PanelSpinner } from '@vkontakte/vkui';
 
 <Panel>
   <PanelHeader left={<PanelHeaderBack />}>Заголовок панели</PanelHeader>

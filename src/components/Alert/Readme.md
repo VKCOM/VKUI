@@ -50,7 +50,7 @@ class Example extends React.Component {
         actions={[{
           title: 'Отмена',
           autoclose: true,
-          style: 'cancel'
+          mode: 'cancel'
         }, {
           title: 'Добавить',
           autoclose: true,
@@ -71,12 +71,12 @@ class Example extends React.Component {
         actions={[{
           title: 'Лишить права',
           autoclose: true,
-          style: 'destructive',
+          mode: 'destructive',
           action: () => this.addActionLogItem('Пользователь больше не может модерировать контент.'),
         }, {
           title: 'Отмена',
           autoclose: true,
-          style: 'cancel'
+          mode: 'cancel'
         }]}
         onClose={this.closePopout}
       >
@@ -93,9 +93,9 @@ class Example extends React.Component {
   render() {
     return (
       <View popout={this.state.popout} header={false} activePanel="alert">
-        <Panel id="alert" theme="white">
+        <Panel id="alert" separator={false}>
           <CellButton onClick={this.openDefault}>Добавить право</CellButton>
-          <CellButton level="danger" onClick={this.openDestructive}>Лишить права</CellButton>
+          <CellButton mode="danger" onClick={this.openDestructive}>Лишить права</CellButton>
 
           {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
         </Panel>

@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'react-styleguidist/lib/client/rsg-components/Link';
 import pkg from '../../package.json';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
-import scheme from '@vkontakte/appearance/main.valette/scheme';
-
-const schemeOptions = Object.keys(scheme).map(scheme_id => (
-  <option value={scheme_id} key={scheme_id}>{scheme_id}</option>
-));
+import { schemeOptions } from '../utils';
 
 export const styles = ({ fontFamily, fontSize }) => ({
   pathline: {

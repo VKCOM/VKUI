@@ -1,48 +1,78 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { Requireable } from 'prop-types';
 import vkConnect from '@vkontakte/vk-connect';
 import { HasChildren } from '../../types/props';
 import { canUseDOM } from '../../lib/dom';
 
 export interface ConfigProviderProps extends HasChildren {
-  scheme?: 'client_light' | 'client_dark' | 'bright_light' | 'space_gray',
-  isWebView?: boolean,
-  webviewType?: 'vkapps' | 'internal',
-  app?: string
+  scheme?: 'client_light' | 'client_dark' | 'bright_light' | 'space_gray';
+  isWebView?: boolean;
+  webviewType?: 'vkapps' | 'internal';
+  app?: string;
+}
+
+export interface ConfigProviderContext {
+  document: Document;
+}
+
+export interface ConfigProviderContextType {
+  document: Requireable<{}>;
+}
+
+export interface ConfigProviderChildContextType {
+  isWebView: Requireable<boolean>;
+  scheme: Requireable<string>;
+  webviewType: Requireable<'vkapps' | 'internal'>;
+  app: Requireable<string>;
 }
 
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
-  constructor (props, context) {
+  constructor(props: ConfigProviderProps, context: ConfigProviderContext) {
     super(props);
     if (canUseDOM) {
-      (context.document || window.document).body.setAttribute('scheme', props.scheme);
+      this.setScheme((context.document || window.document).body, this.mapOldScheme(props.scheme));
     }
   }
 
-  static childContextTypes = {
+  static childContextTypes: ConfigProviderChildContextType = {
     isWebView: PropTypes.bool,
     scheme: PropTypes.string,
     webviewType: PropTypes.oneOf(['vkapps', 'internal']),
-    app: PropTypes.string
+    app: PropTypes.string,
   };
 
-  static defaultProps = {
+  static defaultProps: ConfigProviderProps = {
     webviewType: 'internal',
     isWebView: vkConnect.isWebView(),
-    scheme: 'client_light'
+    scheme: 'bright_light',
   };
 
-  static contextTypes = {
-    document: PropTypes.object
+  static contextTypes: ConfigProviderContextType = {
+    document: PropTypes.object,
   };
 
-  get document() {
+  get document(): Document {
     return this.context.document || window.document;
   }
 
-  componentDidUpdate(prevProps) {
+  mapOldScheme(scheme: ConfigProviderProps['scheme']) {
+    switch (scheme) {
+      case 'client_light':
+        return 'bright_light';
+      case 'client_dark':
+        return 'space_gray';
+      default:
+        return scheme;
+    }
+  }
+
+  setScheme(target: HTMLElement, scheme: ConfigProviderProps['scheme']) {
+    target.setAttribute('scheme', scheme);
+  }
+
+  componentDidUpdate(prevProps: ConfigProviderProps) {
     if (prevProps.scheme !== this.props.scheme) {
-      this.document.body.setAttribute('scheme', this.props.scheme);
+      this.setScheme(this.document.body, this.mapOldScheme(this.props.scheme));
     }
   }
 
@@ -51,7 +81,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
       scheme: this.props.scheme,
-      app: this.props.app
+      app: this.props.app,
     };
   }
 

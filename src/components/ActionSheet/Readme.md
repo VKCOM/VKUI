@@ -9,7 +9,7 @@ ActionSheet – имитация [нативного компонента](https
 В коде примера ниже можно посмотреть, как добавить такой элемент.
 Для Android версии он не нужен.
 
-```jsx harmony
+```jsx
 class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -39,7 +39,7 @@ class Example extends React.Component {
         <ActionSheetItem autoclose>
           По месяцам
         </ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
+        {osname === IOS && <ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }
@@ -53,7 +53,7 @@ class Example extends React.Component {
         <ActionSheetItem autoclose before={<Icon28CameraOutline/>}>
           Изменить фотографию
         </ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
+        {osname === IOS && <ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }
@@ -64,10 +64,10 @@ class Example extends React.Component {
         <ActionSheetItem autoclose>
           Редактировать
         </ActionSheetItem>
-        <ActionSheetItem autoclose theme="destructive">
+        <ActionSheetItem autoclose mode="destructive">
           Выйти
         </ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose theme="cancel">Отменить</ActionSheetItem>}
+        {osname === IOS && <ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }
@@ -77,7 +77,7 @@ class Example extends React.Component {
   render() {
     return (
       <View popout={this.state.popout} header={false} activePanel="panel">
-        <Panel id="panel">
+        <Panel id="panel" separator={false}>
           <CellButton onClick={this.openBase}>Базовый список</CellButton>
           <CellButton onClick={this.openIcons}>Список с иконками</CellButton>
           <CellButton onClick={this.openThemes}>Темы</CellButton>

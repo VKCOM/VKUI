@@ -14,8 +14,7 @@
   <View activePanel="horizontal">
     <Panel id="horizontal">
       <PanelHeader>HorizontalScroll</PanelHeader>
-      <Group style={{ paddingBottom: 8 }}>
-        <Header level="secondary">Недавние</Header>
+      <Group style={{ paddingBottom: 8 }} header={<Header mode="secondary">Недавние</Header>}>
         <HorizontalScroll>
           <div style={{ display: 'flex' }}>
             <div style={{ ...itemStyle, paddingLeft: 4 }}>

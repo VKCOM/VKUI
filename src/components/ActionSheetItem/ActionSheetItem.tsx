@@ -1,37 +1,48 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import usePlatform from '../../hooks/usePlatform';
-import { HasChildren, HasClassName, HasStyleObject } from '../../types/props';
 
-export interface ActionSheetItemProps extends HasClassName, HasChildren, HasStyleObject {
-  theme?: 'default' | 'destructive' | 'cancel',
-  before?: React.ReactNode,
+export interface ActionSheetItemProps extends HTMLAttributes<HTMLElement> {
+  mode?: 'default' | 'destructive' | 'cancel';
+  before?: React.ReactNode;
   // meta?: React.ReactNode,
   // subtitle?: React.ReactNode,
-  onClick?(): void,
-  autoclose?: boolean
+  autoclose?: boolean;
+  href?: string;
+  target?: string;
+  /**
+   * @ignore
+   */
+  isLast?: boolean;
 }
 
 const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   className,
   children,
   autoclose,
-  theme,
+  mode,
   // meta,
   // subtitle,
   before,
+  isLast,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
+
   return (
     <Tappable
       {...restProps}
       className={
-        classNames(getClassName('ActionSheetItem', platform), className, `ActionSheetItem--${theme}`)
+        classNames(
+          getClassName('ActionSheetItem', platform),
+          className,
+          `ActionSheetItem--${mode}`,
+          { ['ActionSheetItem--last']: isLast },
+        )
       }
-      component={theme === 'cancel' ? 'span' : 'div'}
+      Component={restProps.href ? 'a' : 'div'}
     >
       {before && <div className="ActionSheetItem__before">{before}</div>}
       <div className="ActionSheetItem__container">
@@ -46,7 +57,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
 };
 
 ActionSheetItem.defaultProps = {
-  theme: 'default'
+  mode: 'default',
 };
 
 export default ActionSheetItem;

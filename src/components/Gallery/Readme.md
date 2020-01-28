@@ -1,4 +1,4 @@
-```
+```jsx
   class Example extends React.Component {
 
     constructor (props) {
@@ -12,9 +12,10 @@
 
     render () {
       return (
-        <View header={false} activePanel="gallery">
+        <View activePanel="gallery">
           <Panel id="gallery">
-            <Group title="Sticks right">
+            <PanelHeader>Gallery</PanelHeader>
+            <Group header={<Header mode="secondary">Sticks right</Header>}>
               <Gallery
                 slideWidth="90%"
                 style={{ height: 150 }}
@@ -25,7 +26,7 @@
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
-            <Group title="Sticks left">
+            <Group header={<Header mode="secondary">Sticks left</Header>}>
               <Gallery
                 slideWidth="90%"
                 align="right"
@@ -36,7 +37,7 @@
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
-            <Group title="Centered">
+            <Group header={<Header mode="secondary">Centered</Header>}>
               <Gallery
                 slideWidth="90%"
                 align="center"
@@ -47,7 +48,7 @@
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
-            <Group title="Custom width">
+            <Group header={<Header mode="secondary">Custom width</Header>}>
               <Gallery
                 slideWidth="custom"
                 style={{ height: 150 }}
@@ -58,7 +59,7 @@
                 <div style={{ width: 220, backgroundColor: 'var(--icon_secondary)' }} />
               </Gallery>
             </Group>
-            <Group title="Controled">
+            <Group header={<Header mode="secondary">Controled</Header>}>
               <Gallery
                 slideWidth="90%"
                 align="center"

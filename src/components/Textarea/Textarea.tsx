@@ -1,18 +1,17 @@
-import React, { HTMLAttributes, PureComponent } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 import { HasFormStatus, HasRef, HasRootRef } from '../../types/props';
+import { GetRef } from '../../types/common';
 
 export interface TextareaProps extends
-  HTMLAttributes<HTMLTextAreaElement>,
+  TextareaHTMLAttributes<HTMLTextAreaElement>,
   HasRef<HTMLTextAreaElement>,
   HasRootRef<HTMLElement>,
-  HasFormStatus
-{
-  children?: string;
+  HasFormStatus {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
-  value?: string;
+  defaultValue?: string;
 }
 
 export interface TextareaState {
@@ -21,7 +20,7 @@ export interface TextareaState {
 }
 
 export default class Textarea extends PureComponent<TextareaProps, TextareaState> {
-  constructor (props) {
+  constructor(props: TextareaProps) {
     super(props);
 
     if (typeof props.value !== 'undefined') {
@@ -29,28 +28,27 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
       this.state = {};
     } else {
       this.state = {
-        value: props.defaultValue || ''
+        value: props.defaultValue || '',
       };
     }
   }
 
-  isControlledOutside?: boolean
-  element: HTMLTextAreaElement
+  isControlledOutside?: boolean;
+  element: HTMLTextAreaElement;
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.grow) {
       this.resize();
     }
   }
 
-  static defaultProps = {
+  static defaultProps: TextareaProps = {
     style: {},
     defaultValue: '',
     grow: true,
-    onResize: () => {}
   };
 
-  getRef = (element) => {
+  getRef: GetRef<HTMLTextAreaElement> = (element: HTMLTextAreaElement) => {
     this.element = element;
 
     const getRef = this.props.getRef;
@@ -63,7 +61,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     }
   };
 
-  resize = () => {
+  resize: VoidFunction = () => {
     const el = this.element;
 
     if (el) {
@@ -87,14 +85,16 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
 
         this.setState({ height });
 
-        this.props.onResize(el);
+        if (this.props.onResize) {
+          this.props.onResize(el);
+        }
       });
     }
   };
 
-  get value () { return this.isControlledOutside ? this.props.value : this.state.value; }
+  get value() {return this.isControlledOutside ? this.props.value : this.state.value;}
 
-  onChange = (e) => {
+  onChange: ChangeEventHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (this.props.grow) {
       this.resize();
     }
@@ -108,7 +108,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     }
   };
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps: TextareaProps) {
     if (prevProps.value && this.props.value === '') {
       // Fix iOS extra indent on removing content
       window.requestAnimationFrame(() => {
@@ -117,7 +117,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     }
   }
 
-  render () {
+  render() {
     const { defaultValue, value, onChange, grow, style, onResize, className,
       getRootRef, getRef, status, ...restProps } = this.props;
 

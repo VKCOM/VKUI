@@ -23,7 +23,7 @@
     render() {
       return (
         <View activePanel="slider">
-          <Panel id="slider" theme="white">
+          <Panel id="slider">
             <PanelHeader>Slider</PanelHeader>
             <FormLayout>
               <Slider

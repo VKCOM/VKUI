@@ -1,4 +1,4 @@
-import React, { Children, Component } from 'react';
+import React, { Children, Component, HTMLAttributes, ReactElement } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -6,14 +6,14 @@ import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
-import { HasChildren, HasClassName, HasStyleObject, HasPlatform, HasInsets } from '../../types/props';
+import { HasPlatform, HasInsets } from '../../types/props';
 import { ANDROID, IOS } from '../../lib/platform';
 
-export interface ActionSheetProps extends HasStyleObject, HasChildren, HasClassName, HasPlatform, HasInsets {
+export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets {
   /**
    * iOS only
    */
-  title?: React.ReactNode;
+  header?: React.ReactNode;
   /**
    * iOS only
    */
@@ -22,22 +22,39 @@ export interface ActionSheetProps extends HasStyleObject, HasChildren, HasClassN
 }
 
 export interface ActionSheetState {
-  closing: boolean
+  closing: boolean;
 }
 
+export type CloseCallback = () => void;
+
+export type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
+
+export type ActionType = (event: React.MouseEvent) => void;
+
+export type ItemClickHandler = (action: ActionType, autoclose: boolean) => (event: React.MouseEvent) => void;
+
+export type AnimationEndCallback = (e?: AnimationEvent) => void;
+
+export type IsItemLast = (index: number) => boolean;
+
 class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
-  state = {
-    closing: false
+  constructor(props: ActionSheetProps) {
+    super(props);
+    this.elRef = React.createRef();
+  }
+
+  state: ActionSheetState = {
+    closing: false,
   };
 
-  el: HTMLDivElement
+  elRef: React.RefObject<HTMLDivElement>;
 
-  onClose = () => {
+  onClose: CloseCallback = () => {
     this.setState({ closing: true });
     this.waitTransitionFinish(this.props.onClose);
   };
 
-  onItemClick = (action, autoclose) => (event) => {
+  onItemClick: ItemClickHandler = (action: ActionType, autoclose: boolean) => (event: React.MouseEvent) => {
     event.persist();
 
     if (autoclose) {
@@ -51,53 +68,64 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   };
 
-  getRef = el => this.el = el;
+  stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
-  stopPropagation = e => e.stopPropagation();
-
-  waitTransitionFinish (eventHandler) {
+  waitTransitionFinish(eventHandler: AnimationEndCallback) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
-      this.el.removeEventListener(eventName, eventHandler);
-      this.el.addEventListener(eventName, eventHandler);
+      this.elRef.current.removeEventListener(eventName, eventHandler);
+      this.elRef.current.addEventListener(eventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 200 : 300);
+      setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
     }
   }
 
-  render () {
-    const { children, className, title, text, style, insets, platform, ...restProps } = this.props;
+  isItemLast: IsItemLast = (index: number) => {
+    const childrenArray = Children.toArray(this.props.children);
+    const lastElement = childrenArray[childrenArray.length - 1] as ReactElement;
+
+    if (index === childrenArray.length - 1) {
+      return true;
+    } else if (index === childrenArray.length - 2 && lastElement.props.mode === 'cancel') {
+      return true;
+    }
+
+    return false;
+  };
+
+  render() {
+    const { children, className, header, text, style, insets, platform, ...restProps } = this.props;
 
     return (
       <PopoutWrapper
         closing={this.state.closing}
-        v="bottom"
-        h="center"
+        alignY="bottom"
         className={className}
         style={style}
         onClick={this.onClose}
       >
         <div
           {...restProps}
-          ref={this.getRef}
+          ref={this.elRef}
           onClick={this.stopPropagation}
           className={classNames(getClassName('ActionSheet', platform), {
-            'ActionSheet--closing': this.state.closing
+            'ActionSheet--closing': this.state.closing,
           })}
         >
           {platform === IOS &&
           <header className="ActionSheet__header">
-            {title && <div className="ActionSheet__title">{title}</div>}
+            {header && <div className="ActionSheet__title">{header}</div>}
             {text && <div className="ActionSheet__text">{text}</div>}
           </header>
           }
-          {Children.toArray(children).map((child: React.ReactElement, index, arr) => (
+          {Children.toArray(children).map((child: React.ReactElement, index: number, arr: []) =>
             child && React.cloneElement(child, {
               onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
-              style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null
-            })
-          ))}
+              style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null,
+              isLast: this.isItemLast(index),
+            }),
+          )}
         </div>
       </PopoutWrapper>
     );

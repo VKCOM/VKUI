@@ -11,44 +11,53 @@ export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement>, H
   /**
    * Массив ссылок на фотографии
    */
-  photos?: string[],
+  photos?: string[];
   /**
    * Размер аватарок
    */
-  size?: 's' | 'm',
+  size?: 's' | 'm';
   /**
-   * Вертикальный режим. Рекомендуется использовать с размером `m`
+   * Вертикальный режим рекомендуется использовать с размером `m`
    */
-  vertical?: boolean,
+  layout?: 'vertical' | 'horizontal';
   /**
    * Количество аватарок, которые будут показаны.
    * Если в массиве `photos` больше элементов и используется размер `m`, то будет показано количество остальных элементов
    */
-  count?: number,
+  visibleCount?: number;
 }
 
 const UsersStack: React.FunctionComponent<UsersStackProps> = (props: UsersStackProps) => {
   const platform = usePlatform();
-  const { className, photos, count, size, vertical, children, ...restProps } = props;
+  const { className, photos, visibleCount, size, layout, children, ...restProps } = props;
 
-  const othersCount = Math.max(0, photos.length - count);
+  const othersCount = Math.max(0, photos.length - visibleCount);
   const canShowOthers = othersCount > 0 && size === 'm';
 
-  const photosShown = photos.slice(0, count);
+  const photosShown = photos.slice(0, visibleCount);
 
   return (
-    <div {...restProps} className={classNames(getClassName('UsersStack', platform), className, 'UsersStack--size-' + size, {
-      'UsersStack--with-others': canShowOthers,
-      'UsersStack--v': vertical
-    })}>
+    <div
+      {...restProps}
+      className={
+        classNames(
+          getClassName('UsersStack', platform),
+          className,
+          `UsersStack--size-${size}`,
+          `UsersStack--l-${layout}`,
+          {
+            'UsersStack--with-others': canShowOthers,
+          },
+        )}
+    >
       <div className="UsersStack__photos">
-        {photosShown.map((photo, i) => (
+        {photosShown.map((photo: string, i: number) =>
           <div
             key={i}
             className="UsersStack__photo"
             style={{ backgroundImage: `url(${photo})` }}
           />
-        ))}
+        )}
 
         {canShowOthers &&
         <div className="UsersStack__photo UsersStack__photo--others">
@@ -67,7 +76,8 @@ const UsersStack: React.FunctionComponent<UsersStackProps> = (props: UsersStackP
 UsersStack.defaultProps = {
   photos: [],
   size: 's',
-  count: 3
+  visibleCount: 3,
+  layout: 'horizontal',
 };
 
 export default React.memo(UsersStack);

@@ -1,23 +1,23 @@
 import React, { FunctionComponent } from 'react';
-import HeaderButton, { HeaderButtonProps } from '../HeaderButton/HeaderButton';
+import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID } from '../../lib/platform';
 import Icon24Write from '@vkontakte/icons/dist/24/write';
 import Icon24Done from '@vkontakte/icons/dist/24/done';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface PanelHeaderEditProps extends HeaderButtonProps {
+export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
   /**
    * Включен ли режим редактирования
    */
-  isActive?: boolean,
+  isActive?: boolean;
   /**
    * iOS only. Текст кнопки, когда режим редактирования не активен
    */
-  editLabel?: string,
+  editLabel?: string;
   /**
    * iOS only. Текст кнопки при активном режиме редактирования для выхода из него
    */
-  doneLabel?: string
+  doneLabel?: string;
 }
 
 const PanelHeaderEdit: FunctionComponent<PanelHeaderEditProps> = ({
@@ -31,16 +31,16 @@ const PanelHeaderEdit: FunctionComponent<PanelHeaderEditProps> = ({
   const platform = usePlatform();
 
   return (
-    <HeaderButton {...restProps}>
+    <PanelHeaderButton {...restProps}>
       {platform === ANDROID ? AndroidIcon : iOSText}
-    </HeaderButton>
+    </PanelHeaderButton>
   );
 };
 
 PanelHeaderEdit.defaultProps = {
   isActive: false,
   editLabel: 'Редактировать',
-  doneLabel: 'Готово'
+  doneLabel: 'Готово',
 };
 
 export default PanelHeaderEdit;

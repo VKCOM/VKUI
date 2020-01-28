@@ -91,7 +91,8 @@
   margin-top: 8px;
 }
 
-.ModalCard__title + .FormField {
+.ModalCard__title + .FormField,
+.ModalCard__caption + .FormField {
   margin-top: 16px;
 }
 

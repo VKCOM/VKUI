@@ -1,9 +1,13 @@
-import { ObjectClassNames } from '../types/props';
+export interface ObjectClassNames {
+  [index: string]: boolean;
+}
 
-export default function classNames(...classnames: Array<number | string | ObjectClassNames>) {
+export type ClassName = number | string | ObjectClassNames | false | null | undefined;
+
+export default function classNames(...classnames: ClassName[]) {
   let result: string[] = [];
 
-  classnames.forEach((item: number | string | ObjectClassNames): void => {
+  classnames.forEach((item: ClassName): void => {
     if (!item) {
       return;
     }
@@ -12,14 +16,14 @@ export default function classNames(...classnames: Array<number | string | Object
         result.push(item);
         break;
       case 'object':
-        Object.keys(item).forEach(key => {
+        Object.keys(item).forEach((key: string) => {
           if (item[key]) {
             result.push(key);
           }
         });
         break;
       default:
-        result.push('' + item);
+        result.push(`${item}`);
     }
   });
 

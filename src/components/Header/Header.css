@@ -4,7 +4,7 @@
 
   .Header__in {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
     }
 
@@ -13,62 +13,84 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      font-weight: 600;
     }
 
-    .Header--level-primary .Header__content {
+      .Header__subtitle {
+        color: var(--text_secondary);
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 16px;
+        }
+
+    .Header--mode-primary .Header__content {
       color: var(--text_primary);
-      font-size: 17px;
-      line-height: 20px;
-      font-weight: 500;
       }
 
-    .Header--level-secondary .Header__content {
+    .Header--mode-secondary .Header__content {
       color: var(--text_secondary);
-      font-size: 13px;
-      line-height: 15px;
-      font-weight: 600;
       text-transform: uppercase;
       }
 
+    .Header--pi .Header__content {
+      color: var(--text_primary);
+      }
+
     .Header__indicator {
-      margin-left: 10px;
       margin-right: auto;
+      color: var(--text_secondary);
+      font-size: 13px;
+      line-height: 16px;
+      margin-left: 8px;
       }
 
     .Header__aside {
       white-space: nowrap;
-      margin-left: 12px;
+      font-size: 15px;
+      line-height: 20px;
       }
+
+      .Header__aside > .Icon {
+        position: relative;
+        color: var(--icon_secondary);
+        }
+
+      .Header__aside > .Icon--24 {
+        top: 3px;
+        }
+
+      .Header__aside > .Icon--16 {
+        top: 1px;
+        }
 
 .Header--ios {
   padding: 0 12px;
   }
 
-  .Header--ios .Header__aside {
-    font-size: 15px;
+  .Header--ios.Header--mode-primary .Header__content {
+    font-size: 17px;
+    line-height: 22px;
+    padding: 13px 0 9px;
     }
 
-  .Header--ios.Header--level-primary .Header__content {
-    padding: 14px 0;
-    }
-
-  .Header--ios.Header--level-secondary .Header__content {
-    padding: 15px 0 14px;
+  .Header--ios.Header--mode-secondary .Header__content {
+    padding: 14px 0 10px;
+    font-size: 13px;
+    line-height: 16px;
     }
 
 .Header--android {
   padding: 0 16px;
   }
 
-  .Header--android .Header__aside {
-    font-size: 14px;
-    font-weight: 500;
+  .Header--android.Header--mode-primary .Header__content {
+    padding: 15px 0 9px;
+    font-size: 16px;
+    line-height: 20px;
     }
 
-  .Header--android.Header--level-primary .Header__content {
-    padding: 18px 0;
-    }
-
-  .Header--android.Header--level-secondary .Header__content {
-    padding: 15px 0 14px;
+  .Header--android.Header--mode-secondary .Header__content {
+    padding: 15px 0 9px;
+    font-size: 13px;
+    line-height: 16px;
     }

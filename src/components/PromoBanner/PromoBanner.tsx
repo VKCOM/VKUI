@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import Button from '../Button/Button';
 import Cell from '../Cell/Cell';
@@ -19,7 +19,7 @@ type BannerData = {
   ctaText?: string;
   advertisingLabel?: string;
   iconLink?: string;
-  statistics?: { type: string; url: string }[];
+  statistics?: Array<{ type: string; url: string }>;
   openInBrowser?: boolean;
   iconHeight?: number;
   directLink?: boolean;
@@ -28,9 +28,7 @@ type BannerData = {
   ageRestriction?: number;
 };
 
-export interface PromoBannerProps {
-  /** Значение атрибута `class` элемента */
-  className?: string;
+export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
   /** Данные рекламного баннера, полученные из VKWebAppGetAds */
   bannerData: BannerData;
   /** Флаг скрытия кнопки закрытия рекламы */
@@ -39,17 +37,17 @@ export interface PromoBannerProps {
   onClose: () => void;
 }
 
-const PromoBanner = (props: PromoBannerProps) => (
+const PromoBanner = (props: PromoBannerProps) =>
   <div className={classNames('PromoBanner', props.className)}>
     <div className="PromoBanner__head">
       {props.bannerData.ageRestriction && <span className="PromoBanner__age">{props.bannerData.ageRestriction}+</span>}
       <span className="PromoBanner__label">{props.bannerData.advertisingLabel || 'Advertisement'}</span>
 
-      {!props.isCloseButtonHidden && (
+      {!props.isCloseButtonHidden &&
         <div className="PromoBanner__close" onClick={props.onClose}>
           <Icon24Dismiss />
         </div>
-      )}
+      }
     </div>
     <a
       href={props.bannerData.trackingLink}
@@ -60,10 +58,9 @@ const PromoBanner = (props: PromoBannerProps) => (
       <div className="PromoBanner__content">
         <Cell
           before={
-            // @ts-ignore
-            <Avatar type="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
+            <Avatar mode="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
           }
-          asideContent={<Button level="outline">{props.bannerData.ctaText}</Button>}
+          asideContent={<Button mode="outline">{props.bannerData.ctaText}</Button>}
           description={props.bannerData.domain}
         >
           {props.bannerData.title}
@@ -71,6 +68,6 @@ const PromoBanner = (props: PromoBannerProps) => (
       </div>
     </a>
   </div>
-);
+;
 
 export default PromoBanner;

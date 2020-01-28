@@ -4,7 +4,7 @@
   color: var(--text_secondary);
 }
 
-.UsersStack--v {
+.UsersStack--l-vertical {
   flex-direction: column;
   justify-content: center;
 }
@@ -76,7 +76,7 @@
   line-height: 16px;
 }
 
-.UsersStack--v .UsersStack__text {
+.UsersStack--l-vertical .UsersStack__text {
   margin: 8px 0 0;
   text-align: center;
 }

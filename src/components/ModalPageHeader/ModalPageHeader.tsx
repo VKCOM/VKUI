@@ -1,10 +1,10 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasChildren, HasClassName, HasRef } from '../../types/props';
+import { HasRef } from '../../types/props';
 
-export interface ModalPageHeaderProps extends HasChildren, HasClassName, HasRef<HTMLDivElement> {
+export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement> {
   /**
    * Иконки, отображаемые слева
    */

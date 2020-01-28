@@ -4,7 +4,7 @@
 При смене значения свойства `activePanel` происходит плавный переход от одной панели к другой.
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
-```
+```jsx
 class Example extends React.Component {
   constructor(props) {
     super(props);

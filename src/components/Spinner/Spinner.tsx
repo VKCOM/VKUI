@@ -8,7 +8,7 @@ import Spinner16 from '@vkontakte/icons/dist/16/spinner';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
-  size: 'small' | 'regular' | 'large' | 'medium'
+  size: 'small' | 'regular' | 'large' | 'medium';
 }
 
 const svgSpinner = (size: SpinnerProps['size']): React.ReactElement => {
@@ -24,7 +24,7 @@ const svgSpinner = (size: SpinnerProps['size']): React.ReactElement => {
   }
 };
 
-const Spinner: FunctionComponent<SpinnerProps> = React.memo(({ className, size, ...restProps }: SpinnerProps) => {
+const Spinner: FunctionComponent<SpinnerProps> = ({ className, size, ...restProps }: SpinnerProps) => {
   const platform = usePlatform();
 
   return (
@@ -32,10 +32,10 @@ const Spinner: FunctionComponent<SpinnerProps> = React.memo(({ className, size, 
       {svgSpinner(size)}
     </div>
   );
-});
-
-Spinner.defaultProps = {
-  size: 'regular'
 };
 
-export default Spinner;
+Spinner.defaultProps = {
+  size: 'regular',
+};
+
+export default React.memo(Spinner);

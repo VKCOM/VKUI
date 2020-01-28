@@ -1,4 +1,6 @@
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
+/* eslint-disable */
+
+import React, {Component, InputHTMLAttributes, ReactNode} from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
@@ -13,7 +15,9 @@ import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
 import { HasChildren, HasPlatform, HasRootRef } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
 
-export interface CellProps extends HTMLAttributes<HTMLElement>, HasChildren, HasRootRef<HTMLElement>, HasPlatform {
+type ProxyInputHTMLAttributes = Omit<InputHTMLAttributes<HTMLElement>, 'size'>
+
+export interface CellProps extends ProxyInputHTMLAttributes, HasChildren, HasRootRef<HTMLElement>, HasPlatform {
   /**
    * Контейнер для контента от `children`.
    */
@@ -77,12 +81,9 @@ export interface CellProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
-  onDragFinish?({ from, to }: { from: number, to: number }): void;
-  /**
-   * При передаче `href`, ячейка становится полноценной ссылкой. Поддерживаются все валидные для этого элемента
-   * атрибуты (`target`, `rel` и т.д.).
-   */
+  onDragFinish?({ from, to }: { from: number; to: number }): void;
   href?: string;
+  target?: string;
 }
 
 export interface CellState {
@@ -98,12 +99,12 @@ class Cell extends Component<CellProps, CellState> {
     this.state = {
       isRemoveActivated: false,
       removeOffset: 0,
-      dragging: false
+      dragging: false,
     };
   }
 
-  rootEl: HTMLElement
-  removeButton: HTMLDivElement
+  rootEl: HTMLElement;
+  removeButton: HTMLDivElement;
 
   static defaultProps = {
     before: null,
@@ -116,14 +117,14 @@ class Cell extends Component<CellProps, CellState> {
     multiline: false,
     removable: false,
     size: 'm',
-    removePlaceholder: 'Удалить'
+    removePlaceholder: 'Удалить',
   };
 
   static contextTypes = {
-    document: PropTypes.any
+    document: PropTypes.any,
   };
 
-  get document () { return this.context.document || document; }
+  get document() {return this.context.document || document;}
 
   /**
    * предотвращает двойное срабатывание в случае с input
@@ -158,17 +159,17 @@ class Cell extends Component<CellProps, CellState> {
     this.props.onRemove && this.props.onRemove(e, this.rootEl);
   };
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.document.removeEventListener('click', this.deactivateRemove);
   }
 
-  componentDidUpdate (_prevProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     if (prevState.isRemoveActivated !== this.state.isRemoveActivated && this.state.isRemoveActivated) {
       this.setState({ removeOffset: this.removeButton.offsetWidth });
     }
   }
 
-  getRemoveRef = el => this.removeButton = el;
+  getRemoveRef = (el) => this.removeButton = el;
 
   getRootRef = (element) => {
     this.rootEl = element;
@@ -183,12 +184,12 @@ class Cell extends Component<CellProps, CellState> {
     }
   };
 
-  dragShift: number
-  listEl: HTMLElement
-  siblings: HTMLElement[]
-  dragStartIndex: number
-  dragEndIndex: number
-  dragDirection: 'down' | 'up'
+  dragShift: number;
+  listEl: HTMLElement;
+  siblings: HTMLElement[];
+  dragStartIndex: number;
+  dragEndIndex: number;
+  dragDirection: 'down' | 'up';
 
   onDragStart = () => {
     this.setState({ dragging: true });
@@ -201,7 +202,9 @@ class Cell extends Component<CellProps, CellState> {
 
   onDragMove = (e) => {
     e.originalEvent.preventDefault();
-    if (this.state.removeOffset) return;
+    if (this.state.removeOffset) {
+      return;
+    }
 
     this.rootEl.style.transform = `translateY(${e.shiftY}px)`;
     const rootGesture = this.rootEl.getBoundingClientRect();
@@ -213,19 +216,23 @@ class Cell extends Component<CellProps, CellState> {
       const siblingGesture = sibling.getBoundingClientRect();
       if (this.dragStartIndex < siblingIndex) {
         if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2) {
-          if (this.dragDirection === 'down') sibling.style.transform = `translateY(-100%)`;
+          if (this.dragDirection === 'down') {
+            sibling.style.transform = 'translateY(-100%)';
+          }
           this.dragEndIndex++;
         }
         if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2 && this.dragDirection === 'up') {
-          sibling.style.transform = `translateY(0)`;
+          sibling.style.transform = 'translateY(0)';
         }
       } else if (this.dragStartIndex > siblingIndex) {
         if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2) {
-          if (this.dragDirection === 'up') sibling.style.transform = `translateY(100%)`;
+          if (this.dragDirection === 'up') {
+            sibling.style.transform = 'translateY(100%)';
+          }
           this.dragEndIndex--;
         }
         if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2 && this.dragDirection === 'down') {
-          sibling.style.transform = `translateY(0)`;
+          sibling.style.transform = 'translateY(0)';
         }
       }
     });
@@ -235,7 +242,7 @@ class Cell extends Component<CellProps, CellState> {
     this.setState({ dragging: false });
     this.listEl && this.listEl.classList.remove('List--dragging');
     this.props.onDragFinish && this.props.onDragFinish({ from: this.dragStartIndex, to: this.dragEndIndex });
-    this.siblings.forEach(sibling => sibling.style.transform = null);
+    this.siblings.forEach((sibling) => sibling.style.transform = null);
     delete this.dragShift;
     delete this.listEl;
     delete this.siblings;
@@ -244,7 +251,7 @@ class Cell extends Component<CellProps, CellState> {
     delete this.dragDirection;
   };
 
-  render () {
+  render() {
     let {
       before,
       indicator,
@@ -266,13 +273,14 @@ class Cell extends Component<CellProps, CellState> {
       size,
       bottomContent,
       platform,
+      onChange,
       ...restProps
     } = this.props;
 
     selectable = selectable && !draggable;
 
     const rootProps = selectable ? {} : restProps;
-    const inputProps = selectable ? restProps : {};
+    const inputProps = selectable ? {...restProps, onChange} : {};
     const linkProps = href ? restProps : {};
     const IS_PLATFORM_ANDROID = platform === ANDROID;
     const IS_PLATFORM_IOS = platform === IOS;
@@ -285,14 +293,14 @@ class Cell extends Component<CellProps, CellState> {
           'Cell--expandable': expandable,
           'Cell--multiline': multiline,
           'Cell--dragging': this.state.dragging,
-          'Cell--draggable': draggable
+          'Cell--draggable': draggable,
         }, `Cell--${size}`, className)}
         ref={this.getRootRef}
       >
         <Tappable
           {...linkProps}
           onClick={href ? this.onClick : null}
-          component={selectable ? 'label' : href ? 'a' : 'div'}
+          Component={selectable ? 'label' : href ? 'a' : 'div'}
           className="Cell__in"
           href={href}
           disabled={(!selectable && !onClick && !href || removable || draggable)}

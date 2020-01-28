@@ -7,3 +7,9 @@
   border-radius: 3px;
   border: 1px #e8e8e8 solid;
   }
+
+@font-face {
+  font-family: "TT Commons";
+  src: url("./fonts/TTCommons-DemiBold.woff") format("woff");
+  font-weight: 800;
+  }

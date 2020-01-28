@@ -1,6 +1,6 @@
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
+import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
 import Button from '../Button/Button';
-import HeaderButton from '../HeaderButton/HeaderButton';
+import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
@@ -13,7 +13,7 @@ import { HasPlatform, HasChildren, HasInsets } from '../../types/props';
 export interface ModalCardActionInterface {
   title: string;
   action?(): void;
-  type?: 'secondary' | 'primary';
+  mode?: 'secondary' | 'primary';
 }
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, HasInsets {
@@ -27,12 +27,12 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   /**
    * Заголовок карточки
    */
-  title?: string,
+  header?: string;
 
   /**
    * Текст, поясняющий заголовок
    */
-  caption?: string,
+  caption?: string;
 
   /**
    * Список кнопок-действий
@@ -51,13 +51,13 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
 }
 
 class ModalCard extends Component<ModalCardProps> {
-  static defaultProps = {
+  static defaultProps: ModalCardProps = {
     actions: [],
     actionsLayout: 'horizontal',
-    insets: {}
+    insets: {},
   };
 
-  onButtonClick = (event) => {
+  onButtonClick: MouseEventHandler = (event: SyntheticEvent) => {
     const target = event.currentTarget as HTMLButtonElement;
     const action = this.props.actions[target.dataset.index].action;
     event.persist();
@@ -67,41 +67,41 @@ class ModalCard extends Component<ModalCardProps> {
     }
   };
 
-  render () {
-    const { insets, icon, title, caption, children, actions, actionsLayout, onClose, platform } = this.props;
+  render() {
+    const { insets, icon, header, caption, children, actions, actionsLayout, onClose, platform } = this.props;
 
     return (
       <div className={classNames(getClassName('ModalCard', platform))}>
         <div className="ModalCard__in">
           <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
             {icon && <div className="ModalCard__icon">{icon}</div>}
-            {title && <div className="ModalCard__title">{title}</div>}
+            {header && <div className="ModalCard__title">{header}</div>}
             {caption && <div className="ModalCard__caption">{caption}</div>}
 
             {children}
 
             {actions.length > 0 &&
             <div className={classNames('ModalCard__actions', {
-              'ModalCard__actions--v': actionsLayout === 'vertical'
+              'ModalCard__actions--v': actionsLayout === 'vertical',
             })}>
-              {actions.map(({ title, type }, i) => (
+              {actions.map(({ title, mode }: ModalCardActionInterface, i: number) =>
                 <Button
                   key={i}
                   data-index={i}
                   size="xl"
-                  level={type}
+                  mode={mode}
                   onClick={this.onButtonClick}
                 >
                   {title}
                 </Button>
-              ))}
+              )}
             </div>
             }
 
             {platform === IOS &&
-            <HeaderButton className="ModalCard__dismiss" onClick={onClose}>
+            <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
               <Icon24Dismiss />
-            </HeaderButton>}
+            </PanelHeaderButton>}
           </div>
         </div>
       </div>

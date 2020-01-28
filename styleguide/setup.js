@@ -47,6 +47,10 @@ import Icon24DoNotDisturb from '@vkontakte/icons/dist/24/do_not_disturb';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon28CameraOutline from '@vkontakte/icons/dist/28/camera_outline';
 import Icon28Profile from '@vkontakte/icons/dist/28/profile';
+import Icon24Music from '@vkontakte/icons/dist/24/music';
+import Icon24CameraOutline from '@vkontakte/icons/dist/24/camera_outline';
+import Icon16Clear from '@vkontakte/icons/dist/16/clear';
+import Icon16Chevron from '@vkontakte/icons/dist/16/chevron';
 import * as VKUI from '../src';
 
 for (let i in VKUI) {
@@ -103,6 +107,10 @@ window.Icon24DoNotDisturb = Icon24DoNotDisturb;
 window.Icon16Done = Icon16Done;
 window.Icon28CameraOutline = Icon28CameraOutline;
 window.Icon28Profile = Icon28Profile;
+window.Icon24Music = Icon24Music;
+window.Icon24CameraOutline = Icon24CameraOutline;
+window.Icon16Clear = Icon16Clear;
+window.Icon16Chevron = Icon16Chevron;
 
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;

@@ -97,11 +97,11 @@
   }
 }
 
-.ModalPageHeader .HeaderButton .Icon--dismiss_24 {
+.ModalPageHeader .PanelHeaderButton .Icon--dismiss_24 {
   color: var(--placeholder_icon_foreground_primary);
 }
 
-.ModalPageHeader .HeaderButton .Icon--cancel_24 {
+.ModalPageHeader .PanelHeaderButton .Icon--cancel_24 {
   color: var(--icon_secondary);
 }
 
@@ -119,11 +119,11 @@
   font-size: 17px;
 }
 
-.ModalPageHeader--ios .ModalPageHeader__left .HeaderButton .Icon--24 {
+.ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton .Icon--24 {
   padding-left: 12px;
 }
 
-.ModalPageHeader--ios .ModalPageHeader__left .HeaderButton > *:not(.Icon) {
+.ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton > *:not(.Icon) {
   padding-left: 16px;
 }
 
@@ -145,15 +145,15 @@
   font-size: 17px;
 }
 
-.ModalPageHeader--ios .ModalPageHeader__right .HeaderButton:not(:first-child) {
+.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton:not(:first-child) {
   padding-left: 12px;
 }
 
-.ModalPageHeader--ios .ModalPageHeader__right .HeaderButton .Icon--24 {
+.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton .Icon--24 {
   padding-right: 12px;
 }
 
-.ModalPageHeader--ios .ModalPageHeader__right .HeaderButton > *:not(.Icon) {
+.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton > *:not(.Icon) {
   padding-right: 16px;
 }
 
