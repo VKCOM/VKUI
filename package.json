@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "3.0.0-beta",
+  "version": "3.0.0",
   "main": "dist/index.js",
   "module": "dist/es6/index.js",
   "typings": "dist/index.d.ts",
@@ -31,6 +31,7 @@
     "@types/react-dom": "^16.8.5",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@vkontakte/appearance": "https://github.com/VKCOM/Appearance#v2.3.6",
+    "@vkontakte/eslint-config": "1.2.0",
     "@vkontakte/icons": "^1.8.3",
     "@vkontakte/vk-connect": "^1.5.5",
     "autoprefixer": "^7.2.3",
@@ -41,7 +42,6 @@
     "eslint": "~6.8.0",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.0.1",
-    "@vkontakte/eslint-config": "1.2.0",
     "file-loader": "^4.2.0",
     "mini-css-extract-plugin": "^0.4.0",
     "postcss": "^7.0.17",
