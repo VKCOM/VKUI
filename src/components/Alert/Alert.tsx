@@ -1,13 +1,11 @@
-/* eslint-disable */
-
-import React, { Component, HTMLAttributes } from 'react';
+import React, { Component, HTMLAttributes, MouseEventHandler, SyntheticEvent } from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
-import { HasChildren, HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
 
 export interface AlertActionInterface {
@@ -17,7 +15,7 @@ export interface AlertActionInterface {
   mode: 'cancel' | 'destructive' | 'default';
 }
 
-export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren {
+export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform {
   actionsLayout?: 'vertical' | 'horizontal';
   actions?: AlertActionInterface[];
   onClose?(): void;
@@ -27,8 +25,12 @@ export interface AlertState {
   closing: boolean;
 }
 
+type TransitionEndHandler = (e?: TransitionEvent) => void;
+
+type ItemClickHander = (item: AlertActionInterface) => () => void;
+
 class Alert extends Component<AlertProps, AlertState> {
-  constructor(props) {
+  constructor(props: AlertProps) {
     super(props);
     this.element = React.createRef();
     this.state = {
@@ -38,35 +40,41 @@ class Alert extends Component<AlertProps, AlertState> {
 
   element: React.RefObject<HTMLDivElement>;
 
-  static defaultProps = {
+  static defaultProps: AlertProps = {
     actionsLayout: 'horizontal',
     actions: [],
   };
 
-  onItemClick = (item) => () => {
+  onItemClick: ItemClickHander = (item: AlertActionInterface) => () => {
     const { action, autoclose } = item;
 
     if (autoclose) {
       this.setState({ closing: true });
-      this.waitTransitionFinish(() => {
-        autoclose && this.props.onClose();
-        action && action();
+      this.waitTransitionFinish((e?: TransitionEvent) => {
+        if (!e || e.propertyName === 'opacity') {
+          autoclose && this.props.onClose();
+          action && action();
+        }
       });
     } else {
       action && action();
     }
   };
 
-  onClose = () => {
+  onClose: VoidFunction = () => {
     this.setState({ closing: true });
-    this.waitTransitionFinish(() => {
-      this.props.onClose();
+    this.waitTransitionFinish((e?: TransitionEvent) => {
+      if (!e || e.propertyName === 'opacity') {
+        this.props.onClose();
+      }
     });
   };
 
-  stopPropagation = (e) => e.stopPropagation();
+  stopPropagation: MouseEventHandler = (e: SyntheticEvent) => {
+    e.stopPropagation();
+  };
 
-  waitTransitionFinish(eventHandler) {
+  waitTransitionFinish(eventHandler: TransitionEndHandler) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
