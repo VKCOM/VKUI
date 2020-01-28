@@ -25,7 +25,11 @@ if (canUseDOM) {
     ElementProto.closest = function(css: string): Element | null {
       let node: Element = this;
       while (node) {
-        if (node.matches(css)) {return node;} else {node = node.parentElement;}
+        if (node.matches(css)) {
+          return node;
+        } else {
+          node = node.parentElement;
+        }
       }
       return null;
     };

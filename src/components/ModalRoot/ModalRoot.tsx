@@ -231,7 +231,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
    * Отключает скролл документа
    */
   toggleDocumentScrolling(enabled: boolean) {
-    if (this.documentScrolling === enabled) {return;}
+    if (this.documentScrolling === enabled) {
+      return;
+    }
     this.documentScrolling = enabled;
 
     if (enabled) {
@@ -246,7 +248,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   preventTouch = (event) => {
     if (event) {
-      while (event.originalEvent) {event = event.originalEvent;}
+      while (event.originalEvent) {
+        event = event.originalEvent;
+      }
       event.preventDefault();
     }
   };
@@ -260,7 +264,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
    */
   initActiveModal() {
     const activeModal = this.state.activeModal || this.state.nextModal;
-    if (!activeModal) {return;}
+    if (!activeModal) {
+      return;
+    }
 
     const modalElement = this.pickModal(activeModal);
     const modalState = this.modalsState[activeModal];
@@ -376,7 +382,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   closeActiveModal() {
     const { prevModal } = this.state;
-    if (!prevModal) {return console.warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);}
+    if (!prevModal) {
+      return console.warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
+    }
 
     const prevModalState = this.modalsState[prevModal];
 
@@ -386,9 +394,13 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   }
 
   onTouchMove = (e) => {
-    if (this.state.switching) {return;}
+    if (this.state.switching) {
+      return;
+    }
     const activeModal = this.state.activeModal || this.state.nextModal;
-    if (!activeModal) {return;}
+    if (!activeModal) {
+      return;
+    }
 
     const modalState = this.modalsState[activeModal];
 
@@ -425,7 +437,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       this.setState({ touchDown: true });
     }
 
-    if (contentScrolled) {return;}
+    if (contentScrolled) {
+      return;
+    }
 
     if (modalState.touchMovePositive === null) {
       modalState.touchMovePositive = shiftY > 0;
@@ -438,7 +452,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       originalEvent.target.closest('.ModalPage__header')
     ) {
       originalEvent.preventDefault();
-      if (!expandable && shiftY < 0) {return;}
+      if (!expandable && shiftY < 0) {
+        return;
+      }
 
       !this.state.dragging && this.setState({ dragging: true });
 
@@ -474,7 +490,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   onTouchEnd = (e) => {
     const activeModal = this.state.activeModal || this.state.nextModal;
-    if (!activeModal) {return;}
+    if (!activeModal) {
+      return;
+    }
     const modalState = this.modalsState[activeModal];
 
     if (modalState.type === TYPE_PAGE) {
@@ -644,7 +662,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   prevNextSwitchEndHandler = () => {
     this.activeTransitions = Math.max(0, this.activeTransitions - 1);
-    if (this.activeTransitions > 0) {return;}
+    if (this.activeTransitions > 0) {
+      return;
+    }
 
     const activeModal = this.state.nextModal;
 
@@ -712,7 +732,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
    * Устанавливает прозрачность для полупрозрачной подложки
    */
   setMaskOpacity(modalState: ModalsStateEntry, forceOpacity: number = null) {
-    if (forceOpacity === null && this.state.history[0] !== modalState.id) {return;}
+    if (forceOpacity === null && this.state.history[0] !== modalState.id) {
+      return;
+    }
 
     cancelAnimationFrame(this.maskAnimationFrame);
     this.maskAnimationFrame = requestAnimationFrame(() => {
@@ -747,7 +769,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   render() {
     const { prevModal, activeModal, nextModal, visibleModals, animated, touchDown, dragging, switching } = this.state;
 
-    if (!activeModal && !prevModal && !nextModal && !animated) {return null;}
+    if (!activeModal && !prevModal && !nextModal && !animated) {
+      return null;
+    }
 
     return (
       <TouchRootContext.Provider value={true}>
@@ -769,7 +793,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
           <div className="ModalRoot__viewport">
             {this.modals.map((Modal) => {
               const modalId = Modal.props.id;
-              if (!visibleModals.includes(Modal.props.id)) {return null;}
+              if (!visibleModals.includes(Modal.props.id)) {
+                return null;
+              }
               const modalState = this.modalsState[modalId];
 
               const isPage = modalState.type === TYPE_PAGE;

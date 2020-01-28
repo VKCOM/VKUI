@@ -31,7 +31,9 @@ function getSupportedEvents(): string[] {
  * Рассчитывает "сопротивление" для iOS тач-событий
  */
 function rubber(offset: number, dimension: number, resistanceRate: number, isAndroid: boolean): number {
-  if (isAndroid || offset < 0) {return offset;}
+  if (isAndroid || offset < 0) {
+    return offset;
+  }
 
   const result = resistanceRate * Math.abs(offset) * dimension / (dimension + resistanceRate * Math.abs(offset));
   return offset < 0 ? -result : result;

@@ -202,7 +202,9 @@ class Cell extends Component<CellProps, CellState> {
 
   onDragMove = (e) => {
     e.originalEvent.preventDefault();
-    if (this.state.removeOffset) {return;}
+    if (this.state.removeOffset) {
+      return;
+    }
 
     this.rootEl.style.transform = `translateY(${e.shiftY}px)`;
     const rootGesture = this.rootEl.getBoundingClientRect();
@@ -214,7 +216,9 @@ class Cell extends Component<CellProps, CellState> {
       const siblingGesture = sibling.getBoundingClientRect();
       if (this.dragStartIndex < siblingIndex) {
         if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2) {
-          if (this.dragDirection === 'down') {sibling.style.transform = 'translateY(-100%)';}
+          if (this.dragDirection === 'down') {
+            sibling.style.transform = 'translateY(-100%)';
+          }
           this.dragEndIndex++;
         }
         if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2 && this.dragDirection === 'up') {
@@ -222,7 +226,9 @@ class Cell extends Component<CellProps, CellState> {
         }
       } else if (this.dragStartIndex > siblingIndex) {
         if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2) {
-          if (this.dragDirection === 'up') {sibling.style.transform = 'translateY(100%)';}
+          if (this.dragDirection === 'up') {
+            sibling.style.transform = 'translateY(100%)';
+          }
           this.dragEndIndex--;
         }
         if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2 && this.dragDirection === 'down') {
