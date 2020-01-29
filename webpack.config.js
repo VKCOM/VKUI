@@ -51,7 +51,7 @@ const config = {
       'react-dom': 'react-dom'
     },
     /@vkontakte\/icons/i
-  ]
+  ],
 };
 
 const devConfig = {

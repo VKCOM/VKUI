@@ -3,6 +3,7 @@ const webpackConfig = require('../webpack.config');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssConfig = require('../postcss.config');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   title: 'VKUI styleguide',
@@ -161,6 +162,16 @@ module.exports = {
     } else {
       return require('react-docgen').parse(source, resolver, handlers, { filename: filePath })
     }
+  },
+  dangerouslyUpdateWebpackConfig(webpackConfig) { // запрещаем вычищать .git
+    webpackConfig.plugins = webpackConfig.plugins.reduce((acc, item) => {
+      if (item instanceof CleanWebpackPlugin) {
+        item.cleanOnceBeforeBuildPatterns = ['**/*', '!.git'];
+      }
+      acc.push(item);
+      return acc;
+    }, [])
+    return webpackConfig;
   },
   webpackConfig: merge(webpackConfig, {
     module: {
