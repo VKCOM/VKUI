@@ -188,25 +188,23 @@
         height: var(--panelheader_height_android);
         }
 
-      .PanelHeader--android .PanelHeader-left-in {
-        padding-right: 6px;
+      .PanelHeader--android .PanelHeader-left-in:not(:empty) {
+        padding-right: 8px;
+        padding-left: 4px;
         }
 
       .PanelHeader--android .PanelHeader-left-in:empty {
-        padding-right: 12px;
+        width: 16px;
         }
 
-      .PanelHeader--android .PanelHeader-right {
-        padding-left: 6px;
+      .PanelHeader--android .PanelHeader-right:not(:empty) {
+        padding-left: 8px;
+        padding-right: 4px;
         }
 
-        .PanelHeader--android .PanelHeader-right:not(:empty) {
-          padding-right: 4px;
-          }
-
-        .PanelHeader--android .PanelHeader-left-in:not(:empty) {
-          padding-left: 4px;
-          }
+      .PanelHeader--android .PanelHeader-right:empty {
+        width: 16px;
+        }
 
         .PanelHeader--android .PanelHeader-content {
           font-size: 20px;
@@ -219,7 +217,6 @@
         }
 
         .PanelHeader--android .PanelHeader-content > *:not(.Search):not(.PanelHeaderContent) {
-          padding: 0 6px;
           max-width: 100%;
           flex: 1;
           min-width: 0;
