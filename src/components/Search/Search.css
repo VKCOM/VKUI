@@ -146,7 +146,6 @@
  */
 .Search {
   background: var(--search_bar_background);
-  padding: 8px;
   }
 
   .Search__control {
@@ -218,8 +217,15 @@
       }
 
 /**
+  iOS
+ */
+.Search--ios {
+  padding: 8px 12px;
+}
+
+/**
   Android
  */
-.Search--android.Search--default {
+.Search--android {
   padding: 8px 16px;
   }
