@@ -48,18 +48,29 @@ class PrepareFrame extends React.Component {
   }
 
   componentDidMount () {
+    // Пихаем в iFrame с примером спрайты для иконок
     const sprite = document.getElementById('__SVG_SPRITE_NODE__');
     const masks = document.getElementById('__SVG_MASKS_NODE__');
 
     this.context.document.body.appendChild(sprite.cloneNode(true));
     this.context.document.body.appendChild(masks.cloneNode(true));
 
-    let styles = this.context.document.getElementById('styles');
-    styles.onload = styles.onreadystatechange = () => {
+    this.context.document.querySelector('.frame-content').setAttribute('id', 'root');
+
+    // Пихаем в iFrame vkui стили
+    const url = "./main.css",
+      head = this.context.document.getElementsByTagName('head')[0],
+      link = this.context.document.createElement('link');
+
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    link.href = url;
+
+    link.onload = () => {
       this.setState({ loaded: true });
     };
 
-    this.context.document.querySelector('.frame-content').setAttribute('id', 'root');
+    head.appendChild(link);
   }
 
   render () {
