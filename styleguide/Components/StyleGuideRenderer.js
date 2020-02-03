@@ -101,9 +101,6 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
             <div style={{ marginTop: 4 }}>
               Исходники:&nbsp;<Link href={ pkg.repository }>GitHub</Link>
             </div>
-            <div style={{ marginTop: 4 }}>
-              Чат:&nbsp;<Link href="https://vk.me/join/AJQ1d8dLkgTUYRPPQ/Wa6Jmd">VK</Link>
-            </div>
           </div>
           {toc}
         </div>
