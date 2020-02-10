@@ -1,11 +1,10 @@
 .Card__in {
   background-color: var(--background_content);
   overflow: hidden;
-  height: 100%;
 }
 
 .Card--md-shadow .Card__in {
-  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .8), 0 0 2px 0 rgba(0, 0, 0, .8);
+  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .08), 0 0 2px 0 rgba(0, 0, 0, .08);
 }
 
 .Card--md-outline .Card__in {

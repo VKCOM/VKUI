@@ -8,11 +8,6 @@
   flex-shrink: 0;
 }
 
-.CardScroll .Card--sz-l {
-  width: calc(100% - 24px);
-  margin-right: 12px;
-}
-
 .CardScroll .Card:last-child {
   margin-right: 0;
 }
@@ -29,6 +24,11 @@
   padding-right: 12px;
 }
 
+.CardScroll--ios .Card--sz-l {
+  width: calc(100% - 24px);
+  margin-right: 12px;
+}
+
 /**
  * Android
  */
@@ -39,4 +39,9 @@
 
 .CardScroll--android .Card:last-child {
   padding-right: 16px;
+}
+
+.CardScroll--android .Card--sz-l {
+  width: calc(100% - 32px);
+  margin-right: 16px;
 }
