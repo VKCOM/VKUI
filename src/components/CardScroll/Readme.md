@@ -33,7 +33,7 @@
         </Card>
       </CardScroll>
     </Group>
-    <Group separator="hide" description="Ширина карточки <Card size='l' /> зафиксирован в CSS так, чтобы каждая карточка занимала всю ширину вьюпорта">
+    <Group separator="hide" description="Ширина карточки <Card size='l' /> зафиксирована в CSS так, чтобы каждая карточка занимала всю ширину вьюпорта">
       <CardScroll>
         <Card size="l">
           <div style={{ height: 96 }} />
