@@ -60,16 +60,16 @@
       </Group>
       <Group header={<Header mode="secondary">app type</Header>} description="Аватарки для приложений. Радиус скургления зависит от значения свойства size.">
         <List>
-          <Cell before={<Avatar type="app" src="https://pp.userapi.com/c844616/v844616889/9ec4a/9Fk-RI7uchQ.jpg" />} description="Ролевая">Шторм онлайн</Cell>
-          <Cell before={<Avatar type="app" src="https://pp.userapi.com/c848536/v848536020/18242/ZLjAYM59EqY.jpg" />} description="Настольная" multiline={false}>Шашки - 3 вида: шашки, уголки, поддавки</Cell>
-          <Cell before={<Avatar type="app" src="https://pp.userapi.com/c849028/v849028348/1b353/Na_GRlqgRNM.jpg" />} description="Головоломка">Вега Микс на даче</Cell>
+          <Cell before={<Avatar mode="app" src="https://pp.userapi.com/c844616/v844616889/9ec4a/9Fk-RI7uchQ.jpg" />} description="Ролевая">Шторм онлайн</Cell>
+          <Cell before={<Avatar mode="app" src="https://pp.userapi.com/c848536/v848536020/18242/ZLjAYM59EqY.jpg" />} description="Настольная" multiline={false}>Шашки - 3 вида: шашки, уголки, поддавки</Cell>
+          <Cell before={<Avatar mode="app" src="https://pp.userapi.com/c849028/v849028348/1b353/Na_GRlqgRNM.jpg" />} description="Головоломка">Вега Микс на даче</Cell>
         </List>
       </Group>
       <Group header={<Header mode="secondary">image type</Header>} description="Используется для остальных случаев. Например, для музыки и плейлистов.">
         <List>
-          <Cell before={<Avatar type="image" src="https://pp.userapi.com/c841025/v841025503/617f7/bkN1Def0s14.jpg" />} description="Arctic Monkeys" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>I Wanna Be Yours</Cell>
-          <Cell before={<Avatar type="image" src="https://pp.userapi.com/c845220/v845220642/7cacc/XzhH5b7FSKY.jpg" />} description="Лето (звери)" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>6 утра</Cell>
-          <Cell before={<Avatar type="image" src="https://pp.userapi.com/c837628/v837628453/39175/4JRjMaFvCrw.jpg" />} description="Depeche Mode" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>Enjoy the Silence</Cell>
+          <Cell before={<Avatar mode="image" src="https://pp.userapi.com/c841025/v841025503/617f7/bkN1Def0s14.jpg" />} description="Arctic Monkeys" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>I Wanna Be Yours</Cell>
+          <Cell before={<Avatar mode="image" src="https://pp.userapi.com/c845220/v845220642/7cacc/XzhH5b7FSKY.jpg" />} description="Лето (звери)" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>6 утра</Cell>
+          <Cell before={<Avatar mode="image" src="https://pp.userapi.com/c837628/v837628453/39175/4JRjMaFvCrw.jpg" />} description="Depeche Mode" asideContent={<Icon24MoreHorizontal fill="var(--accent)"/>}>Enjoy the Silence</Cell>
         </List>
       </Group>
     </Panel>
