@@ -1,0 +1,47 @@
+.CardScroll__in {
+  display: flex;
+  align-items: center;
+}
+
+.CardScroll .Card {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.CardScroll .Card:last-child {
+  margin-right: 0;
+}
+
+/**
+ * iOS
+ */
+
+.CardScroll--ios .Card:first-child {
+  padding-left: 12px;
+}
+
+.CardScroll--ios .Card:last-child {
+  padding-right: 12px;
+}
+
+.CardScroll--ios .Card--sz-l {
+  width: calc(100% - 24px);
+  margin-right: 12px;
+}
+
+/**
+ * Android
+ */
+
+.CardScroll--android .Card:first-child {
+  padding-left: 16px;
+}
+
+.CardScroll--android .Card:last-child {
+  padding-right: 16px;
+}
+
+.CardScroll--android .Card--sz-l {
+  width: calc(100% - 32px);
+  margin-right: 16px;
+}
