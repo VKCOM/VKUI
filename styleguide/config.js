@@ -69,6 +69,7 @@ module.exports = {
         name: 'Blocks',
         components: () => [
           '../src/components/Button/Button.tsx',
+          '../src/components/Card/Card.tsx',
           '../src/components/CellButton/CellButton.tsx',
           '../src/components/Div/Div.tsx',
           '../src/components/Link/Link.tsx',

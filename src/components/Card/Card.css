@@ -1,0 +1,57 @@
+.Card__in {
+  background-color: var(--background_content);
+  overflow: hidden;
+  height: 100%;
+}
+
+.Card--md-shadow .Card__in {
+  box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .8), 0 0 2px 0 rgba(0, 0, 0, .8);
+}
+
+.Card--md-outline .Card__in {
+  box-shadow: inset 0 0 0 1px var(--background_page);
+}
+
+@media (min-resolution: 2dppx) {
+  .Card--md-outline .Card__in {
+    box-shadow: inset 0 0 0 .5px var(--background_page);
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  .Card--md-outline .Card__in {
+    box-shadow: inset 0 0 0 .33px var(--background_page);
+  }
+}
+
+/**
+  * iOS
+ */
+
+.Card--ios.Card--sz-s .Card__in {
+  border-radius: 6px;
+}
+
+.Card--ios.Card--sz-m .Card__in {
+  border-radius: 10px;
+}
+
+.Card--ios.Card--sz-l .Card__in {
+  border-radius: 10px;
+}
+
+/**
+ * Android
+ */
+
+.Card--android.Card--sz-s .Card__in {
+  border-radius: 6px;
+}
+
+.Card--android.Card--sz-m .Card__in {
+  border-radius: 8px;
+}
+
+.Card--android.Card--sz-l .Card__in {
+  border-radius: 8px;
+}

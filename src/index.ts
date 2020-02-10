@@ -38,6 +38,9 @@ export { default as ModalCard } from './components/ModalCard/ModalCard';
  * Blocks
  */
 export { default as Button } from './components/Button/Button';
+export { default as Card } from './components/Card/Card';
+export { default as CardGrid } from './components/CardGrid/CardGrid';
+export { default as CardScroll } from './components/CardScroll/CardScroll';
 export { default as CellButton } from './components/CellButton/CellButton';
 export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
