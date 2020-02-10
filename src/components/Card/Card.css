@@ -1,14 +1,16 @@
 .Card__in {
-  background-color: var(--background_content);
+  background-color: var(--content_tint_background);
   overflow: hidden;
 }
 
 .Card--md-shadow .Card__in {
   box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .08), 0 0 2px 0 rgba(0, 0, 0, .08);
+  background-color: var(--modal_card_background);
 }
 
 .Card--md-outline .Card__in {
   box-shadow: inset 0 0 0 1px var(--background_page);
+  background-color: var(--modal_card_background);
 }
 
 @media (min-resolution: 2dppx) {

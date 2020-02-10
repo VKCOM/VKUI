@@ -12,7 +12,9 @@ const CardScroll: FunctionComponent<CardScrollProps> = ({ children, className, s
   return (
     <div style={style} className={classNames(className, getClassname('CardScroll', platform))}>
       <HorizontalScroll>
-        {children}
+        <div className="CardScroll__in">
+          {children}
+        </div>
       </HorizontalScroll>
     </div>
   );
