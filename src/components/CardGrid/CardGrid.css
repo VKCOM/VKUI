@@ -1,3 +1,7 @@
+.CardGrid {
+  margin-top: -8px;
+}
+
 .CardGrid::after {
   clear: both;
   content: '';
@@ -8,10 +12,6 @@
 .CardGrid .Card {
   float: left;
   margin-top: 8px;
-}
-
-.CardGrid .Card:first-child {
-  margin-top: 0;
 }
 
 .CardGrid .Card--sz-l {
