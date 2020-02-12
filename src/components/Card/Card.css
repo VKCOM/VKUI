@@ -25,7 +25,7 @@
   height: 100%;
   content: '';
   display: block;
-  border: 1px solid var(--background_page);
+  border: 1px solid var(--image_border);
   z-index: 1;
   box-sizing: border-box;
   border-radius: inherit;

@@ -5,11 +5,11 @@ import usePlatform from '../../hooks/usePlatform';
 
 export type CardGridProps = HTMLAttributes<HTMLDivElement>;
 
-const CardGrid: FunctionComponent<CardGridProps> = ({ children, className, style }: CardGridProps) => {
+const CardGrid: FunctionComponent<CardGridProps> = ({ children, className, style, ...restProps }: CardGridProps) => {
   const platform = usePlatform();
 
   return (
-    <div style={style} className={classNames(className, getClassname('CardGrid', platform))}>
+    <div {...restProps} style={style} className={classNames(className, getClassname('CardGrid', platform))}>
       {children}
     </div>
   );

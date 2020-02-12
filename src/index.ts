@@ -44,6 +44,7 @@ export { default as CardScroll } from './components/CardScroll/CardScroll';
 export { default as CellButton } from './components/CellButton/CellButton';
 export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
+export { default as Gradient } from './components/Gradient/Gradient';
 export { default as List } from './components/List/List';
 export { default as Cell } from './components/Cell/Cell';
 export { default as Footer } from './components/Footer/Footer';

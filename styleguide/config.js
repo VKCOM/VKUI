@@ -77,6 +77,7 @@ module.exports = {
           '../src/components/Card/Card.tsx',
           '../src/components/CardGrid/CardGrid.tsx',
           '../src/components/CardScroll/CardScroll.tsx',
+          '../src/components/Gradient/Gradient.tsx',
           '../src/components/Cell/Cell.tsx',
           '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
