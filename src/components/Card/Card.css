@@ -9,19 +9,20 @@
 }
 
 .Card--md-outline .Card__in {
-  box-shadow: inset 0 0 0 1px var(--background_page);
+  border: 1px solid var(--background_page);
   background-color: var(--modal_card_background);
+  box-sizing: border-box;
 }
 
 @media (min-resolution: 2dppx) {
   .Card--md-outline .Card__in {
-    box-shadow: inset 0 0 0 .5px var(--background_page);
+    border-width: .5px;
   }
 }
 
 @media (min-resolution: 3dppx) {
   .Card--md-outline .Card__in {
-    box-shadow: inset 0 0 0 .33px var(--background_page);
+    border-width: .33px;
   }
 }
 
