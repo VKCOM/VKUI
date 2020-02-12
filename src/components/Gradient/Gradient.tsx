@@ -6,9 +6,10 @@ export interface GradientProps extends HTMLAttributes<HTMLDivElement> {
   to: 'top' | 'bottom';
 }
 
-const Gradient: FunctionComponent<GradientProps> = ({ mode, children, style, className, to }: GradientProps) => {
+const Gradient: FunctionComponent<GradientProps> = ({ mode, children, style, className, to, ...restProps }: GradientProps) => {
   return (
     <div
+      {...restProps}
       className={classNames('Gradient', `Gradient--md-${mode}`, `Gradient--to-${to}`, className)}
       style={style}
     >
