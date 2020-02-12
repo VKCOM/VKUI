@@ -8,11 +8,12 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   mode?: 'tint' | 'shadow' | 'outline';
 }
 
-const Card: FunctionComponent<CardProps> = ({ size, mode, children, style, className }: CardProps) => {
+const Card: FunctionComponent<CardProps> = ({ size, mode, children, style, className, ...restProps }: CardProps) => {
   const platform = usePlatform();
 
   return (
     <div
+      {...restProps}
       style={style}
       className={classNames(className, getClassname('Card', platform), `Card--sz-${size}`, `Card--md-${mode}`)}
     >
