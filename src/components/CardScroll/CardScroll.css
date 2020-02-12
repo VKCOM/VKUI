@@ -1,6 +1,6 @@
 .CardScroll__in {
   display: flex;
-  align-items: center;
+  align-items: stretch;
 }
 
 .CardScroll .Card {
@@ -12,16 +12,20 @@
   margin-right: 0;
 }
 
+.CardScroll__in::before,
+.CardScroll__in::after {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+}
+
 /**
  * iOS
  */
 
-.CardScroll--ios .Card:first-child {
-  padding-left: 12px;
-}
-
-.CardScroll--ios .Card:last-child {
-  padding-right: 12px;
+.CardScroll--ios .CardScroll__in::before,
+.CardScroll--ios .CardScroll__in::after {
+  width: 12px;
 }
 
 .CardScroll--ios .Card--sz-l {
@@ -33,12 +37,9 @@
  * Android
  */
 
-.CardScroll--android .Card:first-child {
-  padding-left: 16px;
-}
-
-.CardScroll--android .Card:last-child {
-  padding-right: 16px;
+.CardScroll--android .CardScroll__in::before,
+.CardScroll--android .CardScroll__in::after {
+  width: 16px;
 }
 
 .CardScroll--android .Card--sz-l {
