@@ -1,23 +1,24 @@
 .Card {
   position: relative;
-  background-color: var(--content_tint_background);
-  overflow: hidden;
-  box-sizing: border-box;
+  background: var(--content_tint_background);
+}
+
+.Card__in {
+  position: relative;
+  z-index: 2;
+  border-radius: inherit;
 }
 
 .Card--md-shadow {
   box-shadow: 0 2px 24px 0 rgba(0, 0, 0, .08), 0 0 2px 0 rgba(0, 0, 0, .08);
-  background-color: var(--modal_card_background);
+  background: var(--modal_card_background);
 }
 
 .Card--md-outline {
-  background-color: var(--modal_card_background);
-  box-sizing: border-box;
-  position: relative;
-  z-index: 2;
+  background: var(--modal_card_background);
 }
 
-.Card--md-outline::after {
+.Card--md-outline::before {
   position: absolute;
   left: 0;
   top: 0;
@@ -32,13 +33,13 @@
 }
 
 @media (min-resolution: 2dppx) {
-  .Card--md-outline::after {
+  .Card--md-outline::before {
     border-width: .5px;
   }
 }
 
 @media (min-resolution: 3dppx) {
-  .Card--md-outline::after {
+  .Card--md-outline::before {
     border-width: .33px;
   }
 }

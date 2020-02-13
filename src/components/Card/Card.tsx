@@ -17,7 +17,9 @@ const Card: FunctionComponent<CardProps> = ({ size, mode, children, style, class
       style={style}
       className={classNames(className, getClassname('Card', platform), `Card--sz-${size}`, `Card--md-${mode}`)}
     >
-      {children}
+      <div className="Card__in">
+        {children}
+      </div>
     </div>
   );
 };
