@@ -38,6 +38,7 @@ module.exports = {
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.tsx',
           '../src/components/PanelHeader/PanelHeader.tsx',
+          '../src/components/PanelHeaderSimple/PanelHeaderSimple.tsx',
           '../src/components/PanelHeaderButton/PanelHeaderButton.tsx',
           '../src/components/PanelHeaderContent/PanelHeaderContent.tsx',
           '../src/components/PanelHeaderContext/PanelHeaderContext.tsx',
