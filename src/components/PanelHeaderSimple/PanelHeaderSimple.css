@@ -1,5 +1,6 @@
 .PanelHeaderSimple {
-
+  position: relative;
+  z-index: 10;
 }
 
 .PanelHeaderSimple__in {
@@ -45,9 +46,14 @@
  * iOS
  */
 
+.PanelHeaderSimple--ios ~ .FixedLayout--top {
+  top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
+}
+
 .PanelHeaderSimple--ios .PanelHeaderSimple__height,
 .PanelHeaderSimple--ios .PanelHeaderSimple__in {
   height: var(--panelheader_height_ios);
+  padding-top: var(--safe-area-inset-top);
 }
 
 .PanelHeaderSimple--ios .PanelHeaderSimple__left {
@@ -112,9 +118,14 @@
  * Android
  */
 
+.PanelHeaderSimple--android ~ .FixedLayout--top {
+  top: calc(var(--panelheader_height_android) + var(--safe-area-inset-top));
+}
+
 .PanelHeaderSimple--android .PanelHeaderSimple__height,
 .PanelHeaderSimple--android .PanelHeaderSimple__in {
   height: var(--panelheader_height_android);
+  padding-top: var(--safe-area-inset-top);
 }
 
 .PanelHeaderSimple--android .PanelHeaderSimple__left-in:not(:empty) {
