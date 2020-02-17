@@ -17,6 +17,8 @@ const Input: FunctionComponent<InputProps> = ({
   getRef,
   className,
   getRootRef,
+  top,
+  bottom,
   ...restProps
 }: InputProps) => {
   return (

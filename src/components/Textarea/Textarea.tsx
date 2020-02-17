@@ -120,7 +120,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
 
   render() {
     const { defaultValue, value, onChange, grow, style, onResize, className,
-      getRootRef, getRef, status, ...restProps } = this.props;
+      getRootRef, getRef, status, top, bottom, ...restProps } = this.props;
 
     const height = this.state.height || style.height || 66;
 
