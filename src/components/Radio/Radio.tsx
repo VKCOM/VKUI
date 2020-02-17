@@ -3,7 +3,7 @@ import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { OS } from '../../lib/platform';
-import { HasRef, HasRootRef } from '../../types/props';
+import { HasFormLabels, HasRef, HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
 const baseClassName = getClassName('Radio');
@@ -11,12 +11,13 @@ const baseClassName = getClassName('Radio');
 export interface RadioProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRef<HTMLInputElement>,
-  HasRootRef<HTMLLabelElement> {
+  HasRootRef<HTMLLabelElement>,
+  HasFormLabels {
   description?: ReactNode;
 }
 
 const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
-  const { children, description, style, className, getRef, getRootRef, ...restProps } = props;
+  const { children, description, style, className, getRef, getRootRef, top, bottom, ...restProps } = props;
   const platform = usePlatform();
 
   return (

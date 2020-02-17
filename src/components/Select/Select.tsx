@@ -2,7 +2,7 @@ import React, { ChangeEvent, ChangeEventHandler, SelectHTMLAttributes } from 're
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
 import { GetRef } from '../../types/common';
 
 export interface SelectProps extends
@@ -10,8 +10,8 @@ export interface SelectProps extends
   HasRef<HTMLSelectElement>,
   HasRootRef<HTMLLabelElement>,
   HasFormStatus,
+  HasFormLabels,
   HasAlign {
-  value?: string;
   defaultValue?: string;
   placeholder?: string;
 }
@@ -87,7 +87,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 
   render() {
     const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, ...restProps } = this.props;
+      getRef, getRootRef, top, bottom, ...restProps } = this.props;
 
     return (
       <FormField

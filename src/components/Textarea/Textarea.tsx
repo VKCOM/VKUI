@@ -1,14 +1,15 @@
 import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
-import { HasFormStatus, HasRef, HasRootRef } from '../../types/props';
+import { HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
 import { GetRef } from '../../types/common';
 
 export interface TextareaProps extends
   TextareaHTMLAttributes<HTMLTextAreaElement>,
   HasRef<HTMLTextAreaElement>,
   HasRootRef<HTMLElement>,
-  HasFormStatus {
+  HasFormStatus,
+  HasFormLabels {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;

@@ -1,17 +1,15 @@
-import React, { ElementType, HTMLAttributes, ReactNode } from 'react';
+import React, { ElementType, HTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasChildren, HasFormStatus, HasRootRef } from '../../types/props';
+import { HasFormLabels, HasFormStatus, HasRootRef } from '../../types/props';
 
 export interface FormFieldProps extends
   HTMLAttributes<HTMLElement>,
   HasRootRef<HTMLElement>,
-  HasChildren,
-  HasFormStatus {
+  HasFormStatus,
+  HasFormLabels {
   Component?: ElementType;
-  top?: ReactNode;
-  bottom?: ReactNode;
 }
 
 const FormField: React.FunctionComponent<FormFieldProps> = ({
@@ -20,6 +18,8 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
   children,
   status,
   getRootRef,
+  top,
+  bottom,
   ...restProps
 }: FormFieldProps) => {
   const platform = usePlatform();

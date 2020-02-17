@@ -2,7 +2,7 @@ import React, { Component, createRef, HTMLAttributes, RefObject } from 'react';
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasPlatform, HasRootRef } from '../../types/props';
+import { HasFormLabels, HasPlatform, HasRootRef } from '../../types/props';
 import { OnSliderResize, precisionRound } from '../Slider/Slider';
 import { GetRef } from '../../types/common';
 import withPlatform from '../../hoc/withPlatform';
@@ -13,7 +13,8 @@ export type Value = [number, number];
 export interface RangeSliderProps extends
   HasRootRef<HTMLDivElement>,
   HasPlatform,
-  Omit<HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'> {
+  Omit<HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'>,
+  HasFormLabels {
   min?: number;
   max?: number;
   step?: number;
@@ -222,7 +223,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
   render() {
     const { className, min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, ...restProps } = this.props;
+      onChange, getRootRef, platform, top, bottom, ...restProps } = this.props;
 
     return (
       <div

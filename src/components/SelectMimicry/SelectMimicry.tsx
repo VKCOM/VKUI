@@ -2,12 +2,13 @@ import React, { FunctionComponent, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormStatus, HasRootRef } from '../../types/props';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRootRef } from '../../types/props';
 
 export interface SelectMimicryProps extends
   HTMLAttributes<HTMLElement>,
   HasAlign,
   HasFormStatus,
+  HasFormLabels,
   HasRootRef<HTMLElement> {
   multiline?: boolean;
   disabled?: boolean;
