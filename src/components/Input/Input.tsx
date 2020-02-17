@@ -1,13 +1,14 @@
 import React, { FunctionComponent, InputHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
 
 export interface InputProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLDivElement>,
   HasFormStatus,
+  HasFormLabels,
   HasAlign {}
 
 const Input: FunctionComponent<InputProps> = ({
@@ -16,6 +17,8 @@ const Input: FunctionComponent<InputProps> = ({
   getRef,
   className,
   getRootRef,
+  top,
+  bottom,
   ...restProps
 }: InputProps) => {
   return (

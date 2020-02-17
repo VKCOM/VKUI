@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { OS } from '../lib/platform';
 
 export interface InsetsInterface {
@@ -53,6 +53,11 @@ export interface HasDangerHTML {
 
 export interface HasFormStatus {
   status?: 'default' | 'error' | 'valid';
+}
+
+export interface HasFormLabels {
+  top?: ReactNode;
+  bottom?: ReactNode;
 }
 
 export interface HasAlign {

@@ -4,13 +4,14 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IOS } from '../../lib/platform';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
-import { HasRootRef, HasRef } from '../../types/props';
+import { HasRootRef, HasRef, HasFormLabels } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface CheckboxProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
-  HasRef<HTMLInputElement> {}
+  HasRef<HTMLInputElement>,
+  HasFormLabels {}
 
 export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,
@@ -18,6 +19,8 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   style,
   getRootRef,
   getRef,
+  top,
+  bottom,
   ...restProps
 }: CheckboxProps) => {
   const platform = usePlatform();

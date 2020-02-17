@@ -2,7 +2,7 @@ import React, { Component, HTMLAttributes } from 'react';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { HasPlatform, HasRootRef } from '../../types/props';
+import { HasFormLabels, HasPlatform, HasRootRef } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
 import { GetRef } from '../../types/common';
 import { canUseDOM } from '../../lib/dom';
@@ -10,7 +10,8 @@ import { canUseDOM } from '../../lib/dom';
 export interface SliderProps extends
   HasRootRef<HTMLDivElement>,
   HasPlatform,
-  Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange'> {
+  Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange'>,
+  HasFormLabels {
   min?: number;
   max?: number;
   value?: number;
@@ -187,7 +188,7 @@ class Slider extends Component<SliderProps, SliderState> {
 
   render() {
     const { className, min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, ...restProps } = this.props;
+      onChange, getRootRef, platform, top, bottom, ...restProps } = this.props;
 
     return (
       <div
