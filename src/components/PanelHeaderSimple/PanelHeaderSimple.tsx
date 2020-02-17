@@ -21,12 +21,22 @@ const PanelHeaderSimple = ({
   children,
   right,
   separator,
+  transparent,
   ...restProps
 }: PanelHeaderSimpleProps) => {
   const platform = usePlatform();
 
   return (
-    <div {...restProps} className={classNames(getClassname('PanelHeaderSimple', platform), className)}>
+    <div
+      {...restProps}
+      className={
+        classNames(
+          getClassname('PanelHeaderSimple', platform),
+          { 'PanelHeaderSimple--transparent': transparent },
+          className,
+        )
+      }
+    >
       <div className="PanelHeaderSimple__height" />
       <FixedLayout vertical="top">
         <div className="PanelHeaderSimple__in">

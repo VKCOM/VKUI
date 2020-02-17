@@ -12,6 +12,10 @@
   background: var(--header_background);
 }
 
+.PanelHeaderSimple--transparent .PanelHeaderSimple__in {
+  background: transparent;
+}
+
 .PanelHeaderSimple__left {
   box-sizing: border-box;
   color: var(--header_tint);
@@ -64,6 +68,8 @@
   flex-basis: 0;
   padding-right: 12px;
   font-size: 17px;
+  opacity: 1;
+  transition: opacity .3s var(--ios-easing);
 }
 
 .PanelHeaderSimple--ios .PanelHeaderSimple__left .PanelHeaderButton .Icon--24 {
@@ -84,8 +90,9 @@
   font-size: 21px;
   line-height: var(--panelheader_height_ios);
   text-align: center;
-  transition: color .6s var(--ios-easing);
   color: var(--header_text);
+  opacity: 1;
+  transition: opacity .3s var(--ios-easing);
 }
 
 .PanelHeaderSimple--ios .PanelHeaderSimple__right {
@@ -96,6 +103,8 @@
   flex-basis: 0;
   padding-left: 12px;
   font-size: 17px;
+  opacity: 1;
+  transition: opacity .3s var(--ios-easing);
 }
 
 .PanelHeaderSimple--ios .PanelHeaderSimple__right .PanelHeaderButton:not(:first-child) {
@@ -112,6 +121,12 @@
 
 .PanelHeaderSimple--ios .PanelHeaderSimple__right .PanelHeaderButton > *:not(.Icon) {
   padding-right: 16px;
+}
+
+.View--ios .View__panel--prev .PanelHeaderSimple__left,
+.View--ios .View__panel--prev .PanelHeaderSimple__right,
+.View--ios .View__panel--prev .PanelHeaderSimple__content {
+  opacity: 0;
 }
 
 /**
