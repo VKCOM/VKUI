@@ -5,10 +5,10 @@ import classNames from '../../lib/classNames';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Separator from '../Separator/Separator';
 import { ANDROID } from '../../lib/platform';
-import { HasRef } from '../../types/props';
+import { HasRootRef } from '../../types/props';
 import ConfigProviderContext from '../ConfigProvider/ConfigProviderContext';
 
-export interface PanelHeaderSimpleProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement> {
+export interface PanelHeaderSimpleProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   left?: ReactNode;
   addon?: ReactNode;
   right?: ReactNode;
@@ -24,7 +24,7 @@ const PanelHeaderSimple = ({
   right,
   separator,
   transparent,
-  getRef,
+  getRootRef,
   ...restProps
 }: PanelHeaderSimpleProps) => {
   const platform = usePlatform();
@@ -43,7 +43,7 @@ const PanelHeaderSimple = ({
           className,
         )
       }
-      ref={getRef}
+      ref={getRootRef}
     >
       <div className="PanelHeaderSimple__height" />
       <FixedLayout vertical="top">
