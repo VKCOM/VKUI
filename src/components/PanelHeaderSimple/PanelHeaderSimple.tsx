@@ -1,12 +1,14 @@
-import React, { HTMLAttributes, ReactNode } from 'react';
+import React, { HTMLAttributes, ReactNode, useContext } from 'react';
 import usePlatform from '../../hooks/usePlatform';
 import getClassname from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Separator from '../Separator/Separator';
 import { ANDROID } from '../../lib/platform';
+import { HasRef } from '../../types/props';
+import ConfigProviderContext from '../ConfigProvider/ConfigProviderContext';
 
-export interface PanelHeaderSimpleProps extends HTMLAttributes<HTMLDivElement> {
+export interface PanelHeaderSimpleProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement> {
   left?: ReactNode;
   addon?: ReactNode;
   right?: ReactNode;
@@ -22,9 +24,11 @@ const PanelHeaderSimple = ({
   right,
   separator,
   transparent,
+  getRef,
   ...restProps
 }: PanelHeaderSimpleProps) => {
   const platform = usePlatform();
+  const { webviewType } = useContext(ConfigProviderContext);
 
   return (
     <div
@@ -32,10 +36,14 @@ const PanelHeaderSimple = ({
       className={
         classNames(
           getClassname('PanelHeaderSimple', platform),
-          { 'PanelHeaderSimple--transparent': transparent },
+          {
+            'PanelHeaderSimple--transparent': transparent,
+            'PanelHeaderSimple--vkapps': webviewType === 'vkapps',
+          },
           className,
         )
       }
+      ref={getRef}
     >
       <div className="PanelHeaderSimple__height" />
       <FixedLayout vertical="top">
@@ -54,7 +62,7 @@ const PanelHeaderSimple = ({
             {children}
           </div>
           <div className="PanelHeaderSimple__right">
-            {right}
+            {webviewType !== 'vkapps' && right}
           </div>
         </div>
       </FixedLayout>

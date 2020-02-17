@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import vkConnect from '@vkontakte/vk-connect';
-import { HasChildren } from '../../types/props';
 import { canUseDOM } from '../../lib/dom';
+import ConfigProviderContext, { ConfigProviderContextInterface } from './ConfigProviderContext';
 
-export interface ConfigProviderProps extends HasChildren {
-  scheme?: 'client_light' | 'client_dark' | 'bright_light' | 'space_gray';
-  isWebView?: boolean;
-  webviewType?: 'vkapps' | 'internal';
-  app?: string;
+export interface ConfigProviderProps extends ConfigProviderContextInterface {
+  children?: ReactNode;
 }
 
 export interface ConfigProviderContext {
@@ -80,12 +77,16 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     return {
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
-      scheme: this.props.scheme,
+      scheme: this.mapOldScheme(this.props.scheme),
       app: this.props.app,
     };
   }
 
   render() {
-    return this.props.children;
+    return (
+      <ConfigProviderContext.Provider value={this.getChildContext()}>
+        {this.props.children}
+      </ConfigProviderContext.Provider>
+    );
   }
 }

@@ -42,6 +42,10 @@
   color: var(--header_tint);
 }
 
+.PanelHeaderSimple--vkapps .PanelHeaderSimple__right {
+  min-width: 90px;
+}
+
 .PanelHeaderSimple__separator {
   padding-top: 4px;
 }
