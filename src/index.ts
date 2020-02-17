@@ -8,6 +8,7 @@ export { default as View } from './components/View/View';
 export { default as Panel } from './components/Panel/Panel';
 export { default as PanelHeaderButton } from './components/PanelHeaderButton/PanelHeaderButton';
 export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
+export { default as PanelHeaderSimple } from './components/PanelHeaderSimple/PanelHeaderSimple';
 export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
 export { default as PanelHeaderContext } from './components/PanelHeaderContext/PanelHeaderContext';
 export { default as Epic } from './components/Epic/Epic';

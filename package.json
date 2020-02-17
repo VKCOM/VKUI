@@ -84,19 +84,21 @@
     "prepublishOnly": "yarn clear && yarn build",
     "styleguide": "NODE_ENV=development styleguidist server --config=styleguide/config.js",
     "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
-    "dev": "yarn clear && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:postcss-dev\"",
+    "dev": "yarn clear && yarn copy-default-scheme && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:postcss-dev\"",
+    "dev-es6": "yarn clear && yarn copy-default-scheme && concurrently \"yarn:tsc-dev\" \"yarn:babel-es6-dev\" \"yarn:postcss-dev\"",
     "postcss-dev": "postcss src/styles/styles.css --output dist/vkui.css --watch --verbose --no-map",
     "babel-dev": "babel src/ --out-dir dist/ --extensions .tsx,.jsx,.ts,.js --watch",
-    "babel:es6-dev": "babel --config-file ./babel.es6.config.js src/ --out-dir dist/es6/ --extensions .tsx,.jsx,.ts,.js --watch",
+    "babel-es6-dev": "babel --config-file ./babel.es6.config.js src/ --out-dir dist/es6/ --extensions .tsx,.jsx,.ts,.js --watch",
     "tsc-dev": "tsc --noEmit --watch --preserveWatchOutput",
-    "build": "yarn tsc && yarn babel && yarn tsc:es6 && yarn babel:es6 && yarn postcss && cp ./src/styles/bright_light.css ./dist/default_scheme.css",
+    "build": "yarn tsc && yarn babel && yarn tsc-es6 && yarn babel-es6 && yarn postcss && yarn copy-default-scheme",
     "postcss": "NODE_ENV=production postcss src/styles/styles.css --output dist/vkui.css --verbose",
     "babel": "NODE_ENV=production babel src/ --out-dir dist/ --source-maps --extensions .tsx,.jsx,.ts,.js",
-    "babel:es6": "NODE_ENV=production babel --config-file ./babel.es6.config.js src/ --out-dir dist/es6/ --source-maps --extensions .tsx,.jsx,.ts,.js",
+    "babel-es6": "NODE_ENV=production babel --config-file ./babel.es6.config.js src/ --out-dir dist/es6/ --source-maps --extensions .tsx,.jsx,.ts,.js",
     "tsc": "NODE_ENV=production tsc --emitDeclarationOnly --declaration",
-    "tsc:es6": "NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/es6/",
+    "tsc-es6": "NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/es6/",
     "clear": "rm -rf dist/*",
-    "test": "tsc --noEmit && eslint --ext .jsx,.js,.ts,.tsx src/ && stylelint './src/**/*.css'"
+    "test": "tsc --noEmit && eslint --ext .jsx,.js,.ts,.tsx src/ && stylelint './src/**/*.css'",
+    "copy-default-scheme": "cp ./src/styles/bright_light.css ./dist/default_scheme.css"
   },
   "pre-commit": [
     "test"
