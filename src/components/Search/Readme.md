@@ -68,11 +68,12 @@
     render() {
       return (
         <React.Fragment>
-          <PanelHeader
-            right={<PanelHeaderButton onClick={this.props.goHeaderSearch} key="add"><Icon28AddOutline /></PanelHeaderButton>}
+          <PanelHeaderSimple
+            right={<PanelHeaderButton onClick={this.props.goHeaderSearch}><Icon28AddOutline /></PanelHeaderButton>}
+            separator={false}
           >
             Выбор тематики
-          </PanelHeader>
+          </PanelHeaderSimple>
           <Search value={this.state.search} onChange={this.onChange} after="Отмена"/>
           {this.thematics.length > 0 &&
             <List>
@@ -105,14 +106,12 @@
     render () {
       return (
         <React.Fragment>
-          <PanelHeader
-            left={<PanelHeaderBack onClick={this.props.goSearch} />}
-          >
+          <PanelHeaderSimple left={<PanelHeaderBack onClick={this.props.goSearch} />} separator={false}>
             <Search
               value={this.state.search}
               onChange={this.onChange}
             />
-          </PanelHeader>
+          </PanelHeaderSimple>
           <List>
             {this.users.map((user) => (
               <Cell
@@ -145,7 +144,7 @@
 
     render () {
       return (
-        <View activePanel={this.state.activePanel}>
+        <View activePanel={this.state.activePanel} header={false}>
           <Panel id="search" separator={false}>
             <SimpleSearch goHeaderSearch={this.goHeaderSearch}/>
           </Panel>
