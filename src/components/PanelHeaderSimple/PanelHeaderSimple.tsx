@@ -14,6 +14,10 @@ export interface PanelHeaderSimpleProps extends HTMLAttributes<HTMLDivElement>, 
   right?: ReactNode;
   separator?: boolean;
   transparent?: boolean;
+  /**
+   * Если `false`, то шапка будет нулевой высоты и контент панели "залезет" под неё
+   */
+  visor?: boolean;
 }
 
 const PanelHeaderSimple = ({
@@ -23,6 +27,7 @@ const PanelHeaderSimple = ({
   children,
   right,
   separator,
+  visor,
   transparent,
   getRootRef,
   ...restProps
@@ -38,6 +43,7 @@ const PanelHeaderSimple = ({
           getClassname('PanelHeaderSimple', platform),
           {
             'PanelHeaderSimple--transparent': transparent,
+            'PanelHeaderSimple--no-visor': !visor,
             'PanelHeaderSimple--vkapps': webviewType === 'vkapps',
           },
           className,
@@ -45,14 +51,13 @@ const PanelHeaderSimple = ({
       }
       ref={getRootRef}
     >
-      <div className="PanelHeaderSimple__height" />
       <FixedLayout vertical="top" className="PanelHeaderSimple__fixed">
         <div className="PanelHeaderSimple__in">
           <div className="PanelHeaderSimple__left">
             <div className="PanelHeaderSimple__left-in">
               {left}
             </div>
-            {platform !== ANDROID &&
+            {platform !== ANDROID && !!addon &&
             <div className="PanelHeaderSimple__addon">
               {addon}
             </div>
@@ -66,7 +71,7 @@ const PanelHeaderSimple = ({
           </div>
         </div>
       </FixedLayout>
-      {separator && <Separator className="PanelHeaderSimple__separator" />}
+      {separator && visor && <Separator className="PanelHeaderSimple__separator" />}
     </div>
   );
 };
@@ -74,6 +79,7 @@ const PanelHeaderSimple = ({
 PanelHeaderSimple.defaultProps = {
   separator: true,
   transparent: false,
+  visor: true,
 };
 
 export default PanelHeaderSimple;
