@@ -26,11 +26,12 @@
     render () {
 
       return (
-        <View activePanel={this.state.activePanel}>
+        <View activePanel={this.state.activePanel} header={false}>
           <Panel id="panel1" separator={false}>
-            <PanelHeader
-              left={<PanelHeaderButton><Icon24CameraOutline /></PanelHeaderButton>}
-              right={<PanelHeaderButton><Icon24Add /></PanelHeaderButton>}
+            <PanelHeaderSimple
+              left={<PanelHeaderButton><Icon28CameraOutline /></PanelHeaderButton>}
+              right={<PanelHeaderButton><Icon28AddOutline /></PanelHeaderButton>}
+              separator={false}
             >
               <Tabs>
                 <TabsItem
@@ -56,7 +57,7 @@
                   Интересное
                 </TabsItem>
               </Tabs>
-            </PanelHeader>
+            </PanelHeaderSimple>
             <PanelHeaderContext
               opened={this.state.contextOpened}
               onClose={() => { this.setState({ contextOpened: false }) }}
@@ -83,11 +84,12 @@
             <CellButton onClick={() => this.setState({ activePanel: 'panel2' })}>Под шапкой</CellButton>
           </Panel>
           <Panel id="panel2" separator={false}>
-            <PanelHeader
+            <PanelHeaderSimple
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}
+              separator={false}
             >
               <Search />
-            </PanelHeader>
+            </PanelHeaderSimple>
             <Tabs>
               <TabsItem
                 onClick={() => this.setState({ activeTab2: 'music' })}
@@ -108,11 +110,12 @@
             </Group>
           </Panel>
           <Panel id="panel3" separator={false}>
-            <PanelHeader
+            <PanelHeaderSimple
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel2' })}/>}
+              separator={false}
             >
               Новости
-            </PanelHeader>
+            </PanelHeaderSimple>
             <Tabs>
               <HorizontalScroll>
                 <TabsItem
@@ -152,12 +155,12 @@
               <CellButton onClick={() => this.setState({ activePanel: 'panel4' })}>Табы-кнопки</CellButton>
             </Group>
           </Panel>
-          <Panel id="panel4">
-            <PanelHeader
+          <Panel id="panel4" separator={false}>
+            <PanelHeaderSimple
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel2' })}/>}
             >
               Кнопки
-            </PanelHeader>
+            </PanelHeaderSimple>
             <Tabs mode="buttons">
               <TabsItem
                 onClick={() => this.setState({ activeTab4: 'all' })}
@@ -177,11 +180,12 @@
             }
           </Panel>
           <Panel id="panel5" separator={false}>
-            <PanelHeader
+            <PanelHeaderSimple
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel4' })}/>}
+              separator={false}
             >
               <Search />
-            </PanelHeader>
+            </PanelHeaderSimple>
             <Tabs mode="segmented">
               <TabsItem
                 onClick={() => this.setState({ activeTab5: 'all' })}

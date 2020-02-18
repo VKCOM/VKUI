@@ -2,15 +2,24 @@
   background: var(--background_content);
   }
 
-.Tabs,
+.Tabs__in,
 .Tabs .HorizontalScroll__in {
   display: flex;
   align-items: center;
   }
 
-.PanelHeader .Tabs {
+.PanelHeader .Tabs,
+.PanelHeaderSimple .Tabs {
+  overflow: hidden;
   background: var(--header_background);
   }
+
+.PanelHeader .Tabs::after,
+.PanelHeaderSimple .Tabs::after {
+  display: block;
+  width: 1000px;
+  content: '';
+}
 
 .Tabs .HorizontalScroll {
   min-width: 100%;

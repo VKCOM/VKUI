@@ -7,6 +7,9 @@ export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export { default as Panel } from './components/Panel/Panel';
 export { default as PanelHeaderButton } from './components/PanelHeaderButton/PanelHeaderButton';
+/**
+ * @deprecated используйте PanelHeaderSimple
+ */
 export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
 export { default as PanelHeaderSimple } from './components/PanelHeaderSimple/PanelHeaderSimple';
 export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';

@@ -20,14 +20,112 @@
 будет удален.
 
 ```jsx
-<View activePanel="panelheader" header={false}>
-  <Panel id="panelheader" separator={false}>
-    <PanelHeaderSimple
-      left={<PanelHeaderBack />}
-      right={<PanelHeaderButton><Icon24MoreHorizontal /></PanelHeaderButton>}
-    >
-      Запись
-    </PanelHeaderSimple>
-  </Panel>
-</View>
+class Example extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      mainPanel: 'panel1',
+      modalPanel: 'modal-panel1',
+      activeView: 'main'
+    }
+  }
+
+  render() {
+    return (
+      <Root activeView={this.state.activeView}>
+        <View id="main" header={false} activePanel={this.state.mainPanel}>
+          <Panel separator={false} id="panel1">
+            <PanelHeaderSimple left={<PanelHeaderClose />}>
+              Стартовый экран
+            </PanelHeaderSimple>
+            <Group>
+              <CellButton onClick={ () => this.setState({ mainPanel: 'panel2' }) }>
+                Вторая панель
+              </CellButton>
+            </Group>
+          </Panel>
+          <Panel separator={false} id="panel2">
+            <PanelHeaderSimple
+              left={<PanelHeaderBack onClick={() => this.setState({ mainPanel: 'panel1' })} />}
+              addon={<PanelHeaderButton onClick={() => this.setState({ mainPanel: 'panel1' })}>Назад</PanelHeaderButton>}
+              right={<PanelHeaderButton><Icon28PictureOutline/></PanelHeaderButton>}
+            >
+              Вторая панель
+            </PanelHeaderSimple>
+            <Group>
+              <CellButton onClick={ () => this.setState({ mainPanel: 'panel3' }) }>
+                Несколько иконок
+              </CellButton>
+            </Group>
+          </Panel>
+          <Panel separator={false} id="panel3">
+            <PanelHeaderSimple
+              left={<PanelHeaderBack onClick={() => this.setState({ mainPanel: 'panel2' })}/>}
+              addon={<PanelHeaderButton onClick={() => this.setState({ mainPanel: 'panel2' })}>Назад</PanelHeaderButton>}
+              right={
+                <React.Fragment>
+                  <PanelHeaderButton><Icon28SettingsOutline/></PanelHeaderButton>
+                  <PanelHeaderButton><Icon28Notifications/></PanelHeaderButton>
+                </React.Fragment>
+              }
+            >
+              Две иконки
+            </PanelHeaderSimple>
+            <Group>
+              <CellButton onClick={ () => this.setState({ activeView: 'modal' }) }>
+                Модальное окно
+              </CellButton>
+            </Group>
+          </Panel>
+        </View>
+        <View id="modal" header={false} activePanel={this.state.modalPanel}>
+          <Panel separator={false} id="modal-panel1">
+            <PanelHeaderSimple
+              left={<PanelHeaderClose onClick={() => this.setState({ activeView: 'main' })} />}
+              right={<PanelHeaderSubmit disabled primary onClick={() => this.setState({ activeView: 'main' })} />}
+            >
+              Модальное окно
+            </PanelHeaderSimple>
+            <Group>
+              <CellButton onClick={ () => this.setState({ modalPanel: 'modal-panel2' }) }>
+                Сложный контент
+              </CellButton>
+            </Group>
+          </Panel>
+          <Panel separator={false} id="modal-panel2">
+            <PanelHeaderSimple left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel1' })} />}>
+              <PanelHeaderContent before={<Avatar size={36} />} status="Был в сети вчера">
+                Влад Анесов
+              </PanelHeaderContent>
+            </PanelHeaderSimple>
+            <Group>
+              <CellButton onClick={ () => this.setState({ modalPanel: 'modal-panel3' }) }>
+                Поиск
+              </CellButton>
+            </Group>
+          </Panel>
+          <Panel separator={false} id="modal-panel3">
+            <PanelHeaderSimple separator={false} left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel2' })} />}>
+              <Search />
+            </PanelHeaderSimple>
+            <CellButton onClick={ () => this.setState({ modalPanel: 'modal-panel4' }) }>
+              Табы
+            </CellButton>
+          </Panel>
+          <Panel separator={false} id="modal-panel4">
+            <PanelHeaderSimple separator={false} left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel3' })} />}>
+              <Tabs>
+                <TabsItem selected>Новости</TabsItem>
+                <TabsItem>Интересное</TabsItem>
+              </Tabs>
+            </PanelHeaderSimple>
+          </Panel>
+        </View>
+      </Root>
+    )
+  }
+}
+
+<Example/>
 ```

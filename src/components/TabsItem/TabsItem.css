@@ -59,7 +59,7 @@
     }
 
 /* Для случая, когда внутри Tabs нет HorizontalScroll */
-.Tabs--buttons > .TabsItem:first-child {
+.Tabs--buttons .Tabs__in > .TabsItem:first-child {
   margin-left: 8px;
   }
 

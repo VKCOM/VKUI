@@ -40,6 +40,10 @@ module.exports = {
           '../src/components/PanelHeader/PanelHeader.tsx',
           '../src/components/PanelHeaderSimple/PanelHeaderSimple.tsx',
           '../src/components/PanelHeaderButton/PanelHeaderButton.tsx',
+          '../src/components/PanelHeaderBack/PanelHeaderBack.tsx',
+          '../src/components/PanelHeaderClose/PanelHeaderClose.tsx',
+          '../src/components/PanelHeaderSubmit/PanelHeaderSubmit.tsx',
+          '../src/components/PanelHeaderEdit/PanelHeaderEdit.tsx',
           '../src/components/PanelHeaderContent/PanelHeaderContent.tsx',
           '../src/components/PanelHeaderContext/PanelHeaderContext.tsx',
           '../src/components/Epic/Epic.tsx',
@@ -83,6 +87,7 @@ module.exports = {
           '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.tsx',
+          '../src/components/PanelSpinner/PanelSpinner.tsx',
           '../src/components/Switch/Switch.tsx',
           '../src/components/InfoRow/InfoRow.tsx',
           '../src/components/Avatar/Avatar.tsx',
@@ -114,16 +119,6 @@ module.exports = {
           '../src/components/SelectMimicry/SelectMimicry.tsx',
           '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx'
-        ]
-      }, {
-        name: 'Helpers',
-        content: './pages/helpers.md',
-        components: () => [
-          '../src/components/PanelSpinner/PanelSpinner.tsx',
-          '../src/components/PanelHeaderBack/PanelHeaderBack.tsx',
-          '../src/components/PanelHeaderClose/PanelHeaderClose.tsx',
-          '../src/components/PanelHeaderSubmit/PanelHeaderSubmit.tsx',
-          '../src/components/PanelHeaderEdit/PanelHeaderEdit.tsx'
         ]
       },
       {

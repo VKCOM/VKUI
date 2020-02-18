@@ -23,11 +23,11 @@ class Example extends React.Component {
   render () {
 
     return (
-      <View activePanel="context">
-        <Panel id="context">
-          <PanelHeader
-            left={<PanelHeaderButton>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</PanelHeaderButton>}
-            right={<PanelHeaderButton>{<Icon24Add />}</PanelHeaderButton>}
+      <View activePanel="context" header={false}>
+        <Panel id="context" separator={false}>
+          <PanelHeaderSimple
+            left={<PanelHeaderBack />}
+            right={<PanelHeaderButton><Icon28AddOutline /></PanelHeaderButton>}
           >
             <PanelHeaderContent
               aside={<Icon16Dropdown style={{ transform: `rotate(${this.state.contextOpened ? '180deg' : '0'})` }} />}
@@ -35,7 +35,7 @@ class Example extends React.Component {
             >
               Communities
             </PanelHeaderContent>
-          </PanelHeader>
+          </PanelHeaderSimple>
           <PanelHeaderContext opened={this.state.contextOpened} onClose={this.toggleContext}>
             <List>
               <Cell

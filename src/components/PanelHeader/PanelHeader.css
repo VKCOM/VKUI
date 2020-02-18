@@ -114,6 +114,14 @@
               padding-left: 12px;
               }
 
+            .PanelHeader--ios .PanelHeader__left-in .PanelHeaderButton:first-child .Icon--28 {
+              padding-left: 10px;
+              }
+
+            .PanelHeader--ios .PanelHeader__left-in .PanelHeaderButton:first-child .Icon--chevron_back_28 {
+              padding-left: 8px;
+              }
+
             .PanelHeader--ios .PanelHeader-left-in .PanelHeaderButton > *:not(.Icon) {
               padding-left: 16px;
               }

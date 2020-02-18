@@ -1,11 +1,11 @@
 Компонент для отрисовки "сложного" содержимого шапки.
 
-```
-<View activePanel="brand">
-  <Panel id="brand">
-    <PanelHeader
-      left={<PanelHeaderButton>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</PanelHeaderButton>}
-      right={<PanelHeaderButton>{<Icon24Phone />}</PanelHeaderButton>}
+```jsx
+<View activePanel="brand" header={false}>
+  <Panel id="brand" separator={false}>
+    <PanelHeaderSimple
+      left={<PanelHeaderBack />}
+      right={<PanelHeaderButton>{<Icon28MessageOutline />}</PanelHeaderButton>}
     >
       <PanelHeaderContent
         status="был в сети сегодня, в 18:46"
@@ -13,7 +13,7 @@
       >
         Влад Анесов
       </PanelHeaderContent>
-    </PanelHeader>
+    </PanelHeaderSimple>
   </Panel>
 </View>
 ```
