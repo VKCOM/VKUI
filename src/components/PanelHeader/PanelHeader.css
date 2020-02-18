@@ -222,6 +222,7 @@
           font-family: var(--font-tt);
           display: flex;
           align-items: center;
+          color: var(--header_text);
         }
 
         .PanelHeader--android .PanelHeader-content > *:not(.Search):not(.PanelHeaderContent) {
