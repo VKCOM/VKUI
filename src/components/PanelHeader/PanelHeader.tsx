@@ -24,6 +24,9 @@ export interface PanelHeaderContext {
   webviewType: Requireable<'vkapps' | 'internal'>;
 }
 
+/**
+ * @deprecated используйте PanelHeaderSimple
+ */
 class PanelHeader extends Component<PanelHeaderProps, PanelHeaderState> {
   static defaultProps: PanelHeaderProps = {
     transparent: false,

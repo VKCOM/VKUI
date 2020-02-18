@@ -30,10 +30,6 @@
   align-items: center;
 }
 
-.PanelHeaderButton--ios .Icon--chevron_back_28 {
-  padding-left: 8px;
-}
-
 .PanelHeaderButton--ios.Tappable--active {
   opacity: .7;
 }
@@ -45,11 +41,14 @@
   border-radius: 50%;
   font-weight: 500;
   font-size: 14px;
-  padding: 0 12px;
 }
 
 .PanelHeaderButton--android .Icon--24 {
-  padding: 12px 0;
+  padding: 12px;
+}
+
+.PanelHeaderButton--android .Icon--28 {
+  padding: 10px;
 }
 
 .PanelHeaderButton--android .Tappable__waves {

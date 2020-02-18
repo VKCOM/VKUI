@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID } from '../../lib/platform';
-import Icon24Write from '@vkontakte/icons/dist/24/write';
-import Icon24Done from '@vkontakte/icons/dist/24/done';
+import Icon28EditOutline from '@vkontakte/icons/dist/28/edit_outline';
+import Icon28DoneOutline from '@vkontakte/icons/dist/28/done_outline';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
@@ -27,7 +27,7 @@ const PanelHeaderEdit: FunctionComponent<PanelHeaderEditProps> = ({
   ...restProps
 }: PanelHeaderEditProps) => {
   const iOSText = isActive ? doneLabel : editLabel;
-  const AndroidIcon = isActive ? <Icon24Done/> : <Icon24Write />;
+  const AndroidIcon = isActive ? <Icon28DoneOutline/> : <Icon28EditOutline />;
   const platform = usePlatform();
 
   return (

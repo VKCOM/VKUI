@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
-import Icon24Done from '@vkontakte/icons/dist/24/done';
+import Icon28DoneOutline from '@vkontakte/icons/dist/28/done_outline';
 import { ANDROID } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 
@@ -12,7 +12,7 @@ const PanelHeaderSubmit: FunctionComponent<PanelHeaderButtonProps> = ({
 
   return (
     <PanelHeaderButton primary {...restProps}>
-      {platform === ANDROID ? <Icon24Done/> : children}
+      {platform === ANDROID ? <Icon28DoneOutline /> : children}
     </PanelHeaderButton>
   );
 };

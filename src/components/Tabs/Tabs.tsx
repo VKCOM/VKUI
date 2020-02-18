@@ -25,7 +25,9 @@ const Tabs: FunctionComponent<TabsProps> = ({
       className={classNames(getClassName('Tabs', platform), `Tabs--${mode}`, className)}
       style={style}
     >
-      {children}
+      <div className="Tabs__in">
+        {children}
+      </div>
     </div>
   );
 };

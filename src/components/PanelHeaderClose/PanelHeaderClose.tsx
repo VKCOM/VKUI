@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
+import Icon28CancelOutline from '@vkontakte/icons/dist/28/cancel_outline';
 import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
@@ -8,7 +8,7 @@ const PanelHeaderClose: FunctionComponent<PanelHeaderButtonProps> = ({ children,
   const platform = usePlatform();
   return (
     <PanelHeaderButton {...restProps}>
-      {platform === ANDROID ? <Icon24Cancel /> : children}
+      {platform === ANDROID ? <Icon28CancelOutline /> : children}
     </PanelHeaderButton>
   );
 };

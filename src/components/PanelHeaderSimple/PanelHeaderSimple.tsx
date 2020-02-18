@@ -46,13 +46,13 @@ const PanelHeaderSimple = ({
       ref={getRootRef}
     >
       <div className="PanelHeaderSimple__height" />
-      <FixedLayout vertical="top">
+      <FixedLayout vertical="top" className="PanelHeaderSimple__fixed">
         <div className="PanelHeaderSimple__in">
           <div className="PanelHeaderSimple__left">
             <div className="PanelHeaderSimple__left-in">
               {left}
             </div>
-            {platform === ANDROID &&
+            {platform !== ANDROID &&
             <div className="PanelHeaderSimple__addon">
               {addon}
             </div>
