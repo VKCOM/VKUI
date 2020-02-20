@@ -318,3 +318,92 @@ class App extends React.Component {
 
 <App />
 ```
+
+### Решение проблем
+
+#### Я указал `dynamicContentHeight` у `ModalPage`, но высота модальной страницы не меняется
+
+Если содержимое вашей модальной страницы вынесено в отдельный компонент, и при смене контента не обновляется высота, оберните вынесенный компонент в hoc `withModalRootContext` и вызывайте прокидываемый проп-функцию `updateModalHeight` после действий, которые могут привести к смене высоты содержимого.
+
+`src/App.js`
+
+```jsx static
+import SelectModal from './SelectModal';
+
+class App extends Component {
+  state = {
+    activeModal: 'select',
+  };
+
+  render() {
+    const modal = (
+      <ModalRoot activeModal={this.state.activeModal}>
+        <ModalPage id="select" dynamicContentHeight>
+          <SelectModal />
+        </ModalPage>
+      </ModalRoot>
+    );
+
+    return (
+      <View activePanel="main" modal={modal}>
+        <Panel id="main">
+          ...
+        </Panel>
+      </View>
+    );
+  }
+}
+```
+
+`src/Modal.js`
+
+```jsx static
+import { withModalRootContext } from '@vkontakte/vkui';
+
+class SelectModal extends Component {
+  state = {
+    items: [],
+    isLoading: true,
+  };
+
+  static propTypes = {
+    // Сообщает ModalRoot, что высота модальной страницы могла измениться
+    updateModalHeight: PropTypes.func,
+  };
+
+  componentDidMount() {
+    this.fetchItems();
+  }
+
+  fetchItems() {
+    fetch('').then((r) => r.json()).then((items) => {
+      this.setState({
+        isLoading: false,
+        items,
+      }, () => {
+        // После установки стейта и перерисовки компонента SelectModal сообщим ModalRoot об изменениях
+        this.props.updateModalHeight();
+      });
+    });
+  }
+
+  render() {
+    return (
+      <div className="SelectModal">
+        {this.state.isLoading && <Spinner />}
+        {!this.state.isLoading &&
+        <Group>
+          {this.state.items.map((item) => (
+            <Cell key={item.id}>
+              {item.title}
+            </Cell>
+          ))}
+        </Group>
+        }
+      </div>
+    );
+  }
+}
+
+export default withModalRootContext(SelectModal);
+```
