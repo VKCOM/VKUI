@@ -287,6 +287,8 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     const contentElement: HTMLElement = modalElement.querySelector('.ModalPage__content');
     const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
 
+    let prevTranslateY = modalState.translateY;
+
     modalState.expandable = contentHeight > contentElement.clientHeight;
 
     modalState.modalElement = modalElement;
@@ -328,6 +330,11 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       collapsed = false;
     }
 
+    // Если модалка может открываться на весь экран, и новый сдвиг больше предудущего, то откроем её на весь экран
+    if (modalState.expandable && translateY > prevTranslateY) {
+      translateY = 0;
+    }
+
     modalState.expandedRange = expandedRange;
     modalState.collapsedRange = collapsedRange;
     modalState.hiddenRange = hiddenRange;
@@ -354,15 +361,17 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       this.initPageModal(modalState, modalElement);
       const currentModalState = { ...modalState };
 
-      const diff = Object.keys(currentModalState).reduce((acc, key) => {
-        if (prevModalState[key] !== currentModalState[key]) {
-          acc[key] = currentModalState[key];
+      let needAnimate = false;
+
+      if (prevModalState.expandable === currentModalState.expandable) {
+        if (prevModalState.translateYFrom !== currentModalState.translateYFrom) {
+          needAnimate = true;
         }
+      } else {
+        needAnimate = true;
+      }
 
-        return acc;
-      }, {});
-
-      if (Object.keys(diff).length) {
+      if (needAnimate) {
         this.animateTranslate(modalState);
         this.animatePageHeader(modalState);
       }
