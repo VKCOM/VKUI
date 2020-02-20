@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, { Component } from 'react';
+import React, { Component, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import Touch from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
@@ -12,15 +12,16 @@ import { IS_PLATFORM_ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 import { HasChildren, HasPlatform } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
+import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 
 export const TYPE_CARD = 'modal-card';
 export const TYPE_PAGE = 'modal-page';
 
-function numberInRange(number, range) {
+function numberInRange(number: number, range: number[]) {
   return number >= range[0] && number <= range[1];
 }
 
-function rangeTranslate(number) {
+function rangeTranslate(number: number) {
   return Math.max(0, Math.min(98, number));
 }
 
@@ -58,7 +59,6 @@ export interface ModalsStateEntry {
 
 export interface ModalRootProps extends HasChildren, HasPlatform {
   activeModal?: string;
-
 }
 
 export interface ModalRootState {
@@ -76,7 +76,7 @@ export interface ModalRootState {
 }
 
 class ModalRoot extends Component<ModalRootProps, ModalRootState> {
-  constructor(props) {
+  constructor(props: ModalRootProps) {
     super(props);
 
     const activeModal = props.activeModal;
@@ -99,6 +99,10 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.maskElementRef = React.createRef();
 
     this.initModalsState();
+
+    this.modalRootContext = {
+      updateModalHeight: this.updateModalHeight,
+    };
   }
 
   private modalsState: { [id: string]: ModalsStateEntry };
@@ -106,11 +110,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   private activeTransitions: number;
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
   private maskAnimationFrame: number;
-
-  static propTypes = {
-    activeModal: PropTypes.string,
-    children: PropTypes.node,
-  };
+  private readonly modalRootContext: ModalRootContextInterface;
 
   static contextTypes = {
     window: PropTypes.any,
@@ -161,16 +161,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.toggleDocumentScrolling(true);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { activeModal, switching } = this.state;
-
-    if (activeModal && this.modalsState[activeModal] && !switching && this.props.children !== prevProps.children) {
-      const modalState = this.modalsState[activeModal];
-      if (modalState && modalState.type === TYPE_PAGE && modalState.dynamicContentHeight) {
-        requestAnimationFrame(() => this.checkPageContentHeight());
-      }
-    }
-
+  componentDidUpdate(prevProps: ModalRootProps, prevState: ModalRootState) {
     if (this.props.activeModal !== prevProps.activeModal && !this.state.switching) {
       const nextModal = this.props.activeModal;
       const prevModal = prevProps.activeModal;
@@ -227,9 +218,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     }
   }
 
-  /**
-   * Отключает скролл документа
-   */
+  /* Отключает скролл документа */
   toggleDocumentScrolling(enabled: boolean) {
     if (this.documentScrolling === enabled) {
       return;
@@ -298,6 +287,8 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     const contentElement: HTMLElement = modalElement.querySelector('.ModalPage__content');
     const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
 
+    let prevTranslateY = modalState.translateY;
+
     modalState.expandable = contentHeight > contentElement.clientHeight;
 
     modalState.modalElement = modalElement;
@@ -339,6 +330,11 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       collapsed = false;
     }
 
+    // Если модалка может открываться на весь экран, и новый сдвиг больше предудущего, то откроем её на весь экран
+    if (modalState.expandable && translateY > prevTranslateY) {
+      translateY = 0;
+    }
+
     modalState.expandedRange = expandedRange;
     modalState.collapsedRange = collapsedRange;
     modalState.hiddenRange = hiddenRange;
@@ -365,20 +361,33 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       this.initPageModal(modalState, modalElement);
       const currentModalState = { ...modalState };
 
-      const diff = Object.keys(currentModalState).reduce((acc, key) => {
-        if (prevModalState[key] !== currentModalState[key]) {
-          acc[key] = currentModalState[key];
+      let needAnimate = false;
+
+      if (prevModalState.expandable === currentModalState.expandable) {
+        if (prevModalState.translateYFrom !== currentModalState.translateYFrom) {
+          needAnimate = true;
         }
+      } else {
+        needAnimate = true;
+      }
 
-        return acc;
-      }, {});
-
-      if (Object.keys(diff).length) {
+      if (needAnimate) {
         this.animateTranslate(modalState);
         this.animatePageHeader(modalState);
       }
     }
   }
+
+  updateModalHeight = () => {
+    const { activeModal, switching } = this.state;
+
+    if (activeModal && this.modalsState[activeModal] && !switching) {
+      const modalState = this.modalsState[activeModal];
+      if (modalState && modalState.type === TYPE_PAGE && modalState.dynamicContentHeight) {
+        requestAnimationFrame(() => this.checkPageContentHeight());
+      }
+    }
+  };
 
   closeActiveModal() {
     const { prevModal } = this.state;
@@ -684,9 +693,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.setState(newState);
   };
 
-  /**
-   * Анимирует сдивг модалки
-   */
+  /* Анимирует сдивг модалки */
   animateTranslate(modalState: ModalsStateEntry, currentPercent: number = null) {
     if (currentPercent === null) {
       currentPercent = modalState.translateY;
@@ -711,9 +718,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     }
   }
 
-  /**
-   * Анимирует тень шапки
-   */
+  /* Анимирует тень шапки */
   animatePageHeader(modalState: ModalsStateEntry, currentPercent: number = null) {
     if (currentPercent === null) {
       currentPercent = modalState.translateY;
@@ -728,9 +733,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     });
   }
 
-  /**
-   * Устанавливает прозрачность для полупрозрачной подложки
-   */
+  /* Устанавливает прозрачность для полупрозрачной подложки */
   setMaskOpacity(modalState: ModalsStateEntry, forceOpacity: number = null) {
     if (forceOpacity === null && this.state.history[0] !== modalState.id) {
       return;
@@ -775,52 +778,54 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
     return (
       <TouchRootContext.Provider value={true}>
-        <Touch
-          className={classNames(getClassName('ModalRoot', this.props.platform), {
-            'ModalRoot--vkapps': this.webviewType === 'vkapps',
-            'ModalRoot--touched': touchDown,
-            'ModalRoot--switching': switching,
-          })}
-          onMove={this.onTouchMove}
-          onEnd={this.onTouchEnd}
-          onScroll={this.onScroll}
-        >
-          <div
-            className="ModalRoot__mask"
-            onClick={this.onMaskClick}
-            ref={this.maskElementRef}
-          />
-          <div className="ModalRoot__viewport">
-            {this.modals.map((Modal) => {
-              const modalId = Modal.props.id;
-              if (!visibleModals.includes(Modal.props.id)) {
-                return null;
-              }
-              const modalState = this.modalsState[modalId];
-
-              const isPage = modalState.type === TYPE_PAGE;
-              const key = 'modal-' + modalId;
-
-              return (
-                <div
-                  key={key}
-                  id={key}
-                  className={classNames('ModalRoot__modal', {
-                    'ModalRoot__modal--active': modalId === activeModal,
-                    'ModalRoot__modal--prev': modalId === prevModal,
-                    'ModalRoot__modal--next': modalId === nextModal,
-
-                    'ModalRoot__modal--dragging': dragging,
-
-                    'ModalRoot__modal--expandable': isPage && modalState.expandable,
-                    'ModalRoot__modal--expanded': isPage && modalState.expanded,
-                    'ModalRoot__modal--collapsed': isPage && modalState.collapsed,
-                  })}
-                >{Modal}</div>
-              );
+        <ModalRootContext.Provider value={this.modalRootContext}>
+          <Touch
+            className={classNames(getClassName('ModalRoot', this.props.platform), {
+              'ModalRoot--vkapps': this.webviewType === 'vkapps',
+              'ModalRoot--touched': touchDown,
+              'ModalRoot--switching': switching,
             })}
-          </div>
-        </Touch>
+            onMove={this.onTouchMove}
+            onEnd={this.onTouchEnd}
+            onScroll={this.onScroll}
+          >
+            <div
+              className="ModalRoot__mask"
+              onClick={this.onMaskClick}
+              ref={this.maskElementRef}
+            />
+            <div className="ModalRoot__viewport">
+              {this.modals.map((Modal: ReactElement) => {
+                const modalId = Modal.props.id;
+                if (!visibleModals.includes(Modal.props.id)) {
+                  return null;
+                }
+                const modalState = this.modalsState[modalId];
+
+                const isPage = modalState.type === TYPE_PAGE;
+                const key = `modal-${modalId}`;
+
+                return (
+                  <div
+                    key={key}
+                    id={key}
+                    className={classNames('ModalRoot__modal', {
+                      'ModalRoot__modal--active': modalId === activeModal,
+                      'ModalRoot__modal--prev': modalId === prevModal,
+                      'ModalRoot__modal--next': modalId === nextModal,
+
+                      'ModalRoot__modal--dragging': dragging,
+
+                      'ModalRoot__modal--expandable': isPage && modalState.expandable,
+                      'ModalRoot__modal--expanded': isPage && modalState.expanded,
+                      'ModalRoot__modal--collapsed': isPage && modalState.collapsed,
+                    })}
+                  >{Modal}</div>
+                );
+              })}
+            </div>
+          </Touch>
+        </ModalRootContext.Provider>
       </TouchRootContext.Provider>
     );
   }
