@@ -355,7 +355,7 @@ class App extends Component {
 }
 ```
 
-`src/Modal.js`
+`src/SelectModal.js`
 
 ```jsx static
 import { withModalRootContext } from '@vkontakte/vkui';
