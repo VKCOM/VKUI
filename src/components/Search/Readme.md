@@ -74,7 +74,7 @@
           >
             Выбор тематики
           </PanelHeaderSimple>
-          <Search value={this.state.search} onChange={this.onChange} after="Отмена"/>
+          <Search value={this.state.search} onChange={this.onChange} after={null}/>
           {this.thematics.length > 0 &&
             <List>
               {this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
@@ -110,6 +110,8 @@
             <Search
               value={this.state.search}
               onChange={this.onChange}
+              icon={<Icon24Filter />}
+              onIconClick={this.props.onFiltersClick}
             />
           </PanelHeaderSimple>
           <List>
@@ -117,7 +119,6 @@
               <Cell
                 before={<Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" />}
                 key={user.id}
-                onClick={this.props.goSearch}
               >{user.name}</Cell>
             ))}
           </List>
@@ -132,7 +133,8 @@
       super(props);
 
       this.state = {
-        activePanel: 'search'
+        activePanel: 'search',
+        activeModal: null
       }
 
       this.goSearch = this.goSearch.bind(this);
@@ -144,12 +146,38 @@
 
     render () {
       return (
-        <View activePanel={this.state.activePanel} header={false}>
+        <View
+         activePanel={this.state.activePanel}
+         modal={
+           <ModalRoot activeModal={this.state.activeModal}>
+             <ModalPage
+               id="filters"
+               onClose={() => this.setState({ activeModal: null })}
+               header={
+                 <ModalPageHeader>
+                   Фильтры
+                 </ModalPageHeader>
+               }
+             >
+               <FormLayout>
+                 <SelectMimicry top="Страна" placeholder="Не выбрана" />
+                 <SelectMimicry top="Город" placeholder="Не выбран" />
+                 <FormLayoutGroup top="Пол">
+                   <Radio name="sex" value="male" defaultChecked>Любой</Radio>
+                   <Radio name="sex" value="male">Мужской</Radio>
+                   <Radio name="sex" value="female">Женский</Radio>
+                 </FormLayoutGroup>
+               </FormLayout>
+             </ModalPage>
+           </ModalRoot>
+         }
+         header={false}
+       >
           <Panel id="search" separator={false}>
             <SimpleSearch goHeaderSearch={this.goHeaderSearch}/>
           </Panel>
           <Panel id="header-search" separator={false}>
-            <HeaderSearch goSearch={this.goSearch}/>
+            <HeaderSearch onFiltersClick={() => this.setState({ activeModal: 'filters' })} goSearch={this.goSearch}/>
           </Panel>
         </View>
       );

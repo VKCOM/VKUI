@@ -11,20 +11,23 @@ import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import getClassname from '../../helpers/getClassName';
 import Icon16SearchOutline from '@vkontakte/icons/dist/16/search_outline';
+import Icon16Clear from '@vkontakte/icons/dist/16/clear';
 import { IOS } from '../../lib/platform';
 import { HasPlatform, HasRef } from '../../types/props';
+import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
+import { VKUITouchEvent } from '../../lib/touch';
 
 let searchId = 0;
 
 export type InputRef = (element: HTMLInputElement) => void;
-
-export type CancelHandler = () => void;
 
 export interface SearchProps extends InputHTMLAttributes<HTMLInputElement>, HasRef<HTMLInputElement>, HasPlatform {
   /**
    * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
   after?: ReactNode;
+  icon?: ReactNode;
+  onIconClick?: (e: VKUITouchEvent) => void;
   defaultValue?: string;
 }
 
@@ -84,13 +87,23 @@ class Search extends Component<SearchProps, SearchState> {
     }
   };
 
-  onCancel: CancelHandler = () => {
+  onCancel: VoidFunction = () => {
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
     nativeInputValueSetter.call(this.inputEl, '');
 
     const ev2 = new Event('input', { bubbles: true });
     this.inputEl.dispatchEvent(ev2);
+  };
+
+  onIconClickStart: TouchEventHandler = (e: TouchEvent) => {
+    this.props.onIconClick && this.props.onIconClick(e.originalEvent);
+  };
+
+  onIconCancelClickStart: TouchEventHandler = (e: TouchEvent) => {
+    e.originalEvent.preventDefault();
+    this.inputEl.focus();
+    this.onCancel();
   };
 
   inputRef: InputRef = (element: HTMLInputElement) => {
@@ -117,6 +130,8 @@ class Search extends Component<SearchProps, SearchState> {
       after,
       getRef,
       platform,
+      icon,
+      onIconClick,
       ...inputProps
     } = this.props;
 
@@ -151,11 +166,23 @@ class Search extends Component<SearchProps, SearchState> {
               </div>
             </label>
           </div>
-          {platform === IOS && after &&
-            <div className="Search__after" onClick={this.onCancel}>
-              <div className="Search__after-in">{after}</div>
+          <div className="Search__after" onClick={this.onCancel}>
+            <div className="Search__icons">
+              {icon &&
+                <Touch onStart={this.onIconClickStart} className="Search__icon">
+                  {icon}
+                </Touch>
+              }
+              {!!this.value &&
+                <Touch onStart={this.onIconCancelClickStart} className="Search__icon">
+                  <Icon16Clear />
+                </Touch>
+              }
             </div>
-          }
+            {platform === IOS && after &&
+              <div className="Search__after-in">{after}</div>
+            }
+          </div>
         </div>
       </div>
     );
