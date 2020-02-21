@@ -45,6 +45,11 @@
   background: var(--accent);
   }
 
+.HorizontalScroll .TabsItem {
+  min-width: 64px;
+  flex-basis: auto;
+}
+
 .Tabs--buttons .TabsItem {
   border-radius: 10px;
   box-sizing: border-box;
