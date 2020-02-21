@@ -1,4 +1,4 @@
-Горизонтальный скролл для [Grid](https://vkcom.github.io/vkui-styleguide/#!/Grid)
+Горизонтальный скролл для [Card](https://vkcom.github.io/vkui-styleguide/#!/Card)
 
 ```jsx
 <View activePanel="card">

@@ -1,4 +1,4 @@
-Сетка для [Grid](https://vkcom.github.io/vkui-styleguide/#!/Grid)
+Сетка для [Card](https://vkcom.github.io/vkui-styleguide/#!/Card)
 
 ```jsx
 <View activePanel="card">
