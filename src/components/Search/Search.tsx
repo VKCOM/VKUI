@@ -140,6 +140,7 @@ class Search extends Component<SearchProps, SearchState> {
         'Search--focused': this.state.focused,
         'Search--has-value': !!this.value,
         'Search--has-after': !!after,
+        'Search--has-icon': !!icon,
       }, className)}>
         <div className="Search__in">
           <div className="Search__width" />

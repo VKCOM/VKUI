@@ -49,7 +49,14 @@
 
 .Search--has-after .Search__input {
   border-radius: 10px 0 0 10px;
-  padding-right: 10px;
+}
+
+.Search--has-value .Search__input {
+  padding-right: 40px;
+}
+
+.Search--has-icon.Search--has-value .Search__input {
+  padding-right: 80px;
 }
 
 .Search__after-width {

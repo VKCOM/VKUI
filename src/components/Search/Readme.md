@@ -139,10 +139,12 @@
 
       this.goSearch = this.goSearch.bind(this);
       this.goHeaderSearch = this.goHeaderSearch.bind(this);
+      this.hideModal = this.hideModal.bind(this);
     }
 
     goHeaderSearch () { this.setState({ activePanel: 'header-search' }); }
     goSearch () { this.setState({ activePanel: 'search' }); }
+    hideModal() { this.setState({ activeModal: null }); }
 
     render () {
       return (
@@ -152,9 +154,12 @@
            <ModalRoot activeModal={this.state.activeModal}>
              <ModalPage
                id="filters"
-               onClose={() => this.setState({ activeModal: null })}
+               onClose={this.hideModal}
                header={
-                 <ModalPageHeader>
+                 <ModalPageHeader
+                   left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.hideModal}><Icon24Cancel /></PanelHeaderButton>}
+                   right={<PanelHeaderButton onClick={this.hideModal}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+                 >
                    Фильтры
                  </ModalPageHeader>
                }
