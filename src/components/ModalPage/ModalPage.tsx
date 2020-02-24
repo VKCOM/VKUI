@@ -14,7 +14,7 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInset
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
   header: ReactNode;
-  onClose: () => {};
+  onClose(): void;
   /**
    * Процент, на который изначально будет открыта модальная страница
    */

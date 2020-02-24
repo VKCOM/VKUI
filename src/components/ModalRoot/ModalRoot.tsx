@@ -58,7 +58,7 @@ export interface ModalsStateEntry {
 }
 
 export interface ModalRootProps extends HasChildren, HasPlatform {
-  activeModal?: string;
+  activeModal?: string | null;
 }
 
 export interface ModalRootState {
