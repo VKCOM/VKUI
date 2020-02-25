@@ -47,6 +47,8 @@ class Search extends Component<SearchProps, SearchState> {
 
   inputEl: HTMLInputElement;
 
+  searchId: string;
+
   constructor(props: SearchProps) {
     super(props);
 
@@ -59,7 +61,7 @@ class Search extends Component<SearchProps, SearchState> {
     } else {
       state.value = props.defaultValue || '';
     }
-    searchId++;
+    this.searchId = `search-${searchId++}`;
     this.state = state;
   }
 
@@ -147,7 +149,7 @@ class Search extends Component<SearchProps, SearchState> {
           <div className="Search__control">
             <input
               {...inputProps}
-              id={`search-${searchId}`}
+              id={this.searchId}
               ref={this.inputRef}
               type="text"
               className="Search__input"
@@ -159,7 +161,7 @@ class Search extends Component<SearchProps, SearchState> {
             {platform === IOS && after && <div className="Search__after-width">{after}</div>}
             <label
               className="Search__placeholder"
-              htmlFor={`search-${searchId}`}
+              htmlFor={this.searchId}
             >
               <div className="Search__placeholder-in">
                 <Icon16SearchOutline />
