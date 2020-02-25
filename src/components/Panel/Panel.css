@@ -18,6 +18,13 @@
   height: 100%;
 }
 
+.Panel--centered .PanelHeaderSimple {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
 .Panel__in {
   position: relative;
   box-sizing: border-box;
@@ -32,6 +39,27 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+}
+
+.View--header .Panel__separator + .Panel__centered {
+  min-height: calc(100% - 1px);
+}
+
+.Panel__centered .PanelHeaderSimple--ios.PanelHeaderSimple--vis + * {
+  margin-top: var(--panelheader_height_ios);
+}
+
+.Panel__centered .PanelHeaderSimple--android.PanelHeaderSimple--vis + * {
+  margin-top: var(--panelheader_height_android);
+}
+
+.Panel__centered .PanelHeaderSimple--ios.PanelHeaderSimple--sep + * {
+  margin-top: calc(var(--panelheader_height_ios) + 5px);
+}
+
+.Panel__centered .PanelHeaderSimple--android.PanelHeaderSimple--sep + * {
+  margin-top: calc(var(--panelheader_height_android) + 5px);
 }
 
 .Epic .Panel__in {
