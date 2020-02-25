@@ -9,6 +9,18 @@
 У `PanelHeaderSimple` этих проблем нет. Он рендерится как обычный компонент, имеет простую структуру, быстро рисуется и
 поддерживает SSR.
 
+### Сепаратор после шапки
+
+Практически всегда содержимое панели должно начинаться с [`Separator`](https://vkcom.github.io/vkui-styleguide/#!/Separator),
+ поэтому он рисуется в PanelHeaderSimple по-умолчанию.
+
+Исключения, в которых разделитель в начале панели не нужен:
+* В `PanelHeaderSimple` рисуется [`Search`](https://vkcom.github.io/vkui-styleguide/#!/Search).
+* После `PanelHeaderSimple` рисуется [`Search`](https://vkcom.github.io/vkui-styleguide/#!/Search).
+* В `PanelHeaderSimple` рисуются [`Tabs`](https://vkcom.github.io/vkui-styleguide/#!/Tabs).
+
+В таких случаях передавайте в `PanelHeaderSimple` свойство `separator={false}`.
+
 ### Переход от PanelHeader к PanelHeaderSimple
 
 1. Во `<View />` добавляем `header={false}`

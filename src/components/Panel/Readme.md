@@ -1,12 +1,4 @@
-`Panel` – это контейнер для контента. Практически всегда содержимое панели должно начинаться с
-[`Separator`](https://vkcom.github.io/vkui-styleguide/#!/Separator), поэтому он рисуется там по-умолчанию.
-
-Исключения, в которых разделитель в начале панели не нужен:
-* В [`PanelHeader`](https://vkcom.github.io/vkui-styleguide/#!/PanelHeader) рисуется [`Search`](https://vkcom.github.io/vkui-styleguide/#!/Search).
-* В [`PanelHeader`](https://vkcom.github.io/vkui-styleguide/#!/PanelHeader) рисуются [`Tabs`](https://vkcom.github.io/vkui-styleguide/#!/Tabs).
-* В начале `Panel` рисуется [`Search`](https://vkcom.github.io/vkui-styleguide/#!/Search).
-
-В таких случаях передавайте в `Panel` свойство `separator={false}`.
+`Panel` – это контейнер для контента.
 
 ```jsx
 class Example extends React.Component {
@@ -20,9 +12,9 @@ class Example extends React.Component {
 
   render() {
     return (
-      <View activePanel={this.state.activePanel}>
-        <Panel id="panel1">
-          <PanelHeader>More</PanelHeader>
+      <View activePanel={this.state.activePanel} header={false}>
+        <Panel id="panel1" separator={false}>
+          <PanelHeaderSimple>More</PanelHeaderSimple>
           <Group>
             <Cell expandable before={<Icon24User/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
               Friends
@@ -36,7 +28,9 @@ class Example extends React.Component {
           </Group>
         </Panel>
         <Panel id="panel2" separator={false}>
-          <PanelHeader left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}>Communities</PanelHeader>
+          <PanelHeaderSimple separator={false} left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}>
+            Communities
+          </PanelHeaderSimple>
           <Search />
           <Cell description="Humor" before={<Avatar />} onClick={() => this.setState({ activePanel: 'panel3' })}>
             Swipe Right
@@ -48,8 +42,10 @@ class Example extends React.Component {
             #ARTPOKAZ
           </Cell>
         </Panel>
-        <Panel id="panel3" centered>
-          <PanelHeader left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel2' })}/>}>Out Cinema</PanelHeader>
+        <Panel id="panel3" centered separator={false}>
+          <PanelHeaderSimple left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel2' })}/>}>
+            Out Cinema
+          </PanelHeaderSimple>
           <Spinner />
           <div style={{ marginTop: 10 }}>Centered Content</div>
         </Panel>

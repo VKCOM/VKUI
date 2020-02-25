@@ -2,13 +2,9 @@
   position: relative;
 }
 
-.PanelHeaderSimple::before {
+.PanelHeaderSimple--vis::before {
   display: block;
   content: '';
-}
-
-.PanelHeaderSimple--no-visor::before {
-  content: none;
 }
 
 .FixedLayout.PanelHeaderSimple__fixed {
@@ -24,7 +20,7 @@
   background: var(--header_background);
 }
 
-.PanelHeaderSimple--transparent .PanelHeaderSimple__in {
+.PanelHeaderSimple--trnsp .PanelHeaderSimple__in {
   background: transparent;
 }
 

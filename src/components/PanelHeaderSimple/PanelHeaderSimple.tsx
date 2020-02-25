@@ -43,8 +43,9 @@ const PanelHeaderSimple = ({
         classNames(
           getClassname('PanelHeaderSimple', platform),
           {
-            'PanelHeaderSimple--transparent': transparent,
-            'PanelHeaderSimple--no-visor': !visor,
+            'PanelHeaderSimple--trnsp': transparent,
+            'PanelHeaderSimple--vis': visor,
+            'PanelHeaderSimple--sep': separator && visor,
             'PanelHeaderSimple--vkapps': webviewType === 'vkapps',
           },
           className,
