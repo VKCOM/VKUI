@@ -1,41 +1,43 @@
 .Group {
-  margin-bottom: 12px;
-  }
+  color: var(--text_primary);
+}
 
-  .Group__content {
-    color: var(--text_primary);
-    }
+.Group > *:not(.Header):first-child {
+  margin-top: 12px;
+}
 
-  .Group__content:first-child {
-    margin-top: 12px;
-    }
+.Group > .Cell:first-child,
+.Group > .CellButton:first-child {
+  margin-top: 8px;
+}
 
-  .Group__description {
-    font-size: 14px;
-    line-height: 16px;
-    color: var(--text_secondary);
-    }
+.Group__description {
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--text_secondary);
+}
 
-  .Group__separator {
-    margin-top: 12px;
-    }
+.Group__separator {
+  margin-top: 12px;
+}
 
-  .Group:last-of-type .Group__separator {
-    display: none;
-    }
+.Cell + .Group__separator,
+.CellButton + .Group__separator {
+  margin-top: 8px;
+}
 
-  .Group:last-of-type .Group__separator--force {
-    display: block;
-    }
+.Group:last-of-type .Group__separator {
+  display: none;
+}
 
-  .Group + .Group > .Header {
-    margin-top: -12px;
-    }
+.Group:last-of-type .Group__separator--force {
+  display: block;
+}
 
-  .Group--ios .Group__description {
-    padding: 4px 12px 24px;
-    }
+.Group--ios .Group__description {
+  padding: 4px 12px 24px;
+}
 
-  .Group--android .Group__description {
-    padding: 4px 16px 24px;
-    }
+.Group--android .Group__description {
+  padding: 4px 16px 24px;
+}

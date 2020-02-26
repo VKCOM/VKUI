@@ -24,7 +24,7 @@ const Group: FunctionComponent<GroupProps> = (props: GroupProps) => {
   return (
     <section {...restProps} ref={getRootRef} className={classNames(baseClassNames, className)}>
       {header}
-      {children && <div className="Group__content">{children}</div>}
+      {children}
       {description && <div className="Group__description">{description}</div>}
       {separator !== 'hide' &&
         <Separator className={classNames('Group__separator', {
