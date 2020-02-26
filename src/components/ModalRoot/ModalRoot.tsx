@@ -379,11 +379,17 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   }
 
   updateModalHeight = () => {
-    const { activeModal, switching } = this.state;
+    const { activeModal, nextModal } = this.state;
 
-    if (activeModal && this.modalsState[activeModal] && !switching) {
-      const modalState = this.modalsState[activeModal];
-      if (modalState && modalState.type === TYPE_PAGE && modalState.dynamicContentHeight) {
+    const modalId = activeModal || nextModal;
+    const modalState = modalId ? this.modalsState[modalId] : undefined;
+
+    if (modalState && modalState.type === TYPE_PAGE && modalState.dynamicContentHeight) {
+      if (this.state.switching) {
+        this.waitTransitionFinish(modalState, () => {
+          requestAnimationFrame(() => this.checkPageContentHeight());
+        });
+      } else {
         requestAnimationFrame(() => this.checkPageContentHeight());
       }
     }
@@ -800,7 +806,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
                 if (!visibleModals.includes(Modal.props.id)) {
                   return null;
                 }
-                const modalState = this.modalsState[modalId];
+                const modalState = { ...this.modalsState[modalId] };
 
                 const isPage = modalState.type === TYPE_PAGE;
                 const key = `modal-${modalId}`;
