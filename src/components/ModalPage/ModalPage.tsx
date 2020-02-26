@@ -8,7 +8,7 @@ import { ModalRootContextInterface } from '../ModalRoot/ModalRootContext';
 import withModalRootContext from '../ModalRoot/withModalRootContext';
 import withPlatform from '../../hoc/withPlatform';
 
-export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInsets, HasPlatform, ModalRootContextInterface {
+export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInsets, HasPlatform {
   id: string;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
@@ -23,6 +23,10 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInset
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
+  /**
+   * @ignore
+   */
+  updateModalHeight?: ModalRootContextInterface['updateModalHeight'];
 }
 
 class ModalPage extends Component<ModalPageProps> {
