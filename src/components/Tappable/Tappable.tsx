@@ -300,7 +300,7 @@ export default class Tappable extends Component<TappableProps, TappableState> {
               {platform === ANDROID &&
               <span className="Tappable__waves">
                 {Object.keys(clicks).map((k: string) =>
-                  <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                  <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />,
                 )}
               </span>
               }

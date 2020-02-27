@@ -175,7 +175,7 @@ class Root extends Component<RootProps, RootState> {
             'Root__view--active': view.props.id === activeView,
           })}>
             {view}
-          </div>
+          </div>,
         )}
         {!!popout && <div className="Root__popout">{popout}</div>}
         {!!modal && <div className="Root__modal">{modal}</div>}

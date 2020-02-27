@@ -416,7 +416,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
         >
           <div className='Gallery__layer' style={layerStyle}>
             {React.Children.map(children, (item: ReactElement, i: number) =>
-              <div className='Gallery__slide' key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>
+              <div className='Gallery__slide' key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>,
             )}
           </div>
         </Touch>
@@ -427,7 +427,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
             <div
               className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })}
               key={index}
-            />
+            />,
           )}
         </div>
         }

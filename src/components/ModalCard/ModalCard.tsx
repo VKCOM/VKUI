@@ -93,7 +93,7 @@ class ModalCard extends Component<ModalCardProps> {
                   onClick={this.onButtonClick}
                 >
                   {title}
-                </Button>
+                </Button>,
               )}
             </div>
             }

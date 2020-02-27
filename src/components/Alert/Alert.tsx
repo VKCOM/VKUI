@@ -116,7 +116,7 @@ class Alert extends Component<AlertProps, AlertState> {
                 key={`alert-action-${i}`}
               >
                 <span dangerouslySetInnerHTML={{ __html: action.title }} />
-              </Tappable>
+              </Tappable>,
             )}
           </footer>
         </div>

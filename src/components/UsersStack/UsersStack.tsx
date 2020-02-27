@@ -56,7 +56,7 @@ const UsersStack: React.FunctionComponent<UsersStackProps> = (props: UsersStackP
             key={i}
             className="UsersStack__photo"
             style={{ backgroundImage: `url(${photo})` }}
-          />
+          />,
         )}
 
         {canShowOthers &&
