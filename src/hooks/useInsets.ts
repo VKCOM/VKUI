@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import vkConnect from '@vkontakte/vk-connect';
+import vkBridge from '@vkontakte/vk-bridge';
 import { InsetsInterface } from './../types/props';
 
 let initialState: InsetsInterface = {
@@ -22,7 +22,7 @@ function resolveInsets(e: ConnectEvent): InsetsInterface | null {
   const { type, data } = e.detail;
   switch (type) {
     case 'VKWebAppUpdateConfig':
-    case 'VKWebAppUpdateInsets': // Устаревшее событие vk-connect
+    case 'VKWebAppUpdateInsets': // Устаревшее событие vk-bridge
       const { insets } = data;
       if (insets) {
         return {
@@ -34,7 +34,7 @@ function resolveInsets(e: ConnectEvent): InsetsInterface | null {
   return null;
 }
 
-vkConnect.subscribe((e: ConnectEvent) => {
+vkBridge.subscribe((e: ConnectEvent) => {
   const insets = resolveInsets(e);
   if (insets) {
     initialState = insets;
@@ -52,9 +52,9 @@ export default function useInsets(): InsetsInterface {
       }
     }
 
-    vkConnect.subscribe(connectListener);
+    vkBridge.subscribe(connectListener);
     return () => {
-      vkConnect.unsubscribe(connectListener);
+      vkBridge.unsubscribe(connectListener);
     };
   }, []);
 
