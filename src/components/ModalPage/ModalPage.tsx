@@ -24,9 +24,9 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInset
    */
   dynamicContentHeight?: boolean;
   /**
-   * @ignore
+   * Обновляет высоту модалки.
    */
-  updateModalHeight?: ModalRootContextInterface['updateModalHeight'];
+  updateModalHeight: ModalRootContextInterface['updateModalHeight'];
 }
 
 class ModalPage extends Component<ModalPageProps> {

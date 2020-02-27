@@ -1,11 +1,30 @@
-import React, { useContext } from 'react';
+import React, { ComponentType, useContext } from 'react';
+
 import ModalRootContext from './ModalRootContext';
 
-export default function withModalRootContext<T>(Component: T): T {
-  function WithModalRootContext(props: {}) {
+interface OverriddenProps {
+  updateModalHeight(): void;
+}
+
+type TOverriddenProps<P> = Omit<P, 'updateModalHeight'>;
+
+/**
+ * Прокидывает updateModalHeight в оборачиваемый компонент.
+ * @param {React.ComponentType<P>} WrappedComponent
+ * @return {React.ComponentType<TOverriddenProps<P>>}
+ */
+export default function withModalRootContext<P extends OverriddenProps>(
+  WrappedComponent: ComponentType<P>,
+): ComponentType<TOverriddenProps<P>> {
+  function WithModalRootContext(props: TOverriddenProps<P>) {
     const { updateModalHeight } = useContext(ModalRootContext);
-    // @ts-ignore
-    return <Component {...props} updateModalHeight={updateModalHeight} />;
+
+    return (
+      <WrappedComponent
+        {...props as any}
+        updateModalHeight={updateModalHeight}
+      />
+    );
   }
-  return WithModalRootContext as unknown as T;
+  return WithModalRootContext;
 }
