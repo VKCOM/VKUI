@@ -7,7 +7,8 @@
 }
 
 .Group > .Cell:first-child,
-.Group > .CellButton:first-child {
+.Group > .CellButton:first-child,
+.Group > .InfoRow:first-child {
   margin-top: 8px;
 }
 
@@ -22,7 +23,8 @@
 }
 
 .Cell + .Group__separator,
-.CellButton + .Group__separator {
+.CellButton + .Group__separator,
+.InfoRow + .Group__separator {
   margin-top: 8px;
 }
 

@@ -1,11 +1,13 @@
-import React, { FunctionComponent } from 'react';
-import Spinner, { SpinnerProps } from '../Spinner/Spinner';
+import React, { FunctionComponent, HTMLAttributes } from 'react';
+import Spinner from '../Spinner/Spinner';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 
-const ScreenSpinner: FunctionComponent<SpinnerProps> = (props: SpinnerProps) => {
+export type ScreenSpinnerProps = HTMLAttributes<HTMLDivElement>;
+
+const ScreenSpinner: FunctionComponent<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
   const { style, className, ...restProps } = props;
   const platform = usePlatform();
 
