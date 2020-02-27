@@ -33,7 +33,7 @@
     "@vkontakte/appearance": "https://github.com/VKCOM/Appearance#v2.3.6",
     "@vkontakte/eslint-config": "1.2.0",
     "@vkontakte/icons": "^1.16.3",
-    "@vkontakte/vk-connect": "^1.5.5",
+    "@vkontakte/vk-bridge": "2.0.0",
     "autoprefixer": "^7.2.3",
     "babel-loader": "^8.0.4",
     "classnames": "^2.2.6",
@@ -74,7 +74,7 @@
   "peerDependencies": {
     "@babel/runtime": "^7.5.5",
     "@vkontakte/icons": "^1.16.3",
-    "@vkontakte/vk-connect": "^1.5.5",
+    "@vkontakte/vk-bridge": "2.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
