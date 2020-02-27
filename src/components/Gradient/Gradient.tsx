@@ -2,8 +2,8 @@ import React, { FunctionComponent, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 
 export interface GradientProps extends HTMLAttributes<HTMLDivElement> {
-  mode: 'tint' | 'white' | 'black';
-  to: 'top' | 'bottom';
+  mode?: 'tint' | 'white' | 'black';
+  to?: 'top' | 'bottom';
 }
 
 const Gradient: FunctionComponent<GradientProps> = ({ mode, children, style, className, to, ...restProps }: GradientProps) => {
