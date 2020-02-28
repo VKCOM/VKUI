@@ -1,49 +1,60 @@
-import React, { Component } from 'react';
+import React, { Component, HTMLAttributes, ReactElement } from 'react';
 import getClassName from '../../helpers/getClassName';
-import Touch from '../Touch/Touch';
+import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import { HasClassName, HasChildren, HasStyleObject, HasPlatform } from '../../types/props';
+import { HasAlign, HasPlatform } from '../../types/props';
 import { canUseDOM } from '../../lib/dom';
+import { GetRef } from '../../types/common';
 
-export interface GalleryProps extends HasStyleObject, HasChildren, HasClassName, HasPlatform {
+export interface GalleryProps extends
+  Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
+  HasPlatform,
+  HasAlign {
   slideWidth?: string | number;
-  autoplay?: number;
+  timeout?: number;
   initialSlideIndex?: number;
   slideIndex?: number;
-  onDragStart?(): void;
-  onDragEnd?(): void,
-  onChange?(current: GalleryState['current']): void,
-  onEnd?({ targetIndex }: { targetIndex: GalleryState['current'] }): void,
-  align?: 'left' | 'center' | 'right',
-  bullets?: 'dark' | 'light' | false
+  onDragStart?: TouchEventHandler;
+  onDragEnd?: TouchEventHandler;
+  onChange?(current: GalleryState['current']): void;
+  onEnd?({ targetIndex }: { targetIndex: GalleryState['current'] }): void;
+  bullets?: 'dark' | 'light' | false;
 }
 
 export interface GalleryState {
-  containerWidth: number,
-  layerWidth?: number,
-  min?: number,
-  max?: number,
-  startT?: number,
-  current: number,
-  deltaX: number,
-  shiftX: number,
-  slides: GallerySlidesState[],
-  animation: boolean,
-  duration: number,
-  dragging?: boolean
+  containerWidth: number;
+  layerWidth?: number;
+  min?: number;
+  max?: number;
+  startT?: Date;
+  current: number;
+  deltaX: number;
+  shiftX: number;
+  slides: GallerySlidesState[];
+  animation: boolean;
+  duration: number;
+  dragging?: boolean;
 }
 
 export interface GallerySlidesState {
-  coordX: number,
-  width: number
+  coordX: number;
+  width: number;
 }
 
+type SetTimeout = (duration: number) => void;
+
+type GetSlideRef = (index: number) => GetRef;
+
 class Gallery extends Component<GalleryProps, GalleryState> {
-  constructor (props) {
+  constructor(props: GalleryProps) {
     super(props);
 
     const current = typeof props.slideIndex === 'number' ? props.slideIndex : props.initialSlideIndex;
+
+    if (!this.props.onChange && typeof this.props.slideIndex === 'number') {
+      this.logControlledError();
+    }
 
     this.state = {
       containerWidth: 0,
@@ -52,7 +63,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       shiftX: 0,
       slides: [],
       animation: false,
-      duration: 0.24
+      duration: 0.24,
     };
 
     this.container = React.createRef();
@@ -61,44 +72,52 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   }
 
   container: React.RefObject<HTMLDivElement>;
-  slidesStore: Object;
+  slidesStore: {
+    [index: string]: HTMLElement;
+  };
   viewport: HTMLElement;
   timeout: number;
   isChildrenDirty: boolean;
 
-  static defaultProps = {
+  static defaultProps: GalleryProps = {
     slideWidth: '100%',
     children: '',
-    autoplay: 0,
+    timeout: 0,
     initialSlideIndex: 0,
     align: 'left',
-    bullets: false
+    bullets: false,
   };
 
-  get isCenterWithCustomWidth () {
+  logControlledError() {
+    console.error('Failed prop type: You provided a `slideIndex` prop to `Gallery` without an `onChange` handler.');
+  }
+
+  get isCenterWithCustomWidth() {
     return this.props.slideWidth === 'custom' && this.props.align === 'center';
   }
 
-  initializeSlides (callback = () => {}) {
-    const slides = React.Children.map(this.props.children, (_item, i): GallerySlidesState => {
-      const elem = this.slidesStore[`slide-${i}`];
-      return {
-        coordX: elem.offsetLeft,
-        width: elem.offsetWidth
-      };
-    });
+  initializeSlides(callback?: VoidFunction) {
+    const slides: GallerySlidesState[] = React.Children.map(
+      this.props.children,
+      (_item: ReactElement, i: number): GallerySlidesState => {
+        const elem = this.slidesStore[`slide-${i}`];
+        return {
+          coordX: elem.offsetLeft,
+          width: elem.offsetWidth,
+        };
+      });
 
     const containerWidth = this.container.current.offsetWidth;
-    const viewportWidth = this.viewport.offsetWidth;
-    const layerWidth = slides.reduce((val, slide) => slide.width + val, 0);
+    const layerWidth = slides.reduce((val: number, slide: GallerySlidesState) => slide.width + val, 0);
 
-    const min = this.calcMin({ containerWidth, layerWidth, viewportWidth, slides });
-    const max = this.calcMax({ viewportWidth, slides });
+    const min = this.calcMin({ containerWidth, layerWidth, slides });
+    const max = this.calcMax({ slides });
 
     this.setState({ min, max, layerWidth, containerWidth, slides }, callback);
   }
 
-  calcMin ({ containerWidth, layerWidth, viewportWidth, slides }) {
+  calcMin({ containerWidth, layerWidth, slides }: Pick<GalleryState, 'containerWidth' | 'layerWidth' | 'slides'>) {
+    const viewportWidth = this.viewport.offsetWidth;
     switch (this.props.align) {
       case 'left':
         return containerWidth - layerWidth;
@@ -107,31 +126,30 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       case 'center':
         if (this.isCenterWithCustomWidth && slides.length) {
           const { coordX, width } = slides[slides.length - 1];
-          return (viewportWidth / 2) - coordX - (width / 2);
+          return viewportWidth / 2 - coordX - width / 2;
         } else {
           return viewportWidth - (containerWidth - viewportWidth) / 2 - layerWidth;
         }
     }
   }
 
-  calcMax ({ viewportWidth, slides }) {
+  calcMax({ slides }: Pick<GalleryState, 'slides'>) {
+    const viewportWidth = this.viewport.offsetWidth;
     if (this.isCenterWithCustomWidth && slides.length) {
       const { width, coordX } = slides[0];
-      return (viewportWidth / 2) - coordX - (width / 2);
+      return viewportWidth / 2 - coordX - width / 2;
     } else {
       return 0;
     }
   }
 
-  /**
+  /*
    * Считает отступ слоя галереи
-   * @param {Number} targetIndex ID целевого слайда
-   * @returns {Number} Значения отступа
    */
-  calculateIndent (targetIndex) {
+  calculateIndent(targetIndex: number) {
     const { slides } = this.state;
 
-    if (!this.isDraggable()) {
+    if (!this.isDraggable) {
       return 0;
     }
 
@@ -142,7 +160,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
 
       if (this.isCenterWithCustomWidth) {
         const viewportWidth = this.viewport.offsetWidth;
-        return (viewportWidth / 2) - coordX - (width / 2);
+        return viewportWidth / 2 - coordX - width / 2;
       }
 
       return this.validateIndent(-1 * coordX);
@@ -151,11 +169,10 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     }
   }
 
-  /**
+  /*
    * Считает отступ слоя галереи во время драга
-   * @returns {Number} Значения отступа
    */
-  calculateDragIndent () {
+  calculateDragIndent() {
     const { shiftX, deltaX, min, max } = this.state;
     const indent = shiftX + deltaX;
 
@@ -168,7 +185,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     return indent;
   }
 
-  validateIndent (value) {
+  validateIndent(value: number) {
     const { min, max } = this.state;
 
     if (value < min) {
@@ -180,22 +197,21 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     return value;
   }
 
-  isDraggable () {
+  get isDraggable() {
     return this.state.layerWidth > this.state.containerWidth;
   }
 
-  /**
+  /*
    * Получает индекс слайда, к которому будет осуществлен переход
-   * @returns {Number} Индекс слайда
    */
-  getTarget () {
+  getTarget() {
     const { slides, current, deltaX, shiftX, startT, max } = this.state;
-    const expectDeltaX = deltaX / (Date.now() - startT) * 240 * 0.6;
+    const expectDeltaX = deltaX / (Date.now() - startT.getTime()) * 240 * 0.6;
     const shift = shiftX + deltaX + expectDeltaX - max;
     const direction = deltaX < 0 ? 1 : -1;
 
     // Находим ближайшую границу слайда к текущему отступу
-    let targetIndex = slides.reduce((val, item, index) => {
+    let targetIndex = slides.reduce((val: number, item: GallerySlidesState, index: number) => {
       const previousValue = Math.abs(slides[val].coordX + shift);
       const currentValue = Math.abs(item.coordX + shift);
 
@@ -215,86 +231,81 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     return targetIndex;
   }
 
-  go = (targetIndex) => {
-    this.setState({
-      animation: true,
-      shiftX: this.calculateIndent(targetIndex),
-      current: targetIndex
-    });
+  go(targetIndex: number) {
+    if (typeof this.props.slideIndex === 'number' && !this.props.onChange) {
+      this.logControlledError();
+      this.setState({
+        animation: true,
+        deltaX: 0,
+        shiftX: this.calculateIndent(this.state.current),
+      });
+    } else {
+      this.setState({
+        animation: true,
+        deltaX: 0,
+        shiftX: this.calculateIndent(targetIndex),
+        current: targetIndex,
+      });
 
-    if (this.timeout) {
-      this.clearTimeout();
-      this.setTimeout(this.props.autoplay);
+      if (this.timeout) {
+        this.clearTimeout();
+        this.setTimeout(this.props.timeout);
+      }
     }
   };
 
-  onStart = (e) => {
+  onStart: TouchEventHandler = (e: TouchEvent) => {
     this.setState({
       animation: false,
-      startT: e.startT
+      startT: e.startT,
     });
-  }
+  };
 
-  onMoveX = (e): void => {
-    if (this.isDraggable()) {
+  onMoveX: TouchEventHandler = (e: TouchEvent) => {
+    if (this.isDraggable) {
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
-        this.props.onDragStart && this.props.onDragStart();
+        this.props.onDragStart && this.props.onDragStart(e);
 
         if (this.state.deltaX !== e.shiftX || this.state.dragging !== e.isSlideX) {
           this.setState({
             deltaX: e.shiftX,
-            dragging: e.isSlideX
+            dragging: e.isSlideX,
           });
         }
       }
     }
-  }
+  };
 
-  onEnd = (e) => {
+  onEnd: TouchEventHandler = (e: TouchEvent) => {
     const targetIndex = e.isSlide ? this.getTarget() : this.state.current;
-    this.props.onDragEnd && this.props.onDragEnd();
-
-    this.setState({
-      shiftX: this.calculateIndent(targetIndex),
-      deltaX: 0,
-      animation: true,
-      current: targetIndex
-    });
+    this.props.onDragEnd && this.props.onDragEnd(e);
+    this.go(targetIndex);
 
     if (this.props.onEnd) {
       this.props.onEnd({ targetIndex });
     }
+  };
 
-    if (this.timeout) {
-      this.clearTimeout();
-      this.setTimeout(this.props.autoplay);
-    }
-
-    return true;
-  }
-
-  onResize = () => {
+  onResize: VoidFunction = () => {
     this.initializeSlides();
 
     const { layerWidth, slides } = this.state;
     const containerWidth = this.container.current.offsetWidth;
 
-    const viewportWidth = this.viewport.offsetWidth;
-
     this.setState({
       shiftX: this.calculateIndent(this.state.current),
       containerWidth,
-      min: this.calcMin({ layerWidth, containerWidth, viewportWidth, slides }),
-      max: this.calcMax({ viewportWidth, slides }),
-      animation: false
+      min: this.calcMin({ layerWidth, containerWidth, slides }),
+      max: this.calcMax({ slides }),
+      animation: false,
     }, () => {
       window.requestAnimationFrame(() => this.setState({ animation: true }));
     });
   };
 
-  setTimeout = (duration) => {
+  setTimeout: SetTimeout = (duration: number) => {
     if (canUseDOM) {
       this.timeout = window.setTimeout(() => {
         const { slides, current } = this.state;
@@ -305,33 +316,33 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     }
   };
 
-  clearTimeout = () => {
+  clearTimeout: VoidFunction = () => {
     clearTimeout(this.timeout);
   };
 
-  getSlideRef = (id) => (slide) => {
+  getSlideRef: GetSlideRef = (id: number) => (slide: HTMLElement) => {
     this.slidesStore[`slide-${id}`] = slide;
-  }
+  };
 
-  getViewportRef = (viewport) => {
-    this.viewport = viewport ? viewport.container : {};
-  }
+  getViewportRef: GetRef = (viewport: HTMLElement) => {
+    this.viewport = viewport;
+  };
 
-  componentDidMount () {
+  componentDidMount() {
     this.initializeSlides(() => {
       this.setState({
-        shiftX: this.calculateIndent(this.state.current)
+        shiftX: this.calculateIndent(this.state.current),
       });
     });
 
     window.addEventListener('resize', this.onResize);
 
-    if (this.props.autoplay) {
-      this.setTimeout(this.props.autoplay);
+    if (this.props.timeout) {
+      this.setTimeout(this.props.timeout);
     }
   }
 
-  componentDidUpdate (prevProps, prevState) {
+  componentDidUpdate(prevProps: GalleryProps, prevState: GalleryState) {
     if (this.props.children !== prevProps.children) {
       this.isChildrenDirty = true;
     }
@@ -344,13 +355,11 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       this.props.onChange(this.state.current);
     }
 
-    if (this.props.autoplay && !prevProps.autoplay) {
-      if (this.props.autoplay) {
-        this.setTimeout(this.props.autoplay);
-      }
+    if (this.props.timeout && !prevProps.timeout) {
+      this.setTimeout(this.props.timeout);
     }
 
-    if (!this.props.autoplay && prevProps.autoplay) {
+    if (!this.props.timeout && prevProps.timeout) {
       this.clearTimeout();
     }
 
@@ -359,17 +368,17 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('resize', this.onResize);
     this.clearTimeout();
   }
 
-  render () {
+  render() {
     const { animation, duration, current, dragging } = this.state;
     const {
       children,
       slideWidth,
-      autoplay,
+      timeout,
       initialSlideIndex,
       slideIndex,
       onDragStart,
@@ -389,13 +398,13 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       WebkitTransform: `translateX(${indent}px)`,
       transform: `translateX(${indent}px)`,
       WebkitTransition: animation ? `-webkit-transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none',
-      transition: animation ? `transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none'
+      transition: animation ? `transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none',
     };
 
     return (
       <div className={classNames(getClassName('Gallery', platform), className, `Gallery--${align}`, {
         'Gallery--dragging': dragging,
-        'Gallery--custom-width': slideWidth === 'custom'
+        'Gallery--custom-width': slideWidth === 'custom',
       })} {...restProps} ref={this.container}>
         <Touch
           className='Gallery__viewport'
@@ -403,23 +412,23 @@ class Gallery extends Component<GalleryProps, GalleryState> {
           onMoveX={this.onMoveX}
           onEnd={this.onEnd}
           style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
-          ref={this.getViewportRef}
+          getRootRef={this.getViewportRef}
         >
           <div className='Gallery__layer' style={layerStyle}>
-            {React.Children.map(children, (item, i) => (
+            {React.Children.map(children, (item: ReactElement, i: number) =>
               <div className='Gallery__slide' key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>
-            ))}
+            )}
           </div>
         </Touch>
 
         {bullets &&
         <div className={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
-          {React.Children.map(children, (_item, index) => (
+          {React.Children.map(children, (_item: ReactElement, index: number) =>
             <div
               className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })}
               key={index}
             />
-          ))}
+          )}
         </div>
         }
       </div>

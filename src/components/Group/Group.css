@@ -1,84 +1,45 @@
 .Group {
-  background: var(--background_content);
-  }
+  color: var(--text_primary);
+}
 
-  .Group__content {
-    color: var(--text_primary);
-    }
+.Group > *:not(.Header):first-child {
+  margin-top: 12px;
+}
 
-/**
- * iOS
- */
-.Group--ios {
-  margin: 10px 0;
-  position: relative;
-  }
+.Group > .Cell:first-child,
+.Group > .CellButton:first-child,
+.Group > .InfoRow:first-child {
+  margin-top: 8px;
+}
 
-  .Group--ios .Group__content .List::before,
-  .Group--ios .Group__content .List::after {
-    content: none;
-    }
+.Group__description {
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--text_secondary);
+}
 
-  .Group--ios .Group__description {
-    font-size: 14px;
-    line-height: 16px;
-    color: var(--text_secondary);
-    padding: 8px 12px;
-    }
+.Group__separator {
+  margin-top: 12px;
+}
 
-  .Group--ios::before,
-  .Group--ios::after {
-    position: absolute;
-    right: 0;
-    left: 0;
-    z-index: 1;
-    height: 1px;
-    content: '';
-    background: var(--separator_common);
-    }
+.Cell + .Group__separator,
+.CellButton + .Group__separator,
+.InfoRow + .Group__separator {
+  margin-top: 8px;
+}
 
-  .Group--ios::before {
-    bottom: 100%;
-    transform-origin: center bottom;
-    }
+.Group:last-of-type .Group__separator {
+  display: none;
+}
 
-  .Group--ios::after {
-    top: 100%;
-    transform-origin: center top;
-    }
+.Group:last-of-type .Group__separator--force {
+  display: block;
+}
 
-  @media (min-resolution: 2dppx) {
-    .Group--ios::before,
-    .Group--ios::after {
-      transform: scaleY(.5);
-      }
-    }
+.Group--ios .Group__description {
+  padding: 4px 12px 24px;
+}
 
-  @media (min-resolution: 3dppx) {
-    .Group--ios::before,
-    .Group--ios::after {
-      transform: scaleY(.33);
-      }
-    }
-
-/**
- * Android
- */
-
-.Group--android {
-  margin: 8px 0;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .06), 0 0 2px 0 rgba(0, 0, 0, .03);
-  }
-
-  .Group--android .Group__description {
-    font-size: 14px;
-    line-height: 16px;
-    color: var(--text_secondary);
-    padding: 12px 16px 8px;
-    }
-
-.Panel__in-before + .Group--android,
-.PullToRefresh__content > .Group--android:first-child {
-  margin-top: 0;
-  padding-top: 8px;
-  }
+.Group--android .Group__description {
+  padding: 4px 16px 24px;
+}

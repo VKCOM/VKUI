@@ -52,7 +52,7 @@
 
       .Cell__before-in {
         flex-shrink: 0;
-        color: var(--icon_secondary);
+        color: var(--accent);
         }
 
       .Cell__checkbox-marker {
@@ -165,36 +165,6 @@
     padding: 0 12px;
     transition: background-color .15s ease-out, transform .6s var(--ios-easing);
     }
-
-    .List .Cell--ios:not(:last-child) .Cell__in:not(.Tappable--active) .Cell__before::before {
-      position: absolute;
-      bottom: 0;
-      width: 10000px;
-      height: 1px;
-      background: var(--separator_common);
-      transform-origin: center center;
-      content: '';
-      }
-
-    @media (min-resolution: 2dppx) {
-      .List .Cell--ios:not(:last-child) .Cell__in:not(.Tappable--active) .Cell__before::before {
-        transform: scaleY(.5);
-        }
-      }
-
-    @media (min-resolution: 3dppx) {
-      .List .Cell--ios:not(:last-child) .Cell__in:not(.Tappable--active) .Cell__before::before {
-        transform: scaleY(.33);
-        }
-      }
-
-    .List .Cell--ios.Cell--m .Cell__before::before {
-      left: 100%;
-      }
-
-    .List .Cell--ios.Cell--l .Cell__before::before {
-      left: -12px;
-      }
 
       .Cell--ios .Cell__before-in > .Icon {
         padding: 10px 16px 10px 0;

@@ -14,7 +14,6 @@ Android. Внизу располагается панель с иконками,
 между окнами.
 
 ``` jsx
-
 class Example extends React.Component {
   constructor (props) {
     super(props);
@@ -69,27 +68,27 @@ class Example extends React.Component {
       }>
         <View id="feed" activePanel="feed">
           <Panel id="feed">
-            <PanelHeader>Feed</PanelHeader>
+            <PanelHeader>Новости</PanelHeader>
           </Panel>
         </View>
         <View id="discover" activePanel="discover">
           <Panel id="discover">
-            <PanelHeader>Discover</PanelHeader>
+            <PanelHeader>Поиск</PanelHeader>
           </Panel>
         </View>
         <View id="messages" activePanel="messages">
           <Panel id="messages">
-            <PanelHeader>Messages</PanelHeader>
+            <PanelHeader>Сообщения</PanelHeader>
           </Panel>
         </View>
         <View id="notifications" activePanel="notifications">
           <Panel id="notifications">
-            <PanelHeader>Notifications</PanelHeader>
+            <PanelHeader>Уведомления</PanelHeader>
           </Panel>
         </View>
         <View id="more" activePanel="more">
           <Panel id="more">
-            <PanelHeader>More</PanelHeader>
+            <PanelHeader>Ещё</PanelHeader>
           </Panel>
         </View>
       </Epic>

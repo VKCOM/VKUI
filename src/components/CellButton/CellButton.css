@@ -62,7 +62,7 @@
   }
 
 .CellButton--ios .CellButton__before .Icon {
-  margin-right: 12px;
+  margin-right: 16px;
   }
 
 /*
@@ -79,5 +79,5 @@
   }
 
 .CellButton--android .CellButton__before .Icon {
-  margin-right: 12px;
+  margin-right: 16px;
   }

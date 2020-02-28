@@ -9,4 +9,4 @@
 }
 ```
 
-Доступные цвета находятся в [тут](https://github.com/VKCOM/VKUI/blob/master/src/styles/client_light.css)
+Доступные цвета находятся [тут](https://github.com/VKCOM/VKUI/blob/master/src/styles/bright_light.css)

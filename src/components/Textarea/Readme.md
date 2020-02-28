@@ -1,6 +1,8 @@
+Надстройка над `<textarea />`. Компонент принимает все валидные для этого элемента свойства.
+
 ```jsx
   <View activePanel="panel">
-    <Panel id="panel" theme="white">
+    <Panel id="panel">
       <PanelHeader>
         Textarea
       </PanelHeader>

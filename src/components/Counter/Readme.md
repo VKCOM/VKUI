@@ -2,43 +2,48 @@
 Принимает в качестве `children` число или строку с отформатированным числом по разрядам.
 
  ```jsx
-<View activePanel="counter-demo" header={false}>
+<View activePanel="counter-demo">
   <Panel id="counter-demo">
-    <Group title="Счётчики в ячейках">
+    <PanelHeader>Counter</PanelHeader>
+    <Group header={<Header mode="secondary">Счётчики в ячейках</Header>}>
       <List>
         <Cell before={<Icon24User />} indicator={<Counter>4</Counter>}>Друзья</Cell>
-        <Cell before={<Icon24Users />} indicator={<Counter type="primary">2</Counter>}>Группы</Cell>
+        <Cell before={<Icon24Users />} indicator={<Counter mode="primary">2</Counter>}>Группы</Cell>
         <Cell before={<Icon24Message />} indicator={<Counter>224</Counter>}>Сообщения</Cell>
-        <Cell before={<Icon24Favorite />} indicator={<Counter type="primary">1</Counter>}>Закладки</Cell>
+        <Cell before={<Icon24Favorite />} indicator={<Counter mode="primary">1</Counter>}>Закладки</Cell>
       </List>
     </Group>
-
-    <Group title="Счётчики в кнопках">
+    <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
       <FormLayout>
-        <Button level="secondary" size="l" after={<Counter>16</Counter>}>Secondary large</Button>
-        <Button level="tertiary" after={<Counter>6</Counter>}>Tertiary medium</Button>
-        <Button level="outline" size="l" after={<Counter>20</Counter>}>Outline large</Button>
-        <Button level="commerce" size="l" after={<Counter>4</Counter>}>Commerce large</Button>
+        <Button mode="secondary" size="l" after={<Counter>16</Counter>}>Secondary large</Button>
+        <Button mode="tertiary" after={<Counter>6</Counter>}>Tertiary medium</Button>
+        <Button mode="outline" size="l" after={<Counter>20</Counter>}>Outline large</Button>
+        <Button mode="commerce" size="l" after={<Counter>4</Counter>}>Commerce large</Button>
         <Button size="xl" after={<Counter>8</Counter>}>Primary extra large</Button>
       </FormLayout>
     </Group>
-
-    <Group>
-      <Header level="secondary" indicator={<Counter type="prominent">1</Counter>} aside={<Link>Подробнее</Link>}>
-        Вопросы
-      </Header>
+    <Group header={
+      <Header
+        indicator={<Counter size="s" mode="prominent">5</Counter>}
+        aside={<Link>Посмотреть все</Link>}
+      >
+        Заявки в друзья
+      </Header>}
+    >
+      <Cell before={<Avatar />}>Александр Сорокин</Cell>
+      <Cell before={<Avatar />}>Виктор Пелевин</Cell>
+      <Cell before={<Avatar />}>Михаил Зыгарь</Cell>
     </Group>
-
-    <Group>
-      <Tabs theme="header" type="buttons">
+    <Group header={<Header mode="secondary">В переключателях</Header>}>
+      <Tabs mode="buttons">
         <HorizontalScroll>
-          <TabsItem after={<Counter>8</Counter>}>
+          <TabsItem after={<Counter size="s">8</Counter>}>
             Все
           </TabsItem>
-          <TabsItem selected after={<Counter>24</Counter>}>
+          <TabsItem selected after={<Counter size="s">24</Counter>}>
             Люди
           </TabsItem>
-          <TabsItem after={<Counter>2</Counter>}>
+          <TabsItem after={<Counter size="s">2</Counter>}>
             Сообщества
           </TabsItem>
           <TabsItem>
@@ -46,25 +51,11 @@
           </TabsItem>
         </HorizontalScroll>
       </Tabs>
-    </Group>
-
-    <Group>
-      <Tabs theme="light">
-        <TabsItem after={<Counter>6</Counter>}>
+      <Tabs>
+        <TabsItem after={<Counter size="s">6</Counter>}>
           Диалоги
         </TabsItem>
-        <TabsItem selected after={<Counter>24</Counter>}>
-          Сообщения
-        </TabsItem>
-      </Tabs>
-    </Group>
-
-    <Group>
-      <Tabs type="buttons">
-        <TabsItem selected after={<Counter>6</Counter>}>
-          Диалоги
-        </TabsItem>
-        <TabsItem after={<Counter>24</Counter>}>
+        <TabsItem selected after={<Counter size="s">24</Counter>}>
           Сообщения
         </TabsItem>
       </Tabs>

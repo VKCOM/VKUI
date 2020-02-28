@@ -1,5 +1,3 @@
-@import './client_light.css';
-@import './client_dark.css';
 @import './bright_light.css';
 @import './space_gray.css';
 @import './constants.css';
@@ -13,15 +11,15 @@
 @import '../components/View/View.css';
 @import '../components/Panel/Panel.css';
 @import '../components/PanelHeader/PanelHeader.css';
-@import '../components/HeaderButton/HeaderButton.css';
+@import '../components/PanelHeaderSimple/PanelHeaderSimple.css';
+@import '../components/PanelHeaderButton/PanelHeaderButton.css';
 @import '../components/PanelHeaderContent/PanelHeaderContent.css';
-@import '../components/HeaderContext/HeaderContext.css';
+@import '../components/PanelHeaderContext/PanelHeaderContext.css';
 @import '../components/Epic/Epic.css';
 @import '../components/Tabbar/Tabbar.css';
 @import '../components/TabbarItem/TabbarItem.css';
 @import '../components/FixedLayout/FixedLayout.css';
 @import '../components/HorizontalScroll/HorizontalScroll.css';
-@import '../components/InnerScroll/InnerScroll.css';
 
 /* Popouts */
 @import '../components/PopoutWrapper/PopoutWrapper.css';
@@ -39,11 +37,15 @@
 /* Blocks */
 @import '../components/Tappable/Tappable.css';
 @import '../components/Button/Button.css';
+@import '../components/Card/Card.css';
+@import '../components/CardGrid/CardGrid.css';
+@import '../components/CardScroll/CardScroll.css';
 @import '../components/CellButton/CellButton.css';
 @import '../components/Div/Div.css';
 @import '../components/Link/Link.css';
 @import '../components/Header/Header.css';
 @import '../components/Group/Group.css';
+@import '../components/Gradient/Gradient.css';
 @import '../components/Cell/Cell.css';
 @import '../components/List/List.css';
 @import '../components/Footer/Footer.css';
@@ -51,11 +53,9 @@
 @import '../components/Switch/Switch.css';
 @import '../components/InfoRow/InfoRow.css';
 @import '../components/Avatar/Avatar.css';
-@import '../components/Entity/Entity.css';
 @import '../components/Gallery/Gallery.css';
 @import '../components/Progress/Progress.css';
-@import '../components/SearchIOS/SearchIOS.css';
-@import '../components/SearchAndroid/SearchAndroid.css';
+@import '../components/Search/Search.css';
 @import '../components/Tabs/Tabs.css';
 @import '../components/TabsItem/TabsItem.css';
 @import '../components/Tooltip/Tooltip.css';
@@ -77,6 +77,9 @@
 @import '../components/Select/Select.css';
 @import '../components/Textarea/Textarea.css';
 @import '../components/File/File.css';
+
+/* Advertisement */
+@import '../components/PromoBanner/PromoBanner.css';
 
 html,
 body,

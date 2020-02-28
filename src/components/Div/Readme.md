@@ -7,8 +7,9 @@
     <PanelHeader>Div</PanelHeader>
     <Group>
       <Div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-        dolore magna aliqua.
+        <Button stretched mode="secondary" size="l">
+          Edit Info
+        </Button>
       </Div>
     </Group>
   </Panel>

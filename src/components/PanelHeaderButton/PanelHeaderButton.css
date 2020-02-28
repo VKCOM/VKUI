@@ -1,0 +1,60 @@
+.PanelHeaderButton {
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  display: block;
+  color: currentColor;
+  padding: 0;
+  margin: 0;
+  font-size: 17px;
+}
+
+.PanelHeaderButton[disabled] {
+  opacity: .6;
+}
+
+.PanelHeaderButton--ios {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.PanelHeaderButton--ios.PanelHeaderButton--primary {
+  font-weight: 600;
+}
+
+.PanelHeaderButton--ios > * {
+  align-items: center;
+}
+
+.PanelHeaderButton--ios.Tappable--active {
+  opacity: .7;
+}
+
+.PanelHeaderButton--android {
+  text-transform: uppercase;
+  height: 48px;
+  line-height: 48px;
+  border-radius: 50%;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.PanelHeaderButton--android .Icon--24 {
+  padding: 12px;
+}
+
+.PanelHeaderButton--android .Icon--28 {
+  padding: 10px;
+}
+
+.PanelHeaderButton--android .Tappable__waves {
+  border-radius: 50%;
+}
+
+.PanelHeaderButton--android.Tappable--active {
+  background-color: var(--background_highlighted);
+}

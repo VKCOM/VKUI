@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { HTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import PropTypes from 'prop-types';
@@ -14,9 +16,13 @@ export interface FixedLayoutProps extends
   HasChildren,
   HasRootRef<HTMLDivElement>,
   HasInsets,
-  HasPlatform
-{
+  HasPlatform {
   vertical?: 'top' | 'bottom';
+  /**
+   * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.
+   * Это часто необходимо для фиксированных кнопок в нижней части экрана.
+   */
+  filled?: boolean;
 }
 
 export interface FixedLayoutState {
@@ -27,27 +33,27 @@ export interface FixedLayoutState {
 class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   state = {
     position: null,
-    top: null
+    top: null,
   };
 
-  el: HTMLDivElement
+  el: HTMLDivElement;
 
   static contextTypes = {
     panel: PropTypes.string,
     document: PropTypes.any,
-    hasTabbar: PropTypes.bool
+    hasTabbar: PropTypes.bool,
   };
 
-  get document () {
+  get document() {
     return this.context.document || document;
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.document.removeEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
@@ -56,14 +62,14 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     let panelScroll = e.detail.scrolls[this.context.panel] || 0;
     this.setState({
       position: 'absolute',
-      top: this.el.offsetTop + panelScroll
+      top: this.el.offsetTop + panelScroll,
     });
   };
 
   onViewTransitionEnd = () => {
     this.setState({
       position: null,
-      top: null
+      top: null,
     });
   };
 
@@ -80,8 +86,8 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     }
   };
 
-  render () {
-    const { className, children, style, vertical, getRootRef, insets, platform, ...restProps } = this.props;
+  render() {
+    const { className, children, style, vertical, getRootRef, insets, platform, filled, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
     const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
@@ -89,7 +95,9 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
       <div
         {...restProps}
         ref={this.getRef}
-        className={classNames(getClassName('FixedLayout', platform), `FixedLayout--${vertical}`, className)}
+        className={classNames(getClassName('FixedLayout', platform), {
+          'FixedLayout--filled': filled
+        }, `FixedLayout--${vertical}`, className)}
         style={{ ...style, ...this.state, paddingBottom }}
       >
         <div className="FixedLayout__in">{children}</div>

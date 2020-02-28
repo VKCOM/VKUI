@@ -1,0 +1,59 @@
+.PromoBanner {
+  width: 100%;
+  box-sizing: border-box;
+  outline: 1px solid #eee;
+  color: var(--text_primary);
+  background: var(--background_content);
+  padding-bottom: 11px;
+  position: relative;
+}
+
+.PromoBanner__head {
+  padding: 11px 11px 0 11px;
+  height: 27px;
+}
+
+.PromoBanner__age {
+  border: 1px solid var(--separator_alpha);
+  padding: 0 4px;
+  line-height: 18px;
+  font-size: 12px;
+  color: var(--text_secondary);
+}
+
+.PromoBanner__label {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text_secondary);
+}
+
+.PromoBanner__age + .PromoBanner__label {
+  padding-left: 10px;
+}
+
+.PromoBanner__clickable-body {
+  display: flex;
+  color: var(--text_primary);
+  text-decoration: none;
+  outline: none;
+}
+
+.PromoBanner__content {
+  flex: 0 1 100%;
+}
+
+.PromoBanner__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  color: var(--placeholder_icon_foreground_primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.PromoBanner__close:active {
+  opacity: .7;
+}

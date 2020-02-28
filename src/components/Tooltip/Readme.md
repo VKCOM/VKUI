@@ -24,7 +24,7 @@ import { Tooltip, Button } from '@vkontakte/vkui';
 ```
 О возможностях тултипа можно прочитать в описании свойств и методов.
 
-```
+```jsx
   class Example extends React.Component {
 
     constructor () {
@@ -68,12 +68,12 @@ import { Tooltip, Button } from '@vkontakte/vkui';
           <Panel id="tooltip2">
             <PanelHeader
               left={
-                <HeaderButton onClick={() => this.setState({ activePanel: 'tooltip' })}>
+                <PanelHeaderButton onClick={() => this.setState({ activePanel: 'tooltip' })}>
                   {osname === ANDROID ? <Icon24Back/> : <Icon28ChevronBack/>}
-                </HeaderButton>
+                </PanelHeaderButton>
               }
               right={
-                <HeaderButton>
+                <PanelHeaderButton>
                   <Tooltip
                     isShown={this.state.tooltip2}
                     onClose={() => this.setState({ tooltip2: false, tooltip3: true })}
@@ -81,11 +81,11 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                     cornerOffset={-10}
                     offsetX={7}
                     text="Обновлённый раздел поможет найти друзей"
-                    title="Рекомендации друзей"
+                    header="Рекомендации друзей"
                   >
                     <Icon24Add/>
                   </Tooltip>
-                </HeaderButton>
+                </PanelHeaderButton>
               }
             >
               Tooltip

@@ -10,14 +10,14 @@
   color: var(--field_error_border);
   }
 
-  .FormStatus__title {
+  .FormStatus__header {
     font-size: 16px;
     font-weight: 500;
     line-height: 1.25;
     margin-top: -2px;
     }
 
-  .FormStatus__title:not(:last-child) {
+  .FormStatus__header:not(:last-child) {
     margin-bottom: 2px;
     }
 

@@ -1,9 +1,7 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 
-export interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {}
-
-const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
+const HorizontalScroll: FunctionComponent<HTMLAttributes<HTMLDivElement>> = (props: HTMLAttributes<HTMLDivElement>) => {
   const { children, className, ...restProps } = props;
   return (
     <div {...restProps} className={classNames('HorizontalScroll', className)}>

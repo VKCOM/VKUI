@@ -1,8 +1,7 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
-import { HasClassName, HasChildren } from '../../types/props';
 
-export interface PlaceholderProps extends HasClassName, HasChildren {
+export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Иконка
    */
@@ -10,7 +9,7 @@ export interface PlaceholderProps extends HasClassName, HasChildren {
   /**
    * Заголовок плейсхолдера
    */
-  title?: ReactNode;
+  header?: ReactNode;
   /**
    * Кнопка действия
    */
@@ -22,17 +21,17 @@ export interface PlaceholderProps extends HasClassName, HasChildren {
 }
 
 const Placeholder: FunctionComponent<PlaceholderProps> = (props: PlaceholderProps) => {
-  const { className, icon, title, action, children, stretched } = props;
+  const { className, icon, header, action, children, stretched } = props;
 
   return (
     <div
       className={classNames('Placeholder', {
-        'Placeholder--stretched': stretched
+        'Placeholder--stretched': stretched,
       }, className)}
     >
       <div className="Placeholder__in">
         {icon && <div className="Placeholder__icon">{icon}</div>}
-        {title && <div className="Placeholder__title">{title}</div>}
+        {header && <div className="Placeholder__header">{header}</div>}
         {children && <div className="Placeholder__text">{children}</div>}
         {action && <div className="Placeholder__action">{action}</div>}
       </div>

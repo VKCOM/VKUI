@@ -1,26 +1,24 @@
 import React, { FunctionComponent } from 'react';
-import HeaderButton, { HeaderButtonProps } from '../HeaderButton/HeaderButton';
-import Icon24Done from '@vkontakte/icons/dist/24/done';
+import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import Icon28DoneOutline from '@vkontakte/icons/dist/28/done_outline';
 import { ANDROID } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface PanelHeaderSubmitProps extends HeaderButtonProps {}
-
-const PanelHeaderSubmit: FunctionComponent<PanelHeaderSubmitProps> = ({
+const PanelHeaderSubmit: FunctionComponent<PanelHeaderButtonProps> = ({
   children,
   ...restProps
-}: PanelHeaderSubmitProps) => {
+}: PanelHeaderButtonProps) => {
   const platform = usePlatform();
 
   return (
-    <HeaderButton primary {...restProps}>
-      {platform === ANDROID ? <Icon24Done/> : children}
-    </HeaderButton>
+    <PanelHeaderButton primary {...restProps}>
+      {platform === ANDROID ? <Icon28DoneOutline /> : children}
+    </PanelHeaderButton>
   );
 };
 
 PanelHeaderSubmit.defaultProps = {
-  children: 'Готово'
+  children: 'Готово',
 };
 
 export default PanelHeaderSubmit;

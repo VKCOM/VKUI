@@ -1,1 +1,1 @@
-export const tabbarHeight: number = 48;
+export const tabbarHeight = 48;

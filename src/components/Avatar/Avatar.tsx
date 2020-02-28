@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { FunctionComponent, ImgHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasChildren, HasRootRef } from '../../types/props';
+import { HasRootRef } from '../../types/props';
 
-export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement>, HasChildren, HasRootRef<HTMLDivElement> {
-  size?: 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24,
-  src?: string,
-  type?: 'default' | 'image' | 'app'
+export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
+  size?: 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24;
+  src?: string;
+  mode?: 'default' | 'image' | 'app';
 }
 
-const Avatar: React.FunctionComponent<AvatarProps> = ({
+const Avatar: FunctionComponent<AvatarProps> = ({
   src,
   size,
-  type,
+  mode,
   style,
   className,
   children,
@@ -24,7 +24,7 @@ const Avatar: React.FunctionComponent<AvatarProps> = ({
   const platform = usePlatform();
   let borderRadius;
 
-  switch (type) {
+  switch (mode) {
     case 'default':
       borderRadius = '50%';
       break;
@@ -38,7 +38,7 @@ const Avatar: React.FunctionComponent<AvatarProps> = ({
 
   return (
     <div
-      className={classNames(getClassName('Avatar', platform), className, `Avatar--type-${type}`)}
+      className={classNames(getClassName('Avatar', platform), className, `Avatar--type-${mode}`)}
       ref={getRootRef}
     >
       <div className="Avatar__in">
@@ -56,7 +56,7 @@ const Avatar: React.FunctionComponent<AvatarProps> = ({
 
 Avatar.defaultProps = {
   size: 48,
-  type: 'default'
+  mode: 'default',
 };
 
 export default Avatar;

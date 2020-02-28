@@ -1,4 +1,4 @@
-Контейнер для Cell.
+Контейнер для однородных [Cell](https://vkcom.github.io/vkui-styleguide/#!/Cell).
 
 ```jsx
 <View activePanel="list">

@@ -2,55 +2,87 @@
   position: relative;
   width: 100%;
   height: 100%;
-  }
+}
 
-  .Panel::after {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    content: '';
-    }
+.Panel::after {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  content: '';
+}
 
-  .Panel--centered .Panel__in {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    }
+.Panel--centered .Panel__in {
+  height: 100%;
+}
 
-  .Panel__in {
-    position: relative;
-    box-sizing: border-box;
-    width: 100%;
-    min-height: 100%;
-    z-index: 2;
-    padding-bottom: var(--safe-area-inset-bottom);
-    }
+.Panel--centered .PanelHeaderSimple {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
 
-  .Epic .Panel__in {
-    padding-bottom: var(--tabbar_height);
-    padding-bottom: calc(var(--safe-area-inset-bottom) + var(--tabbar_height));
-    }
+.Panel__in {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100%;
+  z-index: 2;
+}
 
-    .Panel__in-before {
-      height: 1px;
-      margin-bottom: -1px;
-      }
+.Panel__centered {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
 
-    .Panel__in-after {
-      height: 1px;
-      margin-top: -1px;
-      }
+.View--header .Panel__separator + .Panel__centered {
+  min-height: calc(100% - 1px);
+}
 
-.Panel--tm-gray .Panel__in,
-.Panel--tm-gray::after {
-  background-color: var(--background_page);
-  }
+.Panel__centered .PanelHeaderSimple--ios.PanelHeaderSimple--vis + * {
+  margin-top: var(--panelheader_height_ios);
+}
 
-.Panel--tm-white .Panel__in,
-.Panel--tm-white::after {
+.Panel__centered .PanelHeaderSimple--android.PanelHeaderSimple--vis + * {
+  margin-top: var(--panelheader_height_android);
+}
+
+.Panel__centered .PanelHeaderSimple--ios.PanelHeaderSimple--sep + * {
+  margin-top: calc(var(--panelheader_height_ios) + 5px);
+}
+
+.Panel__centered .PanelHeaderSimple--android.PanelHeaderSimple--sep + * {
+  margin-top: calc(var(--panelheader_height_android) + 5px);
+}
+
+.Epic .Panel__in {
+  padding-bottom: var(--tabbar_height);
+  padding-bottom: calc(var(--safe-area-inset-bottom) + var(--tabbar_height));
+}
+
+.Panel__in-before {
+  height: 1px;
+  margin-bottom: -1px;
+}
+
+.Panel__separator {
+  position: relative;
+  z-index: 3;
+}
+
+.Panel__in-after {
+  height: 1px;
+  margin-top: -1px;
+}
+
+.Panel .Panel__in,
+.Panel::after {
   background-color: var(--background_content);
-  }
+}

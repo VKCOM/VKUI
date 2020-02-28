@@ -1,34 +1,33 @@
-import React, { Component, HTMLAttributes } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, SelectHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasChildren, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
+import { GetRef } from '../../types/common';
 
 export interface SelectProps extends
-  HTMLAttributes<HTMLSelectElement>,
+  SelectHTMLAttributes<HTMLSelectElement>,
   HasRef<HTMLSelectElement>,
   HasRootRef<HTMLLabelElement>,
-  HasChildren,
-  HasFormStatus
-{
-  value?: string;
+  HasFormStatus,
+  HasFormLabels,
+  HasAlign {
+  defaultValue?: string;
   placeholder?: string;
-  alignment?: 'left' | 'center' | 'top';
-  disabled?: boolean;
 }
 
 export interface SelectState {
-  value?: string,
-  title?: string,
-  notSelected?: boolean,
+  value?: string;
+  title?: string;
+  notSelected?: boolean;
 }
 
-export default class Select extends Component<SelectProps, SelectState> {
-  constructor (props) {
+export default class Select extends React.Component<SelectProps, SelectState> {
+  constructor(props: SelectProps) {
     super(props);
     const state: SelectState = {
       title: '',
-      notSelected: false
+      notSelected: false,
     };
     if (typeof props.value !== 'undefined') {
       this.isControlledOutside = true;
@@ -38,10 +37,10 @@ export default class Select extends Component<SelectProps, SelectState> {
     this.state = state;
   }
 
-  isControlledOutside?: boolean
-  selectEl?: HTMLSelectElement
+  isControlledOutside?: boolean;
+  selectEl?: HTMLSelectElement;
 
-  onChange = (e: React.FormEvent<HTMLSelectElement>) => {
+  onChange: ChangeEventHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     this.setTitle();
     if (!this.isControlledOutside) {
       this.setState({ value: e.currentTarget.value });
@@ -51,29 +50,29 @@ export default class Select extends Component<SelectProps, SelectState> {
     }
   };
 
-  setTitle = () => {
+  setTitle: VoidFunction = () => {
     const selectedOption = this.selectEl.options[this.selectEl.selectedIndex];
     selectedOption && this.setState({
       title: selectedOption.text,
-      notSelected: selectedOption.value === '' && this.props.hasOwnProperty('placeholder')
+      notSelected: selectedOption.value === '' && this.props.hasOwnProperty('placeholder'),
     });
   };
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps: SelectProps) {
     if (prevProps.value !== this.props.value || prevProps.children !== this.props.children) {
       this.setTitle();
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.setTitle();
   }
 
-  get value () {
+  get value() {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  getRef = (element) => {
+  getRef: GetRef<HTMLSelectElement> = (element: HTMLSelectElement) => {
     this.selectEl = element;
 
     const getRef = this.props.getRef;
@@ -86,16 +85,16 @@ export default class Select extends Component<SelectProps, SelectState> {
     }
   };
 
-  render () {
-    const { style, value, defaultValue, onChange, alignment, status, placeholder, children, className,
-      getRef, getRootRef, ...restProps } = this.props;
+  render() {
+    const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
+      getRef, getRootRef, top, bottom, ...restProps } = this.props;
 
     return (
       <FormField
-        TagName="label"
+        Component="label"
         className={classNames('Select', {
-          [`Select--not-selected`]: this.state.notSelected,
-          [`Select--align-${alignment}`]: !!alignment
+          ['Select--not-selected']: this.state.notSelected,
+          [`Select--align-${align}`]: !!align,
         }, className)}
         style={style}
         getRootRef={getRootRef}

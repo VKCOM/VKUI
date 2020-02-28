@@ -1,6 +1,8 @@
+Надстройка над `<input type="radio" />`. Компонент принимает все валидные для этого элемента свойства.
+
 ```jsx
   <View activePanel="panel">
-    <Panel id="panel" theme="white">
+    <Panel id="panel">
       <PanelHeader>Radio</PanelHeader>
       <FormLayout>
         <div>
