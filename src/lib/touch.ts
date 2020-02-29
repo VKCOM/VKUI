@@ -4,12 +4,12 @@ export type VKUITouchEventHander = (e: VKUITouchEvent) => void;
 /*
  * Получает кординату по оси абсцисс из touch- или mouse-события
  */
-const coordX = (e: VKUITouchEvent): number => e.clientX || e.touches && e.touches[0].clientX;
+const coordX = (e: VKUITouchEvent): number => e.pageX || e.changedTouches && e.changedTouches[0].pageX;
 
 /*
  * Получает кординату по оси ординат из touch- или mouse-события
  */
-const coordY = (e: VKUITouchEvent): number => e.clientY || e.touches && e.touches[0].clientY;
+const coordY = (e: VKUITouchEvent): number => e.pageY || e.changedTouches && e.changedTouches[0].pageY;
 
 const isClient: boolean = typeof window !== 'undefined';
 const touchEnabled: boolean = isClient && 'ontouchstart' in window;
