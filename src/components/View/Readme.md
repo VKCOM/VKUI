@@ -4,7 +4,7 @@
 При смене значения свойства `activePanel` происходит плавный переход от одной панели к другой.
 Как только он заканчивается, вызывается свойство-функция `onTransition`.
 
-```
+```jsx
 class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -74,7 +74,7 @@ class Example extends React.Component {
 ```jsx static
 import React from 'react';
 import { View, Panel, ConfigProvider } from '@vkontakte/vkui';
-import vkConnect from '@vkontakte/vk-connect';
+import vkBridge from '@vkontakte/vk-bridge';
 
 class App extends React.Component {
 
@@ -88,7 +88,7 @@ class App extends React.Component {
     history.pop();
     const activePanel = history[history.length - 1];
     if (activePanel === 'main') {
-      vkConnect.send('VKWebAppDisableSwipeBack');
+      vkBridge.send('VKWebAppDisableSwipeBack');
     }
     this.setState({ history, activePanel });
   }
@@ -97,7 +97,7 @@ class App extends React.Component {
     const history = [...this.state.history];
     history.push(activePanel);
     if (this.state.activePanel === 'main') {
-      vkConnect.send('VKWebAppEnableSwipeBack');
+      vkBridge.send('VKWebAppEnableSwipeBack');
     }
     this.setState({ history, activePanel });
   }

@@ -1,9 +1,4 @@
-Существует два способа разместить поиск – в теле `Panel` и в шапке `PanelHeader`. Расположение поиска влияет на
-его внешний вид. Для правильной отрисовки ему нужно указать свойство `theme`.
-
-**Важно:** нельзя размещать `<Search theme="header" />` внутри панели. Нельзя размещать `<Search theme="default" />`
-в шапке.
-
+Надстройка над `<input type="text" />`. Компонент принимает все валидные для этого элемента свойства.
 
 ```jsx
   const thematics = [
@@ -63,7 +58,7 @@
       this.onChange = this.onChange.bind(this);
     }
 
-    onChange (search) { this.setState({ search }); }
+    onChange (e) { this.setState({ search: e.target.value }); }
 
     get thematics () {
       const search = this.state.search.toLowerCase();
@@ -72,20 +67,20 @@
 
     render() {
       return (
-        <div>
-          <PanelHeader
-            noShadow
-            right={<HeaderButton onClick={this.props.goHeaderSearch} key="add"><Icon24Add /></HeaderButton>}
+        <React.Fragment>
+          <PanelHeaderSimple
+            right={<PanelHeaderButton onClick={this.props.goHeaderSearch}><Icon28AddOutline /></PanelHeaderButton>}
+            separator={false}
           >
             Выбор тематики
-          </PanelHeader>
-          <Search value={this.state.search} onChange={this.onChange}/>
+          </PanelHeaderSimple>
+          <Search value={this.state.search} onChange={this.onChange} after={null}/>
           {this.thematics.length > 0 &&
             <List>
               {this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
             </List>
           }
-        </div>
+        </React.Fragment>
       );
     }
   }
@@ -95,17 +90,13 @@
     constructor (props) {
       super(props);
       this.state = {
-        showSearch: osname === IOS,
         search: ''
       }
-      this.toggleSearch = this.toggleSearch.bind(this);
 
       this.onChange = this.onChange.bind(this);
     }
 
-    toggleSearch () { this.setState({ showSearch: !this.state.showSearch }); }
-
-    onChange (search) { this.setState({ search }); }
+    onChange (e) { this.setState({ search: e.target.value }); }
 
     get users () {
       const search = this.state.search.toLowerCase();
@@ -114,30 +105,24 @@
 
     render () {
       return (
-        <div>
-          <PanelHeader
-            left={<HeaderButton onClick={this.props.goSearch}>{osname === IOS ? <Icon28ChevronBack /> : <Icon24Back />}</HeaderButton>}
-            right={osname === ANDROID && <HeaderButton onClick={this.toggleSearch}><Icon24Search /></HeaderButton>}
-          >
-            {this.state.showSearch ?
-              <Search
-                theme="header"
-                value={this.state.search}
-                onChange={this.onChange}
-                onClose={this.toggleSearch}
-              /> : 'Поиск'
-            }
-          </PanelHeader>
+        <React.Fragment>
+          <PanelHeaderSimple left={<PanelHeaderBack onClick={this.props.goSearch} />} separator={false}>
+            <Search
+              value={this.state.search}
+              onChange={this.onChange}
+              icon={<Icon24Filter />}
+              onIconClick={this.props.onFiltersClick}
+            />
+          </PanelHeaderSimple>
           <List>
             {this.users.map((user) => (
               <Cell
                 before={<Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" />}
                 key={user.id}
-                onClick={this.props.goSearch}
               >{user.name}</Cell>
             ))}
           </List>
-        </div>
+        </React.Fragment>
       );
     }
   }
@@ -148,24 +133,56 @@
       super(props);
 
       this.state = {
-        activePanel: 'search'
+        activePanel: 'search',
+        activeModal: null
       }
 
       this.goSearch = this.goSearch.bind(this);
       this.goHeaderSearch = this.goHeaderSearch.bind(this);
+      this.hideModal = this.hideModal.bind(this);
     }
 
     goHeaderSearch () { this.setState({ activePanel: 'header-search' }); }
     goSearch () { this.setState({ activePanel: 'search' }); }
+    hideModal() { this.setState({ activeModal: null }); }
 
     render () {
       return (
-        <View activePanel={this.state.activePanel}>
-          <Panel id="search">
+        <View
+         activePanel={this.state.activePanel}
+         modal={
+           <ModalRoot activeModal={this.state.activeModal}>
+             <ModalPage
+               id="filters"
+               onClose={this.hideModal}
+               header={
+                 <ModalPageHeader
+                   left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.hideModal}><Icon24Cancel /></PanelHeaderButton>}
+                   right={<PanelHeaderButton onClick={this.hideModal}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+                 >
+                   Фильтры
+                 </ModalPageHeader>
+               }
+             >
+               <FormLayout>
+                 <SelectMimicry top="Страна" placeholder="Не выбрана" />
+                 <SelectMimicry top="Город" placeholder="Не выбран" />
+                 <FormLayoutGroup top="Пол">
+                   <Radio name="sex" value="male" defaultChecked>Любой</Radio>
+                   <Radio name="sex" value="male">Мужской</Radio>
+                   <Radio name="sex" value="female">Женский</Radio>
+                 </FormLayoutGroup>
+               </FormLayout>
+             </ModalPage>
+           </ModalRoot>
+         }
+         header={false}
+       >
+          <Panel id="search" separator={false}>
             <SimpleSearch goHeaderSearch={this.goHeaderSearch}/>
           </Panel>
-          <Panel id="header-search">
-            <HeaderSearch goSearch={this.goSearch}/>
+          <Panel id="header-search" separator={false}>
+            <HeaderSearch onFiltersClick={() => this.setState({ activeModal: 'filters' })} goSearch={this.goSearch}/>
           </Panel>
         </View>
       );

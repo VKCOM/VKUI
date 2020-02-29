@@ -3,7 +3,9 @@ import { canUseDOM } from '../../lib/dom';
 let masksCreated = false;
 
 export function createMasks(): void {
-  if (!canUseDOM || masksCreated) return;
+  if (!canUseDOM || masksCreated) {
+    return;
+  }
 
   const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svgElement.setAttributeNS(null, 'id', '__SVG_MASKS_NODE__');

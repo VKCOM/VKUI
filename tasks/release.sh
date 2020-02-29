@@ -12,7 +12,7 @@ else
   echo "release: commiting submodule updates"
   git add -A && git commit -m "docs update: v$1"
   echo "release: publishing to npm"
-  yarn publish --access-public
+  yarn publish --access-public --non-interactive
   echo "release: pushing updates to github"
   git push origin master
   echo "release: pushing new tag to github"

@@ -1,29 +1,20 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { OS } from '../lib/platform';
 
-export interface ObjectClassNames {
-  [index: string]: boolean;
-}
-
 export interface InsetsInterface {
-  top?: number
-  right?: number
-  bottom?: number
-  left?: number
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
 }
 
 export interface DangerInnerHTML {
-  __html: string
+  __html: string;
 }
 
-export interface HasClassName {
-  className?: string | number | ObjectClassNames;
-}
-
-export interface HasStyleObject {
-  style?: React.CSSProperties;
-}
-
+/**
+ * @deprecated использовать HTMLAttributes
+ */
 export interface HasChildren {
   children?: React.ReactNode;
 }
@@ -42,29 +33,33 @@ export interface HasInsets {
   insets?: InsetsInterface;
 }
 
-export interface OldRef<T> {
-  (el: T): void
-}
+export type OldRef<T> = (el: T) => void;
 
 export interface RefWithCurrent<T> {
-  current: T | null
+  current: T | null;
 }
 
 export interface HasRootRef<T> {
-  getRootRef?: OldRef<T> | RefWithCurrent<T>
+  getRootRef?: OldRef<T> | RefWithCurrent<T>;
 }
 
 export interface HasRef<T> {
-  getRef?: OldRef<T> | RefWithCurrent<T>
+  getRef?: OldRef<T> | RefWithCurrent<T>;
 }
 
 export interface HasDangerHTML {
-  dangerouslySetInnerHTML?: DangerInnerHTML
+  dangerouslySetInnerHTML?: DangerInnerHTML;
 }
 
 export interface HasFormStatus {
-  /**
-   * Значение `verified` устарело и будет удалено в 3.0.0. Используйте вместо него `valid`
-   */
-  status?: 'default' | 'error' | 'valid' | 'verified'
+  status?: 'default' | 'error' | 'valid';
+}
+
+export interface HasFormLabels {
+  top?: ReactNode;
+  bottom?: ReactNode;
+}
+
+export interface HasAlign {
+  align?: 'left' | 'center' | 'right';
 }

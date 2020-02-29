@@ -7,8 +7,7 @@
 
 Компоненты `Input`, `Textarea`, `Select` и `SelectMimicry` поддерживают свойство `status`, которое принимает значения `default`, `error` или `valid` и позволяет визуально подсвечивать поля в случае ошибки или успеха.
 
-```
-
+```jsx
 class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -37,7 +36,7 @@ class Example extends React.Component {
 
     return (
       <View activePanel="new-user">
-        <Panel id="new-user" theme="white">
+        <Panel id="new-user">
           <PanelHeader>Регистрация</PanelHeader>
           <FormLayout>
             <Input
@@ -87,7 +86,7 @@ class Example extends React.Component {
             </Select>
 
             <Textarea top="О себе" />
-            
+
             <Checkbox>Согласен со всем <Link>этим</Link></Checkbox>
             <Button size="xl">Зарегистрироваться</Button>
           </FormLayout>

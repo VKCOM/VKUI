@@ -1,13 +1,12 @@
+/* eslint-disable */
 import { canUseDOM } from './dom';
 
-export interface MatchesMethod {
-  (css: string): boolean
-}
+export type MatchesMethod = (css: string) => boolean;
 
 export interface OldElement extends Element {
-  matchesSelector?: MatchesMethod,
-  mozMatchesSelector?: MatchesMethod,
-  msMatchesSelector?: MatchesMethod,
+  matchesSelector?: MatchesMethod;
+  mozMatchesSelector?: MatchesMethod;
+  msMatchesSelector?: MatchesMethod;
 }
 
 if (canUseDOM) {
@@ -26,32 +25,65 @@ if (canUseDOM) {
     ElementProto.closest = function(css: string): Element | null {
       let node: Element = this;
       while (node) {
-        if (node.matches(css)) return node;
-        else node = node.parentElement;
+        if (node.matches(css)) {
+          return node;
+        } else {
+          node = node.parentElement;
+        }
       }
       return null;
     };
   }
 }
 
+// Array.prototype.includes
+if (!Array.prototype.includes) {
+  Object.defineProperty(Array.prototype, 'includes', {
+    value: function(searchElement, fromIndex) {
+      if (this == null) {
+        throw new TypeError('"this" is null or not defined');
+      }
+      const o = Object(this);
+      const len = o.length >>> 0;
+      if (len === 0) {
+        return false;
+      }
+      const n = fromIndex | 0;
+      let k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+      function sameValueZero(x, y) {
+        return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
+      }
+      while (k < len) {
+        if (sameValueZero(o[k], searchElement)) {
+          return true;
+        }
+        k++;
+      }
+      return false;
+    }
+  });
+}
+
 // Array.prototype.find
 if (!Array.prototype.find) {
-  Array.prototype.find = function(callback) {
-    if (this === null) {
-      throw new TypeError('Array.prototype.find called on null or undefined');
-    } else if (typeof callback !== 'function') {
-      throw new TypeError('callback must be a function');
-    }
+  Object.defineProperty(Array.prototype, 'find', {
+    value: function(callback) {
+      if (this === null) {
+        throw new TypeError('Array.prototype.find called on null or undefined');
+      } else if (typeof callback !== 'function') {
+        throw new TypeError('callback must be a function');
+      }
 
-    let list = Object(this);
-    let length = list.length >>> 0;
-    let thisArg = arguments[1];
+      let list = Object(this);
+      let length = list.length >>> 0;
+      let thisArg = arguments[1];
 
-    for (let i = 0; i < length; i++) {
-      let element = list[i];
-      if (callback.call(thisArg, element, i, list)) {
-        return element;
+      for (let i = 0; i < length; i++) {
+        let element = list[i];
+        if (callback.call(thisArg, element, i, list)) {
+          return element;
+        }
       }
     }
-  };
+  })
 }

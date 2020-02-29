@@ -1,0 +1,48 @@
+.CardScroll__in {
+  display: flex;
+  align-items: stretch;
+}
+
+.CardScroll .Card {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.CardScroll .Card:last-child {
+  margin-right: 0;
+}
+
+.CardScroll__in::before,
+.CardScroll__in::after {
+  content: '';
+  display: block;
+  flex-shrink: 0;
+}
+
+/**
+ * iOS
+ */
+
+.CardScroll--ios .CardScroll__in::before,
+.CardScroll--ios .CardScroll__in::after {
+  width: 12px;
+}
+
+.CardScroll--ios .Card--sz-l {
+  width: calc(100% - 24px);
+  margin-right: 12px;
+}
+
+/**
+ * Android
+ */
+
+.CardScroll--android .CardScroll__in::before,
+.CardScroll--android .CardScroll__in::after {
+  width: 16px;
+}
+
+.CardScroll--android .Card--sz-l {
+  width: calc(100% - 32px);
+  margin-right: 16px;
+}

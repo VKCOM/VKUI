@@ -1,12 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, HTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { isNumeric } from '../../lib/utils';
 import usePlatform from '../../hooks/usePlatform';
-import { HasChildren, HasClassName } from '../../types/props';
 import useInsets from '../../hooks/useInsets';
 
-export interface TabbarProps extends HasChildren, HasClassName {
+export interface TabbarProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Флаг для показа/скрытия верхней тени (Android) или границы (iOS)
    */
@@ -32,7 +31,7 @@ const Tabbar: FunctionComponent<TabbarProps> = (props: TabbarProps) => {
   return (
     <div
       className={classNames(getClassName('Tabbar', platform), className, `Tabbar--l-${getItemsLayout()}`, {
-        'Tabbar--shadow': shadow
+        'Tabbar--shadow': shadow,
       })}
       style={{ paddingBottom: isNumeric(insets.bottom) ? insets.bottom : null }}
     >
@@ -42,7 +41,7 @@ const Tabbar: FunctionComponent<TabbarProps> = (props: TabbarProps) => {
 };
 
 Tabbar.defaultProps = {
-  shadow: true
+  shadow: true,
 };
 
 export default Tabbar;

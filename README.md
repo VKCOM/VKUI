@@ -1,22 +1,24 @@
 # VKUI
 
-VKUI – это набор React-компонентов, с помощью которых можно создавать интерфейсы, 
+VKUI – это набор React-компонентов, с помощью которых можно создавать интерфейсы,
 внешне неотличимые от наших iOS и Android приложений.
 
 ## License
 
-[![License](https://img.shields.io/github/license/VKCOM/VKUI.svg)](https://github.com/VKCOM/VKUI/blob/master/LICENSE)  
+[![License](https://img.shields.io/github/license/VKCOM/VKUI.svg)](https://github.com/VKCOM/VKUI/blob/master/LICENSE)
 
 ## Установка
 
 `npm i @vkontakte/vkui` или `yarn add @vkontakte/vkui`
+
+*Не забудьте посмотреть в консоль и установить необходимые пакету `peerDependencies`*
 
 ## Hello World
 
 ```jsx static
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { View, Panel, PanelHeader, Group, List, Cell } from '@vkontakte/vkui';
+import { View, Panel, PanelHeader, Header, Group, Cell } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 function App () {
@@ -24,11 +26,9 @@ function App () {
     <View activePanel="main">
       <Panel id="main">
         <PanelHeader>VKUI</PanelHeader>
-        <Group title="Items">
-          <List>
-            <Cell>Hello</Cell>
-            <Cell>World</Cell>
-          </List>
+        <Group header={<Header mode="secondary">Items</Header>}>
+          <Cell>Hello</Cell>
+          <Cell>World</Cell>
         </Group>
       </Panel>
     </View>
@@ -50,12 +50,12 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ## Сообщить о проблеме
 
-Напишите нам [issue](https://github.com/VKCOM/VKUI/issues), если нашли баг или у вас есть предложения по улучшению библиотеки.
+Напишите нам [issue](https://github.com/VKCOM/VKUI/issues/new), если нашли баг или у вас есть предложения по улучшению библиотеки.
 
 ## Contributing
 
-Мы очень радуемся, когда пользователи библиотеки работают над её улучшением. Для того, чтобы оставить след в 
-истории, сделайте форк проекта, внесите изменения и отправьте нам [pull request](https://github.com/VKCOM/VKUI/pulls).  
+Мы очень радуемся, когда пользователи библиотеки работают над её улучшением. Для того, чтобы оставить след в
+истории, сделайте форк проекта, внесите изменения и отправьте нам [pull request](https://github.com/VKCOM/VKUI/pulls).
 
 
 

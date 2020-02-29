@@ -3,6 +3,7 @@ const webpackConfig = require('../webpack.config');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssConfig = require('../postcss.config');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   title: 'VKUI styleguide',
@@ -33,13 +34,18 @@ module.exports = {
       sections: [{
         name: 'Layout',
         components: () => [
-          '../src/components/Root/Root.js',
+          '../src/components/Root/Root.tsx',
           '../src/components/View/View.tsx',
-          '../src/components/Panel/Panel.js',
-          '../src/components/PanelHeader/PanelHeader.js',
-          '../src/components/HeaderButton/HeaderButton.tsx',
-          '../src/components/PanelHeaderContent/PanelHeaderContent.js',
-          '../src/components/HeaderContext/HeaderContext.js',
+          '../src/components/Panel/Panel.tsx',
+          '../src/components/PanelHeader/PanelHeader.tsx',
+          '../src/components/PanelHeaderSimple/PanelHeaderSimple.tsx',
+          '../src/components/PanelHeaderButton/PanelHeaderButton.tsx',
+          '../src/components/PanelHeaderBack/PanelHeaderBack.tsx',
+          '../src/components/PanelHeaderClose/PanelHeaderClose.tsx',
+          '../src/components/PanelHeaderSubmit/PanelHeaderSubmit.tsx',
+          '../src/components/PanelHeaderEdit/PanelHeaderEdit.tsx',
+          '../src/components/PanelHeaderContent/PanelHeaderContent.tsx',
+          '../src/components/PanelHeaderContext/PanelHeaderContext.tsx',
           '../src/components/Epic/Epic.tsx',
           '../src/components/Tabbar/Tabbar.tsx',
           '../src/components/TabbarItem/TabbarItem.tsx',
@@ -49,7 +55,7 @@ module.exports = {
       }, {
         name: 'Popouts',
         components: () => [
-          '../src/components/PopoutWrapper/PopoutWrapper.js',
+          '../src/components/PopoutWrapper/PopoutWrapper.tsx',
           '../src/components/ActionSheet/ActionSheet.tsx',
           '../src/components/ActionSheetItem/ActionSheetItem.tsx',
           '../src/components/Alert/Alert.tsx',
@@ -70,29 +76,32 @@ module.exports = {
           '../src/components/Button/Button.tsx',
           '../src/components/CellButton/CellButton.tsx',
           '../src/components/Div/Div.tsx',
-          '../src/components/Link/Link.js',
-          '../src/components/Header/Header.js',
-          '../src/components/Group/Group.js',
+          '../src/components/Link/Link.tsx',
+          '../src/components/Header/Header.tsx',
+          '../src/components/Group/Group.tsx',
+          '../src/components/Card/Card.tsx',
+          '../src/components/CardGrid/CardGrid.tsx',
+          '../src/components/CardScroll/CardScroll.tsx',
+          '../src/components/Gradient/Gradient.tsx',
           '../src/components/Cell/Cell.tsx',
-          '../src/components/List/List.js',
+          '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.tsx',
-          '../src/components/Switch/Switch.js',
-          '../src/components/InfoRow/InfoRow.js',
+          '../src/components/PanelSpinner/PanelSpinner.tsx',
+          '../src/components/Switch/Switch.tsx',
+          '../src/components/InfoRow/InfoRow.tsx',
           '../src/components/Avatar/Avatar.tsx',
-          '../src/components/Entity/Entity.js',
           '../src/components/Gallery/Gallery.tsx',
           '../src/components/Progress/Progress.tsx',
-          '../src/components/Search/Search.js',
-          '../src/components/Tabs/Tabs.js',
-          '../src/components/TabsItem/TabsItem.js',
-          '../src/components/FixedTabs/FixedTabs.js',
-          '../src/components/Tooltip/Tooltip.js',
-          '../src/components/PullToRefresh/PullToRefresh.js',
+          '../src/components/Search/Search.tsx',
+          '../src/components/Tabs/Tabs.tsx',
+          '../src/components/TabsItem/TabsItem.tsx',
+          '../src/components/Tooltip/Tooltip.tsx',
+          '../src/components/PullToRefresh/PullToRefresh.tsx',
           '../src/components/Counter/Counter.tsx',
-          '../src/components/Touch/Touch.js',
+          '../src/components/Touch/Touch.tsx',
           '../src/components/UsersStack/UsersStack.tsx',
-          '../src/components/Separator/Separator.js',
+          '../src/components/Separator/Separator.tsx',
           '../src/components/Placeholder/Placeholder.tsx',
         ]
       }, {
@@ -101,8 +110,8 @@ module.exports = {
           '../src/components/FormLayout/FormLayout.tsx',
           '../src/components/FormLayoutGroup/FormLayoutGroup.tsx',
           '../src/components/FormStatus/FormStatus.tsx',
-          '../src/components/Slider/Slider.js',
-          '../src/components/RangeSlider/RangeSlider.js',
+          '../src/components/Slider/Slider.tsx',
+          '../src/components/RangeSlider/RangeSlider.tsx',
           '../src/components/Radio/Radio.tsx',
           '../src/components/Checkbox/Checkbox.tsx',
           '../src/components/Input/Input.tsx',
@@ -111,23 +120,17 @@ module.exports = {
           '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx'
         ]
-      }, {
-        name: 'Helpers',
-        content: './pages/helpers.md',
-        components: () => [
-          '../src/components/PanelSpinner/PanelSpinner.tsx',
-          '../src/components/PanelHeaderBack/PanelHeaderBack.tsx',
-          '../src/components/PanelHeaderClose/PanelHeaderClose.tsx',
-          '../src/components/PanelHeaderSubmit/PanelHeaderSubmit.tsx',
-          '../src/components/PanelHeaderEdit/PanelHeaderEdit.tsx'
-        ]
+      },
+      {
+        name: 'Advertisement',
+        components: () => ['../src/components/PromoBanner/PromoBanner.tsx']
       },
       // @TODO раскоментировать, когда все компоненты станут SSR-friendly
       // {
       //   name: 'Server Side Rendering',
       //   content: './pages/ssr.md'
       // },
-        {
+      {
         name: 'Icons',
         content: './pages/icons.md'
       }, {
@@ -159,6 +162,16 @@ module.exports = {
     } else {
       return require('react-docgen').parse(source, resolver, handlers, { filename: filePath })
     }
+  },
+  dangerouslyUpdateWebpackConfig(webpackConfig) { // запрещаем вычищать .git
+    webpackConfig.plugins = webpackConfig.plugins.reduce((acc, item) => {
+      if (item instanceof CleanWebpackPlugin) {
+        item.cleanOnceBeforeBuildPatterns = ['**/*', '!.git'];
+      }
+      acc.push(item);
+      return acc;
+    }, [])
+    return webpackConfig;
   },
   webpackConfig: merge(webpackConfig, {
     module: {

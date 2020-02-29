@@ -1,70 +1,80 @@
-import React, { Component, HTMLAttributes } from 'react';
+import React, { Component, HTMLAttributes, MouseEventHandler, SyntheticEvent } from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
-import { HasChildren, HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
 
-export interface AlertActionsInterface {
+export interface AlertActionInterface {
   title: string;
   action?(): void;
   autoclose?: boolean;
-  style: 'cancel' | 'destructive' | 'default'
+  mode: 'cancel' | 'destructive' | 'default';
 }
 
-export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren {
+export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform {
   actionsLayout?: 'vertical' | 'horizontal';
-  actions?: AlertActionsInterface[];
-  onClose?(): void
+  actions?: AlertActionInterface[];
+  onClose?(): void;
 }
 
 export interface AlertState {
-  closing: boolean
+  closing: boolean;
 }
 
+type TransitionEndHandler = (e?: TransitionEvent) => void;
+
+type ItemClickHander = (item: AlertActionInterface) => () => void;
+
 class Alert extends Component<AlertProps, AlertState> {
-  constructor(props) {
+  constructor(props: AlertProps) {
     super(props);
     this.element = React.createRef();
     this.state = {
-      closing: false
+      closing: false,
     };
   }
 
-  element: React.RefObject<HTMLDivElement>
+  element: React.RefObject<HTMLDivElement>;
 
-  static defaultProps = {
+  static defaultProps: AlertProps = {
     actionsLayout: 'horizontal',
-    actions: []
+    actions: [],
   };
 
-  onItemClick = item => () => {
+  onItemClick: ItemClickHander = (item: AlertActionInterface) => () => {
     const { action, autoclose } = item;
 
     if (autoclose) {
       this.setState({ closing: true });
-      this.waitTransitionFinish(() => {
-        autoclose && this.props.onClose();
-        action && action();
+      this.waitTransitionFinish((e?: TransitionEvent) => {
+        if (!e || e.propertyName === 'opacity') {
+          autoclose && this.props.onClose();
+          action && action();
+        }
       });
     } else {
       action && action();
     }
   };
 
-  onClose = () => {
+  onClose: VoidFunction = () => {
     this.setState({ closing: true });
-    this.waitTransitionFinish(() => {
-      this.props.onClose();
+    this.waitTransitionFinish((e?: TransitionEvent) => {
+      if (!e || e.propertyName === 'opacity') {
+        this.props.onClose();
+      }
     });
   };
 
-  stopPropagation = e => e.stopPropagation();
+  stopPropagation: MouseEventHandler = (e: SyntheticEvent) => {
+    e.stopPropagation();
+  };
 
-  waitTransitionFinish (eventHandler) {
+  waitTransitionFinish(eventHandler: TransitionEndHandler) {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
@@ -75,7 +85,7 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
-  render () {
+  render() {
     const { actions, actionsLayout, children, className, style, platform, ...restProps } = this.props;
     const { closing } = this.state;
 
@@ -93,21 +103,21 @@ class Alert extends Component<AlertProps, AlertState> {
           className={classNames(getClassName('Alert', platform), {
             'Alert--v': actionsLayout === 'vertical',
             'Alert--h': actionsLayout === 'horizontal',
-            'Alert--closing': closing
+            'Alert--closing': closing,
           })}
         >
           <div className="Alert__content">{children}</div>
           <footer className="Alert__footer">
-            {actions.map((button, i) => (
+            {actions.map((action: AlertActionInterface, i: number) =>
               <Tappable
-                component="button"
-                className={classNames('Alert__btn', `Alert__btn--${button.style}`)}
-                onClick={this.onItemClick(button)}
+                Component="button"
+                className={classNames('Alert__btn', `Alert__btn--${action.mode}`)}
+                onClick={this.onItemClick(action)}
                 key={`alert-action-${i}`}
               >
-                <span dangerouslySetInnerHTML={{ __html: button.title }} />
+                <span dangerouslySetInnerHTML={{ __html: action.title }} />
               </Tappable>
-            ))}
+            )}
           </footer>
         </div>
       </PopoutWrapper>

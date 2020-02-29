@@ -1,0 +1,53 @@
+.CardGrid {
+  margin-top: -8px;
+}
+
+.CardGrid::after {
+  clear: both;
+  content: '';
+  display: block;
+  width: 100%;
+}
+
+.CardGrid .Card {
+  float: left;
+  margin-top: 8px;
+}
+
+.CardGrid .Card--sz-l {
+  width: 100%;
+}
+
+.CardGrid .Card--sz-m {
+  width: calc((100% - 8px) / 2);
+}
+
+.CardGrid .Card--sz-m + .Card--sz-m {
+  margin-left: 8px;
+}
+
+.CardGrid .Card--sz-s {
+  width: calc((100% - 2 * 8px) / 3);
+}
+
+.CardGrid .Card--sz-s + .Card--sz-s {
+  margin-left: 8px;
+}
+
+/**
+ * iOS
+ */
+
+.CardGrid--ios {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/**
+ * Android
+ */
+
+.CardGrid--android {
+  padding-left: 16px;
+  padding-right: 16px;
+}

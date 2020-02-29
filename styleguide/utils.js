@@ -1,3 +1,5 @@
+import React from 'react';
+
 window.uaList = {
   ios: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
   android: 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Mobile Safari/537.36'
@@ -10,6 +12,10 @@ Object.defineProperty(navigator, 'userAgent', {
 export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+export const schemeOptions = ['bright_light', 'space_gray'].map(scheme_id => (
+  <option value={scheme_id} key={scheme_id}>{scheme_id}</option>
+));
 
 export const testStrings = [
   'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты.',

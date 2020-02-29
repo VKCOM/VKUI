@@ -1,18 +1,20 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { Component, HTMLAttributes, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
-import { HasChildren, HasClassName, HasInsets } from '../../types/props';
-import usePlatform from '../../hooks/usePlatform';
+import { HasInsets, HasPlatform } from '../../types/props';
+import { ModalRootContextInterface } from '../ModalRoot/ModalRootContext';
+import withModalRootContext from '../ModalRoot/withModalRootContext';
+import withPlatform from '../../hoc/withPlatform';
 
-export interface ModalPageProps extends HasChildren, HasClassName, HasInsets {
+export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInsets, HasPlatform {
   id: string;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
   header: ReactNode;
-  onClose: () => {};
+  onClose(): void;
   /**
    * Процент, на который изначально будет открыта модальная страница
    */
@@ -21,34 +23,45 @@ export interface ModalPageProps extends HasChildren, HasClassName, HasInsets {
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
+  /**
+   * @ignore
+   */
+  updateModalHeight?: ModalRootContextInterface['updateModalHeight'];
 }
 
-const ModalPage: FunctionComponent<ModalPageProps> = (props: ModalPageProps) => {
-  const platform = usePlatform();
-  const { children, className, header, insets } = props;
+class ModalPage extends Component<ModalPageProps> {
+  componentDidUpdate(prevProps: ModalPageProps) {
+    if (prevProps.children !== this.props.children) {
+      this.props.updateModalHeight();
+    }
+  }
 
-  return (
-    <div className={classNames(getClassName('ModalPage', platform), className)}>
-      <div className="ModalPage__in-wrap">
-        <div className="ModalPage__in">
-          <div className="ModalPage__header">
-            {header}
-          </div>
+  static defaultProps: Partial<ModalPageProps> = {
+    settlingHeight: 75,
+    insets: {},
+  };
 
-          <div className="ModalPage__content">
-            <div className="ModalPage__content-in" style={isNumeric(insets.bottom) ? { paddingBottom: insets.bottom } : null}>
-              {children}
+  render() {
+    const { children, className, header, insets, platform } = this.props;
+
+    return (
+      <div className={classNames(getClassName('ModalPage', platform), className)}>
+        <div className="ModalPage__in-wrap">
+          <div className="ModalPage__in">
+            <div className="ModalPage__header">
+              {header}
+            </div>
+
+            <div className="ModalPage__content">
+              <div className="ModalPage__content-in" style={isNumeric(insets.bottom) ? { paddingBottom: insets.bottom } : null}>
+                {children}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-ModalPage.defaultProps = {
-  settlingHeight: 75,
-  insets: {}
-};
-
-export default withInsets(ModalPage);
+export default withInsets(withPlatform(withModalRootContext(ModalPage)));

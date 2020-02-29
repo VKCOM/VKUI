@@ -1,52 +1,54 @@
-import React, { PureComponent } from 'react';
+/* eslint-disable */
+
+import React, { HTMLAttributes, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Touch from '../Touch/Touch';
 import classNames from '../../lib/classNames';
-import { HasChildren, HasClassName, HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types/props';
 import getClassname from '../../helpers/getClassName';
 import { canUseDOM } from '../../lib/dom';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 
-export interface SnackbarProps extends HasChildren, HasClassName, HasPlatform {
+export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform {
   /**
    * Название кнопки действия в уведомлении
    */
-  action?: string | React.ComponentType,
+  action?: string | React.ComponentType;
 
   /**
    * Будет вызвано при клике на кнопку действия
    */
-  onActionClick?: (e: Event) => {},
+  onActionClick?: (e: Event) => {};
 
   /**
    * Цветная иконка 24x24 пикселя
    */
-  before?: React.ComponentType,
+  before?: React.ComponentType;
   /**
    * Контент в правой части, может быть `<Avatar size={32} />`
    */
-  after?: React.ComponentType,
+  after?: React.ComponentType;
   /**
    * Варианты расположения кнопки
    */
-  layout?: 'vertical' | 'horizontal',
+  layout?: 'vertical' | 'horizontal';
   /**
    * Время в миллисекундах, через которое плашка скроется
    */
-  duration?: number,
+  duration?: number;
   /**
    * Обработчик закрытия уведомления
    */
-  onClose: () => {}
+  onClose: () => {};
 }
 
 export interface SnackbarState {
-  closing: boolean,
-  touched: boolean
+  closing: boolean;
+  touched: boolean;
 }
 
 class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
@@ -55,7 +57,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
     this.state = {
       closing: false,
-      touched: false
+      touched: false,
     };
 
     this.bodyElRef = React.createRef();
@@ -66,16 +68,16 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
   }
 
   static defaultProps = {
-    duration: 4000
+    duration: 4000,
   };
 
   static contextTypes = {
     window: PropTypes.any,
-    document: PropTypes.any
+    document: PropTypes.any,
   };
 
   private innerEl: HTMLDivElement;
-  private bodyElRef: React.RefObject<HTMLDivElement>;
+  private readonly bodyElRef: React.RefObject<HTMLDivElement>;
   private closeTimeout: number;
 
   private shiftXPercent: number;
@@ -91,7 +93,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     this.clearCloseTimeout();
   }
 
-  get window () {
+  get window() {
     return this.context.window || window;
   }
 
@@ -154,14 +156,14 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   onTouchEnd = () => {
     const newState = {
-      touched: false
+      touched: false,
     };
 
     let callback;
 
     if (this.state.touched) {
       let shiftXReal = this.shiftXCurrent;
-      const expectTranslateY = (shiftXReal / (Date.now() - this.touchStartTime) * 240 * 0.6) * (this.shiftXPercent < 0 ? -1 : 1);
+      const expectTranslateY = shiftXReal / (Date.now() - this.touchStartTime) * 240 * 0.6 * (this.shiftXPercent < 0 ? -1 : 1);
       shiftXReal = shiftXReal + expectTranslateY;
 
       if (shiftXReal >= 50) {
@@ -176,6 +178,8 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
           this.setBodyTransform(0);
         };
       }
+    } else {
+      this.setCloseTimeout();
     }
 
     this.setState(newState, callback);
@@ -196,7 +200,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       layout,
       action,
       before,
-      after
+      after,
     } = this.props;
 
     const resolvedLayout = after ? 'vertical' : layout;
@@ -206,7 +210,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
         vertical="bottom"
         className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
           'Snackbar--closing': this.state.closing,
-          'Snackbar--touched': this.state.touched
+          'Snackbar--touched': this.state.touched,
         })}
       >
         <Touch
