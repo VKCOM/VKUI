@@ -7,10 +7,10 @@
     <PanelHeader>Counter</PanelHeader>
     <Group header={<Header mode="secondary">Счётчики в ячейках</Header>}>
       <List>
-        <Cell before={<Icon24User />} indicator={<Counter>4</Counter>}>Друзья</Cell>
-        <Cell before={<Icon24Users />} indicator={<Counter mode="primary">2</Counter>}>Группы</Cell>
-        <Cell before={<Icon24Message />} indicator={<Counter>224</Counter>}>Сообщения</Cell>
-        <Cell before={<Icon24Favorite />} indicator={<Counter mode="primary">1</Counter>}>Закладки</Cell>
+        <Cell before={<Icon28UserOutline />} indicator={<Counter>4</Counter>}>Друзья</Cell>
+        <Cell before={<Icon28UsersOutline />} indicator={<Counter mode="primary">2</Counter>}>Группы</Cell>
+        <Cell before={<Icon28MessageOutline />} indicator={<Counter>224</Counter>}>Сообщения</Cell>
+        <Cell before={<Icon28FavoriteOutline />} indicator={<Counter mode="primary">1</Counter>}>Закладки</Cell>
       </List>
     </Group>
     <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
