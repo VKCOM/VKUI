@@ -14,7 +14,7 @@ const InfoRow: FunctionComponent<InfoRowProps> = ({ header, className, children,
   return (
     <div {...restProps} className={classNames(baseClassName, className)}>
       {header && <div className="InfoRow__header">{header}</div>}
-      {children && <div>{children}</div>}
+      {children && <div className="InfoRow__content">{children}</div>}
     </div>
   );
 };
