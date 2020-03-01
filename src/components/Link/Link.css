@@ -12,3 +12,10 @@
     position: relative;
     top: 1px;
     }
+    
+    .Link:active {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      opacity: .6;
+      }
