@@ -16,13 +16,13 @@ class Example extends React.Component {
         <Panel id="panel1" separator={false}>
           <PanelHeaderSimple>More</PanelHeaderSimple>
           <Group>
-            <Cell expandable before={<Icon24User/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
+            <Cell expandable before={<Icon28UserOutline/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
               Friends
             </Cell>
-            <Cell expandable before={<Icon24Users/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
+            <Cell expandable before={<Icon28UsersOutline/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
               Communities
             </Cell>
-            <Cell expandable before={<Icon24Music/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
+            <Cell expandable before={<Icon28MusicOutline/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
               Music
             </Cell>
           </Group>

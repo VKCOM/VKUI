@@ -94,8 +94,8 @@
             </Group>
             <Group header={<Header mode="secondary">Иконки</Header>}>
               <List>
-                <Cell before={<Icon24About />}>Информация</Cell>
-                <Cell before={<Icon24Services />}>Сервисы</Cell>
+                <Cell before={<Icon28InfoOutline />}>Информация</Cell>
+                <Cell before={<Icon28ServicesOutline />}>Сервисы</Cell>
               </List>
             </Group>
             <Group header={<Header mode="secondary">Чекбоксы</Header>}>

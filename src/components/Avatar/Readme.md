@@ -45,7 +45,7 @@
       </Group>
       <Group header={<Header mode="secondary">Using in Cell</Header>}>
         <List>
-          <Cell before={<Avatar><Icon28User /></Avatar>}>Артур Стамбульцян</Cell>
+          <Cell before={<Avatar><Icon24User /></Avatar>}>Артур Стамбульцян</Cell>
           <Cell before={<Avatar src={getAvatarUrl('user_tc')} />}>Тимофей Чаптыков</Cell>
           <Cell before={<Avatar src={getAvatarUrl('user_va')} />}>Влад Анесов</Cell>
         </List>
