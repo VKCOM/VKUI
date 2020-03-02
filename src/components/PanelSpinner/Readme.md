@@ -6,6 +6,6 @@ import { PanelSpinner } from '@vkontakte/vkui';
 <Panel>
   <PanelHeader left={<PanelHeaderBack />}>Заголовок панели</PanelHeader>
 
-  {loading ? <PanelSpinner /> : <Group title="Информация">...</Group>}
+  {loading ? <PanelSpinner /> : <Group header={<Header mode="secondary">Информация</Header>}>...</Group>}
 </Panel>
 ```

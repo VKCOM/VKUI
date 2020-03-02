@@ -35,7 +35,7 @@
       >Иван и ещё 2 ваших друга подписаны</UsersStack>
     </Group>
 
-    <Group title="Вертикальный режим">
+    <Group header={<Header mode="secondary">Вертикальный режим</Header>}>
       <UsersStack
         photos={[
           'https://sun9-9.userapi.com/c847219/v847219582/1eac9d/jxtvce2MwZk.jpg?ava=1',
