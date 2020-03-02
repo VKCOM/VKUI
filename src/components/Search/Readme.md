@@ -27,26 +27,7 @@
     {id: 3127, name: "Танцевальная школа"}
   ];
 
-  const users = [
-    {id: 3201, name: "Влад Анесов"},
-    {id: 3273, name: "Вадим Дорохов"},
-    {id: 3205, name: "Андрей Абрамов"},
-    {id: 3282, name: "Александр Колобов"},
-    {id: 3283, name: "Артур Стамбульцян"},
-    {id: 3284, name: "Илья Таратухин"},
-    {id: 3285, name: "Роман Захаров"},
-    {id: 3286, name: "Михаил Андриевский"},
-    {id: 3287, name: "Тарас Иванов"},
-    {id: 3288, name: "Илья Гришин"},
-    {id: 3117, name: "Илья Пеняев"},
-    {id: 3118, name: "Иван Барышев"},
-    {id: 3119, name: "Иван Гусев"},
-    {id: 3120, name: "Макс Павлов"},
-    {id: 3121, name: "Антон Циварев"},
-    {id: 3122, name: "Юля Брук"},
-    {id: 3123, name: "Андрей Рогозов"},
-    {id: 3124, name: "Андрей Новосельский"}
-  ];
+  const users = getRandomUsers(18);
 
   class SimpleSearch extends React.Component {
 
@@ -117,7 +98,7 @@
           <List>
             {this.users.map((user) => (
               <Cell
-                before={<Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" />}
+                before={<Avatar size={40} src={user.photo_100} />}
                 key={user.id}
               >{user.name}</Cell>
             ))}

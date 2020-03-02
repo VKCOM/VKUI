@@ -1,7 +1,6 @@
 import '../src/styles/styles.css';
-import React from 'react';
 
-import { getRandomInt, getRandomUser, importantCountries } from './utils';
+import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl } from './utils';
 
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon16Add from '@vkontakte/icons/dist/16/add';
@@ -124,4 +123,6 @@ window.Icon16Chevron = Icon16Chevron;
 
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;
+window.getRandomUsers = getRandomUsers;
 window.importantCountries = importantCountries;
+window.getAvatarUrl = getAvatarUrl;

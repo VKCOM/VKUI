@@ -1,21 +1,33 @@
 import React from 'react';
+import { users } from './demo_dataset';
 
 window.uaList = {
   ios: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
-  android: 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Mobile Safari/537.36'
+  android: 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Mobile Safari/537.36',
 };
 
 Object.defineProperty(navigator, 'userAgent', {
-  get: function () { return window.localStorage.getItem('vkui-styleguide:ua') || window.uaList.ios; }
+  get: function() {
+    return window.localStorage.getItem('vkui-styleguide:ua') || window.uaList.ios;
+  },
 });
 
 export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export const schemeOptions = ['bright_light', 'space_gray'].map(scheme_id => (
-  <option value={scheme_id} key={scheme_id}>{scheme_id}</option>
+export const schemeOptions = ['bright_light', 'space_gray'].map((schemeId) => (
+  <option value={schemeId} key={schemeId}>{schemeId}</option>
 ));
+
+function getRandomArrayElement(items) {
+  return items[Math.floor(Math.random() * items.length)];
+}
+
+function getRandomObjectKey(object) {
+  const keys = Object.keys(object);
+  return keys[keys.length * Math.random() << 0];
+}
 
 export const testStrings = [
   'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты.',
@@ -32,114 +44,143 @@ export const testStrings = [
   'Напоивший продолжил сих свой буквенных власти диких составитель, правилами lorem.',
   'Что образ прямо ipsum от всех назад предупреждал наш точках.',
   'Живет всеми но текстов рекламных грамматики залетают все вершину последний. Запятой его там, великий она это?',
-  'Рот языкового скатился, злых, жаренные вопрос снова он единственное журчит меня одна дорогу залетают повстречался толку страна вершину.'
+  'Рот языкового скатился, злых, жаренные вопрос снова он единственное журчит меня одна дорогу залетают повстречался толку страна вершину.',
 ];
 
-export const testUsers = [
-  {
-    'name': 'Катя Лебедева',
-    'photo': 'https://sun9-13.userapi.com/c846216/v846216067/c640b/QKvJtUOHEWk.jpg?ava=1'
+const photos = {
+  'app_shorm_online': {
+    photo_100: 'https://pp.userapi.com/c844616/v844616889/9ec4a/9Fk-RI7uchQ.jpg',
   },
-  {
-    'name': 'Антон Циварев',
-    'photo': 'https://pp.userapi.com/c830708/v830708352/1c50b4/Nl8LPuMRj5k.jpg?ava=1',
+  'app_shashki': {
+    photo_100: 'https://pp.userapi.com/c848536/v848536020/18242/ZLjAYM59EqY.jpg',
   },
-  {
-    'name': 'Настя Семенюк',
-    'photo': 'https://sun9-22.userapi.com/c852132/v852132805/8c0d8/N9WQym0ZEyc.jpg?ava=1',
+  'app_vega_mix': {
+    photo_100: 'https://pp.userapi.com/c849028/v849028348/1b353/Na_GRlqgRNM.jpg',
   },
-  {
-    'name': 'Тимофей Чаптыков',
-    'photo': 'https://pp.userapi.com/c845121/v845121950/63c01/svMMPOmI5SM.jpg?ava=1',
+  'app_zagadki': {
+    photo_100: 'https://pp.userapi.com/c639222/v639222699/5e1d8/2wtUaVn4Pho.jpg',
+    photo_200: 'https://pp.userapi.com/c639222/v639222699/5e1d8/2wtUaVn4Pho.jpg',
   },
-  {
-    'name': 'Павел Князев',
-    'photo': 'https://pp.userapi.com/c844521/v844521213/83b9f/uYAH_OJZisM.jpg?ava=1',
-  },
-  {
-    'name': 'Igor Fedorov',
-    'photo': 'https://sun9-22.userapi.com/c851320/v851320261/7159d/VPN91nn0cHY.jpg?ava=1',
-  },
-  {
-    'name': 'Artur Stambultsian',
-    'photo': 'https://pp.userapi.com/c845324/v845324995/12912f/FyWbKh6vuqs.jpg?ava=1',
-  },
-  {
-    'name': 'Кирилл Аверьянов',
-    'photo': 'https://pp.userapi.com/c850636/v850636435/1c3d7/7IYTKs2elVM.jpg?ava=1',
-  },
-  {
-    'name': 'Коля Борисов',
-    'photo': 'https://pp.userapi.com/c850128/v850128006/86340/1IV4iSrVWQY.jpg?ava=1',
-  },
-  {
-    'name': 'Михаил Лихачёв',
-    'photo': 'https://pp.userapi.com/c840524/v840524444/1f9cd/Q7m20gtLBUw.jpg?ava=1',
-  },
-];
 
-let prevIndex = 0;
+  'audio_arctic_monkeys': {
+    photo_100: 'https://pp.userapi.com/c841025/v841025503/617f7/bkN1Def0s14.jpg',
+  },
+  'audio_leto_zveri': {
+    photo_100: 'https://pp.userapi.com/c845220/v845220642/7cacc/XzhH5b7FSKY.jpg',
+  },
+  'audio_depeche_mode': {
+    photo_100: 'https://pp.userapi.com/c837628/v837628453/39175/4JRjMaFvCrw.jpg',
+  },
+
+  'chat_basketball': {
+    photo_100: 'https://pp.userapi.com/c849324/v849324409/1cacfa/MLy1Lzz_q6E.jpg',
+    photo_200: 'https://pp.userapi.com/c849324/v849324409/1cacfa/MLy1Lzz_q6E.jpg',
+  },
+};
+
+export function getAvatarUrl(id, size) {
+  let object;
+
+  if (id.indexOf('user_') === 0) {
+    object = users.find((user) => 'user_' + user.screen_name === id);
+    if (!object) {
+      object = getRandomArrayElement(users);
+    }
+  } else {
+    if (!photos.hasOwnProperty(id)) {
+      id = getRandomObjectKey(photos);
+    }
+    object = photos[id];
+  }
+
+  if (size === 200) {
+    return object.photo_200 || object.photo_100;
+  } else {
+    return object.photo_100;
+  }
+}
+
 export function getRandomUser() {
-  prevIndex++;
-  if (prevIndex >= testUsers.length - 1) prevIndex = 0;
-
-  let user = testUsers[prevIndex];
+  const user = Object.assign({}, getRandomArrayElement(users));
   user.id = getRandomInt(1, 20e8);
   return user;
 }
 
+export function getRandomUsers(count) {
+  let items = [];
+  let names = {};
+
+  for (let i = 0; i < count; i++) {
+    let user = getRandomUser();
+
+    if (names[user.name]) {
+      for (let j = 0; j < 5; j++) {
+        user = getRandomUser();
+        if (!names[user.name]) {
+          break;
+        }
+      }
+    }
+
+    items.push(user);
+    names[user.name] = true;
+  }
+
+  return items;
+}
+
 export const importantCountries = [{
   id: 1,
-  title: 'Россия'
+  title: 'Россия',
 }, {
   id: 2,
-  title: 'Украина'
+  title: 'Украина',
 }, {
   id: 3,
-  title: 'Беларусь'
+  title: 'Беларусь',
 }, {
   id: 4,
-  title: 'Казахстан'
+  title: 'Казахстан',
 }, {
   id: 5,
-  title: 'Азербайджан'
+  title: 'Азербайджан',
 }, {
   id: 6,
-  title: 'Армения'
+  title: 'Армения',
 }, {
   id: 7,
-  title: 'Грузия'
+  title: 'Грузия',
 }, {
   id: 8,
-  title: 'Израиль'
+  title: 'Израиль',
 }, {
   id: 9,
-  title: 'США'
+  title: 'США',
 }, {
   id: 65,
-  title: 'Германия'
+  title: 'Германия',
 }, {
   id: 11,
-  title: 'Кыргызстан'
+  title: 'Кыргызстан',
 }, {
   id: 12,
-  title: 'Латвия'
+  title: 'Латвия',
 }, {
   id: 13,
-  title: 'Литва'
+  title: 'Литва',
 }, {
   id: 14,
-  title: 'Эстония'
+  title: 'Эстония',
 }, {
   id: 15,
-  title: 'Молдова'
+  title: 'Молдова',
 }, {
   id: 16,
-  title: 'Таджикистан'
+  title: 'Таджикистан',
 }, {
   id: 17,
-  title: 'Туркменистан'
+  title: 'Туркменистан',
 }, {
   id: 18,
-  title: 'Узбекистан'
+  title: 'Узбекистан',
 }];
