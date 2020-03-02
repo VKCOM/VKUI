@@ -76,7 +76,7 @@ Touch – это компонент для удобной работы с pointe
         <View activePanel="gallery">
           <Panel id="gallery">
             <PanelHeader>Touch</PanelHeader>
-            <Group title="Перетащите кружок">
+            <Group header={<Header mode="secondary">Перетащите кружок</Header>}>
               <div style={{
                 ...containerStyle,
                 borderColor: this.limitExceeded ? 'var(--destructive)' : 'var(--icon_secondary)' }}

@@ -7,7 +7,7 @@
       Separator
     </PanelHeader>
 
-    <Group title="Сепаратор">
+    <Group header={<Header mode="secondary">Сепаратор</Header>}>
       <Cell before={<Icon28Notifications />}>Уведомления</Cell>
       <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
 

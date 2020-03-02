@@ -1,8 +1,8 @@
 import '../src/styles/styles.css';
 
 import pkg from '../package';
-import { getRandomInt, getRandomUser, importantCountries } from './utils';
 import * as VKUI from '../src';
+import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl } from './utils';
 
 import Icon16Add from '@vkontakte/icons/dist/16/add';
 import Icon16Chevron from '@vkontakte/icons/dist/16/chevron';
@@ -109,3 +109,9 @@ window.Icon56MessageReadOutline = Icon56MessageReadOutline;
 window.Icon56MoneyTransferOutline = Icon56MoneyTransferOutline;
 window.Icon56NotificationOutline = Icon56NotificationOutline;
 window.Icon56UsersOutline = Icon56UsersOutline;
+
+window.getRandomInt = getRandomInt;
+window.getRandomUser = getRandomUser;
+window.getRandomUsers = getRandomUsers;
+window.importantCountries = importantCountries;
+window.getAvatarUrl = getAvatarUrl;
