@@ -42,7 +42,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
   elRef: React.RefObject<HTMLDivElement>;
 
-  animationFinishTimeout: number;
+  private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   componentDidMount() {
     if (canUseDOM) {
@@ -58,18 +58,17 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
     if (canUseDOM) {
       // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
       window.removeEventListener('touchmove', this.preventTouch, { passive: false });
-      window.clearTimeout(this.animationFinishTimeout);
+      clearTimeout(this.animationFinishTimeout);
     }
   }
 
   waitAnimationFinish(elem: HTMLDivElement, eventHandler: AnimationEndCallback) {
     if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
-      elem.removeEventListener(eventName, eventHandler);
-      elem.addEventListener(eventName, eventHandler);
+      elem.removeEventListener(transitionEvents.animationEndEventName, eventHandler);
+      elem.addEventListener(transitionEvents.animationEndEventName, eventHandler);
     } else {
-      const { platform } = this.props;
-      this.animationFinishTimeout = window.setTimeout(eventHandler, platform === ANDROID ? 300 : 600);
+      clearTimeout(this.animationFinishTimeout);
+      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 300 : 600);
     }
   }
 

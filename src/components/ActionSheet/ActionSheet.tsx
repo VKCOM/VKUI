@@ -49,6 +49,8 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
   elRef: React.RefObject<HTMLDivElement>;
 
+  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+
   onClose: CloseCallback = () => {
     this.setState({ closing: true });
     this.waitTransitionFinish(this.props.onClose);
@@ -72,12 +74,11 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
     if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
-
-      this.elRef.current.removeEventListener(eventName, eventHandler);
-      this.elRef.current.addEventListener(eventName, eventHandler);
+      this.elRef.current.removeEventListener(transitionEvents.transitionEndEventName, eventHandler);
+      this.elRef.current.addEventListener(transitionEvents.transitionEndEventName, eventHandler);
     } else {
-      setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
+      clearTimeout(this.transitionFinishTimeout);
+      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
     }
   }
 

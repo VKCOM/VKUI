@@ -78,12 +78,14 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   private innerEl: HTMLDivElement;
   private readonly bodyElRef: React.RefObject<HTMLDivElement>;
-  private closeTimeout: number;
 
   private shiftXPercent: number;
   private shiftXCurrent: number;
   private touchStartTime: number;
   private animationFrame: number;
+
+  private closeTimeout: ReturnType<typeof setTimeout>;
+  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
 
   componentDidMount() {
     this.setCloseTimeout();
@@ -99,7 +101,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   setCloseTimeout = () => {
     if (canUseDOM) {
-      this.closeTimeout = window.setTimeout(() => {
+      this.closeTimeout = setTimeout(() => {
         this.close();
       }, this.props.duration);
     }
@@ -126,10 +128,13 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   waitTransitionFinish(element: HTMLElement, eventHandler) {
     if (element) {
-      const eventName = transitionEvents.transitionEndEventName;
-
-      element.removeEventListener(eventName, eventHandler);
-      element.addEventListener(eventName, eventHandler);
+      if (transitionEvents.supported) {
+        element.removeEventListener(transitionEvents.transitionEndEventName, eventHandler);
+        element.addEventListener(transitionEvents.transitionEndEventName, eventHandler);
+      } else {
+        clearTimeout(this.transitionFinishTimeout);
+        this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 400 : 320);
+      }
     }
   }
 

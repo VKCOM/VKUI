@@ -28,6 +28,8 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
 
   elementRef: RefObject<HTMLDivElement> = React.createRef();
 
+  private animationFinishTimeout: ReturnType<typeof setTimeout>;
+
   componentDidUpdate(prevProps: PanelHeaderContextProps) {
     if (this.props.opened !== prevProps.opened) {
       if (this.props.opened === false) {
@@ -38,12 +40,14 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
   }
 
   waitAnimationFinish(eventHandler: AnimationHandler) {
-    const eventName = transitionEvents.animationEndEventName;
-    const element = this.elementRef.current;
-
-    if (element) {
-      element.removeEventListener(eventName, eventHandler);
-      element.addEventListener(eventName, eventHandler);
+    if (this.elementRef.current) {
+      if (transitionEvents.supported) {
+        this.elementRef.current.removeEventListener(transitionEvents.animationEndEventName, eventHandler);
+        this.elementRef.current.addEventListener(transitionEvents.animationEndEventName, eventHandler);
+      } else {
+        clearTimeout(this.animationFinishTimeout);
+        this.animationFinishTimeout = setTimeout(eventHandler, 200);
+      }
     }
   }
 

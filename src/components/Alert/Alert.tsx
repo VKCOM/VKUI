@@ -40,6 +40,8 @@ class Alert extends Component<AlertProps, AlertState> {
 
   element: React.RefObject<HTMLDivElement>;
 
+  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+
   static defaultProps: AlertProps = {
     actionsLayout: 'horizontal',
     actions: [],
@@ -76,12 +78,11 @@ class Alert extends Component<AlertProps, AlertState> {
 
   waitTransitionFinish(eventHandler: TransitionEndHandler) {
     if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
-
-      this.element.current.removeEventListener(eventName, eventHandler);
-      this.element.current.addEventListener(eventName, eventHandler);
+      this.element.current.removeEventListener(transitionEvents.transitionEndEventName, eventHandler);
+      this.element.current.addEventListener(transitionEvents.transitionEndEventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 200 : 300);
+      clearTimeout(this.transitionFinishTimeout);
+      this.transitionFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 200 : 300);
     }
   }
 

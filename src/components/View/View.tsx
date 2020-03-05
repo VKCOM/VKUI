@@ -108,6 +108,9 @@ class View extends Component<ViewProps, ViewState> {
     document: PropTypes.any,
   };
 
+  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+  private animationFinishTimeout: ReturnType<typeof setTimeout>;
+
   get document() {
     return this.context.document || document;
   }
@@ -226,23 +229,21 @@ class View extends Component<ViewProps, ViewState> {
 
   waitTransitionFinish(elem: HTMLElement, eventHandler: TransitionEventHandler): void {
     if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
-
-      elem.removeEventListener(eventName, eventHandler);
-      elem.addEventListener(eventName, eventHandler);
+      elem.removeEventListener(transitionEvents.transitionEndEventName, eventHandler);
+      elem.addEventListener(transitionEvents.transitionEndEventName, eventHandler);
     } else {
-      setTimeout(() => eventHandler(), this.props.platform === ANDROID ? 300 : 600);
+      clearTimeout(this.transitionFinishTimeout);
+      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 300 : 600);
     }
   }
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEventHandler): void {
     if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
-
-      elem.removeEventListener(eventName, eventHandler);
-      elem.addEventListener(eventName, eventHandler);
+      elem.removeEventListener(transitionEvents.animationEndEventName, eventHandler);
+      elem.addEventListener(transitionEvents.animationEndEventName, eventHandler);
     } else {
-      setTimeout(() => eventHandler(), this.props.platform === ANDROID ? 300 : 600);
+      clearTimeout(this.animationFinishTimeout);
+      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 300 : 600);
     }
   }
 

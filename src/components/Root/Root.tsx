@@ -57,6 +57,8 @@ class Root extends Component<RootProps, RootState> {
     document: PropTypes.any,
   };
 
+  private animationFinishTimeout: ReturnType<typeof setTimeout>;
+
   get document() {
     return this.context.document || document;
   }
@@ -115,12 +117,11 @@ class Root extends Component<RootProps, RootState> {
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEndCallback) {
     if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
-
-      elem.removeEventListener(eventName, eventHandler);
-      elem.addEventListener(eventName, eventHandler);
+      elem.removeEventListener(transitionEvents.animationEndEventName, eventHandler);
+      elem.addEventListener(transitionEvents.animationEndEventName, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 300 : 600);
+      clearTimeout(this.animationFinishTimeout);
+      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 300 : 600);
     }
   }
 
