@@ -53,7 +53,8 @@
       margin-right: 6px;
       }
 
-  .Button__before .Icon--24 {
+  .Button__before .Icon--24,
+  .Button__before .Icon--28 {
       margin-right: 8px;
       }
 
