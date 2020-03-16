@@ -297,7 +297,8 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     modalState.contentElement = modalElement.querySelector('.ModalPage__content');
     modalState.footerElement = modalElement.querySelector('.ModalPage__footer');
 
-    let collapsed;
+    let collapsed = false;
+    let expanded = false;
     let translateYFrom;
     let translateY;
     let expandedRange;
@@ -314,7 +315,8 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       collapsedRange = [shiftHalf, translateYFrom + visiblePart / 4];
       hiddenRange = [translateYFrom + visiblePart / 4, 100];
 
-      collapsed = true;
+      collapsed = translateYFrom > 0;
+      expanded = translateYFrom <= 0;
       translateY = translateYFrom;
     } else {
       const headerHeight = modalState.headerElement.offsetHeight;
@@ -326,11 +328,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       expandedRange = [translateY, translateY + 25];
       collapsedRange = [translateY + 25, translateY + 25];
       hiddenRange = [translateY + 25, translateY + 100];
-
-      collapsed = false;
     }
 
-    // Если модалка может открываться на весь экран, и новый сдвиг больше предудущего, то откроем её на весь экран
+    // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
     if (modalState.expandable && translateY > prevTranslateY) {
       translateY = 0;
     }
@@ -341,6 +341,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     modalState.translateY = translateY;
     modalState.translateYFrom = translateYFrom;
     modalState.collapsed = collapsed;
+    modalState.expanded = expanded;
   }
 
   initCardModal(modalState: ModalsStateEntry, modalElement: HTMLDivElement) {
