@@ -6,11 +6,11 @@ const csso = require('postcss-csso');
 let plugins = [
   cssImport(),
   cssCustomProperties({ preserve: true }),
-  autoprefixer()
+  autoprefixer(),
 ];
 
 if (process.env.NODE_ENV === 'production') {
   plugins.push(csso({ restructure: false }));
 }
 
-module.exports = { plugins }
+module.exports = { plugins };
