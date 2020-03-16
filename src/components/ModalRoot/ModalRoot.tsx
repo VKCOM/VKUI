@@ -35,11 +35,11 @@ export interface ModalsStateEntry {
   dynamicContentHeight?: boolean;
   expandable?: boolean;
 
-  modalElement?: HTMLDivElement;
-  innerElement?: HTMLDivElement;
-  headerElement?: HTMLDivElement;
-  contentElement?: HTMLDivElement;
-  footerElement?: HTMLDivElement;
+  modalElement?: HTMLElement;
+  innerElement?: HTMLElement;
+  headerElement?: HTMLElement;
+  contentElement?: HTMLElement;
+  footerElement?: HTMLElement;
 
   translateY?: number;
   translateYFrom?: number;
@@ -251,8 +251,8 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     }
   };
 
-  pickModal(modalId): HTMLDivElement | null {
-    return this.document.querySelector(`#modal-${modalId}`);
+  pickModal(modalId: string) {
+    return this.document.getElementById('modal-' + modalId);
   }
 
   /**
@@ -290,7 +290,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.setState({ inited: true, switching: true });
   }
 
-  initPageModal(modalState: ModalsStateEntry, modalElement: HTMLDivElement) {
+  initPageModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
     const contentElement: HTMLElement = modalElement.querySelector('.ModalPage__content');
     const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
 
@@ -350,7 +350,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     modalState.collapsed = collapsed;
   }
 
-  initCardModal(modalState: ModalsStateEntry, modalElement: HTMLDivElement) {
+  initCardModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
     modalState.modalElement = modalElement;
     modalState.innerElement = modalElement.querySelector('.ModalCard__in');
 
