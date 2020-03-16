@@ -8,7 +8,8 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
-import { IS_PLATFORM_ANDROID } from '../../lib/platform';
+import { isFunction } from '../../lib/utils';
+import { ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 import { HasChildren, HasPlatform } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
@@ -27,18 +28,18 @@ function rangeTranslate(number: number) {
 
 export interface ModalsStateEntry {
   id: string;
-  onClose: () => {};
+  onClose?: () => {};
   type?: 'modal-card' | 'modal-page';
 
   settlingHeight?: number;
   dynamicContentHeight?: boolean;
   expandable?: boolean;
 
-  modalElement?: HTMLDivElement;
-  innerElement?: HTMLDivElement;
-  headerElement?: HTMLDivElement;
-  contentElement?: HTMLDivElement;
-  footerElement?: HTMLDivElement;
+  modalElement?: HTMLElement;
+  innerElement?: HTMLElement;
+  headerElement?: HTMLElement;
+  contentElement?: HTMLElement;
+  footerElement?: HTMLElement;
 
   translateY?: number;
   translateYFrom?: number;
@@ -59,6 +60,11 @@ export interface ModalsStateEntry {
 
 export interface ModalRootProps extends HasChildren, HasPlatform {
   activeModal?: string | null;
+
+  /**
+   * Будет вызвано при закрытии активной модалки с её id
+   */
+  onClose?(modalId: string): void;
 }
 
 export interface ModalRootState {
@@ -118,15 +124,15 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     webviewType: PropTypes.oneOf(['vkapps', 'internal']),
   };
 
-  get document() {
+  get document(): Document {
     return this.context.document || document;
   }
 
-  get window() {
+  get window(): Window {
     return this.context.window || window;
   }
 
-  get webviewType() {
+  get webviewType(): 'vkapps' | 'internal' {
     return this.context.webviewType || 'vkapps';
   }
 
@@ -213,7 +219,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   }
 
   blurActiveElement() {
-    if (typeof this.window !== 'undefined' && this.document.activeElement) {
+    if (typeof this.window !== 'undefined' && this.document.activeElement instanceof HTMLElement) {
       this.document.activeElement.blur();
     }
   }
@@ -229,6 +235,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       // Здесь нужен последний аргумент с такими же параметрами, потому что
       // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
       // https://github.com/VKCOM/VKUI/issues/444
+      // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
       this.window.removeEventListener('touchmove', this.preventTouch, { passive: false });
     } else {
       this.window.addEventListener('touchmove', this.preventTouch, { passive: false });
@@ -244,7 +251,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     }
   };
 
-  pickModal(modalId) {
+  pickModal(modalId: string) {
     return this.document.getElementById('modal-' + modalId);
   }
 
@@ -283,7 +290,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.setState({ inited: true, switching: true });
   }
 
-  initPageModal(modalState: ModalsStateEntry, modalElement: HTMLDivElement) {
+  initPageModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
     const contentElement: HTMLElement = modalElement.querySelector('.ModalPage__content');
     const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
 
@@ -344,7 +351,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     modalState.expanded = expanded;
   }
 
-  initCardModal(modalState: ModalsStateEntry, modalElement: HTMLDivElement) {
+  initCardModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
     modalState.modalElement = modalElement;
     modalState.innerElement = modalElement.querySelector('.ModalCard__in');
 
@@ -475,7 +482,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       !this.state.dragging && this.setState({ dragging: true });
 
       const shiftYPercent = shiftY / this.window.innerHeight * 100;
-      const shiftYCurrent = rubber(shiftYPercent, 72, 0.8, IS_PLATFORM_ANDROID);
+      const shiftYCurrent = rubber(shiftYPercent, 72, 0.8, this.props.platform === ANDROID);
 
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = rangeTranslate(modalState.translateY + shiftYCurrent);
@@ -494,7 +501,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       }
 
       const shiftYPercent = shiftY / modalState.innerElement.offsetHeight * 100;
-      const shiftYCurrent = rubber(shiftYPercent, 72, 1.2, IS_PLATFORM_ANDROID);
+      const shiftYCurrent = rubber(shiftYPercent, 72, 1.2, this.props.platform === ANDROID);
 
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = Math.max(0, modalState.translateY + shiftYCurrent);
@@ -556,7 +563,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       modalState.hidden = translateY === 100;
 
       if (modalState.hidden) {
-        modalState.onClose();
+        this.doCloseModal(modalState);
       }
 
       next = () => {
@@ -590,7 +597,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       modalState.hidden = translateY === 100;
 
       if (modalState.hidden) {
-        modalState.onClose();
+        this.doCloseModal(modalState);
       }
 
       next = () => {
@@ -763,9 +770,19 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   triggerActiveModalClose() {
     const activeModalState = this.modalsState[this.state.activeModal];
     if (activeModalState) {
-      activeModalState.onClose();
+      this.doCloseModal(activeModalState);
     }
   }
+
+  private doCloseModal = (modalState: ModalsStateEntry) => {
+    if (isFunction(modalState.onClose)) {
+      modalState.onClose();
+    } else if (isFunction(this.props.onClose)) {
+      this.props.onClose(modalState.id);
+    } else {
+      console.error('[ModalRoot] onClose is undefined');
+    }
+  };
 
   /**
    * По клику на полупрозрачный черный фон нужно закрыть текущую модалку
