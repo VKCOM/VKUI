@@ -8,9 +8,9 @@
     </PanelHeader>
     <Group>
       <List>
-        <Cell expandable before={<Icon24User />}>Учетная запись</Cell>
-        <Cell expandable before={<Icon24Settings />}>Основные</Cell>
-        <Cell expandable before={<Icon24Privacy />}>Приватность</Cell>
+        <Cell expandable before={<Icon28UserOutline />}>Учетная запись</Cell>
+        <Cell expandable before={<Icon28SettingsOutline />}>Основные</Cell>
+        <Cell expandable before={<Icon28PrivacyOutline />}>Приватность</Cell>
       </List>
     </Group>
   </Panel>

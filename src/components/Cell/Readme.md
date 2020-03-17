@@ -94,15 +94,15 @@
             </Group>
             <Group header={<Header mode="secondary">Иконки</Header>}>
               <List>
-                <Cell before={<Icon24About />}>Информация</Cell>
-                <Cell before={<Icon24Services />}>Сервисы</Cell>
+                <Cell before={<Icon28InfoOutline />}>Информация</Cell>
+                <Cell before={<Icon28ServicesOutline />}>Сервисы</Cell>
               </List>
             </Group>
             <Group header={<Header mode="secondary">Чекбоксы</Header>}>
               <List>
-                <Cell selectable before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Артур Стамбульцян</Cell>
-                <Cell selectable before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Тимофей Чаптыков</Cell>
-                <Cell selectable before={ <Avatar size={40} src="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg" /> }>Влад Анесов</Cell>
+                <Cell selectable before={ <Avatar size={40} src={getAvatarUrl('user_arthurstam')} /> }>Артур Стамбульцян</Cell>
+                <Cell selectable before={ <Avatar size={40} src={getAvatarUrl('user_tc')} /> }>Тимофей Чаптыков</Cell>
+                <Cell selectable before={ <Avatar size={40} src={getAvatarUrl('user_va')} /> }>Влад Анесов</Cell>
               </List>
             </Group>
             {this.state.removeList.length > 0 &&

@@ -133,8 +133,9 @@
 }
 
 .ModalPageHeader--ios .ModalPageHeader__content-in {
-  font-size: 17px;
-  line-height: 20px;
+  font-weight: 800;
+  font-family: var(--font-tt);
+  font-size: 21px;
   text-align: center;
 }
 
@@ -183,7 +184,8 @@
 
 .ModalPageHeader--android .ModalPageHeader__content-in {
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 800;
+  font-family: var(--font-tt);
   display: flex;
   align-items: center;
 }

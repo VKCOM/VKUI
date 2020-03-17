@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "3.4.2",
+  "version": "3.4.3",
   "main": "dist/index.js",
   "module": "dist/es6/index.js",
   "typings": "dist/index.d.ts",
@@ -32,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@vkontakte/appearance": "https://github.com/VKCOM/Appearance#v2.3.6",
     "@vkontakte/eslint-config": "1.2.0",
-    "@vkontakte/icons": "^1.16.3",
+    "@vkontakte/icons": "^1.17.0",
     "@vkontakte/vk-bridge": "^2.0.2",
     "autoprefixer": "^7.2.3",
     "babel-loader": "^8.0.4",
@@ -73,7 +73,7 @@
   },
   "peerDependencies": {
     "@babel/runtime": "^7.5.5",
-    "@vkontakte/icons": "^1.16.3",
+    "@vkontakte/icons": "^1.17.0",
     "@vkontakte/vk-bridge": "^2.0.2",
     "prop-types": "^15.6.1",
     "react": "^16.8.6",

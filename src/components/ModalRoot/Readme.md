@@ -1,16 +1,13 @@
-`ModalRoot` – контейнер для модальных страниц и карточек.
+`ModalRoot` – контейнер для модальных страниц и карточек. Модальные страницы и карточки поддерживают различные жесты: раскрытие на весь экран, закрытие смахиванием вниз.
 
 В качестве children принимает коллекцию `ModalPage` и `ModalCard`. У каждого модального окна должен быть уникальный `id`. Свойство `activeModal` определяет какая страница или карточка активна.
 
-Модальные страницы и карточки поддерживают различные жесты: раскрытие на весь экран, закрытие смахиванием вниз.
+- При смене значения свойства `activeModal` происходит плавный переход от одного модального окна к другому.
+- При установке `activeModal` как `null` текущее модальное окно закрывается.
 
-При смене значения свойства `activeModal` происходит плавный переход от одного модального окна к другому.
+`ModalRoot` принимает свойство `onClose`, которое будет вызвано с идентификатором текущего активного модального окна или карточки после свайпа или нажатия на крестик. Приложение должно установить в качестве нового значения `activeModal` либо идентификатор предыдущей модалки, либо `null` для скрытия. Каждой конкретной `ModalPage` или `ModalCard` можно передать свой обработчик `onClose`, если нужно переопределить поведение.
 
-При установке `activeModal` как `null` текущее модальное окно закрывается.
-
-У `ModalPage` и `ModalCard` есть свойства `onClose`, которые вызываются при закрытии модального окна после свайпа или нажатия на крестик. Приложение должно установить либо идентификатор предыдущей модалки, либо `null` для скрытия.
-
-Если в своём приложении на платформе VK Mini Apps вы используете компонент `ConfigProvider`, вам нужно указать у него свойство `webviewType="vkapps"`. Без него модальная страница со скроллом будет открываться на всю высоту экрана и попадать под блок управления приложением в правом верхнем углу.
+Если в своём приложении на платформе **VK Mini Apps** вы используете компонент `ConfigProvider`, вам нужно указать у него свойство `webviewType="vkapps"`. Без него модальная страница со скроллом будет открываться на всю высоту экрана и попадать под блок управления приложением в правом верхнем углу.
 
 ```jsx
 const MODAL_PAGE_FILTERS = 'filters';
@@ -62,7 +59,10 @@ class App extends React.Component {
 
   render() {
     const modal = (
-      <ModalRoot activeModal={this.state.activeModal}>
+      <ModalRoot
+        activeModal={this.state.activeModal}
+        onClose={this.modalBack}
+      >
         <ModalPage
           id={MODAL_PAGE_FILTERS}
           onClose={this.modalBack}
@@ -122,7 +122,6 @@ class App extends React.Component {
               Выберите страну
             </ModalPageHeader>
           }
-          onClose={this.modalBack}
           settlingHeight={80}
         >
           <FormLayout>
@@ -148,14 +147,13 @@ class App extends React.Component {
               Просмотры истории
             </ModalPageHeader>
           }
-          onClose={this.modalBack}
           settlingHeight={80}
         >
           <List>
             {this.users.map((user) => {
               return (
                 <Cell
-                  before={<Avatar src={user.photo} />}
+                  before={<Avatar src={user.photo_100} />}
                   key={user.id}
                 >{user.name}</Cell>
               );
@@ -173,7 +171,6 @@ class App extends React.Component {
               Информация о пользователе
             </ModalPageHeader>
           }
-          onClose={this.modalBack}
         >
           <List>
             <Cell>
@@ -214,7 +211,7 @@ class App extends React.Component {
         <ModalCard
           id={MODAL_CARD_APP_TO_MENU}
           onClose={() => this.setActiveModal(null)}
-          icon={<Avatar mode="app" src="https://pp.userapi.com/c639222/v639222699/5e1d8/2wtUaVn4Pho.jpg" size={72} />}
+          icon={<Avatar mode="app" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
           header="Добавить игру «Загадки детства» в меню?"
           caption="Игра появится под списком разделов на экране меню и будет всегда под рукой."
           actions={[{
@@ -263,7 +260,7 @@ class App extends React.Component {
         <ModalCard
           id={MODAL_CARD_CHAT_INVITE}
           onClose={() => this.setActiveModal(null)}
-          icon={<Avatar src="https://pp.userapi.com/c849324/v849324409/1cacfa/MLy1Lzz_q6E.jpg" size={72} />}
+          icon={<Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />}
           header="Баскетбол на выходных"
           caption="Приглашение в беседу"
           actions={[{
@@ -279,12 +276,12 @@ class App extends React.Component {
         >
           <UsersStack
             photos={[
-              'https://sun9-9.userapi.com/c847219/v847219582/1eac9d/jxtvce2MwZk.jpg?ava=1',
-              'https://pp.userapi.com/c834200/v834200315/1039ea/iFd9WUOdmDo.jpg?ava=1',
-              'https://sun9-20.userapi.com/c850332/v850332555/115030/JyNJrr4cytY.jpg?ava=1',
-              'https://sun9-18.userapi.com/c850024/v850024671/16f784/jDmN7V0YVb4.jpg?ava=1',
-              'https://sun9-18.userapi.com/c850024/v850024671/16f784/jDmN7V0YVb4.jpg?ava=1',
-              'https://sun9-18.userapi.com/c850024/v850024671/16f784/jDmN7V0YVb4.jpg?ava=1'
+              getAvatarUrl('user_mm'),
+              getAvatarUrl('user_ilyagrshn'),
+              getAvatarUrl('user_lihachyov'),
+              getAvatarUrl('user_wayshev'),
+              getAvatarUrl('user_arthurstam'),
+              getAvatarUrl('user_xyz'),
             ]}
             size="m"
             count={3}

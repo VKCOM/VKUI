@@ -7,7 +7,7 @@
 
 **Важно:** в компонент нельзя помещать любой контент с фиксированным позиционированием. PullToRefresh подходит прежде всего, например, для каких-либо простых списков.
 
-```
+```jsx
 class Example extends React.Component {
   constructor () {
     let items = [];
@@ -47,9 +47,16 @@ class Example extends React.Component {
           <PullToRefresh onRefresh={this.onRefresh} isFetching={this.state.fetching}>
             <Group>
               <List>
-                {this.state.items.map(({ id, name, photo }, i) => <Cell key={i}
-                    before={<Avatar src={photo} />}
-                  >{name}</Cell>)}
+                {this.state.items.map(({ id, name, photo_100 }, i) => {
+                  return (
+                    <Cell
+                      key={i}
+                      before={<Avatar src={photo_100} />}
+                    >
+                      {name}
+                    </Cell>
+                  )
+                })}
               </List>
             </Group>
           </PullToRefresh>

@@ -34,7 +34,7 @@ function rubber(offset: number, dimension: number, resistanceRate: number, isAnd
   if (isAndroid || offset < 0) {
     return offset;
   }
-  
+
   const offsettedResistance = offset * resistanceRate;
   return offsettedResistance * dimension / (offsettedResistance + dimension);
 }

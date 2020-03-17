@@ -39,7 +39,7 @@ class Example extends React.Component {
           <PanelHeaderContext opened={this.state.contextOpened} onClose={this.toggleContext}>
             <List>
               <Cell
-                before={<Icon24Users />}
+                before={<Icon28UsersOutline />}
                 asideContent={this.state.mode === 'all' ? <Icon24Done fill="var(--accent)" /> : null}
                 onClick={this.select}
                 data-mode="all"
@@ -47,7 +47,7 @@ class Example extends React.Component {
                 Communities
               </Cell>
               <Cell
-                before={<Icon24Settings />}
+                before={<Icon28SettingsOutline />}
                 asideContent={this.state.mode === 'managed' ? <Icon24Done fill="var(--accent)" /> : null}
                 onClick={this.select}
                 data-mode="managed"

@@ -106,11 +106,15 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
     const { header, text, alignX, alignY, cornerOffset } = this.props;
 
     return ReactDOM.createPortal(
-      <div className={classNames(baseClassName, {
-        [`Tooltip--x-${alignX}`]: true,
-        [`Tooltip--y-${alignY}`]: true,
-        'Tooltip--fixed': this.fixedPortal,
-      })}>
+      <div className={
+        classNames(
+          baseClassName,
+          `Tooltip--x-${alignX}`,
+          `Tooltip--y-${alignY}`,
+          {
+            'Tooltip--fixed': this.fixedPortal,
+          },
+        )}>
         <div className="Tooltip__container" style={{ top: this.state.y, left: this.state.x }} ref={this.getRef}>
           <div className="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }}/>
           <div className="Tooltip__content">

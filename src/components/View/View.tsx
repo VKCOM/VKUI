@@ -21,6 +21,10 @@ interface Scrolls {
   [index: string]: number;
 }
 
+export type TransitionStartEventDetail = {
+  scrolls: Scrolls
+}
+
 interface ViewsScrolls {
   [index: string]: Scrolls;
 }

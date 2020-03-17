@@ -38,20 +38,20 @@ class Example extends React.Component {
             selected={this.state.activeStory === 'feed'}
             data-story="feed"
             text="Новости"
-          ><Icon28Newsfeed /></TabbarItem>
+          ><Icon28NewsfeedOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'discover'}
             data-story="discover"
             text="Поиск"
-          ><Icon28Search /></TabbarItem>
+          ><Icon28SearchOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'messages'}
             data-story="messages"
             label="12"
             text="Сообщения"
-          ><Icon28Messages /></TabbarItem>
+          ><Icon28MessageOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'notifications'}
