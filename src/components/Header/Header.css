@@ -48,7 +48,8 @@
       white-space: nowrap;
       font-size: 15px;
       line-height: 20px;
-      }
+      margin-left: 12px;
+    }
 
       .Header__aside > .Icon {
         position: relative;
