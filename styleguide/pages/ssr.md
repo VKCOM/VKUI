@@ -1,6 +1,6 @@
 Мы постарались максимально облегчить вам работу с SSR. Для корректного рендеринга VKUI-компонент на сервере, достаточно
 обернуть ваше приложения в `SSRWrapper`, передав туда значение заголовка `userAgent`. Это нужно для
-определения платформы пользователя внутри компонент. Пример:
+определения платформы пользователя (iOS или Android) на стороне сервера. Пример:
 
 ```jsx static
 import ReactDOM from 'react-dom';
@@ -13,7 +13,7 @@ server.use(useragent.express());
 
 server.get('/', function(req, res) {
   res.send(ReactDOM.renderToString(
-    <SSRWrapper userAgent={req.useragent}>
+    <SSRWrapper userAgent={req.useragent.source}>
       <Button>Hello</Button>
     </SSRWrapper>
   ))
