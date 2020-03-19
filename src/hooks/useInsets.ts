@@ -9,7 +9,7 @@ let initialState: InsetsInterface = {
   right: null,
 };
 
-interface ConnectEvent {
+interface BridgeEvent {
   detail: {
     type: string;
     data: {
@@ -18,7 +18,7 @@ interface ConnectEvent {
   };
 }
 
-function resolveInsets(e: ConnectEvent): InsetsInterface | null {
+function resolveInsets(e: BridgeEvent): InsetsInterface | null {
   const { type, data } = e.detail;
   switch (type) {
     case 'VKWebAppUpdateConfig':
@@ -34,7 +34,7 @@ function resolveInsets(e: ConnectEvent): InsetsInterface | null {
   return null;
 }
 
-vkBridge.subscribe((e: ConnectEvent) => {
+vkBridge.subscribe((e: BridgeEvent) => {
   const insets = resolveInsets(e);
   if (insets) {
     initialState = insets;
@@ -45,7 +45,7 @@ export default function useInsets(): InsetsInterface {
   const [insets, setInsets] = useState<InsetsInterface>(initialState);
 
   useEffect(() => {
-    function connectListener(e: ConnectEvent) {
+    function connectListener(e: BridgeEvent) {
       const insets = resolveInsets(e);
       if (insets) {
         setInsets(insets);
