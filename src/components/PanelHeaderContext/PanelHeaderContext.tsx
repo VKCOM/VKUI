@@ -15,8 +15,6 @@ export interface PanelHeaderContextState {
   closing: boolean;
 }
 
-type AnimationHandler = () => void;
-
 class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderContextState> {
   static defaultProps: Partial<PanelHeaderContextProps> = {
     opened: false,
@@ -39,7 +37,7 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
     }
   }
 
-  waitAnimationFinish(eventHandler: AnimationHandler) {
+  waitAnimationFinish(eventHandler: VoidFunction) {
     if (this.elementRef.current) {
       if (transitionEvents.supported) {
         this.elementRef.current.removeEventListener(transitionEvents.animationEndEventName, eventHandler);
@@ -51,7 +49,7 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
     }
   }
 
-  onAnimationFinish: AnimationHandler = () => {
+  onAnimationFinish: VoidFunction = () => {
     this.setState({ closing: false });
   };
 

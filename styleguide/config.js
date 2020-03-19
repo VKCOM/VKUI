@@ -125,11 +125,10 @@ module.exports = {
         name: 'Advertisement',
         components: () => ['../src/components/PromoBanner/PromoBanner.tsx']
       },
-      // @TODO раскоментировать, когда все компоненты станут SSR-friendly
-      // {
-      //   name: 'Server Side Rendering',
-      //   content: './pages/ssr.md'
-      // },
+      {
+        name: 'Server Side Rendering',
+        content: './pages/ssr.md'
+      },
       {
         name: 'Icons',
         content: './pages/icons.md'

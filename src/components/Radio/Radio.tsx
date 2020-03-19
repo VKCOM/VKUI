@@ -6,8 +6,6 @@ import { OS } from '../../lib/platform';
 import { HasFormLabels, HasRef, HasRootRef } from '../../types/props';
 import usePlatform from '../../hooks/usePlatform';
 
-const baseClassName = getClassName('Radio');
-
 export interface RadioProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRef<HTMLInputElement>,
@@ -24,7 +22,7 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
     <Tappable
       Component="label"
       style={style}
-      className={classNames(baseClassName, className)}
+      className={classNames(getClassName('Radio', platform), className)}
       activeEffectDelay={platform === OS.IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}

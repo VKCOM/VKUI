@@ -149,7 +149,6 @@ class Search extends Component<SearchProps, SearchState> {
           <div className="Search__control">
             <input
               {...inputProps}
-              id={this.searchId}
               ref={this.inputRef}
               type="text"
               className="Search__input"
@@ -159,15 +158,12 @@ class Search extends Component<SearchProps, SearchState> {
               value={this.value}
             />
             {platform === IOS && after && <div className="Search__after-width">{after}</div>}
-            <label
-              className="Search__placeholder"
-              htmlFor={this.searchId}
-            >
+            <div className="Search__placeholder">
               <div className="Search__placeholder-in">
                 <Icon16SearchOutline />
                 <div className="Search__placeholder-text" dangerouslySetInnerHTML={{ __html: placeholder }} />
               </div>
-            </label>
+            </div>
           </div>
           <div className="Search__after" onClick={this.onCancel}>
             <div className="Search__icons">

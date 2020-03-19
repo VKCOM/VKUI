@@ -9,9 +9,9 @@ import { HasPlatform } from '../../types/props';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
-  onTransition(params: { isBack: boolean; from: string; to: string }): void;
-  popout: ReactNode;
-  modal: ReactNode;
+  onTransition?(params: { isBack: boolean; from: string; to: string }): void;
+  popout?: ReactNode;
+  modal?: ReactNode;
 }
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
