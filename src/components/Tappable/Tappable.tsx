@@ -8,6 +8,7 @@ import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
 import { HasPlatform, HasRootRef, OldRef, RefWithCurrent } from '../../types/props';
 import { GetRef } from '../../types/common';
+import withPlatform from '../../hoc/withPlatform';
 
 export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
   Component: ElementType;
@@ -46,7 +47,6 @@ export interface Storage {
 export type GetStorage = () => StorageItem;
 
 const ts = () => +Date.now();
-const baseClassNames = getClassName('Tappable');
 
 export const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
@@ -66,7 +66,7 @@ function deactivateOtherInstances(exclude?: string) {
   });
 }
 
-export default class Tappable extends Component<TappableProps, TappableState> {
+class Tappable extends Component<TappableProps, TappableState> {
   constructor(props: TappableProps) {
     super(props);
     this.id = Math.round(Math.random() * 1e8).toString(16);
@@ -271,7 +271,7 @@ export default class Tappable extends Component<TappableProps, TappableState> {
     const { children, className, Component, activeEffectDelay,
       stopPropagation, getRootRef, platform, ...restProps } = this.props;
 
-    const classes = classNames(baseClassNames, className, {
+    const classes = classNames(getClassName('Tappable', platform), className, {
       'Tappable--active': active,
       'Tappable--inactive': !active,
     });
@@ -312,3 +312,5 @@ export default class Tappable extends Component<TappableProps, TappableState> {
     );
   }
 }
+
+export default withPlatform(Tappable);

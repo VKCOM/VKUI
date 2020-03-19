@@ -78,6 +78,7 @@
   height: var(--search_default_height);
   font-size: 0;
   padding-left: 12px;
+  pointer-events: none;
 }
 
 .Search__placeholder-in {
