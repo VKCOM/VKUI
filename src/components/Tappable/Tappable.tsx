@@ -177,8 +177,8 @@ class Tappable extends Component<TappableProps, TappableState> {
   onDown: VKUITouchEventHander = (e: VKUITouchEvent) => {
     if (this.props.platform === ANDROID) {
       const { top, left } = getOffsetRect(this.container);
-      const x = coordX(e);
-      const y = coordY(e);
+      const x = coordX(e) - left;
+      const y = coordY(e) - top;
       const key = 'wave' + Date.now().toString();
 
       this.setState((state: TappableState): TappableState => {
@@ -186,8 +186,8 @@ class Tappable extends Component<TappableProps, TappableState> {
           clicks: {
             ...state.clicks,
             [key]: {
-              x: Math.round(x - left),
-              y: Math.round(y - top),
+              x,
+              y,
             },
           },
         };
