@@ -6,7 +6,7 @@ import FixedLayout from '../FixedLayout/FixedLayout';
 import Separator from '../Separator/Separator';
 import { ANDROID } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
-import ConfigProviderContext from '../ConfigProvider/ConfigProviderContext';
+import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
 
 export interface PanelHeaderSimpleProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   left?: ReactNode;
