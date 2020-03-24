@@ -9,7 +9,7 @@ import classNames from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';
-import { IS_PLATFORM_ANDROID, ANDROID } from '../../lib/platform';
+import { ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 import { HasChildren, HasPlatform } from '../../types/props';
 import withPlatform from '../../hoc/withPlatform';
