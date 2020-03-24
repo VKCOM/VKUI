@@ -4,7 +4,7 @@ import classNames from '../../lib/classNames';
 import { ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 
 export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {

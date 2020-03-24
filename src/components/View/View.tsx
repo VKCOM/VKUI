@@ -9,7 +9,7 @@ import getClassName from '../../helpers/getClassName';
 import { IOS, ANDROID } from '../../lib/platform';
 import Touch from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
-import { HasChildren, HasPlatform } from '../../types/props';
+import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';

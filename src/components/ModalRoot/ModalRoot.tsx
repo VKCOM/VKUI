@@ -11,7 +11,7 @@ import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';
 import { ANDROID } from '../../lib/platform';
 import transitionEvents from '../../lib/transitionEvents';
-import { HasChildren, HasPlatform } from '../../types/props';
+import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 

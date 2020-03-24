@@ -6,8 +6,7 @@ import getClassName from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
-import { HasPlatform, HasRootRef, OldRef, RefWithCurrent } from '../../types/props';
-import { GetRef } from '../../types/common';
+import { HasPlatform, HasRootRef, OldRef, RefWithCurrent } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 
 export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
@@ -242,7 +241,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   /*
    * Берет ref на DOM-ноду из экземпляра Touch
    */
-  getRef: GetRef = (container: HTMLElement) => {
+  getRef: OldRef<HTMLElement> = (container: HTMLElement) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;

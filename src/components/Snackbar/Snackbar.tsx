@@ -6,7 +6,7 @@ import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Touch from '../Touch/Touch';
 import classNames from '../../lib/classNames';
-import { HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types';
 import getClassname from '../../helpers/getClassName';
 import { canUseDOM } from '../../lib/dom';
 import transitionEvents from '../../lib/transitionEvents';

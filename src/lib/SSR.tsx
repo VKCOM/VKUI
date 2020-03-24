@@ -1,6 +1,6 @@
 import React from 'react';
 import { OS, platform } from './platform';
-import { HasChildren } from '../types/props';
+import { HasChildren } from '../types';
 
 export interface SSRContextInterface {
   platform: OS;

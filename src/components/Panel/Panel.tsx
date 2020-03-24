@@ -8,8 +8,7 @@ import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
 import Separator from '../Separator/Separator';
-import { HasPlatform, HasInsets, HasRootRef } from '../../types/props';
-import { GetRef } from '../../types/common';
+import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, HasRootRef<HTMLDivElement> {
   id: string;
@@ -48,7 +47,7 @@ class Panel extends Component<PanelProps> {
 
   container: HTMLDivElement;
 
-  getRef: GetRef<HTMLDivElement> = (container: HTMLDivElement) => {
+  getRef: OldRef<HTMLDivElement> = (container: HTMLDivElement) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;

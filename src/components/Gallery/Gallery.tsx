@@ -3,9 +3,8 @@ import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import { HasAlign, HasPlatform } from '../../types/props';
+import { HasAlign, HasPlatform, OldRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
-import { GetRef } from '../../types/common';
 
 export interface GalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
@@ -44,7 +43,7 @@ export interface GallerySlidesState {
 
 type SetTimeout = (duration: number) => void;
 
-type GetSlideRef = (index: number) => GetRef;
+type GetSlideRef = (index: number) => OldRef<HTMLElement>;
 
 class Gallery extends Component<GalleryProps, GalleryState> {
   constructor(props: GalleryProps) {
@@ -324,7 +323,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     this.slidesStore[`slide-${id}`] = slide;
   };
 
-  getViewportRef: GetRef = (viewport: HTMLElement) => {
+  getViewportRef: OldRef<HTMLElement> = (viewport: HTMLElement) => {
     this.viewport = viewport;
   };
 
@@ -416,7 +415,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
         >
           <div className='Gallery__layer' style={layerStyle}>
             {React.Children.map(children, (item: ReactElement, i: number) =>
-              <div className='Gallery__slide' key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>
+              <div className='Gallery__slide' key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>,
             )}
           </div>
         </Touch>
@@ -427,7 +426,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
             <div
               className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === current })}
               key={index}
-            />
+            />,
           )}
         </div>
         }
