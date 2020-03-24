@@ -2,7 +2,7 @@ import React, { FunctionComponent, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRootRef } from '../../types/props';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRootRef } from '../../types';
 
 export interface SelectMimicryProps extends
   HTMLAttributes<HTMLElement>,

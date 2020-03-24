@@ -1,0 +1,66 @@
+import React, { ReactNode } from 'react';
+import { OS } from './lib/platform';
+
+export type InsetsType = {
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+};
+
+export type FormStatusType = 'default' | 'error' | 'valid';
+
+export type AlignType = 'left' | 'center' | 'right';
+
+export type OldRef<T> = (el: T) => void;
+
+export type RefWithCurrent<T> = {
+  current: T | null;
+};
+
+export type Ref<T> = OldRef<T> | RefWithCurrent<T>;
+
+export interface HasRootRef<T> {
+  getRootRef?: Ref<T>;
+}
+
+export interface HasRef<T> {
+  getRef?: Ref<T>;
+}
+
+export interface HasDangerHTML {
+  dangerouslySetInnerHTML?: {
+    __html: string;
+  };
+}
+
+export interface HasFormStatus {
+  status?: FormStatusType;
+}
+
+export interface HasFormLabels {
+  top?: ReactNode;
+  bottom?: ReactNode;
+}
+
+export interface HasAlign {
+  align?: AlignType;
+}
+
+export interface HasPlatform {
+  /**
+   * @ignore
+   */
+  platform?: OS;
+}
+
+export interface HasInsets {
+  /**
+   * @ignore
+   */
+  insets?: InsetsType;
+}
+
+export interface HasChildren {
+  children?: React.ReactNode;
+}

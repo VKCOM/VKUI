@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform, HasRef } from '../../types/props';
+import { HasPlatform, HasRef } from '../../types';
 import { IOS } from '../../lib/platform';
 
 export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasPlatform {

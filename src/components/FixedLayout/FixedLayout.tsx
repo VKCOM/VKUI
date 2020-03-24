@@ -6,9 +6,8 @@ import { transitionEndEventName, TransitionStartEventDetail, transitionStartEven
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform, HasRootRef } from '../../types/props';
+import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
-import { GetRef } from '../../types/common';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -77,7 +76,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     });
   };
 
-  getRef: GetRef<HTMLDivElement> = (element: HTMLDivElement) => {
+  getRef: OldRef<HTMLDivElement> = (element: HTMLDivElement) => {
     this.el = element;
 
     const getRootRef = this.props.getRootRef;

@@ -8,7 +8,7 @@ import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import { IOS } from '../../lib/platform';
 import { isNumeric } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform, HasChildren, HasInsets } from '../../types/props';
+import { HasChildren, HasInsets, HasPlatform } from '../../types';
 
 export interface ModalCardActionInterface {
   title: string;

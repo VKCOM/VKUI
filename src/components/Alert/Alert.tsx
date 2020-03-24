@@ -5,7 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
-import { HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 
 export interface AlertActionInterface {

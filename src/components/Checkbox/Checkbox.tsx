@@ -4,7 +4,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IOS } from '../../lib/platform';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
-import { HasRootRef, HasRef, HasFormLabels } from '../../types/props';
+import { HasFormLabels, HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface CheckboxProps extends

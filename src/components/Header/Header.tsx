@@ -2,7 +2,7 @@ import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types/props';
+import { HasRootRef } from '../../types';
 
 export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   mode?: 'primary' | 'secondary';

@@ -1,7 +1,7 @@
 import React from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasChildren } from '../../types/props';
+import { HasChildren } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import { createMasks } from './masks';
 

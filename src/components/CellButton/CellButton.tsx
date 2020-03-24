@@ -3,7 +3,7 @@ import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasAlign } from '../../types/props';
+import { HasAlign } from '../../types';
 
 export interface CellButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasAlign {
   mode?: 'primary' | 'danger';

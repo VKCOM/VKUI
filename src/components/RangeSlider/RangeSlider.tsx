@@ -2,9 +2,8 @@ import React, { Component, createRef, HTMLAttributes, RefObject } from 'react';
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasFormLabels, HasPlatform, HasRootRef } from '../../types/props';
+import { HasFormLabels, HasPlatform, HasRootRef, OldRef } from '../../types';
 import { OnSliderResize, precisionRound } from '../Slider/Slider';
-import { GetRef } from '../../types/common';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
 
@@ -208,7 +207,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     window.removeEventListener('resize', this.onResize);
   }
 
-  getRef: GetRef<HTMLDivElement> = (container: HTMLDivElement) => {
+  getRef: OldRef<HTMLDivElement> = (container: HTMLDivElement) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;

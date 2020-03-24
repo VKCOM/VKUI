@@ -2,8 +2,8 @@ import React, { FunctionComponent, InputHTMLAttributes, ReactNode } from 'react'
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { OS } from '../../lib/platform';
-import { HasFormLabels, HasRef, HasRootRef } from '../../types/props';
+import { IOS } from '../../lib/platform';
+import { HasFormLabels, HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface RadioProps extends
@@ -23,7 +23,7 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
       Component="label"
       style={style}
       className={classNames(getClassName('Radio', platform), className)}
-      activeEffectDelay={platform === OS.IOS ? 100 : ACTIVE_EFFECT_DELAY}
+      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
     >

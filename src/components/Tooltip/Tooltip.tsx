@@ -3,7 +3,7 @@ import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
-import { GetRef } from '../../types/common';
+import { OldRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
@@ -100,7 +100,7 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
     });
   }
 
-  getRef: GetRef<HTMLDivElement> = (el: HTMLDivElement) => this.el = el;
+  getRef: OldRef<HTMLDivElement> = (el: HTMLDivElement) => this.el = el;
 
   render() {
     const { header, text, alignX, alignY, cornerOffset } = this.props;
@@ -197,7 +197,7 @@ export default class Tooltip extends Component<TooltipProps, TooltipState> {
     }
   }
 
-  getRef: GetRef = (el: HTMLDivElement) => this.targetEl = el;
+  getRef: OldRef<HTMLDivElement> = (el: HTMLDivElement) => this.targetEl = el;
 
   render() {
     const { children, isShown, ...portalProps } = this.props;

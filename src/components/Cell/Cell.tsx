@@ -12,7 +12,7 @@ import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon24Reorder from '@vkontakte/icons/dist/24/reorder';
 import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
-import { HasChildren, HasPlatform, HasRootRef } from '../../types/props';
+import { HasChildren, HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 
 type ProxyInputHTMLAttributes = Omit<InputHTMLAttributes<HTMLElement>, 'size'>
