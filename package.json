@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "main": "dist/index.js",
   "module": "dist/es6/index.js",
   "typings": "dist/index.d.ts",
