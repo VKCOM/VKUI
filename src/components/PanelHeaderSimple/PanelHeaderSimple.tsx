@@ -6,7 +6,7 @@ import FixedLayout from '../FixedLayout/FixedLayout';
 import Separator from '../Separator/Separator';
 import { ANDROID } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
-import ConfigProviderContext from '../ConfigProvider/ConfigProviderContext';
+import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 
 export interface PanelHeaderSimpleProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   left?: ReactNode;
@@ -46,7 +46,7 @@ const PanelHeaderSimple = ({
             'PanelHeaderSimple--trnsp': transparent,
             'PanelHeaderSimple--vis': visor,
             'PanelHeaderSimple--sep': separator && visor,
-            'PanelHeaderSimple--vkapps': webviewType === 'vkapps',
+            'PanelHeaderSimple--vkapps': webviewType === WebviewType.VKAPPS,
           },
           className,
         )
@@ -69,7 +69,7 @@ const PanelHeaderSimple = ({
             {children}
           </div>
           <div className="PanelHeaderSimple__right">
-            {webviewType !== 'vkapps' && right}
+            {webviewType !== WebviewType.VKAPPS && right}
           </div>
         </div>
       </FixedLayout>
