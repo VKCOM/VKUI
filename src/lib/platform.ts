@@ -1,14 +1,12 @@
 import { canUseDOM } from './dom';
 
-enum OSList {
+export enum OS {
   ANDROID = 'android',
   IOS = 'ios',
 }
 
-export type OS = OSList.ANDROID | OSList.IOS;
-
-export const ANDROID: OS = OSList.ANDROID;
-export const IOS: OS = OSList.IOS;
+export const ANDROID = OS.ANDROID;
+export const IOS = OS.IOS;
 
 export function platform(useragent?: string): OS {
   const ua = useragent || canUseDOM && navigator.userAgent || '';
