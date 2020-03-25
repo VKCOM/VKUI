@@ -1,16 +1,25 @@
 import React from 'react';
 import { canUseDOM } from '../../lib/dom';
+import PropTypes, { Validator } from 'prop-types';
 import {
   Appearance,
-  WebviewType,
-  Scheme,
   ConfigProviderContext,
   ConfigProviderContextInterface,
+  Scheme,
+  WebviewType,
 } from './ConfigProviderContext';
 import { HasChildren } from '../../types';
 import vkBridge from '@vkontakte/vk-bridge';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
+
+export interface ConfigProviderChildContextType {
+  isWebView: Validator<boolean>;
+  scheme: Validator<Scheme>;
+  webviewType: Validator<WebviewType>;
+  appearance: Validator<Appearance>;
+  app: Validator<string>;
+}
 
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
   constructor(props: ConfigProviderProps) {
@@ -25,6 +34,19 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     isWebView: vkBridge.isWebView(),
     scheme: Scheme.BRIGHT_LIGHT,
     appearance: Appearance.LIGHT,
+  };
+
+  static childContextTypes: ConfigProviderChildContextType = {
+    isWebView: PropTypes.bool,
+    scheme: PropTypes.oneOf([
+      Scheme.SPACE_GRAY,
+      Scheme.BRIGHT_LIGHT,
+      Scheme.DEPRECATED_CLIENT_DARK,
+      Scheme.DEPRECATED_CLIENT_LIGHT,
+    ]),
+    webviewType: PropTypes.oneOf([WebviewType.VKAPPS, WebviewType.INTERNAL]),
+    appearance: PropTypes.oneOf([Appearance.DARK, Appearance.LIGHT]),
+    app: PropTypes.string,
   };
 
   mapOldScheme(scheme: Scheme): Scheme {
@@ -48,7 +70,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
-  getContext(): ConfigProviderProps {
+  getChildContext(): ConfigProviderProps {
     return {
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
@@ -60,7 +82,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
 
   render() {
     return (
-      <ConfigProviderContext.Provider value={this.getContext()}>
+      <ConfigProviderContext.Provider value={this.getChildContext()}>
         {this.props.children}
       </ConfigProviderContext.Provider>
     );
