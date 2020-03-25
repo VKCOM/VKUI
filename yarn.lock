@@ -1055,10 +1055,10 @@
     es6-object-assign "^1.1.0"
     svg-baker-runtime "^1.4.2"
 
-"@vkontakte/vk-bridge@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.0.2.tgz#a51fdcab5c246b2d815469f996b116ff0e7651ce"
-  integrity sha512-t5WR+wCPpDT9Nr1UcfeJ3bvFtli8sHOdfdZ2Mkg/jRgEyj1rmv/obFijUThtDfOL01EnzcFQ6ZqhAI20xcHFqg==
+"@vkontakte/vk-bridge@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.1.3.tgz#aa8f3e396dd647fabbb3dbd00d34e126b717fc72"
+  integrity sha512-P7NHfVAVzmPrW8ec7kDPY7PeTwWi9UIBM3ZFDasML4lPlnDrOJ9WsaH2Td3nTIXPlMatwTOxX892F/OyrxBGhw==
 
 "@vxna/mini-html-webpack-template@^1.0.0":
   version "1.0.0"

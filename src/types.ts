@@ -1,12 +1,6 @@
 import React, { ReactNode } from 'react';
-import { OS } from './lib/platform';
-
-export type InsetsType = {
-  top?: number;
-  right?: number;
-  bottom?: number;
-  left?: number;
-};
+import { OSType } from './lib/platform';
+import { Insets } from '@vkontakte/vk-bridge';
 
 export type FormStatusType = 'default' | 'error' | 'valid';
 
@@ -51,14 +45,14 @@ export interface HasPlatform {
   /**
    * @ignore
    */
-  platform?: OS;
+  platform?: OSType;
 }
 
 export interface HasInsets {
   /**
    * @ignore
    */
-  insets?: InsetsType;
+  insets?: Partial<Insets>;
 }
 
 export interface HasChildren {

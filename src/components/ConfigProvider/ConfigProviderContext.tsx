@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
 
 export enum Appearance {
   DARK = 'dark',
@@ -18,11 +19,11 @@ export enum WebviewType {
 }
 
 export interface ConfigProviderContextInterface {
-  scheme?: Scheme;
+  scheme?: AppearanceSchemeType;
   isWebView?: boolean;
-  webviewType?: WebviewType;
+  webviewType?: WebviewType.INTERNAL | WebviewType.VKAPPS;
   app?: string;
-  appearance?: Appearance;
+  appearance?: AppearanceType;
 }
 
 export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});

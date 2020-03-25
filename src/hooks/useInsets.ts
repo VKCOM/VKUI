@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import vkBridge from '@vkontakte/vk-bridge';
-import { InsetsType } from '../types';
+import vkBridge, { Insets } from '@vkontakte/vk-bridge';
 
-let initialState: InsetsType = {
+let initialState: Insets = {
   bottom: null,
   top: null,
   left: null,
@@ -18,7 +17,7 @@ interface BridgeEvent {
   };
 }
 
-function resolveInsets(e: BridgeEvent): InsetsType | null {
+function resolveInsets(e: BridgeEvent): Insets | null {
   const { type, data } = e.detail;
   switch (type) {
     case 'VKWebAppUpdateConfig':
@@ -41,8 +40,8 @@ vkBridge.subscribe((e: BridgeEvent) => {
   }
 });
 
-export default function useInsets(): InsetsType {
-  const [insets, setInsets] = useState<InsetsType>(initialState);
+export default function useInsets(): Insets {
+  const [insets, setInsets] = useState<Insets>(initialState);
 
   useEffect(() => {
     function connectListener(e: BridgeEvent) {
