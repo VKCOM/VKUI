@@ -1,6 +1,12 @@
 import React from 'react';
 import { canUseDOM } from '../../lib/dom';
-import { APPEARANCE_LIGHT, ConfigProviderContext, ConfigProviderContextInterface } from './ConfigProviderContext';
+import {
+  Appearance,
+  WebviewType,
+  Scheme,
+  ConfigProviderContext,
+  ConfigProviderContextInterface,
+} from './ConfigProviderContext';
 import { HasChildren } from '../../types';
 import vkBridge from '@vkontakte/vk-bridge';
 
@@ -15,24 +21,24 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
   }
 
   static defaultProps: ConfigProviderProps = {
-    webviewType: 'internal',
+    webviewType: WebviewType.INTERNAL,
     isWebView: vkBridge.isWebView(),
-    scheme: 'bright_light',
-    appearance: APPEARANCE_LIGHT,
+    scheme: Scheme.BRIGHT_LIGHT,
+    appearance: Appearance.LIGHT,
   };
 
-  mapOldScheme(scheme: ConfigProviderProps['scheme']) {
+  mapOldScheme(scheme: Scheme): Scheme {
     switch (scheme) {
-      case 'client_light':
-        return 'bright_light';
-      case 'client_dark':
-        return 'space_gray';
+      case Scheme.DEPRECATED_CLIENT_LIGHT:
+        return Scheme.BRIGHT_LIGHT;
+      case Scheme.DEPRECATED_CLIENT_DARK:
+        return Scheme.SPACE_GRAY;
       default:
         return scheme;
     }
   }
 
-  setScheme(scheme: ConfigProviderProps['scheme']) {
+  setScheme(scheme: Scheme): void {
     document.body.setAttribute('scheme', scheme);
   }
 

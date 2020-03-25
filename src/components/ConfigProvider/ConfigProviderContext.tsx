@@ -1,21 +1,28 @@
 import { createContext } from 'react';
 
-enum AppearanceList {
+export enum Appearance {
   DARK = 'dark',
-  LIGHT = 'light'
+  LIGHT = 'light',
 }
 
-export type AppearanceType = AppearanceList.DARK | AppearanceList.LIGHT;
+export enum Scheme {
+  DEPRECATED_CLIENT_LIGHT = 'client_light',
+  DEPRECATED_CLIENT_DARK = 'client_dark',
+  BRIGHT_LIGHT = 'bright_light',
+  SPACE_GRAY = 'space_gray',
+}
 
-export const APPEARANCE_DARK = AppearanceList.DARK;
-export const APPEARANCE_LIGHT = AppearanceList.LIGHT;
+export enum WebviewType {
+  VKAPPS = 'vkapps',
+  INTERNAL = 'internal',
+}
 
 export interface ConfigProviderContextInterface {
-  scheme?: 'client_light' | 'client_dark' | 'bright_light' | 'space_gray';
+  scheme?: Scheme;
   isWebView?: boolean;
-  webviewType?: 'vkapps' | 'internal';
+  webviewType?: WebviewType;
   app?: string;
-  appearance?: AppearanceType;
+  appearance?: Appearance;
 }
 
 export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});

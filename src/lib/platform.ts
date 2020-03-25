@@ -2,7 +2,7 @@ import { canUseDOM } from './dom';
 
 enum OSList {
   ANDROID = 'android',
-  IOS = 'ios'
+  IOS = 'ios',
 }
 
 export type OS = OSList.ANDROID | OSList.IOS;

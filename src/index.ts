@@ -95,8 +95,9 @@ export { default as Touch } from './components/Touch/Touch';
 export { default as ConfigProvider } from './components/ConfigProvider/ConfigProvider';
 export {
   ConfigProviderContext,
-  APPEARANCE_DARK,
-  APPEARANCE_LIGHT,
+  Appearance,
+  Scheme,
+  WebviewType,
 } from './components/ConfigProvider/ConfigProviderContext';
 export { default as PanelSpinner } from './components/PanelSpinner/PanelSpinner';
 export { default as PanelHeaderClose } from './components/PanelHeaderClose/PanelHeaderClose';
