@@ -1,9 +1,9 @@
 import React from 'react';
-import { OS, platform } from './platform';
+import { OSType, platform } from './platform';
 import { HasChildren } from '../types';
 
 export interface SSRContextInterface {
-  platform: OS;
+  platform: OSType;
 }
 
 export const SSRContext: React.Context<SSRContextInterface> = React.createContext({ platform: null });

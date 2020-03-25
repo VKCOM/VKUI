@@ -9,7 +9,7 @@ import {
   WebviewType,
 } from './ConfigProviderContext';
 import { HasChildren } from '../../types';
-import vkBridge from '@vkontakte/vk-bridge';
+import vkBridge, { AppearanceSchemeType } from '@vkontakte/vk-bridge';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
@@ -49,7 +49,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     app: PropTypes.string,
   };
 
-  mapOldScheme(scheme: Scheme): Scheme {
+  mapOldScheme(scheme: AppearanceSchemeType): AppearanceSchemeType {
     switch (scheme) {
       case Scheme.DEPRECATED_CLIENT_LIGHT:
         return Scheme.BRIGHT_LIGHT;
@@ -60,7 +60,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
-  setScheme(scheme: Scheme): void {
+  setScheme(scheme: AppearanceSchemeType): void {
     document.body.setAttribute('scheme', scheme);
   }
 

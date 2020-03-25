@@ -51,13 +51,15 @@ const UsersStack: React.FunctionComponent<UsersStackProps> = (props: UsersStackP
         )}
     >
       <div className="UsersStack__photos">
-        {photosShown.map((photo: string, i: number) =>
-          <div
-            key={i}
-            className="UsersStack__photo"
-            style={{ backgroundImage: `url(${photo})` }}
-          />
-        )}
+        {photosShown.map((photo: string, i: number) => {
+          return (
+            <div
+              key={i}
+              className="UsersStack__photo"
+              style={{ backgroundImage: `url(${photo})` }}
+            />
+          );
+        })}
 
         {canShowOthers &&
         <div className="UsersStack__photo UsersStack__photo--others">

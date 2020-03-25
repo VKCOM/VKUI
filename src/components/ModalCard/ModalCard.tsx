@@ -84,17 +84,19 @@ class ModalCard extends Component<ModalCardProps> {
             <div className={classNames('ModalCard__actions', {
               'ModalCard__actions--v': actionsLayout === 'vertical',
             })}>
-              {actions.map(({ title, mode }: ModalCardActionInterface, i: number) =>
-                <Button
-                  key={i}
-                  data-index={i}
-                  size="xl"
-                  mode={mode}
-                  onClick={this.onButtonClick}
-                >
-                  {title}
-                </Button>
-              )}
+              {actions.map(({ title, mode }: ModalCardActionInterface, i: number) => {
+                return (
+                  <Button
+                    key={i}
+                    data-index={i}
+                    size="xl"
+                    mode={mode}
+                    onClick={this.onButtonClick}
+                  >
+                    {title}
+                  </Button>
+                );
+              })}
             </div>
             }
 

@@ -108,16 +108,18 @@ class Alert extends Component<AlertProps, AlertState> {
         >
           <div className="Alert__content">{children}</div>
           <footer className="Alert__footer">
-            {actions.map((action: AlertActionInterface, i: number) =>
-              <Tappable
-                Component="button"
-                className={classNames('Alert__btn', `Alert__btn--${action.mode}`)}
-                onClick={this.onItemClick(action)}
-                key={`alert-action-${i}`}
-              >
-                <span dangerouslySetInnerHTML={{ __html: action.title }} />
-              </Tappable>
-            )}
+            {actions.map((action: AlertActionInterface, i: number) => {
+              return (
+                <Tappable
+                  Component="button"
+                  className={classNames('Alert__btn', `Alert__btn--${action.mode}`)}
+                  onClick={this.onItemClick(action)}
+                  key={`alert-action-${i}`}
+                >
+                  <span dangerouslySetInnerHTML={{ __html: action.title }} />
+                </Tappable>
+              );
+            })}
           </footer>
         </div>
       </PopoutWrapper>

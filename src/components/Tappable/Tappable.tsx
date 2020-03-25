@@ -298,9 +298,11 @@ class Tappable extends Component<TappableProps, TappableState> {
             <RootComponent {...restProps} className={classes} {...props}>
               {platform === ANDROID &&
               <span className="Tappable__waves">
-                {Object.keys(clicks).map((k: string) =>
-                  <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
-                )}
+                {Object.keys(clicks).map((k: string) => {
+                  return (
+                    <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                  );
+                })}
               </span>
               }
               {children}
