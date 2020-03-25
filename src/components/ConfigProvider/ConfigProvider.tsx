@@ -21,7 +21,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
   }
 
   static defaultProps: ConfigProviderProps = {
-    webviewType: WebviewType.INTERNAL,
+    webviewType: WebviewType.VKAPPS,
     isWebView: vkBridge.isWebView(),
     scheme: Scheme.BRIGHT_LIGHT,
     appearance: Appearance.LIGHT,
