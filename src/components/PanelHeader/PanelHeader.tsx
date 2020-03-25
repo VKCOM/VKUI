@@ -1,12 +1,13 @@
-import React, { HTMLAttributes, ReactNode, Component } from 'react';
+import React, { Component, HTMLAttributes, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform, HasRef } from '../../types';
 import { IOS } from '../../lib/platform';
+import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
 
-export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasPlatform {
+export interface PanelHeaderProps extends HTMLAttributes<HTMLElement>, HasRef<HTMLElement>, HasPlatform {
   left?: ReactNode;
   addon?: ReactNode;
   right?: ReactNode;
@@ -21,7 +22,7 @@ export interface PanelHeaderContext {
   panel: Requireable<string>;
   document: Requireable<{}>;
   scheme: Requireable<string>;
-  webviewType: Requireable<'vkapps' | 'internal'>;
+  webviewType: Requireable<WebviewType>;
 }
 
 /**
@@ -36,21 +37,25 @@ class PanelHeader extends Component<PanelHeaderProps, PanelHeaderState> {
     panel: PropTypes.string,
     document: PropTypes.any,
     scheme: PropTypes.string,
-    webviewType: PropTypes.oneOf(['vkapps', 'internal']),
+    webviewType: PropTypes.oneOf([WebviewType.INTERNAL, WebviewType.VKAPPS]),
   };
 
   state: PanelHeaderState = {
     ready: false,
   };
 
-  leftNode: HTMLDivElement;
-  addonNode: HTMLDivElement;
-  titleNode: HTMLDivElement;
-  rightNode: HTMLDivElement;
+  leftNode: HTMLElement;
+  addonNode: HTMLElement;
+  titleNode: HTMLElement;
+  rightNode: HTMLElement;
 
-  get document() {return this.context.document || document;}
+  get document(): Document {
+    return this.context.document || document;
+  }
 
-  get webviewType() {return this.context.webviewType || 'vkapps';}
+  get webviewType(): WebviewType {
+    return this.context.webviewType || WebviewType.VKAPPS;
+  }
 
   componentDidMount() {
     const panelId = this.context.panel;
@@ -91,7 +96,7 @@ class PanelHeader extends Component<PanelHeaderProps, PanelHeaderState> {
       </div>, this.titleNode),
       ReactDOM.createPortal(<div className={classNames('PanelHeader-right', {
         'PanelHeader-right--tp': transparent,
-        'PanelHeader-right--vkapps': this.webviewType === 'vkapps',
+        'PanelHeader-right--vkapps': this.webviewType === WebviewType.VKAPPS,
       })}>{this.webviewType === 'internal' ? right : null}</div>, this.rightNode),
     ] : null;
   }

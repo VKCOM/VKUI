@@ -14,6 +14,7 @@ import transitionEvents from '../../lib/transitionEvents';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
+import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
 
 export const TYPE_CARD = 'modal-card';
 export const TYPE_PAGE = 'modal-page';
@@ -121,7 +122,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   static contextTypes = {
     window: PropTypes.any,
     document: PropTypes.any,
-    webviewType: PropTypes.oneOf(['vkapps', 'internal']),
+    webviewType: PropTypes.oneOf([WebviewType.VKAPPS, WebviewType.INTERNAL]),
   };
 
   get document(): Document {
@@ -132,8 +133,8 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     return this.context.window || window;
   }
 
-  get webviewType(): 'vkapps' | 'internal' {
-    return this.context.webviewType || 'vkapps';
+  get webviewType(): WebviewType {
+    return this.context.webviewType || WebviewType.VKAPPS;
   }
 
   get modals() {
