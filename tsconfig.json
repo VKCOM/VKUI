@@ -11,7 +11,8 @@
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "isolatedModules": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]

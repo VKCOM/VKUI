@@ -129,11 +129,24 @@ export { default as classNames } from './lib/classNames';
 export { default as animate } from './lib/animate';
 export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
-export { platform, ANDROID, IOS, OSType, OS, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
+export { platform, ANDROID, IOS, OS, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
 export { default as getClassName } from './helpers/getClassName';
 export const v = process.env.VKUI_VERSION;
 
 /**
  * Types
+ * Экспортируем таким образом из-за проблемы, описанной тут https://github.com/webpack/webpack/issues/7378
  */
-export { FormStatusType, AlignType, HasPlatform, HasInsets } from './types';
+import {
+  FormStatusType as _FormStatusType,
+  AlignType as _AlignType,
+  HasPlatform as _HasPlatform,
+  HasInsets as _HasInsets,
+} from './types';
+import { OSType as _OSType } from './lib/platform';
+
+export type OSType = _OSType;
+export type FormStatusType = _FormStatusType;
+export type AlignType = _AlignType;
+export type HasPlatform = _HasPlatform;
+export type HasInsets = _HasInsets;
