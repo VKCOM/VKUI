@@ -110,6 +110,8 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
     };
+
+    this.frameIds = {};
   }
 
   private modalsState: { [id: string]: ModalsStateEntry };
@@ -118,6 +120,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
   private maskAnimationFrame: number;
   private readonly modalRootContext: ModalRootContextInterface;
+  private readonly frameIds: {
+    [index: string]: number;
+  }
 
   static contextTypes = {
     window: PropTypes.any,
@@ -723,13 +728,11 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       currentPercent = modalState.translateY;
     }
 
-    // TODO cancelAnimationFrame и requestAnimationFrame принимают и возвращают число, а мы им пихаем строки.
     const frameId = `animateTranslateFrame${modalState.id}`;
 
-    // @ts-ignore
-    cancelAnimationFrame(this[frameId]);
-    // @ts-ignore
-    this[frameId] = requestAnimationFrame(() => {
+    cancelAnimationFrame(this.frameIds[frameId]);
+
+    this.frameIds[frameId] = requestAnimationFrame(() => {
       setTransformStyle(modalState.innerElement, `translateY(${currentPercent}%)`);
 
       if (modalState.type === TYPE_PAGE && modalState.footerElement) {
