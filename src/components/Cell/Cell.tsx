@@ -1,11 +1,11 @@
 /* eslint-disable */
 
-import React, {Component, InputHTMLAttributes, ReactNode} from 'react';
+import React, { Component, InputHTMLAttributes, ReactNode, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
-import Touch from '../Touch/Touch';
+import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS } from '../../lib/platform';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
@@ -66,7 +66,7 @@ export interface CellProps extends ProxyInputHTMLAttributes, HasChildren, HasRoo
   /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
-  onRemove?(e, rootEl: HTMLElement): void;
+  onRemove?(e: MouseEvent, rootEl: HTMLElement): void;
   /**
    * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
    */
@@ -93,7 +93,7 @@ export interface CellState {
 }
 
 class Cell extends Component<CellProps, CellState> {
-  constructor(props) {
+  constructor(props: CellProps) {
     super(props);
 
     this.state = {
@@ -107,10 +107,8 @@ class Cell extends Component<CellProps, CellState> {
   removeButton: HTMLDivElement;
 
   static defaultProps = {
-    before: null,
     indicator: '',
     asideContent: '',
-    bottomContent: null,
     expandable: false,
     children: '',
     selectable: false,
@@ -132,9 +130,10 @@ class Cell extends Component<CellProps, CellState> {
    * предотвращает клик в случае, когда включен режим removable
    * @param e
    */
-  onClick = (e) => {
+  onClick = (e: MouseEvent<HTMLElement>): void => {
     const { removable, onClick } = this.props;
-    if (e.target.tagName.toLowerCase() === 'input') {
+    const target = e.target as HTMLElement;
+    if (target.tagName.toLowerCase() === 'input') {
       e.stopPropagation();
     } else if (removable) {
       return null;
@@ -153,7 +152,7 @@ class Cell extends Component<CellProps, CellState> {
     this.document.removeEventListener('click', this.deactivateRemove);
   };
 
-  onRemoveClick = (e) => {
+  onRemoveClick = (e: MouseEvent) => {
     e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
     this.props.onRemove && this.props.onRemove(e, this.rootEl);
@@ -163,15 +162,15 @@ class Cell extends Component<CellProps, CellState> {
     this.document.removeEventListener('click', this.deactivateRemove);
   }
 
-  componentDidUpdate(_prevProps, prevState) {
+  componentDidUpdate(_prevProps: CellProps, prevState: CellState) {
     if (prevState.isRemoveActivated !== this.state.isRemoveActivated && this.state.isRemoveActivated) {
       this.setState({ removeOffset: this.removeButton.offsetWidth });
     }
   }
 
-  getRemoveRef = (el) => this.removeButton = el;
+  getRemoveRef = (el: HTMLDivElement) => this.removeButton = el;
 
-  getRootRef = (element) => {
+  getRootRef = (element: HTMLElement) => {
     this.rootEl = element;
 
     const getRootRef = this.props.getRootRef;
@@ -200,7 +199,7 @@ class Cell extends Component<CellProps, CellState> {
     this.dragStartIndex = this.siblings.indexOf(this.rootEl);
   };
 
-  onDragMove = (e) => {
+  onDragMove = (e: TouchEvent) => {
     e.originalEvent.preventDefault();
     if (this.state.removeOffset) {
       return;

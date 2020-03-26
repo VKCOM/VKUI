@@ -7,7 +7,7 @@ import animate from '../../lib/animate';
 import transitionEvents from '../../lib/transitionEvents';
 import getClassName from '../../helpers/getClassName';
 import { IOS, ANDROID } from '../../lib/platform';
-import Touch from '../Touch/Touch';
+import Touch, { TouchEvent } from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
@@ -59,7 +59,7 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
 export interface ViewState {
   scrolls: Scrolls;
   animated: boolean;
-  startT?: number;
+  startT?: Date;
 
   visiblePanels: string[];
   activePanel: string;
@@ -341,11 +341,12 @@ class View extends Component<ViewProps, ViewState> {
     }
   };
 
-  onMoveX = (e): void => {
+  onMoveX = (e: TouchEvent): void => {
+    const target = e.originalEvent.target as HTMLElement;
     if (
-      e.originalEvent.target &&
-      typeof e.originalEvent.target.tagName === 'string' &&
-      swipeBackExcludedTags.includes(e.originalEvent.target.tagName.toLowerCase())
+      target &&
+      typeof target.tagName === 'string' &&
+      swipeBackExcludedTags.includes(target.tagName.toLowerCase())
     ) {
       return;
     }
@@ -390,7 +391,7 @@ class View extends Component<ViewProps, ViewState> {
 
   onEnd = (): void => {
     if (this.state.swipingBack) {
-      const speed = this.state.swipeBackShift / (Date.now() - this.state.startT) * 1000;
+      const speed = this.state.swipeBackShift / (Date.now() - this.state.startT.getTime()) * 1000;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
