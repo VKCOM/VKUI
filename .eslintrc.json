@@ -18,9 +18,6 @@
     "node": true
   },
   "rules": {
-    "@typescript-eslint/typedef": ["error", { // TODO убрать после полного перехода на TS, не забыв добавить noImplicitAny в tsconfig.json
-      "memberVariableDeclaration": false
-    }],
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
     "@typescript-eslint/no-magic-numbers": "off",
