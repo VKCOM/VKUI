@@ -41,7 +41,7 @@ export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
 }
 
-const PromoBanner = (props: PromoBannerProps) =>{
+const PromoBanner = (props: PromoBannerProps) => {
   const [currentPixel, setCurrentPixel] = useState('');
 
   const statsPixels = useMemo(() => (
