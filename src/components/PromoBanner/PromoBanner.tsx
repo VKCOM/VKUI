@@ -1,9 +1,13 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useEffect, useMemo, useState, useCallback } from 'react';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import Button from '../Button/Button';
 import Cell from '../Cell/Cell';
 import Avatar from '../Avatar/Avatar';
 import classNames from '../../lib/classNames';
+
+type StatsType =
+  | 'playbackStarted' // Начало показа
+  | 'click'; // Клик по баннеру
 
 type BannerData = {
   title?: string;
@@ -19,7 +23,7 @@ type BannerData = {
   ctaText?: string;
   advertisingLabel?: string;
   iconLink?: string;
-  statistics?: Array<{ type: string; url: string }>;
+  statistics?: Array<{ type: StatsType; url: string }>;
   openInBrowser?: boolean;
   iconHeight?: number;
   directLink?: boolean;
@@ -37,37 +41,62 @@ export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
 }
 
-const PromoBanner = (props: PromoBannerProps) =>
-  <div className={classNames('PromoBanner', props.className)}>
-    <div className="PromoBanner__head">
-      {props.bannerData.ageRestriction && <span className="PromoBanner__age">{props.bannerData.ageRestriction}+</span>}
-      <span className="PromoBanner__label">{props.bannerData.advertisingLabel || 'Advertisement'}</span>
+const PromoBanner = (props: PromoBannerProps) => {
+  const [currentPixel, setCurrentPixel] = useState('');
 
-      {!props.isCloseButtonHidden &&
+  const statsPixels = useMemo(() => (
+    props.bannerData.statistics
+      ? props.bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
+      : {}
+  ) as Record<StatsType, string | void>, [props.bannerData.statistics]);
+
+  const onClick = useCallback(() => setCurrentPixel(statsPixels.click || ''), [statsPixels.click]);
+
+  useEffect(() => {
+    if (statsPixels.playbackStarted) {
+      setCurrentPixel(statsPixels.playbackStarted);
+    }
+  }, [statsPixels.playbackStarted]);
+
+  return (
+    <div className={classNames('PromoBanner', props.className)}>
+      <div className="PromoBanner__head">
+        {props.bannerData.ageRestriction && <span className="PromoBanner__age">{props.bannerData.ageRestriction}+</span>}
+        <span className="PromoBanner__label">{props.bannerData.advertisingLabel || 'Advertisement'}</span>
+
+        {!props.isCloseButtonHidden &&
         <div className="PromoBanner__close" onClick={props.onClose}>
           <Icon24Dismiss />
         </div>
+        }
+      </div>
+      <a
+        href={props.bannerData.trackingLink}
+        onClick={onClick}
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+        className="PromoBanner__clickable-body"
+      >
+        <div className="PromoBanner__content">
+          <Cell
+            before={
+              <Avatar mode="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
+            }
+            asideContent={<Button mode="outline">{props.bannerData.ctaText}</Button>}
+            description={props.bannerData.domain}
+          >
+            {props.bannerData.title}
+          </Cell>
+        </div>
+      </a>
+
+      {currentPixel.length > 0 &&
+        <div className="PromoBanner__pixels">
+          <img src={currentPixel} alt="" />
+        </div>
       }
     </div>
-    <a
-      href={props.bannerData.trackingLink}
-      rel="nofollow noopener noreferrer"
-      target="_blank"
-      className="PromoBanner__clickable-body"
-    >
-      <div className="PromoBanner__content">
-        <Cell
-          before={
-            <Avatar mode="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
-          }
-          asideContent={<Button mode="outline">{props.bannerData.ctaText}</Button>}
-          description={props.bannerData.domain}
-        >
-          {props.bannerData.title}
-        </Cell>
-      </div>
-    </a>
-  </div>
-;
+  );
+};
 
 export default PromoBanner;
