@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { Component, CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
@@ -22,8 +20,8 @@ interface Scrolls {
 }
 
 export type TransitionStartEventDetail = {
-  scrolls: Scrolls
-}
+  scrolls: Scrolls;
+};
 
 interface ViewsScrolls {
   [index: string]: Scrolls;

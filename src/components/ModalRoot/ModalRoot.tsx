@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { Component, ReactElement, SyntheticEvent } from 'react';
 import PropTypes from 'prop-types';
 import Touch, { TouchEvent } from '../Touch/Touch';
@@ -122,7 +120,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   private readonly modalRootContext: ModalRootContextInterface;
   private readonly frameIds: {
     [index: string]: number;
-  }
+  };
 
   static contextTypes = {
     window: PropTypes.any,
@@ -790,7 +788,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     }
   }
 
-  private doCloseModal = (modalState: ModalsStateEntry) => {
+  private readonly doCloseModal = (modalState: ModalsStateEntry) => {
     if (isFunction(modalState.onClose)) {
       modalState.onClose();
     } else if (isFunction(this.props.onClose)) {

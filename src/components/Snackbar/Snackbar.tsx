@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { HTMLAttributes, PureComponent, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';

@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { Component, InputHTMLAttributes, ReactNode, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
@@ -15,7 +13,7 @@ import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
 import { HasChildren, HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 
-type ProxyInputHTMLAttributes = Omit<InputHTMLAttributes<HTMLElement>, 'size'>
+type ProxyInputHTMLAttributes = Omit<InputHTMLAttributes<HTMLElement>, 'size'>;
 
 export interface CellProps extends ProxyInputHTMLAttributes, HasChildren, HasRootRef<HTMLElement>, HasPlatform {
   /**
@@ -124,13 +122,12 @@ class Cell extends Component<CellProps, CellState> {
 
   get document() {return this.context.document || document;}
 
-  /**
+  /*
    * предотвращает двойное срабатывание в случае с input
    * (https://github.com/vuejs/vue/issues/3699#issuecomment-247957931)
    * предотвращает клик в случае, когда включен режим removable
-   * @param e
    */
-  onClick = (e: MouseEvent<HTMLElement>): void => {
+  private readonly onClick = (e: MouseEvent<HTMLElement>): void => {
     const { removable, onClick } = this.props;
     const target = e.target as HTMLElement;
     if (target.tagName.toLowerCase() === 'input') {
@@ -152,7 +149,7 @@ class Cell extends Component<CellProps, CellState> {
     this.document.removeEventListener('click', this.deactivateRemove);
   };
 
-  onRemoveClick = (e: MouseEvent) => {
+  private readonly onRemoveClick = (e: MouseEvent) => {
     e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
     this.props.onRemove && this.props.onRemove(e, this.rootEl);
@@ -279,7 +276,7 @@ class Cell extends Component<CellProps, CellState> {
     selectable = selectable && !draggable;
 
     const rootProps = selectable ? {} : restProps;
-    const inputProps = selectable ? {...restProps, onChange} : {};
+    const inputProps = selectable ? { ...restProps, onChange } : {};
     const linkProps = href ? restProps : {};
     const IS_PLATFORM_ANDROID = platform === ANDROID;
     const IS_PLATFORM_IOS = platform === IOS;
