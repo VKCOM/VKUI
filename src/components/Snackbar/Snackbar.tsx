@@ -107,7 +107,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     clearTimeout(this.closeTimeout);
   };
 
-  onActionClick = (e: MouseEvent) => {
+  private readonly onActionClick = (e: MouseEvent) => {
     this.close();
 
     if (this.props.action && typeof this.props.onActionClick === 'function') {
