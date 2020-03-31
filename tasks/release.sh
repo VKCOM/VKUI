@@ -3,6 +3,8 @@
 if [ ! $1 ]; then
   echo "Error: you should pass version number"
 else
+  echo "release: creating build"
+  yarn clear && yarn build || exit 1
   echo "release: creating version"
   yarn version --new-version $1
   echo "release: building styleguide"
