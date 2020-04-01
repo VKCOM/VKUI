@@ -41,7 +41,6 @@ class PrepareFrame extends React.Component {
   };
 
   getChildContext () {
-
     return {
       webviewType: 'internal'
     };
