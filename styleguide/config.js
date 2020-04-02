@@ -46,6 +46,7 @@ module.exports = {
           '../src/components/PanelHeaderEdit/PanelHeaderEdit.tsx',
           '../src/components/PanelHeaderContent/PanelHeaderContent.tsx',
           '../src/components/PanelHeaderContext/PanelHeaderContext.tsx',
+          '../src/components/SplitLayout/SplitLayout.tsx',
           '../src/components/Epic/Epic.tsx',
           '../src/components/Tabbar/Tabbar.tsx',
           '../src/components/TabbarItem/TabbarItem.tsx',

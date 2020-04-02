@@ -14,6 +14,7 @@ export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
 export { default as PanelHeaderSimple } from './components/PanelHeaderSimple/PanelHeaderSimple';
 export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
 export { default as PanelHeaderContext } from './components/PanelHeaderContext/PanelHeaderContext';
+export { default as SplitLayout, SplitCol, SplitFixedCol } from './components/SplitLayout/SplitLayout';
 export { default as Epic } from './components/Epic/Epic';
 export { default as Tabbar } from './components/Tabbar/Tabbar';
 export { default as TabbarItem } from './components/TabbarItem/TabbarItem';

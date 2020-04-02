@@ -135,7 +135,7 @@ class View extends Component<ViewProps, ViewState> {
     // Нужен переход
     if (prevProps.activePanel !== this.props.activePanel && !prevState.swipingBack && !prevState.browserSwipe) {
       const firstLayer = this.panels.find(
-        (panel: React.ReactElement) => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel
+        (panel: React.ReactElement) => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel,
       );
 
       const isBack = firstLayer && firstLayer.props.id === this.props.activePanel;
