@@ -12,6 +12,7 @@ interface ResponsiveState {
 export default class Responsive extends React.Component<ResponsiveProps, ResponsiveState> {
   baseRef: RefObject<HTMLDivElement> = React.createRef();
   matched: any = {};
+  state: ResponsiveState = { matched: {} };
 
   shouldComponentUpdate() {
     return false;
@@ -22,10 +23,16 @@ export default class Responsive extends React.Component<ResponsiveProps, Respons
     this.onResize();
   }
 
+  componentWillUnmount() {
+    window.addEventListener('resize', this.onResize);
+  }
+
   onResize = () => {
-    const target = this.baseRef.current.parentNode as HTMLElement;
-    const width = target.offsetWidth;
-    const height = target.offsetHeight;
+    // const target = this.baseRef.current.parentNode as HTMLElement;
+    // const width = target.offsetWidth;
+    // const height = target.offsetHeight;
+    const width = innerWidth;
+    const height = innerHeight;
 
     const keys = Object.keys(this.props.match);
     const matched: any = {};
@@ -42,12 +49,11 @@ export default class Responsive extends React.Component<ResponsiveProps, Respons
 
     if (shouldUpdate) {
       this.setState({ matched });
+      this.forceUpdate();
     }
   };
 
   render() {
-    return <div ref={this.baseRef}>
-      {this.state.matched && this.props.children(this.state.matched)}
-    </div>;
+    return this.state.matched ? this.props.children(this.state.matched) : null;
   }
 }

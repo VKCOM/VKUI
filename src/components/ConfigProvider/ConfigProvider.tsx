@@ -7,6 +7,7 @@ import {
   ConfigProviderContextInterface,
   Scheme,
   WebviewType,
+  ViewType,
 } from './ConfigProviderContext';
 import { HasChildren } from '../../types';
 import vkBridge, { AppearanceSchemeType } from '@vkontakte/vk-bridge';
@@ -19,6 +20,7 @@ export interface ConfigProviderChildContextType {
   webviewType: Validator<WebviewType>;
   appearance: Validator<Appearance>;
   app: Validator<string>;
+  viewType: Validator<ViewType>;
 }
 
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
@@ -34,6 +36,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     isWebView: vkBridge.isWebView(),
     scheme: Scheme.BRIGHT_LIGHT,
     appearance: Appearance.LIGHT,
+    viewType: ViewType.REGULAR,
   };
 
   static childContextTypes: ConfigProviderChildContextType = {
@@ -47,6 +50,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     webviewType: PropTypes.oneOf([WebviewType.VKAPPS, WebviewType.INTERNAL]),
     appearance: PropTypes.oneOf([Appearance.DARK, Appearance.LIGHT]),
     app: PropTypes.string,
+    viewType: PropTypes.oneOf([ViewType.REGULAR, ViewType.COMPACT]),
   };
 
   mapOldScheme(scheme: AppearanceSchemeType): AppearanceSchemeType {
@@ -77,6 +81,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
       scheme: this.mapOldScheme(this.props.scheme),
       appearance: this.props.appearance,
       app: this.props.app,
+      viewType: this.props.viewType,
     };
   }
 

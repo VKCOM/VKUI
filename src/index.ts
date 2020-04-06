@@ -105,6 +105,8 @@ export { default as PanelHeaderClose } from './components/PanelHeaderClose/Panel
 export { default as PanelHeaderBack } from './components/PanelHeaderBack/PanelHeaderBack';
 export { default as PanelHeaderSubmit } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
 export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
+export { default as AdaptivityProvider } from './components/AdaptivityProvider/AdaptivityProvider';
+export { default as withAdaptivity } from './hoc/withAdaptivity';
 
 /**
  * Advertisement

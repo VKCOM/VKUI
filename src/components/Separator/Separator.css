@@ -1,21 +1,26 @@
 .Separator {}
 
-.Separator__in {
+.Separator__in:not(.Separator__in--regular) {
   height: 1px;
   background: var(--separator_common);
   transform-origin: center top;
 }
 
 @media (min-resolution: 2dppx) {
-  .Separator__in {
+  .Separator__in:not(.Separator__in--regular) {
     transform: scaleY(.5);
   }
 }
 
 @media (min-resolution: 3dppx) {
-  .Separator__in {
+  .Separator__in:not(.Separator__in--regular) {
     transform: scaleY(.32);
   }
+}
+
+.Separator__in--regular {
+  height: 16px;
+  background: transparent;
 }
 
 .Separator:not(.Separator--wide).Separator--ios .Separator__in {

@@ -10,6 +10,21 @@
   display: flex;
 }
 
+/* Hack with using PanelHeaderSimple */
+/* Better to implement simple header-like here */
+.SplitLayout__inner--header {
+  position: relative;
+  z-index: 11;
+}
+
+.SplitLayout--ios .SplitLayout__inner--header {
+  margin-top: calc(var(--panelheader_height_ios) * -1);
+}
+
+.SplitLayout--android .SplitLayout__inner--header {
+  margin-top: calc(var(--panelheader_height_android) * -1);
+}
+
 .SplitLayout__popout {
   position: fixed;
   left: 0;
@@ -47,6 +62,7 @@
   flex-shrink: 1;
   transform: translateZ(0);
   position: relative;
+  margin-right: 12px;
 }
 
 .SplitLayout__colFixedWrap {
@@ -54,6 +70,7 @@
   width: 1px;
   flex-grow: 1;
   flex-shrink: 1;
+  margin-right: 12px;
 }
 
 .SplitLayout__colFixedInner {

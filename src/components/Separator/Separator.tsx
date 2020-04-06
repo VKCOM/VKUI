@@ -2,15 +2,16 @@ import React, { FunctionComponent, HTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
+export interface SeparatorProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   /**
    * С этим свойством компонент не будет иметь отступы слева и справа
    */
   wide?: boolean;
 }
 
-const Separator: FunctionComponent<SeparatorProps> = ({ className, wide, ...restProps }: SeparatorProps) => {
+let Separator: FunctionComponent<SeparatorProps> = ({ className, sizeX, wide, ...restProps }: SeparatorProps) => {
   const platform = usePlatform();
 
   return (
@@ -20,9 +21,10 @@ const Separator: FunctionComponent<SeparatorProps> = ({ className, wide, ...rest
         'Separator--wide': wide,
       })}
     >
-      <div className="Separator__in" />
+      <div className={classNames('Separator__in', `Separator__in--${sizeX}`)} />
     </div>
   );
 };
 
+Separator = withAdaptivity(Separator);
 export default React.memo(Separator);

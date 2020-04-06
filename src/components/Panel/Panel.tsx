@@ -9,8 +9,9 @@ import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
 import Separator from '../Separator/Separator';
 import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, HasRootRef<HTMLDivElement> {
+export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, HasRootRef<HTMLDivElement>, AdaptivityProps {
   id: string;
   separator?: boolean;
   centered?: boolean;
@@ -61,14 +62,14 @@ class Panel extends Component<PanelProps> {
   };
 
   render() {
-    const { className, centered, children, insets, platform, separator, getRootRef, ...restProps } = this.props;
+    const { className, centered, children, insets, platform, separator, getRootRef, sizeX, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
 
     return (
       <div
         {...restProps}
         ref={this.getRef}
-        className={classNames(getClassName('Panel', platform), className, {
+        className={classNames(getClassName('Panel', platform), className, `Panel--${sizeX}`, {
           'Panel--centered': centered,
         })}
       >
@@ -85,4 +86,4 @@ class Panel extends Component<PanelProps> {
   }
 }
 
-export default withPlatform(withInsets(Panel));
+export default withAdaptivity(withPlatform(withInsets(Panel)));
