@@ -21,16 +21,16 @@ export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform 
   /**
    * Будет вызвано при клике на кнопку действия
    */
-  onActionClick?: (e: MouseEvent) => {};
+  onActionClick?: (e: React.MouseEvent) => void;
 
   /**
    * Цветная иконка 24x24 пикселя
    */
-  before?: React.ComponentType;
+  before?: React.ReactNode;
   /**
    * Контент в правой части, может быть `<Avatar size={32} />`
    */
-  after?: React.ComponentType;
+  after?: React.ReactNode;
   /**
    * Варианты расположения кнопки
    */
@@ -42,7 +42,7 @@ export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform 
   /**
    * Обработчик закрытия уведомления
    */
-  onClose: () => {};
+  onClose: () => void;
 }
 
 export interface SnackbarState {
