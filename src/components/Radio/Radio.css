@@ -46,7 +46,7 @@
         }
 
 .Radio--ios {
-  padding: 10px 12px;
+  padding: 10px 0;
   }
 
   .Radio--ios .Radio__container {}
@@ -82,7 +82,7 @@
       }
 
 .Radio--android {
-  padding: 12px 16px;
+  padding: 12px 0;
   }
 
   .Radio--android .Radio__container {}
