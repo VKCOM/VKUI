@@ -12,11 +12,11 @@
 
 ```css static
 :root {
-  --background_page: #141414;
+  --background_page: #ebedf0;
 }
 
-body[scheme="client_dark"] {
-  --background_page: #ebedf0;
+body[scheme="space_gray"] {
+  --background_page: #0a0a0a;
 }
 
 .Panel__in {
