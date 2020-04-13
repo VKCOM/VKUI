@@ -1,16 +1,20 @@
 .FormLayoutGroup {
   width: 100%;
   display: flex;
-}
+  }
 
 .FormLayoutGroup--vertical {
   flex-direction: column;
-}
+  }
+
+.FormLayoutGroup--vertical > * ~ * {
+  margin-top: 12px;
+  }
 
 .FormLayoutGroup--horizontal {
   flex-direction: row;
 }
 
-.FormLayoutGroup--vertical > * ~ * {
-  margin-top: 12px;
+.FormLayoutGroup--horizontal > * ~ * {
+  margin-left: 20px;
   }
