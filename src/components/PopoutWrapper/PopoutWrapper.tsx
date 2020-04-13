@@ -6,6 +6,7 @@ import transitionEvents from '../../lib/transitionEvents';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { canUseDOM } from '../../lib/dom';
+import { hasMouse } from '@vkontakte-internal/vkjs/src/InputUtils';
 
 export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   hasMask?: boolean;
@@ -28,7 +29,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   constructor(props: PopoutWrapperProps) {
     super(props);
     this.state = {
-      opened: false,
+      opened: !props.hasMask,
     };
     this.elRef = React.createRef();
   }
@@ -96,6 +97,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
         {...restProps}
         className={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
           'PopoutWrapper--closing': closing,
+          'PopoutWrapper--transparent': hasMouse,
         }, className)}
         onClick={this.onClick}
         ref={this.elRef}

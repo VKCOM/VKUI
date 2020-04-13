@@ -55,6 +55,14 @@
     justify-content: flex-end;
     }
 
+  .PopoutWrapper--transparent {
+    opacity: 0;
+  }
+
+  .PopoutWrapper--transparent .PopoutWrapper__container {
+    opacity: 0;
+  }
+
 /**
  * iOS version
  */
