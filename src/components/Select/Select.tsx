@@ -86,7 +86,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 
   render() {
     const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, top, bottom, ...restProps } = this.props;
+      getRef, getRootRef, top, bottom, disabled, ...restProps } = this.props;
 
     return (
       <FormField
@@ -94,6 +94,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
         className={classNames('Select', {
           ['Select--not-selected']: this.state.notSelected,
           [`Select--align-${align}`]: !!align,
+          'Select--disabled': disabled,
         }, className)}
         style={style}
         getRootRef={getRootRef}
@@ -101,6 +102,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
       >
         <select
           {...restProps}
+          disabled={disabled}
           className="Select__el"
           onChange={this.onChange}
           value={this.value}

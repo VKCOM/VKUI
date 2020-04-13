@@ -33,9 +33,13 @@
   }
 
 .Input__el:disabled {
-  opacity: .6;
-  }
+  opacity: .4;
+}
 
 .Input__el::placeholder {
   color: var(--field_text_placeholder);
-  }
+}
+
+.Input__el:disabled::placeholder {
+  color: var(--text_secondary);
+}
