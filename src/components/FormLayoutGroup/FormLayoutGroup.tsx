@@ -7,7 +7,9 @@ import { HasFormLabels, HasFormStatus } from '../../types';
 export interface FormLayoutGroupProps extends
   HTMLAttributes<HTMLDivElement>,
   HasFormStatus,
-  HasFormLabels {}
+  HasFormLabels {
+  mode?: 'vertical' | 'horizontal';
+}
 
 const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = ({
   children,
@@ -15,12 +17,13 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = ({
   bottom,
   className,
   status,
+  mode = 'vertical',
   ...restProps
 }: FormLayoutGroupProps) => {
   const platform = usePlatform();
 
   return (
-    <div className={classNames(getClassName('FormLayoutGroup', platform), className)} {...restProps}>
+    <div className={classNames(getClassName('FormLayoutGroup', platform), `FormLayoutGroup--${mode}`, className)} {...restProps}>
       {children}
     </div>
   );

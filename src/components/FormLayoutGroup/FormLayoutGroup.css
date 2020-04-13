@@ -1,3 +1,16 @@
-.FormLayoutGroup > * ~ * {
+.FormLayoutGroup {
+  width: 100%;
+  display: flex;
+}
+
+.FormLayoutGroup--vertical {
+  flex-direction: column;
+}
+
+.FormLayoutGroup--horizontal {
+  flex-direction: row;
+}
+
+.FormLayoutGroup--vertical > * ~ * {
   margin-top: 12px;
   }
