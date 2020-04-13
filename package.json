@@ -31,7 +31,6 @@
     "@types/react-dom": "^16.8.5",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@typescript-eslint/parser": "^2.0.0",
-    "@vkontakte-internal/vkjs": "^0.0.5",
     "@vkontakte/appearance": "https://github.com/VKCOM/Appearance#v2.3.6",
     "@vkontakte/eslint-config": "2.1.0",
     "@vkontakte/icons": "^1.19.0",

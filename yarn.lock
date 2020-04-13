@@ -1089,11 +1089,6 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
-"@vkontakte-internal/vkjs@^0.0.5":
-  version "0.0.5"
-  resolved "https://artifactory.mvk.com:443/api/npm/npm-vkontakte/@vkontakte-internal/vkjs/-/@vkontakte-internal/vkjs-0.0.5.tgz#c9aa985bbc43aa0196f9df5385ad71fb3f8db383"
-  integrity sha1-yaqYW7xDqgGW+d9Tha1x+z+Ns4M=
-
 "@vkontakte/appearance@https://github.com/VKCOM/Appearance#v2.3.6":
   version "1.0.0"
   resolved "https://github.com/VKCOM/Appearance#9f8611d56c0b864d99d3e16b1b708a2d0fd81f50"
