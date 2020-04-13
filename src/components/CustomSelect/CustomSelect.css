@@ -1,0 +1,52 @@
+:root {
+    --side-padding: 12px;
+    --border: solid 1px var(--field_border);
+    --border-radius: 8px;
+    --listItem-height: 36px;
+    --listItem-top-padding: 8px;
+    --arrow-size: 16px;
+}
+
+.CustomSelect__container {
+    width: 100%;
+    position: relative;
+}
+
+.CustomSelect__options {
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    background-color: var(--white);
+    box-sizing: border-box;
+    border: var(--border);
+    border-top: 0;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    max-height: 132px;
+    z-index: 2;
+}
+
+.CustomSelect__hover {
+    background-color: var(--button_muted_background);
+}
+
+.open {
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.CustomSelect__option {
+    width: 100%;
+    height: var(--listItem-height);
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    font-size: 15px;
+    line-height: 1.33;
+    padding: var(--listItem-top-padding) calc(var(--side-padding) + var(--arrow-size)) var(--listItem-top-padding) 10px;
+}
+
+.CustomSelect__selectedIcon {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: var(--side-padding);
+}

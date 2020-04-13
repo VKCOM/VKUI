@@ -119,7 +119,9 @@ module.exports = {
           '../src/components/Select/Select.tsx',
           '../src/components/SelectMimicry/SelectMimicry.tsx',
           '../src/components/Textarea/Textarea.tsx',
-          '../src/components/File/File.tsx'
+          '../src/components/File/File.tsx',
+          '../src/components/CustomSelect/CustomSelect.tsx',
+          '../src/components/DatePicker/DatePicker.tsx'
         ]
       },
       {

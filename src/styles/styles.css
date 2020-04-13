@@ -79,6 +79,8 @@
 @import '../components/Select/Select.css';
 @import '../components/Textarea/Textarea.css';
 @import '../components/File/File.css';
+@import '../components/CustomSelect/CustomSelect.css';
+@import '../components/DatePicker/DatePicker.css';
 
 /* Advertisement */
 @import '../components/PromoBanner/PromoBanner.css';
