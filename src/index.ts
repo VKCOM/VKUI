@@ -86,6 +86,7 @@ export { default as Radio } from './components/Radio/Radio';
 export { default as Checkbox } from './components/Checkbox/Checkbox';
 export { default as Select } from './components/Select/Select';
 export { default as SelectMimicry } from './components/SelectMimicry/SelectMimicry';
+export { default as SliderSwitch } from './components/SliderSwitch/SliderSwitch';
 
 /**
  * Helpers
