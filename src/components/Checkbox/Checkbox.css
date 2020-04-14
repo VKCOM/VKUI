@@ -41,7 +41,7 @@
     }
 
 .Checkbox--ios {
-  padding: 12px;
+  padding: 12px 0;
   }
 
   .Checkbox--ios .Checkbox__container {}
@@ -52,7 +52,7 @@
       }
 
 .Checkbox--android {
-  padding: 16px;
+  padding: 16px 0;
   }
 
   .Checkbox--android .Checkbox__container {}
