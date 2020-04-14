@@ -5,6 +5,7 @@ import usePlatform from '../../hooks/usePlatform';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import Icon24DismissSubstract from '@vkontakte/icons/dist/24/dismiss_substract';
 import Icon24DismissDark from '@vkontakte/icons/dist/24/dismiss_dark';
+import Tappable from '../Tappable/Tappable';
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -72,6 +73,8 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
     ...restProps
   } = props;
 
+  const InnerComponent = asideMode === 'expand' ? Tappable : 'div';
+
   return (
     <div
       {...restProps}
@@ -83,7 +86,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
         }, className,
       )}
     >
-      <div className="Banner__in">
+      <InnerComponent className="Banner__in">
         {mode === 'image' && background &&
         <div className="Banner__bg">
           {background}
@@ -115,7 +118,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
           </div>
         </div>
         }
-      </div>
+      </InnerComponent>
     </div>
   );
 };
