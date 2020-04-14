@@ -76,3 +76,16 @@
   width: 100%;
   height: 100%;
   }
+
+.CustomSelect__container .FormField__border {
+  border: solid 1px var(--field_border);
+  border-radius: 8px;
+}
+
+.CustomSelect__container .Select--mimicry:focus .FormField__border {
+  border-color: var(--field_border);
+}
+
+.CustomSelect__open .FormField__border {
+  border-radius: 8px 8px 0 0;
+}

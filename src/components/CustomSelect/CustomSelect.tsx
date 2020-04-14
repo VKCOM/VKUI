@@ -1,11 +1,11 @@
 import React, { createRef, MouseEvent, KeyboardEvent } from 'react';
+// пока используем react-custom-scrollbars, если свой скроллбар будет весить меньше, то лучше будет написать свой
 import { Scrollbars } from 'react-custom-scrollbars';
 import getScrollbarWidth from 'react-custom-scrollbars/lib/utils/getScrollbarWidth';
 import SelectedIcon from '@vkontakte/icons/dist/16/done';
 import { SelectProps } from '../Select/Select';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce, throttle } from '../../lib/utils';
-import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 
 export interface SelectOption {
@@ -33,7 +33,7 @@ interface Props extends SelectProps {
   onBlur?: () => void;
 }
 
-type MouseDownHandler = (event: MouseEvent<HTMLElement>) => void;
+type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
 export default class CustomSelect extends React.Component<Props, State> {
   public constructor(props: Props) {
@@ -235,13 +235,23 @@ export default class CustomSelect extends React.Component<Props, State> {
     this.focusOptionByIndex(index);
   };
 
-  handleOptionHover = (index: number) => {
+  handleOptionHover: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
+    const { options } = this.state;
+    const label = e.currentTarget.title;
+
+    if (!label) {
+      return;
+    }
+
+    const index = options.findIndex(
+      (option) => option.label === label);
+
     this.setState(() => ({
       focusedOptionId: index,
     }));
   };
 
-  handleOptionDown: MouseDownHandler = (e: MouseEvent<HTMLElement>) => {
+  handleOptionDown: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
   };
 
@@ -333,8 +343,8 @@ export default class CustomSelect extends React.Component<Props, State> {
         aria-selected={selected}
         onClick={this.selectFocused}
         onMouseDown={this.handleOptionDown}
-        onMouseEnter={this.handleOptionHover.bind(this, index)}
-        className={classNames(getClassName('CustomSelect__option'), {
+        onMouseEnter={this.handleOptionHover}
+        className={classNames('CustomSelect__option', {
           ['CustomSelect__hover']: hovered,
         })}
       >
@@ -368,11 +378,13 @@ export default class CustomSelect extends React.Component<Props, State> {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           placeholder={placeholder}
+          className={classNames({
+            ['CustomSelect__open']: opened,
+          })}
         >
           {label}
-          {selected && <input type="hidden" name={name} value={selected.value} />}
         </SelectMimicry>
-
+        {selected && <input type="hidden" name={name} value={selected.value} />}
         {opened &&
         <div
           className={classNames({

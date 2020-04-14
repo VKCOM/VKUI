@@ -186,7 +186,6 @@ class DatePicker extends Component<Props, State> {
 
   get desktopView() {
     const { day, month, year } = this.state;
-    console.log(day, month, year);
 
     return (
       <div className="DatePicker__container">
