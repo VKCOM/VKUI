@@ -67,16 +67,15 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
 
       <Banner
         before={<Avatar src="https://sun9-7.userapi.com/q9qBUh4kGND1pTUytY4LwljtRLWoCXaIzN7C2A/52lM85R5kus.jpg" />}
+        text="Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!"
         actions={
           <React.Fragment>
             <Button>Включить</Button>
             <Button mode="tertiary">Подробнее</Button>
           </React.Fragment>
         }
-      >
-        Хотите, чтобы вам меньше мешали? Включите режим «невидимка»!
-      </Banner>
-     
+      />
+
       <Banner
         header="Больше интересных подкастов в каталоге"
         subheader="Найдите интересующие именно Вас подкасты!"

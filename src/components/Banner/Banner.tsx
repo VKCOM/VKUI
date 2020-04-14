@@ -29,19 +29,19 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   before?: ReactNode;
   /**
    * Заголовок. <br />
-   * При использовании этого свойства рекомендуется не указывать `children`.
+   * При использовании этого свойства рекомендуется не указывать `text`.
    */
   header?: ReactNode;
   /**
    * Подзаголовок. <br />
-   * При использовании этого свойства рекомендуется не указывать `children`.
+   * При использовании этого свойства рекомендуется не указывать `text`.
    */
   subheader?: ReactNode;
   /**
    * Текст баннера. <br />
    * Это свойство следует использовать без указания `header` и `subheader`.
    */
-  children?: ReactNode;
+  text?: ReactNode;
   /**
    * При использовании `mode="image"`.
    *
@@ -67,7 +67,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
 const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {
-    className, mode, imageTheme, size, before, asideMode, header, subheader, children, background, actions,
+    className, mode, imageTheme, size, before, asideMode, header, subheader, text, children, background, actions,
     onDismiss,
     ...restProps
   } = props;
@@ -95,7 +95,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
         <div className="Banner__content">
           {header && <div className="Banner__header">{header}</div>}
           {subheader && <div className="Banner__subheader">{subheader}</div>}
-          <div className="Banner__text">{children}</div>
+          <div className="Banner__text">{text}</div>
 
           {actions &&
           <div className="Banner__actions">{actions}</div>
