@@ -68,6 +68,7 @@ export { default as Counter } from './components/Counter/Counter';
 export { default as UsersStack } from './components/UsersStack/UsersStack';
 export { default as Separator } from './components/Separator/Separator';
 export { default as Placeholder } from './components/Placeholder/Placeholder';
+export { default as Banner } from './components/Banner/Banner';
 
 /**
  * Forms

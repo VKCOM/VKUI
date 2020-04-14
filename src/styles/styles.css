@@ -64,6 +64,7 @@
 @import '../components/UsersStack/UsersStack.css';
 @import '../components/Separator/Separator.css';
 @import '../components/Placeholder/Placeholder.css';
+@import '../components/Banner/Banner.css';
 
 /* Forms */
 @import '../components/FormLayout/FormLayout.css';
