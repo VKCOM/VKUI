@@ -141,6 +141,9 @@ module.exports = {
       }, {
         name: 'Utils',
         content: './pages/utils.md'
+      }, {
+        name: 'Библиотеки компонентов для Sketch',
+        content: './pages/sketch.md'
       }]
     }
   ],
