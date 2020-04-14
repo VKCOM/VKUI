@@ -1,7 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 import Button from '../Button/Button';
 import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
 import { HasPlatform } from '../../types';
 
 interface Option {
@@ -20,12 +19,57 @@ interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform {
 interface State {
   firstActive: boolean;
   secondActive: boolean;
+  focusedOptionId: number;
 }
 
 export default class SliderSwitch extends React.Component<Props, State> {
   state: State = {
     firstActive: Boolean(this.props.options[0].selected),
     secondActive: Boolean(this.props.options[1].selected),
+    focusedOptionId: -1,
+  };
+
+  handleFirstClick = () => {
+    const { options, onSwitch } = this.props;
+    const { value } = options[0];
+
+    onSwitch && onSwitch(value);
+
+    this.setState(() =>({
+      firstActive: true,
+      secondActive: false,
+    }));
+  };
+
+  handleSecondClick = () => {
+    const { options, onSwitch } = this.props;
+    const { value } = options[1];
+
+    onSwitch && onSwitch(value);
+
+    this.setState(() =>({
+      firstActive: false,
+      secondActive: true,
+    }));
+  };
+
+  handleFirstHover = () => {
+    this.setState(() =>({
+      focusedOptionId: 0,
+    }));
+  };
+
+  handleSecondHover = () => {
+    this.setState(() =>({
+      focusedOptionId: 1,
+    }));
+  };
+
+  resetFocusedOption = () => {
+    console.log('rest', this.state.focusedOptionId);
+    this.setState(() => ({
+      focusedOptionId: -1,
+    }));
   };
 
   static getDerivedStateFromProps(nextProps: Props) {
@@ -39,25 +83,9 @@ export default class SliderSwitch extends React.Component<Props, State> {
     return null;
   }
 
-  private onSwitch(index: number) {
-    if (isNaN(index)) {
-      return;
-    }
-
-    const { options, onSwitch } = this.props;
-    const { value } = options[index];
-
-    onSwitch && onSwitch(value);
-
-    this.setState(() =>({
-      firstActive: index === 0,
-      secondActive: index === 1,
-    }));
-  };
-
   public render() {
     const { name, options } = this.props;
-    const { firstActive, secondActive } = this.state;
+    const { firstActive, secondActive, focusedOptionId } = this.state;
     const [firstOption, secondOption] = options;
     let value = '';
 
@@ -68,7 +96,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
     }
 
     const sliderClass = classNames(
-      getClassName('SliderSwitch__slider'),
+      'SliderSwitch__slider',
       {
         ['SliderSwitch__firstActive']: firstActive,
         ['SliderSwitch__secondActive']: secondActive,
@@ -76,21 +104,28 @@ export default class SliderSwitch extends React.Component<Props, State> {
     );
 
     const firstButtonClass = classNames(
-      getClassName('SliderSwitch__button'),
+      'SliderSwitch__button',
       {
         ['SliderSwitch__active']: firstActive,
+        ['SliderSwitch__hover']: !firstActive && focusedOptionId === 0,
+        ['SliderSwitch__hover__active']: firstActive && focusedOptionId === 0,
       },
     );
 
     const secondButtonClass = classNames(
-      getClassName('SliderSwitch__button'),
+      'SliderSwitch__button',
       {
         ['SliderSwitch__active']: secondActive,
+        ['SliderSwitch__hover']: !secondActive && focusedOptionId === 1,
+        ['SliderSwitch__hover__active']: secondActive && focusedOptionId === 1,
       },
     );
 
     return (
-      <div className="SliderSwitch__container">
+      <div
+        className="SliderSwitch__container"
+        onMouseLeave={this.resetFocusedOption}
+      >
         {
           !firstActive && !secondActive && <div className="SliderSwitch__border" />
         }
@@ -100,7 +135,8 @@ export default class SliderSwitch extends React.Component<Props, State> {
           mode="tertiary"
           aria-pressed={firstActive}
           className={firstButtonClass}
-          onClick={this.onSwitch.bind(this, 0)}
+          onClick={this.handleFirstClick}
+          onMouseEnter={this.handleFirstHover}
         >
           {firstOption.name}
         </Button>
@@ -108,7 +144,8 @@ export default class SliderSwitch extends React.Component<Props, State> {
           mode="tertiary"
           area-pressed={secondActive}
           className={secondButtonClass}
-          onClick={this.onSwitch.bind(this, 1)}
+          onClick={this.handleSecondClick}
+          onMouseEnter={this.handleSecondHover}
         >
           {secondOption.name}
         </Button>
