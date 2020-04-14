@@ -26,7 +26,18 @@
   box-sizing: border-box;
   border-radius: inherit;
   pointer-events: none;
-  transform-origin: left top;
+}
+
+@media (min-resolution: 2dppx) {
+  .Banner__in::before {
+    border-width: .5px;
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  .Banner__in::before {
+    border-width: .33px;
+  }
 }
 
 .Banner__before {
@@ -245,24 +256,6 @@
 
 .Banner--ios .Banner__in {
   border-radius: 10px;
-}
-
-@media (min-resolution: 2dppx) {
-  .Banner--ios .Banner__in::before {
-    border-radius: 20px;
-    transform: scale(.5);
-    width: 200%;
-    height: 200%;
-  }
-}
-
-@media (min-resolution: 3dppx) {
-  .Banner--ios .Banner__in::before {
-    border-radius: 31.25px;
-    transform: scale(.32);
-    width: 312.5%;
-    height: 312.5%;
-  }
 }
 
 /**
