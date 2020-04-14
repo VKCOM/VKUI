@@ -10,7 +10,7 @@ import { HasPlatform, HasRootRef, OldRef, RefWithCurrent } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 
 export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
-  Component: ElementType;
+  Component?: ElementType;
   activeEffectDelay?: number;
   disabled?: boolean;
   stopPropagation?: boolean;
