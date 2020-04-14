@@ -64,7 +64,7 @@
         top: 1px;
         }
 
-.Header--ios {
+.Header--ios .Header__in {
   padding: 0 12px;
   }
 
@@ -80,7 +80,7 @@
     line-height: 16px;
     }
 
-.Header--android {
+.Header--android .Header__in {
   padding: 0 16px;
   }
 
