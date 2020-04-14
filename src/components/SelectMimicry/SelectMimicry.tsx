@@ -24,6 +24,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   getRootRef,
   multiline,
   disabled,
+  onClick,
   ...restProps
 }: SelectMimicryProps) => {
   return (
@@ -38,6 +39,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
       }, className)}
       getRootRef={getRootRef}
       status={status}
+      onClick={disabled ? null : onClick}
     >
       <div className="Select__container">
         <div className="Select__title">{children || placeholder}</div>
