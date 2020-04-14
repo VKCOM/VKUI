@@ -103,6 +103,7 @@ module.exports = {
           '../src/components/UsersStack/UsersStack.tsx',
           '../src/components/Separator/Separator.tsx',
           '../src/components/Placeholder/Placeholder.tsx',
+          '../src/components/Banner/Banner.tsx',
         ]
       }, {
         name: 'Forms',
