@@ -249,6 +249,58 @@
   }
 
 /**
+ * Desktop version
+ */
+
+.ActionSheet--desktop {
+  width: auto;
+  height: auto;
+  background: white;
+  box-shadow: 0 0 50px 0 rgba(0, 0, 0, .2);
+  border-radius: 14px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 110;
+}
+
+.ActionSheet--desktop .ActionSheetItem {
+  width: auto;
+  height: auto;
+  padding: 14px 24px;
+  line-height: 22px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.ActionSheet--desktop .ActionSheetItem:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.ActionSheet--desktop .ActionSheetItem:first-child {
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+.ActionSheet--desktop .ActionSheetItem:last-child {
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+.ActionSheet--desktop .ActionSheetItem {
+  color: var(--action_sheet_action_foreground);
+}
+
+.ActionSheet--desktop .ActionSheetItem__children {
+  display: flex;
+  align-items: center;
+}
+
+.ActionSheet--desktop .ActionSheetItem__icon {
+  margin-right: 20px;
+}
+
+/**
 * Animations
 */
 @keyframes animation-actionsheet-intro {

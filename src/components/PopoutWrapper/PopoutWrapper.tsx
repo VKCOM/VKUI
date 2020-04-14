@@ -28,7 +28,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   constructor(props: PopoutWrapperProps) {
     super(props);
     this.state = {
-      opened: false,
+      opened: !props.hasMask,
     };
     this.elRef = React.createRef();
   }
