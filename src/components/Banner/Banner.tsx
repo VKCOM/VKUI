@@ -98,7 +98,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
         <div className="Banner__content">
           {header && <div className="Banner__header">{header}</div>}
           {subheader && <div className="Banner__subheader">{subheader}</div>}
-          <div className="Banner__text">{text}</div>
+          {text && <div className="Banner__text">{text}</div>}
 
           {actions &&
           <div className="Banner__actions">{actions}</div>
