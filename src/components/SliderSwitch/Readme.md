@@ -4,18 +4,21 @@
       <PanelHeader>
         SliderSwitch
       </PanelHeader>
-      <SliderSwitch 
-        options={[
-          {
-           name: 'Мужской',
-           value: 'male',
-          },
-          {
-            name: 'Женский',
-            value: 'female',
-          },
-        ]}
-      />
+      <FormLayout>
+        <SliderSwitch 
+          top="Пол"
+          options={[
+            {
+              name: 'Мужской',
+              value: 'male',
+            },
+            {
+              name: 'Женский',
+              value: 'female',
+            },
+          ]}
+        />
+      </FormLayout>
     </Panel>
   </View>
 ```

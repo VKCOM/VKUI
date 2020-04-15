@@ -52,8 +52,7 @@
   margin: 2px;
   border-radius: 6px;
   /*todo: изменить на transform*/
-  transition: 150ms;
-  left: 0;
+  transition: margin-left 150ms;
 }
 
 .SliderSwitch__firstActive {

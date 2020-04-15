@@ -1,7 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 import Button from '../Button/Button';
 import classNames from '../../lib/classNames';
-import { HasPlatform } from '../../types';
+import { HasFormLabels, HasPlatform } from '../../types';
 
 interface Option {
   name: string;
@@ -9,7 +9,7 @@ interface Option {
   selected?: boolean;
 }
 
-interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabels {
   options: Option[];
   name?: string;
   activeValue?: string;
