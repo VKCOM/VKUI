@@ -3,8 +3,9 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import usePlatform from '../../hooks/usePlatform';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface ActionSheetItemProps extends HTMLAttributes<HTMLElement> {
+export interface ActionSheetItemProps extends HTMLAttributes<HTMLElement>, AdaptivityProps {
   mode?: 'default' | 'destructive' | 'cancel';
   before?: React.ReactNode;
   // meta?: React.ReactNode,
@@ -16,6 +17,7 @@ export interface ActionSheetItemProps extends HTMLAttributes<HTMLElement> {
    * @ignore
    */
   isLast?: boolean;
+  icon?: React.ReactNode;
 }
 
 const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
@@ -27,6 +29,8 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   // subtitle,
   before,
   isLast,
+  icon,
+  isMobile,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
@@ -47,7 +51,10 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
       {before && <div className="ActionSheetItem__before">{before}</div>}
       <div className="ActionSheetItem__container">
         <div className="ActionSheetItem__content">
-          <div className="ActionSheetItem__children">{children}</div>
+          <div className="ActionSheetItem__children">
+            {!isMobile && icon && <div className="ActionSheetItem__icon">{icon}</div>}
+            {children}
+          </div>
           {/* {meta && <div className="ActionSheetItem__meta">{meta}</div>} */}
           {/* {subtitle && <div className="ActionSheetItem__descr">{subtitle}</div>} */}
         </div>
@@ -60,4 +67,4 @@ ActionSheetItem.defaultProps = {
   mode: 'default',
 };
 
-export default ActionSheetItem;
+export default withAdaptivity(ActionSheetItem);

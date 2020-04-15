@@ -122,6 +122,7 @@ module.exports = {
           '../src/components/File/File.tsx',
           '../src/components/CustomSelect/CustomSelect.tsx',
           '../src/components/DatePicker/DatePicker.tsx'
+          '../src/components/SliderSwitch/SliderSwitch.tsx'
         ]
       },
       {

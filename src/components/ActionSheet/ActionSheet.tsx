@@ -5,11 +5,12 @@ import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { isNumeric } from '../../lib/utils';
 import { HasInsets, HasPlatform } from '../../types';
 import { ANDROID, IOS } from '../../lib/platform';
 
-export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets {
+export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, AdaptivityProps {
   /**
    * iOS only
    */
@@ -19,6 +20,10 @@ export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPla
    */
   text?: React.ReactNode;
   onClose(): void;
+  /**
+   * Desktop only
+   */
+  toggleRef?: Element;
 }
 
 export interface ActionSheetState {
@@ -71,6 +76,10 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
+    if (!this.props.isMobile) {
+      eventHandler();
+    }
+
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
 
@@ -94,8 +103,31 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     return false;
   };
 
+  getDropdownCoords: () => { right: number; top: number } = () => {
+    const { toggleRef } = this.props;
+
+    const { x, y, width, height } = toggleRef.getBoundingClientRect();
+    const right = innerWidth - (pageXOffset + x + width);
+    const top = pageYOffset + y + height + 10;
+
+    return { right, top };
+  };
+
   render() {
-    const { children, className, header, text, style, insets, platform, ...restProps } = this.props;
+    const { children, className, header, text, style, insets, platform, isMobile = true, ...restProps } = this.props;
+
+    let dropdownCoords = {};
+    let baseClaseName;
+
+    if (!isMobile) {
+      baseClaseName = 'ActionSheet--desktop';
+      dropdownCoords = {
+        ...this.getDropdownCoords(),
+        left: 'auto',
+      };
+    } else {
+      baseClaseName = getClassName('ActionSheet', platform);
+    }
 
     return (
       <PopoutWrapper
@@ -104,12 +136,14 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
         className={className}
         style={style}
         onClick={this.onClose}
+        hasMask={isMobile}
       >
         <div
           {...restProps}
           ref={this.elRef}
           onClick={this.stopPropagation}
-          className={classNames(getClassName('ActionSheet', platform), {
+          style={{ ...dropdownCoords }}
+          className={classNames(baseClaseName, {
             'ActionSheet--closing': this.state.closing,
           })}
         >
@@ -132,4 +166,4 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   }
 }
 
-export default withPlatform(withInsets(ActionSheet));
+export default withAdaptivity(withPlatform(withInsets(ActionSheet)));
