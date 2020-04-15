@@ -25,6 +25,8 @@ interface State {
 }
 
 interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabels, AdaptivityProps {
+  min: string;
+  max: string;
   name?: string;
   defaultValue?: string;
   onDateChange?: (value: string) => void;
@@ -76,6 +78,7 @@ class DatePicker extends Component<Props, State> {
     };
   };
 
+  // Переводим дату формата 2006-01-17 к объекту
   parseInputDate = (date: string) => {
     const splited = date.split('-');
 
@@ -86,22 +89,22 @@ class DatePicker extends Component<Props, State> {
     };
   };
 
-  // Переводим дату к формату для input type=date: 2006-01-17
+  // Переводим объект даты к формату для input type=date: 2006-01-17
   dateToInputFormat = ({ day, month, year }: State) => {
     return `${year}-${month}-${day}`;
+  };
+
+  // Переводим дату из state к 17.01.2006
+  stateToString = () => {
+    const { day, month, year } = this.state;
+
+    return `${day}.${month}.${year}`;
   };
 
   // Переводим дату из input type=date: 2006-01-17 к 17.01.2006
   inputDateToString = (date: string): string => {
     const splited = date.split('-');
     return `${splited[2]}.${splited[1]}.${splited[0]}`;
-  };
-
-  // Переводим дату из state к type=date: 2006-01-17 к 17.01.2006
-  stateToString = () => {
-    const { day, month, year } = this.state;
-
-    return `${day}.${month}.${year}`;
   };
 
   getDaysInMonth: GetDaysInMonth = (year: string | number, month: string) => {
@@ -186,14 +189,11 @@ class DatePicker extends Component<Props, State> {
   };
 
   get desktopView() {
-    const { name, top } = this.props;
+    const { name } = this.props;
     const { day, month, year } = this.state;
 
     return (
       <fieldset name={name || null} className="DatePicker">
-        {top &&
-          <legend className="DatePicker__label">{top}</legend>
-        }
         <div className="DatePicker__container">
           <div className="DatePicker__day">
             <CustomSelect
@@ -225,11 +225,19 @@ class DatePicker extends Component<Props, State> {
   }
 
   get mobileView() {
-    const { top, name } = this.props;
+    const { top, name, defaultValue: test } = this.props;
     const { day, month, year } = this.state;
     const defaultValue = this.dateToInputFormat({ day, month, year });
     const mindate = this.dateToInputFormat(this.minDate);
     const maxdate = this.dateToInputFormat(this.maxDate);
+
+    console.log(mindate, maxdate);
+    //        1901-01-01 2006-01-01
+    console.log(test);
+    //          13.11.1991
+
+    console.log('defaultValue for input', defaultValue);
+    //           defaultValue
 
     return (
       <Input
