@@ -38,10 +38,10 @@ class DatePicker extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = !props.defaultValue ? this.minDate : this.parseStringDate(props.defaultValue);
+    this.state = !props.defaultValue ? this.maxDate : this.parseStringDate(props.defaultValue);
   }
 
-  get minDate() {
+  get maxDate() {
     return {
       day: String(this.getDayOptions()[0].value),
       month: String(this.getMonthOptions()[0].value),
@@ -49,7 +49,7 @@ class DatePicker extends Component<Props, State> {
     };
   };
 
-  get maxDate() {
+  get minDate() {
     const years = this.getYearOptions();
     const lastYear = years.length - 1;
 
@@ -220,6 +220,8 @@ class DatePicker extends Component<Props, State> {
   get mobileView() {
     const { day, month, year } = this.state;
     const defaultValue = this.dateToInputFormat({ day, month, year });
+    const mindate = this.dateToInputFormat(this.minDate);
+    const maxdate = this.dateToInputFormat(this.maxDate);
 
     return (
       <Input
@@ -228,15 +230,15 @@ class DatePicker extends Component<Props, State> {
         type="date"
         defaultValue={defaultValue}
         onChange={this.onStringChange}
-        min={this.dateToInputFormat(this.minDate)}
-        max={this.dateToInputFormat(this.maxDate)}
+        min={mindate}
+        max={maxdate}
       />
     );
   }
 
   render() {
-    const { mobile } = this.props;
     // mobile - временное решение, пока нет платформы web
+    const { mobile } = this.props;
 
     return mobile ? this.mobileView : this.desktopView;
   }
