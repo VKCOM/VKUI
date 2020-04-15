@@ -6,7 +6,8 @@ import React, {
 } from 'react';
 import CustomSelect from '../CustomSelect/CustomSelect';
 import Input from '../Input/Input';
-import { HasPlatform } from '../../types';
+import { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { HasFormLabels, HasPlatform } from '../../types';
 
 const MonthNames: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
@@ -23,9 +24,9 @@ interface State {
   year?: string; // 2006
 }
 
-interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabels, AdaptivityProps {
+  name?: string;
   defaultValue?: string;
-  mobile?: boolean;
   onDateChange?: (value: string) => void;
 }
 
@@ -185,39 +186,46 @@ class DatePicker extends Component<Props, State> {
   };
 
   get desktopView() {
+    const { name, top } = this.props;
     const { day, month, year } = this.state;
 
     return (
-      <div className="DatePicker__container">
-        <div className="DatePicker__day">
-          <CustomSelect
-            name="day"
-            value={day}
-            options={this.getDayOptions()}
-            onSelectChange={this.onSelectChange}
-          />
+      <fieldset name={name || null} className="DatePicker">
+        {top &&
+          <legend className="DatePicker__label">{top}</legend>
+        }
+        <div className="DatePicker__container">
+          <div className="DatePicker__day">
+            <CustomSelect
+              name="day"
+              value={day}
+              options={this.getDayOptions()}
+              onSelectChange={this.onSelectChange}
+            />
+          </div>
+          <div className="DatePicker__month">
+            <CustomSelect
+              name="month"
+              value={month}
+              options={this.getMonthOptions()}
+              onSelectChange={this.onSelectChange}
+            />
+          </div>
+          <div className="DatePicker__year">
+            <CustomSelect
+              name="year"
+              value={year}
+              options={this.getYearOptions()}
+              onSelectChange={this.onSelectChange}
+            />
+          </div>
         </div>
-        <div className="DatePicker__month">
-          <CustomSelect
-            name="month"
-            value={month}
-            options={this.getMonthOptions()}
-            onSelectChange={this.onSelectChange}
-          />
-        </div>
-        <div className="DatePicker__year">
-          <CustomSelect
-            name="year"
-            value={year}
-            options={this.getYearOptions()}
-            onSelectChange={this.onSelectChange}
-          />
-        </div>
-      </div>
+      </fieldset>
     );
   }
 
   get mobileView() {
+    const { top, name } = this.props;
     const { day, month, year } = this.state;
     const defaultValue = this.dateToInputFormat({ day, month, year });
     const mindate = this.dateToInputFormat(this.minDate);
@@ -225,8 +233,8 @@ class DatePicker extends Component<Props, State> {
 
     return (
       <Input
-        top="Дата рождения"
-        name="bdate"
+        top={top}
+        name={name}
         type="date"
         defaultValue={defaultValue}
         onChange={this.onStringChange}
@@ -237,10 +245,9 @@ class DatePicker extends Component<Props, State> {
   }
 
   render() {
-    // mobile - временное решение, пока нет платформы web
-    const { mobile } = this.props;
+    const { isMobile } = this.props;
 
-    return mobile ? this.mobileView : this.desktopView;
+    return isMobile ? this.mobileView : this.desktopView;
   }
 }
 
