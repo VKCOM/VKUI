@@ -114,10 +114,11 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   };
 
   render() {
-    const { children, className, header, text, style, insets, platform, isMobile, ...restProps } = this.props;
+    const { children, className, header, text, style, insets, platform, isMobile = true, ...restProps } = this.props;
 
     let dropdownCoords = {};
     let baseClaseName;
+
     if (!isMobile) {
       baseClaseName = 'ActionSheet--desktop';
       dropdownCoords = {
