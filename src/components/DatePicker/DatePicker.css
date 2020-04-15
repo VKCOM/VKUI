@@ -4,14 +4,6 @@
   border: 0;
 }
 
-.DatePicker__label {
-  font-size: 13px;
-  color: var(--text_secondary);
-  padding: 0 0 8px 0;
-  margin: 0;
-  letter-spacing: -.08px;
-}
-
 .DatePicker__container {
   width: 100%;
   display: flex;

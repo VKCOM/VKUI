@@ -9,7 +9,7 @@ import Input from '../Input/Input';
 import { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasFormLabels, HasPlatform } from '../../types';
 
-const MonthNames: string[] = [
+const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
 ];
 
@@ -25,60 +25,35 @@ interface State {
 }
 
 interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabels, AdaptivityProps {
-  min: string;
-  max: string;
+  min: string; // 1901-01-01
+  max: string; // 2006-01-01
   name?: string;
   defaultValue?: string;
+  monthNames?: string[];
   onDateChange?: (value: string) => void;
 }
 
+type GetOptions = () => SelectOption[];
 type GetDaysInMonth = (year: string | number, month: string) => number;
 type GetMonthMaxDay = () => number;
-type GetOptions = () => SelectOption[];
 type SelectChangeHandler = (value: string, name: string) => void;
 
 class DatePicker extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = !props.defaultValue ? this.maxDate : this.parseStringDate(props.defaultValue);
+    this.state = props.defaultValue ?
+      this.parseInputDate(props.defaultValue) : this.parseInputDate(props.max);
   }
 
-  get maxDate() {
-    return {
-      day: String(this.getDayOptions()[0].value),
-      month: String(this.getMonthOptions()[0].value),
-      year: String(this.getYearOptions()[0].value),
-    };
+  // Переводим state к формату гг-мм-дд
+  private convertToInputFormat(date: State) {
+    const { day, month, year } = date;
+
+    return `${year}-${month}-${day}`;
   };
 
-  get minDate() {
-    const years = this.getYearOptions();
-    const lastYear = years.length - 1;
-
-    return {
-      day: String(this.getDayOptions()[0].value),
-      month: String(this.getMonthOptions()[0].value),
-      year: String(years[lastYear].value),
-    };
-  }
-
-  // Переводим дату формата 03.04.2020 к объекту
-  parseStringDate = (date?: string) => {
-    if (!date || date === '0.0.0') {
-      return null;
-    }
-
-    const splited = date.split('.');
-
-    return {
-      day: splited[0],
-      month: splited[1],
-      year: splited[2],
-    };
-  };
-
-  // Переводим дату формата 2006-01-17 к объекту
+  // Переводим дату формата гг-мм-дд к объекту
   parseInputDate = (date: string) => {
     const splited = date.split('-');
 
@@ -87,24 +62,6 @@ class DatePicker extends Component<Props, State> {
       month: splited[1],
       year: splited[0],
     };
-  };
-
-  // Переводим объект даты к формату для input type=date: 2006-01-17
-  dateToInputFormat = ({ day, month, year }: State) => {
-    return `${year}-${month}-${day}`;
-  };
-
-  // Переводим дату из state к 17.01.2006
-  stateToString = () => {
-    const { day, month, year } = this.state;
-
-    return `${day}.${month}.${year}`;
-  };
-
-  // Переводим дату из input type=date: 2006-01-17 к 17.01.2006
-  inputDateToString = (date: string): string => {
-    const splited = date.split('-');
-    return `${splited[2]}.${splited[1]}.${splited[0]}`;
   };
 
   getDaysInMonth: GetDaysInMonth = (year: string | number, month: string) => {
@@ -142,21 +99,25 @@ class DatePicker extends Component<Props, State> {
   };
 
   getMonthOptions: GetOptions = () => {
-    return MonthNames.map((name, index) => {
+    const { monthNames } = this.props;
+
+    return (monthNames || DefaultMonths).map((name, index) => {
       const value = String(index + 1);
 
       return {
-        label: String(name),
+        label: name,
         value: value.length === 1 ? '0' + value : value,
       };
     });
   };
 
   getYearOptions: GetOptions = () => {
+    const { max, min } = this.props;
     const yearOptions: SelectOption[] = [];
-    const maxYearAvailable = new Date().getFullYear() - 14;
+    const maxYear = +this.parseInputDate(max).year;
+    const minYear = +this.parseInputDate(min).year;
 
-    for (let value = maxYearAvailable; value >= 1901; value--) {
+    for (let value = maxYear; value >= minYear; value--) {
       yearOptions.push({
         label: String(value),
         value: String(value),
@@ -171,9 +132,9 @@ class DatePicker extends Component<Props, State> {
 
     this.setState(() => ({
       [name]: value,
-    }));
-
-    onDateChange && onDateChange(this.stateToString());
+    }), () => {
+      onDateChange && onDateChange(this.convertToInputFormat(this.state));
+    });
   };
 
   onStringChange: ChangeEventHandler = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -185,7 +146,7 @@ class DatePicker extends Component<Props, State> {
       ...date,
     }));
 
-    onDateChange && onDateChange(this.inputDateToString(e.target.value));
+    onDateChange && onDateChange(value);
   };
 
   get desktopView() {
@@ -225,29 +186,17 @@ class DatePicker extends Component<Props, State> {
   }
 
   get mobileView() {
-    const { top, name, defaultValue: test } = this.props;
-    const { day, month, year } = this.state;
-    const defaultValue = this.dateToInputFormat({ day, month, year });
-    const mindate = this.dateToInputFormat(this.minDate);
-    const maxdate = this.dateToInputFormat(this.maxDate);
-
-    console.log(mindate, maxdate);
-    //        1901-01-01 2006-01-01
-    console.log(test);
-    //          13.11.1991
-
-    console.log('defaultValue for input', defaultValue);
-    //           defaultValue
+    const { top, name, min, max } = this.props;
 
     return (
       <Input
         top={top}
         name={name}
         type="date"
-        defaultValue={defaultValue}
+        defaultValue={this.convertToInputFormat(this.state)}
         onChange={this.onStringChange}
-        min={mindate}
-        max={maxdate}
+        min={min}
+        max={max}
       />
     );
   }
