@@ -5,10 +5,18 @@ export enum SizeType {
   REGULAR = 'regular',
 }
 
+export enum ViewMode {
+  SMALL_MOBILE = 1,
+  MOBILE,
+  SMALL_TABLET,
+  TABLET,
+  DESKTOP,
+}
+
 export interface AdaptivityContextInterface {
   sizeX: SizeType;
   sizeY: SizeType;
-  isMobile?: boolean;
+  viewMode?: ViewMode;
 }
 
 export const AdaptivityContext = createContext<AdaptivityContextInterface>({

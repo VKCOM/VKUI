@@ -296,10 +296,6 @@
   align-items: center;
 }
 
-.ActionSheet--desktop .ActionSheetItem__icon {
-  margin-right: 20px;
-}
-
 /**
 * Animations
 */

@@ -62,7 +62,6 @@
   flex-shrink: 1;
   transform: translateZ(0);
   position: relative;
-  margin-right: 12px;
 }
 
 .SplitLayout__colFixedWrap {
@@ -70,7 +69,6 @@
   width: 1px;
   flex-grow: 1;
   flex-shrink: 1;
-  margin-right: 12px;
 }
 
 .SplitLayout__colFixedInner {

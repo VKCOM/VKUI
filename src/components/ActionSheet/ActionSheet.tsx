@@ -5,7 +5,7 @@ import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
 import { isNumeric } from '../../lib/utils';
 import { HasInsets, HasPlatform } from '../../types';
 import { ANDROID, IOS } from '../../lib/platform';
@@ -76,7 +76,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
-    if (!this.props.isMobile) {
+    if (this.props.viewMode >= ViewMode.TABLET) {
       eventHandler();
     }
 
@@ -107,19 +107,20 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     const { toggleRef } = this.props;
 
     const { x, y, width, height } = toggleRef.getBoundingClientRect();
-    const right = innerWidth - (pageXOffset + x + width);
-    const top = pageYOffset + y + height + 10;
+    const right = innerWidth - (x + width);
+    const top = + y + height + 10;
 
     return { right, top };
   };
 
   render() {
-    const { children, className, header, text, style, insets, platform, isMobile = true, ...restProps } = this.props;
+    const { children, className, header, text, style, insets, platform, viewMode, ...restProps } = this.props;
 
     let dropdownCoords = {};
     let baseClaseName;
+    const isDesktop = viewMode >= ViewMode.TABLET;
 
-    if (!isMobile) {
+    if (isDesktop) {
       baseClaseName = 'ActionSheet--desktop';
       dropdownCoords = {
         ...this.getDropdownCoords(),
@@ -136,7 +137,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
         className={className}
         style={style}
         onClick={this.onClose}
-        hasMask={isMobile}
+        hasMask={!isDesktop}
       >
         <div
           {...restProps}
@@ -166,4 +167,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   }
 }
 
-export default withAdaptivity(withPlatform(withInsets(ActionSheet)));
+export default withAdaptivity(withPlatform(withInsets(ActionSheet)), {
+  viewMode: true,
+});

@@ -1,7 +1,15 @@
 import React, { useContext } from 'react';
-import { AdaptivityContext, SizeType } from '../components/AdaptivityProvider/AdaptivityContext';
+import { AdaptivityContext, SizeType, ViewMode } from '../components/AdaptivityProvider/AdaptivityContext';
 
-export default function withAdaptivity<T>(TargetComponent: T): T {
+interface Config {
+  sizeX?: boolean;
+  sizeY?: boolean;
+  viewMode?: boolean;
+}
+
+export { SizeType, ViewMode };
+
+export default function withAdaptivity<T>(TargetComponent: T, config: Config): T {
   function AdaptivityConsumer(props: AdaptivityProps) {
     const context = useContext(AdaptivityContext);
     let update = false;
@@ -12,12 +20,17 @@ export default function withAdaptivity<T>(TargetComponent: T): T {
 
     const sizeX = props.sizeX || context.sizeX;
     const sizeY = props.sizeY || context.sizeY;
+    const viewMode = context.viewMode;
 
     // @ts-ignore
-    const target = <TargetComponent {...props} sizeX={sizeX} sizeY={sizeY} isMobile={context.isMobile} />;
+    const target = <TargetComponent {...props}
+      sizeX={config.sizeX ? sizeX : undefined}
+      sizeY={config.sizeY ? sizeY : undefined}
+      viewMode={config.viewMode ? viewMode : undefined}
+    />;
 
     if (update) {
-      return <AdaptivityContext.Provider value={{ sizeX, sizeY, isMobile: context.isMobile }}>
+      return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewMode }}>
         {target}
       </AdaptivityContext.Provider>;
     }
@@ -31,44 +44,5 @@ export default function withAdaptivity<T>(TargetComponent: T): T {
 export interface AdaptivityProps {
   sizeX?: SizeType;
   sizeY?: SizeType;
-  isMobile?: boolean;
+  viewMode?: ViewMode;
 }
-
-/* const withAdaptivity = <P extends AdaptivityProps>(TargetComponent: React.ComponentType<P>) => {
-  // const { sizeX, sizeY } = useContext(AdaptivityContext);
-
-  return class AdaptivityConsumer extends React.Component<P> {
-    static context = AdaptivityContext;
-
-    public componentDidMount() {
-
-    }
-
-    public componentWillUnmount() {
-
-    }
-
-    public render() {
-      let update = false;
-
-      if (this.props.sizeX || this.props.sizeY) {
-        update = true;
-      }
-
-      const sizeX = this.props.sizeX || this.context.sizeX;
-      const sizeY = this.props.sizeY || this.context.sizeY;
-
-      const target = <TargetComponent {...this.props} sizeX={sizeX} sizeY={sizeY} />;
-
-      if (update) {
-        return <AdaptivityContext.Provider value={{ sizeX, sizeY }}>
-          {target}
-        </AdaptivityContext.Provider>
-      }
-
-      return target;
-    }
-  };
-};*/
-
-// export default withAdaptivity;

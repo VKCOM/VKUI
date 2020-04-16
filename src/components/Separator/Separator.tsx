@@ -26,5 +26,7 @@ let Separator: FunctionComponent<SeparatorProps> = ({ className, sizeX, wide, ..
   );
 };
 
-Separator = withAdaptivity(Separator);
+Separator = withAdaptivity(Separator, {
+  sizeX: true,
+});
 export default React.memo(Separator);

@@ -86,4 +86,6 @@ class Panel extends Component<PanelProps> {
   }
 }
 
-export default withAdaptivity(withPlatform(withInsets(Panel)));
+export default withAdaptivity(withPlatform(withInsets(Panel)), {
+  sizeX: true,
+});

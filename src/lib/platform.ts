@@ -13,6 +13,7 @@ export type OSType = OS.ANDROID | OS.IOS;
 export function platform(useragent?: string): OSType {
   const ua = useragent || canUseDOM && navigator.userAgent || '';
 
+  return ANDROID;
   return /iphone|ipad|ipod/i.test(ua) ? IOS : ANDROID;
 }
 

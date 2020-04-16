@@ -20,6 +20,7 @@ export interface FixedLayoutProps extends
    * Это часто необходимо для фиксированных кнопок в нижней части экрана.
    */
   filled?: boolean;
+  global?: boolean;
 }
 
 export interface FixedLayoutState {

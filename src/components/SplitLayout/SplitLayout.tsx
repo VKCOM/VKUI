@@ -35,7 +35,6 @@ interface ColProps extends HTMLAttributes<HTMLDivElement>, HasChildren {
   width?: string;
   maxWidth?: string;
   minWidth?: string;
-  className?: string;
 }
 
 export class SplitCol extends Component<ColProps> {
@@ -52,11 +51,7 @@ export class SplitCol extends Component<ColProps> {
   }
 }
 
-interface FixedColProps extends ColProps {
-  fixedClassName?: string;
-}
-
-export class SplitFixedCol extends Component<FixedColProps> {
+export class SplitFixedCol extends Component<ColProps> {
   render() {
     const { children, width, maxWidth, minWidth, ...rest } = this.props;
 
