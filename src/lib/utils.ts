@@ -8,7 +8,6 @@ export function isFunction(value: any): boolean {
   return typeof value === 'function';
 }
 
-// метод из  @vkontakte-internal/vkui-common
 export function throttle(fn: any, threshhold = 50, scope = window) {
   let last: number;
   let deferTimer: any;
@@ -31,7 +30,6 @@ export function throttle(fn: any, threshhold = 50, scope = window) {
   };
 }
 
-// метод из  @vkontakte-internal/vkui-common
 export function debounce(fn: any, delay: number, context = window) {
   let timeout: any;
   let args: any[] = null;
