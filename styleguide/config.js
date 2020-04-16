@@ -104,6 +104,7 @@ module.exports = {
           '../src/components/UsersStack/UsersStack.tsx',
           '../src/components/Separator/Separator.tsx',
           '../src/components/Placeholder/Placeholder.tsx',
+          '../src/components/Banner/Banner.tsx',
         ]
       }, {
         name: 'Forms',
@@ -145,6 +146,9 @@ module.exports = {
       }, {
         name: 'Utils',
         content: './pages/utils.md'
+      }, {
+        name: 'Библиотеки компонентов для Sketch',
+        content: './pages/sketch.md'
       }]
     }
   ],

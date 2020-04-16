@@ -34,9 +34,8 @@
     z-index: 2;
     }
 
-  .Select--disabled .Select__container,
-  .Select select:disabled ~ .Select__container {
-    opacity: .6;
+  .Select--disabled .Select__container {
+    opacity: .4;
     }
 
     .Select:not(.Select--multiline) .Select__title {
@@ -48,6 +47,10 @@
     .Select--not-selected .Select__title {
       color: var(--field_text_placeholder);
       }
+
+    .Select--disabled.Select--not-selected .Select__title {
+      color: var(--text_secondary);
+    }
 
     .Select--align-right .Select__title {
       text-align: right;

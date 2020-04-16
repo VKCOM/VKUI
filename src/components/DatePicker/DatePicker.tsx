@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import CustomSelect from '../CustomSelect/CustomSelect';
 import Input from '../Input/Input';
-import { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
 import { HasFormLabels, HasPlatform } from '../../types';
 
 const DefaultMonths: string[] = [
@@ -202,10 +202,11 @@ class DatePicker extends Component<Props, State> {
   }
 
   render() {
-    const { isMobile } = this.props;
-
-    return isMobile ? this.mobileView : this.desktopView;
+    const isDesktop = this.props.viewMode >= ViewMode.DESKTOP;
+    return isDesktop ? this.desktopView : this.mobileView;
   }
 }
 
-export default DatePicker;
+export default withAdaptivity(DatePicker, {
+  viewMode: true,
+});
