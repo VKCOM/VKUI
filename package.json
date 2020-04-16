@@ -55,6 +55,7 @@
     "pre-commit": "^1.2.2",
     "prop-types": "^15.6.1",
     "react": "^16.8.6",
+    "react-custom-scrollbars": "^4.2.1",
     "react-docgen": "^4.1.1",
     "react-docgen-typescript": "^1.14.1",
     "react-dom": "^16.8.6",

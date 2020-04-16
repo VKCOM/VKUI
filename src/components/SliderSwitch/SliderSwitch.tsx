@@ -66,7 +66,6 @@ export default class SliderSwitch extends React.Component<Props, State> {
   };
 
   resetFocusedOption = () => {
-    console.log('rest', this.state.focusedOptionId);
     this.setState(() => ({
       focusedOptionId: -1,
     }));
