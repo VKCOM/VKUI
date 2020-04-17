@@ -121,8 +121,16 @@ module.exports = {
           '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx'
         ]
-      },
-      {
+      }, {
+        name: 'Typography',
+        components: () => [
+          '../src/components/Typography/Title/Title.tsx',
+          '../src/components/Typography/Headline/Headline.tsx',
+          '../src/components/Typography/Text/Text.tsx',
+          '../src/components/Typography/Subhead/Subhead.tsx',
+          '../src/components/Typography/Caption/Caption.tsx',
+        ]
+      }, {
         name: 'Advertisement',
         components: () => ['../src/components/PromoBanner/PromoBanner.tsx']
       },

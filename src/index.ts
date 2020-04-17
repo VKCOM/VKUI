@@ -112,6 +112,15 @@ export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHe
 export { default as PromoBanner } from './components/PromoBanner/PromoBanner';
 
 /**
+ * Typography
+ */
+export { default as Title } from './components/Typography/Title/Title';
+export { default as Headline } from './components/Typography/Headline/Headline';
+export { default as Text } from './components/Typography/Text/Text';
+export { default as Caption } from './components/Typography/Caption/Caption';
+export { default as Subhead } from './components/Typography/Subhead/Subhead';
+
+/**
  * HOCs
  */
 export { default as withInsets } from './hoc/withInsets';
