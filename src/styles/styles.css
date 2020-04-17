@@ -4,7 +4,7 @@
 @import './animations.css';
 
 /* Файлы с CSS компонентов подключаются здесь неслучайно. Пока не удалось делать импорты через JS так,
- * чтобы в каждом файле были доступны css переменные без их дублирования.
+ * чтобы в каждом файле были доступны CSS переменные без их дублирования.
  */
 /* Layout */
 @import '../components/Root/Root.css';
@@ -64,6 +64,7 @@
 @import '../components/UsersStack/UsersStack.css';
 @import '../components/Separator/Separator.css';
 @import '../components/Placeholder/Placeholder.css';
+@import '../components/Banner/Banner.css';
 
 /* Forms */
 @import '../components/FormLayout/FormLayout.css';

@@ -6,11 +6,11 @@ import getClassName from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
-import { HasPlatform, HasRootRef, OldRef, RefWithCurrent } from '../../types/props';
-import { GetRef } from '../../types/common';
+import { HasPlatform, HasRootRef, OldRef, RefWithCurrent } from '../../types';
+import withPlatform from '../../hoc/withPlatform';
 
 export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
-  Component: ElementType;
+  Component?: ElementType;
   activeEffectDelay?: number;
   disabled?: boolean;
   stopPropagation?: boolean;
@@ -46,7 +46,6 @@ export interface Storage {
 export type GetStorage = () => StorageItem;
 
 const ts = () => +Date.now();
-const baseClassNames = getClassName('Tappable');
 
 export const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
@@ -66,7 +65,7 @@ function deactivateOtherInstances(exclude?: string) {
   });
 }
 
-export default class Tappable extends Component<TappableProps, TappableState> {
+class Tappable extends Component<TappableProps, TappableState> {
   constructor(props: TappableProps) {
     super(props);
     this.id = Math.round(Math.random() * 1e8).toString(16);
@@ -177,8 +176,8 @@ export default class Tappable extends Component<TappableProps, TappableState> {
   onDown: VKUITouchEventHander = (e: VKUITouchEvent) => {
     if (this.props.platform === ANDROID) {
       const { top, left } = getOffsetRect(this.container);
-      const x = coordX(e);
-      const y = coordY(e);
+      const x = coordX(e) - left;
+      const y = coordY(e) - top;
       const key = 'wave' + Date.now().toString();
 
       this.setState((state: TappableState): TappableState => {
@@ -186,8 +185,8 @@ export default class Tappable extends Component<TappableProps, TappableState> {
           clicks: {
             ...state.clicks,
             [key]: {
-              x: Math.round(x - left),
-              y: Math.round(y - top),
+              x,
+              y,
             },
           },
         };
@@ -242,7 +241,7 @@ export default class Tappable extends Component<TappableProps, TappableState> {
   /*
    * Берет ref на DOM-ноду из экземпляра Touch
    */
-  getRef: GetRef = (container: HTMLElement) => {
+  getRef: OldRef<HTMLElement> = (container: HTMLElement) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;
@@ -271,7 +270,7 @@ export default class Tappable extends Component<TappableProps, TappableState> {
     const { children, className, Component, activeEffectDelay,
       stopPropagation, getRootRef, platform, ...restProps } = this.props;
 
-    const classes = classNames(baseClassNames, className, {
+    const classes = classNames(getClassName('Tappable', platform), className, {
       'Tappable--active': active,
       'Tappable--inactive': !active,
     });
@@ -299,9 +298,11 @@ export default class Tappable extends Component<TappableProps, TappableState> {
             <RootComponent {...restProps} className={classes} {...props}>
               {platform === ANDROID &&
               <span className="Tappable__waves">
-                {Object.keys(clicks).map((k: string) =>
-                  <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
-                )}
+                {Object.keys(clicks).map((k: string) => {
+                  return (
+                    <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                  );
+                })}
               </span>
               }
               {children}
@@ -312,3 +313,5 @@ export default class Tappable extends Component<TappableProps, TappableState> {
     );
   }
 }
+
+export default withPlatform(Tappable);

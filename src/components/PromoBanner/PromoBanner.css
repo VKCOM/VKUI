@@ -40,6 +40,7 @@
 
 .PromoBanner__content {
   flex: 0 1 100%;
+  width: 100%;
 }
 
 .PromoBanner__close {
@@ -56,4 +57,8 @@
 
 .PromoBanner__close:active {
   opacity: .7;
+}
+
+.PromoBanner__pixels {
+  display: none;
 }

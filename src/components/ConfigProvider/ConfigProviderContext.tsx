@@ -1,17 +1,29 @@
 import { createContext } from 'react';
-import vkBridge from '@vkontakte/vk-bridge';
+import { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
 
-export interface ConfigProviderContextInterface {
-  scheme?: 'client_light' | 'client_dark' | 'bright_light' | 'space_gray';
-  isWebView?: boolean;
-  webviewType?: 'vkapps' | 'internal';
-  app?: string;
+export enum Appearance {
+  DARK = 'dark',
+  LIGHT = 'light',
 }
 
-const ConfigProviderContext = createContext<ConfigProviderContextInterface>({
-  webviewType: 'internal',
-  isWebView: vkBridge.isWebView(),
-  scheme: 'bright_light',
-});
+export enum Scheme {
+  DEPRECATED_CLIENT_LIGHT = 'client_light',
+  DEPRECATED_CLIENT_DARK = 'client_dark',
+  BRIGHT_LIGHT = 'bright_light',
+  SPACE_GRAY = 'space_gray',
+}
 
-export default ConfigProviderContext;
+export enum WebviewType {
+  VKAPPS = 'vkapps',
+  INTERNAL = 'internal',
+}
+
+export interface ConfigProviderContextInterface {
+  scheme?: AppearanceSchemeType;
+  isWebView?: boolean;
+  webviewType?: WebviewType.INTERNAL | WebviewType.VKAPPS;
+  app?: string;
+  appearance?: AppearanceType;
+}
+
+export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});

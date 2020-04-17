@@ -103,6 +103,7 @@ module.exports = {
           '../src/components/UsersStack/UsersStack.tsx',
           '../src/components/Separator/Separator.tsx',
           '../src/components/Placeholder/Placeholder.tsx',
+          '../src/components/Banner/Banner.tsx',
         ]
       }, {
         name: 'Forms',
@@ -125,11 +126,10 @@ module.exports = {
         name: 'Advertisement',
         components: () => ['../src/components/PromoBanner/PromoBanner.tsx']
       },
-      // @TODO раскоментировать, когда все компоненты станут SSR-friendly
-      // {
-      //   name: 'Server Side Rendering',
-      //   content: './pages/ssr.md'
-      // },
+      {
+        name: 'Server Side Rendering',
+        content: './pages/ssr.md'
+      },
       {
         name: 'Icons',
         content: './pages/icons.md'
@@ -142,6 +142,9 @@ module.exports = {
       }, {
         name: 'Utils',
         content: './pages/utils.md'
+      }, {
+        name: 'Библиотеки компонентов для Sketch',
+        content: './pages/sketch.md'
       }]
     }
   ],

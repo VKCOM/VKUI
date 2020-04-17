@@ -9,7 +9,7 @@ import React, {
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasChildren, HasRef } from '../../types/props';
+import { HasChildren, HasRef } from '../../types';
 
 const preventDefault = (e: FormEvent) => e.preventDefault();
 

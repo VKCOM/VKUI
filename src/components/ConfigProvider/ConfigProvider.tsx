@@ -1,75 +1,72 @@
-import React, { ReactNode } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
-import vkBridge from '@vkontakte/vk-bridge';
+import React from 'react';
 import { canUseDOM } from '../../lib/dom';
-import ConfigProviderContext, { ConfigProviderContextInterface } from './ConfigProviderContext';
+import PropTypes, { Validator } from 'prop-types';
+import {
+  Appearance,
+  ConfigProviderContext,
+  ConfigProviderContextInterface,
+  Scheme,
+  WebviewType,
+} from './ConfigProviderContext';
+import { HasChildren } from '../../types';
+import vkBridge, { AppearanceSchemeType } from '@vkontakte/vk-bridge';
 
-export interface ConfigProviderProps extends ConfigProviderContextInterface {
-  children?: ReactNode;
-}
-
-export interface ConfigProviderContext {
-  document: Document;
-}
-
-export interface ConfigProviderContextType {
-  document: Requireable<{}>;
-}
+export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
 export interface ConfigProviderChildContextType {
-  isWebView: Requireable<boolean>;
-  scheme: Requireable<string>;
-  webviewType: Requireable<'vkapps' | 'internal'>;
-  app: Requireable<string>;
+  isWebView: Validator<boolean>;
+  scheme: Validator<Scheme>;
+  webviewType: Validator<WebviewType>;
+  appearance: Validator<Appearance>;
+  app: Validator<string>;
 }
 
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
-  constructor(props: ConfigProviderProps, context: ConfigProviderContext) {
+  constructor(props: ConfigProviderProps) {
     super(props);
     if (canUseDOM) {
-      this.setScheme((context.document || window.document).body, this.mapOldScheme(props.scheme));
+      this.setScheme(props.scheme);
     }
   }
 
+  static defaultProps: ConfigProviderProps = {
+    webviewType: WebviewType.VKAPPS,
+    isWebView: vkBridge.isWebView(),
+    scheme: Scheme.BRIGHT_LIGHT,
+    appearance: Appearance.LIGHT,
+  };
+
   static childContextTypes: ConfigProviderChildContextType = {
     isWebView: PropTypes.bool,
-    scheme: PropTypes.string,
-    webviewType: PropTypes.oneOf(['vkapps', 'internal']),
+    scheme: PropTypes.oneOf([
+      Scheme.SPACE_GRAY,
+      Scheme.BRIGHT_LIGHT,
+      Scheme.DEPRECATED_CLIENT_DARK,
+      Scheme.DEPRECATED_CLIENT_LIGHT,
+    ]),
+    webviewType: PropTypes.oneOf([WebviewType.VKAPPS, WebviewType.INTERNAL]),
+    appearance: PropTypes.oneOf([Appearance.DARK, Appearance.LIGHT]),
     app: PropTypes.string,
   };
 
-  static defaultProps: ConfigProviderProps = {
-    webviewType: 'internal',
-    isWebView: vkBridge.isWebView(),
-    scheme: 'bright_light',
-  };
-
-  static contextTypes: ConfigProviderContextType = {
-    document: PropTypes.object,
-  };
-
-  get document(): Document {
-    return this.context.document || window.document;
-  }
-
-  mapOldScheme(scheme: ConfigProviderProps['scheme']) {
+  mapOldScheme(scheme: AppearanceSchemeType): AppearanceSchemeType {
     switch (scheme) {
-      case 'client_light':
-        return 'bright_light';
-      case 'client_dark':
-        return 'space_gray';
+      case Scheme.DEPRECATED_CLIENT_LIGHT:
+        return Scheme.BRIGHT_LIGHT;
+      case Scheme.DEPRECATED_CLIENT_DARK:
+        return Scheme.SPACE_GRAY;
       default:
         return scheme;
     }
   }
 
-  setScheme(target: HTMLElement, scheme: ConfigProviderProps['scheme']) {
-    target.setAttribute('scheme', scheme);
+  setScheme(scheme: AppearanceSchemeType): void {
+    document.body.setAttribute('scheme', scheme);
   }
 
   componentDidUpdate(prevProps: ConfigProviderProps) {
     if (prevProps.scheme !== this.props.scheme) {
-      this.setScheme(this.document.body, this.mapOldScheme(this.props.scheme));
+      this.setScheme(this.mapOldScheme(this.props.scheme));
     }
   }
 
@@ -78,6 +75,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
       scheme: this.mapOldScheme(this.props.scheme),
+      appearance: this.props.appearance,
       app: this.props.app,
     };
   }

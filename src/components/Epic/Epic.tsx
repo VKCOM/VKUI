@@ -2,7 +2,7 @@ import React, { HTMLAttributes, ReactNode, Component } from 'react';
 import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasChildren, HasPlatform } from '../../types/props';
+import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 
 export interface EpicProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasPlatform {

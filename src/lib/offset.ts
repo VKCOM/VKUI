@@ -15,8 +15,8 @@ export function getOffsetRect(elem: HTMLElement): OffsetRectInterface {
   const clientLeft = doc.clientLeft || body.clientLeft || 0;
 
   return {
-    top: Math.round(box.top + scrollTop - clientTop),
-    left: Math.round(box.left + scrollLeft - clientLeft),
+    top: box.top + scrollTop - clientTop,
+    left: box.left + scrollLeft - clientLeft,
     width: elem.offsetWidth,
     height: elem.offsetHeight,
   };

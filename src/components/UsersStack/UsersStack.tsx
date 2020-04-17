@@ -1,7 +1,7 @@
 import React from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasChildren } from '../../types/props';
+import { HasChildren } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import { createMasks } from './masks';
 
@@ -51,13 +51,15 @@ const UsersStack: React.FunctionComponent<UsersStackProps> = (props: UsersStackP
         )}
     >
       <div className="UsersStack__photos">
-        {photosShown.map((photo: string, i: number) =>
-          <div
-            key={i}
-            className="UsersStack__photo"
-            style={{ backgroundImage: `url(${photo})` }}
-          />
-        )}
+        {photosShown.map((photo: string, i: number) => {
+          return (
+            <div
+              key={i}
+              className="UsersStack__photo"
+              style={{ backgroundImage: `url(${photo})` }}
+            />
+          );
+        })}
 
         {canShowOthers &&
         <div className="UsersStack__photo UsersStack__photo--others">

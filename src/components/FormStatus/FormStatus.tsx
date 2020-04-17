@@ -1,7 +1,7 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { HasChildren, HasDangerHTML } from '../../types/props';
+import { HasChildren, HasDangerHTML } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface FormStatusProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasDangerHTML {

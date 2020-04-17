@@ -5,13 +5,13 @@ import getClassName from '../../helpers/getClassName';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
-  onTransition(params: { isBack: boolean; from: string; to: string }): void;
-  popout: ReactNode;
-  modal: ReactNode;
+  onTransition?(params: { isBack: boolean; from: string; to: string }): void;
+  popout?: ReactNode;
+  modal?: ReactNode;
 }
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
@@ -166,17 +166,19 @@ class Root extends Component<RootProps, RootState> {
 
     return (
       <div className={classNames(baseClassName, this.props.className, { 'Root--transition': transition })}>
-        {Views.map((view: ReactElement) =>
-          <div key={view.props.id} id={`view-${view.props.id}`} className={classNames('Root__view', {
-            'Root__view--hide-back': view.props.id === prevView && isBack,
-            'Root__view--hide-forward': view.props.id === prevView && !isBack,
-            'Root__view--show-back': view.props.id === nextView && isBack,
-            'Root__view--show-forward': view.props.id === nextView && !isBack,
-            'Root__view--active': view.props.id === activeView,
-          })}>
-            {view}
-          </div>
-        )}
+        {Views.map((view: ReactElement) => {
+          return (
+            <div key={view.props.id} id={`view-${view.props.id}`} className={classNames('Root__view', {
+              'Root__view--hide-back': view.props.id === prevView && isBack,
+              'Root__view--hide-forward': view.props.id === prevView && !isBack,
+              'Root__view--show-back': view.props.id === nextView && isBack,
+              'Root__view--show-forward': view.props.id === nextView && !isBack,
+              'Root__view--active': view.props.id === activeView,
+            })}>
+              {view}
+            </div>
+          );
+        })}
         {!!popout && <div className="Root__popout">{popout}</div>}
         {!!modal && <div className="Root__modal">{modal}</div>}
       </div>

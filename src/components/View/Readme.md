@@ -67,7 +67,7 @@ class Example extends React.Component {
 можно явно передать в `СonfigProvider` свойство `isWebView={true}`.
 
 * При попадании на первую панель слать `vkui-сonnect` событие `VKWebAppDisableSwipeBack`. При уходе с первой панели –
-слать `VKWebAppEnableSwipeBack`. Таким образом vkui свайп не будет конфликтовать со свайпом нативного клиента.
+слать `VKWebAppEnableSwipeBack`. Таким образом VKUI свайп не будет конфликтовать со свайпом нативного клиента.
 
 Пример:
 

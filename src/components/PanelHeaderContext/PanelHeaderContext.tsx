@@ -4,7 +4,7 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import transitionEvents from '../../lib/transitionEvents';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types';
 
 export interface PanelHeaderContextProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   opened: boolean;
@@ -14,8 +14,6 @@ export interface PanelHeaderContextProps extends HTMLAttributes<HTMLDivElement>,
 export interface PanelHeaderContextState {
   closing: boolean;
 }
-
-type AnimationHandler = () => void;
 
 class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderContextState> {
   static defaultProps: Partial<PanelHeaderContextProps> = {
@@ -37,7 +35,7 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
     }
   }
 
-  waitAnimationFinish(eventHandler: AnimationHandler) {
+  waitAnimationFinish(eventHandler: VoidFunction) {
     const eventName = transitionEvents.animationEndEventName;
     const element = this.elementRef.current;
 
@@ -47,7 +45,7 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
     }
   }
 
-  onAnimationFinish: AnimationHandler = () => {
+  onAnimationFinish: VoidFunction = () => {
     this.setState({ closing: false });
   };
 

@@ -5,6 +5,7 @@ coverage
 npm-debug.log
 stats.json
 dist/
-.idea/
 src/styles/generated/
 PUBLISHING.md
+.idea/workspace.xml
+.idea/tasks.xml

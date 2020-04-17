@@ -7,14 +7,14 @@
       Separator
     </PanelHeader>
 
-    <Group title="Сепаратор">
-      <Cell before={<Icon24Notification />}>Уведомления</Cell>
-      <Cell before={<Icon24DoNotDisturb />}>Не беспокоить</Cell>
+    <Group header={<Header mode="secondary">Сепаратор</Header>}>
+      <Cell before={<Icon28Notifications />}>Уведомления</Cell>
+      <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
 
       <Separator style={{ margin: '12px 0' }} />
 
-      <Cell before={<Icon24User />}>Учётная запись</Cell>
-      <Cell before={<Icon24Filter />}>Основные</Cell>
+      <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
+      <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
     </Group>
   </Panel>
 </View>

@@ -87,7 +87,7 @@ class SnackBarExample extends React.Component {
         onClose={() => this.setState({ snackbar: null })}
         action="Отменить"
         onActionClick={() => this.setState({ text: 'Сообщение Ивану было отменено.' })}
-        after={<Avatar src="https://sun9-20.userapi.com/c846018/v846018136/164bc/XoLIN4P5Kb0.jpg?ava=1" size={32} />}
+        after={<Avatar src={getAvatarUrl('user_wayshev')} size={32} />}
       >
         Отправлено Ивану Барышеву
       </Snackbar>

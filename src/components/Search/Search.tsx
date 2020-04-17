@@ -13,7 +13,7 @@ import getClassname from '../../helpers/getClassName';
 import Icon16SearchOutline from '@vkontakte/icons/dist/16/search_outline';
 import Icon16Clear from '@vkontakte/icons/dist/16/clear';
 import { IOS } from '../../lib/platform';
-import { HasPlatform, HasRef } from '../../types/props';
+import { HasPlatform, HasRef } from '../../types';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import { VKUITouchEvent } from '../../lib/touch';
 
@@ -149,7 +149,6 @@ class Search extends Component<SearchProps, SearchState> {
           <div className="Search__control">
             <input
               {...inputProps}
-              id={this.searchId}
               ref={this.inputRef}
               type="text"
               className="Search__input"
@@ -159,15 +158,12 @@ class Search extends Component<SearchProps, SearchState> {
               value={this.value}
             />
             {platform === IOS && after && <div className="Search__after-width">{after}</div>}
-            <label
-              className="Search__placeholder"
-              htmlFor={this.searchId}
-            >
+            <div className="Search__placeholder">
               <div className="Search__placeholder-in">
                 <Icon16SearchOutline />
                 <div className="Search__placeholder-text" dangerouslySetInnerHTML={{ __html: placeholder }} />
               </div>
-            </label>
+            </div>
           </div>
           <div className="Search__after" onClick={this.onCancel}>
             <div className="Search__icons">

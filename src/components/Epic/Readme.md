@@ -7,7 +7,7 @@ Android. Внизу располагается панель с иконками,
 [TabbarItem](https://vkcom.github.io/vkui-styleguide/#!/TabbarItem).
 
 Логика работы `Epic` похожа на логику `View` и `Root`: Внутри `Epic` может находиться либо коллекция `Root`,
-либо коллекция `View`. У каждого элемента коллекции должен быть уникальный `id`. Свойство `activeStory` указывается
+либо коллекция `View`. У каждого элемента коллекции должен быть уникальный `id`. Свойство `activeStory` указывает
 на `id` активного окна.
 
 **Важно:** в `Epic` всегда должен быть передан `Tabbar`, так как он является единственным способом переключения
@@ -38,20 +38,20 @@ class Example extends React.Component {
             selected={this.state.activeStory === 'feed'}
             data-story="feed"
             text="Новости"
-          ><Icon28Newsfeed /></TabbarItem>
+          ><Icon28NewsfeedOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'discover'}
             data-story="discover"
             text="Поиск"
-          ><Icon28Search /></TabbarItem>
+          ><Icon28SearchOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'messages'}
             data-story="messages"
             label="12"
             text="Сообщения"
-          ><Icon28Messages /></TabbarItem>
+          ><Icon28MessageOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'notifications'}

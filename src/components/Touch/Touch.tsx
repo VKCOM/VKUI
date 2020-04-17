@@ -8,9 +8,8 @@ import {
   VKUITouchEvent,
   VKUITouchEventHander,
 } from '../../lib/touch';
-import { HasRootRef } from '../../types/props';
+import { HasRootRef, OldRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
-import { GetRef } from '../../types/common';
 
 export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   onStart?(outputEvent: TouchEvent): void;
@@ -275,7 +274,7 @@ export default class Touch extends Component<TouchProps> {
     this.props.onClick && this.props.onClick(e);
   };
 
-  getRef: GetRef = (container: HTMLElement) => {
+  getRef: OldRef<HTMLElement> = (container: HTMLElement) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;

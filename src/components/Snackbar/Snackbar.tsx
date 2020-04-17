@@ -1,17 +1,16 @@
-/* eslint-disable */
-
-import React, { HTMLAttributes, PureComponent } from 'react';
+import React, { HTMLAttributes, PureComponent, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Touch from '../Touch/Touch';
 import classNames from '../../lib/classNames';
-import { HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types';
 import getClassname from '../../helpers/getClassName';
 import { canUseDOM } from '../../lib/dom';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
+import { TouchEvent } from '../Touch/Touch';
 
 export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform {
   /**
@@ -22,16 +21,16 @@ export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform 
   /**
    * Будет вызвано при клике на кнопку действия
    */
-  onActionClick?: (e: Event) => {};
+  onActionClick?: (e: React.MouseEvent) => void;
 
   /**
    * Цветная иконка 24x24 пикселя
    */
-  before?: React.ComponentType;
+  before?: React.ReactNode;
   /**
    * Контент в правой части, может быть `<Avatar size={32} />`
    */
-  after?: React.ComponentType;
+  after?: React.ReactNode;
   /**
    * Варианты расположения кнопки
    */
@@ -43,7 +42,7 @@ export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform 
   /**
    * Обработчик закрытия уведомления
    */
-  onClose: () => {};
+  onClose: () => void;
 }
 
 export interface SnackbarState {
@@ -52,7 +51,7 @@ export interface SnackbarState {
 }
 
 class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
-  constructor(props) {
+  constructor(props: SnackbarProps) {
     super(props);
 
     this.state = {
@@ -64,7 +63,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
     this.shiftXPercent = 0;
     this.shiftXCurrent = 0;
-    this.touchStartTime = 0;
   }
 
   static defaultProps = {
@@ -82,7 +80,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   private shiftXPercent: number;
   private shiftXCurrent: number;
-  private touchStartTime: number;
+  private touchStartTime: Date;
   private animationFrame: number;
 
   componentDidMount() {
@@ -109,7 +107,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     clearTimeout(this.closeTimeout);
   };
 
-  onActionClick = (e) => {
+  private readonly onActionClick = (e: MouseEvent) => {
     this.close();
 
     if (this.props.action && typeof this.props.onActionClick === 'function') {
@@ -124,7 +122,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     });
   }
 
-  waitTransitionFinish(element: HTMLElement, eventHandler) {
+  waitTransitionFinish(element: HTMLElement, eventHandler: VoidFunction) {
     if (element) {
       const eventName = transitionEvents.transitionEndEventName;
 
@@ -133,13 +131,13 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     }
   }
 
-  getInnerRef = (el) => this.innerEl = el;
+  getInnerRef = (el: HTMLDivElement) => this.innerEl = el;
 
   onTouchStart = () => {
     this.clearCloseTimeout();
   };
 
-  onTouchMoveX = (event) => {
+  onTouchMoveX = (event: TouchEvent) => {
     const { shiftX, startT, originalEvent } = event;
     originalEvent.preventDefault();
 
@@ -163,7 +161,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
     if (this.state.touched) {
       let shiftXReal = this.shiftXCurrent;
-      const expectTranslateY = shiftXReal / (Date.now() - this.touchStartTime) * 240 * 0.6 * (this.shiftXPercent < 0 ? -1 : 1);
+      const expectTranslateY = shiftXReal / (Date.now() - this.touchStartTime.getTime()) * 240 * 0.6 * (this.shiftXPercent < 0 ? -1 : 1);
       shiftXReal = shiftXReal + expectTranslateY;
 
       if (shiftXReal >= 50) {

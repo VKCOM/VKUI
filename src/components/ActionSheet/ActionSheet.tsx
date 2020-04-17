@@ -6,7 +6,7 @@ import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
-import { HasPlatform, HasInsets } from '../../types/props';
+import { HasInsets, HasPlatform } from '../../types';
 import { ANDROID, IOS } from '../../lib/platform';
 
 export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets {

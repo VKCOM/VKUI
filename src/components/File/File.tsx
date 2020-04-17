@@ -2,7 +2,7 @@ import React, { FunctionComponent, InputHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Button, { VKUIButtonProps } from '../Button/Button';
 import classNames from '../../lib/classNames';
-import { HasRef, HasRootRef } from '../../types/props';
+import { HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface FileProps extends
