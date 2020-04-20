@@ -256,6 +256,7 @@
   width: auto;
   height: auto;
   background: white;
+  animation: none;
   box-shadow: 0 0 50px 0 rgba(0, 0, 0, .2);
   border-radius: 14px;
   position: absolute;

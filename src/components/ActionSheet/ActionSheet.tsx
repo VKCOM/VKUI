@@ -23,7 +23,8 @@ export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPla
   /**
    * Desktop only
    */
-  toggleRef?: Element;
+  toggleRef: Element;
+  mobileCloseItem: React.ReactNode;
 }
 
 export interface ActionSheetState {
@@ -114,21 +115,31 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   };
 
   render() {
-    const { children, className, header, text, style, insets, platform, viewMode, ...restProps } = this.props;
+    const {
+      children,
+      className,
+      header,
+      text,
+      style,
+      insets,
+      platform,
+      viewMode,
+      mobileCloseItem,
+      ...restProps
+    } = this.props;
 
-    let dropdownCoords = {};
+    let dropdownStyles = {};
     let baseClaseName;
     const isDesktop = viewMode >= ViewMode.TABLET;
 
     if (isDesktop) {
-      baseClaseName = 'ActionSheet--desktop';
-      dropdownCoords = {
+      dropdownStyles = {
         ...this.getDropdownCoords(),
         left: 'auto',
       };
-    } else {
-      baseClaseName = getClassName('ActionSheet', platform);
     }
+
+    baseClaseName = getClassName('ActionSheet', platform);
 
     return (
       <PopoutWrapper
@@ -143,8 +154,9 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
           {...restProps}
           ref={this.elRef}
           onClick={this.stopPropagation}
-          style={{ ...dropdownCoords }}
+          style={{ ...dropdownStyles }}
           className={classNames(baseClaseName, {
+            'ActionSheet--desktop': isDesktop,
             'ActionSheet--closing': this.state.closing,
           })}
         >
@@ -161,6 +173,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
               isLast: this.isItemLast(index),
             }),
           )}
+          {!isDesktop && mobileCloseItem}
         </div>
       </PopoutWrapper>
     );
