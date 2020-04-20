@@ -108,7 +108,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
     const { x, y, width, height } = toggleRef.getBoundingClientRect();
     const right = innerWidth - (x + width);
-    const top = + y + height + 10;
+    const top = + y + height + 10 + window.scrollY;
 
     return { right, top };
   };
