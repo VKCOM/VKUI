@@ -19,8 +19,20 @@ const Title: FunctionComponent<TitleProps> = ({
 }) => {
   const platform = usePlatform();
 
-  let titleWeight: TitleProps['weight'] = weight;
+  let Component: React.ElementType = 'div';
+  switch (level) {
+    case '1':
+      Component = 'h1';
+      break;
+    case '2':
+      Component = 'h2';
+      break;
+    case '3':
+      Component = 'h3';
+      break;
+  }
 
+  let titleWeight: TitleProps['weight'] = weight;
   if (platform === ANDROID) {
     if (level === '3') {
       let headlineWeight: HeadlineProps['weight'];
@@ -35,7 +47,6 @@ const Title: FunctionComponent<TitleProps> = ({
       }
       return <Headline {...restProps} weight={headlineWeight} className={className}>{children}</Headline>;
     }
-
     if (platform === ANDROID) {
       if (level === '1' && weight === 'heavy') {
         titleWeight = 'bold';
@@ -53,7 +64,7 @@ const Title: FunctionComponent<TitleProps> = ({
   }
 
   return (
-    <div
+    <Component
       {...restProps}
       className={
         classNames(
@@ -65,7 +76,7 @@ const Title: FunctionComponent<TitleProps> = ({
       }
     >
       {children}
-    </div>
+    </Component>
   );
 };
 

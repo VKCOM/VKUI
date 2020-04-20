@@ -16,21 +16,24 @@ const Headline: FunctionComponent<HeadlineProps> = ({
 }) => {
   const platform = usePlatform();
 
+  let Component: React.ElementType = 'h4';
+
   let headlineWeight: HeadlineProps['weight'] = weight;
 
   if (platform === ANDROID) {
+    Component = 'h3';
     if (weight === 'semibold') {
       headlineWeight = 'medium';
     }
   }
 
   return (
-    <div
+    <Component
       {...restProps}
       className={classNames(getClassName('Headline', platform), `Headline--w-${headlineWeight}`, className)}
     >
       {children}
-    </div>
+    </Component>
   );
 };
 

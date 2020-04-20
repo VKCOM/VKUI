@@ -6,9 +6,9 @@
   <Panel id="test" separator={false}>
     <PanelHeaderSimple>Headline</PanelHeaderSimple>
     <Div>
-      <Headline weight="regular" style={{ marginBottom: 10 }}>Headline regular</Headline>
-      <Headline weight="medium" style={{ marginBottom: 10 }}>Headline medium</Headline>
-      <Headline weight="semibold" style={{ marginBottom: 10 }}>Headline semibold</Headline>
+      <Headline weight="regular" style={{ marginBottom: 16 }}>Headline regular</Headline>
+      <Headline weight="medium" style={{ marginBottom: 16 }}>Headline medium</Headline>
+      <Headline weight="semibold" style={{ marginBottom: 16 }}>Headline semibold</Headline>
     </Div>
   </Panel>
 </View>

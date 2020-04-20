@@ -16,21 +16,24 @@ const Subhead: FunctionComponent<SubheadProps> = ({
 }) => {
   const platform = usePlatform();
 
+  let Component: React.ElementType = 'h5';
+
   let subheadWeight: SubheadProps['weight'] = weight;
 
   if (platform === ANDROID) {
+    Component = 'h4';
     if (weight === 'semibold') {
       subheadWeight = 'medium';
     }
   }
 
   return (
-    <div
+    <Component
       {...restProps}
       className={classNames(getClassName('Subhead', platform), `Subhead--w-${subheadWeight}`, className)}
     >
       {children}
-    </div>
+    </Component>
   );
 };
 
