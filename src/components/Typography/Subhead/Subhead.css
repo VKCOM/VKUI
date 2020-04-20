@@ -1,0 +1,21 @@
+.Subhead {
+  margin: 0;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.Subhead--w-regular {
+  font-weight: 400;
+}
+
+.Subhead--w-medium {
+  font-weight: 500;
+}
+
+.Subhead--w-semibold {
+  font-weight: 600;
+}
+
+.Subhead--w-bold {
+  font-weight: 600;
+}

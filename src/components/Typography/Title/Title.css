@@ -1,0 +1,38 @@
+.Title {
+  margin: 0;
+}
+
+.Title--l-1 {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.Title--l-2 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.Title--l-3 {
+  font-size: 17px;
+  line-height: 22px;
+}
+
+.Title--w-regular {
+  font-weight: 400;
+}
+
+.Title--w-medium {
+  font-weight: 500;
+}
+
+.Title--w-semibold {
+  font-weight: 600;
+}
+
+.Title--w-bold {
+  font-weight: 700;
+}
+
+.Title--w-heavy {
+  font-weight: 800;
+}
