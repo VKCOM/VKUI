@@ -5,7 +5,7 @@ ActionSheet – имитация [нативного компонента](https
 **Важно**
 
 * Нужно обязательно передать `onClose` для обработки закрытия `ActionSheet` изнутри.
-* Согласно гайдлайнам Apple, в `ActionSheet` должен быть элемент для закрытия.
+* Согласно гайдлайнам Apple, в `ActionSheet` должен быть элемент для закрытия, для этого предусмотрен атрибут `iosCloseItem`.
 В коде примера ниже можно посмотреть, как добавить такой элемент.
 Для Android версии он не нужен.
 
@@ -29,7 +29,10 @@ class Example extends React.Component {
 
   openBase () {
     this.setState({ popout:
-      <ActionSheet onClose={() => this.setState({ popout: null })}>
+      <ActionSheet 
+        onClose={() => this.setState({ popout: null })}
+        iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+      >
         <ActionSheetItem autoclose>
           По дням
         </ActionSheetItem>
@@ -39,35 +42,38 @@ class Example extends React.Component {
         <ActionSheetItem autoclose>
           По месяцам
         </ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }
 
   openIcons () {
     this.setState({ popout:
-      <ActionSheet onClose={() => this.setState({ popout: null })}>
+      <ActionSheet 
+        onClose={() => this.setState({ popout: null })}
+        iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+      >
         <ActionSheetItem autoclose before={<Icon28Profile/>}>
           Редактировать профиль
         </ActionSheetItem>
         <ActionSheetItem autoclose before={<Icon28CameraOutline/>}>
           Изменить фотографию
         </ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }
 
   openThemes () {
     this.setState({ popout:
-      <ActionSheet onClose={() => this.setState({ popout: null })}>
+      <ActionSheet 
+        onClose={() => this.setState({ popout: null })}
+        iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+      >
         <ActionSheetItem autoclose>
           Редактировать
         </ActionSheetItem>
         <ActionSheetItem autoclose mode="destructive">
           Выйти
         </ActionSheetItem>
-        {osname === IOS && <ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       </ActionSheet>
     });
   }

@@ -1,4 +1,4 @@
-import React, { Children, Component, HTMLAttributes, ReactElement } from 'react';
+import React, { Children, Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -24,7 +24,7 @@ export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPla
    * Desktop only
    */
   toggleRef: Element;
-  mobileCloseItem: React.ReactNode;
+  iosCloseItem: React.ReactNode;
 }
 
 export interface ActionSheetState {
@@ -93,15 +93,8 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
   isItemLast: IsItemLast = (index: number) => {
     const childrenArray = Children.toArray(this.props.children);
-    const lastElement = childrenArray[childrenArray.length - 1] as ReactElement;
 
-    if (index === childrenArray.length - 1) {
-      return true;
-    } else if (index === childrenArray.length - 2 && lastElement.props.mode === 'cancel') {
-      return true;
-    }
-
-    return false;
+    return index === childrenArray.length - 1;
   };
 
   getDropdownCoords: () => { right: number; top: number } = () => {
@@ -124,7 +117,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       insets,
       platform,
       viewMode,
-      mobileCloseItem,
+      iosCloseItem,
       ...restProps
     } = this.props;
 
@@ -166,14 +159,16 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
             {text && <div className="ActionSheet__text">{text}</div>}
           </header>
           }
-          {Children.toArray(children).map((child: React.ReactElement, index: number, arr: []) =>
+          {Children.toArray(children).map((child: React.ReactElement, index: number) =>
             child && React.cloneElement(child, {
               onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
-              style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null,
+              style: this.isItemLast(index) && isNumeric(insets.bottom)
+                ? { marginBottom: insets.bottom }
+                : null,
               isLast: this.isItemLast(index),
             }),
           )}
-          {!isDesktop && mobileCloseItem}
+          {platform === IOS && !isDesktop && iosCloseItem}
         </div>
       </PopoutWrapper>
     );
