@@ -9,6 +9,7 @@ import { IOS } from '../../lib/platform';
 import { isNumeric } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
 import { HasChildren, HasInsets, HasPlatform } from '../../types';
+import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
 
 export interface ModalCardActionInterface {
   title: string;
@@ -16,7 +17,7 @@ export interface ModalCardActionInterface {
   mode?: 'secondary' | 'primary';
 }
 
-export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, HasInsets {
+export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, HasInsets, AdaptivityProps {
   /**
    * Иконка.
    *
@@ -69,10 +70,26 @@ class ModalCard extends Component<ModalCardProps> {
   };
 
   render() {
-    const { insets, icon, header, caption, children, actions, actionsLayout, onClose, platform } = this.props;
+    const {
+      insets,
+      icon,
+      header,
+      caption,
+      children,
+      actions,
+      actionsLayout,
+      onClose,
+      viewMode,
+      platform,
+    } = this.props;
+
+    const isDesktop = viewMode >= ViewMode.TABLET;
+    const canShowCloseBtn = platform === IOS || isDesktop;
 
     return (
-      <div className={classNames(getClassName('ModalCard', platform))}>
+      <div className={classNames(getClassName('ModalCard', platform), {
+        'ModalCard--desktop': isDesktop,
+      })}>
         <div className="ModalCard__in">
           <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
             {icon && <div className="ModalCard__icon">{icon}</div>}
@@ -101,10 +118,11 @@ class ModalCard extends Component<ModalCardProps> {
             </div>
             }
 
-            {platform === IOS &&
-            <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
-              <Icon24Dismiss />
-            </PanelHeaderButton>}
+            {canShowCloseBtn &&
+              <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
+                <Icon24Dismiss />
+              </PanelHeaderButton>
+            }
           </div>
         </div>
       </div>
@@ -112,4 +130,6 @@ class ModalCard extends Component<ModalCardProps> {
   }
 }
 
-export default withPlatform(withInsets(ModalCard));
+export default withAdaptivity(withPlatform(withInsets(ModalCard)), {
+  viewMode: true,
+});
