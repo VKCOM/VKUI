@@ -35,7 +35,7 @@ const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
           <span className="PanelHeaderContent__children-in">{children}</span>
           {aside && <div className="PanelHeaderContent__aside">{aside}</div>}
         </div>
-        <div className="PanelHeaderContent__width" />
+        {before && <div className="PanelHeaderContent__width" />}
       </InComponent>
     </div>
   );

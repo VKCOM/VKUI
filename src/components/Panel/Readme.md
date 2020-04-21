@@ -12,9 +12,9 @@ class Example extends React.Component {
 
   render() {
     return (
-      <View activePanel={this.state.activePanel} header={false}>
-        <Panel id="panel1" separator={false}>
-          <PanelHeaderSimple>More</PanelHeaderSimple>
+      <View activePanel={this.state.activePanel}>
+        <Panel id="panel1">
+          <PanelHeader>More</PanelHeader>
           <Group>
             <Cell expandable before={<Icon28UserOutline/>} onClick={() => this.setState({ activePanel: 'panel2' })}>
               Friends
@@ -27,10 +27,10 @@ class Example extends React.Component {
             </Cell>
           </Group>
         </Panel>
-        <Panel id="panel2" separator={false}>
-          <PanelHeaderSimple separator={false} left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}>
+        <Panel id="panel2">
+          <PanelHeader separator={false} left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}>
             Communities
-          </PanelHeaderSimple>
+          </PanelHeader>
           <Search />
           <Cell description="Humor" before={<Avatar />} onClick={() => this.setState({ activePanel: 'panel3' })}>
             Swipe Right
@@ -42,10 +42,10 @@ class Example extends React.Component {
             #ARTPOKAZ
           </Cell>
         </Panel>
-        <Panel id="panel3" centered separator={false}>
-          <PanelHeaderSimple left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel2' })}/>}>
+        <Panel id="panel3" centered>
+          <PanelHeader left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel2' })}/>}>
             Out Cinema
-          </PanelHeaderSimple>
+          </PanelHeader>
           <Spinner />
           <div style={{ marginTop: 10 }}>Centered Content</div>
         </Panel>

@@ -2,9 +2,9 @@
 * `semibold` превращается в `medium`
 
 ```jsx
-<View activePanel="test" header={false}>
-  <Panel id="test" separator={false}>
-    <PanelHeaderSimple>Caption</PanelHeaderSimple>
+<View activePanel="test">
+  <Panel id="test">
+    <PanelHeader>Caption</PanelHeader>
     <Div>
       <Caption level="1" weight="semibold" style={{ marginBottom: 16 }}>Caption 1 semibold</Caption>
       <Caption level="1" weight="bold" style={{ marginBottom: 16 }}>Caption 1 bold</Caption>

@@ -7,11 +7,11 @@ export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export { default as Panel } from './components/Panel/Panel';
 export { default as PanelHeaderButton } from './components/PanelHeaderButton/PanelHeaderButton';
-/**
- * @deprecated используйте PanelHeaderSimple
- */
 export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
-export { default as PanelHeaderSimple } from './components/PanelHeaderSimple/PanelHeaderSimple';
+/**
+ * @deprecated будет удалено в 4-й версии. Используйте PanelHeader
+ */
+export { default as PanelHeaderSimple } from './components/PanelHeader/PanelHeader';
 export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
 export { default as PanelHeaderContext } from './components/PanelHeaderContext/PanelHeaderContext';
 export { default as Epic } from './components/Epic/Epic';

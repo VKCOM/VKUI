@@ -4,9 +4,9 @@
 * `<Title level="3" />` превращается в `<Headline />`
 
 ```jsx
-<View activePanel="test" header={false}>
-  <Panel id="test" separator={false}>
-    <PanelHeaderSimple>Title</PanelHeaderSimple>
+<View activePanel="test">
+  <Panel id="test">
+    <PanelHeader>Title</PanelHeader>
     <Div>
       <Title level="1" weight="semibold" style={{ marginBottom: 16 }}>Title 1 semibold</Title>
       <Title level="1" weight="bold" style={{ marginBottom: 16 }}>Title 1 bold</Title>

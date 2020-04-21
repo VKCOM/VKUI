@@ -211,46 +211,37 @@
 /*
   header
  */
-.PanelHeader .Search,
-.PanelHeaderSimple .Search {
+.PanelHeader .Search {
   background: var(--header_background);
-  padding: 0;
 }
 
-.PanelHeader .Search__control,
-.PanelHeaderSimple .Search__control {
+.PanelHeader .Search__control {
   background-color: var(--header_search_field_background);
 }
 
-.PanelHeader .Search__input,
-.PanelHeaderSimple .Search__input {
+.PanelHeader .Search__input {
   color: var(--text_primary);
 }
 
-.PanelHeader .Search__placeholder,
-.PanelHeaderSimple .Search__placeholder {
+.PanelHeader .Search__placeholder {
   color: var(--header_search_field_tint);
 }
 
-.PanelHeader .Search__after-width,
-.PanelHeaderSimple .Search__after-width {
+.PanelHeader .Search__after-width {
   background: var(--header_search_field_background);
   color: var(--header_search_field_background);
 }
 
-.PanelHeader .Search__after,
-.PanelHeaderSimple .Search__after {
+.PanelHeader .Search__after {
   background: var(--header_background);
   color: var(--header_tint);
 }
 
-.PanelHeader .Search__after::after,
-.PanelHeaderSimple .Search__after::after {
+.PanelHeader .Search__after::after {
   background-color: var(--header_search_field_background);
 }
 
-.PanelHeader .Search__after::before,
-.PanelHeaderSimple .Search__after::before {
+.PanelHeader .Search__after::before {
   background-color: var(--header_background);
 }
 

@@ -2,9 +2,9 @@
 * `semibold` превращается в `medium`
 
 ```jsx
-<View activePanel="test" header={false}>
-  <Panel id="test" separator={false}>
-    <PanelHeaderSimple>Subhead</PanelHeaderSimple>
+<View activePanel="test">
+  <Panel id="test">
+    <PanelHeader>Subhead</PanelHeader>
     <Div>
       <Subhead weight="regular" style={{ marginBottom: 16 }}>Subhead regular</Subhead>
       <Subhead weight="medium" style={{ marginBottom: 16 }}>Subhead medium</Subhead>
