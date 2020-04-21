@@ -1,7 +1,5 @@
 import React, { Children, Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
@@ -9,6 +7,8 @@ import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptiv
 import { isNumeric } from '../../lib/utils';
 import { HasInsets, HasPlatform } from '../../types';
 import { ANDROID, IOS } from '../../lib/platform';
+import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
+import ActionSheetDropdown from './ActionSheetDropdown';
 
 export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, AdaptivityProps {
   /**
@@ -74,8 +74,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   };
 
-  stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
-
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
     if (this.props.viewMode >= ViewMode.TABLET) {
       eventHandler();
@@ -97,16 +95,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     return index === childrenArray.length - 1;
   };
 
-  getDropdownCoords: () => { right: number; top: number } = () => {
-    const { toggleRef } = this.props;
-
-    const { x, y, width, height } = toggleRef.getBoundingClientRect();
-    const right = innerWidth - (x + width);
-    const top = + y + height + 10 + window.scrollY;
-
-    return { right, top };
-  };
-
   render() {
     const {
       children,
@@ -121,18 +109,11 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       ...restProps
     } = this.props;
 
-    let dropdownStyles = {};
-    let baseClaseName;
     const isDesktop = viewMode >= ViewMode.TABLET;
 
-    if (isDesktop) {
-      dropdownStyles = {
-        ...this.getDropdownCoords(),
-        left: 'auto',
-      };
-    }
-
-    baseClaseName = getClassName('ActionSheet', platform);
+    const DropdownComponent = isDesktop
+      ? ActionSheetDropdownDesktop
+      : ActionSheetDropdown;
 
     return (
       <PopoutWrapper
@@ -143,21 +124,17 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
         onClick={this.onClose}
         hasMask={!isDesktop}
       >
-        <div
+        <DropdownComponent
+          closing={this.state.closing}
+          onClose={this.onClose}
+          elementRef={this.elRef}
           {...restProps}
-          ref={this.elRef}
-          onClick={this.stopPropagation}
-          style={{ ...dropdownStyles }}
-          className={classNames(baseClaseName, {
-            'ActionSheet--desktop': isDesktop,
-            'ActionSheet--closing': this.state.closing,
-          })}
         >
           {platform === IOS &&
-          <header className="ActionSheet__header">
-            {header && <div className="ActionSheet__title">{header}</div>}
-            {text && <div className="ActionSheet__text">{text}</div>}
-          </header>
+            <header className="ActionSheet__header">
+              {header && <div className="ActionSheet__title">{header}</div>}
+              {text && <div className="ActionSheet__text">{text}</div>}
+            </header>
           }
           {Children.toArray(children).map((child: React.ReactElement, index: number) =>
             child && React.cloneElement(child, {
@@ -169,7 +146,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
             }),
           )}
           {platform === IOS && !isDesktop && iosCloseItem}
-        </div>
+        </DropdownComponent>
       </PopoutWrapper>
     );
   }

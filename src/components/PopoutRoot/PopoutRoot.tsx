@@ -46,15 +46,12 @@ class PopoutRoot extends Component<PopoutRootProps> {
 
   render() {
     const { popout, modal, viewMode, children } = this.props;
-
     const isDesktop = viewMode >= ViewMode.TABLET;
 
     return (
       <div className={classNames('PopoutRoot', this.props.className)}>
         {children}
-        {!!popout && <div className={classNames('PopoutRoot__popout', {
-          'PopoutRoot__absolute': isDesktop,
-        })}>{popout}</div>}
+        {!!popout && <div className={isDesktop ? 'PopoutRoot--absolute' : 'PopoutRoot__popout'}>{popout}</div>}
         {!!modal && <div className="PopoutRoot__modal">{modal}</div>}
       </div>
     );
