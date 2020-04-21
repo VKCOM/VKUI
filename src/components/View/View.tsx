@@ -44,6 +44,11 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   onSwipeBackStart?(): void;
   history?: string[];
   id?: string;
+  /**
+   * @ignore
+   * @deprecated будет удалено в 4-й версии.
+   */
+  header?: boolean;
 }
 
 export interface ViewState {
