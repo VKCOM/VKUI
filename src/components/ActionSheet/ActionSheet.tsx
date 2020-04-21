@@ -1,7 +1,5 @@
-import React, { Children, Component, HTMLAttributes, ReactElement } from 'react';
+import React, { Children, Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
 import transitionEvents from '../../lib/transitionEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
@@ -9,6 +7,8 @@ import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptiv
 import { isNumeric } from '../../lib/utils';
 import { HasInsets, HasPlatform } from '../../types';
 import { ANDROID, IOS } from '../../lib/platform';
+import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
+import ActionSheetDropdown from './ActionSheetDropdown';
 
 export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, AdaptivityProps {
   /**
@@ -23,7 +23,8 @@ export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPla
   /**
    * Desktop only
    */
-  toggleRef?: Element;
+  toggleRef: Element;
+  iosCloseItem: React.ReactNode;
 }
 
 export interface ActionSheetState {
@@ -73,8 +74,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   };
 
-  stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
-
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
     if (this.props.viewMode >= ViewMode.TABLET) {
       eventHandler();
@@ -92,43 +91,29 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
   isItemLast: IsItemLast = (index: number) => {
     const childrenArray = Children.toArray(this.props.children);
-    const lastElement = childrenArray[childrenArray.length - 1] as ReactElement;
 
-    if (index === childrenArray.length - 1) {
-      return true;
-    } else if (index === childrenArray.length - 2 && lastElement.props.mode === 'cancel') {
-      return true;
-    }
-
-    return false;
-  };
-
-  getDropdownCoords: () => { right: number; top: number } = () => {
-    const { toggleRef } = this.props;
-
-    const { x, y, width, height } = toggleRef.getBoundingClientRect();
-    const right = innerWidth - (x + width);
-    const top = + y + height + 10;
-
-    return { right, top };
+    return index === childrenArray.length - 1;
   };
 
   render() {
-    const { children, className, header, text, style, insets, platform, viewMode, ...restProps } = this.props;
+    const {
+      children,
+      className,
+      header,
+      text,
+      style,
+      insets,
+      platform,
+      viewMode,
+      iosCloseItem,
+      ...restProps
+    } = this.props;
 
-    let dropdownCoords = {};
-    let baseClaseName;
     const isDesktop = viewMode >= ViewMode.TABLET;
 
-    if (isDesktop) {
-      baseClaseName = 'ActionSheet--desktop';
-      dropdownCoords = {
-        ...this.getDropdownCoords(),
-        left: 'auto',
-      };
-    } else {
-      baseClaseName = getClassName('ActionSheet', platform);
-    }
+    const DropdownComponent = isDesktop
+      ? ActionSheetDropdownDesktop
+      : ActionSheetDropdown;
 
     return (
       <PopoutWrapper
@@ -139,29 +124,29 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
         onClick={this.onClose}
         hasMask={!isDesktop}
       >
-        <div
+        <DropdownComponent
+          closing={this.state.closing}
+          onClose={this.onClose}
+          elementRef={this.elRef}
           {...restProps}
-          ref={this.elRef}
-          onClick={this.stopPropagation}
-          style={{ ...dropdownCoords }}
-          className={classNames(baseClaseName, {
-            'ActionSheet--closing': this.state.closing,
-          })}
         >
           {platform === IOS &&
-          <header className="ActionSheet__header">
-            {header && <div className="ActionSheet__title">{header}</div>}
-            {text && <div className="ActionSheet__text">{text}</div>}
-          </header>
+            <header className="ActionSheet__header">
+              {header && <div className="ActionSheet__title">{header}</div>}
+              {text && <div className="ActionSheet__text">{text}</div>}
+            </header>
           }
-          {Children.toArray(children).map((child: React.ReactElement, index: number, arr: []) =>
+          {Children.toArray(children).map((child: React.ReactElement, index: number) =>
             child && React.cloneElement(child, {
               onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
-              style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null,
+              style: this.isItemLast(index) && isNumeric(insets.bottom)
+                ? { marginBottom: insets.bottom }
+                : null,
               isLast: this.isItemLast(index),
             }),
           )}
-        </div>
+          {platform === IOS && !isDesktop && iosCloseItem}
+        </DropdownComponent>
       </PopoutWrapper>
     );
   }
