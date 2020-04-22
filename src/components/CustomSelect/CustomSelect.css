@@ -28,6 +28,7 @@
   box-sizing: border-box;
   font-size: 15px;
   padding: 8px 28px 8px 10px;
+  white-space: nowrap;
 }
 
 .CustomSelect__selectedIcon {
