@@ -264,7 +264,7 @@ class Tappable extends Component<TappableProps, TappableState> {
     }
   };
 
-  containerHasTransparentBacground = (): boolean => {
+  containerHasTransparentBackground = (): boolean => {
     if (!this.container) {
       return true;
     }
@@ -296,7 +296,7 @@ class Tappable extends Component<TappableProps, TappableState> {
     const { children, className, Component, activeEffectDelay,
       stopPropagation, getRootRef, platform, ...restProps } = this.props;
 
-    const hoverClassModificator = this.containerHasTransparentBacground()
+    const hoverClassModificator = this.containerHasTransparentBackground()
       ? 'shadowHovered'
       : 'opacityHovered';
 
