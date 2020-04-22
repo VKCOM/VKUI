@@ -155,7 +155,7 @@
               <CellButton onClick={() => this.setState({ activePanel: 'panel4' })}>Табы-кнопки</CellButton>
             </Group>
           </Panel>
-          <Panel id="panel4" separator={false}>
+          <Panel id="panel4">
             <PanelHeader
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel2' })}/>}
             >
@@ -179,7 +179,7 @@
             <CellButton onClick={() => this.setState({ activePanel: 'panel5' })}>Segmented (iOS only)</CellButton>
             }
           </Panel>
-          <Panel id="panel5" separator={false}>
+          <Panel id="panel5">
             <PanelHeader
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel4' })}/>}
               separator={false}
