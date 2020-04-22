@@ -1,4 +1,6 @@
-.Tappable {}
+.Tappable {
+  cursor: pointer;
+}
 
 /**
  * iOS tappable
@@ -54,11 +56,6 @@
       background: rgba(127, 127, 127, .1);
       animation: animation-wave .3s var(--android-easing);
       }
-
-.Tappable--shadowHovered,
-.Tappable--opacityHovered {
-  cursor: pointer;
-}
 
 .Tappable__hoverShadow {
   position: absolute;
