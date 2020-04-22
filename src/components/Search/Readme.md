@@ -49,12 +49,12 @@
     render() {
       return (
         <React.Fragment>
-          <PanelHeaderSimple
+          <PanelHeader
             right={<PanelHeaderButton onClick={this.props.goHeaderSearch}><Icon28AddOutline /></PanelHeaderButton>}
             separator={false}
           >
             Выбор тематики
-          </PanelHeaderSimple>
+          </PanelHeader>
           <Search value={this.state.search} onChange={this.onChange} after={null}/>
           {this.thematics.length > 0 &&
             <List>
@@ -87,14 +87,14 @@
     render () {
       return (
         <React.Fragment>
-          <PanelHeaderSimple left={<PanelHeaderBack onClick={this.props.goSearch} />} separator={false}>
+          <PanelHeader left={<PanelHeaderBack onClick={this.props.goSearch} />} separator={false}>
             <Search
               value={this.state.search}
               onChange={this.onChange}
               icon={<Icon24Filter />}
               onIconClick={this.props.onFiltersClick}
             />
-          </PanelHeaderSimple>
+          </PanelHeader>
           <List>
             {this.users.map((user) => (
               <Cell
@@ -157,12 +157,11 @@
              </ModalPage>
            </ModalRoot>
          }
-         header={false}
        >
-          <Panel id="search" separator={false}>
+          <Panel id="search">
             <SimpleSearch goHeaderSearch={this.goHeaderSearch}/>
           </Panel>
-          <Panel id="header-search" separator={false}>
+          <Panel id="header-search">
             <HeaderSearch onFiltersClick={() => this.setState({ activeModal: 'filters' })} goSearch={this.goSearch}/>
           </Panel>
         </View>
