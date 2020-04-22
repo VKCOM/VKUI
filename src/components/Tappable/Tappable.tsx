@@ -8,6 +8,7 @@ import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
 import { HasPlatform, HasRootRef, OldRef, RefWithCurrent } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
+import { hasHover } from '../../helpers/inputUtils';
 
 export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
   Component?: ElementType;
@@ -25,6 +26,7 @@ export interface TappableState {
       y: number;
     };
   };
+  hovered?: boolean;
   active?: boolean;
   ts?: number;
 }
@@ -64,8 +66,6 @@ function deactivateOtherInstances(exclude?: string) {
     delete storage[id];
   });
 }
-
-const isTouchDevice = 'ontouchstart' in window || !!navigator.msMaxTouchPoints;
 
 class Tappable extends Component<TappableProps, TappableState> {
   constructor(props: TappableProps) {
@@ -204,6 +204,14 @@ class Tappable extends Component<TappableProps, TappableState> {
     }
   };
 
+  onEnter = () => {
+    this.setState({ hovered: true });
+  };
+
+  onLeave = () => {
+    this.setState({ hovered: false });
+  };
+
   /*
    * Устанавливает активное выделение
    */
@@ -256,6 +264,22 @@ class Tappable extends Component<TappableProps, TappableState> {
     }
   };
 
+  containerHasTransparentBacground = (): boolean => {
+    if (!this.container) {
+      return true;
+    }
+
+    if (!this.container.style.backgroundColor) {
+      return true;
+    }
+
+    if (this.container.style.backgroundColor === 'transparent') {
+      return true;
+    }
+
+    return false;
+  };
+
   componentWillUnmount() {
     if (storage[this.id]) {
       clearTimeout(storage[this.id].timeout);
@@ -268,14 +292,18 @@ class Tappable extends Component<TappableProps, TappableState> {
   }
 
   render() {
-    const { clicks, active } = this.state;
+    const { clicks, active, hovered } = this.state;
     const { children, className, Component, activeEffectDelay,
       stopPropagation, getRootRef, platform, ...restProps } = this.props;
+
+    const hoverClassModificator = this.containerHasTransparentBacground()
+      ? 'shadowHovered'
+      : 'opacityHovered';
 
     const classes = classNames(getClassName('Tappable', platform), className, {
       'Tappable--active': active,
       'Tappable--inactive': !active,
-      'Tappable--hoverable': !isTouchDevice,
+      [`Tappable--${hoverClassModificator}`]: hasHover && hovered,
     });
 
     const RootComponent = restProps.disabled
@@ -289,6 +317,8 @@ class Tappable extends Component<TappableProps, TappableState> {
       props.onStart = this.onStart;
       props.onMove = this.onMove;
       props.onEnd = this.onEnd;
+      props.onEnter = this.onEnter;
+      props.onLeave = this.onLeave;
       /* eslint-enable */
       props.getRootRef = this.getRef;
     } else {
@@ -311,7 +341,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                 })}
               </span>
               }
-              {!isTouchDevice && <span className="Tappable__hoverShadow" />}
+              {hasHover && <span className="Tappable__hoverShadow" />}
               {children}
             </RootComponent>
           );

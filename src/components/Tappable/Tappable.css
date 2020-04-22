@@ -55,11 +55,12 @@
       animation: animation-wave .3s var(--android-easing);
       }
 
-.Tappable--hoverable {
+.Tappable--shadowHovered,
+.Tappable--opacityHovered {
   cursor: pointer;
 }
 
-.Tappable--hoverable .Tappable__hoverShadow {
+.Tappable__hoverShadow {
   position: absolute;
   top: 0;
   right: 0;
@@ -67,11 +68,17 @@
   left: 0;
   pointer-events: none;
   overflow: hidden;
-  }
-
-.Tappable--hoverable:hover .Tappable__waves {
-  background: rgba(127, 127, 127, .1);
+  border-radius: inherit;
 }
+
+.Tappable--shadowHovered .Tappable__hoverShadow {
+  background: var(--background_hover);
+}
+
+.Tappable--opacityHovered {
+  opacity: .8;
+}
+
 /**
  * Animations
  */
