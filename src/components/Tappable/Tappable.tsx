@@ -65,6 +65,8 @@ function deactivateOtherInstances(exclude?: string) {
   });
 }
 
+const isTouchDevice = 'ontouchstart' in window || !!navigator.msMaxTouchPoints;
+
 class Tappable extends Component<TappableProps, TappableState> {
   constructor(props: TappableProps) {
     super(props);
@@ -273,9 +275,13 @@ class Tappable extends Component<TappableProps, TappableState> {
     const classes = classNames(getClassName('Tappable', platform), className, {
       'Tappable--active': active,
       'Tappable--inactive': !active,
+      'Tappable--hoverable': !isTouchDevice,
     });
 
-    const RootComponent = !restProps.disabled ? Touch : Component;
+    const RootComponent = restProps.disabled
+      ? Component
+      : Touch;
+
     let props: RootComponentProps = {};
     if (!restProps.disabled) {
       props.Component = Component;
@@ -305,6 +311,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                 })}
               </span>
               }
+              {!isTouchDevice && <span className="Tappable__hoverShadow" />}
               {children}
             </RootComponent>
           );
