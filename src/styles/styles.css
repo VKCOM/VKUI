@@ -67,6 +67,7 @@
 @import '../components/Separator/Separator.css';
 @import '../components/Placeholder/Placeholder.css';
 @import '../components/Banner/Banner.css';
+@import '../components/NavigationMenu/NavigationMenu.css';
 
 /* Forms */
 @import '../components/FormLayout/FormLayout.css';

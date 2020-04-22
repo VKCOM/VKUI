@@ -1,0 +1,13 @@
+.NavigationMenu__head--tablet,
+.NavigationMenu__nav--tablet {
+  border: solid 1px var(--gray_100);
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+}
+
+.NavigationMenu__head--tablet {
+  margin-bottom: 16px;
+  padding: 24px;
+}
