@@ -263,19 +263,26 @@
   top: 0;
   left: 0;
   z-index: 110;
+  padding: 0;
 }
 
 .ActionSheet--desktop .ActionSheetItem {
   width: auto;
-  height: auto;
-  padding: 14px 24px;
+  height: 55px;
+  padding: 0 24px;
   line-height: 22px;
   font-size: 17px;
   cursor: pointer;
 }
 
-.ActionSheet--desktop .ActionSheetItem:not(:last-child) {
-  border-bottom: 1px solid rgba(0, 0, 0, .12);
+.ActionSheet--desktop .ActionSheetItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--float_button_border);
 }
 
 .ActionSheet--desktop .ActionSheetItem:first-child {
