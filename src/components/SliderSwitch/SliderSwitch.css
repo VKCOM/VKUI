@@ -31,11 +31,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.SwitchButton--ios {
+.SliderSwitchButton--ios {
   border-radius: 10px;
 }
 
-.SwitchButton--android {
+.SliderSwitchButton--android {
   border-radius: 8px;
 }
 

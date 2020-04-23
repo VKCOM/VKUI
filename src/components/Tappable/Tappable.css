@@ -68,7 +68,7 @@
   border-radius: inherit;
 }
 
-.Tappable--shadowHovered .Tappable__hoverShadow {
+.Tappable:not(.SliderSwitchButton) .Tappable--shadowHovered .Tappable__hoverShadow {
   background: var(--background_hover);
 }
 
