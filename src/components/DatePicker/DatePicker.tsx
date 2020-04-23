@@ -29,6 +29,7 @@ interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabe
   max: string; // 2006-01-01
   name?: string;
   defaultValue?: string;
+  optionsHeightMax?: number;
   monthNames?: string[];
   onDateChange?: (value: string) => void;
 }
@@ -150,7 +151,7 @@ class DatePicker extends Component<Props, State> {
   };
 
   get desktopView() {
-    const { name } = this.props;
+    const { name, optionsHeightMax } = this.props;
     const { day, month, year } = this.state;
 
     return (
@@ -161,6 +162,7 @@ class DatePicker extends Component<Props, State> {
               name="day"
               value={day}
               options={this.getDayOptions()}
+              optionsHeightMax={optionsHeightMax}
               onSelectChange={this.onSelectChange}
             />
           </div>
@@ -169,6 +171,7 @@ class DatePicker extends Component<Props, State> {
               name="month"
               value={month}
               options={this.getMonthOptions()}
+              optionsHeightMax={optionsHeightMax}
               onSelectChange={this.onSelectChange}
             />
           </div>
@@ -177,6 +180,7 @@ class DatePicker extends Component<Props, State> {
               name="year"
               value={year}
               options={this.getYearOptions()}
+              optionsHeightMax={optionsHeightMax}
               onSelectChange={this.onSelectChange}
             />
           </div>

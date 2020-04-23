@@ -28,6 +28,7 @@ interface State {
 
 interface Props extends SelectProps {
   options: SelectOption[];
+  optionsHeightMax?: number;
   onSelectChange?: (value: string, name?: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -56,6 +57,7 @@ export default class CustomSelect extends React.Component<Props, State> {
     });
 
     this.keyboardInput = '';
+    this.optionsHeightMax = props.optionsHeightMax || 132;
 
     this.state = {
       opened: false,
@@ -68,6 +70,7 @@ export default class CustomSelect extends React.Component<Props, State> {
 
   public state: State;
   private keyboardInput: string;
+  private readonly optionsHeightMax: number;
   private node: Element;
   private readonly scrollViewRef = createRef();
 
@@ -396,7 +399,7 @@ export default class CustomSelect extends React.Component<Props, State> {
             style={{ height: `${options.length * 36}px` }}
             autoHeight
             autoHeightMin={40}
-            autoHeightMax={132}
+            autoHeightMax={this.optionsHeightMax}
             ref={this.scrollViewRef}
           >
             {options.map(this.renderOption)}

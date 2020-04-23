@@ -2,12 +2,6 @@
   color: var(--text_primary);
 }
 
-.Group__inner {
-  /* tmp for border radius and margin */
-  /* although margins are now borders and are not affected */
-  overflow: hidden;
-}
-
 .Group__inner > *:not(.Header):first-child {
   border-top: 12px solid transparent;
 }
