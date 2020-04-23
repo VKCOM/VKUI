@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent } from 'react';
+import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent as ReactMouseEvent } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import {
   getSupportedEvents,
@@ -12,6 +12,8 @@ import { HasRootRef, OldRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 
 export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+  onEnter?(outputEvent: MouseEvent): void;
+  onLeave?(outputEvent: MouseEvent): void;
   onStart?(outputEvent: TouchEvent): void;
   onStartX?(outputEvent: TouchEvent): void;
   onStartY?(outputEvent: TouchEvent): void;
@@ -50,7 +52,7 @@ export interface TouchEvent extends Gesture {
 }
 
 export type TouchEventHandler = (e: TouchEvent) => void;
-export type ClickHandler = (e: MouseEvent<HTMLElement>) => void;
+export type ClickHandler = (e: ReactMouseEvent<HTMLElement>) => void;
 export type DragHandler = (e: DragEvent<HTMLElement>) => void;
 
 const events = getSupportedEvents();
@@ -83,13 +85,62 @@ export default class Touch extends Component<TouchProps> {
     if (canUseDOM) {
       this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
       touchEnabled && this.subscribe(this.container);
+
+      this.container.addEventListener('mouseenter', this.onEnter, { capture: this.props.useCapture, passive: true });
+      this.container.addEventListener('mouseleave', this.onLeave, { capture: this.props.useCapture, passive: true });
     }
   }
 
   componentWillUnmount() {
     this.container.removeEventListener(events[0], this.onStart);
     touchEnabled && this.unsubscribe(this.container);
+
+    this.container.removeEventListener('mouseenter', this.onEnter);
+    this.container.removeEventListener('mousemove', this.onMouseMoveOnce);
+    this.container.removeEventListener('mouseleave', this.onLeave);
   }
+
+  /**
+   * Обработчик событий mouseenter
+   *
+   * @param {Object} e Браузерное событие
+   * @return {void}
+   */
+  onEnter = (e: MouseEvent) => {
+    if (this.props.onEnter) {
+      this.props.onEnter(e);
+    }
+  };
+
+  /**
+   * Обработчик событий mouseleave
+   *
+   * @param {Object} e Браузерное событие
+   * @param {boolean} simulated флаг, с которым обработчик был вызван симулятивно
+   * @return {void}
+   */
+  onLeave = (e: MouseEvent, simulated = false) => {
+    if (this.props.onLeave) {
+      this.props.onLeave(e);
+    }
+
+    if (simulated) {
+      this.container.addEventListener('mousemove', this.onMouseMoveOnce, { capture: this.props.useCapture, passive: true, once: true });
+    }
+  };
+
+  /**
+   * Обработчик событий mousemove,
+   * служит для того, чтобы вернуть hover на элемент
+   * после отработки touch анимации на устройствах
+   * с возможностью hover и touch
+   *
+   * @param {Object} e Браузерное событие
+   * @return {void}
+   */
+  onMouseMoveOnce = (e: MouseEvent) => {
+    this.onEnter(e);
+  };
 
   /**
    * Обработчик событий touchstart
@@ -225,6 +276,8 @@ export default class Touch extends Component<TouchProps> {
     this.cancelClick = target.tagName === 'A' && isSlide;
     this.gesture = {};
 
+    this.onLeave(e, true);
+
     !touchEnabled && this.unsubscribe(this.document);
   };
 
@@ -266,7 +319,7 @@ export default class Touch extends Component<TouchProps> {
    * @param {Object} e Браузерное событие
    * @return {void}
    */
-  onClick: ClickHandler = (e: MouseEvent<HTMLElement>) => {
+  onClick: ClickHandler = (e: ReactMouseEvent<HTMLElement>) => {
     if (this.cancelClick) {
       this.cancelClick = false;
       e.preventDefault();

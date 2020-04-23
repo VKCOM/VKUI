@@ -3,6 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
+import { PointerEventsProperty } from 'csstype';
 
 interface Props extends HasPlatform {
   closing: boolean;
@@ -14,7 +15,33 @@ interface Props extends HasPlatform {
 type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
 
 class ActionSheetDropdownDesktop extends Component<Props> {
+  state = {
+    dropdownStyles: {
+      left: '0',
+      top: '0',
+      opacity: '0',
+      pointerEvents: 'none' as PointerEventsProperty,
+    },
+  };
+
   componentDidMount = () => {
+    const { toggleRef, elementRef } = this.props;
+
+    const toggleRect = toggleRef.getBoundingClientRect();
+    const elementRect = elementRef.current.getBoundingClientRect();
+
+    const left = toggleRect.left + toggleRect.width - elementRect.width + pageXOffset;
+    const top = toggleRect.top + toggleRect.height + pageYOffset;
+
+    this.setState({
+      dropdownStyles: {
+        left: `${left}px`,
+        top: `${top}px`,
+        opacity: '1',
+        pointerEvents: 'auto' as PointerEventsProperty,
+      },
+    });
+
     setTimeout(() => {
       window.addEventListener('click', this.handleClickOutside);
     });
@@ -38,23 +65,8 @@ class ActionSheetDropdownDesktop extends Component<Props> {
 
   stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
-  getDropdownCoords: () => { right: number; top: number } = () => {
-    const { toggleRef } = this.props;
-
-    const { x, y, width, height } = toggleRef.getBoundingClientRect();
-    const right = innerWidth - (x + width);
-    const top = + y + height + 10 + window.pageYOffset;
-
-    return { right, top };
-  };
-
   render() {
     const { children, platform, elementRef, ...restProps } = this.props;
-    const dropdownStyles = {
-      ...this.getDropdownCoords(),
-      left: 'auto',
-    };
-
     const baseClaseName = getClassName('ActionSheet', platform);
 
     return (
@@ -62,7 +74,7 @@ class ActionSheetDropdownDesktop extends Component<Props> {
         {...restProps}
         ref={elementRef}
         onClick={this.stopPropagation}
-        style={{ ...dropdownStyles }}
+        style={this.state.dropdownStyles}
         className={classNames(baseClaseName, 'ActionSheet--desktop', {
           'ActionSheet--closing': this.props.closing,
         })}
