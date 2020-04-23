@@ -105,8 +105,8 @@ export default class SliderSwitch extends React.Component<Props, State> {
         <div className={classNames(
           'SliderSwitch__slider',
           {
-            ['SliderSwitch__firstActive']: firstActive,
-            ['SliderSwitch__secondActive']: secondActive,
+            ['SliderSwitch--firstActive']: firstActive,
+            ['SliderSwitch--secondActive']: secondActive,
           },
         )} />
         <input type="hidden" name={name} value={value} />

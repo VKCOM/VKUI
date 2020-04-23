@@ -8,13 +8,14 @@
   transition: all 100ms ease-out;
 }
 
-.SliderSwitchButton {
+.SliderSwitch__button {
   width: 50%;
   height: 100%;
   margin: 0;
   padding: 0;
   border: 0;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
   box-sizing: border-box;
   font-family: inherit;
   cursor: pointer;
@@ -31,15 +32,15 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.SliderSwitchButton--ios {
+.SliderSwitch__button--ios {
   border-radius: 10px;
 }
 
-.SliderSwitchButton--android {
+.SliderSwitch__button--android {
   border-radius: 8px;
 }
 
-.SliderSwitchButton__hover {
+.SliderSwitch__button--hover {
   color: var(--text_tertiary);
 }
 
@@ -53,12 +54,12 @@
   background-color: var(--toolbar_attach_background_from);
 }
 
-.SliderSwitchButton__active {
+.SliderSwitch__button--active {
   color: var(--text_primary);
   transition: transform 150ms ease-in;
 }
 
-.SliderSwitchButton__active__hover {
+.SliderSwitch__button--activeHover {
   color: var(--header_alternate_tab_active_text);
 }
 
@@ -72,12 +73,12 @@
   transition: margin-left 150ms;
 }
 
-.SliderSwitch__firstActive {
+.SliderSwitch--firstActive {
   margin-left: 2px;
   background-color: var(--background_content);
 }
 
-.SliderSwitch__secondActive {
+.SliderSwitch--secondActive {
   margin-left: calc(50% + 2px);
   background-color: var(--background_content);
 }
