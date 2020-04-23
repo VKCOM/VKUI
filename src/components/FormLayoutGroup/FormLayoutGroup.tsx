@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import React, { Children, FunctionComponent, HTMLAttributes, ReactElement } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
@@ -24,7 +24,26 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = ({
 
   return (
     <div className={classNames(getClassName('FormLayoutGroup', platform), `FormLayoutGroup--${mode}`, className)} {...restProps}>
-      {children}
+      {mode === 'vertical' ? children :
+        Children.toArray(children).map((field: ReactElement, index: number) => {
+          if (field) {
+            const { status, top, bottom } = field.props;
+
+            return (
+              <div
+                className={classNames('FormLayoutGroup__cell', { [`FormLayout__row--s-${status}`]: !!status })}
+                key={field.key || `row-${index}`}
+              >
+                {top && <div className="FormLayout__row-top">{top}</div>}
+                {field}
+                {bottom && <div className="FormLayout__row-bottom">{bottom}</div>}
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })
+      }
     </div>
   );
 };

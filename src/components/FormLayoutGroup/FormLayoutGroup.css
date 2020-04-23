@@ -18,3 +18,7 @@
 .FormLayoutGroup--horizontal > * ~ * {
   margin-left: 20px;
   }
+
+.FormLayoutGroup__cell {
+  flex: 1 0;
+}
