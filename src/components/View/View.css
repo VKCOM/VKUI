@@ -45,7 +45,7 @@
 
   .View--animated .View__panel,
   .View--swiping-back .View__panel {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     overflow: hidden;

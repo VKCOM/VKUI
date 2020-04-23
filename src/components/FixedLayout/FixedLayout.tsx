@@ -26,18 +26,21 @@ export interface FixedLayoutProps extends
 export interface FixedLayoutState {
   position: 'absolute' | null;
   top: number;
+  width: string;
 }
 
 export interface FixedLayoutContext {
   panel: Requireable<string>;
   document: Requireable<{}>;
   hasTabbar: Requireable<boolean>;
+  splitCol: Requireable<React.Component>;
 }
 
 class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   state: FixedLayoutState = {
-    position: null,
-    top: null,
+    position: 'absolute',
+    top: 0,
+    width: '',
   };
 
   el: HTMLDivElement;
@@ -46,6 +49,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     panel: PropTypes.string,
     document: PropTypes.any,
     hasTabbar: PropTypes.bool,
+    splitCol: PropTypes.any,
   };
 
   get document() {
@@ -53,11 +57,16 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 
   componentDidMount() {
+    this.doResize();
+    window.addEventListener('resize', this.doResize);
+
     this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.doResize);
+
     this.document.removeEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
@@ -67,6 +76,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     this.setState({
       position: 'absolute',
       top: this.el.offsetTop + panelScroll,
+      width: '',
     });
   };
 
@@ -75,6 +85,21 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
       position: null,
       top: null,
     });
+
+    this.doResize();
+  };
+
+  doResize = () => {
+    const { splitCol } = this.context;
+
+    if (splitCol) {
+      const node: HTMLElement = splitCol.baseRef;
+      const width = node.offsetWidth;
+
+      this.setState({ width: `${width}px` });
+    } else {
+      this.setState({ width: '' });
+    }
   };
 
   getRef: OldRef<HTMLDivElement> = (element: HTMLDivElement) => {

@@ -1,10 +1,11 @@
-import React, { HTMLAttributes, Component, ReactNode } from 'react';
+import React, { createRef, HTMLAttributes, Component, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import PopoutRoot from '../PopoutRoot/PopoutRoot';
 import PanelHeaderSimple from '../PanelHeaderSimple/PanelHeaderSimple';
+import PropTypes, { Requireable } from 'prop-types';
 
 export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasPlatform {
   popout?: ReactNode;
@@ -37,7 +38,23 @@ interface ColProps extends HTMLAttributes<HTMLDivElement>, HasChildren {
   minWidth?: string;
 }
 
+export interface SplitColChildContext {
+  splitCol: Requireable<SplitCol>;
+}
+
 export class SplitCol extends Component<ColProps> {
+  static childContextTypes: SplitColChildContext = {
+    splitCol: PropTypes.any,
+  };
+
+  baseRef: React.RefObject<HTMLDivElement> = createRef();
+
+  getChildContext: () => { splitCol: SplitCol } = () => {
+    return {
+      splitCol: this,
+    };
+  };
+
   render() {
     const { children, width, maxWidth, minWidth, ...rest } = this.props;
 
@@ -45,7 +62,7 @@ export class SplitCol extends Component<ColProps> {
       width: width,
       maxWidth: maxWidth,
       minWidth: minWidth,
-    }} {...rest} className="SplitLayout__col">
+    }} {...rest} ref={this.baseRef} className="SplitLayout__col">
       {children}
     </div>;
   }

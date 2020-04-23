@@ -60,7 +60,6 @@
   width: 1px;
   flex-grow: 1;
   flex-shrink: 1;
-  transform: translateZ(0);
   position: relative;
 }
 
@@ -78,31 +77,4 @@
   transform: translateZ(0);
   overflow: hidden;
   overflow-y: auto;
-}
-
-.SplitLayout__col1 {
-  height: 100%;
-  width: 33%;
-  max-width: 276px;
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-
-.SplitLayout__col1Fixed {
-  height: 100%;
-  width: 33%;
-  max-width: 276px;
-  position: fixed;
-  transform: translateZ(0);
-  overflow: hidden;
-  overflow-y: auto;
-}
-
-.SplitLayout__col2 {
-  height: 100%;
-  width: 66%;
-  flex-grow: 1;
-  flex-shrink: 1;
-  transform: translateZ(0);
-  position: relative;
 }
