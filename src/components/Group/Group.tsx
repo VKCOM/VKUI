@@ -32,7 +32,7 @@ let Group: FunctionComponent<GroupProps> = (props: GroupProps) => {
       {separator !== 'hide' &&
         <Separator className={classNames('Group__separator', {
           'Group__separator--force': separator === 'show',
-        })} />
+        })} expanded={sizeX === 'regular'} />
       }
     </section>
   );

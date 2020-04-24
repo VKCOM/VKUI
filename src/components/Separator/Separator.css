@@ -1,24 +1,24 @@
 .Separator {}
 
-.Separator__in:not(.Separator__in--regular) {
+.Separator__in:not(.Separator__in--expanded) {
   height: 1px;
   background: var(--separator_common);
   transform-origin: center top;
 }
 
 @media (min-resolution: 2dppx) {
-  .Separator__in:not(.Separator__in--regular) {
+  .Separator__in:not(.Separator__in--expanded) {
     transform: scaleY(.5);
   }
 }
 
 @media (min-resolution: 3dppx) {
-  .Separator__in:not(.Separator__in--regular) {
+  .Separator__in:not(.Separator__in--expanded) {
     transform: scaleY(.32);
   }
 }
 
-.Separator__in--regular {
+.Separator__in--expanded {
   height: 16px;
   background: transparent;
 }

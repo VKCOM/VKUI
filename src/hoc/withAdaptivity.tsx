@@ -22,12 +22,17 @@ export default function withAdaptivity<T>(TargetComponent: T, config: Config): T
     const sizeY = props.sizeY || context.sizeY;
     const viewMode = context.viewMode;
 
+    const adaptivityProps: {
+      sizeX?: SizeType;
+      sizeY?: SizeType;
+      viewMode?: ViewMode;
+    } = {};
+    config.sizeX ? adaptivityProps.sizeX = sizeX : undefined;
+    config.sizeY ? adaptivityProps.sizeY = sizeY : undefined;
+    config.viewMode ? adaptivityProps.viewMode = viewMode : undefined;
+
     // @ts-ignore
-    const target = <TargetComponent {...props}
-      sizeX={config.sizeX ? sizeX : undefined}
-      sizeY={config.sizeY ? sizeY : undefined}
-      viewMode={config.viewMode ? viewMode : undefined}
-    />;
+    const target = <TargetComponent {...props} {...adaptivityProps} />;
 
     if (update) {
       return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewMode }}>

@@ -36,6 +36,7 @@ interface ColProps extends HTMLAttributes<HTMLDivElement>, HasChildren {
   width?: string;
   maxWidth?: string;
   minWidth?: string;
+  spaced?: boolean;
 }
 
 export interface SplitColChildContext {
@@ -56,13 +57,14 @@ export class SplitCol extends Component<ColProps> {
   };
 
   render() {
-    const { children, width, maxWidth, minWidth, ...rest } = this.props;
+    const { children, width, maxWidth, minWidth, spaced } = this.props;
 
     return <div style={{
       width: width,
       maxWidth: maxWidth,
       minWidth: minWidth,
-    }} {...rest} ref={this.baseRef} className="SplitLayout__col">
+      margin: spaced ? '0 16px' : null,
+    }} ref={this.baseRef} className="SplitLayout__col">
       {children}
     </div>;
   }
@@ -70,13 +72,14 @@ export class SplitCol extends Component<ColProps> {
 
 export class SplitFixedCol extends Component<ColProps> {
   render() {
-    const { children, width, maxWidth, minWidth, ...rest } = this.props;
+    const { children, width, maxWidth, minWidth, spaced } = this.props;
 
     return <div style={{
       width: width,
       maxWidth: maxWidth,
       minWidth: minWidth,
-    }} {...rest} className="SplitLayout__colFixedWrap">
+      margin: spaced ? '0 16px' : null,
+    }} className="SplitLayout__colFixedWrap">
       <div style={{
         width: width,
         maxWidth: maxWidth,

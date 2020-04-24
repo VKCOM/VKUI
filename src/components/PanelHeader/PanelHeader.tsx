@@ -8,8 +8,9 @@ import { ANDROID } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { PanelContext } from '../Panel/PanelContext';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   left?: ReactNode;
   /**
    * @deprecated будет удалено в 4-й версии. Раньше использовалось, как текстовое дополнение к PanelHeaderBack в iOS.
@@ -35,6 +36,7 @@ const PanelHeader = ({
   transparent,
   getRef,
   getRootRef,
+  sizeX,
   ...restProps
 }: PanelHeaderProps) => {
   const platform = usePlatform();
@@ -81,7 +83,10 @@ const PanelHeader = ({
           </div>
         </div>
       </FixedLayout>
-      {needSeparator && visor && <Separator className="PanelHeader__separator" />}
+      {needSeparator && visor && <Separator
+        className={sizeX === 'compact' ? 'PanelHeader__separator' : ''}
+        expanded={sizeX === 'regular'}
+      />}
     </div>
   );
 };
@@ -92,4 +97,6 @@ PanelHeader.defaultProps = {
   visor: true,
 };
 
-export default PanelHeader;
+export default withAdaptivity(PanelHeader, {
+  sizeX: true,
+});
