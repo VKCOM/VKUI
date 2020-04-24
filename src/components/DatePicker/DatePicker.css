@@ -10,16 +10,8 @@
   flex-direction: row;
 }
 
-.DatePicker__day {
-  max-width: 63px;
-}
-
 .DatePicker__month {
   display: flex;
   flex: 1 0 auto;
   padding: 0 8px;
-}
-
-.DatePicker__year {
-  max-width: 83px;
 }
