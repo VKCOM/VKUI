@@ -12,7 +12,7 @@ interface Option {
 interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabels {
   options: Option[];
   name?: string;
-  activeValue?: string;
+  activeValue?: Option['value'];
   onSwitch?: (value: Option['value']) => void;
 }
 

@@ -11,7 +11,7 @@
 }
 
 .DatePicker__day {
-  max-width: 59px;
+  max-width: 63px;
 }
 
 .DatePicker__month {
@@ -21,5 +21,5 @@
 }
 
 .DatePicker__year {
-  max-width: 78px;
+  max-width: 83px;
 }

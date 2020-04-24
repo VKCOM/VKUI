@@ -3,6 +3,7 @@ import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef, OldRef } from '../../types';
+import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
 
 export interface SelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -10,7 +11,8 @@ export interface SelectProps extends
   HasRootRef<HTMLLabelElement>,
   HasFormStatus,
   HasFormLabels,
-  HasAlign {
+  HasAlign,
+  AdaptivityProps {
   defaultValue?: string;
   placeholder?: string;
 }
@@ -21,7 +23,7 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
-export default class Select extends React.Component<SelectProps, SelectState> {
+class Select extends React.Component<SelectProps, SelectState> {
   constructor(props: SelectProps) {
     super(props);
     const state: SelectState = {
@@ -86,7 +88,9 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 
   render() {
     const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, top, bottom, disabled, ...restProps } = this.props;
+      getRef, getRootRef, top, bottom, disabled, viewMode, ...restProps } = this.props;
+
+    const isDesktop = viewMode >= ViewMode.TABLET;
 
     return (
       <FormField
@@ -95,6 +99,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
           ['Select--not-selected']: this.state.notSelected,
           [`Select--align-${align}`]: !!align,
           'Select--disabled': disabled,
+          'Select--desktop': isDesktop,
         }, className)}
         style={style}
         getRootRef={getRootRef}
@@ -119,3 +124,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
     );
   }
 }
+
+export default withAdaptivity(Select, {
+  viewMode: true,
+});
