@@ -5,6 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
+import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import { IOS } from '../../lib/platform';
 import { isNumeric } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
@@ -120,7 +121,7 @@ class ModalCard extends Component<ModalCardProps> {
 
             {canShowCloseBtn &&
               <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
-                <Icon24Dismiss />
+                {isDesktop ? <Icon24Cancel /> : <Icon24Dismiss />}
               </PanelHeaderButton>
             }
           </div>
