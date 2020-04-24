@@ -386,22 +386,22 @@ export default class CustomSelect extends React.Component<Props, State> {
         </SelectMimicry>
         {selected && <input type="hidden" name={name} value={selected.value} />}
         {opened &&
-        <div
-          className={classNames({
-            ['CustomSelect__options']: opened,
-          })}
-          onMouseLeave={this.resetFocusedOption}
-        >
-          <Scrollbars
-            style={{ height: `${options.length * 36}px` }}
-            autoHeight
-            autoHeightMin={40}
-            autoHeightMax={132}
-            ref={this.scrollViewRef}
+          <div
+            className={classNames({
+              ['CustomSelect__options']: opened,
+            })}
+            onMouseLeave={this.resetFocusedOption}
           >
-            {options.map(this.renderOption)}
-          </Scrollbars>
-        </div>
+            <Scrollbars
+              style={{ height: `${options.length * 40}px` }}
+              autoHeight
+              autoHeightMin={44}
+              autoHeightMax={160}
+              ref={this.scrollViewRef}
+            >
+              {options.map(this.renderOption)}
+            </Scrollbars>
+          </div>
         }
       </div>
     );

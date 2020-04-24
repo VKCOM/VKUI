@@ -202,7 +202,8 @@ class DatePicker extends Component<Props, State> {
   }
 
   render() {
-    const isDesktop = this.props.viewMode >= ViewMode.DESKTOP;
+    const isDesktop = this.props.viewMode >= ViewMode.TABLET;
+
     return isDesktop ? this.desktopView : this.mobileView;
   }
 }
