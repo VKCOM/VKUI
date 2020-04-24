@@ -7,9 +7,9 @@ import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
-import Separator from '../Separator/Separator';
 import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { PanelContext, PanelContextProps } from './PanelContext';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, HasRootRef<HTMLDivElement>, AdaptivityProps {
   id: string;
@@ -17,22 +17,17 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform,
   centered?: boolean;
 }
 
-export interface PanelChildContext {
-  panel: Requireable<string>;
-}
-
 export interface PanelContext {
   hasTabbar: Requireable<boolean>;
 }
 
 class Panel extends Component<PanelProps> {
-  static childContextTypes: PanelChildContext = {
-    panel: PropTypes.string,
-  };
-
   static defaultProps: Partial<PanelProps> = {
     children: '',
     centered: false,
+    /**
+     * @deprecated будет удалено в 4-й версии. Сепаратор теперь устанавливается в PanelHeader
+     */
     separator: true,
   };
 
@@ -40,9 +35,10 @@ class Panel extends Component<PanelProps> {
     hasTabbar: PropTypes.bool,
   };
 
-  getChildContext() {
+  getContext(): PanelContextProps {
     return {
       panel: this.props.id,
+      separator: this.props.separator,
     };
   }
 
@@ -66,22 +62,23 @@ class Panel extends Component<PanelProps> {
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
 
     return (
-      <div
-        {...restProps}
-        ref={this.getRef}
-        className={classNames(getClassName('Panel', platform), className, `Panel--${sizeX}`, {
-          'Panel--centered': centered,
-        })}
-      >
-        <Touch className="Panel__in" style={{
-          paddingBottom: isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null,
-        }}>
-          <div className="Panel__in-before" />
-          {separator && <Separator className="Panel__separator" />}
-          {centered ? <div className="Panel__centered">{children}</div> : children}
-          <div className="Panel__in-after" />
-        </Touch>
-      </div>
+      <PanelContext.Provider value={this.getContext()}>
+        <div
+          {...restProps}
+          ref={this.getRef}
+          className={classNames(getClassName('Panel', platform), className, `Panel--${sizeX}`, {
+            'Panel--centered': centered,
+          })}
+        >
+          <Touch className="Panel__in" style={{
+            paddingBottom: isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null,
+          }}>
+            <div className="Panel__in-before" />
+            {centered ? <div className="Panel__centered">{children}</div> : children}
+            <div className="Panel__in-after" />
+          </Touch>
+        </div>
+      </PanelContext.Provider>
     );
   }
 }

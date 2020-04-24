@@ -4,7 +4,7 @@ import classNames from '../../lib/classNames';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import PopoutRoot from '../PopoutRoot/PopoutRoot';
-import PanelHeaderSimple from '../PanelHeaderSimple/PanelHeaderSimple';
+import PanelHeader from '../PanelHeader/PanelHeader';
 import PropTypes, { Requireable } from 'prop-types';
 
 export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasPlatform {
@@ -22,7 +22,7 @@ class SplitLayout extends Component<SplitLayoutProps> {
     });
 
     return <PopoutRoot className={_class} popout={popout} modal={modal}>
-      {header && <PanelHeaderSimple separator={false} />}
+      {header && <PanelHeader separator={false} />}
       <div {...restProps} className={innerClass}>
         {children}
       </div>

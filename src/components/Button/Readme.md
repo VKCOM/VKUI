@@ -1,6 +1,6 @@
  ```jsx
-<View activePanel="button" header={false}>
-  <Panel id="button" separator={false}>
+<View activePanel="button">
+  <Panel id="button">
     <Group header={<Header mode="secondary">Типы кнопок</Header>}>
       <Div>
         <Button>Primary</Button>

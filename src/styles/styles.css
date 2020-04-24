@@ -11,7 +11,6 @@
 @import '../components/View/View.css';
 @import '../components/Panel/Panel.css';
 @import '../components/PanelHeader/PanelHeader.css';
-@import '../components/PanelHeaderSimple/PanelHeaderSimple.css';
 @import '../components/PanelHeaderButton/PanelHeaderButton.css';
 @import '../components/PanelHeaderContent/PanelHeaderContent.css';
 @import '../components/PanelHeaderContext/PanelHeaderContext.css';
@@ -83,6 +82,13 @@
 @import '../components/CustomSelect/CustomSelect.css';
 @import '../components/DatePicker/DatePicker.css';
 @import '../components/SliderSwitch/SliderSwitch.css';
+
+/* Typography */
+@import '../components/Typography/Title/Title.css';
+@import '../components/Typography/Headline/Headline.css';
+@import '../components/Typography/Subhead/Subhead.css';
+@import '../components/Typography/Caption/Caption.css';
+@import '../components/Typography/Text/Text.css';
 
 /* Advertisement */
 @import '../components/PromoBanner/PromoBanner.css';

@@ -8,7 +8,7 @@ import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
 import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
 import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 
-<PanelHeaderSimple
+<PanelHeader
   left={<PanelHeaderButton><Icon28Notifications/></PanelHeaderButton>}
   right={<PanelHeaderButton><Icon28SettingsOutline/></PanelHeaderButton>}
 />
@@ -21,7 +21,7 @@ import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
 import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
 
-<PanelHeaderSimple
+<PanelHeader
   right={
     <React.Fragment>
       <PanelHeaderButton><Icon28SettingsOutline /></PanelHeaderButton>

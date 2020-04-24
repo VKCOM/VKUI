@@ -38,7 +38,6 @@ module.exports = {
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.tsx',
           '../src/components/PanelHeader/PanelHeader.tsx',
-          '../src/components/PanelHeaderSimple/PanelHeaderSimple.tsx',
           '../src/components/PanelHeaderButton/PanelHeaderButton.tsx',
           '../src/components/PanelHeaderBack/PanelHeaderBack.tsx',
           '../src/components/PanelHeaderClose/PanelHeaderClose.tsx',
@@ -125,8 +124,16 @@ module.exports = {
           '../src/components/DatePicker/DatePicker.tsx',
           '../src/components/SliderSwitch/SliderSwitch.tsx',
         ]
-      },
-      {
+      }, {
+        name: 'Typography',
+        components: () => [
+          '../src/components/Typography/Title/Title.tsx',
+          '../src/components/Typography/Headline/Headline.tsx',
+          '../src/components/Typography/Text/Text.tsx',
+          '../src/components/Typography/Subhead/Subhead.tsx',
+          '../src/components/Typography/Caption/Caption.tsx',
+        ]
+      }, {
         name: 'Advertisement',
         components: () => ['../src/components/PromoBanner/PromoBanner.tsx']
       },

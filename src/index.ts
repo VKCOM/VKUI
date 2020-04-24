@@ -7,11 +7,11 @@ export { default as Root } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export { default as Panel } from './components/Panel/Panel';
 export { default as PanelHeaderButton } from './components/PanelHeaderButton/PanelHeaderButton';
-/**
- * @deprecated используйте PanelHeaderSimple
- */
 export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
-export { default as PanelHeaderSimple } from './components/PanelHeaderSimple/PanelHeaderSimple';
+/**
+ * @deprecated будет удалено в 4-й версии. Используйте PanelHeader
+ */
+export { default as PanelHeaderSimple } from './components/PanelHeader/PanelHeader';
 export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
 export { default as PanelHeaderContext } from './components/PanelHeaderContext/PanelHeaderContext';
 export { default as SplitLayout, SplitCol, SplitFixedCol } from './components/SplitLayout/SplitLayout';
@@ -116,6 +116,15 @@ export { default as withAdaptivity } from './hoc/withAdaptivity';
  * Advertisement
  */
 export { default as PromoBanner } from './components/PromoBanner/PromoBanner';
+
+/**
+ * Typography
+ */
+export { default as Title } from './components/Typography/Title/Title';
+export { default as Headline } from './components/Typography/Headline/Headline';
+export { default as Text } from './components/Typography/Text/Text';
+export { default as Caption } from './components/Typography/Caption/Caption';
+export { default as Subhead } from './components/Typography/Subhead/Subhead';
 
 /**
  * HOCs

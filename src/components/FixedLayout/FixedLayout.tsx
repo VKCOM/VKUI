@@ -8,6 +8,7 @@ import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
 import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
+import withPanelContext from '../Panel/withPanelContext';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -20,7 +21,14 @@ export interface FixedLayoutProps extends
    * Это часто необходимо для фиксированных кнопок в нижней части экрана.
    */
   filled?: boolean;
-  global?: boolean;
+  /**
+   * @ignore
+   */
+  panel?: string;
+  /**
+   * @ignore
+   */
+  separator?: boolean;
 }
 
 export interface FixedLayoutState {
@@ -30,7 +38,6 @@ export interface FixedLayoutState {
 }
 
 export interface FixedLayoutContext {
-  panel: Requireable<string>;
   document: Requireable<{}>;
   hasTabbar: Requireable<boolean>;
   splitCol: Requireable<React.Component>;
@@ -46,7 +53,6 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   el: HTMLDivElement;
 
   static contextTypes: FixedLayoutContext = {
-    panel: PropTypes.string,
     document: PropTypes.any,
     hasTabbar: PropTypes.bool,
     splitCol: PropTypes.any,
@@ -72,7 +78,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
-    let panelScroll = e.detail.scrolls[this.context.panel] || 0;
+    let panelScroll = e.detail.scrolls[this.props.panel] || 0;
     this.setState({
       position: 'absolute',
       top: this.el.offsetTop + panelScroll,
@@ -96,9 +102,9 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
       const node: HTMLElement = splitCol.baseRef;
       const width = node.offsetWidth;
 
-      this.setState({ width: `${width}px` });
+      this.setState({ width: `${width}px`, position: null });
     } else {
-      this.setState({ width: '' });
+      this.setState({ width: '', position: null });
     }
   };
 
@@ -116,7 +122,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, insets, platform, filled, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, insets, platform, filled, separator, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
     const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
@@ -135,4 +141,4 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 }
 
-export default withPlatform(withInsets(FixedLayout));
+export default withPlatform(withInsets(withPanelContext(FixedLayout)));

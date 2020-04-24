@@ -1,246 +1,198 @@
-@import './PanelHeaderTransitions.css';
-
 .PanelHeader {
   position: relative;
+}
+
+.PanelHeader--vis::before {
+  display: block;
+  content: '';
+}
+
+.FixedLayout.PanelHeader__fixed {
+  z-index: 10;
+}
+
+.PanelHeader__in {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  white-space: nowrap;
+  position: relative;
   background: var(--header_background);
-  }
+}
 
-  .PanelHeader__in {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    }
+.PanelHeader--trnsp .PanelHeader__in {
+  background: transparent;
+}
 
-    .PanelHeader__container {
-      display: flex;
-      white-space: nowrap;
-      align-items: center;
-      position: relative;
-      z-index: 2;
-      }
+.PanelHeader__left {
+  box-sizing: border-box;
+  color: var(--header_tint);
+  display: flex;
+  flex-shrink: 0;
+}
 
-      .PanelHeader__left {
-        flex-shrink: 0;
-        display: flex;
-        position: relative;
-        z-index: 2;
-        }
+.PanelHeader__left .Avatar {
+  margin-left: 8px;
+}
 
-        .PanelHeader__left-in {
-          flex-shrink: 0;
-          }
+.PanelHeader__content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-          .PanelHeader-left-in {
-            color: var(--header_tint);
-            }
+.PanelHeader__right {
+  display: flex;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  color: var(--header_tint);
+}
 
-        .PanelHeader__addon {
-          flex-shrink: 0;
-          }
+.PanelHeader__right .Avatar {
+  margin-right: 8px;
+}
 
-          .PanelHeader-addon {
-            color: var(--header_tint);
-            }
+.PanelHeader--vkapps .PanelHeader__right {
+  min-width: 90px;
+}
 
-      .PanelHeader__content {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        }
+.PanelHeader__separator {
+  padding-top: 4px;
+}
 
-        .PanelHeader-content {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          }
-
-      .PanelHeader__right {
-        flex-shrink: 0;
-        display: flex;
-        justify-content: flex-end;
-        position: relative;
-        z-index: 2;
-        }
-
-        .PanelHeader-right {
-          box-sizing: border-box;
-          text-align: right;
-          justify-content: flex-end;
-          display: flex;
-          flex-shrink: 0;
-          color: var(--header_tint);
-          }
-
-        .PanelHeader-right--vkapps {
-          width: 90px;
-          }
-
-.PanelHeader--ios {
-  height: var(--panelheader_height_ios);
-  padding-top: var(--safe-area-inset-top);
-  }
-
-  .PanelHeader--ios .PanelHeader__in {
-    height: var(--panelheader_height_ios);
-    padding-top: var(--safe-area-inset-top);
-    }
-
-    .PanelHeader--ios .PanelHeader__container {
-      height: var(--panelheader_height_ios);
-      justify-content: space-between;
-      align-items: center;
-      }
-
-      .PanelHeader--ios .PanelHeader__left {
-        display: flex;
-        align-items: center;
-        flex-grow: 1;
-        flex-basis: 0;
-        padding-right: 12px;
-        height: var(--panelheader_height_ios);
-        }
-
-        .PanelHeader--ios .PanelHeader__left-in {
-          box-sizing: border-box;
-          height: 100%;
-          }
-
-          .PanelHeader--ios .PanelHeader-left-in {
-            font-size: 17px;
-            height: 100%;
-            }
-
-            .PanelHeader--ios .PanelHeader-left-in .PanelHeaderButton .Icon--24 {
-              padding-left: 12px;
-              }
-
-            .PanelHeader--ios .PanelHeader__left-in .PanelHeaderButton:first-child .Icon--28 {
-              padding-left: 10px;
-              }
-
-            .PanelHeader--ios .PanelHeader__left-in .PanelHeaderButton:first-child .Icon--chevron_back_28 {
-              padding-left: 8px;
-              }
-
-            .PanelHeader--ios .PanelHeader-left-in .PanelHeaderButton > *:not(.Icon) {
-              padding-left: 16px;
-              }
-
-        .PanelHeader--ios .PanelHeader__addon {
-          height: 100%;
-          }
-
-          .PanelHeader--ios .PanelHeader-addon:not(:empty) {
-            padding-left: 4px;
-            height: 100%;
-            }
-
-      .PanelHeader--ios .PanelHeader__content {
-        position: relative;
-        z-index: 1;
-        }
-
-        .PanelHeader--ios .PanelHeader-content {
-          font-weight: 800;
-          font-family: var(--font-tt);
-          font-size: 21px;
-          line-height: var(--panelheader_height_ios);
-          text-align: center;
-          transition: color .6s var(--ios-easing);
-          color: var(--header_text);
-          }
-
-      .PanelHeader--ios .PanelHeader__right {
-        flex-grow: 1;
-        flex-basis: 0;
-        padding-left: 12px;
-        height: var(--panelheader_height_ios);
-        }
-
-        .PanelHeader--ios .PanelHeader-right {
-          font-size: 17px;
-          height: 100%;
-          }
-
-          .PanelHeader--ios .PanelHeader-right .PanelHeaderButton:not(:first-child) {
-            padding-left: 12px;
-            }
-
-            .PanelHeader--ios .PanelHeader-right .PanelHeaderButton .Icon--24 {
-              padding-right: 12px;
-              }
-
-            .PanelHeader--ios .PanelHeader-right .PanelHeaderButton .Icon--28 {
-              padding-right: 12px;
-              }
-
-            .PanelHeader--ios .PanelHeader-right .PanelHeaderButton > *:not(.Icon) {
-              padding-right: 16px;
-              }
-
-.PanelHeader--android {
-  height: var(--panelheader_height_android);
-  }
-
-  .PanelHeader--android .PanelHeader__in {
-    height: var(--panelheader_height_android);
-    }
-
-    .PanelHeader--android .PanelHeader__container {
-      height: var(--panelheader_height_android);
-      }
-
-      .PanelHeader--android .PanelHeader__content {
-        max-width: 100%;
-        flex-grow: 2;
-        height: var(--panelheader_height_android);
-        }
-
-      .PanelHeader--android .PanelHeader-left-in:not(:empty) {
-        padding-right: 8px;
-        padding-left: 4px;
-        }
-
-      .PanelHeader--android .PanelHeader-left-in:empty {
-        width: 16px;
-        }
-
-      .PanelHeader--android .PanelHeader-right:not(:empty) {
-        padding-left: 8px;
-        padding-right: 4px;
-        }
-
-      .PanelHeader--android .PanelHeader-right:empty {
-        width: 16px;
-        }
-
-        .PanelHeader--android .PanelHeader-content {
-          font-size: 20px;
-          line-height: var(--panelheader_height_android);
-          height: var(--panelheader_height_android);
-          font-weight: 800;
-          font-family: var(--font-tt);
-          display: flex;
-          align-items: center;
-          color: var(--header_text);
-        }
-
-        .PanelHeader--android .PanelHeader-content > *:not(.Search):not(.PanelHeaderContent) {
-          max-width: 100%;
-          flex: 1;
-          min-width: 0;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-
-/*
-  Прозрачность
+/**
+ * iOS
  */
 
-.PanelHeader-left-in--tp,
-.PanelHeader-addon--tp,
-.PanelHeader-right--tp,
-.PanelHeader-content--tp {
-  background: transparent;
-  }
+.PanelHeader--ios ~ .FixedLayout--top {
+  top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
+}
+
+.PanelHeader--ios::before,
+.PanelHeader--ios .PanelHeader__in {
+  height: var(--panelheader_height_ios);
+  padding-top: var(--safe-area-inset-top);
+}
+
+.PanelHeader--ios .PanelHeader__left {
+  flex-basis: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
+  opacity: 1;
+  transition: opacity .3s var(--ios-easing);
+  padding: 4px 0 4px 4px;
+}
+
+.PanelHeader--ios .PanelHeader__left .PanelHeaderButton--primitive {
+  padding-left: 12px;
+}
+
+.PanelHeader--ios .PanelHeader__left .PanelHeaderButton + .PanelHeaderButton--primitive {
+  margin-left: -6px;
+  padding-left: 0;
+}
+
+.PanelHeader--ios .PanelHeader__content {
+  font-weight: 800;
+  font-family: var(--font-tt);
+  font-size: 21px;
+  line-height: var(--panelheader_height_ios);
+  text-align: center;
+  color: var(--header_text);
+  opacity: 1;
+  transition: opacity .3s var(--ios-easing);
+}
+
+.PanelHeader--ios .PanelHeader__content > * {
+  padding: 0 4px;
+}
+
+.PanelHeader--ios.PanelHeader--no-left .PanelHeader__content > * {
+  padding-left: 0;
+}
+
+.PanelHeader--ios.PanelHeader--no-left .PanelHeader__content {
+  padding-left: 8px;
+}
+
+.PanelHeader--ios.PanelHeader--no-right .PanelHeader__content > * {
+  padding-right: 0;
+}
+
+.PanelHeader--ios.PanelHeader--no-right .PanelHeader__content {
+  padding-right: 8px;
+}
+
+.PanelHeader--ios .PanelHeader__right {
+  flex-basis: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
+  opacity: 1;
+  transition: opacity .3s var(--ios-easing);
+  padding: 4px 4px 4px 0;
+}
+
+.PanelHeader--ios .PanelHeader__right .PanelHeaderButton--primitive {
+  padding-right: 12px;
+}
+
+.View--ios .View__panel--prev .PanelHeader__left,
+.View--ios .View__panel--prev .PanelHeader__right,
+.View--ios .View__panel--prev .PanelHeader__content {
+  opacity: 0;
+}
+
+/**
+ * Android
+ */
+
+.PanelHeader--android ~ .FixedLayout--top {
+  top: calc(var(--panelheader_height_android) + var(--safe-area-inset-top));
+}
+
+.PanelHeader--android::before,
+.PanelHeader--android .PanelHeader__in {
+  height: var(--panelheader_height_android);
+  padding-top: var(--safe-area-inset-top);
+}
+
+.PanelHeader--android .PanelHeader__left:not(:empty) {
+  padding: 4px 0 4px 4px;
+}
+
+.PanelHeader--android .PanelHeader__content {
+  font-size: 20px;
+  font-weight: 800;
+  font-family: var(--font-tt);
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.PanelHeader--android .PanelHeader__content > * {
+  padding: 0 12px;
+}
+
+.PanelHeader--android .Search {
+  padding: 0 4px;
+}
+
+.PanelHeader--android.PanelHeader--no-left .PanelHeader__content > * {
+  padding-left: 0;
+}
+
+.PanelHeader--android.PanelHeader--no-left .PanelHeader__content {
+  padding-left: 16px;
+}
+
+.PanelHeader--android.PanelHeader--no-right .PanelHeader__content > * {
+  padding-right: 0;
+}
+
+.PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
+  padding-right: 16px;
+}
+
+.PanelHeader--android .PanelHeader__right:not(:empty) {
+  padding: 4px 4px 4px 0;
+}

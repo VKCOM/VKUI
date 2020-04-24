@@ -8,14 +8,12 @@
   align-items: center;
   }
 
-.PanelHeader .Tabs,
-.PanelHeaderSimple .Tabs {
+.PanelHeader .Tabs {
   overflow: hidden;
   background: var(--header_background);
   }
 
-.PanelHeader .Tabs::after,
-.PanelHeaderSimple .Tabs::after {
+.PanelHeader .Tabs::after {
   display: block;
   width: 1000px;
   content: '';
