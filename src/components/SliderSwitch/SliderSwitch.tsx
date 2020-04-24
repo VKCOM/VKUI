@@ -1,11 +1,11 @@
 import React, { HTMLAttributes } from 'react';
-import Button from '../Button/Button';
+import SliderSwitchButton from './SliderSwitchButton';
 import classNames from '../../lib/classNames';
 import { HasFormLabels, HasPlatform } from '../../types';
 
 interface Option {
   name: string;
-  value: string;
+  value: string | number;
   selected?: boolean;
 }
 
@@ -13,7 +13,7 @@ interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabe
   options: Option[];
   name?: string;
   activeValue?: string;
-  onSwitch?: (value: string) => void;
+  onSwitch?: (value: Option['value']) => void;
 }
 
 interface State {
@@ -83,10 +83,10 @@ export default class SliderSwitch extends React.Component<Props, State> {
   }
 
   public render() {
-    const { name, options } = this.props;
+    const { name, options, className } = this.props;
     const { firstActive, secondActive, focusedOptionId } = this.state;
     const [firstOption, secondOption] = options;
-    let value = '';
+    let value = null;
 
     if (firstActive) {
       value = firstOption.value;
@@ -94,60 +94,39 @@ export default class SliderSwitch extends React.Component<Props, State> {
       value = secondOption.value;
     }
 
-    const sliderClass = classNames(
-      'SliderSwitch__slider',
-      {
-        ['SliderSwitch__firstActive']: firstActive,
-        ['SliderSwitch__secondActive']: secondActive,
-      },
-    );
-
-    const firstButtonClass = classNames(
-      'SliderSwitch__button',
-      {
-        ['SliderSwitch__active']: firstActive,
-        ['SliderSwitch__hover']: !firstActive && focusedOptionId === 0,
-        ['SliderSwitch__hover__active']: firstActive && focusedOptionId === 0,
-      },
-    );
-
-    const secondButtonClass = classNames(
-      'SliderSwitch__button',
-      {
-        ['SliderSwitch__active']: secondActive,
-        ['SliderSwitch__hover']: !secondActive && focusedOptionId === 1,
-        ['SliderSwitch__hover__active']: secondActive && focusedOptionId === 1,
-      },
-    );
-
     return (
       <div
-        className="SliderSwitch__container"
+        className={classNames('SliderSwitch__container', className)}
         onMouseLeave={this.resetFocusedOption}
       >
-        {
-          !firstActive && !secondActive && <div className="SliderSwitch__border" />
+        {!firstActive && !secondActive &&
+          <div className="SliderSwitch__border" />
         }
-        <div className={sliderClass} />
+        <div className={classNames(
+          'SliderSwitch__slider',
+          {
+            ['SliderSwitch--firstActive']: firstActive,
+            ['SliderSwitch--secondActive']: secondActive,
+          },
+        )} />
         <input type="hidden" name={name} value={value} />
-        <Button
-          mode="tertiary"
+        <SliderSwitchButton
+          active={firstActive}
+          hovered={focusedOptionId === 0}
           aria-pressed={firstActive}
-          className={firstButtonClass}
           onClick={this.handleFirstClick}
           onMouseEnter={this.handleFirstHover}
         >
           {firstOption.name}
-        </Button>
-        <Button
-          mode="tertiary"
-          area-pressed={secondActive}
-          className={secondButtonClass}
+        </SliderSwitchButton>
+        <SliderSwitchButton
+          active={secondActive}
+          hovered={focusedOptionId === 1}
           onClick={this.handleSecondClick}
           onMouseEnter={this.handleSecondHover}
         >
           {secondOption.name}
-        </Button>
+        </SliderSwitchButton>
       </div>
     );
   }
