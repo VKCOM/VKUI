@@ -31,8 +31,6 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   sizeX,
   ...restProps
 }: SelectMimicryProps) => {
-  const isRegular = sizeX === SizeType.REGULAR;
-
   return (
     <FormField
       {...restProps}
@@ -41,8 +39,8 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
         'Select--not-selected': !children,
         'Select--multiline': multiline,
         'Select--disabled': disabled,
-        'Select--regular': isRegular,
         [`Select--align-${align}`]: !!align,
+        [`Select--${sizeX}`]: !!sizeX,
       }, className)}
       getRootRef={getRootRef}
       status={status}
@@ -50,7 +48,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
     >
       <div className="Select__container">
         <div className="Select__title">{children || placeholder}</div>
-        {isRegular ? <Icon16Dropdown /> : <Icon24Dropdown />}
+        {sizeX === SizeType.REGULAR ? <Icon16Dropdown /> : <Icon24Dropdown />}
       </div>
     </FormField>
   );
@@ -62,5 +60,6 @@ SelectMimicry.defaultProps = {
 
 export default withAdaptivity(SelectMimicry, {
   viewMode: true,
+  sizeX: true,
 });
 

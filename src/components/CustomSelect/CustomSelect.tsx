@@ -393,10 +393,10 @@ export default class CustomSelect extends React.Component<Props, State> {
             onMouseLeave={this.resetFocusedOption}
           >
             <Scrollbars
-              style={{ height: `${options.length * 40}px` }}
+              style={{ height: `${options.length * 36}px` }}
               autoHeight
-              autoHeightMin={44}
-              autoHeightMax={160}
+              autoHeightMin={40}
+              autoHeightMax={132}
               ref={this.scrollViewRef}
             >
               {options.map(this.renderOption)}
