@@ -3,7 +3,7 @@ import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef, OldRef } from '../../types';
-import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface SelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -88,9 +88,9 @@ class Select extends React.Component<SelectProps, SelectState> {
 
   render() {
     const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, top, bottom, disabled, viewMode, ...restProps } = this.props;
+      getRef, getRootRef, top, bottom, disabled, sizeX, ...restProps } = this.props;
 
-    const isDesktop = viewMode >= ViewMode.TABLET;
+    const isRegular = sizeX === SizeType.REGULAR;
 
     return (
       <FormField
@@ -99,7 +99,7 @@ class Select extends React.Component<SelectProps, SelectState> {
           ['Select--not-selected']: this.state.notSelected,
           [`Select--align-${align}`]: !!align,
           'Select--disabled': disabled,
-          'Select--desktop': isDesktop,
+          'Select--regular': isRegular,
         }, className)}
         style={style}
         getRootRef={getRootRef}
