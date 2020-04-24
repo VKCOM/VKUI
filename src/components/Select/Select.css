@@ -73,10 +73,10 @@
   min-height: 44px;
   }
 
-.Select--regular .Select__container {
+.Select--sizeX--compact .Select__container {
   padding: 12px 32px 12px 12px;
   }
 
-.Select--regular .Icon {
+.Select--sizeX--compact .Icon {
   margin-top: -6px;
   }

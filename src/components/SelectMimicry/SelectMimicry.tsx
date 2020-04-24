@@ -40,7 +40,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
         'Select--multiline': multiline,
         'Select--disabled': disabled,
         [`Select--align-${align}`]: !!align,
-        [`Select--${sizeX}`]: !!sizeX,
+        [`Select--sizeX--${sizeX}`]: !!sizeX,
       }, className)}
       getRootRef={getRootRef}
       status={status}
@@ -48,7 +48,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
     >
       <div className="Select__container">
         <div className="Select__title">{children || placeholder}</div>
-        {sizeX === SizeType.REGULAR ? <Icon16Dropdown /> : <Icon24Dropdown />}
+        {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : <Icon24Dropdown />}
       </div>
     </FormField>
   );

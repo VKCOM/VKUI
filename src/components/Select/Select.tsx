@@ -1,9 +1,10 @@
 import React, { ChangeEvent, ChangeEventHandler, SelectHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
+import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef, OldRef } from '../../types';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface SelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -96,7 +97,7 @@ class Select extends React.Component<SelectProps, SelectState> {
         className={classNames('Select', {
           ['Select--not-selected']: this.state.notSelected,
           [`Select--align-${align}`]: !!align,
-          [`Select--${sizeX}`]: !!sizeX,
+          [`Select--sizeX--${sizeX}`]: !!sizeX,
           'Select--disabled': disabled,
         }, className)}
         style={style}
@@ -116,7 +117,7 @@ class Select extends React.Component<SelectProps, SelectState> {
         </select>
         <div className="Select__container">
           <div className="Select__title">{this.state.title}</div>
-          <Icon24Dropdown />
+          {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : <Icon24Dropdown />}
         </div>
       </FormField>
     );
