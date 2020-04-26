@@ -7,7 +7,7 @@
   width: 100%;
   overflow: hidden;
   position: absolute;
-  background-color: var(--white);
+  background-color: var(--modal_card_background);
   box-sizing: border-box;
   border: solid 1px var(--field_border);
   border-top: 0;

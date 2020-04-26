@@ -63,7 +63,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 
   componentDidMount() {
-    this.doResize();
+    setTimeout(() => this.doResize());
     window.addEventListener('resize', this.doResize);
 
     this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
@@ -98,8 +98,8 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   doResize = () => {
     const { splitCol } = this.context;
 
-    if (splitCol) {
-      const node: HTMLElement = splitCol.baseRef;
+    if (splitCol && splitCol.baseRef.current) {
+      const node: HTMLElement = splitCol.baseRef.current;
       const width = node.offsetWidth;
 
       this.setState({ width: `${width}px`, position: null });
