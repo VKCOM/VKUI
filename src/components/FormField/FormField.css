@@ -81,7 +81,7 @@
   border: solid 1px var(--field_border);
 }
 
-.CustomSelect__container .Select--mimicry:focus .FormField__border {
+.CustomSelect__open.Select--mimicry:focus .FormField__border {
   border-color: var(--field_border);
 }
 

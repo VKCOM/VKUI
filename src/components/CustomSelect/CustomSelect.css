@@ -1,6 +1,8 @@
 .CustomSelect__container {
   width: 100%;
   position: relative;
+  cursor: pointer;
+  user-select: none;
 }
 
 .CustomSelect__options {
@@ -16,6 +18,10 @@
   z-index: 2;
 }
 
+.CustomSelect__options--sizeY--regular {
+  max-height: 160px;
+}
+
 .CustomSelect__hover {
   background-color: var(--button_muted_background);
 }
@@ -29,6 +35,13 @@
   font-size: 16px;
   padding: 10px 30px 10px 12px;
   white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+}
+
+.CustomSelect__option--sizeY--regular {
+  height: 44px;
+  padding: 12px 30px 12px 12px;
 }
 
 .CustomSelect__selectedIcon {
