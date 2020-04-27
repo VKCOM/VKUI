@@ -96,7 +96,6 @@ export default class Touch extends Component<TouchProps> {
     touchEnabled && this.unsubscribe(this.container);
 
     this.container.removeEventListener('mouseenter', this.onEnter);
-    this.container.removeEventListener('mousemove', this.onMouseMoveOnce);
     this.container.removeEventListener('mouseleave', this.onLeave);
   }
 
@@ -119,27 +118,10 @@ export default class Touch extends Component<TouchProps> {
    * @param {boolean} simulated флаг, с которым обработчик был вызван симулятивно
    * @return {void}
    */
-  onLeave = (e: MouseEvent, simulated = false) => {
+  onLeave = (e: MouseEvent) => {
     if (this.props.onLeave) {
       this.props.onLeave(e);
     }
-
-    if (simulated) {
-      this.container.addEventListener('mousemove', this.onMouseMoveOnce, { capture: this.props.useCapture, passive: true, once: true });
-    }
-  };
-
-  /**
-   * Обработчик событий mousemove,
-   * служит для того, чтобы вернуть hover на элемент
-   * после отработки touch анимации на устройствах
-   * с возможностью hover и touch
-   *
-   * @param {Object} e Браузерное событие
-   * @return {void}
-   */
-  onMouseMoveOnce = (e: MouseEvent) => {
-    this.onEnter(e);
   };
 
   /**
@@ -276,7 +258,10 @@ export default class Touch extends Component<TouchProps> {
     this.cancelClick = target.tagName === 'A' && isSlide;
     this.gesture = {};
 
-    this.onLeave(e, true);
+    // Если это был тач-евент, симулируем отмену hover
+    if (e.type === 'touchend' || e.type === 'touchcancel') {
+      this.onLeave(e);
+    }
 
     !touchEnabled && this.unsubscribe(this.document);
   };
