@@ -333,6 +333,8 @@ export default class Touch extends Component<TouchProps> {
       onMove,
       onMoveX,
       onMoveY,
+      onLeave,
+      onEnter,
       onEnd,
       onEndX,
       onEndY,
