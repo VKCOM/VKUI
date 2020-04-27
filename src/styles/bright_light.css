@@ -51,6 +51,7 @@
   --destructive: #e64646;
   --field_background: #f2f3f5;
   --field_border: rgba(0, 0, 0, 0.12);
+  --field_border_hover: rgba(0, 0, 0, 0.24);
   --field_error_background: #faebeb;
   --field_error_border: #e64646;
   --field_valid_border: #4bb34b;
