@@ -6,7 +6,7 @@
   margin: 0;
   padding: 0;
   border: none;
-  cursor: default;
+  cursor: pointer;
   width: 100%;
   background: transparent;
   position: relative;
@@ -14,6 +14,7 @@
 
 .CellButton[disabled] {
   opacity: .4;
+  cursor: default;
   }
 
 .CellButton__in {
