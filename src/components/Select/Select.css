@@ -32,10 +32,20 @@
     height: 44px;
     position: relative;
     z-index: 2;
+    cursor: pointer;
     }
+
+  .Select__el {
+    cursor: pointer;
+  }
+
+  .Select--disabled .Select__el {
+    cursor: default;
+  }
 
   .Select--disabled .Select__container {
     opacity: .4;
+    cursor: default;
     }
 
     .Select:not(.Select--multiline) .Select__title {

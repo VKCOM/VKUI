@@ -17,6 +17,10 @@
   transform-origin: left top;
 }
 
+.FormField__border.FormField__border--hover {
+  border-color: var(--field_border_hover);
+}
+
 .FormField--ios .FormField__border {
   border-radius: 10px;
 }
@@ -75,10 +79,6 @@
   transform: scale(1);
   width: 100%;
   height: 100%;
-}
-
-.CustomSelect__container .FormField__border {
-  border: solid 1px var(--field_border);
 }
 
 .CustomSelect__container .Select--mimicry:focus .FormField__border {

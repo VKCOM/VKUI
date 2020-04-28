@@ -50,6 +50,7 @@ body[scheme="space_gray"] {
   --destructive: #ff4e5f;
   --field_background: #232324;
   --field_border: rgba(255, 255, 255, 0.12);
+  --field_border_hover: rgba(255, 255, 255, 0.24);
   --field_error_background: #522e2e;
   --field_error_border: #ff4e5f;
   --field_valid_border: #4bb34b;
