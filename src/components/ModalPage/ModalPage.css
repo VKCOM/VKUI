@@ -52,6 +52,7 @@
 
 .ModalPage--desktop .ModalPage__in {
   height: auto;
+  max-height: 100%;
 }
 
 .ModalPage--ios .ModalPage__in {
@@ -64,12 +65,12 @@
   border-radius: 12px 12px 0 0;
 }
 
-.ModalPage--ios.ModalPage--desktop .ModalPage__in {
-  border-radius: 14px;
-}
-
+.ModalPage--ios.ModalPage--desktop .ModalPage__in,
 .ModalPage--android.ModalPage--desktop .ModalPage__in {
-  border-radius: 12px;
+  border-radius: 10px;
+  box-shadow:
+    0 0 96px rgba(0, 0, 0, .16),
+    0 0 2px rgba(0, 0, 0, .12);
 }
 
 .ModalPage__header {
@@ -86,9 +87,11 @@
   box-sizing: border-box;
 }
 
+.ModalPage--desktop .ModalPage__content,
 .ModalRoot__modal--expandable .ModalPage__content {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .ModalPage__content-in {
