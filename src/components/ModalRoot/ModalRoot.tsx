@@ -13,6 +13,7 @@ import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
+import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
 
 export const TYPE_CARD = 'modal-card';
 export const TYPE_PAGE = 'modal-page';
@@ -57,7 +58,7 @@ export interface ModalsStateEntry {
   contentScrollStopTimeout?: number;
 }
 
-export interface ModalRootProps extends HasChildren, HasPlatform {
+export interface ModalRootProps extends HasChildren, HasPlatform, AdaptivityProps {
   activeModal?: string | null;
 
   /**
@@ -869,4 +870,6 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   }
 }
 
-export default withPlatform(ModalRoot);
+export default withAdaptivity(withPlatform(ModalRoot), {
+  viewMode: true,
+});
