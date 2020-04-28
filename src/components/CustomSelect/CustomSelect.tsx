@@ -1,4 +1,4 @@
-import React, { createRef, MouseEvent, KeyboardEvent } from 'react';
+import React, { createRef, KeyboardEvent, MouseEvent } from 'react';
 // пока используем react-custom-scrollbars, если свой скроллбар будет весить меньше, то лучше будет написать свой
 import { Scrollbars } from 'react-custom-scrollbars';
 import getScrollbarWidth from 'react-custom-scrollbars/lib/utils/getScrollbarWidth';
@@ -393,10 +393,10 @@ export default class CustomSelect extends React.Component<Props, State> {
             onMouseLeave={this.resetFocusedOption}
           >
             <Scrollbars
-              style={{ height: `${options.length * 36}px` }}
+              style={{ height: `${options.length * 44}px` }}
               autoHeight
-              autoHeightMin={40}
-              autoHeightMax={132}
+              autoHeightMin={44}
+              autoHeightMax={160}
               ref={this.scrollViewRef}
             >
               {options.map(this.renderOption)}
