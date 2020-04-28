@@ -414,6 +414,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   closeActiveModal() {
     const { prevModal } = this.state;
+
     if (!prevModal) {
       return console.warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
     }
@@ -723,6 +724,10 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   /* Анимирует сдивг модалки */
   animateTranslate(modalState: ModalsStateEntry, currentPercent: number = null) {
+    const { viewMode } = this.props;
+
+    const isDesktop = viewMode >= ViewMode.TABLET;
+
     if (currentPercent === null) {
       currentPercent = modalState.translateY;
     }
@@ -732,7 +737,11 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     cancelAnimationFrame(this.frameIds[frameId]);
 
     this.frameIds[frameId] = requestAnimationFrame(() => {
-      setTransformStyle(modalState.innerElement, `translateY(${currentPercent}%)`);
+      if (isDesktop) {
+        modalState.innerElement.style.opacity = '1';
+      } else {
+        setTransformStyle(modalState.innerElement, `translateY(${currentPercent}%)`);
+      }
 
       if (modalState.type === TYPE_PAGE && modalState.footerElement) {
         const footerHeight = modalState.footerElement.offsetHeight;

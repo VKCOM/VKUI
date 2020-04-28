@@ -21,14 +21,16 @@
 
 .ModalPage--desktop .ModalPage__in-wrap {
   transform: translateY(0);
+  opacity: 0;
+  align-items: center;
 }
 
 .ModalPage--ios .ModalPage__in-wrap {
-  transition: transform 400ms var(--ios-easing);
+  transition: transform 400ms var(--ios-easing), opacity 400ms var(--ios-easing);
 }
 
 .ModalPage--android .ModalPage__in-wrap {
-  transition: transform 320ms var(--android-easing);
+  transition: transform 320ms var(--android-easing), opacity 320ms var(--android-easing);
 }
 
 .ModalRoot--touched .ModalPage__in-wrap {
@@ -48,6 +50,10 @@
   flex-direction: column;
 }
 
+.ModalPage--desktop .ModalPage__in {
+  height: auto;
+}
+
 .ModalPage--ios .ModalPage__in {
   padding-top: var(--modalheader_height_ios);
   border-radius: 14px 14px 0 0;
@@ -56,6 +62,14 @@
 .ModalPage--android .ModalPage__in {
   padding-top: var(--modalheader_height_android);
   border-radius: 12px 12px 0 0;
+}
+
+.ModalPage--ios.ModalPage--desktop .ModalPage__in {
+  border-radius: 14px;
+}
+
+.ModalPage--android.ModalPage--desktop .ModalPage__in {
+  border-radius: 12px;
 }
 
 .ModalPage__header {
