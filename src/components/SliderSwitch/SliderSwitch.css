@@ -27,6 +27,7 @@
   color: var(--text_subhead);
   transition: color 100ms ease-out;
   outline: none;
+  user-select: none;
   z-index: 1;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
