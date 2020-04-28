@@ -7,7 +7,6 @@ import { SelectProps } from '../Select/Select';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce, throttle } from '../../lib/utils';
 import classNames from '../../lib/classNames';
-import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface SelectOption {
   value: string | number | boolean;
@@ -27,7 +26,7 @@ interface State {
   selectedOptionId: number;
 }
 
-interface Props extends SelectProps, AdaptivityProps {
+interface Props extends SelectProps {
   options: SelectOption[];
   onSelectChange?: (value: string, name?: string) => void;
   onFocus?: () => void;
@@ -36,7 +35,7 @@ interface Props extends SelectProps, AdaptivityProps {
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
-class CustomSelect extends React.Component<Props, State> {
+export default class CustomSelect extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props);
 
@@ -331,7 +330,6 @@ class CustomSelect extends React.Component<Props, State> {
   }
 
   renderOption = (item: SelectOption, index: number) => {
-    const { sizeY } = this.props;
     const { focusedOptionId, selectedOptionId } = this.state;
     const hovered = index === focusedOptionId;
     const selected = index === selectedOptionId;
@@ -348,7 +346,6 @@ class CustomSelect extends React.Component<Props, State> {
         onMouseEnter={this.handleOptionHover}
         className={classNames('CustomSelect__option', {
           ['CustomSelect__hover']: hovered,
-          [`CustomSelect__option--sizeY--${sizeY}`]: !!sizeY,
         })}
       >
         {item.label}
@@ -363,12 +360,9 @@ class CustomSelect extends React.Component<Props, State> {
 
   render() {
     const { opened, options } = this.state;
-    const { placeholder = '', tabIndex, name, sizeY } = this.props;
+    const { placeholder = '', tabIndex, name } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
-
-    const scrollUnitHeight = sizeY === SizeType.REGULAR ? 44 : 40;
-    const scrollMaxHeight = sizeY === SizeType.REGULAR ? 160 : 132;
 
     return (
       <div
@@ -395,15 +389,14 @@ class CustomSelect extends React.Component<Props, State> {
           <div
             className={classNames({
               ['CustomSelect__options']: opened,
-              [`CustomSelect__options--sizeY--${sizeY}`]: !!sizeY,
             })}
             onMouseLeave={this.resetFocusedOption}
           >
             <Scrollbars
-              style={{ height: `${options.length * scrollUnitHeight}px` }}
+              style={{ height: `${options.length * 44}px` }}
               autoHeight
-              autoHeightMin={scrollUnitHeight}
-              autoHeightMax={scrollMaxHeight}
+              autoHeightMin={44}
+              autoHeightMax={160}
               ref={this.scrollViewRef}
             >
               {options.map(this.renderOption)}
@@ -414,7 +407,3 @@ class CustomSelect extends React.Component<Props, State> {
     );
   }
 }
-
-export default withAdaptivity(CustomSelect, {
-  sizeY: true,
-});
