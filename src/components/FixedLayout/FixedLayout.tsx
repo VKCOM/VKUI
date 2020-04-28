@@ -46,7 +46,7 @@ export interface FixedLayoutContext {
 class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   state: FixedLayoutState = {
     position: 'absolute',
-    top: 0,
+    top: null,
     width: '',
   };
 
