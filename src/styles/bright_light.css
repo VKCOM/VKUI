@@ -97,6 +97,8 @@
   --im_bubble_button_outgoing_background: rgba(255, 255, 255, 0.60);
   --im_bubble_button_background_highlighted: #d7d8d9;
   --im_bubble_button_foreground: #000000;
+  --im_bubble_expiring: #d4fde8;
+  --im_bubble_expiring_highlighted: #aee6c9;
   --im_bubble_incoming_expiring: #e6e9ff;
   --im_bubble_incoming_expiring_highlighted: #ccd3ff;
   --im_bubble_outgoing_expiring: #ccd3ff;
@@ -124,6 +126,7 @@
   --im_bubble_wallpaper_outgoing_highlighted: #add3ff;
   --im_bubble_wallpaper_outgoing_border: rgba(0, 57, 115, 0.10);
   --im_forward_line_tint: #45678f;
+  --im_reply_sender_text: #4986cc;
   --im_reply_separator: #4986cc;
   --im_text_name: #4986cc;
   --im_toolbar_voice_msg_background: #99a2ad;
