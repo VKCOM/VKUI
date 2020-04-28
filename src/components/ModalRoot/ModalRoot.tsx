@@ -216,6 +216,12 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       requestAnimationFrame(() => this.switchPrevNext());
     }
 
+    // Ререндер состояния открытого окна в случае смены размера окна
+    // нужно для продолжения показа модельного окна при смене isDesktop
+    if (this.props.viewMode !== prevProps.viewMode) {
+      this.animateTranslate(this.modalsState[this.state.activeModal]);
+    }
+
     if (!this.state.activeModal && !this.state.prevModal && !this.state.nextModal) {
       this.toggleDocumentScrolling(true);
     } else {
