@@ -1,4 +1,4 @@
-import React, { ElementType, HTMLAttributes } from 'react';
+import React, { ElementType, HTMLAttributes, useState } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
@@ -23,16 +23,32 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
   ...restProps
 }: FormFieldProps) => {
   const platform = usePlatform();
+  const [hover, setHover] = useState(false);
+
+  const handleMouseEnter = (e: MouseEvent) => {
+    e.stopPropagation();
+    setHover(true);
+  };
+
+  const handleMouseLeave = (e: MouseEvent) => {
+    e.stopPropagation();
+    setHover(false);
+  };
+
   return (
     <Component
       {...restProps}
       ref={getRootRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={classNames(getClassName('FormField', platform), {
         [`FormField--s-${status}`]: status !== 'default',
       }, className)}
     >
       {children}
-      <div className="FormField__border" />
+      <div className={classNames('FormField__border', {
+        'FormField__border--hover': hover,
+      })} />
     </Component>
   );
 };
