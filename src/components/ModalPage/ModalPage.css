@@ -79,6 +79,7 @@
   box-sizing: border-box;
 }
 
+.ModalPage--desktop .ModalPage__content,
 .ModalRoot__modal--expandable .ModalPage__content {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
