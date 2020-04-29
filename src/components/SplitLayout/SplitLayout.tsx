@@ -4,13 +4,12 @@ import classNames from '../../lib/classNames';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import PopoutRoot from '../PopoutRoot/PopoutRoot';
-import PanelHeader from '../PanelHeader/PanelHeader';
 import PropTypes, { Requireable } from 'prop-types';
 
 export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasPlatform {
   popout?: ReactNode;
   modal?: ReactNode;
-  header?: boolean;
+  header?: ReactNode;
 };
 
 class SplitLayout extends Component<SplitLayoutProps> {
@@ -18,11 +17,11 @@ class SplitLayout extends Component<SplitLayoutProps> {
     const { popout, modal, header, children, className, platform, ...restProps } = this.props;
     const _class = getClassName('SplitLayout', platform);
     const innerClass = classNames('SplitLayout__inner', className, {
-      'SplitLayout__inner--header': header,
+      'SplitLayout__inner--header': !!header,
     });
 
     return <PopoutRoot className={_class} popout={popout} modal={modal}>
-      {header && <PanelHeader separator={false} />}
+      {header}
       <div {...restProps} className={innerClass}>
         {children}
       </div>
