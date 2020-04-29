@@ -44,6 +44,7 @@ const PanelHeader = ({
   const platform = usePlatform();
   const { webviewType } = useContext(ConfigProviderContext);
   const panelContext = useContext(PanelContext);
+  const needShadow = shadow && sizeX === 'regular';
   let needSeparator = separator;
 
   if (typeof separator !== 'boolean') {
@@ -60,7 +61,7 @@ const PanelHeader = ({
           getClassname('PanelHeader', platform),
           {
             'PanelHeader--trnsp': transparent,
-            'PanelHeader--shadow': shadow,
+            'PanelHeader--shadow': needShadow,
             'PanelHeader--vis': visor,
             'PanelHeader--sep': needSeparator && visor,
             'PanelHeader--vkapps': webviewType === WebviewType.VKAPPS,
@@ -78,7 +79,7 @@ const PanelHeader = ({
           classNames(
             'PanelHeader__fixed',
             {
-              'PanelHeader__fixed--shadow': shadow,
+              'PanelHeader__fixed--shadow': needShadow,
             },
           )
         }
