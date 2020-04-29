@@ -89,5 +89,5 @@
 
 .Panel.Panel--regular .Panel__in,
 .Panel.Panel--regular::after {
-  background-color: var(--background_page);
+  background-color: transparent;
 }
