@@ -27,6 +27,13 @@
   transition: transform 320ms var(--android-easing);
 }
 
+.ModalPage--desktop .ModalPage__in-wrap {
+  align-items: center;
+  transform: unset;
+  opacity: 0;
+  transition: opacity 340ms var(--android-easing);
+}
+
 .ModalRoot--touched .ModalPage__in-wrap {
   transition: none;
 }
@@ -52,6 +59,15 @@
 .ModalPage--android .ModalPage__in {
   padding-top: var(--modalheader_height_android);
   border-radius: 12px 12px 0 0;
+}
+
+.ModalPage--desktop .ModalPage__in {
+  height: auto;
+  max-height: 640px;
+  box-shadow:
+    0 16px 16px rgba(0, 0, 0, .16),
+    0 0 8px rgba(0, 0, 0, .12);
+  border-radius: 8px;
 }
 
 .ModalPage__header {
