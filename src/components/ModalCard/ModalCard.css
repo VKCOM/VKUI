@@ -24,16 +24,18 @@
   box-sizing: border-box;
 }
 
-.ModalCard--desktop .ModalCard__in {
-  transform: translateY(0);
-}
-
 .ModalCard--ios .ModalCard__in {
   transition: transform 340ms var(--ios-easing);
 }
 
 .ModalCard--android .ModalCard__in {
   transition: transform 340ms var(--android-easing);
+}
+
+.ModalCard--desktop .ModalCard__in {
+  transform: unset;
+  opacity: 0;
+  transition: opacity 340ms var(--android-easing);
 }
 
 .ModalRoot--touched .ModalCard__in {
@@ -55,7 +57,16 @@
 
 .ModalCard--android .ModalCard__container {
   border-radius: 12px;
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .08);
+  box-shadow:
+    0 8px 8px 0 rgba(0, 0, 0, .16),
+    0 0 4px 0 rgba(0, 0, 0, .08);
+}
+
+.ModalCard--desktop .ModalCard__container {
+  border-radius: 8px;
+  box-shadow:
+    0 16px 16px rgba(0, 0, 0, .16),
+    0 0 8px rgba(0, 0, 0, .12);
 }
 
 .ModalCard__dismiss {
