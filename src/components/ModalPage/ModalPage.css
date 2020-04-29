@@ -52,12 +52,10 @@
 }
 
 .ModalPage--ios .ModalPage__in {
-  padding-top: var(--modalheader_height_ios);
   border-radius: 14px 14px 0 0;
 }
 
 .ModalPage--android .ModalPage__in {
-  padding-top: var(--modalheader_height_android);
   border-radius: 12px 12px 0 0;
 }
 
@@ -71,9 +69,6 @@
 }
 
 .ModalPage__header {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
 }
 
