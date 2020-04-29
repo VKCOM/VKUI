@@ -52,16 +52,14 @@
 
 .ModalPage--desktop .ModalPage__in {
   height: auto;
-  max-height: 100%;
+  max-height: 640px;
 }
 
 .ModalPage--ios .ModalPage__in {
-  padding-top: var(--modalheader_height_ios);
   border-radius: 14px 14px 0 0;
 }
 
 .ModalPage--android .ModalPage__in {
-  padding-top: var(--modalheader_height_android);
   border-radius: 12px 12px 0 0;
 }
 
@@ -74,9 +72,6 @@
 }
 
 .ModalPage__header {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
 }
 
@@ -92,6 +87,7 @@
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
+  -ms-scroll-chaining: none;
 }
 
 .ModalPage__content-in {

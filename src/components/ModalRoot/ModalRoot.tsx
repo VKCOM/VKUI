@@ -218,7 +218,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
     // Ререндер состояния открытого окна в случае смены размера окна
     // нужно для продолжения показа модельного окна при смене isDesktop
-    if (this.props.viewMode !== prevProps.viewMode) {
+    if (this.props.viewMode !== prevProps.viewMode && this.state.activeModal) {
       this.animateTranslate(this.modalsState[this.state.activeModal]);
     }
 
@@ -454,6 +454,12 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   onPageTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
     const { shiftY, startT, originalEvent } = event;
+    const { viewMode } = this.props;
+    const isDesktop = viewMode >= ViewMode.TABLET;
+
+    if (isDesktop) {
+      return;
+    }
 
     const target = originalEvent.target as HTMLElement;
 
