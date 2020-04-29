@@ -1,0 +1,156 @@
+.SimpleCell {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  white-space: nowrap;
+}
+
+.SimpleCell--mult {
+  white-space: normal;
+}
+
+.SimpleCell > *:first-child:not(.SimpleCell__main),
+.SimpleCell > .Tappable__waves + *:not(.SimpleCell__main) {
+  flex-shrink: 0;
+}
+
+.SimpleCell > .Icon:first-child,
+.SimpleCell > .Tappable__waves + .Icon {
+  color: var(--accent);
+}
+
+.SimpleCell__main {
+  max-width: 100%;
+  flex-grow: 1;
+  min-width: 0;
+  flex-shrink: initial;
+  overflow: hidden;
+}
+
+.SimpleCell__main:first-child,
+.SimpleCell > .Tappable__waves + .SimpleCell__main {
+  padding-left: 16px;
+}
+
+.SimpleCell__main:last-child {
+  padding-right: 16px;
+}
+
+.SimpleCell > .Icon:first-child,
+.SimpleCell > .Tappable__waves + .Icon,
+.SimpleCell > .Avatar--sz-32 {
+  padding: 10px 16px;
+}
+
+.SimpleCell > .Avatar--sz-40:first-child,
+.SimpleCell > .Tappable__waves + .Avatar--sz-40 {
+  padding: 4px 12px;
+}
+
+.SimpleCell > .Avatar--sz-48:first-child,
+.SimpleCell > .Tappable__waves + .Avatar--sz-48,
+.SimpleCell > .Avatar--sz-72:first-child,
+.SimpleCell > .Tappable__waves + .Avatar--sz-72 {
+  padding: 6px 12px;
+}
+
+.SimpleCell > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main .SimpleCell__description {
+  margin-top: 3px;
+}
+
+.SimpleCell__description {
+  color: var(--text_secondary);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 16px;
+  margin-top: 2px;
+}
+
+.SimpleCell__children {
+  color: var(--text_primary);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.SimpleCell__indicator {
+  color: var(--text_secondary);
+  min-width: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-left: 4px;
+  padding-right: 16px;
+}
+
+.SimpleCell__after {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.SimpleCell__after .Icon {
+  color: var(--accent);
+  padding: 10px 18px 10px 10px;
+}
+
+/**
+ * iOS
+ */
+
+.SimpleCell--ios {
+  font-size: 17px;
+  line-height: 22px;
+}
+
+.SimpleCell--ios .SimpleCell__main,
+.SimpleCell--ios .SimpleCell__indicator {
+  padding-top: 9px;
+  padding-bottom: 11px;
+}
+
+.SimpleCell--ios > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main,
+.SimpleCell--ios > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__indicator {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.SimpleCell--ios.SimpleCell--exp .SimpleCell__indicator {
+  padding-right: 4px;
+}
+
+.SimpleCell--ios .Switch {
+  padding-left: 10px;
+  padding-right: 12px;
+}
+
+.SimpleCell--ios.SimpleCell--exp .SimpleCell__after .Icon--28,
+.SimpleCell--ios.SimpleCell--exp .Switch {
+  padding-right: 4px;
+}
+
+.SimpleCell--ios .SimpleCell__after .Icon--chevron_24 {
+  color: var(--icon_tertiary);
+  padding-right: 16px;
+  padding-left: 12px;
+}
+
+/**
+ * Android
+ */
+
+.SimpleCell--android {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.SimpleCell--android .SimpleCell__main,
+.SimpleCell--android .SimpleCell__indicator {
+  padding-top: 11px;
+  padding-bottom: 10px;
+}
+
+.SimpleCell--android .Switch {
+  padding-left: 10px;
+  padding-right: 16px;
+}
