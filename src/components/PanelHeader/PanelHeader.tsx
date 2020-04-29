@@ -19,6 +19,7 @@ export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef
   right?: ReactNode;
   separator?: boolean;
   transparent?: boolean;
+  shadow?: boolean;
   /**
    * Если `false`, то шапка будет нулевой высоты и контент панели "залезет" под неё
    */
@@ -34,6 +35,7 @@ const PanelHeader = ({
   separator,
   visor,
   transparent,
+  shadow,
   getRef,
   getRootRef,
   sizeX,
@@ -58,6 +60,7 @@ const PanelHeader = ({
           getClassname('PanelHeader', platform),
           {
             'PanelHeader--trnsp': transparent,
+            'PanelHeader--shadow': shadow,
             'PanelHeader--vis': visor,
             'PanelHeader--sep': needSeparator && visor,
             'PanelHeader--vkapps': webviewType === WebviewType.VKAPPS,
@@ -69,7 +72,18 @@ const PanelHeader = ({
       }
       ref={getRootRef}
     >
-      <FixedLayout vertical="top" className="PanelHeader__fixed" getRootRef={getRef}>
+      <FixedLayout
+        vertical="top"
+        className={
+          classNames(
+            'PanelHeader__fixed',
+            {
+              'PanelHeader__fixed--shadow': shadow,
+            },
+          )
+        }
+        getRootRef={getRef}
+      >
         <div className="PanelHeader__in">
           <div className="PanelHeader__left">
             {left}
