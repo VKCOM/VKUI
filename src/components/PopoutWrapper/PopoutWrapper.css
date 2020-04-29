@@ -6,6 +6,10 @@
   top: 0;
   }
 
+  .PopoutWrapper--fixed {
+    position: fixed;
+  }
+
   .PopoutWrapper--closing .PopoutWrapper__mask {
     opacity: 0;
     }
