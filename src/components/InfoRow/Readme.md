@@ -8,30 +8,29 @@
         InfoRow
       </PanelHeader>
       <Group>
-        <Div>
+        <SimpleCell>
           <InfoRow header="Общий бюджет">
             3000 р.
           </InfoRow>
-        </Div>
+        </SimpleCell>
       </Group>
-      <Group header={<Header mode="secondary">Информация о пользователе</Header>}>
-        <List>
-          <Cell>
-            <InfoRow header="Дата рождения">
-              30 января 1993
-            </InfoRow>
-          </Cell>
-          <Cell>
-            <InfoRow header="Родной город">
-              Ереван
-            </InfoRow>
-          </Cell>
-          <Cell>
-            <InfoRow header="Место работы">
-              Команда ВКонтакте
-            </InfoRow>
-          </Cell>
-        </List>
+      <Group>
+        <Header mode="secondary">Информация о пользователе</Header>
+        <SimpleCell multiline>
+          <InfoRow header="Дата рождения">
+            30 января 1993 slkdfj sdjkf sldflk skldfj lksj lks jksj fks djkfskdf
+          </InfoRow>
+        </SimpleCell>
+        <SimpleCell>
+          <InfoRow header="Родной город">
+            Ереван
+          </InfoRow>
+        </SimpleCell>
+        <SimpleCell>
+          <InfoRow header="Место работы">
+            Команда ВКонтакте
+          </InfoRow>
+        </SimpleCell>
       </Group>
     </Panel>
   </View>
