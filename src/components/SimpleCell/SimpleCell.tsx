@@ -9,7 +9,7 @@ import usePlatform from '../../hooks/usePlatform';
 
 export interface SimpleCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   /**
-   * Иконка 28 или `<Avatar size={32|40|48|72} />`
+   * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
   before?: ReactNode;
   indicator?: ReactNode;

@@ -38,7 +38,8 @@
 
 .SimpleCell > .Icon:first-child,
 .SimpleCell > .Tappable__waves + .Icon,
-.SimpleCell > .Avatar--sz-32 {
+.SimpleCell > .Avatar--sz-32,
+.SimpleCell > .Avatar--sz-28 {
   padding: 10px 16px;
 }
 
@@ -54,16 +55,17 @@
   padding: 6px 12px;
 }
 
-.SimpleCell > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main .SimpleCell__description {
-  margin-top: 3px;
-}
-
 .SimpleCell__description {
   color: var(--text_secondary);
   text-overflow: ellipsis;
   overflow: hidden;
   font-size: 13px;
   line-height: 16px;
+  margin-top: 3px;
+}
+
+.SimpleCell > .Avatar--sz-32 ~ .SimpleCell__main .SimpleCell__description,
+.SimpleCell > .Avatar--sz-28 ~ .SimpleCell__main .SimpleCell__description {
   margin-top: 2px;
 }
 
