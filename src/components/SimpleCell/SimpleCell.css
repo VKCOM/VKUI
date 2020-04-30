@@ -27,11 +27,6 @@
   overflow: hidden;
 }
 
-.SimpleCell__main:first-child,
-.SimpleCell > .Tappable__waves + .SimpleCell__main {
-  padding-left: 16px;
-}
-
 .SimpleCell__main:last-child {
   padding-right: 16px;
 }
@@ -111,6 +106,10 @@
   padding-bottom: 11px;
 }
 
+.SimpleCell--ios .SimpleCell__main:first-child {
+  padding-left: 12px;
+}
+
 .SimpleCell--ios > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main,
 .SimpleCell--ios > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__indicator {
   font-size: 16px;
@@ -150,6 +149,10 @@
 .SimpleCell--android .SimpleCell__indicator {
   padding-top: 11px;
   padding-bottom: 10px;
+}
+
+.SimpleCell--android > .Tappable__waves + .SimpleCell__main {
+  padding-left: 16px;
 }
 
 .SimpleCell--android .Switch {
