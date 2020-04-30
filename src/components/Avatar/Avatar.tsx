@@ -38,7 +38,7 @@ const Avatar: FunctionComponent<AvatarProps> = ({
 
   return (
     <div
-      className={classNames(getClassName('Avatar', platform), className, `Avatar--type-${mode}`)}
+      className={classNames(getClassName('Avatar', platform), className, `Avatar--type-${mode}`, `Avatar--sz-${size}`)}
       ref={getRootRef}
     >
       <div className="Avatar__in">

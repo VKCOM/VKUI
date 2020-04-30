@@ -46,6 +46,8 @@
 @import '../components/Group/Group.css';
 @import '../components/Gradient/Gradient.css';
 @import '../components/Cell/Cell.css';
+@import '../components/SimpleCell/SimpleCell.css';
+@import '../components/RichCell/RichCell.css';
 @import '../components/List/List.css';
 @import '../components/Footer/Footer.css';
 @import '../components/Spinner/Spinner.css';
