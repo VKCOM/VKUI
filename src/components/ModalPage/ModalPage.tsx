@@ -7,8 +7,9 @@ import { HasInsets, HasPlatform } from '../../types';
 import { ModalRootContextInterface } from '../ModalRoot/ModalRootContext';
 import withModalRootContext from '../ModalRoot/withModalRootContext';
 import withPlatform from '../../hoc/withPlatform';
+import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
 
-export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInsets, HasPlatform {
+export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInsets, HasPlatform, AdaptivityProps {
   id: string;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
@@ -42,10 +43,13 @@ class ModalPage extends Component<ModalPageProps> {
   };
 
   render() {
-    const { children, className, header, insets, platform } = this.props;
+    const { children, className, header, insets, platform, viewMode } = this.props;
+    const isDesktop = viewMode >= ViewMode.TABLET;
 
     return (
-      <div className={classNames(getClassName('ModalPage', platform), className)}>
+      <div className={classNames(getClassName('ModalPage', platform), className, {
+        'ModalPage--desktop': isDesktop,
+      })}>
         <div className="ModalPage__in-wrap">
           <div className="ModalPage__in">
             <div className="ModalPage__header">
@@ -64,4 +68,6 @@ class ModalPage extends Component<ModalPageProps> {
   }
 }
 
-export default withInsets(withPlatform(withModalRootContext(ModalPage)));
+export default withAdaptivity(withInsets(withPlatform(withModalRootContext(ModalPage))), {
+  viewMode: true,
+});

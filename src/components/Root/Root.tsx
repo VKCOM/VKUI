@@ -4,7 +4,9 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
+import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import withPlatform from '../../hoc/withPlatform';
+import withContext from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
@@ -12,6 +14,7 @@ export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   popout?: ReactNode;
   modal?: ReactNode;
+  splitCol?: SplitContextProps;
 }
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
@@ -114,6 +117,11 @@ class Root extends Component<RootProps, RootState> {
   }
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEndCallback) {
+    if (!this.props.splitCol.animate) {
+      eventHandler();
+      return;
+    }
+
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
 
@@ -155,7 +163,7 @@ class Root extends Component<RootProps, RootState> {
   }
 
   render() {
-    const { popout, modal, platform } = this.props;
+    const { popout, modal, platform, splitCol } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
     const Views = this.arrayChildren.filter((view: ReactElement) => {
@@ -165,7 +173,10 @@ class Root extends Component<RootProps, RootState> {
     const baseClassName = getClassName('Root', platform);
 
     return (
-      <div className={classNames(baseClassName, this.props.className, { 'Root--transition': transition })}>
+      <div className={classNames(baseClassName, this.props.className, {
+        'Root--transition': transition,
+        'Root--nomotion': !splitCol.animate,
+      })}>
         {Views.map((view: ReactElement) => {
           return (
             <div key={view.props.id} id={`view-${view.props.id}`} className={classNames('Root__view', {
@@ -186,4 +197,8 @@ class Root extends Component<RootProps, RootState> {
   }
 }
 
-export default withPlatform(Root);
+export default withContext(
+  withPlatform(Root),
+  SplitContext,
+  'splitCol',
+);

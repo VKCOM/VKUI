@@ -96,6 +96,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
         {...restProps}
         className={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
           'PopoutWrapper--closing': closing,
+          'PopoutWrapper--fixed': hasMask,
         }, className)}
         onClick={this.onClick}
         ref={this.elRef}

@@ -24,6 +24,10 @@
   background: transparent;
 }
 
+.PanelHeader--shadow .PanelHeader__in {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .08);
+}
+
 .PanelHeader__left {
   box-sizing: border-box;
   color: var(--header_tint);
@@ -65,6 +69,11 @@
 
 .PanelHeader--ios ~ .FixedLayout--top {
   top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
+}
+
+.PanelHeader--ios .FixedLayout.PanelHeader__fixed--shadow {
+  overflow: hidden;
+  height: calc(var(--panelheader_height_ios) + 5px);
 }
 
 .PanelHeader--ios::before,
@@ -147,6 +156,11 @@
 
 .PanelHeader--android ~ .FixedLayout--top {
   top: calc(var(--panelheader_height_android) + var(--safe-area-inset-top));
+}
+
+.PanelHeader--android .FixedLayout.PanelHeader__fixed--shadow {
+  overflow: hidden;
+  height: calc(var(--panelheader_height_android) + 5px);
 }
 
 .PanelHeader--android::before,

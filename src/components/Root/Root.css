@@ -93,6 +93,10 @@
     animation: root-ios-animation-hide-back .6s var(--ios-easing);
     }
 
+.Root--nomotion .Root__view {
+  animation: none !important;
+}
+
 @keyframes root-ios-animation-show-back {
   from {
     opacity: .3;

@@ -3,20 +3,10 @@
 }
 
 .Group__inner > *:not(.Header):first-child {
-  border-top: 12px solid transparent;
-}
-
-/* Probably make this default and in the design */
-/* and shift other content with negative margin */
-.Group__inner > .Cell:first-child,
-.Group__inner > .CellButton:first-child,
-.Group__inner > .InfoRow:first-child {
   border-top: 8px solid transparent;
 }
 
-.Group__inner > .Cell:last-child,
-.Group__inner > .CellButton:last-child,
-.Group__inner > .InfoRow:last-child {
+.Group__inner > *:last-child {
   border-bottom: 8px solid transparent;
 }
 
@@ -26,15 +16,9 @@
   color: var(--text_secondary);
 }
 
-.Group__inner:not(.Group__inner--regular) .Group__separator {
+.Group__inner:not(.Group__inner--regular) + .Group__separator {
   border-top: 12px solid transparent;
 }
-
-/*.Cell + .Group__separator,
-.CellButton + .Group__separator,
-.InfoRow + .Group__separator {
-  margin-top: 8px;
-}*/
 
 .Group:last-of-type .Group__inner:not(.Group__inner--regular) .Group__separator {
   display: none;
@@ -56,18 +40,12 @@
   background: var(--modal_card_background);
   /* For Card border */
   position: relative;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: inset 0 0 0 1px var(--image_border);
-}
-
-.Group__inner--regular > .Cell,
-.Group__inner--regular > .CellButton,
-.Group__inner--regular > .InfoRow,
-.Group__inner--regular > .Header {
   padding: 0 12px;
 }
 
-.Group__inner--regular > .Header {
+.Group__inner--regular > .Header:first-child {
   border-top: 4px solid transparent;
 }
 

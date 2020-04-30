@@ -3,8 +3,10 @@ import getClassName from '../../helpers/getClassName';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
+import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
+import withContext from '../../hoc/withContext';
 import { isNumeric } from '../../lib/utils';
 import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
@@ -29,6 +31,8 @@ export interface FixedLayoutProps extends
    * @ignore
    */
   separator?: boolean;
+
+  splitCol?: SplitContextProps;
 }
 
 export interface FixedLayoutState {
@@ -40,7 +44,6 @@ export interface FixedLayoutState {
 export interface FixedLayoutContext {
   document: Requireable<{}>;
   hasTabbar: Requireable<boolean>;
-  splitCol: Requireable<React.Component>;
 }
 
 class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
@@ -55,7 +58,6 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   static contextTypes: FixedLayoutContext = {
     document: PropTypes.any,
     hasTabbar: PropTypes.bool,
-    splitCol: PropTypes.any,
   };
 
   get document() {
@@ -96,10 +98,10 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   doResize = () => {
-    const { splitCol } = this.context;
+    const { colRef } = this.props.splitCol;
 
-    if (splitCol && splitCol.baseRef.current) {
-      const node: HTMLElement = splitCol.baseRef.current;
+    if (colRef && colRef.current) {
+      const node: HTMLElement = colRef.current;
       const width = node.offsetWidth;
 
       this.setState({ width: `${width}px`, position: null });
@@ -141,4 +143,8 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 }
 
-export default withPlatform(withInsets(withPanelContext(FixedLayout)));
+export default withContext(
+  withPlatform(withInsets(withPanelContext(FixedLayout))),
+  SplitContext,
+  'splitCol',
+);
