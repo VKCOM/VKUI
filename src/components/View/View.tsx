@@ -8,7 +8,9 @@ import { IOS, ANDROID } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { HasChildren, HasPlatform } from '../../types';
+import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import withPlatform from '../../hoc/withPlatform';
+import withContext from '../../hoc/withContext';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -49,6 +51,7 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
    * @deprecated будет удалено в 4-й версии.
    */
   header?: boolean;
+  splitCol?: SplitContextProps;
 }
 
 export interface ViewState {
@@ -234,6 +237,11 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEventHandler): void {
+    if (!this.props.splitCol.animate) {
+      eventHandler();
+      return;
+    }
+
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
 
@@ -449,6 +457,7 @@ class View extends Component<ViewProps, ViewState> {
     const modifiers = {
       'View--animated': this.state.animated,
       'View--swiping-back': this.state.swipingBack,
+      'View--nomotion': !this.props.splitCol.animate,
     };
 
     return (
@@ -491,4 +500,8 @@ class View extends Component<ViewProps, ViewState> {
   }
 }
 
-export default withPlatform(View);
+export default withContext(
+  withPlatform(View),
+  SplitContext,
+  'splitCol',
+);
