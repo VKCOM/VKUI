@@ -1,0 +1,87 @@
+.IconButton {
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  display: block;
+  color: currentColor;
+  padding: 0;
+  margin: 0;
+  font-size: 17px;
+  position: relative;
+}
+
+.IconButton[disabled] {
+  opacity: .6;
+}
+
+.IconButton .Counter {
+  position: absolute;
+  padding: 0;
+  top: 8px;
+  right: 2px;
+}
+
+/*
+ * iOS
+ */
+
+.IconButton--ios {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.IconButton--ios.IconButton--primary {
+  font-weight: 600;
+}
+
+.IconButton--ios.IconButton--primitive {
+  height: 44px;
+  line-height: 44px;
+}
+
+.IconButton--ios .Icon--24 {
+  padding: 10px;
+}
+
+.IconButton--ios .Icon--28 {
+  padding: 8px;
+}
+
+.IconButton--ios.Tappable--active {
+  opacity: .7;
+}
+
+/*
+ * Android
+ */
+
+.IconButton--android {
+  border-radius: 50%;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.IconButton--android.IconButton--primitive {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 12px;
+}
+
+.IconButton--android .Icon--24 {
+  padding: 12px;
+}
+
+.IconButton--android .Icon--28 {
+  padding: 10px;
+}
+
+.IconButton--android .Tappable__waves {
+  border-radius: 50%;
+}
+
+.IconButton--android.Tappable--active {
+  background-color: var(--background_highlighted);
+}

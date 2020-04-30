@@ -21,6 +21,7 @@ import Icon24Done from '@vkontakte/icons/dist/24/done';
 import Icon24Favorite from '@vkontakte/icons/dist/24/favorite';
 import Icon24Filter from '@vkontakte/icons/dist/24/filter';
 import Icon24MoreHorizontal from '@vkontakte/icons/dist/24/more_horizontal';
+import Icon24MoreVertical from '@vkontakte/icons/dist/24/more_vertical';
 import Icon24Play from '@vkontakte/icons/dist/24/play';
 import Icon24Shuffle from '@vkontakte/icons/dist/24/shuffle';
 import Icon24User from '@vkontakte/icons/dist/24/user';
@@ -82,6 +83,7 @@ window.Icon24Favorite = Icon24Favorite;
 window.Icon24Filter = Icon24Filter;
 window.Icon24Play = Icon24Play;
 window.Icon24MoreHorizontal = Icon24MoreHorizontal;
+window.Icon24MoreVertical = Icon24MoreVertical;
 window.Icon24Shuffle = Icon24Shuffle;
 window.Icon24User = Icon24User;
 
