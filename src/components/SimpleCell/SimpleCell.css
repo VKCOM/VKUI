@@ -27,27 +27,23 @@
   overflow: hidden;
 }
 
-.SimpleCell__main:last-child {
-  padding-right: 16px;
-}
-
 .SimpleCell > .Icon:first-child,
 .SimpleCell > .Tappable__waves + .Icon,
 .SimpleCell > .Avatar--sz-32,
 .SimpleCell > .Avatar--sz-28 {
-  padding: 10px 16px;
+  padding: 10px 16px 10px 0;
 }
 
 .SimpleCell > .Avatar--sz-40:first-child,
 .SimpleCell > .Tappable__waves + .Avatar--sz-40 {
-  padding: 4px 12px;
+  padding: 4px 12px 4px 0;
 }
 
 .SimpleCell > .Avatar--sz-48:first-child,
 .SimpleCell > .Tappable__waves + .Avatar--sz-48,
 .SimpleCell > .Avatar--sz-72:first-child,
 .SimpleCell > .Tappable__waves + .Avatar--sz-72 {
-  padding: 6px 12px;
+  padding: 6px 12px 6px 0;
 }
 
 .SimpleCell__description {
@@ -77,7 +73,6 @@
   text-overflow: ellipsis;
   overflow: hidden;
   padding-left: 4px;
-  padding-right: 16px;
 }
 
 .SimpleCell__after {
@@ -86,9 +81,13 @@
   align-items: center;
 }
 
-.SimpleCell__after .Icon {
+.SimpleCell .SimpleCell__after .Icon {
   color: var(--accent);
-  padding: 10px 18px 10px 10px;
+  padding: 10px 2px 10px 10px;
+}
+
+.SimpleCell .Switch {
+  padding-left: 10px;
 }
 
 /**
@@ -98,6 +97,8 @@
 .SimpleCell--ios {
   font-size: 17px;
   line-height: 22px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .SimpleCell--ios .SimpleCell__main,
@@ -106,33 +107,26 @@
   padding-bottom: 11px;
 }
 
-.SimpleCell--ios .SimpleCell__main:first-child {
-  padding-left: 12px;
-}
-
 .SimpleCell--ios > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main,
 .SimpleCell--ios > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__indicator {
   font-size: 16px;
   line-height: 20px;
 }
 
-.SimpleCell--ios.SimpleCell--exp .SimpleCell__indicator {
-  padding-right: 4px;
+.SimpleCell--ios > .Icon:first-child,
+.SimpleCell--ios > .Tappable__waves + .Icon,
+.SimpleCell--ios > .Avatar--sz-32,
+.SimpleCell--ios > .Avatar--sz-28 {
+  padding-left: 4px;
 }
 
-.SimpleCell--ios .Switch {
-  padding-left: 10px;
-  padding-right: 12px;
-}
-
-.SimpleCell--ios.SimpleCell--exp .SimpleCell__after .Icon--28,
-.SimpleCell--ios.SimpleCell--exp .Switch {
-  padding-right: 4px;
+.SimpleCell--ios.SimpleCell--exp .SimpleCell__after .Icon--28 {
+  padding-right: 0;
 }
 
 .SimpleCell--ios .SimpleCell__after .Icon--chevron_24 {
   color: var(--icon_tertiary);
-  padding-right: 16px;
+  padding-right: 4px;
   padding-left: 12px;
 }
 
@@ -143,19 +137,12 @@
 .SimpleCell--android {
   font-size: 16px;
   line-height: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .SimpleCell--android .SimpleCell__main,
 .SimpleCell--android .SimpleCell__indicator {
   padding-top: 11px;
   padding-bottom: 10px;
-}
-
-.SimpleCell--android > .Tappable__waves + .SimpleCell__main {
-  padding-left: 16px;
-}
-
-.SimpleCell--android .Switch {
-  padding-left: 10px;
-  padding-right: 16px;
 }

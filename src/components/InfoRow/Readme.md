@@ -18,7 +18,7 @@
         <Header mode="secondary">Информация о пользователе</Header>
         <SimpleCell multiline>
           <InfoRow header="Дата рождения">
-            30 января 1993 slkdfj sdjkf sldflk skldfj lksj lks jksj fks djkfskdf
+            30 января 1993
           </InfoRow>
         </SimpleCell>
         <SimpleCell>
