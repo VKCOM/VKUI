@@ -55,7 +55,7 @@
                   before={<Avatar size={72} />}
                   size="l"
                   description="Друзья в Facebook"
-                  asideContent={<Icon24MoreHorizontal onClick={() => void 0}/>}
+                  asideContent={<IconButton icon={<Icon24MoreHorizontal />} onClick={() => void 0} />}
                   bottomContent={
                     <div style={{ display: 'flex' }}>
                       <Button size="m">Добавить</Button>
@@ -68,7 +68,7 @@
                   before={<Avatar size={72} />}
                   size="l"
                   description="29 лет, Санкт-Петербург"
-                  asideContent={<Icon24MoreHorizontal onClick={() => void 0}/>}
+                  asideContent={<IconButton icon={<Icon24MoreHorizontal />} onClick={() => void 0} />}
                   bottomContent={
                     <div style={{ display: 'flex' }}>
                       <Button size="m">Добавить</Button>
@@ -81,7 +81,7 @@
                   before={<Avatar size={72} />}
                   size="l"
                   description="Команда ВКонтакте"
-                  asideContent={<Icon24MoreVertical onClick={() => void 0}/>}
+                  asideContent={<IconButton icon={<Icon24MoreVertical />} onClick={() => void 0} />}
                   bottomContent={
                     <div style={{ display: 'flex' }}>
                       <Button size="m">Добавить</Button>

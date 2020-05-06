@@ -7,12 +7,10 @@ import usePlatform from '../../hooks/usePlatform';
 export interface IconButtonProps extends ButtonHTMLAttributes<HTMLElement> {
   icon: ReactNode;
   href?: string;
-  primary?: boolean;
 }
 
 const IconButton: FunctionComponent<IconButtonProps> = ({
   className,
-  primary,
   icon,
   ...restProps
 }: IconButtonProps) => {
@@ -27,18 +25,11 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
       className={classNames(
         getClassName('IconButton', platform),
         className,
-        {
-          'IconButton--primary': primary,
-        },
       )}
     >
       {icon}
     </Tappable>
   );
-};
-
-IconButton.defaultProps = {
-  primary: false,
 };
 
 export default IconButton;

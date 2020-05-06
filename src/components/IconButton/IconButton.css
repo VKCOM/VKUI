@@ -8,7 +8,6 @@
   color: currentColor;
   padding: 0;
   margin: 0;
-  font-size: 17px;
   position: relative;
 }
 
@@ -16,30 +15,15 @@
   opacity: .6;
 }
 
-.IconButton .Counter {
-  position: absolute;
-  padding: 0;
-  top: 8px;
-  right: 2px;
-}
-
 /*
  * iOS
  */
 
 .IconButton--ios {
+  height: 44px;
   position: relative;
   display: flex;
   align-items: center;
-}
-
-.IconButton--ios.IconButton--primary {
-  font-weight: 600;
-}
-
-.IconButton--ios.IconButton--primitive {
-  height: 44px;
-  line-height: 44px;
 }
 
 .IconButton--ios .Icon--24 {
@@ -59,15 +43,8 @@
  */
 
 .IconButton--android {
-  border-radius: 50%;
-  font-weight: 500;
-  font-size: 15px;
-}
-
-.IconButton--android.IconButton--primitive {
   height: 48px;
-  line-height: 48px;
-  padding: 0 12px;
+  border-radius: 24px;
 }
 
 .IconButton--android .Icon--24 {
