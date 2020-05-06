@@ -28,6 +28,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   multiline,
   disabled,
   onClick,
+  viewMode,
   sizeX,
   ...restProps
 }: SelectMimicryProps) => {
