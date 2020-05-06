@@ -124,7 +124,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, insets, platform, filled, separator, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, insets, platform, filled, separator, splitCol, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
     const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
