@@ -406,16 +406,16 @@ class Gallery extends Component<GalleryProps, GalleryState> {
         'Gallery--custom-width': slideWidth === 'custom',
       })} {...restProps} ref={this.container}>
         <Touch
-          className='Gallery__viewport'
+          className="Gallery__viewport"
           onStartX={this.onStart}
           onMoveX={this.onMoveX}
           onEnd={this.onEnd}
           style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           getRootRef={this.getViewportRef}
         >
-          <div className='Gallery__layer' style={layerStyle}>
+          <div className="Gallery__layer" style={layerStyle}>
             {React.Children.map(children, (item: ReactElement, i: number) =>
-              <div className='Gallery__slide' key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>,
+              <div className="Gallery__slide" key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>,
             )}
           </div>
         </Touch>

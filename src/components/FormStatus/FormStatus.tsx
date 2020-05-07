@@ -26,7 +26,7 @@ const FormStatus: FunctionComponent<FormStatusProps> = ({
     >
       {header && <div className="FormStatus__header">{header}</div>}
       {dangerouslySetInnerHTML &&
-        <div className="FormStatus__content" dangerouslySetInnerHTML={dangerouslySetInnerHTML}/>
+        <div className="FormStatus__content" dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
       }
       {children && !dangerouslySetInnerHTML && <div className="FormStatus__content">{children}</div>}
     </div>

@@ -116,7 +116,7 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
           },
         )}>
         <div className="Tooltip__container" style={{ top: this.state.y, left: this.state.x }} ref={this.getRef}>
-          <div className="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }}/>
+          <div className="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }} />
           <div className="Tooltip__content">
             {header && <div className="Tooltip__title">{header}</div>}
             {text && <div className="Tooltip__text">{text}</div>}
