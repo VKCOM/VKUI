@@ -171,7 +171,7 @@ class Root extends Component<RootProps, RootState> {
     return (
       <div className={classNames(baseClassName, this.props.className, {
         'Root--transition': transition,
-        'Root--no-motion': !this.context.transitionMotionEnabled,
+        'Root--no-motion': this.context.transitionMotionEnabled === false,
       })}>
         {Views.map((view: ReactElement) => {
           return (

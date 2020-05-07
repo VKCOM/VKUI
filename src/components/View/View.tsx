@@ -451,7 +451,7 @@ class View extends Component<ViewProps, ViewState> {
     const modifiers = {
       'View--animated': this.state.animated,
       'View--swiping-back': this.state.swipingBack,
-      'View--no-motion': !this.context.transitionMotionEnabled,
+      'View--no-motion': this.context.transitionMotionEnabled === false,
     };
 
     return (
