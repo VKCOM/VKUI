@@ -105,7 +105,7 @@ class View extends Component<ViewProps, ViewState> {
     isWebView: PropTypes.bool,
     window: PropTypes.any,
     document: PropTypes.any,
-    viewTransitions: PropTypes.bool,
+    transitionMotionEnabled: PropTypes.bool,
   };
 
   get document() {
@@ -451,7 +451,7 @@ class View extends Component<ViewProps, ViewState> {
     const modifiers = {
       'View--animated': this.state.animated,
       'View--swiping-back': this.state.swipingBack,
-      'View--no-motion': !this.context.viewTransitions,
+      'View--no-motion': !this.context.transitionMotionEnabled,
     };
 
     return (

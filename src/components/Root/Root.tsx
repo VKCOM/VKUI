@@ -31,7 +31,7 @@ export interface RootState {
 export interface RootContext {
   document: Requireable<object>;
   window: Requireable<object>;
-  viewTransitions: Validator<boolean>;
+  transitionMotionEnabled: Validator<boolean>;
 }
 
 class Root extends Component<RootProps, RootState> {
@@ -56,7 +56,7 @@ class Root extends Component<RootProps, RootState> {
   static contextTypes: RootContext = {
     window: PropTypes.any,
     document: PropTypes.any,
-    viewTransitions: PropTypes.bool,
+    transitionMotionEnabled: PropTypes.bool,
   };
 
   get document() {
@@ -171,7 +171,7 @@ class Root extends Component<RootProps, RootState> {
     return (
       <div className={classNames(baseClassName, this.props.className, {
         'Root--transition': transition,
-        'Root--no-motion': !this.context.viewTransitions,
+        'Root--no-motion': !this.context.transitionMotionEnabled,
       })}>
         {Views.map((view: ReactElement) => {
           return (
