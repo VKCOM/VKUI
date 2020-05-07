@@ -94,6 +94,11 @@
   display: none;
   }
 
+.View--ios.View--no-motion .View__panel,
+.View--ios.View--no-motion .View__panel .Panel__in {
+  animation-duration: .001ms;
+}
+
 /**
  * Active panel
  */
