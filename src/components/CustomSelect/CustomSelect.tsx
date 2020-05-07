@@ -279,7 +279,7 @@ export default class CustomSelect extends React.Component<Props, State> {
   handleKeyDownSelect = (event: KeyboardEvent) => {
     const { opened } = this.state;
 
-    if (event.key.length === 1) {
+    if (event.key.length === 1 && event.key !== ' ') {
       this.onKeyboardInput(event.key);
 
       return;
