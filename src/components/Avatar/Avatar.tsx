@@ -48,6 +48,7 @@ const Avatar: FunctionComponent<AvatarProps> = ({
           src={src}
           style={{ ...style, width: size, height: size, borderRadius }}
         />
+        <span className="Avatar__shadow" style={{ borderRadius }} />
         {children && <div className="Avatar__children" style={{ width: size, height: size, borderRadius }}>{children}</div>}
       </div>
     </div>
