@@ -110,7 +110,6 @@ export { default as PanelHeaderBack } from './components/PanelHeaderBack/PanelHe
 export { default as PanelHeaderSubmit } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
 export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
 export { default as AdaptivityProvider } from './components/AdaptivityProvider/AdaptivityProvider';
-export { default as withAdaptivity } from './hoc/withAdaptivity';
 
 /**
  * Advertisement
@@ -131,6 +130,7 @@ export { default as Subhead } from './components/Typography/Subhead/Subhead';
  */
 export { default as withInsets } from './hoc/withInsets';
 export { default as withPlatform } from './hoc/withPlatform';
+export { default as withAdaptivity } from './hoc/withAdaptivity';
 
 /**
  * Hooks
@@ -147,6 +147,7 @@ export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 export { platform, ANDROID, IOS, OS, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
 export { default as getClassName } from './helpers/getClassName';
+export { ViewMode, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
 export const v = process.env.VKUI_VERSION;
 
 /**
