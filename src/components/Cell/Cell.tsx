@@ -305,14 +305,14 @@ class Cell extends Component<CellProps, CellState> {
           {selectable && <input {...inputProps} type="checkbox" className="Cell__checkbox" />}
           <div className="Cell__before">
             {selectable && IS_PLATFORM_IOS && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
-            {removable && IS_PLATFORM_IOS && <div className="Cell__remove-marker" onClick={this.activateRemove}/>}
+            {removable && IS_PLATFORM_IOS && <div className="Cell__remove-marker" onClick={this.activateRemove} />}
             {IS_PLATFORM_ANDROID && draggable &&
             <Touch
               onStart={this.onDragStart}
               onMoveY={this.onDragMove}
               onEnd={this.onDragEnd}
               className="Cell__dragger"
-            ><Icon24Reorder/></Touch>
+            ><Icon24Reorder /></Touch>
             }
             {before && <div className="Cell__before-in">{before}</div>}
           </div>
@@ -328,14 +328,14 @@ class Cell extends Component<CellProps, CellState> {
             {removable && IS_PLATFORM_ANDROID &&
             <div className="Cell__remove-marker" onClick={this.onRemoveClick}><Icon24Cancel /></div>
             }
-            {IS_PLATFORM_IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron"/>}
+            {IS_PLATFORM_IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron" />}
             {IS_PLATFORM_IOS && draggable &&
             <Touch
               className="Cell__dragger"
               onStart={this.onDragStart}
               onMoveY={this.onDragMove}
               onEnd={this.onDragEnd}
-            ><Icon24ReorderIos/></Touch>
+            ><Icon24ReorderIos /></Touch>
             }
           </div>
         </Tappable>

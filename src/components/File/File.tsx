@@ -32,7 +32,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
       getRootRef={getRootRef}
       disabled={restProps.disabled}
     >
-      <input {...restProps} className="File__input" type="file" ref={getRef}/>
+      <input {...restProps} className="File__input" type="file" ref={getRef} />
       {children}
     </Button>
   );
