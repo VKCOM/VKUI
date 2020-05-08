@@ -11,17 +11,20 @@
   z-index: 10;
 }
 
+.PanelHeader__fixed {
+  background: var(--header_background);
+}
+
+.PanelHeader--trnsp .PanelHeader__fixed {
+  background: transparent;
+}
+
 .PanelHeader__in {
   display: flex;
   justify-content: space-between;
   align-items: center;
   white-space: nowrap;
   position: relative;
-  background: var(--header_background);
-}
-
-.PanelHeader--trnsp .PanelHeader__in {
-  background: transparent;
 }
 
 .PanelHeader__left {
