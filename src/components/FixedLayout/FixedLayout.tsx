@@ -60,12 +60,14 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     hasTabbar: PropTypes.bool,
   };
 
+  private onMountResizeTimeout: number;
+
   get document() {
     return this.context.document || document;
   }
 
   componentDidMount() {
-    setTimeout(() => this.doResize());
+    this.onMountResizeTimeout = setTimeout(() => this.doResize());
     window.addEventListener('resize', this.doResize);
 
     this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
@@ -73,6 +75,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 
   componentWillUnmount() {
+    clearInterval(this.onMountResizeTimeout);
     window.removeEventListener('resize', this.doResize);
 
     this.document.removeEventListener(transitionStartEventName, this.onViewTransitionStart);
@@ -124,7 +127,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, insets, platform, filled, separator, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, insets, platform, filled, separator, splitCol, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
     const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
