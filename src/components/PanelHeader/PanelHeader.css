@@ -42,6 +42,9 @@
 .PanelHeader__content {
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--header_text);
+  font-weight: 800;
+  font-family: var(--font-tt);
 }
 
 .PanelHeader__right {
@@ -101,12 +104,9 @@
 }
 
 .PanelHeader--ios .PanelHeader__content {
-  font-weight: 800;
-  font-family: var(--font-tt);
   font-size: 21px;
   line-height: var(--panelheader_height_ios);
   text-align: center;
-  color: var(--header_text);
   opacity: 1;
   transition: opacity .3s var(--ios-easing);
 }
@@ -175,8 +175,6 @@
 
 .PanelHeader--android .PanelHeader__content {
   font-size: 20px;
-  font-weight: 800;
-  font-family: var(--font-tt);
   display: flex;
   align-items: center;
   flex-grow: 1;
