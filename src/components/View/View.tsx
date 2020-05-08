@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
@@ -78,6 +78,7 @@ export interface ViewState {
 class View extends Component<ViewProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
+
     this.state = {
       scrolls: scrollsCache[props.id] || {},
       animated: false,
@@ -107,6 +108,7 @@ class View extends Component<ViewProps, ViewState> {
     isWebView: PropTypes.bool,
     window: PropTypes.any,
     document: PropTypes.any,
+    transitionMotionEnabled: PropTypes.bool,
   };
 
   get document() {
@@ -117,7 +119,7 @@ class View extends Component<ViewProps, ViewState> {
     return this.context.window || window;
   }
 
-  get panels() {
+  get panels(): ReactElement[] {
     return [].concat(this.props.children);
   }
 
@@ -134,7 +136,7 @@ class View extends Component<ViewProps, ViewState> {
     // Нужен переход
     if (prevProps.activePanel !== this.props.activePanel && !prevState.swipingBack && !prevState.browserSwipe) {
       const firstLayer = this.panels.find(
-        (panel: React.ReactElement) => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel,
+        (panel) => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel,
       );
 
       const isBack = firstLayer && firstLayer.props.id === this.props.activePanel;
@@ -457,7 +459,7 @@ class View extends Component<ViewProps, ViewState> {
     const modifiers = {
       'View--animated': this.state.animated,
       'View--swiping-back': this.state.swipingBack,
-      'View--nomotion': !this.props.splitCol.animate,
+      'View--nomotion': !this.props.splitCol.animate || this.context.transitionMotionEnabled === false,
     };
 
     return (

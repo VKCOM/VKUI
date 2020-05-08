@@ -966,9 +966,10 @@
   version "1.0.0"
   resolved "https://github.com/VKCOM/Appearance#44c13e63028acfd9cedb834b9c2ba65f015cdd98"
 
-"@vkontakte/eslint-config@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/eslint-config/-/eslint-config-2.1.0.tgz#baddda58f29346497ac80d723c28cfbfe3cbad10"
+"@vkontakte/eslint-config@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/eslint-config/-/eslint-config-2.2.0.tgz#a3320c14bbf2fd418690771ae544b13ebaf843d6"
+  integrity sha512-Xpd9OTo7EGnn1wm5iVhTJzvB9ULYFy03csuWMGbh/LnwkcmIawsYk9bSjAF8ExLZJVdlV6SUo8Rt1hb1XazfiA==
   dependencies:
     "@typescript-eslint/parser" "^2.8.0"
     babel-eslint "^10.0.3"

@@ -84,6 +84,8 @@ module.exports = {
           '../src/components/CardScroll/CardScroll.tsx',
           '../src/components/Gradient/Gradient.tsx',
           '../src/components/Cell/Cell.tsx',
+          '../src/components/SimpleCell/SimpleCell.tsx',
+          '../src/components/RichCell/RichCell.tsx',
           '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.tsx',

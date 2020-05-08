@@ -30,6 +30,7 @@ export interface ConfigProviderContextInterface {
   app?: string;
   appearance?: AppearanceType;
   viewType?: ViewType;
+  transitionMotionEnabled?: boolean;
 }
 
 export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});

@@ -21,6 +21,7 @@ export interface ConfigProviderChildContextType {
   appearance: Validator<Appearance>;
   app: Validator<string>;
   viewType: Validator<ViewType>;
+  transitionMotionEnabled: Validator<boolean>;
 }
 
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
@@ -36,6 +37,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     isWebView: vkBridge.isWebView(),
     scheme: Scheme.BRIGHT_LIGHT,
     appearance: Appearance.LIGHT,
+    transitionMotionEnabled: true,
     viewType: ViewType.REGULAR,
   };
 
@@ -50,6 +52,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     webviewType: PropTypes.oneOf([WebviewType.VKAPPS, WebviewType.INTERNAL]),
     appearance: PropTypes.oneOf([Appearance.DARK, Appearance.LIGHT]),
     app: PropTypes.string,
+    transitionMotionEnabled: PropTypes.bool,
     viewType: PropTypes.oneOf([ViewType.REGULAR, ViewType.COMPACT]),
   };
 
@@ -81,6 +84,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
       scheme: this.mapOldScheme(this.props.scheme),
       appearance: this.props.appearance,
       app: this.props.app,
+      transitionMotionEnabled: this.props.transitionMotionEnabled,
       viewType: this.props.viewType,
     };
   }

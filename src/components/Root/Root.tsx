@@ -1,5 +1,5 @@
 import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import PropTypes, { Requireable, Validator } from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import transitionEvents from '../../lib/transitionEvents';
@@ -34,6 +34,7 @@ export interface RootState {
 export interface RootContext {
   document: Requireable<object>;
   window: Requireable<object>;
+  transitionMotionEnabled: Validator<boolean>;
 }
 
 class Root extends Component<RootProps, RootState> {
@@ -58,6 +59,7 @@ class Root extends Component<RootProps, RootState> {
   static contextTypes: RootContext = {
     window: PropTypes.any,
     document: PropTypes.any,
+    transitionMotionEnabled: PropTypes.bool,
   };
 
   get document() {
@@ -77,6 +79,7 @@ class Root extends Component<RootProps, RootState> {
       this.blurActiveElement();
     }
 
+    // Нужен переход
     if (this.props.activeView !== prevProps.activeView) {
       let pageYOffset = this.window.pageYOffset;
       const firstLayerId = [].concat(prevProps.children).find((view: ReactElement) => {
@@ -103,6 +106,7 @@ class Root extends Component<RootProps, RootState> {
       });
     }
 
+    // Начался переход
     if (!prevState.transition && this.state.transition) {
       const prevViewElement = this.document.getElementById(`view-${this.state.prevView}`);
       const nextViewElement = this.document.getElementById(`view-${this.state.nextView}`);
@@ -175,7 +179,7 @@ class Root extends Component<RootProps, RootState> {
     return (
       <div className={classNames(baseClassName, this.props.className, {
         'Root--transition': transition,
-        'Root--nomotion': !splitCol.animate,
+        'Root--nomotion': !splitCol.animate || this.context.transitionMotionEnabled === false,
       })}>
         {Views.map((view: ReactElement) => {
           return (
