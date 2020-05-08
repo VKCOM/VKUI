@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
+import IconButton from '../IconButton/IconButton';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS } from '../../lib/platform';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
@@ -326,7 +327,9 @@ class Cell extends Component<CellProps, CellState> {
             {asideContent}
             {selectable && IS_PLATFORM_ANDROID && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
             {removable && IS_PLATFORM_ANDROID &&
-            <div className="Cell__remove-marker" onClick={this.onRemoveClick}><Icon24Cancel /></div>
+            <div className="Cell__remove-marker">
+              <IconButton icon={<Icon24Cancel />} onClick={this.onRemoveClick} />
+            </div>
             }
             {IS_PLATFORM_IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron" />}
             {IS_PLATFORM_IOS && draggable &&

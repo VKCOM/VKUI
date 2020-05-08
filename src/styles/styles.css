@@ -38,6 +38,7 @@
 /* Blocks */
 @import '../components/Tappable/Tappable.css';
 @import '../components/Button/Button.css';
+@import '../components/IconButton/IconButton.css';
 @import '../components/Card/Card.css';
 @import '../components/CardGrid/CardGrid.css';
 @import '../components/CardScroll/CardScroll.css';

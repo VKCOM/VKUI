@@ -75,6 +75,7 @@ module.exports = {
         components: () => [
           '../src/components/Button/Button.tsx',
           '../src/components/CellButton/CellButton.tsx',
+          '../src/components/IconButton/IconButton.tsx',
           '../src/components/Div/Div.tsx',
           '../src/components/Link/Link.tsx',
           '../src/components/Header/Header.tsx',
