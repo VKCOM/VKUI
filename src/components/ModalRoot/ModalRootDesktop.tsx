@@ -279,16 +279,24 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
         this.animateModalOpacity(nextModalState, true);
       });
 
-      return this.animateModalOpacity(prevModalState, false);
+      requestAnimationFrame(() => {
+        this.animateModalOpacity(prevModalState, false);
+      });
+
+      return;
     }
 
     if (prevModalState && nextIsPage) {
       this.waitTransitionFinish(prevModalState, this.prevNextSwitchEndHandler);
-      this.animateModalOpacity(prevModalState, false);
+      requestAnimationFrame(() => {
+        this.animateModalOpacity(prevModalState, false);
+      });
     }
 
     this.waitTransitionFinish(nextModalState, this.prevNextSwitchEndHandler);
-    this.animateModalOpacity(nextModalState, true);
+    requestAnimationFrame(() => {
+      this.animateModalOpacity(nextModalState, true);
+    });
   }
 
   prevNextSwitchEndHandler = () => {
