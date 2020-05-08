@@ -45,7 +45,7 @@ export interface SplitContextProps {
 
 export const SplitContext = React.createContext<SplitContextProps>({
   colRef: null,
-  animate: false,
+  animate: true,
 });
 
 export class SplitCol extends Component<ColProps> {

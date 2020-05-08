@@ -1,9 +1,9 @@
 :root {
   /* fonts */
-  --font-ios: -apple-system, Helvetica Neue, Arial;
-  --font-android: Roboto, Arial;
-  --font-common: -apple-system, Roboto, Helvetica Neue, Arial;
-  --font-tt: "TT Commons", -apple-system, Roboto, Helvetica Neue, Arial;
+  --font-common: -apple-system, system-ui, Helvetica Neue, Roboto, sans-serif;
+  --font-ios: -apple-system, system-ui, Helvetica Neue, Roboto, sans-serif;
+  --font-android: -apple-system, system-ui, Helvetica Neue, Roboto, sans-serif;
+  --font-tt: "TT Commons", -apple-system, system-ui, Helvetica Neue, Roboto, sans-serif;
 
   /* easings */
   --ios-easing: cubic-bezier(.36, .66, .04, 1);
