@@ -17,7 +17,7 @@
 }
 
 .Group__inner:not(.Group__inner--regular) + .Group__separator {
-  border-top: 12px solid transparent;
+  border-top: 4px solid transparent;
 }
 
 .Group:last-of-type .Group__inner:not(.Group__inner--regular) + .Group__separator {

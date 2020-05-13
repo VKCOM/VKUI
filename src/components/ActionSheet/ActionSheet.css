@@ -264,6 +264,7 @@
   left: 0;
   z-index: 110;
   padding: 0;
+  margin: 0;
 }
 
 .ActionSheet--desktop .ActionSheetItem {
@@ -297,6 +298,10 @@
 
 .ActionSheet--desktop .ActionSheetItem {
   color: var(--action_sheet_action_foreground);
+}
+
+.ActionSheet--desktop .ActionSheetItem--destructive {
+  color: var(--destructive);
 }
 
 .ActionSheet--desktop .ActionSheetItem__children {
