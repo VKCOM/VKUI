@@ -68,6 +68,7 @@ class Panel extends Component<PanelProps> {
           ref={this.getRef}
           className={classNames(getClassName('Panel', platform), className, `Panel--${sizeX}`, {
             'Panel--centered': centered,
+            [`Panel--sizeX--${sizeX}`]: true,
           })}
         >
           <Touch className="Panel__in" style={{

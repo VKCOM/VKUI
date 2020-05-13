@@ -8,7 +8,7 @@ import { ANDROID } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { PanelContext } from '../Panel/PanelContext';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   left?: ReactNode;
@@ -44,7 +44,7 @@ const PanelHeader = ({
   const platform = usePlatform();
   const { webviewType } = useContext(ConfigProviderContext);
   const panelContext = useContext(PanelContext);
-  const needShadow = shadow && sizeX === 'regular';
+  const needShadow = shadow && sizeX === SizeType.REGULAR;
   let needSeparator = separator;
 
   if (typeof separator !== 'boolean') {
@@ -99,8 +99,8 @@ const PanelHeader = ({
         </div>
       </FixedLayout>
       {needSeparator && visor && <Separator
-        className={sizeX === 'compact' ? 'PanelHeader__separator' : ''}
-        expanded={sizeX === 'regular'}
+        className={sizeX === SizeType.COMPACT ? 'PanelHeader__separator' : ''}
+        expanded={sizeX === SizeType.REGULAR}
       />}
     </div>
   );
