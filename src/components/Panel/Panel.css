@@ -42,10 +42,6 @@
   box-sizing: border-box;
 }
 
-.View--header .Panel__separator + .Panel__centered {
-  min-height: calc(100% - 1px);
-}
-
 .Panel__centered .PanelHeader--ios.PanelHeader--vis + * {
   margin-top: var(--panelheader_height_ios);
 }
