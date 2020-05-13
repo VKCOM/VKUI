@@ -77,11 +77,6 @@
   top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
 }
 
-.PanelHeader--ios .FixedLayout.PanelHeader__fixed--shadow {
-  overflow: hidden;
-  height: calc(var(--panelheader_height_ios) + 5px);
-}
-
 .PanelHeader--ios::before,
 .PanelHeader--ios .PanelHeader__in {
   height: var(--panelheader_height_ios);
@@ -159,11 +154,6 @@
 
 .PanelHeader--android ~ .FixedLayout--top {
   top: calc(var(--panelheader_height_android) + var(--safe-area-inset-top));
-}
-
-.PanelHeader--android .FixedLayout.PanelHeader__fixed--shadow {
-  overflow: hidden;
-  height: calc(var(--panelheader_height_android) + 5px);
 }
 
 .PanelHeader--android::before,
