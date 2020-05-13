@@ -300,6 +300,10 @@
   color: var(--action_sheet_action_foreground);
 }
 
+.ActionSheet--desktop .ActionSheetItem--destructive {
+  color: var(--destructive);
+}
+
 .ActionSheet--desktop .ActionSheetItem__children {
   display: flex;
   align-items: center;
