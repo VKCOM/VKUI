@@ -164,9 +164,11 @@ import {
   HasInsets as _HasInsets,
 } from './types';
 import { OSType as _OSType } from './lib/platform';
+import { AdaptivityProps as _AdaptivityProps } from './hoc/withAdaptivity';
 
 export type OSType = _OSType;
 export type FormStatusType = _FormStatusType;
 export type AlignType = _AlignType;
 export type HasPlatform = _HasPlatform;
 export type HasInsets = _HasInsets;
+export type AdaptivityProps = _AdaptivityProps;
