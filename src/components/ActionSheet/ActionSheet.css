@@ -264,6 +264,7 @@
   left: 0;
   z-index: 110;
   padding: 0;
+  margin: 0;
 }
 
 .ActionSheet--desktop .ActionSheetItem {
