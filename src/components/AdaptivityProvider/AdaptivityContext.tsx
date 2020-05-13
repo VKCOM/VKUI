@@ -20,6 +20,6 @@ export interface AdaptivityContextInterface {
 }
 
 export const AdaptivityContext = createContext<AdaptivityContextInterface>({
-  sizeX: SizeType.REGULAR,
-  sizeY: SizeType.REGULAR,
+  sizeX: SizeType.COMPACT,
+  sizeY: SizeType.COMPACT,
 });
