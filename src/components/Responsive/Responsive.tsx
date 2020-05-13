@@ -14,23 +14,26 @@ export default class Responsive extends React.Component<ResponsiveProps, Respons
   matched: any = {};
   state: ResponsiveState = { matched: {} };
 
+  constructor(props: ResponsiveProps) {
+    super(props);
+
+    const [, matched] = this.calculate();
+    this.state = { matched };
+  }
+
   shouldComponentUpdate() {
     return false;
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
-    this.onResize();
   }
 
   componentWillUnmount() {
     window.addEventListener('resize', this.onResize);
   }
 
-  onResize = () => {
-    // const target = this.baseRef.current.parentNode as HTMLElement;
-    // const width = target.offsetWidth;
-    // const height = target.offsetHeight;
+  calculate() {
     const width = innerWidth;
     const height = innerHeight;
 
@@ -46,6 +49,12 @@ export default class Responsive extends React.Component<ResponsiveProps, Respons
         shouldUpdate = true;
       }
     }
+
+    return [shouldUpdate, matched];
+  }
+
+  onResize = () => {
+    const [shouldUpdate, matched] = this.calculate();
 
     if (shouldUpdate) {
       this.setState({ matched });
