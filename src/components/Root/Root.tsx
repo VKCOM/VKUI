@@ -117,7 +117,16 @@ class Root extends Component<RootProps, RootState> {
     }
   }
 
+  shouldDisableTransitionMotion(): boolean {
+    return this.context.transitionMotionEnabled === false;
+  }
+
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEndCallback) {
+    if (this.shouldDisableTransitionMotion()) {
+      eventHandler();
+      return;
+    }
+
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
 
@@ -171,7 +180,7 @@ class Root extends Component<RootProps, RootState> {
     return (
       <div className={classNames(baseClassName, this.props.className, {
         'Root--transition': transition,
-        'Root--no-motion': this.context.transitionMotionEnabled === false,
+        'Root--no-motion': this.shouldDisableTransitionMotion(),
       })}>
         {Views.map((view: ReactElement) => {
           return (
