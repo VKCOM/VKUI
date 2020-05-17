@@ -7,7 +7,6 @@ import {
   ConfigProviderContextInterface,
   Scheme,
   WebviewType,
-  ViewType,
 } from './ConfigProviderContext';
 import { HasChildren } from '../../types';
 import vkBridge, { AppearanceSchemeType } from '@vkontakte/vk-bridge';
@@ -20,7 +19,6 @@ export interface ConfigProviderChildContextType {
   webviewType: Validator<WebviewType>;
   appearance: Validator<Appearance>;
   app: Validator<string>;
-  viewType: Validator<ViewType>;
   transitionMotionEnabled: Validator<boolean>;
 }
 
@@ -38,7 +36,6 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     scheme: Scheme.BRIGHT_LIGHT,
     appearance: Appearance.LIGHT,
     transitionMotionEnabled: true,
-    viewType: ViewType.REGULAR,
   };
 
   static childContextTypes: ConfigProviderChildContextType = {
@@ -53,7 +50,6 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     appearance: PropTypes.oneOf([Appearance.DARK, Appearance.LIGHT]),
     app: PropTypes.string,
     transitionMotionEnabled: PropTypes.bool,
-    viewType: PropTypes.oneOf([ViewType.REGULAR, ViewType.COMPACT]),
   };
 
   mapOldScheme(scheme: AppearanceSchemeType): AppearanceSchemeType {
@@ -85,7 +81,6 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
       appearance: this.props.appearance,
       app: this.props.app,
       transitionMotionEnabled: this.props.transitionMotionEnabled,
-      viewType: this.props.viewType,
     };
   }
 

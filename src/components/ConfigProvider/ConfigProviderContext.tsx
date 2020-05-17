@@ -18,18 +18,12 @@ export enum WebviewType {
   INTERNAL = 'internal',
 }
 
-export enum ViewType {
-  COMPACT = 'compact',
-  REGULAR = 'regular',
-}
-
 export interface ConfigProviderContextInterface {
   scheme?: AppearanceSchemeType;
   isWebView?: boolean;
   webviewType?: WebviewType.INTERNAL | WebviewType.VKAPPS;
   app?: string;
   appearance?: AppearanceType;
-  viewType?: ViewType;
   transitionMotionEnabled?: boolean;
 }
 
