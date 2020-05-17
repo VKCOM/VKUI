@@ -2,6 +2,8 @@
   color: var(--text_primary);
 }
 
+/* Offsets and separators */
+
 .Group__inner > *:not(.Header):first-child {
   border-top: 8px solid transparent;
 }
@@ -10,22 +12,27 @@
   border-bottom: 8px solid transparent;
 }
 
-.Group__description {
-  font-size: 14px;
-  line-height: 16px;
-  color: var(--text_secondary);
+.Group__inner > * + .Separator,
+.Group__inner > .Separator + *:not(.Header) {
+  border-top: 8px solid transparent;
 }
 
-.Group__inner:not(.Group__inner--regular) + .Group__separator {
-  border-top: 4px solid transparent;
-}
-
-.Group:last-of-type .Group__inner:not(.Group__inner--regular) + .Group__separator {
+.Group:last-of-type .Group__inner:not(.Group__inner--sizeX-regular) + .Group__separator {
   display: none;
 }
 
 .Group:last-of-type .Group__separator--force {
   display: block;
+}
+
+/* /Offsets and separators */
+
+/* Description */
+
+.Group__description {
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--text_secondary);
 }
 
 .Group--ios .Group__description {
@@ -36,7 +43,11 @@
   padding: 4px 16px 24px;
 }
 
-.Group__inner--regular {
+/* /Description */
+
+/* Regular Overrides */
+
+.Group__inner--sizeX-regular {
   background: var(--modal_card_background);
   /* For Card border */
   position: relative;
@@ -45,18 +56,20 @@
   padding: 0 12px;
 }
 
-.Group__inner--regular > .Header:first-child {
+.Group__inner--sizeX-regular > .Header:first-child {
   border-top: 4px solid transparent;
 }
 
 @media (min-resolution: 2dppx) {
-  .Group__inner--regular::before {
+  .Group__inner--sizeX-regular::before {
     box-shadow: inset 0 0 0 .5px var(--image_border);
   }
 }
 
 @media (min-resolution: 3dppx) {
-  .Group__inner--regular::before {
+  .Group__inner--sizeX-regular::before {
     box-shadow: inset 0 0 0 .33px var(--image_border);
   }
 }
+
+/* /Regular Overrides */
