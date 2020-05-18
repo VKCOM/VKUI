@@ -18,6 +18,7 @@
  */
 .Tappable--android {
   position: relative;
+  overflow: hidden;
   transition: background-color .15s ease-out;
   }
 
