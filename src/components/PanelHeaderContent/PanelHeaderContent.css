@@ -72,7 +72,6 @@
   iOS
  */
 .PanelHeaderContent--ios {
-  font-family: var(--font-ios);
   }
 
   .PanelHeaderContent--ios .PanelHeaderContent__in.Tappable--active {
@@ -91,7 +90,6 @@
   Android
  */
 .PanelHeaderContent--android {
-  font-family: var(--font-android);
   }
 
   .PanelHeaderContent--android .PanelHeaderContent__in.Tappable--active {
