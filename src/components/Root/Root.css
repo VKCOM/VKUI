@@ -181,5 +181,5 @@
 
 .Root--ios.Root--no-motion .Root__view,
 .Root--android.Root--no-motion .Root__view {
-  animation-duration: .001ms;
+  animation: none;
 }

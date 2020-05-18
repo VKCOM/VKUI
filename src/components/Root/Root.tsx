@@ -120,8 +120,13 @@ class Root extends Component<RootProps, RootState> {
     }
   }
 
+  shouldDisableTransitionMotion(): boolean {
+    return this.context.transitionMotionEnabled === false ||
+      !this.props.splitCol.animate;
+  }
+
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEndCallback) {
-    if (!this.props.splitCol.animate) {
+    if (this.shouldDisableTransitionMotion()) {
       eventHandler();
       return;
     }
@@ -167,7 +172,7 @@ class Root extends Component<RootProps, RootState> {
   }
 
   render() {
-    const { popout, modal, platform, splitCol } = this.props;
+    const { popout, modal, platform } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
     const Views = this.arrayChildren.filter((view: ReactElement) => {
@@ -179,7 +184,7 @@ class Root extends Component<RootProps, RootState> {
     return (
       <div className={classNames(baseClassName, this.props.className, {
         'Root--transition': transition,
-        'Root--nomotion': !splitCol.animate || this.context.transitionMotionEnabled === false,
+        'Root--no-motion': this.shouldDisableTransitionMotion(),
       })}>
         {Views.map((view: ReactElement) => {
           return (
