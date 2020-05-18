@@ -22,7 +22,7 @@
   }
 
 .View--android.View--no-motion .View__panel {
-  animation-duration: .001ms;
+  animation: none;
 }
 
 /**
