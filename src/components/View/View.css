@@ -51,10 +51,6 @@
     overflow: hidden;
     }
 
-  .View--nomotion .View__panel {
-    animation: none !important;
-  }
-
   .View__popout {
     position: fixed;
     left: 0;
