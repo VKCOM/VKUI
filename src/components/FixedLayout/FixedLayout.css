@@ -3,7 +3,9 @@
   box-sizing: border-box;
   left: 0;
   z-index: 3;
-  }
+  padding-left: var(--safe-area-inset-left);
+  padding-right: var(--safe-area-inset-right);
+}
 
 .FixedLayout--filled {
   background: var(--background_content);

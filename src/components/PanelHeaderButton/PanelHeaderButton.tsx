@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, FunctionComponent } from 'react';
+import React, { ButtonHTMLAttributes, FunctionComponent, ReactNode } from 'react';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -8,12 +8,14 @@ export interface PanelHeaderButtonProps extends ButtonHTMLAttributes<HTMLElement
   primary?: boolean;
   href?: string;
   target?: string;
+  label?: ReactNode;
 }
 
 const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   className,
   children,
   primary,
+  label,
   ...restProps
 }: PanelHeaderButtonProps) => {
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
@@ -28,10 +30,14 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
       className={classNames(
         getClassName('PanelHeaderButton', platform),
         className,
-        { 'PanelHeaderButton--primary': primary },
+        {
+          'PanelHeaderButton--primary': primary,
+          'PanelHeaderButton--primitive': isPrimitive,
+        },
       )}
     >
-      {isPrimitive ? <span className="PanelHeaderButton__primitive">{children}</span> : children}
+      {children}
+      {label}
     </Tappable>
   );
 };

@@ -38,7 +38,6 @@ module.exports = {
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.tsx',
           '../src/components/PanelHeader/PanelHeader.tsx',
-          '../src/components/PanelHeaderSimple/PanelHeaderSimple.tsx',
           '../src/components/PanelHeaderButton/PanelHeaderButton.tsx',
           '../src/components/PanelHeaderBack/PanelHeaderBack.tsx',
           '../src/components/PanelHeaderClose/PanelHeaderClose.tsx',
@@ -84,6 +83,8 @@ module.exports = {
           '../src/components/CardScroll/CardScroll.tsx',
           '../src/components/Gradient/Gradient.tsx',
           '../src/components/Cell/Cell.tsx',
+          '../src/components/SimpleCell/SimpleCell.tsx',
+          '../src/components/RichCell/RichCell.tsx',
           '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.tsx',
@@ -121,8 +122,16 @@ module.exports = {
           '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx'
         ]
-      },
-      {
+      }, {
+        name: 'Typography',
+        components: () => [
+          '../src/components/Typography/Title/Title.tsx',
+          '../src/components/Typography/Headline/Headline.tsx',
+          '../src/components/Typography/Text/Text.tsx',
+          '../src/components/Typography/Subhead/Subhead.tsx',
+          '../src/components/Typography/Caption/Caption.tsx',
+        ]
+      }, {
         name: 'Advertisement',
         components: () => ['../src/components/PromoBanner/PromoBanner.tsx']
       },

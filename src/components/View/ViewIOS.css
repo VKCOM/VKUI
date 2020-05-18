@@ -17,8 +17,8 @@
   }
 
 .View--ios .Panel__in {
-  padding-bottom: var(--safe-area-inset-bottom);
-  }
+  padding: 0 var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
+}
 
 /**
  * Panel swipe back
@@ -93,6 +93,11 @@
   content: none;
   display: none;
   }
+
+.View--ios.View--no-motion .View__panel,
+.View--ios.View--no-motion .View__panel .Panel__in {
+  animation: none;
+}
 
 /**
  * Active panel

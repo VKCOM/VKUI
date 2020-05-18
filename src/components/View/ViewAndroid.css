@@ -21,6 +21,10 @@
   animation: animation-android-next-forward .3s var(--android-easing);
   }
 
+.View--android.View--no-motion .View__panel {
+  animation: none;
+}
+
 /**
  * Active panel
  */

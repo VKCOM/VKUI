@@ -11,7 +11,6 @@
 @import '../components/View/View.css';
 @import '../components/Panel/Panel.css';
 @import '../components/PanelHeader/PanelHeader.css';
-@import '../components/PanelHeaderSimple/PanelHeaderSimple.css';
 @import '../components/PanelHeaderButton/PanelHeaderButton.css';
 @import '../components/PanelHeaderContent/PanelHeaderContent.css';
 @import '../components/PanelHeaderContext/PanelHeaderContext.css';
@@ -47,6 +46,8 @@
 @import '../components/Group/Group.css';
 @import '../components/Gradient/Gradient.css';
 @import '../components/Cell/Cell.css';
+@import '../components/SimpleCell/SimpleCell.css';
+@import '../components/RichCell/RichCell.css';
 @import '../components/List/List.css';
 @import '../components/Footer/Footer.css';
 @import '../components/Spinner/Spinner.css';
@@ -78,6 +79,13 @@
 @import '../components/Select/Select.css';
 @import '../components/Textarea/Textarea.css';
 @import '../components/File/File.css';
+
+/* Typography */
+@import '../components/Typography/Title/Title.css';
+@import '../components/Typography/Headline/Headline.css';
+@import '../components/Typography/Subhead/Subhead.css';
+@import '../components/Typography/Caption/Caption.css';
+@import '../components/Typography/Text/Text.css';
 
 /* Advertisement */
 @import '../components/PromoBanner/PromoBanner.css';

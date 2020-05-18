@@ -1,9 +1,9 @@
 Компонент для отрисовки "сложного" содержимого шапки.
 
 ```jsx
-<View activePanel="brand" header={false}>
-  <Panel id="brand" separator={false}>
-    <PanelHeaderSimple
+<View activePanel="brand">
+  <Panel id="brand">
+    <PanelHeader
       left={<PanelHeaderBack />}
       right={<PanelHeaderButton>{<Icon28MessageOutline />}</PanelHeaderButton>}
     >
@@ -13,7 +13,7 @@
       >
         Влад Анесов
       </PanelHeaderContent>
-    </PanelHeaderSimple>
+    </PanelHeader>
   </Panel>
 </View>
 ```

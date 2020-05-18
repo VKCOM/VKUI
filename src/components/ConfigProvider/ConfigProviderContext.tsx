@@ -24,6 +24,7 @@ export interface ConfigProviderContextInterface {
   webviewType?: WebviewType.INTERNAL | WebviewType.VKAPPS;
   app?: string;
   appearance?: AppearanceType;
+  transitionMotionEnabled?: boolean;
 }
 
 export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});

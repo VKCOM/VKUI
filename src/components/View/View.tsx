@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
@@ -31,20 +31,12 @@ type AnimationEventHandler = (e?: AnimationEvent) => void;
 
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
-interface HeaderSwipeStyles {
-  title?: CSSProperties;
-  left?: CSSProperties;
-  addon?: CSSProperties;
-  right?: CSSProperties;
-}
-
 let scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
 export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform {
   activePanel: string;
-  header?: boolean;
   popout?: ReactNode;
   modal?: ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
@@ -52,6 +44,11 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   onSwipeBackStart?(): void;
   history?: string[];
   id?: string;
+  /**
+   * @ignore
+   * @deprecated будет удалено в 4-й версии.
+   */
+  header?: boolean;
 }
 
 export interface ViewState {
@@ -78,6 +75,7 @@ export interface ViewState {
 class View extends Component<ViewProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
+
     this.state = {
       scrolls: scrollsCache[props.id] || {},
       animated: false,
@@ -100,7 +98,6 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   static defaultProps: Partial<ViewProps> = {
-    header: true,
     history: [],
   };
 
@@ -108,6 +105,7 @@ class View extends Component<ViewProps, ViewState> {
     isWebView: PropTypes.bool,
     window: PropTypes.any,
     document: PropTypes.any,
+    transitionMotionEnabled: PropTypes.bool,
   };
 
   get document() {
@@ -118,7 +116,7 @@ class View extends Component<ViewProps, ViewState> {
     return this.context.window || window;
   }
 
-  get panels() {
+  get panels(): ReactElement[] {
     return [].concat(this.props.children);
   }
 
@@ -135,7 +133,7 @@ class View extends Component<ViewProps, ViewState> {
     // Нужен переход
     if (prevProps.activePanel !== this.props.activePanel && !prevState.swipingBack && !prevState.browserSwipe) {
       const firstLayer = this.panels.find(
-        (panel: React.ReactElement) => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel
+        (panel) => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel,
       );
 
       const isBack = firstLayer && firstLayer.props.id === this.props.activePanel;
@@ -226,6 +224,10 @@ class View extends Component<ViewProps, ViewState> {
     }
   }
 
+  shouldDisableTransitionMotion(): boolean {
+    return this.context.transitionMotionEnabled === false;
+  }
+
   waitTransitionFinish(elem: HTMLElement, eventHandler: TransitionEventHandler): void {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
@@ -238,6 +240,11 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEventHandler): void {
+    if (this.shouldDisableTransitionMotion()) {
+      eventHandler();
+      return;
+    }
+
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
 
@@ -435,60 +442,8 @@ class View extends Component<ViewProps, ViewState> {
     return {};
   }
 
-  calcHeaderSwipeStyles(panelId: string): HeaderSwipeStyles {
-    const isPrev = panelId === this.state.swipeBackPrevPanel;
-    const isNext = panelId === this.state.swipeBackNextPanel;
-
-    if (!isPrev && !isNext || this.state.swipeBackResult !== null) {
-      return {
-        title: {},
-        left: {},
-        addon: {},
-        right: {},
-      };
-    }
-
-    let opacity = this.state.swipeBackShift / this.window.innerWidth;
-    let titleTransform = this.state.swipeBackShift / this.window.innerWidth * 30;
-    let leftTransform = this.state.swipeBackShift / this.window.innerWidth * 30;
-
-    if (isNext) {
-      return {
-        title: {
-          transform: `translate3d(${-30 + titleTransform}vw, 0, 0)`,
-          WebkitTransform: `translate3d(${-30 + titleTransform}vw, 0, 0)`,
-          opacity,
-        },
-        left: { opacity },
-        addon: {
-          opacity: 1,
-          transform: `translate3d(${-30 + leftTransform}vw, 0, 0)`,
-          WebkitTransform: `translate3d(${-30 + leftTransform}vw, 0, 0)`,
-        },
-        right: { opacity },
-      };
-    }
-    if (isPrev) {
-      return {
-        title: {
-          transform: `translate3d(${titleTransform}vw, 0, 0)`,
-          WebkitTransform: `translate3d(${titleTransform}vw, 0, 0)`,
-          opacity: 1 - opacity,
-        },
-        left: { opacity: 1 - opacity },
-        addon: {
-          transform: `translate3d(${leftTransform}vw, 0, 0)`,
-          WebkitTransform: `translate3d(${leftTransform}vw, 0, 0)`,
-          opacity: 1 - opacity,
-        },
-      };
-    }
-
-    return {};
-  }
-
   render() {
-    const { style, popout, modal, header, platform } = this.props;
+    const { style, popout, modal, platform } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult } = this.state;
 
     const hasPopout = !!popout;
@@ -503,9 +458,9 @@ class View extends Component<ViewProps, ViewState> {
     });
 
     const modifiers = {
-      'View--header': header,
       'View--animated': this.state.animated,
       'View--swiping-back': this.state.swipingBack,
+      'View--no-motion': this.shouldDisableTransitionMotion(),
     };
 
     return (
@@ -516,60 +471,6 @@ class View extends Component<ViewProps, ViewState> {
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
-        {header &&
-          <div className="View__header">
-            {platform === IOS && <div className="View__header-scrolltop" onClick={this.onScrollTop} />}
-            <div className={classNames(getClassName('PanelHeader', platform))}>
-              {panels.map((panel: React.ReactElement) => {
-                const panelId = panel.props.id;
-                const headerSwipeStyles = this.calcHeaderSwipeStyles(panelId);
-
-                return (
-                  <div
-                    className={classNames('PanelHeader__in', {
-                      'PanelHeader__in--active': panelId === activePanel,
-                      'PanelHeader__in--prev': panelId === prevPanel,
-                      'PanelHeader__in--next': panelId === nextPanel,
-                      'PanelHeader__in--swipe-back-prev': panelId === swipeBackPrevPanel,
-                      'PanelHeader__in--swipe-back-next': panelId === swipeBackNextPanel,
-                      'PanelHeader__in--swipe-back-success': swipeBackResult === SwipeBackResults.success,
-                      'PanelHeader__in--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
-                    })}
-                    key={panelId}
-                    id={`panel-header-${panelId}`}
-                  >
-                    <div className="PanelHeader__container">
-                      <div className="PanelHeader__left">
-                        <div
-                          className="PanelHeader__left-in"
-                          id={`header-left-${panelId}`}
-                          style={headerSwipeStyles.left}
-                        />
-                        {platform === IOS &&
-                        <div
-                          className="PanelHeader__addon"
-                          id={`header-addon-${panelId}`}
-                          style={headerSwipeStyles.addon}
-                        />
-                        }
-                      </div>
-                      <div
-                        className="PanelHeader__content"
-                        style={headerSwipeStyles.title}
-                        id={`header-title-${panelId}`}
-                      />
-                      <div
-                        className="PanelHeader__right"
-                        id={`header-right-${panelId}`}
-                        style={headerSwipeStyles.right}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        }
         <div className="View__panels">
           {panels.map((panel: React.ReactElement) => {
             const panelId = panel.props.id;

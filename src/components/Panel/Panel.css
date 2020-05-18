@@ -18,7 +18,7 @@
   height: 100%;
 }
 
-.Panel--centered .PanelHeaderSimple {
+.Panel--centered .PanelHeader {
   position: absolute;
   left: 0;
   top: 0;
@@ -46,19 +46,19 @@
   min-height: calc(100% - 1px);
 }
 
-.Panel__centered .PanelHeaderSimple--ios.PanelHeaderSimple--vis + * {
+.Panel__centered .PanelHeader--ios.PanelHeader--vis + * {
   margin-top: var(--panelheader_height_ios);
 }
 
-.Panel__centered .PanelHeaderSimple--android.PanelHeaderSimple--vis + * {
+.Panel__centered .PanelHeader--android.PanelHeader--vis + * {
   margin-top: var(--panelheader_height_android);
 }
 
-.Panel__centered .PanelHeaderSimple--ios.PanelHeaderSimple--sep + * {
+.Panel__centered .PanelHeader--ios.PanelHeader--sep + * {
   margin-top: calc(var(--panelheader_height_ios) + 5px);
 }
 
-.Panel__centered .PanelHeaderSimple--android.PanelHeaderSimple--sep + * {
+.Panel__centered .PanelHeader--android.PanelHeader--sep + * {
   margin-top: calc(var(--panelheader_height_android) + 5px);
 }
 
