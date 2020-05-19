@@ -100,7 +100,6 @@ module.exports = {
           '../src/components/Tooltip/Tooltip.tsx',
           '../src/components/PullToRefresh/PullToRefresh.tsx',
           '../src/components/Counter/Counter.tsx',
-          '../src/components/Touch/Touch.tsx',
           '../src/components/UsersStack/UsersStack.tsx',
           '../src/components/Separator/Separator.tsx',
           '../src/components/Placeholder/Placeholder.tsx',
@@ -134,6 +133,12 @@ module.exports = {
       }, {
         name: 'Advertisement',
         components: () => ['../src/components/PromoBanner/PromoBanner.tsx']
+      }, {
+        name: 'Service',
+        components: () => [
+          '../src/components/ConfigProvider/ConfigProvider.tsx',
+          '../src/components/Touch/Touch.tsx',
+        ]
       },
       {
         name: 'Server Side Rendering',
