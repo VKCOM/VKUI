@@ -1,4 +1,4 @@
-.Tappable {
+.Tappable:not([disabled]) {
   cursor: pointer;
 }
 

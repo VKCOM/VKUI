@@ -52,7 +52,7 @@
   /* For Card border */
   position: relative;
   border-radius: 8px;
-  box-shadow: inset 0 0 0 1px var(--image_border);
+  box-shadow: inset 0 0 0 1px var(--input_border);
   padding: 0 12px;
 }
 
@@ -62,13 +62,13 @@
 
 @media (min-resolution: 2dppx) {
   .Group__inner--sizeX-regular::before {
-    box-shadow: inset 0 0 0 .5px var(--image_border);
+    box-shadow: inset 0 0 0 .5px var(--input_border);
   }
 }
 
 @media (min-resolution: 3dppx) {
   .Group__inner--sizeX-regular::before {
-    box-shadow: inset 0 0 0 .33px var(--image_border);
+    box-shadow: inset 0 0 0 .33px var(--input_border);
   }
 }
 
