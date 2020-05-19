@@ -52,7 +52,6 @@
  */
 
 .Tabs--ios {
-  font-family: var(--font-ios);
   }
 
 .Tabs--ios.Tabs--segmented {
@@ -80,7 +79,6 @@
   Android
  */
 .Tabs--android {
-  font-family: var(--font-android);
   }
 
 /**
