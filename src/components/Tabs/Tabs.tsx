@@ -5,7 +5,7 @@ import { HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
-  mode: 'default' | 'buttons' | 'segmented';
+  mode?: 'default' | 'buttons' | 'segmented';
 }
 
 const Tabs: FunctionComponent<TabsProps> = ({
