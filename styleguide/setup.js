@@ -1,8 +1,8 @@
 import '../src/styles/styles.css';
 
 import pkg from '../package';
-import * as VKUI from '../src';
 import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl } from './utils';
+import * as VKUI from '../src';
 
 import Icon16Add from '@vkontakte/icons/dist/16/add';
 import Icon16Chevron from '@vkontakte/icons/dist/16/chevron';

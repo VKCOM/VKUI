@@ -1,7 +1,3 @@
-SimpleCell — это упрощенная и улучшенная с точки зрения соответствия дизайну версия Cell. Она не может быть
-удаляемой, выделяемой или перетаскиваемой. У неё нет размеров. В ней меньше html-элементов.
-Всё это влияет на скорость её отрисовки, особенно если идёт речь о сотнях экземпляров.
-
 ```jsx
   class Example extends React.Component {
 
@@ -36,13 +32,13 @@ SimpleCell — это упрощенная и улучшенная с точк�
             </Group>
             <Group>
               <Header mode="secondary">Список диалогов</Header>
-              <SimpleCell before={<Avatar size={40} src={getAvatarUrl('user_xyz')} />} after={<Icon28MessageOutline />}>Игорь Фёдоров</SimpleCell>
-              <SimpleCell before={<Avatar size={40} src={getAvatarUrl('user_arthurstam')} />} after={<Icon28MessageOutline />}>Artur Stambultsian</SimpleCell>
+              <SimpleCell before={<Avatar size={40} src={getAvatarUrl('user_xyz')} />} after={<IconButton icon={<Icon28MessageOutline />} />}>Игорь Фёдоров</SimpleCell>
+              <SimpleCell before={<Avatar size={40} src={getAvatarUrl('user_arthurstam')} />} after={<IconButton icon={<Icon28MessageOutline />} />}>Artur Stambultsian</SimpleCell>
             </Group>
             <Group>
               <Header mode="secondary">Список друзей</Header>
-              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />} after={<Icon28MessageOutline />} description="Команда ВКонтакте">Игорь Фёдоров</SimpleCell>
-              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />} after={<Icon28MessageOutline />} description="Бот">Artur Stambultsian</SimpleCell>
+              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />} after={<IconButton icon={<Icon28MessageOutline />} />} description="Команда ВКонтакте">Игорь Фёдоров</SimpleCell>
+              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />} after={<IconButton icon={<Icon28MessageOutline />} />} description="Бот">Artur Stambultsian</SimpleCell>
             </Group>
           </Panel>
           <Panel id="nothing">

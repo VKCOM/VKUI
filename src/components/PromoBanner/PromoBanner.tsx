@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, useEffect, useMemo, useState, useCallback } from 'react';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import Button from '../Button/Button';
-import Cell from '../Cell/Cell';
 import Avatar from '../Avatar/Avatar';
 import classNames from '../../lib/classNames';
+import SimpleCell from '../SimpleCell/SimpleCell';
 
 type StatsType =
   | 'playbackStarted' // Начало показа
@@ -78,15 +78,14 @@ const PromoBanner = (props: PromoBannerProps) => {
         className="PromoBanner__clickable-body"
       >
         <div className="PromoBanner__content">
-          <Cell
-            before={
-              <Avatar mode="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
-            }
-            asideContent={<Button mode="outline">{props.bannerData.ctaText}</Button>}
+          <SimpleCell
+            before={<Avatar mode="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />}
+            after={<Button mode="outline">{props.bannerData.ctaText}</Button>}
             description={props.bannerData.domain}
+            disabled
           >
             {props.bannerData.title}
-          </Cell>
+          </SimpleCell>
         </div>
       </a>
 
