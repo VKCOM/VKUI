@@ -25,7 +25,7 @@
   color: var(--icon_secondary);
 }
 
-.Cell [type="checkbox"] {
+.Cell__checkbox {
   display: none;
 }
 
@@ -38,7 +38,7 @@
   box-sizing: border-box;
 }
 
-.Cell [type="checkbox"]:checked ~ .Cell__marker {
+.Cell__checkbox:checked ~ .Cell__marker {
   border: none;
   color: var(--white);
   background-color: var(--accent);

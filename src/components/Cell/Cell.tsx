@@ -14,7 +14,13 @@ import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'> {
+  /**
+   * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
+   */
   draggable?: boolean;
+  /**
+   * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
+   */
   removable?: boolean;
   selectable?: boolean;
   /**
@@ -221,7 +227,7 @@ class Cell extends Component<CellProps, CellState> {
                 {platform === IOS && removable && <div className="Cell__remove-marker" onClick={this.onRemoveActivateClick} />}
                 {selectable &&
                   <Fragment>
-                    <input type="checkbox" name={name} />
+                    <input type="checkbox" className="Cell__checkbox" name={name} />
                     <div className="Cell__marker"><Icon16Done /></div>
                   </Fragment>
                 }
