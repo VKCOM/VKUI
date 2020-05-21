@@ -1,5 +1,4 @@
 .View--ios {
-  font-family: var(--font-ios);
   }
 
 .View--ios .Panel__in {
@@ -86,7 +85,7 @@
 
 .View--ios.View--no-motion .View__panel,
 .View--ios.View--no-motion .View__panel .Panel__in {
-  animation-duration: .001ms;
+  animation: none;
 }
 
 /**

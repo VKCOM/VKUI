@@ -2,11 +2,3 @@
   width: 100%;
   height: 100%;
   }
-
-  .Epic--ios {
-    font-family: var(--font-ios);
-  }
-
-  .Epic--android {
-    font-family: var(--font-android);
-  }

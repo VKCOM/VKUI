@@ -61,7 +61,6 @@
  */
 
 .Root--ios {
-  font-family: var(--font-ios);
   }
 
   .Root--ios .Root__view--show-back::after,
@@ -92,10 +91,6 @@
   .Root--ios .Root__view--hide-back {
     animation: root-ios-animation-hide-back .6s var(--ios-easing);
     }
-
-.Root--nomotion .Root__view {
-  animation: none !important;
-}
 
 @keyframes root-ios-animation-show-back {
   from {
@@ -142,7 +137,6 @@
  */
 
 .Root--android {
-  font-family: var(--font-android);
   }
 
   .Root--android .Root__view--show-forward {
@@ -181,5 +175,5 @@
 
 .Root--ios.Root--no-motion .Root__view,
 .Root--android.Root--no-motion .Root__view {
-  animation-duration: .001ms;
+  animation: none;
 }

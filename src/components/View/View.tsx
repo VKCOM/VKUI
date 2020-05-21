@@ -222,6 +222,11 @@ class View extends Component<ViewProps, ViewState> {
     }
   }
 
+  shouldDisableTransitionMotion(): boolean {
+    return this.context.transitionMotionEnabled === false ||
+      !this.props.splitCol.animate;
+  }
+
   waitTransitionFinish(elem: HTMLElement, eventHandler: TransitionEventHandler): void {
     if (transitionEvents.supported) {
       const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
@@ -234,7 +239,7 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEventHandler): void {
-    if (!this.props.splitCol.animate) {
+    if (this.shouldDisableTransitionMotion()) {
       eventHandler();
       return;
     }
@@ -454,7 +459,7 @@ class View extends Component<ViewProps, ViewState> {
     const modifiers = {
       'View--animated': this.state.animated,
       'View--swiping-back': this.state.swipingBack,
-      'View--nomotion': !this.props.splitCol.animate || this.context.transitionMotionEnabled === false,
+      'View--no-motion': this.shouldDisableTransitionMotion(),
     };
 
     return (

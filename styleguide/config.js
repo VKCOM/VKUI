@@ -84,8 +84,8 @@ module.exports = {
           '../src/components/CardGrid/CardGrid.tsx',
           '../src/components/CardScroll/CardScroll.tsx',
           '../src/components/Gradient/Gradient.tsx',
-          '../src/components/Cell/Cell.tsx',
           '../src/components/SimpleCell/SimpleCell.tsx',
+          '../src/components/Cell/Cell.tsx',
           '../src/components/RichCell/RichCell.tsx',
           '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
@@ -102,7 +102,6 @@ module.exports = {
           '../src/components/Tooltip/Tooltip.tsx',
           '../src/components/PullToRefresh/PullToRefresh.tsx',
           '../src/components/Counter/Counter.tsx',
-          '../src/components/Touch/Touch.tsx',
           '../src/components/UsersStack/UsersStack.tsx',
           '../src/components/Separator/Separator.tsx',
           '../src/components/Placeholder/Placeholder.tsx',
@@ -139,6 +138,12 @@ module.exports = {
       }, {
         name: 'Advertisement',
         components: () => ['../src/components/PromoBanner/PromoBanner.tsx']
+      }, {
+        name: 'Service',
+        components: () => [
+          '../src/components/ConfigProvider/ConfigProvider.tsx',
+          '../src/components/Touch/Touch.tsx',
+        ]
       },
       {
         name: 'Server Side Rendering',

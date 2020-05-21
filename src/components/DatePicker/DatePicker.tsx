@@ -66,7 +66,7 @@ class DatePicker extends Component<Props, State> {
   };
 
   getDaysInMonth: GetDaysInMonth = (year: string | number, month: string) => {
-    return new Date(Number(year), Number(month) + 1, 0).getDate();
+    return new Date(Number(year), Number(month), 0).getDate();
   };
 
   getMonthMaxDay: GetMonthMaxDay = () => {

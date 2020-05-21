@@ -4,7 +4,7 @@ import classNames from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import Separator from '../Separator/Separator';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   header?: ReactNode;
@@ -24,7 +24,7 @@ let Group: FunctionComponent<GroupProps> = (props: GroupProps) => {
 
   return (
     <section {...restProps} ref={getRootRef} className={classNames(baseClassNames, className)}>
-      <div className={classNames('Group__inner', `Group__inner--${sizeX}`)}>
+      <div className={classNames('Group__inner', `Group__inner--sizeX-${sizeX}`)}>
         {header}
         {children}
         {description && <div className="Group__description">{description}</div>}
@@ -32,7 +32,7 @@ let Group: FunctionComponent<GroupProps> = (props: GroupProps) => {
       {separator !== 'hide' &&
         <Separator className={classNames('Group__separator', {
           'Group__separator--force': separator === 'show',
-        })} expanded={sizeX === 'regular'} />
+        })} expanded={sizeX === SizeType.REGULAR} />
       }
     </section>
   );
