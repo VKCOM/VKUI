@@ -4,7 +4,7 @@
 
 /* Offsets and separators */
 
-.Group__inner > *:not(.Header):first-child {
+.Group__inner > *:not(.Header):not(.Tabs):first-child {
   border-top: 8px solid transparent;
 }
 
@@ -53,10 +53,11 @@
   position: relative;
   border-radius: 8px;
   box-shadow: inset 0 0 0 1px var(--input_border);
-  padding: 0 12px;
+  padding: 0 8px;
 }
 
-.Group__inner--sizeX-regular > .Header:first-child {
+.Group__inner--sizeX-regular > .Header:first-child,
+.Group__inner--sizeX-regular > .Tabs:first-child {
   border-top: 4px solid transparent;
 }
 
