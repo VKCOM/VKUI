@@ -107,7 +107,7 @@ class ModalCard extends Component<ModalCardProps> {
                   <Button
                     key={i}
                     data-index={i}
-                    size="xl"
+                    size="m"
                     mode={mode}
                     onClick={this.onButtonClick}
                   >

@@ -114,9 +114,9 @@ class App extends React.Component {
         >
           <FormLayout>
             <FormLayoutGroup>
-              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} size="xl">Выбор страны</Button>
-              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)} size="xl">Просмотры истории</Button>
-              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="xl">Информация о пользователе</Button>
+              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} size="l">Выбор страны</Button>
+              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)} size="l">Просмотры истории</Button>
+              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="l">Информация о пользователе</Button>
             </FormLayoutGroup>
 
             <SelectMimicry top="Страна" placeholder="Выбрать страну" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} />
@@ -162,7 +162,7 @@ class App extends React.Component {
           settlingHeight={80}
         >
           <FormLayout>
-            <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="xl">Информация о пользователе</Button>
+            <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="l">Информация о пользователе</Button>
 
             <FormLayoutGroup>
               {importantCountries.map(({ id, title }) => {
@@ -335,11 +335,11 @@ class App extends React.Component {
 
           <Group>
             <FormLayout>
-              <Button size="xl" mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
+              <Button size="m" mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
                   Открыть модальную страницу
               </Button>
 
-              <Button size="xl" mode="secondary" onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
+              <Button size="m" mode="secondary" onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
                   Открыть модальные карточки
               </Button>
             </FormLayout>

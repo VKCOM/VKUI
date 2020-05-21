@@ -57,7 +57,7 @@
       margin-right: 8px;
       }
 
-  .Button:not(.Button--sz-xl) .Button__after {
+  .Button:not(.Button--sz-l) .Button__after {
     margin-left: 8px;
     }
 
@@ -113,6 +113,21 @@
   color: #fff;
 }
 
+.Button--sz-s {
+  padding: 0 16px;
+  }
+
+  .Button--sz-s .Button__before {
+    margin-left: -4px;
+    }
+
+  .Button--sz-s .Button__content {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 500;
+    padding: 7px 0;
+    }
+
 .Button--sz-m {
   padding: 0 16px;
   }
@@ -122,46 +137,31 @@
     }
 
   .Button--sz-m .Button__content {
-    font-size: 14px;
-    line-height: 14px;
-    font-weight: 500;
-    padding: 7px 0;
-    }
-
-.Button--sz-l {
-  padding: 0 16px;
-  }
-
-  .Button--sz-l .Button__before {
-    margin-left: -4px;
-    }
-
-  .Button--sz-l .Button__content {
     font-size: 15px;
     font-weight: 500;
     padding: 8px 0;
     }
 
-.Button--sz-xl {
+.Button--sz-l {
   display: block;
   width: 100%;
   padding: 0 16px;
   }
 
-  .Button--sz-xl .Button__before {
+  .Button--sz-l .Button__before {
     margin-left: -6px;
     margin-right: 2px;
     }
 
-  .Button--sz-xl .Button__before ~ .Button__content {
+  .Button--sz-l .Button__before ~ .Button__content {
     padding-left: 0;
     }
 
-  .Button--sz-xl .Button__in {
+  .Button--sz-l .Button__in {
     justify-content: center;
     }
 
-  .Button--sz-xl .Button__content {
+  .Button--sz-l .Button__content {
     font-size: 17px;
     font-weight: 500;
     padding: 11px;

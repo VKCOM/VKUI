@@ -32,13 +32,13 @@
     </Group>
     <Group header={<Header mode="secondary">Допустимые размеры</Header>}>
       <Div>
-        <Button>Medium</Button>
+        <Button>Small</Button>
       </Div>
       <Div>
-        <Button size="l">Large</Button>
+        <Button size="m">Medium</Button>
       </Div>
       <Div>
-        <Button size="xl" mode="secondary">Extra large</Button>
+        <Button size="l" mode="secondary">Large</Button>
       </Div>
     </Group>
     <Group header={<Header mode="secondary">Растягивание по ширине</Header>}>

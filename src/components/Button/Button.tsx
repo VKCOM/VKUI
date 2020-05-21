@@ -7,7 +7,7 @@ import usePlatform from '../../hooks/usePlatform';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
-  size?: 'm' | 'l' | 'xl';
+  size?: 's' | 'm' | 'l';
   stretched?: boolean;
   before?: ReactNode;
   after?: ReactNode;
@@ -51,7 +51,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
 Button.defaultProps = {
   mode: 'primary',
   Component: 'button',
-  size: 'm',
+  size: 's',
   stretched: false,
   stopPropagation: true,
 };

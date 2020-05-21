@@ -8,10 +8,10 @@
         File
       </PanelHeader>
       <FormLayout>
-        <File top="Загрузите ваше фото" before={<Icon24Camera />} controlSize="l">
+        <File top="Загрузите ваше фото" before={<Icon24Camera />} controlSize="m">
           Открыть галерею
         </File>
-        <File top="Загрузите документы" before={<Icon24Document />} controlSize="xl" mode="secondary" />
+        <File top="Загрузите документы" before={<Icon24Document />} controlSize="l" mode="secondary" />
       </FormLayout>
     </Panel>
   </View>

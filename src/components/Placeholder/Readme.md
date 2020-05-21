@@ -30,7 +30,7 @@ class PlaceholderExample extends React.Component {
           <Placeholder
             icon={<Icon56UsersOutline />}
             header="Уведомления от сообществ"
-            action={<Button size="l">Подключить сообщества</Button>}
+            action={<Button size="m">Подключить сообщества</Button>}
           >
             Подключите сообщества, от которых Вы хотите получать уведомления
           </Placeholder>
@@ -42,7 +42,7 @@ class PlaceholderExample extends React.Component {
           </Placeholder>
 
           <Div>
-            <Button size="xl" onClick={this.onNavClick} data-to="example-2">Ещё примеры</Button>
+            <Button size="l" onClick={this.onNavClick} data-to="example-2">Ещё примеры</Button>
           </Div>
         </Panel>
 
@@ -58,14 +58,14 @@ class PlaceholderExample extends React.Component {
 
           <Placeholder
             header="Находите друзей"
-            action={<Button size="l">Найти друзей</Button>}
+            action={<Button size="m">Найти друзей</Button>}
           >
             Здесь будут отображаться люди, которых вы добавите в друзья
           </Placeholder>
           <Separator wide />
 
           <Div>
-            <Button size="xl" onClick={this.onNavClick} data-to="example-3">Полноэкранный плейсхолдер</Button>
+            <Button size="l" onClick={this.onNavClick} data-to="example-3">Полноэкранный плейсхолдер</Button>
           </Div>
         </Panel>
 
@@ -76,7 +76,7 @@ class PlaceholderExample extends React.Component {
 
           <Placeholder
             icon={<Icon56MessageReadOutline />}
-            action={<Button size="l" mode="tertiary">Показать все сообщения</Button>}
+            action={<Button size="m" mode="tertiary">Показать все сообщения</Button>}
             stretched
           >
             Нет непрочитанных<br />сообщений

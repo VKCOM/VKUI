@@ -21,7 +21,7 @@ export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<H
    */
   bottom?: ReactNode;
   /**
-   * Кнопка или набор кнопок `<Button size="m" />`
+   * Кнопка или набор кнопок `<Button size="s" />`
    */
   actions?: ReactNode;
   disabled?: boolean;
