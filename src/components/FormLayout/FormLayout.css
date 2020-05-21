@@ -4,6 +4,7 @@
 
   .FormLayout__row {
     display: block;
+    padding: 12px 0;
     }
 
   .FormLayout__row-top {
@@ -37,10 +38,6 @@
     padding: 0 12px;
     }
 
-  .FormLayout--ios .FormLayout__row {
-    padding: 12px 0;
-    }
-
     .FormLayout--ios .FormLayout__row-top {
       padding: 2px 0 8px;
       }
@@ -53,10 +50,6 @@
 
   .FormLayout--android .FormLayout__container {
     padding: 0 16px;
-    }
-
-  .FormLayout--android .FormLayout__row {
-    padding: 10px 0;
     }
 
     .FormLayout--android .FormLayout__row-top {
