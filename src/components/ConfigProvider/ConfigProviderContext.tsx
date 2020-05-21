@@ -18,11 +18,6 @@ export enum WebviewType {
   INTERNAL = 'internal',
 }
 
-export enum ViewType {
-  COMPACT = 'compact',
-  REGULAR = 'regular',
-}
-
 export interface ConfigProviderContextInterface {
   /**
    * Цветовая схема приложения
@@ -49,7 +44,6 @@ export interface ConfigProviderContextInterface {
    * Включена ли анимация переходов между экранами в `Root` и `View`
    */
   transitionMotionEnabled?: boolean;
-  viewType?: ViewType;
 }
 
 export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});
