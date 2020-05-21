@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, FC } from 'react';
+import React, { HTMLAttributes, ReactNode, FC, ElementType } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
@@ -7,7 +7,7 @@ import { HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface SimpleCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface SimpleCellOwnProps {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
@@ -23,7 +23,10 @@ export interface SimpleCellProps extends HTMLAttributes<HTMLElement>, HasRootRef
   disabled?: boolean;
   expandable?: boolean;
   multiline?: boolean;
+  Component?: ElementType;
 }
+
+export interface SimpleCellProps extends SimpleCellOwnProps, HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {}
 
 const SimpleCell: FC<SimpleCellProps> = ({
   before,
@@ -34,6 +37,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
   className,
   expandable,
   multiline,
+  Component,
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -42,7 +46,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
   return (
     <Tappable
       {...restProps}
-      Component={restProps.href ? 'a' : 'div'}
+      Component={restProps.href ? 'a' : Component}
       className={
         classNames(
           className,
@@ -72,6 +76,10 @@ const SimpleCell: FC<SimpleCellProps> = ({
       }
     </Tappable>
   );
+};
+
+SimpleCell.defaultProps = {
+  Component: 'div',
 };
 
 export default SimpleCell;
