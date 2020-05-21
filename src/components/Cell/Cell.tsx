@@ -70,7 +70,7 @@ class Cell extends Component<CellProps, CellState> {
 
   get document() {return this.context.document || document;}
 
-  onRemoveActivateClick = (e: MouseEvent) => {
+  private readonly onRemoveActivateClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
     this.setState({ isRemoveActivated: true });
@@ -180,7 +180,7 @@ class Cell extends Component<CellProps, CellState> {
     delete this.dragDirection;
   };
 
-  onDragClick = (e: MouseEvent) => {
+  private readonly onDragClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
   };
