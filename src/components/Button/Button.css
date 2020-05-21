@@ -48,19 +48,6 @@
     justify-content: center;
     }
 
-  .Button__before .Icon--16 {
-      margin-right: 6px;
-      }
-
-  .Button__before .Icon--24,
-  .Button__before .Icon--28 {
-      margin-right: 8px;
-      }
-
-  .Button:not(.Button--sz-l) .Button__after {
-    margin-left: 8px;
-    }
-
   .Button::before,
   .Button::after {
     display: none;
@@ -118,14 +105,18 @@
   }
 
   .Button--sz-s .Button__before {
-    margin-left: -4px;
+    margin-right: 6px;
+    }
+
+  .Button--sz-s .Button__after {
+    margin-left: 6px;
     }
 
   .Button--sz-s .Button__content {
     font-size: 14px;
-    line-height: 14px;
+    line-height: 18px;
     font-weight: 500;
-    padding: 7px 0;
+    padding: 5px 0;
     }
 
 .Button--sz-m {
@@ -133,24 +124,32 @@
   }
 
   .Button--sz-m .Button__before {
-    margin-left: -4px;
+    margin-right: 6px;
+    }
+
+  .Button--sz-m .Button__after {
+    margin-left: 6px;
     }
 
   .Button--sz-m .Button__content {
     font-size: 15px;
+    line-height: 20px;
     font-weight: 500;
-    padding: 8px 0;
+    padding: 7px 0;
     }
 
 .Button--sz-l {
   display: block;
   width: 100%;
-  padding: 0 16px;
+  padding: 0 20px;
   }
 
   .Button--sz-l .Button__before {
-    margin-left: -6px;
-    margin-right: 2px;
+    margin-right: 8px;
+    }
+
+  .Button--sz-l .Button__after {
+    margin-left: 8px;
     }
 
   .Button--sz-l .Button__before ~ .Button__content {
@@ -163,8 +162,9 @@
 
   .Button--sz-l .Button__content {
     font-size: 17px;
+    line-height: 22px;
     font-weight: 500;
-    padding: 11px;
+    padding: 11px 0;
     }
 
 /*

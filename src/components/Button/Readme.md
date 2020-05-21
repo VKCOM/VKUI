@@ -58,6 +58,12 @@
         <Button before={<Icon24Camera/>} size="l">Take a photo</Button>
       </Div>
       <Div>
+        <Button size="l" after={<Counter>16</Counter>}>Button</Button>
+      </Div>
+      <Div>
+        <Button size="l" before={<Icon24Camera/>} after={<Counter>16</Counter>}>Button</Button>
+      </Div>
+      <Div>
         <Button mode="secondary" before={<Icon24Shuffle/>} size="l">Shuffle</Button>
       </Div>
     </Group>
