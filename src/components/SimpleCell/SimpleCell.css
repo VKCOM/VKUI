@@ -11,6 +11,11 @@
   white-space: normal;
 }
 
+.SimpleCell--mult .SimpleCell__description,
+.SimpleCell--mult .SimpleCell__children {
+  text-overflow: initial;
+}
+
 .SimpleCell > *:first-child:not(.SimpleCell__main),
 .SimpleCell > .Tappable__waves + *:not(.SimpleCell__main) {
   flex-shrink: 0;
