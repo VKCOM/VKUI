@@ -104,6 +104,10 @@
   padding: 0 16px;
   }
 
+.Button--sz-s.Button--with-icon {
+  padding: 0 16px 0 12px;
+  }
+
   .Button--sz-s .Button__before {
     margin-right: 6px;
     }
@@ -113,15 +117,19 @@
     }
 
   .Button--sz-s .Button__content {
-    padding: 5px 0;
+    padding: 4px 0 6px;
     }
 
   .Button--sz-s .Button__content--caps {
-    padding: 7px 0;
+    padding: 6px 0 8px;
     }
 
 .Button--sz-m {
   padding: 0 16px;
+  }
+
+.Button--sz-m.Button--with-icon {
+  padding: 0 16px 0 12px;
   }
 
   .Button--sz-m .Button__before {
@@ -133,13 +141,17 @@
     }
 
   .Button--sz-m .Button__content {
-    padding: 7px 0;
+    padding: 6px 0 8px;
     }
 
 .Button--sz-l {
   display: block;
   width: 100%;
   padding: 0 20px;
+  }
+
+.Button--sz-l.Button--with-icon {
+  padding: 0 20px 0 16px;
   }
 
   .Button--sz-l .Button__before {
@@ -155,7 +167,7 @@
     }
 
   .Button--sz-l .Button__content {
-    padding: 11px 0;
+    padding: 9px 0 11px;
     }
 
 /*

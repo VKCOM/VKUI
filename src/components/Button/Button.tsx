@@ -78,6 +78,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
         `Button--aln-${align || 'center'}`,
         {
           ['Button--str']: stretched,
+          ['Button--with-icon']: hasIcons,
         },
       )
     }
