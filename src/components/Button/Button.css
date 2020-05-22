@@ -152,18 +152,11 @@
     margin-left: 8px;
     }
 
-  .Button--sz-l .Button__before ~ .Button__content {
-    padding-left: 0;
-    }
-
   .Button--sz-l .Button__in {
     justify-content: center;
     }
 
   .Button--sz-l .Button__content {
-    font-size: 17px;
-    line-height: 22px;
-    font-weight: 500;
     padding: 11px 0;
     }
 

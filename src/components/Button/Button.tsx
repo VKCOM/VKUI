@@ -2,6 +2,7 @@ import React, { FunctionComponent, ReactNode, ElementType, ButtonHTMLAttributes 
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
+import Title from '../Typography/Title/Title';
 import { HasAlign, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
@@ -23,6 +24,21 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootR
 const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   const { className, size, mode, stretched, align, children, before, after, getRootRef, Component, ...restProps } = props;
+  let content = null;
+
+  if (children) {
+    switch (size) {
+      case 'l':
+        content =
+          <Title level="3" weight="medium" Component="div" className="Button__content">
+            {children}
+          </Title>;
+        break;
+      default:
+        content = <div className="Button__content">{children}</div>;
+        break;
+    }
+  }
 
   return <Tappable {...restProps}
     className={
@@ -42,7 +58,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   >
     <div className="Button__in">
       {before && <div className="Button__before">{before}</div>}
-      {children && <div className="Button__content">{children}</div>}
+      {content}
       {after && <div className="Button__after">{after}</div>}
     </div>
   </Tappable>;
