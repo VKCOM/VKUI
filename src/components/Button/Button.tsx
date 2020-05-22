@@ -4,6 +4,7 @@ import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
+import Subhead from '../Typography/Subhead/Subhead';
 import { HasAlign, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
@@ -41,8 +42,11 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
             {children}
           </Text>;
         break;
-      default:
-        content = <div className="Button__content">{children}</div>;
+      case 's':
+        content =
+          <Subhead weight="medium" Component="div" className="Button__content">
+            {children}
+          </Subhead>;
         break;
     }
   }
