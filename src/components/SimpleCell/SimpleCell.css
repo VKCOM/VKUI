@@ -3,10 +3,17 @@
   align-items: center;
   min-height: 48px;
   white-space: nowrap;
+  text-decoration: none;
+  color: var(--text_primary);
 }
 
 .SimpleCell--mult {
   white-space: normal;
+}
+
+.SimpleCell--mult .SimpleCell__description,
+.SimpleCell--mult .SimpleCell__children {
+  text-overflow: initial;
 }
 
 .SimpleCell > .Avatar,
