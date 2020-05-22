@@ -30,6 +30,35 @@
         <Button mode="overlay_outline">Overlay Outline</Button>
       </Div>
     </Group>
+    <Group header={<Header mode="secondary">Типы кнопок с disabled="true"</Header>}>
+      <Div>
+        <Button disabled>Primary</Button>
+      </Div>
+      <Div>
+        <Button disabled mode="secondary">Secondary</Button>
+      </Div>
+      <Div>
+        <Button disabled mode="tertiary">Tertiary</Button>
+      </Div>
+      <Div>
+        <Button disabled mode="outline">Outline</Button>
+      </Div>
+      <Div>
+        <Button disabled mode="commerce">Commerce</Button>
+      </Div>
+      <Div>
+        <Button disabled mode="destructive">Destructive</Button>
+      </Div>
+      <Div style={{ background: '#232323' }}>
+        <Button disabled mode="overlay_primary">Overlay Primary</Button>
+      </Div>
+      <Div style={{ background: '#232323' }}>
+        <Button disabled mode="overlay_secondary">Overlay Secondary</Button>
+      </Div>
+      <Div style={{ background: '#232323' }}>
+        <Button disabled mode="overlay_outline">Overlay Outline</Button>
+      </Div>
+    </Group>
     <Group header={<Header mode="secondary">Допустимые размеры</Header>}>
       <Div>
         <Button>Small</Button>
