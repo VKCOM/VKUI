@@ -84,7 +84,7 @@
         <Button before={<Icon16Add/>}>Add item</Button>
       </Div>
       <Div>
-        <Button size="m" before={<Icon16Add/>}>Add item</Button>
+        <Button size="m" before={<Icon24Add/>}>Add item</Button>
       </Div>
       <Div>
         <Button before={<Icon24Camera/>} size="l">Take a photo</Button>
