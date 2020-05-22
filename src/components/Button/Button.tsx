@@ -5,6 +5,7 @@ import Tappable from '../Tappable/Tappable';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Subhead from '../Typography/Subhead/Subhead';
+import Caption from '../Typography/Caption/Caption';
 import { HasAlign, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
@@ -26,27 +27,43 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootR
 const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   const { className, size, mode, stretched, align, children, before, after, getRootRef, Component, ...restProps } = props;
+  const hasIcons = Boolean(before || after);
   let content = null;
 
   if (children) {
-    switch (size) {
-      case 'l':
+    switch (true) {
+      case size === 'l':
         content =
           <Title level="3" weight="medium" Component="div" className="Button__content">
             {children}
           </Title>;
         break;
-      case 'm':
+      case size === 'm':
         content =
           <Text weight="medium" className="Button__content">
             {children}
           </Text>;
         break;
-      case 's':
+      case size === 's' && !hasIcons:
         content =
-          <Subhead weight="medium" Component="div" className="Button__content">
+          <Subhead
+            weight="medium"
+            Component="div"
+            className="Button__content"
+          >
             {children}
           </Subhead>;
+        break;
+      case size === 's' && hasIcons:
+        content =
+          <Caption
+            caps
+            level="2"
+            weight="semibold"
+            className="Button__content--caps"
+          >
+            {children}
+          </Caption>;
         break;
     }
   }

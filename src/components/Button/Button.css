@@ -113,10 +113,11 @@
     }
 
   .Button--sz-s .Button__content {
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: 500;
     padding: 5px 0;
+    }
+
+  .Button--sz-s .Button__content--caps {
+    padding: 7px 0;
     }
 
 .Button--sz-m {
@@ -132,9 +133,6 @@
     }
 
   .Button--sz-m .Button__content {
-    font-size: 15px;
-    line-height: 20px;
-    font-weight: 500;
     padding: 7px 0;
     }
 
