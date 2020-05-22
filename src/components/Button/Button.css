@@ -166,10 +166,6 @@
     justify-content: center;
     }
 
-  .Button--sz-l .Button__content {
-    padding: 9px 0 11px;
-    }
-
 /*
   iOS
  */
@@ -177,11 +173,19 @@
   border-radius: 10px;
 }
 
+.Button--ios.Button--sz-l .Button__content {
+  padding: 9px 0 11px;
+}
+
 /*
   Android
  */
 .Button--android {
   border-radius: 8px;
+}
+
+.Button--android.Button--sz-l .Button__content {
+  padding: 10px 0 12px;
 }
 
 /**
