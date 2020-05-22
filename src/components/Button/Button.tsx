@@ -3,6 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
 import Title from '../Typography/Title/Title';
+import Text from '../Typography/Text/Text';
 import { HasAlign, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
@@ -33,6 +34,12 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
           <Title level="3" weight="medium" Component="div" className="Button__content">
             {children}
           </Title>;
+        break;
+      case 'm':
+        content =
+          <Text weight="medium" className="Button__content">
+            {children}
+          </Text>;
         break;
       default:
         content = <div className="Button__content">{children}</div>;
