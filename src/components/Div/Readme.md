@@ -7,7 +7,7 @@
     <PanelHeader>Div</PanelHeader>
     <Group>
       <Div>
-        <Button stretched mode="secondary" size="l">
+        <Button stretched mode="secondary" size="m">
           Edit Info
         </Button>
       </Div>

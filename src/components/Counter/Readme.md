@@ -15,11 +15,11 @@
     </Group>
     <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
       <FormLayout>
-        <Button mode="secondary" size="l" after={<Counter>16</Counter>}>Secondary large</Button>
-        <Button mode="tertiary" after={<Counter>6</Counter>}>Tertiary medium</Button>
-        <Button mode="outline" size="l" after={<Counter>20</Counter>}>Outline large</Button>
-        <Button mode="commerce" size="l" after={<Counter>4</Counter>}>Commerce large</Button>
-        <Button size="xl" after={<Counter>8</Counter>}>Primary extra large</Button>
+        <Button mode="secondary" size="m" after={<Counter>16</Counter>}>Secondary medium</Button>
+        <Button mode="tertiary" after={<Counter>6</Counter>}>Tertiary small</Button>
+        <Button mode="outline" size="m" after={<Counter>20</Counter>}>Outline medium</Button>
+        <Button mode="commerce" size="m" after={<Counter>4</Counter>}>Commerce medium</Button>
+        <Button size="l" after={<Counter>8</Counter>}>Primary large</Button>
       </FormLayout>
     </Group>
     <Group header={

@@ -48,19 +48,6 @@
     justify-content: center;
     }
 
-  .Button__before .Icon--16 {
-      margin-right: 6px;
-      }
-
-  .Button__before .Icon--24,
-  .Button__before .Icon--28 {
-      margin-right: 8px;
-      }
-
-  .Button:not(.Button--sz-xl) .Button__after {
-    margin-left: 8px;
-    }
-
   .Button::before,
   .Button::after {
     display: none;
@@ -113,58 +100,70 @@
   color: #fff;
 }
 
+.Button--sz-s {
+  padding: 0 16px;
+  }
+
+.Button--sz-s.Button--with-icon {
+  padding: 0 16px 0 12px;
+  }
+
+  .Button--sz-s .Button__before {
+    margin-right: 6px;
+    }
+
+  .Button--sz-s .Button__after {
+    margin-left: 6px;
+    }
+
+  .Button--sz-s .Button__content {
+    padding: 4px 0 6px;
+    }
+
+  .Button--sz-s .Button__content--caps {
+    padding: 7px 0;
+    }
+
 .Button--sz-m {
   padding: 0 16px;
   }
 
+.Button--sz-m.Button--with-icon {
+  padding: 0 16px 0 12px;
+  }
+
   .Button--sz-m .Button__before {
-    margin-left: -4px;
+    margin-right: 6px;
+    }
+
+  .Button--sz-m .Button__after {
+    margin-left: 6px;
     }
 
   .Button--sz-m .Button__content {
-    font-size: 14px;
-    line-height: 14px;
-    font-weight: 500;
-    padding: 7px 0;
+    padding: 6px 0 8px;
     }
 
 .Button--sz-l {
-  padding: 0 16px;
+  display: block;
+  width: 100%;
+  padding: 0 20px;
+  }
+
+.Button--sz-l.Button--with-icon {
+  padding: 0 20px 0 16px;
   }
 
   .Button--sz-l .Button__before {
-    margin-left: -4px;
+    margin-right: 8px;
     }
 
-  .Button--sz-l .Button__content {
-    font-size: 15px;
-    font-weight: 500;
-    padding: 8px 0;
+  .Button--sz-l .Button__after {
+    margin-left: 8px;
     }
 
-.Button--sz-xl {
-  display: block;
-  width: 100%;
-  padding: 0 16px;
-  }
-
-  .Button--sz-xl .Button__before {
-    margin-left: -6px;
-    margin-right: 2px;
-    }
-
-  .Button--sz-xl .Button__before ~ .Button__content {
-    padding-left: 0;
-    }
-
-  .Button--sz-xl .Button__in {
+  .Button--sz-l .Button__in {
     justify-content: center;
-    }
-
-  .Button--sz-xl .Button__content {
-    font-size: 17px;
-    font-weight: 500;
-    padding: 11px;
     }
 
 /*
@@ -174,11 +173,19 @@
   border-radius: 10px;
 }
 
+.Button--ios.Button--sz-l .Button__content {
+  padding: 9px 0 11px;
+}
+
 /*
   Android
  */
 .Button--android {
   border-radius: 8px;
+}
+
+.Button--android.Button--sz-l .Button__content {
+  padding: 10px 0 12px;
 }
 
 /**

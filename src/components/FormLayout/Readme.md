@@ -88,7 +88,7 @@ class Example extends React.Component {
             <Textarea top="О себе" />
 
             <Checkbox>Согласен со всем <Link>этим</Link></Checkbox>
-            <Button size="xl">Зарегистрироваться</Button>
+            <Button size="l">Зарегистрироваться</Button>
           </FormLayout>
         </Panel>
       </View>
