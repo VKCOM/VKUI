@@ -35,6 +35,7 @@ export { default as Snackbar } from './components/Snackbar/Snackbar';
  */
 export { default as ModalRoot } from './components/ModalRoot/ModalRoot';
 export { default as withModalRootContext } from './components/ModalRoot/withModalRootContext';
+export { default as ModalRootContext } from './components/ModalRoot/ModalRootContext';
 export { default as ModalPage } from './components/ModalPage/ModalPage';
 export { default as ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
 export { default as ModalCard } from './components/ModalCard/ModalCard';
