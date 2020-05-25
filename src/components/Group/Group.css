@@ -46,6 +46,10 @@
   padding-right: 8px;
 }
 
+.Group:last-of-type .Group__inner--sizeX-regular + .Group__separator {
+  display: block;
+}
+
 @media (min-resolution: 2dppx) {
   .Group__inner--sizeX-regular {
     box-shadow: inset 0 0 0 .5px var(--input_border);
