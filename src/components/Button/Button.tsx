@@ -24,38 +24,24 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootR
   target?: string;
 }
 
-const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
-  const platform = usePlatform();
-  const { className, size, mode, stretched, align, children, before, after, getRootRef, Component, ...restProps } = props;
-  const hasIcons = Boolean(before || after);
-  let content = null;
-
-  if (children) {
-    switch (true) {
-      case size === 'l':
-        content =
-          <Title level="3" weight="medium" Component="div" className="Button__content">
-            {children}
-          </Title>;
-        break;
-      case size === 'm':
-        content =
-          <Text weight="medium" className="Button__content">
-            {children}
-          </Text>;
-        break;
-      case size === 's' && !hasIcons:
-        content =
-          <Subhead
-            weight="medium"
-            Component="div"
-            className="Button__content"
-          >
-            {children}
-          </Subhead>;
-        break;
-      case size === 's' && hasIcons:
-        content =
+const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean) => {
+  switch (size) {
+    case 'l':
+      return (
+        <Title level="3" weight="medium" Component="div" className="Button__content">
+          {children}
+        </Title>
+      );
+    case 'm':
+      return (
+        <Text weight="medium" className="Button__content">
+          {children}
+        </Text>
+      );
+    case 's':
+    default:
+      if (hasIcons) {
+        return (
           <Caption
             caps
             level="2"
@@ -63,10 +49,26 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
             className="Button__content--caps"
           >
             {children}
-          </Caption>;
-        break;
-    }
+          </Caption>
+        );
+      }
+
+      return (
+        <Subhead
+          weight="medium"
+          Component="div"
+          className="Button__content"
+        >
+          {children}
+        </Subhead>
+      );
   }
+};
+
+const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
+  const platform = usePlatform();
+  const { className, size, mode, stretched, align, children, before, after, getRootRef, Component, ...restProps } = props;
+  const hasIcons = Boolean(before || after);
 
   return <Tappable {...restProps}
     className={
@@ -87,7 +89,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   >
     <div className="Button__in">
       {before && <div className="Button__before">{before}</div>}
-      {content}
+      {children && getContent(size, children, hasIcons)}
       {after && <div className="Button__after">{after}</div>}
     </div>
   </Tappable>;
