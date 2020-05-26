@@ -74,7 +74,7 @@
       position: absolute;
       top: 50%;
       margin-top: -12px;
-      right: 10px;
+      right: 12px;
       color: var(--icon_secondary);
       }
 
@@ -84,7 +84,7 @@
   }
 
 .Select--sizeX--compact .Select__container {
-  padding: 12px 32px 12px 12px;
+  padding: 12px 30px 12px 12px;
   }
 
 .Select--sizeX--compact .Icon {
