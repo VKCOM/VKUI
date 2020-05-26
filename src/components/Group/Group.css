@@ -7,6 +7,15 @@
   padding-bottom: 8px;
 }
 
+.Group__inner > .Separator {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.Group__inner > .Separator + .Header {
+  margin-top: -8px;
+}
+
 .Group:last-of-type .Group__inner + .Group__separator {
   display: none;
 }
@@ -44,11 +53,6 @@
   box-shadow: inset 0 0 0 1px var(--input_border);
   padding-left: 8px;
   padding-right: 8px;
-}
-
-.Group__inner--sizeX-regular > .Separator {
-  margin-top: 8px;
-  margin-bottom: 8px;
 }
 
 .Group:last-of-type .Group__inner--sizeX-regular + .Group__separator {
