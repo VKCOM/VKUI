@@ -38,7 +38,7 @@
       margin-top: 1px;
       max-width: 100%;
       font-family: var(--font-common);
-      color: var(--text_secondary);
+      color: var(--header_text_secondary);
       }
 
     .PanelHeaderContent__status ~ .PanelHeaderContent__children .PanelHeaderContent__children-in {
