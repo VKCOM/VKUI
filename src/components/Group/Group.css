@@ -7,6 +7,11 @@
   padding-bottom: 8px;
 }
 
+.Group__inner > .Separator {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 .Group:last-of-type .Group__inner + .Group__separator {
   display: none;
 }
@@ -22,8 +27,9 @@
 }
 
 .Group__inner > .Header:first-child,
+.Group__inner > .Separator + .Header,
 .Group__inner > .Tabs:first-child {
-  margin-top: -4px;
+  margin-top: -8px;
 }
 
 .Group--ios .Group__description {
@@ -48,6 +54,11 @@
 
 .Group:last-of-type .Group__inner--sizeX-regular + .Group__separator {
   display: block;
+}
+
+.Group__inner--sizeX-regular > .Header:first-child,
+.Group__inner--sizeX-regular > .Tabs:first-child {
+  margin-top: -4px;
 }
 
 @media (min-resolution: 2dppx) {
