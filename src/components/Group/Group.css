@@ -46,6 +46,11 @@
   padding-right: 8px;
 }
 
+.Group__inner--sizeX-regular > .Separator {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
 .Group:last-of-type .Group__inner--sizeX-regular + .Group__separator {
   display: block;
 }
