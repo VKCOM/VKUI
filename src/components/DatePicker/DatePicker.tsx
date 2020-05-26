@@ -31,6 +31,10 @@ interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabe
   name?: string;
   defaultValue?: string;
   monthNames?: string[];
+  dayPlaceholder?: string;
+  monthPlaceholder?: string;
+  yearPlaceholder?: string;
+  mobileViewPlaceholder?: string;
   onDateChange?: (value: string) => void;
 }
 
@@ -43,8 +47,11 @@ class DatePicker extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = props.defaultValue ?
-      this.parseInputDate(props.defaultValue) : this.parseInputDate(props.max);
+    this.state = props.defaultValue ? this.parseInputDate(props.defaultValue) : {
+      day: void 0,
+      month: void 0,
+      year: void 0,
+    };
   }
 
   // Переводим state к формату гг-мм-дд
@@ -151,7 +158,7 @@ class DatePicker extends Component<Props, State> {
   };
 
   get desktopView() {
-    const { name } = this.props;
+    const { name, dayPlaceholder, monthPlaceholder, yearPlaceholder } = this.props;
     const { day, month, year } = this.state;
 
     return (
@@ -162,6 +169,7 @@ class DatePicker extends Component<Props, State> {
               name="day"
               value={day}
               options={this.getDayOptions()}
+              placeholder={dayPlaceholder}
               onSelectChange={this.onSelectChange}
             />
           </div>
@@ -170,6 +178,7 @@ class DatePicker extends Component<Props, State> {
               name="month"
               value={month}
               options={this.getMonthOptions()}
+              placeholder={monthPlaceholder}
               onSelectChange={this.onSelectChange}
             />
           </div>
@@ -178,6 +187,7 @@ class DatePicker extends Component<Props, State> {
               name="year"
               value={year}
               options={this.getYearOptions()}
+              placeholder={yearPlaceholder}
               onSelectChange={this.onSelectChange}
             />
           </div>
@@ -187,14 +197,29 @@ class DatePicker extends Component<Props, State> {
   }
 
   get mobileView() {
-    const { top, name, min, max } = this.props;
+    const { top, name, min, max, mobileViewPlaceholder } = this.props;
+    const { day, month, year } = this.state;
+
+    if (day && month && year) {
+      return (
+        <Input
+          top={top}
+          name={name}
+          type="date"
+          defaultValue={this.convertToInputFormat(this.state)}
+          onChange={this.onStringChange}
+          min={min}
+          max={max}
+        />
+      );
+    }
 
     return (
       <Input
         top={top}
         name={name}
         type="date"
-        defaultValue={this.convertToInputFormat(this.state)}
+        placeholder={mobileViewPlaceholder}
         onChange={this.onStringChange}
         min={min}
         max={max}
