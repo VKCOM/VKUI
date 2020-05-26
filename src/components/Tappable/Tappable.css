@@ -18,7 +18,6 @@
  */
 .Tappable--android {
   position: relative;
-  overflow: hidden;
   transition: background-color .15s ease-out;
   }
 
@@ -37,6 +36,7 @@
     left: 0;
     pointer-events: none;
     overflow: hidden;
+    border-radius: inherit;
     }
 
     /**
