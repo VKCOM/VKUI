@@ -17,6 +17,15 @@
           top="Дата рождения"
           min="1901-01-01"
           max="2006-01-01"
+          onDateChange={(value) => {console.log(value)}}
+          dayPlaceholder="Д"
+          monthPlaceholder="ММ"
+          yearPlaceholder="ГГ"
+        />
+        <DatePicker
+          top="Дата рождения"
+          min="1901-01-01"
+          max="2006-01-01"
           defaultValue="1991-04-02"
           onDateChange={(value) => {console.log(value)}}
         />
