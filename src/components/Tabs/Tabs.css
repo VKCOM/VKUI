@@ -11,7 +11,8 @@
 .PanelHeader .Tabs {
   overflow: hidden;
   background: var(--header_background);
-  }
+  font-family: var(--font-common);
+}
 
 .PanelHeader .Tabs::after {
   display: block;
