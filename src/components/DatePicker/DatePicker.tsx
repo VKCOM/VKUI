@@ -34,7 +34,6 @@ interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabe
   dayPlaceholder?: string;
   monthPlaceholder?: string;
   yearPlaceholder?: string;
-  mobileViewPlaceholder?: string;
   onDateChange?: (value: string) => void;
 }
 
@@ -197,7 +196,7 @@ class DatePicker extends Component<Props, State> {
   }
 
   get mobileView() {
-    const { top, name, min, max, mobileViewPlaceholder } = this.props;
+    const { top, name, min, max } = this.props;
     const { day, month, year } = this.state;
 
     if (day && month && year) {
@@ -219,7 +218,6 @@ class DatePicker extends Component<Props, State> {
         top={top}
         name={name}
         type="date"
-        placeholder={mobileViewPlaceholder}
         onChange={this.onStringChange}
         min={min}
         max={max}
