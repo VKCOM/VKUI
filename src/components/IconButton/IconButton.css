@@ -55,10 +55,6 @@
   padding: 10px;
 }
 
-.IconButton--android .Tappable__waves {
-  border-radius: 50%;
-}
-
 .IconButton--android.Tappable--active {
   background-color: var(--background_highlighted);
 }

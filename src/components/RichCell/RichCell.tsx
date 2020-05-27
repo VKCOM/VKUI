@@ -4,8 +4,9 @@ import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
 import { HasRootRef } from '../../types';
 import Tappable from '../Tappable/Tappable';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, AdaptivityProps {
   text?: ReactNode;
   caption?: ReactNode;
   /**
@@ -40,6 +41,7 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   actions,
   multiline,
   className,
+  sizeX,
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -52,6 +54,7 @@ const RichCell: FunctionComponent<RichCellProps> = ({
         classNames(
           className,
           getClassName('RichCell', platform),
+          `RichCell--sizeX-${sizeX}`,
           {
             'RichCell--mult': multiline,
           },
@@ -81,4 +84,4 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   );
 };
 
-export default RichCell;
+export default withAdaptivity(RichCell, { sizeX: true });
