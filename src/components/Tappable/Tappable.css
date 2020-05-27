@@ -22,11 +22,8 @@
 .Tappable--android {
   position: relative;
   transition: background-color .15s ease-out;
-  }
-
-.Tappable--android:not(.PanelHeaderButton):not(.IconButton) {
   border-radius: 8px;
-}
+  }
 
 .Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.SliderSwitch__button):not(.PanelHeaderContent__in) {
   background: var(--background_highlighted) !important;

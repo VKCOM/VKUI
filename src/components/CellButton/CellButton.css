@@ -12,6 +12,10 @@
   position: relative;
   }
 
+.CellButton--sizeX-compact {
+  border-radius: 0;
+}
+
 .CellButton[disabled] {
   opacity: .4;
   }

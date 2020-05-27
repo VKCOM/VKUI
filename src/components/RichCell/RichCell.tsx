@@ -4,8 +4,9 @@ import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
 import { HasRootRef } from '../../types';
 import Tappable from '../Tappable/Tappable';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, AdaptivityProps {
   text?: ReactNode;
   caption?: ReactNode;
   /**
@@ -40,10 +41,10 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   actions,
   multiline,
   className,
+  sizeX,
   ...restProps
 }) => {
   const platform = usePlatform();
-  const isAfterPrimitive = typeof after === 'string' || typeof after === 'number';
 
   return (
     <Tappable
@@ -53,6 +54,7 @@ const RichCell: FunctionComponent<RichCellProps> = ({
         classNames(
           className,
           getClassName('RichCell', platform),
+          `RichCell--sizeX-${sizeX}`,
           {
             'RichCell--mult': multiline,
           },
@@ -63,7 +65,7 @@ const RichCell: FunctionComponent<RichCellProps> = ({
       <div className="RichCell__in">
         <div className="RichCell__top">
           {/* Этот after будет скрыт из верстки. Он нужен для CSS */}
-          {isAfterPrimitive ? <span>{after}</span> : after}
+          {after}
           <div className="RichCell__content">
             <div className="RichCell__children">{children}</div>
             {after && <div className="RichCell__after">{after}</div>}
@@ -82,4 +84,4 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   );
 };
 
-export default RichCell;
+export default withAdaptivity(RichCell, { sizeX: true });

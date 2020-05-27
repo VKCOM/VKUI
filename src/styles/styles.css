@@ -6,6 +6,10 @@
 /* Файлы с CSS компонентов подключаются здесь неслучайно. Пока не удалось делать импорты через JS так,
  * чтобы в каждом файле были доступны CSS переменные без их дублирования.
  */
+
+/* Service */
+@import '../components/Tappable/Tappable.css';
+
 /* Layout */
 @import '../components/Root/Root.css';
 @import '../components/View/View.css';
@@ -36,7 +40,6 @@
 @import '../components/ModalPageHeader/ModalPageHeader.css';
 
 /* Blocks */
-@import '../components/Tappable/Tappable.css';
 @import '../components/Button/Button.css';
 @import '../components/IconButton/IconButton.css';
 @import '../components/Card/Card.css';
