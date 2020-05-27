@@ -78,10 +78,6 @@
   padding: 10px;
 }
 
-.PanelHeaderButton--android .Tappable__waves {
-  border-radius: 50%;
-}
-
 .PanelHeaderButton--android.Tappable--active {
   background-color: var(--background_highlighted);
 }
