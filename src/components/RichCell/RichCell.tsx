@@ -43,7 +43,6 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
-  const isAfterPrimitive = typeof after === 'string' || typeof after === 'number';
 
   return (
     <Tappable
@@ -63,7 +62,7 @@ const RichCell: FunctionComponent<RichCellProps> = ({
       <div className="RichCell__in">
         <div className="RichCell__top">
           {/* Этот after будет скрыт из верстки. Он нужен для CSS */}
-          {isAfterPrimitive ? <span>{after}</span> : after}
+          {after}
           <div className="RichCell__content">
             <div className="RichCell__children">{children}</div>
             {after && <div className="RichCell__after">{after}</div>}
