@@ -41,6 +41,8 @@
     pointer-events: none;
     overflow: hidden;
     border-radius: inherit;
+    /* Fix for Safari: css animation + border-radius + overflow ignores parent border-radius */
+    will-change: transform;
     }
 
     /**
