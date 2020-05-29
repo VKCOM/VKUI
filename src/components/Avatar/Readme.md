@@ -44,13 +44,13 @@
       <Group>
         <Header mode="secondary">Placeholder</Header>
         <SimpleCell
-          before={<Avatar style={{ background: 'var(--accent)' }} size={28}><Icon16Add fill="var(--white)" /></Avatar>}
+          before={<Avatar style={{ background: 'var(--accent)' }} size={28} shadow={false}><Icon16Add fill="var(--white)" /></Avatar>}
           description="Только от друзей друзей"
         >
           Заявки в друзья
         </SimpleCell>
         <SimpleCell
-          before={<Avatar style={{ background: 'var(--destructive)' }} size={28}><Icon16Like fill="var(--white)" /></Avatar>}
+          before={<Avatar style={{ background: 'var(--destructive)' }} size={28} shadow={false}><Icon16Like fill="var(--white)" /></Avatar>}
           description="Только важные"
         >
           Отметки «Мне нравится»
