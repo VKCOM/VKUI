@@ -4,52 +4,54 @@ import React, {
   ChangeEventHandler,
   HTMLAttributes,
 } from 'react';
-import CustomSelect from '../CustomSelect/CustomSelect';
+import CustomSelect, { SelectChangeResult } from '../CustomSelect/CustomSelect';
 import Input from '../Input/Input';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { hasMouse } from '../../helpers/inputUtils';
 import { HasFormLabels, HasPlatform } from '../../types';
+import { leadingZero } from '../../lib/utils';
 
 const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
 ];
 
 export interface SelectOption {
-  value: string | number;
+  value: number;
   label: string;
 }
 
-interface State {
-  day?: string; // 01
-  month?: string; // 01
-  year?: string; // 2006
+interface DateFormat {
+  day: number;
+  month: number;
+  year: number;
 }
 
-interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabels, AdaptivityProps {
-  min: string; // 1901-01-01
-  max: string; // 2006-01-01
+type State = DateFormat;
+type Attrs = Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>;
+
+interface Props extends Attrs, HasPlatform, HasFormLabels, AdaptivityProps {
+  min: State;
+  max: State;
   name?: string;
-  defaultValue?: string;
+  defaultValue?: State;
   monthNames?: string[];
   dayPlaceholder?: string;
   monthPlaceholder?: string;
   yearPlaceholder?: string;
-  onDateChange?: (value: string) => void;
+  onDateChange?: (value: State) => void;
 }
 
 type GetOptions = () => SelectOption[];
-type GetDaysInMonth = (year: string | number, month: string) => number;
-type GetMonthMaxDay = () => number;
-type SelectChangeHandler = (value: string, name: string) => void;
+type SelectChangeHandler = (result: SelectChangeResult) => void;
 
-class DatePicker extends Component<Props, State> {
+class DatePicker extends Component<Props, Partial<State>> {
   constructor(props: Props) {
     super(props);
 
-    this.state = props.defaultValue ? this.parseInputDate(props.defaultValue) : {
-      day: void 0,
-      month: void 0,
-      year: void 0,
+    this.state = props.defaultValue ? props.defaultValue : {
+      day: 0,
+      month: 0,
+      year: 0,
     };
   }
 
@@ -57,7 +59,7 @@ class DatePicker extends Component<Props, State> {
   private convertToInputFormat(date: State) {
     const { day, month, year } = date;
 
-    return `${year}-${month}-${day}`;
+    return `${year}-${leadingZero(month)}-${leadingZero(day)}`;
   };
 
   // Переводим дату формата гг-мм-дд к объекту
@@ -65,17 +67,17 @@ class DatePicker extends Component<Props, State> {
     const splited = date.split('-');
 
     return {
-      day: splited[2],
-      month: splited[1],
-      year: splited[0],
+      day: Number(splited[2]),
+      month: Number(splited[1]),
+      year: Number(splited[0]),
     };
   };
 
-  getDaysInMonth: GetDaysInMonth = (year: string | number, month: string) => {
-    return new Date(Number(year), Number(month), 0).getDate();
+  getDaysInMonth = (year: number, month: number) => {
+    return new Date(year, month, 0).getDate();
   };
 
-  getMonthMaxDay: GetMonthMaxDay = () => {
+  getMonthMaxDay = () => {
     const { month, year } = this.state;
 
     if (!month) {
@@ -94,11 +96,11 @@ class DatePicker extends Component<Props, State> {
     const array: SelectOption[] = new Array(maxMonthDay);
 
     for (let i = 0; i < maxMonthDay; i++) {
-      const value = String(i + 1);
+      const value = i + 1;
 
       array[i] = {
-        label: value,
-        value: value.length === 1 ? '0' + value : value,
+        label: String(value),
+        value: value,
       };
     }
 
@@ -109,11 +111,11 @@ class DatePicker extends Component<Props, State> {
     const { monthNames } = this.props;
 
     return (monthNames || DefaultMonths).map((name, index) => {
-      const value = String(index + 1);
+      const value = index + 1;
 
       return {
         label: name,
-        value: value.length === 1 ? '0' + value : value,
+        value: value,
       };
     });
   };
@@ -121,26 +123,26 @@ class DatePicker extends Component<Props, State> {
   getYearOptions: GetOptions = () => {
     const { max, min } = this.props;
     const yearOptions: SelectOption[] = [];
-    const maxYear = +this.parseInputDate(max).year;
-    const minYear = +this.parseInputDate(min).year;
+    const maxYear = max.year;
+    const minYear = min.year;
 
     for (let value = maxYear; value >= minYear; value--) {
       yearOptions.push({
         label: String(value),
-        value: String(value),
+        value: value,
       });
     }
 
     return yearOptions;
   };
 
-  onSelectChange: SelectChangeHandler = (value: string, name: string) => {
+  onSelectChange: SelectChangeHandler = ({ value, name }) => {
     const { onDateChange } = this.props;
 
     this.setState(() => ({
       [name]: value,
     }), () => {
-      onDateChange && onDateChange(this.convertToInputFormat(this.state));
+      onDateChange && onDateChange(this.state as State);
     });
   };
 
@@ -153,7 +155,7 @@ class DatePicker extends Component<Props, State> {
       ...date,
     }));
 
-    onDateChange && onDateChange(value);
+    onDateChange && onDateChange(date);
   };
 
   get desktopView() {
@@ -161,7 +163,7 @@ class DatePicker extends Component<Props, State> {
     const { day, month, year } = this.state;
 
     return (
-      <fieldset name={name || null} className="DatePicker">
+      <div className="DatePicker">
         <div className="DatePicker__container">
           <div className="DatePicker__day">
             <CustomSelect
@@ -169,7 +171,7 @@ class DatePicker extends Component<Props, State> {
               value={day}
               options={this.getDayOptions()}
               placeholder={dayPlaceholder}
-              onSelectChange={this.onSelectChange}
+              onChange={this.onSelectChange}
             />
           </div>
           <div className="DatePicker__month">
@@ -178,7 +180,7 @@ class DatePicker extends Component<Props, State> {
               value={month}
               options={this.getMonthOptions()}
               placeholder={monthPlaceholder}
-              onSelectChange={this.onSelectChange}
+              onChange={this.onSelectChange}
             />
           </div>
           <div className="DatePicker__year">
@@ -187,11 +189,12 @@ class DatePicker extends Component<Props, State> {
               value={year}
               options={this.getYearOptions()}
               placeholder={yearPlaceholder}
-              onSelectChange={this.onSelectChange}
+              onChange={this.onSelectChange}
             />
           </div>
         </div>
-      </fieldset>
+        <input type="hidden" name={name} value={this.convertToInputFormat(this.state as State)} />
+      </div>
     );
   }
 
@@ -205,10 +208,10 @@ class DatePicker extends Component<Props, State> {
           top={top}
           name={name}
           type="date"
-          defaultValue={this.convertToInputFormat(this.state)}
+          defaultValue={this.convertToInputFormat(this.state as State)}
           onChange={this.onStringChange}
-          min={min}
-          max={max}
+          min={this.convertToInputFormat(min)}
+          max={this.convertToInputFormat(max)}
         />
       );
     }
@@ -219,8 +222,8 @@ class DatePicker extends Component<Props, State> {
         name={name}
         type="date"
         onChange={this.onStringChange}
-        min={min}
-        max={max}
+        min={this.convertToInputFormat(min)}
+        max={this.convertToInputFormat(max)}
       />
     );
   }
