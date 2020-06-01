@@ -7,6 +7,7 @@ import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
+import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
 
 export interface AlertActionInterface {
   title: string;
@@ -15,7 +16,7 @@ export interface AlertActionInterface {
   mode: 'cancel' | 'destructive' | 'default';
 }
 
-export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform {
+export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   actionsLayout?: 'vertical' | 'horizontal';
   actions?: AlertActionInterface[];
   onClose?(): void;
@@ -86,8 +87,9 @@ class Alert extends Component<AlertProps, AlertState> {
   }
 
   render() {
-    const { actions, actionsLayout, children, className, style, platform, ...restProps } = this.props;
+    const { actions, actionsLayout, children, className, style, platform, viewMode, ...restProps } = this.props;
     const { closing } = this.state;
+    const isDesktop = viewMode >= ViewMode.SMALL_TABLET;
 
     return (
       <PopoutWrapper
@@ -104,6 +106,7 @@ class Alert extends Component<AlertProps, AlertState> {
             'Alert--v': actionsLayout === 'vertical',
             'Alert--h': actionsLayout === 'horizontal',
             'Alert--closing': closing,
+            'Alert--desktop': isDesktop,
           })}
         >
           <div className="Alert__content">{children}</div>
@@ -127,4 +130,6 @@ class Alert extends Component<AlertProps, AlertState> {
   }
 }
 
-export default withPlatform(Alert);
+export default withPlatform(withAdaptivity(Alert, {
+  viewMode: true,
+}));
