@@ -15,6 +15,7 @@
       </PanelHeader>
       <FormLayout>
         <DatePicker
+          tabIndex="1"
           top="Дата рождения"
           min={{day: 1, month: 1, year: 1901}}
           max={{day: 1, month: 1, year: 2006}}
@@ -24,6 +25,7 @@
           yearPlaceholder="ГГ"
         />
         <DatePicker
+          tabIndex="2"
           top="Дата рождения"
           min={{day: 1, month: 1, year: 1901}}
           max={{day: 1, month: 1, year: 2006}}

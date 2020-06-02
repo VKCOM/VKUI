@@ -159,7 +159,7 @@ class DatePicker extends Component<Props, Partial<State>> {
   };
 
   get desktopView() {
-    const { name, dayPlaceholder, monthPlaceholder, yearPlaceholder } = this.props;
+    const { name, dayPlaceholder, monthPlaceholder, yearPlaceholder, tabIndex } = this.props;
     const { day, month, year } = this.state;
 
     return (
@@ -167,6 +167,7 @@ class DatePicker extends Component<Props, Partial<State>> {
         <div className="DatePicker__container">
           <div className="DatePicker__day">
             <CustomSelect
+              tabIndex={tabIndex}
               name="day"
               value={day}
               options={this.getDayOptions()}
@@ -176,6 +177,7 @@ class DatePicker extends Component<Props, Partial<State>> {
           </div>
           <div className="DatePicker__month">
             <CustomSelect
+              tabIndex={tabIndex}
               name="month"
               value={month}
               options={this.getMonthOptions()}
@@ -185,6 +187,7 @@ class DatePicker extends Component<Props, Partial<State>> {
           </div>
           <div className="DatePicker__year">
             <CustomSelect
+              tabIndex={tabIndex}
               name="year"
               value={year}
               options={this.getYearOptions()}
@@ -199,12 +202,13 @@ class DatePicker extends Component<Props, Partial<State>> {
   }
 
   get mobileView() {
-    const { top, name, min, max } = this.props;
+    const { top, name, min, max, tabIndex } = this.props;
     const { day, month, year } = this.state;
 
     if (day && month && year) {
       return (
         <Input
+          tabIndex={tabIndex}
           top={top}
           name={name}
           type="date"
@@ -218,6 +222,7 @@ class DatePicker extends Component<Props, Partial<State>> {
 
     return (
       <Input
+        tabIndex={tabIndex}
         top={top}
         name={name}
         type="date"
