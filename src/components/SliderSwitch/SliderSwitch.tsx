@@ -108,7 +108,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
   }
 
   public render() {
-    const { name, options, className } = this.props;
+    const { name, options, className, tabIndex = 0 } = this.props;
     const { activeValue, hoveredOptionId } = this.state;
 
     const [firstOption, secondOption] = options;
@@ -133,6 +133,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
         )} />
         <input type="hidden" name={name} value={activeValue} />
         <SliderSwitchButton
+          tabIndex={tabIndex}
           active={firstActive}
           hovered={hoveredOptionId === 0}
           aria-pressed={firstActive}
@@ -143,6 +144,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
           {firstOption.name}
         </SliderSwitchButton>
         <SliderSwitchButton
+          tabIndex={tabIndex}
           active={secondActive}
           hovered={hoveredOptionId === 1}
           onClick={this.handleSecondClick}

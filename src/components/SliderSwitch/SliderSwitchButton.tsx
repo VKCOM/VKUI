@@ -11,7 +11,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootR
 }
 
 const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
-  const { active, hovered, className, children, getRootRef, ...restProps } = props;
+  const { active, hovered, className, children, getRootRef, tabIndex, ...restProps } = props;
   const platform = usePlatform();
   const [focus, setFocus] = useState(false);
 
@@ -37,7 +37,7 @@ const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) 
     aria-pressed={active}
     onFocus={toggleFocus}
     onBlur={toggleFocus}
-    tabIndex={0}
+    tabIndex={tabIndex}
   >
     {children}
   </Tappable>;
