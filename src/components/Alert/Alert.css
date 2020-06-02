@@ -263,6 +263,14 @@
       color: var(--destructive);
       }
 
+.Alert--desktop {
+  width: 416px;
+}
+
+  .Alert--desktop .Alert__content p {
+    color: var(--text_subhead);
+  }
+
 /**
  * Animations
  */
