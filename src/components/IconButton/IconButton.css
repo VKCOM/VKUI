@@ -11,6 +11,22 @@
   position: relative;
 }
 
+.IconButton .Icon--16 {
+  padding: 16px;
+}
+
+.IconButton .Icon--16.Icon--w-8 {
+  padding: 16px 14px;
+}
+
+.IconButton .Icon--24 {
+  padding: 12px;
+}
+
+.IconButton .Icon--28 {
+  padding: 10px;
+}
+
 .IconButton[disabled] {
   opacity: .6;
 }
@@ -20,18 +36,7 @@
  */
 
 .IconButton--ios {
-  height: 44px;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.IconButton--ios .Icon--24 {
-  padding: 10px;
-}
-
-.IconButton--ios .Icon--28 {
-  padding: 8px;
+  height: 48px;
 }
 
 .IconButton--ios.Tappable--active {
@@ -47,14 +52,8 @@
   border-radius: 24px;
 }
 
-.IconButton--android .Icon--24 {
-  padding: 12px;
-}
-
-.IconButton--android .Icon--28 {
-  padding: 10px;
-}
-
-.IconButton--android.Tappable--active {
+.IconButton--android.Tappable--active .Icon {
+  transition: inherit;
+  border-radius: inherit;
   background-color: var(--background_highlighted);
 }
