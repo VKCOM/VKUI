@@ -155,11 +155,11 @@
   display: block;
   width: auto;
   margin-top: 7px;
+  padding: 14px 20px;
   font-size: 17px;
   margin-bottom: var(--safe-area-inset-bottom);
   font-weight: 500;
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
+  border-radius: 14px;
   order: 1;
   text-align: center;
   }

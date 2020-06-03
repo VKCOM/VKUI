@@ -6,8 +6,11 @@
  * iOS tappable
  */
 .Tappable--ios {
-  border-radius: 10px;
   transition: background-color .15s ease-out;
+  }
+
+.Tappable--ios:not(.ActionSheetItem) {
+  border-radius: 10px;
   }
 
 /** TODO: Переписать без использования !important */
