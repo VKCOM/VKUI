@@ -66,7 +66,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     if (autoclose) {
       this.setState({ closing: true });
       this.waitTransitionFinish(() => {
-        autoclose && this.props.onClose();
+        this.props.onClose();
         action && action(event);
       });
     } else {
@@ -115,6 +115,12 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       ? ActionSheetDropdownDesktop
       : ActionSheetDropdown;
 
+    const items = Children.toArray(children);
+
+    if (platform === IOS && !isDesktop) {
+      items.push(iosCloseItem);
+    }
+
     return (
       <PopoutWrapper
         closing={this.state.closing}
@@ -136,8 +142,9 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
               {text && <div className="ActionSheet__text">{text}</div>}
             </header>
           }
-          {Children.toArray(children).map((child: React.ReactElement, index: number) =>
+          {items.map((child: React.ReactElement, index: number) =>
             child && React.cloneElement(child, {
+              key: index,
               onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
               style: this.isItemLast(index) && isNumeric(insets.bottom)
                 ? { marginBottom: insets.bottom }
@@ -145,7 +152,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
               isLast: this.isItemLast(index),
             }),
           )}
-          {platform === IOS && !isDesktop && iosCloseItem}
         </DropdownComponent>
       </PopoutWrapper>
     );
