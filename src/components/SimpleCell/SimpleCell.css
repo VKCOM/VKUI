@@ -88,18 +88,36 @@
   color: var(--accent);
 }
 
-.SimpleCell .SimpleCell__after > .Icon--28,
-.SimpleCell .SimpleCell__after .IconButton .Icon {
+.SimpleCell__after > .Icon {
   padding-left: 8px;
 }
 
-.SimpleCell .SimpleCell__after > .Icon--28:last-child,
-.SimpleCell .SimpleCell__after .IconButton:last-child .Icon {
+.SimpleCell__after > .Icon:last-child {
   padding-right: 2px;
 }
 
 .SimpleCell .Switch {
   padding-left: 10px;
+}
+
+.SimpleCell__after .IconButton .Icon--28,
+.SimpleCell__after .IconButton .Icon--28 ~ * {
+  margin-right: -8px;
+}
+
+.SimpleCell__after .IconButton .Icon--24,
+.SimpleCell__after .IconButton .Icon--24 ~ * {
+  margin-right: -10px;
+}
+
+.SimpleCell__after .IconButton .Icon--16,
+.SimpleCell__after .IconButton .Icon--16 ~ * {
+  margin-right: -14px;
+}
+
+.SimpleCell__after .IconButton .Icon--w-8,
+.SimpleCell__after .IconButton .Icon--w-8 ~ * {
+  margin-right: -12px;
 }
 
 /**
