@@ -88,7 +88,7 @@
   color: var(--accent);
 }
 
-.SimpleCell__after > .Icon--28 {
+.SimpleCell__after > .Icon {
   padding-left: 8px;
 }
 
