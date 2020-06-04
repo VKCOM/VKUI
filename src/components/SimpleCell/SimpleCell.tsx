@@ -3,12 +3,12 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
-import { HasRootRef } from '../../types';
+import { HasLinkProps, HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface SimpleCellOwnProps extends AdaptivityProps {
+export interface SimpleCellOwnProps extends AdaptivityProps, HasLinkProps {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
@@ -19,8 +19,6 @@ export interface SimpleCellOwnProps extends AdaptivityProps {
    */
   after?: ReactNode;
   description?: ReactNode;
-  href?: string;
-  target?: string;
   disabled?: boolean;
   expandable?: boolean;
   multiline?: boolean;

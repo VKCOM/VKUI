@@ -58,3 +58,9 @@ export interface HasInsets {
 export interface HasChildren {
   children?: React.ReactNode;
 }
+
+export interface HasLinkProps {
+  href?: string;
+  target?: string;
+  rel?: string;
+}

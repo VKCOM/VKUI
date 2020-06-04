@@ -70,24 +70,19 @@ const PromoBanner = (props: PromoBannerProps) => {
         </div>
         }
       </div>
-      <a
+      <SimpleCell
         href={props.bannerData.trackingLink}
         onClick={onClick}
         rel="nofollow noopener noreferrer"
         target="_blank"
-        className="PromoBanner__clickable-body"
+        before={
+          <Avatar mode="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
+        }
+        after={<Button mode="outline">{props.bannerData.ctaText}</Button>}
+        description={props.bannerData.domain}
       >
-        <div className="PromoBanner__content">
-          <SimpleCell
-            before={<Avatar mode="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />}
-            after={<Button mode="outline">{props.bannerData.ctaText}</Button>}
-            description={props.bannerData.domain}
-            disabled
-          >
-            {props.bannerData.title}
-          </SimpleCell>
-        </div>
-      </a>
+        {props.bannerData.title}
+      </SimpleCell>
 
       {currentPixel.length > 0 &&
         <div className="PromoBanner__pixels">
