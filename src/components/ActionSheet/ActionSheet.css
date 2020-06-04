@@ -267,6 +267,12 @@
   margin: 0;
 }
 
+.ActionSheet--desktop.ActionSheet--android {
+  min-width: 112px;
+  border-radius: 12px;
+  padding: 8px 0;
+}
+
 .ActionSheet--desktop .ActionSheetItem {
   width: auto;
   height: 55px;
@@ -276,7 +282,15 @@
   cursor: pointer;
 }
 
-.ActionSheet--desktop .ActionSheetItem:not(:last-child)::after {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--android {
+  height: 48px;
+  padding: 0 20px;
+  line-height: 20px;
+  color: var(--black);
+  border-radius: 0;
+}
+
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--ios:not(:last-child)::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -286,17 +300,17 @@
   background: var(--float_button_border);
 }
 
-.ActionSheet--desktop .ActionSheetItem:first-child {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--ios:first-child {
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
 }
 
-.ActionSheet--desktop .ActionSheetItem:last-child {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--ios:last-child {
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
 }
 
-.ActionSheet--desktop .ActionSheetItem {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--ios {
   color: var(--action_sheet_action_foreground);
 }
 
@@ -307,6 +321,11 @@
 .ActionSheet--desktop .ActionSheetItem__children {
   display: flex;
   align-items: center;
+}
+
+.ActionSheet--desktop.ActionSheet--android .Tappable__hoverShadow,
+.ActionSheet--desktop.ActionSheet--android .Tappable--android .Tappable__waves {
+  border-radius: none;
 }
 
 /**
