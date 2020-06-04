@@ -154,7 +154,7 @@
 
 @supports not (padding-top: env(safe-area-inset-top)) {
   .PanelHeader--android {
-    --safe-area-inset-bottom: 0px;
+    --safe-area-inset-top: 0px;
   }
 }
 
