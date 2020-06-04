@@ -162,6 +162,13 @@
   padding-top: var(--safe-area-inset-top);
 }
 
+@supports not (padding-top: env(safe-area-inset-top)) {
+  .PanelHeader--android::before,
+  .PanelHeader--android .PanelHeader__in {
+    padding-top: 0;
+  }
+}
+
 .PanelHeader--android .PanelHeader__left:not(:empty) {
   padding: 4px 0 4px 4px;
 }
