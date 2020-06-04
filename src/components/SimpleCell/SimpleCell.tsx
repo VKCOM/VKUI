@@ -3,11 +3,11 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
-import { HasRootRef } from '../../types';
+import { HasLinkProps, HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface SimpleCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface SimpleCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasLinkProps {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
@@ -18,8 +18,6 @@ export interface SimpleCellProps extends HTMLAttributes<HTMLElement>, HasRootRef
    */
   after?: ReactNode;
   description?: ReactNode;
-  href?: string;
-  target?: string;
   disabled?: boolean;
   expandable?: boolean;
   multiline?: boolean;
