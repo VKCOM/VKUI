@@ -150,6 +150,8 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
                 ? { marginBottom: insets.bottom }
                 : null,
               isLast: this.isItemLast(index),
+              href: child.props.href,
+              target: child.props.target,
             }),
           )}
         </DropdownComponent>
