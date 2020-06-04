@@ -1,5 +1,4 @@
 import React, { HTMLAttributes, ReactNode, Component } from 'react';
-import PropTypes from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasChildren, HasPlatform } from '../../types';
@@ -10,21 +9,7 @@ export interface EpicProps extends HTMLAttributes<HTMLDivElement>, HasChildren, 
   activeStory: string;
 }
 
-export interface EpicContext {
-  hasTabbar: boolean;
-}
-
 class Epic extends Component<EpicProps> {
-  getChildContext(): EpicContext {
-    return {
-      hasTabbar: this.props.hasOwnProperty('tabbar'),
-    };
-  }
-
-  static childContextTypes: {} = {
-    hasTabbar: PropTypes.bool,
-  };
-
   render() {
     const { className, activeStory, tabbar, children, platform, ...restProps } = this.props;
 

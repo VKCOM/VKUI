@@ -4,18 +4,14 @@ import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
-import { tabbarHeight } from '../../appearance/constants';
-import withInsets from '../../hoc/withInsets';
 import withContext from '../../hoc/withContext';
-import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
+import { HasPlatform, HasRootRef, OldRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
-  HasInsets,
   HasPlatform {
   vertical?: 'top' | 'bottom';
   /**
@@ -43,7 +39,6 @@ export interface FixedLayoutState {
 
 export interface FixedLayoutContext {
   document: Requireable<{}>;
-  hasTabbar: Requireable<boolean>;
 }
 
 class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
@@ -57,7 +52,6 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   static contextTypes: FixedLayoutContext = {
     document: PropTypes.any,
-    hasTabbar: PropTypes.bool,
   };
 
   private onMountResizeTimeout: number;
@@ -127,9 +121,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, insets, platform, filled, separator, splitCol, ...restProps } = this.props;
-    const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
-    const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
+    const { className, children, style, vertical, getRootRef, platform, filled, separator, splitCol, ...restProps } = this.props;
 
     return (
       <div
@@ -138,7 +130,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
         className={classNames(getClassName('FixedLayout', platform), {
           'FixedLayout--filled': filled,
         }, `FixedLayout--${vertical}`, className)}
-        style={{ ...style, ...this.state, paddingBottom }}
+        style={{ ...style, ...this.state }}
       >
         <div className="FixedLayout__in">{children}</div>
       </div>
@@ -147,7 +139,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 }
 
 export default withContext(
-  withPlatform(withInsets(withPanelContext(FixedLayout))),
+  withPlatform(withPanelContext(FixedLayout)),
   SplitContext,
   'splitCol',
 );
