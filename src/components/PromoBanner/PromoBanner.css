@@ -1,7 +1,7 @@
 .PromoBanner {
   width: 100%;
   box-sizing: border-box;
-  outline: 1px solid #eee;
+  outline: 1px solid var(--separator_alpha);
   color: var(--text_primary);
   background: var(--background_content);
   padding-bottom: 11px;
@@ -29,18 +29,6 @@
 
 .PromoBanner__age + .PromoBanner__label {
   padding-left: 10px;
-}
-
-.PromoBanner__clickable-body {
-  display: flex;
-  color: var(--text_primary);
-  text-decoration: none;
-  outline: none;
-}
-
-.PromoBanner__content {
-  flex: 0 1 100%;
-  width: 100%;
 }
 
 .PromoBanner__close {

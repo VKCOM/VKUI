@@ -1,4 +1,4 @@
-```js
+```jsx
 const promoBannerProps = {
   title: 'Заголовок',
   domain: 'vk.com',
@@ -14,7 +14,11 @@ const promoBannerProps = {
   ]
 };
 
-<FixedLayout vertical="bottom">
-  <PromoBanner bannerData={promoBannerProps} />
-</FixedLayout>;
+<View activePanel="promo">
+  <Panel id="promo">
+    <FixedLayout vertical="bottom">
+      <PromoBanner bannerData={promoBannerProps} />
+    </FixedLayout>
+  </Panel>
+</View>
 ```
