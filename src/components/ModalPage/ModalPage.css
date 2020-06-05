@@ -29,9 +29,13 @@
 
 .ModalPage--desktop .ModalPage__in-wrap {
   align-items: center;
-  transform: unset;
   opacity: 0;
   transition: opacity 340ms var(--android-easing);
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .ModalRoot--touched .ModalPage__in-wrap {
