@@ -9,6 +9,7 @@ import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { PanelContext } from '../Panel/PanelContext';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { SplitContext } from '../SplitLayout/SplitLayout';
 
 export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   left?: ReactNode;
@@ -44,6 +45,7 @@ const PanelHeader = ({
   const platform = usePlatform();
   const { webviewType } = useContext(ConfigProviderContext);
   const panelContext = useContext(PanelContext);
+  const splitContext = useContext(SplitContext);
   const needShadow = shadow && sizeX === SizeType.REGULAR;
   let needSeparator = separator;
 
@@ -52,6 +54,10 @@ const PanelHeader = ({
   }
 
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
+
+  if (!right && splitContext && splitContext.headerRight) {
+    right = React.cloneElement(splitContext.headerRight);
+  }
 
   return (
     <div

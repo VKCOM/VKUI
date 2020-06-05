@@ -1,4 +1,4 @@
-import React, { createRef, HTMLAttributes, Component, ReactNode } from 'react';
+import React, { createRef, HTMLAttributes, Component, ReactNode, ReactElement } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasChildren, HasPlatform } from '../../types';
@@ -36,11 +36,13 @@ interface ColProps extends HTMLAttributes<HTMLDivElement>, HasChildren {
   minWidth?: string;
   animate?: boolean;
   spaced?: boolean;
+  headerRight?: ReactElement;
 }
 
 export interface SplitContextProps {
   colRef: React.RefObject<HTMLDivElement>;
   animate: boolean;
+  headerRight?: ReactElement;
 }
 
 export const SplitContext = React.createContext<SplitContextProps>({
@@ -59,6 +61,7 @@ export class SplitCol extends Component<ColProps> {
     return {
       colRef: this.baseRef,
       animate: this.props.animate,
+      headerRight: this.props.headerRight,
     };
   }
 
