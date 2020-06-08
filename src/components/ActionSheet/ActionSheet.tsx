@@ -1,16 +1,14 @@
 import React, { Children, Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import transitionEvents from '../../lib/transitionEvents';
-import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
-import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 import { ANDROID, IOS } from '../../lib/platform';
 import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
 import ActionSheetDropdown from './ActionSheetDropdown';
 
-export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, AdaptivityProps {
+export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   /**
    * iOS only
    */
@@ -102,7 +100,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       header,
       text,
       style,
-      insets,
       platform,
       viewMode,
       iosCloseItem,
@@ -139,9 +136,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
           {Children.toArray(children).map((child: React.ReactElement, index: number) =>
             child && React.cloneElement(child, {
               onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
-              style: this.isItemLast(index) && isNumeric(insets.bottom)
-                ? { marginBottom: insets.bottom }
-                : null,
               isLast: this.isItemLast(index),
             }),
           )}
@@ -152,6 +146,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   }
 }
 
-export default withAdaptivity(withPlatform(withInsets(ActionSheet)), {
+export default withAdaptivity(withPlatform(ActionSheet), {
   viewMode: true,
 });
