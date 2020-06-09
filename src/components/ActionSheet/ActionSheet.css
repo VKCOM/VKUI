@@ -315,7 +315,7 @@
   color: var(--action_sheet_action_foreground);
 }
 
-.ActionSheet--desktop .ActionSheetItem--destructive {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--destructive {
   color: var(--destructive);
 }
 
