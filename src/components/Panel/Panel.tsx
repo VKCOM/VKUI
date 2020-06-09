@@ -1,24 +1,16 @@
 import React, { Component, HTMLAttributes } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Touch from '../Touch/Touch';
-import { tabbarHeight } from '../../appearance/constants';
-import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
-import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
+import { HasPlatform, HasRootRef, OldRef } from '../../types';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { PanelContext, PanelContextProps } from './PanelContext';
 
-export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, HasRootRef<HTMLDivElement>, AdaptivityProps {
+export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasRootRef<HTMLDivElement>, AdaptivityProps {
   id: string;
   separator?: boolean;
   centered?: boolean;
-}
-
-export interface PanelContext {
-  hasTabbar: Requireable<boolean>;
 }
 
 class Panel extends Component<PanelProps> {
@@ -29,10 +21,6 @@ class Panel extends Component<PanelProps> {
      * @deprecated будет удалено в 4-й версии. Сепаратор теперь устанавливается в PanelHeader
      */
     separator: true,
-  };
-
-  static contextTypes: PanelContext = {
-    hasTabbar: PropTypes.bool,
   };
 
   getContext(): PanelContextProps {
@@ -58,8 +46,7 @@ class Panel extends Component<PanelProps> {
   };
 
   render() {
-    const { className, centered, children, insets, platform, separator, getRootRef, sizeX, ...restProps } = this.props;
-    const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
+    const { className, centered, children, platform, separator, getRootRef, sizeX, ...restProps } = this.props;
 
     return (
       <PanelContext.Provider value={this.getContext()}>
@@ -71,9 +58,7 @@ class Panel extends Component<PanelProps> {
             [`Panel--sizeX-${sizeX}`]: true,
           })}
         >
-          <Touch className="Panel__in" style={{
-            paddingBottom: isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null,
-          }}>
+          <Touch className="Panel__in">
             <div className="Panel__in-before" />
             {centered ? <div className="Panel__centered">{children}</div> : children}
             <div className="Panel__in-after" />
@@ -84,6 +69,6 @@ class Panel extends Component<PanelProps> {
   }
 }
 
-export default withAdaptivity(withPlatform(withInsets(Panel)), {
+export default withAdaptivity(withPlatform(Panel), {
   sizeX: true,
 });

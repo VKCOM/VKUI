@@ -3,12 +3,10 @@ import Button from '../Button/Button';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import withInsets from '../../hoc/withInsets';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import { IOS } from '../../lib/platform';
-import { isNumeric } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
-import { HasChildren, HasInsets, HasPlatform } from '../../types';
+import { HasChildren, HasPlatform } from '../../types';
 import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
 
 export interface ModalCardActionInterface {
@@ -17,7 +15,7 @@ export interface ModalCardActionInterface {
   mode?: 'secondary' | 'primary';
 }
 
-export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, HasInsets, AdaptivityProps {
+export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, AdaptivityProps {
   /**
    * Иконка.
    *
@@ -55,7 +53,6 @@ class ModalCard extends Component<ModalCardProps> {
   static defaultProps: ModalCardProps = {
     actions: [],
     actionsLayout: 'horizontal',
-    insets: {},
   };
 
   onButtonClick: MouseEventHandler = (event: MouseEvent) => {
@@ -71,7 +68,6 @@ class ModalCard extends Component<ModalCardProps> {
 
   render() {
     const {
-      insets,
       icon,
       header,
       caption,
@@ -91,7 +87,7 @@ class ModalCard extends Component<ModalCardProps> {
         'ModalCard--desktop': isDesktop,
       })}>
         <div className="ModalCard__in">
-          <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
+          <div className="ModalCard__container">
             {icon && <div className="ModalCard__icon">{icon}</div>}
             {header && <div className="ModalCard__title">{header}</div>}
             {caption && <div className="ModalCard__caption">{caption}</div>}
@@ -130,6 +126,6 @@ class ModalCard extends Component<ModalCardProps> {
   }
 }
 
-export default withAdaptivity(withPlatform(withInsets(ModalCard)), {
+export default withAdaptivity(withPlatform(ModalCard), {
   viewMode: true,
 });
