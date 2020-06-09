@@ -50,7 +50,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ## Сообщить о проблеме
 
-Напишите нам [issue](https://github.com/VKCOM/VKUI/issues/new), если нашли баг или у вас есть предложения по улучшению библиотеки.
+Напишите нам [issue](https://github.com/VKCOM/VKUI/issues/new/choose), если нашли баг или у вас есть предложения по улучшению библиотеки.
 
 ## Contributing
 
