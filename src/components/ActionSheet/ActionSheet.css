@@ -110,11 +110,13 @@
   }
 
 .ActionSheet--ios .ActionSheet__header:empty + .ActionSheetItem {
-  border-radius: 14px 14px 0 0;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
   }
 
 .ActionSheet--ios .ActionSheetItem--last {
-  border-radius: 0 0 14px 14px;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
   }
 
   .ActionSheet--ios .ActionSheetItem.Tappable--active::before {
