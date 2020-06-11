@@ -55,6 +55,11 @@
   flex-direction: column;
 }
 
+.ModalPage--desktop .ModalPage__in {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 .ModalPage--ios .ModalPage__in {
   border-radius: 14px 14px 0 0;
 }
@@ -93,6 +98,10 @@
 .ModalPage__content-in {
   position: relative;
   padding-bottom: var(--safe-area-inset-bottom);
+}
+
+.ModalPage--desktop .ModalPage__content-in {
+  padding-bottom: 8px;
 }
 
 .ModalRoot__modal--collapsed .ModalPage__content,

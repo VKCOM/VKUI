@@ -44,6 +44,10 @@
 .ModalPageHeader__content-in {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 800;
+}
+
+.ModalPageHeader__desktop .ModalPageHeader__content-in {
   font-weight: 500;
 }
 
@@ -133,7 +137,6 @@
 }
 
 .ModalPageHeader--ios .ModalPageHeader__content-in {
-  font-weight: 800;
   font-family: var(--font-tt);
   font-size: 21px;
   text-align: center;
@@ -184,7 +187,6 @@
 
 .ModalPageHeader--android .ModalPageHeader__content-in {
   font-size: 20px;
-  font-weight: 800;
   font-family: var(--font-tt);
   display: flex;
   align-items: center;
