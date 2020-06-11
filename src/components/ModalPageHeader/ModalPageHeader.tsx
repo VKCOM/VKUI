@@ -3,7 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRef } from '../../types';
-import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, AdaptivityProps {
   /**
@@ -19,10 +19,10 @@ export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, Ha
 
 const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { className, left, right, children, noShadow, getRef, viewMode } = props;
+  const { className, left, right, children, noShadow, getRef, sizeX } = props;
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
-  const isDesktop = viewMode >= ViewMode.SMALL_TABLET;
+  const isDesktop = sizeX === SizeType.REGULAR;
 
   return (
     <div className={classNames(getClassName('ModalPageHeader', platform), className, {
@@ -50,5 +50,5 @@ const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPa
 };
 
 export default withAdaptivity(ModalPageHeader, {
-  viewMode: true,
+  sizeX: true,
 });
