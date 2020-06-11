@@ -231,6 +231,7 @@
 
 .Banner--inverted .Banner__subheader {
   color: var(--white);
+  opacity: .72;
 }
 
 /**
