@@ -1,4 +1,5 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
+import Subhead from '../Typography/Subhead/Subhead';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
@@ -13,7 +14,7 @@ const InfoRow: FunctionComponent<InfoRowProps> = ({ header, className, children,
 
   return (
     <div {...restProps} className={classNames(baseClassName, className)}>
-      {header && <div className="InfoRow__header">{header}</div>}
+      {header && <Subhead className="InfoRow__header" weight="regular">{header}</Subhead>}
       {children}
     </div>
   );

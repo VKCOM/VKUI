@@ -6,6 +6,14 @@
 /* Файлы с CSS компонентов подключаются здесь неслучайно. Пока не удалось делать импорты через JS так,
  * чтобы в каждом файле были доступны CSS переменные без их дублирования.
  */
+
+/* Typography */
+@import '../components/Typography/Title/Title.css';
+@import '../components/Typography/Headline/Headline.css';
+@import '../components/Typography/Subhead/Subhead.css';
+@import '../components/Typography/Caption/Caption.css';
+@import '../components/Typography/Text/Text.css';
+
 /* Layout */
 @import '../components/Root/Root.css';
 @import '../components/View/View.css';
@@ -79,13 +87,6 @@
 @import '../components/Select/Select.css';
 @import '../components/Textarea/Textarea.css';
 @import '../components/File/File.css';
-
-/* Typography */
-@import '../components/Typography/Title/Title.css';
-@import '../components/Typography/Headline/Headline.css';
-@import '../components/Typography/Subhead/Subhead.css';
-@import '../components/Typography/Caption/Caption.css';
-@import '../components/Typography/Text/Text.css';
 
 /* Advertisement */
 @import '../components/PromoBanner/PromoBanner.css';
