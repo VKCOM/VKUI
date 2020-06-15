@@ -155,6 +155,11 @@
   padding-left: 12px;
 }
 
+.SimpleCell--ios .SimpleCell__after .IconButton .Icon--16,
+.SimpleCell--ios .SimpleCell__after .IconButton .Icon--16 ~ * {
+  margin-right: -12px;
+}
+
 /**
  * Android
  */
