@@ -7,6 +7,13 @@
  * чтобы в каждом файле были доступны CSS переменные без их дублирования.
  */
 
+/* Typography */
+@import '../components/Typography/Title/Title.css';
+@import '../components/Typography/Headline/Headline.css';
+@import '../components/Typography/Subhead/Subhead.css';
+@import '../components/Typography/Caption/Caption.css';
+@import '../components/Typography/Text/Text.css';
+
 /* Service */
 @import '../components/Tappable/Tappable.css';
 
@@ -88,13 +95,6 @@
 @import '../components/CustomSelect/CustomSelect.css';
 @import '../components/DatePicker/DatePicker.css';
 @import '../components/SliderSwitch/SliderSwitch.css';
-
-/* Typography */
-@import '../components/Typography/Title/Title.css';
-@import '../components/Typography/Headline/Headline.css';
-@import '../components/Typography/Subhead/Subhead.css';
-@import '../components/Typography/Caption/Caption.css';
-@import '../components/Typography/Text/Text.css';
 
 /* Advertisement */
 @import '../components/PromoBanner/PromoBanner.css';
