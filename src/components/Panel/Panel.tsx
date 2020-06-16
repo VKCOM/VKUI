@@ -9,6 +9,7 @@ import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
 import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
 import { PanelContext, PanelContextProps } from './PanelContext';
+import { IOS } from '../../lib/platform';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, HasRootRef<HTMLDivElement> {
   id: string;
@@ -72,6 +73,7 @@ class Panel extends Component<PanelProps> {
           <Touch className="Panel__in" style={{
             paddingBottom: isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null,
           }}>
+            {platform === IOS && <div className="Panel__fade" />}
             <div className="Panel__in-before" />
             {centered ? <div className="Panel__centered">{children}</div> : children}
             <div className="Panel__in-after" />
