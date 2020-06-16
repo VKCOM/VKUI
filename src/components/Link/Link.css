@@ -7,6 +7,7 @@
   margin: 0;
   padding: 0;
   cursor: pointer;
+  font-size: inherit;
 }
 
 .Link .Icon {
