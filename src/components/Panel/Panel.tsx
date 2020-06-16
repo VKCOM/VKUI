@@ -6,6 +6,7 @@ import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform, HasRootRef, OldRef } from '../../types';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { PanelContext, PanelContextProps } from './PanelContext';
+import { IOS } from '../../lib/platform';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasRootRef<HTMLDivElement>, AdaptivityProps {
   id: string;
@@ -59,6 +60,7 @@ class Panel extends Component<PanelProps> {
           })}
         >
           <Touch className="Panel__in">
+            {platform === IOS && <div className="Panel__fade" />}
             <div className="Panel__in-before" />
             {centered ? <div className="Panel__centered">{children}</div> : children}
             <div className="Panel__in-after" />
