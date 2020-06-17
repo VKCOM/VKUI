@@ -3,7 +3,7 @@ import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import transitionEvents from '../../lib/transitionEvents';
+import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
@@ -77,9 +77,9 @@ class Alert extends Component<AlertProps, AlertState> {
   };
 
   waitTransitionFinish(eventHandler: TransitionEndHandler) {
-    if (transitionEvents.supported) {
-      this.element.current.removeEventListener(transitionEvents.transitionEndEventName, eventHandler);
-      this.element.current.addEventListener(transitionEvents.transitionEndEventName, eventHandler);
+    if (transitionEvent.supported) {
+      this.element.current.removeEventListener(transitionEvent.name, eventHandler);
+      this.element.current.addEventListener(transitionEvent.name, eventHandler);
     } else {
       clearTimeout(this.transitionFinishTimeout);
       this.transitionFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 200 : 300);

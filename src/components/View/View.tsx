@@ -2,7 +2,7 @@ import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElemen
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
-import transitionEvents from '../../lib/transitionEvents';
+import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import getClassName from '../../helpers/getClassName';
 import { IOS, ANDROID } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
@@ -232,9 +232,9 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   waitTransitionFinish(elem: HTMLElement, eventHandler: TransitionEventHandler): void {
-    if (transitionEvents.supported) {
-      elem.removeEventListener(transitionEvents.transitionEndEventName, eventHandler);
-      elem.addEventListener(transitionEvents.transitionEndEventName, eventHandler);
+    if (transitionEvent.supported) {
+      elem.removeEventListener(transitionEvent.name, eventHandler);
+      elem.addEventListener(transitionEvent.name, eventHandler);
     } else {
       clearTimeout(this.transitionFinishTimeout);
       this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 300 : 600);
@@ -247,9 +247,9 @@ class View extends Component<ViewProps, ViewState> {
       return;
     }
 
-    if (transitionEvents.supported) {
-      elem.removeEventListener(transitionEvents.animationEndEventName, eventHandler);
-      elem.addEventListener(transitionEvents.animationEndEventName, eventHandler);
+    if (animationEvent.supported) {
+      elem.removeEventListener(animationEvent.name, eventHandler);
+      elem.addEventListener(animationEvent.name, eventHandler);
     } else {
       clearTimeout(this.animationFinishTimeout);
       this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 300 : 600);

@@ -2,7 +2,7 @@ import React, { Children, Component, HTMLAttributes, ReactElement } from 'react'
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import transitionEvents from '../../lib/transitionEvents';
+import { transitionEvent } from '../../lib/supportEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
@@ -73,9 +73,9 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
-    if (transitionEvents.supported) {
-      this.elRef.current.removeEventListener(transitionEvents.transitionEndEventName, eventHandler);
-      this.elRef.current.addEventListener(transitionEvents.transitionEndEventName, eventHandler);
+    if (transitionEvent.supported) {
+      this.elRef.current.removeEventListener(transitionEvent.name, eventHandler);
+      this.elRef.current.addEventListener(transitionEvent.name, eventHandler);
     } else {
       clearTimeout(this.transitionFinishTimeout);
       this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
