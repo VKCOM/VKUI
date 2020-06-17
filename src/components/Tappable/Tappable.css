@@ -7,7 +7,8 @@
   transition: background-color .15s ease-out;
   }
 
-.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.Button):not(.PanelHeaderContent__in):not(.ActionSheetItem) {
+/** TODO: Переписать без использования !important */
+.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.Button):not(.PanelHeaderContent__in):not(.ActionSheetItem):not(.Banner__in) {
   background: var(--separator_common) !important;
   transition: none;
   }
@@ -35,6 +36,9 @@
     left: 0;
     pointer-events: none;
     overflow: hidden;
+    border-radius: inherit;
+    /* Fix for Safari: css animation + border-radius + overflow ignores parent border-radius */
+    will-change: transform;
     }
 
     /**

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { HasChildren } from '../../types/props';
+import { HasChildren } from '../../types';
 
 const baseClassName = getClassName('Counter');
 

@@ -2,7 +2,7 @@ import React, { FunctionComponent, ReactNode, ElementType, ButtonHTMLAttributes 
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
-import { HasAlign, HasRootRef } from '../../types/props';
+import { HasAlign, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface VKUIButtonProps extends HasAlign {

@@ -1,0 +1,16 @@
+.Text {
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.Text--w-regular {
+  font-weight: 400;
+}
+
+.Text--w-medium {
+  font-weight: 500;
+}
+
+.Text--w-semibold {
+  font-weight: 600;
+}

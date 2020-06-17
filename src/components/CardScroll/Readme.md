@@ -1,4 +1,4 @@
-Горизонтальный скролл для [Card](https://vkcom.github.io/vkui-styleguide/#!/Card)
+Горизонтальный скролл для [Card](https://vkcom.github.io/vkui-styleguide/#!/Card).
 
 ```jsx
 <View activePanel="card">
@@ -49,4 +49,3 @@
   </Panel>
 </View>
 ```
-

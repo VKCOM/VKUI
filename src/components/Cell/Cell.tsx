@@ -1,21 +1,19 @@
-/* eslint-disable */
-
-import React, {Component, InputHTMLAttributes, ReactNode} from 'react';
+import React, { Component, InputHTMLAttributes, ReactNode, MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
-import Touch from '../Touch/Touch';
+import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS } from '../../lib/platform';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon24Reorder from '@vkontakte/icons/dist/24/reorder';
 import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
-import { HasChildren, HasPlatform, HasRootRef } from '../../types/props';
+import { HasChildren, HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 
-type ProxyInputHTMLAttributes = Omit<InputHTMLAttributes<HTMLElement>, 'size'>
+type ProxyInputHTMLAttributes = Omit<InputHTMLAttributes<HTMLElement>, 'size'>;
 
 export interface CellProps extends ProxyInputHTMLAttributes, HasChildren, HasRootRef<HTMLElement>, HasPlatform {
   /**
@@ -66,7 +64,7 @@ export interface CellProps extends ProxyInputHTMLAttributes, HasChildren, HasRoo
   /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
-  onRemove?(e, rootEl: HTMLElement): void;
+  onRemove?(e: MouseEvent, rootEl: HTMLElement): void;
   /**
    * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
    */
@@ -93,7 +91,7 @@ export interface CellState {
 }
 
 class Cell extends Component<CellProps, CellState> {
-  constructor(props) {
+  constructor(props: CellProps) {
     super(props);
 
     this.state = {
@@ -107,10 +105,8 @@ class Cell extends Component<CellProps, CellState> {
   removeButton: HTMLDivElement;
 
   static defaultProps = {
-    before: null,
     indicator: '',
     asideContent: '',
-    bottomContent: null,
     expandable: false,
     children: '',
     selectable: false,
@@ -126,15 +122,15 @@ class Cell extends Component<CellProps, CellState> {
 
   get document() {return this.context.document || document;}
 
-  /**
+  /*
    * предотвращает двойное срабатывание в случае с input
    * (https://github.com/vuejs/vue/issues/3699#issuecomment-247957931)
    * предотвращает клик в случае, когда включен режим removable
-   * @param e
    */
-  onClick = (e) => {
+  private readonly onClick = (e: MouseEvent<HTMLElement>): void => {
     const { removable, onClick } = this.props;
-    if (e.target.tagName.toLowerCase() === 'input') {
+    const target = e.target as HTMLElement;
+    if (target.tagName.toLowerCase() === 'input') {
       e.stopPropagation();
     } else if (removable) {
       return null;
@@ -153,7 +149,7 @@ class Cell extends Component<CellProps, CellState> {
     this.document.removeEventListener('click', this.deactivateRemove);
   };
 
-  onRemoveClick = (e) => {
+  private readonly onRemoveClick = (e: MouseEvent) => {
     e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
     this.props.onRemove && this.props.onRemove(e, this.rootEl);
@@ -163,15 +159,15 @@ class Cell extends Component<CellProps, CellState> {
     this.document.removeEventListener('click', this.deactivateRemove);
   }
 
-  componentDidUpdate(_prevProps, prevState) {
+  componentDidUpdate(_prevProps: CellProps, prevState: CellState) {
     if (prevState.isRemoveActivated !== this.state.isRemoveActivated && this.state.isRemoveActivated) {
       this.setState({ removeOffset: this.removeButton.offsetWidth });
     }
   }
 
-  getRemoveRef = (el) => this.removeButton = el;
+  getRemoveRef = (el: HTMLDivElement) => this.removeButton = el;
 
-  getRootRef = (element) => {
+  getRootRef = (element: HTMLElement) => {
     this.rootEl = element;
 
     const getRootRef = this.props.getRootRef;
@@ -200,7 +196,7 @@ class Cell extends Component<CellProps, CellState> {
     this.dragStartIndex = this.siblings.indexOf(this.rootEl);
   };
 
-  onDragMove = (e) => {
+  onDragMove = (e: TouchEvent) => {
     e.originalEvent.preventDefault();
     if (this.state.removeOffset) {
       return;
@@ -280,7 +276,7 @@ class Cell extends Component<CellProps, CellState> {
     selectable = selectable && !draggable;
 
     const rootProps = selectable ? {} : restProps;
-    const inputProps = selectable ? {...restProps, onChange} : {};
+    const inputProps = selectable ? { ...restProps, onChange } : {};
     const linkProps = href ? restProps : {};
     const IS_PLATFORM_ANDROID = platform === ANDROID;
     const IS_PLATFORM_IOS = platform === IOS;
@@ -309,14 +305,14 @@ class Cell extends Component<CellProps, CellState> {
           {selectable && <input {...inputProps} type="checkbox" className="Cell__checkbox" />}
           <div className="Cell__before">
             {selectable && IS_PLATFORM_IOS && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
-            {removable && IS_PLATFORM_IOS && <div className="Cell__remove-marker" onClick={this.activateRemove}/>}
+            {removable && IS_PLATFORM_IOS && <div className="Cell__remove-marker" onClick={this.activateRemove} />}
             {IS_PLATFORM_ANDROID && draggable &&
             <Touch
               onStart={this.onDragStart}
               onMoveY={this.onDragMove}
               onEnd={this.onDragEnd}
               className="Cell__dragger"
-            ><Icon24Reorder/></Touch>
+            ><Icon24Reorder /></Touch>
             }
             {before && <div className="Cell__before-in">{before}</div>}
           </div>
@@ -332,14 +328,14 @@ class Cell extends Component<CellProps, CellState> {
             {removable && IS_PLATFORM_ANDROID &&
             <div className="Cell__remove-marker" onClick={this.onRemoveClick}><Icon24Cancel /></div>
             }
-            {IS_PLATFORM_IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron"/>}
+            {IS_PLATFORM_IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron" />}
             {IS_PLATFORM_IOS && draggable &&
             <Touch
               className="Cell__dragger"
               onStart={this.onDragStart}
               onMoveY={this.onDragMove}
               onEnd={this.onDragEnd}
-            ><Icon24ReorderIos/></Touch>
+            ><Icon24ReorderIos /></Touch>
             }
           </div>
         </Tappable>

@@ -4,7 +4,7 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import transitionEvents from '../../lib/transitionEvents';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types';
 
 export interface PanelHeaderContextProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   opened: boolean;

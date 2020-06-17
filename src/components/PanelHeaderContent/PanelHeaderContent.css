@@ -2,10 +2,11 @@
   line-height: initial;
   height: 100%;
   max-width: 100%;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  }
+}
 
   .PanelHeaderContent__before {
     flex-shrink: 0;
@@ -22,13 +23,22 @@
     height: 100%;
     }
 
+  .PanelHeaderContent__status,
+  .PanelHeaderContent__children-in {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
     .PanelHeaderContent__status {
       order: 1;
       font-weight: 400;
       font-size: 13px;
       line-height: 16px;
       margin-top: 1px;
-      opacity: .6;
+      max-width: 100%;
+      font-family: var(--font-common);
+      color: var(--header_text_secondary);
       }
 
     .PanelHeaderContent__status ~ .PanelHeaderContent__children .PanelHeaderContent__children-in {
@@ -47,9 +57,6 @@
       .PanelHeaderContent__children-in {
         flex-grow: 0;
         min-width: 0;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
         font-size: 21px;
         line-height: var(--panelheader_height_ios);
         font-weight: 800;
@@ -72,7 +79,6 @@
   iOS
  */
 .PanelHeaderContent--ios {
-  font-family: var(--font-ios);
   }
 
   .PanelHeaderContent--ios .PanelHeaderContent__in.Tappable--active {
@@ -91,7 +97,6 @@
   Android
  */
 .PanelHeaderContent--android {
-  font-family: var(--font-android);
   }
 
   .PanelHeaderContent--android .PanelHeaderContent__in.Tappable--active {

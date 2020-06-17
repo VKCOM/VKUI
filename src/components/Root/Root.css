@@ -61,7 +61,6 @@
  */
 
 .Root--ios {
-  font-family: var(--font-ios);
   }
 
   .Root--ios .Root__view--show-back::after,
@@ -138,7 +137,6 @@
  */
 
 .Root--android {
-  font-family: var(--font-android);
   }
 
   .Root--android .Root__view--show-forward {
@@ -172,3 +170,10 @@
     opacity: 1;
     }
   }
+
+/* iOS + Android */
+
+.Root--ios.Root--no-motion .Root__view,
+.Root--android.Root--no-motion .Root__view {
+  animation: none;
+}

@@ -2,8 +2,7 @@ import React, { ChangeEvent, ChangeEventHandler, SelectHTMLAttributes } from 're
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
-import { GetRef } from '../../types/common';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef, OldRef } from '../../types';
 
 export interface SelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -72,7 +71,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  getRef: GetRef<HTMLSelectElement> = (element: HTMLSelectElement) => {
+  getRef: OldRef<HTMLSelectElement> = (element: HTMLSelectElement) => {
     this.selectEl = element;
 
     const getRef = this.props.getRef;
@@ -87,7 +86,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 
   render() {
     const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, top, bottom, ...restProps } = this.props;
+      getRef, getRootRef, top, bottom, disabled, ...restProps } = this.props;
 
     return (
       <FormField
@@ -95,6 +94,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
         className={classNames('Select', {
           ['Select--not-selected']: this.state.notSelected,
           [`Select--align-${align}`]: !!align,
+          'Select--disabled': disabled,
         }, className)}
         style={style}
         getRootRef={getRootRef}
@@ -102,6 +102,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
       >
         <select
           {...restProps}
+          disabled={disabled}
           className="Select__el"
           onChange={this.onChange}
           value={this.value}

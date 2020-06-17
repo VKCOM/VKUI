@@ -1,6 +1,6 @@
 .FormField {
   position: relative;
-  }
+}
 
 .FormField__border {
   position: absolute;
@@ -15,31 +15,31 @@
   box-sizing: border-box;
   z-index: 1;
   transform-origin: left top;
-  }
+}
 
 .FormField--ios .FormField__border {
   border-radius: 10px;
-  }
+}
 
 .FormField--android .FormField__border {
   border-radius: 8px;
-  }
+}
 
 .FormField--s-error .FormField__border {
   background: var(--field_error_background);
   border-color: var(--field_error_border);
-  }
+}
 
 .FormField--s-valid .FormField__border,
 .FormField--s-verified .FormField__border {
   border-color: var(--field_valid_border);
-  }
+}
 
 .FormField.Textarea .Textarea__el:disabled ~ .FormField__border,
 .FormField.Select .Select__el:disabled ~ .FormField__border,
 .FormField.Input .Input__el:disabled ~ .FormField__border {
-  opacity: .6;
-  }
+  opacity: .4;
+}
 
 @media (min-resolution: 2dppx) {
   .FormField--ios .FormField__border {
@@ -47,8 +47,8 @@
     transform: scale(.5);
     width: 200%;
     height: 200%;
-    }
   }
+}
 
 @media (min-resolution: 3dppx) {
   .FormField--ios .FormField__border {
@@ -56,8 +56,8 @@
     transform: scale(.32);
     width: 312.5%;
     height: 312.5%;
-    }
   }
+}
 
 .FormField.Input .Input__el:focus ~ .FormField__border,
 .FormField.Textarea .Textarea__el:focus ~ .FormField__border,
@@ -65,7 +65,7 @@
 .FormField.Select--mimicry:focus .FormField__border {
   border-color: var(--accent);
   background: var(--field_background);
-  }
+}
 
 .FormField--ios.Input .Input__el:focus ~ .FormField__border,
 .FormField--ios.Textarea .Textarea__el:focus ~ .FormField__border,
@@ -75,4 +75,4 @@
   transform: scale(1);
   width: 100%;
   height: 100%;
-  }
+}

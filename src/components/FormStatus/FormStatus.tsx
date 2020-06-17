@@ -1,7 +1,7 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { HasChildren, HasDangerHTML } from '../../types/props';
+import { HasChildren, HasDangerHTML } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface FormStatusProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasDangerHTML {
@@ -26,7 +26,7 @@ const FormStatus: FunctionComponent<FormStatusProps> = ({
     >
       {header && <div className="FormStatus__header">{header}</div>}
       {dangerouslySetInnerHTML &&
-        <div className="FormStatus__content" dangerouslySetInnerHTML={dangerouslySetInnerHTML}/>
+        <div className="FormStatus__content" dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
       }
       {children && !dangerouslySetInnerHTML && <div className="FormStatus__content">{children}</div>}
     </div>

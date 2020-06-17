@@ -38,7 +38,6 @@ module.exports = {
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.tsx',
           '../src/components/PanelHeader/PanelHeader.tsx',
-          '../src/components/PanelHeaderSimple/PanelHeaderSimple.tsx',
           '../src/components/PanelHeaderButton/PanelHeaderButton.tsx',
           '../src/components/PanelHeaderBack/PanelHeaderBack.tsx',
           '../src/components/PanelHeaderClose/PanelHeaderClose.tsx',
@@ -84,6 +83,8 @@ module.exports = {
           '../src/components/CardScroll/CardScroll.tsx',
           '../src/components/Gradient/Gradient.tsx',
           '../src/components/Cell/Cell.tsx',
+          '../src/components/SimpleCell/SimpleCell.tsx',
+          '../src/components/RichCell/RichCell.tsx',
           '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
           '../src/components/Spinner/Spinner.tsx',
@@ -99,10 +100,10 @@ module.exports = {
           '../src/components/Tooltip/Tooltip.tsx',
           '../src/components/PullToRefresh/PullToRefresh.tsx',
           '../src/components/Counter/Counter.tsx',
-          '../src/components/Touch/Touch.tsx',
           '../src/components/UsersStack/UsersStack.tsx',
           '../src/components/Separator/Separator.tsx',
           '../src/components/Placeholder/Placeholder.tsx',
+          '../src/components/Banner/Banner.tsx',
         ]
       }, {
         name: 'Forms',
@@ -120,10 +121,24 @@ module.exports = {
           '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx'
         ]
-      },
-      {
+      }, {
+        name: 'Typography',
+        components: () => [
+          '../src/components/Typography/Title/Title.tsx',
+          '../src/components/Typography/Headline/Headline.tsx',
+          '../src/components/Typography/Text/Text.tsx',
+          '../src/components/Typography/Subhead/Subhead.tsx',
+          '../src/components/Typography/Caption/Caption.tsx',
+        ]
+      }, {
         name: 'Advertisement',
         components: () => ['../src/components/PromoBanner/PromoBanner.tsx']
+      }, {
+        name: 'Service',
+        components: () => [
+          '../src/components/ConfigProvider/ConfigProvider.tsx',
+          '../src/components/Touch/Touch.tsx',
+        ]
       },
       {
         name: 'Server Side Rendering',
@@ -141,6 +156,9 @@ module.exports = {
       }, {
         name: 'Utils',
         content: './pages/utils.md'
+      }, {
+        name: 'Design',
+        content: './pages/design.md'
       }]
     }
   ],

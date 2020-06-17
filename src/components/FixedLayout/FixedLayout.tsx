@@ -6,9 +6,9 @@ import { transitionEndEventName, TransitionStartEventDetail, transitionStartEven
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform, HasRootRef } from '../../types/props';
+import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
-import { GetRef } from '../../types/common';
+import withPanelContext from '../Panel/withPanelContext';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -21,6 +21,14 @@ export interface FixedLayoutProps extends
    * Это часто необходимо для фиксированных кнопок в нижней части экрана.
    */
   filled?: boolean;
+  /**
+   * @ignore
+   */
+  panel?: string;
+  /**
+   * @ignore
+   */
+  separator?: boolean;
 }
 
 export interface FixedLayoutState {
@@ -29,7 +37,6 @@ export interface FixedLayoutState {
 }
 
 export interface FixedLayoutContext {
-  panel: Requireable<string>;
   document: Requireable<{}>;
   hasTabbar: Requireable<boolean>;
 }
@@ -43,7 +50,6 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   el: HTMLDivElement;
 
   static contextTypes: FixedLayoutContext = {
-    panel: PropTypes.string,
     document: PropTypes.any,
     hasTabbar: PropTypes.bool,
   };
@@ -63,7 +69,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
-    let panelScroll = e.detail.scrolls[this.context.panel] || 0;
+    let panelScroll = e.detail.scrolls[this.props.panel] || 0;
     this.setState({
       position: 'absolute',
       top: this.el.offsetTop + panelScroll,
@@ -77,7 +83,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     });
   };
 
-  getRef: GetRef<HTMLDivElement> = (element: HTMLDivElement) => {
+  getRef: OldRef<HTMLDivElement> = (element: HTMLDivElement) => {
     this.el = element;
 
     const getRootRef = this.props.getRootRef;
@@ -91,7 +97,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, insets, platform, filled, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, insets, platform, filled, separator, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
     const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
 
@@ -110,4 +116,4 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 }
 
-export default withPlatform(withInsets(FixedLayout));
+export default withPlatform(withInsets(withPanelContext(FixedLayout)));

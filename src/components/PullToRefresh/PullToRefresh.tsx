@@ -8,7 +8,7 @@ import { IOS, ANDROID } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types/props';
+import { HasPlatform } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 
 export interface PullToRefreshProps extends TouchProps, HasPlatform {

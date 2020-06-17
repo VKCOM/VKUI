@@ -10,7 +10,7 @@ const PanelHeaderBack: FunctionComponent<PanelHeaderButtonProps> = (props: Panel
 
   return (
     <PanelHeaderButton {...props}>
-      {platform === ANDROID ? <Icon28ArrowLeftOutline/> : <Icon28ChevronBack/>}
+      {platform === ANDROID ? <Icon28ArrowLeftOutline /> : <Icon28ChevronBack />}
     </PanelHeaderButton>
   );
 };

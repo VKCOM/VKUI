@@ -3,7 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform } from '../../types/props';
+import { HasInsets, HasPlatform } from '../../types';
 import { ModalRootContextInterface } from '../ModalRoot/ModalRootContext';
 import withModalRootContext from '../ModalRoot/withModalRootContext';
 import withPlatform from '../../hoc/withPlatform';

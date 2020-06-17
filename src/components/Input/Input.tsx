@@ -1,7 +1,7 @@
 import React, { FunctionComponent, InputHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types/props';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
 
 export interface InputProps extends
   InputHTMLAttributes<HTMLInputElement>,

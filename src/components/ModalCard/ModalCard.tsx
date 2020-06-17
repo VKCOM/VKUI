@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
+import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, MouseEvent } from 'react';
 import Button from '../Button/Button';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
@@ -8,11 +8,11 @@ import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import { IOS } from '../../lib/platform';
 import { isNumeric } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform, HasChildren, HasInsets } from '../../types/props';
+import { HasChildren, HasInsets, HasPlatform } from '../../types';
 
 export interface ModalCardActionInterface {
   title: string;
-  action?(): void;
+  action?(event: MouseEvent): void;
   mode?: 'secondary' | 'primary';
 }
 
@@ -57,9 +57,10 @@ class ModalCard extends Component<ModalCardProps> {
     insets: {},
   };
 
-  onButtonClick: MouseEventHandler = (event: SyntheticEvent) => {
+  onButtonClick: MouseEventHandler = (event: MouseEvent) => {
     const target = event.currentTarget as HTMLButtonElement;
-    const action = this.props.actions[target.dataset.index].action;
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const action = this.props.actions[Number(target.dataset.index)].action;
     event.persist();
 
     if (typeof action === 'function') {
@@ -84,17 +85,19 @@ class ModalCard extends Component<ModalCardProps> {
             <div className={classNames('ModalCard__actions', {
               'ModalCard__actions--v': actionsLayout === 'vertical',
             })}>
-              {actions.map(({ title, mode }: ModalCardActionInterface, i: number) =>
-                <Button
-                  key={i}
-                  data-index={i}
-                  size="xl"
-                  mode={mode}
-                  onClick={this.onButtonClick}
-                >
-                  {title}
-                </Button>
-              )}
+              {actions.map(({ title, mode }: ModalCardActionInterface, i: number) => {
+                return (
+                  <Button
+                    key={i}
+                    data-index={i}
+                    size="xl"
+                    mode={mode}
+                    onClick={this.onButtonClick}
+                  >
+                    {title}
+                  </Button>
+                );
+              })}
             </div>
             }
 

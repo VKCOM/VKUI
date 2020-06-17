@@ -1,0 +1,43 @@
+.Caption--caps {
+  text-transform: uppercase;
+}
+
+.Caption--l-1 {
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.Caption--l-2 {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.Caption--l-3 {
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.Caption--l-4 {
+  font-size: 9px;
+  line-height: 12px;
+}
+
+.Caption--w-regular {
+  font-weight: 400;
+}
+
+.Caption--w-medium {
+  font-weight: 500;
+}
+
+.Caption--w-semibold {
+  font-weight: 600;
+}
+
+.Caption--w-bold {
+  font-weight: 700;
+}
+
+.Caption--w-heavy {
+  font-weight: 800;
+}

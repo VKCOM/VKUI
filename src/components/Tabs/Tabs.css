@@ -8,14 +8,13 @@
   align-items: center;
   }
 
-.PanelHeader .Tabs,
-.PanelHeaderSimple .Tabs {
+.PanelHeader .Tabs {
   overflow: hidden;
   background: var(--header_background);
-  }
+  font-family: var(--font-common);
+}
 
-.PanelHeader .Tabs::after,
-.PanelHeaderSimple .Tabs::after {
+.PanelHeader .Tabs::after {
   display: block;
   width: 1000px;
   content: '';
@@ -54,7 +53,6 @@
  */
 
 .Tabs--ios {
-  font-family: var(--font-ios);
   }
 
 .Tabs--ios.Tabs--segmented {
@@ -82,7 +80,6 @@
   Android
  */
 .Tabs--android {
-  font-family: var(--font-android);
   }
 
 /**

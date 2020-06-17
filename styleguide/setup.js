@@ -21,6 +21,7 @@ import Icon24Done from '@vkontakte/icons/dist/24/done';
 import Icon24Favorite from '@vkontakte/icons/dist/24/favorite';
 import Icon24Filter from '@vkontakte/icons/dist/24/filter';
 import Icon24MoreHorizontal from '@vkontakte/icons/dist/24/more_horizontal';
+import Icon24Play from '@vkontakte/icons/dist/24/play';
 import Icon24Shuffle from '@vkontakte/icons/dist/24/shuffle';
 import Icon24User from '@vkontakte/icons/dist/24/user';
 
@@ -44,6 +45,8 @@ import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 import Icon28SlidersOutline from '@vkontakte/icons/dist/28/sliders_outline';
 import Icon28UserOutline from '@vkontakte/icons/dist/28/user_outline';
 import Icon28UsersOutline from '@vkontakte/icons/dist/28/users_outline';
+import Icon28PaletteOutline from '@vkontakte/icons/dist/28/palette_outline';
+import Icon28UserAddOutline from '@vkontakte/icons/dist/28/user_add_outline';
 
 import Icon56MentionOutline from '@vkontakte/icons/dist/56/mention_outline';
 import Icon56MessageReadOutline from '@vkontakte/icons/dist/56/message_read_outline';
@@ -79,6 +82,7 @@ window.Icon24Document = Icon24Document;
 window.Icon24Done = Icon24Done;
 window.Icon24Favorite = Icon24Favorite;
 window.Icon24Filter = Icon24Filter;
+window.Icon24Play = Icon24Play;
 window.Icon24MoreHorizontal = Icon24MoreHorizontal;
 window.Icon24Shuffle = Icon24Shuffle;
 window.Icon24User = Icon24User;
@@ -103,6 +107,8 @@ window.Icon28SettingsOutline = Icon28SettingsOutline;
 window.Icon28SlidersOutline = Icon28SlidersOutline;
 window.Icon28UserOutline = Icon28UserOutline;
 window.Icon28UsersOutline = Icon28UsersOutline;
+window.Icon28PaletteOutline = Icon28PaletteOutline;
+window.Icon28UserAddOutline = Icon28UserAddOutline;
 
 window.Icon56MentionOutline = Icon56MentionOutline;
 window.Icon56MessageReadOutline = Icon56MessageReadOutline;

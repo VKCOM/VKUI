@@ -1,0 +1,17 @@
+.Headline {
+  margin: 0;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.Headline--w-regular {
+  font-weight: 400;
+}
+
+.Headline--w-medium {
+  font-weight: 500;
+}
+
+.Headline--w-semibold {
+  font-weight: 600;
+}

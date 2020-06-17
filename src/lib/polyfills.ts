@@ -39,7 +39,7 @@ if (canUseDOM) {
 // Array.prototype.includes
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, 'includes', {
-    value: function(searchElement, fromIndex) {
+    value: function(searchElement: any, fromIndex: number) {
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
       }
@@ -50,7 +50,7 @@ if (!Array.prototype.includes) {
       }
       const n = fromIndex | 0;
       let k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-      function sameValueZero(x, y) {
+      function sameValueZero(x: any, y: any) {
         return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
       }
       while (k < len) {
@@ -67,7 +67,7 @@ if (!Array.prototype.includes) {
 // Array.prototype.find
 if (!Array.prototype.find) {
   Object.defineProperty(Array.prototype, 'find', {
-    value: function(callback) {
+    value: function(callback: Array<any>['find']) {
       if (this === null) {
         throw new TypeError('Array.prototype.find called on null or undefined');
       } else if (typeof callback !== 'function') {

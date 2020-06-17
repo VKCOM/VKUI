@@ -9,38 +9,65 @@
   padding: 0;
   margin: 0;
   font-size: 17px;
+  position: relative;
 }
 
 .PanelHeaderButton[disabled] {
   opacity: .6;
 }
 
+.PanelHeaderButton .Counter {
+  position: absolute;
+  padding: 0;
+  top: 8px;
+  right: 2px;
+}
+
+/*
+ * iOS
+ */
+
 .PanelHeaderButton--ios {
   position: relative;
   display: flex;
   align-items: center;
-  height: 100%;
 }
 
 .PanelHeaderButton--ios.PanelHeaderButton--primary {
   font-weight: 600;
 }
 
-.PanelHeaderButton--ios > * {
-  align-items: center;
+.PanelHeaderButton--ios.PanelHeaderButton--primitive {
+  height: 44px;
+  line-height: 44px;
+}
+
+.PanelHeaderButton--ios .Icon--24 {
+  padding: 10px;
+}
+
+.PanelHeaderButton--ios .Icon--28 {
+  padding: 8px;
 }
 
 .PanelHeaderButton--ios.Tappable--active {
   opacity: .7;
 }
 
+/*
+ * Android
+ */
+
 .PanelHeaderButton--android {
-  text-transform: uppercase;
-  height: 48px;
-  line-height: 48px;
   border-radius: 50%;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 15px;
+}
+
+.PanelHeaderButton--android.PanelHeaderButton--primitive {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 12px;
 }
 
 .PanelHeaderButton--android .Icon--24 {

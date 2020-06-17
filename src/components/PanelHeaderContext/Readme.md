@@ -23,9 +23,9 @@ class Example extends React.Component {
   render () {
 
     return (
-      <View activePanel="context" header={false}>
-        <Panel id="context" separator={false}>
-          <PanelHeaderSimple
+      <View activePanel="context">
+        <Panel id="context">
+          <PanelHeader
             left={<PanelHeaderBack />}
             right={<PanelHeaderButton><Icon28AddOutline /></PanelHeaderButton>}
           >
@@ -35,7 +35,7 @@ class Example extends React.Component {
             >
               Communities
             </PanelHeaderContent>
-          </PanelHeaderSimple>
+          </PanelHeader>
           <PanelHeaderContext opened={this.state.contextOpened} onClose={this.toggleContext}>
             <List>
               <Cell

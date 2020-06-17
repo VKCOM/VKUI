@@ -24,8 +24,12 @@
 
   .Textarea textarea::placeholder {
     color: var(--field_text_placeholder);
-    }
+  }
 
   .Textarea textarea:disabled {
-    opacity: .6;
-    }
+    opacity: .4;
+  }
+
+  .Textarea textarea:disabled::placeholder {
+    color: var(--text_secondary);
+  }

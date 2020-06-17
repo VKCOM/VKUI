@@ -2,7 +2,7 @@ import React, { FunctionComponent, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRootRef } from '../../types/props';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRootRef } from '../../types';
 
 export interface SelectMimicryProps extends
   HTMLAttributes<HTMLElement>,
@@ -24,6 +24,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   getRootRef,
   multiline,
   disabled,
+  onClick,
   ...restProps
 }: SelectMimicryProps) => {
   return (
@@ -38,6 +39,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
       }, className)}
       getRootRef={getRootRef}
       status={status}
+      onClick={disabled ? null : onClick}
     >
       <div className="Select__container">
         <div className="Select__title">{children || placeholder}</div>

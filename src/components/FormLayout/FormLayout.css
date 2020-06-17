@@ -4,6 +4,7 @@
 
   .FormLayout__row {
     display: block;
+    padding: 12px 0;
     }
 
   .FormLayout__row-top {
@@ -32,10 +33,6 @@
     }
 
 .FormLayout--ios {}
-
-  .FormLayout--ios .FormLayout__row {
-    padding: 12px 0;
-    }
 
     .FormLayout--ios .FormLayout__row .Checkbox:first-child,
     .FormLayout--ios .FormLayout__row .Radio:first-child,
@@ -77,10 +74,6 @@
       }
 
 .FormLayout--android {}
-
-  .FormLayout--android .FormLayout__row {
-    padding: 10px 0;
-    }
 
     .FormLayout--android .FormLayout__row .Checkbox:first-child,
     .FormLayout--android .FormLayout__row .Radio:first-child,

@@ -1,5 +1,4 @@
 .View--ios {
-  font-family: var(--font-ios);
   }
 
 .View--ios.View--header .Panel__in {
@@ -17,8 +16,8 @@
   }
 
 .View--ios .Panel__in {
-  padding-bottom: var(--safe-area-inset-bottom);
-  }
+  padding: 0 var(--safe-area-inset-right) var(--safe-area-inset-bottom) var(--safe-area-inset-left);
+}
 
 /**
  * Panel swipe back
@@ -67,8 +66,8 @@
   animation: animation-ios-prev-back .6s var(--ios-easing);
   }
 
-.View--ios .View__panel--prev .Panel__in::before,
-.View--ios .View__panel--next .Panel__in::before {
+.View--ios .View__panel--prev .Panel__fade,
+.View--ios .View__panel--next .Panel__fade {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -76,29 +75,31 @@
   top: 0;
   z-index: 10;
   background: #000;
-  content: '';
   pointer-events: none;
   }
 
-.View--ios .View__panel--prev .Panel__in::before {
+.View--ios .View__panel--prev .Panel__fade {
   animation: animation-ios-fade-in .6s var(--ios-easing);
   }
 
-.View--ios .View__panel--next .Panel__in::before {
+.View--ios .View__panel--next .Panel__fade {
   animation: animation-ios-fade-out .6s var(--ios-easing);
   }
 
-.View--ios .View__panel--prev ~ .View__panel--next .Panel__in::before,
-.View--ios .View__panel--next ~ .View__panel--prev .Panel__in::before {
-  content: none;
+.View--ios .View__panel--prev ~ .View__panel--next .Panel__fade,
+.View--ios .View__panel--next ~ .View__panel--prev .Panel__fade {
   display: none;
   }
+
+.View--ios.View--no-motion .View__panel,
+.View--ios.View--no-motion .View__panel .Panel__in {
+  animation: none;
+}
 
 /**
  * Active panel
  */
-.View--ios .View__panel--active .Panel__in::before {
-  content: none;
+.View--ios .View__panel--active .Panel__fade {
   display: none;
   }
 
