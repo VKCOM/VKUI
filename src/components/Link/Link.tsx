@@ -5,7 +5,7 @@ import usePlatform from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 
 export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
-  Component?: ElementType | '';
+  Component?: ElementType;
 }
 
 const Link: FunctionComponent<LinkProps> = ({
@@ -30,10 +30,6 @@ const Link: FunctionComponent<LinkProps> = ({
   return (
     <Component {...restProps} ref={getRootRef} className={classNames(baseClassName, className)}>{children}</Component>
   );
-};
-
-Link.defaultProps = {
-  Component: '',
 };
 
 export default Link;
