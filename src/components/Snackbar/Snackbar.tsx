@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, PureComponent, MouseEvent } from 'react';
+import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -10,8 +10,9 @@ import { canUseDOM } from '../../lib/dom';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
+import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
 
-export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform {
+export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
    * Название кнопки действия в уведомлении
    */
@@ -198,9 +199,11 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       action,
       before,
       after,
+      viewMode,
     } = this.props;
 
-    const resolvedLayout = after ? 'vertical' : layout;
+    const isDesktop = viewMode >= ViewMode.SMALL_TABLET;
+    const resolvedLayout = after || isDesktop ? 'vertical' : layout;
 
     return (
       <FixedLayout
@@ -208,6 +211,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
         className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
           'Snackbar--closing': this.state.closing,
           'Snackbar--touched': this.state.touched,
+          'Snackbar--desktop': isDesktop,
         })}
       >
         <Touch
@@ -243,4 +247,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
   }
 }
 
-export default withPlatform(Snackbar);
+export default withPlatform(withAdaptivity(Snackbar, {
+  viewMode: true,
+}));

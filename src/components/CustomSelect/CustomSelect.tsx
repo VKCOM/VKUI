@@ -8,13 +8,15 @@ import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce, throttle } from '../../lib/utils';
 import classNames from '../../lib/classNames';
 
+type SelectValue = string | number | boolean;
+
 export interface SelectOption {
-  value: string | number | boolean;
+  value: SelectValue;
   label: string;
 }
 
 export interface SelectOptionState {
-  value: string;
+  value: SelectValue;
   label: string;
 }
 
@@ -26,9 +28,14 @@ interface State {
   selectedOptionId: number;
 }
 
-interface Props extends SelectProps {
+export interface SelectChangeResult {
+  value: SelectValue;
+  name: string;
+}
+
+interface Props extends Omit<SelectProps, 'onChange'> {
   options: SelectOption[];
-  onSelectChange?: (value: string, name?: string) => void;
+  onChange?: (result: SelectChangeResult) => void;
   onFocus?: () => void;
   onBlur?: () => void;
 }
@@ -43,14 +50,14 @@ export default class CustomSelect extends React.Component<Props, State> {
 
     let selectedIndex = -1;
     const options = props.options.map((option, index) => {
-      const itemValue = String(option.value);
+      const itemValue = option.value;
 
       if (itemValue === value) {
         selectedIndex = index;
       }
 
       return {
-        value: itemValue,
+        value: option.value,
         label: String(option.label),
       };
     });
@@ -124,7 +131,7 @@ export default class CustomSelect extends React.Component<Props, State> {
   };
 
   select = (index: number) => {
-    const { onSelectChange, name } = this.props;
+    const { onChange, name } = this.props;
     const { options } = this.state;
 
     if (!this.isValidIndex(index)) {
@@ -137,7 +144,10 @@ export default class CustomSelect extends React.Component<Props, State> {
       selectedOptionId: index,
     }));
 
-    onSelectChange && onSelectChange(item.value, name);
+    onChange && onChange({
+      value: item.value,
+      name: name || '',
+    });
     this.close();
   };
 
@@ -323,7 +333,7 @@ export default class CustomSelect extends React.Component<Props, State> {
   static getDerivedStateFromProps(nextProps: Props) {
     return {
       options: nextProps.options.map((option) => ({
-        value: String(option.value),
+        value: option.value,
         label: String(option.label),
       })),
     };
@@ -384,7 +394,7 @@ export default class CustomSelect extends React.Component<Props, State> {
         >
           {label}
         </SelectMimicry>
-        {selected && <input type="hidden" name={name} value={selected.value} />}
+        {name && <input type="hidden" name={name} value={selected ? String(selected.value) : ''} />}
         {opened &&
           <div
             className={classNames({

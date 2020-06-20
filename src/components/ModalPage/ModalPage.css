@@ -29,9 +29,13 @@
 
 .ModalPage--desktop .ModalPage__in-wrap {
   align-items: center;
-  transform: unset;
   opacity: 0;
   transition: opacity 340ms var(--android-easing);
+  width: auto;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .ModalRoot--touched .ModalPage__in-wrap {
@@ -60,6 +64,7 @@
 }
 
 .ModalPage--desktop .ModalPage__in {
+  width: 416px;
   height: auto;
   max-height: 640px;
   box-shadow:
@@ -81,7 +86,7 @@
 
 .ModalPage--desktop .ModalPage__content,
 .ModalRoot__modal--expandable .ModalPage__content {
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -104,4 +109,10 @@
 
 .ModalRoot--touched .ModalPage__footer {
   transition: none;
+}
+
+@media (max-height: 672px) {
+  .ModalPage--desktop .ModalPage__in {
+    max-height: calc(100% - 32px);
+  }
 }

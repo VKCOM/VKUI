@@ -18,13 +18,18 @@ const Link: FunctionComponent<LinkProps> = ({
   const platform = usePlatform();
   const baseClassName = getClassName('Link', platform);
 
+  if (!Component) {
+    if (restProps.href) {
+      Component = 'a';
+    } else {
+      Component = 'button';
+      restProps = { type: 'button', ...restProps };
+    }
+  }
+
   return (
     <Component {...restProps} ref={getRootRef} className={classNames(baseClassName, className)}>{children}</Component>
   );
-};
-
-Link.defaultProps = {
-  Component: 'a',
 };
 
 export default Link;

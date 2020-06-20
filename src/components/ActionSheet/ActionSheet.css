@@ -29,6 +29,10 @@
     flex-grow: 1;
     }
 
+  .ActionSheetItem.Tappable--ios {
+    border-radius: 0;
+  }
+
     /*.ActionSheetItem__descr {*/
     /*  color: var(--text_secondary);*/
     /*  }*/
@@ -56,8 +60,7 @@
     padding: 14px 10px 13px;
     position: relative;
     overflow: hidden;
-    border-top-left-radius: 14px;
-    border-top-right-radius: 14px;
+    border-radius: 14px 14px 0 0;
     }
 
   .ActionSheet--ios .ActionSheet__header:empty {
@@ -155,11 +158,11 @@
   display: block;
   width: auto;
   margin-top: 7px;
+  padding: 14px 20px;
   font-size: 17px;
   margin-bottom: var(--safe-area-inset-bottom);
   font-weight: 500;
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
+  border-radius: 14px;
   order: 1;
   text-align: center;
   }
@@ -267,6 +270,12 @@
   margin: 0;
 }
 
+.ActionSheet--desktop.ActionSheet--android {
+  min-width: 112px;
+  border-radius: 12px;
+  padding: 8px 0;
+}
+
 .ActionSheet--desktop .ActionSheetItem {
   width: auto;
   height: 55px;
@@ -276,7 +285,15 @@
   cursor: pointer;
 }
 
-.ActionSheet--desktop .ActionSheetItem:not(:last-child)::after {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--android {
+  height: 48px;
+  padding: 0 20px;
+  line-height: 20px;
+  color: var(--black);
+  border-radius: 0;
+}
+
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--ios:not(:last-child)::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -286,27 +303,32 @@
   background: var(--float_button_border);
 }
 
-.ActionSheet--desktop .ActionSheetItem:first-child {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--ios:first-child {
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
 }
 
-.ActionSheet--desktop .ActionSheetItem:last-child {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--ios:last-child {
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
 }
 
-.ActionSheet--desktop .ActionSheetItem {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--ios {
   color: var(--action_sheet_action_foreground);
 }
 
-.ActionSheet--desktop .ActionSheetItem--destructive {
+.ActionSheet--desktop .ActionSheetItem.ActionSheetItem--destructive {
   color: var(--destructive);
 }
 
 .ActionSheet--desktop .ActionSheetItem__children {
   display: flex;
   align-items: center;
+}
+
+.ActionSheet--desktop.ActionSheet--android .Tappable__hoverShadow,
+.ActionSheet--desktop.ActionSheet--android .Tappable--android .Tappable__waves {
+  border-radius: none;
 }
 
 /**

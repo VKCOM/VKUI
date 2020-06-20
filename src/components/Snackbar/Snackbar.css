@@ -106,6 +106,12 @@
   border-radius: 8px;
 }
 
+.Snackbar--desktop {
+  left: 2px;
+  bottom: 2px;
+  max-width: 304px;
+}
+
 /**
  * Touch-interaction
  */

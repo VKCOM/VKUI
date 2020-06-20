@@ -54,7 +54,7 @@ class ActionSheetDropdownDesktop extends Component<Props> {
   handleClickOutside = (e: MouseEvent) => {
     const dropdownElement = this.props.elementRef.current;
 
-    if (dropdownElement !== e.target && !dropdownElement.contains(e.target as Node)) {
+    if (dropdownElement !== e.target && dropdownElement && !dropdownElement.contains(e.target as Node)) {
       this.onClose();
     }
   };

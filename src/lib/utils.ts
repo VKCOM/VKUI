@@ -42,3 +42,13 @@ export function debounce(fn: any, delay: number, context = window) {
     timeout = setTimeout(later, delay);
   };
 }
+
+export function leadingZero(val: number) {
+  let strVal = val.toFixed();
+
+  if (strVal.length === 1) {
+    return '0' + strVal;
+  }
+
+  return strVal;
+}

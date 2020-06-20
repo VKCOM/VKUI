@@ -1,14 +1,21 @@
 .Link {
   color: var(--accent);
   text-decoration: none;
-  }
+  border: 0;
+  background: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit;
+}
 
-  .Link .Icon {
-    display: inline-block;
-    margin-left: 4px;
-    }
+.Link .Icon {
+  display: inline-block;
+  margin-left: 4px;
+}
 
-  .Link .Icon--dropdown_16 {
-    position: relative;
-    top: 1px;
-    }
+.Link .Icon--dropdown_16 {
+  position: relative;
+  top: 1px;
+}
