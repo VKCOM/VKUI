@@ -5,7 +5,7 @@ import getScrollbarWidth from 'react-custom-scrollbars/lib/utils/getScrollbarWid
 import SelectedIcon from '@vkontakte/icons/dist/16/done';
 import { SelectProps } from '../Select/Select';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
-import { debounce, throttle } from '../../lib/utils';
+import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
 
 type SelectValue = string | number | boolean;
@@ -317,8 +317,7 @@ export default class CustomSelect extends React.Component<Props, State> {
     }
   };
 
-  handleKeyDown = throttle(this.handleKeyDownSelect, 100);
-  handleKeyUp = debounce(this.resetKeyboardInput, 2000);
+  handleKeyUp = debounce(this.resetKeyboardInput, 1000);
 
   componentDidMount() {
     document.addEventListener('click', this.handleDocumentClick, false);
@@ -383,7 +382,7 @@ export default class CustomSelect extends React.Component<Props, State> {
           tabIndex={tabIndex}
           aria-hidden={true}
           onClick={this.onClick}
-          onKeyDown={this.handleKeyDown}
+          onKeyDown={this.handleKeyDownSelect}
           onKeyUp={this.handleKeyUp}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
