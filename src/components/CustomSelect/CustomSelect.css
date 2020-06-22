@@ -37,8 +37,40 @@
   cursor: pointer;
 }
 
+/* Customize website's scrollbar like Mac OS
+Not supports in Firefox and IE */
+
+/* total width */
+.CustomSelect__webkitScrollable::-webkit-scrollbar {
+  background-color: #fff;
+  width: 6px;
+}
+
+/* background of the scrollbar except button or resizer */
+.CustomSelect__webkitScrollable::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+/* scrollbar itself */
+.CustomSelect__webkitScrollable::-webkit-scrollbar-thumb {
+  background-color: #babac0;
+  border-radius: 3px;
+  border: 1px solid #fff;
+  min-height: 44px;
+}
+
+/* scrollbar itself */
+.CustomSelect__webkitScrollable:hover::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+}
+
+/* set button(top and bottom of the scrollbar) */
+.CustomSelect__webkitScrollable::-webkit-scrollbar-button {
+  display: none;
+}
+
 .CustomSelect__selectedIcon {
   position: absolute;
   top: 15px;
-  right: 12px;
+  right: 6px;
 }

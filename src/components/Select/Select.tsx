@@ -125,6 +125,5 @@ class Select extends React.Component<SelectProps, SelectState> {
 }
 
 export default withAdaptivity(Select, {
-  viewMode: true,
   sizeX: true,
 });
