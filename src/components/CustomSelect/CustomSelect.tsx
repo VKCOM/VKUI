@@ -433,9 +433,9 @@ export default class CustomSelect extends React.Component<Props, State> {
           onChange={handleChange}
           onFocus={this.props.onFocus}
         >
-          {options.map((option, key) =>
-            <option key={key} value={option.value as string} disabled={option.value === undefined}>{option.label}</option>
-          )}
+          {options.map((option, key) => {
+            return <option key={key} value={option.value as string} disabled={option.value === undefined}>{option.label}</option>;
+          })}
         </Select>
       </>
     );
