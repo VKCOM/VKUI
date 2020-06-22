@@ -399,9 +399,6 @@ export default class CustomSelect extends React.Component<Props, State> {
               className="CustomSelect__webkitScrollable"
               style={{
                 height: `${options.length * 44}px`,
-                minHeight: '44px',
-                maxHeight: '160px',
-                overflowY: 'auto',
               }}
               ref={this.scrollViewRef}
             >

@@ -40,6 +40,12 @@
 /* Customize website's scrollbar like Mac OS
 Not supports in Firefox and IE */
 
+.CustomSelect__webkitScrollable {
+  min-height: 44px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
 /* total width */
 .CustomSelect__webkitScrollable::-webkit-scrollbar {
   background-color: #fff;
