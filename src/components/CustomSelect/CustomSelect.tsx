@@ -1,9 +1,9 @@
-import React, { createRef, KeyboardEvent, MouseEvent, ChangeEvent } from 'react';
+import React, { createRef, KeyboardEvent, MouseEvent } from 'react';
 import SelectedIcon from '@vkontakte/icons/dist/16/done';
-import Select, { SelectProps } from '../Select/Select';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
+import { SelectProps } from '../Select/NativeSelect';
 
 type SelectValue = string | number | boolean;
 
@@ -74,7 +74,6 @@ export default class CustomSelect extends React.Component<Props, State> {
   private keyboardInput: string;
   private node: Element;
   private readonly scrollViewRef = createRef<HTMLDivElement>();
-  private readonly isCustomScrollbarSupports = navigator.userAgent.includes('AppleWebKit') && !navigator.userAgent.includes('Edge');
 
   private readonly resetKeyboardInput = () => {
     this.keyboardInput = '';
@@ -410,41 +409,13 @@ export default class CustomSelect extends React.Component<Props, State> {
     );
   }
 
-  renderWithNativeSelect() {
-    const { options } = this.state;
-    const { tabIndex, name } = this.props;
-    const selected = this.getSelectedItem();
-
-    const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-      this.select(e.target.selectedIndex);
-    };
-
-    return (
-      <>
-        <Select
-          value={selected?.value as string}
-          name={name}
-          tabIndex={tabIndex}
-          aria-hidden={true}
-          onBlur={this.props.onBlur}
-          onChange={handleChange}
-          onFocus={this.props.onFocus}
-        >
-          {options.map((option, key) => {
-            return <option key={key} value={option.value as string} disabled={option.value === undefined}>{option.label}</option>;
-          })}
-        </Select>
-      </>
-    );
-  }
-
   render() {
     return (
       <div
         className="CustomSelect__container"
         ref={(node) => this.node = node}
       >
-        {this.isCustomScrollbarSupports ? this.renderWithCustomScrollbar() : this.renderWithNativeSelect()}
+        {this.renderWithCustomScrollbar()}
       </div>
     );
   }

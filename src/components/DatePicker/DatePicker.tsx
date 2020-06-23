@@ -4,12 +4,13 @@ import React, {
   ChangeEventHandler,
   HTMLAttributes,
 } from 'react';
-import CustomSelect, { SelectChangeResult } from '../CustomSelect/CustomSelect';
+import { SelectChangeResult } from '../CustomSelect/CustomSelect';
 import Input from '../Input/Input';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { hasMouse } from '../../helpers/inputUtils';
 import { HasFormLabels, HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
+import { Select } from '../..';
 
 const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
@@ -166,7 +167,7 @@ class DatePicker extends Component<Props, Partial<State>> {
       <div className="DatePicker">
         <div className="DatePicker__container">
           <div className="DatePicker__day">
-            <CustomSelect
+            <Select
               name="day"
               value={day}
               options={this.getDayOptions()}
@@ -175,7 +176,7 @@ class DatePicker extends Component<Props, Partial<State>> {
             />
           </div>
           <div className="DatePicker__month">
-            <CustomSelect
+            <Select
               name="month"
               value={month}
               options={this.getMonthOptions()}
@@ -184,7 +185,7 @@ class DatePicker extends Component<Props, Partial<State>> {
             />
           </div>
           <div className="DatePicker__year">
-            <CustomSelect
+            <Select
               name="year"
               value={year}
               options={this.getYearOptions()}
