@@ -1,10 +1,10 @@
-import React, { ElementType, FunctionComponent, LinkHTMLAttributes } from 'react';
+import React, { ElementType, FunctionComponent, AnchorHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 
-export interface LinkProps extends LinkHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   Component?: ElementType;
 }
 
