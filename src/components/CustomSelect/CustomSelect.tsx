@@ -395,7 +395,7 @@ export default class CustomSelect extends React.Component<Props, State> {
             onMouseLeave={this.resetFocusedOption}
           >
             <div
-              className="CustomSelect__webkitScrollable"
+              className="CustomSelect__scrollable"
               style={{
                 height: `${options.length * 44}px`,
               }}

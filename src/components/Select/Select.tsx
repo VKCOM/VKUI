@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, ChangeEvent } from 'react';
+import React, { FunctionComponent, ReactElement, ChangeEvent, useRef } from 'react';
 import NativeSelect, { SelectProps } from './NativeSelect';
 import { CustomSelect } from '../..';
 import { SelectOption, SelectChangeResult } from '../CustomSelect/CustomSelect';
@@ -10,8 +10,10 @@ interface Props extends Omit<SelectProps, 'onChange'> {
   onBlur?: () => void;
 }
 
+const isCustomScrollbarSupports = navigator.userAgent.includes('AppleWebKit') && !navigator.userAgent.includes('Edge');
+
 const Select: FunctionComponent<Props> = (props) => {
-  const isCustomScrollbarSupports = navigator.userAgent.includes('AppleWebKit') && !navigator.userAgent.includes('Edge');
+  const nativeSelectRef = useRef<HTMLSelectElement>();
 
   if (isCustomScrollbarSupports) {
     const { children, ...restProps } = props;
@@ -56,8 +58,10 @@ const Select: FunctionComponent<Props> = (props) => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     // values from DOM api is always strings
     // search for value from input options if present
+    const selectedIndex = nativeSelectRef.current?.selectedIndex ?? -1;
+
     const value = Array.isArray(options)
-      ? options.find(({ value }) => `${value}` === `${e.target.value}`)?.value
+      ? options[selectedIndex]?.value
       : e.target.value;
 
     onChange && onChange({
@@ -71,6 +75,7 @@ const Select: FunctionComponent<Props> = (props) => {
       onFocus={handleFocus}
       onBlur={handleBlur}
       onChange={handleChange}
+      getRef={nativeSelectRef}
       {...restProps}>
       {!!children ? children : options.map(({ label, value }, key) => {
         return <option value={`${value}`} key={key}>{label}</option>;
