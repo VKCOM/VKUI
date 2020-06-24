@@ -1,12 +1,9 @@
 import React, { createRef, KeyboardEvent, MouseEvent } from 'react';
-// пока используем react-custom-scrollbars, если свой скроллбар будет весить меньше, то лучше будет написать свой
-import { Scrollbars } from 'react-custom-scrollbars';
-import getScrollbarWidth from 'react-custom-scrollbars/lib/utils/getScrollbarWidth';
 import SelectedIcon from '@vkontakte/icons/dist/16/done';
-import { SelectProps } from '../Select/Select';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
+import { SelectProps } from '../Select/NativeSelect';
 
 type SelectValue = string | number | boolean;
 
@@ -76,7 +73,7 @@ export default class CustomSelect extends React.Component<Props, State> {
   public state: State;
   private keyboardInput: string;
   private node: Element;
-  private readonly scrollViewRef = createRef();
+  private readonly scrollViewRef = createRef<HTMLDivElement>();
 
   private readonly resetKeyboardInput = () => {
     this.keyboardInput = '';
@@ -187,15 +184,14 @@ export default class CustomSelect extends React.Component<Props, State> {
   };
 
   private scrollToElement(index: number, center = false) {
-    // @ts-ignore
-    const dropdown: HTMLElement = this.scrollViewRef.current.view;
+    const dropdown = this.scrollViewRef.current;
     const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
 
     if (!item) {
       return;
     }
 
-    const scrollBarSize = getScrollbarWidth() | 0;
+    const scrollBarSize = 6;
     const dropdownHeight = dropdown.offsetHeight;
     const scrollTop = dropdown.scrollTop;
     const itemTop = item.offsetTop;
@@ -367,17 +363,14 @@ export default class CustomSelect extends React.Component<Props, State> {
     );
   };
 
-  render() {
+  renderWithCustomScrollbar() {
     const { opened, options } = this.state;
     const { placeholder = '', tabIndex, name } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
     return (
-      <div
-        className="CustomSelect__container"
-        ref={(node) => this.node = node}
-      >
+      <>
         <SelectMimicry
           tabIndex={tabIndex}
           aria-hidden={true}
@@ -401,17 +394,28 @@ export default class CustomSelect extends React.Component<Props, State> {
             })}
             onMouseLeave={this.resetFocusedOption}
           >
-            <Scrollbars
-              style={{ height: `${options.length * 44}px` }}
-              autoHeight
-              autoHeightMin={44}
-              autoHeightMax={160}
+            <div
+              className="CustomSelect__scrollable"
+              style={{
+                height: `${options.length * 44}px`,
+              }}
               ref={this.scrollViewRef}
             >
               {options.map(this.renderOption)}
-            </Scrollbars>
+            </div>
           </div>
         }
+      </>
+    );
+  }
+
+  render() {
+    return (
+      <div
+        className="CustomSelect__container"
+        ref={(node) => this.node = node}
+      >
+        {this.renderWithCustomScrollbar()}
       </div>
     );
   }

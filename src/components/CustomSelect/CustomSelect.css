@@ -16,7 +16,7 @@
   box-shadow: 0 2px 2px rgba(0, 0, 0, .06), 0 0 2px rgba(0, 0, 0, .03);
   border-radius: 0 0 8px 8px;
   max-height: 160px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .CustomSelect__hover {
@@ -37,8 +37,46 @@
   cursor: pointer;
 }
 
+/* Customize website's scrollbar like Mac OS
+Not supports in Firefox and IE */
+
+.CustomSelect__scrollable {
+  min-height: 44px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+/* total width */
+.CustomSelect__scrollable::-webkit-scrollbar {
+  background-color: var(--modal_card_background);
+  width: 6px;
+}
+
+/* background of the scrollbar except button or resizer */
+.CustomSelect__scrollable::-webkit-scrollbar-track {
+  background-color: var(--modal_card_background);
+}
+
+/* scrollbar itself */
+.CustomSelect__scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--field_border);
+  border-radius: 3px;
+  border: 1px solid var(--modal_card_background);
+  min-height: 44px;
+}
+
+/* scrollbar itself */
+.CustomSelect__scrollable:hover::-webkit-scrollbar-thumb {
+  background-color: var(--field_border_hover);
+}
+
+/* set button(top and bottom of the scrollbar) */
+.CustomSelect__scrollable::-webkit-scrollbar-button {
+  display: none;
+}
+
 .CustomSelect__selectedIcon {
   position: absolute;
   top: 15px;
-  right: 12px;
+  right: 6px;
 }
