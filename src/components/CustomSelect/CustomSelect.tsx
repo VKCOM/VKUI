@@ -3,7 +3,7 @@ import SelectedIcon from '@vkontakte/icons/dist/16/done';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
-import { SelectProps } from '../Select/NativeSelect';
+import { SelectProps } from '../NativeSelect/NativeSelect';
 
 type SelectValue = string | number | boolean;
 
@@ -191,17 +191,15 @@ export default class CustomSelect extends React.Component<Props, State> {
       return;
     }
 
-    const scrollBarSize = 6;
     const dropdownHeight = dropdown.offsetHeight;
     const scrollTop = dropdown.scrollTop;
     const itemTop = item.offsetTop;
     const itemHeight = item.offsetHeight;
 
     if (center) {
-      // Add (+ scrollBarSize / 2) to make it really at center
       dropdown.scrollTop = itemTop - dropdownHeight / 2 + itemHeight / 2;
-    } else if (itemTop + itemHeight > dropdownHeight + scrollTop - scrollBarSize) {
-      dropdown.scrollTop = itemTop - dropdownHeight + itemHeight + scrollBarSize;
+    } else if (itemTop + itemHeight > dropdownHeight + scrollTop) {
+      dropdown.scrollTop = itemTop - dropdownHeight + itemHeight;
     } else if (itemTop < scrollTop) {
       dropdown.scrollTop = itemTop;
     }

@@ -1,7 +1,8 @@
 import React, { FunctionComponent, ReactElement, ChangeEvent, useRef } from 'react';
-import NativeSelect, { SelectProps } from './NativeSelect';
+import NativeSelect, { SelectProps } from '../NativeSelect/NativeSelect';
 import { CustomSelect } from '../..';
 import { SelectOption, SelectChangeResult } from '../CustomSelect/CustomSelect';
+import { hasMouse } from '../../helpers/inputUtils';
 
 interface Props extends Omit<SelectProps, 'onChange'> {
   options?: SelectOption[];
@@ -10,12 +11,15 @@ interface Props extends Omit<SelectProps, 'onChange'> {
   onBlur?: () => void;
 }
 
-const isCustomScrollbarSupports = navigator.userAgent.includes('AppleWebKit') && !navigator.userAgent.includes('Edge');
+const isCustomScrollbarSupported =
+  navigator.userAgent.includes('AppleWebKit') && !navigator.userAgent.includes('Edge') ||
+  'scrollbarColor' in document.documentElement.style;
 
 const Select: FunctionComponent<Props> = (props) => {
   const nativeSelectRef = useRef<HTMLSelectElement>();
+  const needCustomSelect = isCustomScrollbarSupported && hasMouse;
 
-  if (isCustomScrollbarSupports) {
+  if (needCustomSelect) {
     const { children, ...restProps } = props;
 
     let options: SelectOption[] = [];
