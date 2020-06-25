@@ -4,6 +4,7 @@ import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
 import { SelectProps } from '../NativeSelect/NativeSelect';
+import CustomScrollView from '../CustomScrollView/CustomScrollView';
 
 type SelectValue = string | number | boolean;
 
@@ -73,7 +74,7 @@ export default class CustomSelect extends React.Component<Props, State> {
   public state: State;
   private keyboardInput: string;
   private node: Element;
-  private readonly scrollViewRef = createRef<HTMLDivElement>();
+  private readonly scrollViewRef = createRef<CustomScrollView>();
 
   private readonly resetKeyboardInput = () => {
     this.keyboardInput = '';
@@ -184,7 +185,8 @@ export default class CustomSelect extends React.Component<Props, State> {
   };
 
   private scrollToElement(index: number, center = false) {
-    const dropdown = this.scrollViewRef.current;
+    const scrollView = this.scrollViewRef.current;
+    const dropdown = scrollView.box.current;
     const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
 
     if (!item) {
@@ -348,7 +350,7 @@ export default class CustomSelect extends React.Component<Props, State> {
         onMouseDown={this.handleOptionDown}
         onMouseEnter={this.handleOptionHover}
         className={classNames('CustomSelect__option', {
-          ['CustomSelect__hover']: hovered,
+          ['CustomSelect__option--hover']: hovered,
         })}
       >
         {item.label}
@@ -392,15 +394,9 @@ export default class CustomSelect extends React.Component<Props, State> {
             })}
             onMouseLeave={this.resetFocusedOption}
           >
-            <div
-              className="CustomSelect__scrollable"
-              style={{
-                height: `${options.length * 44}px`,
-              }}
-              ref={this.scrollViewRef}
-            >
+            <CustomScrollView ref={this.scrollViewRef}>
               {options.map(this.renderOption)}
-            </div>
+            </CustomScrollView>
           </div>
         }
       </>

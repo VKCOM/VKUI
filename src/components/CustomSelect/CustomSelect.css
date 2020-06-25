@@ -19,8 +19,8 @@
   z-index: 3;
 }
 
-.CustomSelect__hover {
-  background-color: var(--button_muted_background);
+.CustomSelect__options .CustomScrollView__box {
+  max-height: 160px;
 }
 
 .CustomSelect__option {
@@ -37,46 +37,8 @@
   cursor: pointer;
 }
 
-/*
-  Custom, think, mobile like scrollbar using,
-  -webkit proprietary element and spec scrollbar-width/color
-*/
-
-.CustomSelect__scrollable {
-  min-height: 44px;
-  max-height: 160px;
-  overflow-y: auto;
-  scrollbar-color: var(--field_border) transparent;
-  scrollbar-width: thin;
-}
-
-/* total width */
-.CustomSelect__scrollable::-webkit-scrollbar {
-  background-color: var(--modal_card_background);
-  width: 8px;
-}
-
-/* background of the scrollbar except button or resizer */
-.CustomSelect__scrollable::-webkit-scrollbar-track {
-  background-color: var(--modal_card_background);
-}
-
-/* scrollbar itself */
-.CustomSelect__scrollable::-webkit-scrollbar-thumb {
-  background-color: var(--field_border);
-  border-radius: 4px;
-  border: 1px solid var(--modal_card_background);
-  min-height: 44px;
-}
-
-/* scrollbar itself */
-.CustomSelect__scrollable::-webkit-scrollbar-thumb:hover {
-  background-color: var(--field_border_hover);
-}
-
-/* set button(top and bottom of the scrollbar) */
-.CustomSelect__scrollable::-webkit-scrollbar-button {
-  display: none;
+.CustomSelect__option--hover {
+  background-color: var(--button_muted_background);
 }
 
 .CustomSelect__selectedIcon {
