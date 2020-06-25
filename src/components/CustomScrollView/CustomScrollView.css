@@ -18,6 +18,10 @@
   display: none;
 }
 
+.CustomScrollView__box--dragging {
+  pointer-events: none;
+}
+
 .CustomScrollView__barY {
   position: absolute;
   top: 0;

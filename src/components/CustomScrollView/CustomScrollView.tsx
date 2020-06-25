@@ -6,33 +6,27 @@ interface Props {
 
 export default class CustomScrollView extends React.Component<Props> {
   private ratio = NaN;
-  private trackerTop = 0;
+  private lastTrackerTop = 0;
   private clientHeight = 0;
   private trackerHeight = 0;
-  // private scrollHeight = 0;
-  // private trackerMax = 0;
+  private scrollHeight = 0;
   private transformProp = '';
+
+  private startY = 0;
+  private trackerTop = 0;
 
   public readonly box = createRef<HTMLDivElement>();
   public readonly barY = createRef<HTMLDivElement>();
   public readonly trackerY = createRef<HTMLDivElement>();
 
-  private onDragStart: (e: MouseEvent) => void;
-
   componentDidMount() {
-    this.trackerTop = 0;
-    this.ratio = NaN;
-
     this.chooseTransformProp();
 
     this.resize();
-    this.initDragging();
 
     if (this.props.windowResize) {
       window.addEventListener('resize', this.resize);
     }
-
-    this.box.current.addEventListener('scroll', this.scroll);
   }
 
   componentDidUpdate() {
@@ -41,8 +35,6 @@ export default class CustomScrollView extends React.Component<Props> {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resize);
-    this.box.current.removeEventListener('scroll', this.scroll);
-    this.stopDragging();
   }
 
   chooseTransformProp() {
@@ -61,8 +53,13 @@ export default class CustomScrollView extends React.Component<Props> {
   resize = () => {
     const clientHeight = this.box.current.clientHeight;
     const scrollHeight = this.box.current.scrollHeight;
-    const ratio = clientHeight / scrollHeight;
-    const trackerHeight = Math.max(clientHeight * ratio, 40);
+    let ratio = clientHeight / scrollHeight;
+    let trackerHeight = Math.max(clientHeight * ratio, 40);
+
+    this.ratio = ratio;
+    this.clientHeight = clientHeight;
+    this.scrollHeight = scrollHeight;
+    this.trackerHeight = trackerHeight;
 
     if (ratio >= 1) {
       this.barY.current.style.display = 'none';
@@ -70,14 +67,8 @@ export default class CustomScrollView extends React.Component<Props> {
       this.barY.current.style.display = '';
       this.trackerY.current.style.height = `${trackerHeight}px`;
 
-      this.setTrackerPosition(this.box.current.scrollTop * ratio);
+      this.setTrackerPositionFromScroll(this.box.current.scrollTop);
     }
-
-    this.ratio = ratio;
-    this.clientHeight = clientHeight;
-    // this.scrollHeight = scrollHeight;
-    this.trackerHeight = trackerHeight;
-    // this.trackerMax = clientHeight * ratio - trackerHeight;
   };
 
   scroll = () => {
@@ -85,67 +76,60 @@ export default class CustomScrollView extends React.Component<Props> {
       return;
     }
 
-    this.setTrackerPosition(this.box.current.scrollTop * this.ratio);
+    this.setTrackerPositionFromScroll(this.box.current.scrollTop);
   };
 
   setTrackerPosition(scrollTop: number) {
-    this.trackerTop = scrollTop;
+    this.lastTrackerTop = scrollTop;
     (this.trackerY.current.style as any)[this.transformProp] = `translate(0, ${scrollTop}px)`;
   }
 
-  setScrollPositionFromTracker(scrollTop: number) {
-    this.box.current.scrollTop = scrollTop / this.ratio;
+  setTrackerPositionFromScroll(scrollTop: number) {
+    const progress = scrollTop / (this.scrollHeight - this.clientHeight);
+    this.setTrackerPosition((this.clientHeight - this.trackerHeight) * progress);
   }
 
-  initDragging() {
-    let startY = 0;
-    let startTop = 0;
-
-    const onMove = (e: MouseEvent) => {
-      e.preventDefault();
-      const diff = e.clientY - startY;
-      const position = Math.min(Math.max(startTop + diff, 0), this.clientHeight - this.trackerHeight);
-
-      this.setTrackerPosition(position);
-      this.setScrollPositionFromTracker(position);
-    };
-
-    const onUp = (e: MouseEvent) => {
-      e.preventDefault();
-
-      document.removeEventListener('mousemove', onMove);
-      document.removeEventListener('mouseup', onUp);
-      this.trackerY.current.classList.remove('CustomScrollView__trackerY--dragging');
-    };
-
-    this.onDragStart = (e: MouseEvent) => {
-      e.preventDefault();
-      startY = e.clientY;
-      startTop = this.trackerTop;
-
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onUp);
-      this.trackerY.current.classList.add('CustomScrollView__trackerY--dragging');
-    };
-
-    this.trackerY.current.addEventListener('mousedown', this.onDragStart);
+  setScrollPositionFromTracker(trackerTop: number) {
+    const progress = trackerTop / (this.clientHeight - this.trackerHeight);
+    this.box.current.scrollTop = (this.scrollHeight - this.clientHeight) * progress;
   }
 
-  stopDragging() {
-    if (this.onDragStart) {
-      this.trackerY.current.removeEventListener('mousedown', this.onDragStart);
-      this.onDragStart = null;
-    }
-  }
+  onDragStart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    this.startY = e.clientY;
+    this.trackerTop = this.lastTrackerTop;
+
+    document.addEventListener('mousemove', this.onMove);
+    document.addEventListener('mouseup', this.onUp);
+    this.trackerY.current.classList.add('CustomScrollView__trackerY--dragging');
+    this.box.current.classList.add('CustomScrollView__box--dragging');
+  };
+
+  onMove = (e: MouseEvent) => {
+    e.preventDefault();
+    const diff = e.clientY - this.startY;
+    const position = Math.min(Math.max(this.trackerTop + diff, 0), this.clientHeight - this.trackerHeight);
+
+    this.setScrollPositionFromTracker(position);
+  };
+
+  onUp = (e: MouseEvent) => {
+    e.preventDefault();
+
+    document.removeEventListener('mousemove', this.onMove);
+    document.removeEventListener('mouseup', this.onUp);
+    this.trackerY.current.classList.remove('CustomScrollView__trackerY--dragging');
+    this.box.current.classList.remove('CustomScrollView__box--dragging');
+  };
 
   render() {
     return <div className="CustomScrollView">
-      <div className="CustomScrollView__box" ref={this.box}>
+      <div className="CustomScrollView__box" ref={this.box} onScroll={this.scroll}>
         { this.props.children }
       </div>
 
       <div className="CustomScrollView__barY" ref={this.barY}>
-        <div className="CustomScrollView__trackerY" ref={this.trackerY} />
+        <div className="CustomScrollView__trackerY" ref={this.trackerY} onMouseDown={this.onDragStart} />
       </div>
     </div>;
   }

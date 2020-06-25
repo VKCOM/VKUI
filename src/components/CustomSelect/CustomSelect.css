@@ -31,7 +31,7 @@
   position: relative;
   box-sizing: border-box;
   font-size: 16px;
-  padding: 10px 30px 10px 12px;
+  padding: 10px 36px 10px 12px;
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
@@ -44,5 +44,5 @@
 .CustomSelect__selectedIcon {
   position: absolute;
   top: 15px;
-  right: 6px;
+  right: 12px;
 }
