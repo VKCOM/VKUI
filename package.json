@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "4.0.0-alpha.32",
+  "version": "4.0.0-beta.0",
   "main": "dist/index.js",
   "module": "dist/es6/index.js",
   "typings": "dist/index.d.ts",
@@ -105,6 +105,5 @@
   "pre-commit": [
     "test"
   ],
-  "dependencies": {
-  }
+  "dependencies": {}
 }
