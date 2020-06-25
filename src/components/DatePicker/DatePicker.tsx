@@ -10,7 +10,7 @@ import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { hasMouse } from '../../helpers/inputUtils';
 import { HasFormLabels, HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
-import { Select } from '../..';
+import Select from '../Select/Select';
 
 const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
@@ -159,7 +159,7 @@ class DatePicker extends Component<Props, Partial<State>> {
     onDateChange && onDateChange(date);
   };
 
-  get desktopView() {
+  customView() {
     const { name, dayPlaceholder, monthPlaceholder, yearPlaceholder } = this.props;
     const { day, month, year } = this.state;
 
@@ -199,7 +199,7 @@ class DatePicker extends Component<Props, Partial<State>> {
     );
   }
 
-  get mobileView() {
+  nativeView() {
     const { top, name, min, max } = this.props;
     const { day, month, year } = this.state;
 
@@ -230,7 +230,7 @@ class DatePicker extends Component<Props, Partial<State>> {
   }
 
   render() {
-    return hasMouse ? this.desktopView : this.mobileView;
+    return hasMouse ? this.customView() : this.nativeView();
   }
 }
 
