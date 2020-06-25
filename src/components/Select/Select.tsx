@@ -1,7 +1,6 @@
 import React, { FunctionComponent, ReactElement, ChangeEvent, useRef } from 'react';
 import NativeSelect, { SelectProps } from '../NativeSelect/NativeSelect';
-import { CustomSelect } from '../..';
-import { SelectOption, SelectChangeResult } from '../CustomSelect/CustomSelect';
+import CustomSelect, { SelectOption, SelectChangeResult } from '../CustomSelect/CustomSelect';
 import { hasMouse } from '../../helpers/inputUtils';
 
 interface Props extends Omit<SelectProps, 'onChange'> {
@@ -11,15 +10,11 @@ interface Props extends Omit<SelectProps, 'onChange'> {
   onBlur?: () => void;
 }
 
-const isCustomScrollbarSupported =
-  navigator.userAgent.includes('AppleWebKit') && !navigator.userAgent.includes('Edge') ||
-  'scrollbarColor' in document.documentElement.style;
-
 const Select: FunctionComponent<Props> = (props) => {
   const nativeSelectRef = useRef<HTMLSelectElement>();
-  const needCustomSelect = isCustomScrollbarSupported && hasMouse;
 
-  if (needCustomSelect) {
+  // Use custom select if device has connected a mouse
+  if (hasMouse) {
     const { children, ...restProps } = props;
 
     let options: SelectOption[] = [];
