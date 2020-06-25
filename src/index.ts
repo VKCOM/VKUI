@@ -151,7 +151,7 @@ export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 export { platform, ANDROID, IOS, OS, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
 export { default as getClassName } from './helpers/getClassName';
-export { ViewMode, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
+export { ViewWidth, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
 export const v = process.env.VKUI_VERSION;
 
 /**

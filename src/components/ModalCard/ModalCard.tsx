@@ -7,7 +7,7 @@ import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import { IOS } from '../../lib/platform';
 import withPlatform from '../../hoc/withPlatform';
 import { HasChildren, HasPlatform } from '../../types';
-import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 
 export interface ModalCardActionInterface {
   title: string;
@@ -75,11 +75,11 @@ class ModalCard extends Component<ModalCardProps> {
       actions,
       actionsLayout,
       onClose,
-      viewMode,
+      viewWidth,
       platform,
     } = this.props;
 
-    const isDesktop = viewMode >= ViewMode.TABLET;
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
     const canShowCloseBtn = platform === IOS || isDesktop;
 
     return (
@@ -127,5 +127,5 @@ class ModalCard extends Component<ModalCardProps> {
 }
 
 export default withAdaptivity(withPlatform(ModalCard), {
-  viewMode: true,
+  viewWidth: true,
 });

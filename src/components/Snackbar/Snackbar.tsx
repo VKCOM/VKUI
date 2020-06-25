@@ -10,7 +10,7 @@ import { canUseDOM } from '../../lib/dom';
 import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
-import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 
 export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
@@ -199,10 +199,10 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       action,
       before,
       after,
-      viewMode,
+      viewWidth,
     } = this.props;
 
-    const isDesktop = viewMode >= ViewMode.SMALL_TABLET;
+    const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
     const resolvedLayout = after || isDesktop ? 'vertical' : layout;
 
     return (
@@ -248,5 +248,5 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 }
 
 export default withPlatform(withAdaptivity(Snackbar, {
-  viewMode: true,
+  viewWidth: true,
 }));

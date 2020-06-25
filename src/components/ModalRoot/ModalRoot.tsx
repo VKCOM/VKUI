@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { HasChildren } from '../../types';
-import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalRootTouch from './ModalRootTouch';
 import ModalRootDesktop from './ModalRootDesktop';
 
@@ -64,8 +64,8 @@ export interface ModalRootState {
 
 class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   render() {
-    const { viewMode } = this.props;
-    const isDesktop = viewMode >= ViewMode.TABLET;
+    const { viewWidth } = this.props;
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     const RootComponent = isDesktop ? ModalRootDesktop : ModalRootTouch;
 
@@ -76,5 +76,5 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 }
 
 export default withAdaptivity(ModalRoot, {
-  viewMode: true,
+  viewWidth: true,
 });

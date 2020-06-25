@@ -2,7 +2,7 @@ import React, { Component, HTMLAttributes, ReactNode } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import { HasPlatform } from '../../types';
-import withAdaptivity, { ViewMode, AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   popout?: ReactNode;
@@ -45,8 +45,8 @@ class PopoutRoot extends Component<PopoutRootProps> {
   }
 
   render() {
-    const { popout, modal, viewMode, children } = this.props;
-    const isDesktop = viewMode >= ViewMode.TABLET;
+    const { popout, modal, viewWidth, children } = this.props;
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     return (
       <div className={classNames('PopoutRoot', this.props.className)}>
@@ -59,6 +59,6 @@ class PopoutRoot extends Component<PopoutRootProps> {
 }
 
 export default withAdaptivity(PopoutRoot, {
-  viewMode: true,
+  viewWidth: true,
 });
 

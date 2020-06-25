@@ -28,7 +28,6 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   multiline,
   disabled,
   onClick,
-  viewMode,
   sizeX,
   ...restProps
 }: SelectMimicryProps) => {
@@ -60,7 +59,6 @@ SelectMimicry.defaultProps = {
 };
 
 export default withAdaptivity(SelectMimicry, {
-  viewMode: true,
   sizeX: true,
 });
 
