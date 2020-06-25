@@ -5,7 +5,7 @@ export enum SizeType {
   REGULAR = 'regular',
 }
 
-export enum ViewMode {
+export enum ViewWidth {
   SMALL_MOBILE = 1,
   MOBILE,
   SMALL_TABLET,
@@ -16,7 +16,7 @@ export enum ViewMode {
 export interface AdaptivityContextInterface {
   sizeX: SizeType;
   sizeY: SizeType;
-  viewMode?: ViewMode;
+  viewWidth?: ViewWidth;
 }
 
 export const AdaptivityContext = createContext<AdaptivityContextInterface>({

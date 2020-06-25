@@ -7,7 +7,7 @@ import transitionEvents from '../../lib/transitionEvents';
 import { ANDROID } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 
 export interface AlertActionInterface {
   title: string;
@@ -87,9 +87,9 @@ class Alert extends Component<AlertProps, AlertState> {
   }
 
   render() {
-    const { actions, actionsLayout, children, className, style, platform, viewMode, ...restProps } = this.props;
+    const { actions, actionsLayout, children, className, style, platform, viewWidth, ...restProps } = this.props;
     const { closing } = this.state;
-    const isDesktop = viewMode >= ViewMode.SMALL_TABLET;
+    const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
 
     return (
       <PopoutWrapper
@@ -131,5 +131,5 @@ class Alert extends Component<AlertProps, AlertState> {
 }
 
 export default withPlatform(withAdaptivity(Alert, {
-  viewMode: true,
+  viewWidth: true,
 }));

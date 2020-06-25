@@ -234,6 +234,4 @@ class DatePicker extends Component<Props, Partial<State>> {
   }
 }
 
-export default withAdaptivity(DatePicker, {
-  viewMode: true,
-});
+export default withAdaptivity(DatePicker, {});

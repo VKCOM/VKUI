@@ -2,7 +2,7 @@ import React, { Children, Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import transitionEvents from '../../lib/transitionEvents';
 import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { ANDROID, IOS } from '../../lib/platform';
 import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
@@ -73,7 +73,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   };
 
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
-    if (this.props.viewMode >= ViewMode.TABLET) {
+    if (this.props.viewWidth >= ViewWidth.TABLET) {
       eventHandler();
     }
 
@@ -101,12 +101,12 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       text,
       style,
       platform,
-      viewMode,
+      viewWidth,
       iosCloseItem,
       ...restProps
     } = this.props;
 
-    const isDesktop = viewMode >= ViewMode.TABLET;
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     const DropdownComponent = isDesktop
       ? ActionSheetDropdownDesktop
@@ -155,5 +155,5 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 }
 
 export default withAdaptivity(withPlatform(ActionSheet), {
-  viewMode: true,
+  viewWidth: true,
 });

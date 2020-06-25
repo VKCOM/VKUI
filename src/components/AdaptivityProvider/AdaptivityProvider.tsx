@@ -1,6 +1,6 @@
 import React from 'react';
 import { HasChildren } from '../../types';
-import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewMode } from './AdaptivityContext';
+import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewWidth } from './AdaptivityContext';
 import Responsive from '../Responsive/Responsive';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren {};
@@ -16,34 +16,34 @@ export default class AdaptivityProvider extends React.Component<AdaptivityProvid
     sizeY: SizeType.REGULAR,
   };
 
-  renderInner = ({ viewWidth }: { viewWidth: number }) => {
-    let viewMode = ViewMode.SMALL_MOBILE;
+  renderInner = ({ windowWidth }: { windowWidth: number }) => {
+    let viewWidth = ViewWidth.SMALL_MOBILE;
     let sizeY = SizeType.REGULAR;
     let sizeX = SizeType.REGULAR;
 
-    if (viewWidth >= DESKTOP_SIZE) {
-      viewMode = ViewMode.DESKTOP;
-    } else if (viewWidth >= TABLET_SIZE) {
-      viewMode = ViewMode.TABLET;
-    } else if (viewWidth >= SMALL_TABLET_SIZE) {
-      viewMode = ViewMode.SMALL_TABLET;
-    } else if (viewWidth >= MOBILE_SIZE) {
-      viewMode = ViewMode.MOBILE;
+    if (windowWidth >= DESKTOP_SIZE) {
+      viewWidth = ViewWidth.DESKTOP;
+    } else if (windowWidth >= TABLET_SIZE) {
+      viewWidth = ViewWidth.TABLET;
+    } else if (windowWidth >= SMALL_TABLET_SIZE) {
+      viewWidth = ViewWidth.SMALL_TABLET;
+    } else if (windowWidth >= MOBILE_SIZE) {
+      viewWidth = ViewWidth.MOBILE;
       sizeX = SizeType.COMPACT;
     } else {
-      viewMode = ViewMode.SMALL_MOBILE;
+      viewWidth = ViewWidth.SMALL_MOBILE;
       sizeX = SizeType.COMPACT;
       sizeY = SizeType.COMPACT;
     }
 
-    return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewMode }}>
+    return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewWidth }}>
       {this.props.children}
     </AdaptivityContext.Provider>;
   };
 
   render() {
     return <Responsive match={{
-      viewWidth: (width: number) => {
+      windowWidth: (width: number) => {
         return width;
       },
     }}>

@@ -5,7 +5,7 @@ import { HasPlatform } from '../../types';
 import { ModalRootContextInterface } from '../ModalRoot/ModalRootContext';
 import withModalRootContext from '../ModalRoot/withModalRootContext';
 import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewMode } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   id: string;
@@ -40,8 +40,8 @@ class ModalPage extends Component<ModalPageProps> {
   };
 
   render() {
-    const { children, className, header, platform, viewMode } = this.props;
-    const isDesktop = viewMode >= ViewMode.TABLET;
+    const { children, className, header, platform, viewWidth } = this.props;
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     return (
       <div className={classNames(getClassName('ModalPage', platform), className, {
@@ -66,5 +66,5 @@ class ModalPage extends Component<ModalPageProps> {
 }
 
 export default withAdaptivity(withPlatform(withModalRootContext(ModalPage)), {
-  viewMode: true,
+  viewWidth: true,
 });
