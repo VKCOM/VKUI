@@ -64,3 +64,9 @@ export interface HasLinkProps {
   target?: string;
   rel?: string;
 }
+
+export interface Version {
+  major: number;
+  minor?: number;
+  patch?: number;
+}
