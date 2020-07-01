@@ -1,9 +1,9 @@
-import React, { ChangeEvent, ChangeEventHandler, SelectHTMLAttributes } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, RefCallback, SelectHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef, OldRef } from '../../types';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface SelectProps extends
@@ -74,7 +74,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  getRef: OldRef<HTMLSelectElement> = (element: HTMLSelectElement) => {
+  getRef: RefCallback<HTMLSelectElement> = (element) => {
     this.selectEl = element;
 
     const getRef = this.props.getRef;

@@ -1,7 +1,7 @@
-import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes, RefCallback } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
-import { HasFormLabels, HasFormStatus, HasRef, HasRootRef, OldRef } from '../../types';
+import { HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
 
 export interface TextareaProps extends
   TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -48,7 +48,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
     grow: true,
   };
 
-  getRef: OldRef<HTMLTextAreaElement> = (element: HTMLTextAreaElement) => {
+  getRef: RefCallback<HTMLTextAreaElement> = (element) => {
     this.element = element;
 
     const getRef = this.props.getRef;

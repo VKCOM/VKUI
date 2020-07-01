@@ -1,11 +1,11 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, RefCallback } from 'react';
 import getClassName from '../../helpers/getClassName';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import withContext from '../../hoc/withContext';
-import { HasPlatform, HasRootRef, OldRef } from '../../types';
+import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
 
@@ -107,7 +107,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     }
   };
 
-  getRef: OldRef<HTMLDivElement> = (element: HTMLDivElement) => {
+  getRef: RefCallback<HTMLDivElement> = (element) => {
     this.el = element;
 
     const getRootRef = this.props.getRootRef;
