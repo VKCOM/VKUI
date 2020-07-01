@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, RefCallback } from 'react';
 import { OSType } from './lib/platform';
 import { Insets } from '@vkontakte/vk-bridge';
 
@@ -6,13 +6,11 @@ export type FormStatusType = 'default' | 'error' | 'valid';
 
 export type AlignType = 'left' | 'center' | 'right';
 
-export type OldRef<T> = (el: T) => void;
-
 export type RefWithCurrent<T> = {
   current: T | null;
 };
 
-export type Ref<T> = OldRef<T> | RefWithCurrent<T>;
+export type Ref<T> = RefCallback<T> | RefWithCurrent<T>;
 
 export interface HasRootRef<T> {
   getRootRef?: Ref<T>;

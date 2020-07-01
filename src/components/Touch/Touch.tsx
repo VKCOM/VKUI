@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent } from 'react';
+import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent, RefCallback } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import {
   getSupportedEvents,
@@ -8,7 +8,7 @@ import {
   VKUITouchEvent,
   VKUITouchEventHander,
 } from '../../lib/touch';
-import { HasRootRef, OldRef } from '../../types';
+import { HasRootRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 
 export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
@@ -274,7 +274,7 @@ export default class Touch extends Component<TouchProps> {
     this.props.onClick && this.props.onClick(e);
   };
 
-  getRef: OldRef<HTMLElement> = (container: HTMLElement) => {
+  getRef: RefCallback<HTMLElement> = (container) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;

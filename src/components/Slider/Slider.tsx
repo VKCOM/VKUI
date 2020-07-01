@@ -1,8 +1,8 @@
-import React, { Component, HTMLAttributes } from 'react';
+import React, { Component, HTMLAttributes, RefCallback } from 'react';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { HasFormLabels, HasPlatform, HasRootRef, OldRef } from '../../types';
+import { HasFormLabels, HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
 
@@ -172,7 +172,7 @@ class Slider extends Component<SliderProps, SliderState> {
     window.removeEventListener('resize', this.onResize);
   }
 
-  getRef: OldRef<HTMLDivElement> = (container: HTMLDivElement) => {
+  getRef: RefCallback<HTMLDivElement> = (container) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;

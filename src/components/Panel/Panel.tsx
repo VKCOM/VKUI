@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes } from 'react';
+import React, { Component, HTMLAttributes, RefCallback } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -7,7 +7,7 @@ import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
+import { HasInsets, HasPlatform, HasRootRef } from '../../types';
 import { PanelContext, PanelContextProps } from './PanelContext';
 import { IOS } from '../../lib/platform';
 
@@ -44,7 +44,7 @@ class Panel extends Component<PanelProps> {
 
   container: HTMLDivElement;
 
-  getRef: OldRef<HTMLDivElement> = (container: HTMLDivElement) => {
+  getRef: RefCallback<HTMLDivElement> = (container) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;

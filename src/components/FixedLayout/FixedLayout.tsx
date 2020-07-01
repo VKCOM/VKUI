@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, RefCallback } from 'react';
 import getClassName from '../../helpers/getClassName';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
@@ -6,7 +6,7 @@ import { transitionEndEventName, TransitionStartEventDetail, transitionStartEven
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform, HasRootRef, OldRef } from '../../types';
+import { HasInsets, HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
 
@@ -83,7 +83,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     });
   };
 
-  getRef: OldRef<HTMLDivElement> = (element: HTMLDivElement) => {
+  getRef: RefCallback<HTMLDivElement> = (element) => {
     this.el = element;
 
     const getRootRef = this.props.getRootRef;
