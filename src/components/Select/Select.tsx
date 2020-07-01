@@ -1,8 +1,8 @@
-import React, { ChangeEvent, ChangeEventHandler, SelectHTMLAttributes } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, SelectHTMLAttributes, RefCallback } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef, OldRef } from '../../types';
+import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
 
 export interface SelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -71,7 +71,7 @@ export default class Select extends React.Component<SelectProps, SelectState> {
     return this.isControlledOutside ? this.props.value : this.state.value;
   }
 
-  getRef: OldRef<HTMLSelectElement> = (element: HTMLSelectElement) => {
+  getRef: RefCallback<HTMLSelectElement> = (element) => {
     this.selectEl = element;
 
     const getRef = this.props.getRef;

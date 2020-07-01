@@ -1,4 +1,4 @@
-import React, { Component, ElementType, HTMLAttributes } from 'react';
+import React, { Component, ElementType, HTMLAttributes, RefCallback } from 'react';
 import Touch, { TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import classNames from '../../lib/classNames';
@@ -6,7 +6,7 @@ import getClassName from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
-import { HasPlatform, HasRootRef, OldRef, RefWithCurrent } from '../../types';
+import { HasPlatform, HasRootRef, RefWithCurrent } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 
 export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
@@ -30,7 +30,7 @@ export interface TappableState {
 }
 
 export interface RootComponentProps extends TouchProps {
-  ref?: OldRef<HTMLElement> | RefWithCurrent<HTMLElement>;
+  ref?: RefCallback<HTMLElement> | RefWithCurrent<HTMLElement>;
 }
 
 export interface StorageItem {
@@ -241,7 +241,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   /*
    * Берет ref на DOM-ноду из экземпляра Touch
    */
-  getRef: OldRef<HTMLElement> = (container: HTMLElement) => {
+  getRef: RefCallback<HTMLElement> = (container) => {
     this.container = container;
 
     const getRootRef = this.props.getRootRef;

@@ -1,9 +1,8 @@
-import React, { ReactElement, ReactNode, Component, Fragment } from 'react';
+import React, { ReactElement, ReactNode, Component, Fragment, RefCallback } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
-import { OldRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
@@ -100,7 +99,7 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
     });
   }
 
-  getRef: OldRef<HTMLDivElement> = (el: HTMLDivElement) => this.el = el;
+  getRef: RefCallback<HTMLDivElement> = (el) => this.el = el;
 
   render() {
     const { header, text, alignX, alignY, cornerOffset } = this.props;
@@ -197,7 +196,7 @@ export default class Tooltip extends Component<TooltipProps, TooltipState> {
     }
   }
 
-  getRef: OldRef<HTMLDivElement> = (el: HTMLDivElement) => this.targetEl = el;
+  getRef: RefCallback<HTMLDivElement> = (el) => this.targetEl = el;
 
   render() {
     const { children, isShown, ...portalProps } = this.props;

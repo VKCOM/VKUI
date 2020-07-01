@@ -1,9 +1,9 @@
-import React, { Component, HTMLAttributes, ReactElement } from 'react';
+import React, { Component, HTMLAttributes, ReactElement, RefCallback } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import { HasAlign, HasPlatform, OldRef } from '../../types';
+import { HasAlign, HasPlatform } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 
 export interface GalleryProps extends
@@ -43,7 +43,7 @@ export interface GallerySlidesState {
 
 type SetTimeout = (duration: number) => void;
 
-type GetSlideRef = (index: number) => OldRef<HTMLElement>;
+type GetSlideRef = (index: number) => RefCallback<HTMLElement>;
 
 class Gallery extends Component<GalleryProps, GalleryState> {
   constructor(props: GalleryProps) {
@@ -319,11 +319,11 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     clearTimeout(this.timeout);
   };
 
-  getSlideRef: GetSlideRef = (id: number) => (slide: HTMLElement) => {
+  getSlideRef: GetSlideRef = (id: number) => (slide) => {
     this.slidesStore[`slide-${id}`] = slide;
   };
 
-  getViewportRef: OldRef<HTMLElement> = (viewport: HTMLElement) => {
+  getViewportRef: RefCallback<HTMLElement> = (viewport) => {
     this.viewport = viewport;
   };
 
