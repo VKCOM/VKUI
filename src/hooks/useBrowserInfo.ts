@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { IOS, OSType } from '../lib/platform';
 import { SSRContext } from '../lib/SSR';
 import { canUseDOM } from '../lib/dom';
@@ -12,12 +12,8 @@ export interface BrowserInfoInterface {
   platformVersion: Version | null;
 }
 
-export function useBrowserInfo(): BrowserInfoInterface {
-  const ssrContext = useContext(SSRContext);
-  const platform = usePlatform();
-  const userAgent = ssrContext.userAgent || (canUseDOM && navigator.userAgent ? navigator.userAgent : '');
-
-  let platformVersion: Version | null;
+function computeBrowserInfo(platform: OSType, userAgent: string): BrowserInfoInterface {
+  let platformVersion: Version | null = null;
 
   if (platform === IOS) {
     platformVersion = parseiOSVersion(userAgent);
@@ -28,4 +24,14 @@ export function useBrowserInfo(): BrowserInfoInterface {
     platform,
     platformVersion,
   };
+}
+
+export function useBrowserInfo(): BrowserInfoInterface {
+  const ssrContext = useContext(SSRContext);
+  const platform = usePlatform();
+  const userAgent = ssrContext.userAgent || (canUseDOM && navigator.userAgent ? navigator.userAgent : '');
+
+  return useMemo(() => {
+    return computeBrowserInfo(platform, userAgent);
+  }, [computeBrowserInfo, platform, userAgent]);
 }
