@@ -1,4 +1,37 @@
 import { Version } from '../types';
+import { IOS, OSType, platform } from './platform';
+
+export interface BrowserInfo {
+  userAgent: string;
+  platform: OSType;
+  platformVersion: Version | null;
+}
+
+const memoized: { [index: string]: BrowserInfo } = {};
+
+export function computeBrowserInfo(userAgent: string): BrowserInfo {
+  if (memoized[userAgent]) {
+    return memoized[userAgent];
+  }
+
+  const platformName = platform(userAgent);
+
+  let platformVersion: Version | null = null;
+
+  if (platformName === IOS) {
+    platformVersion = parseiOSVersion(userAgent);
+  }
+
+  const browserInfo: BrowserInfo = {
+    userAgent,
+    platform: platformName,
+    platformVersion,
+  };
+
+  memoized[userAgent] = browserInfo;
+
+  return browserInfo;
+}
 
 export function parseiOSVersion(userAgent: string): Version | null {
   if (!userAgent) {
