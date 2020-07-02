@@ -103,6 +103,10 @@
   color: var(--icon_tertiary);
 }
 
+.Banner--android.Banner--md-image .Banner__dismissIcon {
+  color: var(--white);
+}
+
 .Banner__dismissIcon:active {
   opacity: .4;
 }
