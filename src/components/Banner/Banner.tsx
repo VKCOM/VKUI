@@ -2,9 +2,11 @@ import React, { FunctionComponent, ReactNode, HTMLAttributes, MouseEventHandler 
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
+import { ANDROID, IOS } from '../../lib/platform';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import Icon24DismissSubstract from '@vkontakte/icons/dist/24/dismiss_substract';
 import Icon24DismissDark from '@vkontakte/icons/dist/24/dismiss_dark';
+import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Tappable from '../Tappable/Tappable';
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
@@ -114,7 +116,8 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
         {asideMode === 'dismiss' &&
         <div className="Banner__dismiss">
           <div className="Banner__dismissIcon" onClick={onDismiss}>
-            {mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />}
+            {platform === ANDROID && <Icon24Cancel />}
+            {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
           </div>
         </div>
         }
