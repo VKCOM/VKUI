@@ -102,7 +102,7 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
   getRef: RefCallback<HTMLDivElement> = (el) => this.el = el;
 
   render() {
-    const { header, text, alignX, alignY, cornerOffset } = this.props;
+    const { header, text, alignX, alignY, cornerOffset, mode } = this.props;
 
     return ReactDOM.createPortal(
       <div className={
@@ -110,6 +110,7 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
           baseClassName,
           `Tooltip--x-${alignX}`,
           `Tooltip--y-${alignY}`,
+          `Tooltip--${mode}`,
           {
             'Tooltip--fixed': this.fixedPortal,
           },
@@ -132,6 +133,7 @@ export interface TooltipProps {
    * иначе тултип показан не будет. Если передан React-element, то такой проблемы нет.
    */
   children: ReactNode;
+  mode: 'accent' | 'light';
   /**
    * Если передан `false`, то рисуется просто `children`.
    */
@@ -182,6 +184,7 @@ export default class Tooltip extends Component<TooltipProps, TooltipState> {
     alignY: 'bottom',
     cornerOffset: 0,
     isShown: true,
+    mode: 'accent'
   };
 
   state: TooltipState = {
