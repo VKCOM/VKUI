@@ -55,6 +55,7 @@ import { Tooltip, Button } from '@vkontakte/vkui';
             </Group>
             <Group>
               <Tooltip
+                mode="light"
                 text="У нас тут brand new функционал подвезли. Зацените!"
                 isShown={this.state.tooltip}
                 onClose={() => this.setState({ tooltip: false })}
