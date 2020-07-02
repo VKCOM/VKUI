@@ -265,3 +265,11 @@
 .Banner--android .Banner__in {
   border-radius: 8px;
 }
+
+.Banner--android .Banner__dismissIcon {
+  color: var(--icon_secondary);
+}
+
+.Banner--android.Banner--md-image .Banner__dismissIcon {
+  color: var(--white);
+}

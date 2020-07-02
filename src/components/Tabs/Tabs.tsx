@@ -3,6 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
+import { ANDROID } from '../../lib/platform';
 
 export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   mode?: 'default' | 'buttons' | 'segmented';
@@ -17,6 +18,10 @@ const Tabs: FunctionComponent<TabsProps> = ({
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
+
+  if (platform === ANDROID && mode === 'segmented') {
+    mode = 'default';
+  }
 
   return (
     <div
