@@ -175,9 +175,7 @@
                 Записи Павла
               </TabsItem>
             </Tabs>
-            {osname === IOS &&
             <CellButton onClick={() => this.setState({ activePanel: 'panel5' })}>Segmented (iOS only)</CellButton>
-            }
           </Panel>
           <Panel id="panel5">
             <PanelHeader
