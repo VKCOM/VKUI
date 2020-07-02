@@ -184,7 +184,7 @@ export default class Tooltip extends Component<TooltipProps, TooltipState> {
     alignY: 'bottom',
     cornerOffset: 0,
     isShown: true,
-    mode: 'accent'
+    mode: 'accent',
   };
 
   state: TooltipState = {
