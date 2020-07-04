@@ -3,7 +3,7 @@ import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import transitionEvents from '../../lib/transitionEvents';
+import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
@@ -40,6 +40,8 @@ class Alert extends Component<AlertProps, AlertState> {
 
   element: React.RefObject<HTMLDivElement>;
 
+  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+
   static defaultProps: AlertProps = {
     actionsLayout: 'horizontal',
     actions: [],
@@ -75,13 +77,12 @@ class Alert extends Component<AlertProps, AlertState> {
   };
 
   waitTransitionFinish(eventHandler: TransitionEndHandler) {
-    if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
-
-      this.element.current.removeEventListener(eventName, eventHandler);
-      this.element.current.addEventListener(eventName, eventHandler);
+    if (transitionEvent.supported) {
+      this.element.current.removeEventListener(transitionEvent.name, eventHandler);
+      this.element.current.addEventListener(transitionEvent.name, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 200 : 300);
+      clearTimeout(this.transitionFinishTimeout);
+      this.transitionFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 200 : 300);
     }
   }
 

@@ -2,7 +2,7 @@ import React, { Children, Component, HTMLAttributes, ReactElement } from 'react'
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import transitionEvents from '../../lib/transitionEvents';
+import { transitionEvent } from '../../lib/supportEvents';
 import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
 import { isNumeric } from '../../lib/utils';
@@ -49,6 +49,8 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
   elRef: React.RefObject<HTMLDivElement>;
 
+  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+
   onClose: CloseCallback = () => {
     this.setState({ closing: true });
     this.waitTransitionFinish(this.props.onClose);
@@ -71,13 +73,12 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
-    if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'TransitionEnd' : 'transitionend';
-
-      this.elRef.current.removeEventListener(eventName, eventHandler);
-      this.elRef.current.addEventListener(eventName, eventHandler);
+    if (transitionEvent.supported) {
+      this.elRef.current.removeEventListener(transitionEvent.name, eventHandler);
+      this.elRef.current.addEventListener(transitionEvent.name, eventHandler);
     } else {
-      setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
+      clearTimeout(this.transitionFinishTimeout);
+      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
     }
   }
 

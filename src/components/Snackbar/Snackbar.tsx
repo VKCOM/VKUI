@@ -7,7 +7,7 @@ import classNames from '../../lib/classNames';
 import { HasPlatform } from '../../types';
 import getClassname from '../../helpers/getClassName';
 import { canUseDOM } from '../../lib/dom';
-import transitionEvents from '../../lib/transitionEvents';
+import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 
@@ -75,12 +75,14 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   private innerEl: HTMLDivElement;
   private readonly bodyElRef: React.RefObject<HTMLDivElement>;
-  private closeTimeout: number;
 
   private shiftXPercent: number;
   private shiftXCurrent: number;
   private touchStartTime: Date;
   private animationFrame: number;
+
+  private closeTimeout: ReturnType<typeof setTimeout>;
+  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
 
   componentDidMount() {
     this.setCloseTimeout();
@@ -96,7 +98,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   setCloseTimeout = () => {
     if (canUseDOM) {
-      this.closeTimeout = window.setTimeout(() => {
+      this.closeTimeout = setTimeout(() => {
         this.close();
       }, this.props.duration);
     }
@@ -123,10 +125,13 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   waitTransitionFinish(element: HTMLElement, eventHandler: VoidFunction) {
     if (element) {
-      const eventName = transitionEvents.transitionEndEventName;
-
-      element.removeEventListener(eventName, eventHandler);
-      element.addEventListener(eventName, eventHandler);
+      if (transitionEvent.supported) {
+        element.removeEventListener(transitionEvent.name, eventHandler);
+        element.addEventListener(transitionEvent.name, eventHandler);
+      } else {
+        clearTimeout(this.transitionFinishTimeout);
+        this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 400 : 320);
+      }
     }
   }
 

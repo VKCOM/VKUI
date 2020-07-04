@@ -2,7 +2,7 @@ import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react
 import PropTypes, { Requireable, Validator } from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import transitionEvents from '../../lib/transitionEvents';
+import { animationEvent } from '../../lib/supportEvents';
 import { ANDROID } from '../../lib/platform';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
@@ -58,6 +58,8 @@ class Root extends Component<RootProps, RootState> {
     document: PropTypes.any,
     transitionMotionEnabled: PropTypes.bool,
   };
+
+  private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   get document() {
     return this.context.document || document;
@@ -127,13 +129,12 @@ class Root extends Component<RootProps, RootState> {
       return;
     }
 
-    if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
-
-      elem.removeEventListener(eventName, eventHandler);
-      elem.addEventListener(eventName, eventHandler);
+    if (animationEvent.supported) {
+      elem.removeEventListener(animationEvent.name, eventHandler);
+      elem.addEventListener(animationEvent.name, eventHandler);
     } else {
-      setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 300 : 600);
+      clearTimeout(this.animationFinishTimeout);
+      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 300 : 600);
     }
   }
 

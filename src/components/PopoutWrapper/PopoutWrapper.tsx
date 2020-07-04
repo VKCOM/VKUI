@@ -2,7 +2,7 @@ import React, { Component, HTMLAttributes, MouseEvent } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { ANDROID } from '../../lib/platform';
-import transitionEvents from '../../lib/transitionEvents';
+import { animationEvent } from '../../lib/supportEvents';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { canUseDOM } from '../../lib/dom';
@@ -42,7 +42,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
   elRef: React.RefObject<HTMLDivElement>;
 
-  animationFinishTimeout: number;
+  private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   componentDidMount() {
     if (canUseDOM) {
@@ -58,18 +58,17 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
     if (canUseDOM) {
       // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
       window.removeEventListener('touchmove', this.preventTouch, { passive: false });
-      window.clearTimeout(this.animationFinishTimeout);
+      clearTimeout(this.animationFinishTimeout);
     }
   }
 
   waitAnimationFinish(elem: HTMLDivElement, eventHandler: AnimationEndCallback) {
-    if (transitionEvents.supported) {
-      const eventName = transitionEvents.prefix ? transitionEvents.prefix + 'AnimationEnd' : 'animationend';
-      elem.removeEventListener(eventName, eventHandler);
-      elem.addEventListener(eventName, eventHandler);
+    if (animationEvent.supported) {
+      elem.removeEventListener(animationEvent.name, eventHandler);
+      elem.addEventListener(animationEvent.name, eventHandler);
     } else {
-      const { platform } = this.props;
-      this.animationFinishTimeout = window.setTimeout(eventHandler, platform === ANDROID ? 300 : 600);
+      clearTimeout(this.animationFinishTimeout);
+      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 300 : 600);
     }
   }
 
