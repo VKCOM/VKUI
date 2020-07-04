@@ -8,7 +8,7 @@ import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';
 import { ANDROID } from '../../lib/platform';
-import transitionEvents from '../../lib/transitionEvents';
+import { transitionEvent } from '../../lib/supportEvents';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
@@ -609,14 +609,16 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
   };
 
   waitTransitionFinish(modalState: ModalsStateEntry, eventHandler: () => void) {
-    const eventName = transitionEvents.transitionEndEventName;
+    if (transitionEvent.supported) {
+      const onceHandler = () => {
+        modalState.innerElement.removeEventListener(transitionEvent.name, onceHandler);
+        eventHandler();
+      };
 
-    const onceHandler = () => {
-      modalState.innerElement.removeEventListener(eventName, onceHandler);
-      eventHandler();
-    };
-
-    modalState.innerElement.addEventListener(eventName, onceHandler);
+      modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
+    } else {
+      setTimeout(eventHandler, this.props.platform === ANDROID ? 320 : 400);
+    }
   }
 
   switchPrevNext() {

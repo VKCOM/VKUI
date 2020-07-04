@@ -2,7 +2,7 @@ import React, { Component, HTMLAttributes, RefObject } from 'react';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import transitionEvents from '../../lib/transitionEvents';
+import { animationEvent } from '../../lib/supportEvents';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 
@@ -26,6 +26,8 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
 
   elementRef: RefObject<HTMLDivElement> = React.createRef();
 
+  private animationFinishTimeout: ReturnType<typeof setTimeout>;
+
   componentDidUpdate(prevProps: PanelHeaderContextProps) {
     if (this.props.opened !== prevProps.opened) {
       if (this.props.opened === false) {
@@ -36,12 +38,14 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
   }
 
   waitAnimationFinish(eventHandler: VoidFunction) {
-    const eventName = transitionEvents.animationEndEventName;
-    const element = this.elementRef.current;
-
-    if (element) {
-      element.removeEventListener(eventName, eventHandler);
-      element.addEventListener(eventName, eventHandler);
+    if (this.elementRef.current) {
+      if (animationEvent.supported) {
+        this.elementRef.current.removeEventListener(animationEvent.name, eventHandler);
+        this.elementRef.current.addEventListener(animationEvent.name, eventHandler);
+      } else {
+        clearTimeout(this.animationFinishTimeout);
+        this.animationFinishTimeout = setTimeout(eventHandler, 200);
+      }
     }
   }
 

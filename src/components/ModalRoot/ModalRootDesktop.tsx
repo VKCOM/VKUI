@@ -2,13 +2,14 @@ import React, { Component, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import { isFunction } from '../../lib/utils';
-import transitionEvents from '../../lib/transitionEvents';
+import { transitionEvent } from '../../lib/supportEvents';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { ModalsStateEntry, TYPE_PAGE, TYPE_CARD } from './ModalRoot';
-import { getClassName } from '../..';
+import { ANDROID } from '../../lib/platform';
+import getClassName from '../../helpers/getClassName';
 
 export interface ModalRootProps extends HasChildren, HasPlatform {
   activeModal?: string | null;
@@ -258,14 +259,16 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
   }
 
   waitTransitionFinish(modalState: ModalsStateEntry, eventHandler: () => void) {
-    const eventName = transitionEvents.transitionEndEventName;
+    if (transitionEvent.supported) {
+      const onceHandler = () => {
+        modalState.innerElement.removeEventListener(transitionEvent.name, onceHandler);
+        eventHandler();
+      };
 
-    const onceHandler = () => {
-      modalState.innerElement.removeEventListener(eventName, onceHandler);
-      eventHandler();
-    };
-
-    modalState.innerElement.addEventListener(eventName, onceHandler);
+      modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
+    } else {
+      setTimeout(eventHandler, this.props.platform === ANDROID ? 320 : 400);
+    }
   }
 
   switchPrevNext() {
