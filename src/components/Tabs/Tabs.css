@@ -70,7 +70,7 @@
   background: var(--background_content);
   }
 
-  .FixedLayout--ios.FixedLayout--bottom .TabsItem,
+  .FixedLayout--ios.FixedLayout--bottom .Tabs__in,
   .FixedLayout--ios.FixedLayout--bottom .Separator {
     position: relative;
     z-index: 2;
