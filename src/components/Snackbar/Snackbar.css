@@ -78,6 +78,10 @@
   margin-bottom: -6px;
 }
 
+.ModalRoot .Snackbar {
+  padding-bottom: var(--safe-area-inset-bottom);
+}
+
 /* iOS */
 .Snackbar--ios .Snackbar__in,
 .Snackbar--ios .Snackbar__body {
