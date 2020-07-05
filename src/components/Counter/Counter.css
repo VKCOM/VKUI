@@ -20,8 +20,8 @@
   }
 
 .Counter--prominent {
-  background: var(--destructive);
-  color: var(--white);
+  background: var(--counter_prominent_background);
+  color: var(--counter_prominent_text);
   }
 
 .Counter--s-m {
