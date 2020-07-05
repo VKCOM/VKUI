@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
   color: var(--tabbar_inactive_icon);
+  text-decoration: none;
   }
 
 .Tabbar--l-vertical .TabbarItem.TabbarItem--text {
