@@ -43,8 +43,8 @@ class Example extends React.Component {
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'discover'}
             data-story="discover"
-            text="Поиск"
-          ><Icon28SearchOutline /></TabbarItem>
+            text="Обзор"
+          ><Icon28SafariOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'messages'}
@@ -56,14 +56,14 @@ class Example extends React.Component {
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'notifications'}
             data-story="notifications"
-            text="Уведомлен."
-          ><Icon28Notifications /></TabbarItem>
+            text="Клипы"
+          ><Icon28ClipOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'more'}
             data-story="more"
-            text="Ещё"
-          ><Icon28More /></TabbarItem>
+            text="Профиль"
+          ><Icon28UserCircleOutline /></TabbarItem>
         </Tabbar>
       }>
         <View id="feed" activePanel="feed">
