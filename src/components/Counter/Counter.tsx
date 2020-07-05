@@ -13,13 +13,12 @@ export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => {
-  const { mode, size, children, className, style, ...restProps } = props;
+  const { mode, size, children, className, ...restProps } = props;
 
   return (
     <div
       {...restProps}
       className={classNames(className, baseClassName, `Counter--${mode}`, `Counter--s-${size}`)}
-      style={style}
     >
       <div className="Counter__in">
         {children}
