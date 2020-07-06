@@ -47,6 +47,9 @@ import Icon28UserOutline from '@vkontakte/icons/dist/28/user_outline';
 import Icon28UsersOutline from '@vkontakte/icons/dist/28/users_outline';
 import Icon28PaletteOutline from '@vkontakte/icons/dist/28/palette_outline';
 import Icon28UserAddOutline from '@vkontakte/icons/dist/28/user_add_outline';
+import Icon28SafariOutline from '@vkontakte/icons/dist/28/safari_outline';
+import Icon28ClipOutline from '@vkontakte/icons/dist/28/clip_outline';
+import Icon28UserCircleOutline from '@vkontakte/icons/dist/28/user_circle_outline';
 
 import Icon56MentionOutline from '@vkontakte/icons/dist/56/mention_outline';
 import Icon56MessageReadOutline from '@vkontakte/icons/dist/56/message_read_outline';
@@ -109,6 +112,10 @@ window.Icon28UserOutline = Icon28UserOutline;
 window.Icon28UsersOutline = Icon28UsersOutline;
 window.Icon28PaletteOutline = Icon28PaletteOutline;
 window.Icon28UserAddOutline = Icon28UserAddOutline;
+window.Icon28SafariOutline = Icon28SafariOutline;
+window.Icon28ClipOutline = Icon28ClipOutline;
+window.Icon28UserCircleOutline = Icon28ClipOutline;
+
 
 window.Icon56MentionOutline = Icon56MentionOutline;
 window.Icon56MessageReadOutline = Icon56MessageReadOutline;

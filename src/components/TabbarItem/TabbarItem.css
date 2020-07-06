@@ -6,10 +6,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--tabbar_inactive_icon);
+  text-decoration: none;
   }
 
-.TabbarItem {
-  color: var(--tabbar_inactive_icon);
+.Tabbar--l-vertical .TabbarItem.TabbarItem--text {
+  position: relative;
+  top: 2px;
   }
 
 .TabbarItem--selected {
@@ -38,17 +41,8 @@
 
     .TabbarItem__label {
       position: absolute;
-      top: 0;
-      left: calc(100% - 12px);
-      background: var(--destructive);
-      font-size: 12px;
-      color: var(--white);
-      line-height: 14px;
-      border-radius: 9px;
-      min-width: 18px;
-      text-align: center;
-      padding: 2px 4px;
-      box-sizing: border-box;
+      top: -2px;
+      left: calc(100% - 9px);
       }
 
     .Tabbar--l-vertical .TabbarItem__text {
