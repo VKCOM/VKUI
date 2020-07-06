@@ -97,7 +97,7 @@
     "tsc": "NODE_ENV=production tsc --emitDeclarationOnly --declaration",
     "tsc-es6": "NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/es6/",
     "clear": "rm -rf dist/*",
-    "test": "tsc --noEmit && eslint --ext .jsx,.js,.ts,.tsx src/ && stylelint './src/**/*.css'",
+    "test": "tsc --noEmit && eslint --ext .jsx,.js,.ts,.tsx src/ && stylelint \"./src/**/*.css\"",
     "copy-default-scheme": "cp ./src/styles/bright_light.css ./dist/default_scheme.css"
   },
   "pre-commit": [
