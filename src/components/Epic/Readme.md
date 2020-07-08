@@ -41,10 +41,10 @@ class Example extends React.Component {
           ><Icon28NewsfeedOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'discover'}
-            data-story="discover"
-            text="Обзор"
-          ><Icon28SafariOutline /></TabbarItem>
+            selected={this.state.activeStory === 'services'}
+            data-story="services"
+            text="Сервисы"
+          ><Icon28ServicesOutline/></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'messages'}
@@ -71,9 +71,9 @@ class Example extends React.Component {
             <PanelHeader>Новости</PanelHeader>
           </Panel>
         </View>
-        <View id="discover" activePanel="discover">
-          <Panel id="discover">
-            <PanelHeader>Поиск</PanelHeader>
+        <View id="services" activePanel="services">
+          <Panel id="services">
+            <PanelHeader>Сервисы</PanelHeader>
           </Panel>
         </View>
         <View id="messages" activePanel="messages">
