@@ -44,6 +44,10 @@ ReactDOM.render(<App />, document.getElementById('root'));
 * android >= 4.4
 * ios >= 9
 
+### Внимание
+
+Библиотека официально не поддерживает платформу m.vk.com.
+
 ## Документация
 
 В [документации](https://vkcom.github.io/vkui-styleguide/) вы сможете найти информацию об использовании компонентов и утилит.
