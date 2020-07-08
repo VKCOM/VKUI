@@ -19,7 +19,7 @@ class Example extends React.Component {
     super(props);
 
     this.state = {
-      activeStory: 'more'
+      activeStory: 'profile'
     };
     this.onStoryChange = this.onStoryChange.bind(this);
   }
@@ -60,8 +60,8 @@ class Example extends React.Component {
           ><Icon28ClipOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'more'}
-            data-story="more"
+            selected={this.state.activeStory === 'profile'}
+            data-story="profile"
             text="Профиль"
           ><Icon28UserCircleOutline /></TabbarItem>
         </Tabbar>
@@ -86,9 +86,9 @@ class Example extends React.Component {
             <PanelHeader>Уведомления</PanelHeader>
           </Panel>
         </View>
-        <View id="more" activePanel="more">
-          <Panel id="more">
-            <PanelHeader>Ещё</PanelHeader>
+        <View id="profile" activePanel="profile">
+          <Panel id="profile">
+            <PanelHeader>Профиль</PanelHeader>
           </Panel>
         </View>
       </Epic>

@@ -114,7 +114,7 @@ window.Icon28PaletteOutline = Icon28PaletteOutline;
 window.Icon28UserAddOutline = Icon28UserAddOutline;
 window.Icon28SafariOutline = Icon28SafariOutline;
 window.Icon28ClipOutline = Icon28ClipOutline;
-window.Icon28UserCircleOutline = Icon28ClipOutline;
+window.Icon28UserCircleOutline = Icon28UserCircleOutline;
 
 
 window.Icon56MentionOutline = Icon56MentionOutline;
