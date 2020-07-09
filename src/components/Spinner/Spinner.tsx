@@ -7,9 +7,8 @@ import Spinner44 from '@vkontakte/icons/dist/44/spinner';
 import Spinner16 from '@vkontakte/icons/dist/16/spinner';
 import usePlatform from '../../hooks/usePlatform';
 
-export type SpinnerSize = 'small' | 'regular' | 'large' | 'medium';
 export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
-  size: SpinnerSize;
+  size?: 'small' | 'regular' | 'large' | 'medium';
 }
 
 const svgSpinner = (size: SpinnerProps['size']): React.ReactElement => {
