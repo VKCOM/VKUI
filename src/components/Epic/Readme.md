@@ -54,8 +54,8 @@ class Example extends React.Component {
           ><Icon28MessageOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'klips'}
-            data-story="klips"
+            selected={this.state.activeStory === 'clips'}
+            data-story="clips"
             text="Клипы"
           ><Icon28ClipOutline /></TabbarItem>
           <TabbarItem
@@ -81,8 +81,8 @@ class Example extends React.Component {
             <PanelHeader>Сообщения</PanelHeader>
           </Panel>
         </View>
-        <View id="klips" activePanel="klips">
-          <Panel id="klips">
+        <View id="clips" activePanel="clips">
+          <Panel id="clips">
             <PanelHeader>Клипы</PanelHeader>
           </Panel>
         </View>
