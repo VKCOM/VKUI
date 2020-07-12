@@ -29,7 +29,7 @@ type BannerData = {
   directLink?: boolean;
   navigationType?: string;
   description?: string;
-  ageRestrictions?: number;
+  ageRestrictions?: string;
   /** @deprecated */
   ageRestriction?: number;
 };
@@ -44,11 +44,10 @@ export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const PromoBanner = (props: PromoBannerProps) => {
-  const ageRestrictions = useMemo(
-    () =>
-      props.bannerData.ageRestrictions != null ? props.bannerData.ageRestrictions : props.bannerData.ageRestriction,
-    [props.bannerData.ageRestrictions, props.bannerData.ageRestriction],
-  );
+  const ageRestrictions =
+    props.bannerData.ageRestrictions != null
+      ? parseInt(props.bannerData.ageRestrictions)
+      : props.bannerData.ageRestriction;
 
   const [currentPixel, setCurrentPixel] = useState('');
 
@@ -71,7 +70,7 @@ const PromoBanner = (props: PromoBannerProps) => {
   return (
     <div className={classNames('PromoBanner', props.className)}>
       <div className="PromoBanner__head">
-        {ageRestrictions && <span className="PromoBanner__age">{ageRestrictions}+</span>}
+        {ageRestrictions != null && <span className="PromoBanner__age">{ageRestrictions}+</span>}
         <span className="PromoBanner__label">{props.bannerData.advertisingLabel || 'Advertisement'}</span>
 
         {!props.isCloseButtonHidden &&
