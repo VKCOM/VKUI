@@ -4,6 +4,7 @@ import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
 import { HasLinkProps, HasRootRef } from '../../types';
 import Tappable from '../Tappable/Tappable';
+import { hasReactNode } from '../../lib/utils';
 
 export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasLinkProps {
   /**
@@ -70,14 +71,14 @@ const RichCell: FunctionComponent<RichCellProps> = ({
           {isAfterPrimitive ? <span>{after}</span> : after}
           <div className="RichCell__content">
             <div className="RichCell__children">{children}</div>
-            {after && <div className="RichCell__after">{after}</div>}
+            {hasReactNode(after) && <div className="RichCell__after">{after}</div>}
           </div>
-          {text && <div className="RichCell__text">{text}</div>}
-          {caption && <div className="RichCell__caption">{caption}</div>}
-          {(bottom || actions) &&
+          {hasReactNode(text) && <div className="RichCell__text">{text}</div>}
+          {hasReactNode(caption) && <div className="RichCell__caption">{caption}</div>}
+          {(hasReactNode(bottom) || hasReactNode(actions)) &&
             <div className="RichCell__bottom">
               {bottom}
-              {actions && <div className="RichCell__actions">{actions}</div>}
+              {hasReactNode(actions) && <div className="RichCell__actions">{actions}</div>}
             </div>
           }
         </div>
