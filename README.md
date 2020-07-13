@@ -40,9 +40,9 @@ ReactDOM.render(<App />, document.getElementById('root'));
 * ios >= 9
 
 Иными словами, мы поддерживаем браузеры следующих версий:
-* Safari и Chrome для iOS >= 9
-* Android Browser >= 4.4
-* Chrome для Android, начиная с Android 5.0
+* Safari для iOS >= 9
+* Android Browser >= 4.4 (Chrome 30)
+* Chrome для Android, начиная с Android 5.0 (Chrome 36)
 
 ### vk.com и m.vk.com
 Сейчас библиотека не гарантирует стабильную работу при интеграции в [vk.com](vk.com) и [m.vk.com](m.vk.com). В vk.com есть нерешенные проблемы с элементами ввода типа клавиатуры и мышки. В m.vk.com есть несоответствия в списках поддерживаемых браузеров.
