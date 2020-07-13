@@ -17,7 +17,7 @@ type ProxyInputHTMLAttributes = Omit<InputHTMLAttributes<HTMLElement>, 'size'>;
 
 export interface CellProps extends ProxyInputHTMLAttributes, HasChildren, HasRootRef<HTMLElement>, HasPlatform {
   /**
-   * Контейнер для контента от `children`.
+   * Контейнер для контента слева от `children`.
    */
   before?: ReactNode;
   /**

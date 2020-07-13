@@ -202,7 +202,7 @@
 .ActionSheet--android {
   width: calc(100% - 20px);
   margin: 10px;
-  animation: animation-actionsheet-intro .3s var(--android-easing);
+  animation: animation-actionsheet-intro .2s var(--android-easing);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -215,7 +215,7 @@
 
 .ActionSheet--android.ActionSheet--closing {
   transform: translateY(calc(100% + 20px));
-  transition: transform .3s var(--android-easing);
+  transition: transform .2s var(--android-easing);
   }
 
 .ActionSheet--android .ActionSheetItem {
