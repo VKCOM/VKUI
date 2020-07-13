@@ -74,6 +74,7 @@
 @import '../components/Separator/Separator.css';
 @import '../components/Placeholder/Placeholder.css';
 @import '../components/Banner/Banner.css';
+@import '../components/MiniInfoCell/MiniInfoCell.css';
 
 /* Forms */
 @import '../components/FormLayout/FormLayout.css';
