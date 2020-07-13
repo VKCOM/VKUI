@@ -2,12 +2,26 @@ import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
-import { HasRootRef } from '../../types';
+import { HasLinkProps, HasRootRef } from '../../types';
 import Tappable from '../Tappable/Tappable';
 
-export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasLinkProps {
+  /**
+   * Контейнер для текста под `children`.
+   */
   text?: ReactNode;
+  /**
+   * Контейнер для текста под `text`.
+   */
   caption?: ReactNode;
+  /**
+   * Контейнер для контента под `caption`. Например `<UsersStack size="s" />`
+   */
+  bottom?: ReactNode;
+  /**
+   * Кнопка или набор кнопок `<Button size="m" />`. Располагается под `bottom`.
+   */
+  actions?: ReactNode;
   /**
    * `<Avatar size={48|72} />`
    */
@@ -16,18 +30,8 @@ export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<H
    * Иконка 28 или текст
    */
   after?: ReactNode;
-  /**
-   * Например `<UsersStack size="s" />`
-   */
-  bottom?: ReactNode;
-  /**
-   * Кнопка или набор кнопок `<Button size="m" />`
-   */
-  actions?: ReactNode;
   disabled?: boolean;
   multiline?: boolean;
-  href?: string;
-  target?: string;
 }
 
 const RichCell: FunctionComponent<RichCellProps> = ({

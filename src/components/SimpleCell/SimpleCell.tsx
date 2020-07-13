@@ -12,13 +12,22 @@ export interface SimpleCellProps extends HTMLAttributes<HTMLElement>, HasRootRef
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
   before?: ReactNode;
+  /**
+   * Контейнер для текста справа от `children`.
+   */
   indicator?: ReactNode;
   /**
-   * Иконка 24|28 или `<Switch />`
+   * Иконка 24|28 или `<Switch />`. Располагается справа от `indicator`.
    */
   after?: ReactNode;
+  /**
+   * Контейнер для текста под `children`.
+   */
   description?: ReactNode;
   disabled?: boolean;
+  /**
+   * В iOS добавляет chevron справа. Передавать `true`, если предполагается кликабельность ячейки.
+   */
   expandable?: boolean;
   multiline?: boolean;
 }
