@@ -11,6 +11,13 @@ import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import Icon16Like from '@vkontakte/icons/dist/16/like';
 
+import Icon20ArticleOutline from '@vkontakte/icons/dist/20/article_outline';
+import Icon20FollowersOutline from '@vkontakte/icons/dist/20/followers_outline';
+import Icon20WorkOutline from '@vkontakte/icons/dist/20/work_outline';
+import Icon20GlobeOutline from '@vkontakte/icons/dist/20/globe_outline';
+import Icon20Info from '@vkontakte/icons/dist/20/info';
+import Icon20PhoneOutline from '@vkontakte/icons/dist/20/phone_outline';
+
 import Icon24Add from '@vkontakte/icons/dist/24/add';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
@@ -77,6 +84,13 @@ window.Icon16Done = Icon16Done;
 window.Icon16Dropdown = Icon16Dropdown;
 window.Icon16Like = Icon16Like;
 
+window.Icon20ArticleOutline = Icon20ArticleOutline;
+window.Icon20FollowersOutline = Icon20FollowersOutline;
+window.Icon20WorkOutline = Icon20WorkOutline;
+window.Icon20GlobeOutline = Icon20GlobeOutline;
+window.Icon20Info = Icon20Info;
+window.Icon20PhoneOutline = Icon20PhoneOutline;
+
 window.Icon24Add = Icon24Add;
 window.Icon24Back = Icon24Back;
 window.Icon24Camera = Icon24Camera;
@@ -116,7 +130,7 @@ window.Icon28PaletteOutline = Icon28PaletteOutline;
 window.Icon28UserAddOutline = Icon28UserAddOutline;
 window.Icon28SafariOutline = Icon28SafariOutline;
 window.Icon28ClipOutline = Icon28ClipOutline;
-window.Icon28UserCircleOutline = Icon28ClipOutline;
+window.Icon28UserCircleOutline = Icon28UserCircleOutline;
 
 
 window.Icon56MentionOutline = Icon56MentionOutline;

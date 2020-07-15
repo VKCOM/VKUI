@@ -68,7 +68,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
       elem.addEventListener(animationEvent.name, eventHandler);
     } else {
       clearTimeout(this.animationFinishTimeout);
-      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 300 : 600);
+      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
     }
   }
 
@@ -80,14 +80,8 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
   preventTouch: WindowTouchListener = (e: Event) => e.preventDefault();
 
-  onClick: ClickHandler = (e: MouseEvent<HTMLDivElement>) => {
-    if (this.state.opened && this.props.onClick) {
-      this.props.onClick(e);
-    }
-  };
-
   render() {
-    const { alignY, alignX, closing, children, hasMask, onClick, className, platform, ...restProps } = this.props;
+    const { alignY, alignX, closing, children, hasMask, className, platform, ...restProps } = this.props;
     const baseClassNames = getClassName('PopoutWrapper', platform);
 
     return (
@@ -95,9 +89,9 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
         {...restProps}
         className={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
           'PopoutWrapper--closing': closing,
+          'PopoutWrapper--opened': this.state.opened,
           'PopoutWrapper--fixed': hasMask,
         }, className)}
-        onClick={this.onClick}
         ref={this.elRef}
       >
         {hasMask && <div className="PopoutWrapper__mask" />}

@@ -29,6 +29,8 @@ type BannerData = {
   directLink?: boolean;
   navigationType?: string;
   description?: string;
+  ageRestrictions?: string;
+  /** @deprecated */
   ageRestriction?: number;
 };
 
@@ -42,13 +44,20 @@ export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const PromoBanner = (props: PromoBannerProps) => {
+  const ageRestrictions =
+    props.bannerData.ageRestrictions != null
+      ? parseInt(props.bannerData.ageRestrictions)
+      : props.bannerData.ageRestriction;
+
   const [currentPixel, setCurrentPixel] = useState('');
 
-  const statsPixels = useMemo(() => (
-    props.bannerData.statistics
-      ? props.bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
-      : {}
-  ) as Record<StatsType, string | void>, [props.bannerData.statistics]);
+  const statsPixels = useMemo(
+    () =>
+      (props.bannerData.statistics
+        ? props.bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
+        : {}) as Record<StatsType, string | void>,
+    [props.bannerData.statistics],
+  );
 
   const onClick = useCallback(() => setCurrentPixel(statsPixels.click || ''), [statsPixels.click]);
 
@@ -61,13 +70,13 @@ const PromoBanner = (props: PromoBannerProps) => {
   return (
     <div className={classNames('PromoBanner', props.className)}>
       <div className="PromoBanner__head">
-        {props.bannerData.ageRestriction && <span className="PromoBanner__age">{props.bannerData.ageRestriction}+</span>}
+        {ageRestrictions != null && <span className="PromoBanner__age">{ageRestrictions}+</span>}
         <span className="PromoBanner__label">{props.bannerData.advertisingLabel || 'Advertisement'}</span>
 
         {!props.isCloseButtonHidden &&
-        <div className="PromoBanner__close" onClick={props.onClose}>
-          <Icon24Dismiss />
-        </div>
+          <div className="PromoBanner__close" onClick={props.onClose}>
+            <Icon24Dismiss />
+          </div>
         }
       </div>
       <SimpleCell

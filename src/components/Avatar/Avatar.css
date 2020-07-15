@@ -11,7 +11,8 @@
       background: var(--placeholder_icon_background);
       border: none;
       display: block;
-      max-width: 100%;
+      width: 100%;
+      height: 100%;
       position: relative;
       z-index: 1;
       }

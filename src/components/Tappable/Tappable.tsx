@@ -139,6 +139,7 @@ class Tappable extends Component<TappableProps, TappableState> {
 
     if (originalEvent.touches && originalEvent.touches.length > 0) {
       this.isSlide = false;
+      this.stop();
       return;
     }
 

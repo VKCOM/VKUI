@@ -19,7 +19,7 @@ class Example extends React.Component {
     super(props);
 
     this.state = {
-      activeStory: 'more'
+      activeStory: 'profile'
     };
     this.onStoryChange = this.onStoryChange.bind(this);
   }
@@ -41,10 +41,10 @@ class Example extends React.Component {
           ><Icon28NewsfeedOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'discover'}
-            data-story="discover"
-            text="Обзор"
-          ><Icon28SafariOutline /></TabbarItem>
+            selected={this.state.activeStory === 'services'}
+            data-story="services"
+            text="Сервисы"
+          ><Icon28ServicesOutline/></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
             selected={this.state.activeStory === 'messages'}
@@ -54,14 +54,14 @@ class Example extends React.Component {
           ><Icon28MessageOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'notifications'}
-            data-story="notifications"
+            selected={this.state.activeStory === 'clips'}
+            data-story="clips"
             text="Клипы"
           ><Icon28ClipOutline /></TabbarItem>
           <TabbarItem
             onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'more'}
-            data-story="more"
+            selected={this.state.activeStory === 'profile'}
+            data-story="profile"
             text="Профиль"
           ><Icon28UserCircleOutline /></TabbarItem>
         </Tabbar>
@@ -71,9 +71,9 @@ class Example extends React.Component {
             <PanelHeader>Новости</PanelHeader>
           </Panel>
         </View>
-        <View id="discover" activePanel="discover">
-          <Panel id="discover">
-            <PanelHeader>Поиск</PanelHeader>
+        <View id="services" activePanel="services">
+          <Panel id="services">
+            <PanelHeader>Сервисы</PanelHeader>
           </Panel>
         </View>
         <View id="messages" activePanel="messages">
@@ -81,14 +81,14 @@ class Example extends React.Component {
             <PanelHeader>Сообщения</PanelHeader>
           </Panel>
         </View>
-        <View id="notifications" activePanel="notifications">
-          <Panel id="notifications">
-            <PanelHeader>Уведомления</PanelHeader>
+        <View id="clips" activePanel="clips">
+          <Panel id="clips">
+            <PanelHeader>Клипы</PanelHeader>
           </Panel>
         </View>
-        <View id="more" activePanel="more">
-          <Panel id="more">
-            <PanelHeader>Ещё</PanelHeader>
+        <View id="profile" activePanel="profile">
+          <Panel id="profile">
+            <PanelHeader>Профиль</PanelHeader>
           </Panel>
         </View>
       </Epic>

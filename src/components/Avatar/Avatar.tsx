@@ -43,12 +43,12 @@ const Avatar: FunctionComponent<AvatarProps> = ({
       className={classNames(getClassName('Avatar', platform), className, `Avatar--type-${mode}`, `Avatar--sz-${size}`)}
       ref={getRootRef}
     >
-      <div className="Avatar__in">
+      <div className="Avatar__in" style={{ width: size, height: size }}>
         <Component
           {...restProps}
           className="Avatar__img"
           src={src}
-          style={{ ...style, width: size, height: size, borderRadius }}
+          style={{ ...style, borderRadius }}
         />
         {shadow && <span className="Avatar__shadow" style={{ borderRadius }} />}
         {children && <div className="Avatar__children" style={{ width: size, height: size, borderRadius }}>{children}</div>}

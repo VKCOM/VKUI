@@ -6,6 +6,7 @@ import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
 import { HasLinkProps, HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface SimpleCellOwnProps extends AdaptivityProps, HasLinkProps {
@@ -13,13 +14,22 @@ export interface SimpleCellOwnProps extends AdaptivityProps, HasLinkProps {
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
   before?: ReactNode;
+  /**
+   * Контейнер для текста справа от `children`.
+   */
   indicator?: ReactNode;
   /**
-   * Иконка 24|28 или `<Switch />`
+   * Иконка 24|28 или `<Switch />`. Располагается справа от `indicator`.
    */
   after?: ReactNode;
+  /**
+   * Контейнер для текста под `children`.
+   */
   description?: ReactNode;
   disabled?: boolean;
+  /**
+   * В iOS добавляет chevron справа. Передавать `true`, если предполагается кликабельность ячейки.
+   */
   expandable?: boolean;
   multiline?: boolean;
   Component?: ElementType;
@@ -41,7 +51,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
-  const hasAfter = after || expandable && platform === IOS;
+  const hasAfter = hasReactNode(after) || expandable && platform === IOS;
 
   return (
     <Tappable
@@ -64,7 +74,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
         <div className="SimpleCell__children">{children}</div>
         {description && <div className="SimpleCell__description">{description}</div>}
       </div>
-      {indicator &&
+      {hasReactNode(indicator) &&
         <div className="SimpleCell__indicator">
           {indicator}
         </div>

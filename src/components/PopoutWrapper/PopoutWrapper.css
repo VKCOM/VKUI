@@ -4,7 +4,16 @@
   box-sizing: border-box;
   left: 0;
   top: 0;
+  pointer-events: none;
   }
+
+.PopoutWrapper--opened {
+  pointer-events: initial;
+}
+
+.PopoutWrapper--closing {
+  pointer-events: none;
+}
 
   .PopoutWrapper--fixed {
     position: fixed;
@@ -22,8 +31,6 @@
     left: 0;
     top: 0;
     background: rgba(0, 0, 0, .4);
-    animation: animation-full-fade-in .3s ease;
-    user-select: none;
     }
 
   .PopoutWrapper__container {
@@ -63,6 +70,10 @@
  * iOS version
  */
 
+.PopoutWrapper--ios .PopoutWrapper__mask {
+  animation: animation-full-fade-in .3s ease;
+  }
+
 .PopoutWrapper--ios.PopoutWrapper--closing .PopoutWrapper__mask {
   transition: opacity .3s var(--ios-easing);
   }
@@ -70,6 +81,10 @@
 /**
  * Android version
  */
+
+.PopoutWrapper--android .PopoutWrapper__mask {
+  animation: animation-full-fade-in .2s ease;
+  }
 
 .PopoutWrapper--android.PopoutWrapper--closing .PopoutWrapper__mask {
   transition: opacity .2s var(--android-easing);

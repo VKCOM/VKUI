@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 // Является ли переданное значение числовым
 export function isNumeric(value: any): boolean {
   return !isNaN(parseFloat(value)) && isFinite(value);
@@ -51,4 +53,8 @@ export function leadingZero(val: number) {
   }
 
   return strVal;
+}
+
+export function hasReactNode(value: ReactNode): boolean {
+  return value !== undefined && value !== false && value !== null;
 }
