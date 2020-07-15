@@ -69,12 +69,26 @@ const Select: FunctionComponent<Props> = (props) => {
     });
   };
 
+  const getRef = (element: HTMLSelectElement) => {
+    nativeSelectRef.current = element;
+
+    const ref = props.getRef;
+
+    if (ref) {
+      if (typeof ref === 'function') {
+        ref(element);
+      } else {
+        ref.current = element;
+      }
+    }
+  };
+
   return (
     <NativeSelect
       onFocus={handleFocus}
       onBlur={handleBlur}
       onChange={handleChange}
-      getRef={nativeSelectRef}
+      getRef={getRef}
       {...restProps}>
       {!!children ? children : options.map(({ label, value }, key) => {
         return <option value={`${value}`} key={key}>{label}</option>;

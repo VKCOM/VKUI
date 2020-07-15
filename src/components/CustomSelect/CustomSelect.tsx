@@ -5,6 +5,7 @@ import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
 import { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
+import { Ref } from '../../types';
 
 type SelectValue = string | number | boolean;
 
@@ -365,7 +366,7 @@ export default class CustomSelect extends React.Component<Props, State> {
 
   renderWithCustomScrollbar() {
     const { opened, options } = this.state;
-    const { placeholder = '', tabIndex, name } = this.props;
+    const { placeholder = '', tabIndex, name, getRef } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
@@ -386,7 +387,7 @@ export default class CustomSelect extends React.Component<Props, State> {
         >
           {label}
         </SelectMimicry>
-        {name && <input type="hidden" name={name} value={selected ? String(selected.value) : ''} />}
+        {name && <input type="hidden" ref={getRef as Ref<any>} name={name} value={selected ? String(selected.value) : ''} />}
         {opened &&
           <div
             className={classNames({
