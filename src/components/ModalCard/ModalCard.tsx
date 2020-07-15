@@ -69,10 +69,10 @@ class ModalCard extends Component<ModalCardProps> {
   };
 
   render() {
-    const { insets, icon, header, caption, children, actions, actionsLayout, onClose, platform } = this.props;
+    const { insets, icon, header, caption, children, actions, actionsLayout, onClose, platform, className } = this.props;
 
     return (
-      <div className={classNames(getClassName('ModalCard', platform))}>
+      <div className={classNames(getClassName('ModalCard', platform), className)}>
         <div className="ModalCard__in">
           <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
             {icon && <div className="ModalCard__icon">{icon}</div>}
