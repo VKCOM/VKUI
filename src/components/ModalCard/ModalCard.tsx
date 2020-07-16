@@ -77,6 +77,7 @@ class ModalCard extends Component<ModalCardProps> {
       onClose,
       viewWidth,
       platform,
+      className,
     } = this.props;
 
     const isDesktop = viewWidth >= ViewWidth.TABLET;
@@ -85,7 +86,7 @@ class ModalCard extends Component<ModalCardProps> {
     return (
       <div className={classNames(getClassName('ModalCard', platform), {
         'ModalCard--desktop': isDesktop,
-      })}>
+      }, className)}>
         <div className="ModalCard__in">
           <div className="ModalCard__container">
             {icon && <div className="ModalCard__icon">{icon}</div>}
