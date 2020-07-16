@@ -26,9 +26,12 @@ export interface SimpleCellOwnProps extends AdaptivityProps, HasLinkProps {
    * Контейнер для текста под `children`.
    */
   description?: ReactNode;
+  /**
+   * Убирает анимацию нажатия
+   */
   disabled?: boolean;
   /**
-   * В iOS добавляет chevron справа. Передавать `true`, если предполагается кликабельность ячейки.
+   * В iOS добавляет chevron справа. Передавать `true`, если предполагается переход при клике по ячейке.
    */
   expandable?: boolean;
   multiline?: boolean;
@@ -52,9 +55,11 @@ const SimpleCell: FC<SimpleCellProps> = ({
 }) => {
   const platform = usePlatform();
   const hasAfter = hasReactNode(after) || expandable && platform === IOS;
+  const RootComponent = restProps.disabled ? Component : Tappable;
+  Component = restProps.disabled ? undefined : Component;
 
   return (
-    <Tappable
+    <RootComponent
       {...restProps}
       Component={restProps.href ? 'a' : Component}
       className={
@@ -85,7 +90,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
           {expandable && platform === IOS && <Icon24Chevron />}
         </div>
       }
-    </Tappable>
+    </RootComponent>
   );
 };
 
