@@ -2,8 +2,9 @@ import React, { FunctionComponent, ReactElement, ChangeEvent, useRef } from 'rea
 import NativeSelect, { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomSelect, { SelectOption, SelectChangeResult } from '../CustomSelect/CustomSelect';
 import { hasMouse } from '../../helpers/inputUtils';
+import { HasRef, Ref } from '../../types';
 
-interface Props extends Omit<SelectProps, 'onChange'> {
+interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLSelectElement | HTMLInputElement> {
   options?: SelectOption[];
   onChange?: (result: SelectChangeResult) => void;
   onFocus?: () => void;
@@ -15,7 +16,7 @@ const Select: FunctionComponent<Props> = (props) => {
 
   // Use custom select if device has connected a mouse
   if (hasMouse) {
-    const { children, ...restProps } = props;
+    const { children, getRef, getRootRef, ...restProps } = props;
 
     let options: SelectOption[] = [];
 
@@ -38,13 +39,15 @@ const Select: FunctionComponent<Props> = (props) => {
     return (
       <CustomSelect
         options={options}
+        getRef={getRef as Ref<HTMLInputElement>}
+        getRootRef={getRootRef}
         value={value}
         {...restProps}
       />
     );
   }
 
-  const { options, children, onChange, onFocus, onBlur, ...restProps } = props;
+  const { options, children, onChange, onFocus, onBlur, getRef, getRootRef, ...restProps } = props;
 
   const handleFocus = () => {
     onFocus && onFocus();
@@ -69,16 +72,14 @@ const Select: FunctionComponent<Props> = (props) => {
     });
   };
 
-  const getRef = (element: HTMLSelectElement) => {
+  const getRefWrapper = (element: HTMLSelectElement) => {
     nativeSelectRef.current = element;
 
-    const ref = props.getRef;
-
-    if (ref) {
-      if (typeof ref === 'function') {
-        ref(element);
+    if (getRef) {
+      if (typeof getRef === 'function') {
+        getRef(element);
       } else {
-        ref.current = element;
+        getRef.current = element;
       }
     }
   };
@@ -88,7 +89,8 @@ const Select: FunctionComponent<Props> = (props) => {
       onFocus={handleFocus}
       onBlur={handleBlur}
       onChange={handleChange}
-      getRef={getRef}
+      getRef={getRefWrapper}
+      getRootRef={getRootRef}
       {...restProps}>
       {!!children ? children : options.map(({ label, value }, key) => {
         return <option value={`${value}`} key={key}>{label}</option>;
