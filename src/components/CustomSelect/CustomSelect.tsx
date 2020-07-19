@@ -5,6 +5,7 @@ import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
 import { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
+import { HasRef } from '../../types';
 
 type SelectValue = string | number | boolean;
 
@@ -31,7 +32,7 @@ export interface SelectChangeResult {
   name: string;
 }
 
-interface Props extends Omit<SelectProps, 'onChange'> {
+interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInputElement> {
   options: SelectOption[];
   onChange?: (result: SelectChangeResult) => void;
   onFocus?: () => void;
@@ -365,7 +366,7 @@ export default class CustomSelect extends React.Component<Props, State> {
 
   renderWithCustomScrollbar() {
     const { opened, options } = this.state;
-    const { placeholder = '', tabIndex, name } = this.props;
+    const { placeholder = '', tabIndex, name, getRef, getRootRef } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
@@ -380,13 +381,14 @@ export default class CustomSelect extends React.Component<Props, State> {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           placeholder={placeholder}
+          getRootRef={getRootRef}
           className={classNames({
             ['CustomSelect__open']: opened,
           })}
         >
           {label}
         </SelectMimicry>
-        {name && <input type="hidden" name={name} value={selected ? String(selected.value) : ''} />}
+        {name && <input type="hidden" ref={getRef} name={name} value={selected ? String(selected.value) : ''} />}
         {opened &&
           <div
             className={classNames({
