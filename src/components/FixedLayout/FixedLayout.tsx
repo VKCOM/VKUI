@@ -1,14 +1,16 @@
-import React, { HTMLAttributes, RefCallback } from 'react';
+import React, { createRef, HTMLAttributes, RefCallback } from 'react';
 import getClassName from '../../helpers/getClassName';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
-import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
+import { transitionEndEventName, transitionStartEventName } from '../View/View';
 import { tabbarHeight } from '../../appearance/constants';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
 import { HasInsets, HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
+import { withScrolls } from '../../hoc/withScrolls';
+import { ScrollsContextConsumer } from '../../lib/ScrollContext';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -58,6 +60,8 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     return this.context.document || document;
   }
 
+  contentRef = createRef<HTMLDivElement>();
+
   componentDidMount() {
     this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
@@ -68,18 +72,15 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     this.document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
 
-  onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
-    let panelScroll = e.detail.scrolls[this.props.panel] || 0;
+  onViewTransitionStart: EventListener = () => {
     this.setState({
       position: 'absolute',
-      top: this.el.offsetTop + panelScroll,
     });
   };
 
   onViewTransitionEnd: VoidFunction = () => {
     this.setState({
-      position: null,
-      top: null,
+      position: undefined,
     });
   };
 
@@ -100,20 +101,35 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     const { className, children, style, vertical, getRootRef, insets, platform, filled, separator, ...restProps } = this.props;
     const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
     const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
+    const { position } = this.state;
 
     return (
-      <div
-        {...restProps}
-        ref={this.getRef}
-        className={classNames(getClassName('FixedLayout', platform), {
-          'FixedLayout--filled': filled,
-        }, `FixedLayout--${vertical}`, className)}
-        style={{ ...style, ...this.state, paddingBottom }}
-      >
-        <div className="FixedLayout__in">{children}</div>
-      </div>
+      <ScrollsContextConsumer>
+        {({ scrolls }) => {
+          const scroll = scrolls[this.props.panel] || 0;
+          const elHeight = this.contentRef.current?.clientHeight || 0;
+          const top = vertical === 'bottom' ? `calc(${scroll - elHeight}px + 100vh)` : scroll;
+
+          return <div
+            {...restProps}
+            ref={this.getRef}
+            className={classNames(getClassName('FixedLayout', platform), {
+              'FixedLayout--filled': filled,
+            }, `FixedLayout--${vertical}`, className)}
+            style={{
+              ...style,
+              paddingBottom,
+              position,
+              top: position === 'absolute' ? top : undefined,
+            }}
+          >
+            <div className="FixedLayout__in" ref={this.contentRef}>{children}</div>
+          </div>;
+        }
+        }
+      </ScrollsContextConsumer>
     );
   }
 }
 
-export default withPlatform(withInsets(withPanelContext(FixedLayout)));
+export default withScrolls(withPlatform(withInsets(withPanelContext(FixedLayout))));

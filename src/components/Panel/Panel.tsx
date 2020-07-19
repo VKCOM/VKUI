@@ -10,11 +10,15 @@ import { isNumeric } from '../../lib/utils';
 import { HasInsets, HasPlatform, HasRootRef } from '../../types';
 import { PanelContext, PanelContextProps } from './PanelContext';
 import { IOS } from '../../lib/platform';
+import { withScrolls } from '../../hoc/withScrolls';
+import { PanelScrolls } from '../../lib/ScrollContext';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets, HasRootRef<HTMLDivElement> {
   id: string;
   separator?: boolean;
   centered?: boolean;
+  setScroll(payload: PanelScrolls): void;
+  scrolls: PanelScrolls;
 }
 
 export interface PanelContext {
@@ -34,6 +38,16 @@ class Panel extends Component<PanelProps> {
   static contextTypes: PanelContext = {
     hasTabbar: PropTypes.bool,
   };
+
+  componentDidMount(): void {
+    const { id, setScroll, scrolls } = this.props;
+    const { scrollHeight, clientHeight } = this.container;
+    const maxScroll = Math.abs(scrollHeight - clientHeight);
+
+    if (maxScroll < scrolls[id]) {
+      setScroll({ [id]: maxScroll });
+    }
+  }
 
   getContext(): PanelContextProps {
     return {
@@ -84,4 +98,4 @@ class Panel extends Component<PanelProps> {
   }
 }
 
-export default withPlatform(withInsets(Panel));
+export default withScrolls(withPlatform(withInsets(Panel)));
