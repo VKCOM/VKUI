@@ -14,12 +14,12 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const [, updateAdaptivity] = useState({});
 
   if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(innerWidth, props);
+    adaptivityRef.current = calculateAdaptivity(window.innerWidth, props);
   }
 
   useEffect(() => {
     function onResize() {
-      const calculated = calculateAdaptivity(innerWidth, props);
+      const calculated = calculateAdaptivity(window.innerWidth, props);
       const { viewWidth, sizeX, sizeY } = adaptivityRef.current;
 
       if (
