@@ -12,6 +12,7 @@ import Icon16Done from '@vkontakte/icons/dist/16/done';
 import withPlatform from '../../hoc/withPlatform';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
+import { setRef } from '../../lib/utils';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'> {
   /**
@@ -102,15 +103,7 @@ class Cell extends Component<CellProps, CellState> {
 
   getRootRef = (element: HTMLElement) => {
     this.rootEl = element;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(element);
-      } else {
-        getRootRef.current = element;
-      }
-    }
+    setRef(element, this.props.getRootRef);
   };
 
   dragShift: number;

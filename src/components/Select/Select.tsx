@@ -3,6 +3,7 @@ import NativeSelect, { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomSelect, { SelectOption, SelectChangeResult } from '../CustomSelect/CustomSelect';
 import { hasMouse } from '../../helpers/inputUtils';
 import { HasRef, Ref } from '../../types';
+import { setRef } from '../../lib/utils';
 
 interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLSelectElement | HTMLInputElement> {
   options?: SelectOption[];
@@ -74,14 +75,7 @@ const Select: FunctionComponent<Props> = (props) => {
 
   const getRefWrapper = (element: HTMLSelectElement) => {
     nativeSelectRef.current = element;
-
-    if (getRef) {
-      if (typeof getRef === 'function') {
-        getRef(element);
-      } else {
-        getRef.current = element;
-      }
-    }
+    setRef(element, getRef);
   };
 
   return (

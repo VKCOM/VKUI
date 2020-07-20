@@ -7,6 +7,7 @@ import { HasPlatform, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { PanelContext, PanelContextProps } from './PanelContext';
 import { IOS } from '../../lib/platform';
+import { setRef } from '../../lib/utils';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasRootRef<HTMLDivElement>, AdaptivityProps {
   id: string;
@@ -35,15 +36,7 @@ class Panel extends Component<PanelProps> {
 
   getRef: RefCallback<HTMLDivElement> = (container) => {
     this.container = container;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(container);
-      } else {
-        getRootRef.current = container;
-      }
-    }
+    setRef(container, this.props.getRootRef);
   };
 
   render() {

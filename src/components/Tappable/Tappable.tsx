@@ -9,6 +9,7 @@ import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/
 import { HasPlatform, HasRootRef, RefWithCurrent } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { hasHover } from '../../helpers/inputUtils';
+import { setRef } from '../../lib/utils';
 
 export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
   Component?: ElementType;
@@ -254,15 +255,7 @@ class Tappable extends Component<TappableProps, TappableState> {
    */
   getRef: RefCallback<HTMLElement> = (container) => {
     this.container = container;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(container);
-      } else {
-        getRootRef.current = container;
-      }
-    }
+    setRef(container, this.props.getRootRef);
   };
 
   containerHasTransparentBackground = (): boolean => {

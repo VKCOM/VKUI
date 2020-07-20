@@ -10,6 +10,7 @@ import {
 } from '../../lib/touch';
 import { HasRootRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
+import { setRef } from '../../lib/utils';
 
 export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   onEnter?(outputEvent: MouseEvent): void;
@@ -314,15 +315,7 @@ export default class Touch extends Component<TouchProps> {
 
   getRef: RefCallback<HTMLElement> = (container) => {
     this.container = container;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(container);
-      } else {
-        getRootRef.current = container;
-      }
-    }
+    setRef(container, this.props.getRootRef);
   };
 
   render() {
