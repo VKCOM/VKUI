@@ -14,8 +14,8 @@ export enum ViewWidth {
 }
 
 export interface AdaptivityContextInterface {
-  sizeX: SizeType;
-  sizeY: SizeType;
+  sizeX?: SizeType;
+  sizeY?: SizeType;
   viewWidth?: ViewWidth;
 }
 
