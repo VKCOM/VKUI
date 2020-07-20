@@ -15,12 +15,15 @@ class Example extends React.Component {
     super(props);
 
     this.state = {
-      popout: null
+      popout: null,
+      subs: 'rus'
     }
 
     this.openBase = this.openBase.bind(this);
     this.openIcons = this.openIcons.bind(this);
-    this.openThemes = this.openThemes.bind(this);
+    this.openSubtitle = this.openSubtitle.bind(this);
+    this.openSelectable = this.openSelectable.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -34,13 +37,13 @@ class Example extends React.Component {
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       >
         <ActionSheetItem autoclose>
-          По дням
+          Сохранить в закладках
         </ActionSheetItem>
         <ActionSheetItem autoclose>
-          По неделям
+          Закрепить запись
         </ActionSheetItem>
-        <ActionSheetItem autoclose>
-          По месяцам
+        <ActionSheetItem autoclose mode="destructive">
+          Удалить запись
         </ActionSheetItem>
       </ActionSheet>
     });
@@ -52,33 +55,70 @@ class Example extends React.Component {
         onClose={() => this.setState({ popout: null })}
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       >
-        <ActionSheetItem autoclose before={<Icon28Profile/>}>
-          Редактировать профиль
+        <ActionSheetItem autoclose before={<Icon28EditOutline/>}>
+          Редактировать плейлист
         </ActionSheetItem>
-        <ActionSheetItem autoclose before={<Icon28CameraOutline/>}>
-          Изменить фотографию
+        <ActionSheetItem autoclose before={<Icon28ShareOutline/>}>
+          Поделиться
+        </ActionSheetItem>
+        <ActionSheetItem autoclose before={<Icon28DeleteOutline/>} mode="destructive">
+          Удалить плейлист
         </ActionSheetItem>
       </ActionSheet>
     });
   }
 
-  openThemes () {
+  openSubtitle () {
     this.setState({ popout:
       <ActionSheet 
         onClose={() => this.setState({ popout: null })}
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       >
-        <ActionSheetItem autoclose>
-          Редактировать
+        <ActionSheetItem before={<Icon28SettingsOutline />} autoclose subtitle="Авто">
+          Качество
         </ActionSheetItem>
-        <ActionSheetItem autoclose mode="destructive">
-          Выйти
+        <ActionSheetItem disabled before={<Icon28PlaySpeedOutline />} autoclose subtitle="Обычная" mode="destructive">
+          Скорость воспроизведения
         </ActionSheetItem>
       </ActionSheet>
     });
   }
 
-
+  openSelectable () {
+    this.setState({ popout:
+      <ActionSheet 
+        onClose={() => this.setState({ popout: null })}
+        iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+        header="Субтитры"
+      >
+        <ActionSheetItem
+          onChange={this.onChange}
+          checked={this.state.subs === 'off'}
+          name="subs"
+          value="off"
+          autoclose
+          selectable
+        >
+          Отключены
+        </ActionSheetItem>
+        <ActionSheetItem
+          meta="LostFilm"
+          onChange={this.onChange}
+          checked={this.state.subs === 'rus'} 
+          name="subs"
+          value="rus"
+          autoclose
+          selectable
+        >
+          Русские
+        </ActionSheetItem>
+      </ActionSheet>
+    });
+  }
+ 
+  onChange(e) {
+    this.setState({ subs: e.target.value });
+  }
 
   render() {
     return (
@@ -86,7 +126,8 @@ class Example extends React.Component {
         <Panel id="panel">
           <CellButton onClick={this.openBase}>Базовый список</CellButton>
           <CellButton onClick={this.openIcons}>Список с иконками</CellButton>
-          <CellButton onClick={this.openThemes}>Темы</CellButton>
+          <CellButton onClick={this.openSubtitle}>Subtitle</CellButton>
+          <CellButton onClick={this.openSelectable}>Selectable</CellButton>
         </Panel>
       </View>
     )

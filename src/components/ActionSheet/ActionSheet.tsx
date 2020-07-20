@@ -1,4 +1,4 @@
-import React, { Children, Component, HTMLAttributes } from 'react';
+import React, { Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { transitionEvent } from '../../lib/supportEvents';
 import withPlatform from '../../hoc/withPlatform';
@@ -7,6 +7,9 @@ import { HasPlatform } from '../../types';
 import { ANDROID, IOS } from '../../lib/platform';
 import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
 import ActionSheetDropdown from './ActionSheetDropdown';
+import { hasReactNode } from '../../lib/utils';
+import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
+import Caption from '../Typography/Caption/Caption';
 
 export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   /**
@@ -31,15 +34,7 @@ export interface ActionSheetState {
 
 export type CloseCallback = () => void;
 
-export type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
-
-export type ActionType = (event: React.MouseEvent) => void;
-
-export type ItemClickHandler = (action: ActionType, autoclose: boolean) => (event: React.MouseEvent) => void;
-
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
-
-export type IsItemLast = (index: number) => boolean;
 
 class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   constructor(props: ActionSheetProps) {
@@ -60,7 +55,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     this.waitTransitionFinish(this.props.onClose);
   };
 
-  onItemClick: ItemClickHandler = (action: ActionType, autoclose: boolean) => (event: React.MouseEvent) => {
+  onItemClick: ItemClickHandler = (action, autoclose) => (event) => {
     event.persist();
 
     if (autoclose) {
@@ -88,12 +83,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   }
 
-  isItemLast: IsItemLast = (index: number) => {
-    const childrenArray = Children.toArray(this.props.children);
-
-    return index === childrenArray.length - 1;
-  };
-
   render() {
     const {
       children,
@@ -113,12 +102,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       ? ActionSheetDropdownDesktop
       : ActionSheetDropdown;
 
-    const items = Children.toArray(children);
-
-    if (platform === IOS && !isDesktop) {
-      items.push(iosCloseItem);
-    }
-
     return (
       <PopoutWrapper
         closing={this.state.closing}
@@ -128,28 +111,27 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
         onClick={this.onClose}
         hasMask={!isDesktop}
       >
-        <DropdownComponent
-          closing={this.state.closing}
-          onClose={this.onClose}
-          elementRef={this.elRef}
-          {...restProps}
-        >
-          {platform === IOS &&
-            <header className="ActionSheet__header">
-              {header && <div className="ActionSheet__title">{header}</div>}
-              {text && <div className="ActionSheet__text">{text}</div>}
-            </header>
-          }
-          {items.map((child: React.ReactElement, index: number) =>
-            child && React.cloneElement(child, {
-              key: index,
-              onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
-              isLast: this.isItemLast(index),
-              href: child.props.href,
-              target: child.props.target,
-            }),
-          )}
-        </DropdownComponent>
+        <ActionSheetContext.Provider
+          value={{
+            onItemClick: this.onItemClick,
+            isDesktop,
+          }}>
+          <DropdownComponent
+            closing={this.state.closing}
+            onClose={this.onClose}
+            elementRef={this.elRef}
+            {...restProps}
+          >
+            {platform === IOS && (hasReactNode(header) || hasReactNode(text)) &&
+              <header className="ActionSheet__header">
+                {hasReactNode(header) && <Caption level="1" weight="semibold" className="ActionSheet__title">{header}</Caption>}
+                {hasReactNode(text) && <Caption level="1" weight="regular" className="ActionSheet__text">{text}</Caption>}
+              </header>
+            }
+            {children}
+            {platform === IOS && !isDesktop && iosCloseItem}
+          </DropdownComponent>
+        </ActionSheetContext.Provider>
       </PopoutWrapper>
     );
   }
