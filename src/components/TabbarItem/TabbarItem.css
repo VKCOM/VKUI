@@ -19,7 +19,8 @@
   color: var(--tabbar_active_icon);
 }
 
-.TabbarItem__in .TabbarItem__text {
+.TabbarItem__in, 
+.TabbarItem__text {
     max-width: 100%;
 }
 
