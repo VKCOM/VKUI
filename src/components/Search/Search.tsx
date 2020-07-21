@@ -16,6 +16,7 @@ import { IOS } from '../../lib/platform';
 import { HasPlatform, HasRef } from '../../types';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import { VKUITouchEvent } from '../../lib/touch';
+import { setRef } from '../../lib/utils';
 
 let searchId = 0;
 
@@ -109,15 +110,8 @@ class Search extends Component<SearchProps, SearchState> {
   };
 
   inputRef: InputRef = (element: HTMLInputElement) => {
-    const getRef = this.props.getRef;
     this.inputEl = element;
-    if (getRef) {
-      if (typeof getRef === 'function') {
-        getRef(element);
-      } else {
-        getRef.current = element;
-      }
-    }
+    setRef(element, this.props.getRef);
   };
 
   render() {

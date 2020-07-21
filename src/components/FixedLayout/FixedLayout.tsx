@@ -8,6 +8,7 @@ import withContext from '../../hoc/withContext';
 import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
+import { setRef } from '../../lib/utils';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -109,15 +110,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   getRef: RefCallback<HTMLDivElement> = (element) => {
     this.el = element;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(element);
-      } else {
-        getRootRef.current = element;
-      }
-    }
+    setRef(element, this.props.getRootRef);
   };
 
   render() {

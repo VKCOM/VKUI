@@ -5,6 +5,7 @@ import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { setRef } from '../../lib/utils';
 
 export interface SelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -76,15 +77,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
 
   getRef: RefCallback<HTMLSelectElement> = (element) => {
     this.selectEl = element;
-
-    const getRef = this.props.getRef;
-    if (getRef) {
-      if (typeof getRef === 'function') {
-        getRef(element);
-      } else {
-        getRef.current = element;
-      }
-    }
+    setRef(element, this.props.getRef);
   };
 
   render() {

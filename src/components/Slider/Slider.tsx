@@ -5,6 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import { HasFormLabels, HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
+import { setRef } from '../../lib/utils';
 
 export interface SliderProps extends
   HasRootRef<HTMLDivElement>,
@@ -174,15 +175,7 @@ class Slider extends Component<SliderProps, SliderState> {
 
   getRef: RefCallback<HTMLDivElement> = (container) => {
     this.container = container;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(container);
-      } else {
-        getRootRef.current = container;
-      }
-    }
+    setRef(container, this.props.getRootRef);
   };
 
   render() {

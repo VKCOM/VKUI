@@ -2,6 +2,7 @@ import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttr
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 import { HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
+import { setRef } from '../../lib/utils';
 
 export interface TextareaProps extends
   TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -50,15 +51,7 @@ export default class Textarea extends PureComponent<TextareaProps, TextareaState
 
   getRef: RefCallback<HTMLTextAreaElement> = (element) => {
     this.element = element;
-
-    const getRef = this.props.getRef;
-    if (getRef) {
-      if (typeof getRef === 'function') {
-        getRef(element);
-      } else {
-        getRef.current = element;
-      }
-    }
+    setRef(element, this.props.getRef);
   };
 
   resize: VoidFunction = () => {

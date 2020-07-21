@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Ref } from '../types';
 
 // Является ли переданное значение числовым
 export function isNumeric(value: any): boolean {
@@ -57,4 +58,14 @@ export function leadingZero(val: number) {
 
 export function hasReactNode(value: ReactNode): boolean {
   return value !== undefined && value !== false && value !== null;
+}
+
+export function setRef<T>(element: T, ref: Ref<T>): void {
+  if (ref) {
+    if (typeof ref === 'function') {
+      ref(element);
+    } else {
+      ref.current = element;
+    }
+  }
 }
