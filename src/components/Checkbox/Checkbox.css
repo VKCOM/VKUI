@@ -23,11 +23,19 @@
       color: transparent;
       }
 
+      .Checkbox--sizeY-compact .Checkbox__icon {
+        margin-right: 12px;
+      }
+
     .Checkbox__content {
       flex-grow: 1;
       font-size: 16px;
       line-height: 20px;
       color: var(--text_primary);
+      }
+
+      .Checkbox--sizeY-compact .Checkbox__content {
+        font-size: 15px;
       }
 
   .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon {
@@ -38,6 +46,10 @@
 
   .Checkbox__input[disabled] ~ .Checkbox__container {
     opacity: .6;
+    }
+
+  .Checkbox--sizeY-compact .Checkbox__input[disabled] ~ .Checkbox__container {
+    opacity: .4;
     }
 
 .Checkbox--ios {
@@ -51,6 +63,10 @@
       line-height: 20px;
       }
 
+      .Checkbox--ios.Checkbox--sizeY-compact .Checkbox__content {
+        font-size: 15px;
+      }
+
 .Checkbox--android {
   padding: 16px 0;
   }
@@ -60,4 +76,8 @@
     .Checkbox--android .Checkbox__content {
       font-size: 16px;
       line-height: 20px;
+      }
+
+      .Checkbox--android.Checkbox--sizeY-compact .Checkbox__content {
+        font-size: 15px;
       }

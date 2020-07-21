@@ -6,12 +6,13 @@ import { IOS } from '../../lib/platform';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import { HasFormLabels, HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface CheckboxProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   HasRef<HTMLInputElement>,
-  HasFormLabels {}
+  HasFormLabels, AdaptivityProps {}
 
 export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,
@@ -21,6 +22,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   getRef,
   top,
   bottom,
+  sizeY,
   ...restProps
 }: CheckboxProps) => {
   const platform = usePlatform();
@@ -28,7 +30,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   return (
     <Tappable
       Component="label"
-      className={classNames(getClassName('Checkbox', platform), className)}
+      className={classNames(getClassName('Checkbox', platform), className, `Checkbox--sizeY-${sizeY}`)}
       style={style}
       disabled={restProps.disabled}
       activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
@@ -43,4 +45,6 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   );
 };
 
-export default Checkbox;
+export default withAdaptivity(Checkbox, {
+  sizeY: true,
+});
