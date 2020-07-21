@@ -4,6 +4,14 @@
   line-height: 20px;
 }
 
+.Headline--ios {
+  letter-spacing: -.32px;
+}
+
+.Headline--android {
+  letter-spacing: .1px;
+}
+
 .Headline--w-regular {
   font-weight: 400;
 }

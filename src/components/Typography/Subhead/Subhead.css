@@ -4,6 +4,14 @@
   line-height: 18px;
 }
 
+.Subhead--ios {
+  letter-spacing: -.15px;
+}
+
+.Subhead--android {
+  letter-spacing: .2px;
+}
+
 .Subhead--w-regular {
   font-weight: 400;
 }

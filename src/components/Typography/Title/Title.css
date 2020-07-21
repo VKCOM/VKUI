@@ -7,14 +7,26 @@
   line-height: 28px;
 }
 
+.Title--ios.Title--l-1 {
+  letter-spacing: .33px;
+}
+
 .Title--l-2 {
   font-size: 20px;
   line-height: 24px;
 }
 
+.Title--ios.Title--l-2 {
+  letter-spacing: .38px;
+}
+
 .Title--l-3 {
   font-size: 17px;
   line-height: 22px;
+}
+
+.Title--ios.Title--l-3 {
+  letter-spacing: -.4px;
 }
 
 .Title--w-regular {

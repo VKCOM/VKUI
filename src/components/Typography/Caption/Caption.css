@@ -7,9 +7,21 @@
   line-height: 16px;
 }
 
+.Caption--ios.Caption--l-1 {
+  letter-spacing: -.08px;
+}
+
+.Caption--android.Caption--l-1 {
+  letter-spacing: .2px;
+}
+
 .Caption--l-2 {
   font-size: 12px;
   line-height: 14px;
+}
+
+.Caption--android.Caption--l-2 {
+  letter-spacing: .2px;
 }
 
 .Caption--l-3 {
@@ -17,9 +29,25 @@
   line-height: 14px;
 }
 
+.Caption--ios.Caption--l-3 {
+  letter-spacing: .06px;
+}
+
+.Caption--android.Caption--l-3 {
+  letter-spacing: .3px;
+}
+
 .Caption--l-4 {
   font-size: 9px;
   line-height: 12px;
+}
+
+.Caption--ios.Caption--l-4 {
+  letter-spacing: .17px;
+}
+
+.Caption--android.Caption--l-4 {
+  letter-spacing: .3px;
 }
 
 .Caption--w-regular {

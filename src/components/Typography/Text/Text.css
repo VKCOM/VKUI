@@ -3,6 +3,14 @@
   line-height: 20px;
 }
 
+.Text--ios {
+  letter-spacing: -.24px;
+}
+
+.Text--android {
+  letter-spacing: .2px;
+}
+
 .Text--w-regular {
   font-weight: 400;
 }
