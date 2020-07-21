@@ -3,8 +3,9 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { HasChildren, HasDangerHTML } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface FormStatusProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasDangerHTML {
+export interface FormStatusProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasDangerHTML, AdaptivityProps {
   mode?: 'default' | 'error';
   header?: ReactNode;
 }
@@ -15,6 +16,7 @@ const FormStatus: FunctionComponent<FormStatusProps> = ({
   children,
   className,
   dangerouslySetInnerHTML,
+  sizeY,
   ...restProps
 }: FormStatusProps) => {
   const platform = usePlatform();
@@ -22,7 +24,7 @@ const FormStatus: FunctionComponent<FormStatusProps> = ({
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('FormStatus', platform), `FormStatus--${mode}`, className)}
+      className={classNames(getClassName('FormStatus', platform), `FormStatus--${mode}`, className, `FormStatus--sizeY-${sizeY}`)}
     >
       {header && <div className="FormStatus__header">{header}</div>}
       {dangerouslySetInnerHTML &&
@@ -33,4 +35,6 @@ const FormStatus: FunctionComponent<FormStatusProps> = ({
   );
 };
 
-export default FormStatus;
+export default withAdaptivity(FormStatus, {
+  sizeY: true,
+});
