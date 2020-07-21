@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
+import React, { ElementType, FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
@@ -32,8 +32,12 @@ export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<H
    * Иконка 28 или текст
    */
   after?: ReactNode;
+  /**
+   * Убирает анимацию нажатия
+   */
   disabled?: boolean;
   multiline?: boolean;
+  Component?: ElementType;
 }
 
 const RichCell: FunctionComponent<RichCellProps> = ({
@@ -47,14 +51,17 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   multiline,
   className,
   sizeX,
+  Component,
   ...restProps
 }) => {
   const platform = usePlatform();
+  const RootComponent = restProps.disabled ? Component : Tappable;
+  Component = restProps.disabled ? undefined : Component;
 
   return (
-    <Tappable
+    <RootComponent
       {...restProps}
-      Component={restProps.href ? 'a' : 'div'}
+      Component={restProps.href ? 'a' : Component}
       className={
         classNames(
           className,
@@ -85,8 +92,12 @@ const RichCell: FunctionComponent<RichCellProps> = ({
           }
         </div>
       </div>
-    </Tappable>
+    </RootComponent>
   );
+};
+
+RichCell.defaultProps = {
+  Component: 'div',
 };
 
 export default withAdaptivity(RichCell, { sizeX: true });

@@ -2,6 +2,7 @@
   width: 100%;
   height: 100%;
   position: relative;
+  font-family: var(--font-common);
 }
 
 .SplitLayout__inner {
@@ -45,14 +46,6 @@
 
 .SplitLayout__modal:empty {
   display: none;
-}
-
-.SplitLayout--ios {
-  font-family: var(--font-ios);
-}
-
-.SplitLayout--android {
-  font-family: var(--font-android);
 }
 
 .SplitLayout__col {

@@ -14,6 +14,10 @@
     align-items: center;
     }
 
+  .Button__before:not(:last-child) {
+    margin-left: -4px;
+    }
+
 .Button.Tappable--active {
   opacity: .6;
 }
@@ -44,13 +48,8 @@
   width: 100%;
   }
 
-  .Button--stretched .Button__in {
+  .Button--str .Button__in {
     justify-content: center;
-    }
-
-  .Button::before,
-  .Button::after {
-    display: none;
     }
 
 .Button--lvl-primary {
@@ -101,18 +100,15 @@
 }
 
 .Button--sz-s {
+  min-height: 30px;
   padding: 0 16px;
   }
 
-.Button--sz-s.Button--with-icon {
-  padding: 0 16px 0 12px;
-  }
-
-  .Button--sz-s .Button__before {
+  .Button--sz-s .Button__before:not(:last-child) {
     margin-right: 6px;
     }
 
-  .Button--sz-s .Button__after {
+  .Button--sz-s .Button__after:not(:first-child) {
     margin-left: 6px;
     }
 
@@ -126,17 +122,14 @@
 
 .Button--sz-m {
   padding: 0 16px;
+  min-height: 36px;
   }
 
-.Button--sz-m.Button--with-icon {
-  padding: 0 16px 0 12px;
-  }
-
-  .Button--sz-m .Button__before {
+  .Button--sz-m .Button__before:not(:last-child) {
     margin-right: 6px;
     }
 
-  .Button--sz-m .Button__after {
+  .Button--sz-m .Button__after:not(:first-child) {
     margin-left: 6px;
     }
 
@@ -148,17 +141,14 @@
   display: block;
   width: 100%;
   padding: 0 20px;
+  min-height: 44px;
   }
 
-.Button--sz-l.Button--with-icon {
-  padding: 0 20px 0 16px;
-  }
-
-  .Button--sz-l .Button__before {
+  .Button--sz-l .Button__before:not(:last-child) {
     margin-right: 8px;
     }
 
-  .Button--sz-l .Button__after {
+  .Button--sz-l .Button__after:not(:first-child) {
     margin-left: 8px;
     }
 
