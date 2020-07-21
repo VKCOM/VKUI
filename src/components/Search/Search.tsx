@@ -161,7 +161,9 @@ class Search extends Component<SearchProps, SearchState> {
             <div className="Search__placeholder">
               <div className="Search__placeholder-in">
                 <Icon16SearchOutline />
-                <div className="Search__placeholder-text" dangerouslySetInnerHTML={{ __html: placeholder }} />
+                <div className="Search__placeholder-text">
+                  {placeholder}
+                </div>
               </div>
             </div>
           </div>

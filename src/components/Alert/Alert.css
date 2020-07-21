@@ -103,6 +103,7 @@
       outline: none;
       overflow: hidden;
       text-overflow: ellipsis;
+      border-radius: 0;
       }
 
     .Alert--ios .Alert__btn:active {

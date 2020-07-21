@@ -120,7 +120,7 @@ class Alert extends Component<AlertProps, AlertState> {
                   onClick={this.onItemClick(action)}
                   key={`alert-action-${i}`}
                 >
-                  <span dangerouslySetInnerHTML={{ __html: action.title }} />
+                  {action.title}
                 </Tappable>
               );
             })}
