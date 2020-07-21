@@ -30,6 +30,12 @@
     display: flex;
     }
 
+  .TabbarItem__text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+
   .Tabbar--l-vertical .TabbarItem__in {
     flex-direction: column;
     align-items: center;
