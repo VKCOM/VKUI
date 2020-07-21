@@ -4,8 +4,8 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  color: currentColor;
   text-decoration: none;
+  color: var(--text_primary);
 }
 
 .ActionSheetItem__container,
@@ -55,6 +55,10 @@
   color: var(--action_sheet_action_foreground);
 }
 
+.ActionSheetItem--destructive .ActionSheetItem__container:first-child {
+  color: var(--destructive);
+}
+
 .ActionSheetItem--destructive .ActionSheetItem__before {
   color: var(--destructive);
 }
@@ -88,8 +92,8 @@
  */
 
 .ActionSheetItem--ios {
-  padding: 0 18px;
-  min-height: 55px;
+  padding: 0 20px;
+  min-height: 56px;
   border-radius: 0;
   color: var(--action_sheet_action_foreground);
 }
@@ -161,11 +165,15 @@
 }
 
 .ActionSheetItem--ios .ActionSheetItem__container {
-  padding: 14px 0;
+  padding: 13px 0;
 }
 
 .ActionSheetItem--ios .ActionSheetItem__content {
   justify-content: center;
+}
+
+.ActionSheetItem--ios .ActionSheetItem__subtitle {
+  margin-top: 2px;
 }
 
 .ActionSheetItem--ios.ActionSheetItem--compact .ActionSheetItem__content,
@@ -174,14 +182,15 @@
 }
 
 .ActionSheetItem--ios .ActionSheetItem__before {
-  margin-right: 20px;
+  margin-right: 18px;
+  margin-left: -2px;
 }
 
 .ActionSheetItem--cancel {
   margin-top: 7px;
   margin-bottom: var(--safe-area-inset-bottom);
   border-radius: 14px;
-  order: 1;
+  min-height: 52px;
 }
 
 /**
@@ -189,10 +198,9 @@
  */
 
 .ActionSheetItem--android {
-  padding: 0 18px;
+  padding: 0 20px;
   min-height: 48px;
   border-radius: 0;
-  color: var(--text_primary);
 }
 
 .ActionSheetItem--android.Tappable--active {
@@ -201,14 +209,16 @@
 
 .ActionSheetItem--android .ActionSheetItem__before {
   margin-right: 18px;
+  margin-left: -2px;
 }
 
 .ActionSheetItem--android .ActionSheetItem__container {
-  padding: 10px 0;
+  padding: 11px 0;
 }
 
-.ActionSheetItem--android .ActionSheetItem__container:first-child {
-  padding-left: 2px;
+.ActionSheetItem--android .ActionSheetItem__subtitle {
+  margin-top: 1px;
+  margin-bottom: -1px;
 }
 
 /**

@@ -12,13 +12,7 @@ import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
 
 export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
-  /**
-   * iOS only
-   */
   header?: React.ReactNode;
-  /**
-   * iOS only
-   */
   text?: React.ReactNode;
   onClose(): void;
   /**
@@ -122,9 +116,13 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
             elementRef={this.elRef}
             {...restProps}
           >
-            {platform === IOS && (hasReactNode(header) || hasReactNode(text)) &&
+            {(hasReactNode(header) || hasReactNode(text)) &&
               <header className="ActionSheet__header">
-                {hasReactNode(header) && <Caption level="1" weight="semibold" className="ActionSheet__title">{header}</Caption>}
+                {hasReactNode(header) &&
+                  <Caption level="1" weight={platform === IOS ? 'semibold' : 'medium'} className="ActionSheet__title">
+                    {header}
+                  </Caption>
+                }
                 {hasReactNode(text) && <Caption level="1" weight="regular" className="ActionSheet__text">{text}</Caption>}
               </header>
             }

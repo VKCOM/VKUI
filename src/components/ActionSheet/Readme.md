@@ -16,13 +16,14 @@ class Example extends React.Component {
 
     this.state = {
       popout: null,
-      subs: 'rus'
+      filter: 'best'
     }
 
     this.openBase = this.openBase.bind(this);
     this.openIcons = this.openIcons.bind(this);
     this.openSubtitle = this.openSubtitle.bind(this);
     this.openSelectable = this.openSelectable.bind(this);
+    this.openTitle = this.openTitle.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
@@ -42,6 +43,12 @@ class Example extends React.Component {
         <ActionSheetItem autoclose>
           Закрепить запись
         </ActionSheetItem>
+        <ActionSheetItem autoclose>
+          Выключить комментирование
+        </ActionSheetItem>
+        <ActionSheetItem autoclose>
+          Закрепить запись
+        </ActionSheetItem>
         <ActionSheetItem autoclose mode="destructive">
           Удалить запись
         </ActionSheetItem>
@@ -56,12 +63,22 @@ class Example extends React.Component {
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
       >
         <ActionSheetItem autoclose before={<Icon28EditOutline/>}>
-          Редактировать плейлист
+          Редактировать профиль
+        </ActionSheetItem>
+        <ActionSheetItem autoclose before={<Icon28ListPlayOutline/>}>
+          Слушать далее
         </ActionSheetItem>
         <ActionSheetItem autoclose before={<Icon28ShareOutline/>}>
           Поделиться
         </ActionSheetItem>
-        <ActionSheetItem autoclose before={<Icon28DeleteOutline/>} mode="destructive">
+        <ActionSheetItem autoclose before={<Icon28CopyOutline/>}>
+          Скопировать ссылку
+        </ActionSheetItem>
+        <ActionSheetItem
+          autoclose
+          before={platform === IOS ? <Icon28DeleteOutline/> : <Icon28DeleteOutlineAndroid />}
+          mode="destructive"
+        >
           Удалить плейлист
         </ActionSheetItem>
       </ActionSheet>
@@ -77,7 +94,10 @@ class Example extends React.Component {
         <ActionSheetItem before={<Icon28SettingsOutline />} autoclose subtitle="Авто">
           Качество
         </ActionSheetItem>
-        <ActionSheetItem disabled before={<Icon28PlaySpeedOutline />} autoclose subtitle="Обычная" mode="destructive">
+        <ActionSheetItem before={<Icon28SubtitlesOutline />} autoclose subtitle="Отсутствуют" disabled>
+          Субтитры
+        </ActionSheetItem>
+        <ActionSheetItem before={<Icon28PlaySpeedOutline />} autoclose subtitle="Обычная">
           Скорость воспроизведения
         </ActionSheetItem>
       </ActionSheet>
@@ -89,35 +109,77 @@ class Example extends React.Component {
       <ActionSheet 
         onClose={() => this.setState({ popout: null })}
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
-        header="Субтитры"
       >
         <ActionSheetItem
           onChange={this.onChange}
-          checked={this.state.subs === 'off'}
-          name="subs"
-          value="off"
+          checked={this.state.filter === 'best'}
+          name="filter"
+          value="best"
           autoclose
           selectable
         >
-          Отключены
+          Лучшие друзья
         </ActionSheetItem>
         <ActionSheetItem
-          meta="LostFilm"
           onChange={this.onChange}
-          checked={this.state.subs === 'rus'} 
-          name="subs"
-          value="rus"
+          checked={this.state.filter === 'relatives'} 
+          name="filter"
+          value="relatives"
           autoclose
           selectable
         >
-          Русские
+          Родственники
+        </ActionSheetItem>
+        <ActionSheetItem
+          onChange={this.onChange}
+          checked={this.state.filter === 'collegues'} 
+          name="filter"
+          value="collegues"
+          autoclose
+          selectable
+        >
+          Коллеги
+        </ActionSheetItem>
+        <ActionSheetItem
+          onChange={this.onChange}
+          checked={this.state.filter === 'school'} 
+          name="filter"
+          value="school"
+          autoclose
+          selectable
+        >
+          Друзья по школе
+        </ActionSheetItem>
+        <ActionSheetItem
+          onChange={this.onChange}
+          checked={this.state.filter === 'university'} 
+          name="filter"
+          value="university"
+          autoclose
+          selectable
+        >
+          Друзья по вузу
+        </ActionSheetItem>
+      </ActionSheet>
+    });
+  }
+  
+  openTitle() {
+    this.setState({ popout:
+      <ActionSheet 
+        onClose={() => this.setState({ popout: null })}
+        iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+        header="Вы действительно хотите удалить это видео из Ваших видео?"
+      >
+        <ActionSheetItem autoclose mode="destructive">
+          Удалить видео
         </ActionSheetItem>
       </ActionSheet>
     });
   }
  
   onChange(e) {
-    this.setState({ subs: e.target.value });
+    this.setState({ filter: e.target.value });
   }
 
   render() {
@@ -126,8 +188,9 @@ class Example extends React.Component {
         <Panel id="panel">
           <CellButton onClick={this.openBase}>Базовый список</CellButton>
           <CellButton onClick={this.openIcons}>Список с иконками</CellButton>
-          <CellButton onClick={this.openSubtitle}>Subtitle</CellButton>
-          <CellButton onClick={this.openSelectable}>Selectable</CellButton>
+          <CellButton onClick={this.openSubtitle}>С подзаголовком</CellButton>
+          <CellButton onClick={this.openSelectable}>Выделяемые</CellButton>
+          <CellButton onClick={this.openTitle}>C заголовком</CellButton>
         </Panel>
       </View>
     )

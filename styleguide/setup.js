@@ -62,6 +62,10 @@ import Icon28EditOutline from '@vkontakte/icons/dist/28/edit_outline';
 import Icon28DeleteOutline from '@vkontakte/icons/dist/28/delete_outline';
 import Icon28ShareOutline from '@vkontakte/icons/dist/28/share_outline';
 import Icon28PlaySpeedOutline from '@vkontakte/icons/dist/28/play_speed_outline';
+import Icon28DeleteOutlineAndroid from '@vkontakte/icons/dist/28/delete_outline_android';
+import Icon28ListPlayOutline from '@vkontakte/icons/dist/28/list_play_outline';
+import Icon28CopyOutline from '@vkontakte/icons/dist/28/copy_outline';
+import Icon28SubtitlesOutline from '@vkontakte/icons/dist/28/subtitles_outline';
 
 import Icon56MentionOutline from '@vkontakte/icons/dist/56/mention_outline';
 import Icon56MessageReadOutline from '@vkontakte/icons/dist/56/message_read_outline';
@@ -139,7 +143,10 @@ window.Icon28EditOutline = Icon28EditOutline;
 window.Icon28DeleteOutline = Icon28DeleteOutline;
 window.Icon28ShareOutline = Icon28ShareOutline;
 window.Icon28PlaySpeedOutline = Icon28PlaySpeedOutline;
-
+window.Icon28DeleteOutlineAndroid = Icon28DeleteOutlineAndroid;
+window.Icon28ListPlayOutline = Icon28ListPlayOutline;
+window.Icon28CopyOutline = Icon28CopyOutline;
+window.Icon28SubtitlesOutline = Icon28SubtitlesOutline;
 
 window.Icon56MentionOutline = Icon56MentionOutline;
 window.Icon56MessageReadOutline = Icon56MessageReadOutline;
