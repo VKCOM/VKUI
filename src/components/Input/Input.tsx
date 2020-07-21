@@ -2,6 +2,7 @@ import React, { FunctionComponent, InputHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface InputProps extends
   InputHTMLAttributes<HTMLInputElement>,
@@ -9,7 +10,8 @@ export interface InputProps extends
   HasRootRef<HTMLDivElement>,
   HasFormStatus,
   HasFormLabels,
-  HasAlign {}
+  HasAlign,
+  AdaptivityProps {}
 
 const Input: FunctionComponent<InputProps> = ({
   align,
@@ -19,11 +21,12 @@ const Input: FunctionComponent<InputProps> = ({
   getRootRef,
   top,
   bottom,
+  sizeY,
   ...restProps
 }: InputProps) => {
   return (
     <FormField
-      className={classNames('Input', className, { [`Input--${align}`]: !!align })}
+      className={classNames('Input', className, { [`Input--${align}`]: !!align }, `Input--sizeY-${sizeY}`)}
       status={status}
       getRootRef={getRootRef}
     >
@@ -36,4 +39,6 @@ Input.defaultProps = {
   type: 'text',
 };
 
-export default Input;
+export default withAdaptivity(Input, {
+  sizeY: true,
+});
