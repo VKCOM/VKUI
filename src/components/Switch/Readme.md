@@ -7,13 +7,13 @@
         Switch
       </PanelHeader>
       <Group>
-        <Cell asideContent={<Switch />}>
+        <Cell disabled after={<Switch />}>
           Комментарии к записям
         </Cell>
-        <Cell asideContent={<Switch defaultChecked />}>
+        <Cell disabled after={<Switch defaultChecked />}>
           Ссылки
         </Cell>
-        <Cell asideContent={<Switch disabled />}>
+        <Cell disabled after={<Switch disabled />}>
           Фотоальбомы
         </Cell>
       </Group>
