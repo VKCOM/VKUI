@@ -65,7 +65,7 @@
               <List>
                 <Cell
                   before={<Icon28UsersOutline />}
-                  asideContent={this.state.mode === 'all' ? <Icon24Done fill="var(--accent)" /> : null}
+                  after={this.state.mode === 'all' ? <Icon24Done fill="var(--accent)" /> : null}
                   onClick={this.select}
                   data-mode="all"
                 >
@@ -73,7 +73,7 @@
                 </Cell>
                 <Cell
                   before={<Icon28SettingsOutline />}
-                  asideContent={this.state.mode === 'managed' ? <Icon24Done fill="var(--accent)" /> : null}
+                  after={this.state.mode === 'managed' ? <Icon24Done fill="var(--accent)" /> : null}
                   onClick={this.select}
                   data-mode="managed"
                 >
