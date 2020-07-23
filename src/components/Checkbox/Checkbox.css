@@ -19,7 +19,7 @@
       box-sizing: border-box;
       margin: 0 14px 0 2px;
       border-radius: 4px;
-      border: 2px solid var(--icon_secondary);
+      border: 2px solid var(--icon_tertiary);
       color: transparent;
       }
 
