@@ -21,8 +21,6 @@
   display: -webkit-box;
   max-height: 60px;
   -webkit-line-clamp: 3;
-  /* Workaround for autoprefixer bug with this property. Maybe this was fixed in 9.8.5 */
-  /* autoprefixer: ignore next */
   -webkit-box-orient: vertical;
 }
 
