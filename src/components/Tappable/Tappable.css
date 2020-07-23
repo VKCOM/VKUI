@@ -12,7 +12,7 @@
 
 /** TODO: Переписать без использования !important */
 .Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ActionSheetItem):not(.Banner__in) {
-  background: var(--separator_common) !important;
+  background: var(--background_highlighted) !important;
   transition: none;
   }
 
