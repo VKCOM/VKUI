@@ -19,9 +19,23 @@
   color: var(--tabbar_active_icon);
   }
 
+.TabbarItem__in,
+.TabbarItem__text {
+    max-width: 100%;
+}
+
   .TabbarItem__in {
+    position: absolute;
     align-self: center;
     display: flex;
+    }
+
+  .TabbarItem__text {
+    box-sizing: border-box;
+    padding: 0px 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     }
 
   .Tabbar--l-vertical .TabbarItem__in {
