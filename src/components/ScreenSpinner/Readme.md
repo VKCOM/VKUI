@@ -21,9 +21,9 @@ class Example extends React.Component {
       <View popout={this.state.popout} activePanel="spinner">
         <Panel id="spinner">
           <PanelHeader>ScreenSpinner</PanelHeader>
-          <FormLayout>
+          <Group>
             <CellButton onClick={this.onClick.bind(this)}>Запустить долгий процесс</CellButton>
-          </FormLayout>
+          </Group>
         </Panel>
       </View>
     )
