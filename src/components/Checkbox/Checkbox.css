@@ -25,6 +25,10 @@
 
       .Checkbox--sizeY-compact .Checkbox__icon {
         margin-right: 12px;
+        width: 16px;
+        height: 16px;
+        margin-top: auto;
+        margin-bottom: auto;
       }
 
     .Checkbox__content {

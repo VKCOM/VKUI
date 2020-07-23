@@ -6,6 +6,7 @@ import classNames from '../../lib/classNames';
 import { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import { HasRef, HasFormStatus } from '../../types';
+import withAdaptivity from '../../hoc/withAdaptivity';
 
 type SelectValue = string | number | boolean;
 
@@ -42,7 +43,7 @@ interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInp
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
-export default class CustomSelect extends React.Component<Props, State> {
+class CustomSelect extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props);
 
@@ -367,7 +368,7 @@ export default class CustomSelect extends React.Component<Props, State> {
 
   renderWithCustomScrollbar() {
     const { opened, options } = this.state;
-    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status } = this.props;
+    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status, sizeY } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
@@ -384,6 +385,7 @@ export default class CustomSelect extends React.Component<Props, State> {
           onBlur={this.onBlur}
           placeholder={placeholder}
           getRootRef={getRootRef}
+          sizeY={sizeY}
           className={classNames({
             ['CustomSelect__open']: opened,
             ['CustomSelect__open--popupDirectionTop']: popupDirection === 'top',
@@ -397,6 +399,7 @@ export default class CustomSelect extends React.Component<Props, State> {
             className={classNames({
               ['CustomSelect__options']: opened,
               ['CustomSelect__options--popupDirectionTop']: popupDirection === 'top',
+              [`CustomSelect__options--sizeY-${sizeY}`]: !!sizeY,
             })}
             onMouseLeave={this.resetFocusedOption}
           >
@@ -420,3 +423,7 @@ export default class CustomSelect extends React.Component<Props, State> {
     );
   }
 }
+
+export default withAdaptivity(CustomSelect, {
+  sizeY: true,
+});

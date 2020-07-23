@@ -82,7 +82,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
 
   render() {
     const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, top, bottom, disabled, sizeX, ...restProps } = this.props;
+      getRef, getRootRef, top, bottom, disabled, sizeX, sizeY, ...restProps } = this.props;
 
     return (
       <FormField
@@ -91,6 +91,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
           ['Select--not-selected']: this.state.notSelected,
           [`Select--align-${align}`]: !!align,
           [`Select--sizeX--${sizeX}`]: !!sizeX,
+          [`Select--sizeY--${sizeY}`]: !!sizeY,
           'Select--disabled': disabled,
         }, className)}
         style={style}
@@ -119,4 +120,5 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
 
 export default withAdaptivity(NativeSelect, {
   sizeX: true,
+  sizeY: true,
 });

@@ -33,6 +33,7 @@
   }
 
 .Input--sizeY-compact .Input__el {
+  height: 40px;
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 20px;

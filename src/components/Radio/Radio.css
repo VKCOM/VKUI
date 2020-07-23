@@ -73,6 +73,8 @@
       }
 
       .Radio--ios.Radio--sizeY-compact .Radio__icon {
+        width: 18px;
+        height: 18px;
         margin-right: 11px;
       }
 
@@ -87,6 +89,11 @@
         top: 2px;
         transform: scale(.3);
         transition: transform .15s var(--ios-easing);
+        }
+
+        .Radio--ios.Radio--sizeY-compact .Radio__icon::after {
+          width: 10px;
+          height: 10px;
         }
 
       .Radio--ios .Radio__input:checked ~ .Radio__container .Radio__icon::after {
@@ -113,6 +120,8 @@
       }
 
       .Radio--android.Radio--sizeY-compact .Radio__icon {
+        width: 18px;
+        height: 18px;
         margin-right: 11px;
       }
 

@@ -54,6 +54,19 @@
       right: -14px;
       }
 
+  .Slider--sizeY-compact .Slider__thumb {
+    top: -6px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .Slider--sizeY-compact .Slider__thumb--start {
+    left: -8px;
+    }
+
+    .Slider--sizeY-compact .Slider__thumb--end {
+    right: -8px;
+    }
 /**
  * iOS
  */

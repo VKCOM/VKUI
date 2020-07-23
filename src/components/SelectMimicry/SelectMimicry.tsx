@@ -29,6 +29,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   disabled,
   onClick,
   sizeX,
+  sizeY,
   ...restProps
 }: SelectMimicryProps) => {
   return (
@@ -41,6 +42,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
         'Select--disabled': disabled,
         [`Select--align-${align}`]: !!align,
         [`Select--sizeX--${sizeX}`]: !!sizeX,
+        [`Select--sizeY--${sizeY}`]: !!sizeY,
       }, className)}
       getRootRef={getRootRef}
       status={status}
@@ -60,5 +62,6 @@ SelectMimicry.defaultProps = {
 
 export default withAdaptivity(SelectMimicry, {
   sizeX: true,
+  sizeY: true,
 });
 
