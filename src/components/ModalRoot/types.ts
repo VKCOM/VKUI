@@ -3,6 +3,8 @@ export enum ModalType {
   CARD = 'card',
 }
 
+export type TranslateRange = [number, number];
+
 export interface ModalsStateEntry {
   id: string;
   onClose?: () => any;
@@ -29,8 +31,8 @@ export interface ModalsStateEntry {
   collapsed?: boolean;
   hidden?: boolean;
   contentScrolled?: boolean;
-  expandedRange?: [number, number];
-  collapsedRange?: [number, number];
-  hiddenRange?: [number, number];
+  expandedRange?: TranslateRange;
+  collapsedRange?: TranslateRange;
+  hiddenRange?: TranslateRange;
   contentScrollStopTimeout?: number;
 }

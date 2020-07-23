@@ -13,9 +13,9 @@ import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
-import { ModalsStateEntry, ModalType } from './types';
+import { ModalsStateEntry, ModalType, TranslateRange } from './types';
 
-function numberInRange(number: number, range: number[]) {
+function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];
 }
 
