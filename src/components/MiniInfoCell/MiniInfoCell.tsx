@@ -5,6 +5,8 @@ import getClassName from '../../helpers/getClassName';
 import Text from '../Typography/Text/Text';
 import Tappable from '../../components/Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../components/AdaptivityProvider/AdaptivityContext';
 
 export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -34,6 +36,7 @@ export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
 
 export const MiniInfoCell: FC<MiniInfoCellProps> = (props) => {
   const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
   const { before, after, mode, multiline, children, className, ...restProps } = props;
 
   const Component: ElementType = restProps.onClick ? Tappable : 'div';
@@ -44,6 +47,7 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props) => {
       className={classNames(getClassName('MiniInfoCell', platform), {
         [`MiniInfoCell--md-${mode}`]: mode !== 'base',
         'MiniInfoCell--mult': multiline,
+        [`MiniInfoCell--sizeX-${sizeX}`]: sizeX === SizeType.COMPACT,
       }, className)}
     >
       <div className="MiniInfoCell__icon">

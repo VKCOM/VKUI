@@ -142,6 +142,7 @@ export { default as withAdaptivity } from './hoc/withAdaptivity';
  */
 export { default as useInsets } from './hooks/useInsets';
 export { default as usePlatform } from './hooks/usePlatform';
+export { useAdaptivity } from './hooks/useAdaptivity';
 
 /**
  * Utils

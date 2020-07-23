@@ -3,6 +3,10 @@
   color: var(--text_subhead);
 }
 
+.MiniInfoCell--sizeX-compact {
+  border-radius: 0;
+}
+
 .MiniInfoCell__icon {
   color: var(--icon_outline_secondary);
 }
