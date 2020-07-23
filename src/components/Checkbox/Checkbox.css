@@ -31,6 +31,12 @@
         margin-bottom: auto;
       }
 
+      .Checkbox--sizeY-compact .Checkbox__icon .Icon {
+        position: relative;
+        top: -2px;
+        left: -2px;
+      }
+
     .Checkbox__content {
       flex-grow: 1;
       font-size: 16px;
