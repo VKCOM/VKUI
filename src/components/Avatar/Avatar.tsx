@@ -5,7 +5,7 @@ import usePlatform from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 
 export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
-  size?: 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24;
+  size?: 96 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24;
   src?: string;
   mode?: 'default' | 'image' | 'app';
   shadow?: boolean;
