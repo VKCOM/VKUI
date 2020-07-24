@@ -51,6 +51,7 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
     };
 
     this.maskElementRef = React.createRef();
+    this.activeTransitions = 0;
 
     this.initModalsState();
 
@@ -63,6 +64,8 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
   private maskAnimationFrame: number;
   private readonly modalRootContext: ModalRootContextInterface;
+
+  activeTransitions: number;
 
   static contextTypes = {
     window: PropTypes.any,
@@ -288,6 +291,7 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
 
     // Ждём полного скрытия предыдущей модалки
     if (prevModalState && (nextIsCard || prevIsCard && nextIsPage)) {
+      this.activeTransitions += 1;
       this.waitTransitionFinish(prevModalState, () => {
         this.waitTransitionFinish(nextModalState, this.prevNextSwitchEndHandler);
         this.animateModalOpacity(nextModalState, true);
@@ -301,12 +305,14 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
     }
 
     if (prevModalState && nextIsPage) {
+      this.activeTransitions += 1;
       this.waitTransitionFinish(prevModalState, this.prevNextSwitchEndHandler);
       requestAnimationFrame(() => {
         this.animateModalOpacity(prevModalState, false);
       });
     }
 
+    this.activeTransitions += 1;
     this.waitTransitionFinish(nextModalState, this.prevNextSwitchEndHandler);
     requestAnimationFrame(() => {
       this.animateModalOpacity(nextModalState, true);
@@ -314,6 +320,11 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
   }
 
   prevNextSwitchEndHandler = () => {
+    this.activeTransitions = Math.max(0, this.activeTransitions - 1);
+    if (this.activeTransitions > 0) {
+      return;
+    }
+
     const activeModal = this.state.nextModal;
 
     const newState: ModalRootState = {
