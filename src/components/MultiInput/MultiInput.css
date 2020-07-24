@@ -1,0 +1,69 @@
+.MultiInput {
+  display: flex;
+  position: relative;
+  line-height: 19px;
+  font-size: 16px;
+  padding: 8px 6px;
+}
+
+.MultiInput__container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin-bottom: -8px;
+}
+
+.MultiInput__chip {
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-bottom: 8px;
+}
+
+.MultiInput__input-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0 4px 8px;
+}
+
+.MultiInput__el {
+  line-height: 16px;
+  font-size: 13px;
+  color: var(--text_primary);
+  border: none;
+  outline: none;
+  height: 28px;
+  width: 100%;
+  min-width: 50px;
+  box-sizing: border-box;
+  box-shadow: none;
+  appearance: none;
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+
+.MultiInput:focus {
+  outline: none;
+}
+
+.MultiInput__el::-ms-clear {
+  display: none;
+}
+
+.MultiInput__el:disabled {
+  opacity: .4;
+}
+
+.MultiInput__el::placeholder {
+  line-height: 19px;
+  font-size: 16px;
+  color: var(--field_text_placeholder);
+}
+
+.MultiInput__el:disabled::placeholder {
+  color: var(--text_secondary);
+}

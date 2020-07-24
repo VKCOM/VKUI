@@ -69,3 +69,6 @@ export function setRef<T>(element: T, ref: Ref<T>): void {
     }
   }
 }
+
+// eslint-disable-next-line
+export const noop = () => {};
