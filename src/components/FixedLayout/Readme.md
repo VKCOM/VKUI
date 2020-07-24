@@ -22,7 +22,7 @@ class Example extends React.Component {
     return (
       <View activePanel="fixedLayout">
         <Panel id="fixedLayout">
-          <PanelHeader noShadow>
+          <PanelHeader>
             Fixed layout
           </PanelHeader>
           <FixedLayout vertical="top">

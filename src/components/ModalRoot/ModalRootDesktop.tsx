@@ -7,7 +7,7 @@ import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
-import { ModalsStateEntry, TYPE_PAGE, TYPE_CARD } from './ModalRoot';
+import { ModalsStateEntry, ModalType } from './types';
 import { ANDROID } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 
@@ -185,18 +185,18 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
     const modalState = this.modalsState[activeModal];
 
     if (modalElement.querySelector('.ModalPage')) {
-      modalState.type = TYPE_PAGE;
+      modalState.type = ModalType.PAGE;
     } else if (modalElement.querySelector('.ModalCard')) {
-      modalState.type = TYPE_CARD;
+      modalState.type = ModalType.CARD;
     }
 
     switch (modalState.type) {
-      case TYPE_PAGE:
+      case ModalType.PAGE:
         modalState.settlingHeight = modalState.settlingHeight || 75;
         this.initPageModal(modalState, modalElement);
         break;
 
-      case TYPE_CARD:
+      case ModalType.CARD:
         this.initCardModal(modalState, modalElement);
         break;
 
@@ -237,7 +237,7 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
     const modalId = activeModal || nextModal;
     const modalState = modalId ? this.modalsState[modalId] : undefined;
 
-    if (modalState && modalState.type === TYPE_PAGE && modalState.dynamicContentHeight) {
+    if (modalState && modalState.type === ModalType.PAGE && modalState.dynamicContentHeight) {
       if (this.state.switching) {
         this.waitTransitionFinish(modalState, () => {
           requestAnimationFrame(() => this.checkPageContentHeight());
@@ -284,10 +284,10 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
       return console.warn(`[ModalRoot.switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
     }
 
-    const prevIsCard = !!prevModalState && prevModalState.type === TYPE_CARD;
+    const prevIsCard = !!prevModalState && prevModalState.type === ModalType.CARD;
 
-    const nextIsPage = !!nextModalState && nextModalState.type === TYPE_PAGE;
-    const nextIsCard = !!nextModalState && nextModalState.type === TYPE_CARD;
+    const nextIsPage = !!nextModalState && nextModalState.type === ModalType.PAGE;
+    const nextIsCard = !!nextModalState && nextModalState.type === ModalType.CARD;
 
     // Ждём полного скрытия предыдущей модалки
     if (prevModalState && (nextIsCard || prevIsCard && nextIsPage)) {

@@ -19,6 +19,10 @@
   transform: translateY(100%);
 }
 
+.ModalRoot--switching .ModalPage__in-wrap {
+  pointer-events: none;
+}
+
 .ModalPage--ios .ModalPage__in-wrap {
   transition: transform 400ms var(--ios-easing);
 }

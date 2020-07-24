@@ -13,9 +13,9 @@ import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
-import { ModalsStateEntry, TYPE_PAGE, TYPE_CARD } from './ModalRoot';
+import { ModalsStateEntry, ModalType, TranslateRange } from './types';
 
-function numberInRange(number: number, range: number[]) {
+function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];
 }
 
@@ -242,18 +242,18 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
     const modalState = this.modalsState[activeModal];
 
     if (modalElement.querySelector('.ModalPage')) {
-      modalState.type = TYPE_PAGE;
+      modalState.type = ModalType.PAGE;
     } else if (modalElement.querySelector('.ModalCard')) {
-      modalState.type = TYPE_CARD;
+      modalState.type = ModalType.CARD;
     }
 
     switch (modalState.type) {
-      case TYPE_PAGE:
+      case ModalType.PAGE:
         modalState.settlingHeight = modalState.settlingHeight || 75;
         this.initPageModal(modalState, modalElement);
         break;
 
-      case TYPE_CARD:
+      case ModalType.CARD:
         this.initCardModal(modalState, modalElement);
         break;
 
@@ -366,7 +366,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
     const modalId = activeModal || nextModal;
     const modalState = modalId ? this.modalsState[modalId] : undefined;
 
-    if (modalState && modalState.type === TYPE_PAGE && modalState.dynamicContentHeight) {
+    if (modalState && modalState.type === ModalType.PAGE && modalState.dynamicContentHeight) {
       if (this.state.switching) {
         this.waitTransitionFinish(modalState, () => {
           requestAnimationFrame(() => this.checkPageContentHeight());
@@ -401,11 +401,11 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
 
     const modalState = this.modalsState[activeModal];
 
-    if (modalState.type === TYPE_PAGE) {
+    if (modalState.type === ModalType.PAGE) {
       return this.onPageTouchMove(e, modalState);
     }
 
-    if (modalState.type === TYPE_CARD) {
+    if (modalState.type === ModalType.CARD) {
       return this.onCardTouchMove(e, modalState);
     }
   };
@@ -495,11 +495,11 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
     }
     const modalState = this.modalsState[activeModal];
 
-    if (modalState.type === TYPE_PAGE) {
+    if (modalState.type === ModalType.PAGE) {
       return this.onPageTouchEnd(e, modalState);
     }
 
-    if (modalState.type === TYPE_CARD) {
+    if (modalState.type === ModalType.CARD) {
       return this.onCardTouchEnd(modalState);
     }
   };
@@ -631,11 +631,11 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
       return console.warn(`[ModalRoot.switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
     }
 
-    const prevIsPage = !!prevModalState && prevModalState.type === TYPE_PAGE;
-    const prevIsCard = !!prevModalState && prevModalState.type === TYPE_CARD;
+    const prevIsPage = !!prevModalState && prevModalState.type === ModalType.PAGE;
+    const prevIsCard = !!prevModalState && prevModalState.type === ModalType.CARD;
 
-    const nextIsPage = !!nextModalState && nextModalState.type === TYPE_PAGE;
-    const nextIsCard = !!nextModalState && nextModalState.type === TYPE_CARD;
+    const nextIsPage = !!nextModalState && nextModalState.type === ModalType.PAGE;
+    const nextIsCard = !!nextModalState && nextModalState.type === ModalType.CARD;
 
     // Ждём полного скрытия предыдущей модалки
     if (prevModalState && (nextIsCard || prevIsCard && nextIsPage)) {
@@ -697,7 +697,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
     this.frameIds[frameId] = requestAnimationFrame(() => {
       setTransformStyle(modalState.innerElement, `translateY(${currentPercent}%)`);
 
-      if (modalState.type === TYPE_PAGE && modalState.footerElement) {
+      if (modalState.type === ModalType.PAGE && modalState.footerElement) {
         const footerHeight = modalState.footerElement.offsetHeight;
         const factor = modalState.innerElement.offsetHeight * (currentPercent / 100);
 
@@ -705,7 +705,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
       }
     });
 
-    if (modalState.type === TYPE_PAGE && modalState.expandable) {
+    if (modalState.type === ModalType.PAGE && modalState.expandable) {
       this.animatePageHeader(modalState, currentPercent);
     }
   }
@@ -804,7 +804,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
                 }
                 const modalState = { ...this.modalsState[modalId] };
 
-                const isPage = modalState.type === TYPE_PAGE;
+                const isPage = modalState.type === ModalType.PAGE;
                 const key = `modal-${modalId}`;
 
                 return (

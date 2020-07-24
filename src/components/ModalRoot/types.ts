@@ -1,21 +1,24 @@
+export enum ModalType {
+  PAGE = 'page',
+  CARD = 'card',
+}
 
-export const TYPE_CARD = 'modal-card';
-export const TYPE_PAGE = 'modal-page';
+export type TranslateRange = [number, number];
 
 export interface ModalsStateEntry {
   id: string;
-  onClose?: () => {};
-  type?: 'modal-card' | 'modal-page';
+  onClose?: () => any;
+  type?: ModalType;
 
   settlingHeight?: number;
   dynamicContentHeight?: boolean;
   expandable?: boolean;
 
-  modalElement?: HTMLElement;
-  innerElement?: HTMLElement;
-  headerElement?: HTMLElement;
-  contentElement?: HTMLElement;
-  footerElement?: HTMLElement;
+  modalElement?: HTMLElement | null;
+  innerElement?: HTMLElement | null;
+  headerElement?: HTMLElement | null;
+  contentElement?: HTMLElement | null;
+  footerElement?: HTMLElement | null;
 
   translateY?: number;
   translateYFrom?: number;
@@ -28,8 +31,8 @@ export interface ModalsStateEntry {
   collapsed?: boolean;
   hidden?: boolean;
   contentScrolled?: boolean;
-  expandedRange?: [number, number];
-  collapsedRange?: [number, number];
-  hiddenRange?: [number, number];
+  expandedRange?: TranslateRange;
+  collapsedRange?: TranslateRange;
+  hiddenRange?: TranslateRange;
   contentScrollStopTimeout?: number;
 }
