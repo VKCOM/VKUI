@@ -73,7 +73,7 @@
 }
 
 .ModalRoot__modal--expandable .ModalPage__content {
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 

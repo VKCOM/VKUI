@@ -20,6 +20,11 @@
   transition: none;
 }
 
+.ModalRoot--switching .ModalRoot__mask {
+  /** Во время автоматической анимации смены модалок с фоном взаимодействовать нельзя */
+  pointer-events: none;
+}
+
 .ModalRoot__viewport {
   position: absolute;
   top: 0;
