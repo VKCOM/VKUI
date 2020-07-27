@@ -282,9 +282,9 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
     let expanded = false;
     let translateYFrom;
     let translateY;
-    let expandedRange: [number, number];
-    let collapsedRange: [number, number];
-    let hiddenRange: [number, number];
+    let expandedRange: TranslateRange;
+    let collapsedRange: TranslateRange;
+    let hiddenRange: TranslateRange;
 
     if (modalState.expandable) {
       translateYFrom = 100 - modalState.settlingHeight;
@@ -544,7 +544,10 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
       }
 
       next = () => {
-        !modalState.hidden && this.animateTranslate(modalState, modalState.translateY);
+        if (!modalState.hidden) {
+          this.animateTranslate(modalState, modalState.translateY);
+        }
+
         this.setMaskOpacity(modalState);
       };
     }
@@ -578,7 +581,10 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
       }
 
       next = () => {
-        !modalState.hidden && this.animateTranslate(modalState, modalState.translateY);
+        if (!modalState.hidden) {
+          this.animateTranslate(modalState, modalState.translateY);
+        }
+
         this.setMaskOpacity(modalState);
       };
     }
@@ -688,25 +694,30 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
     this.setState(newState);
   };
 
-  /* Анимирует сдивг модалки */
-  animateTranslate(modalState: ModalsStateEntry, currentPercent: number) {
+  /**
+   * Анимирует сдвиг модалки
+   *
+   * @param modalState
+   * @param percent Процент сдвига: 0 – полностью открыта, 100 – полностью закрыта
+   */
+  animateTranslate(modalState: ModalsStateEntry, percent: number) {
     const frameId = `animateTranslateFrame${modalState.id}`;
 
     cancelAnimationFrame(this.frameIds[frameId]);
 
     this.frameIds[frameId] = requestAnimationFrame(() => {
-      setTransformStyle(modalState.innerElement, `translateY(${currentPercent}%)`);
+      setTransformStyle(modalState.innerElement, `translateY(${percent}%)`);
 
       if (modalState.type === ModalType.PAGE && modalState.footerElement) {
         const footerHeight = modalState.footerElement.offsetHeight;
-        const factor = modalState.innerElement.offsetHeight * (currentPercent / 100);
+        const factor = modalState.innerElement.offsetHeight * (percent / 100);
 
         setTransformStyle(modalState.footerElement, `translateY(calc(${footerHeight}px * -${factor / footerHeight}))`);
       }
     });
 
     if (modalState.type === ModalType.PAGE && modalState.expandable) {
-      this.animatePageHeader(modalState, currentPercent);
+      this.animatePageHeader(modalState, percent);
     }
   }
 
@@ -766,9 +777,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
    * По клику на полупрозрачный черный фон нужно закрыть текущую модалку
    */
   onMaskClick = () => {
-    if (!this.state.switching) {
-      this.triggerActiveModalClose();
-    }
+    this.triggerActiveModalClose();
   };
 
   render() {
@@ -783,7 +792,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
             className={classNames(getClassName('ModalRoot', this.props.platform), {
-              'ModalRoot--vkapps': this.webviewType === 'vkapps',
+              'ModalRoot--vkapps': this.webviewType === WebviewType.VKAPPS,
               'ModalRoot--touched': touchDown,
               'ModalRoot--switching': switching,
             })}
