@@ -8,7 +8,7 @@
     <Group>
       <MiniInfoCell
         before={<Icon20ArticleOutline />}
-        multiline
+        textWrap="short"
       >
         ВКонтакте начинался как сайт для выпускников вузов, а сейчас это огромная экосистема с безграничными возможностями и миллионами пользователей.
       </MiniInfoCell>
