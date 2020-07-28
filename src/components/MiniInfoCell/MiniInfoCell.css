@@ -16,12 +16,17 @@
   white-space: nowrap;
 }
 
-.MiniInfoCell--mult .MiniInfoCell__content {
+.MiniInfoCell--wr-short .MiniInfoCell__content {
   white-space: initial;
   display: -webkit-box;
   max-height: 60px;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+
+.MiniInfoCell--wr-full .MiniInfoCell__content {
+  overflow: inherit;
+  white-space: initial;
 }
 
 .MiniInfoCell__after {
