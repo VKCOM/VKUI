@@ -366,7 +366,7 @@ export default class CustomSelect extends React.Component<Props, State> {
 
   renderWithCustomScrollbar() {
     const { opened, options } = this.state;
-    const { placeholder = '', tabIndex, name, getRef, getRootRef } = this.props;
+    const { placeholder = '', tabIndex, name, getRef, getRootRef, status } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
@@ -382,6 +382,7 @@ export default class CustomSelect extends React.Component<Props, State> {
           onBlur={this.onBlur}
           placeholder={placeholder}
           getRootRef={getRootRef}
+          status={status}
           className={classNames({
             ['CustomSelect__open']: opened,
           })}
