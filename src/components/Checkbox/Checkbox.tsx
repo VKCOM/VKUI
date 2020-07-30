@@ -31,7 +31,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
       className={classNames(getClassName('Checkbox', platform), className)}
       style={style}
       disabled={restProps.disabled}
-      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY }
+      activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
     >
       <input {...restProps} type="checkbox" className="Checkbox__input" ref={getRef} />
