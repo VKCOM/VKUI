@@ -24,17 +24,18 @@
       }
 
       .Checkbox--sizeY-compact .Checkbox__icon {
+        border: none;
+        display: none;
         margin-right: 12px;
-        width: 16px;
-        height: 16px;
-        margin-top: auto;
-        margin-bottom: auto;
       }
 
-      .Checkbox--sizeY-compact .Checkbox__icon .Icon {
-        position: relative;
-        top: -2px;
-        left: -2px;
+      .Checkbox--sizeY-compact .Checkbox-off__icon {
+        color: var(--icon_tertiary);
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        box-sizing: border-box;
+        margin: 0 12px 0 2px;
       }
 
     .Checkbox__content {
@@ -52,6 +53,16 @@
     background-color: var(--accent);
     border-color: var(--accent);
     color: var(--white);
+    }
+
+    .Checkbox--sizeY-compact .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon {
+      background-color: transparent;
+      color: var(--accent);
+      display: block;
+    }
+
+    .Checkbox--sizeY-compact .Checkbox__input:checked ~ .Checkbox__container .Checkbox-off__icon {
+      display: none;
     }
 
   .Checkbox__input[disabled] ~ .Checkbox__container {

@@ -4,16 +4,18 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IOS } from '../../lib/platform';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
+import Icon20CheckboxOn from '@vkontakte/icons/dist/20/check_box_on';
+import Icon20CheckboxOff from '@vkontakte/icons/dist/20/check_box_off';
 import { HasFormLabels, HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface CheckboxProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   HasRef<HTMLInputElement>,
   HasFormLabels,
-  AdaptivityProps {}
+  AdaptivityProps { }
 
 export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,
@@ -39,7 +41,18 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
     >
       <input {...restProps} type="checkbox" className="Checkbox__input" ref={getRef} />
       <div className="Checkbox__container">
-        <div className="Checkbox__icon"><Icon16Done /></div>
+        <div className="Checkbox__icon">
+          {sizeY === SizeType.COMPACT ?
+            <Icon20CheckboxOn />
+            :
+            <Icon16Done />
+          }
+        </div>
+        {sizeY === SizeType.COMPACT &&
+          <div className="Checkbox-off__icon">
+            <Icon20CheckboxOff />
+          </div>
+        }
         <div className="Checkbox__content">{children}</div>
       </div>
     </Tappable>
