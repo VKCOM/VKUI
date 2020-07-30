@@ -125,7 +125,7 @@ export default class CustomScrollView extends React.Component<Props> {
   render() {
     return <div className="CustomScrollView">
       <div className="CustomScrollView__box" tabIndex={-1} ref={this.box} onScroll={this.scroll}>
-        { this.props.children }
+        {this.props.children}
       </div>
 
       <div className="CustomScrollView__barY" ref={this.barY}>
