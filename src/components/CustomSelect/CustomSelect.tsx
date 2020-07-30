@@ -385,7 +385,6 @@ class CustomSelect extends React.Component<Props, State> {
           onBlur={this.onBlur}
           placeholder={placeholder}
           getRootRef={getRootRef}
-          sizeY={sizeY}
           className={classNames({
             ['CustomSelect__open']: opened,
             ['CustomSelect__open--popupDirectionTop']: popupDirection === 'top',

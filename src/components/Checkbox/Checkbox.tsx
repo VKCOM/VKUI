@@ -12,7 +12,8 @@ export interface CheckboxProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   HasRef<HTMLInputElement>,
-  HasFormLabels, AdaptivityProps {}
+  HasFormLabels,
+  AdaptivityProps {}
 
 export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,

@@ -11,7 +11,8 @@ export interface RadioProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
-  HasFormLabels, AdaptivityProps {
+  HasFormLabels,
+  AdaptivityProps {
   description?: ReactNode;
 }
 

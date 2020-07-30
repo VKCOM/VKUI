@@ -58,10 +58,6 @@
     opacity: .6;
     }
 
-  .Checkbox--sizeY-compact .Checkbox__input[disabled] ~ .Checkbox__container {
-    opacity: .4;
-    }
-
 .Checkbox--ios {
   padding: 12px 0;
   }

@@ -51,7 +51,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
     >
       <div className="Select__container">
         <div className="Select__title">{children || placeholder}</div>
-        {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : <Icon24Dropdown />}
+        {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
       </div>
     </FormField>
   );

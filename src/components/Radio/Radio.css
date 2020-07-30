@@ -16,10 +16,6 @@
     opacity: .6;
     }
 
-  .Radio--sizeY-compact .Radio__input:disabled ~ .Radio__container {
-    opacity: .4;
-    }
-
     .Radio__icon {
       flex-shrink: 0;
       box-sizing: border-box;
