@@ -34,6 +34,7 @@ export interface SelectChangeResult {
 
 interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInputElement> {
   options: SelectOption[];
+  popupDirection?: 'top' | 'bottom';
   onChange?: (result: SelectChangeResult) => void;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -366,7 +367,7 @@ export default class CustomSelect extends React.Component<Props, State> {
 
   renderWithCustomScrollbar() {
     const { opened, options } = this.state;
-    const { placeholder = '', tabIndex, name, getRef, getRootRef } = this.props;
+    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
@@ -384,6 +385,7 @@ export default class CustomSelect extends React.Component<Props, State> {
           getRootRef={getRootRef}
           className={classNames({
             ['CustomSelect__open']: opened,
+            ['CustomSelect__open--popupDirectionTop']: popupDirection === 'top',
           })}
         >
           {label}
@@ -393,6 +395,7 @@ export default class CustomSelect extends React.Component<Props, State> {
           <div
             className={classNames({
               ['CustomSelect__options']: opened,
+              ['CustomSelect__options--popupDirectionTop']: popupDirection === 'top',
             })}
             onMouseLeave={this.resetFocusedOption}
           >

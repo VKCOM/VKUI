@@ -7,6 +7,7 @@ import { setRef } from '../../lib/utils';
 
 interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLSelectElement | HTMLInputElement> {
   options?: SelectOption[];
+  popupDirection?: 'top' | 'bottom';
   onChange?: (result: SelectChangeResult) => void;
   onFocus?: () => void;
   onBlur?: () => void;
