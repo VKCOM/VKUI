@@ -3,9 +3,12 @@ import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IOS } from '../../lib/platform';
-import Icon16Done from '@vkontakte/icons/dist/16/done';
+
 import Icon20CheckboxOn from '@vkontakte/icons/dist/20/check_box_on';
 import Icon20CheckboxOff from '@vkontakte/icons/dist/20/check_box_off';
+import Icon24CheckboxOn from '@vkontakte/icons/dist/24/check_box_on';
+import Icon24CheckboxOff from '@vkontakte/icons/dist/24/check_box_off';
+
 import { HasFormLabels, HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
@@ -41,18 +44,20 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
     >
       <input {...restProps} type="checkbox" className="Checkbox__input" ref={getRef} />
       <div className="Checkbox__container">
-        <div className="Checkbox__icon">
+        <div className="Checkbox__icon Checkbox__iconOn">
           {sizeY === SizeType.COMPACT ?
             <Icon20CheckboxOn />
             :
-            <Icon16Done />
+            <Icon24CheckboxOn />
           }
         </div>
-        {sizeY === SizeType.COMPACT &&
-          <div className="Checkbox-off__icon">
+        <div className="Checkbox__icon Checkbox__iconOff">
+          {sizeY === SizeType.COMPACT ?
             <Icon20CheckboxOff />
-          </div>
-        }
+            :
+            <Icon24CheckboxOff />
+          }
+        </div>
         <div className="Checkbox__content">{children}</div>
       </div>
     </Tappable>
