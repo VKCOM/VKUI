@@ -69,5 +69,4 @@
   position: fixed;
   transform: translateZ(0);
   overflow: hidden;
-  overflow-y: auto;
 }
