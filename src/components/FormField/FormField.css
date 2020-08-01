@@ -92,3 +92,11 @@
 .FormField--android.CustomSelect__open .FormField__border {
   border-radius: 8px 8px 0 0;
 }
+
+.FormField--ios.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
+  border-radius: 0 0 10px 10px;
+}
+
+.FormField--android.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
+  border-radius: 0 0 8px 8px;
+}

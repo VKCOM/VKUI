@@ -35,6 +35,7 @@ interface Props extends Attrs, HasPlatform, HasFormLabels, AdaptivityProps {
   max: State;
   name?: string;
   defaultValue?: State;
+  popupDirection?: 'top' | 'bottom';
   monthNames?: string[];
   dayPlaceholder?: string;
   monthPlaceholder?: string;
@@ -160,7 +161,7 @@ class DatePicker extends Component<Props, Partial<State>> {
   };
 
   customView() {
-    const { name, dayPlaceholder, monthPlaceholder, yearPlaceholder } = this.props;
+    const { name, dayPlaceholder, monthPlaceholder, yearPlaceholder, popupDirection } = this.props;
     const { day, month, year } = this.state;
 
     return (
@@ -172,6 +173,7 @@ class DatePicker extends Component<Props, Partial<State>> {
               value={day}
               options={this.getDayOptions()}
               placeholder={dayPlaceholder}
+              popupDirection={popupDirection}
               onChange={this.onSelectChange}
             />
           </div>
@@ -181,6 +183,7 @@ class DatePicker extends Component<Props, Partial<State>> {
               value={month}
               options={this.getMonthOptions()}
               placeholder={monthPlaceholder}
+              popupDirection={popupDirection}
               onChange={this.onSelectChange}
             />
           </div>
@@ -190,6 +193,7 @@ class DatePicker extends Component<Props, Partial<State>> {
               value={year}
               options={this.getYearOptions()}
               placeholder={yearPlaceholder}
+              popupDirection={popupDirection}
               onChange={this.onSelectChange}
             />
           </div>
