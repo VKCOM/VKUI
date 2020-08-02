@@ -5,7 +5,7 @@ import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
 import { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
-import { HasRef } from '../../types';
+import { HasRef, HasFormStatus } from '../../types';
 
 type SelectValue = string | number | boolean;
 
@@ -32,7 +32,7 @@ export interface SelectChangeResult {
   name: string;
 }
 
-interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInputElement> {
+interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInputElement>, HasFormStatus {
   options: SelectOption[];
   popupDirection?: 'top' | 'bottom';
   onChange?: (result: SelectChangeResult) => void;
@@ -367,7 +367,7 @@ export default class CustomSelect extends React.Component<Props, State> {
 
   renderWithCustomScrollbar() {
     const { opened, options } = this.state;
-    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection } = this.props;
+    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
@@ -375,6 +375,7 @@ export default class CustomSelect extends React.Component<Props, State> {
       <>
         <SelectMimicry
           tabIndex={tabIndex}
+          status={status}
           aria-hidden={true}
           onClick={this.onClick}
           onKeyDown={this.handleKeyDownSelect}
