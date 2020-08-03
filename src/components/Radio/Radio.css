@@ -142,3 +142,48 @@
         background-color: var(--accent);
         transform: scale(1);
         }
+
+.Radio--vkcom {
+  padding: 12px 0;
+  }
+
+  .Radio--vkcom .Radio__container {}
+
+    .Radio--vkcom .Radio__icon {
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--icon_secondary);
+      margin: 2px 14px 2px 2px;
+      transition: border-color .5s var(--ios-easing);
+      }
+
+      .Radio--vkcom .Radio__icon::after {
+        width: 10px;
+        height: 10px;
+        left: 4px;
+        top: 4px;
+        transform: scale(.3);
+        transition: transform .5s var(--ios-easing);
+        }
+
+    .Radio--vkcom .Radio__content {
+      margin: 2px 0;
+      }
+
+    .Radio--vkcom .Radio__input:disabled ~ .Radio__container {
+      opacity: .4;
+    }
+
+    .Radio--vkcom .Radio__input:disabled ~ .Radio__container .Radio__icon {
+      background-color: transparent;
+    }
+
+    .Radio--vkcom .Radio__input:checked ~ .Radio__container .Radio__icon {
+      border-color: var(--accent);
+      background-color: transparent;
+      }
+
+      .Radio--vkcom .Radio__input:checked ~ .Radio__container .Radio__icon::after {
+        background-color: var(--accent);
+        transform: scale(1);
+        }

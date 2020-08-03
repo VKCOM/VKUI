@@ -7,6 +7,8 @@ import { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import { HasRef, HasFormStatus } from '../../types';
 import withAdaptivity from '../../hoc/withAdaptivity';
+import withPlatform from '../../hoc/withPlatform';
+import { getClassName } from '../..';
 
 type SelectValue = string | number | boolean;
 
@@ -368,7 +370,7 @@ class CustomSelect extends React.Component<Props, State> {
 
   renderWithCustomScrollbar() {
     const { opened, options } = this.state;
-    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status, sizeY } = this.props;
+    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status, sizeY, platform } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
@@ -396,7 +398,7 @@ class CustomSelect extends React.Component<Props, State> {
         {opened &&
           <div
             className={classNames({
-              ['CustomSelect__options']: opened,
+              [getClassName('CustomSelect__options', platform)]: opened,
               ['CustomSelect__options--popupDirectionTop']: popupDirection === 'top',
               [`CustomSelect__options--sizeY-${sizeY}`]: !!sizeY,
             })}
@@ -423,6 +425,6 @@ class CustomSelect extends React.Component<Props, State> {
   }
 }
 
-export default withAdaptivity(CustomSelect, {
+export default withPlatform(withAdaptivity(CustomSelect, {
   sizeY: true,
-});
+}));

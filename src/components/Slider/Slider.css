@@ -100,3 +100,22 @@
       border-radius: 10px;
       box-shadow: 0 1px 3px 0 var(--separator_common), 0 0 1px 0 var(--separator_common), 0 0 0 .5px rgba(0, 0, 0, .04);
       }
+
+/**
+ * VKCOM
+ */
+ .Slider--vkcom {
+}
+
+  .Slider--vkcom .Slider__thumb::before {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    content: '';
+    background: var(--white);
+    border-radius: 10px;
+    border: 1px solid var(--input_border);
+    box-shadow: 0 0 2px var(--separator_common), 0 2px 4px var(--separator_common);
+    }

@@ -6,6 +6,8 @@ import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasFormLabels, HasFormStatus, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import usePlatform from '../../hooks/usePlatform';
+import { getClassName } from '../..';
 
 export interface SelectMimicryProps extends
   HTMLAttributes<HTMLElement>,
@@ -33,11 +35,12 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   sizeY,
   ...restProps
 }: SelectMimicryProps) => {
+  const platform = usePlatform();
   return (
     <FormField
       {...restProps}
       tabIndex={disabled ? null : tabIndex}
-      className={classNames('Select', 'Select--mimicry', {
+      className={classNames(getClassName('Select', platform), 'Select--mimicry', {
         'Select--not-selected': !children,
         'Select--multiline': multiline,
         'Select--disabled': disabled,
