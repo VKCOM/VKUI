@@ -42,11 +42,29 @@ export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
    * - `full` – текст отображается полностью.
    */
   textWrap?: 'nowrap' | 'short' | 'full';
+
+  /**
+   * Стиль текста:
+   *
+   * - `primary` – используйте этот стиль, если хотите выделить информацию в общем списке.<br />Пример использования: подробная информация на странице сообщества
+   * - `secondary` – стиль по-умолчанию.
+   */
+  textLevel?: 'primary' | 'secondary';
 }
 
 export const MiniInfoCell: FC<MiniInfoCellProps> = (props) => {
   const platform = usePlatform();
-  const { before, after, mode, textWrap, multiline, children, className, ...restProps } = props;
+  const {
+    before,
+    after,
+    mode,
+    textWrap,
+    textLevel,
+    multiline,
+    children,
+    className,
+    ...restProps
+  } = props;
 
   const Component: ElementType = restProps.onClick ? Tappable : 'div';
   const finalTextWrap: typeof textWrap = multiline ? 'short' : textWrap;
@@ -57,7 +75,7 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props) => {
       className={classNames(getClassName('MiniInfoCell', platform), {
         [`MiniInfoCell--md-${mode}`]: mode !== 'base',
         [`MiniInfoCell--wr-${finalTextWrap}`]: finalTextWrap !== 'nowrap',
-      }, className)}
+      }, `MiniInfoCell--lvl-${textLevel}`, className)}
     >
       <div className="MiniInfoCell__icon">
         {before}
@@ -80,4 +98,5 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props) => {
 MiniInfoCell.defaultProps = {
   mode: 'base',
   textWrap: 'nowrap',
+  textLevel: 'secondary',
 };
