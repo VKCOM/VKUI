@@ -1,5 +1,14 @@
 .MiniInfoCell {
   display: flex;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.MiniInfoCell--lvl-primary {
+  color: var(--text_primary);
+}
+
+.MiniInfoCell--lvl-secondary {
   color: var(--text_subhead);
 }
 
@@ -49,14 +58,21 @@
   color: var(--link_alternate);
 }
 
+.MiniInfoCell--md-more {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 /* iOS */
 
 .MiniInfoCell--ios {
-  padding: 6px 12px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 /* Android */
 
 .MiniInfoCell--android {
-  padding: 6px 16px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
