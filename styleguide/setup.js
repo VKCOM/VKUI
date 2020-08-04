@@ -17,6 +17,10 @@ import Icon20WorkOutline from '@vkontakte/icons/dist/20/work_outline';
 import Icon20GlobeOutline from '@vkontakte/icons/dist/20/globe_outline';
 import Icon20Info from '@vkontakte/icons/dist/20/info';
 import Icon20PhoneOutline from '@vkontakte/icons/dist/20/phone_outline';
+import Icon20CommunityName from '@vkontakte/icons/dist/20/community_name';
+import Icon20MessageOutline from '@vkontakte/icons/dist/20/message_outline';
+import Icon20PlaceOutline from '@vkontakte/icons/dist/20/place_outline';
+import Icon20MentionOutline from '@vkontakte/icons/dist/20/mention_outline';
 
 import Icon24Add from '@vkontakte/icons/dist/24/add';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
@@ -98,6 +102,10 @@ window.Icon20WorkOutline = Icon20WorkOutline;
 window.Icon20GlobeOutline = Icon20GlobeOutline;
 window.Icon20Info = Icon20Info;
 window.Icon20PhoneOutline = Icon20PhoneOutline;
+window.Icon20CommunityName = Icon20CommunityName;
+window.Icon20MessageOutline = Icon20MessageOutline;
+window.Icon20PlaceOutline = Icon20PlaceOutline;
+window.Icon20MentionOutline = Icon20MentionOutline;
 
 window.Icon24Add = Icon24Add;
 window.Icon24Back = Icon24Back;
