@@ -9,7 +9,7 @@ else
   echo "release: creating version"
   yarn version --new-version $1
 
-  if [ !$2 ]; then
+  if [ ! $2 ]; then
     echo "release: building styleguide"
     yarn styleguide:build
 
