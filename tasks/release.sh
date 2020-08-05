@@ -9,10 +9,10 @@ else
   echo "release: creating version"
   yarn version --new-version $1
 
-  echo "release: building styleguide"
-  yarn styleguide:build
-
   if [ !$2 ]; then
+    echo "release: building styleguide"
+    yarn styleguide:build
+
     echo "release: updating styleguide submodule"
     git submodule foreach 'git add -A && git commit -m '"v$1"''
 
