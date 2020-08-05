@@ -1,0 +1,70 @@
+.ChipsInput {
+  display: flex;
+  position: relative;
+  line-height: 19px;
+  font-size: 16px;
+  padding: 8px 6px;
+}
+
+.ChipsInput__container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin-bottom: -8px;
+}
+
+.ChipsInput__chip {
+  margin-left: 4px;
+  margin-right: 4px;
+  margin-bottom: 8px;
+  max-width: calc(100% - 8px);
+}
+
+.ChipsInput__input-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0 4px 8px;
+}
+
+.ChipsInput__el {
+  line-height: 16px;
+  font-size: 13px;
+  color: var(--text_primary);
+  border: none;
+  outline: none;
+  height: 28px;
+  width: 100%;
+  min-width: 50px;
+  box-sizing: border-box;
+  box-shadow: none;
+  appearance: none;
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+
+.ChipsInput:focus {
+  outline: none;
+}
+
+.ChipsInput__el::-ms-clear {
+  display: none;
+}
+
+.ChipsInput__el:disabled {
+  opacity: .4;
+}
+
+.ChipsInput__el::placeholder {
+  line-height: 19px;
+  font-size: 16px;
+  color: var(--field_text_placeholder);
+}
+
+.ChipsInput__el:disabled::placeholder {
+  color: var(--text_secondary);
+}

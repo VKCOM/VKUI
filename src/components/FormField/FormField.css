@@ -41,7 +41,8 @@
 
 .FormField.Textarea .Textarea__el:disabled ~ .FormField__border,
 .FormField.Select .Select__el:disabled ~ .FormField__border,
-.FormField.Input .Input__el:disabled ~ .FormField__border {
+.FormField.Input .Input__el:disabled ~ .FormField__border,
+.FormField.ChipsInput.ChipsInput--disabled .ChipsInput__container ~ .FormField__border {
   opacity: .4;
 }
 
@@ -66,7 +67,8 @@
 .FormField.Input .Input__el:focus ~ .FormField__border,
 .FormField.Textarea .Textarea__el:focus ~ .FormField__border,
 .FormField.Select .Select__el:focus ~ .FormField__border,
-.FormField.Select--mimicry:focus .FormField__border {
+.FormField.Select--mimicry:focus .FormField__border,
+.FormField.ChipsInput.ChipsInput--focused .ChipsInput__container ~ .FormField__border {
   border-color: var(--accent);
   background: var(--field_background);
 }
@@ -74,7 +76,8 @@
 .FormField--ios.Input .Input__el:focus ~ .FormField__border,
 .FormField--ios.Textarea .Textarea__el:focus ~ .FormField__border,
 .FormField--ios.Select .Select__el:focus ~ .FormField__border,
-.FormField--ios.Select--mimicry:focus .FormField__border {
+.FormField--ios.Select--mimicry:focus .FormField__border,
+.FormField--ios.ChipsInput.ChipsInput--focused .ChipsInput__container ~ .FormField__border {
   border-radius: 10px;
   transform: scale(1);
   width: 100%;

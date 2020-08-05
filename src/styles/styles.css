@@ -92,6 +92,8 @@
 @import '../components/Checkbox/Checkbox.css';
 @import '../components/Input/Input.css';
 @import '../components/Select/Select.css';
+@import '../components/ChipsInput/ChipsInput.css';
+@import '../components/Chip/Chip.css';
 @import '../components/Textarea/Textarea.css';
 @import '../components/File/File.css';
 @import '../components/CustomScrollView/CustomScrollView.css';
