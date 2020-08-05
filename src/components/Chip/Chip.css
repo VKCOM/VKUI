@@ -1,18 +1,17 @@
 .Chip {
-  display: flex;
+  display: inline-block;
   border: var(--image_border);
   background: var(--background_content);
   border-radius: 10px;
   height: 28px;
-  max-width: calc(100% - 8px);
 }
 
 .Chip__in {
   display: flex;
-  padding: 6px 9px;
-  align-items: center;
   width: 100%;
-  max-width: calc(100% - 16px);
+  height: 100%;
+  padding: 0 8px;
+  align-items: center;
 }
 
 .Chip__content {

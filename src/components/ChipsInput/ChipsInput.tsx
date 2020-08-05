@@ -11,23 +11,23 @@ import React, {
 import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
 import FormField from '../FormField/FormField';
 import classNames from '../../lib/classNames';
-import Chip, { ChipProps } from './Chip';
+import Chip, { ChipProps } from '../Chip/Chip';
 import { noop, setRef } from '../../lib/utils';
 
-type MultiInputValue = string | number;
+type ChipsInputValue = string | number;
 
-interface MultiInputOption {
-  value?: MultiInputValue;
+interface ChipsInputOption {
+  value?: ChipsInputValue;
   label?: string;
   [otherProp: string]: any;
 }
 
-export interface RenderChip<Option extends MultiInputOption> extends ChipProps {
+export interface RenderChip<Option extends ChipsInputOption> extends ChipProps {
   option: Option;
   disabled: boolean;
 }
 
-export interface MultiInputProps<Option extends MultiInputOption> extends
+export interface ChipsInputProps<Option extends ChipsInputOption> extends
   Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLDivElement>,
@@ -35,16 +35,15 @@ export interface MultiInputProps<Option extends MultiInputOption> extends
   HasFormLabels,
   HasAlign {
   value: Option[];
-  creatable?: boolean;
   onChange?: (o: Option[]) => void;
-  getOptionValue?: (o: Option) => MultiInputValue;
+  getOptionValue?: (o: Option) => ChipsInputValue;
   getOptionLabel?: (o: Option) => string;
-  getNewOptionData?: (v: MultiInputValue, l: string) => Option;
+  getNewOptionData?: (v: ChipsInputValue, l: string) => Option;
   renderChip: (props: RenderChip<Option>) => ReactNode;
 }
 
-const MultiInput = <Option extends MultiInputOption>(props: MultiInputProps<Option>) => {
-  const { style, value, status, creatable, onChange, onBlur, onFocus, children, className,
+const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
+  const { style, value, status, onChange, onBlur, onFocus, children, className,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, getNewOptionData, renderChip, ...restProps } = props;
 
   const inputRef = useRef(null);
@@ -74,7 +73,7 @@ const MultiInput = <Option extends MultiInputOption>(props: MultiInputProps<Opti
     }
   }, [selectedOptions, setSelectedOptions, onChange, getOptionValue]);
 
-  const removeOption = useCallback((value: MultiInputValue) => {
+  const removeOption = useCallback((value: ChipsInputValue) => {
     const newSelectedOptions = selectedOptions.filter((option: Option) => getOptionValue(option) !== value);
 
     setSelectedOptions(newSelectedOptions);
@@ -120,54 +119,51 @@ const MultiInput = <Option extends MultiInputOption>(props: MultiInputProps<Opti
       Component="label"
       status={status}
       getRootRef={getRootRef}
-      className={classNames('MultiInput', {
-        'MultiInput--focused': focused,
-        'MultiInput--disabled': disabled,
+      className={classNames('ChipsInput', {
+        'ChipsInput--focused': focused,
+        'ChipsInput--disabled': disabled,
       }, className)}
       style={style}
     >
-      <div className="MultiInput__container">
+      <div className="ChipsInput__container">
         {selectedOptions.map((option: Option) => {
           const value = getOptionValue(option);
           const label = getOptionLabel(option);
 
-          return renderChip({ option, value, label, onRemove: removeOption, disabled, className: 'MultiInput__chip' });
+          return renderChip({ option, value, label, onRemove: removeOption, disabled, className: 'ChipsInput__chip' });
         })}
-        {creatable && <>
-          <div className="MultiInput__input-container">
-            <input ref={getRefWrapper}
-              autoCapitalize="none"
-              autoComplete="off"
-              autoCorrect="off"
-              spellCheck={false}
-              aria-autocomplete="list"
-              tabIndex={disabled ? null : tabIndex}
-              className="MultiInput__el"
-              onKeyDown={handleKeydown}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              disabled={disabled || !creatable}
-              placeholder={selectedOptions.length ? null : placeholder}
-              {...restProps} />
-          </div>
-        </>}
+        <div className="ChipsInput__input-container">
+          <input ref={getRefWrapper}
+            autoCapitalize="none"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
+            aria-autocomplete="list"
+            tabIndex={disabled ? null : tabIndex}
+            className="ChipsInput__el"
+            onKeyDown={handleKeydown}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            disabled={disabled}
+            placeholder={selectedOptions.length ? null : placeholder}
+            {...restProps} />
+        </div>
       </div>
     </FormField>
   );
 };
 
-MultiInput.defaultProps = {
+ChipsInput.defaultProps = {
   type: 'text',
   onChange: noop,
   onBlur: noop,
   onFocus: noop,
   value: [],
-  creatable: true,
   tabIndex: 0,
-  getOptionValue: (option: MultiInputOption): MultiInputValue => option.value,
-  getOptionLabel: (option: MultiInputOption): string => option.label,
-  getNewOptionData: (_: MultiInputValue, label: string): MultiInputOption => ({ value: label, label }),
-  renderChip({ disabled, value, ...rest }: RenderChip<MultiInputOption>) {
+  getOptionValue: (option: ChipsInputOption): ChipsInputValue => option.value,
+  getOptionLabel: (option: ChipsInputOption): string => option.label,
+  getNewOptionData: (_: ChipsInputValue, label: string): ChipsInputOption => ({ value: label, label }),
+  renderChip({ disabled, value, ...rest }: RenderChip<ChipsInputOption>) {
     return <Chip key={value}
       value={value}
       removable={!disabled}
@@ -176,4 +172,4 @@ MultiInput.defaultProps = {
   },
 };
 
-export default MultiInput;
+export default ChipsInput;

@@ -1,4 +1,4 @@
-.MultiInput {
+.ChipsInput {
   display: flex;
   position: relative;
   line-height: 19px;
@@ -6,7 +6,7 @@
   padding: 8px 6px;
 }
 
-.MultiInput__container {
+.ChipsInput__container {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -16,20 +16,21 @@
   margin-bottom: -8px;
 }
 
-.MultiInput__chip {
+.ChipsInput__chip {
   margin-left: 4px;
   margin-right: 4px;
   margin-bottom: 8px;
+  max-width: calc(100% - 8px);
 }
 
-.MultiInput__input-container {
+.ChipsInput__input-container {
   display: flex;
   flex-direction: column;
   flex: 1;
   margin: 0 4px 8px;
 }
 
-.MultiInput__el {
+.ChipsInput__el {
   line-height: 16px;
   font-size: 13px;
   color: var(--text_primary);
@@ -46,24 +47,24 @@
   background: transparent;
 }
 
-.MultiInput:focus {
+.ChipsInput:focus {
   outline: none;
 }
 
-.MultiInput__el::-ms-clear {
+.ChipsInput__el::-ms-clear {
   display: none;
 }
 
-.MultiInput__el:disabled {
+.ChipsInput__el:disabled {
   opacity: .4;
 }
 
-.MultiInput__el::placeholder {
+.ChipsInput__el::placeholder {
   line-height: 19px;
   font-size: 16px;
   color: var(--field_text_placeholder);
 }
 
-.MultiInput__el:disabled::placeholder {
+.ChipsInput__el:disabled::placeholder {
   color: var(--text_secondary);
 }

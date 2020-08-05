@@ -73,7 +73,7 @@ import Icon56MoneyTransferOutline from '@vkontakte/icons/dist/56/money_transfer_
 import Icon56NotificationOutline from '@vkontakte/icons/dist/56/notification_outline';
 import Icon56UsersOutline from '@vkontakte/icons/dist/56/users_outline';
 
-import Chip from '../src/components/MultiInput/Chip';
+import Chip from '../src/components/Chip/Chip';
 
 for (let i in VKUI) {
   window[i] = VKUI[i];
@@ -155,8 +155,6 @@ window.Icon56MessageReadOutline = Icon56MessageReadOutline;
 window.Icon56MoneyTransferOutline = Icon56MoneyTransferOutline;
 window.Icon56NotificationOutline = Icon56NotificationOutline;
 window.Icon56UsersOutline = Icon56UsersOutline;
-
-window.Chip = Chip;
 
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;
