@@ -1,5 +1,5 @@
 Представляет собой маленький кусочек информации.  
-Используется внутри ChilpsInput.
+Используется внутри [ChipsInput](https://vkcom.github.io/vkui-styleguide/#!/ChipsInput).
 
 ```jsx
   <View activePanel="panel">
