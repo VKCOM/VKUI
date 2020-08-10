@@ -30,6 +30,10 @@ export interface ModalRootProps extends HasChildren, HasPlatform {
    * Будет вызвано при закрытии активной модалки с её id
    */
   onClose?(modalId: string): void;
+  /**
+   * Будет вызвано при изменении высоты ModalPage
+   */
+  onChangeModalPageHeight?(translateYCurrent: number): void;
 }
 
 export interface ModalRootState {
@@ -465,6 +469,9 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
       this.animateTranslate(modalState, modalState.translateYCurrent);
       this.setMaskOpacity(modalState);
+      if (this.props.onChangeModalPageHeight !== undefined) {
+        this.props.onChangeModalPageHeight(modalState.translateYCurrent);
+      }
     }
   }
 
