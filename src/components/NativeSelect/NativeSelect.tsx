@@ -1,6 +1,7 @@
 import React, { ChangeEvent, ChangeEventHandler, RefCallback, SelectHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
+import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
@@ -82,7 +83,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
 
   render() {
     const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, top, bottom, disabled, sizeX, ...restProps } = this.props;
+      getRef, getRootRef, top, bottom, disabled, sizeX, sizeY, ...restProps } = this.props;
 
     return (
       <FormField
@@ -91,6 +92,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
           ['Select--not-selected']: this.state.notSelected,
           [`Select--align-${align}`]: !!align,
           [`Select--sizeX--${sizeX}`]: !!sizeX,
+          [`Select--sizeY--${sizeY}`]: !!sizeY,
           'Select--disabled': disabled,
         }, className)}
         style={style}
@@ -110,7 +112,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
         </select>
         <div className="Select__container">
           <div className="Select__title">{this.state.title}</div>
-          {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : <Icon24Dropdown />}
+          {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
         </div>
       </FormField>
     );
@@ -119,4 +121,5 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
 
 export default withAdaptivity(NativeSelect, {
   sizeX: true,
+  sizeY: true,
 });

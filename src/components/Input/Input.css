@@ -32,6 +32,14 @@
   background: transparent;
   }
 
+.Input--sizeY-compact .Input__el {
+  height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 20px;
+  font-size: 15px;
+}
+
 .Input__el:disabled {
   opacity: .4;
 }

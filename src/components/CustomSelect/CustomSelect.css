@@ -53,3 +53,9 @@
   top: 15px;
   right: 12px;
 }
+
+.CustomSelect__options--sizeY-compact .CustomSelect__option {
+  height: 40px;
+  padding: 10px 11px;
+  font-size: 15px;
+}

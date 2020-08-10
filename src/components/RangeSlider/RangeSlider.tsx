@@ -7,6 +7,7 @@ import { OnSliderResize, precisionRound } from '../Slider/Slider';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export type Value = [number, number];
 
@@ -14,7 +15,8 @@ export interface RangeSliderProps extends
   HasRootRef<HTMLDivElement>,
   HasPlatform,
   Omit<HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'>,
-  HasFormLabels {
+  HasFormLabels,
+  AdaptivityProps {
   min?: number;
   max?: number;
   step?: number;
@@ -215,12 +217,14 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
   render() {
     const { className, min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, top, bottom, ...restProps } = this.props;
+      onChange, getRootRef, platform, top, bottom, sizeY, ...restProps } = this.props;
 
     return (
       <div
         {...restProps}
-        className={classNames(getClassName('Slider', platform), className)}
+        className={classNames(getClassName('Slider', platform), className, {
+          [`Slider--sizeY-${sizeY}`]: !!sizeY,
+        })}
         ref={this.getRef}
       >
         <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
@@ -250,4 +254,6 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   }
 }
 
-export default withPlatform(RangeSlider);
+export default withAdaptivity(withPlatform(RangeSlider), {
+  sizeY: true,
+});
