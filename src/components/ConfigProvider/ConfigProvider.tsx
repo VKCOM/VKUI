@@ -7,10 +7,11 @@ import {
   ConfigProviderContextInterface,
   Scheme,
   WebviewType,
+  defaultConfigProviderProps,
 } from './ConfigProviderContext';
 import { HasChildren } from '../../types';
-import vkBridge, { AppearanceSchemeType } from '@vkontakte/vk-bridge';
-import { platform, OS, OSType } from '../../lib/platform';
+import { AppearanceSchemeType } from '@vkontakte/vk-bridge';
+import { OS, OSType } from '../../lib/platform';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
@@ -32,14 +33,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
-  static defaultProps: ConfigProviderProps = {
-    webviewType: WebviewType.VKAPPS,
-    isWebView: vkBridge.isWebView(),
-    scheme: Scheme.BRIGHT_LIGHT,
-    appearance: Appearance.LIGHT,
-    transitionMotionEnabled: true,
-    platform: platform(),
-  };
+  static defaultProps: ConfigProviderProps = defaultConfigProviderProps;
 
   static childContextTypes: ConfigProviderChildContextType = {
     isWebView: PropTypes.bool,

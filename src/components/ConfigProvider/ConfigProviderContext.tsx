@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
-import { OSType } from '../..';
+import vkBridge, { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
+import { OSType, platform } from '../..';
 
 export enum Appearance {
   DARK = 'dark',
@@ -51,4 +51,13 @@ export interface ConfigProviderContextInterface {
   platform?: OSType;
 }
 
-export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});
+export const defaultConfigProviderProps = {
+  webviewType: WebviewType.VKAPPS,
+  isWebView: vkBridge.isWebView(),
+  scheme: Scheme.BRIGHT_LIGHT,
+  appearance: Appearance.LIGHT,
+  transitionMotionEnabled: true,
+  platform: platform(),
+};
+
+export const ConfigProviderContext = createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);
