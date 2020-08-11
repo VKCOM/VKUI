@@ -40,12 +40,9 @@
 
 .Button--str {
   display: block;
-  max-width: 100%;
-  flex-grow: 1;
-  }
-
-.Button--str:first-child:last-child {
   width: 100%;
+  flex-grow: 1;
+  flex-basis: 0;
   }
 
   .Button--str .Button__in {
@@ -138,8 +135,6 @@
     }
 
 .Button--sz-l {
-  display: block;
-  width: 100%;
   padding: 0 20px;
   min-height: 44px;
   }
