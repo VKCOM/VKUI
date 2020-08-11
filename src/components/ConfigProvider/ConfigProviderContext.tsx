@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
+import { OSType } from '../..';
 
 export enum Appearance {
   DARK = 'dark',
@@ -44,6 +45,10 @@ export interface ConfigProviderContextInterface {
    * Включена ли анимация переходов между экранами в `Root` и `View`
    */
   transitionMotionEnabled?: boolean;
+  /**
+   * Платоформа
+   */
+  platform?: OSType;
 }
 
 export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});
