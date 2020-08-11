@@ -4,6 +4,8 @@ import FormField from '../FormField/FormField';
 import { HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
 import { setRef } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { getClassName, HasPlatform } from '../..';
+import withPlatform from '../../hoc/withPlatform';
 
 export interface TextareaProps extends
   TextareaHTMLAttributes<HTMLTextAreaElement>,
@@ -11,7 +13,8 @@ export interface TextareaProps extends
   HasRootRef<HTMLElement>,
   HasFormStatus,
   HasFormLabels,
-  AdaptivityProps {
+  AdaptivityProps,
+  HasPlatform {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;
@@ -114,13 +117,13 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
 
   render() {
     const { defaultValue, value, onChange, grow, style, onResize, className,
-      getRootRef, getRef, status, top, bottom, sizeY, ...restProps } = this.props;
+      getRootRef, getRef, status, top, bottom, sizeY, platform, ...restProps } = this.props;
 
     const height = this.state.height || style.height || 66;
 
     return (
       <FormField
-        className={classNames('Textarea', className, `Textarea--sizeY-${sizeY}`)}
+        className={classNames(getClassName('Textarea', platform), className, `Textarea--sizeY-${sizeY}`)}
         style={style}
         getRootRef={getRootRef}
         status={status}
@@ -137,6 +140,6 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
     );
   }
 }
-export default withAdaptivity(Textarea, {
+export default withPlatform(withAdaptivity(Textarea, {
   sizeY: true,
-});
+}));

@@ -96,3 +96,13 @@
       .Checkbox--android.Checkbox--sizeY-compact .Checkbox__content {
         font-size: 15px;
       }
+
+.Checkbox--vkcom .Checkbox__icon {
+  border-radius: 3px;
+  padding: 1px;
+  border-width: 1px;
+}
+
+.Checkbox--vkcom .Checkbox__input[disabled] ~ .Checkbox__container {
+  opacity: .4;
+  }

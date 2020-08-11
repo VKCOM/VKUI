@@ -34,3 +34,7 @@
     .FormStatus__content b {
       font-weight: 500;
       }
+
+.FormStatus--vkcom .FormStatus__content {
+  color: var(--text_subhead);
+}
