@@ -1,8 +1,10 @@
 import { useContext } from 'react';
-import { OSType, platform } from '../lib/platform';
+import { OSType } from '../lib/platform';
 import { SSRContext } from '../lib/SSR';
+import { ConfigProviderContext } from '../components/ConfigProvider/ConfigProviderContext';
 
 export default function usePlatform(): OSType {
   const ssrContext = useContext(SSRContext);
-  return ssrContext.platform || platform();
+  const { platform } = useContext(ConfigProviderContext);
+  return ssrContext.platform || platform;
 }

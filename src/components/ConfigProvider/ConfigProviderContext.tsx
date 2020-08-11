@@ -46,7 +46,7 @@ export interface ConfigProviderContextInterface {
    */
   transitionMotionEnabled?: boolean;
   /**
-   * Платоформа
+   * Платформа
    */
   platform?: OSType;
 }
