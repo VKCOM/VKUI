@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import vkBridge, { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
-import { OSType, platform } from '../..';
+import { OSType, platform } from '../../lib/platform';
 
 export enum Appearance {
   DARK = 'dark',
