@@ -7,9 +7,11 @@ import {
   ConfigProviderContextInterface,
   Scheme,
   WebviewType,
+  defaultConfigProviderProps,
 } from './ConfigProviderContext';
 import { HasChildren } from '../../types';
-import vkBridge, { AppearanceSchemeType } from '@vkontakte/vk-bridge';
+import { AppearanceSchemeType } from '@vkontakte/vk-bridge';
+import { OS, OSType } from '../../lib/platform';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
@@ -20,6 +22,7 @@ export interface ConfigProviderChildContextType {
   appearance: Validator<Appearance>;
   app: Validator<string>;
   transitionMotionEnabled: Validator<boolean>;
+  platform: Validator<OSType>;
 }
 
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
@@ -30,13 +33,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
-  static defaultProps: ConfigProviderProps = {
-    webviewType: WebviewType.VKAPPS,
-    isWebView: vkBridge.isWebView(),
-    scheme: Scheme.BRIGHT_LIGHT,
-    appearance: Appearance.LIGHT,
-    transitionMotionEnabled: true,
-  };
+  static defaultProps: ConfigProviderProps = defaultConfigProviderProps;
 
   static childContextTypes: ConfigProviderChildContextType = {
     isWebView: PropTypes.bool,
@@ -50,6 +47,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     appearance: PropTypes.oneOf([Appearance.DARK, Appearance.LIGHT]),
     app: PropTypes.string,
     transitionMotionEnabled: PropTypes.bool,
+    platform: PropTypes.oneOf([OS.ANDROID, OS.IOS, OS.VKCOM]),
   };
 
   mapOldScheme(scheme: AppearanceSchemeType): AppearanceSchemeType {
@@ -81,6 +79,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
       appearance: this.props.appearance,
       app: this.props.app,
       transitionMotionEnabled: this.props.transitionMotionEnabled,
+      platform: this.props.platform,
     };
   }
 
