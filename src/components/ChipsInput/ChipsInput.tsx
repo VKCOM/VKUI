@@ -39,7 +39,7 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   getOptionValue?: (o: Option) => ChipsInputValue;
   getOptionLabel?: (o: Option) => string;
   getNewOptionData?: (v: ChipsInputValue, l: string) => Option;
-  renderChip: (props: RenderChip<Option>) => ReactNode;
+  renderChip?: (props: RenderChip<Option>) => ReactNode;
 }
 
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
