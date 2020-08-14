@@ -1,22 +1,23 @@
 import React, {
   useCallback,
-  useRef,
   useState,
   KeyboardEvent,
   FocusEvent,
   InputHTMLAttributes,
-  useEffect,
   ReactNode,
+  ChangeEvent,
+  MouseEvent,
 } from 'react';
 import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
 import FormField from '../FormField/FormField';
 import classNames from '../../lib/classNames';
 import Chip, { ChipProps } from '../Chip/Chip';
-import { noop, setRef } from '../../lib/utils';
+import { noop } from '../../lib/utils';
+import { useChipsInput } from './useChipsInput';
 
-type ChipsInputValue = string | number;
+export type ChipsInputValue = string | number;
 
-interface ChipsInputOption {
+export interface ChipsInputOption {
   value?: ChipsInputValue;
   label?: string;
   [otherProp: string]: any;
@@ -36,70 +37,29 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   HasFormLabels,
   HasAlign {
   value: Option[];
+  inputValue?: string;
   onChange?: (o: Option[]) => void;
-  getOptionValue?: (o: Option) => ChipsInputValue;
-  getOptionLabel?: (o: Option) => string;
-  getNewOptionData?: (v: ChipsInputValue, l: string) => Option;
-  renderChip?: (props: RenderChip<Option>) => ReactNode;
+  onInputChange?: (e?: ChangeEvent<HTMLInputElement>) => void;
+  getOptionValue?: (o?: Option) => ChipsInputValue;
+  getOptionLabel?: (o?: Option) => string;
+  getNewOptionData?: (v?: ChipsInputValue, l?: string) => Option;
+  renderChip?: (props?: RenderChip<Option>) => ReactNode;
 }
 
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
-  const { style, value, status, onChange, onBlur, onFocus, children, className,
+  const { style, value, status, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, getNewOptionData, renderChip, ...restProps } = props;
-
-  const inputRef = useRef(null);
-  const [selectedOptions, setSelectedOptions] = useState(value);
   const [focused, setFocused] = useState(false);
+  const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
 
-  useEffect(() => {
-    setSelectedOptions(value);
-  }, [value]);
+  const handleKeDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+    onKeyDown(e);
 
-  const getRefWrapper = (element: HTMLInputElement) => {
-    inputRef.current = element;
-    setRef(element, getRef);
-  };
-
-  const addOption = useCallback((newOption: Option) => {
-    const optionAlreadySelected = selectedOptions.some((option: Option) => {
-      return getOptionValue(option) === getOptionValue(newOption);
-    });
-
-    if (!optionAlreadySelected) {
-      const newSelectedOptions = [...selectedOptions, newOption];
-
-      setSelectedOptions(newSelectedOptions);
-      onChange(newSelectedOptions);
-      inputRef.current.value = null;
+    if (e.key === 'Enter' && !e.defaultPrevented && fieldValue) {
+      addOptionFromInput();
+      e.preventDefault();
     }
-  }, [selectedOptions, setSelectedOptions, onChange, getOptionValue]);
-
-  const removeOption = useCallback((value: ChipsInputValue) => {
-    const newSelectedOptions = selectedOptions.filter((option: Option) => getOptionValue(option) !== value);
-
-    setSelectedOptions(newSelectedOptions);
-    onChange(newSelectedOptions);
-  }, [getOptionValue, selectedOptions, setSelectedOptions, onChange]);
-
-  const handleKeydown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-    const inputValue = typeof inputRef.current.value === 'string' && inputRef.current.value.trim();
-
-    // keyCode and which are @deprecated
-    // TODO: handle backspace?
-    switch (e.key) {
-      case 'Enter': {
-        if (inputValue) {
-          const newOption = getNewOptionData(undefined, inputValue);
-
-          addOption(newOption);
-        }
-        e.preventDefault();
-        break;
-      }
-      default:
-        break;
-    }
-  }, [inputRef?.current, addOption, getNewOptionData]);
+  }, [fieldValue, addOptionFromInput, getNewOptionData]);
 
   const handleBlur = useCallback((e: FocusEvent<HTMLInputElement>) => {
     if (focused) {
@@ -113,7 +73,11 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
       setFocused(true);
     }
     onFocus(e);
-  }, [onFocus, setFocused, focused]);
+  }, [onFocus, focused]);
+
+  const handleChipRemove = useCallback((_: MouseEvent<HTMLInputElement>, value: ChipsInputValue) => {
+    removeOption(value);
+  }, [removeOption]);
 
   return (
     <FormField
@@ -131,10 +95,11 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
           const value = getOptionValue(option);
           const label = getOptionLabel(option);
 
-          return renderChip({ option, value, label, onRemove: removeOption, disabled, className: 'ChipsInput__chip' });
+          return renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: 'ChipsInput__chip' });
         })}
         <div className="ChipsInput__input-container">
-          <input ref={getRefWrapper}
+          <input ref={getRef}
+            value={fieldValue}
             autoCapitalize="none"
             autoComplete="off"
             autoCorrect="off"
@@ -142,7 +107,8 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
             aria-autocomplete="list"
             tabIndex={disabled ? null : tabIndex}
             className="ChipsInput__el"
-            onKeyDown={handleKeydown}
+            onChange={handleInputChange}
+            onKeyDown={handleKeDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
             disabled={disabled}
@@ -157,10 +123,14 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
 ChipsInput.defaultProps = {
   type: 'text',
   onChange: noop,
+  onInputChange: noop,
+  onKeyUp: noop,
+  onKeyDown: noop,
   onBlur: noop,
   onFocus: noop,
   value: [],
   tabIndex: 0,
+  inputValue: '',
   getOptionValue: (option: ChipsInputOption): ChipsInputValue => option.value,
   getOptionLabel: (option: ChipsInputOption): string => option.label,
   getNewOptionData: (_: ChipsInputValue, label: string): ChipsInputOption => ({ value: label, label }),

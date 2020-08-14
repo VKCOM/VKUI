@@ -87,6 +87,8 @@ export { default as File } from './components/File/File';
 export { default as Input } from './components/Input/Input';
 export { default as Chip } from './components/Chip/Chip';
 export { default as ChipsInput } from './components/ChipsInput/ChipsInput';
+export { default as ChipsSelect } from './components/ChipsSelect/ChipsSelect';
+export { default as MobileChipsSelect } from './components/ChipsSelect/MobileChipsSelect';
 export { default as Slider } from './components/Slider/Slider';
 export { default as RangeSlider } from './components/RangeSlider/RangeSlider';
 export { default as Textarea } from './components/Textarea/Textarea';

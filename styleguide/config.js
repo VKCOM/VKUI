@@ -123,6 +123,8 @@ module.exports = {
           '../src/components/Select/Select.tsx',
           '../src/components/SelectMimicry/SelectMimicry.tsx',
           '../src/components/ChipsInput/ChipsInput.tsx',
+          '../src/components/ChipsSelect/ChipsSelect.tsx',
+          '../src/components/MobileChipsSelect/MobileChipsSelect.tsx',
           '../src/components/Chip/Chip.tsx',
           '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx',
