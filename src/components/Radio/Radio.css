@@ -39,11 +39,20 @@
       color: var(--text_primary);
       }
 
+    .Radio--sizeY-compact .Radio__content {
+      font-size: 15px;
+    }
+
       .Radio__description {
         font-size: 13px;
         line-height: 15px;
         color: var(--text_secondary);
         }
+
+      .Radio--sizeY-compact .Radio__description {
+        font-size: 12px;
+        line-height: 14px;
+      }
 
 .Radio--ios {
   padding: 10px 0;
@@ -54,9 +63,15 @@
     .Radio--ios .Radio__icon {
       width: 22px;
       height: 22px;
-      border: 2px solid var(--icon_secondary);
+      border: 2px solid var(--icon_tertiary);
       margin: 1px 12px 1px 1px;
       transition: border-color .15s var(--ios-easing);
+      }
+
+      .Radio--ios.Radio--sizeY-compact .Radio__icon {
+        width: 18px;
+        height: 18px;
+        margin-right: 11px;
       }
 
     .Radio--ios .Radio__input:checked ~ .Radio__container .Radio__icon {
@@ -70,6 +85,11 @@
         top: 2px;
         transform: scale(.3);
         transition: transform .15s var(--ios-easing);
+        }
+
+        .Radio--ios.Radio--sizeY-compact .Radio__icon::after {
+          width: 10px;
+          height: 10px;
         }
 
       .Radio--ios .Radio__input:checked ~ .Radio__container .Radio__icon::after {
@@ -90,9 +110,15 @@
     .Radio--android .Radio__icon {
       width: 20px;
       height: 20px;
-      border: 2px solid var(--icon_secondary);
+      border: 2px solid var(--icon_tertiary);
       margin: 2px 14px 2px 2px;
       transition: border-color .5s var(--ios-easing);
+      }
+
+      .Radio--android.Radio--sizeY-compact .Radio__icon {
+        width: 18px;
+        height: 18px;
+        margin-right: 11px;
       }
 
       .Radio--android .Radio__icon::after {
@@ -113,6 +139,51 @@
       }
 
       .Radio--android .Radio__input:checked ~ .Radio__container .Radio__icon::after {
+        background-color: var(--accent);
+        transform: scale(1);
+        }
+
+.Radio--vkcom {
+  padding: 12px 0;
+  }
+
+  .Radio--vkcom .Radio__container {}
+
+    .Radio--vkcom .Radio__icon {
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--icon_secondary);
+      margin: 2px 14px 2px 2px;
+      transition: border-color .5s var(--ios-easing);
+      }
+
+      .Radio--vkcom .Radio__icon::after {
+        width: 10px;
+        height: 10px;
+        left: 4px;
+        top: 4px;
+        transform: scale(.3);
+        transition: transform .5s var(--ios-easing);
+        }
+
+    .Radio--vkcom .Radio__content {
+      margin: 2px 0;
+      }
+
+    .Radio--vkcom .Radio__input:disabled ~ .Radio__container {
+      opacity: .4;
+    }
+
+    .Radio--vkcom .Radio__input:disabled ~ .Radio__container .Radio__icon {
+      background-color: transparent;
+    }
+
+    .Radio--vkcom .Radio__input:checked ~ .Radio__container .Radio__icon {
+      border-color: var(--accent);
+      background-color: transparent;
+      }
+
+      .Radio--vkcom .Radio__input:checked ~ .Radio__container .Radio__icon::after {
         background-color: var(--accent);
         transform: scale(1);
         }

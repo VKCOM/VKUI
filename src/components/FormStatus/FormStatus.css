@@ -5,6 +5,11 @@
   color: var(--text_primary);
   }
 
+.FormStatus--sizeY-compact {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
 .FormStatus--error {
   background: var(--field_error_background);
   color: var(--field_error_border);
@@ -29,3 +34,7 @@
     .FormStatus__content b {
       font-weight: 500;
       }
+
+.FormStatus--vkcom .FormStatus__content {
+  color: var(--text_subhead);
+}

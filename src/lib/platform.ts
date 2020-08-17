@@ -3,12 +3,14 @@ import { canUseDOM } from './dom';
 export enum OS {
   ANDROID = 'android',
   IOS = 'ios',
+  VKCOM = 'vkcom'
 }
 
 export const ANDROID = OS.ANDROID;
 export const IOS = OS.IOS;
+export const VKCOM = OS.VKCOM;
 
-export type OSType = OS.ANDROID | OS.IOS;
+export type OSType = OS.ANDROID | OS.IOS | OS.VKCOM;
 
 export function platform(useragent?: string): OSType {
   const ua = useragent || canUseDOM && navigator.userAgent || '';

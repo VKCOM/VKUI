@@ -6,6 +6,9 @@ import classNames from '../../lib/classNames';
 import { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import { HasRef, HasFormStatus } from '../../types';
+import withAdaptivity from '../../hoc/withAdaptivity';
+import withPlatform from '../../hoc/withPlatform';
+import { getClassName } from '../..';
 
 type SelectValue = string | number | boolean;
 
@@ -36,7 +39,7 @@ interface CustomSelectProps extends Omit<SelectProps, 'onChange' | 'getRef'>, Ha
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
-export default class CustomSelect extends React.Component<CustomSelectProps, State> {
+class CustomSelect extends React.Component<CustomSelectProps, State> {
   public constructor(props: CustomSelectProps) {
     super(props);
 
@@ -341,7 +344,7 @@ export default class CustomSelect extends React.Component<CustomSelectProps, Sta
 
   renderWithCustomScrollbar() {
     const { opened } = this.state;
-    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status, options } = this.props;
+    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status, options, sizeY, platform } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
@@ -369,8 +372,9 @@ export default class CustomSelect extends React.Component<CustomSelectProps, Sta
         {opened &&
           <div
             className={classNames({
-              ['CustomSelect__options']: opened,
+              [getClassName('CustomSelect__options', platform)]: opened,
               ['CustomSelect__options--popupDirectionTop']: popupDirection === 'top',
+              [`CustomSelect__options--sizeY-${sizeY}`]: !!sizeY,
             })}
             onMouseLeave={this.resetFocusedOption}
           >
@@ -394,3 +398,7 @@ export default class CustomSelect extends React.Component<CustomSelectProps, Sta
     );
   }
 }
+
+export default withPlatform(withAdaptivity(CustomSelect, {
+  sizeY: true,
+}));

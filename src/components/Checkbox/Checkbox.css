@@ -8,19 +8,40 @@
 
   .Checkbox__container {
     display: flex;
-    align-items: flex-start;
+    align-items: baseline;
     justify-content: flex-start;
     }
 
     .Checkbox__icon {
       flex-shrink: 0;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       box-sizing: border-box;
-      margin: 0 14px 0 2px;
+      margin: 0 12px 0 2px;
       border-radius: 4px;
-      border: 2px solid var(--icon_secondary);
-      color: transparent;
+      display: flex;
+      line-height: 24px;
+      }
+
+      .Checkbox__icon::before {
+        content: '\A0';
+        display: inline-block;
+        width: 0;
+      }
+
+      .Checkbox--sizeY-compact .Checkbox__icon {
+        width: 20px;
+        height: 20px;
+        line-height: 18px;
+      }
+
+      .Checkbox__iconOn {
+        color: var(--accent);
+        display: none;
+      }
+
+      .Checkbox__iconOff {
+        color: var(--icon_tertiary);
       }
 
     .Checkbox__content {
@@ -30,10 +51,16 @@
       color: var(--text_primary);
       }
 
-  .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon {
-    background-color: var(--accent);
-    border-color: var(--accent);
-    color: var(--white);
+      .Checkbox--sizeY-compact .Checkbox__content {
+        font-size: 15px;
+      }
+
+    .Checkbox__input:checked ~ .Checkbox__container .Checkbox__iconOn {
+      display: flex;
+    }
+
+    .Checkbox__input:checked ~ .Checkbox__container .Checkbox__iconOff {
+      display: none;
     }
 
   .Checkbox__input[disabled] ~ .Checkbox__container {
@@ -51,6 +78,10 @@
       line-height: 20px;
       }
 
+      .Checkbox--ios.Checkbox--sizeY-compact .Checkbox__content {
+        font-size: 15px;
+      }
+
 .Checkbox--android {
   padding: 16px 0;
   }
@@ -61,3 +92,17 @@
       font-size: 16px;
       line-height: 20px;
       }
+
+      .Checkbox--android.Checkbox--sizeY-compact .Checkbox__content {
+        font-size: 15px;
+      }
+
+.Checkbox--vkcom .Checkbox__icon {
+  border-radius: 3px;
+  padding: 1px;
+  border-width: 1px;
+}
+
+.Checkbox--vkcom .Checkbox__input[disabled] ~ .Checkbox__container {
+  opacity: .4;
+  }

@@ -697,8 +697,8 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
   /**
    * Анимирует сдвиг модалки
    *
-   * @param modalState
-   * @param percent Процент сдвига: 0 – полностью открыта, 100 – полностью закрыта
+   * @param {ModalsStateEntry} modalState
+   * @param {number} percent Процент сдвига: 0 – полностью открыта, 100 – полностью закрыта
    */
   animateTranslate(modalState: ModalsStateEntry, percent: number) {
     const frameId = `animateTranslateFrame${modalState.id}`;

@@ -1,5 +1,6 @@
 import { createContext } from 'react';
-import { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
+import vkBridge, { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
+import { OSType, platform } from '../../lib/platform';
 
 export enum Appearance {
   DARK = 'dark',
@@ -44,6 +45,19 @@ export interface ConfigProviderContextInterface {
    * Включена ли анимация переходов между экранами в `Root` и `View`
    */
   transitionMotionEnabled?: boolean;
+  /**
+   * Платформа
+   */
+  platform?: OSType;
 }
 
-export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});
+export const defaultConfigProviderProps = {
+  webviewType: WebviewType.VKAPPS,
+  isWebView: vkBridge.isWebView(),
+  scheme: Scheme.BRIGHT_LIGHT,
+  appearance: Appearance.LIGHT,
+  transitionMotionEnabled: true,
+  platform: platform(),
+};
+
+export const ConfigProviderContext = createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);

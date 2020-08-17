@@ -5,24 +5,26 @@ import classNames from '../../lib/classNames';
 import { IOS } from '../../lib/platform';
 import { HasFormLabels, HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface RadioProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
-  HasFormLabels {
+  HasFormLabels,
+  AdaptivityProps {
   description?: ReactNode;
 }
 
 const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
-  const { children, description, style, className, getRef, getRootRef, top, bottom, ...restProps } = props;
+  const { children, description, style, className, getRef, getRootRef, top, bottom, sizeY, ...restProps } = props;
   const platform = usePlatform();
 
   return (
     <Tappable
       Component="label"
       style={style}
-      className={classNames(getClassName('Radio', platform), className)}
+      className={classNames(getClassName('Radio', platform), className, `Radio--sizeY-${sizeY}`)}
       activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
@@ -39,4 +41,6 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
   );
 };
 
-export default Radio;
+export default withAdaptivity(Radio, {
+  sizeY: true,
+});

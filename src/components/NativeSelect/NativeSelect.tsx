@@ -1,11 +1,14 @@
 import React, { ChangeEvent, ChangeEventHandler, RefCallback, SelectHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
+import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { setRef } from '../../lib/utils';
+import { getClassName, HasPlatform } from '../..';
+import withPlatform from '../../hoc/withPlatform';
 
 export interface SelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -14,7 +17,8 @@ export interface SelectProps extends
   HasFormStatus,
   HasFormLabels,
   HasAlign,
-  AdaptivityProps {
+  AdaptivityProps,
+  HasPlatform {
   defaultValue?: string;
   placeholder?: string;
 }
@@ -82,15 +86,16 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
 
   render() {
     const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, top, bottom, disabled, sizeX, ...restProps } = this.props;
+      getRef, getRootRef, top, bottom, disabled, sizeX, sizeY, platform, ...restProps } = this.props;
 
     return (
       <FormField
         Component="label"
-        className={classNames('Select', {
+        className={classNames(getClassName('Select', platform), {
           ['Select--not-selected']: this.state.notSelected,
           [`Select--align-${align}`]: !!align,
           [`Select--sizeX--${sizeX}`]: !!sizeX,
+          [`Select--sizeY--${sizeY}`]: !!sizeY,
           'Select--disabled': disabled,
         }, className)}
         style={style}
@@ -110,13 +115,14 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
         </select>
         <div className="Select__container">
           <div className="Select__title">{this.state.title}</div>
-          {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : <Icon24Dropdown />}
+          {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
         </div>
       </FormField>
     );
   }
 }
 
-export default withAdaptivity(NativeSelect, {
+export default withPlatform(withAdaptivity(NativeSelect, {
   sizeX: true,
-});
+  sizeY: true,
+}));

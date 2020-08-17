@@ -90,3 +90,11 @@
 .Select--sizeX--compact .Icon {
   margin-top: -6px;
   }
+
+.Select--sizeY--compact .Select__container {
+  height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  line-height: 20px;
+}

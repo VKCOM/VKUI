@@ -17,7 +17,7 @@
           <ChipsInput placeholder={"Введите название и нажмите Enter"}/>
         </FormLayoutGroup>      
         <FormLayoutGroup top="Любимые группы">
-          <ChipsInput readonly="readonly"
+          <ChipsInput readOnly
             value={[{value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}]}
             renderChip={({ value, option: { src }, ...rest }) => (
                 <Chip key={value}
