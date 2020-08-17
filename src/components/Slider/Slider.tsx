@@ -100,9 +100,10 @@ class Slider extends Component<SliderProps, SliderState> {
   };
 
   onResize: OnSliderResize = (callback?: VoidFunction) => {
+    const boundingRect = this.container.getBoundingClientRect();
     this.setState({
-      containerLeft: this.container.offsetLeft,
-      containerWidth: this.container.offsetWidth,
+      containerLeft: boundingRect.left,
+      containerWidth: boundingRect.width,
     }, () => {
       typeof callback === 'function' && callback();
     });
