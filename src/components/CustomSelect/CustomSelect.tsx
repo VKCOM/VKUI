@@ -14,17 +14,11 @@ export interface SelectOption {
   label: string;
 }
 
-export interface SelectOptionState {
-  value: SelectValue;
-  label: string;
-}
-
 interface State {
   opened?: boolean;
   focused?: boolean;
-  options: SelectOptionState[];
-  focusedOptionId: number;
-  selectedOptionId: number;
+  focusedOptionIndex: number;
+  selectedOptionIndex: number;
 }
 
 export interface SelectChangeResult {
@@ -32,7 +26,7 @@ export interface SelectChangeResult {
   name: string;
 }
 
-interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInputElement>, HasFormStatus {
+interface CustomSelectProps extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInputElement>, HasFormStatus {
   options: SelectOption[];
   popupDirection?: 'top' | 'bottom';
   onChange?: (result: SelectChangeResult) => void;
@@ -42,34 +36,19 @@ interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInp
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
-export default class CustomSelect extends React.Component<Props, State> {
-  public constructor(props: Props) {
+export default class CustomSelect extends React.Component<CustomSelectProps, State> {
+  public constructor(props: CustomSelectProps) {
     super(props);
 
     const { value } = props;
-
-    let selectedIndex = -1;
-    const options = props.options.map((option, index) => {
-      const itemValue = option.value;
-
-      if (itemValue === value) {
-        selectedIndex = index;
-      }
-
-      return {
-        value: option.value,
-        label: String(option.label),
-      };
-    });
 
     this.keyboardInput = '';
 
     this.state = {
       opened: false,
       focused: false,
-      options: options,
-      focusedOptionId: -1,
-      selectedOptionId: selectedIndex,
+      focusedOptionIndex: -1,
+      selectedOptionIndex: props.options.findIndex((option) => option.value === value) || -1,
     };
   }
 
@@ -83,24 +62,25 @@ export default class CustomSelect extends React.Component<Props, State> {
   };
 
   private readonly getSelectedItem = () => {
-    const { options, selectedOptionId } = this.state;
+    const { selectedOptionIndex } = this.state;
+    const { options } = this.props;
 
     if (!options.length) {
       return null;
     }
 
-    return options[selectedOptionId];
+    return options[selectedOptionIndex];
   };
 
   open = () => {
-    this.setState(({ selectedOptionId }) => ({
+    this.setState(({ selectedOptionIndex }) => ({
       opened: true,
-      focusedOptionId: selectedOptionId,
+      focusedOptionIndex: selectedOptionIndex,
     }), () => {
-      const { selectedOptionId } = this.state;
+      const { selectedOptionIndex } = this.state;
 
-      if (this.isValidIndex(selectedOptionId)) {
-        this.scrollToElement(selectedOptionId, true);
+      if (this.isValidIndex(selectedOptionIndex)) {
+        this.scrollToElement(selectedOptionIndex, true);
       }
     });
   };
@@ -110,29 +90,23 @@ export default class CustomSelect extends React.Component<Props, State> {
 
     this.setState(() => ({
       opened: false,
-      focusedOptionId: -1,
+      focusedOptionIndex: -1,
     }));
   };
 
   private isValidIndex(index: number) {
-    const { options } = this.state;
-
-    if (index < 0 || index >= options.length) {
-      return false;
-    }
-
-    return true;
+    return index >= 0 && index < this.props.options.length;
   }
 
   selectFocused = () => {
-    const { focusedOptionId } = this.state;
+    const { focusedOptionIndex } = this.state;
 
-    this.select(focusedOptionId);
+    this.select(focusedOptionIndex);
   };
 
   select = (index: number) => {
     const { onChange, name } = this.props;
-    const { options } = this.state;
+    const { options } = this.props;
 
     if (!this.isValidIndex(index)) {
       return;
@@ -141,7 +115,7 @@ export default class CustomSelect extends React.Component<Props, State> {
     const item = options[index];
 
     this.setState(() => ({
-      selectedOptionId: index,
+      selectedOptionIndex: index,
     }));
 
     onChange && onChange({
@@ -210,8 +184,9 @@ export default class CustomSelect extends React.Component<Props, State> {
   }
 
   focusOptionByIndex = (index: number) => {
-    const { focusedOptionId, options } = this.state;
-    const oldIndex = focusedOptionId;
+    const { focusedOptionIndex } = this.state;
+    const { options } = this.props;
+    const oldIndex = focusedOptionIndex;
 
     if (index < 0) {
       index = options.length - 1;
@@ -226,25 +201,25 @@ export default class CustomSelect extends React.Component<Props, State> {
     this.scrollToElement(index);
 
     this.setState(() => ({
-      focusedOptionId: index,
+      focusedOptionIndex: index,
     }));
   };
 
   focusOption = (type: 'next' | 'prev') => {
-    const { focusedOptionId } = this.state;
-    let index = focusedOptionId;
+    const { focusedOptionIndex } = this.state;
+    let index = focusedOptionIndex;
 
     if (type === 'next') {
-      index = focusedOptionId + 1;
+      index = focusedOptionIndex + 1;
     } else if (type === 'prev') {
-      index = focusedOptionId - 1;
+      index = focusedOptionIndex - 1;
     }
 
     this.focusOptionByIndex(index);
   };
 
   handleOptionHover: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
-    const { options } = this.state;
+    const { options } = this.props;
     const label = e.currentTarget.title;
 
     if (!label) {
@@ -255,7 +230,7 @@ export default class CustomSelect extends React.Component<Props, State> {
       (option) => option.label === label);
 
     this.setState(() => ({
-      focusedOptionId: index,
+      focusedOptionIndex: index,
     }));
   };
 
@@ -265,12 +240,12 @@ export default class CustomSelect extends React.Component<Props, State> {
 
   resetFocusedOption = () => {
     this.setState(() => ({
-      focusedOptionId: -1,
+      focusedOptionIndex: -1,
     }));
   };
 
   onKeyboardInput = (key: string) => {
-    const { options } = this.state;
+    const { options } = this.props;
     const fullInput = this.keyboardInput + key;
 
     const optionIndex = options.findIndex((option) => {
@@ -327,19 +302,18 @@ export default class CustomSelect extends React.Component<Props, State> {
     document.removeEventListener('touchend', this.handleDocumentClick, false);
   }
 
-  static getDerivedStateFromProps(nextProps: Props) {
-    return {
-      options: nextProps.options.map((option) => ({
-        value: option.value,
-        label: String(option.label),
-      })),
-    };
+  componentDidUpdate(prevProps: CustomSelectProps) {
+    if (prevProps.options !== this.props.options || prevProps.value !== this.props.value) {
+      this.setState({
+        selectedOptionIndex: this.props.options.findIndex((option) => option.value === this.props.value),
+      });
+    }
   }
 
   renderOption = (item: SelectOption, index: number) => {
-    const { focusedOptionId, selectedOptionId } = this.state;
-    const hovered = index === focusedOptionId;
-    const selected = index === selectedOptionId;
+    const { focusedOptionIndex, selectedOptionIndex } = this.state;
+    const hovered = index === focusedOptionIndex;
+    const selected = index === selectedOptionIndex;
 
     return (
       <div
@@ -366,8 +340,8 @@ export default class CustomSelect extends React.Component<Props, State> {
   };
 
   renderWithCustomScrollbar() {
-    const { opened, options } = this.state;
-    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status } = this.props;
+    const { opened } = this.state;
+    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status, options } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
