@@ -11,26 +11,23 @@ import { setRef } from '../../lib/utils';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasRootRef<HTMLDivElement>, AdaptivityProps {
   id: string;
-  separator?: boolean;
   centered?: boolean;
 }
 
 class Panel extends Component<PanelProps> {
+  constructor(props: PanelProps) {
+    super(props);
+    this.childContext = {
+      panel: props.id,
+    };
+  }
+
+  private readonly childContext: PanelContextProps;
+
   static defaultProps: Partial<PanelProps> = {
     children: '',
     centered: false,
-    /**
-     * @deprecated будет удалено в 4-й версии. Сепаратор теперь устанавливается в PanelHeader
-     */
-    separator: true,
   };
-
-  getContext(): PanelContextProps {
-    return {
-      panel: this.props.id,
-      separator: this.props.separator,
-    };
-  }
 
   container: HTMLDivElement;
 
@@ -40,10 +37,10 @@ class Panel extends Component<PanelProps> {
   };
 
   render() {
-    const { className, centered, children, platform, separator, getRootRef, sizeX, ...restProps } = this.props;
+    const { className, centered, children, platform, getRootRef, sizeX, ...restProps } = this.props;
 
     return (
-      <PanelContext.Provider value={this.getContext()}>
+      <PanelContext.Provider value={this.childContext}>
         <div
           {...restProps}
           ref={this.getRef}
