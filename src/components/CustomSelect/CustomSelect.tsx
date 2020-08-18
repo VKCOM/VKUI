@@ -108,8 +108,7 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
   };
 
   select = (index: number) => {
-    const { onChange, name } = this.props;
-    const { options } = this.props;
+    const { onChange, name, options } = this.props;
 
     if (!this.isValidIndex(index)) {
       return;
