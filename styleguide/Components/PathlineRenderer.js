@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-styleguidist/lib/client/rsg-components/Link';
 import pkg from '../../package.json';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
-import { schemeOptions } from '../utils';
+import { StyleGuideContext } from './StyleGuideRenderer';
+import { PlatformSelect } from './PlatformSelect';
+import { SchemeSelect } from './SchemeSelect';
+import { WebviewTypeSelect } from './WebviewTypeSelect';
 
 export const styles = ({ fontFamily, fontSize }) => ({
   pathline: {
@@ -17,31 +20,38 @@ export const styles = ({ fontFamily, fontSize }) => ({
 
 export function PathlineRenderer({ classes, children }) {
   return (
-    <div className={classes.pathline}>
-      <span>
-        Платформа:&nbsp;
-        <select onChange={ (e) => {
-          window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
-          window.location.reload();
-        } } value={window.navigator.userAgent}>
-          <option value={window.uaList.ios}>ios</option>
-          <option value={window.uaList.android}>android</option>
-        </select>
-      </span>&nbsp;|&nbsp;<span>
-        Тема:&nbsp;
-        <select onChange={ (e) => {
-          window.localStorage.setItem('vkui-styleguide:schemeId', e.target.value);
-          window.location.reload();
-        } } value={window.schemeId}>
-          {schemeOptions}
-        </select>
-      </span>&nbsp;|&nbsp;<span className={classes.link}>
-        Исходники:&nbsp;
-        <Link target="_blank" href={`${pkg.repository}/tree/v${pkg.version}/${children.replace('../', '')}`}>
-          GitHub
-        </Link>
-      </span>
-    </div>
+    <StyleGuideContext.Consumer>
+      {(styleGuideContext) => {
+        return (
+          <div className={classes.pathline}>
+            <PlatformSelect
+              onChange={(e) => styleGuideContext.setContext({ platform: e.target.value })}
+              value={styleGuideContext.platform}
+            />
+            &nbsp;|&nbsp;
+            <SchemeSelect
+              onChange={(e) => styleGuideContext.setContext({ scheme: e.target.value })}
+              value={styleGuideContext.scheme}
+            />
+            &nbsp;|&nbsp;
+            <WebviewTypeSelect
+              onChange={(e) => styleGuideContext.setContext({ webviewType: e.target.value })}
+              value={styleGuideContext.webviewType}
+            />
+            &nbsp;|&nbsp;
+            <span className={classes.link}>
+              Исходники:&nbsp;
+                <Link
+                  target="_blank"
+                  href={`${pkg.repository}/tree/v${pkg.version}/${children.replace('../', '')}`}
+                >
+                  GitHub
+                </Link>
+            </span>
+          </div>
+        )
+      }}
+    </StyleGuideContext.Consumer>
   );
 }
 

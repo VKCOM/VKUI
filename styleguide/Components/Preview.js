@@ -1,20 +1,11 @@
 import React from 'react';
 import PreviewParent from 'react-styleguidist/lib/client/rsg-components/Preview/Preview';
 import ReactExample from 'react-styleguidist/lib/client/rsg-components/ReactExample/ReactExample';
-import ReactDOM from 'react-dom';
+import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/PlaygroundError';
 import PropTypes from 'prop-types';
 import ReactFrame from 'react-frame-component';
-
-function mapOldScheme(scheme) {
-  switch (scheme) {
-    case 'client_light':
-      return 'bright_light';
-    case 'client_dark':
-      return 'space_gray';
-    default:
-      return scheme;
-  }
-}
+import ConfigProvider from '../../src/components/ConfigProvider/ConfigProvider';
+import { StyleGuideContext } from './StyleGuideRenderer';
 
 const frameInitialContent = `
   <!DOCTYPE html>
@@ -22,7 +13,7 @@ const frameInitialContent = `
     <head>
       <link href="./main.css" rel="stylesheet" id="styles" />
     </head>
-    <body scheme="${mapOldScheme(window.schemeId)}">
+    <body>
     </body>
   </html>
 `;
@@ -35,16 +26,6 @@ class PrepareFrame extends React.Component {
   static contextTypes = {
     document: PropTypes.any
   };
-
-  static childContextTypes = {
-    webviewType: PropTypes.oneOf(['vkapps', 'internal'])
-  };
-
-  getChildContext () {
-    return {
-      webviewType: 'internal'
-    };
-  }
 
   componentDidMount () {
     // Пихаем в iFrame с примером спрайты для иконок
@@ -79,17 +60,28 @@ class PrepareFrame extends React.Component {
 
 export default class Preview extends PreviewParent {
 
-  executeCode () {
-    this.setState({
-      error: null
-    });
+  shouldComponentUpdate() {
+    return true;
+  }
 
-    const { code } = this.props;
-    if (!code) {
-      return;
+  componentDidUpdate(prevProps) {
+    if (this.props.code !== prevProps.code && this.state.error) {
+      this.setState({
+        error: null,
+      });
     }
+  }
 
-    const wrappedComponent = (
+  componentDidMount() {
+    return;
+  }
+
+  render() {
+    const { code } = this.props;
+    const { error } = this.state;
+    return (
+      error ?
+        <PlaygroundError message={error} /> :
         <ReactFrame
           initialContent={frameInitialContent}
           mountTarget="body"
@@ -102,23 +94,26 @@ export default class Preview extends PreviewParent {
           }}
         >
           <PrepareFrame>
-            <ReactExample
-              code={code}
-              evalInContext={this.props.evalInContext}
-              onError={this.handleError}
-              compilerConfig={this.context.config.compilerConfig}
-            />
+            <StyleGuideContext.Consumer>
+              {(styleGuideContext) => {
+                return (
+                  <ConfigProvider
+                    platform={styleGuideContext.platform}
+                    scheme={styleGuideContext.scheme}
+                    webviewType={styleGuideContext.webviewType}
+                  >
+                    <ReactExample
+                      code={code}
+                      evalInContext={this.props.evalInContext}
+                      onError={this.handleError}
+                      compilerConfig={this.context.config.compilerConfig}
+                    />
+                  </ConfigProvider>
+                )
+              }}
+            </StyleGuideContext.Consumer>
           </PrepareFrame>
         </ReactFrame>
-    );
-
-    window.requestAnimationFrame(() => {
-      this.unmountPreview();
-      try {
-        ReactDOM.render(wrappedComponent, this.mountNode);
-      } catch (err) {
-        this.handleError(err);
-      }
-    });
+    )
   }
 }
