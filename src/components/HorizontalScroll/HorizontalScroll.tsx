@@ -3,17 +3,17 @@ import classNames from '../../lib/classNames';
 import { hasMouse } from '../../helpers/inputUtils';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron_right';
 
-interface IHorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {
+interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {
   scrollLeftBy?: (offset: number) => number;
   scrollRightBy?: (offset: number) => number;
 }
 
-interface IHorizontalScrollArrowProps {
+interface HorizontalScrollArrowProps {
   onClick: () => void;
   direction: 'left' | 'right';
 }
 
-const HorizontalScrollArrow: FunctionComponent<IHorizontalScrollArrowProps> = (props: IHorizontalScrollArrowProps) => {
+const HorizontalScrollArrow: FunctionComponent<HorizontalScrollArrowProps> = (props: HorizontalScrollArrowProps) => {
   const { onClick, direction } = props;
   return (
     <div className={`HorizontalScroll__arrow HorizontalScroll__arrow-${direction}`} onClick={onClick}>
@@ -24,7 +24,7 @@ const HorizontalScrollArrow: FunctionComponent<IHorizontalScrollArrowProps> = (p
   );
 };
 
-const HorizontalScroll: FunctionComponent<IHorizontalScrollProps> = (props: IHorizontalScrollProps) => {
+const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
   const { children, scrollLeftBy, scrollRightBy, className, ...restProps } = props;
 
   const [canScrollLeft, setCanScrollLeft] = useState(false);
