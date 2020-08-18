@@ -11,6 +11,7 @@ import { HasChildren, HasPlatform } from '../../types';
 import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
+import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -46,7 +47,14 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   onSwipeBackStart?(): void;
   history?: string[];
   id?: string;
+  /**
+   * @ignore
+   */
   splitCol?: SplitContextProps;
+  /**
+   * @ignore
+   */
+  configProvider?: ConfigProviderContextInterface;
 }
 
 export interface ViewState {
@@ -100,10 +108,8 @@ class View extends Component<ViewProps, ViewState> {
   };
 
   static contextTypes = {
-    isWebView: PropTypes.bool,
     window: PropTypes.any,
     document: PropTypes.any,
-    transitionMotionEnabled: PropTypes.bool,
   };
 
   private transitionFinishTimeout: ReturnType<typeof setTimeout>;
@@ -226,7 +232,7 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   shouldDisableTransitionMotion(): boolean {
-    return this.context.transitionMotionEnabled === false ||
+    return this.props.configProvider.transitionMotionEnabled === false ||
       !this.props.splitCol.animate;
   }
 
@@ -356,13 +362,13 @@ class View extends Component<ViewProps, ViewState> {
       return;
     }
 
-    const { platform } = this.props;
+    const { platform, configProvider } = this.props;
 
-    if (platform === IOS && !this.context.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
+    if (platform === IOS && !configProvider.isWebView && (e.startX <= 70 || e.startX >= this.window.innerWidth - 70) && !this.state.browserSwipe) {
       this.setState({ browserSwipe: true });
     }
 
-    if (platform === IOS && this.context.isWebView && this.props.onSwipeBack) {
+    if (platform === IOS && configProvider.isWebView && this.props.onSwipeBack) {
       if (this.state.animated && e.startX <= 70) {
         return;
       }
@@ -503,8 +509,8 @@ class View extends Component<ViewProps, ViewState> {
   }
 }
 
-export default withContext(
+export default withContext(withContext(
   withPlatform(View),
   SplitContext,
   'splitCol',
-);
+), ConfigProviderContext, 'configProvider');

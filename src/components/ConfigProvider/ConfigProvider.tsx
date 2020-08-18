@@ -1,54 +1,30 @@
 import React from 'react';
 import { canUseDOM } from '../../lib/dom';
-import PropTypes, { Validator } from 'prop-types';
 import {
-  Appearance,
   ConfigProviderContext,
   ConfigProviderContextInterface,
   Scheme,
-  WebviewType,
   defaultConfigProviderProps,
 } from './ConfigProviderContext';
 import { HasChildren } from '../../types';
 import { AppearanceSchemeType } from '@vkontakte/vk-bridge';
-import { OS, OSType } from '../../lib/platform';
+import PropTypes from 'prop-types';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
-export interface ConfigProviderChildContextType {
-  isWebView: Validator<boolean>;
-  scheme: Validator<Scheme>;
-  webviewType: Validator<WebviewType>;
-  appearance: Validator<Appearance>;
-  app: Validator<string>;
-  transitionMotionEnabled: Validator<boolean>;
-  platform: Validator<OSType>;
-}
-
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
-  constructor(props: ConfigProviderProps) {
+  constructor(props: ConfigProviderProps, context: any) {
     super(props);
     if (canUseDOM) {
-      this.setScheme(props.scheme);
+      this.setScheme(this.mapOldScheme(props.scheme), context);
     }
   }
 
-  static defaultProps: ConfigProviderProps = defaultConfigProviderProps;
-
-  static childContextTypes: ConfigProviderChildContextType = {
-    isWebView: PropTypes.bool,
-    scheme: PropTypes.oneOf([
-      Scheme.SPACE_GRAY,
-      Scheme.BRIGHT_LIGHT,
-      Scheme.DEPRECATED_CLIENT_DARK,
-      Scheme.DEPRECATED_CLIENT_LIGHT,
-    ]),
-    webviewType: PropTypes.oneOf([WebviewType.VKAPPS, WebviewType.INTERNAL]),
-    appearance: PropTypes.oneOf([Appearance.DARK, Appearance.LIGHT]),
-    app: PropTypes.string,
-    transitionMotionEnabled: PropTypes.bool,
-    platform: PropTypes.oneOf([OS.ANDROID, OS.IOS, OS.VKCOM]),
+  static contextTypes = {
+    document: PropTypes.any,
   };
+
+  static defaultProps: ConfigProviderProps = defaultConfigProviderProps;
 
   mapOldScheme(scheme: AppearanceSchemeType): AppearanceSchemeType {
     switch (scheme) {
@@ -61,17 +37,17 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
-  setScheme(scheme: AppearanceSchemeType): void {
-    document.body.setAttribute('scheme', scheme);
-  }
+  setScheme = (scheme: AppearanceSchemeType, context: any): void => {
+    (context.document || document).body.setAttribute('scheme', scheme);
+  };
 
   componentDidUpdate(prevProps: ConfigProviderProps) {
     if (prevProps.scheme !== this.props.scheme) {
-      this.setScheme(this.mapOldScheme(this.props.scheme));
+      this.setScheme(this.mapOldScheme(this.props.scheme), this.context);
     }
   }
 
-  getChildContext(): ConfigProviderProps {
+  getContext(): ConfigProviderProps {
     return {
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
@@ -85,7 +61,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
 
   render() {
     return (
-      <ConfigProviderContext.Provider value={this.getChildContext()}>
+      <ConfigProviderContext.Provider value={this.getContext()}>
         {this.props.children}
       </ConfigProviderContext.Provider>
     );

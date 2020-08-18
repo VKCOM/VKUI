@@ -1,5 +1,5 @@
 import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
-import PropTypes, { Requireable, Validator } from 'prop-types';
+import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
@@ -8,13 +8,21 @@ import { SplitContext, SplitContextProps } from '../../components/SplitLayout/Sp
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
+import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   popout?: ReactNode;
   modal?: ReactNode;
+  /**
+   * @ignore
+   */
   splitCol?: SplitContextProps;
+  /**
+   * @ignore
+   */
+  configProvider?: ConfigProviderContextInterface;
 }
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
@@ -34,7 +42,6 @@ export interface RootState {
 export interface RootContext {
   document: Requireable<object>;
   window: Requireable<object>;
-  transitionMotionEnabled: Validator<boolean>;
 }
 
 class Root extends Component<RootProps, RootState> {
@@ -59,7 +66,6 @@ class Root extends Component<RootProps, RootState> {
   static contextTypes: RootContext = {
     window: PropTypes.any,
     document: PropTypes.any,
-    transitionMotionEnabled: PropTypes.bool,
   };
 
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
@@ -123,7 +129,7 @@ class Root extends Component<RootProps, RootState> {
   }
 
   shouldDisableTransitionMotion(): boolean {
-    return this.context.transitionMotionEnabled === false ||
+    return this.props.configProvider.transitionMotionEnabled === false ||
       !this.props.splitCol.animate;
   }
 
@@ -207,8 +213,8 @@ class Root extends Component<RootProps, RootState> {
   }
 }
 
-export default withContext(
+export default withContext(withContext(
   withPlatform(Root),
   SplitContext,
   'splitCol',
-);
+), ConfigProviderContext, 'configProvider');
