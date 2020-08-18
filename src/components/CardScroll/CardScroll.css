@@ -3,12 +3,12 @@
   align-items: stretch;
 }
 
-.CardScroll .Card {
+.CardScroll .CardScroll__slide {
   margin-right: 8px;
   flex-shrink: 0;
 }
 
-.CardScroll .Card:last-child {
+.CardScroll .CardScroll__slide:last-child {
   margin-right: 0;
 }
 
@@ -28,7 +28,7 @@
   width: 12px;
 }
 
-.CardScroll--ios .Card--sz-l {
+.CardScroll--ios .CardScroll__slide--sz-l {
   width: calc(100% - 24px);
   margin-right: 12px;
 }
@@ -42,7 +42,7 @@
   width: 16px;
 }
 
-.CardScroll--android .Card--sz-l {
+.CardScroll--android .CardScroll__slide--sz-l {
   width: calc(100% - 32px);
   margin-right: 16px;
 }
