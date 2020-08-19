@@ -45,7 +45,7 @@
 }
 
 .CustomSelect__option--hover {
-  background-color: var(--button_muted_background);
+  background-color: var(--background_light);
 }
 
 .CustomSelect__selectedIcon {
