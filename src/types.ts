@@ -68,3 +68,8 @@ export interface Version {
   minor?: number;
   patch?: number;
 }
+
+export interface DOMProps {
+  document?: Document;
+  window?: Window;
+}

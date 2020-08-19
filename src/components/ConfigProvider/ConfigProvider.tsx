@@ -6,14 +6,14 @@ import {
   Scheme,
   defaultConfigProviderProps,
 } from './ConfigProviderContext';
-import { HasChildren } from '../../types';
+import { HasChildren, DOMProps } from '../../types';
 import { AppearanceSchemeType } from '@vkontakte/vk-bridge';
 import PropTypes from 'prop-types';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
 export default class ConfigProvider extends React.Component<ConfigProviderProps> {
-  constructor(props: ConfigProviderProps, context: any) {
+  constructor(props: ConfigProviderProps, context: DOMProps) {
     super(props);
     if (canUseDOM) {
       this.setScheme(this.mapOldScheme(props.scheme), context);
@@ -24,7 +24,9 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     document: PropTypes.any,
   };
 
-  static defaultProps: ConfigProviderProps = defaultConfigProviderProps;
+  // Деструктуризация нужна из бага в react-docgen-typescript
+  // https://github.com/styleguidist/react-docgen-typescript/issues/195
+  public static defaultProps = { ...defaultConfigProviderProps };
 
   mapOldScheme(scheme: AppearanceSchemeType): AppearanceSchemeType {
     switch (scheme) {
@@ -37,7 +39,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
-  setScheme = (scheme: AppearanceSchemeType, context: any): void => {
+  setScheme = (scheme: AppearanceSchemeType, context: DOMProps): void => {
     (context.document || document).body.setAttribute('scheme', scheme);
   };
 
