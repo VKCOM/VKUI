@@ -8,14 +8,15 @@ import { IOS, ANDROID } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types';
+import { AnyFunction, HasPlatform } from '../../types';
 import { canUseDOM } from '../../lib/dom';
+import { runTapticImpactOccurred } from '../../lib/taptic';
 
 export interface PullToRefreshProps extends TouchProps, HasPlatform {
   /**
    * Будет вызвана для обновления контента
    */
-  onRefresh(): void;
+  onRefresh: AnyFunction;
   /**
    * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`
    */
@@ -223,6 +224,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
       });
 
       this.props.onRefresh();
+      runTapticImpactOccurred('light');
     }
   }
 
