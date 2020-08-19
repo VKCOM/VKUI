@@ -51,7 +51,7 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
       opened: false,
       focused: false,
       focusedOptionIndex: -1,
-      selectedOptionIndex: props.options.findIndex((option) => option.value === value) || -1,
+      selectedOptionIndex: props.options.findIndex((option) => option.value === value),
     };
   }
 

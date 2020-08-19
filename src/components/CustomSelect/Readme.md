@@ -6,7 +6,7 @@ class Example extends React.Component {
     super(props);
 
     this.state = {
-      value: '3',
+      value: '0',
       options: new Array(20).fill({}).map((item, index) => ({ label: String(index), value: String(index) }))
     }
   }
