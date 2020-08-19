@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Logo from 'react-styleguidist/lib/client/rsg-components/Logo';
 import Markdown from 'react-styleguidist/lib/client/rsg-components/Markdown';
@@ -6,7 +6,15 @@ import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import Link from 'react-styleguidist/lib/client/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
-import { schemeOptions } from '../utils';
+import { defaultConfigProviderProps, WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
+import { PlatformSelect } from './PlatformSelect';
+import { SchemeSelect } from './SchemeSelect';
+import { WebviewTypeSelect } from './WebviewTypeSelect';
+
+export const StyleGuideContext = React.createContext({
+  ...defaultConfigProviderProps,
+  webviewType: WebviewType.INTERNAL
+});
 
 const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
   root: {
@@ -63,8 +71,20 @@ const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
   },
 });
 
-export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
+function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
+  const [state, setState] = useState({
+    ...defaultConfigProviderProps,
+    webviewType: WebviewType.INTERNAL
+  });
+
+  const setContext = useCallback((data) => {
+    setState({ ...state, ...data })
+  }, [state])
+
+  const providerValue = useMemo(() => ({ ...state, setContext }), [state, setContext]);
+
   return (
+    <StyleGuideContext.Provider value={providerValue}>
     <div className={cx(classes.root, hasSidebar && classes.hasSidebar)}>
       <main className={classes.content}>
         {children}
@@ -78,22 +98,15 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
             <Logo>{title}</Logo>
           </div>
           <div className={classes.os}>
-            Платформа:&nbsp;
-            <select onChange={ (e) => {
-              window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
-              window.location.reload();
-            } } value={window.navigator.userAgent}>
-              <option value={window.uaList.ios}>ios</option>
-              <option value={window.uaList.android}>android</option>
-            </select>
+            <PlatformSelect onChange={ (e) => setContext({ platform: e.target.value })} value={state.platform} />
             <div style={{ marginTop: 4 }}>
-              Тема:&nbsp;
-              <select onChange={ (e) => {
-                window.localStorage.setItem('vkui-styleguide:schemeId', e.target.value);
-                window.location.reload();
-              } } value={window.schemeId}>
-                {schemeOptions}
-              </select>
+              <SchemeSelect onChange={ (e) => setContext({ scheme: e.target.value })} value={state.scheme} />
+            </div>
+            <div style={{ marginTop: 4 }}>
+              <WebviewTypeSelect
+                onChange={ (e) => setContext({ webviewType: e.target.value })}
+                value={state.webviewType}
+              />
             </div>
             <div style={{ marginTop: 4 }}>
               Версия:&nbsp;<Link href={`https://www.npmjs.com/package/${pkg.name}`}>{ pkg.version }</Link>
@@ -106,7 +119,8 @@ export function StyleGuideRenderer({ classes, title, homepageUrl, children, toc,
         </div>
       )}
     </div>
-  );
+    </StyleGuideContext.Provider>
+  )
 }
 
 StyleGuideRenderer.propTypes = {

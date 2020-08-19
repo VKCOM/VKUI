@@ -16,7 +16,6 @@ interface TooltipPortalState {
 
 interface TooltipPortalContextType {
   document: Requireable<{}>;
-  panel: Requireable<string>;
 }
 
 type GetBoundingTargetRect = () => {
@@ -57,7 +56,6 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
 
   static contextTypes: TooltipPortalContextType = {
     document: PropTypes.object,
-    panel: PropTypes.string,
   };
 
   get document() {

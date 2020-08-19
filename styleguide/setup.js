@@ -1,6 +1,5 @@
 import '../src/styles/styles.css';
 
-import pkg from '../package';
 import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl } from './utils';
 import * as VKUI from '../src';
 
@@ -80,10 +79,6 @@ import Icon56UsersOutline from '@vkontakte/icons/dist/56/users_outline';
 for (let i in VKUI) {
   window[i] = VKUI[i];
 }
-
-window.osname = VKUI.platform();
-
-window.schemeId = window.localStorage.getItem('vkui-styleguide:schemeId') || pkg.defaultSchemeId;
 
 window.getRandomInt = getRandomInt;
 window.getRandomUser = getRandomUser;

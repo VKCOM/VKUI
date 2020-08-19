@@ -7,7 +7,6 @@ import Separator from '../Separator/Separator';
 import { ANDROID } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
-import { PanelContext } from '../Panel/PanelContext';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
@@ -43,13 +42,7 @@ const PanelHeader = ({
 }: PanelHeaderProps) => {
   const platform = usePlatform();
   const { webviewType } = useContext(ConfigProviderContext);
-  const panelContext = useContext(PanelContext);
   const needShadow = shadow && sizeX === SizeType.REGULAR;
-  let needSeparator = separator;
-
-  if (typeof separator !== 'boolean') {
-    needSeparator = panelContext.separator;
-  }
 
   const isPrimitive = typeof children === 'string' || typeof children === 'number';
 
@@ -63,7 +56,7 @@ const PanelHeader = ({
             'PanelHeader--trnsp': transparent,
             'PanelHeader--shadow': needShadow,
             'PanelHeader--vis': visor,
-            'PanelHeader--sep': needSeparator && visor,
+            'PanelHeader--sep': separator && visor,
             'PanelHeader--vkapps': webviewType === WebviewType.VKAPPS,
             'PanelHeader--no-left': left === undefined,
             'PanelHeader--no-right': right === undefined,
@@ -98,7 +91,7 @@ const PanelHeader = ({
           </div>
         </div>
       </FixedLayout>
-      {needSeparator && visor && <Separator
+      {separator && visor && <Separator
         className={sizeX === SizeType.COMPACT ? 'PanelHeader__separator' : ''}
         expanded={sizeX === SizeType.REGULAR}
       />}

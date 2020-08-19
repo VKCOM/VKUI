@@ -5,14 +5,23 @@ import { isFunction } from '../../lib/utils';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
+import withContext from '../../hoc/withContext';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
-import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
+import {
+  ConfigProviderContext,
+  ConfigProviderContextInterface,
+  WebviewType,
+} from '../ConfigProvider/ConfigProviderContext';
 import { ModalsStateEntry, ModalType } from './types';
 import { ANDROID } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 
 export interface ModalRootProps extends HasChildren, HasPlatform {
   activeModal?: string | null;
+  /**
+   * @ignore
+   */
+  configProvider?: ConfigProviderContextInterface;
 
   /**
    * Будет вызвано при закрытии активной модалки с её id
@@ -70,7 +79,6 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
   static contextTypes = {
     window: PropTypes.any,
     document: PropTypes.any,
-    webviewType: PropTypes.oneOf([WebviewType.VKAPPS, WebviewType.INTERNAL]),
   };
 
   get document(): Document {
@@ -79,10 +87,6 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
 
   get window(): Window {
     return this.context.window || window;
-  }
-
-  get webviewType(): WebviewType {
-    return this.context.webviewType || WebviewType.VKAPPS;
   }
 
   get modals() {
@@ -418,7 +422,7 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
       <ModalRootContext.Provider value={this.modalRootContext}>
         <div
           className={classNames(getClassName('ModalRoot', this.props.platform), {
-            'ModalRoot--vkapps': this.webviewType === 'vkapps',
+            'ModalRoot--vkapps': this.props.configProvider.webviewType === WebviewType.VKAPPS,
           })}
         >
           <div
@@ -454,4 +458,4 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
   }
 }
 
-export default withPlatform(ModalRootDesktop);
+export default withContext(withPlatform(ModalRootDesktop), ConfigProviderContext, 'configProvider');

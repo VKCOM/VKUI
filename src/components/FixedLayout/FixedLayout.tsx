@@ -27,8 +27,6 @@ export interface FixedLayoutProps extends
   /**
    * @ignore
    */
-  separator?: boolean;
-
   splitCol?: SplitContextProps;
 }
 
@@ -114,7 +112,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, platform, filled, separator, splitCol, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panel, ...restProps } = this.props;
 
     return (
       <div

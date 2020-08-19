@@ -11,8 +11,13 @@ import { ANDROID } from '../../lib/platform';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
+import withContext from '../../hoc/withContext';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
-import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
+import {
+  ConfigProviderContext,
+  ConfigProviderContextInterface,
+  WebviewType,
+} from '../ConfigProvider/ConfigProviderContext';
 import { ModalsStateEntry, ModalType, TranslateRange } from './types';
 
 function numberInRange(number: number, range: TranslateRange) {
@@ -30,6 +35,10 @@ export interface ModalRootProps extends HasChildren, HasPlatform {
    * Будет вызвано при закрытии активной модалки с её id
    */
   onClose?(modalId: string): void;
+  /**
+   * @ignore
+   */
+  configProvider?: ConfigProviderContextInterface;
 }
 
 interface ModalRootState {
@@ -91,7 +100,6 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
   static contextTypes = {
     window: PropTypes.any,
     document: PropTypes.any,
-    webviewType: PropTypes.oneOf([WebviewType.VKAPPS, WebviewType.INTERNAL]),
   };
 
   get document(): Document {
@@ -100,10 +108,6 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
 
   get window(): Window {
     return this.context.window || window;
-  }
-
-  get webviewType(): WebviewType {
-    return this.context.webviewType || WebviewType.VKAPPS;
   }
 
   get modals() {
@@ -792,7 +796,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
             className={classNames(getClassName('ModalRoot', this.props.platform), {
-              'ModalRoot--vkapps': this.webviewType === WebviewType.VKAPPS,
+              'ModalRoot--vkapps': this.props.configProvider.webviewType === WebviewType.VKAPPS,
               'ModalRoot--touched': touchDown,
               'ModalRoot--switching': switching,
             })}
@@ -842,4 +846,4 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
   }
 }
 
-export default withPlatform(ModalRootTouch);
+export default withContext(withPlatform(ModalRootTouch), ConfigProviderContext, 'configProvider');

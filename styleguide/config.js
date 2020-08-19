@@ -224,7 +224,7 @@ module.exports = {
     ],
     resolve: {
       alias: {
-        'rsg-components/Preview': path.join(__dirname, './Components/Preview')
+        'rsg-components/Preview': path.join(__dirname, './components/Preview')
       }
     }
   })
