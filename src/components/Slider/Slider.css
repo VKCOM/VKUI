@@ -2,6 +2,7 @@
   position: relative;
   height: 28px;
   margin: 0 14px;
+  z-index: 0;
   }
 
   .Slider::before {
