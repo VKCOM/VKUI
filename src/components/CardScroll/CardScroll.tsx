@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import React, { FunctionComponent, HTMLAttributes, useRef, ReactElement } from 'react';
 import classNames from '../../lib/classNames';
 import getClassname from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
@@ -9,11 +9,35 @@ export type CardScrollProps = HTMLAttributes<HTMLDivElement>;
 const CardScroll: FunctionComponent<CardScrollProps> = ({ children, className, style, ...restProps }: CardScrollProps) => {
   const platform = usePlatform();
 
+  const refs = useRef<HTMLElement[]>(new Array(React.Children.count(children)));
+
+  const refContainer = useRef<HTMLDivElement>(null);
+
+  function scrollLeftBy(offset: number): number {
+    const containerWidth = refContainer.current.offsetWidth;
+    const slide = refs.current.find((el) => el.offsetLeft + el.offsetWidth - offset > 0);
+    if (!slide) {return 0;}
+
+    const marginRight = parseInt(window.getComputedStyle(slide).marginRight);
+    return slide.offsetWidth - offset + slide.offsetLeft + marginRight - containerWidth;
+  }
+
+  function scrollRightBy(offset: number): number {
+    const containerWidth = refContainer.current.offsetWidth;
+    const slide = refs.current.find((el) => el.offsetLeft + el.offsetWidth - offset > containerWidth);
+    if (!slide) {return 0;}
+
+    const marginRight = parseInt(window.getComputedStyle(slide).marginRight);
+    return slide.offsetLeft - offset - marginRight;
+  }
+
   return (
     <div {...restProps} style={style} className={classNames(className, getClassname('CardScroll', platform))}>
-      <HorizontalScroll>
-        <div className="CardScroll__in">
-          {children}
+      <HorizontalScroll scrollLeftBy={scrollLeftBy} scrollRightBy={scrollRightBy}>
+        <div className="CardScroll__in" ref={refContainer}>
+          {React.Children.map(children, (item: ReactElement, i) => (
+            <div className={'CardScroll__slide' + (item.props.size === 'l' ? ' CardScroll__slide--sz-l' : '')} ref={(node: HTMLElement) => refs.current[i] = node}>{item}</div>
+          ))}
         </div>
       </HorizontalScroll>
     </div>
