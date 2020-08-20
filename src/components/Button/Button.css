@@ -173,6 +173,50 @@
   padding: 10px 0 12px;
 }
 
+/*
+  VKCOM
+*/
+.Button--vkcom {
+  border-radius: 4px;
+}
+
+/*
+  sizeY = Compact
+*/
+/* small size */
+.Button--sizeY-compact.Button--sz-s {
+  min-height: 26px;
+}
+
+.Button--sizeY-compact.Button--sz-s .Button__content {
+  padding-top: 3px;
+  padding-bottom: 5px;
+}
+
+.Button--sizeY-compact.Button--sz-s .Button__content--caps {
+  padding: 5px 0;
+}
+
+/* medium size */
+.Button--sizeY-compact.Button--sz-m {
+  min-height: 32px;
+}
+
+.Button--sizeY-compact.Button--sz-m .Button__content {
+  padding-top: 4px;
+  padding-bottom: 6px;
+}
+
+/* large size */
+.Button--sizeY-compact.Button--sz-l {
+  min-height: 40px;
+}
+
+.Button--sizeY-compact.Button--sz-l .Button__content {
+  padding-top: 8px;
+  padding-bottom: 10px;
+}
+
 /**
  * Counter
  */
