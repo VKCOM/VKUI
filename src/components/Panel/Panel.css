@@ -91,7 +91,7 @@
   background-color: var(--background_content);
 }
 
-.Panel.Panel--regular .Panel__in,
-.Panel.Panel--regular::after {
+.SplitLayout .Panel.Panel--regular .Panel__in,
+.SplitLayout .Panel.Panel--regular::after {
   background-color: transparent;
 }
