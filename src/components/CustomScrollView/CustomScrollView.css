@@ -12,6 +12,9 @@
   overflow-x: hidden;
   padding-right: 100px;
   scrollbar-width: none;
+  -ms-scroll-chaining: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
 }
 
 .CustomScrollView__box::-webkit-scrollbar {
