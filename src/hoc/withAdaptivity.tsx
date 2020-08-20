@@ -42,6 +42,9 @@ export default function withAdaptivity<T>(TargetComponent: T, config: Config): T
 
     return target;
   }
+  
+  const displayName = Component.displayName || Component.name || 'Component';
+  AdaptivityConsumer.displayName = `withAdaptivity{displayName})`;
 
   return AdaptivityConsumer as unknown as T;
 }
