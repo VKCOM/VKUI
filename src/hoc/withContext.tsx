@@ -7,5 +7,9 @@ export default function withContext<T, X>(Component: T, Ctx: Context<X>, prop: s
     // @ts-ignore
     return <Component {...props} {...{ [prop]: context }} />;
   }
+
+  const displayName = Component.displayName || Component.name || 'Component';
+  WithContext.displayName = `withContext{displayName})`;
+
   return WithContext as unknown as T;
 }
