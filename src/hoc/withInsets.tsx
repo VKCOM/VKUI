@@ -7,5 +7,9 @@ export default function withInsets<T>(Component: T): T {
     // @ts-ignore
     return <Component {...props} insets={insets} />;
   }
+
+  const displayName = Component.displayName || Component.name || 'Component';
+  WithInsets.displayName = `withInsets{displayName})`;
+
   return WithInsets as unknown as T;
 }
