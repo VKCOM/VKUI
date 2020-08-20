@@ -7,6 +7,7 @@ import { StyleGuideContext } from './StyleGuideRenderer';
 import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
+import { ViewWidthSelect } from './ViewWidthSelect';
 
 export const styles = ({ fontFamily, fontSize }) => ({
   pathline: {
@@ -37,6 +38,12 @@ export function PathlineRenderer({ classes, children }) {
             <WebviewTypeSelect
               onChange={(e) => styleGuideContext.setContext({ webviewType: e.target.value })}
               value={styleGuideContext.webviewType}
+            />
+            &nbsp;|&nbsp;
+            <ViewWidthSelect
+              onChange={(e) => styleGuideContext.setContext({ width: Number(e.target.value) })}
+              value={styleGuideContext.width}
+              isWide={!styleGuideContext.hasSidebar}
             />
             &nbsp;|&nbsp;
             <span className={classes.link}>

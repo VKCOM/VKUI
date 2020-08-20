@@ -3,20 +3,12 @@ import PreviewParent from 'react-styleguidist/lib/client/rsg-components/Preview/
 import ReactExample from 'react-styleguidist/lib/client/rsg-components/ReactExample/ReactExample';
 import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/PlaygroundError';
 import PropTypes from 'prop-types';
-import ReactFrame from 'react-frame-component';
+import ReactFrame  from 'react-frame-component';
 import ConfigProvider from '../../src/components/ConfigProvider/ConfigProvider';
 import { StyleGuideContext } from './StyleGuideRenderer';
-
-const frameInitialContent = `
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <link href="./main.css" rel="stylesheet" id="styles" />
-    </head>
-    <body>
-    </body>
-  </html>
-`;
+import AdaptivityProvider  from '../../src/components/AdaptivityProvider/AdaptivityProvider';
+import SplitLayout, { SplitCol } from '../../src/components/SplitLayout/SplitLayout';
+import withAdaptivity, { ViewWidth } from '../../src/hoc/withAdaptivity';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -24,7 +16,8 @@ class PrepareFrame extends React.Component {
   };
 
   static contextTypes = {
-    document: PropTypes.any
+    document: PropTypes.any,
+    window: PropTypes.any,
   };
 
   componentDidMount () {
@@ -54,9 +47,21 @@ class PrepareFrame extends React.Component {
   }
 
   render () {
-    return this.state.loaded ? this.props.children : null
+    return this.state.loaded ? this.props.children({ window: this.context.window }) : null
   }
 }
+
+let Layout = ({ children, viewWidth }) => {
+  return (
+    <SplitLayout>
+      <SplitCol spaced={viewWidth !== ViewWidth.MOBILE} animate>
+        {children}
+      </SplitCol>
+    </SplitLayout>
+  )
+}
+
+Layout = withAdaptivity(Layout, { viewWidth: true })
 
 export default class Preview extends PreviewParent {
 
@@ -82,38 +87,43 @@ export default class Preview extends PreviewParent {
     return (
       error ?
         <PlaygroundError message={error} /> :
-        <ReactFrame
-          initialContent={frameInitialContent}
-          mountTarget="body"
-          style={{
-            height: 667,
-            width: 375,
-            border: '1px solid rgba(0, 0, 0, .12)',
-            display: 'block',
-            margin: 'auto'
+        <StyleGuideContext.Consumer>
+          {(styleGuideContext) => {
+            return (
+              <ReactFrame
+                mountTarget="body"
+                style={{
+                  height: 667,
+                  width: styleGuideContext.width,
+                  border: '1px solid rgba(0, 0, 0, .12)',
+                  display: 'block',
+                  margin: 'auto'
+                }}
+              >
+                <PrepareFrame>
+                  {({ window }) => (
+                    <ConfigProvider
+                      platform={styleGuideContext.platform}
+                      scheme={styleGuideContext.scheme}
+                      webviewType={styleGuideContext.webviewType}
+                    >
+                      <AdaptivityProvider window={window}>
+                        <Layout>
+                          <ReactExample
+                            code={code}
+                            evalInContext={this.props.evalInContext}
+                            onError={this.handleError}
+                            compilerConfig={this.context.config.compilerConfig}
+                          />
+                        </Layout>
+                      </AdaptivityProvider>
+                    </ConfigProvider>
+                  )}
+                </PrepareFrame>
+              </ReactFrame>
+            )
           }}
-        >
-          <PrepareFrame>
-            <StyleGuideContext.Consumer>
-              {(styleGuideContext) => {
-                return (
-                  <ConfigProvider
-                    platform={styleGuideContext.platform}
-                    scheme={styleGuideContext.scheme}
-                    webviewType={styleGuideContext.webviewType}
-                  >
-                    <ReactExample
-                      code={code}
-                      evalInContext={this.props.evalInContext}
-                      onError={this.handleError}
-                      compilerConfig={this.context.config.compilerConfig}
-                    />
-                  </ConfigProvider>
-                )
-              }}
-            </StyleGuideContext.Consumer>
-          </PrepareFrame>
-        </ReactFrame>
+        </StyleGuideContext.Consumer>
     )
   }
 }

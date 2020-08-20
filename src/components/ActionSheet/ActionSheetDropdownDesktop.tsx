@@ -4,6 +4,7 @@ import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { PointerEventsProperty } from 'csstype';
+import PropTypes from 'prop-types';
 
 interface Props extends HasPlatform {
   closing: boolean;
@@ -24,14 +25,18 @@ class ActionSheetDropdownDesktop extends Component<Props> {
     },
   };
 
+  static contextTypes = {
+    window: PropTypes.any,
+  };
+
   componentDidMount = () => {
     const { toggleRef, elementRef } = this.props;
 
     const toggleRect = toggleRef.getBoundingClientRect();
     const elementRect = elementRef.current.getBoundingClientRect();
 
-    const left = toggleRect.left + toggleRect.width - elementRect.width + pageXOffset;
-    const top = toggleRect.top + toggleRect.height + pageYOffset;
+    const left = toggleRect.left + toggleRect.width - elementRect.width + (this.context.window.pageXOffset as number);
+    const top = toggleRect.top + toggleRect.height + (this.context.window.pageYOffset as number);
 
     this.setState({
       dropdownStyles: {
@@ -43,12 +48,12 @@ class ActionSheetDropdownDesktop extends Component<Props> {
     });
 
     setTimeout(() => {
-      window.addEventListener('click', this.handleClickOutside);
+      this.context.window.addEventListener('click', this.handleClickOutside);
     });
   };
 
   componentWillUnmount = () => {
-    window.removeEventListener('click', this.handleClickOutside);
+    this.context.window.removeEventListener('click', this.handleClickOutside);
   };
 
   handleClickOutside = (e: MouseEvent) => {
