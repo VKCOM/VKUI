@@ -6,6 +6,7 @@
  * iOS tappable
  */
 .Tappable--ios {
+  position: relative;
   border-radius: 10px;
   transition: background-color .15s ease-out;
   }
@@ -26,6 +27,19 @@
   }
 
 .Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.SliderSwitch__button):not(.PanelHeaderContent__in) {
+  background: var(--background_highlighted) !important;
+  }
+
+/**
+ * VKCOM tappable
+ */
+ .Tappable--vkcom {
+  position: relative;
+  transition: background-color .15s ease-out;
+  border-radius: 8px;
+  }
+
+.Tappable--vkcom.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.SliderSwitch__button):not(.PanelHeaderContent__in) {
   background: var(--background_highlighted) !important;
   }
 
