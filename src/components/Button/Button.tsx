@@ -9,6 +9,7 @@ import Caption from '../Typography/Caption/Caption';
 import { HasAlign, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { OS } from '../../lib/platform';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
@@ -25,7 +26,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootR
   target?: string;
 }
 
-const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean, sizeY: AdaptivityProps['sizeY']) => {
+const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean, sizeY: AdaptivityProps['sizeY'], platform: OS) => {
   switch (size) {
     case 'l':
       return (
@@ -52,10 +53,10 @@ const getContent = (size: ButtonProps['size'], children: ButtonProps['children']
       if (hasIcons) {
         return (
           <Caption
-            caps
-            level={sizeY === SizeType.COMPACT ? '3' : '2'}
-            weight="semibold"
-            className="Button__content--caps"
+            caps={platform !== OS.VKCOM}
+            level={platform === OS.VKCOM ? '1' : sizeY === SizeType.COMPACT ? '3' : '2'}
+            weight={platform === OS.VKCOM || sizeY === SizeType.COMPACT ? 'medium' : 'semibold'}
+            className={'Button__content' + (platform !== OS.VKCOM ? '--caps' : '')}
           >
             {children}
           </Caption>
@@ -108,7 +109,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   >
     <div className="Button__in">
       {before && <div className="Button__before">{before}</div>}
-      {children && getContent(size, children, hasIcons, sizeY)}
+      {children && getContent(size, children, hasIcons, sizeY, platform)}
       {after && <div className="Button__after">{after}</div>}
     </div>
   </Tappable>;
