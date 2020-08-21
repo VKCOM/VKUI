@@ -130,6 +130,11 @@
         transition: transform .5s var(--ios-easing);
         }
 
+        .Radio--android .Radio__icon::after {
+          top: 2px;
+          left: 2px;
+        }
+
     .Radio--android .Radio__content {
       margin: 2px 0;
       }
