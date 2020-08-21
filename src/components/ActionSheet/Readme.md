@@ -25,6 +25,12 @@ class Example extends React.Component {
     this.openSelectable = this.openSelectable.bind(this);
     this.openTitle = this.openTitle.bind(this);
     this.onChange = this.onChange.bind(this);
+
+    this.baseTargetRef = React.createRef();
+    this.iconsTargetRef = React.createRef();
+    this.subtitleTargetRef = React.createRef();
+    this.selectableTargetRef = React.createRef();
+    this.titleTargetRef = React.createRef();
   }
 
   componentDidMount() {
@@ -36,6 +42,7 @@ class Example extends React.Component {
       <ActionSheet 
         onClose={() => this.setState({ popout: null })}
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+        toggleRef={this.baseTargetRef.current}
       >
         <ActionSheetItem autoclose>
           Сохранить в закладках
@@ -61,6 +68,7 @@ class Example extends React.Component {
       <ActionSheet 
         onClose={() => this.setState({ popout: null })}
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+        toggleRef={this.iconsTargetRef.current}
       >
         <ActionSheetItem autoclose before={<Icon28EditOutline/>}>
           Редактировать профиль
@@ -90,6 +98,7 @@ class Example extends React.Component {
       <ActionSheet 
         onClose={() => this.setState({ popout: null })}
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+        toggleRef={this.subtitleTargetRef.current}
       >
         <ActionSheetItem before={<Icon28SettingsOutline />} autoclose subtitle="Авто">
           Качество
@@ -109,6 +118,7 @@ class Example extends React.Component {
       <ActionSheet 
         onClose={() => this.setState({ popout: null })}
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+        toggleRef={this.selectableTargetRef.current}
       >
         <ActionSheetItem
           onChange={this.onChange}
@@ -170,6 +180,7 @@ class Example extends React.Component {
         onClose={() => this.setState({ popout: null })}
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
         header="Вы действительно хотите удалить это видео из Ваших видео?"
+        toggleRef={this.titleTargetRef.current}
       >
         <ActionSheetItem autoclose mode="destructive">
           Удалить видео
@@ -186,11 +197,12 @@ class Example extends React.Component {
     return (
       <View popout={this.state.popout} activePanel="panel">
         <Panel id="panel">
-          <CellButton onClick={this.openBase}>Базовый список</CellButton>
-          <CellButton onClick={this.openIcons}>Список с иконками</CellButton>
-          <CellButton onClick={this.openSubtitle}>С подзаголовком</CellButton>
-          <CellButton onClick={this.openSelectable}>Выделяемые</CellButton>
-          <CellButton onClick={this.openTitle}>C заголовком</CellButton>
+          <PanelHeader>ActionSheet</PanelHeader>
+          <CellButton getRootRef={this.baseTargetRef} onClick={this.openBase}>Базовый список</CellButton>
+          <CellButton getRootRef={this.iconsTargetRef} onClick={this.openIcons}>Список с иконками</CellButton>
+          <CellButton getRootRef={this.subtitleTargetRef} onClick={this.openSubtitle}>С подзаголовком</CellButton>
+          <CellButton getRootRef={this.selectableTargetRef} onClick={this.openSelectable}>Выделяемые</CellButton>
+          <CellButton getRootRef={this.titleTargetRef} onClick={this.openTitle}>C заголовком</CellButton>
         </Panel>
       </View>
     )

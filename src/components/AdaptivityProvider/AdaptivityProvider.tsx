@@ -1,25 +1,25 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { HasChildren } from '../../types';
+import { DOMProps, HasChildren } from '../../types';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewWidth } from './AdaptivityContext';
 
-export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren {};
+export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {}
 
-const DESKTOP_SIZE = 1280;
-const TABLET_SIZE = 1024;
-const SMALL_TABLET_SIZE = 768;
-const MOBILE_SIZE = 320;
+export const DESKTOP_SIZE = 1280;
+export const TABLET_SIZE = 1024;
+export const SMALL_TABLET_SIZE = 768;
+export const MOBILE_SIZE = 320;
 
 export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const adaptivityRef = useRef<AdaptivityContextInterface>(null);
   const [, updateAdaptivity] = useState({});
 
   if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(window.innerWidth, props);
+    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props);
   }
 
   useEffect(() => {
     function onResize() {
-      const calculated = calculateAdaptivity(window.innerWidth, props);
+      const calculated = calculateAdaptivity(props.window.innerWidth, props);
       const { viewWidth, sizeX, sizeY } = adaptivityRef.current;
 
       if (
@@ -32,10 +32,10 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
       }
     }
 
-    window.addEventListener('resize', onResize, false);
+    props.window.addEventListener('resize', onResize, false);
 
     return () => {
-      window.removeEventListener('resize', onResize, false);
+      props.window.removeEventListener('resize', onResize, false);
     };
   }, [props.viewWidth, props.sizeX, props.sizeY]);
 
@@ -43,6 +43,10 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     {props.children}
   </AdaptivityContext.Provider>;
 }
+
+AdaptivityProvider.defaultProps = {
+  window: window,
+};
 
 function calculateAdaptivity(windowWidth: number, props: AdaptivityProviderProps) {
   let viewWidth = ViewWidth.SMALL_MOBILE;
