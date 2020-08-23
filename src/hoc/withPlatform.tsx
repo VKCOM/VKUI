@@ -1,17 +1,21 @@
 import React from 'react';
-import { SSRContext } from '../lib/SSR';
-import { ConfigProviderContext } from '../components/ConfigProvider/ConfigProviderContext';
+import type { FC, ComponentType } from 'react';
+import type { OSType } from '../lib/platform';
+import type { InheritProps } from '../types';
+import usePlatform from '../hooks/usePlatform';
+import getDisplayName from '../helpers/getDisplayName';
 
-export default function withPlatform<T>(Component: T): T {
-  function WithPlatform(props: {}) {
-    const ssrContext = React.useContext(SSRContext);
-    const { platform } = React.useContext(ConfigProviderContext);
-    // @ts-ignore
-    return <Component {...props} platform={ssrContext.platform || platform} />;
-  }
+export interface PlatformProps {
+  platform: OSType
+}
 
-  const displayName = Component.displayName || Component.name || 'Component';
-  WithPlatform.displayName = `withPlatform{displayName})`;
+export default function withPlatform<P extends InheritProps>(Component: ComponentType<P & PlatformProps>): ComponentType<P> {
+  const WithPlatform: FC<P> = (props: P) => {
+    const platform = usePlatform();
+    return <Component {...props} platform={platform} />;
+  };
 
-  return WithPlatform as unknown as T;
+  WithPlatform.displayName = `withPlatform(${getDisplayName(Component)})`;
+
+  return WithPlatform;
 }
