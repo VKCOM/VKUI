@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import type { FC, ComponentType } from 'react';
+import type { InheritProps } from '../types'; 
 import { AdaptivityContext, SizeType, ViewWidth } from '../components/AdaptivityProvider/AdaptivityContext';
 import getDisplayName from '../helpers/getDisplayName';
 
@@ -17,7 +18,7 @@ export interface AdaptivityProps {
   viewWidth?: ViewWidth;
 }
 
-export default function withAdaptivity<P extends AdaptivityProps>(Component: ComponentType<P>, config: Config): ComponentType<P> {
+export default function withAdaptivity<P extends InheritProps>(Component: ComponentType<P & AdaptivityProps>, config: Config): ComponentType<P> {
   const AdaptivityConsumer: FC<P> = (props: P) => {
     const context = useContext(AdaptivityContext);
     let update = false;
