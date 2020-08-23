@@ -2,6 +2,8 @@ import React, { ReactNode, RefCallback } from 'react';
 import { OSType } from './lib/platform';
 import { Insets } from '@vkontakte/vk-bridge';
 
+export type InheritProps = Record<string, unknown>;
+
 export type FormStatusType = 'default' | 'error' | 'valid';
 
 export type AlignType = 'left' | 'center' | 'right';
