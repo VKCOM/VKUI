@@ -47,3 +47,10 @@
     font-size: 12px;
     line-height: 16px;
     }
+
+.Counter--vkcom.Counter--s-m .Counter__in {
+  padding-left: 6px;
+  padding-right: 6px;
+  font-weight: 500;
+  letter-spacing: .2px;
+}
