@@ -3,7 +3,7 @@ import type { FC, ComponentType } from 'react';
 import type { Insets } from '@vkontakte/vk-bridge';
 import type { InheritProps } from '../types'; 
 import useInsets from '../hooks/useInsets';
-import getDisplayName from '../helpers/getDisplayName';
+import { getDisplayName } from '../helpers/componentUtils';
 
 export interface InsetsProps {
   insets: Insets;
