@@ -8,7 +8,7 @@ import { SelectChangeResult } from '../CustomSelect/CustomSelect';
 import Input from '../Input/Input';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { hasMouse } from '../../helpers/inputUtils';
-import { HasFormLabels, HasPlatform, HasFormStatus } from '../../types';
+import { HasFormLabels, HasFormStatus } from '../../types';
 import { leadingZero } from '../../lib/utils';
 import Select from '../Select/Select';
 
@@ -30,7 +30,7 @@ interface DateFormat {
 type State = DateFormat;
 type Attrs = Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>;
 
-interface Props extends Attrs, HasPlatform, HasFormLabels, HasFormStatus, AdaptivityProps {
+interface Props extends Attrs, HasFormLabels, HasFormStatus, AdaptivityProps {
   min: State;
   max: State;
   name?: string;

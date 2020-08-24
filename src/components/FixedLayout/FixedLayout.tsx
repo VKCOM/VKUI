@@ -7,8 +7,8 @@ import { SplitContext, SplitContextProps } from '../../components/SplitLayout/Sp
 import withContext from '../../hoc/withContext';
 import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
-import withPanelContext from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
+import { PanelContext, PanelContextProps } from '../Panel/PanelContext';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -20,14 +20,8 @@ export interface FixedLayoutProps extends
    * Это часто необходимо для фиксированных кнопок в нижней части экрана.
    */
   filled?: boolean;
-  /**
-   * @ignore
-   */
-  panel?: string;
-  /**
-   * @ignore
-   */
-  splitCol?: SplitContextProps;
+  panelContext: PanelContextProps;
+  splitCol: SplitContextProps;
 }
 
 export interface FixedLayoutState {
@@ -76,7 +70,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
-    let panelScroll = e.detail.scrolls[this.props.panel] || 0;
+    let panelScroll = e.detail.scrolls[this.props.panelContext.panel] || 0;
     this.setState({
       position: 'absolute',
       top: this.el.offsetTop + panelScroll,
@@ -112,7 +106,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panel, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panelContext, ...restProps } = this.props;
 
     return (
       <div
@@ -129,8 +123,8 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 }
 
-export default withContext(
-  withPlatform(withPanelContext(FixedLayout)),
-  SplitContext,
-  'splitCol',
-);
+export default withContext(withContext(
+  withPlatform(FixedLayout),
+  PanelContext,
+  'panelContext',
+), SplitContext, 'splitCol');

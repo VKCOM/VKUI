@@ -48,7 +48,7 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
     }
   }
 
-  static defaultProps: TextareaProps = {
+  static defaultProps: Partial<TextareaProps> = {
     style: {},
     defaultValue: '',
     grow: true,

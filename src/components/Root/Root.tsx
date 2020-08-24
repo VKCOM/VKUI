@@ -15,14 +15,8 @@ export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   popout?: ReactNode;
   modal?: ReactNode;
-  /**
-   * @ignore
-   */
-  splitCol?: SplitContextProps;
-  /**
-   * @ignore
-   */
-  configProvider?: ConfigProviderContextInterface;
+  splitCol: SplitContextProps;
+  configProvider: ConfigProviderContextInterface;
 }
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;

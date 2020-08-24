@@ -50,7 +50,7 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
 }
 
 class ModalCard extends Component<ModalCardProps> {
-  static defaultProps: ModalCardProps = {
+  static defaultProps: Partial<ModalCardProps> = {
     actions: [],
     actionsLayout: 'horizontal',
   };

@@ -33,7 +33,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
     this.elRef = React.createRef();
   }
 
-  static defaultProps: PopoutWrapperProps = {
+  static defaultProps: Partial<PopoutWrapperProps> = {
     hasMask: true,
     alignY: 'center',
     alignX: 'center',

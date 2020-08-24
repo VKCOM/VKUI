@@ -68,7 +68,7 @@ export default class Touch extends Component<TouchProps> {
   gesture: Partial<Gesture> = {};
   container: HTMLElement;
 
-  static defaultProps: TouchProps = {
+  static defaultProps: Partial<TouchProps> = {
     Component: 'div',
     children: '',
     useCapture: false,

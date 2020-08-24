@@ -38,7 +38,7 @@ export interface SearchState {
 }
 
 class Search extends Component<SearchProps, SearchState> {
-  static defaultProps: SearchProps = {
+  static defaultProps: Partial<SearchProps> = {
     autoComplete: 'off',
     placeholder: 'Поиск',
     after: 'Отмена',

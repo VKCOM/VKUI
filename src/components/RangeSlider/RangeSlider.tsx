@@ -50,7 +50,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     this.thumbEnd = createRef();
   }
 
-  static defaultProps: RangeSliderProps = {
+  static defaultProps: Partial<RangeSliderProps> = {
     min: 0,
     max: 100,
     step: 0,

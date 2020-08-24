@@ -92,7 +92,7 @@ class Tappable extends Component<TappableProps, TappableState> {
 
   wavesTimeout: number;
 
-  static defaultProps: TappableProps = {
+  static defaultProps: Partial<TappableProps> = {
     Component: 'div',
     role: 'button',
     stopPropagation: false,

@@ -40,17 +40,11 @@ export interface HasAlign {
 }
 
 export interface HasPlatform {
-  /**
-   * @ignore
-   */
-  platform?: OSType;
+  platform: OSType;
 }
 
 export interface HasInsets {
-  /**
-   * @ignore
-   */
-  insets?: Partial<Insets>;
+  insets: Partial<Insets>;
 }
 
 export interface HasChildren {

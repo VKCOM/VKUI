@@ -50,7 +50,7 @@ class Slider extends Component<SliderProps, SliderState> {
     this.isControlledOutside = this.props.hasOwnProperty('value');
   }
 
-  static defaultProps: SliderProps = {
+  static defaultProps: Partial<SliderProps> = {
     min: 0,
     max: 100,
     step: 0,

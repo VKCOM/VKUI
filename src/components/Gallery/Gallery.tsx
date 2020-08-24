@@ -78,7 +78,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   timeout: number;
   isChildrenDirty: boolean;
 
-  static defaultProps: GalleryProps = {
+  static defaultProps: Partial<GalleryProps> = {
     slideWidth: '100%',
     children: '',
     timeout: 0,

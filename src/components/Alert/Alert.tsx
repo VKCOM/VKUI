@@ -43,7 +43,7 @@ class Alert extends Component<AlertProps, AlertState> {
 
   private transitionFinishTimeout: ReturnType<typeof setTimeout>;
 
-  static defaultProps: AlertProps = {
+  static defaultProps: Partial<AlertProps> = {
     actionsLayout: 'horizontal',
     actions: [],
   };

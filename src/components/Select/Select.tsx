@@ -5,7 +5,7 @@ import { hasMouse } from '../../helpers/inputUtils';
 import { HasRef, Ref, HasFormStatus } from '../../types';
 import { setRef } from '../../lib/utils';
 
-interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLSelectElement | HTMLInputElement>, HasFormStatus {
+interface Props extends Omit<SelectProps, 'onChange' | 'getRef' | 'platform'>, HasRef<HTMLSelectElement | HTMLInputElement>, HasFormStatus {
   options?: SelectOption[];
   popupDirection?: 'top' | 'bottom';
   onChange?: (result: SelectChangeResult) => void;

@@ -42,7 +42,6 @@ Group.defaultProps = {
   separator: 'auto',
 };
 
-Group = withAdaptivity(Group, {
+export default withAdaptivity(Group, {
   sizeX: true,
 });
-export default Group;
