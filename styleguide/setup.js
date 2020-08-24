@@ -1,16 +1,16 @@
 import '../src/styles/styles.css';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
 import pkg from '../package';
 import * as VKUI from '../src';
-import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl } from './utils';
-
+import { createMasks } from '../src/components/UsersStack/masks';
 import * as Icons from '@vkontakte/icons';
+import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl } from './utils';
 
 for (let i in VKUI) {
   window[i] = VKUI[i];
 }
+
+createMasks();
 
 Object.getOwnPropertyNames(Icons).forEach((name) => {
   if (name.startsWith('Icon')) {

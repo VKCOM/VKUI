@@ -51,8 +51,13 @@ class PrepareFrame extends React.Component {
     const sprite = document.getElementById('__SVG_SPRITE_NODE__');
     const masks = document.getElementById('__SVG_MASKS_NODE__');
 
-    this.context.document.body.appendChild(sprite.cloneNode(true));
-    this.context.document.body.appendChild(masks.cloneNode(true));
+    if (sprite) {
+      this.context.document.body.appendChild(sprite.cloneNode(true));
+    }
+
+    if (masks) {
+      this.context.document.body.appendChild(masks.cloneNode(true));
+    }
 
     this.context.document.querySelector('.frame-content').setAttribute('id', 'root');
 
