@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import type { OSType } from '../lib/platform';
+import { OSType } from '../lib/platform';
 import { SSRContext } from '../lib/SSR';
 import { ConfigProviderContext } from '../components/ConfigProvider/ConfigProviderContext';
 

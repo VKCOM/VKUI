@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-import type { FC, ComponentType } from 'react';
-import type { InheritProps } from '../types'; 
+import React, { useContext, FC, ComponentType } from 'react';
 import { AdaptivityContext, SizeType, ViewWidth } from '../components/AdaptivityProvider/AdaptivityContext';
 import { getDisplayName } from '../helpers/componentUtils';
 

@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-import type { FC, ComponentType, Context } from 'react';
-import type { InheritProps } from '../types'; 
+import React, { useContext, FC, ComponentType, Context } from 'react';
 import { getDisplayName } from '../helpers/componentUtils';
 
 type PartialContext<P, X, T extends keyof P> = Omit<P, {

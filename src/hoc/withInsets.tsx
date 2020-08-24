@@ -1,7 +1,5 @@
-import React from 'react';
-import type { FC, ComponentType } from 'react';
-import type { Insets } from '@vkontakte/vk-bridge';
-import type { InheritProps } from '../types'; 
+import React, { FC, ComponentType } from 'react';
+import { Insets } from '@vkontakte/vk-bridge';
 import useInsets from '../hooks/useInsets';
 import { getDisplayName } from '../helpers/componentUtils';
 

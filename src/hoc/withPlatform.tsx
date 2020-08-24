@@ -1,7 +1,5 @@
-import React from 'react';
-import type { FC, ComponentType } from 'react';
-import type { OSType } from '../lib/platform';
-import type { InheritProps } from '../types';
+import React, { FC, ComponentType } from 'react';
+import { OSType } from '../lib/platform';
 import usePlatform from '../hooks/usePlatform';
 import { getDisplayName } from '../helpers/componentUtils';
 
