@@ -29,14 +29,18 @@ class ActionSheetDropdownDesktop extends Component<Props> {
     window: PropTypes.any,
   };
 
+  get window(): Window {
+    return this.context.window || window;
+  }
+
   componentDidMount = () => {
     const { toggleRef, elementRef } = this.props;
 
     const toggleRect = toggleRef.getBoundingClientRect();
     const elementRect = elementRef.current.getBoundingClientRect();
 
-    const left = toggleRect.left + toggleRect.width - elementRect.width + (this.context.window.pageXOffset as number);
-    const top = toggleRect.top + toggleRect.height + (this.context.window.pageYOffset as number);
+    const left = toggleRect.left + toggleRect.width - elementRect.width + this.window.pageXOffset;
+    const top = toggleRect.top + toggleRect.height + this.window.pageYOffset;
 
     this.setState({
       dropdownStyles: {
@@ -48,12 +52,12 @@ class ActionSheetDropdownDesktop extends Component<Props> {
     });
 
     setTimeout(() => {
-      this.context.window.addEventListener('click', this.handleClickOutside);
+      this.window.addEventListener('click', this.handleClickOutside);
     });
   };
 
   componentWillUnmount = () => {
-    this.context.window.removeEventListener('click', this.handleClickOutside);
+    this.window.removeEventListener('click', this.handleClickOutside);
   };
 
   handleClickOutside = (e: MouseEvent) => {
