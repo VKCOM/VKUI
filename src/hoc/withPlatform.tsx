@@ -3,7 +3,7 @@ import type { FC, ComponentType } from 'react';
 import type { OSType } from '../lib/platform';
 import type { InheritProps } from '../types';
 import usePlatform from '../hooks/usePlatform';
-import getDisplayName from '../helpers/getDisplayName';
+import { getDisplayName } from '../helpers/componentUtils';
 
 export interface PlatformProps {
   platform: OSType
