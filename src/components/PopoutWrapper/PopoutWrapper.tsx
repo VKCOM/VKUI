@@ -1,4 +1,5 @@
-import React, { Component, HTMLAttributes, MouseEvent } from 'react';
+import React, { HTMLAttributes, MouseEvent } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { ANDROID } from '../../lib/platform';
@@ -24,7 +25,7 @@ export type AnimationEndCallback = (e?: AnimationEvent) => void;
 
 export type ClickHandler = (e: MouseEvent<HTMLDivElement>) => void;
 
-class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
+class PopoutWrapper extends SideEffectComponent<PopoutWrapperProps, PopoutWrapperState> {
   constructor(props: PopoutWrapperProps) {
     super(props);
     this.state = {
@@ -46,7 +47,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('touchmove', this.preventTouch, { passive: false });
+      this.window.addEventListener('touchmove', this.preventTouch, { passive: false });
       this.waitAnimationFinish(this.elRef.current, this.onFadeInEnd);
     }
   }
@@ -57,7 +58,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
     // https://github.com/VKCOM/VKUI/issues/444
     if (canUseDOM) {
       // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
-      window.removeEventListener('touchmove', this.preventTouch, { passive: false });
+      this.window.removeEventListener('touchmove', this.preventTouch, { passive: false });
       clearTimeout(this.animationFinishTimeout);
     }
   }

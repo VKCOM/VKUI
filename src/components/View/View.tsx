@@ -1,5 +1,5 @@
-import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
-import PropTypes from 'prop-types';
+import React, { CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
@@ -78,7 +78,7 @@ export interface ViewState {
   browserSwipe: boolean;
 }
 
-class View extends Component<ViewProps, ViewState> {
+class View extends SideEffectComponent<ViewProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
 
@@ -107,21 +107,8 @@ class View extends Component<ViewProps, ViewState> {
     history: [],
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   private transitionFinishTimeout: ReturnType<typeof setTimeout>;
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
-
-  get document() {
-    return this.context.document || document;
-  }
-
-  get window() {
-    return this.context.window || window;
-  }
 
   get panels(): ReactElement[] {
     return [].concat(this.props.children);
@@ -176,8 +163,8 @@ class View extends Component<ViewProps, ViewState> {
         visiblePanels: [nextPanel],
         scrolls: removeObjectKeys(prevState.scrolls, [prevState.swipeBackPrevPanel]),
       }, () => {
-        this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
-        window.scrollTo(0, prevState.scrolls[this.state.activePanel]);
+        this.document.dispatchEvent(new CustomEvent(transitionEndEventName));
+        this.window.scrollTo(0, prevState.scrolls[this.state.activePanel]);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
     }
@@ -186,7 +173,7 @@ class View extends Component<ViewProps, ViewState> {
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
-      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
+      this.document.dispatchEvent(new CustomEvent(transitionStartEventName, { detail: { scrolls } }));
       const nextPanelElement = this.pickPanel(this.state.nextPanel);
       const prevPanelElement = this.pickPanel(this.state.prevPanel);
 
@@ -199,7 +186,7 @@ class View extends Component<ViewProps, ViewState> {
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
-      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
+      this.document.dispatchEvent(new CustomEvent(transitionStartEventName, { detail: { scrolls } }));
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
       const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
       const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
@@ -262,7 +249,7 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   blurActiveElement(): void {
-    if (typeof this.window !== 'undefined' && this.document.activeElement) {
+    if (typeof this.window !== 'undefined' && this.document.activeElement instanceof HTMLElement) {
       this.document.activeElement.blur();
     }
   }
@@ -274,7 +261,7 @@ class View extends Component<ViewProps, ViewState> {
       console.warn(`Element #${id} not found`);
     }
 
-    return elem && elem.parentNode.parentNode;
+    return elem && elem.parentElement.parentElement;
   }
 
   transitionEndHandler = (e?: AnimationEvent): void => {
@@ -287,7 +274,7 @@ class View extends Component<ViewProps, ViewState> {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
       const prevPanel = this.state.prevPanel;
-      this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
+      this.document.dispatchEvent(new CustomEvent(transitionEndEventName));
       this.setState({
         prevPanel: null,
         nextPanel: null,
@@ -330,7 +317,7 @@ class View extends Component<ViewProps, ViewState> {
       swipebackStartX: 0,
       swipeBackShift: 0,
     }, () => {
-      this.document.dispatchEvent(new this.window.CustomEvent(transitionEndEventName));
+      this.document.dispatchEvent(new CustomEvent(transitionEndEventName));
     });
   }
 

@@ -1,4 +1,5 @@
-import React, { Component, HTMLAttributes, RefCallback } from 'react';
+import React, { HTMLAttributes, RefCallback } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
@@ -37,7 +38,7 @@ export function precisionRound(number: number, precision: number) {
   return Math.round(number * factor) / factor;
 }
 
-class Slider extends Component<SliderProps, SliderState> {
+class Slider extends SideEffectComponent<SliderProps, SliderState> {
   constructor(props: SliderProps) {
     super(props);
     this.state = {
@@ -159,7 +160,7 @@ class Slider extends Component<SliderProps, SliderState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('resize', this.onResize);
+      this.window.addEventListener('resize', this.onResize);
       this.onResize(() => {
         this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.value)) });
       });
@@ -173,7 +174,7 @@ class Slider extends Component<SliderProps, SliderState> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
+    this.window.removeEventListener('resize', this.onResize);
   }
 
   getRef: RefCallback<HTMLDivElement> = (container) => {

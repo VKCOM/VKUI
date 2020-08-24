@@ -1,4 +1,5 @@
 import React from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import { canUseDOM } from '../../lib/dom';
 import {
   ConfigProviderContext,
@@ -6,23 +7,18 @@ import {
   Scheme,
   defaultConfigProviderProps,
 } from './ConfigProviderContext';
-import { HasChildren, DOMProps } from '../../types';
+import { HasChildren } from '../../types';
 import { AppearanceSchemeType } from '@vkontakte/vk-bridge';
-import PropTypes from 'prop-types';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
-export default class ConfigProvider extends React.Component<ConfigProviderProps> {
-  constructor(props: ConfigProviderProps, context: DOMProps) {
+export default class ConfigProvider extends SideEffectComponent<ConfigProviderProps> {
+  constructor(props: ConfigProviderProps) {
     super(props);
     if (canUseDOM) {
-      this.setScheme(this.mapOldScheme(props.scheme), context);
+      this.setScheme(this.mapOldScheme(props.scheme));
     }
   }
-
-  static contextTypes = {
-    document: PropTypes.any,
-  };
 
   // Деструктуризация нужна из бага в react-docgen-typescript
   // https://github.com/styleguidist/react-docgen-typescript/issues/195
@@ -39,13 +35,13 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
-  setScheme = (scheme: AppearanceSchemeType, context: DOMProps): void => {
-    (context.document || document).body.setAttribute('scheme', scheme);
+  setScheme = (scheme: AppearanceSchemeType): void => {
+    this.document.body.setAttribute('scheme', scheme);
   };
 
   componentDidUpdate(prevProps: ConfigProviderProps) {
     if (prevProps.scheme !== this.props.scheme) {
-      this.setScheme(this.mapOldScheme(this.props.scheme), this.context);
+      this.setScheme(this.mapOldScheme(this.props.scheme));
     }
   }
 

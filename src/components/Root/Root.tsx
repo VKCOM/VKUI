@@ -1,5 +1,5 @@
-import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import React, { HTMLAttributes, ReactElement, ReactNode } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
@@ -39,12 +39,7 @@ export interface RootState {
   transition: boolean;
 }
 
-export interface RootContext {
-  document: Requireable<object>;
-  window: Requireable<object>;
-}
-
-class Root extends Component<RootProps, RootState> {
+class Root extends SideEffectComponent<RootProps, RootState> {
   constructor(props: RootProps) {
     super(props);
 
@@ -63,20 +58,7 @@ class Root extends Component<RootProps, RootState> {
     popout: null,
   };
 
-  static contextTypes: RootContext = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
-
-  get document() {
-    return this.context.document || document;
-  }
-
-  get window() {
-    return this.context.window || window;
-  }
 
   get arrayChildren() {
     return [].concat(this.props.children);
@@ -173,7 +155,7 @@ class Root extends Component<RootProps, RootState> {
   };
 
   blurActiveElement() {
-    if (typeof this.window !== 'undefined' && this.document.activeElement) {
+    if (typeof this.window !== 'undefined' && this.document.activeElement instanceof HTMLElement) {
       this.document.activeElement.blur();
     }
   }

@@ -1,5 +1,5 @@
-import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { HTMLAttributes, MouseEvent } from 'react';
+import SideEffectPureComponent from '../SideEffectComponent/SideEffectPureComponent';
 import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Touch, { TouchEvent } from '../Touch/Touch';
@@ -50,7 +50,7 @@ export interface SnackbarState {
   touched: boolean;
 }
 
-class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
+class Snackbar extends SideEffectPureComponent<SnackbarProps, SnackbarState> {
   constructor(props: SnackbarProps) {
     super(props);
 
@@ -67,11 +67,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   static defaultProps = {
     duration: 4000,
-  };
-
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
   };
 
   private innerEl: HTMLDivElement;
@@ -91,10 +86,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   componentWillUnmount() {
     this.clearCloseTimeout();
-  }
-
-  get window() {
-    return this.context.window || window;
   }
 
   setCloseTimeout = () => {

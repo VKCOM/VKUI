@@ -1,4 +1,5 @@
 import React, { createRef, KeyboardEvent, MouseEvent } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import SelectedIcon from '@vkontakte/icons/dist/16/done';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce } from '../../lib/utils';
@@ -9,6 +10,7 @@ import { HasRef, HasFormStatus } from '../../types';
 import withAdaptivity from '../../hoc/withAdaptivity';
 import withPlatform from '../../hoc/withPlatform';
 import { getClassName } from '../..';
+import { canUseEventListeners } from '../../lib/dom';
 
 type SelectValue = string | number | boolean;
 
@@ -39,7 +41,7 @@ interface CustomSelectProps extends Omit<SelectProps, 'onChange' | 'getRef'>, Ha
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
-class CustomSelect extends React.Component<CustomSelectProps, State> {
+class CustomSelect extends SideEffectComponent<CustomSelectProps, State> {
   public constructor(props: CustomSelectProps) {
     super(props);
 
@@ -295,13 +297,15 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
   handleKeyUp = debounce(this.resetKeyboardInput, 1000);
 
   componentDidMount() {
-    document.addEventListener('click', this.handleDocumentClick, false);
-    document.addEventListener('touchend', this.handleDocumentClick, false);
+    if (canUseEventListeners) {
+      this.document.addEventListener('click', this.handleDocumentClick, false);
+      this.document.addEventListener('touchend', this.handleDocumentClick, false);
+    }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.handleDocumentClick, false);
-    document.removeEventListener('touchend', this.handleDocumentClick, false);
+    this.document.removeEventListener('click', this.handleDocumentClick, false);
+    this.document.removeEventListener('touchend', this.handleDocumentClick, false);
   }
 
   componentDidUpdate(prevProps: CustomSelectProps) {

@@ -1,4 +1,5 @@
-import React, { Component, createRef, HTMLAttributes, RefObject, RefCallback } from 'react';
+import React, { createRef, HTMLAttributes, RefObject, RefCallback } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -34,7 +35,7 @@ export interface RangeSliderState {
   containerWidth: number;
 }
 
-class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
+class RangeSlider extends SideEffectComponent<RangeSliderProps, RangeSliderState> {
   constructor(props: RangeSliderProps) {
     super(props);
     this.state = {
@@ -193,7 +194,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('resize', this.onResize);
+      this.window.addEventListener('resize', this.onResize);
       this.onResize(() => {
         this.setState(this.validatePercent(this.valueToPercent(this.value)));
       });
@@ -207,7 +208,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
+    this.window.removeEventListener('resize', this.onResize);
   }
 
   getRef: RefCallback<HTMLDivElement> = (container) => {

@@ -1,4 +1,5 @@
-import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes, RefCallback } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, TextareaHTMLAttributes, RefCallback } from 'react';
+import SideEffectPureComponent from '../SideEffectComponent/SideEffectPureComponent';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 import { HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
@@ -25,7 +26,7 @@ export interface TextareaState {
   height?: number;
 }
 
-class Textarea extends PureComponent<TextareaProps, TextareaState> {
+class Textarea extends SideEffectPureComponent<TextareaProps, TextareaState> {
   constructor(props: TextareaProps) {
     super(props);
 
@@ -64,7 +65,7 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
 
     if (el) {
       const { offsetHeight, scrollHeight } = el;
-      const style = window.getComputedStyle(el);
+      const style = this.window.getComputedStyle(el);
       const paddingTop = parseInt(style.paddingTop);
       const paddingBottom = parseInt(style.paddingBottom);
 
@@ -109,7 +110,7 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
   componentDidUpdate(prevProps: TextareaProps) {
     if (prevProps.value && this.props.value === '') {
       // Fix iOS extra indent on removing content
-      window.requestAnimationFrame(() => {
+      this.window.requestAnimationFrame(() => {
         this.element.value = '';
       });
     }

@@ -1,5 +1,5 @@
-import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent as ReactMouseEvent, RefCallback } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import React, { HTMLAttributes, DragEvent, ElementType, MouseEvent as ReactMouseEvent, RefCallback } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import {
   getSupportedEvents,
   coordX,
@@ -28,10 +28,6 @@ export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTML
   Component?: ElementType;
 }
 
-export interface TouchContext {
-  document: Requireable<{}>;
-}
-
 export interface Gesture {
   startX?: number;
   startY?: number;
@@ -58,7 +54,7 @@ export type DragHandler = (e: DragEvent<HTMLElement>) => void;
 
 const events = getSupportedEvents();
 
-export default class Touch extends Component<TouchProps> {
+export default class Touch extends SideEffectComponent<TouchProps> {
   constructor(props: TouchProps) {
     super(props);
     this.cancelClick = false;
@@ -73,14 +69,6 @@ export default class Touch extends Component<TouchProps> {
     children: '',
     useCapture: false,
   };
-
-  static contextTypes: TouchContext = {
-    document: PropTypes.object,
-  };
-
-  get document() {
-    return this.context.document || document;
-  }
 
   componentDidMount() {
     if (canUseDOM) {
@@ -157,7 +145,7 @@ export default class Touch extends Component<TouchProps> {
       this.props.onStartY(outputEvent);
     }
 
-    !touchEnabled && this.subscribe(this.document);
+    !touchEnabled && this.subscribe(this.document as EventTarget);
   };
 
   /**
@@ -264,17 +252,17 @@ export default class Touch extends Component<TouchProps> {
       this.onLeave(e);
     }
 
-    !touchEnabled && this.unsubscribe(this.document);
+    !touchEnabled && this.unsubscribe(this.document as EventTarget);
   };
 
-  subscribe(element: HTMLElement) {
+  subscribe(element: EventTarget) {
     const listenerParams = { capture: this.props.useCapture, passive: false };
     element.addEventListener(events[1], this.onMove, listenerParams);
     element.addEventListener(events[2], this.onEnd, listenerParams);
     element.addEventListener(events[3], this.onEnd, listenerParams);
   }
 
-  unsubscribe(element: HTMLElement) {
+  unsubscribe(element: EventTarget) {
     // Здесь нужен последний аргумент с такими же параметрами, потому что
     // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
     // https://github.com/VKCOM/VKUI/issues/444

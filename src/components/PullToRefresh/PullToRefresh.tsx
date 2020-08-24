@@ -1,5 +1,5 @@
-import React, { PureComponent, RefObject } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import React, { RefObject } from 'react';
+import SideEffectPureComponent from '../SideEffectComponent/SideEffectPureComponent';
 import Touch, { TouchProps, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -36,11 +36,6 @@ export interface PullToRefreshState {
   contentShift: number;
 }
 
-export interface PullToRefreshContext {
-  document: Requireable<{}>;
-  window: Requireable<{}>;
-}
-
 export interface PullToRefreshParams {
   start: number;
   max: number;
@@ -67,7 +62,7 @@ function cancelEvent(event: any) {
   return false;
 }
 
-class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState> {
+class PullToRefresh extends SideEffectPureComponent<PullToRefreshProps, PullToRefreshState> {
   constructor(props: PullToRefreshProps) {
     super(props);
 
@@ -101,25 +96,11 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
 
   contentRef: RefObject<HTMLDivElement>;
 
-  static contextTypes: PullToRefreshContext = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
-  get document() {
-    return this.context.document || document;
-  }
-
-  get window() {
-    return this.context.window || window;
-  }
-
   componentDidMount() {
     if (canUseDOM) {
       this.document.addEventListener('touchmove', this.onWindowTouchMove, {
-        cancelable: true,
         passive: false,
-      });
+      } as any);
     }
   }
 
@@ -129,9 +110,8 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
     // https://github.com/VKCOM/VKUI/issues/444
     if (canUseDOM) {
       this.document.removeEventListener('touchmove', this.onWindowTouchMove, {
-        cancelable: true,
         passive: false,
-      });
+      } as any);
     }
   }
 

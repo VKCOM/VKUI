@@ -43,7 +43,7 @@ export interface ModalsStateEntry {
   hidden?: boolean;
 
   contentScrolled?: boolean;
-  contentScrollStopTimeout?: number;
+  contentScrollStopTimeout?: ReturnType<typeof setTimeout>;
 
   expandedRange?: TranslateRange;
   collapsedRange?: TranslateRange;

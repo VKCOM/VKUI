@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, RefCallback } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import getClassName from '../../helpers/getClassName';
-import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
@@ -36,11 +36,7 @@ export interface FixedLayoutState {
   width: string;
 }
 
-export interface FixedLayoutContext {
-  document: Requireable<{}>;
-}
-
-class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
+class FixedLayout extends SideEffectComponent<FixedLayoutProps, FixedLayoutState> {
   state: FixedLayoutState = {
     position: 'absolute',
     top: null,
@@ -49,19 +45,11 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   el: HTMLDivElement;
 
-  static contextTypes: FixedLayoutContext = {
-    document: PropTypes.any,
-  };
-
   private onMountResizeTimeout: number;
-
-  get document() {
-    return this.context.document || document;
-  }
 
   componentDidMount() {
     this.onMountResizeTimeout = setTimeout(() => this.doResize());
-    window.addEventListener('resize', this.doResize);
+    this.window.addEventListener('resize', this.doResize);
 
     this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
@@ -69,7 +57,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   componentWillUnmount() {
     clearInterval(this.onMountResizeTimeout);
-    window.removeEventListener('resize', this.doResize);
+    this.window.removeEventListener('resize', this.doResize);
 
     this.document.removeEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);

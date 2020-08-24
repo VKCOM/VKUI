@@ -1,10 +1,11 @@
 import React, { createRef } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 
 interface Props {
   windowResize?: boolean;
 }
 
-export default class CustomScrollView extends React.Component<Props> {
+export default class CustomScrollView extends SideEffectComponent<Props> {
   private ratio = NaN;
   private lastTrackerTop = 0;
   private clientHeight = 0;
@@ -25,7 +26,7 @@ export default class CustomScrollView extends React.Component<Props> {
     this.resize();
 
     if (this.props.windowResize) {
-      window.addEventListener('resize', this.resize);
+      this.window.addEventListener('resize', this.resize);
     }
   }
 
@@ -34,7 +35,7 @@ export default class CustomScrollView extends React.Component<Props> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
+    this.window.removeEventListener('resize', this.resize);
   }
 
   chooseTransformProp() {
@@ -99,8 +100,8 @@ export default class CustomScrollView extends React.Component<Props> {
     this.startY = e.clientY;
     this.trackerTop = this.lastTrackerTop;
 
-    document.addEventListener('mousemove', this.onMove);
-    document.addEventListener('mouseup', this.onUp);
+    this.document.addEventListener('mousemove', this.onMove);
+    this.document.addEventListener('mouseup', this.onUp);
     this.trackerY.current.classList.add('CustomScrollView__trackerY--dragging');
     this.box.current.classList.add('CustomScrollView__box--dragging');
   };
@@ -116,8 +117,8 @@ export default class CustomScrollView extends React.Component<Props> {
   onUp = (e: MouseEvent) => {
     e.preventDefault();
 
-    document.removeEventListener('mousemove', this.onMove);
-    document.removeEventListener('mouseup', this.onUp);
+    this.document.removeEventListener('mousemove', this.onMove);
+    this.document.removeEventListener('mouseup', this.onUp);
     this.trackerY.current.classList.remove('CustomScrollView__trackerY--dragging');
     this.box.current.classList.remove('CustomScrollView__box--dragging');
   };

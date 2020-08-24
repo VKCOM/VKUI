@@ -1,4 +1,5 @@
-import React, { Component, HTMLAttributes, ReactElement, RefCallback } from 'react';
+import React, { HTMLAttributes, ReactElement, RefCallback } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
@@ -45,7 +46,7 @@ type SetTimeout = (duration: number) => void;
 
 type GetSlideRef = (index: number) => RefCallback<HTMLElement>;
 
-class Gallery extends Component<GalleryProps, GalleryState> {
+class Gallery extends SideEffectComponent<GalleryProps, GalleryState> {
   constructor(props: GalleryProps) {
     super(props);
 
@@ -75,7 +76,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     [index: string]: HTMLElement;
   };
   viewport: HTMLElement;
-  timeout: number;
+  timeout: ReturnType<typeof setTimeout>;
   isChildrenDirty: boolean;
 
   static defaultProps: GalleryProps = {
@@ -300,13 +301,13 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       max: this.calcMax({ slides }),
       animation: false,
     }, () => {
-      window.requestAnimationFrame(() => this.setState({ animation: true }));
+      this.window.requestAnimationFrame(() => this.setState({ animation: true }));
     });
   };
 
   setTimeout: SetTimeout = (duration: number) => {
     if (canUseDOM) {
-      this.timeout = window.setTimeout(() => {
+      this.timeout = setTimeout(() => {
         const { slides, current } = this.state;
         const targetIndex = current < slides.length - 1 ? current + 1 : 0;
 
@@ -334,7 +335,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       });
     });
 
-    window.addEventListener('resize', this.onResize);
+    this.window.addEventListener('resize', this.onResize);
 
     if (this.props.timeout) {
       this.setTimeout(this.props.timeout);
@@ -368,7 +369,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
+    this.window.removeEventListener('resize', this.onResize);
     this.clearTimeout();
   }
 

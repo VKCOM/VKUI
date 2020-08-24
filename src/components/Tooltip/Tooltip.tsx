@@ -1,5 +1,5 @@
-import React, { ReactElement, ReactNode, Component, Fragment, RefCallback } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import React, { Component, ReactElement, ReactNode, Fragment, RefCallback } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
@@ -12,10 +12,6 @@ interface TooltipPortalProps extends Partial<TooltipProps> {
 interface TooltipPortalState {
   x: number;
   y: number;
-}
-
-interface TooltipPortalContextType {
-  document: Requireable<{}>;
 }
 
 type GetBoundingTargetRect = () => {
@@ -31,7 +27,7 @@ const isDOMTypeElement = (element: ReactElement) => {
 
 const baseClassName = getClassName('Tooltip');
 
-class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
+class TooltipPortal extends SideEffectComponent<TooltipPortalProps, TooltipPortalState> {
   constructor(props: TooltipPortalProps) {
     super(props);
 
@@ -52,14 +48,6 @@ class TooltipPortal extends Component<TooltipPortalProps, TooltipPortalState> {
     }
 
     this.portalTarget = closestFixed || closestHeader || closestPanel;
-  }
-
-  static contextTypes: TooltipPortalContextType = {
-    document: PropTypes.object,
-  };
-
-  get document() {
-    return this.context.document || document;
   }
 
   fixedPortal: boolean;

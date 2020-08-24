@@ -1,5 +1,5 @@
-import React, { Component, ReactNode, MouseEvent, Fragment, InputHTMLAttributes } from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode, MouseEvent, Fragment, InputHTMLAttributes } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import IconButton from '../IconButton/IconButton';
@@ -47,7 +47,7 @@ export interface CellState {
   dragging: boolean;
 }
 
-class Cell extends Component<CellProps, CellState> {
+class Cell extends SideEffectComponent<CellProps, CellState> {
   constructor(props: CellProps) {
     super(props);
 
@@ -64,12 +64,6 @@ class Cell extends Component<CellProps, CellState> {
   static defaultProps = {
     removePlaceholder: 'Удалить',
   };
-
-  static contextTypes = {
-    document: PropTypes.any,
-  };
-
-  get document() {return this.context.document || document;}
 
   private readonly onRemoveActivateClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();

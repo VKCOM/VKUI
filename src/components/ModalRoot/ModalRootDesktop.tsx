@@ -1,5 +1,5 @@
-import React, { Component, ReactElement } from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import classNames from '../../lib/classNames';
 import { isFunction } from '../../lib/utils';
 import { transitionEvent } from '../../lib/supportEvents';
@@ -41,7 +41,7 @@ interface ModalRootState {
   inited?: boolean;
 }
 
-class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
+class ModalRootDesktop extends SideEffectComponent<ModalRootProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -76,19 +76,6 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
 
   activeTransitions: number;
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
-  get document(): Document {
-    return this.context.document || document;
-  }
-
-  get window(): Window {
-    return this.context.window || window;
-  }
-
   get modals() {
     return [].concat(this.props.children);
   }
@@ -120,11 +107,11 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
 
   componentDidMount() {
     this.initActiveModal();
-    document.addEventListener('keydown', this.handleKeyDownEsc);
+    this.document.addEventListener('keydown', this.handleKeyDownEsc);
   }
 
   componentWillUnmount = () => {
-    document.removeEventListener('keydown', this.handleKeyDownEsc);
+    this.document.removeEventListener('keydown', this.handleKeyDownEsc);
   };
 
   componentDidUpdate(prevProps: ModalRootProps, prevState: ModalRootState) {
@@ -168,7 +155,7 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
     }
 
     if (this.state.switching && !prevState.switching) {
-      requestAnimationFrame(() => this.switchPrevNext());
+      this.window.requestAnimationFrame(() => this.switchPrevNext());
     }
   }
 

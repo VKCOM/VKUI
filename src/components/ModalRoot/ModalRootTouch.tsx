@@ -1,5 +1,5 @@
-import React, { Component, ReactElement, SyntheticEvent } from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement, SyntheticEvent } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import getClassName from '../../helpers/getClassName';
@@ -55,7 +55,7 @@ interface ModalRootState {
   dragging?: boolean;
 }
 
-class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
+class ModalRootTouch extends SideEffectComponent<ModalRootProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -96,19 +96,6 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
   private readonly frameIds: {
     [index: string]: number;
   };
-
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
-  get document(): Document {
-    return this.context.document || document;
-  }
-
-  get window(): Window {
-    return this.context.window || window;
-  }
 
   get modals() {
     return [].concat(this.props.children);
@@ -610,7 +597,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
 
       clearTimeout(modalState.contentScrollStopTimeout);
 
-      modalState.contentScrollStopTimeout = window.setTimeout(() => {
+      modalState.contentScrollStopTimeout = setTimeout(() => {
         if (modalState.contentScrolled) {
           modalState.contentScrolled = false;
         }

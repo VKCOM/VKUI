@@ -1,5 +1,5 @@
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import React, { HTMLAttributes, ReactNode } from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import classNames from '../../lib/classNames';
 import { HasPlatform } from '../../types';
 import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -9,28 +9,10 @@ export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlat
   modal?: ReactNode;
 }
 
-export interface PopoutRootContext {
-  document: Requireable<object>;
-  window: Requireable<object>;
-}
-
-class PopoutRoot extends Component<PopoutRootProps> {
+class PopoutRoot extends SideEffectComponent<PopoutRootProps> {
   static defaultProps: Partial<PopoutRootProps> = {
     popout: null,
   };
-
-  static contextTypes: PopoutRootContext = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
-  get document() {
-    return this.context.document || document;
-  }
-
-  get window() {
-    return this.context.window || window;
-  }
 
   componentDidUpdate(prevProps: PopoutRootProps) {
     if (this.props.popout && !prevProps.popout) {
@@ -39,7 +21,7 @@ class PopoutRoot extends Component<PopoutRootProps> {
   }
 
   blurActiveElement() {
-    if (typeof this.window !== 'undefined' && this.document.activeElement) {
+    if (typeof this.window !== 'undefined' && this.document.activeElement instanceof HTMLElement) {
       this.document.activeElement.blur();
     }
   }

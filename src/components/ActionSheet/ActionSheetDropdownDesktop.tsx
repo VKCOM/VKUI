@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import SideEffectComponent from '../SideEffectComponent/SideEffectComponent';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
@@ -12,9 +13,18 @@ interface Props extends HasPlatform {
   elementRef: React.RefObject<HTMLDivElement>;
 }
 
+interface State {
+  dropdownStyles: {
+    left: string;
+    top: string;
+    opacity: string;
+    pointerEvents: PointerEventsProperty;
+  };
+}
+
 type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
 
-class ActionSheetDropdownDesktop extends Component<Props> {
+class ActionSheetDropdownDesktop extends SideEffectComponent<Props, State> {
   state = {
     dropdownStyles: {
       left: '0',
@@ -43,12 +53,12 @@ class ActionSheetDropdownDesktop extends Component<Props> {
     });
 
     setTimeout(() => {
-      window.addEventListener('click', this.handleClickOutside);
+      this.window.addEventListener('click', this.handleClickOutside);
     });
   };
 
   componentWillUnmount = () => {
-    window.removeEventListener('click', this.handleClickOutside);
+    this.window.removeEventListener('click', this.handleClickOutside);
   };
 
   handleClickOutside = (e: MouseEvent) => {
