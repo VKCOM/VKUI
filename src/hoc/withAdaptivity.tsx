@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import type { FC, ComponentType } from 'react';
 import type { InheritProps } from '../types'; 
 import { AdaptivityContext, SizeType, ViewWidth } from '../components/AdaptivityProvider/AdaptivityContext';
-import getDisplayName from '../helpers/getDisplayName';
+import { getDisplayName } from '../helpers/componentUtils';
 
 interface Config {
   sizeX?: boolean;
