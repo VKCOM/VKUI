@@ -4,8 +4,7 @@ import classNames from '../../lib/classNames';
 import { createMasks } from './masks';
 import { useBrowserInfo } from '../../hooks/useBrowserInfo';
 import { IOS } from '../../lib/platform';
-
-createMasks();
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -30,6 +29,10 @@ export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
 const UsersStack: FC<UsersStackProps> = (props) => {
   const { platform, platformVersion } = useBrowserInfo();
   const { className, photos, visibleCount, size, layout, children, ...restProps } = props;
+
+  useIsomorphicLayoutEffect(() => {
+    createMasks();
+  }, []);
 
   const othersCount = Math.max(0, photos.length - visibleCount);
   const canShowOthers = othersCount > 0 && size === 'm';
