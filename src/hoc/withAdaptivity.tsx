@@ -9,14 +9,14 @@ interface Config {
 }
 
 export { SizeType, ViewWidth };
-  
+
 export interface AdaptivityProps {
   sizeX?: SizeType;
   sizeY?: SizeType;
   viewWidth?: ViewWidth;
 }
 
-export default function withAdaptivity<P extends InheritProps>(Component: ComponentType<P & AdaptivityProps>, config: Config): ComponentType<P> {
+export default function withAdaptivity<P extends AdaptivityProps>(Component: ComponentType<P>, config: Config) {
   const AdaptivityConsumer: FC<P> = (props: P) => {
     const context = useContext(AdaptivityContext);
     let update = false;
@@ -43,9 +43,9 @@ export default function withAdaptivity<P extends InheritProps>(Component: Compon
     }
 
     return target;
-  }
-  
+  };
+
   AdaptivityConsumer.displayName = `withAdaptivity(${getDisplayName(Component)})`;
 
-  return AdaptivityConsumer;
+  return AdaptivityConsumer as ComponentType<Omit<P, keyof AdaptivityProps>>; ;
 }

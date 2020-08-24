@@ -4,10 +4,10 @@ import useInsets from '../hooks/useInsets';
 import { getDisplayName } from '../helpers/componentUtils';
 
 export interface InsetsProps {
-  insets: Insets;
+  insets: Partial<Insets>;
 }
 
-export default function withInsets<P extends InheritProps>(Component: ComponentType<P & InsetsProps>): ComponentType<P> {
+export default function withInsets<P extends InsetsProps>(Component: ComponentType<P>) {
   const WithInsets: FC<P> = (props: P) => {
     const insets = useInsets();
     return <Component {...props} insets={insets} />;
@@ -15,5 +15,5 @@ export default function withInsets<P extends InheritProps>(Component: ComponentT
 
   WithInsets.displayName = `withInsets(${getDisplayName(Component)})`;
 
-  return WithInsets;
+  return WithInsets as ComponentType<Omit<P, keyof InsetsProps>>;
 }

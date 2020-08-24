@@ -4,10 +4,10 @@ import usePlatform from '../hooks/usePlatform';
 import { getDisplayName } from '../helpers/componentUtils';
 
 export interface PlatformProps {
-  platform: OSType
+  platform: OSType;
 }
 
-export default function withPlatform<P extends InheritProps>(Component: ComponentType<P & PlatformProps>): ComponentType<P> {
+export default function withPlatform<P extends PlatformProps>(Component: ComponentType<P>) {
   const WithPlatform: FC<P> = (props: P) => {
     const platform = usePlatform();
     return <Component {...props} platform={platform} />;
@@ -15,5 +15,5 @@ export default function withPlatform<P extends InheritProps>(Component: Componen
 
   WithPlatform.displayName = `withPlatform(${getDisplayName(Component)})`;
 
-  return WithPlatform;
+  return WithPlatform as ComponentType<Omit<P, keyof PlatformProps>>;
 }
