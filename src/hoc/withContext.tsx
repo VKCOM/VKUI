@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import type { FC, ComponentType, Context } from 'react';
 import type { InheritProps } from '../types'; 
-import getDisplayName from '../helpers/getDisplayName';
+import { getDisplayName } from '../helpers/componentUtils';
 
 type PartialContext<P, X, T extends keyof P> = Omit<P, {
   [K in keyof P]: P[K] extends X ? never : K
