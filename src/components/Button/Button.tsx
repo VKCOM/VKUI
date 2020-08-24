@@ -8,6 +8,8 @@ import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
 import { HasAlign, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
+import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { OS } from '../../lib/platform';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
@@ -17,36 +19,44 @@ export interface VKUIButtonProps extends HasAlign {
   after?: ReactNode;
 }
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, VKUIButtonProps {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, VKUIButtonProps, AdaptivityProps {
   Component?: ElementType;
   stopPropagation?: boolean;
   href?: string;
   target?: string;
 }
 
-const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean) => {
+const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean, sizeY: AdaptivityProps['sizeY'], platform: OS) => {
   switch (size) {
     case 'l':
       return (
-        <Title level="3" weight="medium" Component="div" className="Button__content">
-          {children}
-        </Title>
+        sizeY === SizeType.COMPACT ?
+          <Text weight="medium" className="Button__content">{children}</Text>
+          :
+          <Title level="3" weight="medium" Component="div" className="Button__content">
+            {children}
+          </Title>
       );
     case 'm':
       return (
-        <Text weight="medium" className="Button__content">
-          {children}
-        </Text>
+        sizeY === SizeType.COMPACT ?
+          <Subhead weight="medium" className="Button__content" Component="div">
+            {children}
+          </Subhead>
+          :
+          <Text weight="medium" className="Button__content">
+            {children}
+          </Text>
       );
     case 's':
     default:
       if (hasIcons) {
         return (
           <Caption
-            caps
-            level="2"
-            weight="semibold"
-            className="Button__content--caps"
+            caps={platform !== OS.VKCOM}
+            level={platform === OS.VKCOM ? '1' : sizeY === SizeType.COMPACT ? '3' : '2'}
+            weight={platform === OS.VKCOM || sizeY === SizeType.COMPACT ? 'medium' : 'semibold'}
+            className={'Button__content' + (platform !== OS.VKCOM ? '--caps' : '')}
           >
             {children}
           </Caption>
@@ -54,20 +64,29 @@ const getContent = (size: ButtonProps['size'], children: ButtonProps['children']
       }
 
       return (
-        <Subhead
-          weight="medium"
-          Component="div"
-          className="Button__content"
-        >
-          {children}
-        </Subhead>
+        sizeY === SizeType.COMPACT ?
+          <Caption
+            weight="medium"
+            level="1"
+            className="Button__content"
+          >
+            {children}
+          </Caption>
+          :
+          <Subhead
+            weight="medium"
+            Component="div"
+            className="Button__content"
+          >
+            {children}
+          </Subhead>
       );
   }
 };
 
 const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
-  const { className, size, mode, stretched, align, children, before, after, getRootRef, Component, ...restProps } = props;
+  const { className, size, mode, stretched, align, children, before, after, getRootRef, Component, sizeY, ...restProps } = props;
   const hasIcons = Boolean(before || after);
 
   return <Tappable {...restProps}
@@ -78,6 +97,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
         `Button--sz-${size}`,
         `Button--lvl-${mode}`,
         `Button--aln-${align || 'center'}`,
+        `Button--sizeY-${sizeY}`,
         {
           ['Button--str']: stretched,
           ['Button--with-icon']: hasIcons,
@@ -89,7 +109,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   >
     <div className="Button__in">
       {before && <div className="Button__before">{before}</div>}
-      {children && getContent(size, children, hasIcons)}
+      {children && getContent(size, children, hasIcons, sizeY, platform)}
       {after && <div className="Button__after">{after}</div>}
     </div>
   </Tappable>;
@@ -103,4 +123,6 @@ Button.defaultProps = {
   stopPropagation: true,
 };
 
-export default Button;
+export default withAdaptivity(Button, {
+  sizeY: true,
+});
