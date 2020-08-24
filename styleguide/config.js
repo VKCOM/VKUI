@@ -174,20 +174,6 @@ module.exports = {
     path.resolve(__dirname, './setup.js'),
     path.resolve(__dirname, './setup.css')
   ],
-  propsParser(filePath, source, resolver, handlers) {
-    if (/.tsx$/.test(filePath)) {
-      return require('react-docgen-typescript').withCustomConfig('./tsconfig.json', {
-        propFilter(prop) {
-          if (prop.parent) {
-            return !prop.parent.fileName.includes('node_modules')
-          }
-          return true
-        },
-      }).parse(filePath)
-    } else {
-      return require('react-docgen').parse(source, resolver, handlers, { filename: filePath })
-    }
-  },
   dangerouslyUpdateWebpackConfig(webpackConfig) { // запрещаем вычищать .git
     webpackConfig.plugins = webpackConfig.plugins.reduce((acc, item) => {
       if (item instanceof CleanWebpackPlugin) {

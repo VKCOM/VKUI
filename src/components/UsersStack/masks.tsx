@@ -1,4 +1,4 @@
-import { canUseDOM } from '../../lib/dom';
+import { canUseDOM, onDOMLoaded } from '../../lib/dom';
 
 let masksCreated = false;
 
@@ -33,6 +33,8 @@ export function createMasks(): void {
   </clipPath>
 </defs>`;
 
-  document.body.appendChild(svgElement);
+  onDOMLoaded(() => {
+    document.body.appendChild(svgElement);
+  });
   masksCreated = true;
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Logo from 'react-styleguidist/lib/client/rsg-components/Logo';
 import Markdown from 'react-styleguidist/lib/client/rsg-components/Markdown';
@@ -6,28 +6,31 @@ import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import Link from 'react-styleguidist/lib/client/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
-import { defaultConfigProviderProps, WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
+import { WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
+import { DESKTOP_SIZE, MOBILE_SIZE } from '../../src/components/AdaptivityProvider/AdaptivityProvider';
+import { defaultConfigProviderProps } from '../../src/components/ConfigProvider/ConfigProviderContext';
+import { ViewWidthSelect } from './ViewWidthSelect';
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
-  webviewType: WebviewType.INTERNAL
+  webviewType: WebviewType.INTERNAL,
+  width: MOBILE_SIZE
 });
 
-const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
+const styles = ({ color, fontFamily, fontSize, mq, space }) => ({
   root: {
     backgroundColor: color.baseBackground
   },
   hasSidebar: {
-    paddingLeft: 230,
+    paddingLeft: 200,
     [mq.small]: {
       paddingLeft: 0
     }
   },
   content: {
-    maxWidth,
     padding: [[space[2], space[4]]],
     margin: [[0, 'auto']],
     [mq.small]: {
@@ -43,7 +46,7 @@ const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
     top: 0,
     left: 0,
     bottom: 0,
-    width: 230,
+    width: 200,
     overflow: 'auto',
     '-webkit-overflow-scrolling': 'touch',
     [mq.small]: {
@@ -74,19 +77,28 @@ const styles = ({ color, fontFamily, fontSize, mq, space, maxWidth }) => ({
 function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
   const [state, setState] = useState({
     ...defaultConfigProviderProps,
-    webviewType: WebviewType.INTERNAL
+    webviewType: WebviewType.INTERNAL,
+    width: MOBILE_SIZE,
   });
+
+  const width = state.width;
 
   const setContext = useCallback((data) => {
     setState({ ...state, ...data })
   }, [state])
 
-  const providerValue = useMemo(() => ({ ...state, setContext }), [state, setContext]);
+  useEffect(() => {
+    if (hasSidebar && width === DESKTOP_SIZE) {
+      setContext({ width: MOBILE_SIZE });
+    }
+  }, [hasSidebar, width])
+
+  const providerValue = useMemo(() => ({ ...state, hasSidebar, setContext }), [state, setContext, hasSidebar]);
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
     <div className={cx(classes.root, hasSidebar && classes.hasSidebar)}>
-      <main className={classes.content}>
+      <main className={classes.content} style={{ maxWidth: hasSidebar ? 1200 : '100%' }}>
         {children}
         <footer className={classes.footer}>
           <Markdown text={`Generated with [React Styleguidist](${homepageUrl})`} />
@@ -106,6 +118,13 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
               <WebviewTypeSelect
                 onChange={ (e) => setContext({ webviewType: e.target.value })}
                 value={state.webviewType}
+              />
+            </div>
+            <div style={{ marginTop: 4 }}>
+              <ViewWidthSelect
+                onChange={ (e) => setContext({ width: Number(e.target.value) })}
+                value={state.width}
+                isWide={!hasSidebar}
               />
             </div>
             <div style={{ marginTop: 4 }}>
