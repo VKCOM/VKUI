@@ -88,6 +88,7 @@ export { default as Input } from './components/Input/Input';
 export { default as Chip } from './components/Chip/Chip';
 export { default as ChipsInput } from './components/ChipsInput/ChipsInput';
 export { default as ChipsSelect } from './components/ChipsSelect/ChipsSelect';
+export { default as AsyncChipsSelect } from './components/AsyncChipsSelect/AsyncChipsSelect';
 export { default as MobileChipsSelect } from './components/ChipsSelect/MobileChipsSelect';
 export { default as Slider } from './components/Slider/Slider';
 export { default as RangeSlider } from './components/RangeSlider/RangeSlider';
@@ -97,6 +98,7 @@ export { default as Checkbox } from './components/Checkbox/Checkbox';
 export { default as Select } from './components/Select/Select';
 export { default as SelectMimicry } from './components/SelectMimicry/SelectMimicry';
 export { default as CustomSelect } from './components/CustomSelect/CustomSelect';
+export { default as CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export { default as DatePicker } from './components/DatePicker/DatePicker';
 export { default as SliderSwitch } from './components/SliderSwitch/SliderSwitch';
 

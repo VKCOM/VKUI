@@ -47,7 +47,7 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
 }
 
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
-  const { style, value, status, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className,
+  const { style, value, status, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className, inputValue,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, getNewOptionData, renderChip, ...restProps } = props;
   const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
@@ -55,11 +55,16 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   const handleKeDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown(e);
 
+    if (e.key === 'Backspace' && !e.defaultPrevented && !fieldValue && selectedOptions.length) {
+      removeOption(selectedOptions[selectedOptions.length - 1].value);
+      e.preventDefault();
+    }
+
     if (e.key === 'Enter' && !e.defaultPrevented && fieldValue) {
       addOptionFromInput();
       e.preventDefault();
     }
-  }, [fieldValue, addOptionFromInput, getNewOptionData]);
+  }, [onKeyDown, fieldValue, addOptionFromInput, getNewOptionData]);
 
   const handleBlur = useCallback((e: FocusEvent<HTMLInputElement>) => {
     if (focused) {

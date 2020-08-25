@@ -5,27 +5,31 @@ import React, {
   useState,
   MouseEvent,
   FocusEvent,
-  KeyboardEvent,
+  KeyboardEvent, ReactNode, useEffect,
 } from 'react';
 import classNames from '../../lib/classNames';
+import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import ChipsInput, { ChipsInputOption, ChipsInputValue, RenderChip } from '../ChipsInput/ChipsInput';
+import CustomSelectOption from '../CustomSelectOption/CustomSelectOption';
 import { noop } from '../../lib/utils';
 import { hasMouse } from '../../helpers/inputUtils';
 import { ChipsSelectProps } from './types';
 import { useChipsSelect } from './useChipsSelect';
+import { CustomSelectOptionProps } from '../CustomSelectOption/types';
 
 const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
-    style, status, onBlur, onFocus, onClick, onKeyDown, className,
+    style, status, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel,
     getNewOptionData, renderChip, popupDirection, sizeY, creatable, filterFn, inputValue, ...restProps
   } = props;
 
   const [opened, setOpened] = useState(false);
-  const [focusedOption, setFocusedOption] = useState(null);
-  const scrollViewRef = useRef(null);
-  const { fieldValue, setFieldValue, selectedOptions, setSelectedOptions, filteredOptions, addOption, handleInputChange } = useChipsSelect(props);
+  const [focusedOptionIndex, setFocusedOptionIndex] = useState<number>(null);
+  const [focusedOption, setFocusedOption] = useState<Option>(null);
+  const scrollViewRef = useRef<CustomScrollView>(null);
+  const { fieldValue, setFieldValue, selectedOptions, setSelectedOptions, filteredOptions, addOption, handleInputChange, addOptionFromInput } = useChipsSelect(props);
 
   const handleFocus = useCallback((e: FocusEvent<HTMLInputElement>) => {
     if (!hasMouse) {
@@ -34,6 +38,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     }
 
     setOpened(true);
+    setFocusedOptionIndex(0);
     onFocus(e);
   }, [onClick, onFocus]);
 
@@ -48,19 +53,109 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     }
   }, [onClick, hasMouse]);
 
+  const scrollToElement = useCallback((index: number, center = false) => {
+    const scrollView = scrollViewRef.current;
+    const dropdown = scrollView.box.current;
+    const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
+
+    if (!item) {
+      return;
+    }
+
+    const dropdownHeight = dropdown.offsetHeight;
+    const scrollTop = dropdown.scrollTop;
+    const itemTop = item.offsetTop;
+    const itemHeight = item.offsetHeight;
+
+    if (center) {
+      dropdown.scrollTop = itemTop - dropdownHeight / 2 + itemHeight / 2;
+    } else if (itemTop + itemHeight > dropdownHeight + scrollTop) {
+      dropdown.scrollTop = itemTop - dropdownHeight + itemHeight;
+    } else if (itemTop < scrollTop) {
+      dropdown.scrollTop = itemTop;
+    }
+  }, []);
+
+  const focusOptionByIndex = useCallback((index: number, oldIndex: number) => {
+    const length = filteredOptions.length + Number(creatable);
+
+    if (index < 0) {
+      index = length - 1;
+    } else if (index >= length) {
+      index = 0;
+    }
+
+    if (index === oldIndex) {
+      return;
+    }
+
+    scrollToElement(index);
+    setFocusedOptionIndex(index);
+  }, [filteredOptions]);
+
+  const focusOption = useCallback((nextIndex: number|null, type: 'next' | 'prev') => {
+    let index = typeof nextIndex !== 'number' ? -1 : nextIndex;
+
+    if (type === 'next') {
+      index = index + 1;
+    } else if (type === 'prev') {
+      index = index - 1;
+    }
+
+    focusOptionByIndex(index, focusedOptionIndex);
+  }, [focusOptionByIndex, focusedOptionIndex]);
+
   const handleKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown(e);
 
+    if (e.key === 'ArrowUp' && !e.defaultPrevented) {
+      e.preventDefault();
+
+      if (!opened) {
+        setOpened(true);
+        setFocusedOptionIndex(0);
+      } else {
+        focusOption(focusedOptionIndex, 'prev');
+      }
+    }
+
+    if (e.key === 'ArrowDown' && !e.defaultPrevented) {
+      e.preventDefault();
+
+      if (!opened) {
+        setOpened(true);
+        setFocusedOptionIndex(0);
+      } else {
+        focusOption(focusedOptionIndex, 'next');
+      }
+    }
+
     if (e.key === 'Enter' && !e.defaultPrevented) {
-      if (filteredOptions.length === 1) {
-        addOption(filteredOptions[0]);
+      const option = filteredOptions[focusedOptionIndex - Number(creatable)];
+
+      if (option) {
+        addOption(option);
+        setFocusedOptionIndex(null);
         setFieldValue('');
+        setOpened(false);
         e.preventDefault();
       } else if (!creatable) {
         e.preventDefault();
       }
     }
-  }, [setFieldValue, onKeyDown, filteredOptions, addOption]);
+  }, [opened, focusedOptionIndex, setFieldValue, onKeyDown, filteredOptions, addOption]);
+
+  useEffect(() => {
+    let index = focusedOptionIndex - Number(creatable);
+
+    if (filteredOptions[index] || focusedOptionIndex === 0) {
+      setFocusedOption(filteredOptions[index]);
+    }
+
+    if (focusedOptionIndex === null) {
+      setFocusedOption(null);
+    }
+  }, [filteredOptions, focusedOptionIndex]);
 
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;
@@ -89,7 +184,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         onFocus={handleFocus}
         onBlur={handleBlur}
         onClick={handleClick}
-        onInputChange={handleInputChange}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         style={style}
@@ -101,6 +195,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         getRef={getRef}
         disabled={disabled}
         {...restProps}
+        onInputChange={handleInputChange}
       />
       {opened &&
       <div
@@ -109,36 +204,51 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
           ['CustomSelect__options--popupDirectionTop']: popupDirection === 'top',
           [`CustomSelect__options--sizeY-${sizeY}`]: !!sizeY,
         })}
-        onMouseLeave={() => setFocusedOption(null)}
+        onMouseLeave={() => setFocusedOptionIndex(null)}
       >
         <CustomScrollView ref={scrollViewRef}>
-          {creatable ? <div className="CustomSelect__option">Создать значение </div> : null}
-          {!filteredOptions?.length && !creatable ? <div className="CustomSelect__option">Не найдено</div> :
-            filteredOptions.map((option: Option, index: number) => {
-              const label = getOptionLabel(option);
-              const focused = focusedOption && getOptionValue(option) === getOptionValue(focusedOption);
-              const selected = selectedOptions.find((selectedOption: Option) => {
-                return getOptionValue(selectedOption) === getOptionValue(option);
-              });
+          {fetching ? (
+            <div className="ChipsSelect__fetching">
+              <Spinner size="small" />
+            </div>
+          ) : (
+            <>
+              {creatable && (
+                <CustomSelectOption
+                  index={0}
+                  hovered={focusedOptionIndex === 0}
+                  label="Создать значение"
+                  onMouseDown={() => {
+                    addOptionFromInput();
+                    setFieldValue('');
+                  }}
+                  onMouseEnter={() => setFocusedOptionIndex(0)}
+                />
+              )}
+              {!filteredOptions?.length && !creatable ? (
+                <div className="ChipsSelect__empty">Ничего не найдено</div>
+              ) :
+                filteredOptions.map((option: Option, i: number) => {
+                  const index = creatable ? i + 1 : i;
+                  const label = getOptionLabel(option);
+                  const hovered = focusedOption && getOptionValue(option) === getOptionValue(focusedOption);
+                  const selected = selectedOptions.find((selectedOption: Option) => {
+                    return getOptionValue(selectedOption) === getOptionValue(option);
+                  });
 
-              return (
-                <div
-                  key={index}
-                  role="option"
-                  title={label}
-                  aria-posinset={index}
-                  aria-selected={!!selected}
-                  onMouseDown={() => addOption(option)}
-                  onMouseEnter={() => setFocusedOption(option)}
-                  className={classNames('CustomSelect__option', {
-                    ['CustomSelect__option--hover']: focused,
-                    ['CustomSelect__option--selected']: !!selected,
-                  })}
-                >
-                  {label}
-                </div>
-              );
-            })}
+                  return renderOption({
+                    option,
+                    index,
+                    hovered,
+                    label,
+                    selected: !!selected,
+                    onMouseDown: () => addOption(option),
+                    onMouseEnter: () => setFocusedOptionIndex(index),
+                  });
+                })
+              }
+            </>
+          )}
         </CustomScrollView>
       </div>
       }
@@ -150,7 +260,22 @@ ChipsSelect.defaultProps = {
   ...ChipsInput.defaultProps,
   onClick: noop,
   creatable: false,
-  filterFn: (value, option, getOptionLabel) => !value || value && getOptionLabel(option)?.toLowerCase()?.startsWith(value?.toLowerCase()),
+  fetching: false,
+  filterFn: (value, option, getOptionLabel) => {
+    return (
+      !value || value && getOptionLabel(option)?.toLowerCase()?.startsWith(value?.toLowerCase())
+    );
+  },
+  renderOption({ index, label, ...otherProps }: CustomSelectOptionProps): ReactNode {
+    return (
+      <CustomSelectOption
+        key={index}
+        label={label}
+        index={index}
+        {...otherProps}
+      />
+    );
+  },
 };
 
 export default ChipsSelect;

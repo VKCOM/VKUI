@@ -1,11 +1,8 @@
-Множественный выбор и добавление значений.  
-Поддерживаются любые модели данных с помощью пропсов `getOptionValue`, `getOptionLabel` и `getNewOptionData`.  
-Изменить визуальное оформление значений можно с помощью `renderChip` и `renderOption`.  
-Поле ввода принимает все валидные для `<input>` значения.
+Ассинхронная версия компонента [ChipsSelect](https://vkcom.github.io/vkui-styleguide/#!/ChipsSelelct) с возможнотью асинхронной дозагрузки данных на основе введенного значения в input
 
 ```jsx
 const colors = [{value: '1', label: 'Красный'}, {value: '2', label: 'Синий'}];
-const groups = [{value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}]
+const groups = [{value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}];
 
 const Example = () => {
   const [activeView, setActiveView] = React.useState('profile');
@@ -38,9 +35,16 @@ const Example = () => {
             </PanelHeader>
             <FormLayout>
               <FormLayoutGroup top="Выберите группы">
-                <ChipsSelect
+                <AsyncChipsSelect
                   {...groupsChipsProps}
-                  onClick={() => setActiveView('groups')}
+                  dataSource={(str) => {
+                    return new window.Promise((resolve) => {
+                      resolve(groupsChipsProps.options.filter(({ label }) => (
+                        label.toLowerCase().startsWith(str.toLowerCase())
+                      )));
+                    });
+                  }}
+                  onClick={() => setActiveView('colors')}
                   renderChip={({ value, option: { src }, ...rest }) => (
                       <Chip
                         key={value}
@@ -63,29 +67,20 @@ const Example = () => {
                 />
               </FormLayoutGroup>
               <FormLayoutGroup top="Выберите или добавьте цвета">
-                <ChipsSelect {...colorsChipsProps} onClick={() => setActiveView('colors')}/>
+                <AsyncChipsSelect
+                  {...colorsChipsProps}
+                  cache={true}
+                  dataSource={(str) => {
+                    return new window.Promise((resolve) => {
+                      setTimeout(() => {
+                        resolve([{ value: '1', label: 'Розовый' }, { value: '2', label: str }]);
+                      }, 1000);
+                    });
+                  }}
+                  onClick={() => setActiveView('colors')}
+                />
               </FormLayoutGroup>
             </FormLayout>
-          </Panel>
-        </View>
-        <View activePanel="groups" id="groups">
-          <Panel id="groups">
-            <PanelHeader>
-              Выбор групп
-            </PanelHeader>
-            <Group>
-              <MobileChipsSelect {...groupsChipsProps} onClick={() => setActiveView('profile')} />
-            </Group>
-          </Panel>
-        </View>
-        <View activePanel="colors" id="colors">
-          <Panel id="colors">
-            <PanelHeader>
-              Выбор и добавление цветов
-            </PanelHeader>
-            <Group>
-              <MobileChipsSelect {...colorsChipsProps} onClick={() => setActiveView('profile')} />
-            </Group>
           </Panel>
         </View>
       </Root>

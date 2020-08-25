@@ -1,0 +1,10 @@
+.ChipsSelect__fetching,
+.ChipsSelect__empty {
+  padding: 12px 0;
+}
+
+.ChipsSelect__empty {
+  font-size: 13px;
+  text-align: center;
+  color: var(--text_secondary);
+}
