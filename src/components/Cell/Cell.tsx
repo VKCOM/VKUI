@@ -110,7 +110,7 @@ class Cell extends Component<CellProps, CellState> {
   }
 
   componentDidUpdate(_prevProps: CellProps, prevState: CellState) {
-    const { defaultChecked, checked: propsChecked, selectable } = this.props;
+    const { checked: propsChecked, selectable } = this.props;
 
     if (prevState.isRemoveActivated !== this.state.isRemoveActivated && this.state.isRemoveActivated) {
       this.setState({ removeOffset: this.removeButton.offsetWidth });
@@ -223,7 +223,6 @@ class Cell extends Component<CellProps, CellState> {
       platform,
       before,
       after,
-      onClick,
       disabled,
       removable,
       draggable,
