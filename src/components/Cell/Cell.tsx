@@ -115,7 +115,7 @@ class Cell extends Component<CellProps, CellState> {
     if (prevState.isRemoveActivated !== this.state.isRemoveActivated && this.state.isRemoveActivated) {
       this.setState({ removeOffset: this.removeButton.offsetWidth });
     }
-    if (selectable && defaultChecked === undefined && propsChecked !== undefined) {
+    if (selectable && propsChecked !== undefined) {
       if (_prevProps.checked !== propsChecked) {
         this.setState({ checked: propsChecked });
       }
