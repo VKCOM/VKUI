@@ -51,7 +51,7 @@ export const useChipsInput = <Option extends ChipsInputOption>(props: Partial<Ch
   }, [props.value]);
 
   useEffect(() => {
-    setFieldValue(fieldValue);
+    setFieldValue(props.inputValue);
 
     return () => setFieldValue('');
   }, [props.inputValue]);

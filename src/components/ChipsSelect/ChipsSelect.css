@@ -1,3 +1,7 @@
+.ChipsSelect .ChipsInput__container {
+  padding-right: 25px;
+}
+
 .ChipsSelect__fetching,
 .ChipsSelect__empty {
   padding: 12px 0;
@@ -7,4 +11,12 @@
   font-size: 13px;
   text-align: center;
   color: var(--text_secondary);
+}
+
+.ChipsSelect__toggle {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 1;
+  color: var(--icon_secondary);
 }

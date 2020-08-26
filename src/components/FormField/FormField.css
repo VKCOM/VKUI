@@ -30,7 +30,7 @@
 }
 
 .FormField--vkcom .FormField__border {
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 .FormField--s-error .FormField__border {
@@ -101,7 +101,7 @@
 }
 
 .FormField--vkcom.CustomSelect__open .FormField__border {
-  border-radius: 8px 8px 0 0;
+  border-radius: 6px 6px 0 0;
 }
 
 .FormField--ios.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
@@ -113,5 +113,5 @@
 }
 
 .FormField--vkcom.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 6px 6px;
 }

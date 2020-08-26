@@ -2,11 +2,11 @@ import React, {
   FC,
   useCallback,
   useRef,
-  useState,
   MouseEvent,
   FocusEvent,
   KeyboardEvent, ReactNode, useEffect,
 } from 'react';
+import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
 import classNames from '../../lib/classNames';
 import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
@@ -25,11 +25,12 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     getNewOptionData, renderChip, popupDirection, sizeY, creatable, filterFn, inputValue, ...restProps
   } = props;
 
-  const [opened, setOpened] = useState(false);
-  const [focusedOptionIndex, setFocusedOptionIndex] = useState<number>(null);
-  const [focusedOption, setFocusedOption] = useState<Option>(null);
   const scrollViewRef = useRef<CustomScrollView>(null);
-  const { fieldValue, setFieldValue, selectedOptions, setSelectedOptions, filteredOptions, addOption, handleInputChange, addOptionFromInput } = useChipsSelect(props);
+  const {
+    fieldValue, selectedOptions, opened, setOpened, addOptionFromInput,
+    setSelectedOptions, filteredOptions, addOption, handleInputChange, clearInput,
+    focusedOption, setFocusedOption, focusedOptionIndex, setFocusedOptionIndex,
+  } = useChipsSelect(props);
 
   const handleFocus = useCallback((e: FocusEvent<HTMLInputElement>) => {
     if (!hasMouse) {
@@ -130,32 +131,38 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
       }
     }
 
-    if (e.key === 'Enter' && !e.defaultPrevented) {
+    if (e.key === 'Enter' && !e.defaultPrevented && opened) {
       const option = filteredOptions[focusedOptionIndex - Number(creatable)];
 
       if (option) {
         addOption(option);
         setFocusedOptionIndex(null);
-        setFieldValue('');
+        clearInput();
         setOpened(false);
         e.preventDefault();
       } else if (!creatable) {
         e.preventDefault();
       }
     }
-  }, [opened, focusedOptionIndex, setFieldValue, onKeyDown, filteredOptions, addOption]);
+  }, [opened, focusedOptionIndex, onKeyDown, filteredOptions, addOption]);
 
   useEffect(() => {
     let index = focusedOptionIndex - Number(creatable);
 
-    if (filteredOptions[index] || focusedOptionIndex === 0) {
+    if (filteredOptions[index]) {
       setFocusedOption(filteredOptions[index]);
-    }
-
-    if (focusedOptionIndex === null) {
+    } else if (focusedOptionIndex === null || focusedOptionIndex === 0) {
       setFocusedOption(null);
     }
-  }, [filteredOptions, focusedOptionIndex]);
+  }, [focusedOptionIndex, creatable]);
+
+  useEffect(() => {
+    const index = focusedOption ? filteredOptions.findIndex(({ value }) => value === focusedOption.value) : -1;
+
+    if (index === -1 && !!filteredOptions.length) {
+      setFocusedOption(filteredOptions[0]);
+    }
+  }, [filteredOptions, focusedOption]);
 
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;
@@ -169,7 +176,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
 
   return (
     <div
-      className="CustomSelect__container"
+      className="ChipsSelect CustomSelect__container"
       ref={getRootRef}
     >
       <ChipsInput
@@ -197,60 +204,60 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         {...restProps}
         onInputChange={handleInputChange}
       />
-      {opened &&
-      <div
-        className={classNames({
-          ['CustomSelect__options']: opened,
-          ['CustomSelect__options--popupDirectionTop']: popupDirection === 'top',
-          [`CustomSelect__options--sizeY-${sizeY}`]: !!sizeY,
-        })}
-        onMouseLeave={() => setFocusedOptionIndex(null)}
-      >
-        <CustomScrollView ref={scrollViewRef}>
-          {fetching ? (
-            <div className="ChipsSelect__fetching">
-              <Spinner size="small" />
-            </div>
-          ) : (
-            <>
-              {creatable && (
-                <CustomSelectOption
-                  index={0}
-                  hovered={focusedOptionIndex === 0}
-                  label="Создать значение"
-                  onMouseDown={() => {
-                    addOptionFromInput();
-                    setFieldValue('');
-                  }}
-                  onMouseEnter={() => setFocusedOptionIndex(0)}
-                />
-              )}
-              {!filteredOptions?.length && !creatable ? (
-                <div className="ChipsSelect__empty">Ничего не найдено</div>
-              ) :
-                filteredOptions.map((option: Option, i: number) => {
-                  const index = creatable ? i + 1 : i;
-                  const label = getOptionLabel(option);
-                  const hovered = focusedOption && getOptionValue(option) === getOptionValue(focusedOption);
-                  const selected = selectedOptions.find((selectedOption: Option) => {
-                    return getOptionValue(selectedOption) === getOptionValue(option);
-                  });
-
-                  return renderOption({
-                    option,
-                    index,
-                    hovered,
-                    label,
-                    selected: !!selected,
-                    onMouseDown: () => addOption(option),
-                    onMouseEnter: () => setFocusedOptionIndex(index),
-                  });
-                })
-              }
-            </>
-          )}
-        </CustomScrollView>
+      <div className="ChipsSelect__toggle">
+        <Icon20Dropdown />
       </div>
+      {opened &&
+        <div
+          className={classNames({
+            ['CustomSelect__options']: opened,
+            ['CustomSelect__options--popupDirectionTop']: popupDirection === 'top',
+            [`CustomSelect__options--sizeY-${sizeY}`]: !!sizeY,
+          })}
+          onMouseLeave={() => setFocusedOptionIndex(null)}
+        >
+          <CustomScrollView ref={scrollViewRef}>
+            {fetching ? (
+              <div className="ChipsSelect__fetching">
+                <Spinner size="small" />
+              </div>
+            ) : (
+              <>
+                {creatable && (
+                  <CustomSelectOption
+                    index={0}
+                    hovered={focusedOptionIndex === 0}
+                    label="Создать значение"
+                    onMouseDown={addOptionFromInput}
+                    onMouseEnter={() => setFocusedOptionIndex(0)}
+                  />
+                )}
+                {!filteredOptions?.length && !creatable ? (
+                  <div className="ChipsSelect__empty">Ничего не найдено</div>
+                ) :
+                  filteredOptions.map((option: Option, i: number) => {
+                    const index = creatable ? i + 1 : i;
+                    const label = getOptionLabel(option);
+                    const hovered = focusedOption && getOptionValue(option) === getOptionValue(focusedOption);
+                    const selected = selectedOptions.find((selectedOption: Option) => {
+                      return getOptionValue(selectedOption) === getOptionValue(option);
+                    });
+
+                    return renderOption({
+                      option,
+                      index,
+                      hovered,
+                      label,
+                      selected: !!selected,
+                      onMouseDown: () => addOption(option),
+                      onMouseEnter: () => setFocusedOptionIndex(index),
+                    });
+                  })
+                }
+              </>
+            )}
+          </CustomScrollView>
+        </div>
       }
     </div>
   );

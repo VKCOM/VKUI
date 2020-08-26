@@ -92,6 +92,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
       className={classNames('ChipsInput', {
         'ChipsInput--focused': focused,
         'ChipsInput--disabled': disabled,
+        'ChipsInput--withChips': !!selectedOptions.length,
       }, className)}
       style={style}
     >

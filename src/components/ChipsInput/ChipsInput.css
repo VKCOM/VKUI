@@ -1,25 +1,28 @@
 .ChipsInput {
   display: flex;
   position: relative;
-  line-height: 19px;
-  font-size: 16px;
-  padding: 8px 6px;
+  padding: 10px 12px;
+}
+
+.ChipsInput--withChips .ChipsInput__container {
+  margin-left: -7px;
+}
+
+.ChipsInput--withChips .ChipsInput__input-container {
+  margin-left: 7px;
 }
 
 .ChipsInput__container {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  align-items: center;
   position: relative;
   z-index: 2;
-  margin-bottom: -8px;
+  margin: -7px -4px;
 }
 
 .ChipsInput__chip {
-  margin-left: 4px;
-  margin-right: 4px;
-  margin-bottom: 8px;
+  margin: 2px;
   max-width: calc(100% - 8px);
 }
 
@@ -27,12 +30,12 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin: 0 4px 8px;
+  margin: 3px 0 3px 4px;
 }
 
 .ChipsInput__el {
-  line-height: 16px;
-  font-size: 13px;
+  line-height: 20px;
+  font-size: 15px;
   color: var(--text_primary);
   border: none;
   outline: none;
@@ -45,6 +48,7 @@
   position: relative;
   z-index: 2;
   background: transparent;
+  padding: 0;
 }
 
 .ChipsInput:focus {
