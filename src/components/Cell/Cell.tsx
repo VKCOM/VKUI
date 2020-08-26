@@ -25,6 +25,14 @@ export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLA
   removable?: boolean;
   selectable?: boolean;
   /**
+   * В режиме selectable реагирует на входящие значения пропса cheсked, как зависящий напрямую от входящего значения
+   */
+  checked?: boolean;
+  /**
+   * В режиме selectable реагирует на входящие значения пропса defaultChecked как неконтролируемый компонент
+   */
+  defaultChecked?: boolean;
+  /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
   onRemove?(e: MouseEvent, rootEl: HTMLElement): void;
@@ -45,16 +53,24 @@ export interface CellState {
   isRemoveActivated: boolean;
   removeOffset: number;
   dragging: boolean;
+  checked?: boolean;
 }
 
 class Cell extends Component<CellProps, CellState> {
   constructor(props: CellProps) {
     super(props);
+    const { defaultChecked, checked: propsChecked } = this.props;
+    const checked = defaultChecked !== undefined
+      ? defaultChecked
+      : propsChecked !== undefined
+        ? propsChecked
+        : false;
 
     this.state = {
       isRemoveActivated: false,
       removeOffset: 0,
       dragging: false,
+      checked,
     };
   }
 
@@ -94,8 +110,15 @@ class Cell extends Component<CellProps, CellState> {
   }
 
   componentDidUpdate(_prevProps: CellProps, prevState: CellState) {
+    const { defaultChecked, checked: propsChecked, selectable } = this.props;
+
     if (prevState.isRemoveActivated !== this.state.isRemoveActivated && this.state.isRemoveActivated) {
       this.setState({ removeOffset: this.removeButton.offsetWidth });
+    }
+    if (selectable && defaultChecked === undefined && propsChecked !== undefined) {
+      if (_prevProps.checked !== propsChecked) {
+        this.setState({ checked: propsChecked });
+      }
     }
   }
 
@@ -104,6 +127,17 @@ class Cell extends Component<CellProps, CellState> {
   getRootRef = (element: HTMLElement) => {
     this.rootEl = element;
     setRef(element, this.props.getRootRef);
+  };
+
+  handleClick = (e: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
+    e.nativeEvent.stopPropagation();
+    e.preventDefault();
+    if (this.props.selectable) {
+      this.setState((prevState)=>({ checked: !prevState.checked }));
+    }
+    if (typeof this.props.onClick === 'function') {
+      this.props.onClick(e);
+    }
   };
 
   dragShift: number;
@@ -195,6 +229,9 @@ class Cell extends Component<CellProps, CellState> {
       draggable,
       selectable,
       Component,
+      name,
+      checked,
+      defaultChecked,
       ...restProps
     } = this.props;
 
@@ -212,7 +249,7 @@ class Cell extends Component<CellProps, CellState> {
         >
           <SimpleCell
             {...restProps}
-            onClick={draggable || removable ? undefined : onClick}
+            onClick={draggable || removable ? undefined : this.handleClick}
             disabled={draggable || removable || disabled}
             Component={selectable ? 'label' : Component}
             before={
@@ -220,7 +257,7 @@ class Cell extends Component<CellProps, CellState> {
                 {platform === IOS && removable && <div className="Cell__remove-marker" onClick={this.onRemoveActivateClick} />}
                 {selectable &&
                   <Fragment>
-                    <input type="checkbox" className="Cell__checkbox" name={name} />
+                    <input type="checkbox" className="Cell__checkbox" name={name} checked={this.state.checked} />
                     <div className="Cell__marker"><Icon16Done /></div>
                   </Fragment>
                 }
