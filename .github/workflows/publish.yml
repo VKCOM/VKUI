@@ -1,0 +1,69 @@
+name: 'Publish'
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'version'
+        required: true
+      tag:
+        description: 'tag'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn test
+
+      - run: yarn build
+
+      - uses: oleksiyrudenko/gha-git-credentials@v1
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - run: yarn version --new-version ${{ github.event.inputs.version }}
+        if: ${{ !github.event.inputs.tag }}
+
+      - run: yarn version --new-version ${{ github.event.inputs.version }} --tag ${{ github.event.inputs.tag }}
+        if: ${{ github.event.inputs.tag }}
+
+      - run: yarn publish --non-interactive
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+
+      - name: Pushing changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Creating doc for stable release
+        run: |
+          yarn styleguide:build
+          mkdir ${{ github.event.inputs.version }}
+          cp -R docs/* ${{ github.event.inputs.version }}
+          mv ${{ github.event.inputs.version }} docs/${{ github.event.inputs.version }}
+        if: ${{ !github.event.inputs.tag }}
+
+      - name: Creating doc for prerelease
+        run: |
+          yarn styleguide:build --dist docs/${{ github.event.inputs.version }}
+        if: ${{ github.event.inputs.tag }}
+
+      - name: Pushing doc
+        uses: ArthurStam/github-action-push-to-another-repository@master
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.NPM_TEST_DOC_SECRET }}
+        with:
+          source-directory: 'docs'
+          destination-github-username: 'VKCOM'
+          destination-repository-name: 'vkui-styleguide'
