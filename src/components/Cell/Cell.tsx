@@ -25,6 +25,14 @@ export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLA
   removable?: boolean;
   selectable?: boolean;
   /**
+   * В режиме selectable реагирует на входящие значения пропса cheсked, как зависящий напрямую от входящего значения
+   */
+  checked?: boolean;
+  /**
+   * В режиме selectable реагирует на входящие значения пропса defaultChecked как неконтролируемый компонент
+   */
+  defaultChecked?: boolean;
+  /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
   onRemove?(e: MouseEvent, rootEl: HTMLElement): void;
@@ -45,6 +53,7 @@ export interface CellState {
   isRemoveActivated: boolean;
   removeOffset: number;
   dragging: boolean;
+  checked?: boolean;
 }
 
 class Cell extends Component<CellProps, CellState> {
@@ -189,12 +198,16 @@ class Cell extends Component<CellProps, CellState> {
       platform,
       before,
       after,
-      onClick,
       disabled,
       removable,
       draggable,
       selectable,
       Component,
+      onChange,
+      onClick,
+      name,
+      checked,
+      defaultChecked,
       ...restProps
     } = this.props;
 
@@ -220,7 +233,7 @@ class Cell extends Component<CellProps, CellState> {
                 {platform === IOS && removable && <div className="Cell__remove-marker" onClick={this.onRemoveActivateClick} />}
                 {selectable &&
                   <Fragment>
-                    <input type="checkbox" className="Cell__checkbox" name={name} />
+                    <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
                     <div className="Cell__marker"><Icon16Done /></div>
                   </Fragment>
                 }
