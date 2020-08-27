@@ -51,10 +51,17 @@ export default class Select extends React.Component<SelectProps, SelectState> {
 
   setTitle: VoidFunction = () => {
     const selectedOption = this.selectEl.options[this.selectEl.selectedIndex];
-    selectedOption && this.setState({
-      title: selectedOption.text,
-      notSelected: selectedOption.value === '' && this.props.hasOwnProperty('placeholder'),
-    });
+    if (selectedOption) {
+      const title = selectedOption.text;
+      const notSelected = selectedOption.value === '' && this.props.hasOwnProperty('placeholder');
+
+      if (title !== this.state.title || notSelected !== this.state.notSelected) {
+        this.setState({
+          title,
+          notSelected,
+        });
+      }
+    }
   };
 
   componentDidUpdate(prevProps: SelectProps) {
