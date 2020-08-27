@@ -203,6 +203,7 @@ class Cell extends Component<CellProps, CellState> {
       draggable,
       selectable,
       Component,
+      onChange,
       onClick,
       name,
       checked,
@@ -232,7 +233,7 @@ class Cell extends Component<CellProps, CellState> {
                 {platform === IOS && removable && <div className="Cell__remove-marker" onClick={this.onRemoveActivateClick} />}
                 {selectable &&
                   <Fragment>
-                    <input type="checkbox" className="Cell__checkbox" name={name} defaultChecked={defaultChecked} checked={checked} />
+                    <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
                     <div className="Cell__marker"><Icon16Done /></div>
                   </Fragment>
                 }
