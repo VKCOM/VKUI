@@ -13,27 +13,31 @@ const CardScroll: FunctionComponent<CardScrollProps> = ({ children, className, s
 
   const refContainer = useRef<HTMLDivElement>(null);
 
-  function scrollLeftBy(offset: number): number {
-    const containerWidth = refContainer.current.offsetWidth;
-    const slide = refs.current.find((el) => el.offsetLeft + el.offsetWidth - offset > 0);
-    if (!slide) {return 0;}
+  function scrollLeftTo(offset: number): number {
+    const slideIndex = refs.current.findIndex((el) => el.offsetLeft + el.offsetWidth - offset >= 0);
+    if (slideIndex === -1) {return offset;}
+
+    const slide = refs.current[slideIndex];
+    if (slideIndex === 0) {
+      return 0;
+    }
 
     const marginRight = parseInt(window.getComputedStyle(slide).marginRight);
-    return slide.offsetWidth - offset + slide.offsetLeft + marginRight - containerWidth;
+    return slide.offsetLeft - marginRight;
   }
 
-  function scrollRightBy(offset: number): number {
+  function scrollRightTo(offset: number): number {
     const containerWidth = refContainer.current.offsetWidth;
     const slide = refs.current.find((el) => el.offsetLeft + el.offsetWidth - offset > containerWidth);
-    if (!slide) {return 0;}
+    if (!slide) {return offset;}
 
     const marginRight = parseInt(window.getComputedStyle(slide).marginRight);
-    return slide.offsetLeft - offset - marginRight;
+    return slide.offsetLeft - marginRight;
   }
 
   return (
     <div {...restProps} style={style} className={classNames(className, getClassname('CardScroll', platform))}>
-      <HorizontalScroll scrollLeftBy={scrollLeftBy} scrollRightBy={scrollRightBy}>
+      <HorizontalScroll scrollLeftTo={scrollLeftTo} scrollRightTo={scrollRightTo}>
         <div className="CardScroll__in" ref={refContainer}>
           {React.Children.map(children, (item: ReactElement, i) => (
             <div className={'CardScroll__slide' + (item.props.size === 'l' ? ' CardScroll__slide--sz-l' : '')} ref={(node: HTMLElement) => refs.current[i] = node}>{item}</div>
