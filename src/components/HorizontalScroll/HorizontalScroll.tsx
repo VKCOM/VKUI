@@ -10,8 +10,6 @@ interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {
 
 interface HorizontalScrollArrowProps {
   onClick: () => void;
-  onMouseEnter?: () => void;
-  onMouseOut?: () => void;
   direction: 'left' | 'right';
 
 }
@@ -25,11 +23,12 @@ function easeInOutSine(x: number) {
 }
 
 const SCROLL_TIME = 468;
+const ARROW_HOVER_OFFSET = 28;
 
 const HorizontalScrollArrow: FunctionComponent<HorizontalScrollArrowProps> = (props: HorizontalScrollArrowProps) => {
-  const { onClick, onMouseEnter, onMouseOut, direction } = props;
+  const { onClick, direction } = props;
   return (
-    <div className={`HorizontalScroll__arrow HorizontalScroll__arrow-${direction}`} onMouseEnter={onMouseEnter} onMouseOut={onMouseOut} onClick={onClick}>
+    <div className={`HorizontalScroll__arrow HorizontalScroll__arrow-${direction}`} onClick={onClick}>
       <div className="HorizontalScroll__arrow-icon">
         <Icon24Chevron />
       </div>
@@ -50,11 +49,16 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
   function doScroll(getOffset: (offset: number) => number) {
     if (!scrollerRef.current || !getOffset) {return;}
 
-    const startLeft = scrollerRef.current.scrollLeft;
-    const endLeft = getOffset(startLeft);
+    let startLeft = scrollerRef.current.scrollLeft;
+    let endLeft = getOffset(startLeft);
+
+    if (endLeft > scrollerRef.current.scrollWidth - scrollerRef.current.offsetWidth) {
+      setCanScrollRight(false);
+      endLeft = scrollerRef.current.scrollWidth - scrollerRef.current.offsetWidth + ARROW_HOVER_OFFSET;
+    }
+
     const startTime = performance.now();
 
-    console.log(startLeft, endLeft, startTime);
     (function scroll() {
       if (!scrollerRef.current) {return;}
 
@@ -64,9 +68,9 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
       const value = easeInOutSine(elapsed);
 
       const currentLeft = startLeft + (endLeft - startLeft) * value;
-      scrollerRef.current.scrollLeft = currentLeft;
+      scrollerRef.current.scrollLeft = Math.ceil(currentLeft);
 
-      if (currentLeft !== endLeft) {
+      if (scrollerRef.current.scrollLeft !== endLeft) {
         requestAnimationFrame(scroll);
         return;
       }
@@ -74,9 +78,6 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
       animationQueue.current.shift();
       if (animationQueue.current.length > 0) {
         animationQueue.current[0]();
-      } else {
-        setCanScrollLeft(scrollerRef.current.scrollLeft > 0);
-        setCanScrollRight(scrollerRef.current.scrollLeft + scrollerRef.current.offsetWidth < scrollerRef.current.scrollWidth);
       }
     })();
   }
@@ -104,9 +105,15 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
 
   return (
     <div {...restProps} className={classNames('HorizontalScroll', className)}>
-      {hasMouse && canScrollLeft && <HorizontalScrollArrow direction="left" onClick={() => scrollTo(scrollLeftTo)} />}
-      {hasMouse && canScrollRight && <HorizontalScrollArrow direction="right" onClick={() => scrollTo(scrollRightTo)} />}
-      <div className="HorizontalScroll__in" ref={scrollerRef}>{children}</div>
+      {hasMouse && canScrollLeft && <HorizontalScrollArrow direction="left"
+        onClick={() => scrollTo(scrollLeftTo)} />}
+      {hasMouse && canScrollRight && <HorizontalScrollArrow direction="right"
+        onClick={() => scrollTo(scrollRightTo)} />}
+      <div className="HorizontalScroll__in" ref={scrollerRef}>
+        <div className="HorizontalScroll__in-wrapper">
+          {children}
+        </div>
+      </div>
     </div>
   );
 };

@@ -60,3 +60,15 @@
     margin-right: 16px;
     right: 0;
   }
+
+  .HorizontalScroll__in-wrapper {
+    transition: transform .2s;
+  }
+
+  .HorizontalScroll__arrow-left:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
+    transform: translateX(28px);
+  }
+
+  .HorizontalScroll__arrow-right:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
+    transform: translateX(-28px);
+  }

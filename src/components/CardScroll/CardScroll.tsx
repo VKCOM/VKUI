@@ -14,6 +14,7 @@ const CardScroll: FunctionComponent<CardScrollProps> = ({ children, className, s
   const refContainer = useRef<HTMLDivElement>(null);
 
   function scrollLeftTo(offset: number): number {
+    const containerWidth = refContainer.current.offsetWidth;
     const slideIndex = refs.current.findIndex((el) => el.offsetLeft + el.offsetWidth - offset >= 0);
     if (slideIndex === -1) {return offset;}
 
@@ -23,12 +24,20 @@ const CardScroll: FunctionComponent<CardScrollProps> = ({ children, className, s
     }
 
     const marginRight = parseInt(window.getComputedStyle(slide).marginRight);
-    return slide.offsetLeft - marginRight;
+
+    const scrollTo = slide.offsetLeft - (containerWidth - slide.offsetWidth) + marginRight;
+
+    if (scrollTo <= 2 * marginRight) {
+      return 0;
+    }
+
+    return scrollTo;
   }
 
   function scrollRightTo(offset: number): number {
     const containerWidth = refContainer.current.offsetWidth;
     const slide = refs.current.find((el) => el.offsetLeft + el.offsetWidth - offset > containerWidth);
+
     if (!slide) {return offset;}
 
     const marginRight = parseInt(window.getComputedStyle(slide).marginRight);
