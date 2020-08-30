@@ -39,10 +39,16 @@ function now() {
 }
 
 /**
- * @var {number} время одной полной прокрутки
+ * Смещение при наведении на стрелки, соответствует указанному в css для 'HorizontalScroll__in-wrapper'
+ */
+const ARROW_HOVER_OFFSET = 28;
+
+/**
+ * Код анимации скрола, на основе полифила: https://github.com/iamdustan/smoothscroll
+ * Константа взята из полифила
+ * @var {number} SCROLL_ONE_FRAME_TIME время анимации скролла
  */
 const SCROLL_ONE_FRAME_TIME = 468;
-const ARROW_HOVER_OFFSET = 28;
 
 function doScroll({ scrollElement, getScrollPosition, animationQueue, onScrollToRightBorder }: ScrollContext) {
   if (!scrollElement || !getScrollPosition) {
