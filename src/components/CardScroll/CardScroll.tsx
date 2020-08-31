@@ -50,7 +50,7 @@ const CardScroll: FunctionComponent<CardScrollProps> = ({ children, className, s
 
   return (
     <div {...restProps} style={style} className={classNames(className, getClassname('CardScroll', platform))}>
-      <HorizontalScroll getScrollToLeft={getScrollToLeft} getScrollToRight={getScrollToRight}>
+      <HorizontalScroll getScrollToLeft={getScrollToLeft} getScrollToRight={getScrollToRight} showArrows={true}>
         <div className="CardScroll__in" ref={refContainer}>
           {React.Children.map(children, (item: ReactElement, i) => (
             <div className={'CardScroll__slide' + (item.props.size === 'l' ? ' CardScroll__slide--sz-l' : '')} ref={(node: HTMLElement) => refs.current[i] = node}>{item}</div>

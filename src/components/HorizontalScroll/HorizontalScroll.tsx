@@ -21,6 +21,7 @@ type ScrollContext = {
 interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {
   getScrollToLeft?: GetScrollPositionCallback;
   getScrollToRight?: GetScrollPositionCallback;
+  showArrows?: boolean;
 }
 
 interface HorizontalScrollArrowProps {
@@ -111,7 +112,7 @@ const HorizontalScrollArrow: FunctionComponent<HorizontalScrollArrowProps> = (pr
 };
 
 const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
-  const { children, getScrollToLeft, getScrollToRight, className, ...restProps } = props;
+  const { children, getScrollToLeft, getScrollToRight, showArrows = false, className, ...restProps } = props;
 
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -130,8 +131,8 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
       getScrollPosition,
       animationQueue: animationQueue.current,
       onScrollToRightBorder: () => setCanScrollRight(false),
-      onScrollEnd: ()=> isCustomScrollingRef.current = false,
-      onScrollStart: ()=> isCustomScrollingRef.current = true,
+      onScrollEnd: () => isCustomScrollingRef.current = false,
+      onScrollStart: () => isCustomScrollingRef.current = true,
       initialScrollWidth,
     }));
     if (animationQueue.current.length === 1) {
@@ -140,7 +141,7 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
   }
 
   const onscroll = useCallback(() => {
-    if (hasMouse && scrollerRef.current && !isCustomScrollingRef.current) {
+    if (showArrows && hasMouse && scrollerRef.current && !isCustomScrollingRef.current) {
       setCanScrollLeft(scrollerRef.current.scrollLeft > 0);
       setCanScrollRight(scrollerRef.current.scrollLeft + scrollerRef.current.offsetWidth < scrollerRef.current.scrollWidth);
     }
@@ -156,9 +157,9 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
 
   return (
     <div {...restProps} className={classNames('HorizontalScroll', className)}>
-      {hasMouse && canScrollLeft && <HorizontalScrollArrow direction="left"
+      {showArrows && hasMouse && canScrollLeft && <HorizontalScrollArrow direction="left"
         onClick={() => scrollTo(getScrollToLeft)} />}
-      {hasMouse && canScrollRight && <HorizontalScrollArrow direction="right"
+      {showArrows && hasMouse && canScrollRight && <HorizontalScrollArrow direction="right"
         onClick={() => scrollTo(getScrollToRight)} />}
       <div className="HorizontalScroll__in" ref={scrollerRef}>
         <div className="HorizontalScroll__in-wrapper">

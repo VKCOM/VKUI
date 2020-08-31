@@ -3,7 +3,7 @@
   }
 
 .Tabs__in,
-.Tabs .HorizontalScroll__in {
+.Tabs .HorizontalScroll__in-wrapper {
   display: flex;
   align-items: center;
   }
@@ -30,17 +30,17 @@
   }
 
 .Tabs--default,
-.Tabs--default .HorizontalScroll__in {
+.Tabs--default .HorizontalScroll__in-wrapper {
   justify-content: center;
   }
 
 .Tabs--buttons,
-.Tabs--default .HorizontalScroll__in {
+.Tabs--default .HorizontalScroll__in-wrapper {
   justify-content: flex-start;
   }
 
-.Tabs.Tabs--buttons .HorizontalScroll__in::after,
-.Tabs.Tabs--buttons .HorizontalScroll__in::before {
+.Tabs.Tabs--buttons .HorizontalScroll__in-wrapper::after,
+.Tabs.Tabs--buttons .HorizontalScroll__in-wrapper::before {
   display: block;
   width: 8px;
   flex-shrink: 0;
