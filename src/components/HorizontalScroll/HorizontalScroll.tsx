@@ -7,13 +7,15 @@ type GetScrollPositionCallback = (currentPosition: number) => number;
 type Callback = () => void;
 type ScrollContext = {
   scrollElement: HTMLElement;
-  getScrollPosition: GetScrollPositionCallback;
+  scrollAnimationDuration: number;
   animationQueue: Callback[];
+  getScrollPosition: GetScrollPositionCallback;
   onScrollToRightBorder: Callback;
   onScrollEnd: Callback;
   onScrollStart: Callback;
   /**
-   * Начальная ширина прокрутки. В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate
+   * Начальная ширина прокрутки.
+   * В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate
    */
   initialScrollWidth: number;
 };
@@ -22,6 +24,7 @@ interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {
   getScrollToLeft?: GetScrollPositionCallback;
   getScrollToRight?: GetScrollPositionCallback;
   showArrows?: boolean;
+  scrollAnimationDuration?: number;
 }
 
 interface HorizontalScrollArrowProps {
@@ -46,12 +49,21 @@ function now() {
 
 /**
  * Код анимации скрола, на основе полифила: https://github.com/iamdustan/smoothscroll
- * Константа взята из полифила
+ * Константа взята из полифила (468), на дизайн-ревью уточнили до 250
  * @var {number} SCROLL_ONE_FRAME_TIME время анимации скролла
  */
-const SCROLL_ONE_FRAME_TIME = 468;
+const SCROLL_ONE_FRAME_TIME = 250;
 
-function doScroll({ scrollElement, getScrollPosition, animationQueue, onScrollToRightBorder, onScrollEnd, onScrollStart, initialScrollWidth }: ScrollContext) {
+function doScroll({
+  scrollElement,
+  getScrollPosition,
+  animationQueue,
+  onScrollToRightBorder,
+  onScrollEnd,
+  onScrollStart,
+  initialScrollWidth,
+  scrollAnimationDuration = SCROLL_ONE_FRAME_TIME,
+}: ScrollContext) {
   if (!scrollElement || !getScrollPosition) {
     return;
   }
@@ -80,7 +92,7 @@ function doScroll({ scrollElement, getScrollPosition, animationQueue, onScrollTo
     }
 
     const time = now();
-    const elapsed = Math.min((time - startTime) / SCROLL_ONE_FRAME_TIME, 1);
+    const elapsed = Math.min((time - startTime) / scrollAnimationDuration, 1);
 
     const value = easeInOutSine(elapsed);
 
@@ -112,7 +124,7 @@ const HorizontalScrollArrow: FunctionComponent<HorizontalScrollArrowProps> = (pr
 };
 
 const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
-  const { children, getScrollToLeft, getScrollToRight, showArrows = false, className, ...restProps } = props;
+  const { children, getScrollToLeft, getScrollToRight, showArrows = false, scrollAnimationDuration, className, ...restProps } = props;
 
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -134,6 +146,7 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
       onScrollEnd: () => isCustomScrollingRef.current = false,
       onScrollStart: () => isCustomScrollingRef.current = true,
       initialScrollWidth,
+      scrollAnimationDuration,
     }));
     if (animationQueue.current.length === 1) {
       animationQueue.current[0]();

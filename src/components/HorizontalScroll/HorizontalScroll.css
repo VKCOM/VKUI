@@ -66,9 +66,9 @@
   }
 
   .HorizontalScroll__arrow-left:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
-    transform: translateX(28px);
+    transform: translateX(8px);
   }
 
   .HorizontalScroll__arrow-right:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
-    transform: translateX(-28px);
+    transform: translateX(-8px);
   }
