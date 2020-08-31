@@ -10,6 +10,12 @@ type ScrollContext = {
   getScrollPosition: GetScrollPositionCallback;
   animationQueue: Callback[];
   onScrollToRightBorder: Callback;
+  onScrollEnd: Callback;
+  onScrollStart: Callback;
+  /**
+   * Начальная ширина прокрутки. В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate
+   */
+  initialScrollWidth: number;
 };
 
 interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {
@@ -20,7 +26,6 @@ interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {
 interface HorizontalScrollArrowProps {
   onClick: () => void;
   direction: 'left' | 'right';
-
 }
 
 /**
@@ -39,34 +44,37 @@ function now() {
 }
 
 /**
- * Смещение при наведении на стрелки, соответствует указанному в css для 'HorizontalScroll__in-wrapper'
- */
-const ARROW_HOVER_OFFSET = 28;
-
-/**
  * Код анимации скрола, на основе полифила: https://github.com/iamdustan/smoothscroll
  * Константа взята из полифила
  * @var {number} SCROLL_ONE_FRAME_TIME время анимации скролла
  */
 const SCROLL_ONE_FRAME_TIME = 468;
 
-function doScroll({ scrollElement, getScrollPosition, animationQueue, onScrollToRightBorder }: ScrollContext) {
+function doScroll({ scrollElement, getScrollPosition, animationQueue, onScrollToRightBorder, onScrollEnd, onScrollStart, initialScrollWidth }: ScrollContext) {
   if (!scrollElement || !getScrollPosition) {
     return;
   }
 
+  /**
+   * максимальное значение сдвига влево
+   */
+  const maxLeft = initialScrollWidth - scrollElement.offsetWidth;
+
   let startLeft = scrollElement.scrollLeft;
   let endLeft = getScrollPosition(startLeft);
 
-  if (endLeft > scrollElement.scrollWidth - scrollElement.offsetWidth) {
+  onScrollStart();
+
+  if (endLeft >= maxLeft) {
     onScrollToRightBorder();
-    endLeft = scrollElement.scrollWidth - scrollElement.offsetWidth + ARROW_HOVER_OFFSET;
+    endLeft = maxLeft;
   }
 
   const startTime = now();
 
   (function scroll() {
     if (!scrollElement) {
+      onScrollEnd();
       return;
     }
 
@@ -83,6 +91,7 @@ function doScroll({ scrollElement, getScrollPosition, animationQueue, onScrollTo
       return;
     }
 
+    onScrollEnd();
     animationQueue.shift();
     if (animationQueue.length > 0) {
       animationQueue[0]();
@@ -107,6 +116,10 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
+  const [initialScrollWidth, setInitialScrollWidth] = useState(0);
+
+  const isCustomScrollingRef = useRef(false);
+
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   const animationQueue = useRef<Callback[]>([]);
@@ -117,6 +130,9 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
       getScrollPosition,
       animationQueue: animationQueue.current,
       onScrollToRightBorder: () => setCanScrollRight(false),
+      onScrollEnd: ()=> isCustomScrollingRef.current = false,
+      onScrollStart: ()=> isCustomScrollingRef.current = true,
+      initialScrollWidth,
     }));
     if (animationQueue.current.length === 1) {
       animationQueue.current[0]();
@@ -124,7 +140,7 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
   }
 
   const onscroll = useCallback(() => {
-    if (hasMouse && scrollerRef.current) {
+    if (hasMouse && scrollerRef.current && !isCustomScrollingRef.current) {
       setCanScrollLeft(scrollerRef.current.scrollLeft > 0);
       setCanScrollRight(scrollerRef.current.scrollLeft + scrollerRef.current.offsetWidth < scrollerRef.current.scrollWidth);
     }
@@ -132,6 +148,7 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
 
   useEffect(() => {
     scrollerRef.current && scrollerRef.current.addEventListener('scroll', onscroll);
+    scrollerRef.current && setInitialScrollWidth(scrollerRef.current.scrollWidth);
     return () => scrollerRef.current && scrollerRef.current.removeEventListener('scroll', onscroll);
   }, []);
 
