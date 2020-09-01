@@ -30,10 +30,10 @@ jobs:
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
 
-      - run: yarn version --new-version ${{ github.event.inputs.version }}
+      - run: yarn version --new-version ${{ github.event.inputs.version }} --no-commit-hooks
         if: ${{ !github.event.inputs.tag }}
 
-      - run: yarn version --new-version ${{ github.event.inputs.version }} --tag ${{ github.event.inputs.tag }}
+      - run: yarn version --new-version ${{ github.event.inputs.version }} --tag ${{ github.event.inputs.tag }} --no-commit-hooks
         if: ${{ github.event.inputs.tag }}
 
       - run: yarn publish --non-interactive
@@ -59,11 +59,9 @@ jobs:
           yarn styleguide:build --dist docs/${{ github.event.inputs.version }}
         if: ${{ github.event.inputs.tag }}
 
-      - name: Pushing doc
-        uses: ArthurStam/github-action-push-to-another-repository@master
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.NPM_TEST_DOC_SECRET }}
+      - name: Publishin doc
+        uses: JamesIves/github-pages-deploy-action@3.5.9
         with:
-          source-directory: 'docs'
-          destination-github-username: 'VKCOM'
-          destination-repository-name: 'vkui-styleguide'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: styleguide # The folder the action should deploy.
