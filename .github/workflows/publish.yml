@@ -31,12 +31,16 @@ jobs:
           token: '${{ secrets.GITHUB_TOKEN }}'
 
       - run: yarn version --new-version ${{ github.event.inputs.version }} --no-commit-hooks
-        if: ${{ !github.event.inputs.tag }}
 
-      - run: yarn version --new-version ${{ github.event.inputs.version }} --tag ${{ github.event.inputs.tag }} --no-commit-hooks
+      - name: Publushing prerelase
+        run: yarn publish --non-interactive --tag ${{ github.event.inputs.tag }}
         if: ${{ github.event.inputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
 
-      - run: yarn publish --non-interactive
+      - name: Publushing release
+        run: yarn publish --non-interactive
+        if: ${{ !github.event.inputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
 
