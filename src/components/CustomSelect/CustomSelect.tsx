@@ -343,27 +343,34 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
 
   renderWithCustomScrollbar() {
     const { opened } = this.state;
-    const { placeholder = '', tabIndex, name, getRef, getRootRef, popupDirection, status, options, sizeY, platform } = this.props;
+    const {
+      name,
+      className,
+      getRef,
+      popupDirection,
+      options,
+      sizeY,
+      platform,
+      onChange,
+      ...restProps
+    } = this.props;
     const selected = this.getSelectedItem();
     const label = !selected ? '' : selected.label;
 
     return (
       <>
         <SelectMimicry
-          tabIndex={tabIndex}
-          status={status}
+          {...restProps}
           aria-hidden={true}
           onClick={this.onClick}
           onKeyDown={this.handleKeyDownSelect}
           onKeyUp={this.handleKeyUp}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
-          placeholder={placeholder}
-          getRootRef={getRootRef}
           className={classNames({
             ['CustomSelect__open']: opened,
             ['CustomSelect__open--popupDirectionTop']: popupDirection === 'top',
-          })}
+          }, className)}
         >
           {label}
         </SelectMimicry>
