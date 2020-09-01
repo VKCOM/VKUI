@@ -55,8 +55,7 @@ jobs:
         if: ${{ !github.event.inputs.tag }}
 
       - name: Creating doc for prerelease
-        run: |
-          yarn styleguide:build --dist docs/${{ github.event.inputs.version }}
+        run: yarn styleguide:build --dist docs/${{ github.event.inputs.version }}
         if: ${{ github.event.inputs.tag }}
 
       - name: Publishin doc
@@ -64,4 +63,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: styleguide # The folder the action should deploy.
+          FOLDER: docs # The folder the action should deploy.
