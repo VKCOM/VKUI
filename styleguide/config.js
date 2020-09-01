@@ -10,9 +10,9 @@ module.exports = {
   title: 'VKUI styleguide',
   styleguideDir: path.join(__dirname, `../${argv.dist || 'docs'}`),
   styleguideComponents: {
-    PlaygroundRenderer: path.join(__dirname, './components/PlaygroundRenderer'),
-    StyleGuideRenderer: path.join(__dirname, './components/StyleGuideRenderer'),
-    PathlineRenderer: path.join(__dirname, './components/PathlineRenderer')
+    PlaygroundRenderer: path.join(__dirname, './Components/PlaygroundRenderer'),
+    StyleGuideRenderer: path.join(__dirname, './Components/StyleGuideRenderer'),
+    PathlineRenderer: path.join(__dirname, './Components/PathlineRenderer')
   },
   sections: [
     {
