@@ -82,6 +82,7 @@
     "react-dom": "^16.8.6"
   },
   "scripts": {
+    "prepare": "yarn build",
     "styleguide": "NODE_ENV=development styleguidist server --config=styleguide/config.js",
     "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
     "dev": "yarn clear && yarn copy-default-scheme && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:postcss-dev\"",
