@@ -12,6 +12,7 @@ import { SplitContext, SplitContextProps } from '../../components/SplitLayout/Sp
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
+import { createCustomEvent } from '../../lib/utils';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -176,7 +177,7 @@ class View extends Component<ViewProps, ViewState> {
         visiblePanels: [nextPanel],
         scrolls: removeObjectKeys(prevState.scrolls, [prevState.swipeBackPrevPanel]),
       }, () => {
-        this.document.dispatchEvent(this.createCustomEvent(transitionEndEventName));
+        this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
         window.scrollTo(0, prevState.scrolls[this.state.activePanel]);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
@@ -186,7 +187,7 @@ class View extends Component<ViewProps, ViewState> {
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
-      this.document.dispatchEvent(this.createCustomEvent(transitionStartEventName, { detail: { scrolls } }));
+      this.document.dispatchEvent(createCustomEvent(this.window, transitionStartEventName, { detail: { scrolls } }));
       const nextPanelElement = this.pickPanel(this.state.nextPanel);
       const prevPanelElement = this.pickPanel(this.state.prevPanel);
 
@@ -199,7 +200,7 @@ class View extends Component<ViewProps, ViewState> {
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
-      this.document.dispatchEvent(this.createCustomEvent(transitionStartEventName, { detail: { scrolls } }));
+      this.document.dispatchEvent(createCustomEvent(this.window, transitionStartEventName, { detail: { scrolls } }));
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
       const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
       const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
@@ -230,23 +231,6 @@ class View extends Component<ViewProps, ViewState> {
       });
     }
   }
-
-  createCustomEvent(type: string, eventInitDict?: any) {
-    if (typeof this.window.CustomEvent !== 'function') {
-      const options = eventInitDict || { bubbles: false, cancelable: false, detail: null };
-
-      const evt = document.createEvent('CustomEvent');
-      evt.initCustomEvent(
-        type,
-        options.bubbles,
-        options.cancelable,
-        options.detail,
-      );
-      return evt;
-    }
-
-    return new this.window.CustomEvent(type, eventInitDict);
-  };
 
   shouldDisableTransitionMotion(): boolean {
     return this.props.configProvider.transitionMotionEnabled === false ||
@@ -304,7 +288,7 @@ class View extends Component<ViewProps, ViewState> {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
       const prevPanel = this.state.prevPanel;
-      this.document.dispatchEvent(this.createCustomEvent(transitionEndEventName));
+      this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
       this.setState({
         prevPanel: null,
         nextPanel: null,
@@ -347,7 +331,7 @@ class View extends Component<ViewProps, ViewState> {
       swipebackStartX: 0,
       swipeBackShift: 0,
     }, () => {
-      this.document.dispatchEvent(this.createCustomEvent(transitionEndEventName));
+      this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
     });
   }
 

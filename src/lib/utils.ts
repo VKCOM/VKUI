@@ -72,3 +72,20 @@ export function setRef<T>(element: T, ref: Ref<T>): void {
 
 // eslint-disable-next-line
 export const noop = () => {};
+
+export function createCustomEvent(window: any, type: string, eventInitDict?: any) {
+  if (typeof window.CustomEvent !== 'function') {
+    const options = eventInitDict || { bubbles: false, cancelable: false, detail: null };
+
+    const evt = document.createEvent('CustomEvent');
+    evt.initCustomEvent(
+      type,
+      options.bubbles,
+      options.cancelable,
+      options.detail,
+    );
+    return evt;
+  }
+
+  return new window.CustomEvent(type, eventInitDict);
+};
