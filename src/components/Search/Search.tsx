@@ -157,7 +157,7 @@ class Search extends Component<SearchProps, SearchState> {
               onChange={this.onChange}
               value={this.value}
             />
-            {platform === IOS && after && <div className="Search__after-width">{after}</div>}
+            {platform === IOS && after && this.state.focused && <div className="Search__after-width">{after}</div>}
             <div className="Search__placeholder">
               <div className="Search__placeholder-in">
                 <Icon16SearchOutline />
@@ -178,7 +178,7 @@ class Search extends Component<SearchProps, SearchState> {
                 </Touch>
               }
             </div>
-            {platform === IOS && after &&
+            {platform === IOS && after && this.state.focused &&
               <div className="Search__after-in">{after}</div>
             }
           </div>
