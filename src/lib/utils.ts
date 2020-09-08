@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { Children, ReactNode } from 'react';
 import { Ref } from '../types';
 
 // Является ли переданное значение числовым
@@ -89,3 +89,15 @@ export function createCustomEvent(window: any, type: string, eventInitDict?: any
 
   return new window.CustomEvent(type, eventInitDict);
 };
+
+export function getTitleFromChildren(children: ReactNode): string {
+  let label = '';
+
+  Children.map(children, (child) => {
+    if (typeof child === 'string') {
+      label += child;
+    }
+  });
+
+  return label;
+}

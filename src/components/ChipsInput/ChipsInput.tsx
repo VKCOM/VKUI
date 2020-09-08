@@ -23,6 +23,7 @@ interface ChipsInputOption {
 }
 
 export interface RenderChip<Option extends ChipsInputOption> extends ChipProps {
+  label: string;
   option: Option;
   disabled: boolean;
 }
@@ -163,12 +164,12 @@ ChipsInput.defaultProps = {
   getOptionValue: (option: ChipsInputOption): ChipsInputValue => option.value,
   getOptionLabel: (option: ChipsInputOption): string => option.label,
   getNewOptionData: (_: ChipsInputValue, label: string): ChipsInputOption => ({ value: label, label }),
-  renderChip({ disabled, value, ...rest }: RenderChip<ChipsInputOption>) {
+  renderChip({ disabled, value, label, ...rest }: RenderChip<ChipsInputOption>) {
     return <Chip key={value}
       value={value}
       removable={!disabled}
       {...rest}
-    />;
+    >{label}</Chip>;
   },
 };
 
