@@ -56,12 +56,16 @@ const SimpleCell: FC<SimpleCellProps> = ({
   const platform = usePlatform();
   const hasAfter = hasReactNode(after) || expandable && platform === IOS;
   const RootComponent = restProps.disabled ? Component : Tappable;
-  Component = restProps.disabled ? undefined : Component;
+
+  const props: SimpleCellProps = restProps;
+
+  if (!restProps.disabled) {
+    props.Component = restProps.href ? 'a' : Component;
+  }
 
   return (
     <RootComponent
-      {...restProps}
-      Component={restProps.href ? 'a' : Component}
+      {...props}
       className={
         classNames(
           className,
