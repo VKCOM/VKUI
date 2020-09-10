@@ -4,9 +4,8 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasAlign } from '../../types';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface CellButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasAlign, AdaptivityProps {
+export interface CellButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasAlign {
   mode?: 'primary' | 'danger';
   before?: React.ReactNode;
   Component?: ElementType;
@@ -23,7 +22,6 @@ const CellButton: React.FunctionComponent<CellButtonProps> = ({
   children,
   stopPropagation,
   Component,
-  sizeX,
   ...restProps
 }: CellButtonProps) => {
   const platform = usePlatform();
@@ -34,7 +32,6 @@ const CellButton: React.FunctionComponent<CellButtonProps> = ({
       className={classNames(
         getClassName('CellButton', platform),
         className,
-        `CellButton--sizeX-${sizeX}`,
         `CellButton--lvl-${mode}`,
         `CellButton--aln-${align}`,
       )}
@@ -55,4 +52,4 @@ CellButton.defaultProps = {
   stopPropagation: true,
 };
 
-export default withAdaptivity(CellButton, { sizeX: true });
+export default CellButton;
