@@ -5,18 +5,10 @@
 
     constructor() {
       this.state = {
-        checkedList: false,
         activePanel: 'list',
-        checked: false,
         removeList: ['Михаил Андриевский', 'Вадим Дорохов', 'Саша Колобов'],
         draggingList: ['Say', 'Hello', 'To', 'My', 'Little', 'Friend']
       };
-      
-      this.handlerOnChange = this.handlerOnChange.bind(this);
-    }
-
-    handlerOnChange(e){
-      this.setState({ checked: e.target.checked });
     }
 
     render() {
@@ -30,27 +22,6 @@
               <Cell selectable before={<Avatar />}>Артур Стамбульцян</Cell>
               <Cell selectable before={<Avatar />}>Игорь Федоров</Cell>
               <Cell selectable before={<Avatar />}>Михаил Лихачев</Cell>
-            </Group>
-            <Group header={<Header mode="secondary">Выделение из внешнего состояния</Header>}>
-            <Div>
-              <Button onClick={() => { this.setState((prevState) => ({checkedList: !prevState.checkedList}))}}>
-                Выделить все
-              </Button>
-            </Div>
-              <Cell selectable before={<Avatar />} checked={this.state.checkedList} >Артур Стамбульцян</Cell>
-              <Cell selectable before={<Avatar />} checked={this.state.checkedList} >Игорь Федоров</Cell>
-              <Cell selectable before={<Avatar />} checked={this.state.checkedList} >Михаил Лихачев</Cell>
-            </Group>
-            <Group header={<Header mode="secondary">Выделение по умолчанию</Header>}>
-              <Cell selectable before={<Avatar />} defaultChecked={true} >Артур Стамбульцян</Cell>
-              <Cell selectable before={<Avatar />} defaultChecked={false} >Игорь Федоров</Cell>
-              <Cell selectable before={<Avatar />} defaultChecked={true} >Михаил Лихачев</Cell>
-            </Group>
-            <Group header={<Header mode="secondary">Обработка события</Header>}>
-              <Div>
-                {this.state.checked ? 'Включено' : 'Выключено'}
-              </Div>
-              <Cell selectable before={<Avatar />} onChange={this.handlerOnChange} >Артур Стамбульцян</Cell>
             </Group>
             {this.state.removeList.length > 0 &&
               <Group header={<Header mode="secondary">Удаление</Header>}>
