@@ -7,9 +7,8 @@ import { HasLinkProps, HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface SimpleCellOwnProps extends AdaptivityProps, HasLinkProps {
+export interface SimpleCellOwnProps extends HasLinkProps {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
@@ -50,7 +49,6 @@ const SimpleCell: FC<SimpleCellProps> = ({
   expandable,
   multiline,
   Component,
-  sizeX,
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -70,7 +68,6 @@ const SimpleCell: FC<SimpleCellProps> = ({
         classNames(
           className,
           getClassName('SimpleCell', platform),
-          `SimpleCell--sizeX-${sizeX}`,
           {
             'SimpleCell--exp': expandable,
             'SimpleCell--mult': multiline,
@@ -102,4 +99,4 @@ SimpleCell.defaultProps = {
   Component: 'div',
 };
 
-export default withAdaptivity(SimpleCell, { sizeX: true });
+export default SimpleCell;
