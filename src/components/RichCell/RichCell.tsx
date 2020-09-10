@@ -58,10 +58,15 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   const RootComponent = restProps.disabled ? Component : Tappable;
   Component = restProps.disabled ? undefined : Component;
 
+  const props: RichCellProps = restProps;
+
+  if (!restProps.disabled) {
+    props.Component = restProps.href ? 'a' : Component;
+  }
+
   return (
     <RootComponent
-      {...restProps}
-      Component={restProps.href ? 'a' : Component}
+      {...props}
       className={
         classNames(
           className,
