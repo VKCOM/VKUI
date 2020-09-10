@@ -23,7 +23,6 @@ export interface SliderProps extends
 }
 
 export interface SliderState {
-  containerLeft: number;
   startX: number;
   percentPosition: number;
   active: boolean;
@@ -42,7 +41,6 @@ class Slider extends Component<SliderProps, SliderState> {
     super(props);
     this.state = {
       startX: 0,
-      containerLeft: 0,
       percentPosition: 0,
       active: false,
       containerWidth: 0,
@@ -61,7 +59,8 @@ class Slider extends Component<SliderProps, SliderState> {
   container: HTMLDivElement;
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
-    const absolutePosition = this.validateAbsolute(e.startX - this.state.containerLeft);
+    const boundingRect = this.container.getBoundingClientRect();
+    const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
     const percentPosition = this.absoluteToPecent(absolutePosition);
 
     this.onChange(this.percentToValue(percentPosition), e);
@@ -102,7 +101,6 @@ class Slider extends Component<SliderProps, SliderState> {
   onResize: OnSliderResize = (callback?: VoidFunction) => {
     const boundingRect = this.container.getBoundingClientRect();
     this.setState({
-      containerLeft: boundingRect.left,
       containerWidth: boundingRect.width,
     }, () => {
       typeof callback === 'function' && callback();
