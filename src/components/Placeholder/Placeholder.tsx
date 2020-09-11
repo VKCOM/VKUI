@@ -21,10 +21,19 @@ export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Placeholder: FunctionComponent<PlaceholderProps> = (props) => {
-  const { className, icon, header, action, children, stretched } = props;
+  const {
+    className,
+    icon,
+    header,
+    action,
+    children,
+    stretched,
+    ...restProps
+  } = props;
 
   return (
     <div
+      {...restProps}
       className={classNames('Placeholder', {
         'Placeholder--stretched': stretched,
       }, className)}
