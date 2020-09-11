@@ -2,12 +2,12 @@ export interface VKUITouchEvent extends MouseEvent, TouchEvent {}
 export type VKUITouchEventHander = (e: VKUITouchEvent) => void;
 
 /*
- * Получает кординату по оси абсцисс из touch- или mouse-события
+ * Получает координату по оси абсцисс из touch- или mouse-события
  */
 const coordX = (e: VKUITouchEvent): number => e.clientX || e.changedTouches && e.changedTouches[0].clientX;
 
 /*
- * Получает кординату по оси ординат из touch- или mouse-события
+ * Получает координату по оси ординат из touch- или mouse-события
  */
 const coordY = (e: VKUITouchEvent): number => e.clientY || e.changedTouches && e.changedTouches[0].clientY;
 
