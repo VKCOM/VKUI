@@ -1,9 +1,12 @@
 import React, { HTMLAttributes, useEffect, useMemo, useState, useCallback } from 'react';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import Button from '../Button/Button';
+import SimpleCell from '../SimpleCell/SimpleCell';
 import Avatar from '../Avatar/Avatar';
 import classNames from '../../lib/classNames';
-import SimpleCell from '../SimpleCell/SimpleCell';
+import Caption from '../Typography/Caption/Caption';
+import usePlatform from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
 
 type StatsType =
   | 'playbackStarted' // Начало показа
@@ -44,19 +47,22 @@ export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const PromoBanner = (props: PromoBannerProps) => {
+  const platform = usePlatform();
+  const { className, bannerData } = props;
+
   const ageRestrictions =
-    props.bannerData.ageRestrictions != null
-      ? parseInt(props.bannerData.ageRestrictions)
-      : props.bannerData.ageRestriction;
+    bannerData.ageRestrictions != null
+      ? parseInt(bannerData.ageRestrictions)
+      : bannerData.ageRestriction;
 
   const [currentPixel, setCurrentPixel] = useState('');
 
   const statsPixels = useMemo(
     () =>
-      (props.bannerData.statistics
-        ? props.bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
+      (bannerData.statistics
+        ? bannerData.statistics.reduce((acc, item) => ({ ...acc, [item.type]: item.url }), {})
         : {}) as Record<StatsType, string | void>,
-    [props.bannerData.statistics],
+    [bannerData.statistics],
   );
 
   const onClick = useCallback(() => setCurrentPixel(statsPixels.click || ''), [statsPixels.click]);
@@ -68,10 +74,10 @@ const PromoBanner = (props: PromoBannerProps) => {
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div className={classNames('PromoBanner', props.className)}>
+    <div className={classNames(getClassName('PromoBanner', platform), className)}>
       <div className="PromoBanner__head">
-        {ageRestrictions != null && <span className="PromoBanner__age">{ageRestrictions}+</span>}
-        <span className="PromoBanner__label">{props.bannerData.advertisingLabel || 'Advertisement'}</span>
+        <Caption weight="regular" level="1" className="PromoBanner__label">{bannerData.advertisingLabel || 'Advertisement'}</Caption>
+        {ageRestrictions != null && <Caption weight="regular" level="1" className="PromoBanner__age">{ageRestrictions}+</Caption>}
 
         {!props.isCloseButtonHidden &&
           <div className="PromoBanner__close" onClick={props.onClose}>
@@ -80,17 +86,17 @@ const PromoBanner = (props: PromoBannerProps) => {
         }
       </div>
       <SimpleCell
-        href={props.bannerData.trackingLink}
+        href={bannerData.trackingLink}
         onClick={onClick}
         rel="nofollow noopener noreferrer"
         target="_blank"
         before={
-          <Avatar mode="image" size={48} src={props.bannerData.iconLink} alt={props.bannerData.title} />
+          <Avatar mode="image" size={48} src={bannerData.iconLink} alt={bannerData.title} />
         }
-        after={<Button mode="outline">{props.bannerData.ctaText}</Button>}
-        description={props.bannerData.domain}
+        after={<Button mode="outline">{bannerData.ctaText}</Button>}
+        description={bannerData.domain}
       >
-        {props.bannerData.title}
+        {bannerData.title}
       </SimpleCell>
 
       {currentPixel.length > 0 &&

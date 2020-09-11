@@ -4,7 +4,7 @@ export interface ObjectClassNames {
 
 export type ClassName = number | string | ObjectClassNames | false | null | undefined;
 
-export default function classNames(...classnames: ClassName[]) {
+export function classNames(...classnames: ClassName[]) {
   let result: string[] = [];
 
   classnames.forEach((item: ClassName): void => {
@@ -29,3 +29,5 @@ export default function classNames(...classnames: ClassName[]) {
 
   return result.join(' ');
 }
+
+export default classNames;

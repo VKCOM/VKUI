@@ -1,5 +1,5 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 
 export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -20,11 +20,20 @@ export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement> {
   stretched?: boolean;
 }
 
-const Placeholder: FunctionComponent<PlaceholderProps> = (props: PlaceholderProps) => {
-  const { className, icon, header, action, children, stretched } = props;
+const Placeholder: FunctionComponent<PlaceholderProps> = (props) => {
+  const {
+    className,
+    icon,
+    header,
+    action,
+    children,
+    stretched,
+    ...restProps
+  } = props;
 
   return (
     <div
+      {...restProps}
       className={classNames('Placeholder', {
         'Placeholder--stretched': stretched,
       }, className)}

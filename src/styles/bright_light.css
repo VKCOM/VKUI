@@ -30,7 +30,9 @@
   --button_primary_background: #4986cc;
   --button_primary_foreground: #ffffff;
   --button_secondary_background: rgba(0, 28, 61, 0.05);
+  --button_secondary_background_highlighted: rgba(0, 28, 61, 0.03);
   --button_secondary_foreground: #3f8ae0;
+  --button_secondary_foreground_highlighted: rgba(63, 138, 224, 0.60);
   --button_secondary_destructive_background: rgba(0, 28, 61, 0.05);
   --button_secondary_destructive_background_highlighted: rgba(0, 28, 61, 0.03);
   --button_secondary_destructive_foreground: #e64646;
@@ -98,8 +100,6 @@
   --im_bubble_button_outgoing_background: rgba(255, 255, 255, 0.60);
   --im_bubble_button_background_highlighted: #d7d8d9;
   --im_bubble_button_foreground: #000000;
-  --im_bubble_expiring: #d4fde8;
-  --im_bubble_expiring_highlighted: #aee6c9;
   --im_bubble_incoming_expiring: #e6e9ff;
   --im_bubble_incoming_expiring_highlighted: #ccd3ff;
   --im_bubble_outgoing_expiring: #ccd3ff;
@@ -127,7 +127,6 @@
   --im_bubble_wallpaper_outgoing_highlighted: #add3ff;
   --im_bubble_wallpaper_outgoing_border: rgba(0, 57, 115, 0.10);
   --im_forward_line_tint: #45678f;
-  --im_reply_sender_text: #4986cc;
   --im_reply_separator: #4986cc;
   --im_text_name: #4986cc;
   --im_toolbar_voice_msg_background: #99a2ad;
@@ -225,12 +224,13 @@
   --dynamic_red: #ff3347;
   --dynamic_green: #4bb34b;
   --dynamic_orange: #ffa000;
+  --dynamic_purple: #735ce6;
   --dynamic_violet: #792ec0;
   --vk_connect_button_primary_background: #19191a;
   --vk_connect_button_primary_foreground: #ffffff;
   --vk_connect_button_secondary_background: #f2f3f5;
   --vk_connect_button_secondary_foreground: #19191a;
-  --background_text_hightlited: rgba(63, 138, 224, 0.20);
+  --background_text_hightlighted: rgba(63, 138, 224, 0.20);
   --skeleton_shimmer_from: #ffffff;
   --skeleton_shimmer_to: #ffffff;
 }
