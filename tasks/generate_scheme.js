@@ -53,7 +53,7 @@ function generateScheme() {
     Object.keys(clusters).forEach((clusterId) => {
       css += `  --${clusterId}: ${resolveColor(palette, clusters[clusterId]).toLowerCase()};\n`;
     });
-    css += '}\n/* stylelint-enable */';
+    css += '}\n/* stylelint-enable */\n';
     fs.writeFileSync(path.resolve(__dirname, '../src/styles', `${schemeId}.css`), css);
   });
 }
