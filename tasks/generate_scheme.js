@@ -50,7 +50,7 @@ function generateScheme() {
     const clusters = scheme[schemeId].colors;
     let css = '/* stylelint-disable */\n/*\n* Этот файл сгенерирован автоматически. Не надо править его руками.\n*/\n';
     css += schemeId === pkg.defaultSchemeId ? ':root {\n' : `body[scheme="${schemeId}"] {\n`;
-    Object.keys(clusters).forEach((clusterId) => {
+    Object.keys(clusters).sort((a, b) => a.localeCompare(b)).forEach((clusterId) => {
       css += `  --${clusterId}: ${resolveColor(palette, clusters[clusterId]).toLowerCase()};\n`;
     });
     css += '}\n/* stylelint-enable */\n';
