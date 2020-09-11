@@ -94,7 +94,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 4;
+  z-index: 2;
   width: 48px;
   height: 48px;
   display: flex;
