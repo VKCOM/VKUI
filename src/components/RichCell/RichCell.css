@@ -8,10 +8,6 @@
   color: var(--text_primary);
 }
 
-.RichCell--sizeX-compact {
-  border-radius: 0;
-}
-
 .RichCell--mult {
   white-space: normal;
 }

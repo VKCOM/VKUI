@@ -7,10 +7,6 @@
   color: var(--text_primary);
 }
 
-.SimpleCell--sizeX-compact {
-  border-radius: 0;
-}
-
 .SimpleCell--mult {
   white-space: normal;
 }

@@ -10,8 +10,9 @@ import { HasPlatform, HasRootRef, RefWithCurrent } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { hasHover } from '../../helpers/inputUtils';
 import { setRef } from '../../lib/utils';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
+export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;
   activeEffectDelay?: number;
   disabled?: boolean;
@@ -288,17 +289,21 @@ class Tappable extends Component<TappableProps, TappableState> {
   render() {
     const { clicks, active, hovered } = this.state;
     const { children, className, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, ...restProps } = this.props;
+      stopPropagation, getRootRef, platform, sizeX, ...restProps } = this.props;
 
     const hoverClassModificator = this.containerHasTransparentBackground()
       ? 'shadowHovered'
       : 'opacityHovered';
 
-    const classes = classNames(getClassName('Tappable', platform), className, {
-      'Tappable--active': active,
-      'Tappable--inactive': !active,
-      [`Tappable--${hoverClassModificator}`]: hasHover && hovered,
-    });
+    const classes = classNames(
+      getClassName('Tappable', platform),
+      className,
+      `Tappable--sizeX-${sizeX}`,
+      {
+        'Tappable--active': active,
+        'Tappable--inactive': !active,
+        [`Tappable--${hoverClassModificator}`]: hasHover && hovered,
+      });
 
     const RootComponent = restProps.disabled
       ? Component
@@ -328,13 +333,13 @@ class Tappable extends Component<TappableProps, TappableState> {
             <RootComponent {...restProps} className={classes} {...props}>
               {children}
               {platform === ANDROID &&
-              <span className="Tappable__waves">
-                {Object.keys(clicks).map((k: string) => {
-                  return (
-                    <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
-                  );
-                })}
-              </span>
+                <span className="Tappable__waves">
+                  {Object.keys(clicks).map((k: string) => {
+                    return (
+                      <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                    );
+                  })}
+                </span>
               }
               {hasHover && <span className="Tappable__hoverShadow" />}
             </RootComponent>
@@ -345,4 +350,4 @@ class Tappable extends Component<TappableProps, TappableState> {
   }
 }
 
-export default withPlatform(Tappable);
+export default withAdaptivity(withPlatform(Tappable), { sizeX: true });

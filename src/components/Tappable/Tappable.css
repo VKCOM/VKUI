@@ -95,6 +95,10 @@
   opacity: .8;
 }
 
+.Tappable--sizeX-compact {
+  border-radius: 0;
+}
+
 /**
  * Animations
  */
