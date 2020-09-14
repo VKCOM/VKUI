@@ -158,6 +158,7 @@
   Android
  */
 
-.TabsItem--android .Tappable__waves {
+.TabsItem--android .Tappable__waves,
+.TabsItem--vkcom .Tappable__waves {
   display: none;
   }

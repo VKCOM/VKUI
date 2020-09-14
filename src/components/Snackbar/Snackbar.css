@@ -98,15 +98,19 @@
 
 /* Android */
 .Snackbar--android .Snackbar__in,
-.Snackbar--android .Snackbar__body {
+.Snackbar--android .Snackbar__body,
+.Snackbar--vkcom .Snackbar__in,
+.Snackbar--vkcom .Snackbar__body {
   transition: transform 320ms var(--android-easing);
 }
 
-.Snackbar--android .Snackbar__in {
+.Snackbar--android .Snackbar__in,
+.Snackbar--vkcom .Snackbar__in {
   animation: animation-snackbarIntro 340ms var(--android-easing);
 }
 
-.Snackbar--android .Snackbar__body {
+.Snackbar--android .Snackbar__body,
+.Snackbar--vkcom .Snackbar__body {
   border-radius: 8px;
 }
 

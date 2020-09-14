@@ -14,7 +14,8 @@
   color: var(--activity_indicator_tint);
   }
 
-.Spinner--android {
+.Spinner--android,
+.Spinner--vkcom {
   color: var(--accent);
   }
 
