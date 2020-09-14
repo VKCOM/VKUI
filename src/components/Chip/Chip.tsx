@@ -1,31 +1,30 @@
-import React, { FC, ReactNode, useCallback } from 'react';
+import React, { FC, HTMLAttributes, ReactNode, useCallback } from 'react';
 import classNames from '../../lib/classNames';
 import Icon16Cancel from '@vkontakte/icons/dist/16/cancel';
-import { hasReactNode, noop } from '../../lib/utils';
+import { getTitleFromChildren, hasReactNode, noop } from '../../lib/utils';
 
 type ChipValue = string | number;
 
-export interface ChipProps {
+export interface ChipProps extends HTMLAttributes<HTMLDivElement>{
   value: ChipValue;
-  label: string;
   onRemove?: (value?: ChipValue) => void;
   removable?: boolean;
-  className?: string;
   before?: ReactNode;
   after?: ReactNode;
 }
 
 const Chip: FC<ChipProps> = (props: ChipProps) => {
-  const { value, label, onRemove, removable, className, before, after } = props;
+  const { value, onRemove, removable, className, before, after, children, ...restProps } = props;
   const onRemoveWrapper = useCallback(() => {
     onRemove(value);
   }, [onRemove, value]);
+  const title = getTitleFromChildren(children);
 
   return (
-    <div className={classNames('Chip', className)}>
+    <div className={classNames('Chip', className)} {...restProps}>
       <div className="Chip__in">
         {hasReactNode(before) && <div className="Chip__before">{before}</div>}
-        <span className="Chip__content" title={label}>{label}</span>
+        <span className="Chip__content" title={title}>{children}</span>
         {hasReactNode(after) && <div className="Chip__after">{after}</div>}
         {removable && <>
           <div className="Chip__remove" onClick={onRemoveWrapper}>
