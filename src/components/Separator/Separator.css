@@ -28,7 +28,8 @@
   margin-right: 12px;
 }
 
-.Separator:not(.Separator--wide).Separator--android .Separator__in {
+.Separator:not(.Separator--wide).Separator--android .Separator__in,
+.Separator:not(.Separator--wide).Separator--vkcom .Separator__in {
   margin-left: 16px;
   margin-right: 16px;
 }

@@ -18,7 +18,8 @@
   color: var(--overlay_status_icon);
   }
 
-.ScreenSpinner--android .ScreenSpinner__container {
+.ScreenSpinner--android .ScreenSpinner__container,
+.ScreenSpinner--vkcom .ScreenSpinner__container {
   width: 88px;
   height: 88px;
   background: var(--tabbar_background);
@@ -26,7 +27,8 @@
   border-radius: 8px;
   }
 
-.ScreenSpinner--android .ScreenSpinner__container .Spinner {
+.ScreenSpinner--android .ScreenSpinner__container .Spinner,
+.ScreenSpinner--vkcom .ScreenSpinner__container .Spinner {
   color: var(--icon_outline_secondary);
   }
 

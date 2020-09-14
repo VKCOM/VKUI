@@ -34,7 +34,8 @@
   color: var(--activity_indicator_tint);
   }
 
-.PullToRefresh--android .PullToRefresh__spinner {
+.PullToRefresh--android .PullToRefresh__spinner,
+.PullToRefresh--vkcom .PullToRefresh__spinner {
   background: var(--background_suggestions);
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .2);

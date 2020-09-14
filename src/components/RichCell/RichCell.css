@@ -124,7 +124,8 @@
  * Android
  */
 
-.RichCell--android {
+.RichCell--android,
+.RichCell--vkcom {
   padding-right: 16px;
   padding-left: 16px;
 }
