@@ -153,26 +153,32 @@
  */
 
 @supports not (padding-top: env(safe-area-inset-top)) {
-  .PanelHeader--android {
+  .PanelHeader--android,
+  .PanelHeader--vkcom {
     --safe-area-inset-top: 0px;
   }
 }
 
-.PanelHeader--android ~ .FixedLayout--top {
+.PanelHeader--android ~ .FixedLayout--top,
+.PanelHeader--vkcom ~ .FixedLayout--top {
   top: calc(var(--panelheader_height_android) + var(--safe-area-inset-top));
 }
 
 .PanelHeader--android::before,
-.PanelHeader--android .PanelHeader__in {
+.PanelHeader--android .PanelHeader__in,
+.PanelHeader--vkcom::before,
+.PanelHeader--vkcom .PanelHeader__in {
   height: var(--panelheader_height_android);
   padding-top: var(--safe-area-inset-top);
 }
 
-.PanelHeader--android .PanelHeader__left:not(:empty) {
+.PanelHeader--android .PanelHeader__left:not(:empty),
+.PanelHeader--vkcom .PanelHeader__left:not(:empty) {
   padding: 4px 0 4px 4px;
 }
 
-.PanelHeader--android .PanelHeader__content {
+.PanelHeader--android .PanelHeader__content,
+.PanelHeader--vkcom .PanelHeader__content {
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -180,30 +186,37 @@
   max-width: 100%;
 }
 
-.PanelHeader--android .PanelHeader__content > * {
+.PanelHeader--android .PanelHeader__content > *,
+.PanelHeader--vkcom .PanelHeader__content > * {
   padding: 0 12px;
 }
 
-.PanelHeader--android .Search {
+.PanelHeader--android .Search,
+.PanelHeader--vkcom .Search {
   padding: 0 4px;
 }
 
-.PanelHeader--android.PanelHeader--no-left .PanelHeader__content > * {
+.PanelHeader--android.PanelHeader--no-left .PanelHeader__content > *,
+.PanelHeader--vkcom.PanelHeader--no-left .PanelHeader__content > * {
   padding-left: 0;
 }
 
-.PanelHeader--android.PanelHeader--no-left .PanelHeader__content {
+.PanelHeader--android.PanelHeader--no-left .PanelHeader__content,
+.PanelHeader--vkcom.PanelHeader--no-left .PanelHeader__content {
   padding-left: 16px;
 }
 
-.PanelHeader--android.PanelHeader--no-right .PanelHeader__content > * {
+.PanelHeader--android.PanelHeader--no-right .PanelHeader__content > *,
+.PanelHeader--vkcom.PanelHeader--no-right .PanelHeader__content > * {
   padding-right: 0;
 }
 
-.PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
+.PanelHeader--android.PanelHeader--no-right .PanelHeader__content,
+.PanelHeader--vkcom.PanelHeader--no-right .PanelHeader__content {
   padding-right: 16px;
 }
 
-.PanelHeader--android .PanelHeader__right:not(:empty) {
+.PanelHeader--android .PanelHeader__right:not(:empty),
+.PanelHeader--vkcom .PanelHeader__right:not(:empty) {
   padding: 4px 4px 4px 0;
 }

@@ -82,11 +82,13 @@
  * Android version
  */
 
-.PopoutWrapper--android .PopoutWrapper__mask {
+.PopoutWrapper--android .PopoutWrapper__mask,
+.PopoutWrapper--vkcom .PopoutWrapper__mask {
   animation: animation-full-fade-in .2s ease;
   }
 
-.PopoutWrapper--android.PopoutWrapper--closing .PopoutWrapper__mask {
+.PopoutWrapper--android.PopoutWrapper--closing .PopoutWrapper__mask,
+.PopoutWrapper--vkcom.PopoutWrapper--closing .PopoutWrapper__mask {
   transition: opacity .2s var(--android-easing);
   }
 

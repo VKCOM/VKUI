@@ -48,7 +48,8 @@
 
 /* Android */
 
-.PromoBanner--android .PromoBanner__head {
+.PromoBanner--android .PromoBanner__head,
+.PromoBanner--vkcom .PromoBanner__head {
   padding-left: 16px;
   padding-right: 16px;
 }
