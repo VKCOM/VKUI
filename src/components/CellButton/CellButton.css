@@ -68,16 +68,19 @@
 /*
   Android
  */
-.CellButton--android {
+.CellButton--android,
+.CellButton--vkcom {
   padding: 0 16px;
   }
 
-.CellButton--android .CellButton__content {
+.CellButton--android .CellButton__content,
+.CellButton--vkcom .CellButton__content {
   font-size: 16px;
   line-height: 20px;
   padding: 14px 0;
   }
 
-.CellButton--android .CellButton__before .Icon {
+.CellButton--android .CellButton__before .Icon,
+.CellButton--vkcom .CellButton__before .Icon {
   margin-right: 16px;
   }
