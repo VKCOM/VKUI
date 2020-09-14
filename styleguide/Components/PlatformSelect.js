@@ -7,6 +7,7 @@ export const PlatformSelect = ({ onChange, value }) => (
     <select onChange={onChange} value={value}>
       <option value={OS.IOS}>{OS.IOS}</option>
       <option value={OS.ANDROID}>{OS.ANDROID}</option>
+      <option value={OS.VKCOM}>{OS.VKCOM}</option>
     </select>
   </Fragment>
 )
