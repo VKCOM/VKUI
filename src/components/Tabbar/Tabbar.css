@@ -36,6 +36,7 @@
     }
   }
 
-.Tabbar--android.Tabbar--shadow {
+.Tabbar--android.Tabbar--shadow,
+.Tabbar--vkcom.Tabbar--shadow {
   box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, .06), 0 0 2px 0 rgba(0, 0, 0, .08);
   }

@@ -58,26 +58,31 @@
  * Android
  */
 
-.PanelHeaderButton--android {
+.PanelHeaderButton--android,
+.PanelHeaderButton--vkcom {
   border-radius: 50%;
   font-weight: 500;
   font-size: 15px;
 }
 
-.PanelHeaderButton--android.PanelHeaderButton--primitive {
+.PanelHeaderButton--android.PanelHeaderButton--primitive,
+.PanelHeaderButton--vkcom.PanelHeaderButton--primitive {
   height: 48px;
   line-height: 48px;
   padding: 0 12px;
 }
 
-.PanelHeaderButton--android .Icon--24 {
+.PanelHeaderButton--android .Icon--24,
+.PanelHeaderButton--vkcom .Icon--24 {
   padding: 12px;
 }
 
-.PanelHeaderButton--android .Icon--28 {
+.PanelHeaderButton--android .Icon--28,
+.PanelHeaderButton--vkcom .Icon--28 {
   padding: 10px;
 }
 
-.PanelHeaderButton--android.Tappable--active {
+.PanelHeaderButton--android.Tappable--active,
+.PanelHeaderButton--vkcom.Tappable--active {
   background-color: var(--background_highlighted);
 }

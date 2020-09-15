@@ -80,17 +80,20 @@
     line-height: 16px;
     }
 
-.Header--android .Header__in {
+.Header--android .Header__in,
+.Header--vkcom .Header__in {
   padding: 0 16px;
   }
 
-  .Header--android.Header--mode-primary .Header__content {
+  .Header--android.Header--mode-primary .Header__content,
+  .Header--vkcom.Header--mode-primary .Header__content {
     padding: 15px 0 9px;
     font-size: 16px;
     line-height: 20px;
     }
 
-  .Header--android.Header--mode-secondary .Header__content {
+  .Header--android.Header--mode-secondary .Header__content,
+  .Header--vkcom.Header--mode-secondary .Header__content {
     padding: 15px 0 9px;
     font-size: 13px;
     line-height: 16px;

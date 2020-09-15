@@ -48,15 +48,18 @@
 
 .FormLayout--android {}
 
-  .FormLayout--android .FormLayout__container {
+  .FormLayout--android .FormLayout__container,
+  .FormLayout--vkcom .FormLayout__container {
     padding: 0 16px;
     }
 
-    .FormLayout--android .FormLayout__row-top {
+    .FormLayout--android .FormLayout__row-top,
+    .FormLayout--vkcom .FormLayout__row-top {
       padding: 2px 0 8px;
       }
 
-    .FormLayout--android .FormLayout__row-bottom {
+    .FormLayout--android .FormLayout__row-bottom,
+    .FormLayout--vkcom .FormLayout__row-bottom {
       padding: 8px 0 0;
       }
 

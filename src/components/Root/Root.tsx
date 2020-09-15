@@ -3,7 +3,7 @@ import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
@@ -144,7 +144,7 @@ class Root extends Component<RootProps, RootState> {
       elem.addEventListener(animationEvent.name, eventHandler);
     } else {
       clearTimeout(this.animationFinishTimeout);
-      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 300 : 600);
+      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
     }
   }
 

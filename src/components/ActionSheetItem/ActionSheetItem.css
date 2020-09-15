@@ -197,26 +197,31 @@
  * Android
  */
 
-.ActionSheetItem--android {
+.ActionSheetItem--android,
+.ActionSheetItem--vkcom {
   padding: 0 20px;
   min-height: 48px;
   border-radius: 0;
 }
 
-.ActionSheetItem--android.Tappable--active {
+.ActionSheetItem--android.Tappable--active,
+.ActionSheetItem--vkcom.Tappable--active {
   background-color: var(--action_sheet_separator);
 }
 
-.ActionSheetItem--android .ActionSheetItem__before {
+.ActionSheetItem--android .ActionSheetItem__before,
+.ActionSheetItem--vkcom .ActionSheetItem__before {
   margin-right: 18px;
   margin-left: -2px;
 }
 
-.ActionSheetItem--android .ActionSheetItem__container {
+.ActionSheetItem--android .ActionSheetItem__container,
+.ActionSheetItem--vkcom .ActionSheetItem__container {
   padding: 11px 0;
 }
 
-.ActionSheetItem--android .ActionSheetItem__subtitle {
+.ActionSheetItem--android .ActionSheetItem__subtitle,
+.ActionSheetItem--vkcom .ActionSheetItem__subtitle {
   margin-top: 1px;
   margin-bottom: -1px;
 }

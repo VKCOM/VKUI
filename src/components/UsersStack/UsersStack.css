@@ -87,6 +87,7 @@
 
 /* Android */
 
-.UsersStack--android {
+.UsersStack--android,
+.UsersStack--vkcom {
   padding: 8px 16px;
 }

@@ -7,7 +7,7 @@ import classNames from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
@@ -462,7 +462,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
       !this.state.dragging && this.setState({ dragging: true });
 
       const shiftYPercent = shiftY / this.window.innerHeight * 100;
-      const shiftYCurrent = rubber(shiftYPercent, 72, 0.8, this.props.platform === ANDROID);
+      const shiftYCurrent = rubber(shiftYPercent, 72, 0.8, this.props.platform === ANDROID || this.props.platform === VKCOM);
 
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = rangeTranslate(modalState.translateY + shiftYCurrent);
@@ -482,7 +482,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
       }
 
       const shiftYPercent = shiftY / modalState.innerElement.offsetHeight * 100;
-      const shiftYCurrent = rubber(shiftYPercent, 72, 1.2, this.props.platform === ANDROID);
+      const shiftYCurrent = rubber(shiftYPercent, 72, 1.2, this.props.platform === ANDROID || this.props.platform === VKCOM);
 
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = Math.max(0, modalState.translateY + shiftYCurrent);
@@ -627,7 +627,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
 
       modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
     } else {
-      setTimeout(eventHandler, this.props.platform === ANDROID ? 320 : 400);
+      setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400);
     }
   }
 

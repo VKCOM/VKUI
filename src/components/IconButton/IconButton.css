@@ -47,12 +47,14 @@
  * Android
  */
 
-.IconButton--android {
+.IconButton--android,
+.IconButton--vkcom {
   height: 48px;
   border-radius: 24px;
 }
 
-.IconButton--android.Tappable--active .Icon {
+.IconButton--android.Tappable--active .Icon,
+.IconButton--vkcom.Tappable--active .Icon {
   transition: inherit;
   border-radius: inherit;
   background-color: var(--background_highlighted);

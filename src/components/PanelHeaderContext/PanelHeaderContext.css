@@ -48,20 +48,24 @@
 /*
  Android
  */
-.PanelHeaderContext--android .PanelHeaderContext__in {
+.PanelHeaderContext--android .PanelHeaderContext__in,
+.PanelHeaderContext--vkcom .PanelHeaderContext__in {
   padding: 8px;
   box-sizing: border-box;
 }
 
-.PanelHeaderContext--android.PanelHeaderContext--opened .PanelHeaderContext__in {
+.PanelHeaderContext--android.PanelHeaderContext--opened .PanelHeaderContext__in,
+.PanelHeaderContext--vkcom.PanelHeaderContext--opened .PanelHeaderContext__in {
   animation: animation-panelheadercontext-translate-in .2s ease;
 }
 
-.PanelHeaderContext--android.PanelHeaderContext--closing .PanelHeaderContext__in {
+.PanelHeaderContext--android.PanelHeaderContext--closing .PanelHeaderContext__in,
+.PanelHeaderContext--vkcom.PanelHeaderContext--closing .PanelHeaderContext__in {
   animation: animation-panelheadercontext-translate-out .2s ease;
 }
 
-.PanelHeaderContext--android .List {
+.PanelHeaderContext--android .List,
+.PanelHeaderContext--vkcom .List {
   overflow: hidden;
   border-radius: 12px;
   padding: 8px 0;

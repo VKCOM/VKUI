@@ -38,11 +38,14 @@
  */
 
 .CardScroll--android .CardScroll__in::before,
-.CardScroll--android .CardScroll__in::after {
+.CardScroll--android .CardScroll__in::after,
+.CardScroll--vkcom .CardScroll__in::before,
+.CardScroll--vkcom .CardScroll__in::after {
   width: 16px;
 }
 
-.CardScroll--android .CardScroll__slide--sz-l {
+.CardScroll--android .CardScroll__slide--sz-l,
+.CardScroll--vkcom .CardScroll__slide--sz-l {
   width: calc(100% - 32px);
   margin-right: 16px;
 }

@@ -72,7 +72,8 @@
 
 /* Android */
 
-.MiniInfoCell--android {
+.MiniInfoCell--android,
+.MiniInfoCell--vkcom {
   padding-left: 16px;
   padding-right: 16px;
 }

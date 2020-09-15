@@ -258,18 +258,22 @@
  * Android
  */
 
-.Banner--android {
+.Banner--android,
+.Banner--vkcom {
   padding: 0 16px;
 }
 
-.Banner--android .Banner__in {
+.Banner--android .Banner__in,
+.Banner--vkcom .Banner__in {
   border-radius: 8px;
 }
 
-.Banner--android .Banner__dismissIcon {
+.Banner--android .Banner__dismissIcon,
+.Banner--vkcom .Banner__dismissIcon {
   color: var(--icon_secondary);
 }
 
-.Banner--android.Banner--md-image .Banner__dismissIcon {
+.Banner--android.Banner--md-image .Banner__dismissIcon,
+.Banner--vkcom.Banner--md-image .Banner__dismissIcon {
   color: var(--white);
 }

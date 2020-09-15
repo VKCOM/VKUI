@@ -8,7 +8,7 @@ import { HasPlatform } from '../../types';
 import getClassname from '../../helpers/getClassName';
 import { canUseDOM } from '../../lib/dom';
 import { transitionEvent } from '../../lib/supportEvents';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 
@@ -131,7 +131,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
         element.addEventListener(transitionEvent.name, eventHandler);
       } else {
         clearTimeout(this.transitionFinishTimeout);
-        this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 400 : 320);
+        this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 400 : 320);
       }
     }
   }
@@ -151,7 +151,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     }
 
     this.shiftXPercent = shiftX / this.window.innerWidth * 100;
-    this.shiftXCurrent = rubber(this.shiftXPercent, 72, 1.2, this.props.platform === ANDROID);
+    this.shiftXCurrent = rubber(this.shiftXPercent, 72, 1.2, this.props.platform === ANDROID || this.props.platform === VKCOM);
     this.touchStartTime = startT;
 
     this.setBodyTransform(this.shiftXCurrent);

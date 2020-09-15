@@ -61,7 +61,8 @@
 /**
  * Android
  */
-.ActionSheet--android {
+.ActionSheet--android,
+.ActionSheet--vkcom {
   width: calc(100% - 20px);
   margin: 10px;
   animation: animation-actionsheet-intro .2s var(--android-easing);
@@ -75,16 +76,19 @@
   background: var(--modal_card_background);
 }
 
-.ActionSheet--android.ActionSheet--closing {
+.ActionSheet--android.ActionSheet--closing,
+.ActionSheet--vkcom.ActionSheet--closing {
   transform: translateY(calc(100% + 20px));
   transition: transform .2s var(--android-easing);
 }
 
-.ActionSheet--android .ActionSheet__header {
+.ActionSheet--android .ActionSheet__header,
+.ActionSheet--vkcom .ActionSheet__header {
   padding: 16px 20px;
 }
 
-.ActionSheet--android .ActionSheet__title + .ActionSheet__text {
+.ActionSheet--android .ActionSheet__title + .ActionSheet__text,
+.ActionSheet--vkcom .ActionSheet__title + .ActionSheet__text {
   margin-top: 8px;
 }
 
@@ -110,7 +114,8 @@
   box-shadow: 0 0 96px rgba(0, 0, 0, .16), 0 0 2px rgba(0, 0, 0, .12);
 }
 
-.ActionSheet--desktop.ActionSheet--android {
+.ActionSheet--desktop.ActionSheet--android,
+.ActionSheet--desktop.ActionSheet--vkcom {
   min-width: 112px;
   border-radius: 12px;
   padding: 8px 0;

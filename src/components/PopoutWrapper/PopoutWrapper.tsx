@@ -1,7 +1,7 @@
 import React, { Component, HTMLAttributes, MouseEvent } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import { animationEvent } from '../../lib/supportEvents';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
@@ -68,7 +68,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
       elem.addEventListener(animationEvent.name, eventHandler);
     } else {
       clearTimeout(this.animationFinishTimeout);
-      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
+      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300);
     }
   }
 

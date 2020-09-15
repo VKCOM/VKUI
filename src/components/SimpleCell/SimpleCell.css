@@ -172,7 +172,8 @@
  * Android
  */
 
-.SimpleCell--android {
+.SimpleCell--android,
+.SimpleCell--vkcom {
   font-size: 16px;
   line-height: 20px;
   padding-left: 16px;
@@ -180,7 +181,9 @@
 }
 
 .SimpleCell--android .SimpleCell__main,
-.SimpleCell--android .SimpleCell__indicator {
+.SimpleCell--android .SimpleCell__indicator,
+.SimpleCell--vkcom .SimpleCell__main,
+.SimpleCell--vkcom .SimpleCell__indicator {
   padding-top: 11px;
   padding-bottom: 10px;
 }
