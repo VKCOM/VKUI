@@ -87,8 +87,8 @@
   padding: 12px 30px 12px 12px;
   }
 
-.Select--sizeX--compact .Icon {
-  margin-top: -6px;
+  .Select--sizeX--compact .Icon--h-12 {
+    margin-top: -6px;
   }
 
 .Select--sizeY--compact .Select__container {
@@ -99,6 +99,6 @@
   line-height: 20px;
 }
 
-.Select--sizeY--compact .Icon {
+.Select--sizeY--compact .Icon--h-16 {
   margin-top: -8px;
-  }
+}
