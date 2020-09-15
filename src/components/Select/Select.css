@@ -98,3 +98,7 @@
   font-size: 15px;
   line-height: 20px;
 }
+
+.Select--sizeY--compact .Icon {
+  margin-top: -8px;
+  }
