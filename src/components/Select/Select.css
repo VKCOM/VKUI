@@ -73,7 +73,7 @@
     .Select .Icon {
       position: absolute;
       top: 50%;
-      margin-top: -12px;
+      transform: translateY(-50%);
       right: 10px;
       color: var(--icon_secondary);
       }
@@ -87,10 +87,6 @@
   padding: 12px 30px 12px 12px;
   }
 
-.Select--sizeX--compact .Icon {
-  margin-top: -6px;
-  }
-
 .Select--sizeY--compact .Select__container {
   height: 40px;
   padding-top: 10px;
@@ -98,7 +94,3 @@
   font-size: 15px;
   line-height: 20px;
 }
-
-.Select--sizeY--compact .Icon {
-  margin-top: -8px;
-  }
