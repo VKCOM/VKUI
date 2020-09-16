@@ -45,23 +45,29 @@
 }
 
 /**
- * Android
+ * Android & VKCOM
  */
 
 .FormItem--android .FormItem__top,
-.FormItem--android .FormItem__bottom {
+.FormItem--vkcom .FormItem__top,
+.FormItem--android .FormItem__bottom,
+.FormItem--vkcom .FormItem__bottom {
   padding-left: 16px;
   padding-right: 16px;
 }
 
 .FormItem--android .Input,
+.FormItem--vkcom .Input,
 .FormItem--android .Select,
-.FormItem--android .Textarea {
+.FormItem--vkcom .Select,
+.FormItem--android .Textarea,
+.FormItem--vkcom .Textarea {
   margin-left: 16px;
   margin-right: 16px;
   width: calc(100% - 32px);
 }
 
-.FormItem--android .FormField + .FormField {
+.FormItem--android .FormField + .FormField,
+.FormItem--vkcom .FormField + .FormField {
   margin-top: 8px;
 }
