@@ -82,14 +82,17 @@
   transition: transform .2s var(--android-easing);
 }
 
-.ActionSheet--android .ActionSheet__header,
-.ActionSheet--vkcom .ActionSheet__header {
+.ActionSheet--android .ActionSheet__header {
   padding: 16px 20px;
 }
 
 .ActionSheet--android .ActionSheet__title + .ActionSheet__text,
 .ActionSheet--vkcom .ActionSheet__title + .ActionSheet__text {
   margin-top: 8px;
+}
+
+.ActionSheet--vkcom .ActionSheet__header {
+  padding: 14px 20px;
 }
 
 /**
@@ -114,12 +117,22 @@
   box-shadow: 0 0 96px rgba(0, 0, 0, .16), 0 0 2px rgba(0, 0, 0, .12);
 }
 
-.ActionSheet--desktop.ActionSheet--android,
-.ActionSheet--desktop.ActionSheet--vkcom {
+.ActionSheet--desktop.ActionSheet--android {
   min-width: 112px;
   border-radius: 12px;
   padding: 8px 0;
   box-shadow: 0 8px 8px rgba(0, 0, 0, .16), 0 0 4px rgba(0, 0, 0, .08);
+}
+
+.ActionSheet--desktop.ActionSheet--vkcom {
+  border-radius: 12px;
+  border: .5px solid rgba(0, 0, 0, .08);
+  box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .08);
+}
+
+.ActionSheet--desktop.ActionSheet--sizeY-compact {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 /**
