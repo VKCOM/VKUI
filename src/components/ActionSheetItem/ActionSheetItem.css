@@ -257,3 +257,7 @@
 .ActionSheetItem[disabled] .ActionSheetItem__marker {
   background: var(--icon_secondary);
 }
+
+.ActionSheetItem--sizeY-compact {
+  min-height: 44px;
+}

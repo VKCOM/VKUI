@@ -10,6 +10,8 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import { HasLinkProps } from '../../types';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../hoc/withAdaptivity';
 
 export interface ActionSheetItemProps extends
   HTMLAttributes<HTMLElement>,
@@ -47,6 +49,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
   const { onItemClick, isDesktop } = useContext(ActionSheetContext);
 
   let Component: ElementType = 'div';
@@ -70,6 +73,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
           {
             'ActionSheetItem--compact': isCompact,
             'ActionSheetItem--desktop': isDesktop,
+            [`ActionSheetItem--sizeY-${sizeY}`]: sizeY === SizeType.COMPACT,
           },
           className,
         )
