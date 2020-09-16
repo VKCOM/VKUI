@@ -2,10 +2,14 @@ import React, { FunctionComponent, InputHTMLAttributes, ReactNode } from 'react'
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { IOS } from '../../lib/platform';
+import { IOS, VKCOM } from '../../lib/platform';
 import { HasFormLabels, HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { hasReactNode } from '../../lib/utils';
+import Caption from '../../components/Typography/Caption/Caption';
+import Headline from '../Typography/Headline/Headline';
+import Text from '../Typography/Text/Text';
 
 export interface RadioProps extends
   InputHTMLAttributes<HTMLInputElement>,
@@ -20,6 +24,8 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
   const { children, description, style, className, getRef, getRootRef, top, bottom, sizeY, ...restProps } = props;
   const platform = usePlatform();
 
+  const ContentComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+
   return (
     <Tappable
       Component="label"
@@ -32,10 +38,10 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
       <input {...restProps} type="radio" className="Radio__input" ref={getRef} />
       <div className="Radio__container">
         <div className="Radio__icon" />
-        <div className="Radio__content">
-          {children}
-          {description && <div className="Radio__description">{description}</div>}
-        </div>
+        <ContentComponent weight="regular" className="Radio__content">
+          <div className="Radio__children">{children}</div>
+          {hasReactNode(description) && <Caption level="1" weight="regular" className="Radio__description">{description}</Caption>}
+        </ContentComponent>
       </div>
     </Tappable>
   );
