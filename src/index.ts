@@ -80,6 +80,7 @@ export { MiniInfoCell } from './components/MiniInfoCell/MiniInfoCell';
  * Forms
  */
 export { default as FormLayout } from './components/FormLayout/FormLayout';
+export { default as FormItem } from './components/FormItem/FormItem';
 export { default as FormLayoutGroup } from './components/FormLayoutGroup/FormLayoutGroup';
 export { default as FormStatus } from './components/FormStatus/FormStatus';
 export { default as Switch } from './components/Switch/Switch';

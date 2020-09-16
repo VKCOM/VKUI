@@ -113,6 +113,7 @@ module.exports = {
         name: 'Forms',
         components: () => [
           '../src/components/FormLayout/FormLayout.tsx',
+          '../src/components/FormItem/FormItem.tsx',
           '../src/components/FormLayoutGroup/FormLayoutGroup.tsx',
           '../src/components/FormStatus/FormStatus.tsx',
           '../src/components/Slider/Slider.tsx',

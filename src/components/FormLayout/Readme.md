@@ -39,33 +39,41 @@ class Example extends React.Component {
         <Panel id="new-user">
           <PanelHeader>Регистрация</PanelHeader>
           <FormLayout>
-            <Input
-              type="email"
-              top="E-mail"
-              name="email"
-              value={email}
-              onChange={this.onChange}
+            <FormItem
+              top="E-mail" 
               status={email ? 'valid' : 'error'}
               bottom={email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'}
-            />
+            >
+              <Input
+                type="email"
+                name="email"
+                value={email}
+                onChange={this.onChange}
+              />
+            </FormItem>
 
-            <FormLayoutGroup top="Пароль" bottom="Пароль может содержать только латинские буквы и цифры.">
+            <FormItem top="Пароль" bottom="Пароль может содержать только латинские буквы и цифры.">
               <Input type="password"  placeholder="Введите пароль" />
               <Input type="password" placeholder="Повторите пароль" />
-            </FormLayoutGroup>
+            </FormItem>
 
-            <Input top="Имя" />
-            <Input top="Фамилия" />
+            <FormItem top="Имя">            
+              <Input />
+            </FormItem>
+            <FormItem top="Фамилия">            
+              <Input />
+            </FormItem>
+            <FormItem top="Пол">
+              <Select placeholder="Выберите пол">
+                <option value="m">Мужской</option>
+                <option value="f">Женский</option>
+              </Select>
+            </FormItem>
 
-            <Select top="Пол" placeholder="Выберите пол">
-              <option value="m">Мужской</option>
-              <option value="f">Женский</option>
-            </Select>
-
-            <FormLayoutGroup top="Тип документа">
+            <FormItem top="Тип документа">
               <Radio name="type">Паспорт</Radio>
               <Radio name="type">Загран</Radio>
-            </FormLayoutGroup>
+            </FormItem>
 
             {this.addressItems.map(({ label, name }) => (
               <Input type="text" name={name} key={name} top={label} />

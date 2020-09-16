@@ -1,0 +1,67 @@
+.FormItem {
+  padding: 14px 0 12px;
+  display: block;
+}
+
+.FormItem__top {
+  padding-bottom: 8px;
+  color: var(--text_secondary);
+}
+
+.FormItem__bottom {
+  color: var(--text_secondary);
+  padding-top: 8px;
+}
+
+.FormItem--error .FormItem__bottom {
+  color: var(--field_error_border);
+}
+
+.FormItem--valid .FormItem__bottom,
+.FormItem--verified .FormItem__bottom {
+  color: var(--field_valid_border);
+}
+
+/**
+ * iOS
+ */
+
+.FormItem--ios .FormItem__top,
+.FormItem--ios .FormItem__bottom {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.FormItem--ios .Input,
+.FormItem--ios .Select,
+.FormItem--ios .Textarea {
+  margin-left: 12px;
+  margin-right: 12px;
+  width: calc(100% - 24px);
+}
+
+.FormItem--ios .FormField + .FormField {
+  margin-top: 8px;
+}
+
+/**
+ * Android
+ */
+
+.FormItem--android .FormItem__top,
+.FormItem--android .FormItem__bottom {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.FormItem--android .Input,
+.FormItem--android .Select,
+.FormItem--android .Textarea {
+  margin-left: 16px;
+  margin-right: 16px;
+  width: calc(100% - 32px);
+}
+
+.FormItem--android .FormField + .FormField {
+  margin-top: 8px;
+}

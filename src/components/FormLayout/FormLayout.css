@@ -1,70 +1,16 @@
 .FormLayout {
   position: relative;
-  }
+}
 
-  .FormLayout__row {
-    display: block;
-    padding: 12px 0;
-    }
-
-  .FormLayout__row-top {
-    font-size: 14px;
-    line-height: 18px;
-    color: var(--text_secondary);
-    }
-
-  .FormLayout__row-bottom {
-    font-size: 13px;
-    line-height: 16px;
-    color: var(--text_secondary);
-    }
-
-  .FormLayout__submit {
-    position: absolute;
-    visibility: hidden;
-    pointer-events: none;
-    left: 0;
-    top: 0;
-    padding: 0;
-    width: 0;
-    height: 0;
-    appearance: none;
-    border: none;
-    }
-
-.FormLayout--ios {}
-
-  .FormLayout--ios .FormLayout__container {
-    padding: 0 12px;
-    }
-
-    .FormLayout--ios .FormLayout__row-top {
-      padding: 2px 0 8px;
-      }
-
-    .FormLayout--ios .FormLayout__row-bottom {
-      padding: 8px 0 0;
-      }
-
-.FormLayout--android {}
-
-  .FormLayout--android .FormLayout__container {
-    padding: 0 16px;
-    }
-
-    .FormLayout--android .FormLayout__row-top {
-      padding: 2px 0 8px;
-      }
-
-    .FormLayout--android .FormLayout__row-bottom {
-      padding: 8px 0 0;
-      }
-
-    .FormLayout__row--s-error .FormLayout__row-bottom {
-      color: var(--field_error_border);
-      }
-
-    .FormLayout__row--s-valid .FormLayout__row-bottom,
-    .FormLayout__row--s-verified .FormLayout__row-bottom {
-      color: var(--field_valid_border);
-      }
+.FormLayout__submit {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  padding: 0;
+  width: 0;
+  height: 0;
+  appearance: none;
+  border: none;
+}
