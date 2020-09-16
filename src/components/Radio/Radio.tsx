@@ -25,6 +25,7 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
   const platform = usePlatform();
 
   const ContentComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+  const descriptionLevel = platform === VKCOM || sizeY === SizeType.COMPACT ? '2' : '1';
 
   return (
     <Tappable
@@ -40,7 +41,7 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
         <div className="Radio__icon" />
         <ContentComponent weight="regular" className="Radio__content">
           <div className="Radio__children">{children}</div>
-          {hasReactNode(description) && <Caption level="1" weight="regular" className="Radio__description">{description}</Caption>}
+          {hasReactNode(description) && <Caption level={descriptionLevel} weight="regular" className="Radio__description">{description}</Caption>}
         </ContentComponent>
       </div>
     </Tappable>

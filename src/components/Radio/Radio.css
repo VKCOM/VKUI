@@ -42,8 +42,7 @@
         }
 
 .Radio--ios {
-  padding: 0 13px;
-  min-height: 44px;
+  padding: 0 12px;
   }
 
   .Radio--ios .Radio__container {}
@@ -52,7 +51,7 @@
       width: 22px;
       height: 22px;
       border: 2px solid var(--icon_tertiary);
-      margin-right: 12px;
+      margin: 1px 12px 1px 1px;
       transition: border-color .15s var(--ios-easing);
       }
 
@@ -97,10 +96,11 @@
 
     .Radio--ios .Radio__description {
       margin-bottom: 12px;
+      margin-top: 1px;
       }
 
 .Radio--android {
-  padding: 12px 17px;
+  padding: 0 16px;
   }
 
   .Radio--android .Radio__container {}
@@ -109,7 +109,7 @@
       width: 22px;
       height: 22px;
       border: 2px solid var(--icon_tertiary);
-      margin-right: 12px;
+      margin: 1px 12px 1px 1px;
       transition: border-color .5s var(--ios-easing);
       }
 
@@ -135,10 +135,6 @@
           height: 12px;
         }
 
-    .Radio--android .Radio__content {
-      margin: 2px 0;
-      }
-
     .Radio--android .Radio__input:checked ~ .Radio__container .Radio__icon {
       border-color: var(--accent);
       }
@@ -148,8 +144,21 @@
         transform: scale(1);
         }
 
+    .Radio--android .Radio__children {
+      margin-top: 12px;
+    }
+
+    .Radio--android .Radio__children:last-child {
+      margin-bottom: 12px;
+    }
+
+    .Radio--android .Radio__description {
+      margin-top: 1px;
+      margin-bottom: 11px;
+    }
+
 .Radio--vkcom {
-  padding: 12px 0;
+  padding: 0 16px;
   }
 
   .Radio--vkcom .Radio__container {}
@@ -157,7 +166,7 @@
     .Radio--vkcom .Radio__icon {
       width: 20px;
       height: 20px;
-      margin: 2px 12px 2px 2px;
+      margin-right: 12px;
     }
 
       .Radio--vkcom .Radio__icon::before {
@@ -182,10 +191,6 @@
         transition: transform .5s var(--ios-easing);
         }
 
-    .Radio--vkcom .Radio__content {
-      margin: 2px 0;
-      }
-
     .Radio--vkcom .Radio__input:disabled ~ .Radio__container {
       opacity: .4;
     }
@@ -203,3 +208,16 @@
         background-color: var(--accent);
         transform: scale(1);
         }
+
+    .Radio--vkcom .Radio__children {
+      margin-top: 10px;
+    }
+
+    .Radio--vkcom .Radio__children:last-child {
+      margin-bottom: 10px;
+    }
+
+    .Radio--vkcom .Radio__description {
+      margin-top: 1px;
+      margin-bottom: 9px;
+    }
