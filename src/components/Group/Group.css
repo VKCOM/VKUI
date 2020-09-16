@@ -36,7 +36,8 @@
   padding: 4px 12px 16px;
 }
 
-.Group--android .Group__description {
+.Group--android .Group__description,
+.Group--vkcom .Group__description {
   padding: 4px 16px 16px;
 }
 

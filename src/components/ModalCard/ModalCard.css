@@ -28,7 +28,8 @@
   transition: transform 340ms var(--ios-easing);
 }
 
-.ModalCard--android .ModalCard__in {
+.ModalCard--android .ModalCard__in,
+.ModalCard--vkcom .ModalCard__in {
   transition: transform 340ms var(--android-easing);
 }
 
@@ -55,7 +56,8 @@
   pointer-events: initial;
 }
 
-.ModalCard--android .ModalCard__container {
+.ModalCard--android .ModalCard__container,
+.ModalCard--vkcom .ModalCard__container {
   border-radius: 12px;
   box-shadow:
     0 8px 8px 0 rgba(0, 0, 0, .16),

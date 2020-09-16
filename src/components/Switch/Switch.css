@@ -68,11 +68,13 @@
  * Android
  */
 
-.Switch--android {
+.Switch--android,
+.Switch--vkcom {
   padding: 3px;
   }
 
-  .Switch--android .Switch__pseudo {
+  .Switch--android .Switch__pseudo,
+  .Switch--vkcom .Switch__pseudo {
     width: 34px;
     height: 14px;
     background: #c6c5c5;
@@ -80,15 +82,18 @@
     transition: background-color .1s ease;
     }
 
-  .Switch--android .Switch__self:checked + .Switch__pseudo {
+  .Switch--android .Switch__self:checked + .Switch__pseudo,
+  .Switch--vkcom .Switch__self:checked + .Switch__pseudo {
     background: #a8bfdb;
     }
 
-  .Switch--android .Switch__self[disabled] + .Switch__pseudo {
+  .Switch--android .Switch__self[disabled] + .Switch__pseudo,
+  .Switch--vkcom .Switch__self[disabled] + .Switch__pseudo {
     opacity: .4;
     }
 
-  .Switch--android .Switch__pseudo::before {
+  .Switch--android .Switch__pseudo::before,
+  .Switch--vkcom .Switch__pseudo::before {
     top: -3px;
     left: -3px;
     width: 20px;
@@ -99,6 +104,7 @@
     transition: transform .1s ease;
     }
 
-  .Switch--android .Switch__self:checked + .Switch__pseudo::before {
+  .Switch--android .Switch__self:checked + .Switch__pseudo::before,
+  .Switch--vkcom .Switch__self:checked + .Switch__pseudo::before {
     background: var(--accent);
     }

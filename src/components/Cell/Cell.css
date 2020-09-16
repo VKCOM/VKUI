@@ -97,14 +97,17 @@
 
 /* Android */
 
-.Cell--android .Cell__dragger {
+.Cell--android .Cell__dragger,
+.Cell--vkcom .Cell__dragger {
   padding-right: 16px;
 }
 
-.Cell--android .Cell__remove-marker {
+.Cell--android .Cell__remove-marker,
+.Cell--vkcom .Cell__remove-marker {
   color: var(--icon_secondary);
 }
 
-.Cell--android .Cell__marker {
+.Cell--android .Cell__marker,
+.Cell--vkcom .Cell__marker {
   margin-right: 16px;
 }

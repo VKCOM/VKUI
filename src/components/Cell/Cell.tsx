@@ -4,7 +4,7 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import IconButton from '../IconButton/IconButton';
 import Touch, { TouchEvent } from '../Touch/Touch';
-import { ANDROID, IOS } from '../../lib/platform';
+import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon24Reorder from '@vkontakte/icons/dist/24/reorder';
 import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
@@ -237,7 +237,7 @@ class Cell extends Component<CellProps, CellState> {
                     <div className="Cell__marker"><Icon16Done /></div>
                   </Fragment>
                 }
-                {platform === ANDROID && draggable &&
+                {(platform === ANDROID || platform === VKCOM) && draggable &&
                 <Touch
                   onStart={this.onDragStart}
                   onMoveY={this.onDragMove}
@@ -251,7 +251,7 @@ class Cell extends Component<CellProps, CellState> {
             }
             after={
               <Fragment>
-                {platform === ANDROID && removable &&
+                {(platform === ANDROID || platform === VKCOM) && removable &&
                 <div className="Cell__remove-marker">
                   <IconButton icon={<Icon24Cancel />} onClick={this.onRemoveClick} />
                 </div>

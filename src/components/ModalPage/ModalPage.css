@@ -27,7 +27,8 @@
   transition: transform 400ms var(--ios-easing);
 }
 
-.ModalPage--android .ModalPage__in-wrap {
+.ModalPage--android .ModalPage__in-wrap,
+.ModalPage--vkcom .ModalPage__in-wrap {
   transition: transform 320ms var(--android-easing);
 }
 
@@ -63,7 +64,8 @@
   border-radius: 14px 14px 0 0;
 }
 
-.ModalPage--android .ModalPage__in {
+.ModalPage--android .ModalPage__in,
+.ModalPage--vkcom .ModalPage__in {
   border-radius: 12px 12px 0 0;
 }
 

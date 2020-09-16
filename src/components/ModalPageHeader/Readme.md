@@ -19,12 +19,12 @@ return (
   <ModalPageHeader
     left={(
       <Fragment>
-        {platform === ANDROID && <PanelHeaderButton onClick={this.backModal}><Icon24Cancel /></PanelHeaderButton>}
+        {(platform === ANDROID || platform === VKCOM) && <PanelHeaderButton onClick={this.backModal}><Icon24Cancel /></PanelHeaderButton>}
       </Fragment>
     )}
     right={(
       <Fragment>
-        {platform === ANDROID && <PanelHeaderButton onClick={this.backModal}><Icon24Done /></PanelHeaderButton>}
+        {(platform === ANDROID || platform === VKCOM) && <PanelHeaderButton onClick={this.backModal}><Icon24Done /></PanelHeaderButton>}
         {platform === IOS && <PanelHeaderButton onClick={this.backModal}>Готово</PanelHeaderButton>}
       </Fragment>
     )}

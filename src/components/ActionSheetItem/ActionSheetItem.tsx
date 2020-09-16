@@ -6,7 +6,7 @@ import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import { HasLinkProps } from '../../types';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
@@ -81,7 +81,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
         <div className="ActionSheetItem__content">
           <Title
             weight={mode === 'cancel' ? 'medium' : 'regular'}
-            level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
+            level={isCompact || hasReactNode(before) || (platform === ANDROID || platform === VKCOM) ? '3' : '2'}
             className="ActionSheetItem__children"
           >
             {children}
@@ -89,7 +89,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
           {hasReactNode(meta) &&
             <Title
               weight="regular"
-              level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
+              level={isCompact || hasReactNode(before) || (platform === ANDROID || platform === VKCOM) ? '3' : '2'}
               className="ActionSheetItem__meta"
             >
               {meta}

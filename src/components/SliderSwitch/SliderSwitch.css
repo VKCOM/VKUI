@@ -43,7 +43,8 @@
   border-radius: 10px;
 }
 
-.SliderSwitch__button--android {
+.SliderSwitch__button--android,
+.SliderSwitch__button--vkcom {
   border-radius: 8px;
 }
 

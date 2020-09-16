@@ -255,6 +255,7 @@
 /**
   Android
  */
-.Search--android {
+.Search--android,
+.Search--vkcom {
   padding: 8px 16px;
 }

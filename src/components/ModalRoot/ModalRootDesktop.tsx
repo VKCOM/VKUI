@@ -13,7 +13,7 @@ import {
   WebviewType,
 } from '../ConfigProvider/ConfigProviderContext';
 import { ModalsStateEntry, ModalType } from './types';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 
 export interface ModalRootProps extends HasChildren, HasPlatform {
@@ -274,7 +274,7 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
 
       modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
     } else {
-      setTimeout(eventHandler, this.props.platform === ANDROID ? 320 : 400);
+      setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400);
     }
   }
 

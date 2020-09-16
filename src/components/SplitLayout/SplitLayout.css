@@ -22,7 +22,8 @@
   margin-top: calc(var(--panelheader_height_ios) * -1);
 }
 
-.SplitLayout--android .SplitLayout__inner--header {
+.SplitLayout--android .SplitLayout__inner--header,
+.SplitLayout--vkcom .SplitLayout__inner--header {
   margin-top: calc(var(--panelheader_height_android) * -1);
 }
 

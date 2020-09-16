@@ -4,7 +4,7 @@ import classNames from '../../lib/classNames';
 import animate from '../../lib/animate';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import getClassName from '../../helpers/getClassName';
-import { IOS, ANDROID } from '../../lib/platform';
+import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { HasChildren, HasPlatform } from '../../types';
@@ -243,7 +243,7 @@ class View extends Component<ViewProps, ViewState> {
       elem.addEventListener(transitionEvent.name, eventHandler);
     } else {
       clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 300 : 600);
+      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
     }
   }
 
@@ -258,7 +258,7 @@ class View extends Component<ViewProps, ViewState> {
       elem.addEventListener(animationEvent.name, eventHandler);
     } else {
       clearTimeout(this.animationFinishTimeout);
-      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 300 : 600);
+      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
     }
   }
 
