@@ -5,7 +5,7 @@ import { getTitleFromChildren, hasReactNode, noop } from '../../lib/utils';
 
 type ChipValue = string | number;
 
-export interface ChipProps extends HTMLAttributes<HTMLDivElement>{
+export interface ChipProps extends HTMLAttributes<HTMLDivElement> {
   value: ChipValue;
   onRemove?: (value?: ChipValue) => void;
   removable?: boolean;
