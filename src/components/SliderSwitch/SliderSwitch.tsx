@@ -117,7 +117,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
 
     return (
       <div
-        className={classNames('SliderSwitch__container', className)}
+        className={classNames('SliderSwitch', className)}
         onKeyDown={this.switchByKey}
         onMouseLeave={this.resetFocusedOption}
       >
