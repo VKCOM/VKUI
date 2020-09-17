@@ -34,7 +34,8 @@
 
 .FormItem--ios .Input,
 .FormItem--ios .Select,
-.FormItem--ios .Textarea {
+.FormItem--ios .Textarea,
+.FormItem--ios .ChipsInput {
   margin-left: 12px;
   margin-right: 12px;
   width: calc(100% - 24px);
@@ -60,6 +61,8 @@
 .FormItem--vkcom .Input,
 .FormItem--android .Select,
 .FormItem--vkcom .Select,
+.FormItem--android .ChipsInput,
+.FormItem--vkcom .ChipsInput,
 .FormItem--android .Textarea,
 .FormItem--vkcom .Textarea {
   margin-left: 16px;
