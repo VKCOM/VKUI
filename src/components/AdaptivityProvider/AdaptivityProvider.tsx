@@ -32,6 +32,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
       }
     }
 
+    onResize();
     props.window.addEventListener('resize', onResize, false);
 
     return () => {
