@@ -57,19 +57,23 @@ class Slider extends Component<SliderProps, SliderState> {
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
     const boundingRect = this.container.getBoundingClientRect();
-    const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
-    const percentPosition = this.absoluteToPecent(absolutePosition);
+    this.setState({
+      containerWidth: boundingRect.width,
+    }, () => {
+      const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
+      const percentPosition = this.absoluteToPecent(absolutePosition);
 
-    this.onChange(this.percentToValue(percentPosition), e);
+      this.onChange(this.percentToValue(percentPosition), e);
 
-    if (this.isControlledOutside) {
-      this.setState({ startX: absolutePosition });
-    } else {
-      this.setState({
-        startX: absolutePosition,
-        percentPosition,
-      });
-    }
+      if (this.isControlledOutside) {
+        this.setState({ startX: absolutePosition });
+      } else {
+        this.setState({
+          startX: absolutePosition,
+          percentPosition,
+        });
+      }
+    });
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
