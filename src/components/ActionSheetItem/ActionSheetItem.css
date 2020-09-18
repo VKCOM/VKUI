@@ -294,6 +294,6 @@
   padding: 12px 0;
 }
 
-.ActionSheetItem--sizeY-compact .ActionSheetItem__container_with_subtitle {
+.ActionSheetItem--sizeY-compact.ActionSheetItem--withSubtitle .ActionSheetItem__container {
   padding: 10px 0;
 }

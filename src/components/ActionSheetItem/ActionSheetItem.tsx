@@ -77,6 +77,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
             'ActionSheetItem--compact': isCompact,
             'ActionSheetItem--desktop': isDesktop,
             [`ActionSheetItem--sizeY-${sizeY}`]: sizeY === SizeType.COMPACT,
+            'ActionSheetItem--withSubtitle': hasReactNode(subtitle),
           },
           className,
         )
@@ -84,9 +85,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
       Component={Component}
     >
       {hasReactNode(before) && <div className="ActionSheetItem__before">{before}</div>}
-      <div className={classNames('ActionSheetItem__container', {
-        'ActionSheetItem__container_with_subtitle': hasReactNode(subtitle),
-      })}>
+      <div className="ActionSheetItem__container">
         <div className="ActionSheetItem__content">
           {sizeY === SizeType.COMPACT ?
             <>
