@@ -123,7 +123,7 @@
 
 .ActionSheet--desktop.ActionSheet--vkcom {
   border-radius: 12px;
-  border: .5px solid rgba(0, 0, 0, .08);
+  border: .5px solid var(--modal_card_border);
   box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .08);
 }
 
