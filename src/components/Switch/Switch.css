@@ -73,8 +73,7 @@
   padding: 3px;
   }
 
-  .Switch--android .Switch__pseudo,
-  .Switch--vkcom .Switch__pseudo {
+  .Switch--android .Switch__pseudo {
     width: 34px;
     height: 14px;
     background: #c6c5c5;
@@ -82,18 +81,15 @@
     transition: background-color .1s ease;
     }
 
-  .Switch--android .Switch__self:checked + .Switch__pseudo,
-  .Switch--vkcom .Switch__self:checked + .Switch__pseudo {
+  .Switch--android .Switch__self:checked + .Switch__pseudo {
     background: #a8bfdb;
     }
 
-  .Switch--android .Switch__self[disabled] + .Switch__pseudo,
-  .Switch--vkcom .Switch__self[disabled] + .Switch__pseudo {
+  .Switch--android .Switch__self[disabled] + .Switch__pseudo {
     opacity: .4;
     }
 
-  .Switch--android .Switch__pseudo::before,
-  .Switch--vkcom .Switch__pseudo::before {
+  .Switch--android .Switch__pseudo::before {
     top: -3px;
     left: -3px;
     width: 20px;
@@ -104,7 +100,57 @@
     transition: transform .1s ease;
     }
 
-  .Switch--android .Switch__self:checked + .Switch__pseudo::before,
-  .Switch--vkcom .Switch__self:checked + .Switch__pseudo::before {
+  .Switch--android .Switch__self:checked + .Switch__pseudo::before {
     background: var(--accent);
     }
+
+/**
+ * VKCOM
+ */
+
+.Switch--vkcom .Switch__pseudo {
+   width: 28px;
+   height: 10px;
+ }
+
+ .Switch--vkcom .Switch__pseudo::after {
+  content: '';
+  display: block;
+  border-radius: 45px;
+  transition: background-color .1s ease;
+  width: 100%;
+  height: 100%;
+  background: var(--icon_tertiary);
+  opacity: .48;
+ }
+
+ .Switch--vkcom .Switch__self:checked + .Switch__pseudo::after {
+    background: var(--accent);
+    opacity: .48;
+ }
+
+ .Switch--vkcom .Switch__self[disabled] + .Switch__pseudo {
+  opacity: .4;
+  }
+
+  .Switch--vkcom .Switch__pseudo::before {
+    top: -3px;
+    left: -2px;
+    width: 16px;
+    height: 16px;
+    background: var(--background_light);
+    border: 1px solid var(--icon_tertiary);
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: transform .1s ease;
+    z-index: 1;
+    }
+
+ .Switch--vkcom .Switch__self:checked + .Switch__pseudo::before {
+  background: var(--accent);
+  border: none;
+ }
+
+ .Switch__self:checked + .Switch__pseudo::before {
+  transform: translateX(16px);
+  }
