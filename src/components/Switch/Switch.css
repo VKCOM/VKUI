@@ -29,8 +29,8 @@
   }
 
   .Switch--ios .Switch__pseudo {
-    width: 50px;
-    height: 30px;
+    width: 51px;
+    height: 31px;
     border: 2px solid var(--switch_ios_off_border);
     background: transparent;
     border-radius: 15px;
@@ -38,6 +38,12 @@
     transition:
       background-color .2s ease,
       border-color .2s ease;
+    }
+
+    .Switch--ios.Switch--sizeY-compact .Switch__pseudo {
+      width: 47px;
+      height: 27px;
+      border-radius: 13px;
     }
 
   .Switch--ios .Switch__self:checked + .Switch__pseudo {
@@ -52,12 +58,18 @@
   .Switch--ios .Switch__pseudo::before {
     top: 0;
     left: 0;
-    width: 26px;
-    height: 26px;
+    width: 27px;
+    height: 27px;
     border-radius: 13px;
     background: var(--white);
     box-shadow: 0 3px 8px rgba(0, 0, 0, .15), 0 3px 1px rgba(0, 0, 0, .06), inset 0 0 0 .5px rgba(0, 0, 0, .04);
     transition: transform .2s cubic-bezier(.36, -.24, .26, 1.32);
+    }
+
+    .Switch--ios.Switch--sizeY-compact .Switch__pseudo::before {
+      width: 23px;
+      height: 23px;
+      border-radius: 11px;
     }
 
   .Switch--ios .Switch__self:checked + .Switch__pseudo::before {
@@ -81,6 +93,12 @@
     transition: background-color .1s ease;
     }
 
+    .Switch--android.Switch--sizeY-compact .Switch__pseudo {
+      width: 32px;
+      height: 12px;
+      border-radius: 6px;
+    }
+
   .Switch--android .Switch__self:checked + .Switch__pseudo {
     background: #a8bfdb;
     }
@@ -100,9 +118,19 @@
     transition: transform .1s ease;
     }
 
+    .Switch--android.Switch--sizeY-compact .Switch__pseudo::before {
+      width: 18px;
+      height: 18px;
+      border-radius: 9px;
+    }
+
   .Switch--android .Switch__self:checked + .Switch__pseudo::before {
     background: var(--accent);
     }
+
+  .Switch--android.Switch--sizeY-compact .Switch__self:checked + .Switch__pseudo::before {
+    transform: translateX(19px);
+  }
 
 /**
  * VKCOM
@@ -149,8 +177,5 @@
  .Switch--vkcom .Switch__self:checked + .Switch__pseudo::before {
   background: var(--accent);
   border: none;
- }
-
- .Switch__self:checked + .Switch__pseudo::before {
   transform: translateX(16px);
   }
