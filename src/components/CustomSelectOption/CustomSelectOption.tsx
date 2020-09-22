@@ -1,8 +1,21 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEvent, ReactNode } from 'react';
 import SelectedIcon from '@vkontakte/icons/dist/16/done';
 import classNames from '../../lib/classNames';
-import { CustomSelectOptionProps } from './types';
-import { hasReactNode, noop } from '../../lib/utils';
+import { hasReactNode } from '../../lib/utils';
+
+export interface CustomSelectOptionProps {
+  label: string;
+  index?: number;
+  option?: any;
+  selected?: boolean;
+  focused?: boolean;
+  hovered?: boolean;
+  before?: ReactNode;
+  after?: ReactNode;
+  onClick?: () => void;
+  onMouseDown?: (event: MouseEvent<HTMLElement>) => void;
+  onMouseEnter?: (event: MouseEvent<HTMLElement>) => void;
+}
 
 const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   label,
@@ -39,12 +52,6 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       )}
     </div>
   );
-};
-
-CustomSelectOption.defaultProps = {
-  onClick: noop,
-  onMouseDown: noop,
-  onMouseEnter: noop,
 };
 
 export default CustomSelectOption;

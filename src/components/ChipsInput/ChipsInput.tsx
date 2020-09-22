@@ -1,5 +1,4 @@
 import React, {
-  useCallback,
   useState,
   KeyboardEvent,
   FocusEvent,
@@ -52,7 +51,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
 
-  const handleKeDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeDown = (e: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown(e);
 
     if (e.key === 'Backspace' && !e.defaultPrevented && !fieldValue && selectedOptions.length) {
@@ -64,25 +63,25 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
       addOptionFromInput();
       e.preventDefault();
     }
-  }, [onKeyDown, fieldValue, addOptionFromInput, getNewOptionData]);
+  };
 
-  const handleBlur = useCallback((e: FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     if (focused) {
       setFocused(false);
     }
     onBlur(e);
-  }, [onBlur, setFocused, focused]);
+  };
 
-  const handleFocus = useCallback((e: FocusEvent<HTMLInputElement>) => {
+  const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
     if (!focused) {
       setFocused(true);
     }
     onFocus(e);
-  }, [onFocus, focused]);
+  };
 
-  const handleChipRemove = useCallback((_: MouseEvent<HTMLInputElement>, value: ChipsInputValue) => {
+  const handleChipRemove = (_: MouseEvent<HTMLInputElement>, value: ChipsInputValue) => {
     removeOption(value);
-  }, [removeOption]);
+  };
 
   return (
     <FormField
@@ -130,7 +129,6 @@ ChipsInput.defaultProps = {
   type: 'text',
   onChange: noop,
   onInputChange: noop,
-  onKeyUp: noop,
   onKeyDown: noop,
   onBlur: noop,
   onFocus: noop,

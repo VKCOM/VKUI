@@ -17,6 +17,7 @@ const Example = () => {
     onChange: setSelectedGroups,
     options: groups,
     placeholder:"Не выбраны",
+    emptyText: 'Ничего не найдено',
   }
 
   const colorsChipsProps = {
@@ -25,7 +26,8 @@ const Example = () => {
     options: colors,
     top:"Выберите или добавьте цвета",
     placeholder:"Не выбраны",
-    creatable: true
+    creatable: true,
+    creatableText: 'Создать значение'
   } 
 
 
@@ -40,14 +42,17 @@ const Example = () => {
               <FormLayoutGroup top="Выберите группы">
                 <ChipsSelect
                   {...groupsChipsProps}
+                  showSelected={false}
                   onClick={() => setActiveView('groups')}
-                  renderChip={({ value, option: { src }, ...rest }) => (
+                  renderChip={({ value, label, option: { src }, ...rest }) => (
                       <Chip
                         key={value}
                         value={value}
                         before={<Avatar size={20} src={src} />}
                         {...rest}
-                      />
+                      >
+                        {label}
+                      </Chip>
                   )}
                   renderOption={({ index, label, option: { src }, ...otherProps }) => {
                       return (
@@ -66,26 +71,6 @@ const Example = () => {
                 <ChipsSelect {...colorsChipsProps} onClick={() => setActiveView('colors')}/>
               </FormLayoutGroup>
             </FormLayout>
-          </Panel>
-        </View>
-        <View activePanel="groups" id="groups">
-          <Panel id="groups">
-            <PanelHeader>
-              Выбор групп
-            </PanelHeader>
-            <Group>
-              <MobileChipsSelect {...groupsChipsProps} onClick={() => setActiveView('profile')} />
-            </Group>
-          </Panel>
-        </View>
-        <View activePanel="colors" id="colors">
-          <Panel id="colors">
-            <PanelHeader>
-              Выбор и добавление цветов
-            </PanelHeader>
-            <Group>
-              <MobileChipsSelect {...colorsChipsProps} onClick={() => setActiveView('profile')} />
-            </Group>
           </Panel>
         </View>
       </Root>

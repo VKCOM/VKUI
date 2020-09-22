@@ -1,4 +1,5 @@
 import '../src/styles/styles.css';
+import '../src/styles/unstable.css';
 
 import pkg from '../package';
 import * as VKUI from '../src';

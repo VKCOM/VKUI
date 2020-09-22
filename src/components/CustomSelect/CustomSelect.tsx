@@ -8,8 +8,7 @@ import { HasRef, HasFormStatus } from '../../types';
 import withAdaptivity from '../../hoc/withAdaptivity';
 import withPlatform from '../../hoc/withPlatform';
 import { getClassName } from '../..';
-import { CustomSelectOptionProps } from '../CustomSelectOption/types';
-import CustomSelectOption from '../CustomSelectOption/CustomSelectOption';
+import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 
 type SelectValue = string | number | boolean;
 
@@ -355,6 +354,7 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
       sizeY,
       platform,
       onChange,
+      renderOption,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
