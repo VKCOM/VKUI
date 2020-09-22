@@ -4,7 +4,6 @@ import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../hoc/withAdaptivity';
 
 export interface SwitchProps extends
   InputHTMLAttributes<HTMLInputElement>,
@@ -26,7 +25,7 @@ const Switch: FunctionComponent<SwitchProps> = ({
     <label className={classNames(
       getClassName('Switch', platform),
       className,
-      { [`Switch--sizeY-${sizeY}`]: sizeY === SizeType.COMPACT })} style={style} ref={getRootRef}>
+      `Switch--sizeY-${sizeY}`)} style={style} ref={getRootRef}>
       <input {...restProps} type="checkbox" className="Switch__self" ref={getRef} />
       <span className="Switch__pseudo" />
     </label>
