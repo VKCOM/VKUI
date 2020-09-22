@@ -17,6 +17,19 @@
           Фотоальбомы
         </Cell>
       </Group>
+      <Group header={<Header mode="secondary">Компактный вид</Header>}>
+        <AdaptivityProvider sizeY="compact">
+          <Cell disabled after={<Switch />}>
+            Комментарии к записям
+          </Cell>
+          <Cell disabled after={<Switch defaultChecked />}>
+            Ссылки
+          </Cell>
+          <Cell disabled after={<Switch disabled />}>
+            Фотоальбомы
+          </Cell>
+        </AdaptivityProvider>
+      </Group>
     </Panel>
   </View>
 ```
