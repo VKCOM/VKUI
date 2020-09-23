@@ -2,7 +2,7 @@ import React, { FunctionComponent, InputHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
+import { HasAlign, HasFormStatus, HasRef, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import usePlatform from '../../hooks/usePlatform';
 
@@ -11,7 +11,6 @@ export interface InputProps extends
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLDivElement>,
   HasFormStatus,
-  HasFormLabels,
   HasAlign,
   AdaptivityProps {}
 
@@ -21,8 +20,6 @@ const Input: FunctionComponent<InputProps> = ({
   getRef,
   className,
   getRootRef,
-  top,
-  bottom,
   sizeY,
   ...restProps
 }: InputProps) => {

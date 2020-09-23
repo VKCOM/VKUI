@@ -1,4 +1,4 @@
-import React, { ReactNode, RefCallback } from 'react';
+import React, { RefCallback } from 'react';
 import { OSType } from './lib/platform';
 import { Insets } from '@vkontakte/vk-bridge';
 
@@ -30,11 +30,6 @@ export interface HasDangerHTML {
 
 export interface HasFormStatus {
   status?: FormStatusType;
-}
-
-export interface HasFormLabels {
-  top?: ReactNode;
-  bottom?: ReactNode;
 }
 
 export interface HasAlign {

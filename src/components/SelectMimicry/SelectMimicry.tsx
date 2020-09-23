@@ -4,7 +4,7 @@ import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
 import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRootRef } from '../../types';
+import { HasAlign, HasFormStatus, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import usePlatform from '../../hooks/usePlatform';
 import { getClassName } from '../..';
@@ -13,7 +13,6 @@ export interface SelectMimicryProps extends
   HTMLAttributes<HTMLElement>,
   HasAlign,
   HasFormStatus,
-  HasFormLabels,
   HasRootRef<HTMLElement>,
   AdaptivityProps {
   multiline?: boolean;

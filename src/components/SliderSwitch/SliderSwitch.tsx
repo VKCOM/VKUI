@@ -1,14 +1,14 @@
 import React, { HTMLAttributes, KeyboardEvent, RefObject, createRef } from 'react';
 import SliderSwitchButton from './SliderSwitchButton';
 import classNames from '../../lib/classNames';
-import { HasFormLabels, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 
 interface Option {
   name: string;
   value: string | number;
 }
 
-interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabels {
+interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   options: Option[];
   activeValue?: Option['value'];
   name?: string;

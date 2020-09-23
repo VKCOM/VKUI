@@ -3,7 +3,7 @@ import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IOS, VKCOM } from '../../lib/platform';
-import { HasFormLabels, HasRef, HasRootRef } from '../../types';
+import { HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { hasReactNode } from '../../lib/utils';
@@ -15,13 +15,12 @@ export interface RadioProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
-  HasFormLabels,
   AdaptivityProps {
   description?: ReactNode;
 }
 
 const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
-  const { children, description, style, className, getRef, getRootRef, top, bottom, sizeY, ...restProps } = props;
+  const { children, description, style, className, getRef, getRootRef, sizeY, ...restProps } = props;
   const platform = usePlatform();
 
   const ContentComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;

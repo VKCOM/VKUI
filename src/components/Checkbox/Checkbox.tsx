@@ -9,7 +9,7 @@ import Icon20CheckboxOff from '@vkontakte/icons/dist/20/check_box_off';
 import Icon24CheckboxOn from '@vkontakte/icons/dist/24/check_box_on';
 import Icon24CheckboxOff from '@vkontakte/icons/dist/24/check_box_off';
 
-import { HasFormLabels, HasRef, HasRootRef } from '../../types';
+import { HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
@@ -19,7 +19,6 @@ export interface CheckboxProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   HasRef<HTMLInputElement>,
-  HasFormLabels,
   AdaptivityProps { }
 
 export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
@@ -28,8 +27,6 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   style,
   getRootRef,
   getRef,
-  top,
-  bottom,
   sizeY,
   ...restProps
 }: CheckboxProps) => {

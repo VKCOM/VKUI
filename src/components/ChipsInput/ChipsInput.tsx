@@ -8,7 +8,7 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
+import { HasAlign, HasFormStatus, HasRef, HasRootRef } from '../../types';
 import FormField from '../FormField/FormField';
 import classNames from '../../lib/classNames';
 import Chip, { ChipProps } from '../Chip/Chip';
@@ -33,7 +33,6 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLDivElement>,
   HasFormStatus,
-  HasFormLabels,
   HasAlign {
   value: Option[];
   onChange?: (o: Option[]) => void;
