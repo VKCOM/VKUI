@@ -204,9 +204,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     return (
       <div
         {...restProps}
-        className={classNames(getClassName('Slider', platform), className, {
-          [`Slider--sizeY-${sizeY}`]: !!sizeY,
-        })}
+        className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
       >
         <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} className="Slider__in">
           <div

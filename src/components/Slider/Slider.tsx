@@ -25,7 +25,6 @@ export interface SliderProps extends
 export interface SliderState {
   startX: number;
   percentPosition: number;
-  active: boolean;
   containerWidth: number;
 }
 
@@ -42,7 +41,6 @@ class Slider extends Component<SliderProps, SliderState> {
     this.state = {
       startX: 0,
       percentPosition: 0,
-      active: false,
       containerWidth: 0,
     };
     this.isControlledOutside = this.props.hasOwnProperty('value');
@@ -73,10 +71,6 @@ class Slider extends Component<SliderProps, SliderState> {
         percentPosition,
       });
     }
-
-    const target = e.originalEvent.target as HTMLElement;
-
-    this.setState({ active: !!target.closest('.Slider__thumb') });
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
@@ -90,12 +84,6 @@ class Slider extends Component<SliderProps, SliderState> {
     }
 
     e.originalEvent.preventDefault();
-  };
-
-  onEnd: TouchEventHandler = () => {
-    this.setState({
-      active: false,
-    });
   };
 
   onResize: OnSliderResize = (callback?: VoidFunction) => {
@@ -186,16 +174,12 @@ class Slider extends Component<SliderProps, SliderState> {
     return (
       <div
         {...restProps}
-        className={classNames(getClassName('Slider', platform), className, {
-          [`Slider--sizeY-${sizeY}`]: !!sizeY,
-        })}
+        className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
       >
-        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
+        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} className="Slider__in">
           <div className="Slider__dragger" style={{ width: `${this.state.percentPosition}%` }}>
             <span
-              className={classNames('Slider__thumb', 'Slider__thumb--end', {
-                'Slider__thumb--active': this.state.active,
-              })}
+              className={classNames('Slider__thumb', 'Slider__thumb--end')}
             />
           </div>
         </Touch>
