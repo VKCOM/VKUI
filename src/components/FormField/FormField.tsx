@@ -2,13 +2,12 @@ import React, { ElementType, HTMLAttributes, useState } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasFormLabels, HasFormStatus, HasRootRef } from '../../types';
+import { HasFormStatus, HasRootRef } from '../../types';
 
 export interface FormFieldProps extends
   HTMLAttributes<HTMLElement>,
   HasRootRef<HTMLElement>,
-  HasFormStatus,
-  HasFormLabels {
+  HasFormStatus {
   Component?: ElementType;
 }
 
@@ -18,8 +17,6 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
   children,
   status,
   getRootRef,
-  top,
-  bottom,
   ...restProps
 }: FormFieldProps) => {
   const platform = usePlatform();

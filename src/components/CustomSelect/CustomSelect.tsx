@@ -396,7 +396,7 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
   render() {
     return (
       <div
-        className="CustomSelect__container"
+        className="CustomSelect"
         ref={(node) => this.node = node}
       >
         {this.renderWithCustomScrollbar()}

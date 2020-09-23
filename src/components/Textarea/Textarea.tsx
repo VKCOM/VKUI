@@ -1,7 +1,7 @@
 import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes, RefCallback } from 'react';
 import classNames from '../../lib/classNames';
 import FormField from '../FormField/FormField';
-import { HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
+import { HasFormStatus, HasRef, HasRootRef } from '../../types';
 import { setRef } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { getClassName, HasPlatform } from '../..';
@@ -12,7 +12,6 @@ export interface TextareaProps extends
   HasRef<HTMLTextAreaElement>,
   HasRootRef<HTMLElement>,
   HasFormStatus,
-  HasFormLabels,
   AdaptivityProps,
   HasPlatform {
   grow?: boolean;
@@ -117,7 +116,7 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
 
   render() {
     const { defaultValue, value, onChange, grow, style, onResize, className,
-      getRootRef, getRef, status, top, bottom, sizeY, platform, ...restProps } = this.props;
+      getRootRef, getRef, status, sizeY, platform, ...restProps } = this.props;
 
     const height = this.state.height || style.height || 66;
 

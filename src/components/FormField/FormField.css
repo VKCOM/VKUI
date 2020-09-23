@@ -18,7 +18,7 @@
 }
 
 .FormField__border.FormField__border--hover {
-  border-color: var(--field_border_hover);
+  border-color: var(--icon_tertiary_alpha);
 }
 
 .FormField--ios .FormField__border {

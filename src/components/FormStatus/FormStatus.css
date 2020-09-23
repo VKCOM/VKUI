@@ -36,31 +36,8 @@
       }
 
 /**
- * iOS
- */
-
-.FormStatus--ios {
-  margin-left: 12px;
-  margin-right: 12px;
-}
-
-/**
- * Android
- */
-
-.FormStatus--android {
-  margin-left: 16px;
-  margin-right: 16px;
-}
-
-/**
  * VKCON
  */
-
-.FormStatus--vkcom {
-  margin-left: 16px;
-  margin-right: 16px;
-}
 
 .FormStatus--vkcom.FormStatus--default .FormStatus__content {
   color: var(--text_subhead);

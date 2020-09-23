@@ -113,39 +113,53 @@ class App extends React.Component {
           }
         >
           <FormLayout>
-            <FormLayoutGroup>
-              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} size="l">Выбор страны</Button>
-              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)} size="l">Просмотры истории</Button>
-              <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="l">Информация о пользователе</Button>
-            </FormLayoutGroup>
+            <FormItem>
+              <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)}>Выбор страны</CellButton>
+              <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)}>Просмотры истории</CellButton>
+              <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}>Информация о пользователе</CellButton>
+            </FormItem>
 
-            <SelectMimicry top="Страна" placeholder="Выбрать страну" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} />
-            <SelectMimicry top="Город" placeholder="Выбрать город" disabled />
+            <FormItem top="Страна">            
+              <SelectMimicry placeholder="Выбрать страну" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} />
+            </FormItem>
+            <FormItem top="Город">            
+              <SelectMimicry placeholder="Выбрать город" disabled />
+            </FormItem>
 
-            <FormLayoutGroup top="Пол">
+            <FormItem top="Пол">
               <Radio name="sex" value={0} defaultChecked>Любой</Radio>
               <Radio name="sex" value={1}>Мужской</Radio>
               <Radio name="sex" value={2}>Женский</Radio>
-            </FormLayoutGroup>
+            </FormItem>
 
-            <SelectMimicry top="Школа" placeholder="Выбрать школу" disabled />
-            <SelectMimicry top="Университет" placeholder="Выбрать университет" disabled />
+            <FormItem top="Школа">            
+              <SelectMimicry placeholder="Выбрать школу" disabled />
+            </FormItem>
+            <FormItem top="Университет">            
+              <SelectMimicry placeholder="Выбрать университет" disabled />
+            </FormItem>
 
-            <FormLayoutGroup top="Дополнительно">
+            <FormItem top="Дополнительно">
               <Checkbox>С фотографией</Checkbox>
               <Checkbox>Сейчас на сайте</Checkbox>
-            </FormLayoutGroup>
+            </FormItem>
 
-            <FormLayoutGroup top="Работа">
+            <FormItem top="Работа">
               <Input placeholder="Место работы" />
+            </FormItem>
+            <FormItem>
               <Input placeholder="Должность" />
-            </FormLayoutGroup>
+            </FormItem>
 
-            <FormLayoutGroup top="Дата рождения">
-              <SelectMimicry placeholder="День рождения" disabled />
-              <SelectMimicry placeholder="Месяц рождения" disabled />
-              <SelectMimicry placeholder="Год рождения" disabled />
-            </FormLayoutGroup>
+            <FormItem top="Дата рождения">
+              <DatePicker 
+                min={{day: 1, month: 1, year: 1901}} 
+                max={{day: 1, month: 1, year: 2006}}
+                dayPlaceholder="Д"
+                monthPlaceholder="ММ"
+                yearPlaceholder="ГГ" 
+              />
+            </FormItem>
           </FormLayout>
         </ModalPage>
 
@@ -162,7 +176,7 @@ class App extends React.Component {
           settlingHeight={80}
         >
           <FormLayout>
-            <Button mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)} size="l">Информация о пользователе</Button>
+            <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}>Информация о пользователе</CellButton>
 
             <FormLayoutGroup>
               {importantCountries.map(({ id, title }) => {
@@ -275,7 +289,7 @@ class App extends React.Component {
             }
           ]}
         >
-          <Textarea defaultValue={'В Грузии'} />
+          <Textarea defaultValue="В Грузии" />
         </ModalCard>
 
         <ModalCard
@@ -332,18 +346,14 @@ class App extends React.Component {
       <View activePanel="modals" modal={modal}>
         <Panel id="modals">
           <PanelHeader>Модальные окна</PanelHeader>
-
-          <Group>
-            <FormLayout>
-              <Button size="m" mode="secondary" onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
-                  Открыть модальную страницу
-              </Button>
-
-              <Button size="m" mode="secondary" onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
-                  Открыть модальные карточки
-              </Button>
-            </FormLayout>
-          </Group>
+            <Group>
+              <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
+                Открыть модальную страницу
+              </CellButton>
+              <CellButton onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
+                Открыть модальные карточки
+              </CellButton>
+            </Group>
         </Panel>
       </View>
     );

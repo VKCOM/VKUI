@@ -189,9 +189,8 @@ class Slider extends Component<SliderProps, SliderState> {
         className={classNames(getClassName('Slider', platform), className, {
           [`Slider--sizeY-${sizeY}`]: !!sizeY,
         })}
-        ref={this.getRef}
       >
-        <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
+        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
           <div className="Slider__dragger" style={{ width: `${this.state.percentPosition}%` }}>
             <span
               className={classNames('Slider__thumb', 'Slider__thumb--end', {

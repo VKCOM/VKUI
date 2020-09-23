@@ -1,9 +1,11 @@
 .FormItem {
-  padding: 14px 0 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   display: block;
 }
 
 .FormItem__top {
+  padding-top: 2px;
   padding-bottom: 8px;
   color: var(--text_secondary);
 }
@@ -26,57 +28,47 @@
  * iOS
  */
 
-.FormItem--ios > .FormItem__top,
-.FormItem--ios > .FormItem__bottom {
+.FormItem--ios {
   padding-left: 12px;
   padding-right: 12px;
 }
 
-.FormItem--ios > .Input,
-.FormItem--ios > .Select,
-.FormItem--ios > .Textarea,
-.FormItem--ios > .ChipsInput,
-.FormItem--ios > .DatePicker,
-.FormItem--ios > .SliderSwitch {
-  margin-left: 12px;
-  margin-right: 12px;
-  width: calc(100% - 24px);
-}
-
-.FormItem--ios > .FormField + .FormField {
-  margin-top: 8px;
+.FormItem--ios .Cell,
+.FormItem--ios .SimpleCell,
+.FormItem--ios .RichCell,
+.FormItem--ios .CellButton,
+.FormItem--ios .Radio,
+.FormItem--ios .Checkbox {
+  width: 100%;
+  box-sizing: content-box;
+  margin-left: -12px;
+  margin-right: -12px;
 }
 
 /**
  * Android & VKCOM
  */
 
-.FormItem--android .FormItem__top,
-.FormItem--vkcom .FormItem__top,
-.FormItem--android .FormItem__bottom,
-.FormItem--vkcom .FormItem__bottom {
+.FormItem--android,
+.FormItem--vkcom {
   padding-left: 16px;
   padding-right: 16px;
 }
 
-.FormItem--android > .Input,
-.FormItem--vkcom > .Input,
-.FormItem--android > .DatePicker,
-.FormItem--vkcom > .DatePicker,
-.FormItem--android > .SliderSwitch,
-.FormItem--vkcom > .SliderSwitch,
-.FormItem--android > .Select,
-.FormItem--vkcom > .Select,
-.FormItem--android > .ChipsInput,
-.FormItem--vkcom > .ChipsInput,
-.FormItem--android > .Textarea,
-.FormItem--vkcom > .Textarea {
-  margin-left: 16px;
-  margin-right: 16px;
-  width: calc(100% - 32px);
-}
-
-.FormItem--android > .FormField + .FormField,
-.FormItem--vkcom > .FormField + .FormField {
-  margin-top: 8px;
+.FormItem--android .Cell,
+.FormItem--vkcom .Cell,
+.FormItem--android .SimpleCell,
+.FormItem--vkcom .SimpleCell,
+.FormItem--android .RichCell,
+.FormItem--vkcom .RichCell,
+.FormItem--android .CellButton,
+.FormItem--vkcom .CellButton,
+.FormItem--android .Radio,
+.FormItem--vkcom .Radio,
+.FormItem--android .Checkbox,
+.FormItem--vkcom .Checkbox {
+  width: 100%;
+  box-sizing: content-box;
+  margin-left: -16px;
+  margin-right: -16px;
 }

@@ -1,11 +1,4 @@
-Компонент для создания форм. Принимает в качестве `children` один или несколько элементов форм.
-
-Для отрисовки лейблов снизу и сверху у каждой строчки, используются свойства `top` и `bottom`, которые нужно навесить
-на `children` элементы.
-
-Можно использовать вложенный массив `children`. Это будет полезно, если часть или все поля формы создаются динамически через `Array.map()`.
-
-Компоненты `Input`, `Textarea`, `Select` и `SelectMimicry` поддерживают свойство `status`, которое принимает значения `default`, `error` или `valid` и позволяет визуально подсвечивать поля в случае ошибки или успеха.
+Компонент для создания form.
 
 ```jsx
 class Example extends React.Component {
@@ -24,12 +17,18 @@ class Example extends React.Component {
     ];
 
     this.onChange = this.onChange.bind(this);
+    this.onSelectChange = this.onSelectChange.bind(this);
   }
 
   onChange(e) {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   }
+
+  onSelectChange({ name, value }) {
+    this.setState({ [name]: value });
+  }
+
 
   render() {
     const { email, purpose } = this.state;
@@ -45,6 +44,7 @@ class Example extends React.Component {
               bottom={email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'}
             >
               <Input
+                status={email ? 'valid' : 'error'}
                 type="email"
                 name="email"
                 value={email}
@@ -52,17 +52,20 @@ class Example extends React.Component {
               />
             </FormItem>
 
-            <FormItem top="Пароль" bottom="Пароль может содержать только латинские буквы и цифры.">
+            <FormItem top="Пароль">
               <Input type="password"  placeholder="Введите пароль" />
+            </FormItem>
+            <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">
               <Input type="password" placeholder="Повторите пароль" />
             </FormItem>
-
-            <FormItem top="Имя">            
-              <Input />
-            </FormItem>
-            <FormItem top="Фамилия">            
-              <Input />
-            </FormItem>
+            <FormLayoutGroup mode="horizontal">
+              <FormItem top="Имя">            
+                <Input />
+              </FormItem>
+              <FormItem top="Фамилия">            
+                <Input />
+              </FormItem>
+            </FormLayoutGroup>
             <FormItem top="Пол">
               <Select placeholder="Выберите пол">
                 <option value="m">Мужской</option>
@@ -76,27 +79,30 @@ class Example extends React.Component {
             </FormItem>
 
             {this.addressItems.map(({ label, name }) => (
-              <Input type="text" name={name} key={name} top={label} />
+              <FormItem top={label} key={name}>
+                <Input name={name} />
+              </FormItem>
             ))}
-
-            <Select
-              top="Цель поездки"
-              placeholder="Выберите цель поездки"
-              status={purpose ? 'valid' : 'error'}
-              bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'}
-              onChange={this.onChange}
-              value={purpose}
-              name="purpose"
-            >
-              <option value="0">Бизнес или работа</option>
-              <option value="1">Индивидуальный туризм</option>
-              <option value="2">Посещение близких родственников</option>
-            </Select>
-
-            <Textarea top="О себе" />
-
+            <FormItem top="Цель поездки" bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'} status={purpose ? 'valid' : 'error'}>
+              <Select
+                placeholder="Выберите цель поездки"
+                onChange={this.onSelectChange}
+                value={purpose}
+                name="purpose"
+                status={purpose ? 'valid' : 'error'}
+              >
+                <option value="0">Бизнес или работа</option>
+                <option value="1">Индивидуальный туризм</option>
+                <option value="2">Посещение близких родственников</option>
+              </Select>
+            </FormItem>
+            <FormItem top="О себе">
+              <Textarea />
+            </FormItem>
             <Checkbox>Согласен со всем <Link>этим</Link></Checkbox>
-            <Button size="l">Зарегистрироваться</Button>
+            <FormItem>
+              <Button size="l" stretched>Зарегистрироваться</Button>
+            </FormItem>
           </FormLayout>
         </Panel>
       </View>
