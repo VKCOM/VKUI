@@ -6,10 +6,15 @@ import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
+import Text from '../Typography/Text/Text';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { HasLinkProps } from '../../types';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
+import Icon24Done from '@vkontakte/icons/dist/24/done';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { SizeType } from '../../hoc/withAdaptivity';
+import Caption from '../Typography/Caption/Caption';
 
 export interface ActionSheetItemProps extends
   HTMLAttributes<HTMLElement>,
@@ -47,6 +52,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
   const { onItemClick, isDesktop } = useContext(ActionSheetContext);
 
   let Component: ElementType = 'div';
@@ -70,6 +76,8 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
           {
             'ActionSheetItem--compact': isCompact,
             'ActionSheetItem--desktop': isDesktop,
+            [`ActionSheetItem--sizeY-${sizeY}`]: sizeY === SizeType.COMPACT,
+            'ActionSheetItem--withSubtitle': hasReactNode(subtitle),
           },
           className,
         )
@@ -79,24 +87,49 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
       {hasReactNode(before) && <div className="ActionSheetItem__before">{before}</div>}
       <div className="ActionSheetItem__container">
         <div className="ActionSheetItem__content">
-          <Title
-            weight={mode === 'cancel' ? 'medium' : 'regular'}
-            level={isCompact || hasReactNode(before) || (platform === ANDROID || platform === VKCOM) ? '3' : '2'}
-            className="ActionSheetItem__children"
-          >
-            {children}
-          </Title>
-          {hasReactNode(meta) &&
-            <Title
-              weight="regular"
-              level={isCompact || hasReactNode(before) || (platform === ANDROID || platform === VKCOM) ? '3' : '2'}
-              className="ActionSheetItem__meta"
-            >
-              {meta}
-            </Title>
+          {sizeY === SizeType.COMPACT ?
+            <>
+              <Text
+                weight={mode === 'cancel' ? 'medium' : 'regular'}
+                className="ActionSheetItem__children"
+              >
+                {children}
+              </Text>
+              {hasReactNode(meta) &&
+                <Text
+                  weight="regular"
+                  className="ActionSheetItem__meta"
+                >
+                  {meta}
+                </Text>
+              }
+            </>
+            :
+            <>
+              <Title
+                weight={mode === 'cancel' ? 'medium' : 'regular'}
+                level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
+                className="ActionSheetItem__children"
+              >
+                {children}
+              </Title>
+              {hasReactNode(meta) &&
+                <Title
+                  weight="regular"
+                  level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
+                  className="ActionSheetItem__meta"
+                >
+                  {meta}
+                </Title>
+              }
+            </>
           }
         </div>
-        {hasReactNode(subtitle) && <Subhead weight="regular" className="ActionSheetItem__subtitle">{subtitle}</Subhead>}
+        {hasReactNode(subtitle) && (sizeY === SizeType.COMPACT ?
+          <Caption weight="regular" className="ActionSheetItem__subtitle" level="1">{subtitle}</Caption>
+          :
+          <Subhead weight="regular" className="ActionSheetItem__subtitle">{subtitle}</Subhead>
+        )}
       </div>
       {selectable &&
         <div className="ActionSheetItem__after">
@@ -110,7 +143,9 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
             checked={checked}
             disabled={restProps.disabled}
           />
-          <div className="ActionSheetItem__marker"><Icon16Done /></div>
+          <div className="ActionSheetItem__marker">
+            {platform === VKCOM ? <Icon24Done /> : <Icon16Done />}
+          </div>
         </div>
       }
     </Tappable>

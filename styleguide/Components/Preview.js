@@ -66,7 +66,7 @@ let Layout = ({ children, viewWidth }) => {
   )
 }
 
-Layout = withAdaptivity(Layout, { viewWidth: true })
+Layout = withAdaptivity(Layout, { viewWidth: true, sizeY: true })
 
 export default class Preview extends PreviewParent {
 
@@ -112,7 +112,7 @@ export default class Preview extends PreviewParent {
                       scheme={styleGuideContext.scheme}
                       webviewType={styleGuideContext.webviewType}
                     >
-                      <AdaptivityProvider window={window}>
+                      <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY}>
                         <Layout>
                           <ReactExample
                             code={code}
