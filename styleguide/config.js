@@ -151,6 +151,10 @@ module.exports = {
         ]
       },
       {
+        name: 'Helpers',
+        content: './pages/helpers.md'
+      },
+      {
         name: 'Server Side Rendering',
         content: './pages/ssr.md'
       },
