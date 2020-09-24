@@ -5,8 +5,9 @@ import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { PointerEventsProperty } from 'csstype';
 import PropTypes from 'prop-types';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-interface Props extends HasPlatform {
+interface Props extends HasPlatform, AdaptivityProps {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;
@@ -75,7 +76,7 @@ class ActionSheetDropdownDesktop extends Component<Props> {
   stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
   render() {
-    const { children, platform, elementRef, toggleRef, closing, ...restProps } = this.props;
+    const { children, platform, elementRef, toggleRef, closing, sizeY, ...restProps } = this.props;
     const baseClaseName = getClassName('ActionSheet', platform);
 
     return (
@@ -86,7 +87,7 @@ class ActionSheetDropdownDesktop extends Component<Props> {
         style={this.state.dropdownStyles}
         className={classNames(baseClaseName, 'ActionSheet--desktop', {
           'ActionSheet--closing': this.props.closing,
-        })}
+        }, `ActionSheet--sizeY-${sizeY}`)}
       >
         {children}
       </div>
@@ -94,4 +95,6 @@ class ActionSheetDropdownDesktop extends Component<Props> {
   }
 }
 
-export default withPlatform(ActionSheetDropdownDesktop);
+export default withAdaptivity(withPlatform(ActionSheetDropdownDesktop), {
+  sizeY: true,
+});
