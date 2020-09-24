@@ -2,7 +2,6 @@ import React, { FunctionComponent, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
-import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasFormStatus, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
@@ -53,7 +52,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
     >
       <div className="Select__container">
         <div className="Select__title">{children || placeholder}</div>
-        {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+        {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
       </div>
     </FormField>
   );

@@ -1,6 +1,5 @@
 import React, { ChangeEvent, ChangeEventHandler, RefCallback, SelectHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
-import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
@@ -114,7 +113,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
         </select>
         <div className="Select__container">
           <div className="Select__title">{this.state.title}</div>
-          {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+          {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
         </div>
       </FormField>
     );
