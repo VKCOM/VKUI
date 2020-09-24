@@ -123,7 +123,6 @@
 
 .ActionSheet--desktop.ActionSheet--vkcom {
   border-radius: 12px;
-  border: 1px solid var(--modal_card_border);
   box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .08);
 }
 
@@ -146,17 +145,5 @@
 
   to {
     transform: translateY(0);
-  }
-}
-
-@media (min-resolution: 2dppx) {
-  .ActionSheet--desktop.ActionSheet--vkcom {
-    border-width: .5px;
-  }
-}
-
-@media (min-resolution: 3dppx) {
-  .ActionSheet--desktop.ActionSheet--vkcom {
-    border-width: .33px;
   }
 }
