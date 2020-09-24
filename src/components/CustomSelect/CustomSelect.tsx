@@ -5,7 +5,7 @@ import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
 import { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
-import { HasRef, HasFormStatus } from '../../types';
+import { HasRef } from '../../types';
 import withAdaptivity from '../../hoc/withAdaptivity';
 import withPlatform from '../../hoc/withPlatform';
 import { getClassName } from '../..';
@@ -29,7 +29,7 @@ export interface SelectChangeResult {
   name: string;
 }
 
-interface CustomSelectProps extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInputElement>, HasFormStatus {
+interface CustomSelectProps extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInputElement> {
   options: SelectOption[];
   popupDirection?: 'top' | 'bottom';
   onChange?: (result: SelectChangeResult) => void;

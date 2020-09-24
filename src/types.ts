@@ -4,8 +4,6 @@ import { Insets } from '@vkontakte/vk-bridge';
 
 export type AnyFunction = (...args: any[]) => any;
 
-export type FormStatusType = 'default' | 'error' | 'valid';
-
 export type AlignType = 'left' | 'center' | 'right';
 
 export type RefWithCurrent<T> = {
@@ -26,10 +24,6 @@ export interface HasDangerHTML {
   dangerouslySetInnerHTML?: {
     __html: string;
   };
-}
-
-export interface HasFormStatus {
-  status?: FormStatusType;
 }
 
 export interface HasAlign {

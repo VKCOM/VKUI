@@ -3,7 +3,7 @@ import classNames from '../../lib/classNames';
 import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormStatus, HasRef, HasRootRef } from '../../types';
+import { HasAlign, HasRef, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { setRef } from '../../lib/utils';
 import { getClassName, HasPlatform } from '../..';
@@ -13,7 +13,6 @@ export interface SelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
   HasRef<HTMLSelectElement>,
   HasRootRef<HTMLLabelElement>,
-  HasFormStatus,
   HasAlign,
   AdaptivityProps,
   HasPlatform {
@@ -83,7 +82,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
   };
 
   render() {
-    const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
+    const { style, value, defaultValue, onChange, align, placeholder, children, className,
       getRef, getRootRef, disabled, sizeX, sizeY, platform, ...restProps } = this.props;
 
     return (
@@ -98,7 +97,6 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
         }, className)}
         style={style}
         getRootRef={getRootRef}
-        status={status}
       >
         <select
           {...restProps}

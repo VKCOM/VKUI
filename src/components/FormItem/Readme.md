@@ -46,7 +46,6 @@ class Example extends React.Component {
               bottom={email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'}
             >
               <Input
-                status={email ? 'valid' : 'error'}
                 type="email"
                 name="email"
                 value={email}
@@ -91,7 +90,6 @@ class Example extends React.Component {
                 onChange={this.onSelectChange}
                 value={purpose}
                 name="purpose"
-                status={purpose ? 'valid' : 'error'}
               >
                 <option value="0">Бизнес или работа</option>
                 <option value="1">Индивидуальный туризм</option>

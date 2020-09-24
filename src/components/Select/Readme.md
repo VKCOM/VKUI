@@ -24,7 +24,7 @@ import { Select } from '@vkontakte/vkui';
     <FormItem top="Обычный Select с скроллом">
       <Select placeholder="Выберите месяц">
         <option value="1">Январь</option>
-        <option value="2">Февраль</option> 
+        <option value="2">Февраль</option>
         <option value="3">Март</option>
         <option value="4">Апрель</option>
         <option value="5">Май</option>
