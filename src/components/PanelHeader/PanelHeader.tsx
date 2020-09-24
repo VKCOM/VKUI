@@ -4,11 +4,12 @@ import getClassname from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Separator from '../Separator/Separator';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { isPrimitiveReactNode } from '../../lib/utils';
+import Text from '../Typography/Text/Text';
 
 export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   left?: ReactNode;
@@ -85,7 +86,7 @@ const PanelHeader = ({
             {platform !== ANDROID && addon}
           </div>
           <div className="PanelHeader__content">
-            {isPrimitive ? <span>{children}</span> : children}
+            {isPrimitive ? platform === VKCOM ? <Text weight="medium">{children}</Text> : <span>{children}</span> : children}
           </div>
           <div className="PanelHeader__right">
             {webviewType !== WebviewType.VKAPPS && right}

@@ -255,7 +255,10 @@
 /**
   Android
  */
-.Search--android,
-.Search--vkcom {
+.Search--android {
   padding: 8px 16px;
+}
+
+.Search--vkcom .Search__control {
+  background-color: transparent;
 }

@@ -177,8 +177,7 @@
   padding: 4px 0 4px 4px;
 }
 
-.PanelHeader--android .PanelHeader__content,
-.PanelHeader--vkcom .PanelHeader__content {
+.PanelHeader--android .PanelHeader__content {
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -201,8 +200,7 @@
   padding-left: 0;
 }
 
-.PanelHeader--android.PanelHeader--no-left .PanelHeader__content,
-.PanelHeader--vkcom.PanelHeader--no-left .PanelHeader__content {
+.PanelHeader--android.PanelHeader--no-left .PanelHeader__content {
   padding-left: 16px;
 }
 
@@ -211,12 +209,23 @@
   padding-right: 0;
 }
 
-.PanelHeader--android.PanelHeader--no-right .PanelHeader__content,
-.PanelHeader--vkcom.PanelHeader--no-right .PanelHeader__content {
+.PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
   padding-right: 16px;
 }
 
 .PanelHeader--android .PanelHeader__right:not(:empty),
 .PanelHeader--vkcom .PanelHeader__right:not(:empty) {
   padding: 4px 4px 4px 0;
+}
+
+/**
+ * VKCOM
+ */
+
+ .PanelHeader--vkcom .PanelHeader__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  max-width: 100%;
 }

@@ -12,7 +12,8 @@ import withPlatform from '../../hoc/withPlatform';
 import getClassname from '../../helpers/getClassName';
 import Icon16SearchOutline from '@vkontakte/icons/dist/16/search_outline';
 import Icon16Clear from '@vkontakte/icons/dist/16/clear';
-import { IOS } from '../../lib/platform';
+import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
+import { IOS, VKCOM } from '../../lib/platform';
 import { HasPlatform, HasRef } from '../../types';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import { VKUITouchEvent } from '../../lib/touch';
@@ -170,7 +171,11 @@ class Search extends Component<SearchProps, SearchState> {
               }
               {!!this.value &&
                 <Touch onStart={this.onIconCancelClickStart} className="Search__icon">
-                  <Icon16Clear />
+                  {platform === VKCOM ?
+                    <Icon24Cancel />
+                    :
+                    <Icon16Clear />
+                  }
                 </Touch>
               }
             </div>
