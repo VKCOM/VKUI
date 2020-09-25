@@ -2,9 +2,8 @@ import React, { FunctionComponent, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
-import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRootRef } from '../../types';
+import { HasAlign, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import usePlatform from '../../hooks/usePlatform';
 import { getClassName } from '../..';
@@ -12,8 +11,6 @@ import { getClassName } from '../..';
 export interface SelectMimicryProps extends
   HTMLAttributes<HTMLElement>,
   HasAlign,
-  HasFormStatus,
-  HasFormLabels,
   HasRootRef<HTMLElement>,
   AdaptivityProps {
   multiline?: boolean;
@@ -26,7 +23,6 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   placeholder,
   children,
   align,
-  status,
   getRootRef,
   multiline,
   disabled,
@@ -49,12 +45,11 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
         [`Select--sizeY--${sizeY}`]: !!sizeY,
       }, className)}
       getRootRef={getRootRef}
-      status={status}
       onClick={disabled ? null : onClick}
     >
       <div className="Select__container">
         <div className="Select__title">{children || placeholder}</div>
-        {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+        {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
       </div>
     </FormField>
   );

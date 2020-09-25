@@ -8,7 +8,7 @@ import React, {
   useEffect,
   ReactNode,
 } from 'react';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
+import { HasAlign, HasRef, HasRootRef } from '../../types';
 import FormField from '../FormField/FormField';
 import classNames from '../../lib/classNames';
 import Chip, { ChipProps } from '../Chip/Chip';
@@ -32,8 +32,6 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLDivElement>,
-  HasFormStatus,
-  HasFormLabels,
   HasAlign {
   value: Option[];
   onChange?: (o: Option[]) => void;
@@ -44,7 +42,7 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
 }
 
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
-  const { style, value, status, onChange, onBlur, onFocus, children, className,
+  const { style, value, onChange, onBlur, onFocus, children, className,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, getNewOptionData, renderChip, ...restProps } = props;
 
   const inputRef = useRef(null);
@@ -118,7 +116,6 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   return (
     <FormField
       Component="label"
-      status={status}
       getRootRef={getRootRef}
       className={classNames('ChipsInput', {
         'ChipsInput--focused': focused,

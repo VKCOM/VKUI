@@ -2,13 +2,11 @@ import React, { ElementType, HTMLAttributes, useState } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasFormLabels, HasFormStatus, HasRootRef } from '../../types';
+import { HasRootRef } from '../../types';
 
 export interface FormFieldProps extends
   HTMLAttributes<HTMLElement>,
-  HasRootRef<HTMLElement>,
-  HasFormStatus,
-  HasFormLabels {
+  HasRootRef<HTMLElement> {
   Component?: ElementType;
 }
 
@@ -16,10 +14,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
   Component,
   className,
   children,
-  status,
   getRootRef,
-  top,
-  bottom,
   ...restProps
 }: FormFieldProps) => {
   const platform = usePlatform();
@@ -41,9 +36,7 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={classNames(getClassName('FormField', platform), {
-        [`FormField--s-${status}`]: status !== 'default',
-      }, className)}
+      className={classNames(getClassName('FormField', platform), className)}
     >
       {children}
       <div className={classNames('FormField__border', {
@@ -54,7 +47,6 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
 };
 
 FormField.defaultProps = {
-  status: 'default',
   Component: 'div',
 };
 

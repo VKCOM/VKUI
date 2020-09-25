@@ -1,10 +1,9 @@
 import React, { ChangeEvent, ChangeEventHandler, RefCallback, SelectHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
-import Icon16Dropdown from '@vkontakte/icons/dist/16/dropdown';
 import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
 import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
 import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
+import { HasAlign, HasRef, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { setRef } from '../../lib/utils';
 import { getClassName, HasPlatform } from '../..';
@@ -14,8 +13,6 @@ export interface SelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
   HasRef<HTMLSelectElement>,
   HasRootRef<HTMLLabelElement>,
-  HasFormStatus,
-  HasFormLabels,
   HasAlign,
   AdaptivityProps,
   HasPlatform {
@@ -85,8 +82,8 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
   };
 
   render() {
-    const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, top, bottom, disabled, sizeX, sizeY, platform, ...restProps } = this.props;
+    const { style, value, defaultValue, onChange, align, placeholder, children, className,
+      getRef, getRootRef, disabled, sizeX, sizeY, platform, ...restProps } = this.props;
 
     return (
       <FormField
@@ -100,7 +97,6 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
         }, className)}
         style={style}
         getRootRef={getRootRef}
-        status={status}
       >
         <select
           {...restProps}
@@ -115,7 +111,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
         </select>
         <div className="Select__container">
           <div className="Select__title">{this.state.title}</div>
-          {sizeX === SizeType.COMPACT ? <Icon16Dropdown /> : sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+          {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
         </div>
       </FormField>
     );

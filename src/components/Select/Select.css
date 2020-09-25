@@ -83,8 +83,8 @@
   min-height: 44px;
   }
 
-.Select--sizeX--compact .Select__container {
-  padding: 12px 30px 12px 12px;
+.Select--sizeY--compact .Select__container {
+  padding: 12px 36px 12px 12px;
   }
 
   .Select--sizeX--compact .Icon--h-12 {

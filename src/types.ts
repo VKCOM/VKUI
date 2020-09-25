@@ -1,10 +1,8 @@
-import React, { ReactNode, RefCallback } from 'react';
+import React, { RefCallback } from 'react';
 import { OSType } from './lib/platform';
 import { Insets } from '@vkontakte/vk-bridge';
 
 export type AnyFunction = (...args: any[]) => any;
-
-export type FormStatusType = 'default' | 'error' | 'valid';
 
 export type AlignType = 'left' | 'center' | 'right';
 
@@ -26,15 +24,6 @@ export interface HasDangerHTML {
   dangerouslySetInnerHTML?: {
     __html: string;
   };
-}
-
-export interface HasFormStatus {
-  status?: FormStatusType;
-}
-
-export interface HasFormLabels {
-  top?: ReactNode;
-  bottom?: ReactNode;
 }
 
 export interface HasAlign {

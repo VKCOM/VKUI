@@ -2,7 +2,7 @@ import React, { Component, createRef, HTMLAttributes, RefObject, RefCallback } f
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasFormLabels, HasPlatform, HasRootRef } from '../../types';
+import { HasPlatform, HasRootRef } from '../../types';
 import { OnSliderResize, precisionRound } from '../Slider/Slider';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
@@ -15,7 +15,6 @@ export interface RangeSliderProps extends
   HasRootRef<HTMLDivElement>,
   HasPlatform,
   Omit<HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'>,
-  HasFormLabels,
   AdaptivityProps {
   min?: number;
   max?: number;
@@ -30,7 +29,6 @@ export interface RangeSliderState {
   startX: number;
   percentStart: number;
   percentEnd: number;
-  active: 'start' | 'end' | null;
   containerWidth: number;
 }
 
@@ -42,7 +40,6 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
       containerLeft: 0,
       percentStart: 0,
       percentEnd: 0,
-      active: null,
       containerWidth: 0,
     };
     this.isControlledOutside = this.props.hasOwnProperty('value');
@@ -79,16 +76,6 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
         percentEnd,
       });
     }
-
-    const target = e.originalEvent.target as HTMLElement;
-
-    const thumb = target.closest('.Slider__thumb');
-
-    if (thumb === this.thumbStart.current) {
-      this.setState({ active: 'start' });
-    } else if (thumb === this.thumbEnd.current) {
-      this.setState({ active: 'end' });
-    }
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
@@ -106,12 +93,6 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     }
 
     e.originalEvent.preventDefault();
-  };
-
-  onEnd: TouchEventHandler = () => {
-    this.setState({
-      active: null,
-    });
   };
 
   onResize: OnSliderResize = (callback?: VoidFunction | Event) => {
@@ -134,7 +115,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
       const stepCount = (this.props.max - this.props.min) / this.props.step;
       const absStep = this.state.containerWidth / stepCount;
 
-      res = Math.round(res / absStep) * absStep;
+      res = Math.floor(res / absStep) * absStep;
     }
 
     return res;
@@ -217,17 +198,14 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
   render() {
     const { className, min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, top, bottom, sizeY, ...restProps } = this.props;
+      onChange, getRootRef, platform, sizeY, ...restProps } = this.props;
 
     return (
       <div
         {...restProps}
-        className={classNames(getClassName('Slider', platform), className, {
-          [`Slider--sizeY-${sizeY}`]: !!sizeY,
-        })}
-        ref={this.getRef}
+        className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
       >
-        <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
+        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} className="Slider__in">
           <div
             className="Slider__dragger"
             style={{
@@ -236,15 +214,11 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
             }}
           >
             <span
-              className={classNames('Slider__thumb', 'Slider__thumb--start', {
-                'Slider__thumb--active': this.state.active === 'start',
-              })}
+              className={classNames('Slider__thumb', 'Slider__thumb--start')}
               ref={this.thumbStart}
             />
             <span
-              className={classNames('Slider__thumb', 'Slider__thumb--end', {
-                'Slider__thumb--active': this.state.active === 'end',
-              })}
+              className={classNames('Slider__thumb', 'Slider__thumb--end')}
               ref={this.thumbEnd}
             />
           </div>

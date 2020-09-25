@@ -1,14 +1,14 @@
 import React, { HTMLAttributes, KeyboardEvent, RefObject, createRef } from 'react';
 import SliderSwitchButton from './SliderSwitchButton';
 import classNames from '../../lib/classNames';
-import { HasFormLabels, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 
 interface Option {
   name: string;
   value: string | number;
 }
 
-interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasFormLabels {
+interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   options: Option[];
   activeValue?: Option['value'];
   name?: string;
@@ -117,7 +117,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
 
     return (
       <div
-        className={classNames('SliderSwitch__container', className)}
+        className={classNames('SliderSwitch', className)}
         onKeyDown={this.switchByKey}
         onMouseLeave={this.resetFocusedOption}
       >

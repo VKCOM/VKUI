@@ -1,8 +1,6 @@
 import React, {
-  Children,
   FunctionComponent,
   HTMLAttributes,
-  ReactElement,
   FormEvent,
   ElementType,
 } from 'react';
@@ -36,24 +34,7 @@ const FormLayout: FunctionComponent<FormLayoutProps> = (props: FormLayoutProps) 
       ref={getRef}
     >
       <div className="FormLayout__container">
-        {Children.toArray(children).map((field: ReactElement, i: number) => {
-          if (field) {
-            const { status, top, bottom } = field.props;
-
-            return (
-              <div
-                className={classNames('FormLayout__row', { [`FormLayout__row--s-${status}`]: !!status })}
-                key={field.key || `row-${i}`}
-              >
-                {top && <div className="FormLayout__row-top">{top}</div>}
-                {field}
-                {bottom && <div className="FormLayout__row-bottom">{bottom}</div>}
-              </div>
-            );
-          } else {
-            return null;
-          }
-        })}
+        {children}
       </div>
       {Component === 'form' &&
         <input type="submit" className="FormLayout__submit" value="" />

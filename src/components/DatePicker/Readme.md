@@ -13,9 +13,8 @@
       <PanelHeader>
         DatePicker
       </PanelHeader>
-      <FormLayout>
+      <FormItem top="Дата рождения">
         <DatePicker
-          top="Дата рождения"
           min={{day: 1, month: 1, year: 1901}}
           max={{day: 1, month: 1, year: 2006}}
           onDateChange={(value) => {console.log(value)}}
@@ -23,14 +22,15 @@
           monthPlaceholder="ММ"
           yearPlaceholder="ГГ"
         />
+      </FormItem>
+      <FormItem top="Дата рождения">
         <DatePicker
-          top="Дата рождения"
           min={{day: 1, month: 1, year: 1901}}
           max={{day: 1, month: 1, year: 2006}}
           defaultValue={{day: 2, month: 4, year: 1994}}
           onDateChange={(value) => {console.log(value)}}
         />
-      </FormLayout>
+      </FormItem>
     </Panel>
   </View>
 ```

@@ -4,9 +4,11 @@
   <View activePanel="panel">
     <Panel id="panel">
       <PanelHeader>Checkbox</PanelHeader>
-      <FormLayout>
-        <Checkbox>Я согласен со всем, что вы <Link>там</Link> понаписали</Checkbox>
-      </FormLayout>
+      <FormItem>
+        <Checkbox defaultChecked>Я участвую в сборе</Checkbox>
+        <Checkbox>Закрепить сообщение с запросом</Checkbox>
+        <Checkbox>Автоматически зачислять на карту</Checkbox>
+      </FormItem>
     </Panel>
   </View>
 ```

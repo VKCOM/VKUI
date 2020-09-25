@@ -18,7 +18,7 @@
 }
 
 .FormField__border.FormField__border--hover {
-  border-color: var(--field_border_hover);
+  border-color: var(--icon_tertiary_alpha);
 }
 
 .FormField--ios .FormField__border {
@@ -33,13 +33,12 @@
   border-radius: 8px;
 }
 
-.FormField--s-error .FormField__border {
+.FormItem--error .FormField__border {
   background: var(--field_error_background);
   border-color: var(--field_error_border);
 }
 
-.FormField--s-valid .FormField__border,
-.FormField--s-verified .FormField__border {
+.FormItem--valid .FormField__border {
   border-color: var(--field_valid_border);
 }
 
