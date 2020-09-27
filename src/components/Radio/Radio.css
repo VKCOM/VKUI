@@ -177,7 +177,7 @@
         border: 1px solid var(--icon_secondary);
         border-radius: 50%;
         transition: border-color .5s var(--ios-easing);
-        position: relative;
+        position: absolute;
         top: 2px;
         left: 2px;
       }
