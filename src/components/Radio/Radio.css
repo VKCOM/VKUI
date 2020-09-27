@@ -171,13 +171,13 @@
 
       .Radio--vkcom .Radio__icon::before {
         content: '';
-        display: inline-block;
+        display: block;
         width: 14px;
         height: 14px;
         border: 1px solid var(--icon_secondary);
         border-radius: 50%;
         transition: border-color .5s var(--ios-easing);
-        position: absolute;
+        position: relative;
         top: 2px;
         left: 2px;
       }
