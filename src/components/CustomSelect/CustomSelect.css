@@ -28,6 +28,7 @@
 
 .CustomSelect__options .CustomScrollView__box {
   max-height: 160px;
+  overscroll-behavior: contain;
 }
 
 .CustomSelect__option {
