@@ -89,15 +89,6 @@ class Slider extends Component<SliderProps, SliderState> {
     e.originalEvent.preventDefault();
   };
 
-  onResize: OnSliderResize = (callback?: VoidFunction) => {
-    const boundingRect = this.container.getBoundingClientRect();
-    this.setState({
-      containerWidth: boundingRect.width,
-    }, () => {
-      typeof callback === 'function' && callback();
-    });
-  };
-
   onChange(value: number, e: TouchEvent) {
     this.props.onChange && this.props.onChange(value, e);
   }
@@ -148,8 +139,10 @@ class Slider extends Component<SliderProps, SliderState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('resize', this.onResize);
-      this.onResize(() => {
+      const boundingRect = this.container.getBoundingClientRect();
+      this.setState({
+        containerWidth: boundingRect.width,
+      }, () => {
         this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.value)) });
       });
     }
@@ -159,10 +152,6 @@ class Slider extends Component<SliderProps, SliderState> {
     if (this.isControlledOutside && this.props.value !== prevProps.value) {
       this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.props.value)) });
     }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
   }
 
   getRef: RefCallback<HTMLDivElement> = (container) => {
