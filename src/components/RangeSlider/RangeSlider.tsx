@@ -3,7 +3,7 @@ import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
-import { OnSliderResize, precisionRound } from '../Slider/Slider';
+import { precisionRound } from '../Slider/Slider';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
@@ -25,7 +25,6 @@ export interface RangeSliderProps extends
 }
 
 export interface RangeSliderState {
-  containerLeft: number;
   startX: number;
   percentStart: number;
   percentEnd: number;
@@ -37,7 +36,6 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     super(props);
     this.state = {
       startX: 0,
-      containerLeft: 0,
       percentStart: 0,
       percentEnd: 0,
       containerWidth: 0,
@@ -61,21 +59,26 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   thumbEnd: RefObject<HTMLDivElement>;
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
-    const absolutePosition = this.validateAbsolute(e.startX - this.state.containerLeft);
-    const percentPosition = this.absoluteToPecent(absolutePosition);
-    const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
+    const boundingRect = this.container.getBoundingClientRect();
+    this.setState({
+      containerWidth: boundingRect.width,
+    }, () => {
+      const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
+      const percentPosition = this.absoluteToPecent(absolutePosition);
+      const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
 
-    this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
+      this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
 
-    if (this.isControlledOutside) {
-      this.setState({ startX: absolutePosition });
-    } else {
-      this.setState({
-        startX: absolutePosition,
-        percentStart,
-        percentEnd,
-      });
-    }
+      if (this.isControlledOutside) {
+        this.setState({ startX: absolutePosition });
+      } else {
+        this.setState({
+          startX: absolutePosition,
+          percentStart,
+          percentEnd,
+        });
+      }
+    });
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
@@ -93,15 +96,6 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     }
 
     e.originalEvent.preventDefault();
-  };
-
-  onResize: OnSliderResize = (callback?: VoidFunction | Event) => {
-    this.setState({
-      containerLeft: this.container.offsetLeft,
-      containerWidth: this.container.offsetWidth,
-    }, () => {
-      typeof callback === 'function' && callback();
-    });
   };
 
   onChange(value: Value, e: TouchEvent) {
@@ -174,8 +168,10 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('resize', this.onResize);
-      this.onResize(() => {
+      const boundingRect = this.container.getBoundingClientRect();
+      this.setState({
+        containerWidth: boundingRect.width,
+      }, () => {
         this.setState(this.validatePercent(this.valueToPercent(this.value)));
       });
     }
@@ -185,10 +181,6 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     if (this.isControlledOutside && prevProps.value !== this.props.value) {
       this.setState(this.validatePercent(this.valueToPercent(this.props.value)));
     }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
   }
 
   getRef: RefCallback<HTMLDivElement> = (container) => {
