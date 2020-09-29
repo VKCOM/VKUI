@@ -30,7 +30,6 @@ const Example = () => {
     creatableText: 'Создать значение'
   } 
 
-
   return (
       <Root activeView={activeView}>
         <View activePanel="profile" id="profile">
@@ -39,7 +38,7 @@ const Example = () => {
               Предпочтения
             </PanelHeader>
             <FormLayout>
-              <FormLayoutGroup top="Выберите группы">
+              <FormItem top="Выберите группы">
                 <ChipsSelect
                   {...groupsChipsProps}
                   showSelected={false}
@@ -66,10 +65,10 @@ const Example = () => {
                       );
                   }}
                 />
-              </FormLayoutGroup>
-              <FormLayoutGroup top="Выберите или добавьте цвета">
+              </FormItem>
+              <FormItem top="Выберите или добавьте цвета">
                 <ChipsSelect {...colorsChipsProps} onClick={() => setActiveView('colors')}/>
-              </FormLayoutGroup>
+              </FormItem>
             </FormLayout>
           </Panel>
         </View>

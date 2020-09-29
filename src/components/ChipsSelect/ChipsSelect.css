@@ -1,3 +1,7 @@
+.ChipsSelect {
+  position: relative;
+}
+
 .ChipsSelect .ChipsInput__container {
   padding-right: 25px;
 }

@@ -31,7 +31,7 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
 
 const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
-    style, status, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
+    style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, sizeY, creatable, filterFn, inputValue, creatableText,
     ...restProps
@@ -205,7 +205,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         style={style}
-        status={status}
         className={classNames(className, {
           ['CustomSelect__open']: opened,
           ['CustomSelect__open--popupDirectionTop']: popupDirection === 'top',
