@@ -27,8 +27,6 @@ export interface SliderState {
   containerWidth: number;
 }
 
-export type OnSliderResize = (callback?: VoidFunction | Event) => void;
-
 export function precisionRound(number: number, precision: number) {
   let factor = Math.pow(10, precision || 1);
   return Math.round(number * factor) / factor;
@@ -57,19 +55,23 @@ class Slider extends Component<SliderProps, SliderState> {
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
     const boundingRect = this.container.getBoundingClientRect();
-    const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
-    const percentPosition = this.absoluteToPecent(absolutePosition);
+    this.setState({
+      containerWidth: boundingRect.width,
+    }, () => {
+      const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
+      const percentPosition = this.absoluteToPecent(absolutePosition);
 
-    this.onChange(this.percentToValue(percentPosition), e);
+      this.onChange(this.percentToValue(percentPosition), e);
 
-    if (this.isControlledOutside) {
-      this.setState({ startX: absolutePosition });
-    } else {
-      this.setState({
-        startX: absolutePosition,
-        percentPosition,
-      });
-    }
+      if (this.isControlledOutside) {
+        this.setState({ startX: absolutePosition });
+      } else {
+        this.setState({
+          startX: absolutePosition,
+          percentPosition,
+        });
+      }
+    });
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
@@ -83,15 +85,6 @@ class Slider extends Component<SliderProps, SliderState> {
     }
 
     e.originalEvent.preventDefault();
-  };
-
-  onResize: OnSliderResize = (callback?: VoidFunction) => {
-    const boundingRect = this.container.getBoundingClientRect();
-    this.setState({
-      containerWidth: boundingRect.width,
-    }, () => {
-      typeof callback === 'function' && callback();
-    });
   };
 
   onChange(value: number, e: TouchEvent) {
@@ -144,8 +137,10 @@ class Slider extends Component<SliderProps, SliderState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('resize', this.onResize);
-      this.onResize(() => {
+      const boundingRect = this.container.getBoundingClientRect();
+      this.setState({
+        containerWidth: boundingRect.width,
+      }, () => {
         this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.value)) });
       });
     }
@@ -155,10 +150,6 @@ class Slider extends Component<SliderProps, SliderState> {
     if (this.isControlledOutside && this.props.value !== prevProps.value) {
       this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.props.value)) });
     }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
   }
 
   getRef: RefCallback<HTMLDivElement> = (container) => {
