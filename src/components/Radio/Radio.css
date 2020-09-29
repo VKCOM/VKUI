@@ -164,29 +164,19 @@
   .Radio--vkcom .Radio__container {}
 
     .Radio--vkcom .Radio__icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 12px;
+      width: 16px;
+      height: 16px;
+      margin: 2px 14px 2px 2px;
+      border: 1px solid var(--icon_secondary);
+      border-radius: 50%;
+      transition: border-color .5s var(--ios-easing);
     }
-
-      .Radio--vkcom .Radio__icon::before {
-        content: '';
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        border: 1px solid var(--icon_secondary);
-        border-radius: 50%;
-        transition: border-color .5s var(--ios-easing);
-        position: absolute;
-        top: 2px;
-        left: 2px;
-      }
 
       .Radio--vkcom .Radio__icon::after {
         width: 8px;
         height: 8px;
-        left: 6px;
-        top: 6px;
+        left: 3px;
+        top: 3px;
         transform: scale(.3);
         transition: transform .5s var(--ios-easing);
         }
@@ -195,13 +185,8 @@
       opacity: .4;
     }
 
-    .Radio--vkcom .Radio__input:disabled ~ .Radio__container .Radio__icon::before {
-      background-color: transparent;
-    }
-
-    .Radio--vkcom .Radio__input:checked ~ .Radio__container .Radio__icon::before {
+    .Radio--vkcom .Radio__input:checked ~ .Radio__container .Radio__icon {
       border-color: var(--accent);
-      background-color: transparent;
       }
 
       .Radio--vkcom .Radio__input:checked ~ .Radio__container .Radio__icon::after {
