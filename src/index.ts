@@ -80,6 +80,7 @@ export { MiniInfoCell } from './components/MiniInfoCell/MiniInfoCell';
  * Forms
  */
 export { default as FormLayout } from './components/FormLayout/FormLayout';
+export { FormItem } from './components/FormItem/FormItem';
 export { default as FormLayoutGroup } from './components/FormLayoutGroup/FormLayoutGroup';
 export { default as FormStatus } from './components/FormStatus/FormStatus';
 export { default as Switch } from './components/Switch/Switch';
@@ -162,7 +163,6 @@ export const v = process.env.VKUI_VERSION;
  * Экспортируем таким образом из-за проблемы, описанной тут https://github.com/webpack/webpack/issues/7378
  */
 import {
-  FormStatusType as _FormStatusType,
   AlignType as _AlignType,
   HasPlatform as _HasPlatform,
   HasInsets as _HasInsets,
@@ -171,7 +171,6 @@ import { OSType as _OSType } from './lib/platform';
 import { AdaptivityProps as _AdaptivityProps } from './hoc/withAdaptivity';
 
 export type OSType = _OSType;
-export type FormStatusType = _FormStatusType;
 export type AlignType = _AlignType;
 export type HasPlatform = _HasPlatform;
 export type HasInsets = _HasInsets;

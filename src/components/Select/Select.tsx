@@ -2,10 +2,10 @@ import React, { FunctionComponent, ReactElement, ChangeEvent, useRef } from 'rea
 import NativeSelect, { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomSelect, { SelectOption, SelectChangeResult } from '../CustomSelect/CustomSelect';
 import { hasMouse } from '../../helpers/inputUtils';
-import { HasRef, Ref, HasFormStatus } from '../../types';
+import { HasRef, Ref } from '../../types';
 import { setRef } from '../../lib/utils';
 
-interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLSelectElement | HTMLInputElement>, HasFormStatus {
+interface Props extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLSelectElement | HTMLInputElement> {
   options?: SelectOption[];
   popupDirection?: 'top' | 'bottom';
   onChange?: (result: SelectChangeResult) => void;

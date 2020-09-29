@@ -7,11 +7,15 @@
       Input
     </PanelHeader>
     <FormLayout>
-      <FormLayoutGroup top="Фамилия">
+      <FormItem top="Фамилия">
         <Input type="text" defaultValue="Петров" />
+      </FormItem>
+      <FormItem>
         <Input type="text" defaultValue="Иванов" align="center" />
+      </FormItem>
+      <FormItem>
         <Input type="text" defaultValue="Сидоров" align="right" />
-      </FormLayoutGroup>
+      </FormItem>
     </FormLayout>
   </Panel>
 </View>

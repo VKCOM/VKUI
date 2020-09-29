@@ -146,13 +146,17 @@
                }
              >
                <FormLayout>
-                 <SelectMimicry top="Страна" placeholder="Не выбрана" />
-                 <SelectMimicry top="Город" placeholder="Не выбран" />
-                 <FormLayoutGroup top="Пол">
+                 <FormItem top="Страна">
+                   <SelectMimicry placeholder="Не выбрана" />
+                 </FormItem>
+                 <FormItem top="Город">
+                   <SelectMimicry placeholder="Не выбран" />
+                 </FormItem>
+                 <FormItem top="Пол">
                    <Radio name="sex" value="male" defaultChecked>Любой</Radio>
                    <Radio name="sex" value="male">Мужской</Radio>
                    <Radio name="sex" value="female">Женский</Radio>
-                 </FormLayoutGroup>
+                 </FormItem>
                </FormLayout>
              </ModalPage>
            </ModalRoot>

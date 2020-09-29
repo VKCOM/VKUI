@@ -14,13 +14,21 @@
       </List>
     </Group>
     <Group header={<Header mode="secondary">Счётчики в кнопках</Header>}>
-      <FormLayout>
+      <FormItem>
         <Button mode="secondary" size="m" after={<Counter>16</Counter>}>Secondary medium</Button>
-        <Button mode="tertiary" after={<Counter>6</Counter>}>Tertiary small</Button>
+      </FormItem>
+      <FormItem>
+        <Button mode="tertiary" after={<Counter size="s">6</Counter>}>Tertiary small</Button>
+      </FormItem>
+      <FormItem>
         <Button mode="outline" size="m" after={<Counter>20</Counter>}>Outline medium</Button>
+      </FormItem>
+      <FormItem>
         <Button mode="commerce" size="m" after={<Counter>4</Counter>}>Commerce medium</Button>
+      </FormItem>
+      <FormItem>
         <Button size="l" after={<Counter>8</Counter>}>Primary large</Button>
-      </FormLayout>
+      </FormItem>
     </Group>
     <Group header={
       <Header

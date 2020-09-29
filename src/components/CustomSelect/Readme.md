@@ -18,14 +18,14 @@ class Example extends React.Component {
           <PanelHeader>
             CustomSelect
           </PanelHeader>
-            <FormLayout>
+            <FormItem>
               <CustomSelect
                 placeholder="Не выбрано"
                 options={this.state.options}
                 value={this.state.value}
                 onChange={(option) => this.setState({ value: option.value })}
               />
-            </FormLayout>
+            </FormItem>
         </Panel>
       </View>
     )

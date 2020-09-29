@@ -12,26 +12,20 @@
 .CardGrid .Card {
   float: left;
   margin-top: 8px;
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 .CardGrid .Card--sz-l {
-  width: 100%;
+  width: calc(100% - 8px);
 }
 
 .CardGrid .Card--sz-m {
-  width: calc((100% - 8px) / 2);
-}
-
-.CardGrid .Card--sz-m + .Card--sz-m {
-  margin-left: 8px;
+  width: calc((100% - 2 * 8px) / 2);
 }
 
 .CardGrid .Card--sz-s {
-  width: calc((100% - 2 * 8px) / 3);
-}
-
-.CardGrid .Card--sz-s + .Card--sz-s {
-  margin-left: 8px;
+  width: calc((100% - 3 * 8px) / 3);
 }
 
 /**
@@ -39,8 +33,8 @@
  */
 
 .CardGrid--ios {
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 /**
@@ -49,6 +43,6 @@
 
 .CardGrid--android,
 .CardGrid--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
 }

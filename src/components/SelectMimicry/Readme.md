@@ -21,17 +21,18 @@
                 Профиль
               </PanelHeader>
               <FormLayout>
-                <SelectMimicry
-                  top="Выберите страну"
-                  placeholder="Не выбрана"
-                  onClick={() => this.setState({ activeView: 'countries' })}
-                >{this.state.country}</SelectMimicry>
-
-                <SelectMimicry
-                  top="Выберите город"
-                  placeholder="Не выбран"
-                  disabled
-                />
+                <FormItem top="Выберите страну">
+                  <SelectMimicry
+                    placeholder="Не выбрана"
+                    onClick={() => this.setState({ activeView: 'countries' })}
+                  >{this.state.country}</SelectMimicry>
+                </FormItem>
+                <FormItem top="Выберите город">
+                  <SelectMimicry
+                    placeholder="Не выбран"
+                    disabled
+                  />
+                </FormItem>
               </FormLayout>
             </Panel>
           </View>

@@ -35,6 +35,10 @@
       font-weight: 500;
       }
 
-.FormStatus--vkcom .FormStatus__content {
+/**
+ * VKCOM
+ */
+
+.FormStatus--vkcom.FormStatus--default .FormStatus__content {
   color: var(--text_subhead);
 }

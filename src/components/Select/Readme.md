@@ -15,12 +15,14 @@ import { Select } from '@vkontakte/vkui';
     <PanelHeader>
       Select
     </PanelHeader>
-    <FormLayout>
-      <Select top="Обычный Select" placeholder="Выберите пол">
+    <FormItem top="Обычный Select">
+      <Select placeholder="Выберите пол">
         <option value="m">Мужской</option>
         <option value="f">Женский</option>
       </Select>
-      <Select top="Обычный Select с скроллом" placeholder="Выберите месяц">
+    </FormItem>
+    <FormItem top="Обычный Select с скроллом">
+      <Select placeholder="Выберите месяц">
         <option value="1">Январь</option>
         <option value="2">Февраль</option>
         <option value="3">Март</option>
@@ -34,7 +36,7 @@ import { Select } from '@vkontakte/vkui';
         <option value="11">Ноябрь</option>
         <option value="12">Декабрь</option>
       </Select>
-    </FormLayout>
+    </FormItem>
   </Panel>
 </View>
 ```

@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "4.0.0-beta.29",
+  "version": "4.0.0-beta.30",
   "main": "dist/index.js",
   "module": "dist/es6/index.js",
   "typings": "dist/index.d.ts",
@@ -41,6 +41,7 @@
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^3.0.0",
     "concurrently": "^4.1.2",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.2.0",
     "eslint": "~6.8.0",
     "eslint-plugin-react": "^7.16.0",
@@ -62,6 +63,7 @@
     "source-map-loader": "^0.2.4",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
+    "shx": "^0.3.2",
     "ts-loader": "^6.0.4",
     "typescript": "3.7.5",
     "webpack": "^4.41.2",
@@ -82,8 +84,8 @@
   },
   "scripts": {
     "prepare": "yarn build",
-    "styleguide": "NODE_ENV=development styleguidist server --config=styleguide/config.js",
-    "styleguide:build": "NODE_ENV=production styleguidist build --config=styleguide/config.js",
+    "styleguide": "cross-env NODE_ENV=development styleguidist server --config=styleguide/config.js",
+    "styleguide:build": "cross-env NODE_ENV=production styleguidist build --config=styleguide/config.js",
     "dev": "yarn clear && yarn copy-default-scheme && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:postcss-dev\" \"yarn:postcss-unstable-dev\"",
     "dev-es6": "yarn clear && yarn copy-default-scheme && concurrently \"yarn:tsc-es6-dev\" \"yarn:babel-es6-dev\" \"yarn:postcss-dev\" \"yarn:postcss-unstable-dev\"",
     "dev-all": "yarn clear && yarn copy-default-scheme && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:tsc-es6-dev\" \"yarn:babel-es6-dev\" \"yarn:postcss-dev\" \"yarn:postcss-unstable-dev\"",
@@ -94,15 +96,15 @@
     "tsc-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/ --watch --preserveWatchOutput",
     "tsc-es6-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/es6/ --watch --preserveWatchOutput",
     "build": "yarn tsc && yarn babel && yarn tsc-es6 && yarn babel-es6 && yarn postcss && yarn postcss-unstable && yarn copy-default-scheme",
-    "postcss": "NODE_ENV=production postcss src/styles/styles.css --output dist/vkui.css --verbose",
+    "postcss": "cross-env NODE_ENV=production postcss src/styles/styles.css --output dist/vkui.css --verbose",
     "postcss-unstable": "NODE_ENV=production postcss src/styles/unstable.css --output dist/unstable.css --verbose",
-    "babel": "NODE_ENV=production babel src/ --out-dir dist/ --source-maps --extensions .tsx,.jsx,.ts,.js",
-    "babel-es6": "NODE_ENV=production babel --config-file ./babel.es6.config.js src/ --out-dir dist/es6/ --source-maps --extensions .tsx,.jsx,.ts,.js",
-    "tsc": "NODE_ENV=production tsc --emitDeclarationOnly --declaration",
-    "tsc-es6": "NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/es6/",
-    "clear": "rm -rf dist/*",
+    "babel": "cross-env NODE_ENV=production babel src/ --out-dir dist/ --source-maps --extensions .tsx,.jsx,.ts,.js",
+    "babel-es6": "cross-env NODE_ENV=production babel --config-file ./babel.es6.config.js src/ --out-dir dist/es6/ --source-maps --extensions .tsx,.jsx,.ts,.js",
+    "tsc": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration",
+    "tsc-es6": "cross-env NODE_ENV=production tsc --emitDeclarationOnly --declaration --outDir dist/es6/",
+    "clear": "shx rm -rf dist/*",
     "test": "tsc --noEmit && eslint --ext .jsx,.js,.ts,.tsx src/ && stylelint \"./src/**/*.css\"",
-    "copy-default-scheme": "cp ./src/styles/bright_light.css ./dist/default_scheme.css"
+    "copy-default-scheme": "shx cp ./src/styles/bright_light.css ./dist/default_scheme.css"
   },
   "pre-commit": [
     "test"

@@ -113,6 +113,7 @@ module.exports = {
         name: 'Forms',
         components: () => [
           '../src/components/FormLayout/FormLayout.tsx',
+          '../src/components/FormItem/FormItem.tsx',
           '../src/components/FormLayoutGroup/FormLayoutGroup.tsx',
           '../src/components/FormStatus/FormStatus.tsx',
           '../src/components/Slider/Slider.tsx',
@@ -150,6 +151,10 @@ module.exports = {
           '../src/components/ConfigProvider/ConfigProvider.tsx',
           '../src/components/Touch/Touch.tsx',
         ]
+      },
+      {
+        name: 'Helpers',
+        content: './pages/helpers.md'
       },
       {
         name: 'Server Side Rendering',

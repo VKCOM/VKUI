@@ -9,15 +9,14 @@
         <View activePanel="slider">
           <Panel id="slider">
             <PanelHeader>RangerSlider</PanelHeader>
-            <FormLayout>
+            <FormItem top="Uncontrolled">
               <RangeSlider
-                top="Uncontrolled"
                 min={10}
                 max={20}
                 step={1}
                 defaultValue={[12, 16]}
               />
-            </FormLayout>
+            </FormItem>
           </Panel>
         </View>
       );

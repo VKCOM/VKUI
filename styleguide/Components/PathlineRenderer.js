@@ -8,6 +8,7 @@ import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
+import { SizeYSelect } from './SizeYSelect';
 
 export const styles = ({ fontFamily, fontSize }) => ({
   pathline: {
@@ -44,6 +45,11 @@ export function PathlineRenderer({ classes, children }) {
               onChange={(e) => styleGuideContext.setContext({ width: Number(e.target.value) })}
               value={styleGuideContext.width}
               isWide={!styleGuideContext.hasSidebar}
+            />
+            &nbsp;|&nbsp;
+            <SizeYSelect
+              onChange={(e) => styleGuideContext.setContext({ sizeY: e.target.value })}
+              value={styleGuideContext.sizeY}
             />
             &nbsp;|&nbsp;
             <span className={classes.link}>

@@ -13,11 +13,14 @@ import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { DESKTOP_SIZE, MOBILE_SIZE } from '../../src/components/AdaptivityProvider/AdaptivityProvider';
 import { defaultConfigProviderProps } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { ViewWidthSelect } from './ViewWidthSelect';
+import { SizeType } from '../../src/components/AdaptivityProvider/AdaptivityContext';
+import { SizeYSelect } from './SizeYSelect';
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
   webviewType: WebviewType.INTERNAL,
-  width: MOBILE_SIZE
+  width: MOBILE_SIZE,
+  sizeY: SizeType.REGULAR,
 });
 
 const styles = ({ color, fontFamily, fontSize, mq, space }) => ({
@@ -79,6 +82,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
     ...defaultConfigProviderProps,
     webviewType: WebviewType.INTERNAL,
     width: MOBILE_SIZE,
+    sizeY: SizeType.REGULAR,
   });
 
   const width = state.width;
@@ -125,6 +129,12 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
                 onChange={ (e) => setContext({ width: Number(e.target.value) })}
                 value={state.width}
                 isWide={!hasSidebar}
+              />
+            </div>
+            <div style={{ marginTop: 4 }}>
+              <SizeYSelect
+                onChange={ (e) => setContext({ sizeY: e.target.value })}
+                value={state.sizeY}
               />
             </div>
             <div style={{ marginTop: 4 }}>

@@ -4,9 +4,8 @@
       <PanelHeader>
         SliderSwitch
       </PanelHeader>
-      <FormLayout>
+      <FormItem top="Пол">
         <SliderSwitch 
-          top="Пол"
           options={[
             {
               name: 'Мужской',
@@ -18,7 +17,7 @@
             },
           ]}
         />
-      </FormLayout>
+      </FormItem>
     </Panel>
   </View>
 ```

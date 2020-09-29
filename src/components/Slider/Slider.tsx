@@ -2,7 +2,7 @@ import React, { Component, HTMLAttributes, RefCallback } from 'react';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { HasFormLabels, HasPlatform, HasRootRef } from '../../types';
+import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
@@ -12,7 +12,6 @@ export interface SliderProps extends
   HasRootRef<HTMLDivElement>,
   HasPlatform,
   Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange'>,
-  HasFormLabels,
   AdaptivityProps {
   min?: number;
   max?: number;
@@ -25,11 +24,8 @@ export interface SliderProps extends
 export interface SliderState {
   startX: number;
   percentPosition: number;
-  active: boolean;
   containerWidth: number;
 }
-
-export type OnSliderResize = (callback?: VoidFunction | Event) => void;
 
 export function precisionRound(number: number, precision: number) {
   let factor = Math.pow(10, precision || 1);
@@ -42,7 +38,6 @@ class Slider extends Component<SliderProps, SliderState> {
     this.state = {
       startX: 0,
       percentPosition: 0,
-      active: false,
       containerWidth: 0,
     };
     this.isControlledOutside = this.props.hasOwnProperty('value');
@@ -60,23 +55,23 @@ class Slider extends Component<SliderProps, SliderState> {
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
     const boundingRect = this.container.getBoundingClientRect();
-    const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
-    const percentPosition = this.absoluteToPecent(absolutePosition);
+    this.setState({
+      containerWidth: boundingRect.width,
+    }, () => {
+      const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
+      const percentPosition = this.absoluteToPecent(absolutePosition);
 
-    this.onChange(this.percentToValue(percentPosition), e);
+      this.onChange(this.percentToValue(percentPosition), e);
 
-    if (this.isControlledOutside) {
-      this.setState({ startX: absolutePosition });
-    } else {
-      this.setState({
-        startX: absolutePosition,
-        percentPosition,
-      });
-    }
-
-    const target = e.originalEvent.target as HTMLElement;
-
-    this.setState({ active: !!target.closest('.Slider__thumb') });
+      if (this.isControlledOutside) {
+        this.setState({ startX: absolutePosition });
+      } else {
+        this.setState({
+          startX: absolutePosition,
+          percentPosition,
+        });
+      }
+    });
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
@@ -90,21 +85,6 @@ class Slider extends Component<SliderProps, SliderState> {
     }
 
     e.originalEvent.preventDefault();
-  };
-
-  onEnd: TouchEventHandler = () => {
-    this.setState({
-      active: false,
-    });
-  };
-
-  onResize: OnSliderResize = (callback?: VoidFunction) => {
-    const boundingRect = this.container.getBoundingClientRect();
-    this.setState({
-      containerWidth: boundingRect.width,
-    }, () => {
-      typeof callback === 'function' && callback();
-    });
   };
 
   onChange(value: number, e: TouchEvent) {
@@ -157,8 +137,10 @@ class Slider extends Component<SliderProps, SliderState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('resize', this.onResize);
-      this.onResize(() => {
+      const boundingRect = this.container.getBoundingClientRect();
+      this.setState({
+        containerWidth: boundingRect.width,
+      }, () => {
         this.setState({ percentPosition: this.validatePercent(this.valueToPercent(this.value)) });
       });
     }
@@ -170,10 +152,6 @@ class Slider extends Component<SliderProps, SliderState> {
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
-  }
-
   getRef: RefCallback<HTMLDivElement> = (container) => {
     this.container = container;
     setRef(container, this.props.getRootRef);
@@ -181,22 +159,17 @@ class Slider extends Component<SliderProps, SliderState> {
 
   render() {
     const { className, min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, top, bottom, sizeY, ...restProps } = this.props;
+      onChange, getRootRef, platform, sizeY, ...restProps } = this.props;
 
     return (
       <div
         {...restProps}
-        className={classNames(getClassName('Slider', platform), className, {
-          [`Slider--sizeY-${sizeY}`]: !!sizeY,
-        })}
-        ref={this.getRef}
+        className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
       >
-        <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
+        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} className="Slider__in">
           <div className="Slider__dragger" style={{ width: `${this.state.percentPosition}%` }}>
             <span
-              className={classNames('Slider__thumb', 'Slider__thumb--end', {
-                'Slider__thumb--active': this.state.active,
-              })}
+              className={classNames('Slider__thumb', 'Slider__thumb--end')}
             />
           </div>
         </Touch>
