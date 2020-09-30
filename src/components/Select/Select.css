@@ -8,7 +8,7 @@
   outline: none;
   }
 
-  .Select select {
+  .Select__el {
     display: block;
     position: absolute;
     appearance: none;
