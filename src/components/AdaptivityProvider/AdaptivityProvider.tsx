@@ -46,7 +46,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 }
 
 AdaptivityProvider.defaultProps = {
-  window: window,
+  window,
 };
 
 function calculateAdaptivity(windowWidth: number, props: AdaptivityProviderProps) {

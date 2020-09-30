@@ -102,7 +102,7 @@ class DatePicker extends Component<Props, Partial<State>> {
 
       array[i] = {
         label: String(value),
-        value: value,
+        value,
       };
     }
 
@@ -117,7 +117,7 @@ class DatePicker extends Component<Props, Partial<State>> {
 
       return {
         label: name,
-        value: value,
+        value,
       };
     });
   };
@@ -131,7 +131,7 @@ class DatePicker extends Component<Props, Partial<State>> {
     for (let value = maxYear; value >= minYear; value--) {
       yearOptions.push({
         label: String(value),
-        value: value,
+        value,
       });
     }
 

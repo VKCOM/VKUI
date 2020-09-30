@@ -686,7 +686,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
       prevModal: null,
       nextModal: null,
       visibleModals: [activeModal],
-      activeModal: activeModal,
+      activeModal,
       animated: false,
       switching: false,
     };

@@ -66,9 +66,9 @@ export class SplitCol extends Component<ColProps> {
     const { children, width, maxWidth, minWidth, spaced } = this.props;
 
     return <div style={{
-      width: width,
-      maxWidth: maxWidth,
-      minWidth: minWidth,
+      width,
+      maxWidth,
+      minWidth,
       margin: spaced ? '0 16px' : null,
     }} ref={this.baseRef} className="SplitLayout__col">
       <SplitContext.Provider value={this.getContext()}>
@@ -83,15 +83,15 @@ export class SplitFixedCol extends Component<ColProps> {
     const { children, width, maxWidth, minWidth, spaced } = this.props;
 
     return <div style={{
-      width: width,
-      maxWidth: maxWidth,
-      minWidth: minWidth,
+      width,
+      maxWidth,
+      minWidth,
       margin: spaced ? '0 16px' : null,
     }} className="SplitLayout__colFixedWrap">
       <div style={{
-        width: width,
-        maxWidth: maxWidth,
-        minWidth: minWidth,
+        width,
+        maxWidth,
+        minWidth,
       }} className="SplitLayout__colFixedInner">
         {children}
       </div>

@@ -293,7 +293,7 @@ class View extends Component<ViewProps, ViewState> {
         prevPanel: null,
         nextPanel: null,
         visiblePanels: [activePanel],
-        activePanel: activePanel,
+        activePanel,
         animated: false,
         isBack: undefined,
         scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls,
