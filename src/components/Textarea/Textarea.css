@@ -2,7 +2,7 @@
   position: relative;
   }
 
-  .Textarea textarea {
+  .Textarea__el {
     margin: 0;
     width: 100%;
     display: block;
@@ -22,7 +22,7 @@
     background: transparent;
     }
 
-  .Textarea--sizeY-compact textarea {
+  .Textarea--sizeY-compact .Textarea__el {
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 15px;
@@ -30,14 +30,14 @@
     min-height: 60px;
   }
 
-  .Textarea textarea::placeholder {
+  .Textarea__el::placeholder {
     color: var(--field_text_placeholder);
   }
 
-  .Textarea textarea:disabled {
+  .Textarea__el:disabled {
     opacity: .4;
   }
 
-  .Textarea textarea:disabled::placeholder {
+  .Textarea__el:disabled::placeholder {
     color: var(--text_secondary);
   }
