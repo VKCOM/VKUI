@@ -218,7 +218,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     }, current);
 
     if (targetIndex === current) {
-      let targetSlide = current + direction;
+      const targetSlide = current + direction;
 
       if (targetSlide >= 0 && targetSlide < slides.length) {
         if (Math.abs(deltaX) > slides[targetSlide].width * 0.05) {

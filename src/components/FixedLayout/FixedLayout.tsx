@@ -76,7 +76,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
-    let panelScroll = e.detail.scrolls[this.props.panel] || 0;
+    const panelScroll = e.detail.scrolls[this.props.panel] || 0;
     this.setState({
       position: 'absolute',
       top: this.el.offsetTop + panelScroll,

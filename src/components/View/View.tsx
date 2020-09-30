@@ -35,7 +35,7 @@ type AnimationEventHandler = (e?: AnimationEvent) => void;
 
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
-let scrollsCache: ViewsScrolls = {};
+const scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
@@ -424,9 +424,9 @@ class View extends Component<ViewProps, ViewState> {
       return {};
     }
 
-    let prevPanelTranslate = `${this.state.swipeBackShift}px`;
-    let nextPanelTranslate = `${-50 + this.state.swipeBackShift * 100 / this.window.innerWidth / 2}%`;
-    let prevPanelShadow = 0.3 * (this.window.innerWidth - this.state.swipeBackShift) / this.window.innerWidth;
+    const prevPanelTranslate = `${this.state.swipeBackShift}px`;
+    const nextPanelTranslate = `${-50 + this.state.swipeBackShift * 100 / this.window.innerWidth / 2}%`;
+    const prevPanelShadow = 0.3 * (this.window.innerWidth - this.state.swipeBackShift) / this.window.innerWidth;
 
     if (this.state.swipeBackResult) {
       return isPrev ? { boxShadow: `-2px 0 12px rgba(0, 0, 0, ${prevPanelShadow})` } : {};

@@ -38,7 +38,7 @@ export default class CustomScrollView extends React.Component<Props> {
   }
 
   chooseTransformProp() {
-    let style = this.trackerY.current.style;
+    const style = this.trackerY.current.style;
     let prop = '';
 
     if ('transform' in style) {
@@ -53,8 +53,8 @@ export default class CustomScrollView extends React.Component<Props> {
   resize = () => {
     const clientHeight = this.box.current.clientHeight;
     const scrollHeight = this.box.current.scrollHeight;
-    let ratio = clientHeight / scrollHeight;
-    let trackerHeight = Math.max(clientHeight * ratio, 40);
+    const ratio = clientHeight / scrollHeight;
+    const trackerHeight = Math.max(clientHeight * ratio, 40);
 
     this.ratio = ratio;
     this.clientHeight = clientHeight;

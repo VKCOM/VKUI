@@ -188,7 +188,7 @@ class Cell extends Component<CellProps, CellState> {
   };
 
   render() {
-    let {
+    const {
       onRemove,
       removePlaceholder,
       onDragFinish,

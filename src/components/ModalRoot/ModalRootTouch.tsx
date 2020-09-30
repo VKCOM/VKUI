@@ -272,7 +272,7 @@ class ModalRootTouch extends Component<ModalRootProps, ModalRootState> {
     const contentElement: HTMLElement = modalElement.querySelector('.ModalPage__content');
     const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
 
-    let prevTranslateY = modalState.translateY;
+    const prevTranslateY = modalState.translateY;
 
     modalState.expandable = contentHeight > contentElement.clientHeight;
 

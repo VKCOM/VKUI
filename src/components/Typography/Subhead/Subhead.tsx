@@ -19,7 +19,7 @@ const Subhead: FunctionComponent<SubheadProps> = ({
   const platform = usePlatform();
 
   let SubheadComponent: React.ElementType = Component;
-  let subheadWeight: SubheadProps['weight'] = platform === ANDROID && weight === 'semibold' ? 'medium' : weight;
+  const subheadWeight: SubheadProps['weight'] = platform === ANDROID && weight === 'semibold' ? 'medium' : weight;
 
   if (!Component) {
     SubheadComponent = platform === ANDROID ? 'h4' : 'h5';

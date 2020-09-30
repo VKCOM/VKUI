@@ -11,7 +11,7 @@ export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
   expanded?: boolean;
 }
 
-let Separator: FunctionComponent<SeparatorProps> = ({ className, wide, expanded, ...restProps }: SeparatorProps) => {
+const Separator: FunctionComponent<SeparatorProps> = ({ className, wide, expanded, ...restProps }: SeparatorProps) => {
   const platform = usePlatform();
 
   return (

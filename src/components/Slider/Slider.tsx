@@ -28,7 +28,7 @@ export interface SliderState {
 }
 
 export function precisionRound(number: number, precision: number) {
-  let factor = Math.pow(10, precision || 1);
+  const factor = Math.pow(10, precision || 1);
   return Math.round(number * factor) / factor;
 }
 

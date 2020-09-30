@@ -5,7 +5,7 @@ export interface ObjectClassNames {
 export type ClassName = number | string | ObjectClassNames | false | null | undefined;
 
 export function classNames(...classnames: ClassName[]) {
-  let result: string[] = [];
+  const result: string[] = [];
 
   classnames.forEach((item: ClassName): void => {
     if (!item) {

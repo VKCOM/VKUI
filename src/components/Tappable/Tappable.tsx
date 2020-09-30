@@ -54,7 +54,7 @@ const ts = () => +Date.now();
 export const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
 
-let storage: Storage = {};
+const storage: Storage = {};
 
 /*
  * Очищает таймауты и хранилище для всех экземпляров компонента, кроме переданного
@@ -199,7 +199,7 @@ class Tappable extends Component<TappableProps, TappableState> {
 
       this.wavesTimeout = window.setTimeout(() => {
         this.setState((state: TappableState): TappableState => {
-          let clicks = { ...state.clicks };
+          const clicks = { ...state.clicks };
           delete clicks[key];
           return { clicks };
         });
@@ -309,7 +309,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       ? Component
       : Touch;
 
-    let props: RootComponentProps = {};
+    const props: RootComponentProps = {};
     if (!restProps.disabled) {
       props.Component = Component;
       /* eslint-disable */

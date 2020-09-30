@@ -185,10 +185,10 @@ export default class Touch extends Component<TouchProps> {
 
       // если мы ещё не определились
       if (!isX && !isY) {
-        let willBeX = shiftXAbs >= 5 && shiftXAbs > shiftYAbs;
-        let willBeY = shiftYAbs >= 5 && shiftYAbs > shiftXAbs;
-        let willBeSlidedX = willBeX && !!this.props.onMoveX || !!this.props.onMove;
-        let willBeSlidedY = willBeY && !!this.props.onMoveY || !!this.props.onMove;
+        const willBeX = shiftXAbs >= 5 && shiftXAbs > shiftYAbs;
+        const willBeY = shiftYAbs >= 5 && shiftYAbs > shiftXAbs;
+        const willBeSlidedX = willBeX && !!this.props.onMoveX || !!this.props.onMove;
+        const willBeSlidedY = willBeY && !!this.props.onMoveY || !!this.props.onMove;
 
         this.gesture.isY = willBeY;
         this.gesture.isX = willBeX;

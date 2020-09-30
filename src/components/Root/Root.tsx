@@ -89,7 +89,7 @@ class Root extends Component<RootProps, RootState> {
 
     // Нужен переход
     if (this.props.activeView !== prevProps.activeView) {
-      let pageYOffset = this.window.pageYOffset;
+      const pageYOffset = this.window.pageYOffset;
       const firstLayerId = [].concat(prevProps.children).find((view: ReactElement) => {
         return view.props.id === prevProps.activeView || view.props.id === this.props.activeView;
       }).props.id;

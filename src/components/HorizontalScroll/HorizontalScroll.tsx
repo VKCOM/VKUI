@@ -73,7 +73,7 @@ function doScroll({
    */
   const maxLeft = initialScrollWidth - scrollElement.offsetWidth;
 
-  let startLeft = scrollElement.scrollLeft;
+  const startLeft = scrollElement.scrollLeft;
   let endLeft = getScrollPosition(startLeft);
 
   onScrollStart();

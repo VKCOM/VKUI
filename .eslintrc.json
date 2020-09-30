@@ -25,6 +25,7 @@
       "ignoreRestSiblings": true
     }],
     "radix": "error",
-    "object-shorthand": "error"
+    "object-shorthand": "error",
+    "prefer-const": "error"
   }
 }
