@@ -204,7 +204,6 @@ class Cell extends Component<CellProps, CellState> {
       selectable,
       Component,
       onChange,
-      onClick,
       name,
       checked,
       defaultChecked,
@@ -225,7 +224,6 @@ class Cell extends Component<CellProps, CellState> {
         >
           <SimpleCell
             {...restProps}
-            onClick={draggable || removable ? undefined : onClick}
             disabled={draggable || removable || disabled}
             Component={selectable ? 'label' : Component}
             before={

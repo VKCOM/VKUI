@@ -49,6 +49,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
   expandable,
   multiline,
   Component,
+  onClick,
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -59,6 +60,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
 
   if (!restProps.disabled) {
     props.Component = restProps.href ? 'a' : Component;
+    props.onClick = onClick;
   }
 
   return (
