@@ -52,7 +52,7 @@ const PromoBanner = (props: PromoBannerProps) => {
 
   const ageRestrictions =
     bannerData.ageRestrictions != null
-      ? parseInt(bannerData.ageRestrictions)
+      ? parseInt(bannerData.ageRestrictions, 10)
       : bannerData.ageRestriction;
 
   const [currentPixel, setCurrentPixel] = useState('');

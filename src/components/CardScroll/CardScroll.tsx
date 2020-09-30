@@ -25,7 +25,7 @@ const CardScroll: FunctionComponent<CardScrollProps> = ({ children, className, s
       return 0;
     }
 
-    const marginRight = parseInt(window.getComputedStyle(slide).marginRight);
+    const marginRight = parseInt(window.getComputedStyle(slide).marginRight, 10);
 
     const scrollTo = slide.offsetLeft - (containerWidth - slide.offsetWidth) + marginRight;
 
@@ -44,7 +44,7 @@ const CardScroll: FunctionComponent<CardScrollProps> = ({ children, className, s
       return offset;
     }
 
-    const marginRight = parseInt(window.getComputedStyle(slide).marginRight);
+    const marginRight = parseInt(window.getComputedStyle(slide).marginRight, 10);
     return slide.offsetLeft - marginRight;
   }
 

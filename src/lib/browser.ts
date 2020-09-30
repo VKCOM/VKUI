@@ -46,8 +46,8 @@ export function parseiOSVersion(userAgent: string): Version | null {
   const [major, minor, patch] = match[2].replace(/_/g, '.').split('.');
 
   return {
-    major: parseInt(major) || 0,
-    minor: parseInt(minor) || 0,
-    patch: parseInt(patch) || 0,
+    major: parseInt(major, 10) || 0,
+    minor: parseInt(minor, 10) || 0,
+    patch: parseInt(patch, 10) || 0,
   };
 }

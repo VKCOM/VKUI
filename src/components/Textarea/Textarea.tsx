@@ -63,8 +63,8 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
     if (el) {
       const { offsetHeight, scrollHeight } = el;
       const style = window.getComputedStyle(el);
-      const paddingTop = parseInt(style.paddingTop);
-      const paddingBottom = parseInt(style.paddingBottom);
+      const paddingTop = parseInt(style.paddingTop, 10);
+      const paddingBottom = parseInt(style.paddingBottom, 10);
 
       let diff = paddingTop + paddingBottom;
 
