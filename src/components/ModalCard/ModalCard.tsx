@@ -22,12 +22,12 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   /**
    * Заголовок карточки
    */
-  header?: string;
+  header?: ReactNode;
 
   /**
-   * Текст, поясняющий заголовок
+   * Подзаголовок
    */
-  caption?: string;
+  caption?: ReactNode;
 
   /**
    * Кнопки-действия.
