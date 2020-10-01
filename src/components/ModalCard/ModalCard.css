@@ -20,18 +20,6 @@
   box-sizing: border-box;
 }
 
-.ModalCard--ios .ModalCard__in {
-  transition: transform 340ms var(--ios-easing);
-}
-
-.ModalCard--android .ModalCard__in {
-  transition: transform 340ms var(--android-easing);
-}
-
-.ModalRoot--touched .ModalCard__in {
-  transition: none;
-}
-
 .ModalCard__container {
   box-sizing: border-box;
   position: relative;
@@ -43,11 +31,6 @@
   flex-direction: column;
   justify-content: center;
   pointer-events: initial;
-}
-
-.ModalCard--android .ModalCard__container {
-  border-radius: 12px;
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .08);
 }
 
 .ModalCard__dismiss {
@@ -69,11 +52,6 @@
 
 .ModalCard__header {
   color: var(--text_primary);
-}
-
-.ModalCard--ios .ModalCard__header:first-child {
-  padding-left: 36px;
-  padding-right: 36px;
 }
 
 .ModalCard__subheader {
@@ -133,4 +111,38 @@
 
 .ModalCard__actions--v .Button + .Button {
   margin-top: 12px;
+}
+
+/**
+ * iOS
+ */
+
+.ModalCard--ios .ModalCard__in {
+  transition: transform 340ms var(--ios-easing);
+}
+
+.ModalCard--ios .ModalCard__header:first-child {
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
+/**
+ * Android
+ */
+
+.ModalCard--android .ModalCard__in {
+  transition: transform 340ms var(--android-easing);
+}
+
+.ModalCard--android .ModalCard__container {
+  border-radius: 12px;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .08);
+}
+
+/**
+ * Common
+ */
+
+.ModalRoot--touched .ModalCard__in {
+  transition: none;
 }
