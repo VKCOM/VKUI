@@ -53,7 +53,18 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
 }
 
 const ModalCard: FC<ModalCardProps> = (props) => {
-  const { insets, icon, header, caption, children, actions, actionsLayout, onClose, platform, className } = props;
+  const {
+    insets,
+    icon,
+    header,
+    caption,
+    children,
+    actions,
+    actionsLayout,
+    onClose,
+    platform,
+    className,
+  } = props;
 
   const onButtonClick: MouseEventHandler = (event: MouseEvent) => {
     const target = event.currentTarget as HTMLButtonElement;
