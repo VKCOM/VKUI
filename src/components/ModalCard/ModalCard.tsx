@@ -1,13 +1,15 @@
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
+import React, { HTMLAttributes, ReactNode, FC } from 'react';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import { IOS } from '../../lib/platform';
+import { hasReactNode } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
 import { HasChildren, HasPlatform } from '../../types';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
-import { hasReactNode } from '../../lib/utils';
+import Subhead from '../Typography/Subhead/Subhead';
+import Title from '../Typography/Title/Title';
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, AdaptivityProps {
   /**
@@ -45,59 +47,57 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   onClose?(): void;
 }
 
-class ModalCard extends Component<ModalCardProps> {
-  static defaultProps: ModalCardProps = {
-    actionsLayout: 'horizontal',
-  };
+const ModalCard: FC<ModalCardProps> = (props) => {
+  const {
+    icon,
+    header,
+    caption,
+    children,
+    actions,
+    actionsLayout,
+    onClose,
+    platform,
+    className,
+    viewWidth,
+  } = props;
 
-  render() {
-    const {
-      icon,
-      header,
-      caption,
-      children,
-      actions,
-      actionsLayout,
-      onClose,
-      viewWidth,
-      platform,
-      className,
-    } = this.props;
+  const isDesktop = viewWidth >= ViewWidth.TABLET;
+  const canShowCloseBtn = platform === IOS || isDesktop;
 
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
-    const canShowCloseBtn = platform === IOS || isDesktop;
+  return (
+    <div className={classNames(getClassName('ModalCard', platform), {
+      'ModalCard--desktop': isDesktop,
+    }, className)}>
+      <div className="ModalCard__in">
+        <div className="ModalCard__container">
+          {hasReactNode(icon) && <div className="ModalCard__icon">{icon}</div>}
+          {hasReactNode(header) && <Title level="2" weight="semibold" className="ModalCard__header">{header}</Title>}
+          {hasReactNode(caption) && <Subhead weight="regular" className="ModalCard__subheader">{caption}</Subhead>}
 
-    return (
-      <div className={classNames(getClassName('ModalCard', platform), {
-        'ModalCard--desktop': isDesktop,
-      }, className)}>
-        <div className="ModalCard__in">
-          <div className="ModalCard__container">
-            {icon && <div className="ModalCard__icon">{icon}</div>}
-            {header && <div className="ModalCard__title">{header}</div>}
-            {caption && <div className="ModalCard__caption">{caption}</div>}
+          {children}
 
-            {children}
-
-            {hasReactNode(actions) &&
-            <div className={classNames('ModalCard__actions', {
-              'ModalCard__actions--v': actionsLayout === 'vertical',
-            })}>
-              {actions}
-            </div>
-            }
-
-            {canShowCloseBtn &&
-              <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
-                <Icon24Dismiss />
-              </PanelHeaderButton>
-            }
+          {hasReactNode(actions) &&
+          <div className={classNames('ModalCard__actions', {
+            'ModalCard__actions--v': actionsLayout === 'vertical',
+          })}>
+            {actions}
           </div>
+          }
+
+          {canShowCloseBtn &&
+          <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
+            <Icon24Dismiss />
+          </PanelHeaderButton>
+          }
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+ModalCard.defaultProps = {
+  actionsLayout: 'horizontal',
+};
 
 export default withAdaptivity(withPlatform(ModalCard), {
   viewWidth: true,
