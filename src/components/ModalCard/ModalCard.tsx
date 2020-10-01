@@ -9,6 +9,8 @@ import { IOS } from '../../lib/platform';
 import { isNumeric } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
 import { HasChildren, HasInsets, HasPlatform } from '../../types';
+import Subhead from '../Typography/Subhead/Subhead';
+import Title from '../Typography/Title/Title';
 
 export interface ModalCardActionInterface {
   title: string;
@@ -76,8 +78,8 @@ class ModalCard extends Component<ModalCardProps> {
         <div className="ModalCard__in">
           <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
             {icon && <div className="ModalCard__icon">{icon}</div>}
-            {header && <div className="ModalCard__title">{header}</div>}
-            {caption && <div className="ModalCard__caption">{caption}</div>}
+            {header && <Title level="2" weight="semibold" className="ModalCard__header">{header}</Title>}
+            {caption && <Subhead weight="regular" className="ModalCard__subheader">{caption}</Subhead>}
 
             {children}
 

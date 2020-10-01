@@ -60,39 +60,32 @@
   justify-content: center;
 }
 
-.ModalCard__title,
-.ModalCard__caption {
+.ModalCard__header,
+.ModalCard__subheader {
   text-align: center;
   margin: 0;
   padding: 0 8px;
 }
 
-.ModalCard__title {
+.ModalCard__header {
   color: var(--text_primary);
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: .3px;
-  text-align: center;
 }
 
-.ModalCard--ios .ModalCard__title:first-child {
+.ModalCard--ios .ModalCard__header:first-child {
   padding-left: 36px;
   padding-right: 36px;
 }
 
-.ModalCard__caption {
+.ModalCard__subheader {
   color: var(--text_secondary);
-  font-size: 14px;
-  line-height: 1.3;
 }
 
-.ModalCard__title + .ModalCard__caption {
+.ModalCard__header + .ModalCard__subheader {
   margin-top: 8px;
 }
 
-.ModalCard__title + .FormField,
-.ModalCard__caption + .FormField {
+.ModalCard__header + .FormField,
+.ModalCard__subheader + .FormField {
   margin-top: 16px;
 }
 
@@ -116,8 +109,8 @@
   margin-top: 24px;
 }
 
-.ModalCard__title + .ModalCard__actions,
-.ModalCard__caption + .ModalCard__actions {
+.ModalCard__header + .ModalCard__actions,
+.ModalCard__subheader + .ModalCard__actions {
   margin-top: 32px;
 }
 
