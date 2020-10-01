@@ -82,6 +82,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      handleModalClose: this.triggerActiveModalClose,
     };
 
     this.frameIds = {};
@@ -760,12 +761,12 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
   /**
    * Закрывает текущую модалку
    */
-  triggerActiveModalClose() {
+  triggerActiveModalClose = () => {
     const activeModalState = this.modalsState[this.state.activeModal];
     if (activeModalState) {
       this.doCloseModal(activeModalState);
     }
-  }
+  };
 
   private readonly doCloseModal = (modalState: ModalsStateEntry) => {
     if (isFunction(modalState.onClose)) {

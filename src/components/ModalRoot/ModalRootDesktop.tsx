@@ -66,6 +66,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      handleModalClose: this.triggerActiveModalClose,
     };
   }
 
@@ -347,7 +348,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
     this.setState(newState);
   };
 
-  /* Анимирует сдивг модалки */
+  /* Анимирует сдвиг модалки */
   animateModalOpacity(modalState: ModalsStateEntry, display: boolean) {
     modalState.innerElement.style.opacity = display ? '1' : '0';
   }
@@ -387,12 +388,12 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
   /**
    * Закрывает текущую модалку
    */
-  triggerActiveModalClose() {
+  triggerActiveModalClose = () => {
     const activeModalState = this.modalsState[this.state.activeModal];
     if (activeModalState) {
       this.doCloseModal(activeModalState);
     }
-  }
+  };
 
   private readonly doCloseModal = (modalState: ModalsStateEntry) => {
     if (isFunction(modalState.onClose)) {

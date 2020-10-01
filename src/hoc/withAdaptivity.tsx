@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { AdaptivityContext, SizeType, ViewWidth } from '../components/AdaptivityProvider/AdaptivityContext';
+import { AdaptivityContext, SizeType, ViewHeight, ViewWidth } from '../components/AdaptivityProvider/AdaptivityContext';
 
 interface Config {
   sizeX?: boolean;
   sizeY?: boolean;
   viewWidth?: boolean;
+  viewHeight?: boolean;
 }
 
 export { SizeType, ViewWidth };
@@ -12,6 +13,7 @@ export { SizeType, ViewWidth };
 export default function withAdaptivity<T>(TargetComponent: T, config: Config): T {
   function AdaptivityConsumer(props: AdaptivityProps) {
     const context = useContext(AdaptivityContext);
+
     let update = false;
 
     if (props.sizeX || props.sizeY) {
@@ -21,15 +23,18 @@ export default function withAdaptivity<T>(TargetComponent: T, config: Config): T
     const sizeX = props.sizeX || context.sizeX;
     const sizeY = props.sizeY || context.sizeY;
     const viewWidth = context.viewWidth;
+    const viewHeight = context.viewHeight;
 
     const adaptivityProps: {
       sizeX?: SizeType;
       sizeY?: SizeType;
       viewWidth?: ViewWidth;
+      viewHeight?: ViewHeight;
     } = {};
     config.sizeX ? adaptivityProps.sizeX = sizeX : undefined;
     config.sizeY ? adaptivityProps.sizeY = sizeY : undefined;
     config.viewWidth ? adaptivityProps.viewWidth = viewWidth : undefined;
+    config.viewHeight ? adaptivityProps.viewHeight = viewHeight : undefined;
 
     // @ts-ignore
     const target = <TargetComponent {...props} {...adaptivityProps} />;
@@ -50,4 +55,5 @@ export interface AdaptivityProps {
   sizeX?: SizeType;
   sizeY?: SizeType;
   viewWidth?: ViewWidth;
+  viewHeight?: ViewHeight;
 }

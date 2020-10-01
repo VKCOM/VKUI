@@ -13,10 +13,17 @@ export enum ViewWidth {
   DESKTOP,
 }
 
+// TODO: Rename breakpoints
+export enum ViewHeight {
+  DEFAULT = 1,
+  HEIGHT_720
+}
+
 export interface AdaptivityContextInterface {
   sizeX?: SizeType;
   sizeY?: SizeType;
   viewWidth?: ViewWidth;
+  viewHeight?: ViewHeight;
 }
 
 export const AdaptivityContext = createContext<AdaptivityContextInterface>({
