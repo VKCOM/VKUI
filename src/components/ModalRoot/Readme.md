@@ -248,13 +248,11 @@ class App extends React.Component {
           icon={<Icon56MoneyTransferOutline />}
           header="Отправляйте деньги друзьям, используя банковскую карту"
           caption="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
-          actions={[{
-            title: 'Попробовать',
-            mode: 'primary',
-            action: () => {
-              this.setActiveModal(MODAL_CARD_APP_TO_MENU);
-            }
-          }]}
+          actions={
+            <Button size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_APP_TO_MENU)}>
+              Попробовать
+            </Button>
+          }
         >
 
         </ModalCard>
@@ -265,29 +263,22 @@ class App extends React.Component {
           icon={<Avatar mode="app" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
           header="Добавить игру «Загадки детства» в меню?"
           caption="Игра появится под списком разделов на экране меню и будет всегда под рукой."
-          actions={[{
-            title: 'Добавить в меню',
-            mode: 'primary',
-            action: () => {
-              this.setActiveModal(MODAL_CARD_ABOUT);
-            }
+          actions={
+            <Button size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_ABOUT)}>
+              Добавить в меню
+            </Button>
           }
-          ]}
         />
 
         <ModalCard
           id={MODAL_CARD_ABOUT}
           onClose={() => this.setActiveModal(null)}
           header="Расскажите о себе"
-          actions={[
-            {
-              title: 'Сохранить',
-              mode: 'primary',
-              action: () => {
-                this.setActiveModal(MODAL_CARD_NOTIFICATIONS);
-              }
-            }
-          ]}
+          actions={
+            <Button size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_NOTIFICATIONS)}>
+              Сохранить
+            </Button>
+          }
         >
           <Textarea defaultValue="В Грузии" />
         </ModalCard>
@@ -297,15 +288,14 @@ class App extends React.Component {
           onClose={() => this.setActiveModal(null)}
           icon={<Icon56NotificationOutline />}
           header="Приложение запрашивает разрешение на отправку Вам уведомлений"
-          actions={[{
-            title: 'Запретить',
-            mode: 'secondary',
-            action: () => this.setActiveModal(MODAL_CARD_CHAT_INVITE)
-          }, {
-            title: 'Разрешить',
-            mode: 'primary',
-            action: () => this.setActiveModal(MODAL_CARD_CHAT_INVITE)
-          }]}
+          actions={[
+            <Button key="deny" size="l" mode="secondary" onClick={() => this.setActiveModal(MODAL_CARD_CHAT_INVITE)}>
+              Запретить
+            </Button>,
+            <Button key="allow" size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_CHAT_INVITE)}>
+              Разрешить
+            </Button>,
+          ]}
         />
 
         <ModalCard
@@ -314,15 +304,14 @@ class App extends React.Component {
           icon={<Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />}
           header="Баскетбол на выходных"
           caption="Приглашение в беседу"
-          actions={[{
-            title: 'Присоединиться',
-            mode: 'primary',
-            action: () => this.setActiveModal(null)
-          }, {
-            title: 'Скопировать приглашение',
-            mode: 'secondary',
-            action: () => this.setActiveModal(null)
-          }]}
+          actions={[
+            <Button key="join" size="l" mode="primary" onClick={() => this.setActiveModal(null)}>
+              Присоединиться
+            </Button>,
+            <Button key="copy" size="l" mode="secondary" onClick={() => this.setActiveModal(null)}>
+              Скопировать приглашение
+            </Button>,
+          ]}
           actionsLayout="vertical"
         >
           <UsersStack
