@@ -6,7 +6,7 @@ import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import { IOS } from '../../lib/platform';
-import { isNumeric } from '../../lib/utils';
+import { hasReactNode, isNumeric } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
 import { HasChildren, HasInsets, HasPlatform } from '../../types';
 import Subhead from '../Typography/Subhead/Subhead';
@@ -72,9 +72,9 @@ const ModalCard: FC<ModalCardProps> = (props) => {
     <div className={classNames(getClassName('ModalCard', platform), className)}>
       <div className="ModalCard__in">
         <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
-          {icon && <div className="ModalCard__icon">{icon}</div>}
-          {header && <Title level="2" weight="semibold" className="ModalCard__header">{header}</Title>}
-          {caption && <Subhead weight="regular" className="ModalCard__subheader">{caption}</Subhead>}
+          {hasReactNode(icon) && <div className="ModalCard__icon">{icon}</div>}
+          {hasReactNode(header) && <Title level="2" weight="semibold" className="ModalCard__header">{header}</Title>}
+          {hasReactNode(caption) && <Subhead weight="regular" className="ModalCard__subheader">{caption}</Subhead>}
 
           {children}
 
