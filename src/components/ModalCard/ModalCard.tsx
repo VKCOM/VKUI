@@ -1,5 +1,4 @@
-import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, MouseEvent } from 'react';
-import Button from '../Button/Button';
+import React, { Component, HTMLAttributes, ReactNode } from 'react';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -8,12 +7,7 @@ import { IOS } from '../../lib/platform';
 import withPlatform from '../../hoc/withPlatform';
 import { HasChildren, HasPlatform } from '../../types';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
-
-export interface ModalCardActionInterface {
-  title: string;
-  action?(event: MouseEvent): void;
-  mode?: 'secondary' | 'primary';
-}
+import { hasReactNode } from '../../lib/utils';
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, AdaptivityProps {
   /**
@@ -34,9 +28,11 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   caption?: string;
 
   /**
-   * Список кнопок-действий
+   * Кнопки-действия.
+   *
+   * Рекомендуется использовать `<Button size="l" mode="primary" />` или `<Button size="l" mode="secondary" />`
    */
-  actions?: ModalCardActionInterface[];
+  actions?: ReactNode;
 
   /**
    * Тип отображения кнопок: вертикальный или горизонтальный
@@ -51,19 +47,7 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
 
 class ModalCard extends Component<ModalCardProps> {
   static defaultProps: ModalCardProps = {
-    actions: [],
     actionsLayout: 'horizontal',
-  };
-
-  onButtonClick: MouseEventHandler = (event: MouseEvent) => {
-    const target = event.currentTarget as HTMLButtonElement;
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const action = this.props.actions[Number(target.dataset.index)].action;
-    event.persist();
-
-    if (typeof action === 'function') {
-      action(event);
-    }
   };
 
   render() {
@@ -95,23 +79,11 @@ class ModalCard extends Component<ModalCardProps> {
 
             {children}
 
-            {actions.length > 0 &&
+            {hasReactNode(actions) &&
             <div className={classNames('ModalCard__actions', {
               'ModalCard__actions--v': actionsLayout === 'vertical',
             })}>
-              {actions.map(({ title, mode }: ModalCardActionInterface, i: number) => {
-                return (
-                  <Button
-                    key={i}
-                    data-index={i}
-                    size="m"
-                    mode={mode}
-                    onClick={this.onButtonClick}
-                  >
-                    {title}
-                  </Button>
-                );
-              })}
+              {actions}
             </div>
             }
 
