@@ -41,7 +41,7 @@ interface ModalRootState {
   inited?: boolean;
 }
 
-class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
+class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -458,4 +458,4 @@ class ModalRootDesktop extends Component<ModalRootProps, ModalRootState> {
   }
 }
 
-export default withContext(withPlatform(ModalRootDesktop), ConfigProviderContext, 'configProvider');
+export const ModalRootDesktop = withContext(withPlatform(ModalRootDesktopComponent), ConfigProviderContext, 'configProvider');
