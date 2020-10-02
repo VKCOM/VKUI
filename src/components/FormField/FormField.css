@@ -17,7 +17,10 @@
   transform-origin: left top;
 }
 
-.FormField__border.FormField__border--hover {
+.FormField.Textarea .Textarea__el:not(:disabled) ~ .FormField__border.FormField__border--hover,
+.FormField.Select .Select__el:not(:disabled) ~ .FormField__border.FormField__border--hover,
+.FormField.Input .Input__el:not(:disabled) ~ .FormField__border.FormField__border--hover,
+.FormField.ChipsInput:not(.ChipsInput--disabled) .ChipsInput__container ~ .FormField__border.FormField__border--hover {
   border-color: var(--icon_tertiary_alpha);
 }
 
