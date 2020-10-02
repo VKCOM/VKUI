@@ -4,7 +4,7 @@ export interface ModalRootContextInterface {
   updateModalHeight: () => void;
 }
 
-const ModalRootContext = createContext<ModalRootContextInterface>({
+export const ModalRootContext = createContext<ModalRootContextInterface>({
   updateModalHeight: () => undefined,
 });
 

@@ -1,13 +1,11 @@
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
+import React, { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasPlatform } from '../../types';
-import { ModalRootContextInterface } from '../ModalRoot/ModalRootContext';
-import withModalRootContext from '../ModalRoot/withModalRootContext';
-import withPlatform from '../../hoc/withPlatform';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 
-export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
+export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   id: string;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
@@ -22,49 +20,49 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasPlatf
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
-  /**
-   * @ignore
-   */
-  updateModalHeight?: ModalRootContextInterface['updateModalHeight'];
 }
 
-class ModalPage extends Component<ModalPageProps> {
-  componentDidUpdate(prevProps: ModalPageProps) {
-    if (prevProps.children !== this.props.children) {
-      this.props.updateModalHeight();
-    }
-  }
+const ModalPage: FC<ModalPageProps> = (props) => {
+  const platform = usePlatform();
+  const { updateModalHeight } = useContext(ModalRootContext);
+  const {
+    children,
+    className,
+    header,
+    viewWidth,
+  } = props;
 
-  static defaultProps: Partial<ModalPageProps> = {
-    settlingHeight: 75,
-  };
+  useEffect(() => {
+    updateModalHeight();
+  }, [children]);
 
-  render() {
-    const { children, className, header, platform, viewWidth } = this.props;
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+  const isDesktop = viewWidth >= ViewWidth.TABLET;
 
-    return (
-      <div className={classNames(getClassName('ModalPage', platform), className, {
-        'ModalPage--desktop': isDesktop,
-      })}>
-        <div className="ModalPage__in-wrap">
-          <div className="ModalPage__in">
-            <div className="ModalPage__header">
-              {header}
-            </div>
+  return (
+    <div className={classNames(getClassName('ModalPage', platform), className, {
+      'ModalPage--desktop': isDesktop,
+    })}>
+      <div className="ModalPage__in-wrap">
+        <div className="ModalPage__in">
+          <div className="ModalPage__header">
+            {header}
+          </div>
 
-            <div className="ModalPage__content">
-              <div className="ModalPage__content-in">
-                {children}
-              </div>
+          <div className="ModalPage__content">
+            <div className="ModalPage__content-in">
+              {children}
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-export default withAdaptivity(withPlatform(withModalRootContext(ModalPage)), {
+ModalPage.defaultProps = {
+  settlingHeight: 75,
+};
+
+export default withAdaptivity(ModalPage, {
   viewWidth: true,
 });
