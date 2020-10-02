@@ -50,9 +50,6 @@
 
 .RichCell__content {
   display: flex;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 20px;
 }
 
 .RichCell__after {
@@ -84,22 +81,19 @@
 }
 
 .RichCell__text {
-  font-size: 15px;
-  line-height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .RichCell__caption {
-  font-size: 13px;
-  line-height: 16px;
+  margin-top: 1px;
   color: var(--text_secondary);
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .RichCell__bottom .UsersStack {
-  padding: 8px 0 0;
+  padding: 5px 0 0;
 }
 
 .RichCell__actions {
@@ -128,4 +122,12 @@
 .RichCell--vkcom {
   padding-right: 16px;
   padding-left: 16px;
+}
+
+/**
+ * sizeY === 'compact'
+ */
+
+.RichCell--sizeY-compact .RichCell__actions {
+  margin-top: 12px;
 }

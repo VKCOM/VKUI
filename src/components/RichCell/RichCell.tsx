@@ -5,8 +5,11 @@ import getClassName from '../../helpers/getClassName';
 import { HasLinkProps, HasRootRef } from '../../types';
 import Tappable from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
+import Text from '../Typography/Text/Text';
+import Caption from '../Typography/Caption/Caption';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasLinkProps {
+export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasLinkProps, AdaptivityProps {
   /**
    * Контейнер для текста под `children`.
    */
@@ -50,6 +53,8 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   multiline,
   className,
   Component,
+  onClick,
+  sizeY,
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -60,6 +65,7 @@ const RichCell: FunctionComponent<RichCellProps> = ({
 
   if (!restProps.disabled) {
     props.Component = restProps.href ? 'a' : Component;
+    props.onClick = onClick;
   }
 
   return (
@@ -72,6 +78,7 @@ const RichCell: FunctionComponent<RichCellProps> = ({
           {
             'RichCell--mult': multiline,
           },
+          `RichCell--sizeY-${sizeY}`,
         )
       }
     >
@@ -80,12 +87,12 @@ const RichCell: FunctionComponent<RichCellProps> = ({
         <div className="RichCell__top">
           {/* Этот after будет скрыт из верстки. Он нужен для CSS */}
           {after}
-          <div className="RichCell__content">
+          <Text weight="medium" className="RichCell__content">
             <div className="RichCell__children">{children}</div>
             {hasReactNode(after) && <div className="RichCell__after">{after}</div>}
-          </div>
-          {hasReactNode(text) && <div className="RichCell__text">{text}</div>}
-          {hasReactNode(caption) && <div className="RichCell__caption">{caption}</div>}
+          </Text>
+          {hasReactNode(text) && <Text weight="regular" className="RichCell__text">{text}</Text>}
+          {hasReactNode(caption) && <Caption level="1" weight="regular" className="RichCell__caption">{caption}</Caption>}
           {(hasReactNode(bottom) || hasReactNode(actions)) &&
             <div className="RichCell__bottom">
               {bottom}
@@ -102,4 +109,4 @@ RichCell.defaultProps = {
   Component: 'div',
 };
 
-export default RichCell;
+export default withAdaptivity(RichCell, { sizeY: true });
