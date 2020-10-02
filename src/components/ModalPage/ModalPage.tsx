@@ -1,11 +1,10 @@
-import React, { FC, HTMLAttributes, ReactNode, useEffect } from 'react';
+import React, { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withInsets from '../../hoc/withInsets';
 import { isNumeric } from '../../lib/utils';
 import { HasInsets } from '../../types';
-import { ModalRootContextInterface } from '../ModalRoot/ModalRootContext';
-import withModalRootContext from '../ModalRoot/withModalRootContext';
+import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInsets {
@@ -23,20 +22,16 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInset
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
-  /**
-   * @ignore
-   */
-  updateModalHeight?: ModalRootContextInterface['updateModalHeight'];
 }
 
 const ModalPage: FC<ModalPageProps> = (props) => {
   const platform = usePlatform();
+  const { updateModalHeight } = useContext(ModalRootContext);
   const {
     children,
     className,
     header,
     insets,
-    updateModalHeight,
   } = props;
 
   useEffect(() => {
@@ -67,4 +62,4 @@ ModalPage.defaultProps = {
   insets: {},
 };
 
-export default withInsets(withModalRootContext(ModalPage));
+export default withInsets(ModalPage);
