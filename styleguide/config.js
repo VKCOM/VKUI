@@ -8,6 +8,7 @@ const { argv } = require('yargs');
 
 module.exports = {
   title: 'VKUI styleguide',
+
   styleguideDir: path.join(__dirname, `../${argv.dist || 'docs'}`),
   styleguideComponents: {
     PlaygroundRenderer: path.join(__dirname, './Components/PlaygroundRenderer'),
