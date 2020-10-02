@@ -10,7 +10,7 @@ const groups = [{value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_a
 const Example = () => {
   const [activeView, setActiveView] = React.useState('profile');
   const [selectedGroups, setSelectedGroups] = React.useState([]);
-  const [selectedColors, setSelectedColors] = React.useState([]);
+  const [selectedColors, setSelectedColors] = React.useState([{value: '1', label: 'Красный'}]);
   
   const groupsChipsProps = {
     value: selectedGroups,

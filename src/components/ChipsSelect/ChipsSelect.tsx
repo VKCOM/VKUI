@@ -27,11 +27,12 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
   showSelected?: boolean;
   creatableText?: string;
   emptyText?: string;
+  inputClass?: string;
 }
 
 const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
-    style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
+    style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText, inputClass,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, sizeY, creatable, filterFn, inputValue, creatableText,
     ...restProps
@@ -165,7 +166,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     } else if (focusedOptionIndex === null || focusedOptionIndex === 0) {
       setFocusedOption(null);
     }
-  }, [focusedOptionIndex, creatable]);
+  }, [focusedOptionIndex, creatable, selectedOptions]);
 
   useEffect(() => {
     const index = focusedOption ? filteredOptions.findIndex(({ value }) => value === focusedOption.value) : -1;
@@ -187,7 +188,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
 
   return (
     <div
-      className="ChipsSelect CustomSelect__container"
+      className={classNames('ChipsSelect CustomSelect__container', className)}
       ref={getRootRef}
     >
       <ChipsInput
@@ -205,7 +206,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         style={style}
-        className={classNames(className, {
+        className={classNames(inputClass, {
           ['CustomSelect__open']: opened,
           ['CustomSelect__open--popupDirectionTop']: popupDirection === 'top',
         })}
@@ -259,7 +260,10 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                       hovered,
                       label,
                       selected: !!selected,
-                      onMouseDown: () => addOption(option),
+                      onMouseDown: () => {
+                        addOption(option);
+                        clearInput();
+                      },
                       onMouseEnter: () => setFocusedOptionIndex(index),
                     });
                   })

@@ -5,14 +5,6 @@
   box-sizing: border-box;
 }
 
-.ChipsInput--withChips .ChipsInput__container {
-  margin-left: -7px;
-}
-
-.ChipsInput--withChips .ChipsInput__input-container {
-  margin-left: 7px;
-}
-
 .ChipsInput__container {
   display: flex;
   width: 100%;
@@ -31,7 +23,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin: 3px 0 3px 4px;
+  margin: 3px 0 3px;
 }
 
 .ChipsInput__el {
@@ -49,6 +41,12 @@
   z-index: 2;
   background: transparent;
   padding: 0;
+  margin-left: 4px;
+}
+
+.ChipsInput__el:focus {
+  min-width: 64px;
+  margin-left: 4px;
 }
 
 .ChipsInput:focus {
@@ -71,4 +69,16 @@
 
 .ChipsInput__el:disabled::placeholder {
   color: var(--text_secondary);
+}
+
+.ChipsInput--withChips .ChipsInput__container {
+  margin-left: -7px;
+}
+
+.ChipsInput--withChips .ChipsInput__el {
+  margin-left: 0;
+}
+
+.ChipsInput--withChips .ChipsInput__el:focus {
+  margin-left: 7px;
 }

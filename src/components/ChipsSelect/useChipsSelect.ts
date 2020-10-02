@@ -26,7 +26,7 @@ export const useChipsSelect = <Option extends ChipsInputOption>(props: Partial<C
   }, [options, filterFn, fieldValue, getOptionLabel]);
 
   filteredOptions = useMemo(() => {
-    if (filteredOptions || !filteredOptions.length) {
+    if (!filteredOptions.length) {
       return filteredOptions;
     }
 
@@ -40,7 +40,7 @@ export const useChipsSelect = <Option extends ChipsInputOption>(props: Partial<C
     }
 
     return [...filteredSet];
-  }, [showSelected, filteredOptions]);
+  }, [showSelected, filteredOptions, selectedOptions]);
 
   return {
     ...chipsInputState, fieldValue, handleInputChange, opened, setOpened, filteredOptions,

@@ -53,7 +53,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
     onKeyDown(e);
 
     if (e.key === 'Backspace' && !e.defaultPrevented && !fieldValue && selectedOptions.length) {
-      removeOption(selectedOptions[selectedOptions.length - 1].value);
+      removeOption(getOptionValue(selectedOptions[selectedOptions.length - 1]));
       e.preventDefault();
     }
 
