@@ -2,6 +2,19 @@
   position: relative;
 }
 
+.FormField__background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--field_background);
+  content: '';
+  border-radius: 10px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
 .FormField__border {
   position: absolute;
   left: 0;
@@ -9,12 +22,12 @@
   width: 100%;
   height: 100%;
   border: 1px solid var(--field_border);
-  background: var(--field_background);
   content: '';
   border-radius: 10px;
   box-sizing: border-box;
-  z-index: 1;
+  z-index: 2;
   transform-origin: left top;
+  pointer-events: none;
 }
 
 .Textarea .Textarea__el:not(:disabled) ~ .FormField__border--hover,
@@ -24,20 +37,29 @@
   border-color: var(--icon_tertiary_alpha);
 }
 
+.FormField--ios.Input .Input__el {
+  border-radius: 10px;
+}
+
 .FormField--ios .FormField__border {
   border-radius: 10px;
 }
 
-.FormField--android .FormField__border {
+.FormField--android.Input .Input__el,
+.FormField--vkcom.Input .Input__el {
   border-radius: 8px;
 }
 
+.FormField--android .FormField__border,
 .FormField--vkcom .FormField__border {
   border-radius: 6px;
 }
 
-.FormItem--error .FormField__border {
+.FormItem--error .FormField__background {
   background: var(--field_error_background);
+}
+
+.FormItem--error .FormField__border {
   border-color: var(--field_error_border);
 }
 
@@ -70,13 +92,20 @@
   }
 }
 
+.FormField.Input .Input__el:focus ~ .FormField__background,
+.FormField.Textarea .Textarea__el:focus ~ .FormField__background,
+.FormField.Select .Select__el:focus ~ .FormField__background,
+.FormField.Select--mimicry:focus .FormField__background,
+.FormField.ChipsInput.ChipsInput--focused .ChipsInput__container ~ .FormField__background {
+  background: var(--field_background);
+}
+
 .FormField.Input .Input__el:focus ~ .FormField__border,
 .FormField.Textarea .Textarea__el:focus ~ .FormField__border,
 .FormField.Select .Select__el:focus ~ .FormField__border,
 .FormField.Select--mimicry:focus .FormField__border,
 .FormField.ChipsInput.ChipsInput--focused .ChipsInput__container ~ .FormField__border {
   border-color: var(--accent);
-  background: var(--field_background);
 }
 
 .FormField--ios.Input .Input__el:focus ~ .FormField__border,
