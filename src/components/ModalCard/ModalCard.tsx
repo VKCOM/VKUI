@@ -27,7 +27,7 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   /**
    * Подзаголовок
    */
-  caption?: ReactNode;
+  subheader?: ReactNode;
 
   /**
    * Кнопки-действия.
@@ -51,7 +51,7 @@ const ModalCard: FC<ModalCardProps> = (props) => {
   const {
     icon,
     header,
-    caption,
+    subheader,
     children,
     actions,
     actionsLayout,
@@ -72,7 +72,7 @@ const ModalCard: FC<ModalCardProps> = (props) => {
         <div className="ModalCard__container">
           {hasReactNode(icon) && <div className="ModalCard__icon">{icon}</div>}
           {hasReactNode(header) && <Title level="2" weight="semibold" className="ModalCard__header">{header}</Title>}
-          {hasReactNode(caption) && <Subhead weight="regular" className="ModalCard__subheader">{caption}</Subhead>}
+          {hasReactNode(subheader) && <Subhead weight="regular" className="ModalCard__subheader">{subheader}</Subhead>}
 
           {children}
 
