@@ -113,6 +113,29 @@
   margin-top: 12px;
 }
 
+.ModalCard__close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 10;
+  left: calc(100% + 4px);
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+
+.ModalCard__close-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(0, 0, 0, .35);
+  border-radius: 50%;
+  color: #fff;
+}
+
 /**
  * iOS
  */
@@ -124,6 +147,10 @@
 .ModalCard--ios .ModalCard__header:first-child {
   padding-left: 36px;
   padding-right: 36px;
+}
+
+.ModalCard--ios .ModalCard__close-button {
+  top: calc((var(--modalheader_height_ios) - 48px) / 2);
 }
 
 /**
@@ -139,6 +166,11 @@
 .ModalCard--vkcom .ModalCard__container {
   border-radius: 12px;
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .08);
+}
+
+.ModalCard--android .ModalCard__close-button,
+.ModalCard--vkcom .ModalCard__close-button {
+  top: calc((var(--modalheader_height_android) - 48px) / 2);
 }
 
 /**
