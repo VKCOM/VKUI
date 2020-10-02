@@ -25,6 +25,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: opacity .15s;
+  }
+
+  .HorizontalScroll--ios .HorizontalScroll__arrow {
+    transition-timing-function: var(--ios-easing);
+  }
+
+  .HorizontalScroll--android .HorizontalScroll__arrow,
+  .HorizontalScroll--vkcom .HorizontalScroll__arrow {
+    transition-timing-function: var(--android-easing);
   }
 
   .HorizontalScroll:hover .HorizontalScroll__arrow {
