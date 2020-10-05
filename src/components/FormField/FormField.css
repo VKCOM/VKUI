@@ -2,6 +2,24 @@
   position: relative;
 }
 
+.FormField--ios.Input,
+.FormField--ios.Textarea,
+.FormField--ios.Select,
+.FormField--ios.ChipsInput {
+  border-radius: 10px;
+}
+
+.FormField--android.Input,
+.FormField--vkcom.Input,
+.FormField--android.Textarea,
+.FormField--vkcom.Textarea,
+.FormField--android.Select,
+.FormField--vkcom.Select,
+.FormField--android.ChipsInput,
+.FormField--vkcom.ChipsInput {
+  border-radius: 8px;
+}
+
 .FormField__background {
   position: absolute;
   left: 0;
@@ -10,7 +28,7 @@
   height: 100%;
   background: var(--field_background);
   content: '';
-  border-radius: 10px;
+  border-radius: inherit;
   box-sizing: border-box;
   z-index: 1;
 }
@@ -23,7 +41,7 @@
   height: 100%;
   border: 1px solid var(--field_border);
   content: '';
-  border-radius: 10px;
+  border-radius: inherit;
   box-sizing: border-box;
   z-index: 2;
   transform-origin: left top;
@@ -53,6 +71,11 @@
 .FormField--android .FormField__border,
 .FormField--vkcom .FormField__border {
   border-radius: 6px;
+}
+
+.FormField.Input .Input__el,
+.FormField.Textarea .Textarea__el {
+  border-radius: inherit;
 }
 
 .FormItem--error .FormField__background {
