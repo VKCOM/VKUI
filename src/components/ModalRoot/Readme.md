@@ -105,8 +105,7 @@ class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
-              right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}>Готово</PanelHeaderButton>}
             >
               Фильтры
             </ModalPageHeader>
