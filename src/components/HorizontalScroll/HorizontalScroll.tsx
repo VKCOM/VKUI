@@ -2,6 +2,8 @@ import React, { FunctionComponent, HTMLAttributes, useRef, useEffect, useState, 
 import classNames from '../../lib/classNames';
 import { hasMouse } from '../../helpers/inputUtils';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron_right';
+import usePlatform from '../../hooks/usePlatform';
+import getClassName from '../../helpers/getClassName';
 
 type GetScrollPositionCallback = (currentPosition: number) => number;
 type Callback = () => void;
@@ -137,6 +139,8 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
 
   const animationQueue = useRef<Callback[]>([]);
 
+  const platform = usePlatform();
+
   function scrollTo(getScrollPosition: (offset: number) => number) {
     animationQueue.current.push(() => doScroll({
       scrollElement: scrollerRef.current,
@@ -169,7 +173,7 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
   useEffect(onscroll, [scrollerRef]);
 
   return (
-    <div {...restProps} className={classNames('HorizontalScroll', className)}>
+    <div {...restProps} className={classNames(className, getClassName('HorizontalScroll', platform))}>
       {showArrows && hasMouse && canScrollLeft && <HorizontalScrollArrow direction="left"
         onClick={() => scrollTo(getScrollToLeft)} />}
       {showArrows && hasMouse && canScrollRight && <HorizontalScrollArrow direction="right"
