@@ -7,7 +7,7 @@ import React, {
 import { SelectChangeResult } from '../CustomSelect/CustomSelect';
 import Input from '../Input/Input';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
-import { hasMouse } from '../../helpers/inputUtils';
+import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
 import Select from '../Select/Select';

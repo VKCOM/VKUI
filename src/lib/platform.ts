@@ -1,30 +1,32 @@
-import { canUseDOM } from './dom';
+import { BrowserInfo, computeBrowserInfo } from './browser';
 
-export enum OS {
+export enum Platform {
   ANDROID = 'android',
   IOS = 'ios',
   VKCOM = 'vkcom'
 }
 
-export const ANDROID = OS.ANDROID;
-export const IOS = OS.IOS;
-export const VKCOM = OS.VKCOM;
+export const ANDROID = Platform.ANDROID;
+export const IOS = Platform.IOS;
+export const VKCOM = Platform.VKCOM;
 
-export type OSType = OS.ANDROID | OS.IOS | OS.VKCOM;
+export type PlatformType = Platform.ANDROID | Platform.IOS | Platform.VKCOM;
 
-export function platform(useragent?: string): OSType {
-  const ua = useragent || canUseDOM && navigator.userAgent || '';
+export function platform(browserInfo?: BrowserInfo): PlatformType {
+  if (!browserInfo) {
+    browserInfo = computeBrowserInfo();
+  }
 
-  return /iphone|ipad|ipod/i.test(ua) ? IOS : ANDROID;
+  return browserInfo.system === 'ios' ? IOS : ANDROID;
 }
 
-const osname = platform();
+const platformName = platform();
 
 /**
  * @deprecated для определения платформы используйте withPlatform или usePlatform
  */
-export const IS_PLATFORM_IOS: boolean = osname === IOS;
+export const IS_PLATFORM_IOS: boolean = platformName === IOS;
 /**
  * @deprecated для определения платформы используйте withPlatform или usePlatform
  */
-export const IS_PLATFORM_ANDROID: boolean = osname === ANDROID;
+export const IS_PLATFORM_ANDROID: boolean = platformName === ANDROID;

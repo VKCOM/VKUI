@@ -154,7 +154,7 @@ export { default as classNames } from './lib/classNames';
 export { default as animate } from './lib/animate';
 export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
-export { platform, ANDROID, IOS, OS, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
+export { platform, ANDROID, IOS, Platform, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
 export { default as getClassName } from './helpers/getClassName';
 export { ViewWidth, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
 export const v = process.env.VKUI_VERSION;
@@ -168,10 +168,10 @@ import {
   HasPlatform as _HasPlatform,
   HasInsets as _HasInsets,
 } from './types';
-import { OSType as _OSType } from './lib/platform';
+import { PlatformType as _PlatformType } from './lib/platform';
 import { AdaptivityProps as _AdaptivityProps } from './hoc/withAdaptivity';
 
-export type OSType = _OSType;
+export type PlatformType = _PlatformType;
 export type AlignType = _AlignType;
 export type HasPlatform = _HasPlatform;
 export type HasInsets = _HasInsets;
