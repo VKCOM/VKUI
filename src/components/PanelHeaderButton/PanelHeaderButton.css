@@ -58,8 +58,7 @@
  * Android
  */
 
-.PanelHeaderButton--android,
-.PanelHeaderButton--vkcom {
+.PanelHeaderButton--android {
   border-radius: 50%;
   font-weight: 500;
   font-size: 15px;
@@ -88,16 +87,18 @@
  * VKCOM
  */
 
- .PanelHeaderButton--vkcom .Icon--24 {
+.PanelHeaderButton--vkcom {
+  display: flex;
+  align-items: center;
   padding: 10px;
 }
 
-.PanelHeaderButton--vkcom .Icon--28 {
-  padding: 8px;
+.PanelHeaderButton--vkcom.PanelHeaderButton--primitive {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 10px;
 }
 
-.PanelHeaderButton--vkcom.PanelHeaderButton--primitive {
-  height: 40px;
-  line-height: 40px;
-  padding: 0 10px;
+.PanelHeaderButton--vkcom:not(.PanelHeaderButton--primitive):not(.PanelHeaderButton--withLabel) {
+  border-radius: 50%;
 }

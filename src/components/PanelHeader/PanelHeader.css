@@ -236,3 +236,7 @@
 .PanelHeader--vkcom .PanelHeader__left:not(:empty) {
   padding: 0 0 0 4px;
 }
+
+.PanelHeader--vkcom .PanelHeader__content {
+  font-family: inherit;
+}

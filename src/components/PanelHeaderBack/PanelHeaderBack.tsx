@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
-import Icon24ChevronLeft from '@vkontakte/icons/dist/24/chevron_left';
+import Icon28ChevronLeftOutline from '@vkontakte/icons/dist/28/chevron_left_outline';
 import Icon28ArrowLeftOutline from '@vkontakte/icons/dist/28/arrow_left_outline';
 import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID, VKCOM } from '../../lib/platform';
@@ -11,7 +11,7 @@ const PanelHeaderBack: FunctionComponent<PanelHeaderButtonProps> = (props: Panel
 
   return (
     <PanelHeaderButton {...props}>
-      {platform === ANDROID ? <Icon28ArrowLeftOutline /> : platform === VKCOM ? <Icon24ChevronLeft /> : <Icon28ChevronBack />}
+      {platform === ANDROID ? <Icon28ArrowLeftOutline /> : platform === VKCOM ? <Icon28ChevronLeftOutline /> : <Icon28ChevronBack />}
     </PanelHeaderButton>
   );
 };

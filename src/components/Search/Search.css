@@ -245,6 +245,20 @@
   background-color: var(--header_background);
 }
 
+.PanelHeader--vkcom .Search--vkcom .Search__input {
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.PanelHeader--vkcom .Search--vkcom .Search__icon {
+  width: 36px;
+}
+
+.PanelHeader--vkcom .Search--vkcom .Search__icon:hover {
+  background-color: var(--background_hover);
+  border-radius: 50%;
+}
+
 /**
   iOS
  */

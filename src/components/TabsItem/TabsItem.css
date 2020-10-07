@@ -162,3 +162,22 @@
 .TabsItem--vkcom .Tappable__waves {
   display: none;
   }
+
+  /*
+  VKCOM
+  */
+
+  .PanelHeader--vkcom .TabsItem--vkcom {
+    flex-grow: 0;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .PanelHeader--vkcom .TabsItem--vkcom::after {
+    left: 2px;
+    bottom: 0;
+    width: calc(100% - 4px);
+  }

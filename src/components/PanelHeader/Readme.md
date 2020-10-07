@@ -41,8 +41,7 @@ class Example extends React.Component {
           </Panel>
           <Panel id="panel2">
             <PanelHeader
-              addon={<PanelHeaderButton onClick={() => this.setState({ mainPanel: 'panel1' })}>Назад</PanelHeaderButton>}
-              left={<PanelHeaderBack onClick={() => this.setState({ mainPanel: 'panel1' })} />}
+              left={<PanelHeaderBack  onClick={() => this.setState({ mainPanel: 'panel1' })} label={this.props.platform === 'vkcom' ? 'Назад' : undefined} />}
               right={<PanelHeaderButton label={<Counter size="s" mode="prominent">21</Counter>}><Icon28PictureOutline/></PanelHeaderButton>}
             >
               Вторая панель
@@ -99,7 +98,7 @@ class Example extends React.Component {
             </Group>
           </Panel>
           <Panel id="modal-panel3">
-            <PanelHeader separator={false} left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel2' })} />}>
+            <PanelHeader separator={this.props.platform === 'vkcom'} left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel2' })} />}>
               <Search />
             </PanelHeader>
             <CellButton onClick={ () => this.setState({ modalPanel: 'modal-panel4' }) }>
@@ -107,7 +106,7 @@ class Example extends React.Component {
             </CellButton>
           </Panel>
           <Panel id="modal-panel4">
-            <PanelHeader separator={false} left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel3' })} />}>
+            <PanelHeader separator={this.props.platform === 'vkcom'} left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel3' })} />}>
               <Tabs>
                 <TabsItem selected>Новости</TabsItem>
                 <TabsItem>Интересное</TabsItem>
@@ -120,5 +119,7 @@ class Example extends React.Component {
   }
 }
 
-<Example/>
+const ExampleWithPlatform = withPlatform(Example);
+
+<ExampleWithPlatform/>
 ```
