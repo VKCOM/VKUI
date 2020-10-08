@@ -7,6 +7,47 @@
   padding-bottom: 8px;
 }
 
+.Group__inner--sizeX-regular {
+  padding: 8px;
+}
+
+/*
+ * TODO: сделать нестинг не только к прямым, но и ко всем вложенным группам
+ * в модалке
+ */
+.Group__inner--mode-card,
+:not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain),
+:not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain) {
+  background: var(--modal_card_background);
+  /* For Card border */
+  position: relative;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px var(--input_border);
+}
+
+@media (min-resolution: 2dppx) {
+  .Group__inner--mode-card,
+  :not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain),
+  :not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain) {
+    box-shadow: inset 0 0 0 .5px var(--input_border);
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  .Group__inner--mode-card,
+  :not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain),
+  :not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain) {
+    box-shadow: inset 0 0 0 .33px var(--input_border);
+  }
+}
+
+.Group__inner::before,
+.Group__inner::after {
+  content: '';
+  display: block;
+  overflow: auto;
+}
+
 .Group__inner > .Separator {
   padding-top: 8px;
   padding-bottom: 8px;
@@ -29,47 +70,22 @@
 .Group__inner > .Header:first-child,
 .Group__inner > .Separator + .Header,
 .Group__inner > .Tabs:first-child {
-  margin-top: -8px;
-}
-
-.Group--ios .Group__description {
-  padding: 4px 12px 16px;
-}
-
-.Group--android .Group__description,
-.Group--vkcom .Group__description {
-  padding: 4px 16px 16px;
-}
-
-/* Regular Overrides */
-
-.Group__inner--sizeX-regular {
-  background: var(--modal_card_background);
-  /* For Card border */
-  position: relative;
-  border-radius: 8px;
-  box-shadow: inset 0 0 0 1px var(--input_border);
-  padding-left: 8px;
-  padding-right: 8px;
+  margin-top: -4px;
 }
 
 .Group:last-of-type .Group__inner--sizeX-regular + .Group__separator {
   display: block;
 }
 
-.Group__inner--sizeX-regular > .Header:first-child,
-.Group__inner--sizeX-regular > .Tabs:first-child {
-  margin-top: -4px;
+/* iOS */
+
+.Group--ios .Group__description {
+  padding: 4px 12px 16px;
 }
 
-@media (min-resolution: 2dppx) {
-  .Group__inner--sizeX-regular {
-    box-shadow: inset 0 0 0 .5px var(--input_border);
-  }
-}
+/* Android & vkcom */
 
-@media (min-resolution: 3dppx) {
-  .Group__inner--sizeX-regular {
-    box-shadow: inset 0 0 0 .33px var(--input_border);
-  }
+.Group--android .Group__description,
+.Group--vkcom .Group__description {
+  padding: 4px 16px 16px;
 }
