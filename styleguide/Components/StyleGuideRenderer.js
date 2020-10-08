@@ -14,6 +14,7 @@ import { DESKTOP_SIZE, MOBILE_SIZE } from '../../src/components/AdaptivityProvid
 import { defaultConfigProviderProps } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { ViewWidthSelect } from './ViewWidthSelect';
 import { SizeType } from '../../src/components/AdaptivityProvider/AdaptivityContext';
+import { OS } from '../../src/lib/platform';
 import { SizeYSelect } from './SizeYSelect';
 
 export const StyleGuideContext = React.createContext({
@@ -77,18 +78,32 @@ const styles = ({ color, fontFamily, fontSize, mq, space }) => ({
   },
 });
 
-function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
-  const [state, setState] = useState({
-    ...defaultConfigProviderProps,
-    webviewType: WebviewType.INTERNAL,
-    width: MOBILE_SIZE,
-    sizeY: SizeType.REGULAR,
-  });
 
-  const width = state.width;
+let initialState = {
+  ...defaultConfigProviderProps,
+  webviewType: WebviewType.INTERNAL,
+  width: MOBILE_SIZE,
+  sizeY: SizeType.REGULAR,
+}
+
+try {
+  const lsState =  localStorage.getItem('vkui:state');
+  if (lsState) {
+    initialState = JSON.parse(lsState);
+  }
+} catch (e) {
+  console.log(e);
+}
+
+function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
+  const [state, setState] = useState(initialState);
+
+  const { width, platform, sizeY } = state;
 
   const setContext = useCallback((data) => {
-    setState({ ...state, ...data })
+    const newState = { ...state, ...data };
+    localStorage.setItem('vkui:state', JSON.stringify(newState));
+    setState(newState)
   }, [state])
 
   useEffect(() => {
@@ -96,6 +111,12 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
       setContext({ width: MOBILE_SIZE });
     }
   }, [hasSidebar, width])
+
+  useEffect(() => {
+    if (platform === OS.VKCOM) {
+      setContext({ sizeY: SizeType.COMPACT });
+    }
+  }, [platform]);
 
   const providerValue = useMemo(() => ({ ...state, hasSidebar, setContext }), [state, setContext, hasSidebar]);
 
@@ -114,7 +135,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
             <Logo>{title}</Logo>
           </div>
           <div className={classes.os}>
-            <PlatformSelect onChange={ (e) => setContext({ platform: e.target.value })} value={state.platform} />
+            <PlatformSelect onChange={ (e) => setContext({ platform: e.target.value })} value={platform} />
             <div style={{ marginTop: 4 }}>
               <SchemeSelect onChange={ (e) => setContext({ scheme: e.target.value })} value={state.scheme} />
             </div>
@@ -127,14 +148,15 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
             <div style={{ marginTop: 4 }}>
               <ViewWidthSelect
                 onChange={ (e) => setContext({ width: Number(e.target.value) })}
-                value={state.width}
+                value={width}
                 isWide={!hasSidebar}
               />
             </div>
             <div style={{ marginTop: 4 }}>
               <SizeYSelect
                 onChange={ (e) => setContext({ sizeY: e.target.value })}
-                value={state.sizeY}
+                value={sizeY}
+                disabled={platform === OS.VKCOM}
               />
             </div>
             <div style={{ marginTop: 4 }}>

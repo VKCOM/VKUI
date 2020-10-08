@@ -66,7 +66,7 @@ module.exports = {
       }, {
         name: 'Modals',
         components: () => [
-          '../src/components/ModalRoot/ModalRoot.tsx',
+          '../src/components/ModalRoot/ModalRootAdaptive.tsx',
           '../src/components/ModalPage/ModalPage.tsx',
           '../src/components/ModalPageHeader/ModalPageHeader.tsx',
           '../src/components/ModalCard/ModalCard.tsx'
