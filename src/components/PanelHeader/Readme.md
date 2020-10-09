@@ -98,12 +98,15 @@ class Example extends React.Component {
             </Group>
           </Panel>
           <Panel id="modal-panel3">
-            <PanelHeader separator={this.props.platform === 'vkcom'} left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel2' })} />}>
+            <PanelHeader separator={this.props.platform === 'vkcom'} left={this.props.platform !== 'vkcom' && <PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel2' })} />}>
               <Search />
             </PanelHeader>
             <CellButton onClick={ () => this.setState({ modalPanel: 'modal-panel4' }) }>
               Табы
             </CellButton>
+            {this.props.platform === 'vkcom' && <CellButton onClick={ () => this.setState({ modalPanel: 'modal-panel2' }) }>
+              Сложный контент
+            </CellButton>}
           </Panel>
           <Panel id="modal-panel4">
             <PanelHeader separator={this.props.platform === 'vkcom'} left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel3' })} />}>
