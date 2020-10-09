@@ -115,14 +115,6 @@
   }
 }
 
-.FormField.Input .Input__el:focus ~ .FormField__background,
-.FormField.Textarea .Textarea__el:focus ~ .FormField__background,
-.FormField.Select .Select__el:focus ~ .FormField__background,
-.FormField.Select--mimicry:focus .FormField__background,
-.FormField.ChipsInput.ChipsInput--focused .ChipsInput__container ~ .FormField__background {
-  background: var(--field_background);
-}
-
 .FormField.Input .Input__el:focus ~ .FormField__border,
 .FormField.Textarea .Textarea__el:focus ~ .FormField__border,
 .FormField.Select .Select__el:focus ~ .FormField__border,
