@@ -220,11 +220,7 @@
  */
 
  .PanelHeader--vkcom .PanelHeader__content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  max-width: 100%;
+  text-align: center;
 }
 
 .PanelHeader--vkcom::before,
@@ -239,4 +235,11 @@
 
 .PanelHeader--vkcom .PanelHeader__content {
   font-family: inherit;
+}
+
+.PanelHeader--vkcom .PanelHeader__left,
+.PanelHeader--vkcom .PanelHeader__right {
+  flex-basis: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
 }
