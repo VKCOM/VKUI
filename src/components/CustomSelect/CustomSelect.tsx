@@ -326,17 +326,18 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
     }
   }
 
-  renderOption = (item: SelectOption, index: number) => {
+  renderOption = (option: SelectOption, index: number) => {
     const { focusedOptionIndex, selectedOptionIndex } = this.state;
     const { renderOption } = this.props;
     const hovered = index === focusedOptionIndex;
     const selected = index === selectedOptionIndex;
 
     return renderOption({
+      option,
       index,
-      label: item.label,
-      selected,
       hovered,
+      label: option.label,
+      selected: !!selected,
       onClick: this.selectFocused,
       onMouseDown: this.handleOptionDown,
       onMouseEnter: this.handleOptionHover,

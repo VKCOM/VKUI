@@ -114,3 +114,7 @@
 .FormField--vkcom.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
   border-radius: 0 0 6px 6px;
 }
+
+.FormField--vkcom.ChipsSelect__open.ChipsSelect__open--popupDirectionTop .FormField__border {
+  border-radius: 0 0 6px 6px;
+}

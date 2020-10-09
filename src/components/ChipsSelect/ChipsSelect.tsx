@@ -13,8 +13,8 @@ import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderC
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { noop } from '../../lib/utils';
 import { hasMouse } from '../../helpers/inputUtils';
+import { SizeType } from '../AdaptivityProvider/AdaptivityContext';
 import { useChipsSelect } from './useChipsSelect';
-import { SizeType } from '../..';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option> {
   popupDirection?: 'top' | 'bottom';
@@ -188,7 +188,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
 
   return (
     <div
-      className={classNames('ChipsSelect CustomSelect__container', className)}
+      className={classNames('ChipsSelect', className)}
       ref={getRootRef}
     >
       <ChipsInput
@@ -207,8 +207,8 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         placeholder={placeholder}
         style={style}
         className={classNames(inputClass, {
-          ['CustomSelect__open']: opened,
-          ['CustomSelect__open--popupDirectionTop']: popupDirection === 'top',
+          ['ChipsSelect__open']: opened,
+          ['ChipsSelect__open--popupDirectionTop']: popupDirection === 'top',
         })}
         getRef={getRef}
         disabled={disabled}
@@ -221,9 +221,9 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
       {opened &&
         <div
           className={classNames({
-            ['CustomSelect__options']: opened,
-            ['CustomSelect__options--popupDirectionTop']: popupDirection === 'top',
-            [`CustomSelect__options--sizeY-${sizeY}`]: !!sizeY,
+            ['ChipsSelect__options']: opened,
+            ['ChipsSelect__options--popupDirectionTop']: popupDirection === 'top',
+            [`ChipsSelect__options--sizeY-${sizeY}`]: !!sizeY,
           })}
           onMouseLeave={() => setFocusedOptionIndex(null)}
         >

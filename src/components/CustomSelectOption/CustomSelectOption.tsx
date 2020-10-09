@@ -1,9 +1,9 @@
-import React, { FC, MouseEvent, ReactNode } from 'react';
+import React, { FC, HTMLAttributes, ReactNode } from 'react';
 import SelectedIcon from '@vkontakte/icons/dist/16/done';
 import classNames from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 
-export interface CustomSelectOptionProps {
+export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement> {
   label: string;
   index?: number;
   option?: any;
@@ -12,9 +12,6 @@ export interface CustomSelectOptionProps {
   hovered?: boolean;
   before?: ReactNode;
   after?: ReactNode;
-  onClick?: () => void;
-  onMouseDown?: (event: MouseEvent<HTMLElement>) => void;
-  onMouseEnter?: (event: MouseEvent<HTMLElement>) => void;
 }
 
 const CustomSelectOption: FC<CustomSelectOptionProps> = ({
@@ -24,9 +21,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   selected,
   before,
   after,
-  onClick,
-  onMouseDown,
-  onMouseEnter,
+  ...restProps
 }) => {
   return (
     <div
@@ -34,13 +29,11 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       title={label}
       aria-posinset={index}
       aria-selected={selected}
-      onClick={onClick}
-      onMouseDown={onMouseDown}
-      onMouseEnter={onMouseEnter}
       className={classNames('CustomSelectOption', {
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
       })}
+      {...restProps}
     >
       {hasReactNode(before) && <div className="CustomSelectOption__before">{before}</div>}
       {label}
