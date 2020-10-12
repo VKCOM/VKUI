@@ -4,7 +4,7 @@ import getClassname from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLInputElement> {
+export interface CardProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   mode?: 'tint' | 'shadow' | 'outline';
 }
