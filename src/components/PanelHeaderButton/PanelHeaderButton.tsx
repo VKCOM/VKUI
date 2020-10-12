@@ -3,6 +3,7 @@ import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
+import { isPrimitiveReactNode } from '../../lib/utils';
 
 export interface PanelHeaderButtonProps extends ButtonHTMLAttributes<HTMLElement> {
   primary?: boolean;
@@ -18,7 +19,7 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   label,
   ...restProps
 }: PanelHeaderButtonProps) => {
-  const isPrimitive = typeof children === 'string' || typeof children === 'number';
+  const isPrimitive = isPrimitiveReactNode(children);
   const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
 

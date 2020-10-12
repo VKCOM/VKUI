@@ -8,6 +8,7 @@ import { ANDROID } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { isPrimitiveReactNode } from '../../lib/utils';
 
 export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   left?: ReactNode;
@@ -44,7 +45,7 @@ const PanelHeader = ({
   const { webviewType } = useContext(ConfigProviderContext);
   const needShadow = shadow && sizeX === SizeType.REGULAR;
 
-  const isPrimitive = typeof children === 'string' || typeof children === 'number';
+  const isPrimitive = isPrimitiveReactNode(children);
 
   return (
     <div

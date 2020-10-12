@@ -60,6 +60,10 @@ export function hasReactNode(value: ReactNode): boolean {
   return value !== undefined && value !== false && value !== null;
 }
 
+export function isPrimitiveReactNode(node: ReactNode): boolean {
+  return typeof node === 'string' || typeof node === 'number';
+}
+
 export function setRef<T>(element: T, ref: Ref<T>): void {
   if (ref) {
     if (typeof ref === 'function') {
