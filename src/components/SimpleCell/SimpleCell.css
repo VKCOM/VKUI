@@ -202,6 +202,16 @@
   padding-bottom: 10px;
 }
 
+.SimpleCell--sizeY-compact > .Avatar--sz-40 {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.SimpleCell--sizeY-compact > .Avatar--sz-48 {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
 .SimpleCell--sizeY-compact > .Icon,
 .SimpleCell--sizeY-compact > .Avatar--sz-32,
 .SimpleCell--sizeY-compact > .Avatar--sz-28 {
