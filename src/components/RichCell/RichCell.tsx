@@ -4,7 +4,7 @@ import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
 import { HasLinkProps, HasRootRef } from '../../types';
 import Tappable from '../Tappable/Tappable';
-import { hasReactNode } from '../../lib/utils';
+import { hasReactNode, isPrimitiveReactNode } from '../../lib/utils';
 
 export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasLinkProps {
   /**
@@ -48,7 +48,7 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
-  const isAfterPrimitive = typeof after === 'string' || typeof after === 'number';
+  const isAfterPrimitive = isPrimitiveReactNode(after);
 
   return (
     <Tappable

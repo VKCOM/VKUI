@@ -8,6 +8,7 @@ import { ANDROID } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
 import { PanelContext } from '../Panel/PanelContext';
+import { isPrimitiveReactNode } from '../../lib/utils';
 
 export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   left?: ReactNode;
@@ -46,7 +47,7 @@ const PanelHeader = ({
     needSeparator = panelContext.separator;
   }
 
-  const isPrimitive = typeof children === 'string' || typeof children === 'number';
+  const isPrimitive = isPrimitiveReactNode(children);
 
   return (
     <div
