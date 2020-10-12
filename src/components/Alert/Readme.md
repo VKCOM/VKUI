@@ -57,10 +57,9 @@ class Example extends React.Component {
           action: () => this.addActionLogItem('Право на модерацию контента добавлено.'),
         }]}
         onClose={this.closePopout}
-      >
-        <h2>Подтвердите действие</h2>
-        <p>Добавить пользователю право на модерацию контента.</p>
-      </Alert>
+        header="Подтвердите действие"
+        text="Добавить пользователю право на модерацию контента."
+      />
     });
   }
 
@@ -79,10 +78,9 @@ class Example extends React.Component {
           mode: 'cancel'
         }]}
         onClose={this.closePopout}
-      >
-        <h2>Подтвердите действие</h2>
-        <p>Вы уверены, что хотите лишить пользователя права на модерацию контента?</p>
-      </Alert>
+        header="Подтвердите действие"
+        text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+      />
     });
   }
 
@@ -94,9 +92,9 @@ class Example extends React.Component {
     return (
       <View popout={this.state.popout} activePanel="alert">
         <Panel id="alert">
+          <PanelHeader>Alert</PanelHeader>
           <CellButton onClick={this.openDefault}>Добавить право</CellButton>
           <CellButton mode="danger" onClick={this.openDestructive}>Лишить права</CellButton>
-
           {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
         </Panel>
       </View>

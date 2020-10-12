@@ -205,82 +205,26 @@
   transform: scale(.95);
   opacity: 0;
   transition: transform .2s var(--android-easing), opacity .2s var(--android-easing);
-  }
+}
 
-  /**
-   * Content container
-   */
-  .Alert--android .Alert__content,
-  .Alert--vkcom .Alert__content {
-    padding: 20px 24px 8px;
-    font-size: 16px;
-    line-height: 24px;
-    }
+.Alert--android .Alert__content,
+.Alert--vkcom .Alert__content {
+  padding: 20px 24px 8px;
+}
 
-    .Alert--android .Alert__content h2,
-    .Alert--vkcom .Alert__content h2 {
-      margin: 0 0 8px;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 28px;
-      }
-
-    .Alert--android .Alert__content p,
-    .Alert--vkcom .Alert__content p {
-      margin: 0;
-      }
-
-    .Alert--android .Alert__content p + p,
-    .Alert--vkcom .Alert__content p + p {
-      margin: 24px 0 0;
-      }
-
-  /**
-   * Footer
-   */
-  .Alert--android .Alert__footer,
-  .Alert--vkcom .Alert__footer {
-    padding: 12px 16px 16px;
-    display: flex;
-    justify-content: flex-end;
-    flex-flow: wrap;
-    }
-
-  .Alert--android.Alert--v .Alert__footer,
-  .Alert--vkcom.Alert--v .Alert__footer {
-    flex-direction: column;
-    align-items: flex-end;
-    }
-
-    .Alert--android .Alert__btn,
-    .Alert--vkcom .Alert__btn {
-      margin: 4px 0 0 8px;
-      border: 0;
-      flex: 0 1 auto;
-      text-transform: uppercase;
-      font-weight: 500;
-      font-size: 15px;
-      line-height: 20px;
-      padding: 8px 16px;
-      border-radius: 8px;
-      color: var(--accent);
-      outline: none;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      }
-
-    .Alert--android .Alert__btn--destructive,
-    .Alert--vkcom .Alert__btn--destructive {
-      color: var(--destructive);
-      }
+.Alert--android.Alert--v .Alert__footer,
+.Alert--vkcom.Alert--v .Alert__footer {
+  flex-direction: column;
+  align-items: flex-end;
+}
 
 .Alert--desktop {
   width: 416px;
 }
 
-  .Alert--desktop .Alert__content p {
-    color: var(--text_subhead);
-  }
+.Alert--desktop .Alert__content p {
+  color: var(--text_subhead);
+}
 
 /**
  * Animations
