@@ -86,7 +86,7 @@ class Example extends React.Component {
             </Group>
           </Panel>
           <Panel id="modal-panel2">
-            <PanelHeader left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel1' })} />}>
+            <PanelHeader left={<PanelHeaderBack onClick={() => this.setState({ modalPanel: 'modal-panel1' })} label={this.props.platform === 'vkcom' ? 'Назад' : undefineds} />}>
               <PanelHeaderContent before={<Avatar size={36} />} status="Был в сети вчера">
                 Влад Анесов
               </PanelHeaderContent>

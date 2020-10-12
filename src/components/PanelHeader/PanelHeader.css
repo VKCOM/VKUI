@@ -182,8 +182,7 @@
   max-width: 100%;
 }
 
-.PanelHeader--android .PanelHeader__content > *,
-.PanelHeader--vkcom .PanelHeader__content > * {
+.PanelHeader--android .PanelHeader__content > * {
   padding: 0 12px;
 }
 
