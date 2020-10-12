@@ -40,7 +40,7 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
         {
           'PanelHeaderButton--primary': primary,
           'PanelHeaderButton--primitive': isPrimitive,
-          'PanelHeaderButton--withLabel': isPrimitiveLabel,
+          'PanelHeaderButton--notPrimitive': !isPrimitive && !isPrimitiveLabel,
         },
       )}
     >

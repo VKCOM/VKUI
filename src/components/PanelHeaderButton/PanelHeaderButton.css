@@ -99,6 +99,6 @@
   padding: 0 10px;
 }
 
-.PanelHeaderButton--vkcom:not(.PanelHeaderButton--primitive):not(.PanelHeaderButton--withLabel) {
+.PanelHeaderButton--vkcom.PanelHeaderButton--notPrimitive {
   border-radius: 50%;
 }
