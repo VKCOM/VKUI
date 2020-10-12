@@ -34,7 +34,7 @@
     "@typescript-eslint/parser": "^2.0.0",
     "@vkontakte/appearance": "https://github.com/VKCOM/Appearance#v7.2.2",
     "@vkontakte/eslint-config": "2.5.0",
-    "@vkontakte/icons": "1.35.1",
+    "@vkontakte/icons": "1.44.0",
     "@vkontakte/vk-bridge": "^2.1.3",
     "autoprefixer": "^9.8.0",
     "babel-loader": "^8.0.4",
