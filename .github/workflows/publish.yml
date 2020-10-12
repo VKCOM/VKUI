@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v1
         with:
@@ -36,7 +36,7 @@ jobs:
       - name: Pushing changes
           uses: ad-m/github-push-action@master
           with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
+            github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
             branch: ${{ github.ref }}
 
       - name: Publushing prerelase
@@ -66,6 +66,6 @@ jobs:
       - name: Publishin doc
         uses: JamesIves/github-pages-deploy-action@3.5.9
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: docs
