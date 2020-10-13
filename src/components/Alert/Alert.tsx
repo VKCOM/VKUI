@@ -4,7 +4,7 @@ import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { transitionEvent } from '../../lib/supportEvents';
-import { ANDROID, OS, VKCOM } from '../../lib/platform';
+import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
@@ -100,26 +100,26 @@ class Alert extends Component<AlertProps, AlertState> {
 
   renderHeader(header: ReactNode) {
     switch (this.props.platform) {
-      case OS.VKCOM:
+      case VKCOM:
         return this.isDesktop ?
           <Headline className="Alert__header" weight="medium">{header}</Headline> :
           <Title className="Alert__header" weight="medium" level="2">{header}</Title>;
-      case OS.IOS:
+      case IOS:
         return <Title className="Alert__header" weight="semibold" level="3">{header}</Title>;
-      case OS.ANDROID:
+      case ANDROID:
         return <Title className="Alert__header" weight="medium" level="2">{header}</Title>;
     }
   }
 
   renderText(text: ReactNode) {
     switch (this.props.platform) {
-      case OS.VKCOM:
+      case VKCOM:
         return this.isDesktop ?
           <Caption className="Alert__text" level="1" weight="regular">{text}</Caption> :
           <Headline className="Alert__text" weight="regular">{text}</Headline>;
-      case OS.IOS:
+      case IOS:
         return <Caption className="Alert__text" level="2" weight="regular">{text}</Caption>;
-      case OS.ANDROID:
+      case ANDROID:
         return <Headline className="Alert__text" weight="regular">{text}</Headline>;
     }
   }
@@ -127,9 +127,9 @@ class Alert extends Component<AlertProps, AlertState> {
   renderAction = (action: AlertActionInterface, i: number) => {
     const { platform } = this.props;
     switch (platform) {
-      case OS.ANDROID:
+      case ANDROID:
         return <Button mode="tertiary" size="m">{action.title}</Button>;
-      case OS.VKCOM:
+      case VKCOM:
         return this.isDesktop ?
           <Button size="m" mode={action.mode === 'cancel' ? 'secondary' : 'primary'}>{action.title}</Button> :
           <Button mode="tertiary" size="m">{action.title}</Button>;
@@ -151,7 +151,7 @@ class Alert extends Component<AlertProps, AlertState> {
     const { actions, actionsLayout, children, className, style, platform, viewWidth, text, header, ...restProps } = this.props;
     const { closing } = this.state;
 
-    const resolvedActionsLayout: AlertProps['actionsLayout'] = platform === OS.VKCOM ? 'horizontal' : actionsLayout;
+    const resolvedActionsLayout: AlertProps['actionsLayout'] = platform === VKCOM ? 'horizontal' : actionsLayout;
 
     return (
       <PopoutWrapper
