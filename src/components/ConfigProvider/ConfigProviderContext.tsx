@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import vkBridge, { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
-import { OSType, platform } from '../../lib/platform';
+import { PlatformType, platform } from '../../lib/platform';
 
 export enum Appearance {
   DARK = 'dark',
@@ -48,7 +48,7 @@ export interface ConfigProviderContextInterface {
   /**
    * Платформа
    */
-  platform?: OSType;
+  platform?: PlatformType;
 }
 
 export const defaultConfigProviderProps = {

@@ -165,20 +165,16 @@
 }
 
 .PanelHeader--android::before,
-.PanelHeader--android .PanelHeader__in,
-.PanelHeader--vkcom::before,
-.PanelHeader--vkcom .PanelHeader__in {
+.PanelHeader--android .PanelHeader__in {
   height: var(--panelheader_height_android);
   padding-top: var(--safe-area-inset-top);
 }
 
-.PanelHeader--android .PanelHeader__left:not(:empty),
-.PanelHeader--vkcom .PanelHeader__left:not(:empty) {
+.PanelHeader--android .PanelHeader__left:not(:empty) {
   padding: 4px 0 4px 4px;
 }
 
-.PanelHeader--android .PanelHeader__content,
-.PanelHeader--vkcom .PanelHeader__content {
+.PanelHeader--android .PanelHeader__content {
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -186,8 +182,7 @@
   max-width: 100%;
 }
 
-.PanelHeader--android .PanelHeader__content > *,
-.PanelHeader--vkcom .PanelHeader__content > * {
+.PanelHeader--android .PanelHeader__content > * {
   padding: 0 12px;
 }
 
@@ -201,8 +196,7 @@
   padding-left: 0;
 }
 
-.PanelHeader--android.PanelHeader--no-left .PanelHeader__content,
-.PanelHeader--vkcom.PanelHeader--no-left .PanelHeader__content {
+.PanelHeader--android.PanelHeader--no-left .PanelHeader__content {
   padding-left: 16px;
 }
 
@@ -211,12 +205,40 @@
   padding-right: 0;
 }
 
-.PanelHeader--android.PanelHeader--no-right .PanelHeader__content,
-.PanelHeader--vkcom.PanelHeader--no-right .PanelHeader__content {
+.PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
   padding-right: 16px;
 }
 
 .PanelHeader--android .PanelHeader__right:not(:empty),
 .PanelHeader--vkcom .PanelHeader__right:not(:empty) {
   padding: 4px 4px 4px 0;
+}
+
+/**
+ * VKCOM
+ */
+
+ .PanelHeader--vkcom .PanelHeader__content {
+  text-align: center;
+}
+
+.PanelHeader--vkcom::before,
+.PanelHeader--vkcom .PanelHeader__in {
+  height: var(--panelheader_height_vkcom);
+  padding-top: var(--safe-area-inset-top);
+}
+
+.PanelHeader--vkcom .PanelHeader__left:not(:empty) {
+  padding: 0 0 0 4px;
+}
+
+.PanelHeader--vkcom .PanelHeader__content {
+  font-family: inherit;
+}
+
+.PanelHeader--vkcom .PanelHeader__left,
+.PanelHeader--vkcom .PanelHeader__right {
+  flex-basis: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
 }

@@ -9,7 +9,7 @@ import Caption from '../Typography/Caption/Caption';
 import { HasAlign, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
-import { OS } from '../../lib/platform';
+import { Platform } from '../../lib/platform';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
@@ -26,7 +26,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootR
   target?: string;
 }
 
-const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean, sizeY: AdaptivityProps['sizeY'], platform: OS) => {
+const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean, sizeY: AdaptivityProps['sizeY'], platform: Platform) => {
   switch (size) {
     case 'l':
       return (
@@ -53,10 +53,10 @@ const getContent = (size: ButtonProps['size'], children: ButtonProps['children']
       if (hasIcons) {
         return (
           <Caption
-            caps={platform !== OS.VKCOM}
-            level={platform === OS.VKCOM ? '1' : sizeY === SizeType.COMPACT ? '3' : '2'}
-            weight={platform === OS.VKCOM || sizeY === SizeType.COMPACT ? 'medium' : 'semibold'}
-            className={'Button__content' + (platform !== OS.VKCOM ? '--caps' : '')}
+            caps={platform !== Platform.VKCOM}
+            level={platform === Platform.VKCOM ? '1' : sizeY === SizeType.COMPACT ? '3' : '2'}
+            weight={platform === Platform.VKCOM || sizeY === SizeType.COMPACT ? 'medium' : 'semibold'}
+            className={'Button__content' + (platform !== Platform.VKCOM ? '--caps' : '')}
           >
             {children}
           </Caption>

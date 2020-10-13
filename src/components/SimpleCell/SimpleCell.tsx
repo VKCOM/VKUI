@@ -7,6 +7,7 @@ import { HasLinkProps, HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface SimpleCellOwnProps extends HasLinkProps {
   /**
@@ -37,7 +38,7 @@ export interface SimpleCellOwnProps extends HasLinkProps {
   Component?: ElementType;
 }
 
-export interface SimpleCellProps extends SimpleCellOwnProps, HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {}
+export interface SimpleCellProps extends SimpleCellOwnProps, HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, AdaptivityProps {}
 
 const SimpleCell: FC<SimpleCellProps> = ({
   before,
@@ -50,6 +51,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
   multiline,
   Component,
   onClick,
+  sizeY,
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -74,6 +76,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
             'SimpleCell--exp': expandable,
             'SimpleCell--mult': multiline,
           },
+          `SimpleCell--sizeY-${sizeY}`,
         )
       }
     >
@@ -101,4 +104,4 @@ SimpleCell.defaultProps = {
   Component: 'div',
 };
 
-export default SimpleCell;
+export default withAdaptivity(SimpleCell, { sizeY: true });
