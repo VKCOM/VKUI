@@ -30,6 +30,11 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
   inputClass?: string;
 }
 
+type focusActionType = 'next' | 'prev';
+
+const FOCUS_ACTION_NEXT: focusActionType = 'next';
+const FOCUS_ACTION_PREV: focusActionType = 'prev';
+
 const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
     style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText, inputClass,
@@ -102,12 +107,12 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     setFocusedOptionIndex(index);
   };
 
-  const focusOption = (nextIndex: number|null, type: 'next' | 'prev') => {
+  const focusOption = (nextIndex: number|null, type: focusActionType) => {
     let index = typeof nextIndex !== 'number' ? -1 : nextIndex;
 
-    if (type === 'next') {
+    if (type === FOCUS_ACTION_NEXT) {
       index = index + 1;
-    } else if (type === 'prev') {
+    } else if (type === FOCUS_ACTION_PREV) {
       index = index - 1;
     }
 
@@ -124,7 +129,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         setOpened(true);
         setFocusedOptionIndex(0);
       } else {
-        focusOption(focusedOptionIndex, 'prev');
+        focusOption(focusedOptionIndex, FOCUS_ACTION_PREV);
       }
     }
 
@@ -135,7 +140,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         setOpened(true);
         setFocusedOptionIndex(0);
       } else {
-        focusOption(focusedOptionIndex, 'next');
+        focusOption(focusedOptionIndex, FOCUS_ACTION_NEXT);
       }
     }
 

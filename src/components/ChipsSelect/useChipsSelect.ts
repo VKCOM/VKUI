@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { ChipsInputOption } from '../ChipsInput/ChipsInput';
 import { useChipsInput } from '../ChipsInput/useChipsInput';
 import { ChipsSelectProps } from './ChipsSelect';
@@ -12,14 +12,14 @@ export const useChipsSelect = <Option extends ChipsInputOption>(props: Partial<C
 
   const { fieldValue, selectedOptions, ...chipsInputState } = useChipsInput(props);
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     chipsInputState.handleInputChange(e);
 
     if (!opened) {
       setOpened(true);
       setFocusedOptionIndex(0);
     }
-  }, [opened]);
+  };
 
   let filteredOptions = useMemo(() => {
     return options.filter((option: Option) => filterFn(fieldValue, option, getOptionLabel));
