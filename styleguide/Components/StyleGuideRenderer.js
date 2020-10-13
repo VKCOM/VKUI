@@ -14,7 +14,7 @@ import { DESKTOP_SIZE, MOBILE_SIZE } from '../../src/components/AdaptivityProvid
 import { defaultConfigProviderProps } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { ViewWidthSelect } from './ViewWidthSelect';
 import { SizeType } from '../../src/components/AdaptivityProvider/AdaptivityContext';
-import { OS } from '../../src/lib/platform';
+import { VKCOM } from '../../src/lib/platform';
 import { SizeYSelect } from './SizeYSelect';
 
 export const StyleGuideContext = React.createContext({
@@ -113,7 +113,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
   }, [hasSidebar, width])
 
   useEffect(() => {
-    if (platform === OS.VKCOM) {
+    if (platform === VKCOM) {
       setContext({ sizeY: SizeType.COMPACT });
     }
   }, [platform]);
@@ -156,7 +156,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
               <SizeYSelect
                 onChange={ (e) => setContext({ sizeY: e.target.value })}
                 value={sizeY}
-                disabled={platform === OS.VKCOM}
+                disabled={platform === VKCOM}
               />
             </div>
             <div style={{ marginTop: 4 }}>
