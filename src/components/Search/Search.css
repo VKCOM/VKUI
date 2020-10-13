@@ -255,7 +255,27 @@
 /**
   Android
  */
-.Search--android,
-.Search--vkcom {
+.Search--android {
   padding: 8px 16px;
+}
+
+/**
+  VKCOM
+*/
+.Search--vkcom .Search__input {
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.Search--vkcom .Search__icon {
+  width: 36px;
+}
+
+.Search--vkcom .Search__icon:hover {
+  background-color: var(--background_hover);
+  border-radius: 50%;
+}
+
+.Search--vkcom .Search__control {
+  background-color: transparent;
 }

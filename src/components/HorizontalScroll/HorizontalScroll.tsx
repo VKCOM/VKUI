@@ -1,6 +1,6 @@
 import React, { FunctionComponent, HTMLAttributes, useRef, useEffect, useState, useCallback } from 'react';
 import classNames from '../../lib/classNames';
-import { hasMouse } from '../../helpers/inputUtils';
+import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron_right';
 import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';

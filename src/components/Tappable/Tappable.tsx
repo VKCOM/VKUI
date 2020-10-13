@@ -8,7 +8,7 @@ import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
 import { HasPlatform, HasRootRef, RefWithCurrent } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
-import { hasHover } from '../../helpers/inputUtils';
+import { hasHover } from '@vkontakte/vkjs/lib/InputUtils';
 import { setRef } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 

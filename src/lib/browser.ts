@@ -1,53 +1,44 @@
 import { Version } from '../types';
-import { IOS, OSType, platform } from './platform';
+import { detectIOS } from '@vkontakte/vkjs/lib/IOSDetections';
+
+export enum System {
+  IOS = 'ios',
+  UNKNOWN = '',
+}
 
 export interface BrowserInfo {
   userAgent: string;
-  platform: OSType;
-  platformVersion: Version | null;
+  system: System;
+  systemVersion: Version | null;
 }
 
 const memoized: { [index: string]: BrowserInfo } = {};
 
-export function computeBrowserInfo(userAgent: string): BrowserInfo {
+export function computeBrowserInfo(userAgent = ''): BrowserInfo {
   if (memoized[userAgent]) {
     return memoized[userAgent];
   }
 
-  const platformName = platform(userAgent);
+  let systemVersion: Version | null = null;
+  let system = System.UNKNOWN;
 
-  let platformVersion: Version | null = null;
+  const { isIOS, iosMajor, iosMinor } = detectIOS(userAgent);
 
-  if (platformName === IOS) {
-    platformVersion = parseiOSVersion(userAgent);
+  if (isIOS) {
+    system = System.IOS;
+    systemVersion = {
+      major: iosMajor,
+      minor: iosMinor,
+    };
   }
 
   const browserInfo: BrowserInfo = {
     userAgent,
-    platform: platformName,
-    platformVersion,
+    system,
+    systemVersion,
   };
 
   memoized[userAgent] = browserInfo;
 
   return browserInfo;
-}
-
-export function parseiOSVersion(userAgent: string): Version | null {
-  if (!userAgent) {
-    return null;
-  }
-
-  const match = userAgent.match(/(iphone os|cpu os|ios) \b([0-9]+_[0-9]+(?:_[0-9]+)?)\b/i);
-  if (!match) {
-    return null;
-  }
-
-  const [major, minor, patch] = match[2].replace(/_/g, '.').split('.');
-
-  return {
-    major: parseInt(major) || 0,
-    minor: parseInt(minor) || 0,
-    patch: parseInt(patch) || 0,
-  };
 }

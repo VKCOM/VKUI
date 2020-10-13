@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactElement, ChangeEvent, useRef } from 'react';
 import NativeSelect, { SelectProps } from '../NativeSelect/NativeSelect';
 import CustomSelect, { SelectOption, SelectChangeResult } from '../CustomSelect/CustomSelect';
-import { hasMouse } from '../../helpers/inputUtils';
+import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { HasRef, Ref } from '../../types';
 import { setRef } from '../../lib/utils';
 

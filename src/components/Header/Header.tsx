@@ -1,8 +1,9 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
+import { hasReactNode, isPrimitiveReactNode } from '../../lib/utils';
 
 export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   mode?: 'primary' | 'secondary';
@@ -29,16 +30,16 @@ const Header: FunctionComponent<HeaderProps> = ({
       {...restProps}
       ref={getRootRef}
       className={classNames(baseClassNames, className, `Header--mode-${mode}`, {
-        'Header--pi': typeof indicator === 'string' || typeof indicator === 'number',
+        'Header--pi': isPrimitiveReactNode(indicator),
       })}
     >
       <div className="Header__in">
         <div className="Header__content">
           {children}
-          {subtitle && <div className="Header__subtitle">{subtitle}</div>}
+          {hasReactNode(subtitle) && <div className="Header__subtitle">{subtitle}</div>}
         </div>
-        {indicator && <div className="Header__indicator">{indicator}</div>}
-        {aside && <div className="Header__aside">{aside}</div>}
+        {hasReactNode(indicator) && <div className="Header__indicator">{indicator}</div>}
+        {hasReactNode(aside) && <div className="Header__aside">{aside}</div>}
       </div>
     </div>
   );
