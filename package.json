@@ -7,7 +7,7 @@
   "license": "MIT",
   "description": "VKUI library",
   "repository": "https://github.com/VKCOM/VKUI",
-  "homepage": "https://vkcom.github.io/vkui-styleguide",
+  "homepage": "https://vkcom.github.io/VKUI/",
   "defaultSchemeId": "bright_light",
   "sideEffects": [
     "./dist/lib/polyfills.js",
