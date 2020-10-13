@@ -1,4 +1,4 @@
-Контейнер для однородных [Cell](/#!/Cell).
+Контейнер для однородных [Cell](#!/Cell).
 
 ```jsx
 <View activePanel="list">

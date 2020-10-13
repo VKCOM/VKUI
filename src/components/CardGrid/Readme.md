@@ -1,4 +1,4 @@
-Сетка для [Card](/#!/Card).
+Сетка для [Card](#!/Card).
 
 ```jsx
 <View activePanel="card">
