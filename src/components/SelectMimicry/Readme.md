@@ -1,4 +1,4 @@
-Визуальная имитация компонента [Select](https://vkcom.github.io/vkui-styleguide/#!/Select). У него нет свойства `value`, а `children` вместо массива `options` принимает
+Визуальная имитация компонента [Select](#!/Select). У него нет свойства `value`, а `children` вместо массива `options` принимает
 любой `ReactNode`, отображая его без изменений.
 
 ```jsx
