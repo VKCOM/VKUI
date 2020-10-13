@@ -9,7 +9,7 @@ import { SchemeSelect } from './SchemeSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
 import { SizeYSelect } from './SizeYSelect';
-import { OS } from '../../src/lib/platform';
+import { VKCOM } from '../../src/lib/platform';
 
 export const styles = ({ fontFamily, fontSize }) => ({
   pathline: {
@@ -51,7 +51,7 @@ export function PathlineRenderer({ classes, children }) {
             <SizeYSelect
               onChange={(e) => styleGuideContext.setContext({ sizeY: e.target.value })}
               value={styleGuideContext.sizeY}
-              disabled={styleGuideContext.platform === OS.VKCOM}
+              disabled={styleGuideContext.platform === VKCOM}
             />
             &nbsp;|&nbsp;
             <span className={classes.link}>

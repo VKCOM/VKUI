@@ -70,7 +70,7 @@ import { Tooltip, Button } from '@vkontakte/vkui';
             <PanelHeader
               left={
                 <PanelHeaderButton onClick={() => this.setState({ activePanel: 'tooltip' })}>
-                  {(this.props.platform === ANDROID || this.props.platform === OS.VKCOM) ? <Icon24Back/> : <Icon28ChevronBack/>}
+                  {(this.props.platform === ANDROID || this.props.platform === VKCOM) ? <Icon24Back/> : <Icon28ChevronBack/>}
                 </PanelHeaderButton>
               }
               right={
