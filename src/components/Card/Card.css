@@ -61,12 +61,12 @@
 }
 
 /**
- * Android
+ * Android & VKCOM
  */
 
 .Card--android.Card--sz-s,
 .Card--vkcom.Card--sz-s {
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .Card--android.Card--sz-m,
