@@ -13,7 +13,8 @@ import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
-import { ModalsStateEntry, ModalType, TranslateRange } from './types';
+import { ModalsState, ModalsStateEntry, ModalType, TranslateRange } from './types';
+import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
 
 function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];
@@ -78,7 +79,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.frameIds = {};
   }
 
-  private modalsState: { [id: string]: ModalsStateEntry };
+  private modalsState: ModalsState;
   private documentScrolling: boolean;
   private activeTransitions: number;
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
@@ -106,12 +107,12 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     return this.context.webviewType || WebviewType.VKAPPS;
   }
 
-  get modals() {
+  getModals(): ReactElement[] {
     return [].concat(this.props.children);
   }
 
   initModalsState() {
-    this.modalsState = this.modals.reduce((acc, Modal) => {
+    this.modalsState = this.getModals().reduce<ModalsState>((acc, Modal) => {
       const modalProps = Modal.props;
       const state: ModalsStateEntry = {
         id: Modal.props.id,
@@ -188,12 +189,6 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     }
   }
 
-  blurActiveElement() {
-    if (typeof this.window !== 'undefined' && this.document.activeElement instanceof HTMLElement) {
-      this.document.activeElement.blur();
-    }
-  }
-
   /* Отключает скролл документа */
   toggleDocumentScrolling(enabled: boolean) {
     if (this.documentScrolling === enabled) {
@@ -249,7 +244,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
     switch (modalState.type) {
       case ModalType.PAGE:
-        modalState.settlingHeight = modalState.settlingHeight || 75;
+        modalState.settlingHeight = modalState.settlingHeight || MODAL_PAGE_DEFAULT_PERCENT_HEIGHT;
         this.initPageModal(modalState, modalElement);
         break;
 
@@ -412,7 +407,6 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   onPageTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
     const { shiftY, startT, originalEvent } = event;
-
     const target = originalEvent.target as HTMLElement;
 
     if (!event.isY) {
@@ -510,7 +504,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     modalState.contentScrolled = false;
     modalState.touchMovePositive = null;
 
-    let next;
+    let setStateCallback;
 
     if (this.state.dragging) {
       const shiftYEndPercent = (startY + shiftY) / this.window.innerHeight * 100;
@@ -543,7 +537,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
         this.doCloseModal(modalState);
       }
 
-      next = () => {
+      setStateCallback = () => {
         if (!modalState.hidden) {
           this.animateTranslate(modalState, modalState.translateY);
         }
@@ -555,11 +549,11 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.setState({
       touchDown: false,
       dragging: false,
-    }, next);
+    }, setStateCallback);
   }
 
   onCardTouchEnd(modalState: ModalsStateEntry) {
-    let next;
+    let setStateCallback;
 
     if (this.state.dragging) {
       let translateY = modalState.translateYCurrent;
@@ -580,7 +574,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
         this.doCloseModal(modalState);
       }
 
-      next = () => {
+      setStateCallback = () => {
         if (!modalState.hidden) {
           this.animateTranslate(modalState, modalState.translateY);
         }
@@ -592,7 +586,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     this.setState({
       touchDown: false,
       dragging: false,
-    }, next);
+    }, setStateCallback);
   }
 
   onScroll = (e: SyntheticEvent) => {
@@ -706,7 +700,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
     cancelAnimationFrame(this.frameIds[frameId]);
 
     this.frameIds[frameId] = requestAnimationFrame(() => {
-      setTransformStyle(modalState.innerElement, `translateY(${percent}%)`);
+      setTransformStyle(modalState.innerElement, `translate3d(0, ${percent}%, 0)`);
 
       if (modalState.type === ModalType.PAGE && modalState.footerElement) {
         const footerHeight = modalState.footerElement.offsetHeight;
@@ -806,7 +800,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
               ref={this.maskElementRef}
             />
             <div className="ModalRoot__viewport">
-              {this.modals.map((Modal: ReactElement) => {
+              {this.getModals().map((Modal) => {
                 const modalId = Modal.props.id;
                 if (!visibleModals.includes(Modal.props.id)) {
                   return null;
