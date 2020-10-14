@@ -7,12 +7,13 @@ import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import Button from '../Button/Button';
 import { hasReactNode } from '../../lib/utils';
 import Headline from '../Typography/Headline/Headline';
 import Title from '../Typography/Title/Title';
 import Caption from '../Typography/Caption/Caption';
+import { Icon28CancelOutline } from '@vkontakte/icons';
 
 export interface AlertActionInterface {
   title: string;
@@ -94,16 +95,10 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
-  get isDesktop() {
-    return this.props.viewWidth >= ViewWidth.SMALL_TABLET;
-  }
-
   renderHeader(header: ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
-        return this.isDesktop ?
-          <Headline className="Alert__header" weight="medium">{header}</Headline> :
-          <Title className="Alert__header" weight="medium" level="2">{header}</Title>;
+        return <Headline className="Alert__header" weight="medium">{header}</Headline>;
       case IOS:
         return <Title className="Alert__header" weight="semibold" level="3">{header}</Title>;
       case ANDROID:
@@ -114,9 +109,7 @@ class Alert extends Component<AlertProps, AlertState> {
   renderText(text: ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
-        return this.isDesktop ?
-          <Caption className="Alert__text" level="1" weight="regular">{text}</Caption> :
-          <Headline className="Alert__text" weight="regular">{text}</Headline>;
+        return <Caption className="Alert__text" level="1" weight="regular">{text}</Caption>;
       case IOS:
         return <Caption className="Alert__text" level="2" weight="regular">{text}</Caption>;
       case ANDROID:
@@ -128,16 +121,30 @@ class Alert extends Component<AlertProps, AlertState> {
     const { platform } = this.props;
     switch (platform) {
       case ANDROID:
-        return <Button mode="tertiary" size="m">{action.title}</Button>;
+        return (
+          <Button
+            className={classNames('Alert__button', `Alert__button--${action.mode}`)}
+            mode="tertiary"
+            size="m"
+          >
+            {action.title}
+          </Button>
+        );
       case VKCOM:
-        return this.isDesktop ?
-          <Button size="m" mode={action.mode === 'cancel' ? 'secondary' : 'primary'}>{action.title}</Button> :
-          <Button mode="tertiary" size="m">{action.title}</Button>;
+        return (
+          <Button
+            className={classNames('Alert__button', `Alert__button--${action.mode}`)}
+            size="m"
+            mode={action.mode === 'cancel' ? 'secondary' : 'primary'}
+          >
+            {action.title}
+          </Button>
+        );
       default:
         return (
           <Tappable
             Component="button"
-            className={classNames('Alert__btn', `Alert__btn--${action.mode}`)}
+            className={classNames('Alert__action', `Alert__action--${action.mode}`)}
             onClick={this.onItemClick(action)}
             key={`alert-action-${i}`}
           >
@@ -168,15 +175,19 @@ class Alert extends Component<AlertProps, AlertState> {
             'Alert--v': resolvedActionsLayout === 'vertical',
             'Alert--h': resolvedActionsLayout === 'horizontal',
             'Alert--closing': closing,
-            'Alert--desktop': this.isDesktop,
           })}
         >
+          {platform === VKCOM && (
+            <button className="Alert__close" onClick={this.onClose}>
+              <Icon28CancelOutline width={20} height={20} />
+            </button>
+          )}
           <div className="Alert__content">
             {hasReactNode(header) && this.renderHeader(header)}
             {hasReactNode(text) && this.renderText(text)}
             {children}
           </div>
-          <footer className="Alert__footer">
+          <footer className="Alert__actions">
             {actions.map(this.renderAction)}
           </footer>
         </div>
