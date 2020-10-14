@@ -3,8 +3,8 @@ Android. Внизу располагается панель с иконками,
 разделами.
 
 `Epic` неразрывно связан с новыми компонентами для отрисовки
-нижнего меню – [Tabbar](https://vkcom.github.io/vkui-styleguide/#!/Tabbar) и
-[TabbarItem](https://vkcom.github.io/vkui-styleguide/#!/TabbarItem).
+нижнего меню – [Tabbar](#!/Tabbar) и
+[TabbarItem](#!/TabbarItem).
 
 Логика работы `Epic` похожа на логику `View` и `Root`: Внутри `Epic` может находиться либо коллекция `Root`,
 либо коллекция `View`. У каждого элемента коллекции должен быть уникальный `id`. Свойство `activeStory` указывает
