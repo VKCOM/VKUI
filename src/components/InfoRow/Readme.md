@@ -8,7 +8,7 @@
         InfoRow
       </PanelHeader>
       <Group>
-        <SimpleCell>
+        <SimpleCell disabled>
           <InfoRow header="Общий бюджет">
             3000 р.
           </InfoRow>
@@ -16,17 +16,17 @@
       </Group>
       <Group>
         <Header mode="secondary">Информация о пользователе</Header>
-        <SimpleCell multiline>
+        <SimpleCell disabled multiline>
           <InfoRow header="Дата рождения">
             30 января 1993
           </InfoRow>
         </SimpleCell>
-        <SimpleCell>
+        <SimpleCell disabled>
           <InfoRow header="Родной город">
             Ереван
           </InfoRow>
         </SimpleCell>
-        <SimpleCell>
+        <SimpleCell disabled>
           <InfoRow header="Место работы">
             Команда ВКонтакте
           </InfoRow>
