@@ -9,6 +9,8 @@ import { StyleGuideContext } from './StyleGuideRenderer';
 import AdaptivityProvider  from '../../src/components/AdaptivityProvider/AdaptivityProvider';
 import SplitLayout, { SplitCol } from '../../src/components/SplitLayout/SplitLayout';
 import withAdaptivity, { ViewWidth } from '../../src/hoc/withAdaptivity';
+import usePlatform from '../../src/hooks/usePlatform';
+import { ANDROID, IOS } from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -57,9 +59,13 @@ class PrepareFrame extends React.Component {
 }
 
 let Layout = ({ children, viewWidth }) => {
+  const platform = usePlatform();
   return (
     <SplitLayout>
-      <SplitCol spaced={viewWidth !== ViewWidth.MOBILE} animate={viewWidth !== ViewWidth.DESKTOP}>
+      <SplitCol
+        spaced={viewWidth !== ViewWidth.MOBILE}
+        animate={viewWidth === ViewWidth.MOBILE && (platform === IOS || platform === ANDROID)}
+      >
         {children}
       </SplitCol>
     </SplitLayout>
