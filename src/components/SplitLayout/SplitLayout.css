@@ -3,6 +3,7 @@
   height: 100%;
   position: relative;
   font-family: var(--font-common);
+  background: var(--background_page);
 }
 
 .SplitLayout__inner {
