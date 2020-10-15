@@ -3,7 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
-import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
+import { SplitContext, SplitContextProps } from '../SplitLayout/SplitLayout';
 import withContext from '../../hoc/withContext';
 import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
@@ -37,7 +37,8 @@ export interface FixedLayoutState {
 }
 
 export interface FixedLayoutContext {
-  document: Requireable<{}>;
+  document: Requireable<Document>;
+  window: Requireable<Window>;
 }
 
 class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
@@ -51,6 +52,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   static contextTypes: FixedLayoutContext = {
     document: PropTypes.any,
+    window: PropTypes.any,
   };
 
   private onMountResizeTimeout: number;
@@ -59,9 +61,13 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     return this.context.document || document;
   }
 
+  get window() {
+    return this.context.window || window;
+  }
+
   componentDidMount() {
     this.onMountResizeTimeout = setTimeout(() => this.doResize());
-    window.addEventListener('resize', this.doResize);
+    this.window.addEventListener('resize', this.doResize);
 
     this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
@@ -69,7 +75,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   componentWillUnmount() {
     clearInterval(this.onMountResizeTimeout);
-    window.removeEventListener('resize', this.doResize);
+    this.window.removeEventListener('resize', this.doResize);
 
     this.document.removeEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
