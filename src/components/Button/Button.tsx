@@ -9,7 +9,7 @@ import Caption from '../Typography/Caption/Caption';
 import { HasAlign, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
-import { Platform } from '../../lib/platform';
+import { Platform, VKCOM } from '../../lib/platform';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
@@ -40,7 +40,7 @@ const getContent = (size: ButtonProps['size'], children: ButtonProps['children']
     case 'm':
       return (
         sizeY === SizeType.COMPACT ?
-          <Subhead weight="medium" className="Button__content" Component="div">
+          <Subhead weight={platform === VKCOM ? 'regular' : 'medium'} className="Button__content" Component="div">
             {children}
           </Subhead>
           :
@@ -55,8 +55,8 @@ const getContent = (size: ButtonProps['size'], children: ButtonProps['children']
           <Caption
             caps={platform !== Platform.VKCOM}
             level={platform === Platform.VKCOM ? '1' : sizeY === SizeType.COMPACT ? '3' : '2'}
-            weight={platform === Platform.VKCOM || sizeY === SizeType.COMPACT ? 'medium' : 'semibold'}
-            className={'Button__content' + (platform !== Platform.VKCOM ? '--caps' : '')}
+            weight={platform === Platform.VKCOM ? 'regular' : 'medium'}
+            className={classNames('Button__content', { 'Button__content--caps': platform !== Platform.VKCOM })}
           >
             {children}
           </Caption>
@@ -66,7 +66,7 @@ const getContent = (size: ButtonProps['size'], children: ButtonProps['children']
       return (
         sizeY === SizeType.COMPACT ?
           <Caption
-            weight="medium"
+            weight={platform === VKCOM ? 'regular' : 'medium'}
             level="1"
             className="Button__content"
           >
