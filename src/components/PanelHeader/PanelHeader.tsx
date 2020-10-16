@@ -88,9 +88,9 @@ const PanelHeader = ({
           </div>
         </div>
       </FixedLayout>
-      {separator && visor && <Separator
-        className={sizeX === SizeType.COMPACT ? 'PanelHeader__separator' : ''}
-        expanded={sizeX === SizeType.REGULAR && sizeY !== SizeType.COMPACT}
+      {separator && visor && platform !== VKCOM && <Separator
+        className={classNames({ 'PanelHeader__separator': sizeX === SizeType.COMPACT })}
+        expanded={sizeX === SizeType.REGULAR}
       />}
     </div>
   );

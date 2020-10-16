@@ -41,6 +41,16 @@
   padding: 4px 16px 16px;
 }
 
+.PanelHeader--vkcom + .Group {
+  top: -1px;
+  position: relative;
+}
+
+.PanelHeader--vkcom + .Group .Group__inner {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
 /* Regular Overrides */
 
 .Group__inner--sizeX-regular {

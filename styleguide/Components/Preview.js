@@ -4,13 +4,20 @@ import ReactExample from 'react-styleguidist/lib/client/rsg-components/ReactExam
 import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/PlaygroundError';
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
-import ConfigProvider from '../../src/components/ConfigProvider/ConfigProvider';
 import { StyleGuideContext } from './StyleGuideRenderer';
-import AdaptivityProvider  from '../../src/components/AdaptivityProvider/AdaptivityProvider';
-import SplitLayout, { SplitCol } from '../../src/components/SplitLayout/SplitLayout';
-import withAdaptivity, { ViewWidth } from '../../src/hoc/withAdaptivity';
-import usePlatform from '../../src/hooks/usePlatform';
-import { ANDROID, IOS } from '../../src';
+import {
+  ConfigProvider,
+  AdaptivityProvider,
+  SplitLayout,
+  SplitCol,
+  withAdaptivity,
+  ViewWidth,
+  usePlatform,
+  ANDROID,
+  IOS,
+  VKCOM,
+  PanelHeader
+} from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -61,7 +68,7 @@ class PrepareFrame extends React.Component {
 let Layout = ({ children, viewWidth }) => {
   const platform = usePlatform();
   return (
-    <SplitLayout>
+    <SplitLayout header={platform !== VKCOM && <PanelHeader separator={false} />}>
       <SplitCol
         spaced={viewWidth !== ViewWidth.MOBILE}
         animate={viewWidth === ViewWidth.MOBILE && (platform === IOS || platform === ANDROID)}

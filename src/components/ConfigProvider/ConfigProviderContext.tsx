@@ -49,6 +49,10 @@ export interface ConfigProviderContextInterface {
    * Платформа
    */
   platform?: PlatformType;
+  /**
+   * body или какая-то внутренняя нода
+   */
+  viewportNode?: HTMLElement;
 }
 
 export const defaultConfigProviderProps = {

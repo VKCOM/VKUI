@@ -24,6 +24,10 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     document: PropTypes.any,
   };
 
+  get document() {
+    return this.context.document || document;
+  }
+
   // Деструктуризация нужна из бага в react-docgen-typescript
   // https://github.com/styleguidist/react-docgen-typescript/issues/195
   public static defaultProps = { ...defaultConfigProviderProps };
@@ -58,6 +62,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
       app: this.props.app,
       transitionMotionEnabled: this.props.transitionMotionEnabled,
       platform: this.props.platform,
+      viewportNode: this.props.viewportNode || this.document.body,
     };
   }
 
