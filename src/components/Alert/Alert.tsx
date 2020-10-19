@@ -126,6 +126,8 @@ class Alert extends Component<AlertProps, AlertState> {
             className={classNames('Alert__button', `Alert__button--${action.mode}`)}
             mode="tertiary"
             size="m"
+            onClick={this.onItemClick(action)}
+            key={`alert-action-${i}`}
           >
             {action.title}
           </Button>
@@ -136,6 +138,8 @@ class Alert extends Component<AlertProps, AlertState> {
             className={classNames('Alert__button', `Alert__button--${action.mode}`)}
             size="m"
             mode={action.mode === 'cancel' ? 'secondary' : 'primary'}
+            onClick={this.onItemClick(action)}
+            key={`alert-action-${i}`}
           >
             {action.title}
           </Button>

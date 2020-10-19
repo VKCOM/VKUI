@@ -77,7 +77,7 @@ class Example extends React.Component {
           title: 'Удалить',
           autoclose: true,
           mode: 'destructive',
-          action: () => this.addActionLogItem('Пользователь больше не может модерировать контент.'),
+          action: () => this.addActionLogItem('Документ удален.'),
         }]}
         actionsLayout="horizontal"
         onClose={this.closePopout}
