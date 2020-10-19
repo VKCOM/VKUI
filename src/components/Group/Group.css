@@ -7,7 +7,7 @@
   padding-bottom: 8px;
 }
 
-.Group__inner--sizeX-regular {
+.Group--sizeX-regular .Group__inner {
   padding: 8px;
 }
 
@@ -15,9 +15,8 @@
  * TODO: сделать нестинг не только к прямым, но и ко всем вложенным группам
  * в модалке
  */
-.Group__inner--mode-card,
-:not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain),
-:not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain) {
+.Group--card .Group__inner,
+:not(.ModalPage) .Group--sizeX-regular:not(.Group--plain) .Group__inner {
   background: var(--modal_card_background);
   /* For Card border */
   position: relative;
@@ -26,17 +25,15 @@
 }
 
 @media (min-resolution: 2dppx) {
-  .Group__inner--mode-card,
-  :not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain),
-  :not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain) {
+  .Group--card .Group__inner,
+  :not(.ModalPage) .Group--sizeX-regular:not(.Group--plain) .Group__inner {
     box-shadow: inset 0 0 0 .5px var(--input_border);
   }
 }
 
 @media (min-resolution: 3dppx) {
-  .Group__inner--mode-card,
-  :not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain),
-  :not(.ModalPage__content-in) > .Group > .Group__inner--sizeX-regular:not(.Group__inner--mode-plain) {
+  .Group--card .Group__inner,
+  :not(.ModalPage) .Group--sizeX-regular:not(.Group--plain) .Group__inner {
     box-shadow: inset 0 0 0 .33px var(--input_border);
   }
 }
@@ -73,7 +70,7 @@
   margin-top: -4px;
 }
 
-.Group:last-of-type .Group__inner--sizeX-regular + .Group__separator {
+.Group:last-of-type.Group--sizeX-regular .Group__separator {
   display: block;
 }
 

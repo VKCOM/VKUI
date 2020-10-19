@@ -21,7 +21,6 @@ export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<H
    * обводкой и внешними отступами. Если 'plain' — без отступов и обводки.
    * По-умолчанию режим отображения зависит от `sizeX`. В модальных окнах
    * по умолчанию 'plain'.
-   * @type 'plain' | 'card'
    */
   mode?: 'plain' | 'card';
 }
@@ -36,15 +35,11 @@ const Group: FunctionComponent<GroupProps> = (props: GroupProps) => {
     <section
       {...restProps}
       ref={getRootRef}
-      className={classNames(baseClassNames, className)}
+      className={classNames(className, baseClassNames, `Group--sizeX-${sizeX}`, {
+        [`Group--${mode}`]: !!mode,
+      })}
     >
-      <div className={
-        classNames(
-          'Group__inner',
-          `Group__inner--sizeX-${sizeX}`,
-          { [`Group__inner--mode-${mode}`]: !!mode },
-        )
-      }>
+      <div className="Group__inner">
         {header}
         {children}
         {description && <div className="Group__description">{description}</div>}
