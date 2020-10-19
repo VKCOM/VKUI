@@ -3,6 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRef } from '../../types';
+import { isPrimitiveReactNode } from '../../lib/utils';
 
 export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement> {
   /**
@@ -19,7 +20,7 @@ export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, Ha
 const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
   const { className, left, right, children, noShadow, getRef } = props;
-  const isPrimitive = typeof children === 'string' || typeof children === 'number';
+  const isPrimitive = isPrimitiveReactNode(children);
 
   return (
     <div className={classNames(getClassName('ModalPageHeader', platform), className)} ref={getRef}>

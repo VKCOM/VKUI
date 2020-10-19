@@ -20,7 +20,7 @@ import { View, Panel } from '@vkontakte/vkui';
 </View>
 ```
 
-В компонент `View` передается коллекция `Panel`. Свойство `activePanel` отвечает за то, какая `Panel` должна быть показана. [Демо](https://vkcom.github.io/vkui-styleguide/#!/View).
+В компонент `View` передается коллекция `Panel`. Свойство `activePanel` отвечает за то, какая `Panel` должна быть показана. [Демо](#!/View).
 
 ### Переход между модальными окнами
 
@@ -53,7 +53,7 @@ import { Root, View } from '@vkontakte/vkui';
 ```
 
 В компонент `Root` передается коллекция `View`, в каждой из которых содержится набор `Panel`. Свойство
-`activeView` отвечает за то, какая `View` должна быть показана. [Демо](https://vkcom.github.io/vkui-styleguide/#!/Root).
+`activeView` отвечает за то, какая `View` должна быть показана. [Демо](#!/Root).
 
 ### Еще раз :)
 Структура любого VKUI-приложения должна выглядеть так:

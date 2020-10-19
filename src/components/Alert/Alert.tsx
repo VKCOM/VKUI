@@ -1,13 +1,19 @@
-import React, { Component, HTMLAttributes, MouseEventHandler, SyntheticEvent } from 'react';
+import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { transitionEvent } from '../../lib/supportEvents';
-import { ANDROID, VKCOM } from '../../lib/platform';
+import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import Button from '../Button/Button';
+import { hasReactNode } from '../../lib/utils';
+import Headline from '../Typography/Headline/Headline';
+import Title from '../Typography/Title/Title';
+import Caption from '../Typography/Caption/Caption';
+import { Icon28CancelOutline } from '@vkontakte/icons';
 
 export interface AlertActionInterface {
   title: string;
@@ -19,6 +25,8 @@ export interface AlertActionInterface {
 export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   actionsLayout?: 'vertical' | 'horizontal';
   actions?: AlertActionInterface[];
+  header?: ReactNode;
+  text?: ReactNode;
   onClose?(): void;
 }
 
@@ -87,10 +95,74 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
+  renderHeader(header: ReactNode) {
+    switch (this.props.platform) {
+      case VKCOM:
+        return <Headline className="Alert__header" weight="medium">{header}</Headline>;
+      case IOS:
+        return <Title className="Alert__header" weight="semibold" level="3">{header}</Title>;
+      case ANDROID:
+        return <Title className="Alert__header" weight="medium" level="2">{header}</Title>;
+    }
+  }
+
+  renderText(text: ReactNode) {
+    switch (this.props.platform) {
+      case VKCOM:
+        return <Caption className="Alert__text" level="1" weight="regular">{text}</Caption>;
+      case IOS:
+        return <Caption className="Alert__text" level="2" weight="regular">{text}</Caption>;
+      case ANDROID:
+        return <Headline className="Alert__text" weight="regular">{text}</Headline>;
+    }
+  }
+
+  renderAction = (action: AlertActionInterface, i: number) => {
+    const { platform } = this.props;
+    switch (platform) {
+      case ANDROID:
+        return (
+          <Button
+            className={classNames('Alert__button', `Alert__button--${action.mode}`)}
+            mode="tertiary"
+            size="m"
+            onClick={this.onItemClick(action)}
+            key={`alert-action-${i}`}
+          >
+            {action.title}
+          </Button>
+        );
+      case VKCOM:
+        return (
+          <Button
+            className={classNames('Alert__button', `Alert__button--${action.mode}`)}
+            size="m"
+            mode={action.mode === 'cancel' ? 'secondary' : 'primary'}
+            onClick={this.onItemClick(action)}
+            key={`alert-action-${i}`}
+          >
+            {action.title}
+          </Button>
+        );
+      default:
+        return (
+          <Tappable
+            Component="button"
+            className={classNames('Alert__action', `Alert__action--${action.mode}`)}
+            onClick={this.onItemClick(action)}
+            key={`alert-action-${i}`}
+          >
+            {action.title}
+          </Tappable>
+        );
+    }
+  };
+
   render() {
-    const { actions, actionsLayout, children, className, style, platform, viewWidth, ...restProps } = this.props;
+    const { actions, actionsLayout, children, className, style, platform, viewWidth, text, header, ...restProps } = this.props;
     const { closing } = this.state;
-    const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+
+    const resolvedActionsLayout: AlertProps['actionsLayout'] = platform === VKCOM ? 'horizontal' : actionsLayout;
 
     return (
       <PopoutWrapper
@@ -104,26 +176,23 @@ class Alert extends Component<AlertProps, AlertState> {
           ref={this.element}
           onClick={this.stopPropagation}
           className={classNames(getClassName('Alert', platform), {
-            'Alert--v': actionsLayout === 'vertical',
-            'Alert--h': actionsLayout === 'horizontal',
+            'Alert--v': resolvedActionsLayout === 'vertical',
+            'Alert--h': resolvedActionsLayout === 'horizontal',
             'Alert--closing': closing,
-            'Alert--desktop': isDesktop,
           })}
         >
-          <div className="Alert__content">{children}</div>
-          <footer className="Alert__footer">
-            {actions.map((action: AlertActionInterface, i: number) => {
-              return (
-                <Tappable
-                  Component="button"
-                  className={classNames('Alert__btn', `Alert__btn--${action.mode}`)}
-                  onClick={this.onItemClick(action)}
-                  key={`alert-action-${i}`}
-                >
-                  {action.title}
-                </Tappable>
-              );
-            })}
+          {platform === VKCOM && (
+            <button className="Alert__close" onClick={this.onClose}>
+              <Icon28CancelOutline width={20} height={20} />
+            </button>
+          )}
+          <div className="Alert__content">
+            {hasReactNode(header) && this.renderHeader(header)}
+            {hasReactNode(text) && this.renderText(text)}
+            {children}
+          </div>
+          <footer className="Alert__actions">
+            {actions.map(this.renderAction)}
           </footer>
         </div>
       </PopoutWrapper>
