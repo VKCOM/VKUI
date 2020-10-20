@@ -83,6 +83,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      isInsideModal: true,
     };
 
     this.frameIds = {};

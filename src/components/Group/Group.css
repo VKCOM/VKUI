@@ -11,50 +11,37 @@
   padding: 8px;
 }
 
-/*
- * TODO: сделать нестинг не только к прямым, но и ко всем вложенным группам
- * в модалке
- */
-.Group--card .Group__inner,
-:not(.ModalPage) .Group--sizeX-regular:not(.Group--plain) .Group__inner {
+.Group--card .Group__inner {
   background: var(--modal_card_background);
-  /* For Card border */
-  position: relative;
   border-radius: 8px;
-  box-shadow: inset 0 0 0 1px var(--input_border);
+  box-shadow: inset 0 0 0 var(--thin-border) var(--input_border);
 }
 
-@media (min-resolution: 2dppx) {
-  .Group--card .Group__inner,
-  :not(.ModalPage) .Group--sizeX-regular:not(.Group--plain) .Group__inner {
-    box-shadow: inset 0 0 0 .5px var(--input_border);
-  }
+.Group--plain:not(:first-of-type) .Group__inner > .Header:first-child,
+.Group--plain:not(:first-of-type) .Group__inner > .Tabs:first-child {
+  margin-top: -16px;
 }
 
-@media (min-resolution: 3dppx) {
-  .Group--card .Group__inner,
-  :not(.ModalPage) .Group--sizeX-regular:not(.Group--plain) .Group__inner {
-    box-shadow: inset 0 0 0 .33px var(--input_border);
-  }
+.Group--card .Group__inner > .Header:first-child,
+.Group--card .Group__inner > .Tabs:first-child {
+  margin-top: -4px;
 }
 
-.Group__inner::before,
-.Group__inner::after {
-  content: '';
-  display: block;
-  overflow: auto;
-}
-
-.Group__inner > .Separator {
+.Group--plain .Group__separator {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-.Group:last-of-type .Group__inner + .Group__separator {
+.Group--sizeX-regular.Group--plain .Group__separator {
+  padding: 8px;
+}
+
+.Group:last-of-type .Group__separator {
   display: none;
 }
 
-.Group:last-of-type .Group__inner + .Group__separator--force {
+.Group:last-of-type .Group__separator--force,
+.Group--sizeX-regular.Group--card:last-of-type .Group__separator {
   display: block;
 }
 
@@ -62,16 +49,6 @@
   font-size: 14px;
   line-height: 16px;
   color: var(--text_secondary);
-}
-
-.Group__inner > .Header:first-child,
-.Group__inner > .Separator + .Header,
-.Group__inner > .Tabs:first-child {
-  margin-top: -4px;
-}
-
-.Group:last-of-type.Group--sizeX-regular .Group__separator {
-  display: block;
 }
 
 /* iOS */

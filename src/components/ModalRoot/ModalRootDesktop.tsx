@@ -66,6 +66,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      isInsideModal: true,
     };
   }
 

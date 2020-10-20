@@ -10,6 +10,59 @@ class App extends React.Component {
     }
   }
 
+  renderGroup() {
+    return (
+    <>
+      <Group>
+        <SimpleCell indicator="+7 ••• •• •• 96" before={<Icon28PhoneOutline />}>
+          Номер телефона
+        </SimpleCell>
+        <SimpleCell indicator="g•••@gmail.com" before={<Icon28MailOutline />}>
+          Email
+        </SimpleCell>
+        <SimpleCell indicator="Обновлён 3 года назад" before={<Icon28KeyOutline />}>
+          Пароль
+        </SimpleCell>
+        <SimpleCell indicator="Вкл." before={<Icon28CheckShieldDeviceOutline />}>
+          Подтверждение входа
+        </SimpleCell>
+        <SimpleCell indicator="2" before={<Icon28DevicesOutline />}>
+          Привязанные устройства
+        </SimpleCell>
+      </Group>
+
+      <Group
+        header={<Header>Последняя активность</Header>}
+      >
+        <SimpleCell 
+          after={<IconButton icon={<Icon16MoreVertical />} />} 
+          description="Санкт-Петербург, Россия" 
+          before={<Avatar size={32} mode="app" />}
+        >
+          VK · Приложение для iPhone
+        </SimpleCell>
+        <SimpleCell 
+          after={<IconButton icon={<Icon16MoreVertical />} />} 
+          description="Санкт-Петербург, Россия" 
+          before={<Avatar size={32} mode="app" />}
+        >
+          VK · Браузер Chrome для macOS
+        </SimpleCell>
+        <CellButton>Показать историю активности</CellButton>
+        <CellButton mode="danger">Завершить все остальные сеансы</CellButton>
+      </Group>
+      
+      <Group 
+        header={<Header>Адреса</Header>}
+        description="Для использования в мини-приложениях, Delivery Cub, VK Taxi и других сервисах ВКонтакте. Эти адреса видны только Вам."
+      >
+        <CellButton>Добавить домашний адрес</CellButton>
+        <CellButton>Добавить рабочий адрес</CellButton>
+      </Group> 
+    </>   
+    )  
+  }
+
   render() {
     const modal = (
       <ModalRoot
@@ -20,24 +73,15 @@ class App extends React.Component {
           id={MODAL_NAME}
           onClose={() => this.setState({ isModalOpened: false })}
           header={
-            <ModalPageHeader>
+            <ModalPageHeader
+              left={this.props.platform !== IOS && <PanelHeaderClose onClick={() => this.setState({ isModalOpened: false })} />}
+              right={this.props.platform === IOS && <PanelHeaderButton onClick={() => this.setState({ isModalOpened: false })}><Icon24Dismiss /></PanelHeaderButton>}
+            >
               Group в модальном окне
             </ModalPageHeader>
           }
         >
-          <Group 
-            header={<Header mode="secondary">Group в модальном окне</Header>}
-            description="Group в модальном окне по-умолчанию отображается без обводки"
-          >
-
-            <SimpleCell after={<Switch defaultChecked/>}>
-              Lorem ipsum
-            </SimpleCell>
-            <SimpleCell expandable>
-              Dolor sit amet
-            </SimpleCell>
-          </Group>
-
+          {this.renderGroup()}
         </ModalPage>
       </ModalRoot>
     );
@@ -49,42 +93,7 @@ class App extends React.Component {
             Group
           </PanelHeader>
 
-          <Group 
-            header={<Header mode="secondary">Адаптивный режим</Header>}
-            description="По-умолчанию внешний вид Group зависит от ширины окна и ориентации устройства"
-          >
-            <SimpleCell after={<Switch defaultChecked/>}>
-              Compress Photos
-            </SimpleCell>
-
-            <SimpleCell after={<Switch/>}>
-              Compress Videos
-            </SimpleCell>
-          </Group>
-
-          <Group
-            header={<Header mode="secondary">Режим card</Header>}
-            description='При mode="card" Group всегда отображается с обводкой'
-            separator="show"
-            mode="card"
-          >
-            <SimpleCell indicator="While Using" expandable>
-              Location
-            </SimpleCell>
-          </Group>
-          
-          <Group 
-            header={<Header mode="secondary">Режим plain</Header>}
-            description='При mode="plain" Group всегда отображается без обводки'
-            mode="plain"
-          >
-            <SimpleCell indicator="Wi-Fi" expandable>
-              Autoplay Media
-            </SimpleCell>
-            <SimpleCell expandable>
-              Stickers
-            </SimpleCell>
-          </Group>
+          {this.renderGroup()}
 
           <Group header={<Header mode="secondary">Модальное окно с Group</Header>}>
             <SimpleCell onClick={() => this.setState({ isModalOpened: true })}>
@@ -97,5 +106,8 @@ class App extends React.Component {
   }
 }
 
-<App />
+const AppWithPlatform = withPlatform(App);
+
+
+<AppWithPlatform />;
 ```
