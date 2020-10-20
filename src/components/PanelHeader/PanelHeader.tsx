@@ -90,7 +90,7 @@ const PanelHeader = ({
       </FixedLayout>
       {separator && visor && <Separator
         className={sizeX === SizeType.COMPACT ? 'PanelHeader__separator' : ''}
-        expanded={sizeX === SizeType.REGULAR && sizeY !== SizeType.COMPACT}
+        expanded={sizeX === SizeType.REGULAR}
       />}
     </div>
   );

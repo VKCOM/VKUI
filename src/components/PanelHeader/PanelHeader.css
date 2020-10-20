@@ -200,6 +200,10 @@
   padding-left: 16px;
 }
 
+.SplitCol--spaced .PanelHeader--android.PanelHeader--no-left .PanelHeader__content {
+  padding-left: 0;
+}
+
 .PanelHeader--android.PanelHeader--no-right .PanelHeader__content > *,
 .PanelHeader--vkcom.PanelHeader--no-right .PanelHeader__content > * {
   padding-right: 0;
@@ -207,6 +211,10 @@
 
 .PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
   padding-right: 16px;
+}
+
+.SplitCol--spaced .PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
+  padding-right: 0;
 }
 
 .PanelHeader--android .PanelHeader__right:not(:empty),
