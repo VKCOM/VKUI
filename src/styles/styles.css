@@ -123,6 +123,10 @@ body {
   overflow-x: hidden;
 }
 
+.--vkui-sizeX-regular {
+  background: var(--background_page);
+}
+
 input,
 textarea,
 select,
