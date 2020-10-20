@@ -19,9 +19,9 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
   function paintBody(sizeX: SizeType) {
     if (sizeX === SizeType.REGULAR) {
-      props.window.document.body.classList.add('--vkui-sizeX-regular');
+      props.window.document.body.classList.add('vkui-sizeX-regular');
     } else {
-      props.window.document.body.classList.remove('--vkui-sizeX-regular');
+      props.window.document.body.classList.remove('vkui-sizeX-regular');
     }
   }
 
