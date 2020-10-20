@@ -56,7 +56,7 @@ const Group: FunctionComponent<GroupProps> = (props: GroupProps) => {
           className={classNames('Group__separator', {
             'Group__separator--force': separator === 'show',
           })}
-          expanded={sizeX === SizeType.REGULAR && !isInsideModal}
+          expanded={computedMode === 'card'}
         />
       }
     </section>
