@@ -1,12 +1,12 @@
 ### Сепаратор после шапки
 
-Практически всегда содержимое панели должно начинаться с [`Separator`](https://vkcom.github.io/vkui-styleguide/#!/Separator),
+Практически всегда содержимое панели должно начинаться с [`Separator`](#!/Separator),
 поэтому он рисуется в `PanelHeader` по-умолчанию.
 
 Исключения, в которых разделитель в начале панели не нужен:
-* В `PanelHeader` рисуется [`Search`](https://vkcom.github.io/vkui-styleguide/#!/Search).
-* После `PanelHeader` рисуется [`Search`](https://vkcom.github.io/vkui-styleguide/#!/Search).
-* В `PanelHeader` рисуются [`Tabs`](https://vkcom.github.io/vkui-styleguide/#!/Tabs).
+* В `PanelHeader` рисуется [`Search`](#!/Search).
+* После `PanelHeader` рисуется [`Search`](#!/Search).
+* В `PanelHeader` рисуются [`Tabs`](#!/Tabs).
 
 В таких случаях передавайте в `PanelHeader` свойство `separator={false}`.
 

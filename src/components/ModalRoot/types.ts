@@ -5,6 +5,8 @@ export enum ModalType {
 
 export type TranslateRange = [number, number];
 
+export type ModalsState = { [index: string]: ModalsStateEntry };
+
 export interface ModalsStateEntry {
   id: string;
   onClose?: () => any;
