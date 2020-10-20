@@ -62,8 +62,8 @@
 }
 
 .ChipsInput__el::placeholder {
-  line-height: 19px;
-  font-size: 16px;
+  line-height: 20px;
+  font-size: 15px;
   color: var(--field_text_placeholder);
 }
 

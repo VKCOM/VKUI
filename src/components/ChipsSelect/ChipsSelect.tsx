@@ -11,8 +11,6 @@ import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderChip } from '../ChipsInput/ChipsInput';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
-import { noop } from '../../lib/utils';
-import { hasMouse } from '../../helpers/inputUtils';
 import { SizeType } from '../AdaptivityProvider/AdaptivityContext';
 import { useChipsSelect } from './useChipsSelect';
 
@@ -59,12 +57,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
   const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     setOpened(false);
     onBlur(e);
-  };
-
-  const handleClick = (e: MouseEvent<HTMLInputElement>) => {
-    if (!hasMouse) {
-      onClick(e);
-    }
   };
 
   const scrollToElement = (index: number, center = false) => {
@@ -207,7 +199,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         onChange={setSelectedOptions}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onClick={handleClick}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         style={style}
@@ -284,7 +275,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
 
 ChipsSelect.defaultProps = {
   ...ChipsInput.defaultProps,
-  onClick: noop,
   creatable: false,
   fetching: false,
   showSelected: true,

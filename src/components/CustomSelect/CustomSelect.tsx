@@ -337,7 +337,7 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
       index,
       hovered,
       label: option.label,
-      selected: !!selected,
+      selected,
       onClick: this.selectFocused,
       onMouseDown: this.handleOptionDown,
       onMouseEnter: this.handleOptionHover,

@@ -30,7 +30,7 @@ export const useChipsSelect = <Option extends ChipsInputOption>(props: Partial<C
       return filteredOptions;
     }
 
-    const filteredSet = new window.Set(filteredOptions);
+    const filteredSet = new Set(filteredOptions);
     const selected = selectedOptions.map((item) => getOptionValue(item));
 
     for (const item of filteredSet) {

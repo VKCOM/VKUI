@@ -25,6 +25,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
 }) => {
   return (
     <div
+      {...restProps}
       role="option"
       title={label}
       aria-posinset={index}
@@ -33,7 +34,6 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
       })}
-      {...restProps}
     >
       {hasReactNode(before) && <div className="CustomSelectOption__before">{before}</div>}
       {label}

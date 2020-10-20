@@ -33,48 +33,48 @@ const Example = () => {
   } 
 
   return (
-      <Root activeView={activeView}>
-        <View activePanel="profile" id="profile">
-          <Panel id="profile">
-            <PanelHeader>
-              Предпочтения
-            </PanelHeader>
-            <FormLayout>
-              <FormItem top="Выберите группы">
-                <ChipsSelect
-                  {...groupsChipsProps}
-                  showSelected={false}
-                  onClick={() => setActiveView('groups')}
-                  renderChip={({ value, label, option: { src }, ...rest }) => (
-                      <Chip
-                        key={value}
-                        value={value}
+    <Root activeView={activeView}>
+      <View activePanel="profile" id="profile">
+        <Panel id="profile">
+          <PanelHeader>
+            Предпочтения
+          </PanelHeader>
+          <FormLayout>
+            <FormItem top="Выберите группы">
+              <ChipsSelect
+                {...groupsChipsProps}
+                showSelected={false}
+                onClick={() => setActiveView('groups')}
+                renderChip={({ value, label, option: { src }, ...rest }) => (
+                    <Chip
+                      key={value}
+                      value={value}
+                      before={<Avatar size={20} src={src} />}
+                      {...rest}
+                    >
+                      {label}
+                    </Chip>
+                )}
+                renderOption={({ index, label, option: { src }, ...otherProps }) => {
+                    return (
+                      <CustomSelectOption
+                        key={index}
                         before={<Avatar size={20} src={src} />}
-                        {...rest}
-                      >
-                        {label}
-                      </Chip>
-                  )}
-                  renderOption={({ index, label, option: { src }, ...otherProps }) => {
-                      return (
-                        <CustomSelectOption
-                          key={index}
-                          before={<Avatar size={20} src={src} />}
-                          label={label}
-                          index={index}
-                          {...otherProps}
-                        />
-                      );
-                  }}
-                />
-              </FormItem>
-              <FormItem top="Выберите или добавьте цвета">
-                <ChipsSelect {...colorsChipsProps} onClick={() => setActiveView('colors')}/>
-              </FormItem>
-            </FormLayout>
-          </Panel>
-        </View>
-      </Root>
+                        label={label}
+                        index={index}
+                        {...otherProps}
+                      />
+                    );
+                }}
+              />
+            </FormItem>
+            <FormItem top="Выберите или добавьте цвета">
+              <ChipsSelect {...colorsChipsProps} onClick={() => setActiveView('colors')}/>
+            </FormItem>
+          </FormLayout>
+        </Panel>
+      </View>
+    </Root>
   );
 }
 

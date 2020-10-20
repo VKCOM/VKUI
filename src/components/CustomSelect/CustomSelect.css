@@ -30,7 +30,7 @@
   max-height: 160px;
 }
 
-s.CustomSelect__selectedIcon {
+.CustomSelect__selectedIcon {
   position: absolute;
   top: 15px;
   right: 12px;
