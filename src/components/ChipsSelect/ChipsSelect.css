@@ -1,11 +1,31 @@
-.CustomSelect {
-  width: 100%;
+.ChipsSelect {
   position: relative;
-  cursor: pointer;
-  user-select: none;
 }
 
-.CustomSelect__options {
+.ChipsSelect .ChipsInput__container {
+  padding-right: 25px;
+}
+
+.ChipsSelect__fetching,
+.ChipsSelect__empty {
+  padding: 12px 0;
+}
+
+.ChipsSelect__empty {
+  font-size: 13px;
+  text-align: center;
+  color: var(--text_secondary);
+}
+
+.ChipsSelect__toggle {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  z-index: 1;
+  color: var(--icon_secondary);
+}
+
+.ChipsSelect__options {
   width: 100%;
   overflow: hidden;
   position: absolute;
@@ -19,24 +39,14 @@
   z-index: 3;
 }
 
-.CustomSelect__options--popupDirectionTop {
+.ChipsSelect__options--popupDirectionTop {
   bottom: 100%;
   border-radius: 8px 8px 0 0;
   border-top: unset;
   border-bottom: 0;
 }
 
-.CustomSelect__options .CustomScrollView__box {
-  max-height: 160px;
-}
-
-.CustomSelect__selectedIcon {
-  position: absolute;
-  top: 15px;
-  right: 12px;
-}
-
-.CustomSelect__options--sizeY-compact .CustomSelectOption {
+.ChipsSelect__options--sizeY-compact .CustomSelectOption {
   height: 40px;
   padding: 10px 11px;
   font-size: 15px;

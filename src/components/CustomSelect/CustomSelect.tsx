@@ -1,5 +1,4 @@
-import React, { createRef, KeyboardEvent, MouseEvent } from 'react';
-import SelectedIcon from '@vkontakte/icons/dist/16/done';
+import React, { createRef, KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce } from '../../lib/utils';
 import classNames from '../../lib/classNames';
@@ -9,6 +8,7 @@ import { HasRef } from '../../types';
 import withAdaptivity from '../../hoc/withAdaptivity';
 import withPlatform from '../../hoc/withPlatform';
 import { getClassName } from '../..';
+import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 
 type SelectValue = string | number | boolean;
 
@@ -35,11 +35,20 @@ interface CustomSelectProps extends Omit<SelectProps, 'onChange' | 'getRef'>, Ha
   onChange?: (result: SelectChangeResult) => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  renderOption: (props: CustomSelectOptionProps) => ReactNode;
 }
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
 class CustomSelect extends React.Component<CustomSelectProps, State> {
+  static defaultProps = {
+    renderOption(props: CustomSelectOptionProps): ReactNode {
+      return (
+        <CustomSelectOption {...props} />
+      );
+    },
+  };
+
   public constructor(props: CustomSelectProps) {
     super(props);
 
@@ -312,32 +321,24 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
     }
   }
 
-  renderOption = (item: SelectOption, index: number) => {
+  renderOption = (option: SelectOption, index: number) => {
     const { focusedOptionIndex, selectedOptionIndex } = this.state;
+    const { renderOption } = this.props;
     const hovered = index === focusedOptionIndex;
     const selected = index === selectedOptionIndex;
 
     return (
-      <div
-        key={index}
-        role="option"
-        title={item.label}
-        aria-posinset={index}
-        aria-selected={selected}
-        onClick={this.selectFocused}
-        onMouseDown={this.handleOptionDown}
-        onMouseEnter={this.handleOptionHover}
-        className={classNames('CustomSelect__option', {
-          ['CustomSelect__option--hover']: hovered,
+      <React.Fragment key={index}>
+        {renderOption({
+          option,
+          hovered,
+          children: option.label,
+          selected,
+          onClick: this.selectFocused,
+          onMouseDown: this.handleOptionDown,
+          onMouseEnter: this.handleOptionHover,
         })}
-      >
-        {item.label}
-        {selected &&
-        <div className="CustomSelect__selectedIcon">
-          <SelectedIcon fill="var(--accent)" />
-        </div>
-        }
-      </div>
+      </React.Fragment>
     );
   };
 
@@ -352,6 +353,7 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
       sizeY,
       platform,
       onChange,
+      renderOption,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
