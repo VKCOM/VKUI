@@ -189,6 +189,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
       ref={getRootRef}
     >
       <ChipsInput
+        {...restProps}
         tabIndex={tabIndex}
         value={selectedOptions}
         inputValue={fieldValue}
@@ -208,7 +209,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         })}
         getRef={getRef}
         disabled={disabled}
-        {...restProps}
         onInputChange={handleInputChange}
       />
       <div className="ChipsSelect__toggle">
