@@ -39,6 +39,7 @@ class Example extends React.Component {
       <View activePanel="new-user">
         <Panel id="new-user">
           <PanelHeader>Регистрация</PanelHeader>
+          <Group>
           <FormLayout>
             <FormItem
               top="E-mail" 
@@ -104,6 +105,7 @@ class Example extends React.Component {
               <Button size="l" stretched>Зарегистрироваться</Button>
             </FormItem>
           </FormLayout>
+          </Group>
         </Panel>
       </View>
     );

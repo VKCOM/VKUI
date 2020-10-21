@@ -4,11 +4,13 @@
   <View activePanel="panel">
     <Panel id="panel">
       <PanelHeader>Checkbox</PanelHeader>
-      <FormItem>
-        <Checkbox defaultChecked>Я участвую в сборе</Checkbox>
-        <Checkbox>Закрепить сообщение с запросом</Checkbox>
-        <Checkbox>Автоматически зачислять на карту</Checkbox>
-      </FormItem>
+      <Group>
+        <FormItem>
+          <Checkbox defaultChecked>Я участвую в сборе</Checkbox>
+          <Checkbox>Закрепить сообщение с запросом</Checkbox>
+          <Checkbox>Автоматически зачислять на карту</Checkbox>
+        </FormItem>
+      </Group>
     </Panel>
   </View>
 ```

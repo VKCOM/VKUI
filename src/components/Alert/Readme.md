@@ -96,9 +96,11 @@ class Example extends React.Component {
       <View popout={this.state.popout} activePanel="alert">
         <Panel id="alert">
           <PanelHeader>Alert</PanelHeader>
-          <CellButton onClick={this.openAction}>Лишить права</CellButton>
-          <CellButton onClick={this.openDeleteion}>Удалить документ</CellButton>
-          {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
+          <Group>
+            <CellButton onClick={this.openAction}>Лишить права</CellButton>
+            <CellButton onClick={this.openDeleteion}>Удалить документ</CellButton>
+            {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
+          </Group>
         </Panel>
       </View>
     )

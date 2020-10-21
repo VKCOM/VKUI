@@ -5,16 +5,18 @@
 <View activePanel="FormLayoutGroup">
   <Panel id="FormLayoutGroup">
     <PanelHeader>FormLayoutGroup</PanelHeader>
-    <FormLayout>
-      <FormLayoutGroup mode="horizontal">
-        <FormItem top="Имя">    
-          <Input />
-        </FormItem>
-        <FormItem top="Фамилия">    
-          <Input />
-        </FormItem>
-      </FormLayoutGroup>
-    </FormLayout>
+    <Group>
+      <FormLayout>
+        <FormLayoutGroup mode="horizontal">
+          <FormItem top="Имя">    
+            <Input />
+          </FormItem>
+          <FormItem top="Фамилия">    
+            <Input />
+          </FormItem>
+        </FormLayoutGroup>
+      </FormLayout>
+    </Group>
   </Panel>
 </View>
 ```

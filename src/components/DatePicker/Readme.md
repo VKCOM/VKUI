@@ -13,6 +13,7 @@
       <PanelHeader>
         DatePicker
       </PanelHeader>
+      <Group>
       <FormItem top="Дата рождения">
         <DatePicker
           min={{day: 1, month: 1, year: 1901}}
@@ -31,6 +32,7 @@
           onDateChange={(value) => {console.log(value)}}
         />
       </FormItem>
+      </Group>
     </Panel>
   </View>
 ```

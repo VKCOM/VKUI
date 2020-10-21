@@ -20,7 +20,7 @@
               <PanelHeader>
                 Профиль
               </PanelHeader>
-              <FormLayout>
+              <Group>
                 <FormItem top="Выберите страну">
                   <SelectMimicry
                     placeholder="Не выбрана"
@@ -33,7 +33,7 @@
                     disabled
                   />
                 </FormItem>
-              </FormLayout>
+              </Group>
             </Panel>
           </View>
           <View activePanel="countries" id="countries">

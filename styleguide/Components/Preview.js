@@ -60,7 +60,7 @@ class PrepareFrame extends React.Component {
 let Layout = ({ children, viewWidth }) => {
   return (
     <SplitLayout header={<PanelHeader separator={false} />}>
-      <SplitCol spaced={viewWidth !== ViewWidth.MOBILE} animate={viewWidth !== ViewWidth.DESKTOP}>
+      <SplitCol spaced={viewWidth !== ViewWidth.MOBILE} animate={viewWidth <= ViewWidth.MOBILE}>
         {children}
       </SplitCol>
     </SplitLayout>

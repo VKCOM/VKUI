@@ -125,7 +125,7 @@ class Example extends React.Component {
               Добавить
             </PanelHeader>
 
-            {!formLoaded ? <PanelSpinner /> : <FormLayout>
+            {!formLoaded ? <PanelSpinner /> : <Group><FormLayout>
               <FormItem top="Название сообщества">              
                 <Input
                   placeholder="Введите название..."
@@ -137,7 +137,7 @@ class Example extends React.Component {
                   placeholder="Введите описание..."
                 />
               </FormItem>
-            </FormLayout>}
+            </FormLayout></Group>}
           </Panel>
         </View>
       </Root>

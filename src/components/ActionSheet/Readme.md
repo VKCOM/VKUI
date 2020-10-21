@@ -198,11 +198,13 @@ class Example extends React.Component {
       <View popout={this.state.popout} activePanel="panel">
         <Panel id="panel">
           <PanelHeader>ActionSheet</PanelHeader>
-          <CellButton getRootRef={this.baseTargetRef} onClick={this.openBase}>Базовый список</CellButton>
-          <CellButton getRootRef={this.iconsTargetRef} onClick={this.openIcons}>Список с иконками</CellButton>
-          <CellButton getRootRef={this.subtitleTargetRef} onClick={this.openSubtitle}>С подзаголовком</CellButton>
-          <CellButton getRootRef={this.selectableTargetRef} onClick={this.openSelectable}>Выделяемые</CellButton>
-          <CellButton getRootRef={this.titleTargetRef} onClick={this.openTitle}>C заголовком</CellButton>
+          <Group>
+            <CellButton getRootRef={this.baseTargetRef} onClick={this.openBase}>Базовый список</CellButton>
+            <CellButton getRootRef={this.iconsTargetRef} onClick={this.openIcons}>Список с иконками</CellButton>
+            <CellButton getRootRef={this.subtitleTargetRef} onClick={this.openSubtitle}>С подзаголовком</CellButton>
+            <CellButton getRootRef={this.selectableTargetRef} onClick={this.openSelectable}>Выделяемые</CellButton>
+            <CellButton getRootRef={this.titleTargetRef} onClick={this.openTitle}>C заголовком</CellButton>
+          </Group>
         </Panel>
       </View>
     )
