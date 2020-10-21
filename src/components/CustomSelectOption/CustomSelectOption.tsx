@@ -4,7 +4,6 @@ import classNames from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement> {
-  index?: number;
   option?: any;
   selected?: boolean;
   focused?: boolean;
@@ -15,7 +14,6 @@ export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement> 
 
 const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   children,
-  index,
   hovered,
   selected,
   before,
@@ -29,7 +27,6 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       {...restProps}
       role="option"
       title={title}
-      aria-posinset={index}
       aria-selected={selected}
       className={classNames('CustomSelectOption', {
         ['CustomSelectOption--hover']: hovered,

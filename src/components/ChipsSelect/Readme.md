@@ -55,7 +55,7 @@ const Example = () => {
                       {label}
                     </Chip>
                 )}
-                renderOption={({ index, label, option: { src }, ...otherProps }) => {
+                renderOption={({ label, option: { src }, ...otherProps }) => {
                     return (
                       <CustomSelectOption
                         before={<Avatar size={20} src={src} />}

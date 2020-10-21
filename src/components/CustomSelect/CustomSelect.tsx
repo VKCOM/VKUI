@@ -331,7 +331,6 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
       <React.Fragment key={index}>
         {renderOption({
           option,
-          index,
           hovered,
           children: option.label,
           selected,

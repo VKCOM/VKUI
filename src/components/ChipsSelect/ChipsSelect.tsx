@@ -245,7 +245,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
               <>
                 {creatable && (
                   <CustomSelectOption
-                    index={0}
                     hovered={focusedOptionIndex === 0}
                     onMouseDown={addOptionFromInput}
                     onMouseEnter={() => setFocusedOptionIndex(0)}
@@ -268,7 +267,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                       <React.Fragment key={getOptionValue(option)}>
                         {renderOption({
                           option,
-                          index,
                           hovered,
                           children: label,
                           selected: !!selected,
