@@ -58,10 +58,7 @@ const Example = () => {
                 renderOption={({ index, label, option: { src }, ...otherProps }) => {
                     return (
                       <CustomSelectOption
-                        key={index}
                         before={<Avatar size={20} src={src} />}
-                        label={label}
-                        index={index}
                         {...otherProps}
                       />
                     );

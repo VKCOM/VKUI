@@ -233,10 +233,11 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                   <CustomSelectOption
                     index={0}
                     hovered={focusedOptionIndex === 0}
-                    label={creatableText}
                     onMouseDown={addOptionFromInput}
                     onMouseEnter={() => setFocusedOptionIndex(0)}
-                  />
+                  >
+                    {creatableText}
+                  </CustomSelectOption>
                 )}
                 {!filteredOptions?.length && !creatable && emptyText ? (
                   <div className="ChipsSelect__empty">{emptyText}</div>
@@ -249,18 +250,22 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                       return getOptionValue(selectedOption) === getOptionValue(option);
                     });
 
-                    return renderOption({
-                      option,
-                      index,
-                      hovered,
-                      label,
-                      selected: !!selected,
-                      onMouseDown: () => {
-                        addOption(option);
-                        clearInput();
-                      },
-                      onMouseEnter: () => setFocusedOptionIndex(index),
-                    });
+                    return (
+                      <React.Fragment key={getOptionValue(option)}>
+                        {renderOption({
+                          option,
+                          index,
+                          hovered,
+                          children: label,
+                          selected: !!selected,
+                          onMouseDown: () => {
+                            addOption(option);
+                            clearInput();
+                          },
+                          onMouseEnter: () => setFocusedOptionIndex(index),
+                        })}
+                      </React.Fragment>
+                    );
                   })
                 }
               </>
@@ -282,14 +287,9 @@ ChipsSelect.defaultProps = {
       !value || value && getOptionLabel(option)?.toLowerCase()?.startsWith(value?.toLowerCase())
     );
   },
-  renderOption({ index, label, ...otherProps }: CustomSelectOptionProps): ReactNode {
+  renderOption(props: CustomSelectOptionProps): ReactNode {
     return (
-      <CustomSelectOption
-        key={index}
-        label={label}
-        index={index}
-        {...otherProps}
-      />
+      <CustomSelectOption {...props} />
     );
   },
 };

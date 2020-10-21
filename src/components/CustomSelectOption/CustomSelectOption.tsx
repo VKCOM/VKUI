@@ -4,7 +4,6 @@ import classNames from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement> {
-  label: string;
   index?: number;
   option?: any;
   selected?: boolean;
@@ -15,7 +14,7 @@ export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement> 
 }
 
 const CustomSelectOption: FC<CustomSelectOptionProps> = ({
-  label,
+  children,
   index,
   hovered,
   selected,
@@ -23,11 +22,13 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   after,
   ...restProps
 }) => {
+  const title = typeof children === 'string' ? children : null;
+
   return (
     <div
       {...restProps}
       role="option"
-      title={label}
+      title={title}
       aria-posinset={index}
       aria-selected={selected}
       className={classNames('CustomSelectOption', {
@@ -36,7 +37,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       })}
     >
       {hasReactNode(before) && <div className="CustomSelectOption__before">{before}</div>}
-      {label}
+      {children}
       {hasReactNode(after) && <div className="CustomSelectOption__after">{after}</div>}
       {selected && (
         <div className="CustomSelectOption__selectedIcon">

@@ -42,14 +42,9 @@ type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
 class CustomSelect extends React.Component<CustomSelectProps, State> {
   static defaultProps = {
-    renderOption({ index, label, ...otherProps }: CustomSelectOptionProps): ReactNode {
+    renderOption(props: CustomSelectOptionProps): ReactNode {
       return (
-        <CustomSelectOption
-          key={index}
-          label={label}
-          index={index}
-          {...otherProps}
-        />
+        <CustomSelectOption {...props} />
       );
     },
   };
@@ -332,16 +327,20 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
     const hovered = index === focusedOptionIndex;
     const selected = index === selectedOptionIndex;
 
-    return renderOption({
-      option,
-      index,
-      hovered,
-      label: option.label,
-      selected,
-      onClick: this.selectFocused,
-      onMouseDown: this.handleOptionDown,
-      onMouseEnter: this.handleOptionHover,
-    });
+    return (
+      <React.Fragment key={index}>
+        {renderOption({
+          option,
+          index,
+          hovered,
+          children: option.label,
+          selected,
+          onClick: this.selectFocused,
+          onMouseDown: this.handleOptionDown,
+          onMouseEnter: this.handleOptionHover,
+        })}
+      </React.Fragment>
+    );
   };
 
   renderWithCustomScrollbar() {

@@ -21,13 +21,10 @@ const [selectedGroup, setSelectedGroup] = React.useState(groups[0].value);
               options={groups}
               value={selectedGroup}
               onChange={(option) => setSelectedGroup(option.value)}
-              renderOption={({ index, label, option: { src }, ...otherProps }) => {
+              renderOption={({ option: { src }, ...otherProps }) => {
                 return (
                   <CustomSelectOption
-                    key={index}
                     before={<Avatar size={20} src={src} />}
-                    label={label}
-                    index={index}
                     {...otherProps}
                   />
                 );
@@ -41,13 +38,10 @@ const [selectedGroup, setSelectedGroup] = React.useState(groups[0].value);
               options={groups}
               placeholder="Не выбраны"
               emptyText="Ничего не найдено"
-              renderOption={({ index, label, option: { src }, ...otherProps }) => {
+              renderOption={({ option: { src }, ...otherProps }) => {
                   return (
                     <CustomSelectOption
-                      key={index}
                       before={<Avatar size={20} src={src} />}
-                      label={label}
-                      index={index}
                       {...otherProps}
                     />
                   );
