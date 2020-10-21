@@ -19,12 +19,12 @@
 }
 
 .SplitLayout--ios .SplitLayout__inner--header {
-  margin-top: calc(var(--panelheader_height_ios) * -1);
+  margin-top: calc(-1 * var(--panelheader_height_ios));
 }
 
 .SplitLayout--android .SplitLayout__inner--header,
 .SplitLayout--vkcom .SplitLayout__inner--header {
-  margin-top: calc(var(--panelheader_height_android) * -1);
+  margin-top: calc(-1 * var(--panelheader_height_android));
 }
 
 .SplitLayout__popout {
