@@ -63,7 +63,7 @@ export class SplitCol extends Component<ColProps> {
   }
 
   render() {
-    const { children, width, maxWidth, minWidth, spaced, className, ...restProps } = this.props;
+    const { children, width, maxWidth, minWidth, spaced, className, animate, ...restProps } = this.props;
 
     return (
       <div
