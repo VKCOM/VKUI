@@ -11,13 +11,12 @@ import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderChip } from '../ChipsInput/ChipsInput';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
-import { SizeType } from '../AdaptivityProvider/AdaptivityContext';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useChipsSelect } from './useChipsSelect';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option> {
   popupDirection?: 'top' | 'bottom';
   options?: Option[];
-  sizeY?: SizeType;
   filterFn?: (value?: string, option?: Option, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => boolean;
   creatable?: boolean;
   fetching?: boolean;
@@ -37,10 +36,11 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
   const {
     style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText, inputClass,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
-    getNewOptionData, renderChip, popupDirection, sizeY, creatable, filterFn, inputValue, creatableText,
+    getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText,
     ...restProps
   } = props;
 
+  const { sizeY } = useAdaptivity();
   const scrollViewRef = useRef<CustomScrollView>(null);
   const {
     fieldValue, selectedOptions, opened, setOpened, addOptionFromInput,
@@ -216,10 +216,9 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
       </div>
       {opened &&
         <div
-          className={classNames({
+          className={classNames(`ChipsSelect__options--sizeY-${sizeY}`, {
             ['ChipsSelect__options']: opened,
             ['ChipsSelect__options--popupDirectionTop']: popupDirection === 'top',
-            [`ChipsSelect__options--sizeY-${sizeY}`]: !!sizeY,
           })}
           onMouseLeave={() => setFocusedOptionIndex(null)}
         >
