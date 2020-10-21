@@ -7,11 +7,11 @@
   padding-bottom: 8px;
 }
 
-.Group--sizeX-regular .Group__inner {
+.Group--sizeX-regular > .Group__inner {
   padding: 8px;
 }
 
-.Group--card .Group__inner {
+.Group--card > .Group__inner {
   background: var(--modal_card_background);
   border-radius: 8px;
   box-shadow: inset 0 0 0 var(--thin-border) var(--input_border);
@@ -22,26 +22,26 @@
   margin-top: -16px;
 }
 
-.Group--card .Group__inner > .Header:first-child,
-.Group--card .Group__inner > .Tabs:first-child {
+.Group--card > .Group__inner > .Header:first-child,
+.Group--card > .Group__inner > .Tabs:first-child {
   margin-top: -4px;
 }
 
-.Group--plain .Group__separator {
+.Group--plain > .Group__separator {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-.Group--sizeX-regular.Group--plain .Group__separator {
+.Group--sizeX-regular.Group--plain > .Group__separator {
   padding: 8px;
 }
 
-.Group:last-of-type .Group__separator {
+.Group:last-of-type > .Group__separator {
   display: none;
 }
 
-.Group:last-of-type .Group__separator--force,
-.Group--sizeX-regular.Group--card:last-of-type .Group__separator {
+.Group:last-of-type > .Group__separator--force,
+.Group--sizeX-regular.Group--card:last-of-type > .Group__separator {
   display: block;
 }
 
@@ -49,6 +49,24 @@
   font-size: 14px;
   line-height: 16px;
   color: var(--text_secondary);
+}
+
+.Group .Group > .Group__inner {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.Group .Group > .Group__separator {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.Group .Group:first-of-type > .Group__inner {
+  padding-top: 0;
+}
+
+.Group .Group:last-of-type > .Group__inner {
+  padding-bottom: 0;
 }
 
 /* iOS */

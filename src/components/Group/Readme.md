@@ -14,21 +14,25 @@ class App extends React.Component {
     return (
     <>
       <Group>
-        <SimpleCell indicator="+7 ••• •• •• 96" before={<Icon28PhoneOutline />}>
-          Номер телефона
-        </SimpleCell>
-        <SimpleCell indicator="g•••@gmail.com" before={<Icon28MailOutline />}>
-          Email
-        </SimpleCell>
-        <SimpleCell indicator="Обновлён 3 года назад" before={<Icon28KeyOutline />}>
-          Пароль
-        </SimpleCell>
-        <SimpleCell indicator="Вкл." before={<Icon28CheckShieldDeviceOutline />}>
-          Подтверждение входа
-        </SimpleCell>
-        <SimpleCell indicator="2" before={<Icon28DevicesOutline />}>
-          Привязанные устройства
-        </SimpleCell>
+        <Group mode="plain">
+          <SimpleCell indicator="+7 ••• •• •• 96" before={<Icon28PhoneOutline />}>
+            Номер телефона
+          </SimpleCell>
+          <SimpleCell indicator="g•••@gmail.com" before={<Icon28MailOutline />}>
+            Email
+          </SimpleCell>
+        </Group>
+        <Group mode="plain">
+          <SimpleCell indicator="Обновлён 3 года назад" before={<Icon28KeyOutline />}>
+            Пароль
+          </SimpleCell>
+          <SimpleCell indicator="Вкл." before={<Icon28CheckShieldDeviceOutline />}>
+            Подтверждение входа
+          </SimpleCell>
+          <SimpleCell indicator="2" before={<Icon28DevicesOutline />}>
+            Привязанные устройства
+          </SimpleCell>
+        </Group>
       </Group>
 
       <Group
