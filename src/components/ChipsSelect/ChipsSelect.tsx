@@ -18,13 +18,27 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
   popupDirection?: 'top' | 'bottom';
   options?: Option[];
   filterFn?: (value?: string, option?: Option, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => boolean;
+  /**
+   * Возможность создавать чипы которых нет в списке (по enter или с помощью пункта в меню, см creatableText)
+   */
   creatable?: boolean;
+  /**
+   * Отрисовка лоадера вместо списка опций в выпадающем списке
+   */
   fetching?: boolean;
   renderOption?: (props: CustomSelectOptionProps) => ReactNode;
+  /**
+   * Показывать или скрывать уже выбранные опции
+   */
   showSelected?: boolean;
+  /**
+   * Текст для пункта создающего чипы при клике
+   */
   creatableText?: string;
+  /**
+   * Текст который показывается если список опций пуст
+   */
   emptyText?: string;
-  inputClass?: string;
 }
 
 type focusActionType = 'next' | 'prev';
@@ -34,7 +48,7 @@ const FOCUS_ACTION_PREV: focusActionType = 'prev';
 
 const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
-    style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText, inputClass,
+    style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText,
     ...restProps
@@ -187,6 +201,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     <div
       className={classNames('ChipsSelect', className)}
       ref={getRootRef}
+      style={style}
     >
       <ChipsInput
         {...restProps}
@@ -202,8 +217,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        style={style}
-        className={classNames(inputClass, {
+        className={classNames({
           ['ChipsSelect__open']: opened,
           ['ChipsSelect__open--popupDirectionTop']: popupDirection === 'top',
         })}
