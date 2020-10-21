@@ -98,6 +98,7 @@ class SnackBarExample extends React.Component {
     return (
       <View activePanel="example">
         <Panel id="example">
+          <PanelHeader>Snackbar</PanelHeader>
           <Group>
             <CellButton onClick={this.openBase}>Простое уведомление с иконкой</CellButton>
             <CellButton onClick={this.openBaseWithAction}>Уведомление с иконкой и кнопкой</CellButton>

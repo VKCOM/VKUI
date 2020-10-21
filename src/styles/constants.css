@@ -15,6 +15,7 @@
   --modalheader_height_ios: 52px;
   --modalheader_height_android: 56px;
   --search_default_height: 36px;
+  --thin-border: 1px;
 
   /* colors */
   --white: #fff;
@@ -24,6 +25,18 @@
   --safe-area-inset-right: 0px;
   --safe-area-inset-bottom: 0px;
   --safe-area-inset-left: 0px;
+}
+
+@media (min-resolution: 2dppx) {
+  :root {
+    --thin-border: .5px;
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  :root {
+    --thin-border: .33px;
+  }
 }
 
 @supports (padding-top: constant(safe-area-inset-top)) {

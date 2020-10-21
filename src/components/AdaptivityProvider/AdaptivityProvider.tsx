@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DOMProps, HasChildren } from '../../types';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewWidth } from './AdaptivityContext';
 
@@ -17,6 +17,14 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props);
   }
 
+  function paintBody(sizeX: SizeType) {
+    if (sizeX === SizeType.REGULAR) {
+      props.window.document.body.classList.add('vkui-sizeX-regular');
+    } else {
+      props.window.document.body.classList.remove('vkui-sizeX-regular');
+    }
+  }
+
   useEffect(() => {
     function onResize() {
       const calculated = calculateAdaptivity(props.window.innerWidth, props);
@@ -27,11 +35,13 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY
       ) {
+        paintBody(calculated.sizeX);
         adaptivityRef.current = calculated;
         updateAdaptivity({});
       }
     }
 
+    paintBody(adaptivityRef.current.sizeX);
     onResize();
     props.window.addEventListener('resize', onResize, false);
 

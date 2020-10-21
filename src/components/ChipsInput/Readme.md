@@ -9,7 +9,7 @@
       <PanelHeader>
         ChipsInput
       </PanelHeader>
-      <FormLayout>
+      <Group>
         <FormItem top="Цвет">
           <ChipsInput value={[{value: 'red', label: 'Красный'}, {value: 'blue', label: 'Синий'}]}/>
         </FormItem>
@@ -29,7 +29,7 @@
             )}
           />
         </FormItem>
-      </FormLayout>
+      </Group>
     </Panel>
   </View>
 ```

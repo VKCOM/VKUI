@@ -9,7 +9,7 @@ export interface SplitLayoutProps extends HTMLAttributes<HTMLDivElement>, HasChi
   popout?: ReactNode;
   modal?: ReactNode;
   header?: ReactNode;
-};
+}
 
 class SplitLayout extends Component<SplitLayoutProps> {
   render() {
@@ -30,7 +30,7 @@ class SplitLayout extends Component<SplitLayoutProps> {
 
 export default withPlatform(SplitLayout);
 
-interface ColProps extends HTMLAttributes<HTMLDivElement>, HasChildren {
+interface ColProps extends HTMLAttributes<HTMLDivElement> {
   width?: string;
   maxWidth?: string;
   minWidth?: string;
@@ -63,38 +63,35 @@ export class SplitCol extends Component<ColProps> {
   }
 
   render() {
-    const { children, width, maxWidth, minWidth, spaced } = this.props;
+    const { children, width, maxWidth, minWidth, spaced, className, animate, ...restProps } = this.props;
 
-    return <div style={{
-      width: width,
-      maxWidth: maxWidth,
-      minWidth: minWidth,
-      margin: spaced ? '0 16px' : null,
-    }} ref={this.baseRef} className="SplitLayout__col">
-      <SplitContext.Provider value={this.getContext()}>
-        {children}
-      </SplitContext.Provider>
-    </div>;
+    return (
+      <div
+        {...restProps}
+        style={{
+          width: width,
+          maxWidth: maxWidth,
+          minWidth: minWidth,
+        }}
+        ref={this.baseRef}
+        className={classNames(className, 'SplitCol', { 'SplitCol--spaced': spaced })}
+      >
+        <SplitContext.Provider value={this.getContext()}>
+          {children}
+        </SplitContext.Provider>
+      </div>
+    );
   }
 }
 
 export class SplitFixedCol extends Component<ColProps> {
   render() {
-    const { children, width, maxWidth, minWidth, spaced } = this.props;
+    const { children, ...restProps } = this.props;
 
-    return <div style={{
-      width: width,
-      maxWidth: maxWidth,
-      minWidth: minWidth,
-      margin: spaced ? '0 16px' : null,
-    }} className="SplitLayout__colFixedWrap">
-      <div style={{
-        width: width,
-        maxWidth: maxWidth,
-        minWidth: minWidth,
-      }} className="SplitLayout__colFixedInner">
+    return <SplitCol {...restProps} className="SplitCol--fixed">
+      <div className="SplitCol__fixedInner">
         {children}
       </div>
-    </div>;
+    </SplitCol>;
   }
 }

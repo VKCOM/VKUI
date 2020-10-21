@@ -9,6 +9,7 @@ import { StyleGuideContext } from './StyleGuideRenderer';
 import AdaptivityProvider  from '../../src/components/AdaptivityProvider/AdaptivityProvider';
 import SplitLayout, { SplitCol } from '../../src/components/SplitLayout/SplitLayout';
 import withAdaptivity, { ViewWidth } from '../../src/hoc/withAdaptivity';
+import PanelHeader from '../../src/components/PanelHeader/PanelHeader';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -58,8 +59,8 @@ class PrepareFrame extends React.Component {
 
 let Layout = ({ children, viewWidth }) => {
   return (
-    <SplitLayout>
-      <SplitCol spaced={viewWidth !== ViewWidth.MOBILE} animate={viewWidth !== ViewWidth.DESKTOP}>
+    <SplitLayout header={<PanelHeader separator={false} />}>
+      <SplitCol spaced={viewWidth !== ViewWidth.MOBILE} animate={viewWidth <= ViewWidth.MOBILE}>
         {children}
       </SplitCol>
     </SplitLayout>

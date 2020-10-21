@@ -112,7 +112,7 @@ class App extends React.Component {
             </ModalPageHeader>
           }
         >
-          <FormLayout>
+          <Group>
             <FormItem>
               <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)}>Выбор страны</CellButton>
               <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)}>Просмотры истории</CellButton>
@@ -160,7 +160,7 @@ class App extends React.Component {
                 yearPlaceholder="ГГ" 
               />
             </FormItem>
-          </FormLayout>
+          </Group>
         </ModalPage>
 
         <ModalPage
@@ -175,7 +175,7 @@ class App extends React.Component {
           }
           settlingHeight={80}
         >
-          <FormLayout>
+          <Group>
             <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}>Информация о пользователе</CellButton>
 
             <FormLayoutGroup>
@@ -185,7 +185,7 @@ class App extends React.Component {
                 );
               })}
             </FormLayoutGroup>
-          </FormLayout>
+          </Group>
         </ModalPage>
 
         <ModalPage
@@ -200,7 +200,7 @@ class App extends React.Component {
           }
           settlingHeight={80}
         >
-          <List>
+          <Group>
             {this.users.map((user) => {
               return (
                 <Cell
@@ -209,7 +209,7 @@ class App extends React.Component {
                 >{user.name}</Cell>
               );
             })}
-          </List>
+          </Group>
         </ModalPage>
 
         <ModalPage
@@ -223,7 +223,7 @@ class App extends React.Component {
             </ModalPageHeader>
           }
         >
-          <List>
+          <Group>
             <Cell>
               <InfoRow header="Дата рождения">
                 30 января 1993
@@ -239,7 +239,7 @@ class App extends React.Component {
                 Команда ВКонтакте
               </InfoRow>
             </Cell>
-          </List>
+          </Group>
         </ModalPage>
 
         <ModalCard

@@ -18,6 +18,7 @@ class Example extends React.Component {
           <PanelHeader>
             CustomSelect
           </PanelHeader>
+          <Group>
             <FormItem>
               <CustomSelect
                 placeholder="Не выбрано"
@@ -26,6 +27,7 @@ class Example extends React.Component {
                 onChange={(option) => this.setState({ value: option.value })}
               />
             </FormItem>
+          </Group>
         </Panel>
       </View>
     )

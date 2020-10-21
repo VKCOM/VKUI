@@ -4,20 +4,22 @@
       <PanelHeader>
         SliderSwitch
       </PanelHeader>
-      <FormItem top="Пол">
-        <SliderSwitch 
-          options={[
-            {
-              name: 'Мужской',
-              value: 'male',
-            },
-            {
-              name: 'Женский',
-              value: 'female',
-            },
-          ]}
-        />
-      </FormItem>
+      <Group>
+        <FormItem top="Пол">
+          <SliderSwitch 
+            options={[
+              {
+                name: 'Мужской',
+                value: 'male',
+              },
+              {
+                name: 'Женский',
+                value: 'female',
+              },
+            ]}
+          />
+        </FormItem>
+      </Group>
     </Panel>
   </View>
 ```

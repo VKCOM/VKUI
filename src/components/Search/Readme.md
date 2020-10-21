@@ -51,16 +51,14 @@
         <React.Fragment>
           <PanelHeader
             right={<PanelHeaderButton onClick={this.props.goHeaderSearch}><Icon28AddOutline /></PanelHeaderButton>}
-            separator={false}
+            separator={this.props.sizeX === SizeType.REGULAR}
           >
             Выбор тематики
           </PanelHeader>
-          <Search value={this.state.search} onChange={this.onChange} after={null}/>
-          {this.thematics.length > 0 &&
-            <List>
-              {this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
-            </List>
-          }
+          <Group>
+            <Search value={this.state.search} onChange={this.onChange} after={null}/>  
+            {this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
+          </Group>
         </React.Fragment>
       );
     }
@@ -87,7 +85,7 @@
     render () {
       return (
         <React.Fragment>
-          <PanelHeader left={<PanelHeaderBack onClick={this.props.goSearch} />} separator={false}>
+          <PanelHeader left={<PanelHeaderBack onClick={this.props.goSearch} />} separator={this.props.sizeX === SizeType.REGULAR}>
             <Search
               value={this.state.search}
               onChange={this.onChange}
@@ -95,14 +93,14 @@
               onIconClick={this.props.onFiltersClick}
             />
           </PanelHeader>
-          <List>
+          <Group>
             {this.users.map((user) => (
               <Cell
                 before={<Avatar size={40} src={user.photo_100} />}
                 key={user.id}
               >{user.name}</Cell>
             ))}
-          </List>
+          </Group>
         </React.Fragment>
       );
     }
@@ -145,7 +143,7 @@
                  </ModalPageHeader>
                }
              >
-               <FormLayout>
+               <Group>
                  <FormItem top="Страна">
                    <SelectMimicry placeholder="Не выбрана" />
                  </FormItem>
@@ -157,21 +155,23 @@
                    <Radio name="sex" value="male">Мужской</Radio>
                    <Radio name="sex" value="female">Женский</Radio>
                  </FormItem>
-               </FormLayout>
+               </Group>
              </ModalPage>
            </ModalRoot>
          }
        >
           <Panel id="search">
-            <SimpleSearch goHeaderSearch={this.goHeaderSearch}/>
+            <SimpleSearch sizeX={this.props.sizeX} goHeaderSearch={this.goHeaderSearch}/>
           </Panel>
           <Panel id="header-search">
-            <HeaderSearch onFiltersClick={() => this.setState({ activeModal: 'filters' })} goSearch={this.goSearch}/>
+            <HeaderSearch sizeX={this.props.sizeX} onFiltersClick={() => this.setState({ activeModal: 'filters' })} goSearch={this.goSearch}/>
           </Panel>
         </View>
       );
     }
   }
+  
+  const AdaptivitySearch = withAdaptivity(SearchExample, { sizeX: true });
 
-  <SearchExample />
+  <AdaptivitySearch />
 ```

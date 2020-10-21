@@ -21,23 +21,11 @@
   height: 100%;
   content: '';
   display: block;
-  border: 1px solid var(--image_border);
+  border: var(--thin-border) solid var(--image_border);
   z-index: 3;
   box-sizing: border-box;
   border-radius: inherit;
   pointer-events: none;
-}
-
-@media (min-resolution: 2dppx) {
-  .Banner__in::before {
-    border-width: .5px;
-  }
-}
-
-@media (min-resolution: 3dppx) {
-  .Banner__in::before {
-    border-width: .33px;
-  }
 }
 
 .Banner__before {

@@ -49,7 +49,7 @@
   display: none;
 }
 
-.SplitLayout__col {
+.SplitCol {
   height: 100%;
   width: 1px;
   flex-grow: 1;
@@ -57,16 +57,22 @@
   position: relative;
 }
 
-.SplitLayout__colFixedWrap {
+.SplitCol--spaced {
+  margin: 0 16px;
+}
+
+.SplitCol--fixed {
   height: 100%;
   width: 1px;
   flex-grow: 1;
   flex-shrink: 1;
 }
 
-.SplitLayout__colFixedInner {
-  height: 100%;
-  width: 1px;
+.SplitCol__fixedInner {
+  height: inherit;
+  width: inherit;
+  min-width: inherit;
+  max-width: inherit;
   position: fixed;
   transform: translateZ(0);
   overflow: hidden;

@@ -1396,10 +1396,10 @@
     babel-eslint "^10.0.3"
     eslint-config-google "^0.9.1"
 
-"@vkontakte/icons@1.44.0":
-  version "1.44.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-1.44.0.tgz#c0463748b72787099d60d766666249ac201d8196"
-  integrity sha512-8Bt8EIzpiggSdT9mStOYIGKXBU6oLRT56w7WXuKrTOT1iXqvgBiBYu1aQUrn408YFtgN3Qzs8bSGo4FTIwEMKg==
+"@vkontakte/icons@1.47.0":
+  version "1.47.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-1.47.0.tgz#0ff987d2758db65e9db3e0ff89c6aebe837aa537"
+  integrity sha512-M+E0Dlon5TV6rQHK8KVK+wqWjJsgVuf5ydq9F49NwfSWd/CAKvl6R1ES5HNY9icw3xWdIVHXX2gKdl4IEyVKIg==
   dependencies:
     es6-object-assign "1.1.0"
     svg-baker-runtime "1.4.6"
