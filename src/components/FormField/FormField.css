@@ -17,10 +17,10 @@
   transform-origin: left top;
 }
 
-.FormField.Textarea .Textarea__el:not(:disabled) ~ .FormField__border--hover,
-.FormField.Select .Select__el:not(:disabled) ~ .FormField__border--hover,
-.FormField.Input .Input__el:not(:disabled) ~ .FormField__border--hover,
-.FormField.ChipsInput:not(.ChipsInput--disabled) .ChipsInput__container ~ .FormField__border--hover {
+.Textarea .Textarea__el:not(:disabled) ~ .FormField__border--hover,
+.Select:not(.Select--disabled) .FormField__border--hover,
+.Input .Input__el:not(:disabled) ~ .FormField__border--hover,
+.ChipsInput:not(.ChipsInput--disabled) .ChipsInput__container ~ .FormField__border--hover {
   border-color: var(--icon_tertiary_alpha);
 }
 
@@ -45,10 +45,10 @@
   border-color: var(--field_valid_border);
 }
 
-.FormField.Textarea .Textarea__el:disabled ~ .FormField__border,
-.FormField.Select .Select__el:disabled ~ .FormField__border,
-.FormField.Input .Input__el:disabled ~ .FormField__border,
-.FormField.ChipsInput.ChipsInput--disabled .ChipsInput__container ~ .FormField__border {
+.Textarea .Textarea__el:disabled ~ .FormField__border,
+.Select .Select__el:disabled ~ .FormField__border,
+.Input .Input__el:disabled ~ .FormField__border,
+.ChipsInput.ChipsInput--disabled .ChipsInput__container ~ .FormField__border {
   opacity: .4;
 }
 
@@ -94,30 +94,32 @@
   border-color: var(--field_border);
 }
 
-.FormField--ios.CustomSelect__open .FormField__border {
+.FormField--ios.CustomSelect__open .FormField__border,
+.FormField--ios.ChipsSelect__open .FormField__border {
   border-radius: 10px 10px 0 0;
 }
 
-.FormField--android.CustomSelect__open .FormField__border {
+.FormField--android.CustomSelect__open .FormField__border,
+.FormField--android.ChipsSelect__open .FormField__border {
   border-radius: 8px 8px 0 0;
 }
 
-.FormField--vkcom.CustomSelect__open .FormField__border {
+.FormField--vkcom.CustomSelect__open .FormField__border,
+.FormField--vkcom.ChipsSelect__open .FormField__border {
   border-radius: 6px 6px 0 0;
 }
 
-.FormField--ios.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
+.FormField--ios.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border,
+.FormField--ios.ChipsSelect__open.ChipsSelect__open--popupDirectionTop .FormField__border {
   border-radius: 0 0 10px 10px;
 }
 
-.FormField--android.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
+.FormField--android.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border,
+.FormField--android.ChipsSelect__open.ChipsSelect__open--popupDirectionTop .FormField__border {
   border-radius: 0 0 8px 8px;
 }
 
-.FormField--vkcom.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border {
-  border-radius: 0 0 6px 6px;
-}
-
+.FormField--vkcom.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border,
 .FormField--vkcom.ChipsSelect__open.ChipsSelect__open--popupDirectionTop .FormField__border {
   border-radius: 0 0 6px 6px;
 }
