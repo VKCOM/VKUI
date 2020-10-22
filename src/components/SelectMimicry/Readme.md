@@ -1,5 +1,6 @@
-Визуальная имитация компонента [Select](#!/Select). У него нет свойства `value`, а `children` вместо массива `options` принимает
-любой `ReactNode`, отображая его без изменений.
+Визуальная имитация компонента [NativeSelect](#!/NativeSelect). У него нет свойства `value`, а `children`
+вместо массива `options` принимает любой `ReactNode`, отображая его без изменений. Используется внутри
+[CustomSelect](#!/CustomSelect)
 
 ```jsx
   class Example extends React.Component {

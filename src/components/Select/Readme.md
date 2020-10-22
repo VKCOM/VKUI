@@ -1,4 +1,4 @@
-Надстройка над `<select />`. Компонент принимает все валидные для этого элемента свойства.
+Отрисовывает [CustomSelect](#!/CustomSelect), если есть мышка, либо [NativeSelect](#!/NativeSelect)
 
 ```jsx static
 import { Select } from '@vkontakte/vkui';

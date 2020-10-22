@@ -10,6 +10,8 @@ import AdaptivityProvider  from '../../src/components/AdaptivityProvider/Adaptiv
 import SplitLayout, { SplitCol } from '../../src/components/SplitLayout/SplitLayout';
 import withAdaptivity, { ViewWidth } from '../../src/hoc/withAdaptivity';
 import PanelHeader from '../../src/components/PanelHeader/PanelHeader';
+import usePlatform from '../../src/hooks/usePlatform';
+import { VKCOM } from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -58,9 +60,10 @@ class PrepareFrame extends React.Component {
 }
 
 let Layout = ({ children, viewWidth }) => {
+  const platform = usePlatform();
   return (
     <SplitLayout header={<PanelHeader separator={false} />}>
-      <SplitCol spaced={viewWidth !== ViewWidth.MOBILE} animate={viewWidth <= ViewWidth.MOBILE}>
+      <SplitCol spaced={viewWidth !== ViewWidth.MOBILE} animate={viewWidth <= ViewWidth.MOBILE && platform !== VKCOM}>
         {children}
       </SplitCol>
     </SplitLayout>
