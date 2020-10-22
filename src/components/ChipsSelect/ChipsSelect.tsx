@@ -58,7 +58,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
   const scrollViewRef = useRef<CustomScrollView>(null);
   const {
     fieldValue, selectedOptions, opened, setOpened, addOptionFromInput,
-    setSelectedOptions, filteredOptions, addOption, handleInputChange, clearInput,
+    filteredOptions, addOption, handleInputChange, clearInput,
     focusedOption, setFocusedOption, focusedOptionIndex, setFocusedOptionIndex,
   } = useChipsSelect(props);
 
@@ -212,7 +212,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         getOptionLabel={getOptionLabel}
         getOptionValue={getOptionValue}
         renderChip={renderChipWrapper}
-        onChange={setSelectedOptions}
         onFocus={handleFocus}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
