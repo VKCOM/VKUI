@@ -1,5 +1,5 @@
-Унивирсальный комппонент option для кастомных селектов. 
-Используется внутри [CustomSelect](https://vkcom.github.io/vkui-styleguide/#!/CustomSelect), [ChipsSelect](https://vkcom.github.io/vkui-styleguide/#!/ChipsSelect).
+Унивирсальный компонент для отрисовки option в кастомных селектах. 
+Используется внутри [CustomSelect](#!/CustomSelect), [ChipsSelect](#!/ChipsSelect).
 
 ```jsx
 const groups = [{value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}]
@@ -14,7 +14,7 @@ const [selectedGroup, setSelectedGroup] = React.useState(groups[0].value);
         <PanelHeader>
           CustomSelectOption
         </PanelHeader>
-        <FormLayout>
+        <Group>
           <FormItem top="CustomSelect">
             <CustomSelect
               placeholder="Не выбрано"
@@ -48,7 +48,7 @@ const [selectedGroup, setSelectedGroup] = React.useState(groups[0].value);
               }}
             />
           </FormItem>
-        </FormLayout>
+        </Group>
       </Panel>
     </View>
   );

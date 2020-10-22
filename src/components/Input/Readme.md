@@ -6,7 +6,7 @@
     <PanelHeader>
       Input
     </PanelHeader>
-    <FormLayout>
+    <Group>
       <FormItem top="Фамилия">
         <Input type="text" defaultValue="Петров" />
       </FormItem>
@@ -16,7 +16,7 @@
       <FormItem>
         <Input type="text" defaultValue="Сидоров" align="right" />
       </FormItem>
-    </FormLayout>
+    </Group>
   </Panel>
 </View>
 ```

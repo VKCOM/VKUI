@@ -1,4 +1,4 @@
-Надстройка над `SelectMimicry`. Компонент принимает все валидные для этого элемента свойства + options
+Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком
 
 ```jsx
 class Example extends React.Component {

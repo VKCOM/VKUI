@@ -1,9 +1,21 @@
-Представляет собой маленький кусочек информации. С помощью свойств `removable` и `onRemove` можно управлять удалением. Используется внутри [ChipsInput](https://vkcom.github.io/vkui-styleguide/#!/ChipsInput).
+Представляет собой маленький кусочек информации. С помощью свойств `removable` и `onRemove` можно управлять удалением. 
+Используется внутри [ChipsInput](#!/ChipsInput) и [ChipsSelect](#!/ChipsSelect)
 
 ```jsx
+const colors = [{value: '1', label: 'Красный'}, {value: '2', label: 'Синий'}];
+
 const Example = () => {
-  const [hidden, setHidden] = React.useState(false);
-  const chipStyle = { marginLeft: 10 };
+  const [selectedColors, setSelectedColors] = React.useState([{value: '1', label: 'Красный'}]);
+
+  const colorsChipsProps = {
+    value: selectedColors,
+    onChange: setSelectedColors,
+    options: colors,
+    top:"Выберите или добавьте цвета",
+    placeholder:"Не выбраны",
+    creatable: true,
+    creatableText: 'Создать значение'
+  } 
 
   return <View activePanel="panel">
     <Panel id="panel">
@@ -11,32 +23,24 @@ const Example = () => {
         Chip
       </PanelHeader>
       <Group>
-        <CardGrid>
-          <Card size="l">
-            <div style={{display: 'flex', alignItems: 'center', height: 44, }}>
-              <Chip
-                value="1"
-                style={chipStyle}
+        <FormItem top="Любимые группы">
+          <ChipsInput
+            value={[{value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}]}
+            renderChip={({ value, label, option: { src }, ...rest }) => (
+              <Chip key={value}
+                value={value}
                 removable={false}
-                before={<Avatar size={20} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="/>}
+                before={<Avatar size={20} src={src} />}
+                {...rest}
               >
-                Синий
+                {label}
               </Chip>
-              {hidden ? 
-                null : 
-                <Chip 
-                  value="2" 
-                  style={chipStyle} 
-                  removable 
-                  onRemove={() => setHidden(true)} 
-                  before={<Avatar size={20} src={"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII="}/>}
-                >
-                  Серый
-                </Chip>
-              }
-            </div>
-          </Card>
-        </CardGrid>
+            )}
+          />
+        </FormItem>
+        <FormItem top="Выберите или добавьте цвета">
+          <ChipsSelect {...colorsChipsProps} onClick={() => setActiveView('colors')}/>
+        </FormItem>
       </Group>
     </Panel>
   </View>
