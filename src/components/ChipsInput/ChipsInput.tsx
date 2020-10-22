@@ -97,7 +97,11 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
           const value = getOptionValue(option);
           const label = getOptionLabel(option);
 
-          return renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: 'ChipsInput__chip' });
+          return (
+            <React.Fragment key={value}>
+              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: 'ChipsInput__chip' })}
+            </React.Fragment>
+          );
         })}
         <div className="ChipsInput__input-container">
           <input ref={getRef}
@@ -136,8 +140,7 @@ ChipsInput.defaultProps = {
   getOptionLabel: (option: ChipsInputOption): string => option.label,
   getNewOptionData: (_: ChipsInputValue, label: string): ChipsInputOption => ({ value: label, label }),
   renderChip({ disabled, value, label, ...rest }: RenderChip<ChipsInputOption>) {
-    return <Chip key={value}
-      value={value}
+    return <Chip value={value}
       removable={!disabled}
       {...rest}
     >{label}</Chip>;

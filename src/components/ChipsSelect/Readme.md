@@ -45,7 +45,6 @@ const Example = () => {
               onClick={() => setActiveView('groups')}
               renderChip={({ value, label, option: { src }, ...rest }) => (
                 <Chip
-                  key={value}
                   value={value}
                   before={<Avatar size={20} src={src} />}
                   {...rest}
