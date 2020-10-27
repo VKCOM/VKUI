@@ -41,7 +41,14 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   modal?: ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   onSwipeBack?(): void;
+  /**
+   * callback начала анимации свайпа назад.
+   */
   onSwipeBackStart?(): void;
+  /**
+   * callback начала анимации завершения свайпа назад.
+   */
+  onSwipeBackStartEndAnimation?(): void;
   history?: string[];
   id?: string;
   /**
@@ -206,6 +213,7 @@ class View extends Component<ViewProps, ViewState> {
 
     // Началась анимация завершения свайпа назад.
     if (!prevState.swipeBackResult && this.state.swipeBackResult) {
+      this.props.onSwipeBackStartEndAnimation && this.props.onSwipeBackStartEndAnimation();
       this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
     }
 
