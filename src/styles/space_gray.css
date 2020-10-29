@@ -20,7 +20,7 @@ body[scheme="space_gray"] {
   --background_light: #232324;
   --background_page: #0a0a0a;
   --background_suggestions: #2c2d2e;
-  --background_text_hightlighted: rgba(113, 170, 235, 0.24);
+  --background_text_highlighted: rgba(113, 170, 235, 0.24);
   --button_bot_shadow: #19191a;
   --button_commerce_background: #4bb34b;
   --button_commerce_foreground: #ffffff;
@@ -45,6 +45,7 @@ body[scheme="space_gray"] {
   --content_placeholder_text: #aaaeb3;
   --content_tint_background: #232324;
   --content_tint_foreground: #909499;
+  --content_warning_background: #857250;
   --control_background: #454647;
   --control_foreground: #e1e3e6;
   --control_tint: #19191a;
@@ -217,7 +218,7 @@ body[scheme="space_gray"] {
   --tabbar_tablet_text_secondary: #76787a;
   --text_action_counter: #aaaeb3;
   --text_link: #71aaeb;
-  --text_link_hightlighted_background: #71aaeb;
+  --text_link_highlighted_background: #71aaeb;
   --text_muted: #c4c8cc;
   --text_name: #e1e3e6;
   --text_placeholder: #aaaeb3;
