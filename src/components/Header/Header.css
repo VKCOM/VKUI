@@ -71,11 +71,13 @@
   .Header--ios.Header--mode-primary .Header__content {
     font-size: 17px;
     line-height: 22px;
-    padding: 13px 0 9px;
+    /* https://github.com/VKCOM/VKUI/issues/738 */
+    margin: 13px 0 9px;
     }
 
   .Header--ios.Header--mode-secondary .Header__content {
-    padding: 14px 0 10px;
+    /* https://github.com/VKCOM/VKUI/issues/738 */
+    margin: 14px 0 10px;
     font-size: 13px;
     line-height: 16px;
     }
@@ -87,14 +89,16 @@
 
   .Header--android.Header--mode-primary .Header__content,
   .Header--vkcom.Header--mode-primary .Header__content {
-    padding: 15px 0 9px;
+    /* https://github.com/VKCOM/VKUI/issues/738 */
+    margin: 15px 0 9px;
     font-size: 16px;
     line-height: 20px;
     }
 
   .Header--android.Header--mode-secondary .Header__content,
   .Header--vkcom.Header--mode-secondary .Header__content {
-    padding: 15px 0 9px;
+    /* https://github.com/VKCOM/VKUI/issues/738 */
+    margin: 15px 0 9px;
     font-size: 13px;
     line-height: 16px;
     }
