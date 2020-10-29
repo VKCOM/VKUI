@@ -20,7 +20,7 @@
   --background_light: #f9f9f9;
   --background_page: #ebedf0;
   --background_suggestions: #ffffff;
-  --background_text_hightlighted: rgba(63, 138, 224, 0.20);
+  --background_text_highlighted: rgba(63, 138, 224, 0.20);
   --button_bot_shadow: #c4c8cc;
   --button_commerce_background: #4bb34b;
   --button_commerce_foreground: #ffffff;
@@ -45,6 +45,7 @@
   --content_placeholder_text: #818c99;
   --content_tint_background: #f5f5f5;
   --content_tint_foreground: #7f8285;
+  --content_warning_background: #fff2d6;
   --control_background: #ebedf0;
   --control_foreground: #5181b8;
   --control_tint: #ffffff;
@@ -200,7 +201,7 @@
   --snippet_border: rgba(0, 0, 0, 0.15);
   --snippet_icon_tertiary: #c4c8cc;
   --splashscreen_icon: #e1e3e6;
-  --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0.30);
+  --statusbar_alternate_legacy_background: rgba(0, 0, 0, 0.20);
   --stories_create_button_background_from: #f2f3f5;
   --stories_create_button_background_to: #e1e3e6;
   --stories_create_button_foreground: #6d7885;
@@ -217,7 +218,7 @@
   --tabbar_tablet_text_secondary: #909499;
   --text_action_counter: #818c99;
   --text_link: #4986cc;
-  --text_link_hightlighted_background: #000000;
+  --text_link_highlighted_background: #000000;
   --text_muted: #2c2d2e;
   --text_name: #4986cc;
   --text_placeholder: #818c99;
