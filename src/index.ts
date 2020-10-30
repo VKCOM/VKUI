@@ -49,6 +49,7 @@ export { default as IconButton } from './components/IconButton/IconButton';
 export { default as Card } from './components/Card/Card';
 export { default as CardGrid } from './components/CardGrid/CardGrid';
 export { default as CardScroll } from './components/CardScroll/CardScroll';
+export { default as CardContent } from './components/ContentCard/ContentCard';
 export { default as CellButton } from './components/CellButton/CellButton';
 export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
