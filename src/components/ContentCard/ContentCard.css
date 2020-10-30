@@ -1,0 +1,27 @@
+.ContentCard--body {
+  padding: 12px 16px;
+}
+
+/*
+* iOS
+* */
+.ContentCard--ios > .Card__in > .Tappable {
+  border-radius: 10px;
+}
+
+.ContentCard--ios > .Card__in > .Tappable > .ContentCard--img {
+  border-radius: 10px 10px 0 0;
+}
+
+/*
+* Android and vkcom
+* */
+.ContentCard--android > .Card__in > .Tappable,
+.ContentCard--vkcom > .Card__in > .Tappable {
+  border-radius: 8px;
+}
+
+.ContentCard--android > .Card__in > .Tappable > .ContentCard--img,
+.ContentCard--vkcom > .Card__in > .Tappable > .ContentCard--img {
+  border-radius: 8px 8px 0 0;
+}
