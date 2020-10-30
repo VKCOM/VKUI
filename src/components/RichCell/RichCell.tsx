@@ -1,15 +1,15 @@
-import React, { ElementType, FunctionComponent, HTMLAttributes, ReactNode } from 'react';
+import React, { ElementType, FunctionComponent, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
-import { HasLinkProps, HasRootRef } from '../../types';
+import { MorphButtonLink, HasRootRef } from '../../types';
 import Tappable from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasLinkProps, AdaptivityProps {
+export interface RichCellProps extends MorphButtonLink, HasRootRef<HTMLElement>, AdaptivityProps {
   /**
    * Контейнер для текста под `children`.
    */

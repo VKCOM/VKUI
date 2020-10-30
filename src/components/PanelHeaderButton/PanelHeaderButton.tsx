@@ -1,4 +1,5 @@
-import React, { ButtonHTMLAttributes, FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
+import { MorphButtonLink } from '../../types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -7,10 +8,8 @@ import { isPrimitiveReactNode } from '../../lib/utils';
 import { VKCOM } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
 
-export interface PanelHeaderButtonProps extends ButtonHTMLAttributes<HTMLElement> {
+export interface PanelHeaderButtonProps extends MorphButtonLink {
   primary?: boolean;
-  href?: string;
-  target?: string;
   label?: ReactNode;
 }
 

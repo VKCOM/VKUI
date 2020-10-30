@@ -17,8 +17,6 @@ export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<H
   activeEffectDelay?: number;
   disabled?: boolean;
   stopPropagation?: boolean;
-  href?: string;
-  target?: string;
 }
 
 export interface TappableState {

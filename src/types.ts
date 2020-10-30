@@ -1,4 +1,4 @@
-import React, { RefCallback } from 'react';
+import React, { RefCallback, ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react';
 import { PlatformType } from './lib/platform';
 import { Insets } from '@vkontakte/vk-bridge';
 
@@ -48,12 +48,6 @@ export interface HasChildren {
   children?: React.ReactNode;
 }
 
-export interface HasLinkProps {
-  href?: string;
-  target?: string;
-  rel?: string;
-}
-
 export interface Version {
   major: number;
   minor?: number;
@@ -64,3 +58,10 @@ export interface DOMProps {
   document?: Document;
   window?: Window;
 }
+
+export type MorphButtonLink = Omit<ButtonHTMLAttributes<HTMLButtonElement> & AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & {
+  /**
+   * Превращает компонент в `<a>`
+   */
+  href?: string;
+};

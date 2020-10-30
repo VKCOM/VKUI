@@ -1,12 +1,12 @@
-import React, { ReactNode, ButtonHTMLAttributes, FunctionComponent } from 'react';
+import React, { ReactNode, FunctionComponent } from 'react';
+import { MorphButtonLink } from '../../types';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface IconButtonProps extends ButtonHTMLAttributes<HTMLElement> {
+export interface IconButtonProps extends MorphButtonLink {
   icon: ReactNode;
-  href?: string;
 }
 
 const IconButton: FunctionComponent<IconButtonProps> = ({

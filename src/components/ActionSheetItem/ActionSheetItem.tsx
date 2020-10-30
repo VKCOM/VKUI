@@ -1,4 +1,4 @@
-import React, { ElementType, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
+import React, { ElementType, InputHTMLAttributes, useContext } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
@@ -8,7 +8,7 @@ import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import { HasLinkProps } from '../../types';
+import { MorphButtonLink } from '../../types';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon24Done from '@vkontakte/icons/dist/24/done';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
@@ -17,8 +17,7 @@ import { SizeType } from '../../hoc/withAdaptivity';
 import Caption from '../Typography/Caption/Caption';
 
 export interface ActionSheetItemProps extends
-  HTMLAttributes<HTMLElement>,
-  HasLinkProps,
+  MorphButtonLink,
   Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'> {
   mode?: 'default' | 'destructive' | 'cancel';
   before?: React.ReactNode;

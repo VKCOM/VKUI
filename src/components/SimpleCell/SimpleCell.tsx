@@ -1,15 +1,15 @@
-import React, { HTMLAttributes, ReactNode, FC, ElementType } from 'react';
+import React, { ReactNode, FC, ElementType } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
-import { HasLinkProps, HasRootRef } from '../../types';
+import { MorphButtonLink, HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface SimpleCellOwnProps extends HasLinkProps {
+export interface SimpleCellOwnProps extends MorphButtonLink {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
@@ -38,7 +38,7 @@ export interface SimpleCellOwnProps extends HasLinkProps {
   Component?: ElementType;
 }
 
-export interface SimpleCellProps extends SimpleCellOwnProps, HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, AdaptivityProps {}
+export interface SimpleCellProps extends SimpleCellOwnProps, HasRootRef<HTMLElement>, AdaptivityProps {}
 
 const SimpleCell: FC<SimpleCellProps> = ({
   before,

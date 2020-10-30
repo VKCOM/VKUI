@@ -1,11 +1,11 @@
-import React, { FunctionComponent, ReactNode, HTMLAttributes, ElementType } from 'react';
+import React, { FunctionComponent, ReactNode, ElementType } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Counter from '../Counter/Counter';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasLinkProps } from '../../types';
+import { MorphButtonLink } from '../../types';
 
-export interface TabbarItemProps extends HTMLAttributes<HTMLElement>, HasLinkProps {
+export interface TabbarItemProps extends MorphButtonLink {
   selected?: boolean;
   /**
    * Тест рядом с иконкой
@@ -20,7 +20,7 @@ export interface TabbarItemProps extends HTMLAttributes<HTMLElement>, HasLinkPro
 const TabbarItem: FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) => {
   const { className, children, selected, label, text, ...restProps } = props;
   const platform = usePlatform();
-  const Component: ElementType = restProps.href ? 'a' : 'div';
+  const Component: ElementType = restProps.href ? 'a' : 'button';
 
   return (
     <Component
