@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ImgHTMLAttributes } from 'react';
+import React, { FunctionComponent, ImgHTMLAttributes, ReactNode } from 'react';
 import Card from '../Card/Card';
 import Div from '../Div/Div';
 import Caption from '../Typography/Caption/Caption';
@@ -9,24 +9,24 @@ export interface ContentCardInfoProps {
   /*
   * Текст над заголовком
   * */
-  subtitle?: string;
+  subtitle?: ReactNode;
   /*
   * Заголовок
   * */
-  title?: string;
+  header?: ReactNode;
   /*
   * Текст
   * */
-  text?: string;
+  text?: ReactNode;
   /*
   * Нижний текст
   * */
-  caption?: string;
+  caption?: ReactNode;
 }
 const ContentCardInfo: (props: ContentCardInfoProps) => JSX.Element = (props: ContentCardInfoProps) => (
   <div style={{ padding: '12px 16px' }}>
     {props.subtitle && <Caption weight="semibold" level="3" caps style={{ marginBottom: 4, color: 'var(--text_secondary)' }}>{props.subtitle}</Caption>}
-    {props.title && <Title weight="semibold" level="3" style={{ marginBottom: 4 }}>{props.title}</Title>}
+    {props.header && <Title weight="semibold" level="3" style={{ marginBottom: 4 }}>{props.header}</Title>}
     {props.text && <Text weight="regular" style={{ marginBottom: 4 }}>{props.text}</Text>}
     {props.caption && <Caption weight="regular" level="1" style={{ color: 'var(--text_secondary)' }}>{props.caption}</Caption>}
   </div>
@@ -48,11 +48,12 @@ export interface ContentCardProps extends ImgHTMLAttributes<HTMLImageElement>, C
   * Отключает Tappable у карточки
   * */
   disabled?: boolean;
+  mode?: 'tint' | 'shadow' | 'outline';
 }
 const ContentCard: FunctionComponent = (props: ContentCardProps) => {
   return (
     <Div>
-      <Card style={{ overflow: 'hidden' }} mode="shadow">
+      <Card style={{ overflow: 'hidden' }} mode={props.mode ? props.mode : 'shadow'}>
         <Tappable disabled={props.disabled}>
           {props.image && <img src={props.image} alt={props.alt} style={{ objectFit: 'cover', maxHeight: props.maxHeight }} width="100%" />}
           <ContentCardInfo {...props} />
