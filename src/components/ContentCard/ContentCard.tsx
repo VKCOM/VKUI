@@ -1,5 +1,5 @@
-import React, { FC, FunctionComponent, ImgHTMLAttributes, ReactNode } from 'react';
-import Card from '../Card/Card';
+import React, { FunctionComponent, ImgHTMLAttributes, ReactNode } from 'react';
+import Card, { CardProps } from '../Card/Card';
 import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
@@ -8,34 +8,25 @@ import classNames from '../../lib/classNames';
 import getClassname from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
+import { HasRootRef } from '../../types';
 
-export interface ContentCardInfoProps {
+export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAttributes<HTMLImageElement>{
   /**
-    Текст над заголовком
+   Текст над заголовком
    */
   subtitle?: ReactNode;
   /**
-    Заголовок
+   Заголовок
    */
   header?: ReactNode;
   /**
-    Текст
+   Текст
    */
   text?: ReactNode;
   /**
-    Нижний текст
+   Нижний текст
    */
   caption?: ReactNode;
-}
-const ContentCardInfo: FC<ContentCardInfoProps> = (props: ContentCardInfoProps) => (
-  <div className="ContentCard--body">
-    {hasReactNode(props.subtitle) && <Caption caps className="ContentCard--caption" weight="semibold" level="3">{props.subtitle}</Caption>}
-    {hasReactNode(props.header) && <Title className="ContentCard--title" weight="semibold" level="3">{props.header}</Title>}
-    {hasReactNode(props.text) && <Text className="ContentCard--text" weight="regular">{props.text}</Text>}
-    {hasReactNode(props.caption) && <Caption className="ContentCard--caption" weight="regular" level="1">{props.caption}</Caption>}
-  </div>
-);
-export interface ContentCardProps extends ImgHTMLAttributes<HTMLImageElement>, ContentCardInfoProps{
   /**
     URL или путь к изображению
    */
@@ -55,22 +46,30 @@ export interface ContentCardProps extends ImgHTMLAttributes<HTMLImageElement>, C
   /**
    В точности как у `<Card/>`
    */
-  mode?: 'tint' | 'shadow' | 'outline';
+  mode?: CardProps['mode'];
 }
+
 const ContentCard: FunctionComponent = (props: ContentCardProps) => {
-  const { subtitle, header, text, caption, className, image, disabled, mode, alt, style, ...restProps } = props;
+  const { subtitle, header, text, caption, className, image, disabled, mode, alt, style, getRootRef, ...restProps } = props;
   const platform = usePlatform();
 
   return (
-    <Card mode={mode} size="l" className={classNames(className, getClassname('ContentCard', platform))} style={style}>
-      <Tappable disabled={disabled} className="ContentCard--tappable">
-        {image && <img src={image} alt={alt} className="ContentCard--img" style={{ objectFit: 'cover', maxHeight: props.maxHeight }} width="100%" {...restProps} />}
-        <ContentCardInfo subtitle={subtitle} header={header} text={text} caption={caption} />
+    <Card mode={mode} getRootRef={getRootRef} size="l" className={classNames(className, getClassname('ContentCard', platform))} style={style}>
+      <Tappable disabled={disabled} className="ContentCard__tappable">
+        {image && <img src={image} alt={alt} className="ContentCard__img" style={{ objectFit: 'cover', maxHeight: props.maxHeight }} width="100%" {...restProps} />}
+        <div className="ContentCard__body">
+          {hasReactNode(subtitle) && <Caption caps className="ContentCard__caption" weight="semibold" level="3">{subtitle}</Caption>}
+          {hasReactNode(header) && <Title className="ContentCard__title" weight="semibold" level="3">{header}</Title>}
+          {hasReactNode(text) && <Text className="ContentCard__text" weight="regular">{text}</Text>}
+          {hasReactNode(caption) && <Caption className="ContentCard__caption" weight="regular" level="1">{caption}</Caption>}
+        </div>
       </Tappable>
     </Card>
   );
 };
+
 ContentCard.defaultProps = {
   mode: 'shadow',
 };
+
 export default ContentCard;

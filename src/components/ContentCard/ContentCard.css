@@ -1,37 +1,37 @@
-.ContentCard--body {
+.ContentCard__body {
   padding: 12px 16px;
 }
 
-.ContentCard--caption:not(:last-child),
-.ContentCard--title:not(:last-child),
-.ContentCard--text:not(:last-child) {
+.ContentCard__caption:not(:last-child),
+.ContentCard__title:not(:last-child),
+.ContentCard__text:not(:last-child) {
   margin-bottom: 4px;
 }
 
-.ContentCard--caption {
+.ContentCard__caption {
   color: var(--text_secondary);
 }
 
 /*
 * iOS
 * */
-.ContentCard--ios .ContentCard--tappable {
+.ContentCard--ios .ContentCard__tappable {
   border-radius: 10px;
 }
 
-.ContentCard--ios .ContentCard--img {
+.ContentCard--ios .ContentCard__img {
   border-radius: 10px 10px 0 0;
 }
 
 /*
 * Android and vkcom
 * */
-.ContentCard--android .ContentCard--tappable,
-.ContentCard--vkcom .ContentCard--tappable {
+.ContentCard--android .ContentCard__tappable,
+.ContentCard--vkcom .ContentCard__tappable {
   border-radius: 8px;
 }
 
-.ContentCard--android .ContentCard--img,
-.ContentCard--vkcom .ContentCard--img {
+.ContentCard--android .ContentCard__img,
+.ContentCard--vkcom .ContentCard__img {
   border-radius: 8px 8px 0 0;
 }
