@@ -1,0 +1,94 @@
+.WriteBar {
+  display: flex;
+  align-items: flex-start;
+}
+
+.WriteBar--content {
+  width: 100%;
+  padding: 6px 0;
+}
+
+.WriteBar--content > input {
+  height: 36px;
+  width: 100%;
+}
+
+.WriteBar--ios > .WriteBar--after,
+.WriteBar--ios > .WriteBar--before {
+  color: var(--accent);
+}
+
+.WriteBar--ios > .WriteBar--content > textarea {
+  margin: unset;
+  display: block;
+  box-sizing: border-box;
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+  text-overflow: ellipsis;
+  line-height: 19px;
+  font-size: 16px;
+  color: var(--text_primary);
+  padding: 7px 12px;
+  position: relative;
+  z-index: 2;
+  background-color: var(--input_background);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--input_border);
+  border-radius: 18px;
+  width: 100%;
+  resize: none;
+}
+
+.WriteBar--android > .WriteBar--content > textarea {
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
+  box-shadow: none;
+  border: none;
+  outline: none;
+  appearance: none;
+  text-overflow: ellipsis;
+  line-height: 19px;
+  font-size: 16px;
+  color: var(--text_primary);
+  padding: 7px 12px;
+  position: relative;
+  z-index: 2;
+  background-color: transparent;
+  border-radius: 18px;
+  width: 100%;
+  resize: none;
+}
+
+.WriteBar--android > .WriteBar--after,
+.WriteBar--android > .WriteBar--before,
+.WriteBar--vkcom > .WriteBar--after,
+.WriteBar--vkcom > .WriteBar--before {
+  color: var(--icon_secondary);
+}
+
+.WriteBar--vkcom > .WriteBar--content > textarea {
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
+  box-shadow: none;
+  outline: none;
+  appearance: none;
+  text-overflow: ellipsis;
+  line-height: 19px;
+  font-size: 16px;
+  color: var(--text_primary);
+  padding: 9px 12px;
+  position: relative;
+  z-index: 2;
+  background-color: var(--input_background);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--input_border);
+  border-radius: 6px;
+  height: 40px;
+  width: 100%;
+  resize: none;
+}
