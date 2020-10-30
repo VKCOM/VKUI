@@ -24,21 +24,19 @@ const HorizontalCell: FC<HorizontalCellProps> = (props) => {
       {hasReactNode(image) && <div className="HorizontalCell__image">{image}</div>}
       <div className="HorizontalCell__content">
         {hasReactNode(title) &&
-          size === 'small' ?
-            <Caption weight='regular' level='2' className="HorizontalCell__title">{title}</Caption> :
-            <Subhead weight='regular' className="HorizontalCell__title">{title}</Subhead>
-        }
-        {hasReactNode(subtitle) && <Caption weight='regular' level='1' className="HorizontalCell__subtitle">{subtitle}</Caption>}
-        {hasReactNode(secondSubtitle) && <Caption weight='regular' level='1' className="HorizontalCell__subtitle">{secondSubtitle}</Caption>}
+          size === 'small' ? <Caption weight="regular" level="2" className="HorizontalCell__title">{title}</Caption> :
+          <Subhead weight="regular" className="HorizontalCell__title">{title}</Subhead>}
+        {hasReactNode(subtitle) && <Caption weight="regular" level="1" className="HorizontalCell__subtitle">{subtitle}</Caption>}
+        {hasReactNode(secondSubtitle) && <Caption weight="regular" level="1" className="HorizontalCell__subtitle">{secondSubtitle}</Caption>}
       </div>
     </Tappable>
   );
-}
+};
 
 HorizontalCell.defaultProps = {
   size: 'small',
-  image: <Avatar size={56}/>,
-  title: 'Title'
-}
+  image: <Avatar size={56} />,
+  title: 'Title',
+};
 
 export default HorizontalCell;
