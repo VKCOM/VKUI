@@ -9,21 +9,21 @@ import getClassname from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface ContentCardInfoProps {
-  /*
-  * Текст над заголовком
-  * */
+  /**
+    Текст над заголовком
+   */
   subtitle?: ReactNode;
-  /*
-  * Заголовок
-  * */
+  /**
+    Заголовок
+   */
   header?: ReactNode;
-  /*
-  * Текст
-  * */
+  /**
+    Текст
+   */
   text?: ReactNode;
-  /*
-  * Нижний текст
-  * */
+  /**
+    Нижний текст
+   */
   caption?: ReactNode;
 }
 const ContentCardInfo: FC<ContentCardInfoProps> = (props: ContentCardInfoProps) => (
@@ -35,22 +35,25 @@ const ContentCardInfo: FC<ContentCardInfoProps> = (props: ContentCardInfoProps) 
   </div>
 );
 export interface ContentCardProps extends ImgHTMLAttributes<HTMLImageElement>, ContentCardInfoProps{
-  /*
-  * URL или путь к изображению
-  * */
+  /**
+    URL или путь к изображению
+   */
   image?: string;
-  /*
-  * Максимальная высота изображения
-  * */
+  /**
+    Максимальная высота изображения
+   */
   maxHeight?: number;
-  /*
-  * Аналогично alt для img
-  * */
+  /**
+    Аналогично alt для img
+   */
   alt?: string;
-  /*
-  * Отключает Tappable у карточки
-  * */
+  /**
+    Отключает Tappable у карточки
+   */
   disabled?: boolean;
+  /**
+   В точности как у `<Card/>`
+   */
   mode?: 'tint' | 'shadow' | 'outline';
 }
 const ContentCard: FunctionComponent = (props: ContentCardProps) => {
