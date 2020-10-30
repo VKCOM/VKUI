@@ -108,6 +108,7 @@ module.exports = {
           '../src/components/Placeholder/Placeholder.tsx',
           '../src/components/Banner/Banner.tsx',
           '../src/components/MiniInfoCell/MiniInfoCell.tsx',
+          '../src/components/ContentCard/ContentCard.tsx',
         ]
       }, {
         name: 'Forms',
