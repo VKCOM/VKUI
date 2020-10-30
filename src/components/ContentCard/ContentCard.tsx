@@ -7,6 +7,7 @@ import Tappable from '../Tappable/Tappable';
 import classNames from '../../lib/classNames';
 import getClassname from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
 
 export interface ContentCardInfoProps {
   /**
@@ -28,10 +29,10 @@ export interface ContentCardInfoProps {
 }
 const ContentCardInfo: FC<ContentCardInfoProps> = (props: ContentCardInfoProps) => (
   <div className="ContentCard--body">
-    {props.subtitle && <Caption weight="semibold" level="3" caps style={{ marginBottom: 4, color: 'var(--text_secondary)' }}>{props.subtitle}</Caption>}
-    {props.header && <Title weight="semibold" level="3" style={{ marginBottom: 4 }}>{props.header}</Title>}
-    {props.text && <Text weight="regular" style={{ marginBottom: 4 }}>{props.text}</Text>}
-    {props.caption && <Caption weight="regular" level="1" style={{ color: 'var(--text_secondary)' }}>{props.caption}</Caption>}
+    {hasReactNode(props.subtitle) && <Caption caps className="ContentCard--caption" weight="semibold" level="3">{props.subtitle}</Caption>}
+    {hasReactNode(props.header) && <Title className="ContentCard--title" weight="semibold" level="3">{props.header}</Title>}
+    {hasReactNode(props.text) && <Text className="ContentCard--text" weight="regular">{props.text}</Text>}
+    {hasReactNode(props.caption) && <Caption className="ContentCard--caption" weight="regular" level="1">{props.caption}</Caption>}
   </div>
 );
 export interface ContentCardProps extends ImgHTMLAttributes<HTMLImageElement>, ContentCardInfoProps{
@@ -57,11 +58,11 @@ export interface ContentCardProps extends ImgHTMLAttributes<HTMLImageElement>, C
   mode?: 'tint' | 'shadow' | 'outline';
 }
 const ContentCard: FunctionComponent = (props: ContentCardProps) => {
-  const { subtitle, header, text, caption, className, image, disabled, mode, alt, ...restProps } = props;
+  const { subtitle, header, text, caption, className, image, disabled, mode, alt, style, ...restProps } = props;
   const platform = usePlatform();
 
   return (
-    <Card mode={mode} size="l" className={classNames(className, getClassname('ContentCard', platform))}>
+    <Card mode={mode} size="l" className={classNames(className, getClassname('ContentCard', platform))} style={style}>
       <Tappable disabled={disabled} className="ContentCard--tappable">
         {image && <img src={image} alt={alt} className="ContentCard--img" style={{ objectFit: 'cover', maxHeight: props.maxHeight }} width="100%" {...restProps} />}
         <ContentCardInfo subtitle={subtitle} header={header} text={text} caption={caption} />
