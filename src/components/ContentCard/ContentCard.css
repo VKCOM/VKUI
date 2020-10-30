@@ -5,23 +5,23 @@
 /*
 * iOS
 * */
-.ContentCard--ios > .Card__in > .Tappable {
+.ContentCard--ios .ContentCard--tappable {
   border-radius: 10px;
 }
 
-.ContentCard--ios > .Card__in > .Tappable > .ContentCard--img {
+.ContentCard--ios .ContentCard--img {
   border-radius: 10px 10px 0 0;
 }
 
 /*
 * Android and vkcom
 * */
-.ContentCard--android > .Card__in > .Tappable,
-.ContentCard--vkcom > .Card__in > .Tappable {
+.ContentCard--android .ContentCard--tappable,
+.ContentCard--vkcom .ContentCard--tappable {
   border-radius: 8px;
 }
 
-.ContentCard--android > .Card__in > .Tappable > .ContentCard--img,
-.ContentCard--vkcom > .Card__in > .Tappable > .ContentCard--img {
+.ContentCard--android .ContentCard--img,
+.ContentCard--vkcom .ContentCard--img {
   border-radius: 8px 8px 0 0;
 }
