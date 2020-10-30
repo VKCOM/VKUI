@@ -19,10 +19,12 @@ export interface VKUIButtonProps extends HasAlign {
   after?: ReactNode;
 }
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, AnchorHTMLAttributes<HTMLAnchorElement>, HasRootRef<HTMLElement>, VKUIButtonProps, AdaptivityProps {
+type MorphButtonLink = ButtonHTMLAttributes<HTMLButtonElement> & AnchorHTMLAttributes<HTMLAnchorElement>;
+
+export interface ButtonProps extends MorphButtonLink, HasRootRef<HTMLElement>, VKUIButtonProps, AdaptivityProps {
   Component?: ElementType;
   stopPropagation?: boolean;
-}
+};
 
 const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean, sizeY: AdaptivityProps['sizeY'], platform: Platform) => {
   switch (size) {
