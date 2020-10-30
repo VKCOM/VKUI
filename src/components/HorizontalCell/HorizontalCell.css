@@ -1,0 +1,67 @@
+.HorizontalCell {
+  padding-bottom: 6px;
+}
+
+.HorizontalCell--ios:first-child {
+  margin-left: 12px;
+}
+
+.HorizontalCell--ios:last-child {
+  margin-right: 12px;
+}
+
+.HorizontalCell--android:first-child,
+.HorizontalCell--vkcom:first-child {
+  margin-left: 16px;
+}
+
+.HorizontalCell--android:last-child,
+.HorizontalCell--vkcom:last-child {
+  margin-right: 16px;
+}
+
+.HorizontalCell__image {
+  display: flex;
+  justify-content: center;
+}
+
+.HorizontalCell__title:not(:last-child),
+.HorizontalCell__subtitle:not(:last-child) {
+  margin-bottom: 2px;
+}
+
+.HorizontalCell__subtitle {
+  color: var(--text_secondary);
+}
+
+.HorizontalCell--sz-small {
+  width: 80px;
+}
+
+.HorizontalCell--sz-small .HorizontalCell__image {
+  padding: 4px 8px;
+}
+
+.HorizontalCell--sz-small .HorizontalCell__content {
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.HorizontalCell--sz-medium {
+  width: 106px;
+}
+
+.HorizontalCell--sz-medium .HorizontalCell__image,
+.HorizontalCell--sz-large .HorizontalCell__image {
+  padding: 4px 6px;
+}
+
+.HorizontalCell--sz-medium .HorizontalCell__content,
+.HorizontalCell--sz-large .HorizontalCell__content {
+  padding: 2px 6px;
+  text-align: left;
+}
+
+.HorizontalCell--sz-large {
+  width: auto;
+}
