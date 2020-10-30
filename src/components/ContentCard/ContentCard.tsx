@@ -8,9 +8,9 @@ import classNames from '../../lib/classNames';
 import getClassname from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import { HasRootRef } from '../../types';
+import { HasRef, HasRootRef } from '../../types';
 
-export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAttributes<HTMLImageElement>{
+export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAttributes<HTMLImageElement>, HasRef<HTMLImageElement>{
   /**
    Текст над заголовком
    */
@@ -50,13 +50,13 @@ export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAtt
 }
 
 const ContentCard: FunctionComponent = (props: ContentCardProps) => {
-  const { subtitle, header, text, caption, className, image, disabled, mode, alt, style, getRootRef, ...restProps } = props;
+  const { getRef, subtitle, header, text, caption, className, image, disabled, mode, alt, style, getRootRef, ...restProps } = props;
   const platform = usePlatform();
 
   return (
     <Card mode={mode} getRootRef={getRootRef} size="l" className={classNames(className, getClassname('ContentCard', platform))} style={style}>
       <Tappable disabled={disabled} className="ContentCard__tappable">
-        {image && <img {...restProps} src={image} alt={alt} className="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
+        {image && <img {...restProps} ref={getRef} src={image} alt={alt} className="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
         <div className="ContentCard__body">
           {hasReactNode(subtitle) && <Caption caps className="ContentCard__caption" weight="semibold" level="3">{subtitle}</Caption>}
           {hasReactNode(header) && <Title className="ContentCard__title" weight="semibold" level="3">{header}</Title>}
