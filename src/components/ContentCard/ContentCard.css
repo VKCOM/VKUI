@@ -2,6 +2,10 @@
   padding: 12px 16px;
 }
 
+.ContentCard__img {
+  object-fit: cover;
+}
+
 .ContentCard__caption:not(:last-child),
 .ContentCard__title:not(:last-child),
 .ContentCard__text:not(:last-child) {
