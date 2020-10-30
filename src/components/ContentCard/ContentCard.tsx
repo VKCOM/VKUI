@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ImgHTMLAttributes, ReactNode } from 'react';
+import React, { FC, FunctionComponent, ImgHTMLAttributes, ReactNode } from 'react';
 import Card from '../Card/Card';
 import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
@@ -26,7 +26,7 @@ export interface ContentCardInfoProps {
   * */
   caption?: ReactNode;
 }
-const ContentCardInfo: (props: ContentCardInfoProps) => JSX.Element = (props: ContentCardInfoProps) => (
+const ContentCardInfo: FC<ContentCardInfoProps> = (props: ContentCardInfoProps) => (
   <div className="ContentCard--body">
     {props.subtitle && <Caption weight="semibold" level="3" caps style={{ marginBottom: 4, color: 'var(--text_secondary)' }}>{props.subtitle}</Caption>}
     {props.header && <Title weight="semibold" level="3" style={{ marginBottom: 4 }}>{props.header}</Title>}
@@ -54,13 +54,14 @@ export interface ContentCardProps extends ImgHTMLAttributes<HTMLImageElement>, C
   mode?: 'tint' | 'shadow' | 'outline';
 }
 const ContentCard: FunctionComponent = (props: ContentCardProps) => {
+  const { subtitle, header, text, caption, className, image, disabled, mode, alt, ...restProps } = props;
   const platform = usePlatform();
 
   return (
-    <Card {...props} mode={props.mode} size="l" className={classNames(getClassname('ContentCard', platform))}>
-      <Tappable disabled={props.disabled}>
-        {props.image && <img src={props.image} alt={props.alt} className="ContentCard--img" style={{ objectFit: 'cover', maxHeight: props.maxHeight }} width="100%" />}
-        <ContentCardInfo {...props} />
+    <Card {...restProps} mode={mode} size="l" className={classNames(className, getClassname('ContentCard', platform))}>
+      <Tappable disabled={disabled}>
+        {image && <img src={image} alt={alt} className="ContentCard--img" style={{ objectFit: 'cover', maxHeight: props.maxHeight }} width="100%" />}
+        <ContentCardInfo subtitle={subtitle} header={header} text={text} caption={caption} />
       </Tappable>
     </Card>
   );
