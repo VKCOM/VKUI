@@ -56,7 +56,7 @@ const ContentCard: FunctionComponent = (props: ContentCardProps) => {
   return (
     <Card mode={mode} getRootRef={getRootRef} size="l" className={classNames(className, getClassname('ContentCard', platform))} style={style}>
       <Tappable disabled={disabled} className="ContentCard__tappable">
-        {image && <img src={image} alt={alt} className="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" {...restProps} />}
+        {image && <img {...restProps} src={image} alt={alt} className="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
         <div className="ContentCard__body">
           {hasReactNode(subtitle) && <Caption caps className="ContentCard__caption" weight="semibold" level="3">{subtitle}</Caption>}
           {hasReactNode(header) && <Title className="ContentCard__title" weight="semibold" level="3">{header}</Title>}
