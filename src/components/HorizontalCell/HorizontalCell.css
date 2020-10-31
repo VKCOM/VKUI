@@ -1,23 +1,18 @@
 .HorizontalCell {
   padding-bottom: 6px;
+  display: flex;
 }
 
-.HorizontalCell--ios:first-child {
-  margin-left: 12px;
+.HorizontalCell--ios:first-child .HorizontalCell__left,
+.HorizontalCell--ios:last-child .HorizontalCell__right {
+  min-width: 6px;
 }
 
-.HorizontalCell--ios:last-child {
-  margin-right: 12px;
-}
-
-.HorizontalCell--android:first-child,
-.HorizontalCell--vkcom:first-child {
-  margin-left: 16px;
-}
-
-.HorizontalCell--android:last-child,
-.HorizontalCell--vkcom:last-child {
-  margin-right: 16px;
+.HorizontalCell--android:first-child .HorizontalCell__left,
+.HorizontalCell--android:last-child .HorizontalCell__right,
+.HorizontalCell--vkcom:first-child .HorizontalCell__left,
+.HorizontalCell--vkcom:last-child .HorizontalCell__right {
+  min-width: 8px;
 }
 
 .HorizontalCell__image {
@@ -34,34 +29,58 @@
   color: var(--text_secondary);
 }
 
-.HorizontalCell--sz-small {
+.HorizontalCell--s {
+  width: 72px;
+}
+
+.HorizontalCell--ios:first-child.HorizontalCell--s,
+.HorizontalCell--ios:last-child.HorizontalCell--s {
+  width: 78px;
+}
+
+.HorizontalCell--android:first-child.HorizontalCell--s,
+.HorizontalCell--android:last-child.HorizontalCell--s,
+.HorizontalCell--vkcom:first-child.HorizontalCell--s,
+.HorizontalCell--vkcom:last-child.HorizontalCell--s {
   width: 80px;
 }
 
-.HorizontalCell--sz-small .HorizontalCell__image {
+.HorizontalCell--s .HorizontalCell__image {
   padding: 4px 8px;
 }
 
-.HorizontalCell--sz-small .HorizontalCell__content {
+.HorizontalCell--s .HorizontalCell__content {
   padding: 2px 4px;
   text-align: center;
 }
 
-.HorizontalCell--sz-medium {
-  width: 106px;
+.HorizontalCell--m {
+  width: 108px;
 }
 
-.HorizontalCell--sz-medium .HorizontalCell__image,
-.HorizontalCell--sz-large .HorizontalCell__image {
+.HorizontalCell--ios:first-child.HorizontalCell--m,
+.HorizontalCell--ios:last-child.HorizontalCell--m {
+  width: 114px;
+}
+
+.HorizontalCell--android:first-child.HorizontalCell--m,
+.HorizontalCell--android:last-child.HorizontalCell--m,
+.HorizontalCell--vkcom:first-child.HorizontalCell--m,
+.HorizontalCell--vkcom:last-child.HorizontalCell--m {
+  width: 116px;
+}
+
+.HorizontalCell--m .HorizontalCell__image,
+.HorizontalCell--l .HorizontalCell__image {
   padding: 4px 6px;
 }
 
-.HorizontalCell--sz-medium .HorizontalCell__content,
-.HorizontalCell--sz-large .HorizontalCell__content {
+.HorizontalCell--m .HorizontalCell__content,
+.HorizontalCell--l .HorizontalCell__content {
   padding: 2px 6px;
   text-align: left;
 }
 
-.HorizontalCell--sz-large {
+.HorizontalCell--l {
   width: auto;
 }
