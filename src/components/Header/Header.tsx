@@ -34,9 +34,11 @@ const Header: FunctionComponent<HeaderProps> = ({
       })}
     >
       <div className="Header__in">
-        <div className="Header__content">
-          {children}
-          {hasReactNode(subtitle) && <div className="Header__subtitle">{subtitle}</div>}
+        <div className="Header__main">
+          <div className="Header__content">
+            {children}
+            {hasReactNode(subtitle) && <div className="Header__subtitle">{subtitle}</div>}
+          </div>
         </div>
         {hasReactNode(indicator) && <div className="Header__indicator">{indicator}</div>}
         {hasReactNode(aside) && <div className="Header__aside">{aside}</div>}
