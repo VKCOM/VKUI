@@ -125,40 +125,35 @@ class HorizontalCellExample extends React.Component {
           <PanelHeader>
             HorizontalCell
           </PanelHeader>
-          <Group>
-            <Header>Возможные друзья</Header>
+          <Group header={<Header>Возможные друзья</Header>}>
             <HorizontalScroll>
               <div style={{display: 'flex'}}>
                 {this.state.userItems}
               </div>
             </HorizontalScroll>
           </Group>
-          <Group>
-            <Header aside={<Link>Показать</Link>}>Мини-приложения</Header>
+          <Group header={<Header aside={<Link>Показать</Link>}>Мини-приложения</Header>}>
             <HorizontalScroll>
               <div style={{display: 'flex'}}>
                 {this.state.miniAppItems}
               </div>
             </HorizontalScroll>
           </Group>
-          <Group>
-            <Header aside={<Link>Показать</Link>}>Игры</Header>
+          <Group header={<Header aside={<Link>Показать</Link>}>Игры</Header>}>
             <HorizontalScroll>
               <div style={{display: 'flex'}}>
                 {this.state.gamesItems}
               </div>
             </HorizontalScroll>
           </Group>
-          <Group>
-            <Header aside={<Link>Показать</Link>}>Плейлисты</Header>
+          <Group header={<Header aside={<Link>Показать</Link>}>Плейлисты</Header>}>
             <HorizontalScroll>
               <div style={{display: 'flex'}}>
                 {this.state.playlistsItems}
               </div>
             </HorizontalScroll>
           </Group>
-          <Group>
-            <Header aside={<Link>Показать</Link>}>Альбомы</Header>
+          <Group header={<Header aside={<Link>Показать</Link>}>Альбомы</Header>}>
             <HorizontalScroll>
               <div style={{display: 'flex'}}>
                 {this.state.albumItems}
