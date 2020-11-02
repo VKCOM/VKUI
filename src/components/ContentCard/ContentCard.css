@@ -4,6 +4,7 @@
 
 .ContentCard__img {
   object-fit: cover;
+  display: block;
 }
 
 .ContentCard__caption:not(:last-child),
