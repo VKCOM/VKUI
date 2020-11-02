@@ -3,15 +3,17 @@
   display: flex;
 }
 
-.HorizontalCell--ios:first-child .HorizontalCell__left,
-.HorizontalCell--ios:last-child .HorizontalCell__right {
-  min-width: 6px;
+.HorizontalCell.HorizontalCell--ios:first-child::before,
+.HorizontalCell.HorizontalCell--ios:last-child::after {
+  content: "";
+  width: 4px;
 }
 
-.HorizontalCell--android:first-child .HorizontalCell__left,
-.HorizontalCell--android:last-child .HorizontalCell__right,
-.HorizontalCell--vkcom:first-child .HorizontalCell__left,
-.HorizontalCell--vkcom:last-child .HorizontalCell__right {
+.HorizontalCell.HorizontalCell--android:first-child::before,
+.HorizontalCell.HorizontalCell--android:last-child::after,
+.HorizontalCell.HorizontalCell--vkcom:first-child::before,
+.HorizontalCell.HorizontalCell--vkcom:last-child::after {
+  content: "";
   min-width: 8px;
 }
 

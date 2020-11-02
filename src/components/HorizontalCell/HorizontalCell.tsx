@@ -20,7 +20,6 @@ const HorizontalCell: FC<HorizontalCellProps> = (props) => {
   const { className, title, subtitle, secondSubtitle, size, style, children, ...restProps } = props;
   return (
     <div className={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`, className)} style={style}>
-      <div className="HorizontalCell__left" />
       <Tappable {...restProps}>
         {hasReactNode(children) && <div className="HorizontalCell__image">{children}</div>}
         <div className="HorizontalCell__content">
@@ -31,7 +30,6 @@ const HorizontalCell: FC<HorizontalCellProps> = (props) => {
           {hasReactNode(secondSubtitle) && <Caption weight="regular" level="1" className="HorizontalCell__subtitle">{secondSubtitle}</Caption>}
         </div>
       </Tappable>
-      <div className="HorizontalCell__right" />
     </div>
   );
 };
