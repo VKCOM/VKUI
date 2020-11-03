@@ -35,7 +35,7 @@ interface CustomSelectProps extends Omit<SelectProps, 'onChange' | 'getRef'>, Ha
   onChange?: (result: SelectChangeResult) => void;
   onFocus?: () => void;
   onBlur?: () => void;
-  renderOption: (props: CustomSelectOptionProps) => ReactNode;
+  renderOption: (props: CustomSelectOptionProps, index: number) => ReactNode;
 }
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
@@ -337,7 +337,7 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
           onClick: this.selectFocused,
           onMouseDown: this.handleOptionDown,
           onMouseEnter: this.handleOptionHover,
-        })}
+        }, index)}
       </React.Fragment>
     );
   };

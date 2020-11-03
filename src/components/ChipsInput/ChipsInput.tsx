@@ -40,7 +40,7 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   getOptionValue?: (o?: Option) => ChipsInputValue;
   getOptionLabel?: (o?: Option) => string;
   getNewOptionData?: (v?: ChipsInputValue, l?: string) => Option;
-  renderChip?: (props?: RenderChip<Option>) => ReactNode;
+  renderChip?: (props: RenderChip<Option>, index: number) => ReactNode;
 }
 
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
@@ -93,13 +93,13 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
       style={style}
     >
       <div className="ChipsInput__container">
-        {selectedOptions.map((option: Option) => {
+        {selectedOptions.map((option: Option, index: number) => {
           const value = getOptionValue(option);
           const label = getOptionLabel(option);
 
           return (
             <React.Fragment key={value}>
-              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: 'ChipsInput__chip' })}
+              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: 'ChipsInput__chip' }, index)}
             </React.Fragment>
           );
         })}

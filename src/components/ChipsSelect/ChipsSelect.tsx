@@ -26,7 +26,7 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
    * Отрисовка лоадера вместо списка опций в выпадающем списке
    */
   fetching?: boolean;
-  renderOption?: (props: CustomSelectOptionProps) => ReactNode;
+  renderOption?: (props: CustomSelectOptionProps, index: number) => ReactNode;
   /**
    * Показывать или скрывать уже выбранные опции
    */
@@ -187,14 +187,14 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     }
   }, [filteredOptions, focusedOption, creatable]);
 
-  const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
+  const renderChipWrapper = (renderChipProps: RenderChip<Option>, index: number) => {
     const { onRemove } = renderChipProps;
     const onRemoveWrapper = (e: MouseEvent, value: ChipsInputValue) => {
       e.preventDefault();
       onRemove(e, value);
     };
 
-    return renderChip({ ...renderChipProps, onRemove: onRemoveWrapper });
+    return renderChip({ ...renderChipProps, onRemove: onRemoveWrapper }, index);
   };
 
   return (
@@ -274,7 +274,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                             clearInput();
                           },
                           onMouseEnter: () => setFocusedOptionIndex(index),
-                        })}
+                        }, i)}
                       </React.Fragment>
                     );
                   })
