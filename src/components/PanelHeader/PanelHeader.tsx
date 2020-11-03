@@ -96,7 +96,7 @@ const PanelHeader: FC<PanelHeaderProps> = (props) => {
       ref={isFixed ? getRootRef : getRef}
     >
       {isFixed ?
-        <FixedLayout className="PanelHeader__fixed" vertical="top">
+        <FixedLayout className="PanelHeader__fixed" vertical="top" getRootRef={getRef}>
           <PanelHeaderIn {...props} />
         </FixedLayout> :
         <PanelHeaderIn {...props} />
