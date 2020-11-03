@@ -84,6 +84,7 @@ module.exports = {
           '../src/components/Card/Card.tsx',
           '../src/components/CardGrid/CardGrid.tsx',
           '../src/components/CardScroll/CardScroll.tsx',
+          '../src/components/ContentCard/ContentCard.tsx',
           '../src/components/Gradient/Gradient.tsx',
           '../src/components/SimpleCell/SimpleCell.tsx',
           '../src/components/Cell/Cell.tsx',
