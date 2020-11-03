@@ -262,6 +262,12 @@
 /**
   VKCOM
 */
+
+.Search--vkcom,
+.PanelHeader--vkcom .Search {
+  background: transparent;
+}
+
 .Search--vkcom .Search__input {
   font-size: 15px;
   line-height: 20px;

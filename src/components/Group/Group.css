@@ -81,3 +81,17 @@
 .Group--vkcom .Group__description {
   padding: 4px 16px 16px;
 }
+
+/* vkcom */
+
+.PanelHeader--vkcom ~ .Group--card:first-of-type,
+.PanelHeader--vkcom + * .Group--card:first-of-type {
+  position: relative;
+  top: -1px;
+}
+
+.PanelHeader--vkcom ~ .Group--card:first-of-type .Group__inner,
+.PanelHeader--vkcom + * .Group--card:first-of-type .Group__inner {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
