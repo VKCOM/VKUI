@@ -7,11 +7,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
 <View activePanel="banner">
   <Panel id="banner">
     <PanelHeader>Banner</PanelHeader>
-
-    <Header>Regular size</Header>
-
     <Group
-      header={<Header mode="secondary">Content: Tint</Header>}
+      header={<Header>Content: tint, size: regular</Header>}
     >
       <Banner
         before={<Avatar size={96} mode="image" src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg" />}
@@ -85,7 +82,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
     </Group>
 
     <Group
-      header={<Header mode="secondary">Content: Image</Header>}
+      header={<Header>Mode: image, size: regular</Header>}
     >
       <Banner
         mode="image"
@@ -105,11 +102,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         actions={<Button mode="overlay_primary">Подробнее</Button>}
       />
     </Group>
-
-    <Header>Medium size</Header>
-
     <Group
-      header={<Header mode="secondary">Content: Tint</Header>}
+      header={<Header>Content: tint, size: medium</Header>}
     >
       <Banner
         size="m"
@@ -121,7 +115,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
     </Group>
 
     <Group
-      header={<Header mode="secondary">Content: Image</Header>}
+      header={<Header>Content: image, size: medium</Header>}
     >
       <Banner
         mode="image"
