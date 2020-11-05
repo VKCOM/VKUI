@@ -3,28 +3,9 @@
   display: flex;
 }
 
-.HorizontalCell.HorizontalCell--ios:first-child::before,
-.HorizontalCell.HorizontalCell--ios:last-child::after {
-  content: "";
-  width: 4px;
-}
-
-.HorizontalCell.HorizontalCell--android:first-child::before,
-.HorizontalCell.HorizontalCell--android:last-child::after,
-.HorizontalCell.HorizontalCell--vkcom:first-child::before,
-.HorizontalCell.HorizontalCell--vkcom:last-child::after {
-  content: "";
-  min-width: 8px;
-}
-
 .HorizontalCell__image {
   display: flex;
   justify-content: center;
-}
-
-.HorizontalCell__title:not(:last-child),
-.HorizontalCell__subtitle:not(:last-child) {
-  margin-bottom: 2px;
 }
 
 .HorizontalCell__subtitle {
@@ -33,18 +14,6 @@
 
 .HorizontalCell--s {
   width: 72px;
-}
-
-.HorizontalCell--ios:first-child.HorizontalCell--s,
-.HorizontalCell--ios:last-child.HorizontalCell--s {
-  width: 78px;
-}
-
-.HorizontalCell--android:first-child.HorizontalCell--s,
-.HorizontalCell--android:last-child.HorizontalCell--s,
-.HorizontalCell--vkcom:first-child.HorizontalCell--s,
-.HorizontalCell--vkcom:last-child.HorizontalCell--s {
-  width: 80px;
 }
 
 .HorizontalCell--s .HorizontalCell__image {
@@ -60,16 +29,8 @@
   width: 108px;
 }
 
-.HorizontalCell--ios:first-child.HorizontalCell--m,
-.HorizontalCell--ios:last-child.HorizontalCell--m {
-  width: 114px;
-}
-
-.HorizontalCell--android:first-child.HorizontalCell--m,
-.HorizontalCell--android:last-child.HorizontalCell--m,
-.HorizontalCell--vkcom:first-child.HorizontalCell--m,
-.HorizontalCell--vkcom:last-child.HorizontalCell--m {
-  width: 116px;
+.HorizontalCell--l {
+  width: auto;
 }
 
 .HorizontalCell--m .HorizontalCell__image,
@@ -83,6 +44,47 @@
   text-align: left;
 }
 
-.HorizontalCell--l {
-  width: auto;
+.HorizontalCell__title:not(:last-child),
+.HorizontalCell__subtitle:not(:last-child) {
+  margin-bottom: 2px;
+}
+
+/* iOS */
+.HorizontalCell--ios:first-child::before,
+.HorizontalCell--ios:last-child::after {
+  content: "";
+  width: 4px;
+}
+
+.HorizontalCell--ios.HorizontalCell--s:first-child,
+.HorizontalCell--ios.HorizontalCell--s:last-child {
+  width: 78px;
+}
+
+.HorizontalCell--ios.HorizontalCell--m:first-child,
+.HorizontalCell--ios.HorizontalCell--m:last-child {
+  width: 114px;
+}
+
+/* Android and vkcom */
+.HorizontalCell--android:first-child::before,
+.HorizontalCell--android:last-child::after,
+.HorizontalCell--vkcom:first-child::before,
+.HorizontalCell--vkcom:last-child::after {
+  content: "";
+  min-width: 8px;
+}
+
+.HorizontalCell--android.HorizontalCell--s:first-child,
+.HorizontalCell--android.HorizontalCell--s:last-child,
+.HorizontalCell--vkcom.HorizontalCell--s:first-child,
+.HorizontalCell--vkcom.HorizontalCell--s:last-child {
+  width: 80px;
+}
+
+.HorizontalCell--android.HorizontalCell--m:first-child,
+.HorizontalCell--android.HorizontalCell--m:last-child,
+.HorizontalCell--vkcom.HorizontalCell--m:first-child,
+.HorizontalCell--vkcom.HorizontalCell--m:last-child {
+  width: 116px;
 }
