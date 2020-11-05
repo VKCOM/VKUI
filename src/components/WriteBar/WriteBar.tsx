@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   RefCallback,
   useEffect,
-  useRef, useState,
+  useRef,
   TextareaHTMLAttributes,
 } from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -62,9 +62,6 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const textareaMinHeightRef = useRef<number | null>(null);
 
-  const [inlineAfterWidth, setInlineAfterWidth] = useState(0);
-  const inlineAfterElRef = useRef<HTMLDivElement | null>(null);
-
   const resize = () => {
     const textareaEl = textareaRef.current;
     if (!textareaEl) {
@@ -115,13 +112,6 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
     resize();
   }, [value]);
 
-  useEffect(() => {
-    const width = inlineAfterElRef.current ? inlineAfterElRef.current.offsetWidth : 0;
-    if (width !== inlineAfterWidth) {
-      setInlineAfterWidth(width);
-    }
-  }, [inlineAfter, inlineAfterElRef.current]);
-
   return (
     <div
       ref={getRootRef}
@@ -138,9 +128,6 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
         <div className="WriteBar__formIn">
           <textarea
             {...restProps}
-            style={{
-              paddingRight: inlineAfterWidth > 0 ? inlineAfterWidth : null,
-            }}
             className="WriteBar__textarea"
             placeholder={placeholder}
             onChange={onTextareaChange}
@@ -149,7 +136,7 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
           />
 
           {hasReactNode(inlineAfter) &&
-          <div className="WriteBar__inlineAfter" ref={inlineAfterElRef}>
+          <div className="WriteBar__inlineAfter">
             {inlineAfter}
           </div>
           }

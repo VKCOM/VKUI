@@ -25,6 +25,9 @@
   width: 100%;
   flex: 1;
   min-width: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
   outline: none;
   resize: none;
   line-height: 20px;
@@ -37,10 +40,14 @@
   color: var(--text_placeholder);
 }
 
+.WriteBar__textarea::-moz-placeholder {
+  opacity: 1;
+  color: var(--text_placeholder);
+}
+
 .WriteBar__inlineAfter {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  display: flex;
+  align-items: flex-end;
 }
 
 /* iOS */
@@ -49,13 +56,23 @@
 
 }
 
-.WriteBar--ios .WriteBar__textarea {
+.WriteBar--ios .WriteBar__formIn {
+  box-sizing: border-box;
   background-color: var(--input_background);
   border: 1px solid var(--input_border);
   border-radius: 18px;
-  height: 36px;
-  padding: 6px 12px;
   margin: 8px 0;
+}
+
+.WriteBar--ios .WriteBar__inlineAfter {
+  margin-right: -1px;
+  margin-top: -9px;
+  margin-bottom: -9px;
+}
+
+.WriteBar--ios .WriteBar__textarea {
+  height: 34px;
+  padding: 6px 12px;
   font-size: 17px;
   line-height: 22px;
 }
@@ -72,8 +89,6 @@
 }
 
 .WriteBar--android .WriteBar__textarea {
-  border: 0;
-  background: transparent;
   height: 52px;
   padding: 16px 0;
   margin: 0 6px;
