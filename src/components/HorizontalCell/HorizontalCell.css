@@ -10,6 +10,7 @@
 
 .HorizontalCell__subtitle {
   color: var(--text_secondary);
+  line-height: 18px;
 }
 
 .HorizontalCell--s {
@@ -42,11 +43,6 @@
 .HorizontalCell--l .HorizontalCell__content {
   padding: 2px 6px;
   text-align: left;
-}
-
-.HorizontalCell__title:not(:last-child),
-.HorizontalCell__subtitle:not(:last-child) {
-  margin-bottom: 2px;
 }
 
 /* iOS */

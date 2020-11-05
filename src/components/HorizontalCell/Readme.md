@@ -87,7 +87,7 @@ class HorizontalCellExample extends React.Component {
         <Avatar size={144} mode='image'
                 src='https://sun9-4.userapi.com/22uxwvZiO4JhrkSz6j6FEzoJDfZzBjEBVY4ABA/wHAweL65dNI.jpg'/>
       </HorizontalCell>,
-      <HorizontalCell size='l' header='Hakuna Matata' subtitle='Музыка ВКонтакте' secondSubtitle='2019'>
+      <HorizontalCell size='l' header='Hakuna Matata' subtitle="Музыка ВКонтакте\n2019">
         <Avatar size={144} mode='image'
                 src='https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg'/>
       </HorizontalCell>];
