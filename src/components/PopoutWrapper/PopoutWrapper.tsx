@@ -81,11 +81,12 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   preventTouch: WindowTouchListener = (e: Event) => e.preventDefault();
 
   render() {
-    const { alignY, alignX, closing, children, hasMask, className, platform, ...restProps } = this.props;
+    const { alignY, alignX, closing, children, hasMask, className, platform, onClick, ...restProps } = this.props;
     const baseClassNames = getClassName('PopoutWrapper', platform);
 
     return (
       <div
+        onClick={onClick}
         {...restProps}
         className={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
           'PopoutWrapper--closing': closing,
@@ -94,7 +95,12 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
         }, className)}
         ref={this.elRef}
       >
-        {hasMask && <div className="PopoutWrapper__mask" />}
+        <div
+          className={classNames({
+            'PopoutWrapper__mask': hasMask,
+            'PopoutWrapper__overlay': !hasMask,
+          })}
+          onClick={onClick} />
         <div className="PopoutWrapper__container">{children}</div>
       </div>
     );

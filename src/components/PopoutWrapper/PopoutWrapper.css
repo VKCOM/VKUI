@@ -23,6 +23,14 @@
     opacity: 0;
     }
 
+  .PopoutWrapper__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   .PopoutWrapper__mask {
     opacity: 1;
     width: 100%;
