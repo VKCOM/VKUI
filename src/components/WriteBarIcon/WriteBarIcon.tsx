@@ -1,5 +1,12 @@
 import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react';
-import { Icon24Send, Icon28AddCircleOutline, Icon28AttachOutline, Icon48WritebarSend } from '@vkontakte/icons';
+import {
+  Icon24Send,
+  Icon28AddCircleOutline,
+  Icon28AttachOutline,
+  Icon28CheckCircleOutline,
+  Icon48WritebarDone,
+  Icon48WritebarSend,
+} from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
@@ -13,8 +20,9 @@ export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElemen
    *
    * - `attach` – иконка прикрепления.
    * - `send` – иконка отправки.
+   * - `done` – иконка отправки в режиме редактирования.
    */
-  mode?: 'attach' | 'send';
+  mode?: 'attach' | 'send' | 'done';
   /**
    * Значение счётчика для кнопки. Например, для количества прикреплённых файлов.
    */
@@ -40,6 +48,10 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
 
     case 'send':
       childrenResolved = platform === IOS ? <Icon48WritebarSend /> : <Icon24Send />;
+      break;
+
+    case 'done':
+      childrenResolved = platform === IOS ? <Icon48WritebarDone /> : <Icon28CheckCircleOutline />;
       break;
 
     default:

@@ -11,6 +11,7 @@ const WriteBarExample = (props) => {
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
   const [text3, setText3] = useState('Завтра в 7?');
+  const [text4, setText4] = useState('Да.');
 
   const attachmentsCount = 5;
   const fixedLayoutInnerElRef = useRef();
@@ -137,6 +138,40 @@ const WriteBarExample = (props) => {
                 <WriteBarIcon
                   mode="send"
                   disabled={text3.length === 0}
+                />
+              </Fragment>
+            }
+            placeholder="Сообщение"
+          />
+        </Group>
+
+        <Group>
+          <WriteBar
+            value={text4}
+            onChange={(e) => setText4(e.target.value)}
+            before={
+              <WriteBarIcon mode="attach" />
+            }
+            inlineAfter={
+              <Fragment>
+                {text4.length > 0 &&
+                <WriteBarIcon>
+                  <Icon28SmileOutline />
+                </WriteBarIcon>
+                }
+              </Fragment>
+            }
+            after={
+              <Fragment>
+                {text4.length === 0 &&
+                <WriteBarIcon>
+                  <Icon28SmileOutline />
+                </WriteBarIcon>
+                }
+
+                <WriteBarIcon
+                  mode="done"
+                  disabled={text4.length === 0}
                 />
               </Fragment>
             }

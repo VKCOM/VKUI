@@ -12,6 +12,7 @@
 }
 
 .WriteBarIcon--disabled {
+  opacity: .4;
   pointer-events: none;
 }
 
@@ -35,10 +36,6 @@
   color: var(--button_commerce_foreground);
   background: var(--button_commerce_background);
   border-radius: 50%;
-}
-
-.WriteBarIcon--send.WriteBarIcon--disabled {
-  opacity: .4;
 }
 
 .WriteBarIcon--send:not(.WriteBarIcon--disabled) {
