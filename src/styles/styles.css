@@ -75,6 +75,8 @@
 @import '../components/Placeholder/Placeholder.css';
 @import '../components/Banner/Banner.css';
 @import '../components/MiniInfoCell/MiniInfoCell.css';
+@import '../components/WriteBar/WriteBar.css';
+@import '../components/WriteBarIcon/WriteBarIcon.css';
 
 /* Forms */
 @import '../components/FormLayout/FormLayout.css';
