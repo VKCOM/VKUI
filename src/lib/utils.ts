@@ -7,7 +7,7 @@ export function isNumeric(value: any): boolean {
 }
 
 // Является ли переданное значение функцией
-export function isFunction(value: any): boolean {
+export function isFunction(value: any): value is ((...args: any[]) => any) {
   return typeof value === 'function';
 }
 
