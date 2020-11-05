@@ -54,6 +54,11 @@
   width: 48px;
 }
 
+.WriteBarIcon--ios.WriteBarIcon--send:first-child,
+.WriteBarIcon--ios.WriteBarIcon--done:first-child {
+  margin-left: -4px;
+}
+
 .WriteBarIcon--ios.WriteBarIcon--send:last-child,
 .WriteBarIcon--ios.WriteBarIcon--done:last-child {
   margin-right: -4px;
