@@ -1,5 +1,5 @@
 .Tabs {
-  background: var(--background_content);
+
   }
 
 .Tabs__in,
@@ -10,7 +10,6 @@
 
 .PanelHeader .Tabs {
   overflow: hidden;
-  background: var(--header_background);
   font-family: var(--font-common);
 }
 

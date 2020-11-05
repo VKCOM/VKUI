@@ -62,7 +62,7 @@ class PrepareFrame extends React.Component {
 let Layout = ({ children, viewWidth }) => {
   const platform = usePlatform();
   return (
-    <SplitLayout header={<PanelHeader separator={false} />}>
+    <SplitLayout header={platform !== VKCOM && <PanelHeader separator={false} />}>
       <SplitCol spaced={viewWidth !== ViewWidth.MOBILE} animate={viewWidth <= ViewWidth.MOBILE && platform !== VKCOM}>
         {children}
       </SplitCol>

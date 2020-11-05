@@ -16,6 +16,7 @@
 
 /* Service */
 @import '../components/Tappable/Tappable.css';
+@import '../components/FixedLayout/FixedLayout.css';
 
 /* Layout */
 @import '../components/Root/Root.css';
@@ -30,7 +31,6 @@
 @import '../components/Epic/Epic.css';
 @import '../components/Tabbar/Tabbar.css';
 @import '../components/TabbarItem/TabbarItem.css';
-@import '../components/FixedLayout/FixedLayout.css';
 @import '../components/HorizontalScroll/HorizontalScroll.css';
 
 /* Popouts */
