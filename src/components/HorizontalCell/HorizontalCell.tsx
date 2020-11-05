@@ -36,5 +36,4 @@ export const HorizontalCell: FC<HorizontalCellProps> = (props) => {
 HorizontalCell.defaultProps = {
   size: 's',
   children: <Avatar size={56} />,
-  header: 'Header',
 };
