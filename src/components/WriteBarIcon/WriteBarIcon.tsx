@@ -25,7 +25,6 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
   const {
     mode,
     className,
-    disabled,
     children,
     count,
     ...restProps
@@ -51,9 +50,8 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
       {...restProps}
       className={classNames(getClassName('WriteBarIcon', platform), {
         [`WriteBarIcon--${mode}`]: !!mode,
-        'WriteBarIcon--disabled': disabled,
+        'WriteBarIcon--disabled': restProps.disabled,
       }, className)}
-      disabled={disabled}
     >
       {childrenResolved}
       {count ? <div className="WriteBarIcon__count">{count}</div> : null}
