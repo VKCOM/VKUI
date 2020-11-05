@@ -41,6 +41,8 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
   const platform = usePlatform();
   const {
     className,
+    style,
+
     before,
     inlineAfter,
     after,
@@ -52,8 +54,6 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
     getRootRef,
     getTextareaRef,
     onHeightChange,
-
-    style = {},
     ...restProps
   } = props;
 
@@ -126,6 +126,7 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
     <div
       ref={getRootRef}
       className={classNames(getClassName('WriteBar', platform), className)}
+      style={style}
     >
       <form className="WriteBar__form" onSubmit={(e) => e.preventDefault()}>
         {hasReactNode(before) &&
@@ -138,7 +139,6 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
           <textarea
             {...restProps}
             style={{
-              ...style,
               paddingRight: inlineAfterWidth > 0 ? inlineAfterWidth : null,
             }}
             className="WriteBar__textarea"
