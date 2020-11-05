@@ -33,7 +33,7 @@
   max-height: 120px;
 }
 
-.WriteBar__textarea::-webkit-input-placeholder {
+.WriteBar__textarea::placeholder {
   color: var(--text_placeholder);
 }
 
