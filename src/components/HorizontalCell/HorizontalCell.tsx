@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react';
+import React, { FC, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
@@ -11,14 +11,13 @@ import { HasRef, HasRootRef } from '../../types';
 
 export interface HorizontalCellProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
-  header?: string;
-  subtitle?: string;
-  secondSubtitle?: string;
+  header?: ReactNode;
+  subtitle?: ReactNode;
 }
 
-const HorizontalCell: FC<HorizontalCellProps> = (props) => {
+export const HorizontalCell: FC<HorizontalCellProps> = (props) => {
   const platform = usePlatform();
-  const { className, header, subtitle, secondSubtitle, size, style, children, getRootRef, getRef, ...restProps } = props;
+  const { className, header, subtitle, size, style, children, getRootRef, getRef, ...restProps } = props;
   return (
     <div className={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`, className)} ref={getRootRef} style={style}>
       <Tappable getRootRef={getRef} {...restProps}>
@@ -28,7 +27,6 @@ const HorizontalCell: FC<HorizontalCellProps> = (props) => {
             size === 's' ? <Caption weight="regular" level="2" className="HorizontalCell__title">{header}</Caption> :
             <Subhead weight="regular" className="HorizontalCell__title">{header}</Subhead>}
           {hasReactNode(subtitle) && <Caption weight="regular" level="1" className="HorizontalCell__subtitle">{subtitle}</Caption>}
-          {hasReactNode(secondSubtitle) && <Caption weight="regular" level="1" className="HorizontalCell__subtitle">{secondSubtitle}</Caption>}
         </div>
       </Tappable>
     </div>
@@ -38,7 +36,5 @@ const HorizontalCell: FC<HorizontalCellProps> = (props) => {
 HorizontalCell.defaultProps = {
   size: 's',
   children: <Avatar size={56} />,
-  title: 'Title',
+  header: 'Header',
 };
-
-export default HorizontalCell;
