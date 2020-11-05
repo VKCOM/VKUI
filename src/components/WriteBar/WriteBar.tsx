@@ -116,10 +116,6 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
   }, [value]);
 
   useEffect(() => {
-    resize();
-  }, []);
-
-  useEffect(() => {
     const width = inlineAfterElRef.current ? inlineAfterElRef.current.offsetWidth : 0;
     if (width !== inlineAfterWidth) {
       setInlineAfterWidth(width);
