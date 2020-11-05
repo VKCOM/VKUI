@@ -110,3 +110,22 @@
   font-size: 16px;
   line-height: 20px;
 }
+
+/**
+ * vkcom
+ */
+
+.WriteBar--vkcom .WriteBar__before {
+  padding-left: 4px;
+}
+
+.WriteBar--vkcom .WriteBar__after {
+  padding-right: 4px;
+}
+
+.WriteBar--vkcom .WriteBar__textarea {
+  height: 52px;
+  padding: 16px 12px;
+  font-size: 16px;
+  line-height: 20px;
+}

@@ -75,3 +75,17 @@
 .WriteBarIcon--android.WriteBarIcon--done {
   color: var(--accent);
 }
+
+/**
+ * vkcom
+ */
+
+.WriteBarIcon--vkcom {
+  width: 44px;
+  color: var(--icon_secondary);
+}
+
+.WriteBarIcon--vkcom.WriteBarIcon--send,
+.WriteBarIcon--vkcom.WriteBarIcon--done {
+  color: var(--accent);
+}
