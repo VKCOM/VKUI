@@ -1,9 +1,7 @@
 import React, {
   ChangeEventHandler,
   FC,
-  MutableRefObject,
   ReactNode,
-  RefCallback,
   useEffect,
   useRef,
   TextareaHTMLAttributes,
@@ -12,9 +10,9 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode, isFunction, setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import { HasRootRef } from '../../types';
+import { HasRef, HasRootRef } from '../../types';
 
-export interface WriteBarProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, HasRootRef<HTMLDivElement> {
+export interface WriteBarProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLTextAreaElement> {
   /**
    * Содержимое, отображаемое слево от поля ввода.
    */
@@ -27,8 +25,6 @@ export interface WriteBarProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
    * Содержимое, отображаемое справа от поля ввода
    */
   after?: ReactNode;
-
-  getTextareaRef?: MutableRefObject<HTMLTextAreaElement> | RefCallback<HTMLTextAreaElement>;
   /**
    * Вызывается при смене высоты поля ввода
    */
@@ -49,10 +45,9 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
 
     value,
     onChange,
-    placeholder,
 
     getRootRef,
-    getTextareaRef,
+    getRef,
     onHeightChange,
     ...restProps
   } = props;
@@ -105,7 +100,7 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
 
   const getTextareaElRef = (element: HTMLTextAreaElement) => {
     textareaRef.current = element;
-    setRef(element, getTextareaRef);
+    setRef(element, getRef);
   };
 
   useEffect(() => {
@@ -129,7 +124,6 @@ export const WriteBar: FC<WriteBarProps> = (props) => {
           <textarea
             {...restProps}
             className="WriteBar__textarea"
-            placeholder={placeholder}
             onChange={onTextareaChange}
             ref={getTextareaElRef}
             value={value}
