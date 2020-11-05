@@ -4,6 +4,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS } from '../../lib/platform';
+import Caption from '../Typography/Caption/Caption';
 
 export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -54,7 +55,12 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
       }, className)}
     >
       {childrenResolved}
-      {count ? <div className="WriteBarIcon__count">{count}</div> : null}
+      {count ?
+        <div className="WriteBarIcon__count">
+          <Caption weight="regular" level="2">{count}</Caption>
+        </div> :
+        null
+      }
     </button>
   );
 };
