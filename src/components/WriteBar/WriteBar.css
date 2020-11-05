@@ -9,6 +9,14 @@
   align-items: flex-end;
 }
 
+.WriteBar__before {
+  padding-left: 4px;
+}
+
+.WriteBar__after {
+  padding-right: 4px;
+}
+
 .WriteBar__form {
   min-height: 52px;
 }
@@ -72,14 +80,9 @@
 
 .WriteBar--ios .WriteBar__textarea {
   height: 34px;
-  padding: 6px 12px;
+  padding: 6px 11px;
   font-size: 17px;
   line-height: 22px;
-}
-
-.WriteBar--ios .WriteBar__before .WriteBarIcon:first-child,
-.WriteBar--ios .WriteBar__after .WriteBarIcon:last-child {
-  width: 48px;
 }
 
 /* Android */
@@ -94,9 +97,4 @@
   margin: 0 6px;
   font-size: 16px;
   line-height: 20px;
-}
-
-.WriteBar--android .WriteBar__before .WriteBarIcon:first-child,
-.WriteBar--android .WriteBar__after .WriteBarIcon:last-child {
-  width: 48px;
 }

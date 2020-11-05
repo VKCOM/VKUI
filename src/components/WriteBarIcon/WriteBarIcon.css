@@ -49,6 +49,16 @@
   color: var(--writebar_icon);
 }
 
+.WriteBarIcon--ios.WriteBarIcon--send,
+.WriteBarIcon--ios.WriteBarIcon--done {
+  width: 48px;
+}
+
+.WriteBarIcon--ios.WriteBarIcon--send:last-child,
+.WriteBarIcon--ios.WriteBarIcon--done:last-child {
+  margin-right: -4px;
+}
+
 /* Android */
 
 .WriteBarIcon--android {
