@@ -48,7 +48,7 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   /**
    * callback начала анимации завершения свайпа назад.
    */
-  onSwipeBackStartEndAnimation?(): void;
+  onSwipeBackCancel?(): void;
   history?: string[];
   id?: string;
   /**
@@ -213,7 +213,7 @@ class View extends Component<ViewProps, ViewState> {
 
     // Началась анимация завершения свайпа назад.
     if (!prevState.swipeBackResult && this.state.swipeBackResult) {
-      this.props.onSwipeBackStartEndAnimation && this.props.onSwipeBackStartEndAnimation();
+      this.props.onSwipeBackCancel && this.props.onSwipeBackCancel();
       this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
     }
 
