@@ -64,14 +64,19 @@
   margin-right: -4px;
 }
 
-/* Android */
+/**
+ * Android + vkcom
+ */
 
-.WriteBarIcon--android {
+.WriteBarIcon--android,
+.WriteBarIcon--vkcom {
   width: 44px;
   color: var(--icon_secondary);
 }
 
 .WriteBarIcon--android.WriteBarIcon--send,
-.WriteBarIcon--android.WriteBarIcon--done {
+.WriteBarIcon--vkcom.WriteBarIcon--send,
+.WriteBarIcon--android.WriteBarIcon--done,
+.WriteBarIcon--vkcom.WriteBarIcon--done {
   color: var(--accent);
 }
