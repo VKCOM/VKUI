@@ -18,6 +18,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   selected,
   before,
   after,
+  className,
   ...restProps
 }) => {
   const title = typeof children === 'string' ? children : null;
@@ -28,7 +29,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       role="option"
       title={title}
       aria-selected={selected}
-      className={classNames('CustomSelectOption', {
+      className={classNames('CustomSelectOption', className, {
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
       })}

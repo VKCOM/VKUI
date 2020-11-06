@@ -39,6 +39,14 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
    * Текст который показывается если список опций пуст
    */
   emptyText?: string;
+  /**
+   * Колбек срабатывающий после выбора элемента с помощью клавиши Enter
+   */
+  onAddFromEnter: (e: React.KeyboardEvent, option: Option) => void;
+  /**
+   * Закрытие выпадающиего списка после выбора элемента
+   */
+  closeAfterSelect: boolean;
 }
 
 type focusActionType = 'next' | 'prev';
@@ -51,7 +59,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText,
-    ...restProps
+    onAddFromEnter, closeAfterSelect, ...restProps
   } = props;
 
   const { sizeY } = useAdaptivity();
@@ -68,15 +76,23 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     onFocus(e);
   };
 
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const handleClickOutside = () => {
+    if (opened) {
+      return;
+    }
+
     setOpened(false);
-    onBlur(e);
   };
 
   const scrollToElement = (index: number, center = false) => {
     const scrollView = scrollViewRef.current;
     const dropdown = scrollView.box.current;
-    const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
+
+    const chipsSelectOptions: HTMLElement[] = Array.prototype.filter.call(dropdown.children, (item: HTMLElement) => {
+      return item.classList.contains('ChipsSelect__option');
+    });
+
+    const item = chipsSelectOptions[index];
 
     if (!item) {
       return;
@@ -154,11 +170,15 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
       const option = filteredOptions[focusedOptionIndex - Number(creatable)];
 
       if (option) {
-        addOption(option);
-        setFocusedOptionIndex(null);
-        clearInput();
-        setOpened(false);
-        e.preventDefault();
+        onAddFromEnter(e, option);
+
+        if (!e.defaultPrevented) {
+          addOption(option);
+          setFocusedOptionIndex(null);
+          clearInput();
+          closeAfterSelect && setOpened(false);
+          e.preventDefault();
+        }
       } else if (!creatable) {
         e.preventDefault();
       }
@@ -187,6 +207,14 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     }
   }, [filteredOptions, focusedOption, creatable]);
 
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;
     const onRemoveWrapper = (e: MouseEvent, value: ChipsInputValue) => {
@@ -213,7 +241,6 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
         getOptionValue={getOptionValue}
         renderChip={renderChipWrapper}
         onFocus={handleFocus}
-        onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         className={classNames({
@@ -265,11 +292,13 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                     return (
                       <React.Fragment key={getOptionValue(option)}>
                         {renderOption({
+                          className: 'ChipsSelect__option',
                           option,
                           hovered,
                           children: label,
                           selected: !!selected,
                           onMouseDown: () => {
+                            closeAfterSelect && setOpened(false);
                             addOption(option);
                             clearInput();
                           },
@@ -293,6 +322,7 @@ ChipsSelect.defaultProps = {
   creatable: false,
   fetching: false,
   showSelected: true,
+  closeAfterSelect: true,
   filterFn: (value, option, getOptionLabel) => {
     return (
       !value || value && getOptionLabel(option)?.toLowerCase()?.startsWith(value?.toLowerCase())

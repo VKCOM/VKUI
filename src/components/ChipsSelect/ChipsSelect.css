@@ -56,3 +56,7 @@
   padding: 10px 11px;
   font-size: 15px;
 }
+
+.ChipsSelect .CustomScrollView__box:focus {
+  outline: none;
+}
