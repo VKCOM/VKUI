@@ -203,6 +203,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              esModule: false,
               importLoaders: 1
             }
           },
@@ -218,7 +219,9 @@ module.exports = {
       }]
     },
     plugins: [
-      new MiniCssExtractPlugin('[name].css')
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+      }),
     ],
     resolve: {
       alias: {
