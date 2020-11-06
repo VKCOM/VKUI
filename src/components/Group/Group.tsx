@@ -1,9 +1,11 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode, useContext } from 'react';
+import React, { FC, HTMLAttributes, ReactNode, useContext } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import Separator from '../Separator/Separator';
+import { hasReactNode } from '../../lib/utils';
+import Caption from '../Typography/Caption/Caption';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import ModalRootContext from '../ModalRoot/ModalRootContext';
@@ -26,7 +28,7 @@ export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<H
   mode?: 'plain' | 'card';
 }
 
-const Group: FunctionComponent<GroupProps> = (props: GroupProps) => {
+const Group: FC<GroupProps> = (props) => {
   const { header, description, className, children, separator, getRootRef, mode, ...restProps } = props;
   const { sizeX } = useAdaptivity();
   const { isInsideModal } = useContext(ModalRootContext);
@@ -48,7 +50,11 @@ const Group: FunctionComponent<GroupProps> = (props: GroupProps) => {
       <div className="Group__inner">
         {header}
         {children}
-        {description && <div className="Group__description">{description}</div>}
+        {hasReactNode(description) &&
+        <div className="Group__description">
+          <Caption weight="regular" level="1">{description}</Caption>
+        </div>
+        }
       </div>
 
       {separator !== 'hide' &&

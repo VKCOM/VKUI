@@ -46,8 +46,6 @@
 }
 
 .Group__description {
-  font-size: 14px;
-  line-height: 16px;
   color: var(--text_secondary);
 }
 
