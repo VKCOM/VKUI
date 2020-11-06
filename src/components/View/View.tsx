@@ -213,7 +213,6 @@ class View extends Component<ViewProps, ViewState> {
 
     // Началась анимация завершения свайпа назад.
     if (!prevState.swipeBackResult && this.state.swipeBackResult) {
-      this.props.onSwipeBackCancel && this.props.onSwipeBackCancel();
       this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
     }
 
@@ -325,6 +324,7 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   onSwipeBackCancel(): void {
+    this.props.onSwipeBackCancel && this.props.onSwipeBackCancel();
     this.setState({
       swipeBackPrevPanel: null,
       swipeBackNextPanel: null,
