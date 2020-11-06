@@ -64,28 +64,19 @@
   margin-right: -4px;
 }
 
-/* Android */
-
-.WriteBarIcon--android {
-  width: 44px;
-  color: var(--icon_secondary);
-}
-
-.WriteBarIcon--android.WriteBarIcon--send,
-.WriteBarIcon--android.WriteBarIcon--done {
-  color: var(--accent);
-}
-
 /**
- * vkcom
+ * Android + vkcom
  */
 
+.WriteBarIcon--android,
 .WriteBarIcon--vkcom {
   width: 44px;
   color: var(--icon_secondary);
 }
 
+.WriteBarIcon--android.WriteBarIcon--send,
 .WriteBarIcon--vkcom.WriteBarIcon--send,
+.WriteBarIcon--android.WriteBarIcon--done,
 .WriteBarIcon--vkcom.WriteBarIcon--done {
   color: var(--accent);
 }
