@@ -4,11 +4,11 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
+import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
@@ -18,7 +18,7 @@ export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   /**
    * @ignore
    */
-  splitCol?: SplitContextProps;
+  splitCol?: SplitColContextProps;
   /**
    * @ignore
    */
@@ -215,6 +215,6 @@ class Root extends Component<RootProps, RootState> {
 
 export default withContext(withContext(
   withPlatform(Root),
-  SplitContext,
+  SplitColContext,
   'splitCol',
 ), ConfigProviderContext, 'configProvider');
