@@ -96,10 +96,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
         ref={this.elRef}
       >
         <div
-          className={classNames({
-            'PopoutWrapper__mask': hasMask,
-            'PopoutWrapper__overlay': !hasMask,
-          })}
+          className={classNames('PopoutWrapper__overlay', { 'PopoutWrapper__overlay--mask': hasMask })}
           onClick={onClick} />
         <div className="PopoutWrapper__container">{children}</div>
       </div>
