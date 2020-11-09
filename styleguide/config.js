@@ -130,7 +130,6 @@ module.exports = {
           '../src/components/SelectMimicry/SelectMimicry.tsx',
           '../src/components/CustomSelect/CustomSelect.tsx',
           '../src/components/CustomSelectOption/CustomSelectOption.tsx',
-          '../src/components/ChipsSelect/ChipsSelect.tsx',
           '../src/components/Chip/Chip.tsx',
           '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx',
@@ -155,8 +154,13 @@ module.exports = {
           '../src/components/ConfigProvider/ConfigProvider.tsx',
           '../src/components/Touch/Touch.tsx',
         ]
-      },
-      {
+      }, {
+        name: 'Unstable',
+        content: './pages/unstable.md',
+        components: () => [
+          '../src/components/ChipsSelect/ChipsSelect.tsx',
+        ]
+      }, {
         name: 'Helpers',
         content: './pages/helpers.md'
       },
