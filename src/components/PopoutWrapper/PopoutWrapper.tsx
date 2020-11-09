@@ -9,6 +9,7 @@ import { canUseDOM } from '../../lib/dom';
 
 export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   hasMask?: boolean;
+  fixed?: boolean;
   alignY?: 'top' | 'center' | 'bottom';
   alignX?: 'left' | 'center' | 'right';
   closing?: boolean;
@@ -35,6 +36,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
   static defaultProps: PopoutWrapperProps = {
     hasMask: true,
+    fixed: true,
     alignY: 'center',
     alignX: 'center',
     closing: false,
@@ -81,7 +83,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   preventTouch: WindowTouchListener = (e: Event) => e.preventDefault();
 
   render() {
-    const { alignY, alignX, closing, children, hasMask, className, platform, onClick, ...restProps } = this.props;
+    const { alignY, alignX, closing, children, hasMask, fixed, className, platform, onClick, ...restProps } = this.props;
     const baseClassNames = getClassName('PopoutWrapper', platform);
 
     return (
@@ -91,12 +93,13 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
         className={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
           'PopoutWrapper--closing': closing,
           'PopoutWrapper--opened': this.state.opened,
-          'PopoutWrapper--fixed': hasMask,
+          'PopoutWrapper--fixed': fixed,
+          'PopoutWrapper--masked': hasMask,
         }, className)}
         ref={this.elRef}
       >
         <div
-          className={classNames('PopoutWrapper__overlay', { 'PopoutWrapper__overlay--mask': hasMask })}
+          className="PopoutWrapper__overlay"
           onClick={onClick} />
         <div className="PopoutWrapper__container">{children}</div>
       </div>

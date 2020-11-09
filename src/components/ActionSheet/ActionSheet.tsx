@@ -104,6 +104,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
         style={style}
         onClick={this.onClose}
         hasMask={!isDesktop}
+        fixed={!isDesktop}
       >
         <ActionSheetContext.Provider
           value={{
