@@ -398,7 +398,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           onBlur={onBlur}
           onFocus={onFocus}
           value={value}
-          style={{ display: 'none' }}
+          className="CustomSelect__control"
         >
           {options.map((item) => <option key={item.label} value={item.value} />)}
         </select>

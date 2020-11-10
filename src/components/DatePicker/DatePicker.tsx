@@ -141,7 +141,7 @@ class DatePicker extends Component<Props, Partial<State>> {
     const target = e.target as HTMLSelectElement;
 
     this.setState(() => ({
-      [name]: target.value,
+      [target.name]: Number(target.value),
     }), () => {
       onDateChange && onDateChange(this.state as State);
     });

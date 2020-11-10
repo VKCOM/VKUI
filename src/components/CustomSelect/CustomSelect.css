@@ -5,6 +5,10 @@
   display: block;
 }
 
+.CustomSelect__control {
+  display: none;
+}
+
 .CustomSelect__options {
   width: 100%;
   overflow: hidden;
