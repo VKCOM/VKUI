@@ -27,7 +27,7 @@
 }
 
 .HorizontalCell--m {
-  width: 108px;
+  width: 100px;
 }
 
 .HorizontalCell--l {
@@ -59,7 +59,7 @@
 
 .HorizontalCell--ios.HorizontalCell--m:first-child,
 .HorizontalCell--ios.HorizontalCell--m:last-child {
-  width: 114px;
+  width: 106px;
 }
 
 /* Android and vkcom */

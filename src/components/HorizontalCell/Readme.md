@@ -1,7 +1,7 @@
 HorizontalCell автоматически ставит отступы по бокам в зависимости от платформы, поэтому его лучше использовать в HorizontalScroll.
 * При `size='s'` рекомендуется `<Avatar size={56}/>` или же любой компонент шириной 56 пикс.
-* При `size='m'` рекомендуется `<Avatar size={96} mode='app'/>` или же любой компонент шириной 96 пикс.
-* При `size='l'` рекомендуется `<Avatar size={144} mode='image/>` или же любой компонент.
+* При `size='m'` рекомендуется `<Avatar size={88} mode='app'/>` или же любой компонент шириной 96 пикс.
+* При `size='l'` рекомендуется `<Avatar size={128} mode='image/>` или же любой компонент.
 
 ```jsx
 class HorizontalCellExample extends React.Component {
@@ -61,15 +61,15 @@ class HorizontalCellExample extends React.Component {
     
     let exampleGames = [
       <HorizontalCell size='m' header='Контра Сити'>
-        <Avatar size={96} mode='app'
+        <Avatar size={88} mode='app'
                 src='https://sun9-24.userapi.com/c639120/v639120173/3fe6f/tgPr7lecAY4.jpg'/>
       </HorizontalCell>,
       <HorizontalCell size='m' header='Golden Valley'>
-        <Avatar size={96} mode='app'
+        <Avatar size={88} mode='app'
                 src='https://sun9-71.userapi.com/c849220/v849220453/147ade/0MtQXKEVsiQ.jpg'/>
       </HorizontalCell>,
-      <HorizontalCell size='m' header='Warmageddon'>
-        <Avatar size={96} mode='app'
+      <HorizontalCell size='m' header='Warma-geddon'>
+        <Avatar size={88} mode='app'
                 src='https://sun9-45.userapi.com/c846418/v846418215/5cf20/Gd9mQ6dVXTw.jpg'/>
       </HorizontalCell>];
     let generatedGamesItems = [];
@@ -80,15 +80,15 @@ class HorizontalCellExample extends React.Component {
 
     let examplePlaylists = [
       <HorizontalCell size='l' header='Awesome Mix Vol.2' subtitle='New Tribute Kings'>
-        <Avatar size={144} mode='image'
+        <Avatar size={128} mode='image'
                 src='https://sun9-53.userapi.com/c637816/v637816450/4a6d9/lvCvft600Zc.jpg'/>
       </HorizontalCell>,
       <HorizontalCell size='l' header='Сегодня в плеере' subtitle='Музыка ВКонтакте'>
-        <Avatar size={144} mode='image'
+        <Avatar size={128} mode='image'
                 src='https://sun9-4.userapi.com/22uxwvZiO4JhrkSz6j6FEzoJDfZzBjEBVY4ABA/wHAweL65dNI.jpg'/>
       </HorizontalCell>,
       <HorizontalCell size='l' header='Hakuna Matata' subtitle="Музыка ВКонтакте\n2019">
-        <Avatar size={144} mode='image'
+        <Avatar size={128} mode='image'
                 src='https://sun9-51.userapi.com/c857024/v857024436/f927/rG9fac2cuac.jpg'/>
       </HorizontalCell>];
     let generatedPlaylists = [];
