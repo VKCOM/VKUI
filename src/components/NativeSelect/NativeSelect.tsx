@@ -9,7 +9,7 @@ import { setRef } from '../../lib/utils';
 import { getClassName, HasPlatform } from '../..';
 import withPlatform from '../../hoc/withPlatform';
 
-export interface SelectProps extends
+export interface NativeSelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
   HasRef<HTMLSelectElement>,
   HasRootRef<HTMLLabelElement>,
@@ -26,8 +26,8 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
-class NativeSelect extends React.Component<SelectProps, SelectState> {
-  constructor(props: SelectProps) {
+class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
+  constructor(props: NativeSelectProps) {
     super(props);
     const state: SelectState = {
       title: '',
@@ -62,7 +62,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
     });
   };
 
-  componentDidUpdate(prevProps: SelectProps) {
+  componentDidUpdate(prevProps: NativeSelectProps) {
     if (prevProps.value !== this.props.value || prevProps.children !== this.props.children) {
       this.setTitle();
     }

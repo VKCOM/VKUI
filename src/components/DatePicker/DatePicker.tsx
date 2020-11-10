@@ -4,7 +4,6 @@ import React, {
   ChangeEventHandler,
   HTMLAttributes,
 } from 'react';
-import { SelectChangeResult } from '../CustomSelect/CustomSelect';
 import Input from '../Input/Input';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
@@ -44,7 +43,6 @@ interface Props extends Attrs, HasPlatform, AdaptivityProps {
 }
 
 type GetOptions = () => SelectOption[];
-type SelectChangeHandler = (result: SelectChangeResult) => void;
 
 class DatePicker extends Component<Props, Partial<State>> {
   constructor(props: Props) {
@@ -138,11 +136,12 @@ class DatePicker extends Component<Props, Partial<State>> {
     return yearOptions;
   };
 
-  onSelectChange: SelectChangeHandler = ({ value, name }) => {
+  onSelectChange: ChangeEventHandler = (e: ChangeEvent) => {
     const { onDateChange } = this.props;
+    const target = e.target as HTMLSelectElement;
 
     this.setState(() => ({
-      [name]: value,
+      [name]: target.value,
     }), () => {
       onDateChange && onDateChange(this.state as State);
     });
