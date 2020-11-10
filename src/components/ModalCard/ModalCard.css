@@ -68,7 +68,7 @@
 }
 
 .ModalCard .UsersStack {
-  margin-top: 12px;
+  margin-top: 20px;
 }
 
 .ModalCard__icon {
@@ -84,7 +84,7 @@
 }
 
 .ModalCard .UsersStack + .ModalCard__actions {
-  margin-top: 24px;
+  margin-top: 32px;
 }
 
 .ModalCard__header + .ModalCard__actions,
