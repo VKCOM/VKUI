@@ -63,6 +63,7 @@
 @import '../components/Cell/Cell.css';
 @import '../components/CellButton/CellButton.css';
 @import '../components/RichCell/RichCell.css';
+@import '../components/HorizontalCell/HorizontalCell.css';
 @import '../components/List/List.css';
 @import '../components/Footer/Footer.css';
 @import '../components/Spinner/Spinner.css';

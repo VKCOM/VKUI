@@ -88,6 +88,7 @@ module.exports = {
           '../src/components/Gradient/Gradient.tsx',
           '../src/components/SimpleCell/SimpleCell.tsx',
           '../src/components/Cell/Cell.tsx',
+          '../src/components/HorizontalCell/HorizontalCell.tsx',
           '../src/components/RichCell/RichCell.tsx',
           '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',

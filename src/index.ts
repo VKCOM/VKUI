@@ -58,6 +58,7 @@ export { default as List } from './components/List/List';
 export { default as Cell } from './components/Cell/Cell';
 export { default as RichCell } from './components/RichCell/RichCell';
 export { default as SimpleCell } from './components/SimpleCell/SimpleCell';
+export { HorizontalCell } from './components/HorizontalCell/HorizontalCell';
 export { default as Footer } from './components/Footer/Footer';
 export { default as InfoRow } from './components/InfoRow/InfoRow';
 export { default as Gallery } from './components/Gallery/Gallery';
