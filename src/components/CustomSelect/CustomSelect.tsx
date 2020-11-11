@@ -20,6 +20,7 @@ type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 export interface SelectOption {
   value: SelectValue;
   label: string;
+  [index: string]: any;
 }
 
 interface CustomSelectState {
@@ -144,7 +145,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       focused: true,
     }));
 
-    const event = new Event('focus', { bubbles: true });
+    const event = new Event('focus');
     this.selectEl.dispatchEvent(event);
   };
 
@@ -156,7 +157,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       focused: false,
     }));
 
-    const event = new Event('blur', { bubbles: true });
+    const event = new Event('blur');
     this.selectEl.dispatchEvent(event);
   };
 
