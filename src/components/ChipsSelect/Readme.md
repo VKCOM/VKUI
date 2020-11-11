@@ -7,7 +7,7 @@
 
 ```jsx
 const colors = [{value: '1', label: 'Красный'}, {value: '2', label: 'Синий'}];
-const groups = [{ value: 'download', label: 'Скачать все и вся!', icon: <Icon24Download /> }, { value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}]
+const groups = [{ value: 'download', label: 'Скачать все и вся!', icon: <Icon12Download /> }, { value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}]
 
 const Example = () => {
   const [selectedGroups, setSelectedGroups] = React.useState([]);
@@ -59,10 +59,10 @@ const Example = () => {
                   {label}
                 </Chip>
               )}
-              renderOption={({ label, option: { src, value, icon }, ...otherProps }) => {
+              renderOption={({ option: { src, value, icon }, ...otherProps }) => {
                 return (
                   <CustomSelectOption
-                    before={icon ? icon : <Avatar size={20} src={src} />}
+                    before={icon ? <Avatar size={20}>{icon}</Avatar> : <Avatar size={20} src={src} />}
                     {...otherProps}
                   />
                 );
