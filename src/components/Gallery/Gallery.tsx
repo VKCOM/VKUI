@@ -348,7 +348,12 @@ class Gallery extends Component<GalleryProps, GalleryState> {
 
     if (this.isChildrenDirty) {
       this.isChildrenDirty = false;
-      this.initializeSlides();
+      this.initializeSlides(() => {
+        const { current, slides } = this.state;
+        if (current > slides.length - 1) {
+          this.go(slides.length - 1);
+        }
+      });
     }
     if (prevState.current !== this.state.current && this.props.onChange) {
       this.props.onChange(this.state.current);
