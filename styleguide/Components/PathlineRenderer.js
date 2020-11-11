@@ -46,6 +46,7 @@ export function PathlineRenderer({ classes, children }) {
               onChange={(e) => styleGuideContext.setContext({ width: Number(e.target.value) })}
               value={styleGuideContext.width}
               isWide={!styleGuideContext.hasSidebar}
+              isVKCOM={styleGuideContext.platform === VKCOM}
             />
             &nbsp;|&nbsp;
             <SizeYSelect
