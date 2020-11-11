@@ -19,10 +19,6 @@
   position: fixed;
 }
 
-.PopoutWrapper:not(.PopoutWrapper--fixed) .PopoutWrapper__overlay {
-  position: fixed;
-}
-
 .PopoutWrapper--masked .PopoutWrapper__overlay {
   background: rgba(0, 0, 0, .4);
 }
@@ -32,7 +28,7 @@
 }
 
 .PopoutWrapper__overlay {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
@@ -40,7 +36,11 @@
   opacity: 1;
 }
 
-  .PopoutWrapper__container {
+.PopoutWrapper--fixed .PopoutWrapper__overlay {
+  position: absolute;
+}
+
+.PopoutWrapper__container {
     width: 100%;
     height: 100%;
     position: relative;
