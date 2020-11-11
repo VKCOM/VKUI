@@ -1,6 +1,5 @@
 import React, {
   Component,
-  ChangeEvent,
   ChangeEventHandler,
   HTMLAttributes,
 } from 'react';
@@ -9,7 +8,7 @@ import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
-import Select from '../Select/Select';
+import CustomSelect from '../CustomSelect/CustomSelect';
 
 const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
@@ -136,21 +135,19 @@ class DatePicker extends Component<Props, Partial<State>> {
     return yearOptions;
   };
 
-  onSelectChange: ChangeEventHandler = (e: ChangeEvent) => {
+  onSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const { onDateChange } = this.props;
-    const target = e.target as HTMLSelectElement;
 
-    this.setState(() => ({
-      [target.name]: Number(target.value),
-    }), () => {
+    this.setState({
+      [e.target.name]: Number(e.target.value),
+    }, () => {
       onDateChange && onDateChange(this.state as State);
     });
   };
 
-  onStringChange: ChangeEventHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+  onStringChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { onDateChange } = this.props;
-    const { value } = e.currentTarget;
-    const date = this.parseInputDate(value);
+    const date = this.parseInputDate(e.currentTarget.value);
 
     this.setState(() => ({
       ...date,
@@ -167,7 +164,7 @@ class DatePicker extends Component<Props, Partial<State>> {
       <div className="DatePicker">
         <div className="DatePicker__container">
           <div className="DatePicker__day">
-            <Select
+            <CustomSelect
               name="day"
               value={day}
               options={this.getDayOptions()}
@@ -177,7 +174,7 @@ class DatePicker extends Component<Props, Partial<State>> {
             />
           </div>
           <div className="DatePicker__month">
-            <Select
+            <CustomSelect
               name="month"
               value={month}
               options={this.getMonthOptions()}
@@ -187,7 +184,7 @@ class DatePicker extends Component<Props, Partial<State>> {
             />
           </div>
           <div className="DatePicker__year">
-            <Select
+            <CustomSelect
               name="year"
               value={year}
               options={this.getYearOptions()}
