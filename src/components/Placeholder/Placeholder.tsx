@@ -3,8 +3,9 @@ import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
 import Headline from '../Typography/Headline/Headline';
+import { HasRootRef } from '../../types';
 
-export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement> {
+export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   /**
    * Иконка
    */
@@ -31,12 +32,14 @@ const Placeholder: FC<PlaceholderProps> = (props) => {
     action,
     children,
     stretched,
+    getRootRef,
     ...restProps
   } = props;
 
   return (
     <div
       {...restProps}
+      ref={getRootRef}
       className={classNames('Placeholder', {
         'Placeholder--stretched': stretched,
       }, className)}
