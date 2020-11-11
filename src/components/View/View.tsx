@@ -40,8 +40,18 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   popout?: ReactNode;
   modal?: ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
+  /**
+   * callback свайпа назад
+   */
   onSwipeBack?(): void;
+  /**
+   * callback начала анимации свайпа назад.
+   */
   onSwipeBackStart?(): void;
+  /**
+   * callback завершения анимации отмененного пользователем свайпа
+   */
+  onSwipeBackCancel?(): void;
   history?: string[];
   id?: string;
   /**
@@ -317,6 +327,7 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   onSwipeBackCancel(): void {
+    this.props.onSwipeBackCancel && this.props.onSwipeBackCancel();
     this.setState({
       swipeBackPrevPanel: null,
       swipeBackNextPanel: null,
