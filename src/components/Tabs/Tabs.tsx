@@ -3,9 +3,10 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   mode?: 'default' | 'buttons' | 'segmented';
 }
 
@@ -15,11 +16,12 @@ const Tabs: FunctionComponent<TabsProps> = ({
   style,
   mode,
   getRootRef,
+  sizeX,
   ...restProps
 }: TabsProps) => {
   const platform = usePlatform();
 
-  if (platform === ANDROID && mode === 'segmented') {
+  if ((platform === ANDROID || platform === VKCOM) && mode === 'segmented') {
     mode = 'default';
   }
 
@@ -27,7 +29,7 @@ const Tabs: FunctionComponent<TabsProps> = ({
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNames(getClassName('Tabs', platform), `Tabs--${mode}`, className)}
+      className={classNames(getClassName('Tabs', platform), `Tabs--${mode}`, `Tabs--sizeX-${sizeX}`, className)}
       style={style}
     >
       <div className="Tabs__in">
@@ -41,4 +43,4 @@ Tabs.defaultProps = {
   mode: 'default',
 };
 
-export default Tabs;
+export default withAdaptivity(Tabs, { sizeX: true });
