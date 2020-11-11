@@ -1,9 +1,9 @@
 import React, { FunctionComponent, ReactElement } from 'react';
-import NativeSelect from '../NativeSelect/NativeSelect';
-import CustomSelect, { CustomSelectProps, SelectOption } from '../CustomSelect/CustomSelect';
+import NativeSelect, { NativeSelectProps } from '../NativeSelect/NativeSelect';
+import CustomSelect, { SelectOption } from '../CustomSelect/CustomSelect';
 import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 
-const Select: FunctionComponent<CustomSelectProps> = (props) => {
+const Select: FunctionComponent<NativeSelectProps> = (props) => {
   // Use custom select if device has connected a mouse
   if (hasMouse) {
     const { children, ...restProps } = props;
@@ -17,7 +17,6 @@ const Select: FunctionComponent<CustomSelectProps> = (props) => {
         .map((element: ReactElement) => {
           const value = element.props?.value?.toString() ?? '';
           const label = element.props?.children?.toString() ?? '';
-
           return { value, label };
         });
     }
@@ -35,14 +34,11 @@ const Select: FunctionComponent<CustomSelectProps> = (props) => {
     );
   }
 
-  const { options, children, ...restProps } = props;
+  const { children, ...restProps } = props;
 
   return (
-    <NativeSelect
-      {...restProps}>
-      {!!children ? children : options.map(({ label, value }, key) => {
-        return <option value={`${value}`} key={key}>{label}</option>;
-      })}
+    <NativeSelect {...restProps}>
+      {children}
     </NativeSelect>
   );
 };
