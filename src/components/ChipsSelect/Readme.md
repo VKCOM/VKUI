@@ -44,7 +44,7 @@ const Example = () => {
               showSelected={false}
               closeAfterSelect={false}
               onClick={() => setActiveView('groups')}
-              onAddFromEnter={(e, option) => {
+              onChangeStart={(e, option) => {
                 if (option.value === 'download') {
                   e.preventDefault();
                   alert('download!');
@@ -64,13 +64,6 @@ const Example = () => {
                   <CustomSelectOption
                     before={icon ? icon : <Avatar size={20} src={src} />}
                     {...otherProps}
-                    onMouseDown={(e) => {
-                      if (value === 'download') {
-                        alert('download!');
-                      } else {
-                        otherProps.onMouseDown(e);
-                      }
-                    }}
                   />
                 );
               }}

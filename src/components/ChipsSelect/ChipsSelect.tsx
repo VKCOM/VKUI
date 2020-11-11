@@ -40,9 +40,9 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
    */
   emptyText?: string;
   /**
-   * Колбек срабатывающий после выбора элемента с помощью клавиши Enter
+   * Событие срабатывающее перед onChange
    */
-  onAddFromEnter: (e: React.KeyboardEvent, option: Option) => void;
+  onChangeStart?: (e: MouseEvent | KeyboardEvent, option: Option) => void;
   /**
    * Закрытие выпадающиего списка после выбора элемента
    */
@@ -59,7 +59,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText,
-    onAddFromEnter, closeAfterSelect, ...restProps
+    closeAfterSelect, onChangeStart, ...restProps
   } = props;
 
   const { sizeY } = useAdaptivity();
@@ -170,7 +170,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
       const option = filteredOptions[focusedOptionIndex - Number(creatable)];
 
       if (option) {
-        onAddFromEnter(e, option);
+        onChangeStart(e, option);
 
         if (!e.defaultPrevented) {
           addOption(option);
@@ -272,7 +272,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                 {creatable && (
                   <CustomSelectOption
                     hovered={focusedOptionIndex === 0}
-                    onMouseDown={addOptionFromInput}
+                    onClick={addOptionFromInput}
                     onMouseEnter={() => setFocusedOptionIndex(0)}
                   >
                     {creatableText}
@@ -297,10 +297,14 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                           hovered,
                           children: label,
                           selected: !!selected,
-                          onMouseDown: () => {
-                            closeAfterSelect && setOpened(false);
-                            addOption(option);
-                            clearInput();
+                          onClick: (e: MouseEvent<HTMLDivElement>) => {
+                            onChangeStart(e, option);
+
+                            if (!e.defaultPrevented) {
+                              closeAfterSelect && setOpened(false);
+                              addOption(option);
+                              clearInput();
+                            }
                           },
                           onMouseEnter: () => setFocusedOptionIndex(index),
                         })}
