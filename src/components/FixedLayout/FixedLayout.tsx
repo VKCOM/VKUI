@@ -3,12 +3,12 @@ import getClassName from '../../helpers/getClassName';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
-import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import withContext from '../../hoc/withContext';
 import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
+import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -27,7 +27,7 @@ export interface FixedLayoutProps extends
   /**
    * @ignore
    */
-  splitCol?: SplitContextProps;
+  splitCol?: SplitColContextProps;
 }
 
 export interface FixedLayoutState {
@@ -137,6 +137,6 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
 export default withContext(
   withPlatform(withPanelContext(FixedLayout)),
-  SplitContext,
+  SplitColContext,
   'splitCol',
 );

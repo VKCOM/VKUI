@@ -1,10 +1,10 @@
 import React, { Component, HTMLAttributes, ReactNode } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
-import { HasPlatform } from '../../types';
+import { HasPlatform, HasRootRef } from '../../types';
 import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
+export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps, HasRootRef<HTMLDivElement> {
   popout?: ReactNode;
   modal?: ReactNode;
 }
@@ -45,11 +45,15 @@ class PopoutRoot extends Component<PopoutRootProps> {
   }
 
   render() {
-    const { popout, modal, viewWidth, children } = this.props;
+    const { popout, modal, viewWidth, children, className, getRootRef, ...restProps } = this.props;
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     return (
-      <div className={classNames('PopoutRoot', this.props.className)}>
+      <div
+        {...restProps}
+        className={classNames('PopoutRoot', className)}
+        ref={getRootRef}
+      >
         {children}
         {!!popout && <div className={isDesktop ? 'PopoutRoot--absolute' : 'PopoutRoot__popout'}>{popout}</div>}
         {!!modal && <div className="PopoutRoot__modal">{modal}</div>}

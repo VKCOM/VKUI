@@ -8,11 +8,11 @@ import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { HasChildren, HasPlatform } from '../../types';
-import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { createCustomEvent } from '../../lib/utils';
+import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -51,7 +51,7 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   /**
    * @ignore
    */
-  splitCol?: SplitContextProps;
+  splitCol?: SplitColContextProps;
   /**
    * @ignore
    */
@@ -512,6 +512,6 @@ class View extends Component<ViewProps, ViewState> {
 
 export default withContext(withContext(
   withPlatform(View),
-  SplitContext,
+  SplitColContext,
   'splitCol',
 ), ConfigProviderContext, 'configProvider');

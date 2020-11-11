@@ -28,6 +28,7 @@
 @import '../components/PanelHeaderContext/PanelHeaderContext.css';
 @import '../components/PopoutRoot/PopoutRoot.css';
 @import '../components/SplitLayout/SplitLayout.css';
+@import '../components/SplitCol/SplitCol.css';
 @import '../components/Epic/Epic.css';
 @import '../components/Tabbar/Tabbar.css';
 @import '../components/TabbarItem/TabbarItem.css';
