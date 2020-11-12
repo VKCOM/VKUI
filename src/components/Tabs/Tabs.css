@@ -38,8 +38,8 @@
   justify-content: flex-start;
   }
 
-.Tabs.Tabs--buttons .HorizontalScroll__in-wrapper::after,
-.Tabs.Tabs--buttons .HorizontalScroll__in-wrapper::before {
+.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::after,
+.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::before {
   display: block;
   width: 8px;
   flex-shrink: 0;

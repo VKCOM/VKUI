@@ -90,7 +90,7 @@
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}
               separator={this.props.sizeX === SizeType.REGULAR}
             >
-              <Search />
+              Музыка
             </PanelHeader>
             <Group>
               <Tabs>
@@ -184,7 +184,7 @@
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel4' })}/>}
               separator={this.props.sizeX === SizeType.REGULAR}
             >
-              <Search />
+              Лента
             </PanelHeader>
             <Group>
               <Tabs mode="segmented">

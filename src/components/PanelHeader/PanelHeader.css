@@ -159,9 +159,7 @@
 }
 
 .PanelHeader--android ~ .FixedLayout--top,
-.PanelHeader--android ~ * .FixedLayout--top:not(.PanelHeader__fixed),
-.PanelHeader--vkcom ~ .FixedLayout--top,
-.PanelHeader--vkcom ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
+.PanelHeader--android ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
   top: calc(var(--panelheader_height_android) + var(--safe-area-inset-top));
 }
 
@@ -230,6 +228,11 @@
 .PanelHeader--vkcom {
   position: relative;
   z-index: 10;
+}
+
+.PanelHeader--vkcom ~ .FixedLayout--top,
+.PanelHeader--vkcom ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
+  top: calc(var(--panelheader_height_vkcom) + var(--safe-area-inset-top));
 }
 
 .PanelHeader--vkcom .PanelHeader__in {
