@@ -88,7 +88,6 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
     return (
       <div
-        onClick={onClick}
         {...restProps}
         className={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
           'PopoutWrapper--closing': closing,
@@ -98,10 +97,14 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
         }, className)}
         ref={this.elRef}
       >
-        <div
-          className="PopoutWrapper__overlay"
-          onClick={onClick} />
-        <div className="PopoutWrapper__container">{children}</div>
+        <div className="PopoutWrapper__container">
+          <div
+            className="PopoutWrapper__overlay"
+            onClick={onClick} />
+          <div className="PopoutWrapper__content">
+            {children}
+          </div>
+        </div>
       </div>
     );
   }
