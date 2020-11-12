@@ -1,10 +1,13 @@
 import React, {
   FC,
   useRef,
-  MouseEvent,
   FocusEvent,
-  KeyboardEvent, ReactNode, useEffect,
+  ReactNode,
+  useEffect,
+  MutableRefObject,
+  useCallback,
 } from 'react';
+import PropTypes from 'prop-types';
 import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
 import classNames from '../../lib/classNames';
 import Spinner from '../Spinner/Spinner';
@@ -12,6 +15,7 @@ import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderChip } from '../ChipsInput/ChipsInput';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import withLegacyContext from '../../hoc/withLegacyContext';
 import { useChipsSelect } from './useChipsSelect';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option> {
@@ -42,11 +46,12 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
   /**
    * Событие срабатывающее перед onChange
    */
-  onChangeStart?: (e: MouseEvent | KeyboardEvent, option: Option) => void;
+  onChangeStart?: (e: React.MouseEvent | React.KeyboardEvent, option: Option) => void;
   /**
    * Закрытие выпадающиего списка после выбора элемента
    */
   closeAfterSelect: boolean;
+  legacyContext?: { document: Document };
 }
 
 type focusActionType = 'next' | 'prev';
@@ -59,11 +64,12 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText,
-    closeAfterSelect, onChangeStart, ...restProps
+    closeAfterSelect, onChangeStart, legacyContext, ...restProps
   } = props;
 
   const { sizeY } = useAdaptivity();
   const scrollViewRef = useRef<CustomScrollView>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const {
     fieldValue, selectedOptions, opened, setOpened, addOptionFromInput,
     filteredOptions, addOption, handleInputChange, clearInput,
@@ -76,13 +82,13 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     onFocus(e);
   };
 
-  const handleClickOutside = () => {
-    if (opened) {
-      return;
-    }
+  const handleClickOutside = useCallback((e: MouseEvent) => {
+    const { current: rootNode } = getRootRef as MutableRefObject<HTMLDivElement> || rootRef;
 
-    setOpened(false);
-  };
+    if (rootNode && e.target !== rootNode && !rootNode.contains(e.target as Node)) {
+      setOpened(false);
+    }
+  }, [opened]);
 
   const scrollToElement = (index: number, center = false) => {
     const scrollView = scrollViewRef.current;
@@ -141,7 +147,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     focusOptionByIndex(index, focusedOptionIndex);
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown(e);
 
     if (e.key === 'ArrowUp' && !e.defaultPrevented) {
@@ -208,6 +214,8 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
   }, [filteredOptions, focusedOption, creatable]);
 
   useEffect(() => {
+    const { document } = legacyContext;
+
     document.addEventListener('click', handleClickOutside);
 
     return () => {
@@ -217,7 +225,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
 
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;
-    const onRemoveWrapper = (e: MouseEvent, value: ChipsInputValue) => {
+    const onRemoveWrapper = (e: React.MouseEvent, value: ChipsInputValue) => {
       e.preventDefault();
       onRemove(e, value);
     };
@@ -228,7 +236,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
   return (
     <div
       className={classNames('ChipsSelect', className)}
-      ref={getRootRef}
+      ref={getRootRef || rootRef}
       style={style}
     >
       <ChipsInput
@@ -297,7 +305,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                           hovered,
                           children: label,
                           selected: !!selected,
-                          onClick: (e: MouseEvent<HTMLDivElement>) => {
+                          onClick: (e: React.MouseEvent<HTMLDivElement>) => {
                             onChangeStart(e, option);
 
                             if (!e.defaultPrevented) {
@@ -339,4 +347,4 @@ ChipsSelect.defaultProps = {
   },
 };
 
-export default ChipsSelect;
+export default withLegacyContext(ChipsSelect, { document: PropTypes.shape({}) });
