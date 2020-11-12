@@ -2,7 +2,11 @@
   width: 100%;
   position: relative;
   cursor: pointer;
-  user-select: none;
+  display: block;
+}
+
+.CustomSelect__control {
+  display: none;
 }
 
 .CustomSelect__options {

@@ -19,15 +19,10 @@ class Example extends React.Component {
     ];
 
     this.onChange = this.onChange.bind(this);
-    this.onSelectChange = this.onSelectChange.bind(this);
   }
 
   onChange(e) {
     const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
-  }
-
-  onSelectChange({ name, value }) {
     this.setState({ [name]: value });
   }
 
@@ -88,7 +83,7 @@ class Example extends React.Component {
             <FormItem top="Цель поездки" bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'} status={purpose ? 'valid' : 'error'}>
               <Select
                 placeholder="Выберите цель поездки"
-                onChange={this.onSelectChange}
+                onChange={this.onChange}
                 value={purpose}
                 name="purpose"
               >

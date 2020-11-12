@@ -8,47 +8,55 @@
     <PanelHeader>Аватарки пользователей</PanelHeader>
 
     <Group>
-      <UsersStack
-        photos={[
-          getAvatarUrl('user_lihachyov'),
-        ]}
-      >Понравилось Муртолу Левзачеву</UsersStack>
+      <Div>
+        <UsersStack
+          photos={[
+            getAvatarUrl('user_lihachyov'),
+          ]}
+        >Понравилось Муртолу Левзачеву</UsersStack>
+      </Div>
     </Group>
 
     <Group>
-      <UsersStack
-        photos={[
-          getAvatarUrl('user_manzuk'),
-          getAvatarUrl('user_ji'),
-        ]}
-        size="m"
-      >Настя и Jean пойдут на это мероприятие</UsersStack>
+      <Div>
+        <UsersStack
+          photos={[
+            getAvatarUrl('user_manzuk'),
+            getAvatarUrl('user_ji'),
+          ]}
+          size="m"
+        >Настя и Jean пойдут на это мероприятие</UsersStack>
+      </Div>
     </Group>
 
     <Group>
-      <UsersStack
-        photos={[
-          getAvatarUrl('user_ox'),
-          getAvatarUrl('user_vitalyavolyn'),
-          getAvatarUrl('user_eee'),
-        ]}
-      >Иван и ещё 2 ваших друга подписаны</UsersStack>
+      <Div>
+        <UsersStack
+          photos={[
+            getAvatarUrl('user_ox'),
+            getAvatarUrl('user_vitalyavolyn'),
+            getAvatarUrl('user_eee'),
+          ]}
+        >Иван и ещё 2 ваших друга подписаны</UsersStack>
+      </Div>
     </Group>
 
     <Group header={<Header mode="secondary">Вертикальный режим</Header>}>
-      <UsersStack
-        photos={[
-          getAvatarUrl('user_mm'),
-          getAvatarUrl('user_ilyagrshn'),
-          getAvatarUrl('user_lihachyov'),
-          getAvatarUrl('user_wayshev'),
-          getAvatarUrl('user_arthurstam'),
-          getAvatarUrl('user_xyz'),
-        ]}
-        size="m"
-        count={3}
-        layout="vertical"
-      >Алексей, Илья, Михаил<br />и ещё 3 человека</UsersStack>
+      <Div>
+        <UsersStack
+          photos={[
+            getAvatarUrl('user_mm'),
+            getAvatarUrl('user_ilyagrshn'),
+            getAvatarUrl('user_lihachyov'),
+            getAvatarUrl('user_wayshev'),
+            getAvatarUrl('user_arthurstam'),
+            getAvatarUrl('user_xyz'),
+          ]}
+          size="m"
+          count={3}
+          layout="vertical"
+        >Алексей, Илья, Михаил<br />и ещё 3 человека</UsersStack>
+      </Div>
     </Group>
 
     <Group>
@@ -68,7 +76,7 @@
               getAvatarUrl('user_va'),
               getAvatarUrl('user_tc'),
             ]}
-            style={{ color: "#fff" }}
+            style={{ color: "#fff", padding: '8px 0' }}
           >Проголосовали 2 176 человек</UsersStack>
         </div>
       </Div>

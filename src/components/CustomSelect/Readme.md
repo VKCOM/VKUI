@@ -24,7 +24,7 @@ class Example extends React.Component {
                 placeholder="Не выбрано"
                 options={this.state.options}
                 value={this.state.value}
-                onChange={(option) => this.setState({ value: option.value })}
+                onChange={(e) => this.setState({ value: e.target.value })}
               />
             </FormItem>
           </Group>
