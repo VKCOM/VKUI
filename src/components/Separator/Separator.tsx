@@ -9,9 +9,10 @@ export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
    */
   wide?: boolean;
   expanded?: boolean;
+  fill?: string;
 }
 
-let Separator: FunctionComponent<SeparatorProps> = ({ className, wide, expanded, ...restProps }: SeparatorProps) => {
+let Separator: FunctionComponent<SeparatorProps> = ({ className, wide, expanded, fill, ...restProps }: SeparatorProps) => {
   const platform = usePlatform();
 
   return (
@@ -21,7 +22,7 @@ let Separator: FunctionComponent<SeparatorProps> = ({ className, wide, expanded,
         'Separator--wide': wide,
       })}
     >
-      <div className={classNames('Separator__in', {
+      <div style={{ background: fill }} className={classNames('Separator__in', {
         'Separator__in--expanded': expanded,
       })} />
     </div>

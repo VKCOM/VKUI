@@ -19,6 +19,7 @@ import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import { VKUITouchEvent } from '../../lib/touch';
 import { setRef } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
+import { Separator } from '../../index';
 
 let searchId = 0;
 
@@ -161,6 +162,7 @@ class Search extends Component<SearchProps, SearchState> {
                   {platform === VKCOM ? <Text weight="regular">{placeholder}</Text> : placeholder}
                 </div>
               </div>
+              {this.state.focused && platform === IOS && after && <div className="Search__after-width">{after}</div>}
             </div>
           </div>
           <div className="Search__after" onClick={this.onCancel}>
@@ -185,6 +187,7 @@ class Search extends Component<SearchProps, SearchState> {
             }
           </div>
         </div>
+        {platform === VKCOM && <Separator fill="var(--input_border)" className="Search__separator" wide />}
       </div>
     );
   }
