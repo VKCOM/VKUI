@@ -4,8 +4,6 @@ import React, {
   FocusEvent,
   ReactNode,
   useEffect,
-  MutableRefObject,
-  useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
@@ -17,6 +15,7 @@ import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOpti
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import withLegacyContext from '../../hoc/withLegacyContext';
 import { useChipsSelect } from './useChipsSelect';
+import { setRef } from '../../lib/utils';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option> {
   popupDirection?: 'top' | 'bottom';
@@ -82,13 +81,12 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
     onFocus(e);
   };
 
-  const handleClickOutside = useCallback((e: MouseEvent) => {
-    const { current: rootNode } = getRootRef as MutableRefObject<HTMLDivElement> || rootRef;
-
+  const handleClickOutside = (e: MouseEvent) => {
+    const { current: rootNode } = rootRef;
     if (rootNode && e.target !== rootNode && !rootNode.contains(e.target as Node)) {
       setOpened(false);
     }
-  }, [opened]);
+  };
 
   const scrollToElement = (index: number, center = false) => {
     const scrollView = scrollViewRef.current;
@@ -214,14 +212,20 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
   }, [filteredOptions, focusedOption, creatable]);
 
   useEffect(() => {
-    const { document } = legacyContext;
+    const curDocument = legacyContext.document || document;
 
-    document.addEventListener('click', handleClickOutside);
+    curDocument.addEventListener('click', handleClickOutside);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      curDocument.removeEventListener('click', handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const { current: element } = rootRef;
+
+    setRef(element, getRef);
+  }, [getRef]);
 
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;
@@ -236,7 +240,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
   return (
     <div
       className={classNames('ChipsSelect', className)}
-      ref={getRootRef || rootRef}
+      ref={rootRef}
       style={style}
     >
       <ChipsInput
