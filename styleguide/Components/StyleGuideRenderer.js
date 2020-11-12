@@ -10,7 +10,7 @@ import { WebviewType } from '../../src/components/ConfigProvider/ConfigProviderC
 import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
-import { DESKTOP_SIZE, MOBILE_SIZE } from '../../src/components/AdaptivityProvider/AdaptivityProvider';
+import { DESKTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from '../../src/components/AdaptivityProvider/AdaptivityProvider';
 import { defaultConfigProviderProps } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { ViewWidthSelect } from './ViewWidthSelect';
 import { SizeType } from '../../src/components/AdaptivityProvider/AdaptivityContext';
@@ -114,7 +114,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
 
   useEffect(() => {
     if (platform === VKCOM) {
-      setContext({ sizeY: SizeType.COMPACT });
+      setContext({ sizeY: SizeType.COMPACT, width: TABLET_SIZE });
     }
   }, [platform]);
 
@@ -150,6 +150,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
                 onChange={ (e) => setContext({ width: Number(e.target.value) })}
                 value={width}
                 isWide={!hasSidebar}
+                isVKCOM={platform === VKCOM}
               />
             </div>
             <div style={{ marginTop: 4 }}>

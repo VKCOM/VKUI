@@ -31,6 +31,14 @@ module.exports = {
       name: 'Concept',
       content: './pages/concept.md'
     }, {
+      name: 'Adaptivity',
+      content: './pages/adaptivity.md',
+      components: () => [
+        '../src/components/AdaptivityProvider/AdaptivityProvider.tsx',
+        '../src/components/SplitLayout/SplitLayout.tsx',
+        '../src/components/SplitCol/SplitCol.tsx',
+      ]
+    }, {
       name: 'Components',
       sections: [{
         name: 'Layout',
@@ -46,7 +54,6 @@ module.exports = {
           '../src/components/PanelHeaderEdit/PanelHeaderEdit.tsx',
           '../src/components/PanelHeaderContent/PanelHeaderContent.tsx',
           '../src/components/PanelHeaderContext/PanelHeaderContext.tsx',
-          '../src/components/SplitLayout/SplitLayout.tsx',
           '../src/components/Epic/Epic.tsx',
           '../src/components/Tabbar/Tabbar.tsx',
           '../src/components/TabbarItem/TabbarItem.tsx',
@@ -88,6 +95,7 @@ module.exports = {
           '../src/components/Gradient/Gradient.tsx',
           '../src/components/SimpleCell/SimpleCell.tsx',
           '../src/components/Cell/Cell.tsx',
+          '../src/components/HorizontalCell/HorizontalCell.tsx',
           '../src/components/RichCell/RichCell.tsx',
           '../src/components/List/List.tsx',
           '../src/components/Footer/Footer.tsx',
@@ -130,7 +138,6 @@ module.exports = {
           '../src/components/SelectMimicry/SelectMimicry.tsx',
           '../src/components/CustomSelect/CustomSelect.tsx',
           '../src/components/CustomSelectOption/CustomSelectOption.tsx',
-          '../src/components/ChipsSelect/ChipsSelect.tsx',
           '../src/components/Chip/Chip.tsx',
           '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx',
@@ -155,8 +162,13 @@ module.exports = {
           '../src/components/ConfigProvider/ConfigProvider.tsx',
           '../src/components/Touch/Touch.tsx',
         ]
-      },
-      {
+      }, {
+        name: 'Unstable',
+        content: './pages/unstable.md',
+        components: () => [
+          '../src/components/ChipsSelect/ChipsSelect.tsx',
+        ]
+      }, {
         name: 'Helpers',
         content: './pages/helpers.md'
       },
@@ -205,6 +217,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              esModule: false,
               importLoaders: 1
             }
           },
@@ -220,7 +233,9 @@ module.exports = {
       }]
     },
     plugins: [
-      new MiniCssExtractPlugin('[name].css')
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+      }),
     ],
     resolve: {
       alias: {

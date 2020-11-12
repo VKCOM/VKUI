@@ -4,14 +4,8 @@ import ReactExample from 'react-styleguidist/lib/client/rsg-components/ReactExam
 import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/PlaygroundError';
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
-import ConfigProvider from '../../src/components/ConfigProvider/ConfigProvider';
 import { StyleGuideContext } from './StyleGuideRenderer';
-import AdaptivityProvider  from '../../src/components/AdaptivityProvider/AdaptivityProvider';
-import SplitLayout, { SplitCol } from '../../src/components/SplitLayout/SplitLayout';
-import withAdaptivity, { ViewWidth } from '../../src/hoc/withAdaptivity';
-import PanelHeader from '../../src/components/PanelHeader/PanelHeader';
-import usePlatform from '../../src/hooks/usePlatform';
-import { VKCOM } from '../../src';
+import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AdaptivityProvider, ConfigProvider } from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {

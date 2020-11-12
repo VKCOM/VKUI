@@ -89,22 +89,26 @@
 }
 
 /**
- * Android
+ * Android + vkcom
  */
 
-.WriteBar--android {
+.WriteBar--android,
+.WriteBar--vkcom {
 
 }
 
-.WriteBar--android .WriteBar__before {
+.WriteBar--android .WriteBar__before,
+.WriteBar--vkcom .WriteBar__before {
   padding-left: 4px;
 }
 
-.WriteBar--android .WriteBar__after {
+.WriteBar--android .WriteBar__after,
+.WriteBar--vkcom .WriteBar__after {
   padding-right: 4px;
 }
 
-.WriteBar--android .WriteBar__textarea {
+.WriteBar--android .WriteBar__textarea,
+.WriteBar--vkcom .WriteBar__textarea {
   height: 52px;
   padding: 16px 12px;
   font-size: 16px;

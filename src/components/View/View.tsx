@@ -8,11 +8,11 @@ import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
 import { HasChildren, HasPlatform } from '../../types';
-import { SplitContext, SplitContextProps } from '../../components/SplitLayout/SplitLayout';
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { createCustomEvent } from '../../lib/utils';
+import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -44,14 +44,24 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   popout?: ReactNode;
   modal?: ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
+  /**
+   * callback свайпа назад
+   */
   onSwipeBack?(): void;
+  /**
+   * callback начала анимации свайпа назад.
+   */
   onSwipeBackStart?(): void;
+  /**
+   * callback завершения анимации отмененного пользователем свайпа
+   */
+  onSwipeBackCancel?(): void;
   history?: string[];
   id?: string;
   /**
    * @ignore
    */
-  splitCol?: SplitContextProps;
+  splitCol?: SplitColContextProps;
   /**
    * @ignore
    */
@@ -323,6 +333,7 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   onSwipeBackCancel(): void {
+    this.props.onSwipeBackCancel && this.props.onSwipeBackCancel();
     this.setState({
       swipeBackPrevPanel: null,
       swipeBackNextPanel: null,
@@ -512,6 +523,6 @@ class View extends Component<ViewProps, ViewState> {
 
 export default withContext(withContext(
   withPlatform(View),
-  SplitContext,
+  SplitColContext,
   'splitCol',
 ), ConfigProviderContext, 'configProvider');

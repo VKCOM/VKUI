@@ -30,6 +30,7 @@ const config = {
         use: {
           loader: 'file-loader',
           options: {
+            esModule: false,
             outputPath: 'static/',
             name: '[name].[hash:8].[ext]',
           },
