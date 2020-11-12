@@ -331,6 +331,10 @@
   display: none;
 }
 
+.Search--vkcom .Search__separator {
+  color: var(--input_border);
+}
+
 .Group--card .Search--vkcom {
   margin: -8px -8px 0;
 }

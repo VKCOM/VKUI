@@ -143,7 +143,7 @@ class Search extends Component<SearchProps, SearchState> {
       }, className)}>
         <div className="Search__in">
           <div className="Search__width" />
-          <div className="Search__control">
+          <label className="Search__control">
             <input
               {...inputProps}
               ref={this.inputRef}
@@ -164,7 +164,7 @@ class Search extends Component<SearchProps, SearchState> {
               </div>
               {this.state.focused && platform === IOS && after && <div className="Search__after-width">{after}</div>}
             </div>
-          </div>
+          </label>
           <div className="Search__after" onClick={this.onCancel}>
             <div className="Search__icons">
               {icon &&
@@ -187,7 +187,7 @@ class Search extends Component<SearchProps, SearchState> {
             }
           </div>
         </div>
-        {platform === VKCOM && <Separator fill="var(--input_border)" className="Search__separator" wide />}
+        {platform === VKCOM && <Separator className="Search__separator" wide />}
       </div>
     );
   }
