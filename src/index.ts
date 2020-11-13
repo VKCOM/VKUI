@@ -100,6 +100,7 @@ export { default as Radio } from './components/Radio/Radio';
 export { default as Checkbox } from './components/Checkbox/Checkbox';
 export { default as Select } from './components/Select/Select';
 export { default as SelectMimicry } from './components/SelectMimicry/SelectMimicry';
+export { default as NativeSelect } from './components/NativeSelect/NativeSelect';
 export { default as CustomSelect } from './components/CustomSelect/CustomSelect';
 export { default as CustomSelectOption } from './components/CustomSelectOption/CustomSelectOption';
 export { default as DatePicker } from './components/DatePicker/DatePicker';
