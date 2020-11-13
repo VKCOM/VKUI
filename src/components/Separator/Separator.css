@@ -1,8 +1,10 @@
-.Separator {}
+.Separator {
+  color: var(--separator_common);
+}
 
 .Separator__in:not(.Separator__in--expanded) {
   height: 1px;
-  background: var(--separator_common);
+  background: currentColor;
   transform-origin: center top;
 }
 
