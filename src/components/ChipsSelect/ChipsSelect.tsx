@@ -15,7 +15,7 @@ import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOpti
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import withLegacyContext from '../../hoc/withLegacyContext';
 import { useChipsSelect } from './useChipsSelect';
-import { setRef } from '../../lib/utils';
+import { setRef, noop } from '../../lib/utils';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option> {
   popupDirection?: 'top' | 'bottom';
@@ -284,7 +284,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                 {creatable && (
                   <CustomSelectOption
                     hovered={focusedOptionIndex === 0}
-                    onClick={addOptionFromInput}
+                    onMouseDown={addOptionFromInput}
                     onMouseEnter={() => setFocusedOptionIndex(0)}
                   >
                     {creatableText}
@@ -309,7 +309,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
                           hovered,
                           children: label,
                           selected: !!selected,
-                          onClick: (e: React.MouseEvent<HTMLDivElement>) => {
+                          onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => {
                             onChangeStart(e, option);
 
                             if (!e.defaultPrevented) {
@@ -335,6 +335,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
 
 ChipsSelect.defaultProps = {
   ...ChipsInput.defaultProps,
+  onChangeStart: noop,
   creatable: false,
   fetching: false,
   showSelected: true,
