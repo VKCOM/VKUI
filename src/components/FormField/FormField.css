@@ -38,8 +38,7 @@
   border-radius: 6px;
 }
 
-.FormField > *,
-.FormField__border {
+.FormField > * {
   border-radius: inherit;
 }
 
