@@ -1,5 +1,7 @@
 .FormField {
   position: relative;
+  box-sizing: border-box;
+  padding: 1px;
 }
 
 .FormField__border {
@@ -24,16 +26,21 @@
   border-color: var(--icon_tertiary_alpha);
 }
 
-.FormField--ios .FormField__border {
+.FormField--ios {
   border-radius: 10px;
 }
 
-.FormField--android .FormField__border {
+.FormField--android {
   border-radius: 8px;
 }
 
-.FormField--vkcom .FormField__border {
+.FormField--vkcom {
   border-radius: 6px;
+}
+
+.FormField > :first-child,
+.FormField__border {
+  border-radius: inherit;
 }
 
 .FormItem--error .FormField__border {
