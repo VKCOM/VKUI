@@ -26,10 +26,10 @@
   .Select__container {
     line-height: 19px;
     font-size: 16px;
-    padding: 13px 40px 12px 12px;
+    padding: 12px 39px 11px 11px;
     color: var(--text_primary);
     box-sizing: border-box;
-    height: 44px;
+    height: 42px;
     position: relative;
     z-index: 2;
     cursor: pointer;
@@ -80,11 +80,11 @@
 
 .Select--multiline .Select__container {
   height: auto;
-  min-height: 44px;
+  min-height: 42px;
   }
 
 .Select--sizeY--compact .Select__container {
-  padding: 12px 36px 12px 12px;
+  padding: 11px 35px 11px 11px;
   }
 
   .Select--sizeX--compact .Icon--h-12 {
@@ -92,9 +92,9 @@
   }
 
 .Select--sizeY--compact .Select__container {
-  height: 40px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  height: 38px;
+  padding-top: 9px;
+  padding-bottom: 9px;
   font-size: 15px;
   line-height: 20px;
 }
