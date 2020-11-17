@@ -38,7 +38,7 @@
   border-radius: 6px;
 }
 
-.FormField > :first-child,
+.FormField > *,
 .FormField__border {
   border-radius: inherit;
 }
