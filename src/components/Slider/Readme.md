@@ -15,7 +15,7 @@
     options () {
       let options = [];
       for (let i = 0; i <= 10; i += 2) {
-        options.push(<option value={`${i / 10}`} key={`${i}`}>{i / 10}</option>)
+        options.push({ value: `${i / 10}`, label: `${i / 10}` });
       }
       return options;
     }
@@ -47,9 +47,11 @@
                 />
               </FormItem>
               <FormItem>
-                <Select onChange={e => this.setState({ value2: e.target.value })} value={String(this.state.value2)}>
-                  {this.options()}
-                </Select>
+                <Select
+                  onChange={e => this.setState({ value2: e.target.value })} 
+                  value={String(this.state.value2)}
+                  options={this.options()} 
+                />
               </FormItem>
               <FormItem top="Uncontrolled">
                 <Slider

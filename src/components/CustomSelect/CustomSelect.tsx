@@ -366,6 +366,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       onBlur,
       onFocus,
       renderOption,
+      children,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
