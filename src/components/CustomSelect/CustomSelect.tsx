@@ -35,6 +35,7 @@ export interface CustomSelectProps extends NativeSelectProps {
   options: SelectOption[];
   popupDirection?: 'top' | 'bottom';
   renderOption?: (props: CustomSelectOptionProps) => ReactNode;
+  renderLabel?: (selected: any) => ReactNode;
 }
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
@@ -83,6 +84,20 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
 
     return options[selectedOptionIndex];
+  };
+
+  private readonly getSelectedItemLabel = () => {
+    const selected = this.getSelectedItem();
+    const { renderLabel } = this.props;
+
+    if (!selected) {
+      return undefined;
+    }
+    if (!renderLabel) {
+      return selected.label;
+    }
+
+    return renderLabel(selected);
   };
 
   open = () => {
@@ -368,8 +383,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       renderOption,
       ...restProps
     } = this.props;
-    const selected = this.getSelectedItem();
-    const label = selected ? selected.label : undefined;
+    const label = this.getSelectedItemLabel();
 
     return (
       <label
