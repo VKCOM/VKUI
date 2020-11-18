@@ -137,17 +137,8 @@
 }
 
 @media (max-height: 720px) {
-  .ModalRoot--ios .ModalPage--desktop .ModalPage__in {
-    max-height: calc(100vh - var(--safe-area-inset-top));
-  }
-
-  .ModalRoot--vkapps.ModalRoot--android .ModalPage--desktop .ModalPage__in,
-  .ModalRoot--vkapps.ModalRoot--vkcom .ModalPage--desktop .ModalPage__in {
-    max-height: calc(100vh - var(--panelheader_height_android));
-  }
-
-  .ModalRoot--vkapps.ModalRoot--ios .ModalPage__in {
-    max-height: calc(100vh - var(--safe-area-inset-top) - var(--panelheader_height_ios));
+  .ModalPage--desktop .ModalPage__in {
+    max-height: calc(100vh - 64px);
   }
 }
 
