@@ -3,15 +3,6 @@ name: 'Pull Request'
 on: ['pull_request']
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - run: yarn install --frozen-lockfile
-      - run: yarn test:static
   test:
     runs-on: ubuntu-latest
     steps:
@@ -20,7 +11,12 @@ jobs:
         with:
           node-version: 12
       - run: yarn install --frozen-lockfile
-      - run: yarn test:unit
+      - run: yarn test:unit:ci
+      - run: yarn test:static
+      - name: Create test report
+        run: yarn danger ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   styleguide:
     runs-on: ubuntu-latest
     steps:
