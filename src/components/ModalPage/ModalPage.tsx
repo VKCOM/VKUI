@@ -3,7 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
@@ -31,6 +31,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     className,
     header,
     viewWidth,
+    viewHeight,
     onClose,
   } = props;
 
@@ -40,10 +41,12 @@ const ModalPage: FC<ModalPageProps> = (props) => {
 
   const isDesktop = viewWidth >= ViewWidth.TABLET;
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+  const centered = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.REGULAR;
 
   return (
     <div className={classNames(getClassName('ModalPage', platform), className, {
       'ModalPage--desktop': isDesktop,
+      'ModalPage--centered': centered,
     })}>
       <div className="ModalPage__in-wrap">
         <div className="ModalPage__in">
@@ -69,4 +72,5 @@ ModalPage.defaultProps = {
 
 export default withAdaptivity(ModalPage, {
   viewWidth: true,
+  viewHeight: true
 });
