@@ -4,6 +4,7 @@ import classNames from '../../lib/classNames';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   id: string;
@@ -30,6 +31,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     className,
     header,
     viewWidth,
+    onClose,
   } = props;
 
   useEffect(() => {
@@ -37,6 +39,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
   }, [children]);
 
   const isDesktop = viewWidth >= ViewWidth.TABLET;
+  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   return (
     <div className={classNames(getClassName('ModalPage', platform), className, {
@@ -54,6 +57,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
             </div>
           </div>
         </div>
+        {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
       </div>
     </div>
   );
