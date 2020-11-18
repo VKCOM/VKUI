@@ -14,6 +14,8 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform,
   centered?: boolean;
 }
 
+export const PANEL_CLASS = 'Panel';
+
 class Panel extends Component<PanelProps> {
   constructor(props: PanelProps) {
     super(props);
@@ -44,7 +46,7 @@ class Panel extends Component<PanelProps> {
         <div
           {...restProps}
           ref={this.getRef}
-          className={classNames(getClassName('Panel', platform), className, `Panel--${sizeX}`, {
+          className={classNames(getClassName(PANEL_CLASS, platform), className, `Panel--${sizeX}`, {
             'Panel--centered': centered,
             [`Panel--sizeX-${sizeX}`]: true,
           })}

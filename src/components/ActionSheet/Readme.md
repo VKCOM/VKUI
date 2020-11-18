@@ -20,6 +20,7 @@ class Example extends React.Component {
     }
 
     this.openBase = this.openBase.bind(this);
+    this.openScrollable = this.openScrollable.bind(this);
     this.openIcons = this.openIcons.bind(this);
     this.openSubtitle = this.openSubtitle.bind(this);
     this.openSelectable = this.openSelectable.bind(this);
@@ -27,6 +28,7 @@ class Example extends React.Component {
     this.onChange = this.onChange.bind(this);
 
     this.baseTargetRef = React.createRef();
+    this.scrollableTargetRef = React.createRef();
     this.iconsTargetRef = React.createRef();
     this.subtitleTargetRef = React.createRef();
     this.selectableTargetRef = React.createRef();
@@ -35,6 +37,8 @@ class Example extends React.Component {
 
   componentDidMount() {
     this.openBase();
+
+    this.scrollableTargetRef.current.parentNode.parentNode.scrollTop = this.scrollableTargetRef.current.offsetTop / 2;
   }
 
   openBase () {
@@ -43,6 +47,32 @@ class Example extends React.Component {
         onClose={() => this.setState({ popout: null })}
         iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
         toggleRef={this.baseTargetRef.current}
+      >
+        <ActionSheetItem autoclose>
+          Сохранить в закладках
+        </ActionSheetItem>
+        <ActionSheetItem autoclose>
+          Закрепить запись
+        </ActionSheetItem>
+        <ActionSheetItem autoclose>
+          Выключить комментирование
+        </ActionSheetItem>
+        <ActionSheetItem autoclose>
+          Закрепить запись
+        </ActionSheetItem>
+        <ActionSheetItem autoclose mode="destructive">
+          Удалить запись
+        </ActionSheetItem>
+      </ActionSheet>
+    });
+  }
+  
+  openScrollable () {
+    this.setState({ popout:
+      <ActionSheet 
+        onClose={() => this.setState({ popout: null })}
+        iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+        toggleRef={this.scrollableTargetRef.current}
       >
         <ActionSheetItem autoclose>
           Сохранить в закладках
@@ -193,7 +223,7 @@ class Example extends React.Component {
     this.setState({ filter: e.target.value });
   }
 
-  render() {
+  render() {    
     return (
       <View popout={this.state.popout} activePanel="panel">
         <Panel id="panel">
@@ -204,6 +234,15 @@ class Example extends React.Component {
             <CellButton getRootRef={this.subtitleTargetRef} onClick={this.openSubtitle}>С подзаголовком</CellButton>
             <CellButton getRootRef={this.selectableTargetRef} onClick={this.openSelectable}>Выделяемые</CellButton>
             <CellButton getRootRef={this.titleTargetRef} onClick={this.openTitle}>C заголовком</CellButton>
+          </Group>
+          <Group>
+            <Header mode="secondary">Внутри scrollable элемента</Header>
+            <div style={{ height: '90vh', overflow: 'scroll' }}>
+              <div style={{ height: 1500 }}>
+                
+                <CellButton style={{ marginTop: 700 }} getRootRef={this.scrollableTargetRef} onClick={this.openScrollable}>Базовый список</CellButton>
+              </div>
+            </div>
           </Group>
         </Panel>
       </View>

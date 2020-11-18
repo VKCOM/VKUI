@@ -6,6 +6,8 @@ import { HasPlatform } from '../../types';
 import { PointerEventsProperty } from 'csstype';
 import PropTypes from 'prop-types';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { getScrollableParent } from '../../lib/dom';
+import { PANEL_CLASS } from '../Panel/Panel';
 
 interface Props extends HasPlatform, AdaptivityProps {
   closing: boolean;
@@ -37,11 +39,37 @@ class ActionSheetDropdownDesktop extends Component<Props> {
   componentDidMount = () => {
     const { toggleRef, elementRef } = this.props;
 
+    const scrollableParent = getScrollableParent(toggleRef);
+    const isWindowScroll = scrollableParent === document.body || scrollableParent.classList.contains(PANEL_CLASS);
+
     const toggleRect = toggleRef.getBoundingClientRect();
     const elementRect = elementRef.current.getBoundingClientRect();
+    const scrollableParentRect = scrollableParent.getBoundingClientRect();
 
-    const left = toggleRect.left + toggleRect.width - elementRect.width + this.window.pageXOffset;
-    const top = toggleRect.top + toggleRect.height + this.window.pageYOffset;
+    let left: number;
+    let top: number;
+    if (isWindowScroll) {
+      left = toggleRect.left + toggleRect.width - elementRect.width + this.window.pageXOffset;
+      top = toggleRect.top + toggleRect.height + this.window.pageYOffset;
+    } else {
+      left = toggleRect.left + toggleRect.width - elementRect.width;
+      top = toggleRect.top + toggleRect.height;
+    }
+
+    const scrollableParentOffset = (scrollableParent as HTMLDivElement).offsetTop - scrollableParentRect.top;
+    const scrollableParentBottomDistance = this.window.innerHeight - scrollableParentRect.top - scrollableParentRect.height;
+
+    const overflowSpaceTop = -(top - elementRect.height - elementRect.height + scrollableParentOffset);
+    const overflowSpaceBottom = -(scrollableParentRect.height - top + toggleRect.height - elementRect.height - scrollableParentBottomDistance);
+
+    let direction = 'bottom';
+    if (overflowSpaceBottom > 0 && overflowSpaceBottom > overflowSpaceTop) {
+      direction = 'top';
+    }
+
+    if (direction === 'top') {
+      top -= elementRect.height + toggleRect.height;
+    }
 
     this.setState({
       dropdownStyles: {
