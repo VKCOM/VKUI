@@ -58,7 +58,7 @@ const ModalCard: FC<ModalCardProps> = (props) => {
     platform,
     className,
     viewWidth,
-    viewHeight
+    viewHeight,
   } = props;
 
   const isDesktop = viewWidth >= ViewWidth.TABLET;
@@ -68,7 +68,7 @@ const ModalCard: FC<ModalCardProps> = (props) => {
   return (
     <div className={classNames(getClassName('ModalCard', platform), {
       'ModalCard--desktop': isDesktop,
-      'ModalCard--centered': centered
+      'ModalCard--centered': centered,
     }, className)}>
       <div className="ModalCard__in">
         <div className="ModalCard__container">
@@ -99,5 +99,5 @@ ModalCard.defaultProps = {
 
 export default withAdaptivity(withPlatform(ModalCard), {
   viewWidth: true,
-  viewHeight: true
+  viewHeight: true,
 });
