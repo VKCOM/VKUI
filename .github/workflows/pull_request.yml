@@ -3,6 +3,15 @@ name: 'Pull Request'
 on: ['pull_request']
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: yarn install --frozen-lockfile
+      - run: yarn test:static
   test:
     runs-on: ubuntu-latest
     steps:
@@ -11,7 +20,7 @@ jobs:
         with:
           node-version: 12
       - run: yarn install --frozen-lockfile
-      - run: yarn test
+      - run: yarn test:unit
   styleguide:
     runs-on: ubuntu-latest
     steps:

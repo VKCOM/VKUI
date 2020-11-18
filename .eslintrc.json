@@ -16,7 +16,8 @@
   "env": {
     "es6": true, // Enable global es6 variables, like Set, Map, etc
     "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "rules": {
     "@typescript-eslint/explicit-member-accessibility": "off",
