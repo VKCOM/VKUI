@@ -1,0 +1,21 @@
+.ModalDismissButton {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 48px;
+  height: 48px;
+  color: var(--placeholder_icon_foreground_primary);
+  justify-content: center;
+}
+
+.ModalDismissButton--side {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: 14px;
+  padding: 4px;
+  background-color: rgba(0, 0, 0, .35);
+  color: var(--white);
+  border-radius: 50%;
+  right: -42px;
+}
