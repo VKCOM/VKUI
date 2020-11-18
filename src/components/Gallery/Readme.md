@@ -6,11 +6,13 @@
       super(props);
 
       this.state = {
-        slideIndex: 0
+        slideIndex: 0,
+        draggable: true
       }
     }
 
     render () {
+      const { draggable, slideIndex } = this.state
       return (
         <View activePanel="gallery">
           <Panel id="gallery">
@@ -64,16 +66,23 @@
                 slideWidth="90%"
                 align="center"
                 style={{ height: 150 }}
-                slideIndex={this.state.slideIndex}
-                onChange={slideIndex => this.setState({slideIndex})}
+                slideIndex={slideIndex}
+                // TODO: (() => {})
+                onChange={draggable ? slideIndex => this.setState({slideIndex}) : (() => {})}
               >
                 <div style={{ backgroundColor: 'var(--destructive)' }} />
                 <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
-              <Div>
-                <Button onClick={() => this.setState({slideIndex: this.state.slideIndex === 2 ? 0 : this.state.slideIndex + 1 })}>Next slide</Button>
-              </Div>
+
+              <Checkbox checked={draggable} onChange={e => this.setState({ draggable: e.target.checked })}>
+                draggable
+              </Checkbox>
+              <FormItem>
+                <Button size='l' stretch onClick={() => this.setState({ slideIndex: (slideIndex + 1) % 3 })}>
+                  Next slide
+                </Button>
+              </FormItem>
             </Group>
           </Panel>
         </View>

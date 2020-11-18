@@ -54,10 +54,6 @@ class Gallery extends Component<GalleryProps, GalleryState> {
 
     const current = typeof props.slideIndex === 'number' ? props.slideIndex : props.initialSlideIndex;
 
-    if (!this.props.onChange && typeof this.props.slideIndex === 'number') {
-      this.logControlledError();
-    }
-
     this.state = {
       containerWidth: 0,
       current,
@@ -87,10 +83,6 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     align: 'left',
     bullets: false,
   };
-
-  logControlledError() {
-    console.error('Failed prop type: You provided a `slideIndex` prop to `Gallery` without an `onChange` handler.');
-  }
 
   get isCenterWithCustomWidth() {
     return this.props.slideWidth === 'custom' && this.props.align === 'center';
@@ -232,25 +224,16 @@ class Gallery extends Component<GalleryProps, GalleryState> {
   }
 
   go(targetIndex: number) {
-    if (typeof this.props.slideIndex === 'number' && !this.props.onChange) {
-      this.logControlledError();
-      this.setState({
-        animation: true,
-        deltaX: 0,
-        shiftX: this.calculateIndent(this.state.current),
-      });
-    } else {
-      this.setState({
-        animation: true,
-        deltaX: 0,
-        shiftX: this.calculateIndent(targetIndex),
-        current: targetIndex,
-      });
+    this.setState({
+      animation: true,
+      deltaX: 0,
+      shiftX: this.calculateIndent(targetIndex),
+      current: targetIndex,
+    });
 
-      if (this.timeout) {
-        this.clearTimeout();
-        this.setTimeout(this.props.timeout);
-      }
+    if (this.timeout) {
+      this.clearTimeout();
+      this.setTimeout(this.props.timeout);
     }
   };
 
@@ -411,6 +394,12 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       WebkitTransition: animation ? `-webkit-transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none',
       transition: animation ? `transform ${duration}s cubic-bezier(.1, 0, .25, 1)` : 'none',
     };
+    const isDraggable = typeof slideIndex !== 'number' || onChange;
+    const touchHandlers = isDraggable ? {
+      onStartX: this.onStart,
+      onMoveX: this.onMoveX,
+      onEnd: this.onEnd,
+    } : {};
 
     return (
       <div {...restProps} className={classNames(getClassName('Gallery', platform), className, `Gallery--${align}`, {
@@ -419,9 +408,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       })} ref={this.getRootRef}>
         <Touch
           className="Gallery__viewport"
-          onStartX={this.onStart}
-          onMoveX={this.onMoveX}
-          onEnd={this.onEnd}
+          {...touchHandlers}
           noSlideClick
           style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           getRootRef={this.getViewportRef}
