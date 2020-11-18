@@ -33,16 +33,6 @@
   pointer-events: initial;
 }
 
-.ModalCard__dismiss {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 48px;
-  height: 48px;
-  color: var(--placeholder_icon_foreground_primary);
-  justify-content: center;
-}
-
 .ModalCard__header,
 .ModalCard__subheader {
   text-align: center;
@@ -160,10 +150,6 @@
   box-shadow:
           0 16px 16px rgba(0, 0, 0, .16),
           0 0 8px rgba(0, 0, 0, .12);
-}
-
-.ModalCard--desktop .ModalCard__dismiss {
-  position: absolute;
 }
 
 /**
