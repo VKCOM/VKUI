@@ -228,19 +228,9 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   handleOptionHover: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
-    const { options } = this.props;
-    const label = e.currentTarget.title;
-
-    if (!label) {
-      return;
-    }
-
-    const index = options.findIndex(
-      (option) => option.label === label);
-
-    this.setState(() => ({
-      focusedOptionIndex: index,
-    }));
+    this.setState({
+      focusedOptionIndex: Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget),
+    });
   };
 
   handleOptionDown: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
@@ -326,7 +316,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     const selected = index === selectedOptionIndex;
 
     return (
-      <React.Fragment key={index}>
+      <React.Fragment key={`${option.value}`}>
         {renderOption({
           option,
           hovered,
@@ -366,6 +356,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       onBlur,
       onFocus,
       renderOption,
+      children,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -401,7 +392,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           value={value}
           className="CustomSelect__control"
         >
-          {options.map((item) => <option key={item.label} value={item.value} />)}
+          {options.map((item) => <option key={`${item.value}`} value={item.value} />)}
         </select>
         {opened &&
         <div
