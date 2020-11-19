@@ -39,14 +39,12 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     updateModalHeight();
   }, [children]);
 
-  const isDesktop = viewWidth >= ViewWidth.TABLET;
-  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
-  const centered = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.REGULAR;
+  const isDesktop = viewWidth >= ViewWidth.TABLET && viewHeight >= ViewHeight.REGULAR;
+  const canShowCloseBtn = viewWidth >= ViewWidth.TABLET;
 
   return (
     <div className={classNames(getClassName('ModalPage', platform), className, {
       'ModalPage--desktop': isDesktop,
-      'ModalPage--centered': centered,
     })}>
       <div className="ModalPage__in-wrap">
         <div className="ModalPage__in">
@@ -72,5 +70,5 @@ ModalPage.defaultProps = {
 
 export default withAdaptivity(ModalPage, {
   viewWidth: true,
-  viewHeight: true
+  viewHeight: true,
 });
