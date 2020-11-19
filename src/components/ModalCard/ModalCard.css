@@ -33,6 +33,16 @@
   pointer-events: initial;
 }
 
+.ModalCard__dismiss {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 48px;
+  height: 48px;
+  color: var(--placeholder_icon_foreground_primary);
+  justify-content: center;
+}
+
 .ModalCard__header,
 .ModalCard__subheader {
   text-align: center;
