@@ -9,7 +9,7 @@ export const TABLET_SIZE = 1024;
 export const SMALL_TABLET_SIZE = 768;
 export const MOBILE_SIZE = 320;
 
-export const REGULAR_HEIGHT = 720;
+export const MEDIUM_HEIGHT = 720;
 
 export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const adaptivityRef = useRef<AdaptivityContextInterface>(null);
@@ -64,7 +64,7 @@ AdaptivityProvider.defaultProps = {
 
 function calculateAdaptivity(windowWidth: number, windowHeight: number, props: AdaptivityProviderProps) {
   let viewWidth = ViewWidth.SMALL_MOBILE;
-  let viewHeight = ViewHeight.COMPACT;
+  let viewHeight = ViewHeight.SMALL;
   let sizeY = SizeType.REGULAR;
   let sizeX = SizeType.REGULAR;
 
@@ -83,10 +83,10 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
     sizeY = SizeType.COMPACT;
   }
 
-  if (windowHeight >= REGULAR_HEIGHT) {
-    viewHeight = ViewHeight.REGULAR;
+  if (windowHeight >= MEDIUM_HEIGHT) {
+    viewHeight = ViewHeight.MEDIUM;
   } else {
-    viewHeight = ViewHeight.COMPACT;
+    viewHeight = ViewHeight.SMALL;
     sizeY = SizeType.COMPACT;
   }
 

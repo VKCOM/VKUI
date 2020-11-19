@@ -15,7 +15,7 @@ export interface ModalRootProps extends HasChildren, AdaptivityProps {
 
 const ModalRootComponent: FC<ModalRootProps> = (props) => {
   const { viewWidth, viewHeight } = props;
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.REGULAR;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.MEDIUM;
 
   const RootComponent = isDesktop ? ModalRootDesktop : ModalRootTouch;
 

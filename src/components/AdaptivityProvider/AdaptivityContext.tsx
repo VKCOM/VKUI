@@ -14,8 +14,8 @@ export enum ViewWidth {
 }
 
 export enum ViewHeight {
-  COMPACT = 1,
-  REGULAR
+  SMALL = 1,
+  MEDIUM
 }
 
 export interface AdaptivityContextInterface {
