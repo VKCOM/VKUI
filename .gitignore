@@ -13,3 +13,5 @@ PUBLISHING.md
 .idea/markdown-navigator.xml
 docs/
 .vscode/
+test-results.json
+lint-results.json
