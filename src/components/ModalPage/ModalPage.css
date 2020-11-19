@@ -30,7 +30,7 @@
 }
 
 .ModalPage__in {
-  width: 700px;
+  width: 416px;
   max-width: 100%;
   margin: 0 auto;
   background: var(--background_content);
@@ -121,7 +121,6 @@
 }
 
 .ModalPage--desktop .ModalPage__in {
-  width: 416px;
   height: auto;
   max-height: 640px;
   box-shadow:
