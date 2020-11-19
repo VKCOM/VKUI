@@ -13,7 +13,9 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn test:unit:ci
       - run: yarn test:static
+        if: always()
       - name: Create test report
+        if: always()
         run: yarn danger ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
