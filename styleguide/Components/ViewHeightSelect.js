@@ -3,7 +3,7 @@ import {
   REGULAR_HEIGHT,
 } from '../../src/components/AdaptivityProvider/AdaptivityProvider';
 
-const COMPACT_HEIGHT = 500;
+const COMPACT_HEIGHT = 667;
 
 export const ViewHeightSelect = ({ onChange, value }) => (
   <Fragment>
