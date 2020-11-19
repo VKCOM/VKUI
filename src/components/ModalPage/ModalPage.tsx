@@ -39,7 +39,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     updateModalHeight();
   }, [children]);
 
-  const isDesktop = viewWidth >= ViewWidth.TABLET && viewHeight >= ViewHeight.REGULAR;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.REGULAR;
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   return (
