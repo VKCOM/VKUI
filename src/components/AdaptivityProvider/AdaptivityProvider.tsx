@@ -87,6 +87,7 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
     viewHeight = ViewHeight.REGULAR;
   } else {
     viewHeight = ViewHeight.COMPACT;
+    sizeY = SizeType.COMPACT;
   }
 
   props.viewWidth && (viewWidth = props.viewWidth);
