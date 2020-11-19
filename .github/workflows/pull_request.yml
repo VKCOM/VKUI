@@ -11,9 +11,7 @@ jobs:
         with:
           node-version: 12
       - uses: bahmutov/npm-install@v1
-      - run: yarn test:unit:ci
-      - run: yarn test:static
-        if: always()
+      - run: yarn test:ci
       - name: Create test report
         if: always()
         run: yarn danger ci

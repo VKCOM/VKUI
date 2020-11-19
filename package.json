@@ -104,8 +104,12 @@
     "clear": "shx rm -rf dist/*",
     "test:unit": "jest",
     "test:unit:ci": "jest --ci --silent --outputFile test-results.json --json",
-    "test:static": "concurrently 'tsc --noEmit' 'eslint --ext .jsx,.js,.ts,.tsx src/' 'stylelint \"./src/**/*.css\"'",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
+    "lint:ci": "yarn lint -o lint-results.json -f json",
+    "test:static": "concurrently 'tsc --noEmit' 'yarn lint' 'stylelint \"./src/**/*.css\"'",
+    "test:static:ci": "concurrently 'tsc --noEmit' 'yarn lint:ci' 'stylelint \"./src/**/*.css\"'",
     "test": "concurrently 'yarn test:unit' 'yarn test:static'",
+    "test:ci": "concurrently 'yarn test:unit:ci' 'yarn test:static:ci'",
     "copy-default-scheme": "shx cp ./src/styles/bright_light.css ./dist/default_scheme.css"
   },
   "pre-commit": [
