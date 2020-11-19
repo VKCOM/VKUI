@@ -8,6 +8,7 @@ import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
+import { ViewHeightSelect } from './ViewHeightSelect';
 import { SizeYSelect } from './SizeYSelect';
 import { VKCOM } from '../../src/lib/platform';
 
@@ -47,6 +48,11 @@ export function PathlineRenderer({ classes, children }) {
               value={styleGuideContext.width}
               isWide={!styleGuideContext.hasSidebar}
               isVKCOM={styleGuideContext.platform === VKCOM}
+            />
+            &nbsp;|&nbsp;
+            <ViewHeightSelect
+              onChange={(e) => styleGuideContext.setContext({ height: Number(e.target.value) })}
+              value={styleGuideContext.height}
             />
             &nbsp;|&nbsp;
             <SizeYSelect
