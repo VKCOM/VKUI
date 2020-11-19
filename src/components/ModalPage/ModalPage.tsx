@@ -57,8 +57,8 @@ const ModalPage: FC<ModalPageProps> = (props) => {
               {children}
             </div>
           </div>
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
         </div>
-        {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
       </div>
     </div>
   );

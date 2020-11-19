@@ -34,7 +34,7 @@
   max-width: 100%;
   margin: 0 auto;
   background: var(--background_content);
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   box-sizing: border-box;
   height: 100%;
