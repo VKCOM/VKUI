@@ -165,6 +165,7 @@ class App extends React.Component {
 
         <ModalPage
           id={MODAL_PAGE_COUNTRIES}
+          onClose={this.modalBack}
           header={
             <ModalPageHeader
               left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
@@ -190,6 +191,7 @@ class App extends React.Component {
 
         <ModalPage
           id={MODAL_PAGE_STORY_FEEDBACK}
+          onClose={this.modalBack}
           header={
             <ModalPageHeader
               left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
@@ -214,6 +216,7 @@ class App extends React.Component {
 
         <ModalPage
           id={MODAL_PAGE_USER_INFO}
+          onClose={this.modalBack}
           header={
             <ModalPageHeader
               left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
