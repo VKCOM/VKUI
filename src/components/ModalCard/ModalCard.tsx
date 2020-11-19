@@ -62,7 +62,7 @@ const ModalCard: FC<ModalCardProps> = (props) => {
   } = props;
 
   const isDesktop = viewWidth >= ViewWidth.TABLET && viewHeight >= ViewHeight.REGULAR;
-  const canShowCloseBtn = platform === IOS || viewWidth >= ViewWidth.TABLET;
+  const canShowCloseBtn = platform === IOS || viewWidth >= ViewWidth.SMALL_TABLET;
 
   return (
     <div className={classNames(getClassName('ModalCard', platform), {

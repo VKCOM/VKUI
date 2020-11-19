@@ -40,7 +40,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
   }, [children]);
 
   const isDesktop = viewWidth >= ViewWidth.TABLET && viewHeight >= ViewHeight.REGULAR;
-  const canShowCloseBtn = viewWidth >= ViewWidth.TABLET;
+  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   return (
     <div className={classNames(getClassName('ModalPage', platform), className, {
