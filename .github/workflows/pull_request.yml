@@ -12,6 +12,7 @@ jobs:
           node-version: 12
       - uses: bahmutov/npm-install@v1
       - run: yarn test:ci
+      - run: yarn test:e2e
       - name: Create test report
         if: always()
         run: yarn danger ci

@@ -4,7 +4,8 @@ coverage
 .env
 npm-debug.log
 stats.json
-dist/
+dist/*
+!e2e/dist/index.html
 src/styles/generated/
 PUBLISHING.md
 .idea/workspace.xml

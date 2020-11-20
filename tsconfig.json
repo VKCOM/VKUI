@@ -16,5 +16,10 @@
     "noImplicitAny": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.spec.ts", "src/**/*.spec.tsx"]
+  "exclude": [
+    "node_modules", 
+    "src/**/*.test.ts", "src/**/*.test.tsx", 
+    "src/**/*.spec.ts", "src/**/*.spec.tsx", 
+    "src/**/*.e2e.ts", "src/**/*.e2e.tsx",
+  ]
 }

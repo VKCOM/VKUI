@@ -1,11 +1,14 @@
 {
-  "extends": ["@vkontakte/eslint-config/typescript/react"],
+  "extends": [
+    "@vkontakte/eslint-config/typescript/react",
+    "plugin:jest-playwright/recommended"
+  ],
   "parserOptions": {
     "project": "./tsconfig.eslint.json",
-    "ecmaVersion": 2018,  // Allows for the parsing of modern ECMAScript features
-    "sourceType": "module",  // Allows for the use of imports
+    "ecmaVersion": 2018,
+    "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true,  // Allows for the parsing of JSX
+      "jsx": true,
       "restParams": true,
       "spread": true
     }
@@ -14,7 +17,7 @@
     "Element": true
   },
   "env": {
-    "es6": true, // Enable global es6 variables, like Set, Map, etc
+    "es6": true,
     "browser": true,
     "node": true,
     "jest": true
