@@ -8,18 +8,10 @@
   justify-content: center;
 }
 
-.HorizontalCell__title {
+.HorizontalCell__content {
   word-break: break-all;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.HorizontalCell__subtitle {
-  word-break: break-all;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  color: var(--text_secondary);
-  line-height: 18px;
 }
 
 .HorizontalCell--s {
