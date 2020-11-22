@@ -14,6 +14,11 @@
   overflow: hidden;
 }
 
+.HorizontalCell__subtitle {
+  color: var(--text_secondary);
+  line-height: 18px;
+}
+
 .HorizontalCell--s {
   width: 72px;
 }
