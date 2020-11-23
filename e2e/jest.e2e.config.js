@@ -1,4 +1,5 @@
-const base = require('./jest.config')
+const base = require('../jest.config')
+const path = require('path');
 
 module.exports = {
   ...base,
@@ -7,13 +8,18 @@ module.exports = {
   collectCoverage: false,
   setupFilesAfterEnv: [
     ...(base.setupFilesAfterEnv || []),
-    './e2e/matchers.ts'
+    './jest/matchers.ts'
   ],
-  testEnvironment: './e2e/react-playwright.js',
+  globalSetup: './jest/globalSetup.js',
+  globalTeardown: './jest/globalTeardown.js',
+  testEnvironment: './jest/jsdomPlaywrightEnv.js',
   testEnvironmentOptions: {
     ...(base.testEnvironmentOptions || {}),
     'jest-playwright': {
       collectCoverage: true
     },
+  },
+  moduleNameMapper: {
+    '@react-playwright': path.join(__dirname, 'index.ts'),
   },
 }

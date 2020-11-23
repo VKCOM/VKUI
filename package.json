@@ -111,7 +111,7 @@
     "clear": "shx rm -rf dist/*",
     "test:unit": "jest",
     "test:unit:ci": "jest --ci --silent --outputFile test-results.json --json --coverageReporters='json-summary'",
-    "test:e2e": "yarn postcss && cp dist/*.css e2e/dist && jest --config jest.e2e.config.js",
+    "test:e2e": "yarn postcss && cp dist/*.css e2e/dist && jest --config e2e/jest.e2e.config.js",
     "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
     "lint:ci": "yarn lint -o lint-results.json -f json",
     "test:static": "concurrently 'tsc --noEmit' 'yarn lint' 'stylelint \"./src/**/*.css\"'",

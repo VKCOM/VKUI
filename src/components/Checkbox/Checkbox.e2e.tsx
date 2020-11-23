@@ -1,10 +1,10 @@
-import { screenshot } from '../../../e2e';
+import React from 'react';
+import { screenshot } from '@react-playwright';
+import { Checkbox } from './Checkbox';
 
 describe('Checkbox', () => {
   test('should render', async () => {
-    console.log('executing test');
-    expect(true).toBe(true);
-    const screen = await screenshot(({ Checkbox, React }) => <Checkbox>label</Checkbox>);
+    const screen = await screenshot(<Checkbox>label</Checkbox>);
     expect(screen).toMatchImageSnapshot();
   });
 });

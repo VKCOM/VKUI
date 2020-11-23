@@ -1,5 +1,6 @@
+const path = require('path');
 module.exports = {
-  roots: ['src'],
+  roots: [path.join(__dirname, 'src')],
   collectCoverage: true,
   collectCoverageFrom: ['src/*/**/*.{ts,tsx}'],
   coveragePathIgnorePatterns: [
