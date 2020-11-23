@@ -111,9 +111,13 @@
 /* Advertisement */
 @import '../components/PromoBanner/PromoBanner.css';
 
-html,
-body,
-div#root {
+.vkui > body {
+  overflow-x: hidden;
+}
+
+.vkui,
+.vkui > body,
+.vkui-root {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -125,25 +129,21 @@ div#root {
   color: var(--text_primary);
 }
 
-body {
-  overflow-x: hidden;
-}
-
 .vkui-sizeX-regular {
   background: var(--background_page);
 }
 
-input,
-textarea,
-select,
-button {
+.vkui-root input,
+.vkui-root textarea,
+.vkui-root select,
+.vkui-root button {
   font-family: inherit;
   }
 
-#root {
+.vkui-root {
   user-select: none;
   }
 
-a:focus {
+.vkui-root a:focus {
   outline: none;
   }
