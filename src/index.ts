@@ -1,5 +1,7 @@
 import './lib/polyfills';
 
+export { default as AppRoot } from './components/AppRoot/AppRoot';
+
 /**
  * Layout
  */
