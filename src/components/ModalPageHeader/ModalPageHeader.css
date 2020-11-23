@@ -23,7 +23,7 @@
 
 .ModalPage--ios .ModalPageHeader__in {
   height: var(--modalheader_height_ios);
-  padding: 0 2px;
+  padding: 0 4px;
 }
 
 .ModalPageHeader__left,
