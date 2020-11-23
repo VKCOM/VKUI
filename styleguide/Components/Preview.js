@@ -5,7 +5,7 @@ import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/Playgr
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
-import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AdaptivityProvider, ConfigProvider } from '../../src';
+import { VKCOM, AppRoot, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AdaptivityProvider, ConfigProvider } from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -46,6 +46,24 @@ class PrepareFrame extends React.Component {
     };
 
     head.appendChild(link);
+
+    this.updateVKUIClasses(this.props.integration);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.integration !== this.props.integration) {
+      this.updateVKUIClasses(this.props.integration);
+    }
+  }
+
+  updateVKUIClasses(integration) {
+    if (integration === "embeded") {
+      this.context.document.documentElement.classList.remove("vkui");
+      this.context.document.querySelector("#root").classList.remove("vkui-root");
+    } else {
+      this.context.document.documentElement.classList.add("vkui");
+      this.context.document.querySelector("#root").classList.add("vkui-root");
+    }
   }
 
   render () {
@@ -92,6 +110,7 @@ export default class Preview extends PreviewParent {
         <PlaygroundError message={error} /> :
         <StyleGuideContext.Consumer>
           {(styleGuideContext) => {
+            const isEmbeded = styleGuideContext.integration === "embeded";
             return (
               <ReactFrame
                 mountTarget="body"
@@ -100,29 +119,52 @@ export default class Preview extends PreviewParent {
                   width: styleGuideContext.width,
                   border: '1px solid rgba(0, 0, 0, .12)',
                   display: 'block',
-                  margin: 'auto'
+                  margin: 'auto',
                 }}
               >
-                <PrepareFrame>
-                  {({ window }) => (
-                    <ConfigProvider
-                      platform={styleGuideContext.platform}
-                      scheme={styleGuideContext.scheme}
-                      webviewType={styleGuideContext.webviewType}
-                    >
-                      <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY}>
-                        <Layout>
-                          <ReactExample
-                            code={code}
-                            evalInContext={this.props.evalInContext}
-                            onError={this.handleError}
-                            compilerConfig={this.context.config.compilerConfig}
-                          />
-                        </Layout>
-                      </AdaptivityProvider>
-                    </ConfigProvider>
-                  )}
-                </PrepareFrame>
+                  <div className={isEmbeded ? "vkui-root" : ""} style={isEmbeded ? {
+                    border: '1px solid #000',
+                    height: 600,
+                    margin: 16,
+                    position: 'relative',
+                    overflow: 'hidden',
+                  } : {
+                    height: "100%"
+                  }}>
+                  <PrepareFrame integration={styleGuideContext.integration}>
+                    {({ window }) => (
+                      <ConfigProvider
+                        platform={styleGuideContext.platform}
+                        scheme={styleGuideContext.scheme}
+                        webviewType={styleGuideContext.webviewType}
+                      >
+                        <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY}>
+                          {isEmbeded ? (
+                            <Layout>
+                              <ReactExample
+                                code={code}
+                                evalInContext={this.props.evalInContext}
+                                onError={this.handleError}
+                                compilerConfig={this.context.config.compilerConfig}
+                              />
+                            </Layout>
+                          ) : (
+                            <AppRoot>
+                              <Layout>
+                                <ReactExample
+                                  code={code}
+                                  evalInContext={this.props.evalInContext}
+                                  onError={this.handleError}
+                                  compilerConfig={this.context.config.compilerConfig}
+                                />
+                              </Layout>
+                            </AppRoot>
+                          )}
+                        </AdaptivityProvider>
+                      </ConfigProvider>
+                    )}
+                  </PrepareFrame>
+                </div>
               </ReactFrame>
             )
           }}
