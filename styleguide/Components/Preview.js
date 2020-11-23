@@ -57,7 +57,7 @@ class PrepareFrame extends React.Component {
   }
 
   updateVKUIClasses(integration) {
-    if (integration === "embeded") {
+    if (integration === "embedded") {
       this.context.document.documentElement.classList.remove("vkui");
       this.context.document.querySelector("#root").classList.remove("vkui-root");
     } else {
@@ -110,7 +110,7 @@ export default class Preview extends PreviewParent {
         <PlaygroundError message={error} /> :
         <StyleGuideContext.Consumer>
           {(styleGuideContext) => {
-            const isEmbeded = styleGuideContext.integration === "embeded";
+            const isEmbedded = styleGuideContext.integration === "embedded";
             return (
               <ReactFrame
                 mountTarget="body"
@@ -122,7 +122,7 @@ export default class Preview extends PreviewParent {
                   margin: 'auto',
                 }}
               >
-                  <div className={isEmbeded ? "vkui-root" : ""} style={isEmbeded ? {
+                  <div className={isEmbedded ? "vkui-root" : ""} style={isEmbedded ? {
                     border: '1px solid #000',
                     height: 600,
                     margin: 16,
@@ -139,7 +139,7 @@ export default class Preview extends PreviewParent {
                         webviewType={styleGuideContext.webviewType}
                       >
                         <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY}>
-                          {isEmbeded ? (
+                          {isEmbedded ? (
                             <Layout>
                               <ReactExample
                                 code={code}

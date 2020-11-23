@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-const schemeOptions = ["full", "embeded"].map((schemeId) => (
+const schemeOptions = ["full", "embedded"].map((schemeId) => (
   <option value={schemeId} key={schemeId}>{schemeId}</option>
 ))
 
