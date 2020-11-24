@@ -193,13 +193,13 @@
  */
 
 .SimpleCell--sizeY-compact {
-  min-height: 40px;
+  min-height: 44px;
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__main,
 .SimpleCell--sizeY-compact .SimpleCell__indicator {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .SimpleCell--sizeY-compact > .Avatar--sz-40 {
@@ -215,8 +215,8 @@
 .SimpleCell--sizeY-compact > .Icon,
 .SimpleCell--sizeY-compact > .Avatar--sz-32,
 .SimpleCell--sizeY-compact > .Avatar--sz-28 {
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .SimpleCell--sizeY-compact,
