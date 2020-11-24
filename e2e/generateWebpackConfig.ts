@@ -12,7 +12,7 @@ async function generateWebpackConfig() {
     ...baseWebpackConfig,
     entry: {
       main: [path.resolve(__dirname, 'browser/runtime.ts'), ...testFiles],
-      vkui: [path.resolve(__dirname, '../src/styles/styles.css')],
+      vkui: [path.resolve(__dirname, 'styles.test.css')],
     },
     output: {
       ...output,
@@ -37,7 +37,7 @@ async function generateWebpackConfig() {
           test: /\.css$/i,
           use: [
             { loader: MiniCssExtractPlugin.loader },
-            'css-loader',
+            { loader: 'css-loader', options: { url: false } },
             'postcss-loader',
           ],
         },
