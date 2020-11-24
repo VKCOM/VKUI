@@ -13,6 +13,10 @@
   transition: opacity .15s ease-out;
 }
 
+.ModalDismissButton--ios {
+  top: 12px;
+}
+
 .ModalDismissButton.Tappable--shadowHovered {
   opacity: .6;
 }
