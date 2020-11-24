@@ -1,44 +1,33 @@
 .FormStatus {
   border-radius: 10px;
-  padding: 14px 12px;
+  padding: 12px;
   background: var(--field_background);
-  color: var(--text_primary);
-  }
+  color: var(--text_subhead);
+}
 
-.FormStatus--sizeY-compact {
-  padding-top: 12px;
-  padding-bottom: 12px;
+.FormStatus__header,
+.FormStatus b:first-child {
+  color: var(--text_primary);
+}
+
+.FormStatus__header:not(:last-child),
+.FormStatus b:first-child {
+  margin-bottom: 2px;
 }
 
 .FormStatus--error {
   background: var(--field_error_background);
   color: var(--field_error_border);
-  }
+}
 
-  .FormStatus__header {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.25;
-    margin-top: -2px;
-    }
+.FormStatus--error .FormStatus__header,
+.FormStatus--error .FormStatus b:first-child {
+  color: currentColor;
+}
 
-  .FormStatus__header:not(:last-child) {
-    margin-bottom: 2px;
-    }
-
-  .FormStatus__content {
-    font-size: 13px;
-    line-height: 16px;
-    }
-
-    .FormStatus__content b {
-      font-weight: 500;
-      }
-
-/**
- * VKCOM
- */
-
-.FormStatus--vkcom.FormStatus--default .FormStatus__content {
-  color: var(--text_subhead);
+.FormStatus b:first-child { /* хак для ошибок из API, текст в которых приходит с <b>в начале</b> */
+  display: block;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
 }
