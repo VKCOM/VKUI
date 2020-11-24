@@ -26,7 +26,7 @@ async function generateWebpackConfig() {
     devServer: {
       ...devServer,
       contentBase: path.join(__dirname, 'dist'),
-    }
+    },
   };
 };
 

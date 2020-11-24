@@ -10,9 +10,9 @@ module.exports = {
     ...(base.setupFilesAfterEnv || []),
     './jest/matchers.ts'
   ],
-  globalSetup: './jest/globalSetup.js',
-  globalTeardown: './jest/globalTeardown.js',
-  testEnvironment: './jest/jsdomPlaywrightEnv.js',
+  globalSetup: './jest/globalSetup.ts',
+  globalTeardown: './jest/globalTeardown.ts',
+  testEnvironment: './jest/jsdomPlaywrightEnv.ts',
   testEnvironmentOptions: {
     ...(base.testEnvironmentOptions || {}),
     'jest-playwright': {
