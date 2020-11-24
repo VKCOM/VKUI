@@ -1,7 +1,7 @@
 .Progress {
-  border-radius: 2px;
-  background: var(--placeholder_icon_background);
-  height: 4px;
+  border-radius: 1px;
+  background: var(--loader_track_fill);
+  height: 2px;
   }
 
 .Progress__in {
@@ -9,9 +9,4 @@
   border-radius: inherit;
   transition: width .2s ease;
   background: var(--accent);
-}
-
-.Progress--sizeY-compact {
-  height: 2px;
-  border-radius: 1px;
 }
