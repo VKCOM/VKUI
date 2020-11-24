@@ -35,14 +35,18 @@
   max-height: 160px;
 }
 
-.CustomSelect__selectedIcon {
+.CustomSelectOption__selectedIcon {
   position: absolute;
   top: 15px;
   right: 12px;
 }
 
 .CustomSelect__options--sizeY-compact .CustomSelectOption {
-  height: 40px;
-  padding: 10px 11px;
+  height: 36px;
+  padding: 10px 9px;
   font-size: 15px;
+}
+
+.CustomSelect__options--sizeY-compact .CustomSelectOption__selectedIcon {
+  top: 11px;
 }
