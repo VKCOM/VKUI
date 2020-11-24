@@ -93,8 +93,8 @@
 
 .Select--sizeY--compact .Select__container {
   height: 34px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 7px;
+  padding-bottom: 7px;
   font-size: 15px;
   line-height: 20px;
 }
