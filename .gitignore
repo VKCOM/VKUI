@@ -16,3 +16,4 @@ docs/
 .vscode/
 test-results.json
 lint-results.json
+.nyc_output
