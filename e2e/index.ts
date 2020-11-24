@@ -11,5 +11,7 @@ export async function mount(jsx: ReactElement) {
 
 export async function screenshot(jsx: ReactElement) {
   await mount(jsx);
-  return page.screenshot({ fullPage: true });
+  const wrapper = await page.$('#mount');
+  const { width, height } = await wrapper.boundingBox();
+  return page.screenshot({ fullPage: true, clip: { x: 0, y: 0, width, height } });
 }
