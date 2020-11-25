@@ -2,6 +2,8 @@ import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import baseSetup from 'jest-playwright-preset/setup';
 import { generateWebpackConfig } from '../generateWebpackConfig';
+import { useDocker } from '../detectEnv';
+import { startDocker } from '../docker';
 
 let devServer: WebpackDevServer;
 async function setupWebpack() {
@@ -27,6 +29,7 @@ async function setupWebpack() {
   devServer = new WebpackDevServer(compiler, {
     noInfo: true,
     stats: 'minimal',
+    disableHostCheck: true,
     ...webpackConfig.devServer,
   });
   devServer.listen(9000);
@@ -43,5 +46,10 @@ module.exports = async function setup(jestConfig) {
   }
 
   await setupWebpack();
+  if (useDocker) {
+    console.log('Starting dockerized chrome...');
+    await startDocker();
+    console.log('Running E2E tests in docker');
+  }
   await baseSetup(jestConfig);
 };

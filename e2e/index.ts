@@ -1,8 +1,10 @@
 import { ReactElement } from 'react';
+import { useDocker } from './detectEnv';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function mount(jsx: ReactElement) {
-  await page.goto('http://localhost:9000');
+  const host = useDocker ? 'host.docker.internal' : 'localhost';
+  await page.goto(`http://${host}:9000`);
   const testName = expect.getState().currentTestName;
   await page.evaluate(({ testName }) => {
     window['testHandle'].mount(testName);

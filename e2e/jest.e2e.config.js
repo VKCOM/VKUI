@@ -1,7 +1,22 @@
 const base = require('../jest.unit.config')
 const path = require('path');
+const chalk = require('chalk');
+const { canRunTests, useDocker } = require('./detectEnv');
 
-module.exports = {
+const jestPlaywrightOptions = Object.assign({
+  collectCoverage: true,
+  contextOptions: {
+    viewport: {
+      width: 800,
+      height: 600,
+    },
+  }
+}, useDocker ? {
+  connectOptions: {
+    wsEndpoint: 'ws://localhost:9001/playwright',
+  },
+} : {});
+const config = {
   ...base,
   displayName: 'e2e',
   testMatch: ['**/*.e2e.{ts,tsx}'],
@@ -16,11 +31,16 @@ module.exports = {
   testEnvironment: path.join(__dirname, 'jest/jsdomPlaywrightEnv.ts'),
   testEnvironmentOptions: {
     ...(base.testEnvironmentOptions || {}),
-    'jest-playwright': {
-      collectCoverage: true
-    },
+    'jest-playwright': jestPlaywrightOptions,
   },
   moduleNameMapper: {
     '@react-playwright': path.join(__dirname, 'index.ts'),
   },
+};
+
+if (!canRunTests) {
+  console.error(chalk.red.bold('E2E tests can only run in linux or docker - please install and start docker. Skipping for now.'));
+  module.exports = {};
+} else {
+  module.exports = config;
 }

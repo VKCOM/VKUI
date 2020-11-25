@@ -11701,7 +11701,7 @@ wait-on@^5.2.0:
     minimist "^1.2.5"
     rxjs "^6.5.5"
 
-wait-port@^0.2.7:
+wait-port@^0.2.7, wait-port@^0.2.9:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/wait-port/-/wait-port-0.2.9.tgz#3905cf271b5dbe37a85c03b85b418b81cb24ee55"
   integrity sha512-hQ/cVKsNqGZ/UbZB/oakOGFqic00YAMM5/PEj3Bt4vKarv2jWIWzDbqlwT94qMs/exAQAsvMOq99sZblV92zxQ==
