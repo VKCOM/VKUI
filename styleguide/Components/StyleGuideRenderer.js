@@ -6,7 +6,7 @@ import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import Link from 'react-styleguidist/lib/client/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
-import { WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
+import { Scheme, WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
@@ -98,7 +98,7 @@ try {
 function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
   const [state, setState] = useState(initialState);
 
-  const { width, platform, sizeY } = state;
+  const { width, platform, sizeY, scheme } = state;
 
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };
@@ -114,9 +114,11 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
 
   useEffect(() => {
     if (platform === VKCOM) {
-      setContext({ sizeY: SizeType.COMPACT, width: TABLET_SIZE });
+      setContext({ sizeY: SizeType.COMPACT, width: TABLET_SIZE, scheme: Scheme.VKCOM });
+    } else if (scheme === Scheme.VKCOM) {
+      setContext({ scheme: Scheme.BRIGHT_LIGHT });
     }
-  }, [platform]);
+  }, [platform, scheme]);
 
   const providerValue = useMemo(() => ({ ...state, hasSidebar, setContext }), [state, setContext, hasSidebar]);
 
@@ -137,7 +139,12 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
           <div className={classes.os}>
             <PlatformSelect onChange={ (e) => setContext({ platform: e.target.value })} value={platform} />
             <div style={{ marginTop: 4 }}>
-              <SchemeSelect onChange={ (e) => setContext({ scheme: e.target.value })} value={state.scheme} />
+              <SchemeSelect
+                onChange={ (e) => setContext({ scheme: e.target.value })}
+                value={state.scheme}
+                isVKCOM={platform === VKCOM}
+                disabled={platform === VKCOM}
+              />
             </div>
             <div style={{ marginTop: 4 }}>
               <WebviewTypeSelect
