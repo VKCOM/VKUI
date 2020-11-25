@@ -17,3 +17,4 @@ docs/
 test-results.json
 lint-results.json
 .nyc_output
+__diff_output__
