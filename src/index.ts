@@ -164,7 +164,6 @@ export { SSRWrapper } from './lib/SSR';
 export { platform, ANDROID, IOS, VKCOM, Platform, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
 export { default as getClassName } from './helpers/getClassName';
 export { ViewWidth, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
-export const v = process.env.VKUI_VERSION;
 
 /**
  * Types
