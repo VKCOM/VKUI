@@ -47,6 +47,7 @@
 }
 
 .ModalPage__content-wrap {
+  position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
