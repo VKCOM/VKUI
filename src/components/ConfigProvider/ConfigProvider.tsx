@@ -4,10 +4,10 @@ import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   Scheme,
+  AppearanceScheme,
   defaultConfigProviderProps,
 } from './ConfigProviderContext';
 import { HasChildren, DOMProps } from '../../types';
-import { AppearanceSchemeType } from '@vkontakte/vk-bridge';
 import PropTypes from 'prop-types';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
@@ -28,7 +28,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
   // https://github.com/styleguidist/react-docgen-typescript/issues/195
   public static defaultProps = { ...defaultConfigProviderProps };
 
-  mapOldScheme(scheme: AppearanceSchemeType): AppearanceSchemeType {
+  mapOldScheme(scheme: AppearanceScheme): AppearanceScheme {
     switch (scheme) {
       case Scheme.DEPRECATED_CLIENT_LIGHT:
         return Scheme.BRIGHT_LIGHT;
@@ -39,7 +39,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
-  setScheme = (scheme: AppearanceSchemeType, context: DOMProps): void => {
+  setScheme = (scheme: AppearanceScheme, context: DOMProps): void => {
     (context.document || document).body.setAttribute('scheme', scheme);
   };
 
