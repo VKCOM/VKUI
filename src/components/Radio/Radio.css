@@ -207,20 +207,14 @@
       margin-bottom: 9px;
     }
 
-.Radio--ios.Radio--sizeY-compact .Radio__children,
-.Radio--android.Radio--sizeY-compact .Radio__children,
-.Radio--vkcom.Radio--sizeY-compact .Radio__children {
+.Radio--sizeY-compact .Radio__children {
   margin-top: 8px;
 }
 
-.Radio--ios.Radio--sizeY-compact .Radio__children:last-child,
-.Radio--android.Radio--sizeY-compact .Radio__children:last-child,
-.Radio--vkcom.Radio--sizeY-compact .Radio__children:last-child {
+.Radio--sizeY-compact .Radio__children:last-child {
   margin-bottom: 8px;
 }
 
-.Radio--ios.Radio--sizeY-compact .Radio__description,
-.Radio--android.Radio--sizeY-compact .Radio__description,
-.Radio--vkcom.Radio--sizeY-compact .Radio__description {
+.Radio--sizeY-compact .Radio__description {
   margin-bottom: 7px;
 }
