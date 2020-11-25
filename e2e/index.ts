@@ -6,6 +6,7 @@ export async function mount(jsx: ReactElement) {
   const host = useDocker ? 'host.docker.internal' : 'localhost';
   await page.goto(`http://${host}:9000`);
   const testName = expect.getState().currentTestName;
+  /* istanbul ignore next */
   await page.evaluate(({ testName }) => {
     window['testHandle'].mount(testName);
   }, { testName });
