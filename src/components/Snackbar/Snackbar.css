@@ -49,13 +49,16 @@
   color: var(--text_primary);
 }
 
+.Snackbar__action {
+  margin-left: -17px;
+}
+
 .Snackbar--l-horizontal .Snackbar__action {
   margin-right: -17px;
 }
 
 .Snackbar--l-vertical .Snackbar__action {
   margin-top: 2px;
-  margin-left: -17px;
 }
 
 .ModalRoot .Snackbar {
@@ -69,7 +72,7 @@
 }
 
 .Snackbar--ios .Snackbar__in {
-  animation: animation-snackbarIntro 340ms var(--ios-easing);
+  animation: animation-snackbar-intro-vertical 340ms var(--ios-easing);
 }
 
 .Snackbar--ios .Snackbar__body {
@@ -86,7 +89,7 @@
 
 .Snackbar--android .Snackbar__in,
 .Snackbar--vkcom .Snackbar__in {
-  animation: animation-snackbarIntro 340ms var(--android-easing);
+  animation: animation-snackbar-intro-vertical 340ms var(--android-easing);
 }
 
 .Snackbar--android .Snackbar__body,
@@ -95,13 +98,14 @@
 }
 
 .Snackbar--desktop {
-  max-width: 304px;
+  max-width: 328px;
   left: 0;
   bottom: 0;
 }
 
 .Snackbar--desktop .Snackbar__in {
   padding: 12px;
+  animation-name: animation-snackbar-intro-horizontal;
 }
 
 /**
@@ -114,9 +118,19 @@
 /**
  * Animations
  */
-@keyframes animation-snackbarIntro {
+@keyframes animation-snackbar-intro-vertical {
   from {
     transform: translate3d(0, 140%, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes animation-snackbar-intro-horizontal {
+  from {
+    transform: translate3d(-100%, 0, 0);
   }
 
   to {
