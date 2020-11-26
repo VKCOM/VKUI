@@ -3,23 +3,23 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface SwitchProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
-  HasRef<HTMLInputElement> { }
+  HasRef<HTMLInputElement>,
+  AdaptivityProps { }
 
 const Switch: FunctionComponent<SwitchProps> = ({
   style,
   className,
   getRef,
   getRootRef,
+  sizeY,
   ...restProps
 }: SwitchProps) => {
   const platform = usePlatform();
-
-  const { sizeY } = useAdaptivity();
 
   return (
     <label className={classNames(
@@ -32,4 +32,4 @@ const Switch: FunctionComponent<SwitchProps> = ({
   );
 };
 
-export default Switch;
+export default withAdaptivity(Switch, { sizeY: true });

@@ -12,14 +12,14 @@ import { HasLinkProps } from '../../types';
 import Icon16Done from '@vkontakte/icons/dist/16/done';
 import Icon24Done from '@vkontakte/icons/dist/24/done';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { SizeType } from '../../hoc/withAdaptivity';
 import Caption from '../Typography/Caption/Caption';
+import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface ActionSheetItemProps extends
   HTMLAttributes<HTMLElement>,
   HasLinkProps,
-  Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'> {
+  Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'>,
+  AdaptivityProps {
   mode?: 'default' | 'destructive' | 'cancel';
   before?: React.ReactNode;
   meta?: React.ReactNode;
@@ -49,10 +49,10 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   defaultChecked,
   onChange,
   onClick,
+  sizeY,
   ...restProps
 }: ActionSheetItemProps) => {
   const platform = usePlatform();
-  const { sizeY } = useAdaptivity();
   const { onItemClick, isDesktop } = useContext(ActionSheetContext);
 
   let Component: ElementType = 'div';
@@ -156,4 +156,4 @@ ActionSheetItem.defaultProps = {
   mode: 'default',
 };
 
-export default ActionSheetItem;
+export default withAdaptivity(ActionSheetItem, { sizeY: true });
