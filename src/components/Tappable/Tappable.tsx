@@ -94,11 +94,12 @@ class Tappable extends Component<TappableProps, TappableState> {
 
   wavesTimeout: number;
 
-  static defaultProps: TappableProps = {
+  static defaultProps = {
     Component: 'div',
     role: 'button',
     stopPropagation: false,
     disabled: false,
+    hasHover,
     activeEffectDelay: ACTIVE_EFFECT_DELAY,
   };
 
@@ -350,9 +351,5 @@ class Tappable extends Component<TappableProps, TappableState> {
     );
   }
 }
-
-Tappable.defaultProps = {
-  hasHover,
-};
 
 export default withAdaptivity(withPlatform(Tappable), { sizeX: true });
