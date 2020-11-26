@@ -19,6 +19,7 @@ export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<H
   stopPropagation?: boolean;
   href?: string;
   target?: string;
+  hasHover?: boolean;
 }
 
 export interface TappableState {
@@ -289,7 +290,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   render() {
     const { clicks, active, hovered } = this.state;
     const { children, className, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, sizeX, ...restProps } = this.props;
+      stopPropagation, getRootRef, platform, sizeX, hasHover, ...restProps } = this.props;
 
     const hoverClassModificator = this.containerHasTransparentBackground()
       ? 'shadowHovered'
@@ -349,5 +350,9 @@ class Tappable extends Component<TappableProps, TappableState> {
     );
   }
 }
+
+Tappable.defaultProps = {
+  hasHover,
+};
 
 export default withAdaptivity(withPlatform(Tappable), { sizeX: true });

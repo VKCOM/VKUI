@@ -11,6 +11,8 @@ import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import Text from '../Typography/Text/Text';
+import Button from '../Button/Button';
 
 export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
@@ -101,7 +103,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     if (canUseDOM) {
       this.closeTimeout = setTimeout(() => {
         this.close();
-      }, this.props.duration);
+      }, 100000);
     }
   };
 
@@ -233,12 +235,12 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
             </div>}
 
             <div className="Snackbar__content">
-              <div className="Snackbar__content-text">{children}</div>
+              <Text weight="regular" className="Snackbar__content-text">{children}</Text>
 
               {action &&
-              <button className="Snackbar__action" onClick={this.onActionClick}>
-                <div className="Snackbar__action-self">{action}</div>
-              </button>}
+              <Button hasHover={false} mode="tertiary" size="s" className="Snackbar__action" onClick={this.onActionClick}>
+                {action}
+              </Button>}
             </div>
 
             {after &&
