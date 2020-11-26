@@ -46,6 +46,15 @@
   width: 100%;
 }
 
+.ModalPage__content-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
 .ModalPage__content {
   height: 100%;
   overflow-y: hidden;

@@ -52,9 +52,11 @@ const ModalPage: FC<ModalPageProps> = (props) => {
             {header}
           </div>
 
-          <div className="ModalPage__content">
-            <div className="ModalPage__content-in">
-              {children}
+          <div className="ModalPage__content-wrap">
+            <div className="ModalPage__content">
+              <div className="ModalPage__content-in">
+                {children}
+              </div>
             </div>
           </div>
           {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}

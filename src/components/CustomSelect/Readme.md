@@ -1,38 +1,22 @@
 Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком
 
 ```jsx
-class Example extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value: '0',
-      options: new Array(20).fill({}).map((item, index) => ({ label: String(index), value: String(index) }))
-    }
-  }
-
-  render() {
-    return (
-      <View activePanel="сustomSelect">
-        <Panel id="сustomSelect">
-          <PanelHeader>
-            CustomSelect
-          </PanelHeader>
-          <Group>
-            <FormItem>
-              <CustomSelect
-                placeholder="Не выбрано"
-                options={this.state.options}
-                value={this.state.value}
-                onChange={(e) => this.setState({ value: e.target.value })}
-              />
-            </FormItem>
-          </Group>
-        </Panel>
-      </View>
-    )
-  }
-}
-
-<Example />
+<View activePanel="select">
+  <Panel id="select">
+    <PanelHeader>
+      CustomSelect
+    </PanelHeader>
+    <Group>
+      <FormItem top="Администратор">
+        <Select
+          placeholder="Не выбран" 
+          options={getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
+          renderOption={({ option, ...restProps }) => (
+            <CustomSelectOption {...restProps} before={<Avatar size={24} src={option.avatar} />} />
+          )}
+        />
+      </FormItem>
+    </Group>
+  </Panel>
+</View>
 ```

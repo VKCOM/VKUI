@@ -1,5 +1,5 @@
 .PullToRefresh {
-  height: 100%;
+  flex-grow: 1;
   }
 
 .PullToRefresh--refreshing {
@@ -31,7 +31,7 @@
   }
 
 .PullToRefresh--ios .PullToRefresh__spinner {
-  color: var(--activity_indicator_tint);
+  color: var(--icon_outline_secondary);
   }
 
 .PullToRefresh--android .PullToRefresh__spinner,

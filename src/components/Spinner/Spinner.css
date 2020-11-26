@@ -8,36 +8,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  }
-
-.Spinner--ios {
-  color: var(--activity_indicator_tint);
-  }
-
-.Spinner--android,
-.Spinner--vkcom {
-  color: var(--accent);
-  }
+  color: var(--icon_outline_secondary);
+}
 
 .PanelHeader .Spinner {
   color: currentColor;
-  }
+}
 
-  .Spinner__self {
-    animation: rotator var(--duration) linear infinite;
-    transform-origin: center;
-    }
+.Spinner__self {
+  animation: rotator var(--duration) linear infinite;
+  transform-origin: center;
+}
 
-  .Spinner__self svg {
-    transform: scale(1);
-    }
+.Spinner__self svg {
+  transform: scale(1);
+}
 
 @keyframes rotator {
   0% {
     transform: rotate(0deg);
-    }
+  }
 
   100% {
     transform: rotate(360deg);
     }
-  }
+}

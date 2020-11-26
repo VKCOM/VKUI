@@ -72,10 +72,12 @@ const App = ({ viewWidth }) => {
 export default withAdaptivity(App, { viewWidth: true });
 ```
 
-Адаптивность базируется на трёх свойствах: `viewWidth`, `sizeX`, `sizeY`. Эти свойства вычисляются в `AdaptivityProvider`, 
-доступ к ним можно полоучить через HOC `withAdaptivty`.
+
+Адаптивность базируется на трёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства вычисляются в `AdaptivityProvider`, 
+доступ к ним можно полоучить через HOC `withAdaptivty` (либо через hook `useAdaptivity`).
 * `sizeX` и `sizeY` принимают значения `SizeType.REGULAR | SizeType.COMPACT`
 * `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`
+* `viewHeight` — `ViewHeight.SMALL | ViewHeight.MEDIUM`
 
 Нюансы:
 
