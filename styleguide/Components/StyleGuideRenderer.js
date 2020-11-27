@@ -17,6 +17,7 @@ import { ViewHeightSelect, COMPACT_HEIGHT } from './ViewHeightSelect';
 import { SizeType } from '../../src/components/AdaptivityProvider/AdaptivityContext';
 import { VKCOM } from '../../src/lib/platform';
 import { SizeYSelect } from './SizeYSelect';
+import { HasMouseCheckbox } from './HasMouseCheckbox';
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
@@ -24,6 +25,7 @@ export const StyleGuideContext = React.createContext({
   width: MOBILE_SIZE,
   height: COMPACT_HEIGHT,
   sizeY: SizeType.REGULAR,
+  hasMouse: true,
 });
 
 const styles = ({ color, fontFamily, fontSize, mq, space }) => ({
@@ -87,6 +89,7 @@ let initialState = {
   width: MOBILE_SIZE,
   height: COMPACT_HEIGHT,
   sizeY: SizeType.REGULAR,
+  hasMouse: true
 }
 
 try {
@@ -101,7 +104,7 @@ try {
 function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
   const [state, setState] = useState(initialState);
 
-  const { width, height, platform, sizeY } = state;
+  const { width, height, platform, sizeY, hasMouse } = state;
 
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };
@@ -117,7 +120,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
 
   useEffect(() => {
     if (platform === VKCOM) {
-      setContext({ sizeY: SizeType.COMPACT, width: TABLET_SIZE });
+      setContext({ sizeY: SizeType.COMPACT, width: TABLET_SIZE, hasMouse: true });
     }
   }, [platform]);
 
@@ -166,6 +169,13 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
               <SizeYSelect
                 onChange={ (e) => setContext({ sizeY: e.target.value })}
                 value={sizeY}
+                disabled={platform === VKCOM}
+              />
+            </div>
+            <div style={{ marginTop: 4 }}>
+              <HasMouseCheckbox
+                onChange={ (e) => setContext({ hasMouse: e.target.checked })}
+                value={hasMouse}
                 disabled={platform === VKCOM}
               />
             </div>

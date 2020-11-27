@@ -10,6 +10,7 @@ import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
 import { ViewHeightSelect } from './ViewHeightSelect';
 import { SizeYSelect } from './SizeYSelect';
+import { HasMouseCheckbox } from './HasMouseCheckbox';
 import { VKCOM } from '../../src/lib/platform';
 
 export const styles = ({ fontFamily, fontSize }) => ({
@@ -58,6 +59,12 @@ export function PathlineRenderer({ classes, children }) {
             <SizeYSelect
               onChange={(e) => styleGuideContext.setContext({ sizeY: e.target.value })}
               value={styleGuideContext.sizeY}
+              disabled={styleGuideContext.platform === VKCOM}
+            />
+            &nbsp;|&nbsp;
+            <HasMouseCheckbox 
+              onChange={(e) => styleGuideContext.setContext({ hasMouse: e.target.checked })}
+              value={styleGuideContext.hasMouse}
               disabled={styleGuideContext.platform === VKCOM}
             />
             &nbsp;|&nbsp;

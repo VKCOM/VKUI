@@ -110,7 +110,7 @@ export default class Preview extends PreviewParent {
                       scheme={styleGuideContext.scheme}
                       webviewType={styleGuideContext.webviewType}
                     >
-                      <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY}>
+                      <AdaptivityProvider window={window} hasMouse={styleGuideContext.hasMouse}>
                         <Layout>
                           <ReactExample
                             code={code}
