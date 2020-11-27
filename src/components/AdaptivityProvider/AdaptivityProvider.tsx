@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DOMProps, HasChildren } from '../../types';
+import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {}
@@ -9,6 +10,7 @@ export const TABLET_SIZE = 1024;
 export const SMALL_TABLET_SIZE = 768;
 export const MOBILE_SIZE = 320;
 
+export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
 export default function AdaptivityProvider(props: AdaptivityProviderProps) {
@@ -80,13 +82,18 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
   } else {
     viewWidth = ViewWidth.SMALL_MOBILE;
     sizeX = SizeType.COMPACT;
-    sizeY = SizeType.COMPACT;
   }
 
   if (windowHeight >= MEDIUM_HEIGHT) {
     viewHeight = ViewHeight.MEDIUM;
-  } else {
+  } else if (windowHeight > MOBILE_LANDSCAPE_HEIGHT) {
     viewHeight = ViewHeight.SMALL;
+  } else {
+    viewHeight = ViewHeight.EXTRA_SMALL;
+    sizeY = SizeType.COMPACT;
+  }
+
+  if (windowWidth >= SMALL_TABLET_SIZE && hasMouse) {
     sizeY = SizeType.COMPACT;
   }
 
