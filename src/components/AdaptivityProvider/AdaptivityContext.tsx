@@ -14,7 +14,8 @@ export enum ViewWidth {
 }
 
 export enum ViewHeight {
-  SMALL = 1,
+  EXTRA_SMALL = 1,
+  SMALL,
   MEDIUM
 }
 

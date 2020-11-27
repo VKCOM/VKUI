@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DOMProps, HasChildren } from '../../types';
+import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {}
@@ -16,7 +17,8 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const [, updateAdaptivity] = useState({});
 
   if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
+    const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, isLandscape, props);
   }
 
   function paintBody(sizeX: SizeType) {
@@ -29,7 +31,8 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
   useEffect(() => {
     function onResize() {
-      const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
+      const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+      const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, isLandscape, props);
       const { viewWidth, viewHeight, sizeX, sizeY } = adaptivityRef.current;
 
       if (
@@ -62,7 +65,7 @@ AdaptivityProvider.defaultProps = {
   window: window,
 };
 
-function calculateAdaptivity(windowWidth: number, windowHeight: number, props: AdaptivityProviderProps) {
+function calculateAdaptivity(windowWidth: number, windowHeight: number, isLandscape: boolean, props: AdaptivityProviderProps) {
   let viewWidth = ViewWidth.SMALL_MOBILE;
   let viewHeight = ViewHeight.SMALL;
   let sizeY = SizeType.REGULAR;
@@ -80,13 +83,23 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
   } else {
     viewWidth = ViewWidth.SMALL_MOBILE;
     sizeX = SizeType.COMPACT;
-    sizeY = SizeType.COMPACT;
+    if (!isLandscape) {
+      sizeY = SizeType.COMPACT;
+    }
   }
 
   if (windowHeight >= MEDIUM_HEIGHT) {
     viewHeight = ViewHeight.MEDIUM;
-  } else {
+  } else if (windowHeight >= MOBILE_SIZE) {
     viewHeight = ViewHeight.SMALL;
+  } else {
+    viewHeight = ViewHeight.EXTRA_SMALL;
+    if (isLandscape) {
+      sizeY = SizeType.COMPACT;
+    }
+  }
+
+  if (windowWidth >= SMALL_TABLET_SIZE && hasMouse) {
     sizeY = SizeType.COMPACT;
   }
 
