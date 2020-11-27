@@ -69,6 +69,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   static defaultProps = {
     duration: 4000,
+    layout: 'horizontal',
   };
 
   static contextTypes = {
@@ -245,7 +246,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
               <Text weight="regular" className="Snackbar__content-text">{children}</Text>
 
               {action &&
-              <Button hasHover={false} mode="tertiary" size="s" className="Snackbar__action" onClick={this.onActionClick}>
+              <Button align="left" hasHover={false} mode="tertiary" size="s" className="Snackbar__action" onClick={this.onActionClick}>
                 {action}
               </Button>}
             </div>

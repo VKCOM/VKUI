@@ -49,16 +49,16 @@
   color: var(--text_primary);
 }
 
-.Snackbar__action {
-  margin-left: -17px;
-}
-
 .Snackbar--l-horizontal .Snackbar__action {
   margin-right: -17px;
+  position: relative;
+  top: 2px;
 }
 
 .Snackbar--l-vertical .Snackbar__action {
   margin-top: 2px;
+  margin-bottom: -6px;
+  margin-left: -17px;
 }
 
 .ModalRoot .Snackbar {

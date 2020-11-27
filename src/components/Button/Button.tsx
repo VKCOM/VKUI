@@ -94,7 +94,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
         className,
         `Button--sz-${size}`,
         `Button--lvl-${mode}`,
-        `Button--aln-${align || 'center'}`,
+        `Button--aln-${align}`,
         `Button--sizeY-${sizeY}`,
         {
           ['Button--str']: stretched,
@@ -116,6 +116,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
 Button.defaultProps = {
   mode: 'primary',
   Component: 'button',
+  align: 'center',
   size: 's',
   stretched: false,
   stopPropagation: true,
