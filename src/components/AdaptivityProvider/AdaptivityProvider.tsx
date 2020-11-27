@@ -10,6 +10,7 @@ export const TABLET_SIZE = 1024;
 export const SMALL_TABLET_SIZE = 768;
 export const MOBILE_SIZE = 320;
 
+export const MOBILE_LANDSCAPE_HEIGHT = 415;
 export const MEDIUM_HEIGHT = 720;
 
 export default function AdaptivityProvider(props: AdaptivityProviderProps) {
@@ -83,14 +84,11 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, isLandsc
   } else {
     viewWidth = ViewWidth.SMALL_MOBILE;
     sizeX = SizeType.COMPACT;
-    if (!isLandscape) {
-      sizeY = SizeType.COMPACT;
-    }
   }
 
   if (windowHeight >= MEDIUM_HEIGHT) {
     viewHeight = ViewHeight.MEDIUM;
-  } else if (windowHeight >= MOBILE_SIZE) {
+  } else if (windowHeight >= MOBILE_LANDSCAPE_HEIGHT) {
     viewHeight = ViewHeight.SMALL;
   } else {
     viewHeight = ViewHeight.EXTRA_SMALL;
