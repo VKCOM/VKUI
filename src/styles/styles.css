@@ -117,7 +117,8 @@
 
 .vkui,
 .vkui > body,
-.vkui-root {
+.vkui-root,
+.AppRoot {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -129,7 +130,8 @@
   color: var(--text_primary);
 }
 
-.vkui-sizeX-regular {
+.vkui > body.vkui-sizeX-regular,
+.AppRoot-sizeX-regular {
   background: var(--background_page);
 }
 

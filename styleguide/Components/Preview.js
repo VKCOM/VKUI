@@ -5,7 +5,7 @@ import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/Playgr
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
-import { VKCOM, AppRoot, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AdaptivityProvider, ConfigProvider } from '../../src';
+import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AdaptivityProvider, ConfigProvider } from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -138,28 +138,15 @@ export default class Preview extends PreviewParent {
                         scheme={styleGuideContext.scheme}
                         webviewType={styleGuideContext.webviewType}
                       >
-                        <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY}>
-                          {isEmbedded ? (
-                            <Layout>
-                              <ReactExample
-                                code={code}
-                                evalInContext={this.props.evalInContext}
-                                onError={this.handleError}
-                                compilerConfig={this.context.config.compilerConfig}
-                              />
-                            </Layout>
-                          ) : (
-                            <AppRoot>
-                              <Layout>
-                                <ReactExample
-                                  code={code}
-                                  evalInContext={this.props.evalInContext}
-                                  onError={this.handleError}
-                                  compilerConfig={this.context.config.compilerConfig}
-                                />
-                              </Layout>
-                            </AppRoot>
-                          )}
+                        <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY} embeded={isEmbedded}>
+                          <Layout>
+                            <ReactExample
+                              code={code}
+                              evalInContext={this.props.evalInContext}
+                              onError={this.handleError}
+                              compilerConfig={this.context.config.compilerConfig}
+                            />
+                          </Layout>
                         </AdaptivityProvider>
                       </ConfigProvider>
                     )}

@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import classNames from '../../lib/classNames';
 import { DOMProps, HasChildren } from '../../types';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewWidth } from './AdaptivityContext';
 
-export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {}
+export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {
+  embeded?: boolean;
+}
 
 export const DESKTOP_SIZE = 1280;
 export const TABLET_SIZE = 1024;
@@ -17,6 +20,14 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props);
   }
 
+  function paintBody(sizeX: SizeType) {
+    if (sizeX === SizeType.REGULAR) {
+      props.window.document.body.classList.add('vkui-sizeX-regular');
+    } else {
+      props.window.document.body.classList.remove('vkui-sizeX-regular');
+    }
+  }
+
   useEffect(() => {
     function onResize() {
       const calculated = calculateAdaptivity(props.window.innerWidth, props);
@@ -27,21 +38,33 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY
       ) {
+        if (!props.embeded) {
+          paintBody(adaptivityRef.current.sizeX);
+        }
         adaptivityRef.current = calculated;
         updateAdaptivity({});
       }
     }
 
+    if (!props.embeded) {
+      paintBody(adaptivityRef.current.sizeX);
+    }
     onResize();
     props.window.addEventListener('resize', onResize, false);
 
     return () => {
       props.window.removeEventListener('resize', onResize, false);
     };
-  }, [props.viewWidth, props.sizeX, props.sizeY]);
+  }, [props.viewWidth, props.sizeX, props.sizeY, props.embeded]);
 
   return <AdaptivityContext.Provider value={adaptivityRef.current}>
-    {props.children}
+    {props.embeded ? (
+      <div className={classNames('AppRoot', {
+        'AppRoot-sizeX-regular': adaptivityRef.current.sizeX === SizeType.REGULAR })
+      }>
+        {props.children}
+      </div>
+    ) : props.children}
   </AdaptivityContext.Provider>;
 }
 
