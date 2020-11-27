@@ -10,7 +10,7 @@ export const TABLET_SIZE = 1024;
 export const SMALL_TABLET_SIZE = 768;
 export const MOBILE_SIZE = 320;
 
-export const MOBILE_LANDSCAPE_HEIGHT = 415;
+export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
 export default function AdaptivityProvider(props: AdaptivityProviderProps) {
