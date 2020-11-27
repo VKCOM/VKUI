@@ -1,9 +1,9 @@
 import React, { FunctionComponent, HTMLAttributes, useRef, useEffect, useState, useCallback } from 'react';
 import classNames from '../../lib/classNames';
-import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import Icon24Chevron from '@vkontakte/icons/dist/24/chevron_right';
 import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 type GetScrollPositionCallback = (currentPosition: number) => number;
 type Callback = () => void;
@@ -22,7 +22,7 @@ type ScrollContext = {
   initialScrollWidth: number;
 };
 
-interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {
+interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   getScrollToLeft?: GetScrollPositionCallback;
   getScrollToRight?: GetScrollPositionCallback;
   showArrows?: boolean;
@@ -126,7 +126,7 @@ const HorizontalScrollArrow: FunctionComponent<HorizontalScrollArrowProps> = (pr
 };
 
 const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
-  const { children, getScrollToLeft, getScrollToRight, showArrows = false, scrollAnimationDuration, className, ...restProps } = props;
+  const { children, getScrollToLeft, getScrollToRight, showArrows = false, scrollAnimationDuration, className, hasMouse, ...restProps } = props;
 
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -187,4 +187,6 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
   );
 };
 
-export default HorizontalScroll;
+export default withAdaptivity(HorizontalScroll, {
+  hasMouse: true,
+});
