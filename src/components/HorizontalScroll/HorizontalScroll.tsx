@@ -162,7 +162,7 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
       setCanScrollLeft(scrollerRef.current.scrollLeft > 0);
       setCanScrollRight(scrollerRef.current.scrollLeft + scrollerRef.current.offsetWidth < scrollerRef.current.scrollWidth);
     }
-  }, []);
+  }, [hasMouse]);
 
   useEffect(() => {
     scrollerRef.current && scrollerRef.current.addEventListener('scroll', onscroll);
