@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { render } from 'react-dom';
+import { render, unmountComponentAtNode } from 'react-dom';
 
 class ComponentHandle {
   constructor(private readonly mountNode: Element) {}
@@ -17,6 +17,10 @@ class ComponentHandle {
       throw new Error(`Test "${name}" does not exist, ${JSON.stringify(Object.keys(this.components))}`);
     }
     render(this.components[name].node, this.mountNode);
+  }
+
+  unmount() {
+    unmountComponentAtNode(this.mountNode);
   }
 }
 

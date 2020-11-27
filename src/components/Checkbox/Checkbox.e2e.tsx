@@ -1,10 +1,10 @@
 import React from 'react';
-import { screenshot } from '@react-playwright';
-import { Checkbox } from './Checkbox';
+import { Checkbox, CheckboxProps } from './Checkbox';
+import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 
 describe('Checkbox', () => {
-  test('should render', async () => {
-    const screen = await screenshot(<Checkbox>labl</Checkbox>);
-    expect(screen).toMatchImageSnapshot();
-  });
+  describeScreenshotFuzz((props: CheckboxProps) => <Checkbox {...props}>label</Checkbox>, [{
+    checked: [false, true],
+    disabled: [undefined, true],
+  }], {});
 });

@@ -27,3 +27,8 @@
   font-family: 'Roboto';
   -webkit-font-smoothing: antialiased;
 }
+
+* {
+  animation: none !important;
+  transition: none !important;
+}
