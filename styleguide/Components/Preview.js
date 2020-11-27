@@ -138,7 +138,7 @@ export default class Preview extends PreviewParent {
                         scheme={styleGuideContext.scheme}
                         webviewType={styleGuideContext.webviewType}
                       >
-                        <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY} embeded={isEmbedded}>
+                        <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY} embedded={isEmbedded}>
                           <Layout>
                             <ReactExample
                               code={code}

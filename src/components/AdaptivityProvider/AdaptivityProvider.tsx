@@ -4,7 +4,7 @@ import { DOMProps, HasChildren } from '../../types';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewWidth } from './AdaptivityContext';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {
-  embeded?: boolean;
+  embedded?: boolean;
 }
 
 export const DESKTOP_SIZE = 1280;
@@ -38,7 +38,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY
       ) {
-        if (!props.embeded) {
+        if (!props.embedded) {
           paintBody(adaptivityRef.current.sizeX);
         }
         adaptivityRef.current = calculated;
@@ -46,7 +46,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
       }
     }
 
-    if (!props.embeded) {
+    if (!props.embedded) {
       paintBody(adaptivityRef.current.sizeX);
     }
     onResize();
@@ -55,10 +55,10 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     return () => {
       props.window.removeEventListener('resize', onResize, false);
     };
-  }, [props.viewWidth, props.sizeX, props.sizeY, props.embeded]);
+  }, [props.viewWidth, props.sizeX, props.sizeY, props.embedded]);
 
   return <AdaptivityContext.Provider value={adaptivityRef.current}>
-    {props.embeded ? (
+    {props.embedded ? (
       <div className={classNames('AppRoot', {
         'AppRoot-sizeX-regular': adaptivityRef.current.sizeX === SizeType.REGULAR })
       }>
