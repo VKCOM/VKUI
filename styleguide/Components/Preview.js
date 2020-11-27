@@ -122,14 +122,16 @@ export default class Preview extends PreviewParent {
                   margin: 'auto',
                 }}
               >
-                  <div className={isEmbedded ? "vkui-root" : ""} style={isEmbedded ? {
+                  <div className={isEmbedded ? "" : "vkui-root"} style={isEmbedded ? {
                     border: '1px solid #000',
                     height: 600,
                     margin: 16,
                     position: 'relative',
                     overflow: 'hidden',
                   } : {
-                    height: "100%"
+                    height: "100%",
+                    overflow: 'hidden',
+                    position: 'relative',
                   }}>
                   <PrepareFrame integration={styleGuideContext.integration}>
                     {({ window }) => (

@@ -39,7 +39,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         sizeY !== calculated.sizeY
       ) {
         if (!props.embedded) {
-          paintBody(adaptivityRef.current.sizeX);
+          paintBody(calculated.sizeX);
         }
         adaptivityRef.current = calculated;
         updateAdaptivity({});
