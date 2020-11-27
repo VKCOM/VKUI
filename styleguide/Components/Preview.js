@@ -128,11 +128,7 @@ export default class Preview extends PreviewParent {
                     margin: 16,
                     position: 'relative',
                     overflow: 'hidden',
-                  } : {
-                    height: "100%",
-                    overflow: 'hidden',
-                    position: 'relative',
-                  }}>
+                  } : {}}>
                   <PrepareFrame integration={styleGuideContext.integration}>
                     {({ window }) => (
                       <ConfigProvider
