@@ -18,8 +18,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const [, updateAdaptivity] = useState({});
 
   if (!adaptivityRef.current) {
-    const isLandscape = window.matchMedia('(orientation: landscape)').matches;
-    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, isLandscape, props);
+    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
   }
 
   function paintBody(sizeX: SizeType) {
@@ -32,8 +31,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
   useEffect(() => {
     function onResize() {
-      const isLandscape = window.matchMedia('(orientation: landscape)').matches;
-      const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, isLandscape, props);
+      const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
       const { viewWidth, viewHeight, sizeX, sizeY } = adaptivityRef.current;
 
       if (
@@ -66,7 +64,7 @@ AdaptivityProvider.defaultProps = {
   window: window,
 };
 
-function calculateAdaptivity(windowWidth: number, windowHeight: number, isLandscape: boolean, props: AdaptivityProviderProps) {
+function calculateAdaptivity(windowWidth: number, windowHeight: number, props: AdaptivityProviderProps) {
   let viewWidth = ViewWidth.SMALL_MOBILE;
   let viewHeight = ViewHeight.SMALL;
   let sizeY = SizeType.REGULAR;
@@ -92,9 +90,7 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, isLandsc
     viewHeight = ViewHeight.SMALL;
   } else {
     viewHeight = ViewHeight.EXTRA_SMALL;
-    if (isLandscape) {
-      sizeY = SizeType.COMPACT;
-    }
+    sizeY = SizeType.COMPACT;
   }
 
   if (windowWidth >= SMALL_TABLET_SIZE && hasMouse) {
