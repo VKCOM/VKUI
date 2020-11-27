@@ -16,7 +16,6 @@ import { ViewWidthSelect } from './ViewWidthSelect';
 import { ViewHeightSelect, COMPACT_HEIGHT } from './ViewHeightSelect';
 import { SizeType } from '../../src/components/AdaptivityProvider/AdaptivityContext';
 import { VKCOM } from '../../src/lib/platform';
-import { SizeYSelect } from './SizeYSelect';
 import { HasMouseCheckbox } from './HasMouseCheckbox';
 
 export const StyleGuideContext = React.createContext({
@@ -24,7 +23,6 @@ export const StyleGuideContext = React.createContext({
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
   height: COMPACT_HEIGHT,
-  sizeY: SizeType.REGULAR,
   hasMouse: true,
 });
 
@@ -88,7 +86,6 @@ let initialState = {
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
   height: COMPACT_HEIGHT,
-  sizeY: SizeType.REGULAR,
   hasMouse: true
 }
 
@@ -104,7 +101,7 @@ try {
 function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
   const [state, setState] = useState(initialState);
 
-  const { width, height, platform, sizeY, hasMouse } = state;
+  const { width, height, platform, hasMouse } = state;
 
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };
@@ -120,7 +117,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
 
   useEffect(() => {
     if (platform === VKCOM) {
-      setContext({ sizeY: SizeType.COMPACT, width: TABLET_SIZE, hasMouse: true });
+      setContext({ width: TABLET_SIZE, hasMouse: true });
     }
   }, [platform]);
 
@@ -164,13 +161,6 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
               onChange={ (e) => setContext({ height: Number(e.target.value) })}
               value={height}
             />
-            </div>
-            <div style={{ marginTop: 4 }}>
-              <SizeYSelect
-                onChange={ (e) => setContext({ sizeY: e.target.value })}
-                value={sizeY}
-                disabled={platform === VKCOM}
-              />
             </div>
             <div style={{ marginTop: 4 }}>
               <HasMouseCheckbox

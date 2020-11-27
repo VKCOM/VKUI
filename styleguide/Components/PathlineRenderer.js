@@ -9,7 +9,6 @@ import { SchemeSelect } from './SchemeSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
 import { ViewHeightSelect } from './ViewHeightSelect';
-import { SizeYSelect } from './SizeYSelect';
 import { HasMouseCheckbox } from './HasMouseCheckbox';
 import { VKCOM } from '../../src/lib/platform';
 
@@ -54,12 +53,6 @@ export function PathlineRenderer({ classes, children }) {
             <ViewHeightSelect
               onChange={(e) => styleGuideContext.setContext({ height: Number(e.target.value) })}
               value={styleGuideContext.height}
-            />
-            &nbsp;|&nbsp;
-            <SizeYSelect
-              onChange={(e) => styleGuideContext.setContext({ sizeY: e.target.value })}
-              value={styleGuideContext.sizeY}
-              disabled={styleGuideContext.platform === VKCOM}
             />
             &nbsp;|&nbsp;
             <HasMouseCheckbox 
