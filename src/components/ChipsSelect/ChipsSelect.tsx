@@ -11,10 +11,10 @@ import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderChip } from '../ChipsInput/ChipsInput';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useChipsSelect } from './useChipsSelect';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option> {
+export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
   options?: Option[];
   filterFn?: (value?: string, option?: Option, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => boolean;
@@ -50,11 +50,10 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
   const {
     style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
-    getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText,
+    getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText, sizeY,
     ...restProps
   } = props;
 
-  const { sizeY } = useAdaptivity();
   const scrollViewRef = useRef<CustomScrollView>(null);
   const {
     fieldValue, selectedOptions, opened, setOpened, addOptionFromInput,
@@ -305,4 +304,4 @@ ChipsSelect.defaultProps = {
   },
 };
 
-export default ChipsSelect;
+export default withAdaptivity(ChipsSelect, { sizeY: true });
