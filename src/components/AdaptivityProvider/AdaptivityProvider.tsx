@@ -86,7 +86,7 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
 
   if (windowHeight >= MEDIUM_HEIGHT) {
     viewHeight = ViewHeight.MEDIUM;
-  } else if (windowHeight >= MOBILE_LANDSCAPE_HEIGHT) {
+  } else if (windowHeight > MOBILE_LANDSCAPE_HEIGHT) {
     viewHeight = ViewHeight.SMALL;
   } else {
     viewHeight = ViewHeight.EXTRA_SMALL;
