@@ -13,10 +13,17 @@ export enum ViewWidth {
   DESKTOP,
 }
 
+export enum ViewHeight {
+  EXTRA_SMALL = 1,
+  SMALL,
+  MEDIUM
+}
+
 export interface AdaptivityContextInterface {
   sizeX?: SizeType;
   sizeY?: SizeType;
   viewWidth?: ViewWidth;
+  viewHeight?: ViewHeight;
 }
 
 export const AdaptivityContext = createContext<AdaptivityContextInterface>({

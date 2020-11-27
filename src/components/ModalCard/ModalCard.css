@@ -14,7 +14,7 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  max-width: 480px;
+  max-width: 360px;
   padding: 8px;
   transform: translateY(100%);
   box-sizing: border-box;
@@ -130,6 +130,10 @@
  * Android + vkcom
  */
 
+.ModalCard--vkcom .ModalCard__in {
+  max-width: 416px;
+}
+
 .ModalCard--android .ModalCard__in,
 .ModalCard--vkcom .ModalCard__in {
   transition: transform 340ms var(--android-easing);
@@ -160,10 +164,6 @@
   box-shadow:
           0 16px 16px rgba(0, 0, 0, .16),
           0 0 8px rgba(0, 0, 0, .12);
-}
-
-.ModalCard--desktop .ModalCard__dismiss {
-  position: absolute;
 }
 
 /**
