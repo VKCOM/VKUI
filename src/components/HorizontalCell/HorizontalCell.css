@@ -10,8 +10,6 @@
 
 .HorizontalCell__content {
   word-break: break-all;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 
 .HorizontalCell__subtitle {
