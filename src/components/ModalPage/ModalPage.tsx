@@ -5,6 +5,8 @@ import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import Separator from '../Separator/Separator';
+import { VKCOM } from '../../lib/platform';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   id: string;
@@ -51,6 +53,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
           <div className="ModalPage__header">
             {header}
           </div>
+          {platform === VKCOM && <Separator wide />}
 
           <div className="ModalPage__content-wrap">
             <div className="ModalPage__content">
