@@ -5,8 +5,7 @@ const paletteVKUI = require('@vkontakte/appearance/main.valette/palette');
 const schemeWeb = require('@vkontakte/appearance/main.valette/scheme_web');
 const paletteWeb = require('@vkontakte/appearance/main.valette/palette_web');
 const pkg = require('../package.json');
-// const generateScheme = require('@vkontakte/vkjs/build/tasks/generate_scheme');
-const generateScheme = require('../../vkjs/build/tasks/generate_scheme');
+const generateScheme = require('@vkontakte/vkjs/build/tasks/generate_scheme');
 
 const stylesDir = path.resolve(__dirname, '../src/styles');
 
