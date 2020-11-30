@@ -167,7 +167,6 @@ const App = withAdaptivity(class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              separator={false}
               left={<PanelHeaderBack onClick={this.modalBack} />}
               right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
@@ -177,7 +176,8 @@ const App = withAdaptivity(class App extends React.Component {
           settlingHeight={80}
         >
           <Group>
-            <Search />
+            <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}>Информация о пользователе</CellButton>
+
             <FormLayoutGroup>
               {importantCountries.map(({ id, title }) => {
                 return (
