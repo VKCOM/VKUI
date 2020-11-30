@@ -32,13 +32,14 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   useEffect(() => {
     function onResize() {
       const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
-      const { viewWidth, viewHeight, sizeX, sizeY } = adaptivityRef.current;
+      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse } = adaptivityRef.current;
 
       if (
         viewWidth !== calculated.viewWidth ||
         viewHeight !== calculated.viewHeight ||
         sizeX !== calculated.sizeX ||
-        sizeY !== calculated.sizeY
+        sizeY !== calculated.sizeY ||
+        hasMouse !== calculated.hasMouse
       ) {
         paintBody(calculated.sizeX);
         adaptivityRef.current = calculated;
