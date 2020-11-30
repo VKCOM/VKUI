@@ -24,7 +24,7 @@ export default function withAdaptivity<T>(TargetComponent: T, config: Config): T
     const sizeY = props.sizeY || context.sizeY;
     const viewWidth = context.viewWidth;
     const viewHeight = context.viewHeight;
-    const hasMouse = props.hasMouse !== undefined ? props.hasMouse : context.hasMouse;
+    const hasMouse = context.hasMouse;
 
     const adaptivityProps: {
       sizeX?: SizeType;
