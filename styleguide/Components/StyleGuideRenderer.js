@@ -13,7 +13,7 @@ import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { DESKTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from '../../src/components/AdaptivityProvider/AdaptivityProvider';
 import { defaultConfigProviderProps } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { ViewWidthSelect } from './ViewWidthSelect';
-import { ViewHeightSelect, COMPACT_HEIGHT } from './ViewHeightSelect';
+import { ViewHeightSelect, SMALL_HEIGHT } from './ViewHeightSelect';
 import { SizeType } from '../../src/components/AdaptivityProvider/AdaptivityContext';
 import { VKCOM } from '../../src/lib/platform';
 import { HasMouseCheckbox } from './HasMouseCheckbox';
@@ -22,7 +22,7 @@ export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
-  height: COMPACT_HEIGHT,
+  height: SMALL_HEIGHT,
   hasMouse: true,
 });
 
@@ -85,7 +85,7 @@ let initialState = {
   ...defaultConfigProviderProps,
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
-  height: COMPACT_HEIGHT,
+  height: SMALL_HEIGHT,
   hasMouse: true
 }
 
