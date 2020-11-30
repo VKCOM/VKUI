@@ -5,7 +5,6 @@ import React, {
 } from 'react';
 import Input from '../Input/Input';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
-import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
 import CustomSelect from '../CustomSelect/CustomSelect';
@@ -228,8 +227,10 @@ class DatePicker extends Component<Props, Partial<State>> {
   }
 
   render() {
-    return hasMouse ? this.customView() : this.nativeView();
+    return this.props.hasMouse ? this.customView() : this.nativeView();
   }
 }
 
-export default withAdaptivity(DatePicker, {});
+export default withAdaptivity(DatePicker, {
+  hasMouse: true,
+});

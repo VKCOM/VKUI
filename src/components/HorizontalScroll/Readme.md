@@ -15,7 +15,7 @@
     <Panel id="horizontal">
       <PanelHeader>HorizontalScroll</PanelHeader>
       <Group header={<Header mode="secondary">Недавние</Header>}>
-        <HorizontalScroll>
+        <HorizontalScroll showArrows getScrollToLeft={i => i - 120} getScrollToRight={i => i + 120}>
           <div style={{ display: 'flex' }}>
             {getRandomUsers(15).map((item) => ( 
               <HorizontalCell key={item.id} header={item.first_name}><Avatar size={56} src={item.photo_200} /></HorizontalCell>)
