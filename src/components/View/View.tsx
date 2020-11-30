@@ -186,9 +186,13 @@ class View extends Component<ViewProps, ViewState> {
       const nextPanelElement = this.pickPanel(this.state.nextPanel);
       const prevPanelElement = this.pickPanel(this.state.prevPanel);
 
+      console.log('prevPanelElement.scrollTop before -', prevPanelElement.scrollTop);
       prevPanelElement.scrollTop = scrolls[this.state.prevPanel];
+      console.log('prevPanelElement.scrollTop after -', prevPanelElement.scrollTop);
       if (this.state.isBack) {
+        console.log('nextPanelElement.scrollTop before -', nextPanelElement.scrollTop);
         nextPanelElement.scrollTop = scrolls[this.state.nextPanel];
+        console.log('nextPanelElement.scrollTop after -', nextPanelElement.scrollTop);
       }
       this.waitAnimationFinish(this.pickPanel(this.state.isBack ? this.state.prevPanel : this.state.nextPanel), this.transitionEndHandler);
     }
