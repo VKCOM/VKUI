@@ -1,8 +1,9 @@
-const child_process = require('child_process');
+// This file is in JS because it runs in node when generating jest.e2e.config
+const { execSync } = require('child_process');
 
 function checkDocker() {
   try {
-    child_process.execSync('docker stats --no-stream');
+    execSync('docker stats --no-stream');
     return true;
   } catch (err) {
     return false;
@@ -18,4 +19,4 @@ const isLinux = checkLinux();
 const useDocker = process.env.E2E_DOCKER === '1' || !isLinux && checkDocker();
 const canRunTests = useDocker || isLinux;
 
-module.exports = { useDocker, isLinux, canRunTests };
+module.exports = { isLinux, useDocker, canRunTests };

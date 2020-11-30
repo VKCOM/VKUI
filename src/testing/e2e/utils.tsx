@@ -1,4 +1,5 @@
 import React, { ComponentType, Fragment, isValidElement } from 'react';
+import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { screenshot } from '@react-playwright';
 import ConfigProvider from '../../components/ConfigProvider/ConfigProvider';
 import Panel from '../../components/Panel/Panel';
@@ -40,16 +41,25 @@ function prettyProps(props: any) {
   }).join(' ');
 }
 
+type ScreenshotOptions = {
+  matchScreenshot?: MatchImageSnapshotOptions;
+  platforms?: Platform[];
+  schemes?: Scheme[];
+};
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
   propSets: Array<PropDesc<Props>> = [],
-  options = {},
+  options: ScreenshotOptions = {},
 ) {
-  console.log(options);
-  Object.values(Platform).forEach((platform) => {
+  const {
+    matchScreenshot,
+    platforms = Object.values(Platform),
+    schemes = [Scheme.BRIGHT_LIGHT, Scheme.SPACE_GRAY],
+  } = options;
+  platforms.forEach((platform) => {
     describe(platform, () => {
       const width = platform === 'vkcom' ? 'auto' : 320;
-      [Scheme.BRIGHT_LIGHT, Scheme.SPACE_GRAY].forEach((scheme) => {
+      schemes.forEach((scheme) => {
         it(scheme, async () => {
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>
@@ -64,7 +74,7 @@ export function describeScreenshotFuzz<Props>(
                 </Panel>
               </div>
             </ConfigProvider>
-          ))).toMatchImageSnapshot();
+          ))).toMatchImageSnapshot(matchScreenshot);
         });
       });
     });

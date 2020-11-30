@@ -1,12 +1,13 @@
-const path = require('path');
-const { promisify } = require('util');
-const glob = promisify(require('glob'));
-const webpackConfig = require('../webpack.config.js');
+import * as path from 'path';
+import { promisify } from 'util';
+import cbGlob from 'glob';
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpackConfig = require('../webpack.config.js');
+const glob = promisify(cbGlob);
 
 const { externals, plugins = [], devServer, resolve = {}, output = {}, ...baseWebpackConfig } = webpackConfig;
 
-async function generateWebpackConfig() {
+export async function generateWebpackConfig() {
   const testFiles = await glob(path.join(__dirname, '../src/**/*.e2e.{ts,tsx}'));
   return {
     ...baseWebpackConfig,
@@ -48,8 +49,4 @@ async function generateWebpackConfig() {
       new MiniCssExtractPlugin(),
     ],
   };
-};
-
-module.exports = {
-  generateWebpackConfig,
 };

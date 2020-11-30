@@ -1,16 +1,21 @@
 import { ReactElement } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function mount(jsx: ReactElement) {
+/**
+ * Хелперы для тестов jest + playwright. В браузерной сборке подменяются на browser/mount.
+ */
+
+export function mount(jsx: ReactElement): Promise<void>;
+export async function mount() {
   const testName = expect.getState().currentTestName;
   /* istanbul ignore next */
   await page.evaluate(({ testName }) => {
-    window['testHandle'].mount(testName);
+    (window as any).testHandle.mount(testName);
   }, { testName });
 }
 
 export async function screenshot(jsx: ReactElement) {
   await mount(jsx);
+  /* istanbul ignore next */
   const { width, height } = await page.evaluate(() => {
     const size = { width: 0, height: 0 };
     document.querySelectorAll('#mount > *').forEach((node) => {

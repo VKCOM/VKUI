@@ -5,7 +5,7 @@ const toMatchImageSnapshot = configureToMatchImageSnapshot({
   customSnapshotIdentifier: ({ currentTestName, counter }) => {
     return `${currentTestName.toLowerCase().replace(/ /g, '-')}-${counter}`;
   },
-} as any);
+});
 
 beforeAll(async () => {
   const host = useDocker ? 'host.docker.internal' : 'localhost';
@@ -14,7 +14,7 @@ beforeAll(async () => {
 
 afterEach(async () => {
   /* istanbul ignore next */
-  await page.evaluate(() => window['testHandle'].unmount());
+  await page.evaluate(() => (window as any).testHandle.unmount());
 });
 
 expect.extend({ toMatchImageSnapshot });

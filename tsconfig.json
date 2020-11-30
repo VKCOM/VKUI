@@ -19,12 +19,9 @@
       "@react-playwright": ["../e2e"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": [
-    "node_modules",
-    "src/**/*.test.ts", "src/**/*.test.tsx",
-    "src/**/*.spec.ts", "src/**/*.spec.tsx",
-    "src/**/*.e2e.ts", "src/**/*.e2e.tsx",
-    "e2e", "src/testing"
+  "include": ["src/**/*.ts", "src/**/*.tsx", "e2e/**/*.ts", "e2e/**/*.tsx"],
+  "files": [
+    "node_modules/jest-playwright-preset/types/global.d.ts",
+    "node_modules/expect-playwright/global.d.ts"
   ]
 }

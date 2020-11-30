@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
+import type { Config as JestConfig } from '@jest/types';
 import baseSetup from 'jest-playwright-preset/setup';
 import { generateWebpackConfig } from '../generateWebpackConfig';
 import { useDocker } from '../detectEnv';
@@ -33,16 +34,17 @@ async function setupWebpack() {
     ...webpackConfig.devServer,
   });
   devServer.listen(9000);
-  global['__DEV_SERVER__'] = devServer;
+  (global as any)['__DEV_SERVER__'] = devServer;
 
   return compilerDone;
 }
 
-module.exports = async function setup(jestConfig) {
+module.exports = async function setup(jestConfig: JestConfig.GlobalConfig) {
   // do not re-run webpack in watch mode
   // https://github.com/facebook/jest/issues/6800
   if (devServer) {
-    return new Promise((ok) => devServer.middleware.waitUntilValid(ok));
+    // hack into middleware to wait for build to pass
+    return new Promise((ok) => (devServer as any).middleware.waitUntilValid(ok));
   }
 
   await setupWebpack();

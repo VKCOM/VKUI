@@ -4,11 +4,11 @@
     "plugin:jest-playwright/recommended"
   ],
   "parserOptions": {
-    "project": "./tsconfig.eslint.json",
-    "ecmaVersion": 2018,
-    "sourceType": "module",
+    "project": "./tsconfig.json",
+    "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
+    "sourceType": "module", // Allows for the use of imports
     "ecmaFeatures": {
-      "jsx": true,
+      "jsx": true, // Allows for the parsing of JSX
       "restParams": true,
       "spread": true
     }
@@ -17,7 +17,7 @@
     "Element": true
   },
   "env": {
-    "es6": true,
+    "es6": true, // Enable global es6 variables, like Set, Map, etc
     "browser": true,
     "node": true,
     "jest": true

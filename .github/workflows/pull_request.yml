@@ -7,9 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Checkout LFS objects
+        run: git lfs checkout
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      # cached yarn install
       - uses: bahmutov/npm-install@v1
       - run: yarn test:ci
       - name: Create test report
@@ -24,6 +29,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      # cached yarn install
       - uses: bahmutov/npm-install@v1
       - run: yarn styleguide:build
       - name: Uploading styleguide artifact
