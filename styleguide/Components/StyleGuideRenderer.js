@@ -92,7 +92,10 @@ let initialState = {
 try {
   const lsState =  localStorage.getItem('vkui:state');
   if (lsState) {
-    initialState = JSON.parse(lsState);
+    initialState = {
+      ...initialState,
+      ...JSON.parse(lsState)
+    };
   }
 } catch (e) {
   console.log(e);
@@ -106,7 +109,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };
     localStorage.setItem('vkui:state', JSON.stringify(newState));
-    setState(newState)
+    setState(newState);
   }, [state])
 
   useEffect(() => {
