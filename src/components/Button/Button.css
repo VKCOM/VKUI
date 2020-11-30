@@ -28,14 +28,17 @@
 
   .Button--aln-left .Button__in {
     justify-content: flex-start;
+    text-align: left;
     }
 
   .Button--aln-center .Button__in {
     justify-content: center;
+    text-align: center;
     }
 
   .Button--aln-right .Button__in {
     justify-content: flex-end;
+    text-align: right;
     }
 
 .Button--str {
