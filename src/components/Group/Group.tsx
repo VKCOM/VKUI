@@ -7,7 +7,6 @@ import Separator from '../Separator/Separator';
 import { hasReactNode } from '../../lib/utils';
 import Caption from '../Typography/Caption/Caption';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
-import { useAdaptivity } from '../../hooks/useAdaptivity';
 import ModalRootContext from '../ModalRoot/ModalRootContext';
 
 export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<HTMLDivElement>, AdaptivityProps {
@@ -29,8 +28,7 @@ export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<H
 }
 
 const Group: FC<GroupProps> = (props) => {
-  const { header, description, className, children, separator, getRootRef, mode, ...restProps } = props;
-  const { sizeX } = useAdaptivity();
+  const { header, description, className, children, separator, getRootRef, mode, sizeX, ...restProps } = props;
   const { isInsideModal } = useContext(ModalRootContext);
   const platform = usePlatform();
   const baseClassNames = getClassName('Group', platform);
@@ -73,4 +71,4 @@ Group.defaultProps = {
   separator: 'auto',
 };
 
-export default withAdaptivity(Group, {});
+export default withAdaptivity(Group, { sizeX: true });

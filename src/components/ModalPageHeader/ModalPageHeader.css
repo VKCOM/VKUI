@@ -23,7 +23,7 @@
 
 .ModalPage--ios .ModalPageHeader__in {
   height: var(--modalheader_height_ios);
-  padding: 0 2px;
+  padding: 0 4px;
 }
 
 .ModalPageHeader__left,
@@ -123,6 +123,7 @@
 
 .ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton .Icon--24 {
   padding-left: 12px;
+  padding-right: 12px;
 }
 
 .ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton--primitive {
@@ -153,6 +154,7 @@
 }
 
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton .Icon--24 {
+  padding-left: 12px;
   padding-right: 12px;
 }
 

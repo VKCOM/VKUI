@@ -3,13 +3,16 @@ import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import { HasAlign, HasPlatform } from '../../types';
+import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
+import { setRef } from '../../lib/utils';
 
 export interface GalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
   HasPlatform,
-  HasAlign {
+  HasAlign,
+  HasRootRef<HTMLDivElement>,
+  HasRef<HTMLElement> {
   slideWidth?: string | number;
   timeout?: number;
   initialSlideIndex?: number;
@@ -65,12 +68,10 @@ class Gallery extends Component<GalleryProps, GalleryState> {
       duration: 0.24,
     };
 
-    this.container = React.createRef();
-
     this.slidesStore = {};
   }
 
-  container: React.RefObject<HTMLDivElement>;
+  container: HTMLDivElement;
   slidesStore: {
     [index: string]: HTMLElement;
   };
@@ -106,7 +107,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
         };
       });
 
-    const containerWidth = this.container.current.offsetWidth;
+    const containerWidth = this.container.offsetWidth;
     const layerWidth = slides.reduce((val: number, slide: GallerySlidesState) => slide.width + val, 0);
 
     const min = this.calcMin({ containerWidth, layerWidth, slides });
@@ -291,7 +292,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     this.initializeSlides();
 
     const { layerWidth, slides } = this.state;
-    const containerWidth = this.container.current.offsetWidth;
+    const containerWidth = this.container.offsetWidth;
 
     this.setState({
       shiftX: this.calculateIndent(this.state.current),
@@ -325,6 +326,12 @@ class Gallery extends Component<GalleryProps, GalleryState> {
 
   getViewportRef: RefCallback<HTMLElement> = (viewport) => {
     this.viewport = viewport;
+    setRef(viewport, this.props.getRef);
+  };
+
+  getRootRef: RefCallback<HTMLDivElement> = (container) => {
+    this.container = container;
+    setRef(container, this.props.getRootRef);
   };
 
   componentDidMount() {
@@ -406,10 +413,10 @@ class Gallery extends Component<GalleryProps, GalleryState> {
     };
 
     return (
-      <div className={classNames(getClassName('Gallery', platform), className, `Gallery--${align}`, {
+      <div {...restProps} className={classNames(getClassName('Gallery', platform), className, `Gallery--${align}`, {
         'Gallery--dragging': dragging,
         'Gallery--custom-width': slideWidth === 'custom',
-      })} {...restProps} ref={this.container}>
+      })} ref={this.getRootRef}>
         <Touch
           className="Gallery__viewport"
           onStartX={this.onStart}

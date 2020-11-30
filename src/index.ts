@@ -50,7 +50,7 @@ export { default as IconButton } from './components/IconButton/IconButton';
 export { default as Card } from './components/Card/Card';
 export { default as CardGrid } from './components/CardGrid/CardGrid';
 export { default as CardScroll } from './components/CardScroll/CardScroll';
-export { default as CardContent } from './components/ContentCard/ContentCard';
+export { default as ContentCard } from './components/ContentCard/ContentCard';
 export { default as CellButton } from './components/CellButton/CellButton';
 export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
@@ -87,7 +87,7 @@ export { WriteBarIcon } from './components/WriteBarIcon/WriteBarIcon';
 export { default as FormLayout } from './components/FormLayout/FormLayout';
 export { FormItem } from './components/FormItem/FormItem';
 export { default as FormLayoutGroup } from './components/FormLayoutGroup/FormLayoutGroup';
-export { default as FormStatus } from './components/FormStatus/FormStatus';
+export { FormStatus } from './components/FormStatus/FormStatus';
 export { default as Switch } from './components/Switch/Switch';
 export { default as File } from './components/File/File';
 export { default as Input } from './components/Input/Input';
@@ -163,8 +163,7 @@ export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 export { platform, ANDROID, IOS, VKCOM, Platform, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
 export { default as getClassName } from './helpers/getClassName';
-export { ViewWidth, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
-export const v = process.env.VKUI_VERSION;
+export { ViewWidth, ViewHeight, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
 
 /**
  * Types
