@@ -15,10 +15,10 @@ body[scheme="vkcom"] {
   --attach_picker_tab_inactive_text: #818c99;
   --background_content: #ffffff;
   --background_highlighted: rgba(0, 0, 0, 0.08);
-  --background_hover: #000;
-  --background_keyboard: #000;
+  --background_hover: rgba(0, 0, 0, 0.04);
+  --background_keyboard: #dce1e6;
   --background_light: #f0f2f5;
-  --background_page: #000;
+  --background_page: #edeef0;
   --background_suggestions: #ffffff;
   --background_text_highlighted: rgba(81, 129, 184, 0.20);
   --button_bot_shadow: #cccccc;
@@ -37,7 +37,7 @@ body[scheme="vkcom"] {
   --button_secondary_destructive_foreground: #e64646;
   --button_secondary_destructive_foreground_highlighted: rgba(230, 70, 70, 0.12);
   --button_secondary_foreground: #55677d;
-  --button_secondary_foreground_highlighted: #000;
+  --button_secondary_foreground_highlighted: rgba(85, 103, 125, 0.64);
   --button_tertiary_background: rgba(0, 0, 0, 0.00);
   --button_tertiary_foreground: #2a5885;
   --cell_button_foreground: #2a5885;
@@ -136,11 +136,11 @@ body[scheme="vkcom"] {
   --im_reply_separator: #2a5885;
   --im_service_message_text: #818c99;
   --im_text_name: #2a5885;
-  --im_toolbar_separator: #000;
+  --im_toolbar_separator: #001c3d;
   --im_toolbar_voice_msg_background: #99a2ad;
   --image_border: rgba(0, 0, 0, 0.08);
   --input_background: #f5f5f5;
-  --input_border: #000;
+  --input_border: #dce1e6;
   --landing_background: #ffffff;
   --landing_field_background: #f7f8fa;
   --landing_field_border: rgba(0, 0, 0, 0.00);
@@ -149,7 +149,7 @@ body[scheme="vkcom"] {
   --landing_login_button_foreground: #ffffff;
   --landing_primary_button_background: #5181b8;
   --landing_primary_button_foreground: #ffffff;
-  --landing_secondary_button_background: #000;
+  --landing_secondary_button_background: rgba(0, 57, 115, 0.10);
   --landing_secondary_button_foreground: #5181b8;
   --landing_snippet_border: rgba(0, 0, 0, 0.12);
   --landing_tertiary_button_background: rgba(0, 0, 0, 0.00);
@@ -160,7 +160,7 @@ body[scheme="vkcom"] {
   --like_text_tint: #ff3347;
   --link_alternate: #2a5885;
   --loader_background: #edeef0;
-  --loader_tint: #000;
+  --loader_tint: #99a2ad;
   --loader_track_fill: #e7e8ec;
   --loader_track_value_fill: #5181b8;
   --media_overlay_button_background: #ffffff;
@@ -175,12 +175,12 @@ body[scheme="vkcom"] {
   --panel_tab_active_background: #edeef0;
   --panel_tab_active_text: #4e5966;
   --panel_tab_inactive_text: #6f7985;
-  --placeholder_icon_background: #000;
+  --placeholder_icon_background: rgba(0, 28, 61, 0.08);
   --placeholder_icon_background_opaque: #edeef0;
   --placeholder_icon_foreground_primary: #99a2ad;
   --placeholder_icon_foreground_secondary: #aeb7c2;
   --placeholder_icon_tint: #1d3a5c;
-  --poll_option_background: #000;
+  --poll_option_background: #5181b8;
   --search_bar_background: rgba(0, 0, 0, 0.00);
   --search_bar_field_background: #edeef0;
   --search_bar_field_tint: #818c99;
@@ -203,7 +203,7 @@ body[scheme="vkcom"] {
   --stories_create_button_foreground: #6f7985;
   --stories_create_button_icon_background: #ffffff;
   --stories_skeleton_loader_background: #cccccc;
-  --switch_ios_off_border: #000;
+  --switch_ios_off_border: #dce1e6;
   --tabbar_active_icon: #5181b8;
   --tabbar_background: #f7f8fa;
   --tabbar_inactive_icon: #99a2ad;
