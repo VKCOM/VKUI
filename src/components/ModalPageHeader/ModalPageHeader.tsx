@@ -4,8 +4,11 @@ import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRef } from '../../types';
 import { isPrimitiveReactNode } from '../../lib/utils';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import { VKCOM } from '../../lib/platform';
+import { Separator } from '../..';
 
-export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement> {
+export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement>, AdaptivityProps {
   /**
    * Иконки, отображаемые слева
    */
@@ -15,11 +18,12 @@ export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, Ha
    */
   right?: ReactNode;
   noShadow?: boolean;
+  separator?: boolean;
 }
 
 const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { className, left, right, children, noShadow, getRef } = props;
+  const { className, left, right, children, noShadow, getRef, separator, viewWidth } = props;
   const isPrimitive = isPrimitiveReactNode(children);
 
   return (
@@ -41,8 +45,16 @@ const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPa
       </div>
 
       {!noShadow && <div className="ModalPageHeader__shadow" />}
+
+      {(platform === VKCOM || separator && viewWidth >= ViewWidth.SMALL_TABLET) && <Separator wide />}
     </div>
   );
 };
 
-export default ModalPageHeader;
+ModalPageHeader.defaultProps = {
+  separator: true,
+};
+
+export default withAdaptivity(ModalPageHeader, {
+  viewWidth: true,
+});
