@@ -6,9 +6,7 @@
       </PanelHeader>
       <Group>
         <Div>
-          <InfoRow header="Default">
-            <Progress value={40} />
-          </InfoRow>
+          <Progress value={40} />
         </Div>
       </Group>
     </Panel>

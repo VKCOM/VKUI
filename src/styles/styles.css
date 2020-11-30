@@ -47,6 +47,7 @@
 @import '../components/ModalRoot/ModalRoot.css';
 @import '../components/ModalCard/ModalCard.css';
 @import '../components/ModalPage/ModalPage.css';
+@import '../components/ModalDismissButton/ModalDismissButton.css';
 @import '../components/ModalPageHeader/ModalPageHeader.css';
 
 /* Blocks */
