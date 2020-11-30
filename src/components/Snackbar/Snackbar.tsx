@@ -169,7 +169,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
     if (this.state.touched) {
       let shiftXCurrent = this.shiftXCurrent;
-      const expectTranslateY = shiftXCurrent / (Date.now() - this.touchStartTime.getTime()) * 240 * 0.6 * (this.shiftXPercent < 0 ? -1 : 1);
+      const expectTranslateY = shiftXCurrent / (Date.now() - this.touchStartTime.getTime()) * 240 * 0.6;
       shiftXCurrent = shiftXCurrent + expectTranslateY;
 
       if (this.isDesktop && shiftXCurrent <= -50) {
