@@ -58,7 +58,7 @@ const MODAL_CARD_ABOUT = 'say-about';
 const MODAL_CARD_NOTIFICATIONS = 'notifications';
 const MODAL_CARD_CHAT_INVITE = 'chat-invite';
 
-class App extends React.Component {
+const App = withAdaptivity(class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -95,6 +95,7 @@ class App extends React.Component {
   };
 
   render() {
+    const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
     const modal = (
       <ModalRoot
         activeModal={this.state.activeModal}
@@ -105,7 +106,7 @@ class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
+              left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
               right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
             >
               Фильтры
@@ -113,11 +114,9 @@ class App extends React.Component {
           }
         >
           <Group>
-            <FormItem>
-              <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)}>Выбор страны</CellButton>
-              <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)}>Просмотры истории</CellButton>
-              <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}>Информация о пользователе</CellButton>
-            </FormItem>
+            <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)}>Выбор страны</CellButton>
+            <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)}>Просмотры истории</CellButton>
+            <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}>Информация о пользователе</CellButton>
 
             <FormItem top="Страна">            
               <SelectMimicry placeholder="Выбрать страну" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} />
@@ -168,7 +167,7 @@ class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
+              left={<PanelHeaderBack onClick={this.modalBack} />}
               right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Выберите страну
@@ -194,7 +193,7 @@ class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
+              left={<PanelHeaderBack onClick={this.modalBack} />}
               right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Просмотры истории
@@ -219,7 +218,7 @@ class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
+              left={<PanelHeaderBack onClick={this.modalBack} />}
               right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Информация о пользователе
@@ -350,7 +349,9 @@ class App extends React.Component {
       </View>
     );
   }
-}
+}, {
+  viewWidth: true
+});
 
 <App />
 ```
