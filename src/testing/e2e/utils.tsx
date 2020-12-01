@@ -5,6 +5,8 @@ import ConfigProvider from '../../components/ConfigProvider/ConfigProvider';
 import Panel from '../../components/Panel/Panel';
 import { Platform } from '../../lib/platform';
 import { Scheme } from '../../components/ConfigProvider/ConfigProviderContext';
+import AdaptivityProvider from '../../components/AdaptivityProvider/AdaptivityProvider';
+import { SizeType } from '../../components/AdaptivityProvider/AdaptivityContext';
 
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> };
 function cartesian<Props>(propDesc: PropDesc<Props>): Props[] {
@@ -46,6 +48,9 @@ type ScreenshotOptions = {
   platforms?: Platform[];
   schemes?: Scheme[];
 };
+const CompactProvider: React.ComponentType = ({ children }) => (
+  <AdaptivityProvider sizeX={SizeType.COMPACT} sizeY={SizeType.COMPACT}>{children}</AdaptivityProvider>
+);
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
   propSets: Array<PropDesc<Props>> = [],
@@ -59,19 +64,22 @@ export function describeScreenshotFuzz<Props>(
   platforms.forEach((platform) => {
     describe(platform, () => {
       const width = platform === 'vkcom' ? 'auto' : 320;
+      const ForceAdaptivity = platform === 'vkcom' ? CompactProvider : Fragment;
       schemes.forEach((scheme) => {
         it(scheme, async () => {
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>
               <div style={{ width, position: 'absolute' }}>
-                <Panel id="panel">
-                  {multiCartesian(propSets).map((props, i) => (
-                    <Fragment key={i}>
-                      <div>{prettyProps(props)}</div>
-                      <Component {...props} />
-                    </Fragment>
-                  ))}
-                </Panel>
+                <ForceAdaptivity>
+                  <Panel id="panel">
+                    {multiCartesian(propSets).map((props, i) => (
+                      <Fragment key={i}>
+                        <div>{prettyProps(props)}</div>
+                        <div><Component {...props} /></div>
+                      </Fragment>
+                    ))}
+                  </Panel>
+                </ForceAdaptivity>
               </div>
             </ConfigProvider>
           ))).toMatchImageSnapshot(matchScreenshot);

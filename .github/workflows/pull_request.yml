@@ -16,7 +16,11 @@ jobs:
           node-version: 12
       # cached yarn install
       - uses: bahmutov/npm-install@v1
-      - run: yarn test:ci
+      - name: Run tests
+        run: yarn test:ci
+      - name: FYI visual tests
+        run: yarn test:e2e
+        continue-on-error: true
       - name: Create test report
         if: always()
         run: yarn danger ci
