@@ -11,5 +11,6 @@ describe('Button', () => {
     disabled: [undefined, true],
   }, {
     size: ['s', 'm', 'l'],
+    $adaptivity: 'y',
   }]);
 });

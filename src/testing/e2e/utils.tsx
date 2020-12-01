@@ -5,11 +5,28 @@ import ConfigProvider from '../../components/ConfigProvider/ConfigProvider';
 import Panel from '../../components/Panel/Panel';
 import { Platform } from '../../lib/platform';
 import { Scheme } from '../../components/ConfigProvider/ConfigProviderContext';
-import AdaptivityProvider from '../../components/AdaptivityProvider/AdaptivityProvider';
+import AdaptivityProvider, { AdaptivityProviderProps } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { SizeType } from '../../components/AdaptivityProvider/AdaptivityContext';
 
-type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> };
-function cartesian<Props>(propDesc: PropDesc<Props>): Props[] {
+type AdaptivityFlag = boolean | 'x' | 'y';
+type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & { $adaptivity?: AdaptivityFlag };
+type SizeProps = Pick<AdaptivityProviderProps, 'sizeX' | 'sizeY'>;
+type TestProps<Props> = Array<Props & SizeProps>;
+type CartesianOptions = { adaptive: boolean };
+
+function getAdaptivity(adaptivity?: AdaptivityFlag) {
+  const extra: PropDesc<SizeProps> = {};
+  if (adaptivity && adaptivity !== 'y') {
+    extra.sizeX = Object.values(SizeType);
+  }
+  if (adaptivity && adaptivity !== 'x') {
+    extra.sizeY = Object.values(SizeType);
+  }
+  return extra;
+};
+
+function cartesian<Props>({ $adaptivity, ...propDesc }: PropDesc<Props>, ops: CartesianOptions): TestProps<Props> {
+  propDesc = { ...propDesc, ...getAdaptivity(ops.adaptive ? $adaptivity : false) };
   return Object.entries(propDesc).reduce((acc, [prop, values]: [string, any[]]) => {
     const res: any[] = [];
     acc.forEach((props) => {
@@ -21,11 +38,11 @@ function cartesian<Props>(propDesc: PropDesc<Props>): Props[] {
   }, [{}]);
 }
 
-function multiCartesian<Props>(propSets: Array<PropDesc<Props>>): Props[] {
+function multiCartesian<Props>(propSets: Array<PropDesc<Props>>, ops: CartesianOptions): TestProps<Props> {
   if (propSets.length === 0) {
     return [{} as any];
   }
-  return propSets.reduce((acc, ortho) => acc.concat(cartesian(ortho)), []);
+  return propSets.reduce((acc, ortho) => acc.concat(cartesian(ortho, ops)), []);
 }
 
 function prettyProps(props: any) {
@@ -63,8 +80,9 @@ export function describeScreenshotFuzz<Props>(
   } = options;
   platforms.forEach((platform) => {
     describe(platform, () => {
-      const width = platform === 'vkcom' ? 'auto' : 320;
-      const ForceAdaptivity = platform === 'vkcom' ? CompactProvider : Fragment;
+      const isVkCom = platform === 'vkcom';
+      const width = isVkCom ? 'auto' : 320;
+      const ForceAdaptivity = isVkCom ? CompactProvider : Fragment;
       schemes.forEach((scheme) => {
         it(scheme, async () => {
           expect(await screenshot((
@@ -72,10 +90,10 @@ export function describeScreenshotFuzz<Props>(
               <div style={{ width, position: 'absolute' }}>
                 <ForceAdaptivity>
                   <Panel id="panel">
-                    {multiCartesian(propSets).map((props, i) => (
+                    {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
                       <Fragment key={i}>
                         <div>{prettyProps(props)}</div>
-                        <div><Component {...props} /></div>
+                        <div><Component {...props as any} /></div>
                       </Fragment>
                     ))}
                   </Panel>
