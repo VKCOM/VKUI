@@ -17,7 +17,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
   constructor(props: ConfigProviderProps, context: DOMProps) {
     super(props);
     if (canUseDOM) {
-      this.setScheme(this.mapOldScheme(props.scheme), context);
+      this.setScheme(props.platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(props.scheme), context);
     }
   }
 
@@ -45,7 +45,11 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
   };
 
   componentDidUpdate(prevProps: ConfigProviderProps) {
-    if (prevProps.scheme !== this.props.scheme) {
+    if (this.props.platform === VKCOM) {
+      if (prevProps.platform !== this.props.platform) {
+        this.setScheme(Scheme.VKCOM, this.context);
+      }
+    } else if (prevProps.scheme !== this.props.scheme) {
       this.setScheme(this.mapOldScheme(this.props.scheme), this.context);
     }
   }
