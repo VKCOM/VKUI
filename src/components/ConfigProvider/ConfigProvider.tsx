@@ -40,7 +40,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
-  getScheme = (platform: Platform, scheme: AppearanceScheme) => {
+  getScheme = (platform: Platform, scheme: AppearanceScheme): AppearanceScheme => {
     return platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(scheme);
   };
 
