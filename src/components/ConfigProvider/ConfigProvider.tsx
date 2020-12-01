@@ -9,7 +9,7 @@ import {
 } from './ConfigProviderContext';
 import { HasChildren, DOMProps } from '../../types';
 import PropTypes from 'prop-types';
-import { VKCOM } from '../../lib/platform';
+import { Platform, VKCOM } from '../../lib/platform';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
@@ -17,7 +17,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
   constructor(props: ConfigProviderProps, context: DOMProps) {
     super(props);
     if (canUseDOM) {
-      this.setScheme(props.platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(props.scheme), context);
+      this.setScheme(this.getScheme(props.platform, props.scheme), context);
     }
   }
 
@@ -40,13 +40,17 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     }
   }
 
+  getScheme = (platform: Platform, scheme: AppearanceScheme) => {
+    return platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(scheme);
+  };
+
   setScheme = (scheme: AppearanceScheme, context: DOMProps): void => {
     (context.document || document).body.setAttribute('scheme', scheme);
   };
 
   componentDidUpdate(prevProps: ConfigProviderProps) {
     if (prevProps.scheme !== this.props.scheme) {
-      this.setScheme(this.props.platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(this.props.scheme), this.context);
+      this.setScheme(this.getScheme(this.props.platform, this.props.scheme), this.context);
     }
   }
 
@@ -54,7 +58,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     return {
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
-      scheme: this.props.platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(this.props.scheme),
+      scheme: this.getScheme(this.props.platform, this.props.scheme),
       appearance: this.props.appearance,
       app: this.props.app,
       transitionMotionEnabled: this.props.transitionMotionEnabled,
