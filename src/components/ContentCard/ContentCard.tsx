@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ImgHTMLAttributes, ReactNode } from 'react';
+import React, { FC, ImgHTMLAttributes, ReactNode } from 'react';
 import Card, { CardProps } from '../Card/Card';
 import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
@@ -49,7 +49,7 @@ export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAtt
   mode?: CardProps['mode'];
 }
 
-const ContentCard: FunctionComponent = (props: ContentCardProps) => {
+const ContentCard: FC<ContentCardProps> = (props) => {
   const { getRef, subtitle, header, text, caption, className, image, disabled, mode, alt, style, getRootRef, ...restProps } = props;
   const platform = usePlatform();
 

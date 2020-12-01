@@ -19,6 +19,9 @@
 @import '../components/Tappable/Tappable.css';
 @import '../components/FixedLayout/FixedLayout.css';
 
+/* Primitives */
+@import '../components/Button/Button.css';
+
 /* Layout */
 @import '../components/Root/Root.css';
 @import '../components/View/View.css';
@@ -51,7 +54,6 @@
 @import '../components/ModalPageHeader/ModalPageHeader.css';
 
 /* Blocks */
-@import '../components/Button/Button.css';
 @import '../components/IconButton/IconButton.css';
 @import '../components/Card/Card.css';
 @import '../components/CardGrid/CardGrid.css';

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 
-export interface CellButtonProps extends SimpleCellProps {
+export interface CellButtonProps extends ButtonHTMLAttributes<HTMLElement>, SimpleCellProps {
   mode?: 'primary' | 'danger';
   stopPropagation?: boolean;
   centered?: boolean;

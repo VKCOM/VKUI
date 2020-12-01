@@ -11,6 +11,8 @@ import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import Text from '../Typography/Text/Text';
+import Button from '../Button/Button';
 
 export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
@@ -67,6 +69,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   static defaultProps = {
     duration: 4000,
+    layout: 'horizontal',
   };
 
   static contextTypes = {
@@ -150,7 +153,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       this.setState({ touched: true });
     }
 
-    this.shiftXPercent = shiftX / this.window.innerWidth * 100;
+    this.shiftXPercent = shiftX / this.bodyElRef.current.offsetWidth * 100;
     this.shiftXCurrent = rubber(this.shiftXPercent, 72, 1.2, this.props.platform === ANDROID || this.props.platform === VKCOM);
     this.touchStartTime = startT;
 
@@ -165,11 +168,17 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     let callback;
 
     if (this.state.touched) {
-      let shiftXReal = this.shiftXCurrent;
-      const expectTranslateY = shiftXReal / (Date.now() - this.touchStartTime.getTime()) * 240 * 0.6 * (this.shiftXPercent < 0 ? -1 : 1);
-      shiftXReal = shiftXReal + expectTranslateY;
+      let shiftXCurrent = this.shiftXCurrent;
+      const expectTranslateY = shiftXCurrent / (Date.now() - this.touchStartTime.getTime()) * 240 * 0.6;
+      shiftXCurrent = shiftXCurrent + expectTranslateY;
 
-      if (shiftXReal >= 50) {
+      if (this.isDesktop && shiftXCurrent <= -50) {
+        this.clearCloseTimeout();
+        this.waitTransitionFinish(this.bodyElRef.current, () => {
+          this.props.onClose();
+        });
+        this.setBodyTransform(-120);
+      } else if (!this.isDesktop && shiftXCurrent >= 50) {
         this.clearCloseTimeout();
         this.waitTransitionFinish(this.bodyElRef.current, () => {
           this.props.onClose();
@@ -195,6 +204,10 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     });
   }
 
+  get isDesktop() {
+    return this.props.viewWidth >= ViewWidth.SMALL_TABLET;
+  }
+
   render() {
     const {
       children,
@@ -204,11 +217,8 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       action,
       before,
       after,
-      viewWidth,
     } = this.props;
-
-    const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
-    const resolvedLayout = after || isDesktop ? 'vertical' : layout;
+    const resolvedLayout = after || this.isDesktop ? 'vertical' : layout;
 
     return (
       <FixedLayout
@@ -216,7 +226,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
         className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
           'Snackbar--closing': this.state.closing,
           'Snackbar--touched': this.state.touched,
-          'Snackbar--desktop': isDesktop,
+          'Snackbar--desktop': this.isDesktop,
         })}
       >
         <Touch
@@ -233,12 +243,12 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
             </div>}
 
             <div className="Snackbar__content">
-              <div className="Snackbar__content-text">{children}</div>
+              <Text weight="regular" className="Snackbar__content-text">{children}</Text>
 
               {action &&
-              <button className="Snackbar__action" onClick={this.onActionClick}>
-                <div className="Snackbar__action-self">{action}</div>
-              </button>}
+              <Button align="left" hasHover={false} mode="tertiary" size="s" className="Snackbar__action" onClick={this.onActionClick}>
+                {action}
+              </Button>}
             </div>
 
             {after &&

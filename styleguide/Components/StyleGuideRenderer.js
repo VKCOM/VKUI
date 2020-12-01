@@ -13,17 +13,17 @@ import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { DESKTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from '../../src/components/AdaptivityProvider/AdaptivityProvider';
 import { defaultConfigProviderProps } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { ViewWidthSelect } from './ViewWidthSelect';
-import { ViewHeightSelect, COMPACT_HEIGHT } from './ViewHeightSelect';
+import { ViewHeightSelect, SMALL_HEIGHT } from './ViewHeightSelect';
 import { SizeType } from '../../src/components/AdaptivityProvider/AdaptivityContext';
 import { VKCOM } from '../../src/lib/platform';
-import { SizeYSelect } from './SizeYSelect';
+import { HasMouseCheckbox } from './HasMouseCheckbox';
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
-  height: COMPACT_HEIGHT,
-  sizeY: SizeType.REGULAR,
+  height: SMALL_HEIGHT,
+  hasMouse: true,
 });
 
 const styles = ({ color, fontFamily, fontSize, mq, space }) => ({
@@ -85,14 +85,17 @@ let initialState = {
   ...defaultConfigProviderProps,
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
-  height: COMPACT_HEIGHT,
-  sizeY: SizeType.REGULAR,
+  height: SMALL_HEIGHT,
+  hasMouse: true
 }
 
 try {
   const lsState =  localStorage.getItem('vkui:state');
   if (lsState) {
-    initialState = JSON.parse(lsState);
+    initialState = {
+      ...initialState,
+      ...JSON.parse(lsState)
+    };
   }
 } catch (e) {
   console.log(e);
@@ -100,12 +103,12 @@ try {
 
 function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
   const [state, setState] = useState(initialState);
-  const { width, height, platform, sizeY, scheme } = state;
+  const { width, height, platform, scheme, hasMouse } = state;
 
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };
     localStorage.setItem('vkui:state', JSON.stringify(newState));
-    setState(newState)
+    setState(newState);
   }, [state])
 
   useEffect(() => {
@@ -116,7 +119,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
 
   useEffect(() => {
     if (platform === VKCOM) {
-      setContext({ sizeY: SizeType.COMPACT, width: TABLET_SIZE, scheme: Scheme.VKCOM });
+      setContext({ hasMouse: true, width: TABLET_SIZE, scheme: Scheme.VKCOM });
     } else if (scheme === Scheme.VKCOM) {
       setContext({ scheme: Scheme.BRIGHT_LIGHT });
     }
@@ -169,9 +172,9 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
             />
             </div>
             <div style={{ marginTop: 4 }}>
-              <SizeYSelect
-                onChange={ (e) => setContext({ sizeY: e.target.value })}
-                value={sizeY}
+              <HasMouseCheckbox
+                onChange={ (e) => setContext({ hasMouse: e.target.checked })}
+                value={hasMouse}
                 disabled={platform === VKCOM}
               />
             </div>
