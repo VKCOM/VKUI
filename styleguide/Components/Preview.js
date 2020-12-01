@@ -5,7 +5,7 @@ import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/Playgr
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
-import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AdaptivityProvider, ConfigProvider } from '../../src';
+import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AdaptivityProvider, ConfigProvider, AppRoot } from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -124,10 +124,10 @@ export default class Preview extends PreviewParent {
               >
                 <div className={isEmbedded ? "" : "vkui-root"} style={isEmbedded ? {
                     border: '1px solid #000',
-                    height: 600,
+                    minHeight: 600,
                     margin: 16,
                     position: 'relative',
-                    overflow: 'hidden',
+                    overflow: 'auto',
                   } : {}}>
                   <PrepareFrame integration={styleGuideContext.integration}>
                     {({ window }) => (
@@ -137,14 +137,28 @@ export default class Preview extends PreviewParent {
                         webviewType={styleGuideContext.webviewType}
                       >
                         <AdaptivityProvider window={window} hasMouse={styleGuideContext.hasMouse} embedded={isEmbedded}>
-                          <Layout>
-                            <ReactExample
-                              code={code}
-                              evalInContext={this.props.evalInContext}
-                              onError={this.handleError}
-                              compilerConfig={this.context.config.compilerConfig}
-                            />
-                          </Layout>
+                          {isEmbedded ? (
+                            <AppRoot>
+                              <Layout>
+                                <ReactExample
+                                  code={code}
+                                  evalInContext={this.props.evalInContext}
+                                  onError={this.handleError}
+                                  compilerConfig={this.context.config.compilerConfig}
+                                />
+                              </Layout>
+                            </AppRoot>
+                          ) : (
+                            <Layout>
+                              <ReactExample
+                                code={code}
+                                evalInContext={this.props.evalInContext}
+                                onError={this.handleError}
+                                compilerConfig={this.context.config.compilerConfig}
+                              />
+                            </Layout>
+                          )}
+                          
                         </AdaptivityProvider>
                       </ConfigProvider>
                     )}

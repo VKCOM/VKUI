@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import classNames from '../../lib/classNames';
 import { DOMProps, HasChildren } from '../../types';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
@@ -64,13 +63,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded]);
 
   return <AdaptivityContext.Provider value={adaptivityRef.current}>
-    {props.embedded ? (
-      <div className={classNames('AppRoot', {
-        'AppRoot-sizeX-regular': adaptivityRef.current.sizeX === SizeType.REGULAR })
-      }>
-        {props.children}
-      </div>
-    ) : props.children}
+    {props.children}
   </AdaptivityContext.Provider>;
 }
 
