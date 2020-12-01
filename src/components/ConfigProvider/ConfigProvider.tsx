@@ -9,6 +9,7 @@ import {
 } from './ConfigProviderContext';
 import { HasChildren, DOMProps } from '../../types';
 import PropTypes from 'prop-types';
+import { VKCOM } from '../../lib/platform';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
@@ -53,7 +54,7 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     return {
       isWebView: this.props.isWebView,
       webviewType: this.props.webviewType,
-      scheme: this.mapOldScheme(this.props.scheme),
+      scheme: this.props.platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(this.props.scheme),
       appearance: this.props.appearance,
       app: this.props.app,
       transitionMotionEnabled: this.props.transitionMotionEnabled,

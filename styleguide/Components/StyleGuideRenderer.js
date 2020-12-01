@@ -147,7 +147,6 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
               <SchemeSelect
                 onChange={ (e) => setContext({ scheme: e.target.value })}
                 value={state.scheme}
-                isVKCOM={platform === VKCOM}
                 disabled={platform === VKCOM}
               />
             </div>
