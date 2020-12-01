@@ -212,12 +212,12 @@
 
 /* large size */
 .Button--sizeY-compact.Button--sz-l {
-  min-height: 40px;
+  min-height: 36px;
 }
 
 .Button--sizeY-compact.Button--sz-l .Button__content {
-  padding-top: 8px;
-  padding-bottom: 10px;
+  padding-top: 6px;
+  padding-bottom: 8px;
 }
 
 /**

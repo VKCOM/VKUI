@@ -23,11 +23,11 @@
     }
 
   .Textarea--sizeY-compact .Textarea__el {
-    padding-top: 9px;
-    padding-bottom: 9px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     font-size: 15px;
     line-height: 20px;
-    min-height: 58px;
+    min-height: 54px;
   }
 
   .Textarea__el::placeholder {
