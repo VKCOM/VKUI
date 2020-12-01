@@ -16,7 +16,7 @@ class ComponentHandle {
     if (!(name in this.components)) {
       throw new Error(`Test "${name}" does not exist, ${JSON.stringify(Object.keys(this.components))}`);
     }
-    render(this.components[name].node, this.mountNode);
+    return new Promise((ok) => render(this.components[name].node, this.mountNode, () => ok()));
   }
 
   unmount() {

@@ -69,7 +69,12 @@ async function uploadFailedScreenshots() {
         ContentType: 'image/png',
         ACL: 'public-read',
       }).promise();
-      markdown(`Screenshot \`${screenName}\` failed\n![](https://${awsHost}/${key})`);
+      markdown(`
+        <details>
+          <summary>Screenshot <code>${screenName}</code> failed</summary>
+          <img src="https://${awsHost}/${key}">
+        </details>
+      `.replace(/(^|\n) +/g, ''));
     } catch (err) {
       warn(`Counls not upload screenshot diff ${screenName}: ${err.message}`);
     }

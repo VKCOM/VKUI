@@ -9,12 +9,15 @@ export async function mount() {
   const testName = expect.getState().currentTestName;
   /* istanbul ignore next */
   await page.evaluate(({ testName }) => {
-    (window as any).testHandle.mount(testName);
+    return (window as any).testHandle.mount(testName);
   }, { testName });
 }
 
 export async function screenshot(jsx: ReactElement) {
   await mount(jsx);
+  // font load affects layout
+  /* istanbul ignore next */
+  await page.evaluate(() => document.fonts.ready);
   /* istanbul ignore next */
   const { width, height } = await page.evaluate(() => {
     const size = { width: 0, height: 0 };
