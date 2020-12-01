@@ -7,12 +7,12 @@
 
       this.state = {
         slideIndex: 0,
-        draggable: true
+        isDraggable: true
       }
     }
 
     render () {
-      const { draggable, slideIndex } = this.state
+      const { isDraggable, slideIndex } = this.state
       return (
         <View activePanel="gallery">
           <Panel id="gallery">
@@ -67,19 +67,21 @@
                 align="center"
                 style={{ height: 150 }}
                 slideIndex={slideIndex}
-                // TODO: (() => {})
-                onChange={draggable ? slideIndex => this.setState({slideIndex}) : (() => {})}
+                onChange={slideIndex => this.setState({slideIndex})}
+                isDraggable={isDraggable}
               >
                 <div style={{ backgroundColor: 'var(--destructive)' }} />
                 <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
 
-              <Checkbox checked={draggable} onChange={e => this.setState({ draggable: e.target.checked })}>
-                draggable
-              </Checkbox>
               <FormItem>
-                <Button size='l' stretch onClick={() => this.setState({ slideIndex: (slideIndex + 1) % 3 })}>
+                <Checkbox checked={isDraggable} onChange={e => this.setState({ isDraggable: e.target.checked })}>
+                  isDraggable
+                </Checkbox>
+              </FormItem>
+              <FormItem>
+                <Button size='l' stretched onClick={() => this.setState({ slideIndex: (slideIndex + 1) % 3 })}>
                   Next slide
                 </Button>
               </FormItem>
