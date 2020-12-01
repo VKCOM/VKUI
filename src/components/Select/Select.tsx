@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import NativeSelect from '../NativeSelect/NativeSelect';
 import CustomSelect, { CustomSelectProps } from '../CustomSelect/CustomSelect';
-import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-const Select: FunctionComponent<CustomSelectProps> = (props) => {
+const Select: FunctionComponent<CustomSelectProps & AdaptivityProps> = ({ hasMouse, ...props }) => {
   // Use custom select if device has connected a mouse
   if (hasMouse) {
     const { children, ...restProps } = props;
@@ -29,4 +29,6 @@ const Select: FunctionComponent<CustomSelectProps> = (props) => {
   );
 };
 
-export default Select;
+export default withAdaptivity(Select, {
+  hasMouse: true,
+});

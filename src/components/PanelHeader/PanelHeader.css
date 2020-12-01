@@ -18,7 +18,6 @@
   white-space: nowrap;
   position: relative;
   background: var(--header_background);
-  box-sizing: border-box;
 }
 
 .PanelHeader--trnsp .PanelHeader__in {

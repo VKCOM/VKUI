@@ -7,9 +7,10 @@ import { IOS } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
 import { HasChildren, HasPlatform } from '../../types';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
+import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, AdaptivityProps {
   /**
@@ -59,10 +60,12 @@ const ModalCard: FC<ModalCardProps> = (props) => {
     platform,
     className,
     viewWidth,
+    viewHeight,
   } = props;
 
-  const isDesktop = viewWidth >= ViewWidth.TABLET;
-  const canShowCloseBtn = platform === IOS || isDesktop;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.MEDIUM;
+  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+  const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
   return (
     <div className={classNames(getClassName('ModalCard', platform), {
@@ -84,7 +87,8 @@ const ModalCard: FC<ModalCardProps> = (props) => {
           </div>
           }
 
-          {canShowCloseBtn &&
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
+          {canShowCloseBtnIos &&
           <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
             <Icon24Dismiss />
           </PanelHeaderButton>
@@ -101,4 +105,5 @@ ModalCard.defaultProps = {
 
 export default withAdaptivity(withPlatform(ModalCard), {
   viewWidth: true,
+  viewHeight: true,
 });

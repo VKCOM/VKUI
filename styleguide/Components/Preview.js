@@ -115,14 +115,14 @@ export default class Preview extends PreviewParent {
               <ReactFrame
                 mountTarget="body"
                 style={{
-                  height: 667,
+                  height: styleGuideContext.height,
                   width: styleGuideContext.width,
                   border: '1px solid rgba(0, 0, 0, .12)',
                   display: 'block',
                   margin: 'auto',
                 }}
               >
-                  <div className={isEmbedded ? "" : "vkui-root"} style={isEmbedded ? {
+                <div className={isEmbedded ? "" : "vkui-root"} style={isEmbedded ? {
                     border: '1px solid #000',
                     height: 600,
                     margin: 16,
@@ -136,7 +136,7 @@ export default class Preview extends PreviewParent {
                         scheme={styleGuideContext.scheme}
                         webviewType={styleGuideContext.webviewType}
                       >
-                        <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY} embedded={isEmbedded}>
+                        <AdaptivityProvider window={window} hasMouse={styleGuideContext.hasMouse} embedded={isEmbedded}>
                           <Layout>
                             <ReactExample
                               code={code}

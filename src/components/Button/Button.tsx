@@ -1,12 +1,12 @@
-import React, { FunctionComponent, ReactNode, ElementType, ButtonHTMLAttributes } from 'react';
+import React, { ButtonHTMLAttributes, FunctionComponent, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import Tappable from '../Tappable/Tappable';
+import Tappable, { TappableProps } from '../Tappable/Tappable';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
-import { HasAlign, HasRootRef } from '../../types';
+import { HasAlign } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { Platform, VKCOM } from '../../lib/platform';
@@ -19,9 +19,7 @@ export interface VKUIButtonProps extends HasAlign {
   after?: ReactNode;
 }
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, VKUIButtonProps, AdaptivityProps {
-  Component?: ElementType;
-  stopPropagation?: boolean;
+export interface ButtonProps extends TappableProps, ButtonHTMLAttributes<HTMLElement>, VKUIButtonProps {
   href?: string;
   target?: string;
 }
@@ -96,7 +94,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
         className,
         `Button--sz-${size}`,
         `Button--lvl-${mode}`,
-        `Button--aln-${align || 'center'}`,
+        `Button--aln-${align}`,
         `Button--sizeY-${sizeY}`,
         {
           ['Button--str']: stretched,
@@ -118,6 +116,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
 Button.defaultProps = {
   mode: 'primary',
   Component: 'button',
+  align: 'center',
   size: 's',
   stretched: false,
   stopPropagation: true,

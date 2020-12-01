@@ -52,6 +52,10 @@
   transition: transform .6s var(--ios-easing);
 }
 
+.Cell--ios.Cell--removable {
+  overflow: hidden;
+}
+
 .Cell--ios .Cell__remove {
   position: absolute;
   left: 100%;

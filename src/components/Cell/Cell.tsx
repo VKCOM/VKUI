@@ -214,6 +214,7 @@ class Cell extends Component<CellProps, CellState> {
       <div
         className={classNames(getClassName('Cell', platform), {
           'Cell--dragging': this.state.dragging,
+          'Cell--removable': removable,
         }, className)}
         style={style}
         ref={this.getRootRef}
