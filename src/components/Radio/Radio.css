@@ -206,3 +206,15 @@
       margin-top: 1px;
       margin-bottom: 9px;
     }
+
+.Radio--sizeY-compact .Radio__children {
+  margin-top: 8px;
+}
+
+.Radio--sizeY-compact .Radio__children:last-child {
+  margin-bottom: 8px;
+}
+
+.Radio--sizeY-compact .Radio__description {
+  margin-bottom: 7px;
+}
