@@ -45,12 +45,8 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
   };
 
   componentDidUpdate(prevProps: ConfigProviderProps) {
-    if (this.props.platform === VKCOM) {
-      if (prevProps.platform !== this.props.platform) {
-        this.setScheme(Scheme.VKCOM, this.context);
-      }
-    } else if (prevProps.scheme !== this.props.scheme) {
-      this.setScheme(this.mapOldScheme(this.props.scheme), this.context);
+    if (prevProps.scheme !== this.props.scheme) {
+      this.setScheme(this.props.platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(this.props.scheme), this.context);
     }
   }
 
