@@ -76,7 +76,8 @@ module.exports = {
           '../src/components/ModalRoot/ModalRootAdaptive.tsx',
           '../src/components/ModalPage/ModalPage.tsx',
           '../src/components/ModalPageHeader/ModalPageHeader.tsx',
-          '../src/components/ModalCard/ModalCard.tsx'
+          '../src/components/ModalCard/ModalCard.tsx',
+          '../src/components/ModalDismissButton/ModalDismissButton.tsx'
         ]
       }, {
         name: 'Blocks',
