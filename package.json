@@ -121,16 +121,20 @@
     "test:unit:ci": "yarn test:unit --ci --silent --outputFile test-results.json --json --coverage --coverageReporters='json-summary'",
     "test:e2e": "jest --config e2e/jest.e2e.config.js",
     "test:code": "jest",
-    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
-    "lint:ci": "yarn lint -o lint-results.json -f json",
-    "test:static": "concurrently 'tsc --noEmit' 'yarn lint' 'stylelint \"./src/**/*.css\"'",
-    "test:static:ci": "concurrently 'tsc --noEmit' 'yarn lint:ci' 'stylelint \"./src/**/*.css\"'",
+
+    "lint:es": "eslint --ext .jsx,.js,.ts,.tsx src/ --cache --cache-location .cache/.eslintcache",
+    "lint:es:ci": "yarn lint:es -o lint-results.json -f json",
+    "lint:style": "stylelint \"./src/**/*.css\" --cache --cache-location .cache/.stylelintcache",
+    "typecheck": "tsc --incremental --emitDeclarationOnly --declaration --tsBuildInfoFile .cache/.tsbuildinfo --outDir .cache/ts",
+    "test:static": "concurrently 'yarn typecheck' 'yarn lint:es' 'yarn lint:style'",
+    "test:static:ci": "concurrently 'yarn typecheck' 'yarn lint:es:ci' 'yarn lint:style'",
+
     "test": "concurrently 'yarn test:unit' 'yarn test:static'",
     "test:quick": "concurrently 'yarn test:unit:quick' 'yarn test:static'",
     "test:ci": "concurrently 'yarn test:unit:ci' 'yarn test:static:ci'",
     "copy-default-scheme": "shx cp ./src/styles/bright_light.css ./dist/default_scheme.css"
   },
   "pre-commit": [
-    "test:quick"
+    "test:static"
   ]
 }
