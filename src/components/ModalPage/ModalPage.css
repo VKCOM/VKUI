@@ -115,6 +115,10 @@
   border-radius: 12px 12px 0 0;
 }
 
+.ModalPage--vkcom .ModalPage__in {
+  width: 448px;
+}
+
 /**
  * desktop
  */
