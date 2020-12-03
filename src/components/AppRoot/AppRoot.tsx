@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useEffect, useRef, useState } from 'react';
+import React, { FC, PropsWithChildren, useEffect, useRef } from 'react';
 import AdaptivityProvider, { AdaptivityProviderProps } from '../AdaptivityProvider/AdaptivityProvider';
 import ConfigProvider, { ConfigProviderProps } from '../ConfigProvider/ConfigProvider';
 import classNames from '../../lib/classNames';
@@ -62,13 +62,8 @@ const AppRoot: FC<AppRootProps> = (props: AppRootProps) => {
   };
 
   const rootRef = useRef<HTMLDivElement>();
-  const [, updateRoot] = useState({});
 
   useEffect(() => {
-    if (rootRef && rootRef.current) {
-      updateRoot({});
-    }
-
     (rootRef.current.parentNode as HTMLElement).classList.add('vkui-root');
 
     if (!embedded) {
@@ -88,7 +83,7 @@ const AppRoot: FC<AppRootProps> = (props: AppRootProps) => {
       'AppRoot--embedded': embedded,
     })}>
       <ConfigProvider {...configProviderProps}>
-        <AdaptivityProvider {...adaptivityProviderProps} root={rootRef.current}>
+        <AdaptivityProvider {...adaptivityProviderProps}>
           {embedded ? <EmbeddedWrapper>{children}</EmbeddedWrapper> : children}
         </AdaptivityProvider>
       </ConfigProvider>

@@ -63,5 +63,4 @@ export interface Version {
 export interface DOMProps {
   document?: Document;
   window?: Window;
-  root?: HTMLElement;
 }

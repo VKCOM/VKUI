@@ -3,9 +3,7 @@ import { DOMProps, HasChildren } from '../../types';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
 
-export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {
-  embedded?: boolean;
-}
+export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {}
 
 export const DESKTOP_SIZE = 1280;
 export const TABLET_SIZE = 1024;
@@ -15,16 +13,12 @@ export const MOBILE_SIZE = 320;
 export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
-declare const ResizeObserver: any;
-
 export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const adaptivityRef = useRef<AdaptivityContextInterface>(null);
   const [, updateAdaptivity] = useState({});
 
   if (!adaptivityRef.current) {
-    const width = props.embedded && props.root ? props.root.offsetWidth : props.window.innerWidth;
-    const height = props.embedded && props.root ? props.root.offsetHeight : props.window.innerHeight;
-    adaptivityRef.current = calculateAdaptivity(width, height, props);
+    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
   }
 
   function paintBody(sizeX: SizeType) {
@@ -37,17 +31,16 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
   useEffect(() => {
     function onResize() {
-      const width = props.embedded && props.root ? props.root.offsetWidth : props.window.innerWidth;
-      const height = props.embedded && props.root ? props.root.offsetHeight : props.window.innerHeight;
-      const calculated = calculateAdaptivity(width, height, props);
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse } = adaptivityRef.current;
+      const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
+      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, embedded } = adaptivityRef.current;
 
       if (
         viewWidth !== calculated.viewWidth ||
         viewHeight !== calculated.viewHeight ||
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY ||
-        hasMouse !== calculated.hasMouse
+        hasMouse !== calculated.hasMouse ||
+        embedded !== props.embedded
       ) {
         if (!props.embedded) {
           paintBody(calculated.sizeX);
@@ -59,21 +52,14 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
     if (!props.embedded) {
       paintBody(adaptivityRef.current.sizeX);
-      onResize();
-      props.window.addEventListener('resize', onResize, false);
-      return () => {
-        props.window.removeEventListener('resize', onResize, false);
-      };
-    } else if (props.root) {
-      const observer = new ResizeObserver(onResize);
-      observer.observe(props.root);
-      onResize();
-      return () => observer.unobserve(props.root);
-    } else {
-      onResize();
-      return undefined;
     }
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded, props.window, props.root]);
+    onResize();
+    props.window.addEventListener('resize', onResize, false);
+
+    return () => {
+      props.window.removeEventListener('resize', onResize, false);
+    };
+  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded]);
 
   return <AdaptivityContext.Provider value={adaptivityRef.current}>
     {props.children}

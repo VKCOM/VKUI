@@ -34,6 +34,7 @@ module.exports = {
       name: 'Adaptivity',
       content: './pages/adaptivity.md',
       components: () => [
+        '../src/components/AppRoot/AppRoot.tsx',
         '../src/components/AdaptivityProvider/AdaptivityProvider.tsx',
         '../src/components/SplitLayout/SplitLayout.tsx',
         '../src/components/SplitCol/SplitCol.tsx',
