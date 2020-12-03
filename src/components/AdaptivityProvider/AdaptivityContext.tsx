@@ -26,6 +26,7 @@ export interface AdaptivityContextInterface {
   viewHeight?: ViewHeight;
   hasMouse?: boolean;
   embedded?: boolean;
+  modalRoot?: HTMLElement;
 }
 
 export const AdaptivityContext = createContext<AdaptivityContextInterface>({

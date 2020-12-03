@@ -18,7 +18,11 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const [, updateAdaptivity] = useState({});
 
   if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
+    adaptivityRef.current = {
+      ...calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props),
+      embedded: props.embedded,
+      modalRoot: props.modalRoot,
+    };
   }
 
   function paintBody(sizeX: SizeType) {
@@ -32,7 +36,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   useEffect(() => {
     function onResize() {
       const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, embedded } = adaptivityRef.current;
+      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, embedded, modalRoot } = adaptivityRef.current;
 
       if (
         viewWidth !== calculated.viewWidth ||
@@ -40,12 +44,17 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY ||
         hasMouse !== calculated.hasMouse ||
-        embedded !== props.embedded
+        embedded !== props.embedded ||
+        modalRoot !== props.modalRoot
       ) {
         if (!props.embedded) {
           paintBody(calculated.sizeX);
         }
-        adaptivityRef.current = calculated;
+        adaptivityRef.current = {
+          ...calculated,
+          embedded,
+          modalRoot,
+        };
         updateAdaptivity({});
       }
     }
@@ -59,7 +68,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     return () => {
       props.window.removeEventListener('resize', onResize, false);
     };
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded]);
+  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded, props.modalRoot]);
 
   return <AdaptivityContext.Provider value={adaptivityRef.current}>
     {props.children}
