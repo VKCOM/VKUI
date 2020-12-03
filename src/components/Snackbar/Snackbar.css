@@ -1,5 +1,6 @@
 .Snackbar {
   user-select: none;
+  z-index: 101;
 }
 
 .Snackbar__in {
