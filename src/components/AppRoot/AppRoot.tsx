@@ -22,10 +22,6 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
   };
 
   update(props: AppRootProps) {
-    props.window.document.body.appendChild(this.modalRoot);
-
-    (this.rootRef.current.parentNode as HTMLElement).classList.add('vkui-root');
-
     if (!props.embedded) {
       props.window.document.documentElement.classList.add('vkui');
     } else {
@@ -34,6 +30,8 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
   }
 
   componentDidMount() {
+    this.props.window.document.body.appendChild(this.modalRoot);
+    (this.rootRef.current.parentNode as HTMLElement).classList.add('vkui-root');
     this.update(this.props);
   }
 
