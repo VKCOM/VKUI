@@ -46,7 +46,7 @@ class PopoutRoot extends Component<PopoutRootProps> {
   }
 
   render() {
-    const { popout, modal, viewWidth, children, className, getRootRef, ...restProps } = this.props;
+    const { popout, modal, viewWidth, children, className, getRootRef, modalRoot, ...restProps } = this.props;
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     return (
@@ -61,7 +61,7 @@ class PopoutRoot extends Component<PopoutRootProps> {
             {!!popout && <div className={isDesktop ? 'PopoutRoot--absolute' : 'PopoutRoot__popout'}>{popout}</div>}
             {!!modal && <div className="PopoutRoot__modal">{modal}</div>}
           </div>
-        ), this.props.modalRoot)}
+        ), modalRoot)}
       </div>
     );
   }

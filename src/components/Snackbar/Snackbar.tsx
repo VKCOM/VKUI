@@ -218,6 +218,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       action,
       before,
       after,
+      modalRoot,
     } = this.props;
     const resolvedLayout = after || this.isDesktop ? 'vertical' : layout;
 
@@ -259,7 +260,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
           </div>
         </Touch>
       </FixedLayout>
-    ), this.props.modalRoot);
+    ), modalRoot);
   }
 }
 
