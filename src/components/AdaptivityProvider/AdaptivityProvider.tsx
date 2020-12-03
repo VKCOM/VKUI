@@ -26,10 +26,13 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   }
 
   function paintBody(sizeX: SizeType) {
+    const root = props.embedded
+      ? props.window.document.querySelector('.AppRoot')
+      : props.window.document.body;
     if (sizeX === SizeType.REGULAR) {
-      props.window.document.body.classList.add('vkui-sizeX-regular');
+      root.classList.add('vkui-sizeX-regular');
     } else {
-      props.window.document.body.classList.remove('vkui-sizeX-regular');
+      root.classList.remove('vkui-sizeX-regular');
     }
   }
 
@@ -47,9 +50,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         embedded !== props.embedded ||
         modalRoot !== props.modalRoot
       ) {
-        if (!props.embedded) {
-          paintBody(calculated.sizeX);
-        }
+        paintBody(calculated.sizeX);
         adaptivityRef.current = {
           ...calculated,
           embedded,
@@ -59,9 +60,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
       }
     }
 
-    if (!props.embedded) {
-      paintBody(adaptivityRef.current.sizeX);
-    }
+    paintBody(adaptivityRef.current.sizeX);
     onResize();
     props.window.addEventListener('resize', onResize, false);
 

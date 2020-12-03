@@ -1,20 +1,7 @@
-import React, { createRef, FC, PropsWithChildren, RefObject } from 'react';
+import React, { createRef, PropsWithChildren, RefObject } from 'react';
 import AdaptivityProvider, { AdaptivityProviderProps } from '../AdaptivityProvider/AdaptivityProvider';
 import ConfigProvider, { ConfigProviderProps } from '../ConfigProvider/ConfigProvider';
 import classNames from '../../lib/classNames';
-import withAdaptivity, { SizeType } from '../../hoc/withAdaptivity';
-
-const EmbeddedWrapper: FC<PropsWithChildren<{}>> = withAdaptivity(({ sizeX, children }: PropsWithChildren<AppRootProps>) => {
-  return (
-    <div className={classNames('AppRoot__wrapper', {
-      'AppRoot__wrapper--sizeX-regular': sizeX === SizeType.REGULAR,
-    })}>
-      {children}
-    </div>
-  );
-}, {
-  sizeX: true,
-});
 
 export interface AppRootProps extends ConfigProviderProps, AdaptivityProviderProps {}
 
@@ -111,11 +98,13 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
         'AppRoot--embedded': embedded,
       })}>
         <ConfigProvider {...configProviderProps}>
-          {this.modalRoot ? (
-            <AdaptivityProvider {...adaptivityProviderProps} modalRoot={this.modalRoot}>
-              {embedded ? <EmbeddedWrapper>{children}</EmbeddedWrapper> : children}
-            </AdaptivityProvider>
-          ) : null}
+          <AdaptivityProvider {...adaptivityProviderProps} modalRoot={this.modalRoot}>
+            {embedded ? (
+              <div className="AppRoot__wrapper">
+                {children}
+              </div>
+            ) : children}
+          </AdaptivityProvider>
         </ConfigProvider>
       </div>
     );

@@ -138,11 +138,11 @@
 }
 
 .vkui > .vkui-sizeX-regular,
-.AppRoot__wrapper--sizeX-regular {
+.AppRoot.vkui-sizeX-regular {
   background: var(--background_page);
 }
 
-.AppRoot--embedded .AppRoot__wrapper {
+.AppRoot__wrapper {
   height: 100%;
   overflow: auto;
 }
