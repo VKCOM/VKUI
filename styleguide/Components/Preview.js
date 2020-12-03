@@ -5,7 +5,7 @@ import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/Playgr
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
-import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AdaptivityProvider, ConfigProvider, AppRoot } from '../../src';
+import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot } from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -46,24 +46,6 @@ class PrepareFrame extends React.Component {
     };
 
     head.appendChild(link);
-
-    this.updateVKUIClasses(this.props.integration);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.integration !== this.props.integration) {
-      this.updateVKUIClasses(this.props.integration);
-    }
-  }
-
-  updateVKUIClasses(integration) {
-    if (integration === "embedded") {
-      this.context.document.documentElement.classList.remove("vkui");
-      this.context.document.querySelector("#root").classList.remove("vkui-root");
-    } else {
-      this.context.document.documentElement.classList.add("vkui");
-      this.context.document.querySelector("#root").classList.add("vkui-root");
-    }
   }
 
   render () {
@@ -122,45 +104,33 @@ export default class Preview extends PreviewParent {
                   margin: 'auto',
                 }}
               >
-                <div className={isEmbedded ? "" : "vkui-root"} style={isEmbedded ? {
-                    border: '1px solid #000',
-                    minHeight: 600,
-                    margin: 16,
-                    position: 'relative',
-                    overflow: 'auto',
-                  } : {}}>
+                <div style={isEmbedded ? {
+                  position: 'relative',
+                  border: '1px solid #000',
+                  height: 600,
+                  margin: 16,
+                  position: 'relative',
+                  overflow: 'hidden',
+                } : {}}>
                   <PrepareFrame integration={styleGuideContext.integration}>
                     {({ window }) => (
-                      <ConfigProvider
+                      <AppRoot
                         platform={styleGuideContext.platform}
                         scheme={styleGuideContext.scheme}
                         webviewType={styleGuideContext.webviewType}
+                        window={window}
+                        hasMouse={styleGuideContext.hasMouse}
+                        embedded={isEmbedded}
                       >
-                        <AdaptivityProvider window={window} hasMouse={styleGuideContext.hasMouse} embedded={isEmbedded}>
-                          {isEmbedded ? (
-                            <AppRoot>
-                              <Layout>
-                                <ReactExample
-                                  code={code}
-                                  evalInContext={this.props.evalInContext}
-                                  onError={this.handleError}
-                                  compilerConfig={this.context.config.compilerConfig}
-                                />
-                              </Layout>
-                            </AppRoot>
-                          ) : (
-                            <Layout>
-                              <ReactExample
-                                code={code}
-                                evalInContext={this.props.evalInContext}
-                                onError={this.handleError}
-                                compilerConfig={this.context.config.compilerConfig}
-                              />
-                            </Layout>
-                          )}
-                          
-                        </AdaptivityProvider>
-                      </ConfigProvider>
+                        <Layout>
+                          <ReactExample
+                            code={code}
+                            evalInContext={this.props.evalInContext}
+                            onError={this.handleError}
+                            compilerConfig={this.context.config.compilerConfig}
+                            />
+                        </Layout>
+                      </AppRoot>
                     )}
                   </PrepareFrame>
                 </div>

@@ -1,20 +1,104 @@
-import React, { FC, PropsWithChildren } from 'react';
-import withAdaptivity, { SizeType } from '../../hoc/withAdaptivity';
+import React, { FC, PropsWithChildren, useEffect, useRef, useState } from 'react';
+import AdaptivityProvider, { AdaptivityProviderProps } from '../AdaptivityProvider/AdaptivityProvider';
+import ConfigProvider, { ConfigProviderProps } from '../ConfigProvider/ConfigProvider';
 import classNames from '../../lib/classNames';
-import { AdaptivityProviderProps } from '../AdaptivityProvider/AdaptivityProvider';
+import withAdaptivity, { SizeType } from '../../hoc/withAdaptivity';
 
-export type AppRootProps = AdaptivityProviderProps;
-
-const AppRoot: FC<PropsWithChildren<AppRootProps>> = ({ sizeX, children }: PropsWithChildren<AppRootProps>) => {
+const EmbeddedWrapper: FC<PropsWithChildren<{}>> = withAdaptivity(({ sizeX, children }: PropsWithChildren<AppRootProps>) => {
   return (
-    <div className={classNames('AppRoot', {
-      'AppRoot-sizeX-regular': sizeX === SizeType.REGULAR,
+    <div className={classNames('AppRoot__wrapper', {
+      'AppRoot__wrapper--sizeX-regular': sizeX === SizeType.REGULAR,
     })}>
       {children}
     </div>
   );
-};
-
-export default withAdaptivity(AppRoot, {
+}, {
   sizeX: true,
 });
+
+export interface AppRootProps extends ConfigProviderProps, AdaptivityProviderProps {
+  embedded?: boolean;
+}
+
+const AppRoot: FC<AppRootProps> = (props: AppRootProps) => {
+  const {
+    embedded,
+    children,
+    scheme,
+    isWebView,
+    webviewType,
+    app,
+    appearance,
+    transitionMotionEnabled,
+    platform,
+    document,
+    window,
+    sizeX,
+    sizeY,
+    viewWidth,
+    viewHeight,
+    hasMouse,
+  } = props;
+
+  const configProviderProps: ConfigProviderProps = {
+    scheme,
+    isWebView,
+    webviewType,
+    app,
+    appearance,
+    transitionMotionEnabled,
+    platform,
+  };
+
+  const adaptivityProviderProps: AdaptivityProviderProps = {
+    embedded,
+    document,
+    window,
+    sizeX,
+    sizeY,
+    viewWidth,
+    viewHeight,
+    hasMouse,
+  };
+
+  const rootRef = useRef<HTMLDivElement>();
+  const [, updateRoot] = useState({});
+
+  useEffect(() => {
+    if (rootRef && rootRef.current) {
+      updateRoot({});
+    }
+
+    (rootRef.current.parentNode as HTMLElement).classList.add('vkui-root');
+
+    if (!embedded) {
+      props.window.document.documentElement.classList.add('vkui');
+    }
+
+    return () => {
+      (rootRef.current.parentNode as HTMLElement).classList.remove('vkui-root');
+      if (!embedded) {
+        props.window.document.documentElement.classList.remove('vkui');
+      }
+    };
+  }, [rootRef, embedded]);
+
+  return (
+    <div ref={rootRef} className={classNames('AppRoot', {
+      'AppRoot--embedded': embedded,
+    })}>
+      <ConfigProvider {...configProviderProps}>
+        <AdaptivityProvider {...adaptivityProviderProps} root={rootRef.current}>
+          {embedded ? <EmbeddedWrapper>{children}</EmbeddedWrapper> : children}
+        </AdaptivityProvider>
+      </ConfigProvider>
+    </div>
+  );
+};
+
+AppRoot.defaultProps = {
+  ...ConfigProvider.defaultProps,
+  ...AdaptivityProvider.defaultProps,
+};
+
+export default AppRoot;

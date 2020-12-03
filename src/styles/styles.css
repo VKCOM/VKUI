@@ -133,9 +133,18 @@
   color: var(--text_primary);
 }
 
-.vkui > body.vkui-sizeX-regular,
-.AppRoot-sizeX-regular {
+.AppRoot--embedded {
+  transform: translate3d(0, 0, 0);
+}
+
+.vkui > .vkui-sizeX-regular,
+.AppRoot__wrapper--sizeX-regular {
   background: var(--background_page);
+}
+
+.AppRoot--embedded .AppRoot__wrapper {
+  height: 100%;
+  overflow: auto;
 }
 
 .vkui-root input,

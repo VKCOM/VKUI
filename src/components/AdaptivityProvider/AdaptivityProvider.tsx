@@ -15,12 +15,16 @@ export const MOBILE_SIZE = 320;
 export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
+declare const ResizeObserver: any;
+
 export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const adaptivityRef = useRef<AdaptivityContextInterface>(null);
   const [, updateAdaptivity] = useState({});
 
   if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
+    const width = props.embedded && props.root ? props.root.offsetWidth : props.window.innerWidth;
+    const height = props.embedded && props.root ? props.root.offsetHeight : props.window.innerHeight;
+    adaptivityRef.current = calculateAdaptivity(width, height, props);
   }
 
   function paintBody(sizeX: SizeType) {
@@ -33,7 +37,9 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
   useEffect(() => {
     function onResize() {
-      const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
+      const width = props.embedded && props.root ? props.root.offsetWidth : props.window.innerWidth;
+      const height = props.embedded && props.root ? props.root.offsetHeight : props.window.innerHeight;
+      const calculated = calculateAdaptivity(width, height, props);
       const { viewWidth, viewHeight, sizeX, sizeY, hasMouse } = adaptivityRef.current;
 
       if (
@@ -53,14 +59,21 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
     if (!props.embedded) {
       paintBody(adaptivityRef.current.sizeX);
+      onResize();
+      props.window.addEventListener('resize', onResize, false);
+      return () => {
+        props.window.removeEventListener('resize', onResize, false);
+      };
+    } else if (props.root) {
+      const observer = new ResizeObserver(onResize);
+      observer.observe(props.root);
+      onResize();
+      return () => observer.unobserve(props.root);
+    } else {
+      onResize();
+      return undefined;
     }
-    onResize();
-    props.window.addEventListener('resize', onResize, false);
-
-    return () => {
-      props.window.removeEventListener('resize', onResize, false);
-    };
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded]);
+  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded, props.window, props.root]);
 
   return <AdaptivityContext.Provider value={adaptivityRef.current}>
     {props.children}
