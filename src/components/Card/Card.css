@@ -49,20 +49,10 @@
 }
 
 /**
- * Android
+ * Android, VKCOM
  */
 
-.Card--android.Card--sz-s,
-.Card--vkcom.Card--sz-s {
-  border-radius: 6px;
-}
-
-.Card--android.Card--sz-m,
-.Card--vkcom.Card--sz-m {
-  border-radius: 8px;
-}
-
-.Card--android.Card--sz-l,
-.Card--vkcom.Card--sz-l {
+.Card--android,
+.Card--vkcom {
   border-radius: 8px;
 }
