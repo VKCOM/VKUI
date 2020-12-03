@@ -107,9 +107,9 @@ export default class Preview extends PreviewParent {
                 <div style={isEmbedded ? {
                   position: 'relative',
                   border: '1px solid #000',
+                  maxWidth: 1024,
+                  width: "calc(100% - 10px)",
                   height: 600,
-                  margin: 16,
-                  position: 'relative',
                   overflow: 'hidden',
                 } : {}}>
                   <PrepareFrame integration={styleGuideContext.integration}>
@@ -128,7 +128,7 @@ export default class Preview extends PreviewParent {
                             evalInContext={this.props.evalInContext}
                             onError={this.handleError}
                             compilerConfig={this.context.config.compilerConfig}
-                            />
+                          />
                         </Layout>
                       </AppRoot>
                     )}

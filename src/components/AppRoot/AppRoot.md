@@ -8,6 +8,18 @@ const Example = withAdaptivity(
     const [panel, setPanel] = React.useState(panels[0]);
     const [modal, setModal] = React.useState(null);
     const [popout, setPopout] = React.useState(null);
+    const [snackbar, setSnackbar] = React.useState(null);
+
+    const showSnackbar = () => setSnackbar((
+      <Snackbar
+        onClose={() => setSnackbar(null)}
+        after={<Avatar src={getAvatarUrl('user_wayshev')} size={32} />}
+      >
+        Отправлено Ивану Барышеву
+      </Snackbar>
+    ));
+
+    const showAlert = () => setPopout(<Alert header="Alert!" onClose={() => setPopout(null)} />);
 
     const modalRoot = (
       <ModalRoot activeModal={modal}>
@@ -18,6 +30,8 @@ const Example = withAdaptivity(
         >
           <Group>
             <CellButton onClick={() => setModal(modals[1])}>Modal 2</CellButton>
+            <CellButton onClick={showAlert}>Alert</CellButton>
+            <CellButton onClick={showSnackbar}>Snackbar</CellButton>
           </Group>
         </ModalPage>
         <ModalPage
@@ -61,7 +75,9 @@ const Example = withAdaptivity(
               <Separator />
               <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
               <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
-              <Cell onClick={() => setPopout(<Alert header="Alert!" onClose={() => setPopout(null)} />)}>alert</Cell>
+              <Cell onClick={showAlert}>alert</Cell>
+              <Cell onClick={showSnackbar}>snackbar</Cell>
+              {snackbar}
             </Panel>
           </SplitCol>
         )}
