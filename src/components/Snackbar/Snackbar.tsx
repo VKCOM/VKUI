@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -220,7 +221,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     } = this.props;
     const resolvedLayout = after || this.isDesktop ? 'vertical' : layout;
 
-    return (
+    return createPortal((
       <FixedLayout
         vertical="bottom"
         className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
@@ -258,10 +259,11 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
           </div>
         </Touch>
       </FixedLayout>
-    );
+    ), this.props.modalRoot);
   }
 }
 
 export default withPlatform(withAdaptivity(Snackbar, {
   viewWidth: true,
+  modalRoot: true,
 }));
