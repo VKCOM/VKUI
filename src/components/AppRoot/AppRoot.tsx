@@ -8,13 +8,13 @@ export interface AppRootProps extends ConfigProviderProps, AdaptivityProviderPro
 
 export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
   private readonly rootRef: RefObject<HTMLDivElement>;
-  private readonly modalRoot: HTMLDivElement;
+  private readonly portalRoot: HTMLDivElement;
 
   constructor(props: AppRootProps) {
     super(props);
-    this.modalRoot = props.window.document.createElement('div');
-    this.modalRoot.setAttribute('id', 'vkui-modal-root');
-    this.modalRoot.classList.add('vkui-modal-root');
+    this.portalRoot = props.window.document.createElement('div');
+    this.portalRoot.setAttribute('id', 'vkui-portal-root');
+    this.portalRoot.classList.add('vkui-portal-root');
     this.rootRef = createRef<HTMLDivElement>();
   }
 
@@ -31,7 +31,7 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
   }
 
   componentDidMount() {
-    this.props.window.document.body.appendChild(this.modalRoot);
+    this.props.window.document.body.appendChild(this.portalRoot);
     (this.rootRef.current.parentNode as HTMLElement).classList.add('vkui-root');
     this.update(this.props);
   }
@@ -43,7 +43,7 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
   }
 
   componentWillUnmount() {
-    this.props.window.document.body.removeChild(this.modalRoot);
+    this.props.window.document.body.removeChild(this.portalRoot);
 
     (this.rootRef.current.parentNode as HTMLElement).classList.remove('vkui-root');
     if (!this.props.embedded) {
@@ -96,7 +96,7 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
       <div ref={this.rootRef} className={classNames('AppRoot', {
         'AppRoot--embedded': embedded,
       })}>
-        <AppRootContext.Provider value={{ modalRoot: this.modalRoot }}>
+        <AppRootContext.Provider value={{ portalRoot: this.portalRoot }}>
           <ConfigProvider {...configProviderProps}>
             <AdaptivityProvider {...adaptivityProviderProps}>
               {embedded ? (

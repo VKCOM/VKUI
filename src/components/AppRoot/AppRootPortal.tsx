@@ -1,17 +1,10 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import { AppRootContext } from './AppRootContext';
 
 export const AppRootPortal: FC<PropsWithChildren<{ className?: string }>> = ({ children, className }) => {
-  return (
-    <AppRootContext.Consumer>
-      {({ modalRoot }) => {
-        return modalRoot ? createPortal((
-          <div className={className}>
-            {children}
-          </div>
-        ), modalRoot) : children;
-      }}
-    </AppRootContext.Consumer>
-  );
+  const { portalRoot } = useContext(AppRootContext);
+  return portalRoot
+    ? createPortal((<div className={className}>{children}</div>), portalRoot)
+    : <>{children}</>;
 };
