@@ -1,9 +1,9 @@
 import React, { Component, HTMLAttributes, ReactNode } from 'react';
-import { createPortal } from 'react-dom';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
 import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 
 export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps, HasRootRef<HTMLDivElement> {
   popout?: ReactNode;
@@ -46,7 +46,7 @@ class PopoutRoot extends Component<PopoutRootProps> {
   }
 
   render() {
-    const { popout, modal, viewWidth, children, className, getRootRef, modalRoot, ...restProps } = this.props;
+    const { popout, modal, viewWidth, children, className, getRootRef, ...restProps } = this.props;
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     return (
@@ -56,12 +56,10 @@ class PopoutRoot extends Component<PopoutRootProps> {
         ref={getRootRef}
       >
         {children}
-        {createPortal((
-          <div className="PopoutRoot__portal">
-            {!!popout && <div className={isDesktop ? 'PopoutRoot--absolute' : 'PopoutRoot__popout'}>{popout}</div>}
-            {!!modal && <div className="PopoutRoot__modal">{modal}</div>}
-          </div>
-        ), modalRoot)}
+        <AppRootPortal className="PopoutRoot__portal">
+          {!!popout && <div className={isDesktop ? 'PopoutRoot--absolute' : 'PopoutRoot__popout'}>{popout}</div>}
+          {!!modal && <div className="PopoutRoot__modal">{modal}</div>}
+        </AppRootPortal>
       </div>
     );
   }
@@ -69,6 +67,5 @@ class PopoutRoot extends Component<PopoutRootProps> {
 
 export default withAdaptivity(PopoutRoot, {
   viewWidth: true,
-  modalRoot: true,
 });
 

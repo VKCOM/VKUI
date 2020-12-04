@@ -1,5 +1,4 @@
 import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
-import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -14,6 +13,7 @@ import { rubber } from '../../lib/touch';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
 import Button from '../Button/Button';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 
 export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
@@ -218,53 +218,53 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       action,
       before,
       after,
-      modalRoot,
     } = this.props;
     const resolvedLayout = after || this.isDesktop ? 'vertical' : layout;
 
-    return createPortal((
-      <FixedLayout
-        vertical="bottom"
-        className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
-          'Snackbar--closing': this.state.closing,
-          'Snackbar--touched': this.state.touched,
-          'Snackbar--desktop': this.isDesktop,
-        })}
-      >
-        <Touch
-          className="Snackbar__in"
-          getRootRef={this.getInnerRef}
-          onStart={this.onTouchStart}
-          onMoveX={this.onTouchMoveX}
-          onEnd={this.onTouchEnd}
+    return (
+      <AppRootPortal className="Snackbar__portal">
+        <FixedLayout
+          vertical="bottom"
+          className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
+            'Snackbar--closing': this.state.closing,
+            'Snackbar--touched': this.state.touched,
+            'Snackbar--desktop': this.isDesktop,
+          })}
         >
-          <div className="Snackbar__body" ref={this.bodyElRef}>
-            {before &&
-            <div className="Snackbar__before">
-              {before}
-            </div>}
+          <Touch
+            className="Snackbar__in"
+            getRootRef={this.getInnerRef}
+            onStart={this.onTouchStart}
+            onMoveX={this.onTouchMoveX}
+            onEnd={this.onTouchEnd}
+          >
+            <div className="Snackbar__body" ref={this.bodyElRef}>
+              {before &&
+              <div className="Snackbar__before">
+                {before}
+              </div>}
 
-            <div className="Snackbar__content">
-              <Text weight="regular" className="Snackbar__content-text">{children}</Text>
+              <div className="Snackbar__content">
+                <Text weight="regular" className="Snackbar__content-text">{children}</Text>
 
-              {action &&
-              <Button align="left" hasHover={false} mode="tertiary" size="s" className="Snackbar__action" onClick={this.onActionClick}>
-                {action}
-              </Button>}
+                {action &&
+                <Button align="left" hasHover={false} mode="tertiary" size="s" className="Snackbar__action" onClick={this.onActionClick}>
+                  {action}
+                </Button>}
+              </div>
+
+              {after &&
+              <div className="Snackbar__after">
+                {after}
+              </div>}
             </div>
-
-            {after &&
-            <div className="Snackbar__after">
-              {after}
-            </div>}
-          </div>
-        </Touch>
-      </FixedLayout>
-    ), modalRoot);
+          </Touch>
+        </FixedLayout>
+      </AppRootPortal>
+    );
   }
 }
 
 export default withPlatform(withAdaptivity(Snackbar, {
   viewWidth: true,
-  modalRoot: true,
 }));
