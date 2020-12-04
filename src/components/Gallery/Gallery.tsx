@@ -422,6 +422,7 @@ class Gallery extends Component<GalleryProps, GalleryState> {
           onStartX={this.onStart}
           onMoveX={this.onMoveX}
           onEnd={this.onEnd}
+          noSlideClick
           style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           getRootRef={this.getViewportRef}
         >
