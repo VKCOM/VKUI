@@ -20,6 +20,7 @@ export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<H
   href?: string;
   target?: string;
   hasHover?: boolean;
+  hasActive?: boolean;
 }
 
 export interface TappableState {
@@ -33,6 +34,7 @@ export interface TappableState {
   active?: boolean;
   ts?: number;
   hasHover?: boolean;
+  hasActive?: boolean;
 }
 
 export interface RootComponentProps extends TouchProps {
@@ -82,6 +84,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       active: false,
       ts: null,
       hasHover: props.hasHover,
+      hasActive: props.hasActive,
     };
     this.isSlide = false;
   }
@@ -104,6 +107,7 @@ class Tappable extends Component<TappableProps, TappableState> {
     stopPropagation: false,
     disabled: false,
     hasHover,
+    hasActive: true,
     activeEffectDelay: ACTIVE_EFFECT_DELAY,
   };
 
@@ -112,19 +116,21 @@ class Tappable extends Component<TappableProps, TappableState> {
    */
   onStart: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
-    if (originalEvent.touches && originalEvent.touches.length > 1) {
-      deactivateOtherInstances();
-      return;
-    }
+    if (this.state.hasActive) {
+      if (originalEvent.touches && originalEvent.touches.length > 1) {
+        deactivateOtherInstances();
+        return;
+      }
 
-    if (this.props.platform === ANDROID) {
-      this.onDown(originalEvent);
-    }
+      if (this.props.platform === ANDROID) {
+        this.onDown(originalEvent);
+      }
 
-    storage[this.id] = {
-      stop: this.stop,
-      activeTimeout: window.setTimeout(this.start, ACTIVE_DELAY),
-    };
+      storage[this.id] = {
+        stop: this.stop,
+        activeTimeout: window.setTimeout(this.start, ACTIVE_DELAY),
+      };
+    }
   };
 
   /*
@@ -225,7 +231,7 @@ class Tappable extends Component<TappableProps, TappableState> {
    * Устанавливает активное выделение
    */
   start: VoidFunction = () => {
-    if (!this.state.active) {
+    if (!this.state.active && this.state.hasActive) {
       this.setState({
         active: true,
         ts: ts(),
@@ -293,13 +299,13 @@ class Tappable extends Component<TappableProps, TappableState> {
   }
 
   componentDidUpdate(prevProps: TappableProps) {
-    if (prevProps.hasHover !== this.props.hasHover) {
-      this.setState({ hasHover: this.props.hasHover });
+    if (prevProps.hasHover !== this.props.hasHover || prevProps.hasActive !== this.props.hasActive) {
+      this.setState({ hasHover: this.props.hasHover, hasActive: this.props.hasActive });
     }
   }
 
   render() {
-    const { clicks, active, hovered, hasHover } = this.state;
+    const { clicks, active, hovered, hasHover, hasActive } = this.state;
     const { children, className, Component, activeEffectDelay,
       stopPropagation, getRootRef, platform, sizeX, hasMouse, ...restProps } = this.props;
 
@@ -312,7 +318,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       className,
       `Tappable--sizeX-${sizeX}`,
       {
-        'Tappable--active': active,
+        'Tappable--active': hasActive && active,
         'Tappable--inactive': !active,
         'Tappable--mouse': hasMouse,
         [`Tappable--${hoverClassModificator}`]: hasHover && hovered,
@@ -359,8 +365,8 @@ class Tappable extends Component<TappableProps, TappableState> {
                     <TappableContext.Provider
                       value={{
                         insideTappable: true,
-                        onEnter: () => this.setState({ hasHover: false }),
-                        onLeave: () => this.setState({ hasHover: restProps.hasHover }),
+                        onEnter: () => this.setState({ hasHover: false, hasActive: false }),
+                        onLeave: () => this.setState({ hasHover: restProps.hasHover, hasActive: restProps.hasActive }),
                       }}
                     >
                       {children}
