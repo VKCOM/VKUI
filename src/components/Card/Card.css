@@ -36,15 +36,7 @@
   * iOS
  */
 
-.Card--ios.Card--sz-s {
-  border-radius: 6px;
-}
-
-.Card--ios.Card--sz-m {
-  border-radius: 10px;
-}
-
-.Card--ios.Card--sz-l {
+.Card--ios {
   border-radius: 10px;
 }
 

@@ -1,18 +1,33 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
-import getClassname from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export type CardGridProps = HTMLAttributes<HTMLDivElement>;
+export interface CardGridProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+  size: 's' | 'm' | 'l';
+}
 
-const CardGrid: FunctionComponent<CardGridProps> = ({ children, className, style, ...restProps }: CardGridProps) => {
+const CardGrid: FunctionComponent<CardGridProps> = ({ children, className, size, sizeX, ...restProps }: CardGridProps) => {
   const platform = usePlatform();
 
   return (
-    <div {...restProps} style={style} className={classNames(className, getClassname('CardGrid', platform))}>
+    <div
+      {...restProps}
+      className={classNames(
+        getClassName('CardGrid', platform),
+        `CardGrid--${size}`,
+        `CardGrid--sizeX-${sizeX}`,
+        className,
+      )}
+    >
       {children}
     </div>
   );
 };
 
-export default CardGrid;
+CardGrid.defaultProps = {
+  size: 's',
+};
+
+export default withAdaptivity(CardGrid, { sizeX: true });
