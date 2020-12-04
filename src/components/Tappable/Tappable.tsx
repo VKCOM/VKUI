@@ -32,6 +32,7 @@ export interface TappableState {
   hovered?: boolean;
   active?: boolean;
   ts?: number;
+  hasHover?: boolean;
 }
 
 export interface RootComponentProps extends TouchProps {
@@ -70,6 +71,8 @@ function deactivateOtherInstances(exclude?: string) {
   });
 }
 
+const TappableContext = React.createContext<{ insideTappable?: boolean; onEnter?: VoidFunction; onLeave?: VoidFunction }>({ insideTappable: false });
+
 class Tappable extends Component<TappableProps, TappableState> {
   constructor(props: TappableProps) {
     super(props);
@@ -78,6 +81,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       clicks: {},
       active: false,
       ts: null,
+      hasHover: props.hasHover,
     };
     this.isSlide = false;
   }
@@ -288,10 +292,16 @@ class Tappable extends Component<TappableProps, TappableState> {
     clearTimeout(this.wavesTimeout);
   }
 
+  componentDidUpdate(prevProps: TappableProps) {
+    if (prevProps.hasHover !== this.props.hasHover) {
+      this.setState({ hasHover: this.props.hasHover });
+    }
+  }
+
   render() {
-    const { clicks, active, hovered } = this.state;
+    const { clicks, active, hovered, hasHover } = this.state;
     const { children, className, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, sizeX, hasHover, hasMouse, ...restProps } = this.props;
+      stopPropagation, getRootRef, platform, sizeX, hasMouse, ...restProps } = this.props;
 
     const hoverClassModificator = this.containerHasTransparentBackground()
       ? 'shadowHovered'
@@ -319,8 +329,6 @@ class Tappable extends Component<TappableProps, TappableState> {
       props.onStart = this.onStart;
       props.onMove = this.onMove;
       props.onEnd = this.onEnd;
-      props.onEnter = this.onEnter;
-      props.onLeave = this.onLeave;
       /* eslint-enable */
       props.getRootRef = this.getRef;
     } else {
@@ -328,27 +336,52 @@ class Tappable extends Component<TappableProps, TappableState> {
     }
 
     return (
-      <TouchRootContext.Consumer>
-        {(insideTouchRoot: boolean) => {
-          this.insideTouchRoot = insideTouchRoot;
-
+      <TappableContext.Consumer>
+        {({ insideTappable, onEnter, onLeave }) => {
           return (
-            <RootComponent {...restProps} className={classes} {...props}>
-              {children}
-              {platform === ANDROID && !hasMouse &&
-                <span className="Tappable__waves">
-                  {Object.keys(clicks).map((k: string) => {
-                    return (
-                      <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
-                    );
-                  })}
-                </span>
-              }
-              {hasHover && <span className="Tappable__hoverShadow" />}
-            </RootComponent>
+            <TouchRootContext.Consumer>
+              {(insideTouchRoot: boolean) => {
+                this.insideTouchRoot = insideTouchRoot;
+
+                return (
+                  <RootComponent
+                    onEnter={() => {
+                      insideTappable && onEnter();
+                      !restProps.disabled && this.onEnter();
+                    }}
+                    onLeave={() => {
+                      insideTappable && onLeave();
+                      !restProps.disabled && this.onLeave();
+                    }}
+                    {...restProps}
+                    className={classes}
+                    {...props}>
+                    <TappableContext.Provider
+                      value={{
+                        insideTappable: true,
+                        onEnter: () => this.setState({ hasHover: false }),
+                        onLeave: () => this.setState({ hasHover: restProps.hasHover }),
+                      }}
+                    >
+                      {children}
+                    </TappableContext.Provider>
+                    {platform === ANDROID && !hasMouse &&
+                    <span className="Tappable__waves">
+                      {Object.keys(clicks).map((k: string) => {
+                        return (
+                          <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                        );
+                      })}
+                    </span>
+                    }
+                    {hasHover && <span className="Tappable__hoverShadow" />}
+                  </RootComponent>
+                );
+              }}
+            </TouchRootContext.Consumer>
           );
         }}
-      </TouchRootContext.Consumer>
+      </TappableContext.Consumer>
     );
   }
 }
