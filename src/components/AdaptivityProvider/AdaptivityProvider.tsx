@@ -21,7 +21,6 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     adaptivityRef.current = {
       ...calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props),
       embedded: props.embedded,
-      modalRoot: props.modalRoot,
     };
   }
 
@@ -39,7 +38,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   useEffect(() => {
     function onResize() {
       const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, embedded, modalRoot } = adaptivityRef.current;
+      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, embedded } = adaptivityRef.current;
 
       if (
         viewWidth !== calculated.viewWidth ||
@@ -47,14 +46,12 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY ||
         hasMouse !== calculated.hasMouse ||
-        embedded !== props.embedded ||
-        modalRoot !== props.modalRoot
+        embedded !== props.embedded
       ) {
         paintBody(calculated.sizeX);
         adaptivityRef.current = {
           ...calculated,
           embedded,
-          modalRoot,
         };
         updateAdaptivity({});
       }
@@ -67,7 +64,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     return () => {
       props.window.removeEventListener('resize', onResize, false);
     };
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded, props.modalRoot]);
+  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded]);
 
   return <AdaptivityContext.Provider value={adaptivityRef.current}>
     {props.children}

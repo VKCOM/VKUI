@@ -8,7 +8,6 @@ interface Config {
   viewHeight?: boolean;
   hasMouse?: boolean;
   embedded?: boolean;
-  modalRoot?: boolean;
 }
 
 export { SizeType, ViewWidth, ViewHeight };
@@ -18,7 +17,7 @@ export default function withAdaptivity<T>(TargetComponent: T, config: Config): T
     const context = useContext(AdaptivityContext);
     let update = false;
 
-    if (props.sizeX || props.sizeY || props.modalRoot) {
+    if (props.sizeX || props.sizeY) {
       update = true;
     }
 
@@ -28,7 +27,6 @@ export default function withAdaptivity<T>(TargetComponent: T, config: Config): T
     const viewHeight = context.viewHeight;
     const hasMouse = context.hasMouse;
     const embedded = context.embedded;
-    const modalRoot = context.modalRoot;
 
     const adaptivityProps: {
       sizeX?: SizeType;
@@ -37,7 +35,6 @@ export default function withAdaptivity<T>(TargetComponent: T, config: Config): T
       viewHeight?: ViewHeight;
       hasMouse?: boolean;
       embedded?: boolean;
-      modalRoot?: HTMLElement;
     } = {};
     config.sizeX ? adaptivityProps.sizeX = sizeX : undefined;
     config.sizeY ? adaptivityProps.sizeY = sizeY : undefined;
@@ -45,13 +42,12 @@ export default function withAdaptivity<T>(TargetComponent: T, config: Config): T
     config.viewHeight ? adaptivityProps.viewHeight = viewHeight : undefined;
     config.hasMouse ? adaptivityProps.hasMouse = hasMouse : undefined;
     config.embedded ? adaptivityProps.embedded = embedded : undefined;
-    config.modalRoot ? adaptivityProps.modalRoot = modalRoot : undefined;
 
     // @ts-ignore
     const target = <TargetComponent {...props} {...adaptivityProps} />;
 
     if (update) {
-      return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewWidth, viewHeight, hasMouse, embedded, modalRoot }}>
+      return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewWidth, viewHeight, hasMouse, embedded }}>
         {target}
       </AdaptivityContext.Provider>;
     }
@@ -69,5 +65,4 @@ export interface AdaptivityProps {
   viewHeight?: ViewHeight;
   hasMouse?: boolean;
   embedded?: boolean;
-  modalRoot?: HTMLElement;
 }
