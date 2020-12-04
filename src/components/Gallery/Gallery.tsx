@@ -1,4 +1,4 @@
-import React, { Component, ComponentType, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState } from 'react';
+import React, { Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
@@ -6,6 +6,7 @@ import withPlatform from '../../hoc/withPlatform';
 import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
+import { withFrame, FrameProps } from '../../hoc/withFrame';
 
 export interface BaseGalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
@@ -49,7 +50,7 @@ export interface GallerySlidesState {
 
 type GetSlideRef = (index: number) => RefCallback<HTMLElement>;
 
-class BaseGallery extends Component<BaseGalleryProps, GalleryState> {
+class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState> {
   constructor(props: GalleryProps) {
     super(props);
 
@@ -261,7 +262,7 @@ class BaseGallery extends Component<BaseGalleryProps, GalleryState> {
     this.setState({
       animation: false,
     }, () => {
-      window.requestAnimationFrame(() => this.setState({ animation: true }));
+      this.props.window.requestAnimationFrame(() => this.setState({ animation: true }));
     });
   };
 
@@ -281,7 +282,7 @@ class BaseGallery extends Component<BaseGalleryProps, GalleryState> {
 
   componentDidMount() {
     this.initializeSlides();
-    window.addEventListener('resize', this.onResize);
+    this.props.window.addEventListener('resize', this.onResize);
   }
 
   componentDidUpdate(prevProps: GalleryProps) {
@@ -300,7 +301,7 @@ class BaseGallery extends Component<BaseGalleryProps, GalleryState> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
+    this.props.window.removeEventListener('resize', this.onResize);
   }
 
   render() {
@@ -366,7 +367,7 @@ class BaseGallery extends Component<BaseGalleryProps, GalleryState> {
   }
 }
 
-const Gallery: ComponentType<GalleryProps> = ({
+const Gallery = withFrame<GalleryProps>(({
   initialSlideIndex = 0,
   children,
   timeout,
@@ -391,8 +392,8 @@ const Gallery: ComponentType<GalleryProps> = ({
     if (!timeout || !canUseDOM) {
       return undefined;
     }
-    const id = window.setTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
-    return () => window.clearTimeout(id);
+    const id = props.window.setTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
+    return () => props.window.clearTimeout(id);
   }, [timeout, slideIndex, childCount]);
   // prevent overflow
   useEffect(() => handleChange(Math.min(slideIndex, childCount - 1)), [childCount]);
@@ -405,6 +406,6 @@ const Gallery: ComponentType<GalleryProps> = ({
       onChange={handleChange}
     >{children}</BaseGallery>
   );
-};
+});
 
 export default withPlatform(Gallery);
