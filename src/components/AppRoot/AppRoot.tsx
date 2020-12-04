@@ -2,6 +2,7 @@ import React, { createRef, PropsWithChildren, RefObject } from 'react';
 import AdaptivityProvider, { AdaptivityProviderProps } from '../AdaptivityProvider/AdaptivityProvider';
 import ConfigProvider, { ConfigProviderProps } from '../ConfigProvider/ConfigProvider';
 import classNames from '../../lib/classNames';
+import { AppRootContext } from './AppRootContext';
 
 export interface AppRootProps extends ConfigProviderProps, AdaptivityProviderProps {}
 
@@ -95,15 +96,17 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
       <div ref={this.rootRef} className={classNames('AppRoot', {
         'AppRoot--embedded': embedded,
       })}>
-        <ConfigProvider {...configProviderProps}>
-          <AdaptivityProvider {...adaptivityProviderProps} modalRoot={this.modalRoot}>
-            {embedded ? (
-              <div className="AppRoot__wrapper">
-                {children}
-              </div>
-            ) : children}
-          </AdaptivityProvider>
-        </ConfigProvider>
+        <AppRootContext.Provider value={{ modalRoot: this.modalRoot }}>
+          <ConfigProvider {...configProviderProps}>
+            <AdaptivityProvider {...adaptivityProviderProps}>
+              {embedded ? (
+                <div className="AppRoot__wrapper">
+                  {children}
+                </div>
+              ) : children}
+            </AdaptivityProvider>
+          </ConfigProvider>
+        </AppRootContext.Provider>
       </div>
     );
   }
