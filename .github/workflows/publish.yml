@@ -69,3 +69,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: docs
+          CLEAN: false
