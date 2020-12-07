@@ -5,7 +5,10 @@ import usePlatform from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 
 export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
-  size?: 96 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24;
+  /**
+   * Рекомендуемый сет значений: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24
+   */
+  size?: number;
   src?: string;
   mode?: 'default' | 'image' | 'app';
   shadow?: boolean;
@@ -31,10 +34,16 @@ const Avatar: FunctionComponent<AvatarProps> = ({
       borderRadius = '50%';
       break;
     case 'image':
-      borderRadius = 4;
+      size < 64 && (borderRadius = 4);
+      size >= 64 && size < 96 && (borderRadius = 6);
+      size >= 96 && (borderRadius = 8);
       break;
     case 'app':
-      borderRadius = Math.floor(size * 10 / 48);
+      size <= 40 && (borderRadius = 8);
+      size > 40 && size < 56 && (borderRadius = 10);
+      size >= 56 && size < 64 && (borderRadius = 12);
+      size >= 64 && size < 84 && (borderRadius = 16);
+      size >= 84 && size < 84 && (borderRadius = 18);
       break;
   }
 

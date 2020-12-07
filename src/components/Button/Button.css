@@ -101,7 +101,7 @@
 
 .Button--sz-s {
   min-height: 30px;
-  padding: 0 16px;
+  padding: 0 15px;
   }
 
   .Button--sz-s .Button__before:not(:last-child) {
@@ -121,7 +121,7 @@
     }
 
 .Button--sz-m {
-  padding: 0 16px;
+  padding: 0 15px;
   min-height: 36px;
   }
 
@@ -138,7 +138,7 @@
     }
 
 .Button--sz-l {
-  padding: 0 20px;
+  padding: 0 19px;
   min-height: 44px;
   }
 

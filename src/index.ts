@@ -41,6 +41,7 @@ export { default as ModalRootContext } from './components/ModalRoot/ModalRootCon
 export { default as ModalPage } from './components/ModalPage/ModalPage';
 export { default as ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
 export { default as ModalCard } from './components/ModalCard/ModalCard';
+export { default as ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
 
 /**
  * Blocks
