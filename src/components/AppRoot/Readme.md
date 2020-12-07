@@ -77,10 +77,10 @@ const Example = withAdaptivity(
               <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
               <Cell onClick={showAlert}>alert</Cell>
               <Cell onClick={showSnackbar}>snackbar</Cell>
-              {snackbar}
             </Panel>
           </SplitCol>
         )}
+        {snackbar}
 
         <SplitCol
           animate={!isDesktop}
@@ -92,6 +92,10 @@ const Example = withAdaptivity(
             <Panel id={panels[0]}>
               <PanelHeader right={<Avatar size={36} />}>Panel 1</PanelHeader>
               <Group>
+                <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
+                <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
+                <Cell onClick={showAlert}>alert</Cell>
+                <Cell onClick={showSnackbar}>snackbar</Cell>
                 <Placeholder
                   icon={<Icon56UsersOutline />}
                   header="Уведомления от сообществ"
