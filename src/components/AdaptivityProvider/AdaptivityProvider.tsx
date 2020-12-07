@@ -21,9 +21,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const { embedded } = useContext(AppRootContext);
 
   if (!adaptivityRef.current) {
-    adaptivityRef.current = {
-      ...calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props),
-    };
+    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
   }
 
   function paintBody(sizeX: SizeType) {
