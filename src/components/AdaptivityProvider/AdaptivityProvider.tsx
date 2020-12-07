@@ -28,10 +28,12 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     const root = embedded
       ? props.window.document.querySelector('.AppRoot')
       : props.window.document.body;
-    if (sizeX === SizeType.REGULAR) {
-      root.classList.add('vkui-sizeX-regular');
-    } else {
-      root.classList.remove('vkui-sizeX-regular');
+    if (root) {
+      if (sizeX === SizeType.REGULAR) {
+        root.classList.add('vkui-sizeX-regular');
+      } else {
+        root.classList.remove('vkui-sizeX-regular');
+      }
     }
   }
 
