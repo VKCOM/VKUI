@@ -1,7 +1,8 @@
 .ChipsInput {
   display: flex;
   position: relative;
-  padding: 10px 12px;
+  /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
+  padding: 2px 12px 2px 0;
   box-sizing: border-box;
 }
 
@@ -11,11 +12,10 @@
   flex-wrap: wrap;
   position: relative;
   z-index: 2;
-  margin: -7px -4px;
 }
 
 .ChipsInput__chip {
-  margin: 2px;
+  margin: 2px 0 2px 4px;
   max-width: calc(100% - 8px);
 }
 
@@ -23,16 +23,17 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin: 3px 0 3px;
+  margin: 2px 0 2px 12px;
 }
 
 .ChipsInput__el {
-  line-height: 20px;
+  /* Визуальная компенсация - центрируем строчные буквы */
+  line-height: 26px;
+  margin-bottom: 2px;
   font-size: 15px;
   color: var(--text_primary);
   border: none;
   outline: none;
-  height: 28px;
   width: 100%;
   box-sizing: border-box;
   box-shadow: none;
@@ -41,12 +42,10 @@
   z-index: 2;
   background: transparent;
   padding: 0;
-  margin-left: 4px;
 }
 
 .ChipsInput__el:focus {
   min-width: 64px;
-  margin-left: 4px;
 }
 
 .ChipsInput:focus {
@@ -62,23 +61,9 @@
 }
 
 .ChipsInput__el::placeholder {
-  line-height: 20px;
-  font-size: 15px;
   color: var(--field_text_placeholder);
 }
 
 .ChipsInput__el:disabled::placeholder {
   color: var(--text_secondary);
-}
-
-.ChipsInput--withChips .ChipsInput__container {
-  margin-left: -7px;
-}
-
-.ChipsInput--withChips .ChipsInput__el {
-  margin-left: 0;
-}
-
-.ChipsInput--withChips .ChipsInput__el:focus {
-  margin-left: 7px;
 }

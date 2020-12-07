@@ -19,8 +19,8 @@
 
 .ChipsSelect__toggle {
   position: absolute;
-  right: 10px;
-  top: 12px;
+  right: 8px;
+  top: 10px;
   z-index: 1;
   color: var(--icon_secondary);
 }
