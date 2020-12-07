@@ -85,7 +85,19 @@
         <Button before={<Icon16Add/>}>Add item</Button>
       </Div>
       <Div>
-        <Button size="m" before={<Icon24Add/>}>Add item</Button>
+        <Button size="l" before={<Icon24Add/>} after={<Counter>16</Counter>}>Add item</Button>
+      </Div>
+      <Div>
+        <Button mode="secondary" size="l" before={<Icon24Add/>} after={<Counter>16</Counter>}>Add item</Button>
+      </Div>
+      <Div>
+        <Button mode="tertiary" size="l" before={<Icon24Add/>} after={<Counter>16</Counter>}>Add item</Button>
+      </Div>
+      <Div>
+        <Button mode="outline" size="l" before={<Icon24Add/>} after={<Counter>16</Counter>}>Add item</Button>
+      </Div>
+      <Div>
+        <Button mode="commerce" size="l" before={<Icon24Add/>} after={<Counter>16</Counter>}>Add item</Button>
       </Div>
       <Div>
         <Button before={<Icon24Camera/>} size="l">Take a photo</Button>
