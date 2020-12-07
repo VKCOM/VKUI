@@ -78,14 +78,24 @@
   padding: 10px;
 }
 
-.PanelHeaderButton--android.Tappable--active,
-.PanelHeaderButton--vkcom.Tappable--active {
+.PanelHeaderButton--android.Tappable--active {
   background-color: var(--background_highlighted);
 }
 
 /**
- * VKCOM
- */
+* VKCOM
+*/
+.PanelHeaderButton--vkcom {
+  transition: color .3s;
+}
+
+.PanelHeaderButton--vkcom.Tappable--shadowHovered {
+  color: var(--header_text_secondary);
+}
+
+.PanelHeaderButton--vkcom.Tappable--active {
+  color: var(--header_text_secondary);
+}
 
 .PanelHeaderButton--vkcom {
   display: flex;
