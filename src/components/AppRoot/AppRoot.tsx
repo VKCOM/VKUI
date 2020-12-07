@@ -4,7 +4,9 @@ import ConfigProvider, { ConfigProviderProps } from '../ConfigProvider/ConfigPro
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 
-export interface AppRootProps extends ConfigProviderProps, AdaptivityProviderProps {}
+export interface AppRootProps extends ConfigProviderProps, AdaptivityProviderProps {
+  embedded?: boolean;
+}
 
 export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
   private readonly rootRef: RefObject<HTMLDivElement>;
@@ -82,7 +84,6 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
     };
 
     const adaptivityProviderProps: AdaptivityProviderProps = {
-      embedded,
       document,
       window,
       sizeX,
@@ -96,7 +97,7 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
       <div ref={this.rootRef} className={classNames('AppRoot', {
         'AppRoot--embedded': embedded,
       })}>
-        <AppRootContext.Provider value={{ portalRoot: this.portalRoot }}>
+        <AppRootContext.Provider value={{ portalRoot: this.portalRoot, embedded }}>
           <ConfigProvider {...configProviderProps}>
             <AdaptivityProvider {...adaptivityProviderProps}>
               {embedded ? (

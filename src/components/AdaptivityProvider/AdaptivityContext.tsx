@@ -25,7 +25,6 @@ export interface AdaptivityContextInterface {
   viewWidth?: ViewWidth;
   viewHeight?: ViewHeight;
   hasMouse?: boolean;
-  embedded?: boolean;
 }
 
 export const AdaptivityContext = createContext<AdaptivityContextInterface>({

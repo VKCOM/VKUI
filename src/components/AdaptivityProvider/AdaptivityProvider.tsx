@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { DOMProps, HasChildren } from '../../types';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {}
 
@@ -17,15 +18,16 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const adaptivityRef = useRef<AdaptivityContextInterface>(null);
   const [, updateAdaptivity] = useState({});
 
+  const { embedded } = useContext(AppRootContext);
+
   if (!adaptivityRef.current) {
     adaptivityRef.current = {
       ...calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props),
-      embedded: props.embedded,
     };
   }
 
   function paintBody(sizeX: SizeType) {
-    const root = props.embedded
+    const root = embedded
       ? props.window.document.querySelector('.AppRoot')
       : props.window.document.body;
     if (sizeX === SizeType.REGULAR) {
@@ -38,7 +40,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   useEffect(() => {
     function onResize() {
       const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, embedded } = adaptivityRef.current;
+      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse } = adaptivityRef.current;
 
       if (
         viewWidth !== calculated.viewWidth ||
@@ -46,12 +48,11 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY ||
         hasMouse !== calculated.hasMouse ||
-        embedded !== props.embedded
+        embedded
       ) {
         paintBody(calculated.sizeX);
         adaptivityRef.current = {
           ...calculated,
-          embedded,
         };
         updateAdaptivity({});
       }
@@ -64,7 +65,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     return () => {
       props.window.removeEventListener('resize', onResize, false);
     };
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.embedded]);
+  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, embedded]);
 
   return <AdaptivityContext.Provider value={adaptivityRef.current}>
     {props.children}
