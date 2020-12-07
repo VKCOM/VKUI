@@ -15,7 +15,6 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
   constructor(props: AppRootProps) {
     super(props);
     this.portalRoot = props.window.document.createElement('div');
-    this.portalRoot.setAttribute('id', 'vkui-portal-root');
     this.portalRoot.classList.add('vkui-portal-root');
     this.rootRef = createRef<HTMLDivElement>();
   }
