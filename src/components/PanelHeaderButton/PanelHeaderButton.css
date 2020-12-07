@@ -86,15 +86,14 @@
 * VKCOM
 */
 .PanelHeaderButton--vkcom {
-  transition: color .3s;
-}
-
-.PanelHeaderButton--vkcom.Tappable--shadowHovered {
+  transition: opacity .3s;
   color: var(--header_text_secondary);
+  opacity: .7;
 }
 
+.PanelHeaderButton--vkcom.Tappable--shadowHovered,
 .PanelHeaderButton--vkcom.Tappable--active {
-  color: var(--header_text_secondary);
+  opacity: 1;
 }
 
 .PanelHeaderButton--vkcom {
