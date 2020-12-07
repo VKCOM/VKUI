@@ -11,7 +11,8 @@
   left: 0;
   width: 100%;
   pointer-events: none;
-  z-index: 100;
+  /* Прямо под шапкой, см https://github.com/VKCOM/VKUI/issues/1207 */
+  z-index: 9;
   }
 
 .PullToRefresh--ios .PullToRefresh__controls {
