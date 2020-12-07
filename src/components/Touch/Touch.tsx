@@ -25,6 +25,7 @@ export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTML
   onEndX?(outputEvent: TouchEvent): void;
   onEndY?(outputEvent: TouchEvent): void;
   useCapture?: boolean;
+  noSlideClick?: boolean;
   Component?: ElementType;
 }
 
@@ -59,12 +60,8 @@ export type DragHandler = (e: DragEvent<HTMLElement>) => void;
 const events = getSupportedEvents();
 
 export default class Touch extends Component<TouchProps> {
-  constructor(props: TouchProps) {
-    super(props);
-    this.cancelClick = false;
-  }
-
-  cancelClick: boolean;
+  preventClickDefault = false;
+  stopClickPropagation = false;
   gesture: Partial<Gesture> = {};
   container: HTMLElement;
 
@@ -72,6 +69,7 @@ export default class Touch extends Component<TouchProps> {
     Component: 'div',
     children: '',
     useCapture: false,
+    noSlideClick: false,
   };
 
   static contextTypes: TouchContext = {
@@ -251,12 +249,14 @@ export default class Touch extends Component<TouchProps> {
       if (isSlideX && this.props.onEndX) {
         this.props.onEndX(outputEvent);
       }
+
+      this.stopClickPropagation = this.props.noSlideClick && isSlide;
     }
 
     const target = e.target as HTMLElement;
 
     // Если закончили жест на ссылке, выставляем флаг для отмены перехода
-    this.cancelClick = target.tagName === 'A' && isSlide;
+    this.preventClickDefault = target.tagName === 'A' && isSlide;
     this.gesture = {};
 
     // Если это был тач-евент, симулируем отмену hover
@@ -306,9 +306,14 @@ export default class Touch extends Component<TouchProps> {
    * @return {void}
    */
   onClick: ClickHandler = (e: ReactMouseEvent<HTMLElement>) => {
-    if (this.cancelClick) {
-      this.cancelClick = false;
+    if (this.preventClickDefault) {
+      this.preventClickDefault = false;
       e.preventDefault();
+    }
+    if (this.stopClickPropagation) {
+      this.stopClickPropagation = false;
+      e.stopPropagation();
+      return;
     }
     this.props.onClick && this.props.onClick(e);
   };

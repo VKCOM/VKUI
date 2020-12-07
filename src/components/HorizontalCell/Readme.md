@@ -131,28 +131,28 @@ class HorizontalCellExample extends React.Component {
               </div>
             </HorizontalScroll>
           </Group>
-          <Group header={<Header aside={<Link>Показать</Link>}>Мини-приложения</Header>}>
+          <Group header={<Header aside={<Link>Показать все</Link>}>Мини-приложения</Header>}>
             <HorizontalScroll>
               <div style={{display: 'flex'}}>
                 {this.state.miniAppItems}
               </div>
             </HorizontalScroll>
           </Group>
-          <Group header={<Header aside={<Link>Показать</Link>}>Игры</Header>}>
+          <Group header={<Header aside={<Link>Показать все</Link>}>Игры</Header>}>
             <HorizontalScroll>
               <div style={{display: 'flex'}}>
                 {this.state.gamesItems}
               </div>
             </HorizontalScroll>
           </Group>
-          <Group header={<Header aside={<Link>Показать</Link>}>Плейлисты</Header>}>
+          <Group header={<Header aside={<Link>Показать все</Link>}>Плейлисты</Header>}>
             <HorizontalScroll>
               <div style={{display: 'flex'}}>
                 {this.state.playlistsItems}
               </div>
             </HorizontalScroll>
           </Group>
-          <Group header={<Header aside={<Link>Показать</Link>}>Альбомы</Header>}>
+          <Group header={<Header aside={<Link>Показать все</Link>}>Альбомы</Header>}>
             <HorizontalScroll>
               <div style={{display: 'flex'}}>
                 {this.state.albumItems}

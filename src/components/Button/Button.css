@@ -247,3 +247,12 @@
   background-color: var(--button_commerce_foreground);
   color: var(--button_commerce_background);
   }
+
+.Button--vkcom.Button--lvl-secondary .Counter,
+.Button--vkcom.Button--lvl-tertiary .Counter,
+.Button--vkcom.Button--lvl-outline .Counter,
+.Button--vkcom.Button--lvl-secondary .Icon,
+.Button--vkcom.Button--lvl-tertiary .Icon,
+.Button--vkcom.Button--lvl-outline .Icon {
+  opacity: .72;
+}

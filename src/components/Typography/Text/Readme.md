@@ -9,7 +9,7 @@
       <Div>
         <Text weight="regular" style={{ marginBottom: 16 }}>Text regular</Text>
         <Text weight="medium" style={{ marginBottom: 16 }}>Text medium</Text>
-        <Text weight="semibold" style={{ marginBottom: 16 }}>Text semibold</Text>
+        <Text weight="semibold">Text semibold</Text>
       </Div>
     </Group>
   </Panel>
