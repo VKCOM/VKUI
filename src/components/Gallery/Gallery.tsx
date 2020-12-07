@@ -378,7 +378,9 @@ const Gallery = withFrame<GalleryProps>(({
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? props.slideIndex : localSlideIndex;
   const isDraggable = !isControlled || Boolean(onChange);
-  const childCount = React.Children.count(children);
+
+  const slides = React.Children.toArray(children).filter((item) => Boolean(item));
+  const childCount = slides.length;
 
   const handleChange: GalleryProps['onChange'] = useCallback((current) => {
     if (current === slideIndex) {
@@ -404,7 +406,7 @@ const Gallery = withFrame<GalleryProps>(({
       isDraggable={isDraggable}
       {...props}
       onChange={handleChange}
-    >{children}</BaseGallery>
+    >{slides}</BaseGallery>
   );
 });
 
