@@ -257,7 +257,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
 
     if (platform === IOS && refreshing && !touchDown) {
       contentTransform = 'translate3d(0, 100px, 0)';
-    } else if (platform === IOS && contentShift) {
+    } else if (platform === IOS && (contentShift || refreshing)) {
       contentTransform = `translate3d(0, ${contentShift}px, 0)`;
     }
 
