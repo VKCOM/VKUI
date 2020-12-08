@@ -99,6 +99,14 @@
   border-radius: 0;
 }
 
+.Tappable--mouse {
+  transition: opacity .15s ease-out;
+}
+
+.Tappable--mouse .Tappable__hoverShadow {
+  transition: background-color .15s ease-out;
+}
+
 /**
  * Animations
  */

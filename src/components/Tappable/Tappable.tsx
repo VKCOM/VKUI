@@ -291,7 +291,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   render() {
     const { clicks, active, hovered } = this.state;
     const { children, className, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, sizeX, hasHover, ...restProps } = this.props;
+      stopPropagation, getRootRef, platform, sizeX, hasHover, hasMouse, ...restProps } = this.props;
 
     const hoverClassModificator = this.containerHasTransparentBackground()
       ? 'shadowHovered'
@@ -304,6 +304,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       {
         'Tappable--active': active,
         'Tappable--inactive': !active,
+        'Tappable--mouse': hasMouse,
         [`Tappable--${hoverClassModificator}`]: hasHover && hovered,
       });
 
@@ -352,4 +353,4 @@ class Tappable extends Component<TappableProps, TappableState> {
   }
 }
 
-export default withAdaptivity(withPlatform(Tappable), { sizeX: true });
+export default withAdaptivity(withPlatform(Tappable), { sizeX: true, hasMouse: true });
