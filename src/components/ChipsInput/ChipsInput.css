@@ -2,8 +2,12 @@
   display: flex;
   position: relative;
   /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
-  padding: 2px 12px 2px 0;
+  padding: 4px 14px;
   box-sizing: border-box;
+}
+
+.ChipsInput.ChipsInput--sizeY-compact {
+  padding: 2px 12px;
 }
 
 .ChipsInput__container {
@@ -15,7 +19,7 @@
 }
 
 .ChipsInput__chip {
-  margin: 2px 0 2px 4px;
+  margin: 2px 12px 2px -8px;
   max-width: calc(100% - 8px);
 }
 
@@ -23,7 +27,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin: 2px 0 2px 12px;
+  margin: 2px 0;
 }
 
 .ChipsInput__el {
