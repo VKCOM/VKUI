@@ -8,14 +8,10 @@
   padding: 0;
   cursor: pointer;
   font-size: inherit;
+  display: inline-flex;
 }
 
 .Link .Icon {
-  display: inline-block;
   margin-left: 4px;
-}
-
-.Link .Icon--dropdown_16 {
-  position: relative;
-  top: 1px;
+  align-self: center;
 }
