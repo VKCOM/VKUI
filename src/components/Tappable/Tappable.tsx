@@ -335,7 +335,7 @@ class Tappable extends Component<TappableProps, TappableState> {
           return (
             <RootComponent {...restProps} className={classes} {...props}>
               {children}
-              {platform === ANDROID &&
+              {platform === ANDROID && !hasMouse &&
                 <span className="Tappable__waves">
                   {Object.keys(clicks).map((k: string) => {
                     return (
