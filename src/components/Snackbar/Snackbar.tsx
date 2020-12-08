@@ -13,6 +13,7 @@ import { rubber } from '../../lib/touch';
 import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
 import Button from '../Button/Button';
+import { withSnackbarPortal } from './hoc';
 
 export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
@@ -262,6 +263,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
   }
 }
 
-export default withPlatform(withAdaptivity(Snackbar, {
+export default withPlatform(withAdaptivity(withSnackbarPortal(Snackbar), {
   viewWidth: true,
 }));

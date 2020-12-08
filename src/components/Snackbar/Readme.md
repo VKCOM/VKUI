@@ -13,7 +13,8 @@ class SnackBarExample extends React.Component {
 
     this.state = {
       text: '',
-      snackbar: null
+      snackbar: null,
+      hasModal: false,
     };
 
     this.openBaseWithAction = this.openBaseWithAction.bind(this);
@@ -29,6 +30,7 @@ class SnackBarExample extends React.Component {
     if (this.state.snackbar) return;
     this.setState({ snackbar:
       <Snackbar
+        duration={4000}
         onClose={() => this.setState({ snackbar: null })}
         action="Поделиться"
         onActionClick={() => this.setState({ text: 'Добавляем метку.' })}
@@ -68,8 +70,25 @@ class SnackBarExample extends React.Component {
   }
 
   render() {
+    const closeModal = () => this.setState({ hasModal: false });
+    const modal = (
+      <ModalRoot activeModal={this.state.hasModal ? 'modal' : null} onClose={closeModal}>
+        <ModalPage
+          id="modal"
+          onClose={closeModal}
+          header={
+            <ModalPageHeader
+              left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={closeModal}><Icon24Cancel /></PanelHeaderButton>}
+              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={closeModal}><Icon24Done /></PanelHeaderButton>}
+            >Модалка</ModalPageHeader>
+          }
+        >
+          <div style={{ height: '600px' }} />
+        </ModalPage>
+      </ModalRoot>
+    );
     return (
-      <View activePanel="example">
+      <View activePanel="example" modal={modal}>
         <Panel id="example">
           <PanelHeader>Snackbar</PanelHeader>
           <Group>
@@ -78,8 +97,11 @@ class SnackBarExample extends React.Component {
             <CellButton onClick={this.openWithAvatar}>Уведомление с аватаркой</CellButton>
           </Group>
 
-          {this.state.text && <Group><Div>{this.state.text}</Div></Group>}
+          <Group>
+            <CellButton onClick={() => this.setState({ hasModal: true })}>Открыть модалку</CellButton>
+          </Group>
 
+          {this.state.text && <Group><Div>{this.state.text}</Div></Group>}
           {this.state.snackbar}
         </Panel>
       </View>

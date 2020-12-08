@@ -12,6 +12,7 @@ import withContext from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
+import { withSnackbarContainer } from '../Snackbar/hoc';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -42,6 +43,7 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, Has
   activePanel: string;
   popout?: ReactNode;
   modal?: ReactNode;
+  snackbar?: ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**
    * callback свайпа назад
@@ -442,7 +444,7 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   render() {
-    const { style, popout, modal, platform } = this.props;
+    const { style, popout, modal, snackbar, platform } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult } = this.state;
 
     const hasPopout = !!popout;
@@ -497,13 +499,14 @@ class View extends Component<ViewProps, ViewState> {
         </div>
         {hasPopout && <div className="View__popout">{popout}</div>}
         {hasModal && <div className="View__modal">{modal}</div>}
+        {snackbar}
       </Touch>
     );
   }
 }
 
 export default withContext(withContext(
-  withPlatform(View),
+  withPlatform(withSnackbarContainer(View)),
   SplitColContext,
   'splitCol',
 ), ConfigProviderContext, 'configProvider');
