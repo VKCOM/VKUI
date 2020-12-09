@@ -1,12 +1,22 @@
 import React, { ComponentType, Fragment, isValidElement } from 'react';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { screenshot } from '@react-playwright';
+// Импорты из отдельных модулей помогают jest отслеживать зависимости
 import ConfigProvider from '../../components/ConfigProvider/ConfigProvider';
 import Panel from '../../components/Panel/Panel';
 import { Platform } from '../../lib/platform';
 import { Scheme } from '../../components/ConfigProvider/ConfigProviderContext';
-import AdaptivityProvider, { AdaptivityProviderProps } from '../../components/AdaptivityProvider/AdaptivityProvider';
-import { SizeType } from '../../components/AdaptivityProvider/AdaptivityContext';
+import AdaptivityProvider, {
+  AdaptivityProviderProps,
+  DESKTOP_SIZE,
+  TABLET_SIZE,
+  SMALL_TABLET_SIZE,
+  MOBILE_SIZE,
+} from '../../components/AdaptivityProvider/AdaptivityProvider';
+import { SizeType, ViewWidth } from '../../components/AdaptivityProvider/AdaptivityContext';
+import { AdaptivityProps } from '../../hoc/withAdaptivity';
+import View from '../../components/View/View';
+import Group from '../../components/Group/Group';
 
 type AdaptivityFlag = boolean | 'x' | 'y';
 type PropDesc<Props> = { [K in keyof Props]?: Array<Props[K]> } & { $adaptivity?: AdaptivityFlag };
@@ -63,11 +73,20 @@ function prettyProps(props: any) {
 type ScreenshotOptions = {
   matchScreenshot?: MatchImageSnapshotOptions;
   platforms?: Platform[];
-  schemes?: Scheme[];
+  mobileSchemes?: Scheme[];
+  adaptivity?: AdaptivityProps;
 };
-const CompactProvider: React.ComponentType = ({ children }) => (
-  <AdaptivityProvider sizeX={SizeType.COMPACT} sizeY={SizeType.COMPACT}>{children}</AdaptivityProvider>
-);
+
+function getAdaptivePxWidth(viewWidth: ViewWidth) {
+  switch (viewWidth) {
+    case ViewWidth.SMALL_MOBILE: return MOBILE_SIZE - 10;
+    case ViewWidth.MOBILE: return MOBILE_SIZE;
+    case ViewWidth.SMALL_TABLET: return SMALL_TABLET_SIZE;
+    case ViewWidth.TABLET: return TABLET_SIZE;
+    case ViewWidth.DESKTOP: return DESKTOP_SIZE;
+  }
+}
+
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
   propSets: Array<PropDesc<Props>> = [],
@@ -76,28 +95,37 @@ export function describeScreenshotFuzz<Props>(
   const {
     matchScreenshot,
     platforms = Object.values(Platform),
-    schemes = [Scheme.BRIGHT_LIGHT, Scheme.SPACE_GRAY],
+    mobileSchemes = [Scheme.BRIGHT_LIGHT, Scheme.SPACE_GRAY],
+    adaptivity = {},
   } = options;
   platforms.forEach((platform) => {
     describe(platform, () => {
       const isVkCom = platform === 'vkcom';
-      const width = isVkCom ? 'auto' : 320;
-      const ForceAdaptivity = isVkCom ? CompactProvider : Fragment;
-      schemes.forEach((scheme) => {
+      const width: number | 'auto' = adaptivity.viewWidth
+        ? getAdaptivePxWidth(adaptivity.viewWidth)
+        : isVkCom ? 'auto' : 320;
+      const adaptivityProps = Object.assign(
+        isVkCom ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
+        adaptivity);
+      (isVkCom ? [Scheme.VKCOM] : mobileSchemes).forEach((scheme) => {
         it(scheme, async () => {
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>
               <div style={{ width, position: 'absolute' }}>
-                <ForceAdaptivity>
-                  <Panel id="panel">
-                    {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
-                      <Fragment key={i}>
-                        <div>{prettyProps(props)}</div>
-                        <div><Component {...props as any} /></div>
-                      </Fragment>
-                    ))}
-                  </Panel>
-                </ForceAdaptivity>
+                <AdaptivityProvider {...adaptivityProps}>
+                  <View activePanel="panel">
+                    <Panel id="panel">
+                      <Group>
+                        {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
+                          <Fragment key={i}>
+                            <div>{prettyProps(props)}</div>
+                            <div><Component {...props as any} /></div>
+                          </Fragment>
+                        ))}
+                      </Group>
+                    </Panel>
+                  </View>
+                </AdaptivityProvider>
               </div>
             </ConfigProvider>
           ))).toMatchImageSnapshot(matchScreenshot);

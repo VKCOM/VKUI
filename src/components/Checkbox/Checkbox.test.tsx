@@ -6,11 +6,11 @@ import { Checkbox } from './Checkbox';
 
 describe('Checkbox', () => {
   it('handles change', () => {
-    const UncontrolledCheckbox = () => {
+    const CheckboxController = () => {
       const [checked, setChecked] = useState(false);
       return <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)}>check</Checkbox>;
     };
-    render(<UncontrolledCheckbox />);
+    render(<CheckboxController />);
     expect(screen.getByRole('checkbox')).not.toBeChecked();
     userEvent.click(screen.getByText('check'));
     expect(screen.getByRole('checkbox')).toBeChecked();

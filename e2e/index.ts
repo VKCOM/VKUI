@@ -17,7 +17,7 @@ export async function screenshot(jsx: ReactElement) {
   await mount(jsx);
   // font load affects layout
   /* istanbul ignore next */
-  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(() => (document as any).fonts.ready);
   /* istanbul ignore next */
   const { width, height } = await page.evaluate(() => {
     const size = { width: 0, height: 0 };
