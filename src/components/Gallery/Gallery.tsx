@@ -140,8 +140,8 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   }
 
   /*
-  * Считает отступ слоя галереи
-  */
+   * Считает отступ слоя галереи
+   */
   calculateIndent(targetIndex: number) {
     const { slides } = this.state;
 
@@ -166,8 +166,8 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   }
 
   /*
-  * Считает отступ слоя галереи во время драга
-  */
+   * Считает отступ слоя галереи во время драга
+   */
   calculateDragIndent() {
     const { shiftX, deltaX, min, max } = this.state;
     const indent = shiftX + deltaX;
@@ -198,8 +198,8 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   }
 
   /*
-  * Получает индекс слайда, к которому будет осуществлен переход
-  */
+   * Получает индекс слайда, к которому будет осуществлен переход
+   */
   getTarget() {
     const { slides, deltaX, shiftX, startT, max } = this.state;
     const { slideIndex } = this.props;
