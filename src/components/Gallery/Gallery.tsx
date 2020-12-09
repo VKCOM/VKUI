@@ -43,6 +43,7 @@ export interface GalleryState {
   animation: boolean;
   duration: number;
   dragging?: boolean;
+  scrolling?: boolean;
 }
 
 export interface GallerySlidesState {
@@ -233,7 +234,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
-    if (this.props.isDraggable && !this.isFullyVisible) {
+    if (this.props.isDraggable && !this.isFullyVisible && !this.state.scrolling) {
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
@@ -252,7 +253,11 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   onEnd: TouchEventHandler = (e: TouchEvent) => {
     const targetIndex = e.isSlide ? this.getTarget() : this.props.slideIndex;
     this.props.onDragEnd && this.props.onDragEnd(e);
-    this.setState({ deltaX: 0, animation: true }, () => this.props.onChange(targetIndex));
+    this.setState({
+      deltaX: 0,
+      animation: true,
+      dragging: false,
+    }, () => this.props.onChange(targetIndex));
 
     if (this.props.onEnd) {
       this.props.onEnd({ targetIndex });
@@ -272,12 +277,21 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   private scrollTimeout: ReturnType<typeof setTimeout>;
 
   onWheel = (e: WheelEvent<HTMLElement>) => {
-    if (this.props.hasMouse && this.props.isScrollable && !this.isFullyVisible && e.deltaX !== 0 && this.state.deltaX !== e.deltaX) {
-      this.setState({
-        deltaX: e.deltaX,
-        dragging: true,
-        animation: true,
-        startT: new Date(),
+    e.persist();
+    const { hasMouse, isScrollable, onChange } = this.props;
+    const { deltaX, min, max, shiftX, containerWidth, dragging } = this.state;
+    if (hasMouse && isScrollable && !dragging && !this.isFullyVisible && e.deltaX !== 0 && deltaX !== e.deltaX) {
+      this.setState((s: GalleryState) => {
+        const dX = (typeof s.deltaX === 'number' ? s.deltaX : 0) - e.deltaX;
+        const constrainedDX = shiftX + dX < min - containerWidth / 2 || shiftX + dX > max + containerWidth / 2
+          ? s.deltaX : dX;
+        return {
+          ...s,
+          deltaX: constrainedDX,
+          scrolling: true,
+          animation: true,
+          startT: new Date(),
+        };
       });
 
       if (this.scrollTimeout) {
@@ -286,7 +300,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
 
       this.scrollTimeout = setTimeout(() => {
         const targetIndex = this.getTarget();
-        this.setState({ deltaX: 0, animation: true, dragging: false, }, () => this.props.onChange(targetIndex));
+        this.setState({ deltaX: 0, animation: true, scrolling: false }, () => onChange(targetIndex));
       }, 300);
     }
   };
@@ -330,7 +344,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   }
 
   render() {
-    const { animation, duration, dragging } = this.state;
+    const { animation, duration, dragging, scrolling } = this.state;
     const {
       children,
       slideWidth,
@@ -348,7 +362,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
       ...restProps
     } = this.props;
 
-    const indent = dragging ? this.calculateDragIndent() : this.calculateIndent(slideIndex);
+    const indent = dragging || scrolling ? this.calculateDragIndent() : this.calculateIndent(slideIndex);
 
     const layerStyle = {
       WebkitTransform: `translateX(${indent}px)`,
