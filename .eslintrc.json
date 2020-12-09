@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "@vkontakte/eslint-config/typescript/react",
-    "plugin:jest-playwright/recommended"
-  ],
+  "extends": ["@vkontakte/eslint-config/typescript/react"],
   "parserOptions": {
     "project": "./tsconfig.json",
     "ecmaVersion": 2018, // Allows for the parsing of modern ECMAScript features
@@ -19,8 +16,7 @@
   "env": {
     "es6": true, // Enable global es6 variables, like Set, Map, etc
     "browser": true,
-    "node": true,
-    "jest": true
+    "node": true
   },
   "rules": {
     "@typescript-eslint/explicit-member-accessibility": "off",
@@ -29,5 +25,17 @@
     "@typescript-eslint/no-unused-vars": ["error", {
       "ignoreRestSiblings": true
     }]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.{test,spec,e2e}.{ts,tsx}", "e2e/**/*", "src/testing/**/*"],
+      "env": {
+        "jest": true
+      }
+    },
+    {
+      "files": ["src/**/*.e2e.{ts,tsx}", "e2e/**/*", "src/testing/**/*"],
+      "extends": ["plugin:jest-playwright/recommended"]
+    }
+  ]
 }
