@@ -8,10 +8,16 @@
   padding: 0;
   cursor: pointer;
   font-size: inherit;
-  display: inline-flex;
+  display: inline;
 }
 
 .Link .Icon {
   margin-left: 4px;
-  align-self: center;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.Link.Tappable--shadowHovered,
+.Link.Tappable--active {
+  opacity: .72;
 }
