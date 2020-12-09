@@ -9,7 +9,7 @@ import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
 import classNames from '../../lib/classNames';
 import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
-import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderChip } from '../ChipsInput/ChipsInput';
+import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderChip, chipsInputDefaultProps } from '../ChipsInput/ChipsInput';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { useChipsSelect } from './useChipsSelect';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -198,7 +198,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
 
   return (
     <div
-      className={classNames('ChipsSelect', className)}
+      className={classNames('ChipsSelect', `ChipsSelect--sizeY-${sizeY}`, className)}
       ref={getRootRef}
       style={style}
     >
@@ -228,8 +228,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
       </div>
       {opened &&
         <div
-          className={classNames(`ChipsSelect__options--sizeY-${sizeY}`, {
-            ['ChipsSelect__options']: opened,
+          className={classNames('ChipsSelect__options', {
             ['ChipsSelect__options--popupDirectionTop']: popupDirection === 'top',
           })}
           onMouseLeave={() => setFocusedOptionIndex(null)}
@@ -288,7 +287,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
 };
 
 ChipsSelect.defaultProps = {
-  ...ChipsInput.defaultProps,
+  ...chipsInputDefaultProps,
   creatable: false,
   fetching: false,
   showSelected: true,

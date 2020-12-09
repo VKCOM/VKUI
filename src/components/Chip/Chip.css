@@ -4,6 +4,7 @@
   background: var(--background_content);
   border-radius: 4px;
   height: 28px;
+  box-sizing: border-box;
 }
 
 .Chip__in {
