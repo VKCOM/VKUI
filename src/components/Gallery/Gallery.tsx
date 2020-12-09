@@ -8,6 +8,7 @@ import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import { withFrame, FrameProps } from '../../hoc/withFrame';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
 
 export interface BaseGalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
@@ -24,6 +25,7 @@ export interface BaseGalleryProps extends
   bullets?: 'dark' | 'light' | false;
   isDraggable?: boolean;
   isScrollable?: boolean;
+  showArrows?: boolean;
 }
 
 export interface GalleryProps extends BaseGalleryProps {
@@ -305,6 +307,28 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
     }
   };
 
+  get canSlideLeft() {
+    return !this.isFullyVisible && this.props.slideIndex > 0;
+  }
+
+  get canSlideRight() {
+    return !this.isFullyVisible && this.props.slideIndex < this.state.slides.length - 1;
+  }
+
+  slideLeft = () => {
+    const { slideIndex, onChange } = this.props;
+    if (this.canSlideLeft) {
+      this.setState({ deltaX: 0, animation: true }, () => onChange(slideIndex - 1));
+    }
+  };
+
+  slideRight = () => {
+    const { slideIndex, onChange } = this.props;
+    if (this.canSlideRight) {
+      this.setState({ deltaX: 0, animation: true }, () => onChange(slideIndex + 1));
+    }
+  };
+
   getSlideRef: GetSlideRef = (id: number) => (slide) => {
     this.slidesStore[`slide-${id}`] = slide;
   };
@@ -359,6 +383,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
       className,
       platform,
       hasMouse,
+      showArrows,
       ...restProps
     } = this.props;
 
@@ -403,6 +428,9 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
           )}
         </div>
         }
+
+        {showArrows && hasMouse && this.canSlideLeft && <HorizontalScrollArrow direction="left" onClick={this.slideLeft} />}
+        {showArrows && hasMouse && this.canSlideRight && <HorizontalScrollArrow direction="right" onClick={this.slideRight} />}
       </div>
     );
   }
