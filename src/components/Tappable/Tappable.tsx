@@ -307,7 +307,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   render() {
     const { clicks, active, hovered, hasHover, hasActive } = this.state;
     const { children, className, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, sizeX, hasMouse, ...restProps } = this.props;
+      stopPropagation, getRootRef, platform, sizeX, hasMouse, hasHover: propsHasHover, hasActive: propsHasActive, ...restProps } = this.props;
 
     const hoverClassModificator = this.containerHasTransparentBackground()
       ? 'shadowHovered'
@@ -366,7 +366,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                       value={{
                         insideTappable: true,
                         onEnter: () => this.setState({ hasHover: false, hasActive: false }),
-                        onLeave: () => this.setState({ hasHover: restProps.hasHover, hasActive: restProps.hasActive }),
+                        onLeave: () => this.setState({ hasHover: propsHasHover, hasActive: propsHasActive }),
                       }}
                     >
                       {children}
