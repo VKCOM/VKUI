@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState } from 'react';
+import React, { Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState, WheelEvent } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
@@ -7,6 +7,7 @@ import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import { withFrame, FrameProps } from '../../hoc/withFrame';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface BaseGalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
@@ -22,6 +23,7 @@ export interface BaseGalleryProps extends
   onEnd?({ targetIndex }: { targetIndex: number }): void;
   bullets?: 'dark' | 'light' | false;
   isDraggable?: boolean;
+  isScrollable?: boolean;
 }
 
 export interface GalleryProps extends BaseGalleryProps {
@@ -50,7 +52,7 @@ export interface GallerySlidesState {
 
 type GetSlideRef = (index: number) => RefCallback<HTMLElement>;
 
-class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState> {
+class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityProps, GalleryState> {
   constructor(props: GalleryProps) {
     super(props);
 
@@ -78,6 +80,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
     align: 'left',
     bullets: false,
     isDraggable: true,
+    isScrollable: false,
   };
 
   get isCenterWithCustomWidth() {
@@ -134,8 +137,8 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
   }
 
   /*
-   * Считает отступ слоя галереи
-   */
+  * Считает отступ слоя галереи
+  */
   calculateIndent(targetIndex: number) {
     const { slides } = this.state;
 
@@ -160,8 +163,8 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
   }
 
   /*
-   * Считает отступ слоя галереи во время драга
-   */
+  * Считает отступ слоя галереи во время драга
+  */
   calculateDragIndent() {
     const { shiftX, deltaX, min, max } = this.state;
     const indent = shiftX + deltaX;
@@ -192,12 +195,12 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
   }
 
   /*
-   * Получает индекс слайда, к которому будет осуществлен переход
-   */
+  * Получает индекс слайда, к которому будет осуществлен переход
+  */
   getTarget() {
     const { slides, deltaX, shiftX, startT, max } = this.state;
     const { slideIndex } = this.props;
-    const expectDeltaX = deltaX / (Date.now() - startT.getTime()) * 240 * 0.6;
+    const expectDeltaX = startT ? deltaX / (Date.now() - startT.getTime()) * 240 * 0.6 : deltaX;
     const shift = shiftX + deltaX + expectDeltaX - max;
     const direction = deltaX < 0 ? 1 : -1;
 
@@ -266,6 +269,28 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
     });
   };
 
+  private scrollTimeout: ReturnType<typeof setTimeout>;
+
+  onWheel = (e: WheelEvent<HTMLElement>) => {
+    if (this.props.hasMouse && this.props.isScrollable && !this.isFullyVisible && e.deltaX !== 0 && this.state.deltaX !== e.deltaX) {
+      this.setState({
+        deltaX: e.deltaX,
+        dragging: true,
+        animation: true,
+        startT: new Date(),
+      });
+
+      if (this.scrollTimeout) {
+        clearTimeout(this.scrollTimeout);
+      }
+
+      this.scrollTimeout = setTimeout(() => {
+        const targetIndex = this.getTarget();
+        this.setState({ deltaX: 0, animation: true, dragging: false, }, () => this.props.onChange(targetIndex));
+      }, 300);
+    }
+  };
+
   getSlideRef: GetSlideRef = (id: number) => (slide) => {
     this.slidesStore[`slide-${id}`] = slide;
   };
@@ -319,6 +344,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
       bullets,
       className,
       platform,
+      hasMouse,
       ...restProps
     } = this.props;
 
@@ -341,6 +367,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
           onStartX={this.onStart}
           onMoveX={this.onMoveX}
           onEnd={this.onEnd}
+          onWheel={this.onWheel}
           noSlideClick
           style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           getRootRef={this.getViewportRef}
@@ -367,6 +394,10 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
   }
 }
 
+const BaseGalleryAdaptive = withAdaptivity(BaseGallery, {
+  hasMouse: true,
+});
+
 const Gallery = withFrame<GalleryProps>(({
   initialSlideIndex = 0,
   children,
@@ -378,6 +409,7 @@ const Gallery = withFrame<GalleryProps>(({
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? props.slideIndex : localSlideIndex;
   const isDraggable = !isControlled || Boolean(onChange);
+  const isScrollable = !isControlled || Boolean(onChange);
   const childCount = React.Children.count(children);
 
   const handleChange: GalleryProps['onChange'] = useCallback((current) => {
@@ -399,12 +431,13 @@ const Gallery = withFrame<GalleryProps>(({
   useEffect(() => handleChange(Math.min(slideIndex, childCount - 1)), [childCount]);
 
   return (
-    <BaseGallery
+    <BaseGalleryAdaptive
       slideIndex={slideIndex}
       isDraggable={isDraggable}
+      isScrollable={isScrollable}
       {...props}
       onChange={handleChange}
-    >{children}</BaseGallery>
+    >{children}</BaseGalleryAdaptive>
   );
 });
 

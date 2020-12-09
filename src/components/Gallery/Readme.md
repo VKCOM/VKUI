@@ -7,12 +7,13 @@
 
       this.state = {
         slideIndex: 0,
-        isDraggable: true
+        isDraggable: true,
+        isScrollable: true,
       }
     }
 
     render () {
-      const { isDraggable, slideIndex } = this.state
+      const { isDraggable, isScrollable, slideIndex } = this.state
       return (
         <View activePanel="gallery">
           <Panel id="gallery">
@@ -69,6 +70,7 @@
                 slideIndex={slideIndex}
                 onChange={slideIndex => this.setState({slideIndex})}
                 isDraggable={isDraggable}
+                isScrollable={isScrollable}
               >
                 <div style={{ backgroundColor: 'var(--destructive)' }} />
                 <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
@@ -78,6 +80,9 @@
               <FormItem>
                 <Checkbox checked={isDraggable} onChange={e => this.setState({ isDraggable: e.target.checked })}>
                   isDraggable
+                </Checkbox>
+                <Checkbox checked={isScrollable} onChange={e => this.setState({ isScrollable: e.target.checked })}>
+                  isScrollable
                 </Checkbox>
               </FormItem>
               <FormItem>
