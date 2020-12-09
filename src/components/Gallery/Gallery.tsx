@@ -281,8 +281,8 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   onWheel = (e: WheelEvent<HTMLElement>) => {
     e.persist();
     const { hasMouse, isScrollable, onChange } = this.props;
-    const { deltaX, min, max, shiftX, containerWidth, dragging } = this.state;
-    if (hasMouse && isScrollable && !dragging && !this.isFullyVisible && e.deltaX !== 0 && deltaX !== e.deltaX) {
+    const { min, max, shiftX, containerWidth, dragging } = this.state;
+    if (hasMouse && isScrollable && !dragging && !this.isFullyVisible && e.deltaX !== 0) {
       this.setState((s: GalleryState) => {
         const dX = (typeof s.deltaX === 'number' ? s.deltaX : 0) - e.deltaX;
         const constrainedDX = shiftX + dX < min - containerWidth / 2 || shiftX + dX > max + containerWidth / 2
