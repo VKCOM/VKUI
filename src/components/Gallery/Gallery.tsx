@@ -83,7 +83,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
     align: 'left',
     bullets: false,
     isDraggable: true,
-    isScrollable: false,
+    isScrollable: true,
   };
 
   get isCenterWithCustomWidth() {
