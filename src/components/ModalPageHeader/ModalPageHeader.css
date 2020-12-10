@@ -28,31 +28,28 @@
 
 .ModalPageHeader__left,
 .ModalPageHeader__right {
+  flex: 0 0;
+  display: flex;
+  align-items: center;
   color: var(--header_tint_alternate);
 }
 
-.ModalPageHeader__left {
-  flex-shrink: 0;
+.ModalPageHeader__content {
+  flex: 1 1;
   display: flex;
   align-items: center;
-}
-
-.ModalPageHeader__content {
+  font-family: var(--font-tt);
+  font-weight: 800;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .ModalPageHeader__content-in {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 500;
 }
 
 .ModalPageHeader__right {
-  display: flex;
   justify-content: flex-end;
-  align-items: center;
-  flex-shrink: 0;
   text-align: right;
 }
 
@@ -133,13 +130,9 @@
 .ModalPageHeader--ios .ModalPageHeader__content {
   position: relative;
   z-index: 1;
-}
-
-.ModalPageHeader--ios .ModalPageHeader__content-in {
-  font-weight: 800;
-  font-family: var(--font-tt);
+  flex-grow: 3;
   font-size: 21px;
-  text-align: center;
+  justify-content: center;
 }
 
 .ModalPageHeader--ios .ModalPageHeader__right {
@@ -185,19 +178,9 @@
   color: var(--icon_secondary);
 }
 
-.ModalPageHeader--android .ModalPageHeader__content,
-.ModalPageHeader--vkcom .ModalPageHeader__content {
-  max-width: 100%;
-  flex-grow: 2;
-}
-
 .ModalPageHeader--android .ModalPageHeader__content-in,
 .ModalPageHeader--vkcom .ModalPageHeader__content-in {
   font-size: 20px;
-  font-weight: 800;
-  font-family: var(--font-tt);
-  display: flex;
-  align-items: center;
 }
 
 .ModalPageHeader--android .ModalPageHeader__right,
