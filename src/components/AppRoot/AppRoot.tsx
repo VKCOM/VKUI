@@ -31,23 +31,30 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
   }
 
   componentDidMount() {
-    this.props.window.document.body.appendChild(this.portalRoot);
     (this.rootRef.current.parentNode as HTMLElement).classList.add('vkui-root');
     this.update(this.props);
+    if (this.props.embedded) {
+      this.props.window.document.body.appendChild(this.portalRoot);
+    }
   }
 
   componentDidUpdate(prevProps: AppRootProps) {
     if (prevProps.embedded !== this.props.embedded) {
       this.update(this.props);
+      if (!this.props.embedded) {
+        this.props.window.document.body.removeChild(this.portalRoot);
+      } else {
+        this.props.window.document.body.appendChild(this.portalRoot);
+      }
     }
   }
 
   componentWillUnmount() {
-    this.props.window.document.body.removeChild(this.portalRoot);
-
     (this.rootRef.current.parentNode as HTMLElement).classList.remove('vkui-root');
     if (!this.props.embedded) {
       this.props.window.document.documentElement.classList.remove('vkui');
+    } else {
+      this.props.window.document.body.removeChild(this.portalRoot);
     }
   }
 
