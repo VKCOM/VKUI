@@ -86,13 +86,16 @@
 * VKCOM
 */
 .PanelHeaderButton--vkcom {
-  transition: opacity .3s;
   color: var(--header_text_secondary);
+}
+
+.PanelHeaderButton--vkcom > :not(.Counter) {
+  transition: opacity .3s;
   opacity: .7;
 }
 
-.PanelHeaderButton--vkcom.Tappable--shadowHovered,
-.PanelHeaderButton--vkcom.Tappable--active {
+.PanelHeaderButton--vkcom.Tappable--shadowHovered > :not(.Counter),
+.PanelHeaderButton--vkcom.Tappable--active > :not(.Counter) {
   opacity: 1;
 }
 
