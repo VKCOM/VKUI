@@ -123,7 +123,6 @@ export default class Preview extends PreviewParent {
                           <AdaptivityProvider
                             window={window}
                             hasMouse={styleGuideContext.hasMouse}
-                            embedded={isEmbedded}
                           >
                             <Layout>
                               <ReactExample
