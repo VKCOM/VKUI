@@ -58,7 +58,7 @@ const MODAL_CARD_ABOUT = 'say-about';
 const MODAL_CARD_NOTIFICATIONS = 'notifications';
 const MODAL_CARD_CHAT_INVITE = 'chat-invite';
 
-const App = withAdaptivity(class App extends React.Component {
+const App = withPlatform(withAdaptivity(class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -96,6 +96,9 @@ const App = withAdaptivity(class App extends React.Component {
 
   render() {
     const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
+    const { platform } = this.props;
+    const isIos = platform === IOS;
+    const isAndroid = platform === ANDROID;
     const modal = (
       <ModalRoot
         activeModal={this.state.activeModal}
@@ -106,8 +109,8 @@ const App = withAdaptivity(class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
-              right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+              left={isMobile && isAndroid && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
+              right={<PanelHeaderButton onClick={this.modalBack}>{isIos ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
             >
               Фильтры
             </ModalPageHeader>
@@ -118,10 +121,10 @@ const App = withAdaptivity(class App extends React.Component {
             <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_STORY_FEEDBACK)}>Просмотры истории</CellButton>
             <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_USER_INFO)}>Информация о пользователе</CellButton>
 
-            <FormItem top="Страна">            
+            <FormItem top="Страна">
               <SelectMimicry placeholder="Выбрать страну" onClick={() => this.setActiveModal(MODAL_PAGE_COUNTRIES)} />
             </FormItem>
-            <FormItem top="Город">            
+            <FormItem top="Город">
               <SelectMimicry placeholder="Выбрать город" disabled />
             </FormItem>
 
@@ -131,10 +134,10 @@ const App = withAdaptivity(class App extends React.Component {
               <Radio name="sex" value={2}>Женский</Radio>
             </FormItem>
 
-            <FormItem top="Школа">            
+            <FormItem top="Школа">
               <SelectMimicry placeholder="Выбрать школу" disabled />
             </FormItem>
-            <FormItem top="Университет">            
+            <FormItem top="Университет">
               <SelectMimicry placeholder="Выбрать университет" disabled />
             </FormItem>
 
@@ -151,12 +154,12 @@ const App = withAdaptivity(class App extends React.Component {
             </FormItem>
 
             <FormItem top="Дата рождения">
-              <DatePicker 
-                min={{day: 1, month: 1, year: 1901}} 
+              <DatePicker
+                min={{day: 1, month: 1, year: 1901}}
                 max={{day: 1, month: 1, year: 2006}}
                 dayPlaceholder="Д"
                 monthPlaceholder="ММ"
-                yearPlaceholder="ГГ" 
+                yearPlaceholder="ГГ"
               />
             </FormItem>
           </Group>
@@ -168,7 +171,7 @@ const App = withAdaptivity(class App extends React.Component {
           header={
             <ModalPageHeader
               left={<PanelHeaderBack onClick={this.modalBack} />}
-              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
+              right={isIos && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Выберите страну
             </ModalPageHeader>
@@ -194,7 +197,7 @@ const App = withAdaptivity(class App extends React.Component {
           header={
             <ModalPageHeader
               left={<PanelHeaderBack onClick={this.modalBack} />}
-              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
+              right={isIos && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Просмотры истории
             </ModalPageHeader>
@@ -219,7 +222,7 @@ const App = withAdaptivity(class App extends React.Component {
           header={
             <ModalPageHeader
               left={<PanelHeaderBack onClick={this.modalBack} />}
-              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
+              right={isIos && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Информация о пользователе
             </ModalPageHeader>
@@ -351,7 +354,7 @@ const App = withAdaptivity(class App extends React.Component {
   }
 }, {
   viewWidth: true
-});
+}));
 
 <App />
 ```
