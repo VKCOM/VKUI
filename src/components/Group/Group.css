@@ -25,7 +25,7 @@
   margin-top: -8px;
 }
 
-.Group--card > .Group__inner > .Header:first-child,
+.Group--card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child,
 .Group--card > .Group__inner > .Tabs--default:first-child {
   margin-top: -4px;
 }
