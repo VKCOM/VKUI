@@ -5,7 +5,7 @@ import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/Playgr
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
-import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot } from '../../src';
+import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider } from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -114,22 +114,27 @@ export default class Preview extends PreviewParent {
                 } : {}}>
                   <PrepareFrame integration={styleGuideContext.integration}>
                     {({ window }) => (
-                      <AppRoot
-                        platform={styleGuideContext.platform}
-                        scheme={styleGuideContext.scheme}
-                        webviewType={styleGuideContext.webviewType}
-                        window={window}
-                        hasMouse={styleGuideContext.hasMouse}
-                        embedded={isEmbedded}
-                      >
-                        <Layout>
-                          <ReactExample
-                            code={code}
-                            evalInContext={this.props.evalInContext}
-                            onError={this.handleError}
-                            compilerConfig={this.context.config.compilerConfig}
-                          />
-                        </Layout>
+                      <AppRoot embedded={isEmbedded} window={window}>
+                        <ConfigProvider
+                          platform={styleGuideContext.platform}
+                          scheme={styleGuideContext.scheme}
+                          webviewType={styleGuideContext.webviewType}
+                        >
+                          <AdaptivityProvider
+                            window={window}
+                            hasMouse={styleGuideContext.hasMouse}
+                            embedded={isEmbedded}
+                          >
+                            <Layout>
+                              <ReactExample
+                                code={code}
+                                evalInContext={this.props.evalInContext}
+                                onError={this.handleError}
+                                compilerConfig={this.context.config.compilerConfig}
+                                />
+                            </Layout>
+                          </AdaptivityProvider>
+                        </ConfigProvider>
                       </AppRoot>
                     )}
                   </PrepareFrame>

@@ -1,11 +1,10 @@
 import React, { createRef, PropsWithChildren, RefObject } from 'react';
-import AdaptivityProvider, { AdaptivityProviderProps } from '../AdaptivityProvider/AdaptivityProvider';
-import ConfigProvider, { ConfigProviderProps } from '../ConfigProvider/ConfigProvider';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 
-export interface AppRootProps extends ConfigProviderProps, AdaptivityProviderProps {
+export interface AppRootProps {
   embedded?: boolean;
+  window?: Window;
 }
 
 export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
@@ -53,68 +52,22 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
   }
 
   render() {
-    const {
-      embedded,
-      children,
-      scheme,
-      isWebView,
-      webviewType,
-      app,
-      appearance,
-      transitionMotionEnabled,
-      platform,
-      document,
-      window,
-      sizeX,
-      sizeY,
-      viewWidth,
-      viewHeight,
-      hasMouse,
-    } = this.props;
-
-    const configProviderProps: ConfigProviderProps = {
-      scheme,
-      isWebView,
-      webviewType,
-      app,
-      appearance,
-      transitionMotionEnabled,
-      platform,
-    };
-
-    const adaptivityProviderProps: AdaptivityProviderProps = {
-      document,
-      window,
-      sizeX,
-      sizeY,
-      viewWidth,
-      viewHeight,
-      hasMouse,
-    };
+    const { embedded, children } = this.props;
 
     return (
       <div ref={this.rootRef} className={classNames('AppRoot', {
         'AppRoot--embedded': embedded,
       })}>
         <AppRootContext.Provider value={{ portalRoot: this.portalRoot, embedded }}>
-          <ConfigProvider {...configProviderProps}>
-            <AdaptivityProvider {...adaptivityProviderProps}>
-              {embedded ? (
-                <div className="AppRoot__wrapper">
-                  {children}
-                </div>
-              ) : children}
-            </AdaptivityProvider>
-          </ConfigProvider>
+          {embedded ? (
+            <div className="AppRoot__wrapper">
+              {children}
+            </div>
+          ) : children}
         </AppRootContext.Provider>
       </div>
     );
   }
 }
-
-AppRoot.defaultProps = {
-  ...ConfigProvider.defaultProps,
-  ...AdaptivityProvider.defaultProps,
-};
 
 export default AppRoot;
