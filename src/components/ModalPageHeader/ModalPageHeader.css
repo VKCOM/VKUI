@@ -15,8 +15,7 @@
   z-index: 2;
 }
 
-.ModalPage--android .ModalPageHeader__in,
-.ModalPage--vkcom .ModalPageHeader__in {
+.ModalPage--android .ModalPageHeader__in {
   height: var(--modalheader_height_android);
   padding: 0 4px;
 }
@@ -24,6 +23,10 @@
 .ModalPage--ios .ModalPageHeader__in {
   height: var(--modalheader_height_ios);
   padding: 0 4px;
+}
+
+.ModalPageHeader__separator {
+  margin-top: -1px;
 }
 
 .ModalPageHeader__left,
@@ -170,13 +173,11 @@
   padding-right: 6px;
 }
 
-.ModalPageHeader--android .ModalPageHeader__left:empty,
-.ModalPageHeader--vkcom .ModalPageHeader__left:empty {
+.ModalPageHeader--android .ModalPageHeader__left:empty {
   padding-right: 12px;
 }
 
-.ModalPageHeader--android .ModalPageHeader__left:not(:empty),
-.ModalPageHeader--vkcom .ModalPageHeader__left:not(:empty) {
+.ModalPageHeader--android .ModalPageHeader__left:not(:empty) {
   padding-left: 4px;
 }
 
@@ -185,14 +186,12 @@
   color: var(--icon_secondary);
 }
 
-.ModalPageHeader--android .ModalPageHeader__content,
-.ModalPageHeader--vkcom .ModalPageHeader__content {
+.ModalPageHeader--android .ModalPageHeader__content {
   max-width: 100%;
   flex-grow: 2;
 }
 
-.ModalPageHeader--android .ModalPageHeader__content-in,
-.ModalPageHeader--vkcom .ModalPageHeader__content-in {
+.ModalPageHeader--android .ModalPageHeader__content-in {
   font-size: 20px;
   font-weight: 800;
   font-family: var(--font-tt);
@@ -205,7 +204,56 @@
   padding-left: 6px;
 }
 
-.ModalPageHeader--android .ModalPageHeader__right:not(:empty),
-.ModalPageHeader--vkcom .ModalPageHeader__right:not(:empty) {
+.ModalPageHeader--android .ModalPageHeader__right:not(:empty) {
   padding-right: 4px;
+}
+
+/**
+ * VKCOM
+ */
+
+.ModalPageHeader--vkcom .ModalPageHeader__in {
+  height: var(--panelheader_height_vkcom);
+  justify-content: space-between;
+  padding: 0 2px;
+}
+
+.ModalPageHeader--vkcom .ModalPageHeader__left,
+.ModalPageHeader--vkcom .ModalPageHeader__right {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.ModalPageHeader--vkcom .ModalPageHeader__left {
+  padding-right: 1px;
+}
+
+.ModalPageHeader--vkcom .ModalPageHeader__right {
+  padding-left: 1px;
+}
+
+.ModalPageHeader--vkcom .ModalPageHeader__left:empty {
+  padding-right: 10px;
+}
+
+.ModalPageHeader--vkcom .ModalPageHeader__right:empty {
+  padding-left: 10px;
+}
+
+.ModalPageHeader--vkcom .ModalPageHeader__content {
+  max-width: 100%;
+}
+
+.ModalPageHeader--vkcom .ModalPageHeader__content-in {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.ModalPageHeader--vkcom .ModalPageHeader__content-in > span {
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
 }
