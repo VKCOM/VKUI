@@ -1,4 +1,4 @@
-import React, { Component, createRef, HTMLAttributes, RefObject, RefCallback } from 'react';
+import React, { Component, createRef, HTMLAttributes, RefCallback } from 'react';
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -28,8 +28,9 @@ export interface RangeSliderState {
   startX: number;
   percentStart: number;
   percentEnd: number;
-  containerWidth: number;
 }
+
+const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max));
 
 class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   constructor(props: RangeSliderProps) {
@@ -38,12 +39,12 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
       startX: 0,
       percentStart: 0,
       percentEnd: 0,
-      containerWidth: 0,
     };
     this.isControlledOutside = this.props.hasOwnProperty('value');
-    this.thumbStart = createRef();
-    this.thumbEnd = createRef();
   }
+
+  isDragging: false | 'start' | 'end' = false;
+  containerWidth = 0;
 
   static defaultProps: RangeSliderProps = {
     min: 0,
@@ -54,31 +55,28 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   isControlledOutside: boolean;
 
   container: HTMLDivElement;
-
-  thumbStart: RefObject<HTMLDivElement>;
-  thumbEnd: RefObject<HTMLDivElement>;
+  thumbStart = createRef<HTMLDivElement>();
+  thumbEnd = createRef<HTMLDivElement>();
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
     const boundingRect = this.container.getBoundingClientRect();
-    this.setState({
-      containerWidth: boundingRect.width,
-    }, () => {
-      const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
-      const percentPosition = this.absoluteToPecent(absolutePosition);
-      const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
+    this.containerWidth = boundingRect.width;
 
-      this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
+    const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
+    const percentPosition = this.absoluteToPecent(absolutePosition);
+    const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
 
-      if (this.isControlledOutside) {
-        this.setState({ startX: absolutePosition });
-      } else {
-        this.setState({
-          startX: absolutePosition,
-          percentStart,
-          percentEnd,
-        });
-      }
-    });
+    this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
+
+    if (this.isControlledOutside) {
+      this.setState({ startX: absolutePosition });
+    } else {
+      this.setState({
+        startX: absolutePosition,
+        percentStart,
+        percentEnd,
+      });
+    }
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
@@ -103,11 +101,11 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   }
 
   validateAbsolute(absolute: number) {
-    let res = Math.max(0, Math.min(absolute, this.state.containerWidth));
+    let res = clamp(absolute, 0, this.containerWidth);
 
     if (this.props.step > 0) {
       const stepCount = (this.props.max - this.props.min) / this.props.step;
-      const absStep = this.state.containerWidth / stepCount;
+      const absStep = this.containerWidth / stepCount;
 
       res = Math.floor(res / absStep) * absStep;
     }
@@ -117,13 +115,13 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
   validatePercent({ percentStart, percentEnd }: { percentStart: number; percentEnd: number }) {
     return {
-      percentStart: Math.max(0, Math.min(percentStart, 100)),
-      percentEnd: Math.max(0, Math.min(percentEnd, 100)),
+      percentStart: clamp(percentStart, 0, 100),
+      percentEnd: clamp(percentEnd, 0, 100),
     };
   }
 
   absoluteToPecent(absolute: number) {
-    return absolute * 100 / this.state.containerWidth;
+    return absolute * 100 / this.containerWidth;
   }
 
   calcPercentRange(percent: number) {
@@ -168,12 +166,8 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      const boundingRect = this.container.getBoundingClientRect();
-      this.setState({
-        containerWidth: boundingRect.width,
-      }, () => {
-        this.setState(this.validatePercent(this.valueToPercent(this.value)));
-      });
+      this.containerWidth = this.container.getBoundingClientRect().width;
+      this.setState(this.validatePercent(this.valueToPercent(this.value)));
     }
   }
 
@@ -205,14 +199,8 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
               left: `${this.state.percentStart}%`,
             }}
           >
-            <span
-              className={classNames('Slider__thumb', 'Slider__thumb--start')}
-              ref={this.thumbStart}
-            />
-            <span
-              className={classNames('Slider__thumb', 'Slider__thumb--end')}
-              ref={this.thumbEnd}
-            />
+            <span className={classNames('Slider__thumb', 'Slider__thumb--start')} ref={this.thumbStart} />
+            <span className={classNames('Slider__thumb', 'Slider__thumb--end')} ref={this.thumbEnd} />
           </div>
         </Touch>
       </div>
