@@ -21,6 +21,8 @@ interface Scrolls {
 
 export type TransitionStartEventDetail = {
   scrolls: Scrolls;
+  from: string;
+  to: string;
 };
 
 interface ViewsScrolls {
@@ -182,24 +184,33 @@ class View extends Component<ViewProps, ViewState> {
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
-      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
+      const transitionStartEventData = {
+        detail: {
+          from: this.state.prevPanel,
+          to: this.state.nextPanel,
+          scrolls,
+        },
+      };
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, transitionStartEventData));
       const nextPanelElement = this.pickPanel(this.state.nextPanel);
       const prevPanelElement = this.pickPanel(this.state.prevPanel);
-
-      console.log('prevPanelElement.scrollTop before -', prevPanelElement.scrollTop);
       prevPanelElement.scrollTop = scrolls[this.state.prevPanel];
-      console.log('prevPanelElement.scrollTop after -', prevPanelElement.scrollTop);
       if (this.state.isBack) {
-        console.log('nextPanelElement.scrollTop before -', nextPanelElement.scrollTop);
         nextPanelElement.scrollTop = scrolls[this.state.nextPanel];
-        console.log('nextPanelElement.scrollTop after -', nextPanelElement.scrollTop);
       }
       this.waitAnimationFinish(this.pickPanel(this.state.isBack ? this.state.prevPanel : this.state.nextPanel), this.transitionEndHandler);
     }
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
-      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, { detail: { scrolls } }));
+      const transitionStartEventData = {
+        detail: {
+          from: this.state.swipeBackPrevPanel,
+          to: this.state.swipeBackNextPanel,
+          scrolls,
+        },
+      };
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, transitionStartEventData));
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
       const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
       const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
