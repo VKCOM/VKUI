@@ -39,12 +39,18 @@ function coverage() {
   })
 }
 
+const updateScreensActionLink = `https://github.com/VKCOM/VKUI/actions?query=workflow%3A"Update+screenshots"`;
 const UPLOAD_BUCKET = 'vkui-screenshots';
 const awsHost = `${UPLOAD_BUCKET}.${AWS_ENDPOINT}`;
 async function uploadFailedScreenshots() {
   const diffDir = '__diff_output__'
   const { github } = danger;
   const pathPrefix = github ? github.pr.number : 'local';
+  const failedScreens = await pglob(path.join(__dirname, '**', diffDir, '*.png'));
+
+  if (failedScreens.length) {
+    warn(`${failedScreens.length} changed screenshots found — review & update them via ["Update Screenshots" action](${updateScreensActionLink}) before merging.`);
+  }
 
   let s3;
   try {
@@ -65,7 +71,7 @@ async function uploadFailedScreenshots() {
     warn(`Could not purge old screenshots from S3: "${err.message}"`);
   }
 
-  for (const failedScreen of await pglob(path.join(__dirname, '**', diffDir, '*.png'))) {
+  for (const failedScreen of failedScreens) {
     const screenName = path.parse(failedScreen).name;
     const fileContents = await readFile(failedScreen);
     const key = `${pathPrefix}/${screenName}-${md5(fileContents)}.png`;
@@ -89,6 +95,12 @@ async function uploadFailedScreenshots() {
   }
 }
 
+async function checkUpdatedScreenshots() {
+  if (danger.git.modified_files.some(file => /__image_snapshots__/.test(file))) {
+    warn('Some screenshots were modified in this PR');
+  }
+}
+
 async function removeDiffs(s3, prefix) {
   const list = (await s3.listObjects({
     Bucket: UPLOAD_BUCKET,
@@ -109,4 +121,5 @@ Promise.all([
   lint(),
   coverage(),
   uploadFailedScreenshots(),
+  checkUpdatedScreenshots(),
 ]);
