@@ -1,11 +1,10 @@
-import React, { Component, createRef, HTMLAttributes, RefCallback } from 'react';
+import React, { Component, FC, createRef, HTMLAttributes, RefCallback, useCallback, useState } from 'react';
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
 import { precisionRound } from '../Slider/Slider';
 import withPlatform from '../../hoc/withPlatform';
-import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
@@ -24,34 +23,12 @@ export interface RangeSliderProps extends
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-export interface RangeSliderState {
-  start: number;
-  end: number;
-}
-
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max));
 
-class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
-  constructor(props: RangeSliderProps) {
-    super(props);
-    this.state = {
-      start: 0,
-      end: 0,
-    };
-    this.isControlledOutside = this.props.hasOwnProperty('value');
-  }
-
+class RangeSliderDumb extends Component<RangeSliderProps> {
   dragging: false | 'start' | 'end' = false;
   startX = 0;
   containerWidth = 0;
-
-  static defaultProps: RangeSliderProps = {
-    min: 0,
-    max: 100,
-    step: 0,
-  };
-
-  isControlledOutside: boolean;
 
   container: HTMLDivElement;
   thumbStart = createRef<HTMLDivElement>();
@@ -67,12 +44,18 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     this.dragging = this.closestBound(value);
     this.startX = absolutePosition;
 
-    this.updateRange(value, e);
+    this.props.onChange(this.updateRange(value), e);
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
     const value = this.offsetToValue(this.startX + (e.shiftX || 0));
-    this.updateRange(value, e);
+    // "перехватиться", если перетянули за другой ползунок
+    if (this.dragging === 'start' && value > this.props.value[1]) {
+      this.dragging = 'end';
+    } else if (this.dragging === 'end' && value < this.props.value[0]) {
+      this.dragging = 'start';
+    }
+    this.props.onChange(this.updateRange(value), e);
 
     e.originalEvent.preventDefault();
   };
@@ -81,20 +64,11 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     this.dragging = false;
   };
 
-  updateRange = (value: number, event: TouchEvent) => {
-    // TODO: prevent start > end
-    const start = this.dragging === 'start' ? value : this.state.start;
-    const end = this.dragging === 'end' ? value : this.state.end;
-
-    this.onChange([start, end], event);
-    if (!this.isControlledOutside) {
-      this.setState({ start, end });
-    }
+  updateRange(value: number): Value {
+    const start = this.dragging === 'start' ? value : this.props.value[0];
+    const end = this.dragging === 'end' ? value : this.props.value[1];
+    return [start, end];
   };
-
-  onChange(value: Value, e: TouchEvent) {
-    this.props.onChange && this.props.onChange(value, e);
-  }
 
   offsetToValue(absolute: number) {
     const { min, max, step } = this.props;
@@ -109,37 +83,8 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   }
 
   closestBound(value: number) {
-    const { start, end } = this.state;
+    const [start, end] = this.props.value;
     return Math.abs(start - value) <= Math.abs(end - value) ? 'start' : 'end';
-  }
-
-  clampValue([start, end]: Value) {
-    return {
-      start: clamp(start, this.props.min, this.props.max),
-      end: clamp(end, this.props.min, this.props.max),
-    };
-  }
-
-  get value(): Value {
-    if (this.isControlledOutside) {
-      return this.props.value;
-    } else if (this.props.hasOwnProperty('defaultValue')) {
-      return this.props.defaultValue;
-    } else {
-      return [this.props.min, this.props.max];
-    }
-  }
-
-  componentDidMount() {
-    if (canUseDOM) {
-      this.setState(this.clampValue(this.value));
-    }
-  }
-
-  componentDidUpdate(prevProps: RangeSliderProps) {
-    if (this.isControlledOutside && prevProps.value !== this.props.value) {
-      this.setState(this.clampValue(this.props.value));
-    }
   }
 
   getRef: RefCallback<HTMLDivElement> = (container) => {
@@ -150,8 +95,8 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   render() {
     const { className, min, max, step, value, defaultValue,
       onChange, getRootRef, platform, sizeY, ...restProps } = this.props;
-    const percentStart = (this.state.start - min) / (max - min) * 100;
-    const percentEnd = (this.state.end - min) / (max - min) * 100;
+    const percentStart = (value[0] - min) / (max - min) * 100;
+    const percentEnd = (value[1] - min) / (max - min) * 100;
 
     return (
       <Touch
@@ -177,6 +122,30 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     );
   }
 }
+
+const RangeSlider: FC<RangeSliderProps> = ({ onChange, defaultValue, ...props }) => {
+  const isControlled = Boolean(props.value);
+
+  const [localValue, setValue] = useState(defaultValue || [props.min, props.max] as Value);
+  const [start, end] = props.value || localValue;
+  const value = [clamp(start, props.min, props.max), clamp(end, props.min, props.max)] as Value;
+
+  const handleChange: RangeSliderProps['onChange'] = useCallback((nextValue, event) => {
+    if (value[0] === nextValue[0] && value[1] === nextValue[1]) {
+      return;
+    }
+    !isControlled && setValue(nextValue);
+    onChange && onChange(nextValue, event);
+  }, [onChange, isControlled, value]);
+
+  return <RangeSliderDumb {...props} value={value} onChange={handleChange} />;
+};
+
+RangeSlider.defaultProps = {
+  min: 0,
+  max: 100,
+  step: 0,
+};
 
 export default withAdaptivity(withPlatform(RangeSlider), {
   sizeY: true,
