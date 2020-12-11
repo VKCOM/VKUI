@@ -12,7 +12,7 @@
   }
 
 /** TODO: Переписать без использования !important */
-.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ActionSheetItem):not(.Banner__in):not(.ModalDismissButton) {
+.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ActionSheetItem):not(.Banner__in):not(.ModalDismissButton) {
   background: var(--background_highlighted) !important;
   transition: none;
   }
@@ -26,7 +26,7 @@
   border-radius: 8px;
   }
 
-.Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton) {
+.Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton) {
   background: var(--background_highlighted) !important;
   }
 
@@ -39,7 +39,7 @@
   border-radius: 8px;
   }
 
-.Tappable--vkcom.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton) {
+.Tappable--vkcom.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton) {
   background: var(--background_highlighted) !important;
   }
 
@@ -87,7 +87,7 @@
   border-radius: inherit;
 }
 
-.Tappable:not(.SliderSwitch__button):not(.ModalDismissButton):not(.PanelHeaderButton--vkcom).Tappable--shadowHovered > .Tappable__hoverShadow {
+.Tappable:not(.SliderSwitch__button):not(.ModalDismissButton):not(.Link):not(.PanelHeaderButton--vkcom).Tappable--shadowHovered > .Tappable__hoverShadow {
   background: var(--background_hover);
 }
 
@@ -97,6 +97,14 @@
 
 .Tappable--sizeX-compact {
   border-radius: 0;
+}
+
+.Tappable--mouse {
+  transition: opacity .15s ease-out;
+}
+
+.Tappable--mouse .Tappable__hoverShadow {
+  transition: background-color .15s ease-out;
 }
 
 /**
