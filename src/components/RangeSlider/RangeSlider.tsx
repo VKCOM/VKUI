@@ -25,7 +25,6 @@ export interface RangeSliderProps extends
 }
 
 export interface RangeSliderState {
-  startX: number;
   percentStart: number;
   percentEnd: number;
 }
@@ -36,14 +35,14 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   constructor(props: RangeSliderProps) {
     super(props);
     this.state = {
-      startX: 0,
       percentStart: 0,
       percentEnd: 0,
     };
     this.isControlledOutside = this.props.hasOwnProperty('value');
   }
 
-  isDragging: false | 'start' | 'end' = false;
+  dragging: false | 'start' | 'end' = false;
+  startX = 0;
   containerWidth = 0;
 
   static defaultProps: RangeSliderProps = {
@@ -64,36 +63,34 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
     const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
     const percentPosition = this.absoluteToPecent(absolutePosition);
-    const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
 
-    this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
+    this.dragging = this.closestBound(percentPosition);
+    console.log('dragging', this.dragging);
+    this.startX = absolutePosition;
 
-    if (this.isControlledOutside) {
-      this.setState({ startX: absolutePosition });
-    } else {
-      this.setState({
-        startX: absolutePosition,
-        percentStart,
-        percentEnd,
-      });
-    }
+    this.updateRange(percentPosition, e);
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
-    const absolutePosition = this.validateAbsolute(this.state.startX + (e.shiftX || 0));
+    const absolutePosition = this.validateAbsolute(this.startX + (e.shiftX || 0));
     const percentPosition = this.absoluteToPecent(absolutePosition);
-    const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
-
-    this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
-
-    if (!this.isControlledOutside) {
-      this.setState({
-        percentStart,
-        percentEnd,
-      });
-    }
+    this.updateRange(percentPosition, e);
 
     e.originalEvent.preventDefault();
+  };
+
+  onEnd: TouchEventHandler = () => {
+    this.dragging = false;
+  };
+
+  updateRange = (percentPosition: number, event: TouchEvent) => {
+    const percentStart = this.dragging === 'start' ? percentPosition : this.state.percentStart;
+    const percentEnd = this.dragging === 'end' ? percentPosition : this.state.percentEnd;
+
+    this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], event);
+    if (!this.isControlledOutside) {
+      this.setState({ percentStart, percentEnd });
+    }
   };
 
   onChange(value: Value, e: TouchEvent) {
@@ -107,7 +104,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
       const stepCount = (this.props.max - this.props.min) / this.props.step;
       const absStep = this.containerWidth / stepCount;
 
-      res = Math.floor(res / absStep) * absStep;
+      res = Math.round(res / absStep) * absStep;
     }
 
     return res;
@@ -124,18 +121,9 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     return absolute * 100 / this.containerWidth;
   }
 
-  calcPercentRange(percent: number) {
+  closestBound(percent: number) {
     const { percentStart, percentEnd } = this.state;
-
-    if (percentStart === 100) {
-      return { percentStart: percent, percentEnd };
-    } else if (percentEnd === 0) {
-      return { percentEnd: percent, percentStart };
-    } else if (Math.abs(percentStart - percent) <= Math.abs(percentEnd - percent)) {
-      return { percentStart: percent, percentEnd };
-    } else {
-      return { percentEnd: percent, percentStart };
-    }
+    return Math.abs(percentStart - percent) <= Math.abs(percentEnd - percent) ? 'start' : 'end';
   }
 
   percentToValue(percent: number) {
@@ -191,7 +179,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
         {...restProps}
         className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
       >
-        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} className="Slider__in">
+        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
           <div
             className="Slider__dragger"
             style={{
