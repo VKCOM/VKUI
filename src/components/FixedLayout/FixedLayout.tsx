@@ -83,11 +83,19 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
     let panelScroll = e.detail.scrolls[this.props.panel] || 0;
-    this.setState({
-      position: 'absolute',
-      top: this.el.offsetTop + panelScroll,
-      width: '',
-    });
+    const fromPannelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
+    const toPannelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
+    const document = this.document;
+
+    // Для панелей, с которых уходим всегда выставляется скролл
+    // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл
+    if (fromPannelHasScroll ||
+      (toPannelHasScroll && !document || document?.documentElement?.scrollTop > 0)) {
+      this.setState({
+        position: 'absolute',
+        top: this.el.offsetTop + panelScroll,
+      });
+    }
   };
 
   onViewTransitionEnd: VoidFunction = () => {
