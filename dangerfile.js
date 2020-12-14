@@ -52,6 +52,12 @@ async function uploadFailedScreenshots() {
     warn(`${failedScreens.length} changed screenshots found — review & update them via ["Update Screenshots" action](${updateScreensActionLink}) before merging.`);
   }
 
+  if (!AWS_ENDPOINT || !AWS_ACCESS_KEY_ID || !AWS_SECRET_KEY) {
+    // Silently skip screenshot reporting if credentials missing
+    console.log('AWS credentials missing - skip screenshot reporting');
+    return;
+  }
+
   let s3;
   try {
     s3 = new AWS.S3({
