@@ -8,10 +8,12 @@ export interface ScrollSaverProps extends FrameProps {
   saveScroll: (scroll: number) => any;
 }
 
-export const ScrollSaver = withFrame(({ children, initialScroll, saveScroll, window }: ScrollSaverProps) => {
+export const ScrollSaver = withFrame(({ children, initialScroll, saveScroll, window, document }: ScrollSaverProps) => {
   useIsomorphicLayoutEffect(() => {
     if (typeof initialScroll === 'number') {
-      window.scrollTo(0, initialScroll);
+      // Some iOS versions do not normalize scroll — do it manually.
+      const safeScroll = Math.max(Math.min(initialScroll, document.body.scrollHeight - window.innerHeight), 0);
+      window.scrollTo(0, safeScroll);
     }
     return () => saveScroll(window.pageYOffset);
   }, []);
