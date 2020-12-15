@@ -1,4 +1,4 @@
-import React, { FunctionComponent, InputHTMLAttributes } from 'react';
+import React, { HTMLAttributes, FunctionComponent, InputHTMLAttributes, useRef } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Button, { VKUIButtonProps } from '../Button/Button';
 import classNames from '../../lib/classNames';
@@ -7,7 +7,8 @@ import usePlatform from '../../hooks/usePlatform';
 
 export interface FileProps extends
   Omit<VKUIButtonProps, 'size'>,
-  InputHTMLAttributes<HTMLInputElement>,
+  Omit<InputHTMLAttributes<HTMLInputElement>, 'onClick'>,
+  Pick<HTMLAttributes<HTMLElement>, 'onClick'>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLElement> {
   controlSize?: VKUIButtonProps['size'];
@@ -15,15 +16,15 @@ export interface FileProps extends
 
 const File: FunctionComponent<FileProps> = (props: FileProps) => {
   const { children, align, controlSize, mode, stretched, before, className,
-    style, getRef, getRootRef, ...restProps } = props;
+    style, getRef, getRootRef, onClick, ...restProps } = props;
 
   const platform = usePlatform();
+  const inputRef = useRef<HTMLInputElement>();
 
   return (
     <Button
       align={align}
       className={classNames(getClassName('File', platform), className)}
-      Component="label"
       stretched={stretched}
       mode={mode}
       size={controlSize}
@@ -31,8 +32,15 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}
+      onClick={(e) => {
+        if (!getRef) {
+          inputRef.current.click();
+        } else if (onClick) {
+          onClick(e);
+        }
+      }}
     >
-      <input {...restProps} className="File__input" type="file" ref={getRef} />
+      <input {...restProps} className="File__input" type="file" ref={getRef || inputRef} />
       {children}
     </Button>
   );
