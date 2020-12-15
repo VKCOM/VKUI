@@ -49,12 +49,6 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
     const value = this.offsetToValue(this.startX + (e.shiftX || 0));
-    // "перехватиться", если перетянули за другой ползунок
-    if (this.dragging === 'start' && value > this.props.value[1]) {
-      this.dragging = 'end';
-    } else if (this.dragging === 'end' && value < this.props.value[0]) {
-      this.dragging = 'start';
-    }
     this.props.onChange(this.updateRange(value), e);
 
     e.originalEvent.preventDefault();
@@ -65,9 +59,25 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
   };
 
   updateRange(value: number): Value {
-    const start = this.dragging === 'start' ? value : this.props.value[0];
-    const end = this.dragging === 'end' ? value : this.props.value[1];
-    return [start, end];
+    const [start, end] = this.props.value;
+    const { dragging } = this;
+    if (dragging === 'start') {
+      if (value > end) {
+        // "перехватиться", если перетянули за конец
+        this.dragging = 'end';
+        return [end, value];
+      }
+      return [value, end];
+    }
+    if (dragging === 'end') {
+      if (value < start) {
+        // "перехватиться", если перетянули за начало
+        this.dragging = 'start';
+        return [value, start];
+      }
+      return [start, value];
+    }
+    return this.props.value;
   };
 
   offsetToValue(absolute: number) {
