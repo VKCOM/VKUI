@@ -7,6 +7,7 @@ import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { precisionRound } from '../../helpers/math';
 
 export interface SliderProps extends
   HasRootRef<HTMLDivElement>,
@@ -25,11 +26,6 @@ export interface SliderState {
   startX: number;
   percentPosition: number;
   containerWidth: number;
-}
-
-export function precisionRound(number: number, precision: number) {
-  let factor = Math.pow(10, precision || 1);
-  return Math.round(number * factor) / factor;
 }
 
 class Slider extends Component<SliderProps, SliderState> {

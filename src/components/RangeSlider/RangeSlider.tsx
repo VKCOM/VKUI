@@ -3,9 +3,9 @@ import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
-import { precisionRound } from '../Slider/Slider';
 import withPlatform from '../../hoc/withPlatform';
 import { setRef } from '../../lib/utils';
+import { rescale, clamp } from '../../helpers/math';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export type Value = [number, number];
@@ -22,8 +22,6 @@ export interface RangeSliderProps extends
   defaultValue?: Value;
   onChange?(value: Value, e: TouchEvent): void;
 }
-
-const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max));
 
 class RangeSliderDumb extends Component<RangeSliderProps> {
   dragging: false | 'start' | 'end' = false;
@@ -82,14 +80,7 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
 
   offsetToValue(absolute: number) {
     const { min, max, step } = this.props;
-    const res = clamp(absolute / this.containerWidth * (max - min) + min, min, max);
-
-    if (step > 0) {
-      const stepFloatPart = `${step}`.split('.')[1] || '';
-      return precisionRound(Math.round(res / step) * step, stepFloatPart.length);
-    }
-
-    return res;
+    return rescale(absolute, [0, this.containerWidth], [min, max], { step });
   }
 
   closestBound(value: number) {
@@ -110,6 +101,7 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
 
     return (
       <Touch
+        data-value={value.join(',')}
         {...restProps}
         onStart={this.onStart}
         onMoveX={this.onMoveX}
