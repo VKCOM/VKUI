@@ -76,6 +76,8 @@ export default class Touch extends Component<TouchProps> {
     return this.context.document || document;
   }
 
+  private subscribed = false;
+
   componentDidMount() {
     if (canUseDOM) {
       this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
@@ -88,7 +90,8 @@ export default class Touch extends Component<TouchProps> {
 
   componentWillUnmount() {
     this.container.removeEventListener(events[0], this.onStart);
-    touchEnabled && this.unsubscribe(this.container);
+    // unsubscribe if touchEnabled OR !touchEnabled & gesture in progress
+    this.subscribed && this.unsubscribe(this.container);
 
     this.container.removeEventListener('mouseenter', this.onEnter);
     this.container.removeEventListener('mouseleave', this.onLeave);
@@ -264,6 +267,7 @@ export default class Touch extends Component<TouchProps> {
   };
 
   subscribe(element: HTMLElement) {
+    this.subscribed = true;
     const listenerParams = { capture: this.props.useCapture, passive: false };
     element.addEventListener(events[1], this.onMove, listenerParams);
     element.addEventListener(events[2], this.onEnd, listenerParams);
@@ -278,6 +282,7 @@ export default class Touch extends Component<TouchProps> {
     element.removeEventListener(events[1], this.onMove, listenerParams);
     element.removeEventListener(events[2], this.onEnd, listenerParams);
     element.removeEventListener(events[3], this.onEnd, listenerParams);
+    this.subscribed = false;
   }
 
   /**
