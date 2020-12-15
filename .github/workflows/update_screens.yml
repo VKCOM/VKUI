@@ -1,0 +1,26 @@
+name: 'Update screenshots'
+
+on:
+  workflow_dispatch
+
+jobs:
+  update_screens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Checkout LFS objects
+        run: git lfs checkout
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      # cached yarn install
+      - uses: bahmutov/npm-install@v1
+      - name: Update screenshots
+        run: yarn test:e2e -u
+      - name: Push updated screenshots
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "CHORE: Update screenshots"
+          file_pattern: './**/*.png'
