@@ -17,14 +17,14 @@ export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, Ha
    */
   right?: ReactNode;
   noShadow?: boolean;
-  noSeparator?: boolean;
+  separator?: boolean;
 }
 
 const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { className, left, right, children, noShadow, noSeparator, getRef } = props;
+  const { className, left, right, children, noShadow, separator, getRef } = props;
   const isPrimitive = isPrimitiveReactNode(children);
-  const hasSeparator = !noSeparator && platform === VKCOM;
+  const hasSeparator = separator && platform === VKCOM;
 
   return (
     <div className={classNames(getClassName('ModalPageHeader', platform), className)} ref={getRef}>
@@ -49,6 +49,10 @@ const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPa
       {!noShadow && <div className="ModalPageHeader__shadow" />}
     </div>
   );
+};
+
+ModalPageHeader.defaultProps = {
+  separator: true,
 };
 
 export default ModalPageHeader;
