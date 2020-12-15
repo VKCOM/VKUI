@@ -16,13 +16,12 @@ export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, Ha
    * Иконки, отображаемые справа
    */
   right?: ReactNode;
-  noShadow?: boolean;
   separator?: boolean;
 }
 
 const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { className, left, right, children, noShadow, separator, getRef } = props;
+  const { className, left, right, children, separator, getRef } = props;
   const isPrimitive = isPrimitiveReactNode(children);
   const hasSeparator = separator && platform === VKCOM;
 
@@ -45,8 +44,6 @@ const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPa
       </div>
 
       {hasSeparator && <Separator wide className="ModalPageHeader__separator" />}
-
-      {!noShadow && <div className="ModalPageHeader__shadow" />}
     </div>
   );
 };
