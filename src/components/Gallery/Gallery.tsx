@@ -452,8 +452,6 @@ const Gallery = withFrame<GalleryProps>(({
   const slideIndex = isControlled ? props.slideIndex : localSlideIndex;
   const isDraggable = !isControlled || Boolean(onChange);
   const isScrollable = !isControlled || Boolean(onChange);
-  const childCount = React.Children.count(children);
-  const isScrollable = !isControlled || Boolean(onChange);
   const slides = React.Children.toArray(children).filter((item) => Boolean(item));
   const childCount = slides.length;
 
