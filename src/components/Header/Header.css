@@ -2,103 +2,161 @@
   user-select: text;
   }
 
-  .Header__in {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    }
+.Header__in {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
 
-    .Header__content {
-      min-width: 0;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      font-weight: 600;
-    }
+.Header__main {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
-      .Header__subtitle {
-        color: var(--text_secondary);
-        font-weight: normal;
-        font-size: 13px;
-        line-height: 16px;
-        }
+.Header__content {
+  display: flex;
+  align-items: baseline;
+}
 
-    .Header--mode-primary .Header__content {
-      color: var(--text_primary);
-      }
+.Header__subtitle {
+  color: var(--text_secondary);
+}
 
-    .Header--mode-secondary .Header__content {
-      color: var(--text_secondary);
-      text-transform: uppercase;
-      }
+.Header--mode-primary .Header__main {
+  color: var(--text_primary);
+}
 
-    .Header--pi .Header__content {
-      color: var(--text_primary);
-      }
+.Header--mode-secondary .Header__main {
+  color: var(--text_secondary);
+}
 
-    .Header__indicator {
-      margin-right: auto;
-      color: var(--text_secondary);
-      font-size: 13px;
-      line-height: 16px;
-      margin-left: 8px;
-      }
+.Header--pi .Header__main {
+  color: var(--text_primary);
+}
 
-    .Header__aside {
-      white-space: nowrap;
-      font-size: 15px;
-      line-height: 20px;
-      margin-left: 12px;
-    }
+.Header--mode-tertiary .Header__main {
+  color: var(--text_secondary);
+}
 
-      .Header__aside > .Icon {
-        position: relative;
-        color: var(--icon_secondary);
-        }
+.Header__indicator {
+  color: var(--text_secondary);
+  margin-left: 6px;
+}
 
-      .Header__aside > .Icon--24 {
-        top: 3px;
-        }
+.Header:not(.Header--pi) .Header__indicator {
+  align-self: center;
+}
 
-      .Header__aside > .Icon--16 {
-        top: 1px;
-        }
+.Header--mode-secondary .Header__indicator {
+  margin-left: 8px;
+}
+
+.Header__aside {
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+.Header__aside > .Icon {
+  position: relative;
+  color: var(--icon_secondary);
+}
+
+.Header__aside > .Icon--24 {
+  top: 3px;
+}
+
+.Header__aside > .Icon--16 {
+  top: 1px;
+}
+
+.Header__aside > .Icon--16 {
+  top: 1px;
+}
+
+/**
+ * iOS
+ */
 
 .Header--ios .Header__in {
   padding: 0 12px;
-  }
+}
 
-  .Header--ios.Header--mode-primary .Header__content {
-    font-size: 17px;
-    line-height: 22px;
-    /* https://github.com/VKCOM/VKUI/issues/738 */
-    margin: 13px 0 9px;
-    }
+.Header--ios .Header__subtitle {
+  margin-top: 1px;
+}
 
-  .Header--ios.Header--mode-secondary .Header__content {
-    /* https://github.com/VKCOM/VKUI/issues/738 */
-    margin: 14px 0 10px;
-    font-size: 13px;
-    line-height: 16px;
-    }
+.Header--ios.Header--mode-primary .Header__main {
+  margin: 13px 0 9px;
+}
 
-.Header--android .Header__in,
+.Header--ios.Header--mode-primary .Header__content:not(:last-child) {
+  margin-top: -1px;
+}
+
+.Header--ios.Header--mode-secondary .Header__main {
+  margin: 14px 0 10px;
+}
+
+.Header--ios.Header--mode-tertiary .Header__main {
+  margin: 9px 0;
+}
+
+/**
+ * Android
+ */
+
+.Header--android .Header__in {
+  padding: 0 16px;
+}
+
+.Header--android .Header__subtitle {
+  margin-top: 1px;
+}
+
+.Header--android.Header--mode-primary .Header__main {
+  margin: 15px 0 9px;
+}
+
+.Header--android.Header--mode-primary .Header__content:not(:last-child) {
+  margin-top: -1px;
+}
+
+.Header--android.Header--mode-secondary .Header__main {
+  margin: 15px 0 9px;
+}
+
+.Header--android.Header--mode-tertiary .Header__main {
+  margin: 11px 0 9px;
+}
+
+/**
+ * VKCOM
+ */
+
 .Header--vkcom .Header__in {
   padding: 0 16px;
-  }
+  align-items: center;
+  min-height: 100%;
+}
 
-  .Header--android.Header--mode-primary .Header__content,
-  .Header--vkcom.Header--mode-primary .Header__content {
-    /* https://github.com/VKCOM/VKUI/issues/738 */
-    margin: 15px 0 9px;
-    font-size: 16px;
-    line-height: 20px;
-    }
+.Header--vkcom .Header__subtitle {
+  margin-top: 2px;
+}
 
-  .Header--android.Header--mode-secondary .Header__content,
-  .Header--vkcom.Header--mode-secondary .Header__content {
-    /* https://github.com/VKCOM/VKUI/issues/738 */
-    margin: 15px 0 9px;
-    font-size: 13px;
-    line-height: 16px;
-    }
+.Header--vkcom.Header--mode-primary {
+  height: 64px;
+}
+
+.Header--vkcom.Header--mode-secondary {
+  height: 56px;
+}
+
+.Header--vkcom.Header--mode-tertiary {
+  height: 40px;
+}
+
+.Header--vkcom .Header__main {
+  color: var(--text_primary);
+}

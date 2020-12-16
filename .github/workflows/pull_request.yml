@@ -7,11 +7,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Checkout LFS objects
+        run: git lfs checkout
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn install --frozen-lockfile
-      - run: yarn test
+      # cached yarn install
+      - uses: bahmutov/npm-install@v1
+      - name: Run tests
+        run: yarn test:ci
+      - name: FYI visual tests
+        run: yarn test:e2e
+        continue-on-error: true
+      - name: Create test report
+        if: always()
+        run: yarn danger ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   styleguide:
     runs-on: ubuntu-latest
     steps:
@@ -19,10 +33,20 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn install --frozen-lockfile
+      # cached yarn install
+      - uses: bahmutov/npm-install@v1
       - run: yarn styleguide:build
       - name: Uploading styleguide artifact
         uses: actions/upload-artifact@v2
         with:
           name: styleguide
           path: docs/
+  size:
+    runs-on: ubuntu-latest
+    env:
+      CI_JOB_NUMBER: 1
+    steps:
+      - uses: actions/checkout@v1
+      - uses: andresz1/size-limit-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

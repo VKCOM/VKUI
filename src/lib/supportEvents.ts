@@ -1,4 +1,5 @@
 import { canUseDOM } from './dom';
+import { isTesting } from './testing';
 
 export type VKUISupportEvents = {
   supported: boolean;
@@ -19,7 +20,7 @@ const transitionEvent: VKUISupportEvents = {
   name: null,
 };
 
-if (canUseDOM) {
+if (canUseDOM && !isTesting) {
   if (typeof AnimationEvent !== 'undefined') {
     animationEvent.supported = true;
     animationEvent.name = 'animationend';
