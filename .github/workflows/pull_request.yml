@@ -50,6 +50,23 @@ jobs:
           FOLDER: docs
           TARGET_FOLDER: pull/${{ github.event.pull_request.number }}
           CLEAN: true
+
+      - name: Find styleguide URL comment
+        uses: peter-evans/find-comment@v1
+        id: find_url_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: <!-- styleguide_url -->
+      - name: Post styleguide URL to PR
+        if: ${{ steps.find_url_comment.outputs.comment-id == 0 }}
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <!-- styleguide_url -->
+            See the styleguide for this PR at https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/
+
   size:
     runs-on: ubuntu-latest
     env:
