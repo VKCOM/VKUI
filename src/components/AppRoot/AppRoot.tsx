@@ -65,7 +65,11 @@ export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
       <div ref={this.rootRef} className={classNames('AppRoot', {
         'AppRoot--embedded': embedded,
       })}>
-        <AppRootContext.Provider value={{ portalRoot: this.portalRoot, embedded }}>
+        <AppRootContext.Provider value={{
+          appRoot: this.rootRef,
+          portalRoot: this.portalRoot,
+          embedded,
+        }}>
           {embedded ? (
             <div className="AppRoot__wrapper">
               {children}

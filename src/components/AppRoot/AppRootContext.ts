@@ -1,6 +1,7 @@
-import { createContext } from 'react';
+import { createContext, RefObject } from 'react';
 
 export interface AppRootContextInterface {
+  appRoot?: RefObject<HTMLDivElement>;
   portalRoot?: HTMLDivElement;
   embedded?: boolean;
 }

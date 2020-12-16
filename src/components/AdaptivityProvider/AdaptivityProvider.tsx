@@ -18,15 +18,15 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const adaptivityRef = useRef<AdaptivityContextInterface>(null);
   const [, updateAdaptivity] = useState({});
 
-  const { embedded } = useContext(AppRootContext);
+  const { embedded, appRoot } = useContext(AppRootContext);
 
   if (!adaptivityRef.current) {
     adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
   }
 
   function paintBody(sizeX: SizeType) {
-    const root = embedded
-      ? props.window.document.querySelector('.AppRoot')
+    const root = embedded && appRoot.current
+      ? appRoot.current
       : props.window.document.body;
     if (root) {
       if (sizeX === SizeType.REGULAR) {
