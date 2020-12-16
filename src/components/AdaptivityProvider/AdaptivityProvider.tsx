@@ -51,9 +51,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         embedded
       ) {
         paintBody(calculated.sizeX);
-        adaptivityRef.current = {
-          ...calculated,
-        };
+        adaptivityRef.current = calculated;
         updateAdaptivity({});
       }
     }
