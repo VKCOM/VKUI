@@ -41,6 +41,15 @@ jobs:
         with:
           name: styleguide
           path: docs/
+      - name: Publishing styleguide to GitHub pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          COMMIT_MESSAGE: "Publish PR ${{ github.event.pull_request.number }}"
+          BRANCH: gh-pages
+          FOLDER: docs
+          TARGET_FOLDER: pull/${{ github.event.pull_request.number }}
+          CLEAN: true
   size:
     runs-on: ubuntu-latest
     env:
