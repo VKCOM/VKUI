@@ -16,6 +16,10 @@ jobs:
           node-version: 12
       # cached yarn install
       - uses: bahmutov/npm-install@v1
+        with:
+          install-command: yarn --frozen-lockfile --ignore-scripts
+      - name: Selectively run install scripts
+        run: yarn --cwd node_modules/playwright run install
       - name: Run tests
         run: yarn test:ci
       - name: FYI visual tests
@@ -35,6 +39,8 @@ jobs:
           node-version: 12
       # cached yarn install
       - uses: bahmutov/npm-install@v1
+        with:
+          install-command: yarn --frozen-lockfile --ignore-scripts
       - run: yarn styleguide:build
       - name: Uploading styleguide artifact
         uses: actions/upload-artifact@v2
