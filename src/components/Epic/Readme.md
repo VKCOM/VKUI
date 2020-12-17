@@ -14,87 +14,116 @@ Android. Внизу располагается панель с иконками,
 между окнами.
 
 ``` jsx
-class Example extends React.Component {
-  constructor (props) {
-    super(props);
+const Example = withAdaptivity(({ viewWidth }) => {
+  const platform = usePlatform();
+  const [activeStory, setActiveStory] = React.useState('profile');
+  const onStoryChange = (e) => setActiveStory(e.currentTarget.dataset.story);
+  const isDesktop = viewWidth >= ViewWidth.TABLET;
+  const hasHeader = platform !== VKCOM;
 
-    this.state = {
-      activeStory: 'profile'
-    };
-    this.onStoryChange = this.onStoryChange.bind(this);
-  }
-
-  onStoryChange (e) {
-    this.setState({ activeStory: e.currentTarget.dataset.story })
-  }
-
-  render () {
-
-    return (
-      <Epic activeStory={this.state.activeStory} tabbar={
-        <Tabbar>
-          <TabbarItem
-            onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'feed'}
-            data-story="feed"
-            text="Новости"
-          ><Icon28NewsfeedOutline /></TabbarItem>
-          <TabbarItem
-            onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'services'}
-            data-story="services"
-            text="Сервисы"
-          ><Icon28ServicesOutline/></TabbarItem>
-          <TabbarItem
-            onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'messages'}
-            data-story="messages"
-            label="12"
-            text="Сообщения"
-          ><Icon28MessageOutline /></TabbarItem>
-          <TabbarItem
-            onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'clips'}
-            data-story="clips"
-            text="Клипы"
-          ><Icon28ClipOutline /></TabbarItem>
-          <TabbarItem
-            onClick={this.onStoryChange}
-            selected={this.state.activeStory === 'profile'}
-            data-story="profile"
-            text="Профиль"
-          ><Icon28UserCircleOutline /></TabbarItem>
-        </Tabbar>
-      }>
-        <View id="feed" activePanel="feed">
-          <Panel id="feed">
-            <PanelHeader>Новости</PanelHeader>
-          </Panel>
-        </View>
-        <View id="services" activePanel="services">
-          <Panel id="services">
-            <PanelHeader>Сервисы</PanelHeader>
-          </Panel>
-        </View>
-        <View id="messages" activePanel="messages">
-          <Panel id="messages">
-            <PanelHeader>Сообщения</PanelHeader>
-          </Panel>
-        </View>
-        <View id="clips" activePanel="clips">
-          <Panel id="clips">
-            <PanelHeader>Клипы</PanelHeader>
-          </Panel>
-        </View>
-        <View id="profile" activePanel="profile">
-          <Panel id="profile">
-            <PanelHeader>Профиль</PanelHeader>
-          </Panel>
-        </View>
-      </Epic>
-    )
-  }
-}
+  return (
+    <SplitLayout
+      header={hasHeader && <PanelHeader separator={false} />}
+      style={{ justifyContent: "center" }}
+    >
+      <SplitCol
+        animate={!isDesktop}
+        spaced={isDesktop}
+        width={isDesktop ? '560px' : '100%'}
+        maxWidth={isDesktop ? '560px' : '100%'}
+      >
+        <Epic activeStory={activeStory} tabbar={
+          <Tabbar>
+            <TabbarItem
+              onClick={onStoryChange}
+              selected={activeStory === 'feed'}
+              data-story="feed"
+              text="Новости"
+            ><Icon28NewsfeedOutline /></TabbarItem>
+            <TabbarItem
+              onClick={onStoryChange}
+              selected={activeStory === 'services'}
+              data-story="services"
+              text="Сервисы"
+            ><Icon28ServicesOutline/></TabbarItem>
+            <TabbarItem
+              onClick={onStoryChange}
+              selected={activeStory === 'messages'}
+              data-story="messages"
+              label="12"
+              text="Сообщения"
+            ><Icon28MessageOutline /></TabbarItem>
+            <TabbarItem
+              onClick={onStoryChange}
+              selected={activeStory === 'clips'}
+              data-story="clips"
+              text="Клипы"
+            ><Icon28ClipOutline /></TabbarItem>
+            <TabbarItem
+              onClick={onStoryChange}
+              selected={activeStory === 'profile'}
+              data-story="profile"
+              text="Профиль"
+            ><Icon28UserCircleOutline /></TabbarItem>
+          </Tabbar>
+        }>
+          <View id="feed" activePanel="feed">
+            <Panel id="feed">
+              <PanelHeader left={<PanelHeaderBack />}>Новости</PanelHeader>
+              <Group>
+                <Placeholder icon={<Icon56MentionOutline />}>
+                  Введите адрес страницы в поле поиска
+                </Placeholder>
+              </Group>
+            </Panel>
+          </View>
+          <View id="services" activePanel="services">
+            <Panel id="services">
+              <PanelHeader left={<PanelHeaderBack />}>Сервисы</PanelHeader>
+              <Group>
+                <Placeholder icon={<Icon56MentionOutline />}>
+                  Введите адрес страницы в поле поиска
+                </Placeholder>
+              </Group>
+            </Panel>
+          </View>
+          <View id="messages" activePanel="messages">
+            <Panel id="messages">
+              <PanelHeader left={<PanelHeaderBack />}>Сообщения</PanelHeader>
+              <Group>
+                <Placeholder icon={<Icon56MentionOutline />}>
+                  Введите адрес страницы в поле поиска
+                </Placeholder>
+              </Group>
+            </Panel>
+          </View>
+          <View id="clips" activePanel="clips">
+            <Panel id="clips">
+              <PanelHeader left={<PanelHeaderBack />}>Клипы</PanelHeader>
+              <Group>
+                <Placeholder icon={<Icon56MentionOutline />}>
+                  Введите адрес страницы в поле поиска
+                </Placeholder>
+              </Group>
+            </Panel>
+          </View>
+          <View id="profile" activePanel="profile">
+            <Panel id="profile">
+              <PanelHeader left={<PanelHeaderBack />}>Профиль</PanelHeader>
+              <Group>
+                <Placeholder icon={<Icon56MentionOutline />}>
+                  Введите адрес страницы в поле поиска
+                </Placeholder>
+              </Group>
+            </Panel>
+          </View>
+        </Epic>
+      </SplitCol>
+    </SplitLayout>
+  );
+}, {
+  viewWidth: true
+});
 
 <Example />
 
