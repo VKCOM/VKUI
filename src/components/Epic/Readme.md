@@ -10,7 +10,7 @@ Android. Внизу располагается панель с иконками,
 либо коллекция `View`. У каждого элемента коллекции должен быть уникальный `id`. Свойство `activeStory` указывает
 на `id` активного окна.
 
-**Важно:** в `Epic` всегда должен быть передан `Tabbar`, так как он является единственным способом переключения
+**Важно:** При `viewWidth < SMALL_TABLET` в `Epic` всегда должен быть передан `Tabbar`, так как он является единственным способом переключения
 между окнами.
 
 ``` jsx
@@ -26,13 +26,83 @@ const Example = withAdaptivity(({ viewWidth }) => {
       header={hasHeader && <PanelHeader separator={false} />}
       style={{ justifyContent: "center" }}
     >
+      {isDesktop && (
+        <SplitCol fixed width="280px" maxWidth="280px">
+          <Panel>
+            {hasHeader && <PanelHeader />}
+            <Group>
+              <Cell
+                disabled={activeStory === 'feed'}
+                style={activeStory === 'feed' ? {
+                  backgroundColor: "var(--button_secondary_background)",
+                  borderRadius: 8
+                } : {}}
+                data-story="feed"
+                onClick={onStoryChange}
+                before={<Icon28NewsfeedOutline />}
+              >
+                feed
+              </Cell>
+              <Cell
+                disabled={activeStory === 'services'}
+                style={activeStory === 'services' ? {
+                  backgroundColor: "var(--button_secondary_background)",
+                  borderRadius: 8
+                } : {}}
+                data-story="services"
+                onClick={onStoryChange}
+                before={<Icon28ServicesOutline />}
+              >
+                services
+              </Cell>
+              <Cell
+                disabled={activeStory === 'messages'}
+                style={activeStory === 'messages' ? {
+                  backgroundColor: "var(--button_secondary_background)",
+                  borderRadius: 8
+                } : {}}
+                data-story="messages"
+                onClick={onStoryChange}
+                before={<Icon28MessageOutline />}
+              >
+                messages
+              </Cell>
+              <Cell
+                disabled={activeStory === 'clips'}
+                style={activeStory === 'clips' ? {
+                  backgroundColor: "var(--button_secondary_background)",
+                  borderRadius: 8
+                } : {}}
+                data-story="clips"
+                onClick={onStoryChange}
+                before={<Icon28ClipOutline />}
+              >
+                clips
+              </Cell>
+              <Cell
+                disabled={activeStory === 'profile'}
+                style={activeStory === 'profile' ? {
+                  backgroundColor: "var(--button_secondary_background)",
+                  borderRadius: 8
+                } : {}}
+                data-story="profile"
+                onClick={onStoryChange}
+                before={<Icon28UserCircleOutline />}
+              >
+                profile
+              </Cell>
+            </Group>
+          </Panel>
+        </SplitCol>
+      )}
+
       <SplitCol
         animate={!isDesktop}
         spaced={isDesktop}
         width={isDesktop ? '560px' : '100%'}
         maxWidth={isDesktop ? '560px' : '100%'}
       >
-        <Epic activeStory={activeStory} tabbar={
+        <Epic activeStory={activeStory} tabbar={!isDesktop &&
           <Tabbar>
             <TabbarItem
               onClick={onStoryChange}
@@ -71,8 +141,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
             <Panel id="feed">
               <PanelHeader left={<PanelHeaderBack />}>Новости</PanelHeader>
               <Group>
-                <Placeholder icon={<Icon56MentionOutline />}>
-                  Введите адрес страницы в поле поиска
+                <Placeholder icon={<Icon56NewsfeedOutline width={56} height={56} />}>
                 </Placeholder>
               </Group>
             </Panel>
@@ -81,8 +150,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
             <Panel id="services">
               <PanelHeader left={<PanelHeaderBack />}>Сервисы</PanelHeader>
               <Group>
-                <Placeholder icon={<Icon56MentionOutline />}>
-                  Введите адрес страницы в поле поиска
+                <Placeholder icon={<Icon28ServicesOutline width={56} height={56} />}>
                 </Placeholder>
               </Group>
             </Panel>
@@ -91,8 +159,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
             <Panel id="messages">
               <PanelHeader left={<PanelHeaderBack />}>Сообщения</PanelHeader>
               <Group>
-                <Placeholder icon={<Icon56MentionOutline />}>
-                  Введите адрес страницы в поле поиска
+                <Placeholder icon={<Icon28MessageOutline width={56} height={56} />}>
                 </Placeholder>
               </Group>
             </Panel>
@@ -101,8 +168,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
             <Panel id="clips">
               <PanelHeader left={<PanelHeaderBack />}>Клипы</PanelHeader>
               <Group>
-                <Placeholder icon={<Icon56MentionOutline />}>
-                  Введите адрес страницы в поле поиска
+                <Placeholder icon={<Icon28ClipOutline width={56} height={56} />}>
                 </Placeholder>
               </Group>
             </Panel>
@@ -111,8 +177,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
             <Panel id="profile">
               <PanelHeader left={<PanelHeaderBack />}>Профиль</PanelHeader>
               <Group>
-                <Placeholder icon={<Icon56MentionOutline />}>
-                  Введите адрес страницы в поле поиска
+                <Placeholder icon={<Icon28UserCircleOutline width={56} height={56} />}>
                 </Placeholder>
               </Group>
             </Panel>
