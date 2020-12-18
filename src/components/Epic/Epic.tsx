@@ -1,25 +1,34 @@
-import React, { HTMLAttributes, ReactNode, Component } from 'react';
+import React, { HTMLAttributes, ReactNode, FC, useEffect } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasChildren, HasPlatform } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
+import { HasChildren } from '../../types';
+import usePlatform from '../../hooks/usePlatform';
+import { AdaptivityProps } from 'index';
+import withAdaptivity, { ViewWidth } from '../../hoc/withAdaptivity';
 
-export interface EpicProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasPlatform {
-  tabbar: ReactNode;
+export interface EpicProps extends HTMLAttributes<HTMLDivElement>, HasChildren, AdaptivityProps {
+  tabbar?: ReactNode;
   activeStory: string;
 }
 
-class Epic extends Component<EpicProps> {
-  render() {
-    const { className, activeStory, tabbar, children, platform, ...restProps } = this.props;
+export const Epic: FC<EpicProps> = (props) => {
+  const platform = usePlatform();
+  const { className, activeStory, tabbar, children, viewWidth, ...restProps } = props;
 
-    return (
-      <div {...restProps} className={classNames(getClassName('Epic', platform), className)}>
-        {React.Children.toArray(children).find((item: React.ReactElement) => item.props.id === activeStory)}
-        {tabbar}
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    if (!tabbar && viewWidth < ViewWidth.SMALL_TABLET) {
+      console.warn('[Epic] Using Epic without tabbar is not recommended on mobile');
+    }
+  }, [viewWidth]);
 
-export default withPlatform(Epic);
+  return (
+    <div {...restProps} className={classNames(getClassName('Epic', platform), className)}>
+      {React.Children.toArray(children).find((item: React.ReactElement) => item.props.id === activeStory)}
+      {tabbar}
+    </div>
+  );
+};
+
+export default withAdaptivity(Epic, {
+  viewWidth: true,
+});
