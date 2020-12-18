@@ -1422,7 +1422,7 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .Checkbox__input{display:none}
 .Checkbox__container{display:flex;align-items:flex-start;justify-content:flex-start}
 .Checkbox__icon{flex-shrink:0;box-sizing:border-box;margin-right:12px;border-radius:4px;display:flex;line-height:24px}
-.Checkbox__icon--on{color:red;display:none}
+.Checkbox__icon--on{color:#3f8ae0;color:#3f8ae0;color:var(--accent);display:none}
 .Checkbox__icon--off{color:#b8c1cc;color:#b8c1cc;color:var(--icon_tertiary)}
 .Checkbox__content{flex-grow:1;color:#000;color:#000;color:var(--text_primary)}
 .Checkbox__input:checked~.Checkbox__container .Checkbox__icon--on{display:flex}
