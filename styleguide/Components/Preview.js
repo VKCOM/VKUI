@@ -104,40 +104,51 @@ export default class Preview extends PreviewParent {
                   margin: 'auto',
                 }}
               >
-                <div style={isEmbedded ? {
-                  position: 'relative',
-                  border: '1px solid #000',
-                  maxWidth: 1024,
-                  width: "calc(100% - 10px)",
-                  height: 600,
-                  overflow: 'hidden',
-                } : {}}>
-                  <PrepareFrame integration={styleGuideContext.integration}>
-                    {({ window }) => (
-                      <AppRoot embedded={isEmbedded} window={window}>
-                        <ConfigProvider
-                          platform={styleGuideContext.platform}
-                          scheme={styleGuideContext.scheme}
-                          webviewType={styleGuideContext.webviewType}
-                        >
-                          <AdaptivityProvider
-                            window={window}
-                            hasMouse={styleGuideContext.hasMouse}
+                {isEmbedded && (
+                  <button onClick={() => this.setState(s => ({
+                    ...s,
+                    hideEmbeddedApp:!s.hideEmbeddedApp
+                  }))}>
+                    {this.state.hideEmbeddedApp ? "mount embedded app" : "unmount embedded app"}
+                  </button>
+                )}
+                {isEmbedded && this.state.hideEmbeddedApp ? null : 
+                  <div style={isEmbedded ? {
+                    marginTop: 8,
+                    position: 'relative',
+                    border: '1px solid #000',
+                    maxWidth: 1024,
+                    width: "calc(100% - 10px)",
+                    height: 600,
+                    overflow: 'hidden',
+                  } : {}}>
+                    <PrepareFrame integration={styleGuideContext.integration}>
+                      {({ window }) => (
+                        <AppRoot embedded={isEmbedded} window={window}>
+                          <ConfigProvider
+                            platform={styleGuideContext.platform}
+                            scheme={styleGuideContext.scheme}
+                            webviewType={styleGuideContext.webviewType}
                           >
-                            <Layout>
-                              <ReactExample
-                                code={code}
-                                evalInContext={this.props.evalInContext}
-                                onError={this.handleError}
-                                compilerConfig={this.context.config.compilerConfig}
-                                />
-                            </Layout>
-                          </AdaptivityProvider>
-                        </ConfigProvider>
-                      </AppRoot>
-                    )}
-                  </PrepareFrame>
-                </div>
+                            <AdaptivityProvider
+                              window={window}
+                              hasMouse={styleGuideContext.hasMouse}
+                            >
+                              <Layout>
+                                <ReactExample
+                                  code={code}
+                                  evalInContext={this.props.evalInContext}
+                                  onError={this.handleError}
+                                  compilerConfig={this.context.config.compilerConfig}
+                                  />
+                              </Layout>
+                            </AdaptivityProvider>
+                          </ConfigProvider>
+                        </AppRoot>
+                      )}
+                    </PrepareFrame>
+                  </div>
+                }
               </ReactFrame>
             )
           }}

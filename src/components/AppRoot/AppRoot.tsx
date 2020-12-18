@@ -8,6 +8,13 @@ export interface AppRootProps extends HasChildren {
   window?: Window;
 }
 
+function cleanupPortalRoots(window: Window) {
+  const portalRoots = window.document.querySelector('.vkui-portal-root');
+  if (portalRoots) {
+    window.document.body.removeChild(portalRoots);
+  }
+}
+
 export const AppRoot: FC<AppRootProps> = ({ children, embedded, window }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
@@ -30,13 +37,16 @@ export const AppRoot: FC<AppRootProps> = ({ children, embedded, window }) => {
       window.document.documentElement.classList.remove('vkui');
     } else {
       setPortalRoot(null);
-      const portalRoots = window.document.querySelector('.vkui-portal-root');
-      if (portalRoots) {
-        window.document.body.removeChild(portalRoots);
-      }
+      cleanupPortalRoots(window);
 
       window.document.documentElement.classList.add('vkui');
     }
+
+    return () => {
+      if (embedded) {
+        cleanupPortalRoots(window);
+      }
+    };
   }, [embedded]);
 
   return (
