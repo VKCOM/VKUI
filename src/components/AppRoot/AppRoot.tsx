@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { HasChildren } from 'types';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
@@ -9,8 +9,8 @@ export interface AppRootProps extends HasChildren {
 }
 
 export const AppRoot: FC<AppRootProps> = ({ children, embedded, window }) => {
-  let portalRoot: HTMLDivElement = null;
   const rootRef = useRef<HTMLDivElement>();
+  const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
 
   useEffect(() => {
     rootRef.current.parentElement.classList.add('vkui-root');
@@ -22,6 +22,11 @@ export const AppRoot: FC<AppRootProps> = ({ children, embedded, window }) => {
 
   useEffect(() => {
     if (embedded) {
+      const portal = document.createElement('div');
+      portal.classList.add('vkui-portal-root');
+      window.document.body.appendChild(portal);
+      setPortalRoot(portal);
+
       window.document.documentElement.classList.remove('vkui');
     } else {
       window.document.documentElement.classList.add('vkui');
