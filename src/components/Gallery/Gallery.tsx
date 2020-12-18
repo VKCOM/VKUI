@@ -44,7 +44,6 @@ export interface GalleryState {
   animation: boolean;
   duration: number;
   dragging?: boolean;
-  scrolling?: boolean;
 }
 
 export interface GallerySlidesState {
@@ -201,7 +200,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   getTarget() {
     const { slides, deltaX, shiftX, startT, max } = this.state;
     const { slideIndex } = this.props;
-    const expectDeltaX = startT ? deltaX / (Date.now() - startT.getTime()) * 240 * 0.6 : deltaX;
+    const expectDeltaX = deltaX / (Date.now() - startT.getTime()) * 240 * 0.6;
     const shift = shiftX + deltaX + expectDeltaX - max;
     const direction = deltaX < 0 ? 1 : -1;
 
@@ -234,7 +233,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
-    if (this.props.isDraggable && !this.isFullyVisible && !this.state.scrolling) {
+    if (this.props.isDraggable && !this.isFullyVisible) {
       e.originalEvent.preventDefault();
 
       if (e.isSlideX) {
@@ -253,11 +252,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   onEnd: TouchEventHandler = (e: TouchEvent) => {
     const targetIndex = e.isSlide ? this.getTarget() : this.props.slideIndex;
     this.props.onDragEnd && this.props.onDragEnd(e);
-    this.setState({
-      deltaX: 0,
-      animation: true,
-      dragging: false,
-    }, () => this.props.onChange(targetIndex));
+    this.setState({ deltaX: 0, animation: true }, () => this.props.onChange(targetIndex));
 
     if (this.props.onEnd) {
       this.props.onEnd({ targetIndex });
@@ -335,7 +330,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   }
 
   render() {
-    const { animation, duration, dragging, scrolling } = this.state;
+    const { animation, duration, dragging } = this.state;
     const {
       children,
       slideWidth,
@@ -354,7 +349,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
       ...restProps
     } = this.props;
 
-    const indent = dragging || scrolling ? this.calculateDragIndent() : this.calculateIndent(slideIndex);
+    const indent = dragging ? this.calculateDragIndent() : this.calculateIndent(slideIndex);
 
     const layerStyle = {
       WebkitTransform: `translateX(${indent}px)`,
