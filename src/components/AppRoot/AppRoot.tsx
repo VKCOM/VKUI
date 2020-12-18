@@ -1,84 +1,54 @@
-import React, { createRef, PropsWithChildren, RefObject } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
+import { HasChildren } from 'types';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 
-export interface AppRootProps {
+export interface AppRootProps extends HasChildren {
   embedded?: boolean;
   window?: Window;
 }
 
-export class AppRoot extends React.Component<PropsWithChildren<AppRootProps>> {
-  private readonly rootRef: RefObject<HTMLDivElement>;
-  private readonly portalRoot: HTMLDivElement;
+export const AppRoot: FC<AppRootProps> = ({ children, embedded, window }) => {
+  let portalRoot: HTMLDivElement = null;
+  const rootRef = useRef<HTMLDivElement>();
 
-  constructor(props: AppRootProps) {
-    super(props);
-    this.portalRoot = props.window.document.createElement('div');
-    this.portalRoot.classList.add('vkui-portal-root');
-    this.rootRef = createRef<HTMLDivElement>();
-  }
+  useEffect(() => {
+    rootRef.current.parentElement.classList.add('vkui-root');
 
-  static defaultProps = {
-    window: window,
-  };
+    return () => {
+      rootRef.current.parentElement.classList.remove('vkui-root');
+    };
+  }, []);
 
-  update(props: AppRootProps) {
-    if (!props.embedded) {
-      props.window.document.documentElement.classList.add('vkui');
+  useEffect(() => {
+    if (embedded) {
+      window.document.documentElement.classList.remove('vkui');
     } else {
-      props.window.document.documentElement.classList.remove('vkui');
+      window.document.documentElement.classList.add('vkui');
     }
-  }
+  }, [embedded]);
 
-  componentDidMount() {
-    (this.rootRef.current.parentNode as HTMLElement).classList.add('vkui-root');
-    this.update(this.props);
-    if (this.props.embedded) {
-      this.props.window.document.body.appendChild(this.portalRoot);
-    }
-  }
+  return (
+    <div ref={rootRef} className={classNames('AppRoot', {
+      'AppRoot--embedded': embedded,
+    })}>
+      <AppRootContext.Provider value={{
+        appRoot: rootRef,
+        portalRoot: portalRoot,
+        embedded,
+      }}>
+        {embedded ? (
+          <div className="AppRoot__wrapper">
+            {children}
+          </div>
+        ) : children}
+      </AppRootContext.Provider>
+    </div>
+  );
+};
 
-  componentDidUpdate(prevProps: AppRootProps) {
-    if (prevProps.embedded !== this.props.embedded) {
-      this.update(this.props);
-      if (!this.props.embedded) {
-        this.props.window.document.body.removeChild(this.portalRoot);
-      } else {
-        this.props.window.document.body.appendChild(this.portalRoot);
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    (this.rootRef.current.parentNode as HTMLElement).classList.remove('vkui-root');
-    if (!this.props.embedded) {
-      this.props.window.document.documentElement.classList.remove('vkui');
-    } else {
-      this.props.window.document.body.removeChild(this.portalRoot);
-    }
-  }
-
-  render() {
-    const { embedded, children } = this.props;
-
-    return (
-      <div ref={this.rootRef} className={classNames('AppRoot', {
-        'AppRoot--embedded': embedded,
-      })}>
-        <AppRootContext.Provider value={{
-          appRoot: this.rootRef,
-          portalRoot: this.portalRoot,
-          embedded,
-        }}>
-          {embedded ? (
-            <div className="AppRoot__wrapper">
-              {children}
-            </div>
-          ) : children}
-        </AppRootContext.Provider>
-      </div>
-    );
-  }
-}
+AppRoot.defaultProps = {
+  window: window,
+};
 
 export default AppRoot;
