@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState, WheelEvent } from 'react';
+import React, { Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
@@ -24,7 +24,6 @@ export interface BaseGalleryProps extends
   onEnd?({ targetIndex }: { targetIndex: number }): void;
   bullets?: 'dark' | 'light' | false;
   isDraggable?: boolean;
-  isScrollable?: boolean;
   showArrows?: boolean;
 }
 
@@ -83,7 +82,6 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
     align: 'left',
     bullets: false,
     isDraggable: true,
-    isScrollable: true,
   };
 
   get isCenterWithCustomWidth() {
@@ -276,37 +274,6 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
     });
   };
 
-  private scrollTimeout: ReturnType<typeof setTimeout>;
-
-  onWheel = (e: WheelEvent<HTMLElement>) => {
-    e.persist();
-    const { hasMouse, isScrollable, onChange } = this.props;
-    const { min, max, shiftX, containerWidth, dragging } = this.state;
-    if (hasMouse && isScrollable && !dragging && !this.isFullyVisible && e.deltaX !== 0) {
-      this.setState((s: GalleryState) => {
-        const dX = (typeof s.deltaX === 'number' ? s.deltaX : 0) - e.deltaX;
-        const constrainedDX = shiftX + dX < min - containerWidth / 2 || shiftX + dX > max + containerWidth / 2
-          ? s.deltaX : dX;
-        return {
-          ...s,
-          deltaX: constrainedDX,
-          scrolling: true,
-          animation: true,
-          startT: new Date(),
-        };
-      });
-
-      if (this.scrollTimeout) {
-        clearTimeout(this.scrollTimeout);
-      }
-
-      this.scrollTimeout = setTimeout(() => {
-        const targetIndex = this.getTarget();
-        this.setState({ deltaX: 0, animation: true, scrolling: false }, () => onChange(targetIndex));
-      }, 300);
-    }
-  };
-
   get canSlideLeft() {
     return !this.isFullyVisible && this.props.slideIndex > 0;
   }
@@ -406,7 +373,6 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
           onStartX={this.onStart}
           onMoveX={this.onMoveX}
           onEnd={this.onEnd}
-          onWheel={this.onWheel}
           noSlideClick
           style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           getRootRef={this.getViewportRef}
@@ -451,7 +417,6 @@ const Gallery = withFrame<GalleryProps>(({
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? props.slideIndex : localSlideIndex;
   const isDraggable = !isControlled || Boolean(onChange);
-  const isScrollable = !isControlled || Boolean(onChange);
   const slides = React.Children.toArray(children).filter((item) => Boolean(item));
   const childCount = slides.length;
 
@@ -477,7 +442,6 @@ const Gallery = withFrame<GalleryProps>(({
     <BaseGalleryAdaptive
       slideIndex={slideIndex}
       isDraggable={isDraggable}
-      isScrollable={isScrollable}
       {...props}
       onChange={handleChange}
     >{slides}</BaseGalleryAdaptive>
