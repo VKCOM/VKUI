@@ -1,3 +1,4 @@
+import path from 'path';
 import { configureToMatchImageSnapshot } from 'jest-image-snapshot';
 import { useDocker } from '../detectEnv';
 
@@ -5,6 +6,7 @@ const toMatchImageSnapshot = configureToMatchImageSnapshot({
   customSnapshotIdentifier: ({ currentTestName, counter }) => {
     return `${currentTestName.toLowerCase().replace(/ /g, '-')}-${counter}`;
   },
+  customDiffDir: path.join(__dirname, '../..', '__diff_output__'),
 });
 
 beforeAll(async () => {

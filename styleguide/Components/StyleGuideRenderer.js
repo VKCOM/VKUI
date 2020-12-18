@@ -174,7 +174,6 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
               <HasMouseCheckbox
                 onChange={ (e) => setContext({ hasMouse: e.target.checked })}
                 value={hasMouse}
-                disabled={platform === VKCOM}
               />
             </div>
             <div style={{ marginTop: 4 }}>

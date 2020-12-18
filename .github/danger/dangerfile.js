@@ -1,22 +1,20 @@
 import { fail, message, warn, danger, markdown } from 'danger';
 const dangerJest = require('danger-plugin-jest').default;
-const { readFile } = require('fs').promises;
+const { readFile, readdir, access } = require('fs').promises;
 const md5 = require('md5');
 const path = require('path');
-const glob = require('glob');
-const { promisify } = require('util')
-const pglob = promisify(glob);
 const AWS = require('aws-sdk/global');
 const S3 = require('aws-sdk/clients/s3');
 
 const { AWS_ACCESS_KEY_ID, AWS_SECRET_KEY, AWS_ENDPOINT } = process.env;
+const rootDir = path.join(__dirname, '../..');
 
-const lintPath = path.join(__dirname, 'lint-results.json');
+const lintPath = path.join(rootDir, 'lint-results.json');
 function lint() {
   return readFile(lintPath).then(file => {
     const lintReport = JSON.parse(file)
     for (const { messages, filePath } of lintReport) {
-      const relPath = path.relative(__dirname, filePath)
+      const relPath = path.relative(rootDir, filePath)
       for (const message of messages) {
         const text = `${message.message} \`${message.ruleId}\``
         if (message.severity === 2) {
@@ -26,27 +24,32 @@ function lint() {
         }
       }
     }
+  }).catch(err => {
+    fail(`Could not read lint results: ${err.message}`);
   });
 }
 
+const coveragePath = path.join(rootDir, 'coverage', 'coverage-summary.json');
 function coverage() {
-  return readFile(path.join(__dirname, 'coverage', 'coverage-summary.json')).then(file => {
+  return readFile(coveragePath).then(file => {
     const { total } = JSON.parse(file)
     const formatCoverage = (kind, { covered, total, pct }) => `${covered} / ${total} ${kind} (${pct}%)`
     message(`Code coverage: ${
       Object.entries(total).map(([kind, cov]) => formatCoverage(kind, cov)).join(', ')
     }`)
+  }).catch(err => {
+    warn(`Could not read coverage file: "${err.message}"`);
   })
 }
 
 const updateScreensActionLink = `https://github.com/VKCOM/VKUI/actions?query=workflow%3A"Update+screenshots"`;
 const UPLOAD_BUCKET = 'vkui-screenshots';
 const awsHost = `${UPLOAD_BUCKET}.${AWS_ENDPOINT}`;
+const diffDir = path.join(rootDir, '__diff_output__');
 async function uploadFailedScreenshots() {
-  const diffDir = '__diff_output__'
   const { github } = danger;
   const pathPrefix = github ? github.pr.number : 'local';
-  const failedScreens = await pglob(path.join(__dirname, '**', diffDir, '*.png'));
+  const failedScreens = await access(diffDir).then(() => readdir(diffDir), () => []);
 
   if (failedScreens.length) {
     warn(`${failedScreens.length} changed screenshots found — review & update them via ["Update Screenshots" action](${updateScreensActionLink}) before merging.`);
@@ -96,7 +99,7 @@ async function uploadFailedScreenshots() {
         </details>
       `.replace(/(^|\n) +/g, ''));
     } catch (err) {
-      warn(`Counld not upload screenshot diff ${screenName}: ${err.message}`);
+      warn(`Could not upload screenshot diff ${screenName}: ${err.message}`);
     }
   }
 }
@@ -123,7 +126,7 @@ async function removeDiffs(s3, prefix) {
 }
 
 Promise.all([
-  dangerJest(),
+  dangerJest({ testResultsJsonPath: path.join(rootDir, 'test-results.json') }),
   lint(),
   coverage(),
   uploadFailedScreenshots(),

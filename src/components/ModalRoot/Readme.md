@@ -167,7 +167,7 @@ const App = withAdaptivity(class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={<PanelHeaderBack onClick={this.modalBack} />}
+              left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
               right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Выберите страну
@@ -193,7 +193,7 @@ const App = withAdaptivity(class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={<PanelHeaderBack onClick={this.modalBack} />}
+              left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
               right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Просмотры истории
@@ -218,7 +218,7 @@ const App = withAdaptivity(class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={<PanelHeaderBack onClick={this.modalBack} />}
+              left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
               right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Информация о пользователе

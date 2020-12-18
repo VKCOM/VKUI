@@ -353,21 +353,6 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
     modalState.innerElement.style.opacity = display ? '1' : '0';
   }
 
-  /* Анимирует тень шапки */
-  animatePageHeader(modalState: ModalsStateEntry, currentPercent: number = null) {
-    if (currentPercent === null) {
-      currentPercent = modalState.translateY;
-    }
-    const headerOpenPercent = currentPercent < 15 ? Math.max(0, 15 - currentPercent) / 15 : 0;
-
-    requestAnimationFrame(() => {
-      const headerShadow: HTMLElement = modalState.headerElement.querySelector('.ModalPageHeader__shadow');
-      if (headerShadow) {
-        headerShadow.style.opacity = headerOpenPercent.toString();
-      }
-    });
-  }
-
   /* Устанавливает прозрачность для полупрозрачной подложки */
   setMaskOpacity(modalState: ModalsStateEntry, forceOpacity: number = null) {
     if (forceOpacity === null && this.state.history[0] !== modalState.id) {

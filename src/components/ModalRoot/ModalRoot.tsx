@@ -355,7 +355,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
 
       if (needAnimate) {
         this.animateTranslate(modalState, modalState.translateY);
-        this.animatePageHeader(modalState);
       }
     }
   }
@@ -712,25 +711,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
         const factor = modalState.innerElement.offsetHeight * (percent / 100);
 
         setTransformStyle(modalState.footerElement, `translateY(calc(${footerHeight}px * -${factor / footerHeight}))`);
-      }
-    });
-
-    if (modalState.type === ModalType.PAGE && modalState.expandable) {
-      this.animatePageHeader(modalState, percent);
-    }
-  }
-
-  /* Анимирует тень шапки */
-  animatePageHeader(modalState: ModalsStateEntry, currentPercent: number = null) {
-    if (currentPercent === null) {
-      currentPercent = modalState.translateY;
-    }
-    const headerOpenPercent = currentPercent < 15 ? Math.max(0, 15 - currentPercent) / 15 : 0;
-
-    requestAnimationFrame(() => {
-      const headerShadow: HTMLElement = modalState.headerElement.querySelector('.ModalPageHeader__shadow');
-      if (headerShadow) {
-        headerShadow.style.opacity = headerOpenPercent.toString();
       }
     });
   }
