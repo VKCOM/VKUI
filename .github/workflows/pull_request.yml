@@ -18,8 +18,8 @@ jobs:
       - uses: bahmutov/npm-install@v1
         with:
           install-command: yarn --frozen-lockfile --ignore-scripts
-      - name: Selectively run install scripts
-        run: yarn --cwd node_modules/playwright run install
+      - name: Install browser for E2E
+        run: yarn --cwd node_modules/playwright-chromium run install
       - name: Run tests
         run: yarn test:ci
       - name: FYI visual tests
