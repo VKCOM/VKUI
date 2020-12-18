@@ -28,6 +28,7 @@
 @import '../components/Panel/Panel.css';
 @import '../components/PanelHeader/PanelHeader.css';
 @import '../components/PanelHeaderButton/PanelHeaderButton.css';
+@import '../components/PanelHeaderBack/PanelHeaderBack.css';
 @import '../components/PanelHeaderContent/PanelHeaderContent.css';
 @import '../components/PanelHeaderContext/PanelHeaderContext.css';
 @import '../components/PopoutRoot/PopoutRoot.css';

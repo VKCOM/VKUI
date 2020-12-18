@@ -87,7 +87,7 @@
   border-radius: inherit;
 }
 
-.Tappable:not(.SliderSwitch__button):not(.ModalDismissButton):not(.Link).Tappable--shadowHovered > .Tappable__hoverShadow {
+.Tappable:not(.SliderSwitch__button):not(.ModalDismissButton):not(.Link):not(.PanelHeaderButton--vkcom).Tappable--shadowHovered > .Tappable__hoverShadow {
   background: var(--background_hover);
 }
 

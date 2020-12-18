@@ -7,6 +7,7 @@ const modals = ["modal 1", "modal 2"];
 
 const Example = withAdaptivity(
   ({ viewWidth }) => {
+    const platform = usePlatform();
     const [panel, setPanel] = React.useState(panels[0]);
     const [modal, setModal] = React.useState(null);
     const [popout, setPopout] = React.useState(null);
@@ -35,35 +36,38 @@ const Example = withAdaptivity(
     );
 
     const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const hasHeader = platform !== VKCOM;
 
     return (
       <SplitLayout
         style={{ justifyContent: "center" }}
-        header={<PanelHeader separator={false} />}
+        header={hasHeader && <PanelHeader separator={false} />}
         popout={popout}
         modal={modalRoot}
       >
         {isDesktop && (
           <SplitCol fixed width="280px" maxWidth="280px">
             <Panel>
-              <PanelHeader />
-              {panels.map((i) => (
-                <Cell
-                  key={i}
-                  disabled={i === panel}
-                  style={i === panel ? {
-                    backgroundColor: "var(--button_secondary_background)",
-                    borderRadius: 8
-                  } : {}}
-                  onClick={() => setPanel(i)}
-                >
-                  {i}
-                </Cell>
-              ))}
-              <Separator />
-              <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
-              <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
-              <Cell onClick={() => setPopout(<Alert header="Alert!" onClose={() => setPopout(null)} />)}>alert</Cell>
+              {hasHeader && <PanelHeader />}
+              <Group>
+                {panels.map((i) => (
+                  <Cell
+                    key={i}
+                    disabled={i === panel}
+                    style={i === panel ? {
+                      backgroundColor: "var(--button_secondary_background)",
+                      borderRadius: 8
+                    } : {}}
+                    onClick={() => setPanel(i)}
+                  >
+                    {i}
+                  </Cell>
+                ))}
+                <Separator />
+                <Cell onClick={() => setModal(modals[0])}>modal 1</Cell>
+                <Cell onClick={() => setModal(modals[1])}>modal 2</Cell>
+                <Cell onClick={() => setPopout(<Alert header="Alert!" onClose={() => setPopout(null)} />)}>alert</Cell>
+              </Group>
             </Panel>
           </SplitCol>
         )}

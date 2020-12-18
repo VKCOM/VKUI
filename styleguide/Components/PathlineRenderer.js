@@ -59,7 +59,6 @@ export function PathlineRenderer({ classes, children }) {
             <HasMouseCheckbox 
               onChange={(e) => styleGuideContext.setContext({ hasMouse: e.target.checked })}
               value={styleGuideContext.hasMouse}
-              disabled={styleGuideContext.platform === VKCOM}
             />
             &nbsp;|&nbsp;
             <span className={classes.link}>
