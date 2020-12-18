@@ -38,14 +38,13 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
 
     const absolutePosition = e.startX - boundingRect.left;
     const value = this.offsetToValue(absolutePosition);
-
-    this.dragging = this.closestBound(value);
+    this.dragging = this.snapDirection(value, e.originalEvent.target);
     this.startX = absolutePosition;
 
     this.props.onChange(this.updateRange(value), e);
   };
 
-  onMoveX: TouchEventHandler = (e: TouchEvent) => {
+  onMove: TouchEventHandler = (e: TouchEvent) => {
     const value = this.offsetToValue(this.startX + (e.shiftX || 0));
     this.props.onChange(this.updateRange(value), e);
 
@@ -83,7 +82,13 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
     return rescale(absolute, [0, this.containerWidth], [min, max], { step });
   }
 
-  closestBound(value: number) {
+  snapDirection(value: number, target: EventTarget) {
+    if (target === this.thumbStart.current) {
+      return 'start';
+    }
+    if (target === this.thumbEnd.current) {
+      return 'end';
+    }
     const [start, end] = this.props.value;
     return Math.abs(start - value) <= Math.abs(end - value) ? 'start' : 'end';
   }
@@ -104,7 +109,7 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
         data-value={value.join(',')}
         {...restProps}
         onStart={this.onStart}
-        onMoveX={this.onMoveX}
+        onMove={this.onMove}
         onEnd={this.onEnd}
         className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
       >
