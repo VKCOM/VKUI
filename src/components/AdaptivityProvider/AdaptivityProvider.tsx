@@ -80,10 +80,8 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
     viewWidth = ViewWidth.SMALL_TABLET;
   } else if (windowWidth >= MOBILE_SIZE) {
     viewWidth = ViewWidth.MOBILE;
-    sizeX = SizeType.COMPACT;
   } else {
     viewWidth = ViewWidth.SMALL_MOBILE;
-    sizeX = SizeType.COMPACT;
   }
 
   if (windowHeight >= MEDIUM_HEIGHT) {
@@ -92,15 +90,19 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
     viewHeight = ViewHeight.SMALL;
   } else {
     viewHeight = ViewHeight.EXTRA_SMALL;
-    sizeY = SizeType.COMPACT;
-  }
-
-  if (windowWidth >= SMALL_TABLET_SIZE && hasMouse) {
-    sizeY = SizeType.COMPACT;
   }
 
   props.viewWidth && (viewWidth = props.viewWidth);
   props.viewHeight && (viewHeight = props.viewHeight);
+
+  if (viewWidth <= ViewWidth.MOBILE) {
+    sizeX = SizeType.COMPACT;
+  }
+
+  if (viewWidth >= ViewWidth.SMALL_TABLET && hasMouse || viewHeight <= ViewHeight.EXTRA_SMALL) {
+    sizeY = SizeType.COMPACT;
+  }
+
   props.sizeX && (sizeX = props.sizeX);
   props.sizeY && (sizeY = props.sizeY);
 
