@@ -29,6 +29,12 @@ export const AppRoot: FC<AppRootProps> = ({ children, embedded, window }) => {
 
       window.document.documentElement.classList.remove('vkui');
     } else {
+      setPortalRoot(null);
+      const portalRoots = window.document.querySelector('.vkui-portal-root');
+      if (portalRoots) {
+        window.document.body.removeChild(portalRoots);
+      }
+
       window.document.documentElement.classList.add('vkui');
     }
   }, [embedded]);
