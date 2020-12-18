@@ -4,6 +4,7 @@ import Button, { VKUIButtonProps } from '../Button/Button';
 import classNames from '../../lib/classNames';
 import { HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
+import { setRef } from '../../lib/utils';
 
 export interface FileProps extends
   Omit<VKUIButtonProps, 'size'>,
@@ -21,6 +22,11 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
   const platform = usePlatform();
   const inputRef = useRef<HTMLInputElement>();
 
+  const getInputRef = (element: HTMLInputElement) => {
+    inputRef.current = element;
+    setRef(element, getRef);
+  };
+
   return (
     <Button
       align={align}
@@ -33,14 +39,11 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
       getRootRef={getRootRef}
       disabled={restProps.disabled}
       onClick={(e) => {
-        if (!getRef) {
-          inputRef.current.click();
-        } else if (onClick) {
-          onClick(e);
-        }
+        inputRef.current.click();
+        onClick && onClick(e);
       }}
     >
-      <input {...restProps} className="File__input" type="file" ref={getRef || inputRef} />
+      <input {...restProps} className="File__input" type="file" ref={getInputRef} />
       {children}
     </Button>
   );
