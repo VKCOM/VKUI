@@ -1545,7 +1545,7 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .vkui>body{overflow-x:hidden}
 .vkui,.vkui>body,.vkui-root,.AppRoot{margin:0;padding:0;height:100%;-webkit-font-smoothing:subpixel-antialiased;-webkit-tap-highlight-color:transparent;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;font-family:-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-common);color:#000;color:#000;color:var(--text_primary)}
 .AppRoot--embedded{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
-.vkui>.vkui-sizeX-regular,.AppRoot.vkui-sizeX-regular{background:#ebedf0;background:#ebedf0;background:var(--background_page)}
+.vkui>.vkui-sizeX-regular,.AppRoot--embedded.AppRoot--sizeX-regular{background:#ebedf0;background:#ebedf0;background:var(--background_page)}
 .AppRoot__wrapper{height:100%;overflow:auto}
 .vkui-root input,.vkui-root textarea,.vkui-root select,.vkui-root button{font-family:inherit}
 .vkui-root{-webkit-user-select:none;user-select:none}
