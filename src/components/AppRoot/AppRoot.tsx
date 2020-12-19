@@ -16,7 +16,7 @@ function cleanupPortalRoots(window: Window) {
   }
 }
 
-const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX }) => {
+const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
 
@@ -60,6 +60,7 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX }) => {
     <div ref={rootRef} className={classNames('AppRoot', {
       'AppRoot--embedded': embedded,
       'AppRoot--sizeX-regular': sizeX === SizeType.REGULAR,
+      'AppRoot--no-mouse': !hasMouse,
     })}>
       <AppRootContext.Provider value={{
         appRoot: rootRef,
@@ -80,4 +81,7 @@ AppRoot.defaultProps = {
   window: window,
 };
 
-export default withAdaptivity(AppRoot, { sizeX: true });
+export default withAdaptivity(AppRoot, {
+  sizeX: true,
+  hasMouse: true,
+});

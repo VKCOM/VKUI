@@ -144,6 +144,10 @@
   background: var(--background_page);
 }
 
+.AppRoot--no-mouse {
+  user-select: none;
+}
+
 .AppRoot__wrapper {
   height: 100%;
   overflow: auto;
@@ -154,10 +158,6 @@
 .vkui-root select,
 .vkui-root button {
   font-family: inherit;
-}
-
-.vkui-root {
-  user-select: none;
 }
 
 .vkui-root a:focus {
