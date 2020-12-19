@@ -2,8 +2,9 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { HasChildren } from 'types';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
+import withAdaptivity, { SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface AppRootProps extends HasChildren {
+export interface AppRootProps extends HasChildren, AdaptivityProps {
   embedded?: boolean;
   window?: Window;
 }
@@ -15,7 +16,7 @@ function cleanupPortalRoots(window: Window) {
   }
 }
 
-export const AppRoot: FC<AppRootProps> = ({ children, embedded, window }) => {
+const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
 
@@ -40,6 +41,12 @@ export const AppRoot: FC<AppRootProps> = ({ children, embedded, window }) => {
       cleanupPortalRoots(window);
 
       window.document.documentElement.classList.add('vkui');
+
+      if (sizeX === SizeType.REGULAR) {
+        window.document.body.classList.add('vkui-sizeX-regular');
+      } else {
+        window.document.body.classList.remove('vkui-sizeX-regular');
+      }
     }
 
     return () => {
@@ -47,11 +54,12 @@ export const AppRoot: FC<AppRootProps> = ({ children, embedded, window }) => {
         cleanupPortalRoots(window);
       }
     };
-  }, [embedded]);
+  }, [embedded, sizeX]);
 
   return (
     <div ref={rootRef} className={classNames('AppRoot', {
       'AppRoot--embedded': embedded,
+      'AppRoot--sizeX-regular': sizeX === SizeType.REGULAR,
     })}>
       <AppRootContext.Provider value={{
         appRoot: rootRef,
@@ -72,4 +80,4 @@ AppRoot.defaultProps = {
   window: window,
 };
 
-export default AppRoot;
+export default withAdaptivity(AppRoot, { sizeX: true });

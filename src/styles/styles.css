@@ -140,7 +140,7 @@
 }
 
 .vkui > .vkui-sizeX-regular,
-.AppRoot.vkui-sizeX-regular {
+.AppRoot--embedded.AppRoot--sizeX-regular {
   background: var(--background_page);
 }
 

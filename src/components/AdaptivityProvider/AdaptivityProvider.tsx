@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DOMProps, HasChildren } from '../../types';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
-import { AppRootContext } from '../AppRoot/AppRootContext';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {}
 
@@ -18,23 +17,8 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const adaptivityRef = useRef<AdaptivityContextInterface>(null);
   const [, updateAdaptivity] = useState({});
 
-  const { embedded, appRoot } = useContext(AppRootContext);
-
   if (!adaptivityRef.current) {
     adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
-  }
-
-  function paintBody(sizeX: SizeType) {
-    const root = embedded && appRoot.current
-      ? appRoot.current
-      : props.window.document.body;
-    if (root) {
-      if (sizeX === SizeType.REGULAR) {
-        root.classList.add('vkui-sizeX-regular');
-      } else {
-        root.classList.remove('vkui-sizeX-regular');
-      }
-    }
   }
 
   useEffect(() => {
@@ -47,23 +31,20 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
         viewHeight !== calculated.viewHeight ||
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY ||
-        hasMouse !== calculated.hasMouse ||
-        embedded
+        hasMouse !== calculated.hasMouse
       ) {
-        paintBody(calculated.sizeX);
         adaptivityRef.current = calculated;
         updateAdaptivity({});
       }
     }
 
-    paintBody(adaptivityRef.current.sizeX);
     onResize();
     props.window.addEventListener('resize', onResize, false);
 
     return () => {
       props.window.removeEventListener('resize', onResize, false);
     };
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, embedded]);
+  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse]);
 
   return <AdaptivityContext.Provider value={adaptivityRef.current}>
     {props.children}

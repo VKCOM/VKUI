@@ -124,16 +124,16 @@ export default class Preview extends PreviewParent {
                   } : {}}>
                     <PrepareFrame integration={styleGuideContext.integration}>
                       {({ window }) => (
-                        <AppRoot embedded={isEmbedded} window={window}>
-                          <ConfigProvider
-                            platform={styleGuideContext.platform}
-                            scheme={styleGuideContext.scheme}
-                            webviewType={styleGuideContext.webviewType}
+                        <ConfigProvider
+                          platform={styleGuideContext.platform}
+                          scheme={styleGuideContext.scheme}
+                          webviewType={styleGuideContext.webviewType}
+                        >
+                          <AdaptivityProvider
+                            window={window}
+                            hasMouse={styleGuideContext.hasMouse}
                           >
-                            <AdaptivityProvider
-                              window={window}
-                              hasMouse={styleGuideContext.hasMouse}
-                            >
+                            <AppRoot embedded={isEmbedded} window={window}>
                               <Layout>
                                 <ReactExample
                                   code={code}
@@ -142,9 +142,9 @@ export default class Preview extends PreviewParent {
                                   compilerConfig={this.context.config.compilerConfig}
                                   />
                               </Layout>
-                            </AdaptivityProvider>
-                          </ConfigProvider>
-                        </AppRoot>
+                            </AppRoot>
+                          </AdaptivityProvider>
+                        </ConfigProvider>
                       )}
                     </PrepareFrame>
                   </div>
