@@ -30,6 +30,7 @@ export interface SearchProps extends InputHTMLAttributes<HTMLInputElement>, HasR
    * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
   after?: ReactNode;
+  before?: ReactNode;
   icon?: ReactNode;
   onIconClick?: (e: VKUITouchEvent) => void;
   defaultValue?: string;
@@ -45,6 +46,7 @@ class Search extends Component<SearchProps, SearchState> {
     autoComplete: 'off',
     placeholder: 'Поиск',
     after: 'Отмена',
+    before: <Icon16SearchOutline />,
   };
 
   isControlledOutside: boolean;
@@ -119,6 +121,7 @@ class Search extends Component<SearchProps, SearchState> {
 
   render() {
     const {
+      before,
       className,
       onFocus,
       onBlur,
@@ -157,7 +160,7 @@ class Search extends Component<SearchProps, SearchState> {
             {platform === IOS && after && <div className="Search__after-width">{after}</div>}
             <div className="Search__placeholder">
               <div className="Search__placeholder-in">
-                <Icon16SearchOutline />
+                {before}
                 <div className="Search__placeholder-text">
                   {platform === VKCOM ? <Text weight="regular">{placeholder}</Text> : placeholder}
                 </div>
