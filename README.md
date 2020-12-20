@@ -1,3 +1,18 @@
+<div align="center">
+  <a href="https://vkcom.github.io/VKUI/"><img src="styleguide/assets/vkui_logo.png?raw=true" width="300" alt="VKUI logo"></a>
+  <h1>VKUI</h1>
+</div>
+<div align="center">
+  <img src="https://img.shields.io/npm/l/@vkontakte/vkui?maxAge=3600" alt="npm">
+  <img src="https://img.shields.io/npm/v/@vkontakte/vkui/latest.svg?maxAge=3600" alt="npm">
+</div>
+
+<div align="center">
+[![license](https://img.shields.io/npm/l/@vkontakte/vkui?maxAge=3600)](LICENSE)
+[![npm latest package](https://img.shields.io/npm/v/@vkontakte/vkui/latest.svg?maxAge=3600)](https://npmjs.com/package/@vkontakte/vkui)
+</div>
+<br>
+
 # VKUI
 VKUI – это набор React-компонентов, с помощью которых можно создавать интерфейсы,
 внешне неотличимые от наших iOS и Android приложений.
