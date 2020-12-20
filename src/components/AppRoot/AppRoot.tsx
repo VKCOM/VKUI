@@ -10,9 +10,17 @@ export interface AppRootProps extends HasChildren, AdaptivityProps {
 }
 
 function cleanupPortalRoots(window: Window) {
-  const portalRoots = window.document.querySelector('.vkui-portal-root');
+  const portalRoots = window.document.querySelector('.vkui__portal-root');
   if (portalRoots) {
     window.document.body.removeChild(portalRoots);
+  }
+}
+
+function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
+  if (sizeX === SizeType.REGULAR) {
+    container.classList.add('vkui--sizeX-regular');
+  } else {
+    container.classList.remove('vkui--sizeX-regular');
   }
 }
 
@@ -21,32 +29,44 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
 
   useEffect(() => {
-    rootRef.current.parentElement.classList.add('vkui-root');
+    rootRef.current.parentElement.classList.add('vkui__root');
 
     return () => {
-      rootRef.current.parentElement.classList.remove('vkui-root');
+      rootRef.current.parentElement.classList.remove('vkui__root');
     };
   }, []);
 
   useEffect(() => {
+    const parentNode = rootRef.current.parentElement;
+    const doc = window.document.documentElement;
+    const body = window.document.body;
+
     if (embedded) {
+      // prepare portal root
       const portal = document.createElement('div');
-      portal.classList.add('vkui-portal-root');
-      window.document.body.appendChild(portal);
+      portal.classList.add('vkui__portal-root');
+      body.appendChild(portal);
       setPortalRoot(portal);
 
-      window.document.documentElement.classList.remove('vkui');
+      // apply embedded styles
+      parentNode.classList.add('vkui__root--embedded');
+
+      // cleanup possible previous state
+      doc.classList.remove('vkui');
+      body.classList.remove('vkui--sizeX-regular');
+
+      applyAdaptivityStyles(parentNode, sizeX);
     } else {
+      // apply global styles
+      doc.classList.add('vkui');
+
+      // cleanup possible previous state
       setPortalRoot(null);
       cleanupPortalRoots(window);
+      parentNode.classList.remove('vkui__root--embedded');
+      parentNode.classList.remove('vkui--sizeX-regular');
 
-      window.document.documentElement.classList.add('vkui');
-
-      if (sizeX === SizeType.REGULAR) {
-        window.document.body.classList.add('vkui-sizeX-regular');
-      } else {
-        window.document.body.classList.remove('vkui-sizeX-regular');
-      }
+      applyAdaptivityStyles(body, sizeX);
     }
 
     return () => {
@@ -58,8 +78,6 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
 
   return (
     <div ref={rootRef} className={classNames('AppRoot', {
-      'AppRoot--embedded': embedded,
-      'AppRoot--sizeX-regular': sizeX === SizeType.REGULAR,
       'AppRoot--no-mouse': !hasMouse,
     })}>
       <AppRootContext.Provider value={{
@@ -67,11 +85,7 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
         portalRoot: portalRoot,
         embedded,
       }}>
-        {embedded ? (
-          <div className="AppRoot__wrapper">
-            {children}
-          </div>
-        ) : children}
+        {children}
       </AppRootContext.Provider>
     </div>
   );
