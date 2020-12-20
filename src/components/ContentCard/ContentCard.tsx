@@ -54,7 +54,7 @@ const ContentCard: FC<ContentCardProps> = (props) => {
   const platform = usePlatform();
 
   return (
-    <Card mode={mode} getRootRef={getRootRef} size="l" className={classNames(className, getClassname('ContentCard', platform))} style={style}>
+    <Card mode={mode} getRootRef={getRootRef} className={classNames(className, getClassname('ContentCard', platform))} style={style}>
       <Tappable disabled={disabled} className="ContentCard__tappable">
         {image && <img {...restProps} ref={getRef} src={image} alt={alt} className="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
         <div className="ContentCard__body">
