@@ -5,13 +5,9 @@
   <a href="LICENSE"><img src="https://img.shields.io/npm/l/@vkontakte/vkui?maxAge=3600" alt="license mit"></a>
   <a href="https://npmjs.com/package/@vkontakte/vkui"><img src="https://img.shields.io/npm/v/@vkontakte/vkui/latest.svg?maxAge=3600" alt="open latest version"></a>
 </p>
-<br>
-
 <p align="center">
-  
-VKUI — это библиотека адаптивных React-компонентов для создания веб-приложений и [мини-приложения ВКонтакте](https://vk.com/dev/vk_apps_docs).
-Библиотека основана на [дизайн-системе ВКонтакте](https://www.figma.com/@vk) и реализует её интерфейсы для различных платформ.
-
+VKUI — это библиотека адаптивных React-компонентов для создания веб-приложений и <a href="https://vk.com/dev/vk_apps_docs">мини-приложения ВКонтакте</a>.
+Библиотека основана на <a href="https://www.figma.com/@vk">дизайн-системе ВКонтакте</a> и реализует её интерфейсы для различных платформ.
 </p>
 
 
