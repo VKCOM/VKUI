@@ -93,6 +93,19 @@ export default class Preview extends PreviewParent {
         <StyleGuideContext.Consumer>
           {(styleGuideContext) => {
             const isEmbedded = styleGuideContext.integration === "embedded";
+            const isPartial = styleGuideContext.integration === "partial";
+
+            const example = (
+              <Layout>
+                <ReactExample
+                  code={code}
+                  evalInContext={this.props.evalInContext}
+                  onError={this.handleError}
+                  compilerConfig={this.context.config.compilerConfig}
+                  />
+              </Layout>
+            );
+
             return (
               <ReactFrame
                 mountTarget="body"
@@ -113,7 +126,7 @@ export default class Preview extends PreviewParent {
                   </button>
                 )}
                 {isEmbedded && this.state.hideEmbeddedApp ? null : 
-                  <div style={isEmbedded ? {
+                  <div className={isPartial ? "vkui__root" : null} style={isEmbedded ? {
                     marginTop: 8,
                     position: 'relative',
                     border: '1px solid #000',
@@ -133,16 +146,11 @@ export default class Preview extends PreviewParent {
                             window={window}
                             hasMouse={styleGuideContext.hasMouse}
                           >
-                            <AppRoot embedded={isEmbedded} window={window}>
-                              <Layout>
-                                <ReactExample
-                                  code={code}
-                                  evalInContext={this.props.evalInContext}
-                                  onError={this.handleError}
-                                  compilerConfig={this.context.config.compilerConfig}
-                                  />
-                              </Layout>
-                            </AppRoot>
+                            {isPartial ? example : (
+                              <AppRoot embedded={isEmbedded} window={window}>
+                                {example}
+                              </AppRoot>
+                            )}
                           </AdaptivityProvider>
                         </ConfigProvider>
                       )}
