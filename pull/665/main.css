@@ -789,26 +789,43 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .Card--md-shadow{box-shadow:0 2px 24px 0 rgba(0,0,0,.08),0 0 2px 0 rgba(0,0,0,.08);background:#fff;background:#fff;background:var(--modal_card_background)}
 .Card--md-outline{background:#fff;background:#fff;background:var(--modal_card_background)}
 .Card--md-outline::before{position:absolute;left:0;top:0;width:100%;height:100%;content:'';display:block;border:1px solid #e1e3e6;border:1px solid #e1e3e6;border:var(--thin-border) solid var(--input_border);z-index:1;box-sizing:border-box;border-radius:inherit}
-.Card--ios.Card--sz-s{border-radius:6px}
-.Card--ios.Card--sz-m{border-radius:10px}
-.Card--ios.Card--sz-l{border-radius:10px}
+.Card--ios{border-radius:10px}
 .Card--android,.Card--vkcom{border-radius:8px}
-.CardGrid{margin-top:-8px}
-.CardGrid::after{clear:both;content:'';display:block;width:100%}
-.CardGrid .Card{float:left;margin-top:8px;margin-left:4px;margin-right:4px}
-.CardGrid .Card--sz-l{width:calc(100% - 8px)}
-.CardGrid .Card--sz-m{width:calc((100% - 2*8px)/2)}
-.CardGrid .Card--sz-s{width:calc((100% - 3*8px)/3)}
-.CardGrid--ios{padding-left:8px;padding-right:8px}
-.CardGrid--android,.CardGrid--vkcom{padding-left:12px;padding-right:12px}
+.CardGrid{display:flex;align-items:flex-start;justify-content:flex-start;flex-wrap:wrap}
+.CardGrid+.CardGrid{margin-top:16px}
+.CardGrid .Card{margin-right:8px}
+.CardGrid--l .Card{width:100%;margin-right:0}
+.CardGrid--l .Card:not(:first-child){margin-top:8px}
+.CardGrid--m .Card{width:calc((100% - 8px)/2)}
+.CardGrid--m .Card:nth-child(n+3){margin-top:8px}
+.CardGrid--m .Card:nth-child(2n){margin-right:0}
+.CardGrid--s .Card{width:calc((100% - 2*8px)/3)}
+.CardGrid--s .Card:nth-child(n+4){margin-top:8px}
+.CardGrid--s .Card:nth-child(3n){margin-right:0}
+.CardGrid--ios.CardGrid--sizeX-compact{padding-left:12px;padding-right:12px}
+.CardGrid--android.CardGrid--sizeX-compact{padding-left:16px;padding-right:16px}
+.Group--card .CardGrid{padding-left:8px;padding-right:8px}
+.Group .CardGrid:first-child{margin-top:8px}
+.Group .CardGrid:last-child{margin-bottom:8px}
 .CardScroll__in{display:flex;align-items:stretch}
-.CardScroll .CardScroll__slide{margin-right:8px;flex-shrink:0}
-.CardScroll .CardScroll__slide:last-child{margin-right:0}
-.CardScroll__in::before,.CardScroll__in::after{content:'';display:block;flex-shrink:0}
-.CardScroll--ios .CardScroll__in::before,.CardScroll--ios .CardScroll__in::after{width:12px}
-.CardScroll--ios .CardScroll__slide--sz-l{width:calc(100% - 24px);margin-right:12px}
-.CardScroll--android .CardScroll__in::before,.CardScroll--android .CardScroll__in::after,.CardScroll--vkcom .CardScroll__in::before,.CardScroll--vkcom .CardScroll__in::after{width:16px}
-.CardScroll--android .CardScroll__slide--sz-l,.CardScroll--vkcom .CardScroll__slide--sz-l{width:calc(100% - 32px);margin-right:16px}
+.CardScroll .Card{margin-right:8px;flex-shrink:0}
+.CardScroll__gap{display:block;flex-shrink:0}
+.CardScroll+.CardScroll{margin-top:16px}
+.CardScroll .Card:last-of-type{margin-right:0}
+.CardScroll--s .Card{width:40%}
+.CardScroll--m .Card{width:62%}
+.CardScroll--l .Card{width:100%}
+.CardScroll--ios .CardScroll__gap{width:12px}
+.CardScroll--android .CardScroll__gap,.CardScroll--vkcom .CardScroll__gap{width:16px}
+.SplitCol--spaced .CardScroll{margin-left:-16px;margin-right:-16px}
+.SplitCol--spaced .CardScroll__gap{width:16px}
+.SplitCol--spaced .CardScroll--l .Card{width:calc(100% - 32px)}
+.SplitCol--spaced .CardScroll--l .Card:not(:last-of-type){margin-right:16px}
+.Group--card .CardScroll{margin-left:-8px;margin-right:-8px}
+.Group--card .CardScroll--l .Card{width:calc(100% - 32px)}
+.Group--card .CardScroll--l .Card:not(:last-of-type){margin-right:16px}
+.Group--card .CardScroll:first-child{padding-top:8px}
+.Group--card .CardScroll:last-child{padding-bottom:8px}
 .ContentCard__body{padding:12px 16px}
 .ContentCard__img{object-fit:cover;display:block}
 .ContentCard__caption:not(:last-child),.ContentCard__title:not(:last-child),.ContentCard__text:not(:last-child){margin-bottom:4px}
