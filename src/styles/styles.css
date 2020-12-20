@@ -38,6 +38,7 @@
 @import '../components/Tabbar/Tabbar.css';
 @import '../components/TabbarItem/TabbarItem.css';
 @import '../components/HorizontalScroll/HorizontalScroll.css';
+@import '../components/HorizontalScroll/HorizontalScrollArrow.css';
 
 /* Popouts */
 @import '../components/PopoutWrapper/PopoutWrapper.css';

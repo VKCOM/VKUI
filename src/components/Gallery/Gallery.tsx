@@ -7,6 +7,8 @@ import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import { withFrame, FrameProps } from '../../hoc/withFrame';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
 
 export interface BaseGalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
@@ -22,6 +24,7 @@ export interface BaseGalleryProps extends
   onEnd?({ targetIndex }: { targetIndex: number }): void;
   bullets?: 'dark' | 'light' | false;
   isDraggable?: boolean;
+  showArrows?: boolean;
 }
 
 export interface GalleryProps extends BaseGalleryProps {
@@ -50,7 +53,7 @@ export interface GallerySlidesState {
 
 type GetSlideRef = (index: number) => RefCallback<HTMLElement>;
 
-class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState> {
+class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityProps, GalleryState> {
   constructor(props: GalleryProps) {
     super(props);
 
@@ -266,6 +269,28 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
     });
   };
 
+  get canSlideLeft() {
+    return !this.isFullyVisible && this.props.slideIndex > 0;
+  }
+
+  get canSlideRight() {
+    return !this.isFullyVisible && this.props.slideIndex < this.state.slides.length - 1;
+  }
+
+  slideLeft = () => {
+    const { slideIndex, onChange } = this.props;
+    if (this.canSlideLeft) {
+      this.setState({ deltaX: 0, animation: true }, () => onChange(slideIndex - 1));
+    }
+  };
+
+  slideRight = () => {
+    const { slideIndex, onChange } = this.props;
+    if (this.canSlideRight) {
+      this.setState({ deltaX: 0, animation: true }, () => onChange(slideIndex + 1));
+    }
+  };
+
   getSlideRef: GetSlideRef = (id: number) => (slide) => {
     this.slidesStore[`slide-${id}`] = slide;
   };
@@ -319,6 +344,8 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
       bullets,
       className,
       platform,
+      hasMouse,
+      showArrows,
       ...restProps
     } = this.props;
 
@@ -362,10 +389,17 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps, GalleryState>
           )}
         </div>
         }
+
+        {showArrows && hasMouse && this.canSlideLeft && <HorizontalScrollArrow direction="left" onClick={this.slideLeft} />}
+        {showArrows && hasMouse && this.canSlideRight && <HorizontalScrollArrow direction="right" onClick={this.slideRight} />}
       </div>
     );
   }
 }
+
+const BaseGalleryAdaptive = withAdaptivity(BaseGallery, {
+  hasMouse: true,
+});
 
 const Gallery = withFrame<GalleryProps>(({
   initialSlideIndex = 0,
@@ -378,7 +412,6 @@ const Gallery = withFrame<GalleryProps>(({
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? props.slideIndex : localSlideIndex;
   const isDraggable = !isControlled || Boolean(onChange);
-
   const slides = React.Children.toArray(children).filter((item) => Boolean(item));
   const childCount = slides.length;
 
@@ -401,12 +434,12 @@ const Gallery = withFrame<GalleryProps>(({
   useEffect(() => handleChange(Math.min(slideIndex, childCount - 1)), [childCount]);
 
   return (
-    <BaseGallery
+    <BaseGalleryAdaptive
       slideIndex={slideIndex}
       isDraggable={isDraggable}
       {...props}
       onChange={handleChange}
-    >{slides}</BaseGallery>
+    >{slides}</BaseGalleryAdaptive>
   );
 });
 

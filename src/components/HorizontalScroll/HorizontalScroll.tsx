@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, useRef, useEffect, useState, useCallback, FC } from 'react';
 import classNames from '../../lib/classNames';
-import Icon24Chevron from '@vkontakte/icons/dist/24/chevron_right';
 import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import HorizontalScrollArrow from './HorizontalScrollArrow';
 
 type GetScrollPositionCallback = (currentPosition: number) => number;
 type Callback = () => void;
@@ -27,11 +27,6 @@ interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
   getScrollToRight?: GetScrollPositionCallback;
   showArrows?: boolean;
   scrollAnimationDuration?: number;
-}
-
-interface HorizontalScrollArrowProps {
-  onClick: () => void;
-  direction: 'left' | 'right';
 }
 
 /**
@@ -113,17 +108,6 @@ function doScroll({
     }
   })();
 }
-
-const HorizontalScrollArrow: FC<HorizontalScrollArrowProps> = (props) => {
-  const { onClick, direction } = props;
-  return (
-    <div className={`HorizontalScroll__arrow HorizontalScroll__arrow-${direction}`} onClick={onClick}>
-      <div className="HorizontalScroll__arrow-icon">
-        <Icon24Chevron />
-      </div>
-    </div>
-  );
-};
 
 const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
   const { children, getScrollToLeft, getScrollToRight, showArrows = false, scrollAnimationDuration, className, hasMouse, ...restProps } = props;
