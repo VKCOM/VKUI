@@ -3,13 +3,8 @@
   <h1>VKUI</h1>
 </div>
 <div align="center">
-  <img src="https://img.shields.io/npm/l/@vkontakte/vkui?maxAge=3600" alt="npm">
-  <img src="https://img.shields.io/npm/v/@vkontakte/vkui/latest.svg?maxAge=3600" alt="npm">
-</div>
-
-<div align="center">
-[![license](https://img.shields.io/npm/l/@vkontakte/vkui?maxAge=3600)](LICENSE)
-[![npm latest package](https://img.shields.io/npm/v/@vkontakte/vkui/latest.svg?maxAge=3600)](https://npmjs.com/package/@vkontakte/vkui)
+  <a href="LICENSE"><img src="https://img.shields.io/npm/l/@vkontakte/vkui?maxAge=3600" alt="license mit"></a>
+  <a href="https://npmjs.com/package/@vkontakte/vkui"><img src="https://img.shields.io/npm/v/@vkontakte/vkui/latest.svg?maxAge=3600" alt="open latest version"></a>
 </div>
 <br>
 
