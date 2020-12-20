@@ -32,8 +32,6 @@ const CardScroll = withFrame<CardScrollProps>(({ children, className, size, size
 
     const slide = refContainer.current.children[slideIndex] as HTMLElement;
 
-    console.log(slide);
-
     const scrollTo = slide.offsetLeft - (containerWidth - slide.offsetWidth) + gapRef.current.offsetWidth;
 
     if (scrollTo <= 2 * gapRef.current.offsetWidth) {
