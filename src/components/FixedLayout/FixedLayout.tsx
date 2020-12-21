@@ -65,6 +65,25 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     return this.context.window || window;
   }
 
+  get currentPanel(): HTMLElement {
+    const { panel: id } = this.props;
+    const elem = this.document.getElementById(id);
+
+    if (!elem) {
+      console.warn(`Element #${id} not found`);
+    }
+
+    return elem;
+  }
+
+  get canTargetPanelScroll() {
+    const panelEl = this.currentPanel;
+    if (!panelEl) {
+      return true; // Всегда предпологаем, что может быть скролл в случае, если нет document
+    }
+    return panelEl.scrollHeight > panelEl.clientHeight;
+  }
+
   componentDidMount() {
     this.onMountResizeTimeout = setTimeout(() => this.doResize());
     this.window.addEventListener('resize', this.doResize);
@@ -85,15 +104,14 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     let panelScroll = e.detail.scrolls[this.props.panel] || 0;
     const fromPannelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
     const toPannelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
-    const document = this.document;
 
     // Для панелей, с которых уходим всегда выставляется скролл
     // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл
-    if (fromPannelHasScroll ||
-      (toPannelHasScroll && !document || document?.documentElement?.scrollTop > 0)) {
+    if (fromPannelHasScroll || toPannelHasScroll && this.canTargetPanelScroll) {
       this.setState({
         position: 'absolute',
         top: this.el.offsetTop + panelScroll,
+        width: '',
       });
     }
   };
