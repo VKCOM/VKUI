@@ -143,10 +143,14 @@
 
 .vkui__root--embedded {
   transform: translate3d(0, 0, 0);
+  overflow-x: hidden;
 }
 
 .AppRoot {
   height: 100%;
+}
+
+.vkui__root--embedded .AppRoot {
   overflow: auto;
 }
 
@@ -156,11 +160,6 @@
 
 .AppRoot--no-mouse {
   user-select: none;
-}
-
-.AppRoot__wrapper {
-  height: 100%;
-  overflow: auto;
 }
 
 .vkui__root input,

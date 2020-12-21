@@ -66,6 +66,21 @@ let Layout = ({ children, viewWidth }) => {
 
 Layout = withAdaptivity(Layout, { viewWidth: true, sizeY: true })
 
+const initialFrameContent = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #root {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+  </body>
+</html>
+`;
+
 export default class Preview extends PreviewParent {
 
   shouldComponentUpdate() {
@@ -116,6 +131,7 @@ export default class Preview extends PreviewParent {
                   display: 'block',
                   margin: 'auto',
                 }}
+                initialContent={initialFrameContent}
               >
                 {isEmbedded && (
                   <button onClick={() => this.setState(s => ({
@@ -132,9 +148,11 @@ export default class Preview extends PreviewParent {
                     border: '1px solid #000',
                     maxWidth: 1024,
                     width: "calc(100% - 10px)",
-                    height: 600,
-                    overflow: 'hidden',
-                  } : {}}>
+                    height: 600
+                  } : {
+                    position: 'relative',
+                    height: '100%'
+                  }}>
                     <PrepareFrame integration={styleGuideContext.integration}>
                       {({ window }) => (
                         <ConfigProvider
