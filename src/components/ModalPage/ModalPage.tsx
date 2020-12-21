@@ -33,6 +33,10 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     viewWidth,
     viewHeight,
     onClose,
+    id,
+    settlingHeight,
+    dynamicContentHeight,
+    ...restProps
   } = props;
 
   useEffect(() => {
@@ -43,9 +47,12 @@ const ModalPage: FC<ModalPageProps> = (props) => {
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   return (
-    <div className={classNames(getClassName('ModalPage', platform), className, {
-      'ModalPage--desktop': isDesktop,
-    })}>
+    <div
+      {...restProps}
+      className={classNames(getClassName('ModalPage', platform), className, {
+        'ModalPage--desktop': isDesktop,
+      })}
+    >
       <div className="ModalPage__in-wrap">
         <div className="ModalPage__in">
           <div className="ModalPage__header">

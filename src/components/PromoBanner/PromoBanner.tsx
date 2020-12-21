@@ -48,7 +48,7 @@ export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
 
 const PromoBanner = (props: PromoBannerProps) => {
   const platform = usePlatform();
-  const { className, bannerData = {} } = props;
+  const { className, bannerData = {}, onClose, ...restProps } = props;
 
   const ageRestrictions =
     bannerData.ageRestrictions != null
@@ -74,7 +74,7 @@ const PromoBanner = (props: PromoBannerProps) => {
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div className={classNames(getClassName('PromoBanner', platform), className)}>
+    <div className={classNames(getClassName('PromoBanner', platform), className)} {...restProps}>
       <div className="PromoBanner__head">
         <Caption weight="regular" level="1" className="PromoBanner__label">{bannerData.advertisingLabel || 'Advertisement'}</Caption>
         {ageRestrictions != null && <Caption weight="regular" level="1" className="PromoBanner__age">{ageRestrictions}+</Caption>}

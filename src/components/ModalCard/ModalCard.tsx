@@ -61,6 +61,7 @@ const ModalCard: FC<ModalCardProps> = (props) => {
     className,
     viewWidth,
     viewHeight,
+    ...restProps
   } = props;
 
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.MEDIUM;
@@ -68,9 +69,12 @@ const ModalCard: FC<ModalCardProps> = (props) => {
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
   return (
-    <div className={classNames(getClassName('ModalCard', platform), {
-      'ModalCard--desktop': isDesktop,
-    }, className)}>
+    <div
+      {...restProps}
+      className={classNames(getClassName('ModalCard', platform), {
+        'ModalCard--desktop': isDesktop,
+      }, className)}
+    >
       <div className="ModalCard__in">
         <div className="ModalCard__container">
           {hasReactNode(icon) && <div className="ModalCard__icon">{icon}</div>}
