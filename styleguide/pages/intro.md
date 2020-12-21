@@ -1,5 +1,5 @@
 <h1>
-  <a href="https://vkcom.github.io/VKUI/" target="_blank" ><img src="/static/vkui_logo.png" width="300" alt="VKUI logo" class="logo"></a>
+  <a href="https://vkcom.github.io/VKUI/" target="_blank" ><img src="./static/vkui_logo.png" width="300" alt="VKUI logo" class="logo"></a>
 </h1>
 <p>
 VKUI — это библиотека адаптивных React-компонентов для создания веб-приложений и <a href="https://vk.com/dev/vk_apps_docs" target="_blank">VK Mini Apps</a> в экосистеме ВКонтакте.<br>
