@@ -6,7 +6,7 @@ const schemeOptions = ["full", "embedded", "partial"].map((schemeId) => (
 
 export const IntegrationSelect = ({ onChange, value }) => (
   <Fragment>
-    vkui integration:&nbsp;
+    integration:&nbsp;
     <select onChange={onChange} value={value}>
       {schemeOptions}
     </select>
