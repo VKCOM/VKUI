@@ -1,5 +1,5 @@
 import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
@@ -40,11 +40,6 @@ export interface RootState {
   transition: boolean;
 }
 
-export interface RootContext {
-  document: Requireable<object>;
-  window: Requireable<object>;
-}
-
 class Root extends Component<RootProps, RootState> {
   constructor(props: RootProps) {
     super(props);
@@ -64,7 +59,7 @@ class Root extends Component<RootProps, RootState> {
     popout: null,
   };
 
-  static contextTypes: RootContext = {
+  static contextTypes = {
     window: PropTypes.any,
     document: PropTypes.any,
   };
