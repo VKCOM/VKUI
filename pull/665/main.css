@@ -470,19 +470,22 @@ to{opacity:0}}
 .PopoutWrapper--opened{pointer-events:initial}
 .PopoutWrapper--closing{pointer-events:none}
 .PopoutWrapper--fixed{position:fixed}
-.PopoutWrapper--closing .PopoutWrapper__mask{opacity:0}
-.PopoutWrapper__mask{opacity:1;width:100%;height:100%;position:absolute;left:0;top:0;background:rgba(0,0,0,.4)}
-.PopoutWrapper__container{width:100%;height:100%;position:relative;display:flex;box-sizing:border-box;z-index:2}
+.PopoutWrapper--masked .PopoutWrapper__overlay{background:rgba(0,0,0,.4)}
+.PopoutWrapper--closing .PopoutWrapper__overlay{opacity:0}
+.PopoutWrapper__overlay{position:fixed;left:0;top:0;width:100%;height:100%;opacity:1}
+.PopoutWrapper--fixed .PopoutWrapper__overlay{position:absolute}
+.PopoutWrapper__container{width:100%;height:100%;position:relative;display:flex;box-sizing:border-box}
+.PopoutWrapper__content{display:flex;justify-content:center;width:100%;z-index:2}
 .PopoutWrapper--v-center .PopoutWrapper__container{align-items:center}
 .PopoutWrapper--v-bottom .PopoutWrapper__container{align-items:flex-end}
 .PopoutWrapper--v-top .PopoutWrapper__container{align-items:flex-start}
 .PopoutWrapper--h-center .PopoutWrapper__container{justify-content:center}
 .PopoutWrapper--h-left .PopoutWrapper__container{justify-content:flex-start}
 .PopoutWrapper--h-right .PopoutWrapper__container{justify-content:flex-end}
-.PopoutWrapper--ios .PopoutWrapper__mask{-webkit-animation:animation-full-fade-in .3s ease;animation:animation-full-fade-in .3s ease}
-.PopoutWrapper--ios.PopoutWrapper--closing .PopoutWrapper__mask{transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s var(--ios-easing)}
-.PopoutWrapper--android .PopoutWrapper__mask,.PopoutWrapper--vkcom .PopoutWrapper__mask{-webkit-animation:animation-full-fade-in .2s ease;animation:animation-full-fade-in .2s ease}
-.PopoutWrapper--android.PopoutWrapper--closing .PopoutWrapper__mask,.PopoutWrapper--vkcom.PopoutWrapper--closing .PopoutWrapper__mask{transition:opacity .2s cubic-bezier(.4,0,.2,1);transition:opacity .2s cubic-bezier(.4,0,.2,1);transition:opacity .2s var(--android-easing)}
+.PopoutWrapper--ios .PopoutWrapper__overlay{-webkit-animation:animation-full-fade-in .3s ease;animation:animation-full-fade-in .3s ease}
+.PopoutWrapper--ios.PopoutWrapper--closing .PopoutWrapper__overlay{transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s var(--ios-easing)}
+.PopoutWrapper--android .PopoutWrapper__overlay,.PopoutWrapper--vkcom .PopoutWrapper__overlay{-webkit-animation:animation-full-fade-in .2s ease;animation:animation-full-fade-in .2s ease}
+.PopoutWrapper--android.PopoutWrapper--closing .PopoutWrapper__overlay,.PopoutWrapper--vkcom.PopoutWrapper--closing .PopoutWrapper__overlay{transition:opacity .2s cubic-bezier(.4,0,.2,1);transition:opacity .2s cubic-bezier(.4,0,.2,1);transition:opacity .2s var(--android-easing)}
 @-webkit-keyframes animation-full-fade-in{
 0%{opacity:0}
 to{opacity:1}}
@@ -625,7 +628,7 @@ to{opacity:1;-webkit-transform:scale(1);transform:scale(1)}}
 @keyframes animation-android-alert-intro{
 0%{opacity:0;-webkit-transform:scale(.95);transform:scale(.95)}
 to{opacity:1;-webkit-transform:scale(1);transform:scale(1)}}
-.ScreenSpinner .PopoutWrapper__mask{background:0 0}
+.ScreenSpinner .PopoutWrapper__overlay{background:0 0}
 .ScreenSpinner{-webkit-animation:screen-spinner-intro .3s ease;animation:screen-spinner-intro .3s ease}
 .ScreenSpinner--ios .ScreenSpinner__container{width:88px;height:88px;background:#fff;background:#fff;background:var(--modal_card_background);box-shadow:0 0 2px 0 rgba(0,0,0,.12),0 0 96px 0 rgba(0,0,0,.16);border-radius:10px}
 .ScreenSpinner--ios .ScreenSpinner__container .Spinner{color:#818c99;color:#818c99;color:var(--overlay_status_icon)}
