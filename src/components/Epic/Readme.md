@@ -140,16 +140,15 @@ const Example = withAdaptivity(({ viewWidth }) => {
           <View id="feed" activePanel="feed">
             <Panel id="feed">
               <PanelHeader left={<PanelHeaderBack />}>Новости</PanelHeader>
-              <Group>
-                <Placeholder icon={<Icon56NewsfeedOutline width={56} height={56} />}>
-                </Placeholder>
+              <Group style={{ height: '1000px' }}>
+                <Placeholder icon={<Icon56NewsfeedOutline width={56} height={56} />} />
               </Group>
             </Panel>
           </View>
           <View id="services" activePanel="services">
             <Panel id="services">
               <PanelHeader left={<PanelHeaderBack />}>Сервисы</PanelHeader>
-              <Group>
+              <Group style={{ height: '1000px' }}>
                 <Placeholder icon={<Icon28ServicesOutline width={56} height={56} />}>
                 </Placeholder>
               </Group>
@@ -158,7 +157,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
           <View id="messages" activePanel="messages">
             <Panel id="messages">
               <PanelHeader left={<PanelHeaderBack />}>Сообщения</PanelHeader>
-              <Group>
+              <Group style={{ height: '1000px' }}>
                 <Placeholder icon={<Icon28MessageOutline width={56} height={56} />}>
                 </Placeholder>
               </Group>
@@ -167,7 +166,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
           <View id="clips" activePanel="clips">
             <Panel id="clips">
               <PanelHeader left={<PanelHeaderBack />}>Клипы</PanelHeader>
-              <Group>
+              <Group style={{ height: '1000px' }}>
                 <Placeholder icon={<Icon28ClipOutline width={56} height={56} />}>
                 </Placeholder>
               </Group>
@@ -176,7 +175,7 @@ const Example = withAdaptivity(({ viewWidth }) => {
           <View id="profile" activePanel="profile">
             <Panel id="profile">
               <PanelHeader left={<PanelHeaderBack />}>Профиль</PanelHeader>
-              <Group>
+              <Group style={{ height: '1000px' }}>
                 <Placeholder icon={<Icon28UserCircleOutline width={56} height={56} />}>
                 </Placeholder>
               </Group>
