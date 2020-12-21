@@ -6,6 +6,7 @@ import { animationEvent } from '../../lib/supportEvents';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { canUseDOM } from '../../lib/dom';
+import { withFrame } from '../../hoc/withFrame';
 
 export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   hasMask?: boolean;
@@ -13,6 +14,7 @@ export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasP
   alignY?: 'top' | 'center' | 'bottom';
   alignX?: 'left' | 'center' | 'right';
   closing?: boolean;
+  window?: Window;
 }
 
 export interface PopoutWrapperState {
@@ -40,6 +42,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
     alignY: 'center',
     alignX: 'center',
     closing: false,
+    window: window,
   };
 
   elRef: React.RefObject<HTMLDivElement>;
@@ -48,7 +51,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('touchmove', this.preventTouch, { passive: false });
+      this.props.window.addEventListener('touchmove', this.preventTouch, { passive: false });
       this.waitAnimationFinish(this.elRef.current, this.onFadeInEnd);
     }
   }
@@ -59,7 +62,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
     // https://github.com/VKCOM/VKUI/issues/444
     if (canUseDOM) {
       // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
-      window.removeEventListener('touchmove', this.preventTouch, { passive: false });
+      this.props.window.removeEventListener('touchmove', this.preventTouch, { passive: false });
       clearTimeout(this.animationFinishTimeout);
     }
   }
@@ -110,4 +113,4 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   }
 }
 
-export default withPlatform(PopoutWrapper);
+export default withFrame(withPlatform(PopoutWrapper));
