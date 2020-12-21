@@ -53,6 +53,11 @@ class DatePicker extends Component<Props, Partial<State>> {
     };
   }
 
+  static defaultProps = {
+    min: { day: 0, month: 0, year: 0 },
+    max: { day: 31, month: 12, year: 2100 },
+  };
+
   // Переводим state к формату гг-мм-дд
   private convertToInputFormat(date: State) {
     const { day, month, year } = date;

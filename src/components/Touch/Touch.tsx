@@ -335,6 +335,7 @@ export default class Touch extends Component<TouchProps> {
       useCapture,
       Component,
       getRootRef,
+      noSlideClick,
       ...restProps
     } = this.props;
 

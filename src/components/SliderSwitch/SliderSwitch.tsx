@@ -7,6 +7,7 @@ interface Option {
   name: string;
   value: string | number;
 }
+const nullOption: Option = { name: '', value: '' };
 
 interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   options: Option[];
@@ -32,6 +33,10 @@ export default class SliderSwitch extends React.Component<Props, State> {
     this.firstButton = createRef();
     this.secondButton = createRef();
   }
+
+  static defaultProps = {
+    options: [nullOption, nullOption],
+  };
 
   firstButton: RefObject<HTMLDivElement>;
   secondButton: RefObject<HTMLDivElement>;

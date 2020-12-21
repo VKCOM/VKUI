@@ -291,6 +291,7 @@ ChipsSelect.defaultProps = {
   creatable: false,
   fetching: false,
   showSelected: true,
+  options: [],
   filterFn: (value, option, getOptionLabel) => {
     return (
       !value || value && getOptionLabel(option)?.toLowerCase()?.startsWith(value?.toLowerCase())

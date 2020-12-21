@@ -40,12 +40,13 @@ export interface CustomSelectProps extends NativeSelectProps {
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
 class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
-  static defaultProps = {
+  static defaultProps: CustomSelectProps = {
     renderOption(props: CustomSelectOptionProps): ReactNode {
       return (
         <CustomSelectOption {...props} />
       );
     },
+    options: [],
   };
 
   public constructor(props: CustomSelectProps) {

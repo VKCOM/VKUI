@@ -112,8 +112,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
     return this.context.window || window;
   }
 
-  getModals(): ReactElement[] {
-    return [].concat(this.props.children);
+  getModals() {
+    return React.Children.toArray(this.props.children) as ReactElement[];
   }
 
   initModalsState() {

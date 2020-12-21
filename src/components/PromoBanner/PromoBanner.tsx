@@ -48,7 +48,7 @@ export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
 
 const PromoBanner = (props: PromoBannerProps) => {
   const platform = usePlatform();
-  const { className, bannerData } = props;
+  const { className, bannerData = {} } = props;
 
   const ageRestrictions =
     bannerData.ageRestrictions != null

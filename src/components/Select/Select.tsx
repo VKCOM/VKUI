@@ -20,7 +20,7 @@ const Select: FunctionComponent<CustomSelectProps & AdaptivityProps> = ({ hasMou
     );
   }
 
-  const { options, popupDirection, renderOption, ...restProps } = props;
+  const { options = [], popupDirection, renderOption, ...restProps } = props;
 
   return (
     <NativeSelect {...restProps}>

@@ -74,10 +74,6 @@ class Root extends Component<RootProps, RootState> {
     return this.context.window || window;
   }
 
-  get arrayChildren() {
-    return [].concat(this.props.children);
-  }
-
   componentDidUpdate(prevProps: RootProps, prevState: RootState) {
     if (this.props.popout && !prevProps.popout) {
       this.blurActiveElement();
@@ -178,7 +174,7 @@ class Root extends Component<RootProps, RootState> {
     const { popout, modal, platform } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
-    const Views = this.arrayChildren.filter((view: ReactElement) => {
+    const Views = React.Children.toArray(this.props.children).filter((view: ReactElement) => {
       return this.state.visibleViews.includes(view.props.id);
     });
 
