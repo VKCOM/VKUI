@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, Component, Fragment, RefCallback } from 'react';
+import React, { ReactElement, ReactNode, Component, Fragment, RefCallback, isValidElement } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
@@ -200,11 +200,11 @@ export default class Tooltip extends Component<TooltipProps, TooltipState> {
   getRef: RefCallback<HTMLDivElement> = (el) => this.targetEl = el;
 
   render() {
-    const { children, isShown, ...portalProps } = this.props;
+    const { children = null, isShown, ...portalProps } = this.props;
 
-    const child = React.cloneElement(children as ReactElement, {
-      [isDOMTypeElement(children as ReactElement) ? 'ref' : 'getRootRef']: this.getRef,
-    });
+    const child = isValidElement(children) ? React.cloneElement(children, {
+      [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: this.getRef,
+    }) : children;
 
     if (!isShown || !this.state.ready) {
       return child;

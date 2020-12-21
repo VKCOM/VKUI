@@ -22,7 +22,7 @@ export const Epic: FC<EpicProps> = (props) => {
       console.warn('[Epic] Using Epic without tabbar is not recommended on mobile');
     }
   }, [viewWidth]);
-  const story = (React.Children.toArray(children) as ReactElement[]).find((story) => story.props.id === activeStory);
+  const story = (React.Children.toArray(children) as ReactElement[]).find((story) => story.props.id === activeStory) || null;
 
   return (
     <div {...restProps} className={classNames(getClassName('Epic', platform), className)}>

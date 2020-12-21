@@ -134,8 +134,8 @@ class View extends Component<ViewProps, ViewState> {
     return this.context.window || window;
   }
 
-  get panels(): ReactElement[] {
-    return [].concat(this.props.children);
+  get panels() {
+    return React.Children.toArray(this.props.children) as ReactElement[];
   }
 
   componentWillUnmount() {
