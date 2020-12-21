@@ -9,6 +9,7 @@ import withContext from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
@@ -206,8 +207,10 @@ class Root extends Component<RootProps, RootState> {
             </div>
           );
         })}
-        {!!popout && <div className="Root__popout">{popout}</div>}
-        {!!modal && <div className="Root__modal">{modal}</div>}
+        <AppRootPortal className="Root__portal">
+          {!!popout && <div className="Root__popout">{popout}</div>}
+          {!!modal && <div className="Root__modal">{modal}</div>}
+        </AppRootPortal>
       </div>
     );
   }

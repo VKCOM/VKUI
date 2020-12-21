@@ -36,6 +36,7 @@
   border: 2px solid var(--icon_secondary);
   color: transparent;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .Cell__checkbox:checked ~ .Cell__marker {
@@ -49,6 +50,10 @@
 
 .Cell--ios .Cell__in {
   transition: transform .6s var(--ios-easing);
+}
+
+.Cell--ios.Cell--removable {
+  overflow: hidden;
 }
 
 .Cell--ios .Cell__remove {
@@ -65,6 +70,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .Cell--ios .Cell__remove-in {

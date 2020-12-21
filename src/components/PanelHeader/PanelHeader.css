@@ -18,7 +18,6 @@
   white-space: nowrap;
   position: relative;
   background: var(--header_background);
-  box-sizing: border-box;
 }
 
 .PanelHeader--trnsp .PanelHeader__in {
@@ -42,10 +41,15 @@
 
 .PanelHeader__content {
   overflow: hidden;
-  text-overflow: ellipsis;
   color: var(--header_text);
   font-weight: 800;
   font-family: var(--font-tt);
+}
+
+.PanelHeader__content > * {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .PanelHeader__right {
@@ -174,8 +178,7 @@
 }
 
 .PanelHeader--android .PanelHeader__content {
-  font-size: 20px;
-  display: flex;
+  font-size: 23px;
   align-items: center;
   flex-grow: 1;
   max-width: 100%;

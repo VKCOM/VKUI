@@ -1,5 +1,5 @@
 .PullToRefresh {
-  height: 100%;
+  flex-grow: 1;
   }
 
 .PullToRefresh--refreshing {
@@ -11,7 +11,8 @@
   left: 0;
   width: 100%;
   pointer-events: none;
-  z-index: 100;
+  /* Прямо под шапкой, см https://github.com/VKCOM/VKUI/issues/1207 */
+  z-index: 9;
   }
 
 .PullToRefresh--ios .PullToRefresh__controls {
@@ -31,7 +32,7 @@
   }
 
 .PullToRefresh--ios .PullToRefresh__spinner {
-  color: var(--activity_indicator_tint);
+  color: var(--icon_outline_secondary);
   }
 
 .PullToRefresh--android .PullToRefresh__spinner,

@@ -56,7 +56,7 @@
     }
 
   .Checkbox--ios.Checkbox--sizeY-compact .Checkbox__icon {
-    margin-top: 12px;
+    margin-top: 8px;
     }
 
   .Checkbox--ios .Checkbox__content {
@@ -73,7 +73,7 @@
     }
 
   .Checkbox--android.Checkbox--sizeY-compact .Checkbox__icon {
-    margin-top: 12px;
+    margin-top: 8px;
     }
 
   .Checkbox--android .Checkbox__content {
@@ -89,14 +89,14 @@
     border-radius: 3px;
     padding: 1px;
     border-width: 1px;
-    margin-top: 9px;
+    margin-top: 8px;
     }
 
   .Checkbox--vkcom .Checkbox__input[disabled] ~ .Checkbox__container {
     opacity: .4;
     }
 
-    .Checkbox--vkcom .Checkbox__content {
-      margin-top: 10px;
-      margin-bottom: 10px;
-      }
+.Checkbox--sizeY-compact .Checkbox__content {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

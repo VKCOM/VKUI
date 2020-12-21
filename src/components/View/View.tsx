@@ -1,7 +1,6 @@
 import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
-import animate from '../../lib/animate';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import getClassName from '../../helpers/getClassName';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
@@ -13,6 +12,7 @@ import withContext from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -346,24 +346,6 @@ class View extends Component<ViewProps, ViewState> {
     });
   }
 
-  onScrollTop = (): void => {
-    const { activePanel } = this.state;
-
-    if (activePanel) {
-      const scrollTop = this.document.body.scrollTop || this.document.documentElement.scrollTop;
-
-      if (scrollTop) {
-        animate({
-          duration: 200,
-          timing: (n: number) => Math.sqrt(n),
-          draw: (val: number) => {
-            this.window.scrollTo(0, scrollTop - val * scrollTop);
-          },
-        });
-      }
-    }
-  };
-
   onMoveX = (e: TouchEvent): void => {
     const target = e.originalEvent.target as HTMLElement;
     if (
@@ -514,8 +496,10 @@ class View extends Component<ViewProps, ViewState> {
             );
           })}
         </div>
-        {hasPopout && <div className="View__popout">{popout}</div>}
-        {hasModal && <div className="View__modal">{modal}</div>}
+        <AppRootPortal className="View__portal">
+          {hasPopout && <div className="View__popout">{popout}</div>}
+          {hasModal && <div className="View__modal">{modal}</div>}
+        </AppRootPortal>
       </Touch>
     );
   }

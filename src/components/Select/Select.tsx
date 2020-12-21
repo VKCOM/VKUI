@@ -1,25 +1,12 @@
-import React, { FunctionComponent, ReactElement } from 'react';
-import NativeSelect, { NativeSelectProps } from '../NativeSelect/NativeSelect';
-import CustomSelect, { SelectOption } from '../CustomSelect/CustomSelect';
-import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
+import React, { FunctionComponent } from 'react';
+import NativeSelect from '../NativeSelect/NativeSelect';
+import CustomSelect, { CustomSelectProps } from '../CustomSelect/CustomSelect';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-const Select: FunctionComponent<NativeSelectProps> = (props) => {
+const Select: FunctionComponent<CustomSelectProps & AdaptivityProps> = ({ hasMouse, ...props }) => {
   // Use custom select if device has connected a mouse
   if (hasMouse) {
     const { children, ...restProps } = props;
-
-    let options: SelectOption[] = [];
-
-    if (Array.isArray(children)) {
-      // filter <option> elements from children root and ignore others
-      options = children
-        .filter((node) => React.isValidElement(node) && node.type === 'option')
-        .map((element: ReactElement) => {
-          const value = element.props?.value?.toString() ?? '';
-          const label = element.props?.children?.toString() ?? '';
-          return { value, label };
-        });
-    }
 
     const value = restProps.hasOwnProperty('value')
       ? restProps.value
@@ -27,20 +14,21 @@ const Select: FunctionComponent<NativeSelectProps> = (props) => {
 
     return (
       <CustomSelect
-        options={options}
         value={value}
         {...restProps}
       />
     );
   }
 
-  const { children, ...restProps } = props;
+  const { options, popupDirection, renderOption, ...restProps } = props;
 
   return (
     <NativeSelect {...restProps}>
-      {children}
+      {options.map(({ label, value }) => <option value={value} key={`${value}`}>{label}</option>)}
     </NativeSelect>
   );
 };
 
-export default Select;
+export default withAdaptivity(Select, {
+  hasMouse: true,
+});

@@ -8,6 +8,10 @@
   justify-content: center;
 }
 
+.HorizontalCell__content {
+  word-break: break-all;
+}
+
 .HorizontalCell__subtitle {
   color: var(--text_secondary);
   line-height: 18px;

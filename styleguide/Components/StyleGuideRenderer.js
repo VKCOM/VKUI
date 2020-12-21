@@ -6,22 +6,25 @@ import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import Link from 'react-styleguidist/lib/client/rsg-components/Link';
 import cx from 'classnames';
 import pkg from '../../package.json';
-import { WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
+import { Scheme, WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
+import { IntegrationSelect } from './IntegrationSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { DESKTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from '../../src/components/AdaptivityProvider/AdaptivityProvider';
 import { defaultConfigProviderProps } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { ViewWidthSelect } from './ViewWidthSelect';
+import { ViewHeightSelect, SMALL_HEIGHT } from './ViewHeightSelect';
 import { SizeType } from '../../src/components/AdaptivityProvider/AdaptivityContext';
 import { VKCOM } from '../../src/lib/platform';
-import { SizeYSelect } from './SizeYSelect';
+import { HasMouseCheckbox } from './HasMouseCheckbox';
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
-  sizeY: SizeType.REGULAR,
+  height: SMALL_HEIGHT,
+  hasMouse: true,
 });
 
 const styles = ({ color, fontFamily, fontSize, mq, space }) => ({
@@ -81,15 +84,20 @@ const styles = ({ color, fontFamily, fontSize, mq, space }) => ({
 
 let initialState = {
   ...defaultConfigProviderProps,
+  integration: "full",
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
-  sizeY: SizeType.REGULAR,
+  height: SMALL_HEIGHT,
+  hasMouse: true
 }
 
 try {
   const lsState =  localStorage.getItem('vkui:state');
   if (lsState) {
-    initialState = JSON.parse(lsState);
+    initialState = {
+      ...initialState,
+      ...JSON.parse(lsState)
+    };
   }
 } catch (e) {
   console.log(e);
@@ -97,26 +105,27 @@ try {
 
 function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSidebar }) {
   const [state, setState] = useState(initialState);
-
-  const { width, platform, sizeY } = state;
+  const { width, height, platform, scheme, hasMouse } = state;
 
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };
     localStorage.setItem('vkui:state', JSON.stringify(newState));
-    setState(newState)
+    setState(newState);
   }, [state])
 
   useEffect(() => {
     if (hasSidebar && width === DESKTOP_SIZE) {
       setContext({ width: MOBILE_SIZE });
     }
-  }, [hasSidebar, width])
+  }, [hasSidebar, width, height])
 
   useEffect(() => {
     if (platform === VKCOM) {
-      setContext({ sizeY: SizeType.COMPACT, width: TABLET_SIZE });
+      setContext({ hasMouse: true, width: TABLET_SIZE, scheme: Scheme.VKCOM });
+    } else if (scheme === Scheme.VKCOM) {
+      setContext({ scheme: Scheme.BRIGHT_LIGHT });
     }
-  }, [platform]);
+  }, [platform, scheme]);
 
   const providerValue = useMemo(() => ({ ...state, hasSidebar, setContext }), [state, setContext, hasSidebar]);
 
@@ -135,9 +144,16 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
             <Logo>{title}</Logo>
           </div>
           <div className={classes.os}>
-            <PlatformSelect onChange={ (e) => setContext({ platform: e.target.value })} value={platform} />
+            <IntegrationSelect onChange={ (e) => setContext({ integration: e.target.value })} value={state.integration} />
             <div style={{ marginTop: 4 }}>
-              <SchemeSelect onChange={ (e) => setContext({ scheme: e.target.value })} value={state.scheme} />
+              <PlatformSelect onChange={ (e) => setContext({ platform: e.target.value })} value={platform} />
+            </div>
+            <div style={{ marginTop: 4 }}>
+              <SchemeSelect
+                onChange={ (e) => setContext({ scheme: e.target.value })}
+                value={state.scheme}
+                disabled={platform === VKCOM}
+              />
             </div>
             <div style={{ marginTop: 4 }}>
               <WebviewTypeSelect
@@ -154,10 +170,15 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
               />
             </div>
             <div style={{ marginTop: 4 }}>
-              <SizeYSelect
-                onChange={ (e) => setContext({ sizeY: e.target.value })}
-                value={sizeY}
-                disabled={platform === VKCOM}
+            <ViewHeightSelect
+              onChange={ (e) => setContext({ height: Number(e.target.value) })}
+              value={height}
+            />
+            </div>
+            <div style={{ marginTop: 4 }}>
+              <HasMouseCheckbox
+                onChange={ (e) => setContext({ hasMouse: e.target.checked })}
+                value={hasMouse}
               />
             </div>
             <div style={{ marginTop: 4 }}>

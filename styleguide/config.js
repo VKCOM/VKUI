@@ -34,6 +34,7 @@ module.exports = {
       name: 'Adaptivity',
       content: './pages/adaptivity.md',
       components: () => [
+        '../src/components/AppRoot/AppRoot.tsx',
         '../src/components/AdaptivityProvider/AdaptivityProvider.tsx',
         '../src/components/SplitLayout/SplitLayout.tsx',
         '../src/components/SplitCol/SplitCol.tsx',
@@ -76,7 +77,8 @@ module.exports = {
           '../src/components/ModalRoot/ModalRootAdaptive.tsx',
           '../src/components/ModalPage/ModalPage.tsx',
           '../src/components/ModalPageHeader/ModalPageHeader.tsx',
-          '../src/components/ModalCard/ModalCard.tsx'
+          '../src/components/ModalCard/ModalCard.tsx',
+          '../src/components/ModalDismissButton/ModalDismissButton.tsx'
         ]
       }, {
         name: 'Blocks',

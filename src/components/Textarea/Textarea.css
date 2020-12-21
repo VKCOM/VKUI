@@ -13,9 +13,9 @@
     line-height: 19px;
     font-size: 16px;
     color: var(--text_primary);
-    padding: 12px;
-    min-height: 86px;
-    max-height: 198px;
+    padding: 11px;
+    min-height: 84px;
+    max-height: 196px;
     border: none;
     z-index: 2;
     position: relative;
@@ -23,11 +23,11 @@
     }
 
   .Textarea--sizeY-compact .Textarea__el {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     font-size: 15px;
     line-height: 20px;
-    min-height: 60px;
+    min-height: 54px;
   }
 
   .Textarea__el::placeholder {

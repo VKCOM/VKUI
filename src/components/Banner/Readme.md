@@ -22,7 +22,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         before={<Avatar size={96} mode="image" src="https://sun9-32.userapi.com/uFzLOK55iY7pC0DHjneEdP9G6gXcXi2Mxj9wVA/wnTmzh_blNM.jpg" />}
         header="Для Вас"
         subheader="Обновлено сегодня"
-        actions={<Button before={<Icon24Play />}>СЛУШАТЬ</Button>}
+        actions={<Button before={<Icon24Play />}>Слушать</Button>}
       />
 
       <Banner
@@ -33,7 +33,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         actions={
           <React.Fragment>
             <Button mode="primary">Подробнее</Button>
-            <Button mode="tertiary">Напомнить позже</Button>
+            <Button mode="tertiary" hasHover={false}>Напомнить позже</Button>
           </React.Fragment>
         }
       />
@@ -59,7 +59,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
             <Link>Ускорьте процесс</Link>, если у Вас есть<br />доступ к старому номеру.
           </React.Fragment>
         }
-        actions={<Button mode="tertiary">Отменить заявку</Button>}
+        actions={<Button mode="tertiary" hasHover={false}>Отменить заявку</Button>}
       />
 
       <Banner
@@ -68,7 +68,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         actions={
           <React.Fragment>
             <Button>Включить</Button>
-            <Button mode="tertiary">Подробнее</Button>
+            <Button mode="tertiary" hasHover={false}>Подробнее</Button>
           </React.Fragment>
         }
       />

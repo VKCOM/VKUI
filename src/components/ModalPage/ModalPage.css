@@ -30,11 +30,11 @@
 }
 
 .ModalPage__in {
-  width: 700px;
+  width: 416px;
   max-width: 100%;
   margin: 0 auto;
   background: var(--background_content);
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   box-sizing: border-box;
   height: 100%;
@@ -44,6 +44,15 @@
 
 .ModalPage__header {
   width: 100%;
+}
+
+.ModalPage__content-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
 }
 
 .ModalPage__content {
@@ -106,6 +115,10 @@
   border-radius: 12px 12px 0 0;
 }
 
+.ModalPage--vkcom .ModalPage__in {
+  width: 448px;
+}
+
 /**
  * desktop
  */
@@ -121,7 +134,6 @@
 }
 
 .ModalPage--desktop .ModalPage__in {
-  width: 416px;
   height: auto;
   max-height: 640px;
   box-shadow:

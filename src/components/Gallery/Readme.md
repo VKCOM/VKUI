@@ -6,11 +6,14 @@
       super(props);
 
       this.state = {
-        slideIndex: 0
+        slideIndex: 0,
+        isDraggable: true,
+        showArrows: true,
       }
     }
 
     render () {
+      const { isDraggable, showArrows, slideIndex } = this.state
       return (
         <View activePanel="gallery">
           <Panel id="gallery">
@@ -59,21 +62,46 @@
                 <div style={{ width: 220, backgroundColor: 'var(--icon_secondary)' }} />
               </Gallery>
             </Group>
-            <Group header={<Header mode="secondary">Controled</Header>}>
+            <Group header={<Header mode="secondary">Arrows</Header>}>
               <Gallery
                 slideWidth="90%"
-                align="center"
                 style={{ height: 150 }}
-                slideIndex={this.state.slideIndex}
-                onChange={slideIndex => this.setState({slideIndex})}
+                bullets="dark"
+                showArrows
               >
                 <div style={{ backgroundColor: 'var(--destructive)' }} />
                 <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
-              <Div>
-                <Button onClick={() => this.setState({slideIndex: this.state.slideIndex === 2 ? 0 : this.state.slideIndex + 1 })}>Next slide</Button>
-              </Div>
+            </Group>
+            <Group header={<Header mode="secondary">Controled</Header>}>
+              <Gallery
+                slideWidth="90%"
+                align="center"
+                style={{ height: 150 }}
+                slideIndex={slideIndex}
+                onChange={slideIndex => this.setState({slideIndex})}
+                isDraggable={isDraggable}
+                showArrows={showArrows}
+              >
+                <div style={{ backgroundColor: 'var(--destructive)' }} />
+                <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
+                <div style={{ backgroundColor: 'var(--accent)' }} />
+              </Gallery>
+
+              <FormItem>
+                <Checkbox checked={isDraggable} onChange={e => this.setState({ isDraggable: e.target.checked })}>
+                  isDraggable
+                </Checkbox>
+                <Checkbox checked={showArrows} onChange={e => this.setState({ showArrows: e.target.checked })}>
+                  showArrows
+                </Checkbox>
+              </FormItem>
+              <FormItem>
+                <Button size='l' stretched onClick={() => this.setState({ slideIndex: (slideIndex + 1) % 3 })}>
+                  Next slide
+                </Button>
+              </FormItem>
             </Group>
           </Panel>
         </View>

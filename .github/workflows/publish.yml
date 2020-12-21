@@ -39,13 +39,13 @@ jobs:
           github_token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
 
-      - name: Publushing prerelase
+      - name: Publishing prerelase
         run: yarn publish --non-interactive --tag ${{ github.event.inputs.tag }}
         if: ${{ github.event.inputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
 
-      - name: Publushing release
+      - name: Publishing release
         run: yarn publish --non-interactive
         if: ${{ !github.event.inputs.tag }}
         env:
@@ -63,9 +63,10 @@ jobs:
         run: yarn styleguide:build --dist docs/${{ github.event.inputs.version }}
         if: ${{ github.event.inputs.tag }}
 
-      - name: Publishin doc
-        uses: JamesIves/github-pages-deploy-action@3.5.9
+      - name: Publishing doc
+        uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: docs
+          CLEAN: false

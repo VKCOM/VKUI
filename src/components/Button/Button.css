@@ -28,14 +28,17 @@
 
   .Button--aln-left .Button__in {
     justify-content: flex-start;
+    text-align: left;
     }
 
   .Button--aln-center .Button__in {
     justify-content: center;
+    text-align: center;
     }
 
   .Button--aln-right .Button__in {
     justify-content: flex-end;
+    text-align: right;
     }
 
 .Button--str {
@@ -98,7 +101,7 @@
 
 .Button--sz-s {
   min-height: 30px;
-  padding: 0 16px;
+  padding: 0 15px;
   }
 
   .Button--sz-s .Button__before:not(:last-child) {
@@ -118,7 +121,7 @@
     }
 
 .Button--sz-m {
-  padding: 0 16px;
+  padding: 0 15px;
   min-height: 36px;
   }
 
@@ -135,7 +138,7 @@
     }
 
 .Button--sz-l {
-  padding: 0 20px;
+  padding: 0 19px;
   min-height: 44px;
   }
 
@@ -209,12 +212,12 @@
 
 /* large size */
 .Button--sizeY-compact.Button--sz-l {
-  min-height: 40px;
+  min-height: 36px;
 }
 
 .Button--sizeY-compact.Button--sz-l .Button__content {
-  padding-top: 8px;
-  padding-bottom: 10px;
+  padding-top: 6px;
+  padding-bottom: 8px;
 }
 
 /**
@@ -244,3 +247,12 @@
   background-color: var(--button_commerce_foreground);
   color: var(--button_commerce_background);
   }
+
+.Button--vkcom.Button--lvl-secondary .Counter,
+.Button--vkcom.Button--lvl-tertiary .Counter,
+.Button--vkcom.Button--lvl-outline .Counter,
+.Button--vkcom.Button--lvl-secondary .Icon,
+.Button--vkcom.Button--lvl-tertiary .Icon,
+.Button--vkcom.Button--lvl-outline .Icon {
+  opacity: .72;
+}

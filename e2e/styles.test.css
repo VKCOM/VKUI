@@ -1,0 +1,34 @@
+@import '../src/styles/styles.css';
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: url(/font/Roboto-Italic.ttf) format('truetype');
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/font/Roboto-Regular.ttf) format('truetype');
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/font/Roboto-Bold.ttf) format('truetype');
+}
+
+#mount {
+  /* Force use embedded Roboto font for cross-platformity */
+  --font-common: 'Roboto';
+  font-family: 'Roboto';
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  animation: none !important;
+  transition: none !important;
+}

@@ -7,11 +7,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          lfs: true
+      - name: Checkout LFS objects
+        run: git lfs checkout
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn install --frozen-lockfile
-      - run: yarn test
+      # cached yarn install
+      - uses: bahmutov/npm-install@v1
+        with:
+          install-command: yarn --frozen-lockfile --ignore-scripts
+      - name: Install browser for E2E
+        run: yarn --cwd node_modules/playwright-chromium run install
+      - name: Run tests
+        run: yarn test:ci
+      - name: FYI visual tests
+        run: yarn test:e2e
+        if: always()
+        continue-on-error: true
+      - name: Upload test artifact
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: test-output
+          path: |
+            __diff_output__/
+            coverage/
+            lint-results.json
+            test-results.json
   styleguide:
     runs-on: ubuntu-latest
     steps:
@@ -19,10 +43,77 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: yarn install --frozen-lockfile
+      # cached yarn install
+      - uses: bahmutov/npm-install@v1
+        with:
+          install-command: yarn --frozen-lockfile --ignore-scripts
       - run: yarn styleguide:build
       - name: Uploading styleguide artifact
         uses: actions/upload-artifact@v2
         with:
           name: styleguide
           path: docs/
+  size:
+    runs-on: ubuntu-latest
+    env:
+      CI_JOB_NUMBER: 1
+    steps:
+      - uses: actions/checkout@v1
+      - uses: andresz1/size-limit-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+  deploy_styleguide:
+    runs-on: ubuntu-latest
+    needs: styleguide
+    # Skip deploy from forked repo
+    if: github.event.pull_request.base.repo.id == github.event.pull_request.head.repo.id
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download styleguide artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: styleguide
+          path: tmp
+      - name: Publishing styleguide to GitHub pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+          COMMIT_MESSAGE: "Publish PR ${{ github.event.pull_request.number }}"
+          BRANCH: gh-pages
+          FOLDER: tmp
+          TARGET_FOLDER: pull/${{ github.event.pull_request.number }}
+          CLEAN: true
+      - name: Find styleguide URL comment
+        uses: peter-evans/find-comment@v1
+        id: find_url_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: <!-- styleguide_url -->
+      - name: Post styleguide URL to PR
+        if: steps.find_url_comment.outputs.comment-id == 0
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <!-- styleguide_url -->
+            ## 👀 Styleguide deployed
+            See the styleguide for this PR at https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/
+  report_tests:
+    runs-on: ubuntu-latest
+    needs: test
+    if: always()
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Download test artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: test-output
+      - run: yarn --cwd .github/danger --frozen-lockfile --ignore-scripts
+      - name: Create test report
+        run: yarn --cwd .github/danger danger ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

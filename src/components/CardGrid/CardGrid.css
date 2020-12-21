@@ -1,48 +1,82 @@
 .CardGrid {
-  margin-top: -8px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
-.CardGrid::after {
-  clear: both;
-  content: '';
-  display: block;
-  width: 100%;
+.CardGrid + .CardGrid {
+  margin-top: 16px;
 }
 
 .CardGrid .Card {
-  float: left;
+  margin-right: 8px;
+}
+
+.CardGrid--l .Card {
+  width: 100%;
+  margin-right: 0;
+}
+
+.CardGrid--l .Card:not(:first-child) {
   margin-top: 8px;
-  margin-left: 4px;
-  margin-right: 4px;
 }
 
-.CardGrid .Card--sz-l {
-  width: calc(100% - 8px);
+.CardGrid--m .Card {
+  width: calc((100% - 8px) / 2);
 }
 
-.CardGrid .Card--sz-m {
-  width: calc((100% - 2 * 8px) / 2);
+.CardGrid--m .Card:nth-child(n + 3) {
+  margin-top: 8px;
 }
 
-.CardGrid .Card--sz-s {
-  width: calc((100% - 3 * 8px) / 3);
+.CardGrid--m .Card:nth-child(2n) {
+  margin-right: 0;
+}
+
+.CardGrid--s .Card {
+  width: calc((100% - 2 * 8px) / 3);
+}
+
+.CardGrid--s .Card:nth-child(n + 4) {
+  margin-top: 8px;
+}
+
+.CardGrid--s .Card:nth-child(3n) {
+  margin-right: 0;
 }
 
 /**
  * iOS
  */
 
-.CardGrid--ios {
+.CardGrid--ios.CardGrid--sizeX-compact {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/**
+ * Android & VKCOM
+ */
+
+.CardGrid--android.CardGrid--sizeX-compact {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/**
+ * Group
+ */
+
+.Group--card .CardGrid {
   padding-left: 8px;
   padding-right: 8px;
 }
 
-/**
- * Android
- */
+.Group .CardGrid:first-child {
+  margin-top: 8px;
+}
 
-.CardGrid--android,
-.CardGrid--vkcom {
-  padding-left: 12px;
-  padding-right: 12px;
+.Group .CardGrid:last-child {
+  margin-bottom: 8px;
 }

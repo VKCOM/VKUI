@@ -25,6 +25,11 @@
   color: var(--icon_secondary);
 }
 
+.ChipsSelect--sizeY-compact .ChipsSelect__toggle {
+  right: 8px;
+  top: 10px;
+}
+
 .ChipsSelect__options {
   width: 100%;
   overflow: hidden;
@@ -51,8 +56,8 @@
   box-shadow: 0 -2px 2px rgba(0, 0, 0, .06), 0 0 2px rgba(0, 0, 0, .03);
 }
 
-.ChipsSelect__options--sizeY-compact .CustomSelectOption {
-  height: 40px;
-  padding: 10px 11px;
+.ChipsSelect--sizeY-compact .CustomSelectOption {
+  height: 36px;
+  padding: 10px 9px;
   font-size: 15px;
 }

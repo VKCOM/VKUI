@@ -263,23 +263,6 @@
   order: 1;
 }
 
-.Alert__close {
-  position: absolute;
-  left: calc(100% + 14px);
-  top: 10px;
-  width: 28px;
-  height: 28px;
-  box-sizing: border-box;
-  padding: 4px;
-  margin: 0;
-  border: none;
-  color: var(--white);
-  background: rgba(0, 0, 0, .35);
-  cursor: pointer;
-  border-radius: 50%;
-  outline: none;
-}
-
 /**
  * Animations
  */
