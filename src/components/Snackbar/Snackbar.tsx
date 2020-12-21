@@ -68,7 +68,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     this.shiftXCurrent = 0;
   }
 
-  static defaultProps = {
+  static defaultProps: Partial<SnackbarProps> = {
     duration: 4000,
     layout: 'horizontal',
   };

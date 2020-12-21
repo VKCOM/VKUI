@@ -1,5 +1,5 @@
 import React, { Component, HTMLAttributes, ReactNode } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
 import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -10,17 +10,12 @@ export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlat
   modal?: ReactNode;
 }
 
-export interface PopoutRootContext {
-  document: Requireable<object>;
-  window: Requireable<object>;
-}
-
 class PopoutRoot extends Component<PopoutRootProps> {
   static defaultProps: Partial<PopoutRootProps> = {
     popout: null,
   };
 
-  static contextTypes: PopoutRootContext = {
+  static contextTypes = {
     window: PropTypes.any,
     document: PropTypes.any,
   };
@@ -68,4 +63,3 @@ class PopoutRoot extends Component<PopoutRootProps> {
 export default withAdaptivity(PopoutRoot, {
   viewWidth: true,
 });
-

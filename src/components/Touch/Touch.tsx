@@ -1,5 +1,5 @@
 import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent as ReactMouseEvent, RefCallback } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   getSupportedEvents,
   coordX,
@@ -27,10 +27,6 @@ export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTML
   useCapture?: boolean;
   noSlideClick?: boolean;
   Component?: ElementType;
-}
-
-export interface TouchContext {
-  document: Requireable<{}>;
 }
 
 export interface Gesture {
@@ -72,7 +68,7 @@ export default class Touch extends Component<TouchProps> {
     noSlideClick: false,
   };
 
-  static contextTypes: TouchContext = {
+  static contextTypes = {
     document: PropTypes.object,
   };
 

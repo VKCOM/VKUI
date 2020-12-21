@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, RefCallback } from 'react';
 import getClassName from '../../helpers/getClassName';
-import PropTypes, { Requireable } from 'prop-types';
+import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import withContext from '../../hoc/withContext';
@@ -36,11 +36,6 @@ export interface FixedLayoutState {
   width: string;
 }
 
-export interface FixedLayoutContext {
-  document: Requireable<{}>;
-  window: Requireable<Window>;
-}
-
 class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   state: FixedLayoutState = {
     position: 'absolute',
@@ -50,7 +45,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   el: HTMLDivElement;
 
-  static contextTypes: FixedLayoutContext = {
+  static contextTypes = {
     document: PropTypes.any,
     window: PropTypes.any,
   };
