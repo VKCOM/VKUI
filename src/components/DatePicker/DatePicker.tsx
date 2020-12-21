@@ -7,6 +7,7 @@ import Input from '../Input/Input';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
+import classNames from '../../lib/classNames';
 import CustomSelect from '../CustomSelect/CustomSelect';
 
 const DefaultMonths: string[] = [
@@ -161,11 +162,19 @@ class DatePicker extends Component<Props, Partial<State>> {
   };
 
   customView() {
-    const { name, dayPlaceholder, monthPlaceholder, yearPlaceholder, popupDirection } = this.props;
+    const {
+      name, min, max,
+      dayPlaceholder, monthPlaceholder, yearPlaceholder,
+      popupDirection,
+      defaultValue,
+      className,
+      hasMouse,
+      ...restProps
+    } = this.props;
     const { day, month, year } = this.state;
 
     return (
-      <div className="DatePicker">
+      <div className={classNames('DatePicker', className)} {...restProps}>
         <div className="DatePicker__container">
           <div className="DatePicker__day">
             <CustomSelect
@@ -204,12 +213,21 @@ class DatePicker extends Component<Props, Partial<State>> {
   }
 
   nativeView() {
-    const { name, min, max } = this.props;
+    const {
+      name, min, max,
+      dayPlaceholder, monthPlaceholder, yearPlaceholder,
+      popupDirection,
+      defaultValue,
+      className,
+      hasMouse,
+      ...restProps
+    } = this.props;
     const { day, month, year } = this.state;
 
     if (day && month && year) {
       return (
         <Input
+          {...restProps}
           name={name}
           type="date"
           defaultValue={this.convertToInputFormat(this.state as State)}
@@ -222,6 +240,7 @@ class DatePicker extends Component<Props, Partial<State>> {
 
     return (
       <Input
+        {...restProps}
         name={name}
         type="date"
         onChange={this.onStringChange}

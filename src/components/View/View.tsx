@@ -443,7 +443,12 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   render() {
-    const { style, popout, modal, platform } = this.props;
+    const {
+      popout, modal, platform,
+      activePanel: _1, splitCol, configProvider, history, id,
+      onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
+      ...restProps
+    } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult } = this.state;
 
     const hasPopout = !!popout;
@@ -467,7 +472,7 @@ class View extends Component<ViewProps, ViewState> {
       <Touch
         Component="section"
         className={classNames(getClassName('View', platform), this.props.className, modifiers)}
-        style={style}
+        {...restProps}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >

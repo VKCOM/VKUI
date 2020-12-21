@@ -21,12 +21,12 @@ export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, Ha
 
 const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { className, left, right, children, separator, getRef } = props;
+  const { className, left, right, children, separator, getRef, ...restProps } = props;
   const isPrimitive = isPrimitiveReactNode(children);
   const hasSeparator = separator && platform === VKCOM;
 
   return (
-    <div className={classNames(getClassName('ModalPageHeader', platform), className)} ref={getRef}>
+    <div {...restProps} className={classNames(getClassName('ModalPageHeader', platform), className)} ref={getRef}>
       <div className="ModalPageHeader__in">
         <div className="ModalPageHeader__left">
           {left}

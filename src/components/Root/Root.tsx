@@ -171,7 +171,11 @@ class Root extends Component<RootProps, RootState> {
   }
 
   render() {
-    const { popout, modal, platform } = this.props;
+    const {
+      popout, modal, platform,
+      splitCol, configProvider, activeView: _1, onTransition,
+      ...restProps
+    } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
     const Views = React.Children.toArray(this.props.children).filter((view: ReactElement) => {
@@ -184,7 +188,7 @@ class Root extends Component<RootProps, RootState> {
       <div className={classNames(baseClassName, this.props.className, {
         'Root--transition': transition,
         'Root--no-motion': this.shouldDisableTransitionMotion(),
-      })}>
+      })} {...restProps}>
         {Views.map((view: ReactElement) => {
           return (
             <div key={view.props.id} id={`view-${view.props.id}`} className={classNames('Root__view', {

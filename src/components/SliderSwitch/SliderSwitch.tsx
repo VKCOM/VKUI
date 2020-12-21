@@ -113,7 +113,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
   }
 
   public render() {
-    const { name, options, className } = this.props;
+    const { name, options, className, ...restProps } = this.props;
     const { activeValue, hoveredOptionId } = this.state;
 
     const [firstOption, secondOption] = options;
@@ -122,6 +122,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
 
     return (
       <div
+        {...restProps}
         className={classNames('SliderSwitch', className)}
         onKeyDown={this.switchByKey}
         onMouseLeave={this.resetFocusedOption}
