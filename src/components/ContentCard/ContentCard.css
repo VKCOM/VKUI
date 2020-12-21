@@ -20,6 +20,10 @@
 /*
 * iOS
 * */
+.ContentCard--ios {
+  margin: 12px;
+}
+
 .ContentCard--ios .ContentCard__tappable {
   border-radius: 10px;
 }
@@ -31,6 +35,11 @@
 /*
 * Android and vkcom
 * */
+.ContentCard--android,
+.ContentCard--vkcom {
+  margin: 12px 16px;
+}
+
 .ContentCard--android .ContentCard__tappable,
 .ContentCard--vkcom .ContentCard__tappable {
   border-radius: 8px;
