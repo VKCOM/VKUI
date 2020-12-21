@@ -161,11 +161,6 @@
   user-select: none;
 }
 
-.AppRoot__wrapper {
-  height: 100%;
-  overflow: auto;
-}
-
 .vkui__root input,
 .vkui__root textarea,
 .vkui__root select,
