@@ -132,16 +132,20 @@ class Search extends Component<SearchProps, SearchState> {
       platform,
       icon,
       onIconClick,
+      style,
       ...inputProps
     } = this.props;
 
     return (
-      <div className={classNames(getClassname('Search', platform), {
-        'Search--focused': this.state.focused,
-        'Search--has-value': !!this.value,
-        'Search--has-after': !!after,
-        'Search--has-icon': !!icon,
-      }, className)}>
+      <div
+        className={classNames(getClassname('Search', platform), {
+          'Search--focused': this.state.focused,
+          'Search--has-value': !!this.value,
+          'Search--has-after': !!after,
+          'Search--has-icon': !!icon,
+        }, className)}
+        style={style}
+      >
         <div className="Search__in">
           <div className="Search__width" />
           <label className="Search__control">

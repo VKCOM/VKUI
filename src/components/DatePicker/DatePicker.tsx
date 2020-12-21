@@ -218,7 +218,6 @@ class DatePicker extends Component<Props, Partial<State>> {
       dayPlaceholder, monthPlaceholder, yearPlaceholder,
       popupDirection,
       defaultValue,
-      className,
       hasMouse,
       ...restProps
     } = this.props;
