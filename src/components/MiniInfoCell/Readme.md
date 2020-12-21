@@ -16,7 +16,7 @@ function MiniInfoCellExample() {
       <ModalPage
         header={
           <ModalPageHeader
-            left={platform === ANDROID && <PanelHeaderButton onClick={closeModal}><Icon24Cancel /></PanelHeaderButton>}
+            left={(platform === ANDROID || platform === VKCOM) && <PanelHeaderButton onClick={closeModal}><Icon24Cancel /></PanelHeaderButton>}
             right={platform === IOS && <PanelHeaderButton onClick={closeModal}><Icon24Dismiss /></PanelHeaderButton>}
             noShadow
           >

@@ -7,15 +7,6 @@
 После закрытия компонент вызывает обязательное свойство `onClose`, и вам необходимо убрать `Snackbar` со страницы.
 
 ```jsx
-
-const orangeBackground = {
-  backgroundImage: 'linear-gradient(135deg, #ffb73d, #ffa000)'
-};
-
-const blueBackground = {
-  backgroundColor: 'var(--accent)'
-};
-
 class SnackBarExample extends React.Component {
   constructor(props) {
     super(props);
@@ -25,28 +16,13 @@ class SnackBarExample extends React.Component {
       snackbar: null
     };
 
-    this.openBase = this.openBase.bind(this);
     this.openBaseWithAction = this.openBaseWithAction.bind(this);
-
-    this.openLongText = this.openLongText.bind(this);
+    this.openVertical = this.openVertical.bind(this);
     this.openWithAvatar = this.openWithAvatar.bind(this);
   }
 
   componentDidMount() {
-    this.openBase()
-  }
-
-  openBase () {
-    if (this.state.snackbar) return;
-    this.setState({ snackbar:
-      <Snackbar
-        layout="vertical"
-        onClose={() => this.setState({ snackbar: null })}
-        before={<Avatar size={24} style={blueBackground}><Icon16Done fill="#fff" width={14} height={14} /></Avatar>}
-      >
-        Уведомления о подкастах включены
-      </Snackbar>
-    });
+    this.openBaseWithAction()
   }
 
   openBaseWithAction () {
@@ -54,27 +30,26 @@ class SnackBarExample extends React.Component {
     this.setState({ snackbar:
       <Snackbar
         onClose={() => this.setState({ snackbar: null })}
-        action="Добавить метку"
+        action="Поделиться"
         onActionClick={() => this.setState({ text: 'Добавляем метку.' })}
-        before={<Avatar size={24} style={orangeBackground}><Icon24Favorite fill="#fff" width={14} height={14} /></Avatar>}
+        before={<Avatar size={24} style={{ background: 'var(--accent)' }}><Icon16Done fill="#fff" width={14} height={14} /></Avatar>}
       >
-        Ссылка сохранена в закладки
+        Ссылка скопирована
       </Snackbar>
     });
   }
 
-  openLongText () {
+  openVertical () {
     if (this.state.snackbar) return;
     this.setState({ snackbar:
       <Snackbar
         layout="vertical"
         onClose={() => this.setState({ snackbar: null })}
-        action="Подробнее"
+        action="Перейти в раздел «Понравилось»"
         onActionClick={() => this.setState({ text: 'Открыта подробная информация.' })}
-        before={<Avatar size={24} style={orangeBackground}><Icon24Favorite fill="#fff" width={14} height={14} /></Avatar>}
+        before={<Avatar size={24} style={{ background: 'var(--accent)' }}><Icon16Done fill="#fff" width={14} height={14} /></Avatar>}
       >
-        Ссылка сохранена в закладки. Все отметки «Нравится» переместились в новости
-        под вкладкой «Понравилось».
+        Ссылка сохранена в закладки
       </Snackbar>
     });
   }
@@ -83,9 +58,7 @@ class SnackBarExample extends React.Component {
     if (this.state.snackbar) return;
     this.setState({ snackbar:
       <Snackbar
-        layout="vertical"
         onClose={() => this.setState({ snackbar: null })}
-        action="Отменить"
         onActionClick={() => this.setState({ text: 'Сообщение Ивану было отменено.' })}
         after={<Avatar src={getAvatarUrl('user_wayshev')} size={32} />}
       >
@@ -98,10 +71,10 @@ class SnackBarExample extends React.Component {
     return (
       <View activePanel="example">
         <Panel id="example">
+          <PanelHeader>Snackbar</PanelHeader>
           <Group>
-            <CellButton onClick={this.openBase}>Простое уведомление с иконкой</CellButton>
             <CellButton onClick={this.openBaseWithAction}>Уведомление с иконкой и кнопкой</CellButton>
-            <CellButton onClick={this.openLongText}>Длинный текст</CellButton>
+            <CellButton onClick={this.openVertical}>Вертикальное расположение</CellButton>
             <CellButton onClick={this.openWithAvatar}>Уведомление с аватаркой</CellButton>
           </Group>
 

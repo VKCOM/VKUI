@@ -1,8 +1,7 @@
 import React, { HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-
-const baseClassName = getClassName('Counter');
+import usePlatform from '../../hooks/usePlatform';
 
 export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -14,6 +13,9 @@ export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
 
 const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => {
   const { mode, size, children, className, ...restProps } = props;
+
+  const platform = usePlatform();
+  const baseClassName = getClassName('Counter', platform);
 
   return (
     <div

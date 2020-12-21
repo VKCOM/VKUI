@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-styleguidist/lib/client/rsg-components/Link';
 import pkg from '../../package.json';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
-import { schemeOptions } from '../utils';
+import { StyleGuideContext } from './StyleGuideRenderer';
+import { PlatformSelect } from './PlatformSelect';
+import { SchemeSelect } from './SchemeSelect';
+import { IntegrationSelect } from './IntegrationSelect';
+import { WebviewTypeSelect } from './WebviewTypeSelect';
+import { ViewWidthSelect } from './ViewWidthSelect';
+import { ViewHeightSelect } from './ViewHeightSelect';
+import { HasMouseCheckbox } from './HasMouseCheckbox';
+import { VKCOM } from '../../src/lib/platform';
 
 export const styles = ({ fontFamily, fontSize }) => ({
   pathline: {
@@ -17,31 +25,61 @@ export const styles = ({ fontFamily, fontSize }) => ({
 
 export function PathlineRenderer({ classes, children }) {
   return (
-    <div className={classes.pathline}>
-      <span>
-        Платформа:&nbsp;
-        <select onChange={ (e) => {
-          window.localStorage.setItem('vkui-styleguide:ua', e.target.value);
-          window.location.reload();
-        } } value={window.navigator.userAgent}>
-          <option value={window.uaList.ios}>ios</option>
-          <option value={window.uaList.android}>android</option>
-        </select>
-      </span>&nbsp;|&nbsp;<span>
-        Тема:&nbsp;
-        <select onChange={ (e) => {
-          window.localStorage.setItem('vkui-styleguide:schemeId', e.target.value);
-          window.location.reload();
-        } } value={window.schemeId}>
-          {schemeOptions}
-        </select>
-      </span>&nbsp;|&nbsp;<span className={classes.link}>
-        Исходники:&nbsp;
-        <Link target="_blank" href={`${pkg.repository}/tree/v${pkg.version}/${children.replace('../', '')}`}>
-          GitHub
-        </Link>
-      </span>
-    </div>
+    <StyleGuideContext.Consumer>
+      {(styleGuideContext) => {
+        return (
+          <div className={classes.pathline}>
+            <IntegrationSelect
+              onChange={(e) => styleGuideContext.setContext({ integration: e.target.value })}
+              value={styleGuideContext.integration}
+            />
+            &nbsp;|&nbsp;
+            <PlatformSelect
+              onChange={(e) => styleGuideContext.setContext({ platform: e.target.value })}
+              value={styleGuideContext.platform}
+            />
+            &nbsp;|&nbsp;
+            <SchemeSelect
+              onChange={(e) => styleGuideContext.setContext({ scheme: e.target.value })}
+              value={styleGuideContext.scheme}
+              disabled={styleGuideContext.platform === VKCOM}
+            />
+            &nbsp;|&nbsp;
+            <WebviewTypeSelect
+              onChange={(e) => styleGuideContext.setContext({ webviewType: e.target.value })}
+              value={styleGuideContext.webviewType}
+            />
+            &nbsp;|&nbsp;
+            <ViewWidthSelect
+              onChange={(e) => styleGuideContext.setContext({ width: Number(e.target.value) })}
+              value={styleGuideContext.width}
+              isWide={!styleGuideContext.hasSidebar}
+              isVKCOM={styleGuideContext.platform === VKCOM}
+            />
+            &nbsp;|&nbsp;
+            <ViewHeightSelect
+              onChange={(e) => styleGuideContext.setContext({ height: Number(e.target.value) })}
+              value={styleGuideContext.height}
+            />
+            &nbsp;|&nbsp;
+            <HasMouseCheckbox 
+              onChange={(e) => styleGuideContext.setContext({ hasMouse: e.target.checked })}
+              value={styleGuideContext.hasMouse}
+            />
+            &nbsp;|&nbsp;
+            <span className={classes.link}>
+              Исходники:&nbsp;
+                <Link
+                  target="_blank"
+                  href={`${pkg.repository}/tree/v${pkg.version}/${children.replace('../', '')}`}
+                >
+                  GitHub
+                </Link>
+            </span>
+          </div>
+        )
+      }}
+    </StyleGuideContext.Consumer>
   );
 }
 

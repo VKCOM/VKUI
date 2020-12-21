@@ -1,128 +1,34 @@
-import React, { ChangeEvent, ChangeEventHandler, SelectHTMLAttributes, RefCallback } from 'react';
-import classNames from '../../lib/classNames';
-import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
-import FormField from '../FormField/FormField';
-import { HasAlign, HasFormLabels, HasFormStatus, HasRef, HasRootRef } from '../../types';
+import React, { FunctionComponent } from 'react';
+import NativeSelect from '../NativeSelect/NativeSelect';
+import CustomSelect, { CustomSelectProps } from '../CustomSelect/CustomSelect';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface SelectProps extends
-  SelectHTMLAttributes<HTMLSelectElement>,
-  HasRef<HTMLSelectElement>,
-  HasRootRef<HTMLLabelElement>,
-  HasFormStatus,
-  HasFormLabels,
-  HasAlign {
-  defaultValue?: string;
-  placeholder?: string;
-}
+const Select: FunctionComponent<CustomSelectProps & AdaptivityProps> = ({ hasMouse, ...props }) => {
+  // Use custom select if device has connected a mouse
+  if (hasMouse) {
+    const { children, ...restProps } = props;
 
-export interface SelectState {
-  value?: string;
-  title?: string;
-  notSelected?: boolean;
-}
-
-export default class Select extends React.Component<SelectProps, SelectState> {
-  constructor(props: SelectProps) {
-    super(props);
-    const state: SelectState = {
-      title: '',
-      notSelected: false,
-    };
-    if (typeof props.value !== 'undefined') {
-      this.isControlledOutside = true;
-    } else {
-      state.value = props.defaultValue || '';
-    }
-    this.state = state;
-  }
-
-  isControlledOutside?: boolean;
-  selectEl?: HTMLSelectElement;
-
-  onChange: ChangeEventHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    this.setTitle();
-    if (!this.isControlledOutside) {
-      this.setState({ value: e.currentTarget.value });
-    }
-    if (this.props.onChange) {
-      this.props.onChange(e);
-    }
-  };
-
-  setTitle: VoidFunction = () => {
-    const selectedOption = this.selectEl.options[this.selectEl.selectedIndex];
-    if (selectedOption) {
-      const title = selectedOption.text;
-      const notSelected = selectedOption.value === '' && this.props.hasOwnProperty('placeholder');
-
-      if (title !== this.state.title || notSelected !== this.state.notSelected) {
-        this.setState({
-          title,
-          notSelected,
-        });
-      }
-    }
-  };
-
-  componentDidUpdate(prevProps: SelectProps) {
-    if (prevProps.value !== this.props.value || prevProps.children !== this.props.children) {
-      this.setTitle();
-    }
-  }
-
-  componentDidMount() {
-    this.setTitle();
-  }
-
-  get value() {
-    return this.isControlledOutside ? this.props.value : this.state.value;
-  }
-
-  getRef: RefCallback<HTMLSelectElement> = (element) => {
-    this.selectEl = element;
-
-    const getRef = this.props.getRef;
-    if (getRef) {
-      if (typeof getRef === 'function') {
-        getRef(element);
-      } else {
-        getRef.current = element;
-      }
-    }
-  };
-
-  render() {
-    const { style, value, defaultValue, onChange, align, status, placeholder, children, className,
-      getRef, getRootRef, top, bottom, disabled, ...restProps } = this.props;
+    const value = restProps.hasOwnProperty('value')
+      ? restProps.value
+      : restProps.defaultValue;
 
     return (
-      <FormField
-        Component="label"
-        className={classNames('Select', {
-          ['Select--not-selected']: this.state.notSelected,
-          [`Select--align-${align}`]: !!align,
-          'Select--disabled': disabled,
-        }, className)}
-        style={style}
-        getRootRef={getRootRef}
-        status={status}
-      >
-        <select
-          {...restProps}
-          disabled={disabled}
-          className="Select__el"
-          onChange={this.onChange}
-          value={this.value}
-          ref={this.getRef}
-        >
-          {placeholder && <option value="">{placeholder}</option>}
-          {children}
-        </select>
-        <div className="Select__container">
-          <div className="Select__title">{this.state.title}</div>
-          <Icon24Dropdown />
-        </div>
-      </FormField>
+      <CustomSelect
+        value={value}
+        {...restProps}
+      />
     );
   }
-}
+
+  const { options, popupDirection, renderOption, ...restProps } = props;
+
+  return (
+    <NativeSelect {...restProps}>
+      {options.map(({ label, value }) => <option value={value} key={`${value}`}>{label}</option>)}
+    </NativeSelect>
+  );
+};
+
+export default withAdaptivity(Select, {
+  hasMouse: true,
+});

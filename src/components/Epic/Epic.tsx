@@ -1,40 +1,41 @@
-import React, { HTMLAttributes, ReactNode, Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { HTMLAttributes, ReactNode, ReactElement, FC, useEffect, useRef } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasChildren, HasPlatform } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
+import { HasChildren } from '../../types';
+import usePlatform from '../../hooks/usePlatform';
+import { AdaptivityProps } from 'index';
+import withAdaptivity, { ViewWidth } from '../../hoc/withAdaptivity';
+import { ScrollSaver } from './ScrollSaver';
 
-export interface EpicProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasPlatform {
-  tabbar: ReactNode;
+export interface EpicProps extends HTMLAttributes<HTMLDivElement>, HasChildren, AdaptivityProps {
+  tabbar?: ReactNode;
   activeStory: string;
 }
 
-export interface EpicContext {
-  hasTabbar: boolean;
-}
+export const Epic: FC<EpicProps> = (props) => {
+  const platform = usePlatform();
+  const scroll = useRef<{ [key: string]: number }>({}).current;
+  const { className, activeStory, tabbar, children, viewWidth, ...restProps } = props;
 
-class Epic extends Component<EpicProps> {
-  getChildContext(): EpicContext {
-    return {
-      hasTabbar: this.props.hasOwnProperty('tabbar'),
-    };
-  }
+  useEffect(() => {
+    if (!tabbar && viewWidth < ViewWidth.SMALL_TABLET) {
+      console.warn('[Epic] Using Epic without tabbar is not recommended on mobile');
+    }
+  }, [viewWidth]);
+  const story = (React.Children.toArray(children) as ReactElement[]).find((story) => story.props.id === activeStory);
 
-  static childContextTypes: {} = {
-    hasTabbar: PropTypes.bool,
-  };
+  return (
+    <div {...restProps} className={classNames(getClassName('Epic', platform), className)}>
+      <ScrollSaver
+        key={activeStory}
+        initialScroll={scroll[activeStory] || 0}
+        saveScroll={(value) => scroll[activeStory] = value}
+      >{story}</ScrollSaver>
+      {tabbar}
+    </div>
+  );
+};
 
-  render() {
-    const { className, activeStory, tabbar, children, platform, ...restProps } = this.props;
-
-    return (
-      <div {...restProps} className={classNames(getClassName('Epic', platform), className)}>
-        {React.Children.toArray(children).find((item: React.ReactElement) => item.props.id === activeStory)}
-        {tabbar}
-      </div>
-    );
-  }
-}
-
-export default withPlatform(Epic);
+export default withAdaptivity(Epic, {
+  viewWidth: true,
+});

@@ -1,14 +1,20 @@
-# VKUI
-VKUI – это набор React-компонентов, с помощью которых можно создавать интерфейсы,
-внешне неотличимые от наших iOS и Android приложений.
+<h1 align="center">
+  <a href="https://vkcom.github.io/VKUI/"><img src="styleguide/assets/static/vkui_logo.png?raw=true" width="300" alt="VKUI logo"></a>
+</h1>
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/npm/l/@vkontakte/vkui?maxAge=3600" alt="license mit"></a>
+  <a href="https://npmjs.com/package/@vkontakte/vkui"><img src="https://img.shields.io/npm/v/@vkontakte/vkui/latest.svg?maxAge=3600" alt="open latest version"></a>
+</p>
+<p align="center">
+VKUI — это библиотека адаптивных React-компонентов, <br> для создания веб-приложений и <a href="https://vk.com/dev/vk_apps_docs">VK Mini Apps</a> в экосистеме ВКонтакте.<br>
+Библиотека основана на <a href="https://www.figma.com/@vk">дизайн-системе ВКонтакте</a> и реализует её интерфейсы для различных платформ.
+</p>
 
-## License
-[![License](https://img.shields.io/github/license/VKCOM/VKUI.svg)](https://github.com/VKCOM/VKUI/blob/master/LICENSE)
 
 ## Установка
 `npm i @vkontakte/vkui` или `yarn add @vkontakte/vkui`
 
-*Не забудьте посмотреть в консоль и установить необходимые пакету `peerDependencies`*
+**Важно:** Нужно установить вручную [`peerDependencies`](package.json#L95-L103), либо использовать npm7+ который делает это автоматически.
 
 ## Hello World
 ```jsx static
@@ -44,11 +50,9 @@ ReactDOM.render(<App />, document.getElementById('root'));
 * Android Browser >= 4.4 (Chrome 30)
 * Chrome для Android, начиная с Android 5.0 (Chrome 36)
 
-### vk.com и m.vk.com
-Сейчас библиотека не гарантирует стабильную работу при интеграции в [vk.com](vk.com) и [m.vk.com](m.vk.com). В vk.com есть нерешенные проблемы с элементами ввода типа клавиатуры и мышки. В m.vk.com есть несоответствия в списках поддерживаемых браузеров.
+## Тестирование
 
-### Десктопный UI
-В данный момент ведется [активная разработка](https://github.com/VKCOM/VKUI/pull/665) адаптивного UI, который будет работать на десктопных и планшетных браузерах. Stay tuned. 
+Мы работаем над качеством библиотеки и подвозим тесты. `yarn test` запускает юниты, проверяет типы и линтит. `yarn test:unit` запускает только юниты и поддерживает интерактивный режим с флагом `--watch`. Также мы поддерживаем скриншотные тесты — смотрите наш [гайд по тестированию](./TESTING.md).
 
 ## Документация
 В [документации](https://vkcom.github.io/VKUI/) вы сможете найти информацию об использовании компонентов и утилит.
@@ -59,8 +63,3 @@ ReactDOM.render(<App />, document.getElementById('root'));
 ## Contributing
 Мы очень радуемся, когда пользователи библиотеки работают над её улучшением. Для того, чтобы оставить след в
 истории, сделайте форк проекта, внесите изменения и отправьте нам [pull request](https://github.com/VKCOM/VKUI/pulls).
-
-
-
-
-

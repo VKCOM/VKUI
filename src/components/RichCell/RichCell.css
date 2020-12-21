@@ -1,7 +1,6 @@
 .RichCell {
   display: flex;
   min-height: 64px;
-  padding: 8px 0;
   box-sizing: border-box;
   white-space: nowrap;
   text-decoration: none;
@@ -20,6 +19,8 @@
 
 .RichCell > .Avatar {
   padding-right: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   flex-shrink: 0;
 }
 
@@ -32,9 +33,13 @@
   flex-direction: column;
   justify-content: center;
   position: relative;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .RichCell__top {
+  font-size: 0;
+  line-height: 0;
 }
 
 .RichCell__top > :first-child:not(.RichCell__content) {
@@ -48,9 +53,6 @@
 
 .RichCell__content {
   display: flex;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 20px;
 }
 
 .RichCell__after {
@@ -82,22 +84,19 @@
 }
 
 .RichCell__text {
-  font-size: 15px;
-  line-height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .RichCell__caption {
-  font-size: 13px;
-  line-height: 16px;
+  margin-top: 1px;
   color: var(--text_secondary);
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .RichCell__bottom .UsersStack {
-  padding: 8px 0 0;
+  padding: 5px 0 0;
 }
 
 .RichCell__actions {
@@ -122,7 +121,29 @@
  * Android
  */
 
-.RichCell--android {
+.RichCell--android,
+.RichCell--vkcom {
   padding-right: 16px;
   padding-left: 16px;
+}
+
+/**
+ * sizeY === 'compact'
+ */
+
+.RichCell--sizeY-compact {
+  min-height: 60px;
+}
+
+.RichCell > .Avatar--sz-48 {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.RichCell--sizeY-compact .RichCell__actions {
+  margin-top: 11px;
+}
+
+.RichCell--sizeY-compact .UsersStack + .RichCell__actions {
+  margin-top: 12px;
 }

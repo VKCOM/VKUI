@@ -14,26 +14,33 @@
 
     .Checkbox__icon {
       flex-shrink: 0;
-      width: 20px;
-      height: 20px;
       box-sizing: border-box;
-      margin: 0 14px 0 2px;
+      margin-right: 12px;
       border-radius: 4px;
-      border: 2px solid var(--icon_secondary);
-      color: transparent;
+      display: flex;
+      line-height: 24px;
+      }
+
+      .Checkbox__icon--on {
+        color: var(--accent);
+        display: none;
+      }
+
+      .Checkbox__icon--off {
+        color: var(--icon_tertiary);
       }
 
     .Checkbox__content {
       flex-grow: 1;
-      font-size: 16px;
-      line-height: 20px;
       color: var(--text_primary);
       }
 
-  .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon {
-    background-color: var(--accent);
-    border-color: var(--accent);
-    color: var(--white);
+    .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--on {
+      display: flex;
+    }
+
+    .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--off {
+      display: none;
     }
 
   .Checkbox__input[disabled] ~ .Checkbox__container {
@@ -41,23 +48,55 @@
     }
 
 .Checkbox--ios {
-  padding: 12px;
+  padding: 0 12px;
   }
 
-  .Checkbox--ios .Checkbox__container {}
+  .Checkbox--ios .Checkbox__icon {
+    margin-top: 10px;
+    }
 
-    .Checkbox--ios .Checkbox__content {
-      font-size: 16px;
-      line-height: 20px;
-      }
+  .Checkbox--ios.Checkbox--sizeY-compact .Checkbox__icon {
+    margin-top: 8px;
+    }
+
+  .Checkbox--ios .Checkbox__content {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    }
 
 .Checkbox--android {
-  padding: 16px;
+  padding: 0 16px;
   }
 
-  .Checkbox--android .Checkbox__container {}
+  .Checkbox--android .Checkbox__icon {
+    margin-top: 10px;
+    }
 
-    .Checkbox--android .Checkbox__content {
-      font-size: 16px;
-      line-height: 20px;
-      }
+  .Checkbox--android.Checkbox--sizeY-compact .Checkbox__icon {
+    margin-top: 8px;
+    }
+
+  .Checkbox--android .Checkbox__content {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    }
+
+.Checkbox--vkcom {
+  padding: 0 16px;
+  }
+
+  .Checkbox--vkcom .Checkbox__icon {
+    border-radius: 3px;
+    padding: 1px;
+    border-width: 1px;
+    margin-top: 8px;
+    }
+
+  .Checkbox--vkcom .Checkbox__input[disabled] ~ .Checkbox__container {
+    opacity: .4;
+    }
+
+.Checkbox--sizeY-compact .Checkbox__content {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

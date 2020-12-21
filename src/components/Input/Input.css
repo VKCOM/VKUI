@@ -22,15 +22,23 @@
   outline: none;
   appearance: none;
   text-overflow: ellipsis;
-  height: 44px;
+  height: 42px;
   line-height: 19px;
   font-size: 16px;
   color: var(--text_primary);
-  padding: 12px;
+  padding: 11px;
   position: relative;
   z-index: 2;
   background: transparent;
   }
+
+.Input--sizeY-compact .Input__el {
+  height: 34px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  line-height: 20px;
+  font-size: 15px;
+}
 
 .Input__el:disabled {
   opacity: .4;

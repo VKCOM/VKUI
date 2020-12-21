@@ -2,9 +2,9 @@ import React, { ElementType, FunctionComponent, AnchorHTMLAttributes } from 'rea
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
+import Tappable, { TappableProps } from '../Tappable/Tappable';
 
-export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, TappableProps {
   Component?: ElementType;
 }
 
@@ -12,19 +12,27 @@ const Link: FunctionComponent<LinkProps> = ({
   children,
   className,
   Component,
-  getRootRef,
   ...restProps
 }: LinkProps) => {
   const platform = usePlatform();
   const baseClassName = getClassName('Link', platform);
 
-  return (
-    <Component {...restProps} ref={getRootRef} className={classNames(baseClassName, className)}>{children}</Component>
-  );
-};
+  if (!Component) {
+    if (restProps.href) {
+      Component = 'a';
+    } else {
+      Component = 'button';
+      restProps = { type: 'button', ...restProps };
+    }
+  }
 
-Link.defaultProps = {
-  Component: 'a',
+  return (
+    <Tappable
+      Component={Component}
+      {...restProps}
+      className={classNames(baseClassName, className)}
+    >{children}</Tappable>
+  );
 };
 
 export default Link;

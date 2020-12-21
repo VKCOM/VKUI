@@ -7,11 +7,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
 <View activePanel="banner">
   <Panel id="banner">
     <PanelHeader>Banner</PanelHeader>
-
-    <Header>Regular size</Header>
-
     <Group
-      header={<Header mode="secondary">Content: Tint</Header>}
+      header={<Header>Content: tint, size: regular</Header>}
     >
       <Banner
         before={<Avatar size={96} mode="image" src="https://sun9-63.userapi.com/yOEQYPHrNHjZEoanbqPb65HPl5iojmiLgLzfGA/W3geVMMt8TI.jpg" />}
@@ -25,7 +22,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         before={<Avatar size={96} mode="image" src="https://sun9-32.userapi.com/uFzLOK55iY7pC0DHjneEdP9G6gXcXi2Mxj9wVA/wnTmzh_blNM.jpg" />}
         header="Для Вас"
         subheader="Обновлено сегодня"
-        actions={<Button before={<Icon24Play />}>СЛУШАТЬ</Button>}
+        actions={<Button before={<Icon24Play />}>Слушать</Button>}
       />
 
       <Banner
@@ -36,7 +33,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         actions={
           <React.Fragment>
             <Button mode="primary">Подробнее</Button>
-            <Button mode="tertiary">Напомнить позже</Button>
+            <Button mode="tertiary" hasHover={false}>Напомнить позже</Button>
           </React.Fragment>
         }
       />
@@ -62,7 +59,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
             <Link>Ускорьте процесс</Link>, если у Вас есть<br />доступ к старому номеру.
           </React.Fragment>
         }
-        actions={<Button mode="tertiary">Отменить заявку</Button>}
+        actions={<Button mode="tertiary" hasHover={false}>Отменить заявку</Button>}
       />
 
       <Banner
@@ -71,7 +68,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         actions={
           <React.Fragment>
             <Button>Включить</Button>
-            <Button mode="tertiary">Подробнее</Button>
+            <Button mode="tertiary" hasHover={false}>Подробнее</Button>
           </React.Fragment>
         }
       />
@@ -85,7 +82,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
     </Group>
 
     <Group
-      header={<Header mode="secondary">Content: Image</Header>}
+      header={<Header>Mode: image, size: regular</Header>}
     >
       <Banner
         mode="image"
@@ -105,11 +102,8 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
         actions={<Button mode="overlay_primary">Подробнее</Button>}
       />
     </Group>
-
-    <Header>Medium size</Header>
-
     <Group
-      header={<Header mode="secondary">Content: Tint</Header>}
+      header={<Header>Content: tint, size: medium</Header>}
     >
       <Banner
         size="m"
@@ -121,7 +115,7 @@ const warningGradient = 'linear-gradient(90deg, #ffb73d 0%, #ffa000 100%)';
     </Group>
 
     <Group
-      header={<Header mode="secondary">Content: Image</Header>}
+      header={<Header>Content: image, size: medium</Header>}
     >
       <Banner
         mode="image"

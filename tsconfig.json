@@ -13,8 +13,15 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "isolatedModules": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "baseUrl": "src",
+    "paths": {
+      "@react-playwright": ["../e2e"]
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "e2e/**/*.ts", "e2e/**/*.tsx", "e2e/**/*.js"],
+  "files": [
+    "node_modules/jest-playwright-preset/types/global.d.ts",
+    "node_modules/expect-playwright/global.d.ts"
+  ]
 }

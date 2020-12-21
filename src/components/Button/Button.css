@@ -3,7 +3,6 @@
   box-sizing: border-box;
   outline: none;
   text-decoration: none;
-  cursor: default;
   border: 1px solid transparent;
   margin: 0;
   padding: 0;
@@ -13,6 +12,10 @@
   .Button__in {
     display: flex;
     align-items: center;
+    }
+
+  .Button__before:not(:last-child) {
+    margin-left: -4px;
     }
 
 .Button.Tappable--active {
@@ -25,46 +28,28 @@
 
   .Button--aln-left .Button__in {
     justify-content: flex-start;
+    text-align: left;
     }
 
   .Button--aln-center .Button__in {
     justify-content: center;
+    text-align: center;
     }
 
   .Button--aln-right .Button__in {
     justify-content: flex-end;
+    text-align: right;
     }
 
 .Button--str {
   display: block;
-  max-width: 100%;
-  flex-grow: 1;
-  }
-
-.Button--str:first-child:last-child {
   width: 100%;
+  flex-grow: 1;
+  flex-basis: 0;
   }
 
-  .Button--stretched .Button__in {
+  .Button--str .Button__in {
     justify-content: center;
-    }
-
-  .Button__before .Icon--16 {
-      margin-right: 6px;
-      }
-
-  .Button__before .Icon--24,
-  .Button__before .Icon--28 {
-      margin-right: 8px;
-      }
-
-  .Button:not(.Button--sz-xl) .Button__after {
-    margin-left: 8px;
-    }
-
-  .Button::before,
-  .Button::after {
-    display: none;
     }
 
 .Button--lvl-primary {
@@ -114,58 +99,59 @@
   color: #fff;
 }
 
-.Button--sz-m {
-  padding: 0 16px;
+.Button--sz-s {
+  min-height: 30px;
+  padding: 0 15px;
   }
 
-  .Button--sz-m .Button__before {
-    margin-left: -4px;
+  .Button--sz-s .Button__before:not(:last-child) {
+    margin-right: 6px;
     }
 
-  .Button--sz-m .Button__content {
-    font-size: 14px;
-    line-height: 14px;
-    font-weight: 500;
+  .Button--sz-s .Button__after:not(:first-child) {
+    margin-left: 6px;
+    }
+
+  .Button--sz-s .Button__content {
+    padding: 4px 0 6px;
+    }
+
+  .Button--sz-s .Button__content--caps {
     padding: 7px 0;
     }
 
+.Button--sz-m {
+  padding: 0 15px;
+  min-height: 36px;
+  }
+
+  .Button--sz-m .Button__before:not(:last-child) {
+    margin-right: 6px;
+    }
+
+  .Button--sz-m .Button__after:not(:first-child) {
+    margin-left: 6px;
+    }
+
+  .Button--sz-m .Button__content {
+    padding: 6px 0 8px;
+    }
+
 .Button--sz-l {
-  padding: 0 16px;
+  padding: 0 19px;
+  min-height: 44px;
   }
 
-  .Button--sz-l .Button__before {
-    margin-left: -4px;
+  .Button--sz-l .Button__before:not(:last-child) {
+    margin-right: 8px;
     }
 
-  .Button--sz-l .Button__content {
-    font-size: 15px;
-    font-weight: 500;
-    padding: 8px 0;
+  .Button--sz-l .Button__after:not(:first-child) {
+    margin-left: 8px;
     }
 
-.Button--sz-xl {
-  display: block;
-  width: 100%;
-  padding: 0 16px;
-  }
-
-  .Button--sz-xl .Button__before {
-    margin-left: -6px;
-    margin-right: 2px;
-    }
-
-  .Button--sz-xl .Button__before ~ .Button__content {
-    padding-left: 0;
-    }
-
-  .Button--sz-xl .Button__in {
+  .Button--sz-l .Button__in {
     justify-content: center;
-    }
-
-  .Button--sz-xl .Button__content {
-    font-size: 17px;
-    font-weight: 500;
-    padding: 11px;
     }
 
 /*
@@ -175,11 +161,63 @@
   border-radius: 10px;
 }
 
+.Button--ios.Button--sz-l .Button__content {
+  padding: 9px 0 11px;
+}
+
 /*
   Android
  */
 .Button--android {
   border-radius: 8px;
+}
+
+.Button--android.Button--sz-l .Button__content {
+  padding: 10px 0 12px;
+}
+
+/*
+  VKCOM
+*/
+.Button--vkcom {
+  border-radius: 4px;
+}
+
+/*
+  sizeY = Compact
+*/
+/* small size */
+.Button--sizeY-compact.Button--sz-s {
+  min-height: 26px;
+}
+
+.Button--sizeY-compact.Button--sz-s .Button__content {
+  padding-top: 3px;
+  padding-bottom: 5px;
+}
+
+.Button--sizeY-compact.Button--sz-s .Button__content--caps {
+  padding: 5px 0;
+}
+
+/* medium size */
+.Button--sizeY-compact.Button--sz-m {
+  min-height: 32px;
+}
+
+.Button--sizeY-compact.Button--sz-m .Button__content {
+  padding-top: 4px;
+  padding-bottom: 6px;
+}
+
+/* large size */
+.Button--sizeY-compact.Button--sz-l {
+  min-height: 36px;
+}
+
+.Button--sizeY-compact.Button--sz-l .Button__content {
+  padding-top: 6px;
+  padding-bottom: 8px;
 }
 
 /**
@@ -209,3 +247,12 @@
   background-color: var(--button_commerce_foreground);
   color: var(--button_commerce_background);
   }
+
+.Button--vkcom.Button--lvl-secondary .Counter,
+.Button--vkcom.Button--lvl-tertiary .Counter,
+.Button--vkcom.Button--lvl-outline .Counter,
+.Button--vkcom.Button--lvl-secondary .Icon,
+.Button--vkcom.Button--lvl-tertiary .Icon,
+.Button--vkcom.Button--lvl-outline .Icon {
+  opacity: .72;
+}

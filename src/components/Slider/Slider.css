@@ -1,49 +1,55 @@
 .Slider {
   position: relative;
+  z-index: 0;
   height: 28px;
-  margin: 0 14px;
+  padding: 0 14px;
   }
 
   .Slider::before {
     position: absolute;
     left: 0;
-    top: 12px;
-    height: 4px;
     width: 100%;
     background-color: var(--placeholder_icon_background);
-    border-radius: 2px;
     content: '';
+    z-index: -1;
+    top: 13px;
+    height: 2px;
+    border-radius: 1px;
     }
 
   .Slider__in {
     height: 100%;
+    position: relative;
     }
 
   .Slider__dragger {
     position: absolute;
-    top: 12px;
     left: 0;
     width: 0;
     height: 0;
+    top: 13px;
     }
 
   .Slider__dragger::before {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
+    width: calc(100% + 28px);
     background: var(--accent);
-    border-radius: 2px;
     content: '';
+    left: -14px;
+    height: 2px;
+    border-radius: 1px;
     }
 
   .Slider__thumb {
     position: absolute;
-    top: -12px;
+    top: -13px;
     width: 28px;
     height: 28px;
     transition: transform .1s ease;
+    border-radius: 14px;
+    background: var(--white);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .15);
     }
 
     .Slider__thumb--start {
@@ -55,35 +61,81 @@
       }
 
 /**
- * iOS
+ * sizeY COMPACT
  */
-.Slider--ios {
-  }
 
-  .Slider--ios .Slider__in {}
+.Slider--sizeY-compact {
+  height: 24px;
+  padding: 0 12px;
+}
 
-    .Slider--ios .Slider__thumb {
-      border-radius: 14px;
-      background: var(--white);
-      box-shadow: 0 2px 7px rgba(0, 0, 0, .35), 0 1px 1px rgba(0, 0, 0, .15);
-      }
+.Slider--sizeY-compact::before {
+  top: 11px;
+}
+
+.Slider--sizeY-compact .Slider__dragger {
+  top: 11px;
+}
+
+.Slider--sizeY-compact .Slider__dragger::before {
+  width: calc(100% + 24px);
+  left: -12px;
+}
+
+.Slider--sizeY-compact .Slider__thumb {
+  top: -11px;
+  width: 24px;
+  height: 24px;
+}
+
+.Slider--sizeY-compact .Slider__thumb--start {
+  left: -12px;
+}
+
+.Slider--sizeY-compact .Slider__thumb--end {
+  right: -12px;
+}
 
 /**
- * Android
+ * VKCOM
  */
-.Slider--android {
-  }
+.Slider--vkcom {
+  height: 20px;
+  padding: 0 10px;
+}
 
-  .Slider--ios .Slider__in {}
+.Slider--vkcom::before {
+  top: 8px;
+  height: 4px;
+  border-radius: 2px;
+}
 
-    .Slider--android .Slider__thumb::before {
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 20px;
-      height: 20px;
-      content: '';
-      background: var(--white);
-      border-radius: 10px;
-      box-shadow: 0 1px 3px 0 var(--separator_common), 0 0 1px 0 var(--separator_common), 0 0 0 .5px rgba(0, 0, 0, .04);
-      }
+.Slider--vkcom .Slider__dragger {
+  top: 8px;
+}
+
+.Slider--vkcom .Slider__dragger::before {
+  width: calc(100% + 20px);
+  background: var(--accent);
+  left: -10px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.Slider--vkcom .Slider__thumb {
+  top: -8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--input_border);
+  box-shadow: 0 0 2px var(--separator_common), 0 2px 4px var(--separator_common);
+  box-sizing: border-box;
+}
+
+.Slider--vkcom .Slider__thumb--start {
+  left: -10px;
+}
+
+.Slider--vkcom .Slider__thumb--end {
+  right: -10px;
+}

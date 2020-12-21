@@ -1,13 +1,5 @@
 .View--android {
-  font-family: var(--font-android);
-  }
-
-.View--android.View--header .Panel__in {
-  padding-top: var(--panelheader_height_android);
-  }
-
-.View--android.View--header .FixedLayout--top {
-  top: var(--panelheader_height_android);
+  font-family: var(--font-common);
   }
 
 /**

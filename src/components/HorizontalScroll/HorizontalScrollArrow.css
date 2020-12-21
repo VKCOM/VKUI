@@ -1,0 +1,69 @@
+.HorizontalScroll__arrow {
+  position: absolute;
+  cursor: pointer;
+  user-select: auto;
+  top: 0;
+  height: 100%;
+  opacity: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: opacity .15s;
+}
+
+.HorizontalScroll--ios .HorizontalScroll__arrow,
+.Gallery--ios .HorizontalScroll__arrow {
+  transition-timing-function: var(--ios-easing);
+}
+
+.HorizontalScroll--android .HorizontalScroll__arrow,
+.HorizontalScroll--vkcom .HorizontalScroll__arrow,
+.Gallery--android .HorizontalScroll__arrow,
+.Gallery--vkcom .HorizontalScroll__arrow {
+  transition-timing-function: var(--android-easing);
+}
+
+.HorizontalScroll:hover .HorizontalScroll__arrow,
+.Gallery:hover .HorizontalScroll__arrow {
+  opacity: .72;
+}
+
+.HorizontalScroll:hover .HorizontalScroll__arrow:hover,
+.Gallery:hover .HorizontalScroll__arrow:hover {
+  opacity: 1;
+}
+
+.HorizontalScroll__arrow-icon {
+  background-color: var(--modal_card_background);
+  color: var(--icon_secondary);
+  width: 40px;
+  height: 40px;
+  border-radius: 24px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 0 16px rgba(0, 0, 0, .12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.HorizontalScroll__arrow-left {
+  margin-left: 16px;
+  left: 0;
+}
+
+.HorizontalScroll__arrow-left .HorizontalScroll__arrow-icon {
+  transform: rotate(180deg);
+}
+
+.HorizontalScroll__arrow-right {
+  margin-right: 16px;
+  right: 0;
+}
+
+.HorizontalScroll__arrow-left:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
+  transform: translateX(8px);
+}
+
+.HorizontalScroll__arrow-right:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
+  transform: translateX(-8px);
+}

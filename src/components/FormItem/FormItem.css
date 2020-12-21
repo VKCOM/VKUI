@@ -1,0 +1,82 @@
+.FormItem {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: block;
+}
+
+.FormItem__top {
+  padding-top: 2px;
+  padding-bottom: 8px;
+  color: var(--text_secondary);
+}
+
+.FormItem--sizeY-compact .FormItem__top {
+  padding-bottom: 6px;
+}
+
+.FormItem__bottom {
+  color: var(--text_secondary);
+  padding-top: 8px;
+}
+
+.FormItem--sizeY-compact .FormItem__bottom {
+  padding-top: 6px;
+}
+
+.FormItem--error .FormItem__bottom {
+  color: var(--field_error_border);
+}
+
+.FormItem--valid .FormItem__bottom,
+.FormItem--verified .FormItem__bottom {
+  color: var(--field_valid_border);
+}
+
+/**
+ * iOS
+ */
+
+.FormItem--ios {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.FormItem--ios .Cell,
+.FormItem--ios .SimpleCell,
+.FormItem--ios .RichCell,
+.FormItem--ios .CellButton,
+.FormItem--ios .Radio,
+.FormItem--ios .Checkbox {
+  width: 100%;
+  box-sizing: content-box;
+  margin-left: -12px;
+  margin-right: -12px;
+}
+
+/**
+ * Android & VKCOM
+ */
+
+.FormItem--android,
+.FormItem--vkcom {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.FormItem--android .Cell,
+.FormItem--vkcom .Cell,
+.FormItem--android .SimpleCell,
+.FormItem--vkcom .SimpleCell,
+.FormItem--android .RichCell,
+.FormItem--vkcom .RichCell,
+.FormItem--android .CellButton,
+.FormItem--vkcom .CellButton,
+.FormItem--android .Radio,
+.FormItem--vkcom .Radio,
+.FormItem--android .Checkbox,
+.FormItem--vkcom .Checkbox {
+  width: 100%;
+  box-sizing: content-box;
+  margin-left: -16px;
+  margin-right: -16px;
+}

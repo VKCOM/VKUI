@@ -7,15 +7,28 @@
         Switch
       </PanelHeader>
       <Group>
-        <Cell asideContent={<Switch />}>
+        <Cell disabled after={<Switch />}>
           Комментарии к записям
         </Cell>
-        <Cell asideContent={<Switch defaultChecked />}>
+        <Cell disabled after={<Switch defaultChecked />}>
           Ссылки
         </Cell>
-        <Cell asideContent={<Switch disabled />}>
+        <Cell disabled after={<Switch disabled />}>
           Фотоальбомы
         </Cell>
+      </Group>
+      <Group header={<Header mode="secondary">Компактный вид</Header>}>
+        <AdaptivityProvider sizeY="compact">
+          <Cell disabled after={<Switch />}>
+            Комментарии к записям
+          </Cell>
+          <Cell disabled after={<Switch defaultChecked />}>
+            Ссылки
+          </Cell>
+          <Cell disabled after={<Switch disabled />}>
+            Фотоальбомы
+          </Cell>
+        </AdaptivityProvider>
       </Group>
     </Panel>
   </View>

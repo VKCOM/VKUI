@@ -1,13 +1,4 @@
-Надстройка над `<select />`. Компонент принимает все валидные для этого элемента свойства.
-
-```jsx static
-import { Select } from '@vkontakte/vkui';
-
-<Select placeholder="Выберите пол">
-  <option value="m">Мужской</option>
-  <option value="f">Женский</option>
-</Select>
-```
+Отрисовывает [CustomSelect](#!/CustomSelect), если есть мышка, либо [NativeSelect](#!/NativeSelect)
 
 ```jsx
 <View activePanel="select">
@@ -15,12 +6,17 @@ import { Select } from '@vkontakte/vkui';
     <PanelHeader>
       Select
     </PanelHeader>
-    <FormLayout>
-      <Select top="Обычный Select" placeholder="Выберите пол">
-        <option value="m">Мужской</option>
-        <option value="f">Женский</option>
-      </Select>
-    </FormLayout>
+    <Group>
+      <FormItem top="Администратор">
+        <Select
+          placeholder="Не выбран" 
+          options={getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
+          renderOption={({ option, ...restProps }) => (
+            <CustomSelectOption {...restProps} before={<Avatar size={24} src={option.avatar} />} />
+          )}
+        />
+      </FormItem>
+    </Group>
   </Panel>
 </View>
 ```

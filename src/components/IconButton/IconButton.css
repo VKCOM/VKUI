@@ -1,0 +1,61 @@
+.IconButton {
+  appearance: none;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  display: block;
+  color: currentColor;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.IconButton .Icon--16 {
+  padding: 16px;
+}
+
+.IconButton .Icon--16.Icon--w-8 {
+  padding: 16px 14px;
+}
+
+.IconButton .Icon--24 {
+  padding: 12px;
+}
+
+.IconButton .Icon--28 {
+  padding: 10px;
+}
+
+.IconButton[disabled] {
+  opacity: .6;
+}
+
+/*
+ * iOS
+ */
+
+.IconButton--ios {
+  height: 48px;
+}
+
+.IconButton--ios.Tappable--active {
+  opacity: .7;
+}
+
+/*
+ * Android
+ */
+
+.IconButton--android,
+.IconButton--vkcom {
+  height: 48px;
+  border-radius: 24px;
+}
+
+.IconButton--android.Tappable--active .Icon,
+.IconButton--vkcom.Tappable--active .Icon {
+  transition: inherit;
+  border-radius: inherit;
+  background-color: var(--background_highlighted);
+}

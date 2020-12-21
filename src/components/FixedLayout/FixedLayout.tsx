@@ -3,17 +3,16 @@ import getClassName from '../../helpers/getClassName';
 import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
-import { tabbarHeight } from '../../appearance/constants';
-import withInsets from '../../hoc/withInsets';
-import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform, HasRootRef } from '../../types';
+import withContext from '../../hoc/withContext';
+import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
+import { setRef } from '../../lib/utils';
+import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
-  HasInsets,
   HasPlatform {
   vertical?: 'top' | 'bottom';
   /**
@@ -28,42 +27,56 @@ export interface FixedLayoutProps extends
   /**
    * @ignore
    */
-  separator?: boolean;
+  splitCol?: SplitColContextProps;
 }
 
 export interface FixedLayoutState {
   position: 'absolute' | null;
   top: number;
+  width: string;
 }
 
 export interface FixedLayoutContext {
   document: Requireable<{}>;
-  hasTabbar: Requireable<boolean>;
+  window: Requireable<Window>;
 }
 
 class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   state: FixedLayoutState = {
-    position: null,
+    position: 'absolute',
     top: null,
+    width: '',
   };
 
   el: HTMLDivElement;
 
   static contextTypes: FixedLayoutContext = {
     document: PropTypes.any,
-    hasTabbar: PropTypes.bool,
+    window: PropTypes.any,
   };
+
+  private onMountResizeTimeout: number;
 
   get document() {
     return this.context.document || document;
   }
 
+  get window() {
+    return this.context.window || window;
+  }
+
   componentDidMount() {
+    this.onMountResizeTimeout = setTimeout(() => this.doResize());
+    this.window.addEventListener('resize', this.doResize);
+
     this.document.addEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.addEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
 
   componentWillUnmount() {
+    clearInterval(this.onMountResizeTimeout);
+    this.window.removeEventListener('resize', this.doResize);
+
     this.document.removeEventListener(transitionStartEventName, this.onViewTransitionStart);
     this.document.removeEventListener(transitionEndEventName, this.onViewTransitionEnd);
   }
@@ -73,6 +86,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
     this.setState({
       position: 'absolute',
       top: this.el.offsetTop + panelScroll,
+      width: '',
     });
   };
 
@@ -81,25 +95,30 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
       position: null,
       top: null,
     });
+
+    this.doResize();
+  };
+
+  doResize = () => {
+    const { colRef } = this.props.splitCol;
+
+    if (colRef && colRef.current) {
+      const node: HTMLElement = colRef.current;
+      const width = node.offsetWidth;
+
+      this.setState({ width: `${width}px`, position: null });
+    } else {
+      this.setState({ width: '', position: null });
+    }
   };
 
   getRef: RefCallback<HTMLDivElement> = (element) => {
     this.el = element;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(element);
-      } else {
-        getRootRef.current = element;
-      }
-    }
+    setRef(element, this.props.getRootRef);
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, insets, platform, filled, separator, ...restProps } = this.props;
-    const tabbarPadding = this.context.hasTabbar ? tabbarHeight : 0;
-    const paddingBottom = vertical === 'bottom' && isNumeric(insets.bottom) ? insets.bottom + tabbarPadding : null;
+    const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panel, ...restProps } = this.props;
 
     return (
       <div
@@ -108,7 +127,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
         className={classNames(getClassName('FixedLayout', platform), {
           'FixedLayout--filled': filled,
         }, `FixedLayout--${vertical}`, className)}
-        style={{ ...style, ...this.state, paddingBottom }}
+        style={{ ...style, ...this.state }}
       >
         <div className="FixedLayout__in">{children}</div>
       </div>
@@ -116,4 +135,8 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   }
 }
 
-export default withPlatform(withInsets(withPanelContext(FixedLayout)));
+export default withContext(
+  withPlatform(withPanelContext(FixedLayout)),
+  SplitColContext,
+  'splitCol',
+);

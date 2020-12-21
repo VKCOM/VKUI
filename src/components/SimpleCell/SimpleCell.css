@@ -16,13 +16,12 @@
   text-overflow: initial;
 }
 
-.SimpleCell > *:first-child:not(.SimpleCell__main),
-.SimpleCell > .Tappable__waves + *:not(.SimpleCell__main) {
+.SimpleCell > .Avatar,
+.SimpleCell > .Icon {
   flex-shrink: 0;
 }
 
-.SimpleCell > .Icon:first-child,
-.SimpleCell > .Tappable__waves + .Icon {
+.SimpleCell > .Icon {
   color: var(--accent);
 }
 
@@ -34,23 +33,31 @@
   overflow: hidden;
 }
 
-.SimpleCell > .Icon:first-child,
-.SimpleCell > .Tappable__waves + .Icon,
+.SimpleCell > .Icon,
+.SimpleCell > .Avatar {
+  padding-right: 12px;
+}
+
+.SimpleCell > .Icon--28 {
+  padding-right: 16px;
+}
+
+.SimpleCell > .Icon,
 .SimpleCell > .Avatar--sz-32,
 .SimpleCell > .Avatar--sz-28 {
-  padding: 10px 16px 10px 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.SimpleCell > .Avatar--sz-40:first-child,
-.SimpleCell > .Tappable__waves + .Avatar--sz-40 {
-  padding: 4px 12px 4px 0;
+.SimpleCell > .Avatar--sz-40 {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
-.SimpleCell > .Avatar--sz-48:first-child,
-.SimpleCell > .Tappable__waves + .Avatar--sz-48,
-.SimpleCell > .Avatar--sz-72:first-child,
-.SimpleCell > .Tappable__waves + .Avatar--sz-72 {
-  padding: 6px 12px 6px 0;
+.SimpleCell > .Avatar--sz-48,
+.SimpleCell > .Avatar--sz-72 {
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 .SimpleCell__description {
@@ -68,7 +75,7 @@
 }
 
 .SimpleCell__children {
-  color: var(--text_primary);
+  color: inherit;
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -86,15 +93,39 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
+  color: var(--accent);
 }
 
-.SimpleCell .SimpleCell__after .Icon {
-  color: var(--accent);
-  padding: 10px 2px 10px 10px;
+.SimpleCell__after > .Icon {
+  padding-left: 8px;
+}
+
+.SimpleCell__after > .Icon:last-child {
+  padding-right: 2px;
 }
 
 .SimpleCell .Switch {
   padding-left: 10px;
+}
+
+.SimpleCell__after .IconButton .Icon--28,
+.SimpleCell__after .IconButton .Icon--28 ~ * {
+  margin-right: -8px;
+}
+
+.SimpleCell__after .IconButton .Icon--24,
+.SimpleCell__after .IconButton .Icon--24 ~ * {
+  margin-right: -10px;
+}
+
+.SimpleCell__after .IconButton .Icon--16,
+.SimpleCell__after .IconButton .Icon--16 ~ * {
+  margin-right: -14px;
+}
+
+.SimpleCell__after .IconButton .Icon--w-8,
+.SimpleCell__after .IconButton .Icon--w-8 ~ * {
+  margin-right: -12px;
 }
 
 /**
@@ -120,15 +151,10 @@
   line-height: 20px;
 }
 
-.SimpleCell--ios > .Icon:first-child,
-.SimpleCell--ios > .Tappable__waves + .Icon,
+.SimpleCell--ios > .Icon--28,
 .SimpleCell--ios > .Avatar--sz-32,
 .SimpleCell--ios > .Avatar--sz-28 {
   padding-left: 4px;
-}
-
-.SimpleCell--ios.SimpleCell--exp .SimpleCell__after .Icon--28 {
-  padding-right: 0;
 }
 
 .SimpleCell--ios .SimpleCell__after .Icon--chevron_24 {
@@ -137,11 +163,17 @@
   padding-left: 12px;
 }
 
+.SimpleCell--ios .SimpleCell__after .IconButton .Icon--16,
+.SimpleCell--ios .SimpleCell__after .IconButton .Icon--16 ~ * {
+  margin-right: -12px;
+}
+
 /**
- * Android
+ * Android & VKCOM
  */
 
-.SimpleCell--android {
+.SimpleCell--android,
+.SimpleCell--vkcom {
   font-size: 16px;
   line-height: 20px;
   padding-left: 16px;
@@ -149,7 +181,53 @@
 }
 
 .SimpleCell--android .SimpleCell__main,
-.SimpleCell--android .SimpleCell__indicator {
+.SimpleCell--android .SimpleCell__indicator,
+.SimpleCell--vkcom .SimpleCell__main,
+.SimpleCell--vkcom .SimpleCell__indicator {
   padding-top: 11px;
   padding-bottom: 10px;
+}
+
+/**
+ * sizeY === 'compact'
+ */
+
+.SimpleCell--sizeY-compact {
+  min-height: 44px;
+}
+
+.SimpleCell--sizeY-compact .SimpleCell__main,
+.SimpleCell--sizeY-compact .SimpleCell__indicator {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.SimpleCell--sizeY-compact > .Avatar--sz-40 {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.SimpleCell--sizeY-compact > .Avatar--sz-48 {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.SimpleCell--sizeY-compact > .Icon,
+.SimpleCell--sizeY-compact > .Avatar--sz-32,
+.SimpleCell--sizeY-compact > .Avatar--sz-28 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.SimpleCell--sizeY-compact,
+.SimpleCell--sizeY-compact > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main,
+.SimpleCell--sizeY-compact > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__indicator {
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.SimpleCell--sizeY-compact .SimpleCell__description,
+.SimpleCell--sizeY-compact > .Avatar--sz-32 ~ .SimpleCell__main .SimpleCell__description,
+.SimpleCell--sizeY-compact > .Avatar--sz-28 ~ .SimpleCell__main .SimpleCell__description {
+  margin-top: 1px;
 }

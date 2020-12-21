@@ -78,10 +78,39 @@
   padding: 10px;
 }
 
-.PanelHeaderButton--android .Tappable__waves {
-  border-radius: 50%;
-}
-
 .PanelHeaderButton--android.Tappable--active {
   background-color: var(--background_highlighted);
+}
+
+/**
+* VKCOM
+*/
+.PanelHeaderButton--vkcom {
+  color: var(--header_text_secondary);
+}
+
+.PanelHeaderButton--vkcom > :not(.Counter) {
+  transition: opacity .3s;
+  opacity: .7;
+}
+
+.PanelHeaderButton--vkcom.Tappable--shadowHovered > :not(.Counter),
+.PanelHeaderButton--vkcom.Tappable--active > :not(.Counter) {
+  opacity: 1;
+}
+
+.PanelHeaderButton--vkcom {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.PanelHeaderButton--vkcom.PanelHeaderButton--primitive {
+  height: 48px;
+  line-height: 48px;
+  padding: 0 10px;
+}
+
+.PanelHeaderButton--vkcom.PanelHeaderButton--notPrimitive {
+  border-radius: 50%;
 }

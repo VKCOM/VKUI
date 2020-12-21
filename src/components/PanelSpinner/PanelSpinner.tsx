@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import Spinner, { SpinnerProps } from '../Spinner/Spinner';
 
-export interface PanelSpinnerProps extends SpinnerProps{
+export interface PanelSpinnerProps extends SpinnerProps {
   height?: number;
 }
 
-const PanelSpinner: FunctionComponent<PanelSpinnerProps> = ({ height, ...restProps }: PanelSpinnerProps) => {
+const PanelSpinner: FunctionComponent<PanelSpinnerProps> = ({ height, style, ...restProps }: PanelSpinnerProps) => {
   return (
-    <Spinner size="small" {...restProps} style={{ height }} />
+    <Spinner size="regular" {...restProps} style={{ height, ...style }} />
   );
 };
 

@@ -1,0 +1,90 @@
+.HorizontalCell {
+  padding-bottom: 6px;
+  display: flex;
+}
+
+.HorizontalCell__image {
+  display: flex;
+  justify-content: center;
+}
+
+.HorizontalCell__content {
+  word-break: break-all;
+}
+
+.HorizontalCell__subtitle {
+  color: var(--text_secondary);
+  line-height: 18px;
+}
+
+.HorizontalCell--s {
+  width: 72px;
+}
+
+.HorizontalCell--s .HorizontalCell__image {
+  padding: 4px 8px;
+}
+
+.HorizontalCell--s .HorizontalCell__content {
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.HorizontalCell--m {
+  width: 100px;
+}
+
+.HorizontalCell--l {
+  width: auto;
+}
+
+.HorizontalCell--m .HorizontalCell__image,
+.HorizontalCell--l .HorizontalCell__image {
+  padding: 4px 6px;
+}
+
+.HorizontalCell--m .HorizontalCell__content,
+.HorizontalCell--l .HorizontalCell__content {
+  padding: 2px 6px;
+  text-align: left;
+}
+
+/* iOS */
+.HorizontalCell--ios:first-child::before,
+.HorizontalCell--ios:last-child::after {
+  content: "";
+  width: 4px;
+}
+
+.HorizontalCell--ios.HorizontalCell--s:first-child,
+.HorizontalCell--ios.HorizontalCell--s:last-child {
+  width: 78px;
+}
+
+.HorizontalCell--ios.HorizontalCell--m:first-child,
+.HorizontalCell--ios.HorizontalCell--m:last-child {
+  width: 106px;
+}
+
+/* Android and vkcom */
+.HorizontalCell--android:first-child::before,
+.HorizontalCell--android:last-child::after,
+.HorizontalCell--vkcom:first-child::before,
+.HorizontalCell--vkcom:last-child::after {
+  content: "";
+  min-width: 8px;
+}
+
+.HorizontalCell--android.HorizontalCell--s:first-child,
+.HorizontalCell--android.HorizontalCell--s:last-child,
+.HorizontalCell--vkcom.HorizontalCell--s:first-child,
+.HorizontalCell--vkcom.HorizontalCell--s:last-child {
+  width: 80px;
+}
+
+.HorizontalCell--android.HorizontalCell--m:first-child,
+.HorizontalCell--android.HorizontalCell--m:last-child,
+.HorizontalCell--vkcom.HorizontalCell--m:first-child,
+.HorizontalCell--vkcom.HorizontalCell--m:last-child {
+  width: 116px;
+}

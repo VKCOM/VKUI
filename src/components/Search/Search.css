@@ -51,11 +51,15 @@
   border-radius: 10px 0 0 10px;
 }
 
-.Search--has-value .Search__input {
+.Search--has-value .Search__input,
+.Search--has-icon .Search__input,
+.Search--has-value .Search__placeholder,
+.Search--has-icon .Search__placeholder {
   padding-right: 40px;
 }
 
-.Search--has-icon.Search--has-value .Search__input {
+.Search--has-icon.Search--has-value .Search__input,
+.Search--has-icon.Search--has-value .Search__placeholder {
   padding-right: 80px;
 }
 
@@ -65,6 +69,7 @@
   line-height: var(--search_default_height);
   padding-left: 12px;
   padding-right: 4px;
+  flex-shrink: 0;
 }
 
 .Search__placeholder {
@@ -74,23 +79,31 @@
   cursor: text;
   z-index: 1;
   text-align: left;
-  display: block;
   height: var(--search_default_height);
   font-size: 0;
   padding-left: 12px;
+  padding-right: 22px;
   pointer-events: none;
+  box-sizing: border-box;
+  display: flex;
 }
 
 .Search__placeholder-in {
   height: var(--search_default_height);
   display: flex;
   align-items: center;
+  overflow: hidden;
+  flex-grow: 1;
+  max-width: 100%;
 }
 
 .Search__placeholder-text {
   margin-left: 8px;
   line-height: 22px;
   font-size: 17px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Search--has-value .Search__placeholder-text {
@@ -165,6 +178,10 @@
   border-radius: 0 10px 10px 0;
   cursor: text;
   pointer-events: none;
+}
+
+.Group--plain .Search {
+  padding-top: 4px;
 }
 
 /*
@@ -257,4 +274,79 @@
  */
 .Search--android {
   padding: 8px 16px;
+}
+
+/**
+  VKCOM
+*/
+
+.Search--vkcom,
+.PanelHeader--vkcom .Search {
+  background: transparent;
+}
+
+.Search--vkcom .Search__in {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.Search--vkcom .Search__input {
+  font-size: 15px;
+  line-height: 20px;
+  padding-left: 40px;
+}
+
+.Search--vkcom .Search__placeholder {
+  padding-left: 16px;
+}
+
+.Search--vkcom .Search__icons {
+  top: 4px;
+  right: calc(100% + 8px);
+}
+
+.Search--vkcom.Search--has-value .Search__input {
+  padding-right: 56px;
+}
+
+.Search--vkcom.Search--has-icon.Search--has-value .Search__input {
+  padding-right: 92px;
+}
+
+.Search--vkcom .Search__icon {
+  width: 40px;
+  height: 40px;
+}
+
+.Search--vkcom .Search__icon:hover {
+  background-color: var(--background_hover);
+  border-radius: 50%;
+}
+
+.Search--vkcom .Search__control {
+  background-color: transparent;
+}
+
+.PanelHeader--vkcom .Search__separator {
+  display: none;
+}
+
+.Search--vkcom .Search__separator {
+  color: var(--input_border);
+}
+
+.Group--card .Search--vkcom {
+  margin: -8px -8px 0;
+}
+
+.Group--card .Search--vkcom:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.Group--card .Search--vkcom .Search__placeholder {
+  padding-left: 20px;
+}
+
+.Group--card .Search--vkcom .Search__input {
+  padding-left: 44px;
 }

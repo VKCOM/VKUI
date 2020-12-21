@@ -1,5 +1,6 @@
-Визуальная имитация компонента [Select](#!/Select). У него нет свойства `value`, а `children` вместо массива `options` принимает
-любой `ReactNode`, отображая его без изменений.
+Визуальная имитация компонента [NativeSelect](#!/NativeSelect). У него нет свойства `value`, а `children`
+вместо массива `options` принимает любой `ReactNode`, отображая его без изменений. Используется внутри
+[CustomSelect](#!/CustomSelect)
 
 ```jsx
   class Example extends React.Component {
@@ -20,19 +21,20 @@
               <PanelHeader>
                 Профиль
               </PanelHeader>
-              <FormLayout>
-                <SelectMimicry
-                  top="Выберите страну"
-                  placeholder="Не выбрана"
-                  onClick={() => this.setState({ activeView: 'countries' })}
-                >{this.state.country}</SelectMimicry>
-
-                <SelectMimicry
-                  top="Выберите город"
-                  placeholder="Не выбран"
-                  disabled
-                />
-              </FormLayout>
+              <Group>
+                <FormItem top="Выберите страну">
+                  <SelectMimicry
+                    placeholder="Не выбрана"
+                    onClick={() => this.setState({ activeView: 'countries' })}
+                  >{this.state.country}</SelectMimicry>
+                </FormItem>
+                <FormItem top="Выберите город">
+                  <SelectMimicry
+                    placeholder="Не выбран"
+                    disabled
+                  />
+                </FormItem>
+              </Group>
             </Panel>
           </View>
           <View activePanel="countries" id="countries">
@@ -44,19 +46,19 @@
                 <List>
                   <Cell
                     onClick={() => this.setState({ country: 'Россия', activeView: 'profile' })}
-                    asideContent={this.state.country === 'Россия' ? <Icon24Done fill="var(--accent)" /> : null}
+                    after={this.state.country === 'Россия' ? <Icon24Done fill="var(--accent)" /> : null}
                   >
                     Россия
                   </Cell>
                   <Cell
                     onClick={() => this.setState({ country: 'Италия', activeView: 'profile' })}
-                    asideContent={this.state.country === 'Италия' ? <Icon24Done fill="var(--accent)" /> : null}
+                    after={this.state.country === 'Италия' ? <Icon24Done fill="var(--accent)" /> : null}
                   >
                     Италия
                   </Cell>
                   <Cell
                     onClick={() => this.setState({ country: 'Англия', activeView: 'profile' })}
-                    asideContent={this.state.country === 'Англия' ? <Icon24Done fill="var(--accent)" /> : null}
+                    after={this.state.country === 'Англия' ? <Icon24Done fill="var(--accent)" /> : null}
                   >
                     Англия
                   </Cell>

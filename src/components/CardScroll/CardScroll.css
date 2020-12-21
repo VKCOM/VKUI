@@ -8,41 +8,90 @@
   flex-shrink: 0;
 }
 
-.CardScroll .Card:last-child {
+.CardScroll__gap {
+  display: block;
+  flex-shrink: 0;
+}
+
+.CardScroll + .CardScroll {
+  margin-top: 16px;
+}
+
+.CardScroll .Card:last-of-type {
   margin-right: 0;
 }
 
-.CardScroll__in::before,
-.CardScroll__in::after {
-  content: '';
-  display: block;
-  flex-shrink: 0;
+.CardScroll--s .Card {
+  width: 40%;
+}
+
+.CardScroll--m .Card {
+  width: 62%;
+}
+
+.CardScroll--l .Card {
+  width: 100%;
 }
 
 /**
  * iOS
  */
 
-.CardScroll--ios .CardScroll__in::before,
-.CardScroll--ios .CardScroll__in::after {
+.CardScroll--ios .CardScroll__gap {
   width: 12px;
 }
 
-.CardScroll--ios .Card--sz-l {
-  width: calc(100% - 24px);
-  margin-right: 12px;
-}
-
 /**
- * Android
+ * Android & VKCOM
  */
 
-.CardScroll--android .CardScroll__in::before,
-.CardScroll--android .CardScroll__in::after {
+.CardScroll--android .CardScroll__gap,
+.CardScroll--vkcom .CardScroll__gap {
   width: 16px;
 }
 
-.CardScroll--android .Card--sz-l {
+/**
+ * SplitCol
+ */
+
+.SplitCol--spaced .CardScroll {
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
+.SplitCol--spaced .CardScroll__gap {
+  width: 16px;
+}
+
+.SplitCol--spaced .CardScroll--l .Card {
   width: calc(100% - 32px);
+}
+
+.SplitCol--spaced .CardScroll--l .Card:not(:last-of-type) {
   margin-right: 16px;
+}
+
+/**
+ * Group
+ */
+
+.Group--card .CardScroll {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+.Group--card .CardScroll--l .Card {
+  width: calc(100% - 32px);
+}
+
+.Group--card .CardScroll--l .Card:not(:last-of-type) {
+  margin-right: 16px;
+}
+
+.Group--card .CardScroll:first-child {
+  padding-top: 8px;
+}
+
+.Group--card .CardScroll:last-child {
+  padding-bottom: 8px;
 }

@@ -1,51 +1,60 @@
-Горизонтальный скролл для [Card](#!/Card).
+Горизонтальный скролл для [Card](#!/Card). Согласно дизайну, высота `Card` должна масштабироваться относительно её ширины.  
+В примерах это достигается с помощью процентного `padding-bottom`. Пропорции следующие:
+- `size="s"`: высота равна 66% ширины;
+- `size="m"`: высота равна 42% ширины;
+- `size="l"`: высота равна 29% ширины.
 
 ```jsx
 <View activePanel="card">
   <Panel id="card">
     <PanelHeader>CardScroll</PanelHeader>
-    <Group separator="hide" description="Рекомендуемый размер карточки — 144px">
-      <CardScroll>
-        <Card size="s">
-          <div style={{ width: 144, height: 96 }} />
+    <Group description="Внутри Group">
+      <CardScroll size="s">
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
-        <Card size="s">
-          <div style={{ width: 144, height: 96 }} />
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
-        <Card size="s">
-          <div style={{ width: 144, height: 96 }} />
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
-        <Card size="s">
-          <div style={{ width: 144, height: 96 }} />
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
-      </CardScroll>
-    </Group>
-    <Group separator="hide" description="Рекомендуемый размер карточки — 224px">
-      <CardScroll>
-        <Card size="m">
-          <div style={{ width: 224, height: 96 }} />
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
-        <Card size="m">
-          <div style={{ width: 224, height: 96 }} />
-        </Card>
-        <Card size="m">
-          <div style={{ width: 224, height: 96 }} />
+        <Card>
+          <div style={{ paddingBottom: '66%' }} />
         </Card>
       </CardScroll>
     </Group>
-    <Group separator="hide" description="Ширина карточки <Card size='l' /> зафиксирована в CSS так, чтобы каждая карточка занимала всю ширину вьюпорта">
-      <CardScroll>
-        <Card size="l">
-          <div style={{ height: 96 }} />
-        </Card>
-        <Card size="l">
-          <div style={{ height: 96 }} />
-        </Card>
-        <Card size="l">
-          <div style={{ height: 96 }} />
-        </Card>
-      </CardScroll>
-    </Group>
+    <CardScroll size="m">
+      <Card>
+        <div style={{ paddingBottom: '42%' }} />
+      </Card>
+      <Card>
+        <div style={{ paddingBottom: '42%' }} />
+      </Card>
+      <Card>
+        <div style={{ paddingBottom: '42%' }} />
+      </Card>
+      <Card>
+        <div style={{ paddingBottom: '42%' }} />
+      </Card>
+    </CardScroll>
+    <CardScroll size="l">
+      <Card>
+        <div style={{ paddingBottom: '29%' }} />
+      </Card>
+      <Card>
+        <div style={{ paddingBottom: '29%' }} />
+      </Card>
+      <Card>
+        <div style={{ paddingBottom: '29%' }} />
+      </Card>
+    </CardScroll>
   </Panel>
 </View>
 ```

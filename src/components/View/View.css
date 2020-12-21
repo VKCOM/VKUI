@@ -1,5 +1,6 @@
 @import './ViewIOS.css';
 @import './ViewAndroid.css';
+@import './ViewVkcom.css';
 
 .View {
   position: relative;

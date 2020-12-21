@@ -1,24 +1,9 @@
 import React from 'react';
 import { users } from './demo_dataset';
 
-window.uaList = {
-  ios: 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
-  android: 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Mobile Safari/537.36',
-};
-
-Object.defineProperty(navigator, 'userAgent', {
-  get: function() {
-    return window.localStorage.getItem('vkui-styleguide:ua') || window.uaList.ios;
-  },
-});
-
 export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
-export const schemeOptions = ['bright_light', 'space_gray'].map((schemeId) => (
-  <option value={schemeId} key={schemeId}>{schemeId}</option>
-));
 
 function getRandomArrayElement(items) {
   return items[Math.floor(Math.random() * items.length)];
@@ -28,24 +13,6 @@ function getRandomObjectKey(object) {
   const keys = Object.keys(object);
   return keys[keys.length * Math.random() << 0];
 }
-
-export const testStrings = [
-  'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты.',
-  'Переписали правилами по всей свой буквенных единственное жизни пустился!',
-  'Которой реторический, текстами речью маленький обеспечивает пор они знаках свой текстов но!',
-  'Семантика по всей ведущими несколько за, выйти эта, lorem свой рукописи на берегу свое обеспечивает, злых коварный?',
-  'Путь не сих переулка сбить моей, напоивший, над продолжил необходимыми, снова журчит за грамматики злых.',
-  'По всей подпоясал, безопасную рыбного деревни послушавшись свое маленький текстов.',
-  'Сбить свою несколько маленький взобравшись.',
-  'Подпоясал осталось своего, до это свой реторический всеми агенство.',
-  'Назад океана, коварных они моей дороге но рукописи которое заманивший власти проектах текст себя текста то великий решила взобравшись большой приставка?',
-  'Свой там, переписывается семь, напоивший буквенных необходимыми если первую предложения своих?',
-  'Живет взобравшись лучше безорфографичный текстов пояс заманивший родного не она одна он дороге дал алфавит заголовок мир последний',
-  'Напоивший продолжил сих свой буквенных власти диких составитель, правилами lorem.',
-  'Что образ прямо ipsum от всех назад предупреждал наш точках.',
-  'Живет всеми но текстов рекламных грамматики залетают все вершину последний. Запятой его там, великий она это?',
-  'Рот языкового скатился, злых, жаренные вопрос снова он единственное журчит меня одна дорогу залетают повстречался толку страна вершину.',
-];
 
 const photos = {
   'app_shorm_online': {
@@ -70,6 +37,12 @@ const photos = {
   },
   'audio_depeche_mode': {
     photo_100: 'https://pp.userapi.com/c837628/v837628453/39175/4JRjMaFvCrw.jpg',
+  },
+  'audio_linkin_park': {
+    photo_100: 'https://pp.userapi.com/c846120/v846120617/1ff005/WmCcgV5CozY.jpg'
+  },
+  'audio_face': {
+    photo_100: 'https://pp.userapi.com/c845218/v845218888/182681/Al6XrhpJYn0.jpg',
   },
 
   'chat_basketball': {

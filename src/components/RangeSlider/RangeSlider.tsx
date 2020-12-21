@@ -2,10 +2,12 @@ import React, { Component, createRef, HTMLAttributes, RefObject, RefCallback } f
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasFormLabels, HasPlatform, HasRootRef } from '../../types';
-import { OnSliderResize, precisionRound } from '../Slider/Slider';
+import { HasPlatform, HasRootRef } from '../../types';
+import { precisionRound } from '../Slider/Slider';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
+import { setRef } from '../../lib/utils';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export type Value = [number, number];
 
@@ -13,7 +15,7 @@ export interface RangeSliderProps extends
   HasRootRef<HTMLDivElement>,
   HasPlatform,
   Omit<HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'>,
-  HasFormLabels {
+  AdaptivityProps {
   min?: number;
   max?: number;
   step?: number;
@@ -23,11 +25,9 @@ export interface RangeSliderProps extends
 }
 
 export interface RangeSliderState {
-  containerLeft: number;
   startX: number;
   percentStart: number;
   percentEnd: number;
-  active: 'start' | 'end' | null;
   containerWidth: number;
 }
 
@@ -36,10 +36,8 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     super(props);
     this.state = {
       startX: 0,
-      containerLeft: 0,
       percentStart: 0,
       percentEnd: 0,
-      active: null,
       containerWidth: 0,
     };
     this.isControlledOutside = this.props.hasOwnProperty('value');
@@ -61,31 +59,26 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   thumbEnd: RefObject<HTMLDivElement>;
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
-    const absolutePosition = this.validateAbsolute(e.startX - this.state.containerLeft);
-    const percentPosition = this.absoluteToPecent(absolutePosition);
-    const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
+    const boundingRect = this.container.getBoundingClientRect();
+    this.setState({
+      containerWidth: boundingRect.width,
+    }, () => {
+      const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
+      const percentPosition = this.absoluteToPecent(absolutePosition);
+      const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
 
-    this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
+      this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
 
-    if (this.isControlledOutside) {
-      this.setState({ startX: absolutePosition });
-    } else {
-      this.setState({
-        startX: absolutePosition,
-        percentStart,
-        percentEnd,
-      });
-    }
-
-    const target = e.originalEvent.target as HTMLElement;
-
-    const thumb = target.closest('.Slider__thumb');
-
-    if (thumb === this.thumbStart.current) {
-      this.setState({ active: 'start' });
-    } else if (thumb === this.thumbEnd.current) {
-      this.setState({ active: 'end' });
-    }
+      if (this.isControlledOutside) {
+        this.setState({ startX: absolutePosition });
+      } else {
+        this.setState({
+          startX: absolutePosition,
+          percentStart,
+          percentEnd,
+        });
+      }
+    });
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
@@ -105,21 +98,6 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     e.originalEvent.preventDefault();
   };
 
-  onEnd: TouchEventHandler = () => {
-    this.setState({
-      active: null,
-    });
-  };
-
-  onResize: OnSliderResize = (callback?: VoidFunction | Event) => {
-    this.setState({
-      containerLeft: this.container.offsetLeft,
-      containerWidth: this.container.offsetWidth,
-    }, () => {
-      typeof callback === 'function' && callback();
-    });
-  };
-
   onChange(value: Value, e: TouchEvent) {
     this.props.onChange && this.props.onChange(value, e);
   }
@@ -131,7 +109,7 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
       const stepCount = (this.props.max - this.props.min) / this.props.step;
       const absStep = this.state.containerWidth / stepCount;
 
-      res = Math.round(res / absStep) * absStep;
+      res = Math.floor(res / absStep) * absStep;
     }
 
     return res;
@@ -190,8 +168,10 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('resize', this.onResize);
-      this.onResize(() => {
+      const boundingRect = this.container.getBoundingClientRect();
+      this.setState({
+        containerWidth: boundingRect.width,
+      }, () => {
         this.setState(this.validatePercent(this.valueToPercent(this.value)));
       });
     }
@@ -203,34 +183,21 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize);
-  }
-
   getRef: RefCallback<HTMLDivElement> = (container) => {
     this.container = container;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(container);
-      } else {
-        getRootRef.current = container;
-      }
-    }
+    setRef(container, this.props.getRootRef);
   };
 
   render() {
     const { className, min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, top, bottom, ...restProps } = this.props;
+      onChange, getRootRef, platform, sizeY, ...restProps } = this.props;
 
     return (
       <div
         {...restProps}
-        className={classNames(getClassName('Slider', platform), className)}
-        ref={this.getRef}
+        className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
       >
-        <Touch onStart={this.onStart} onMoveX={this.onMoveX} onEnd={this.onEnd} className="Slider__in">
+        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} className="Slider__in">
           <div
             className="Slider__dragger"
             style={{
@@ -239,15 +206,11 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
             }}
           >
             <span
-              className={classNames('Slider__thumb', 'Slider__thumb--start', {
-                'Slider__thumb--active': this.state.active === 'start',
-              })}
+              className={classNames('Slider__thumb', 'Slider__thumb--start')}
               ref={this.thumbStart}
             />
             <span
-              className={classNames('Slider__thumb', 'Slider__thumb--end', {
-                'Slider__thumb--active': this.state.active === 'end',
-              })}
+              className={classNames('Slider__thumb', 'Slider__thumb--end')}
               ref={this.thumbEnd}
             />
           </div>
@@ -257,4 +220,6 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
   }
 }
 
-export default withPlatform(RangeSlider);
+export default withAdaptivity(withPlatform(RangeSlider), {
+  sizeY: true,
+});

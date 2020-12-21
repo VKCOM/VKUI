@@ -1,16 +1,15 @@
 .Tabs {
-  background: var(--background_content);
+
   }
 
 .Tabs__in,
-.Tabs .HorizontalScroll__in {
+.Tabs .HorizontalScroll__in-wrapper {
   display: flex;
   align-items: center;
   }
 
 .PanelHeader .Tabs {
   overflow: hidden;
-  background: var(--header_background);
   font-family: var(--font-common);
 }
 
@@ -30,17 +29,17 @@
   }
 
 .Tabs--default,
-.Tabs--default .HorizontalScroll__in {
+.Tabs--default .HorizontalScroll__in-wrapper {
   justify-content: center;
   }
 
 .Tabs--buttons,
-.Tabs--default .HorizontalScroll__in {
+.Tabs--default .HorizontalScroll__in-wrapper {
   justify-content: flex-start;
   }
 
-.Tabs.Tabs--buttons .HorizontalScroll__in::after,
-.Tabs.Tabs--buttons .HorizontalScroll__in::before {
+.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::after,
+.Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::before {
   display: block;
   width: 8px;
   flex-shrink: 0;

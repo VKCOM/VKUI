@@ -6,9 +6,11 @@
       <PanelHeader>
         Textarea
       </PanelHeader>
-      <FormLayout>
-        <Textarea top="Любимая музыка" placeholder="Группы, исполнители, продюссеры" />
-      </FormLayout>
+      <Group>
+        <FormItem top="Любимая музыка">
+          <Textarea placeholder="Группы, исполнители, продюссеры" />
+        </FormItem>
+      </Group>
     </Panel>
   </View>
 ```

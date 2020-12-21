@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, PureComponent, MouseEvent } from 'react';
+import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -8,10 +8,14 @@ import { HasPlatform } from '../../types';
 import getClassname from '../../helpers/getClassName';
 import { canUseDOM } from '../../lib/dom';
 import { transitionEvent } from '../../lib/supportEvents';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import Text from '../Typography/Text/Text';
+import Button from '../Button/Button';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 
-export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform {
+export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
    * Название кнопки действия в уведомлении
    */
@@ -66,6 +70,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   static defaultProps = {
     duration: 4000,
+    layout: 'horizontal',
   };
 
   static contextTypes = {
@@ -130,7 +135,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
         element.addEventListener(transitionEvent.name, eventHandler);
       } else {
         clearTimeout(this.transitionFinishTimeout);
-        this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 400 : 320);
+        this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 400 : 320);
       }
     }
   }
@@ -149,8 +154,8 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       this.setState({ touched: true });
     }
 
-    this.shiftXPercent = shiftX / this.window.innerWidth * 100;
-    this.shiftXCurrent = rubber(this.shiftXPercent, 72, 1.2, this.props.platform === ANDROID);
+    this.shiftXPercent = shiftX / this.bodyElRef.current.offsetWidth * 100;
+    this.shiftXCurrent = rubber(this.shiftXPercent, 72, 1.2, this.props.platform === ANDROID || this.props.platform === VKCOM);
     this.touchStartTime = startT;
 
     this.setBodyTransform(this.shiftXCurrent);
@@ -164,11 +169,17 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     let callback;
 
     if (this.state.touched) {
-      let shiftXReal = this.shiftXCurrent;
-      const expectTranslateY = shiftXReal / (Date.now() - this.touchStartTime.getTime()) * 240 * 0.6 * (this.shiftXPercent < 0 ? -1 : 1);
-      shiftXReal = shiftXReal + expectTranslateY;
+      let shiftXCurrent = this.shiftXCurrent;
+      const expectTranslateY = shiftXCurrent / (Date.now() - this.touchStartTime.getTime()) * 240 * 0.6;
+      shiftXCurrent = shiftXCurrent + expectTranslateY;
 
-      if (shiftXReal >= 50) {
+      if (this.isDesktop && shiftXCurrent <= -50) {
+        this.clearCloseTimeout();
+        this.waitTransitionFinish(this.bodyElRef.current, () => {
+          this.props.onClose();
+        });
+        this.setBodyTransform(-120);
+      } else if (!this.isDesktop && shiftXCurrent >= 50) {
         this.clearCloseTimeout();
         this.waitTransitionFinish(this.bodyElRef.current, () => {
           this.props.onClose();
@@ -194,6 +205,10 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     });
   }
 
+  get isDesktop() {
+    return this.props.viewWidth >= ViewWidth.SMALL_TABLET;
+  }
+
   render() {
     const {
       children,
@@ -204,48 +219,52 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       before,
       after,
     } = this.props;
-
-    const resolvedLayout = after ? 'vertical' : layout;
+    const resolvedLayout = after || this.isDesktop ? 'vertical' : layout;
 
     return (
-      <FixedLayout
-        vertical="bottom"
-        className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
-          'Snackbar--closing': this.state.closing,
-          'Snackbar--touched': this.state.touched,
-        })}
-      >
-        <Touch
-          className="Snackbar__in"
-          getRootRef={this.getInnerRef}
-          onStart={this.onTouchStart}
-          onMoveX={this.onTouchMoveX}
-          onEnd={this.onTouchEnd}
+      <AppRootPortal className="Snackbar__portal">
+        <FixedLayout
+          vertical="bottom"
+          className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
+            'Snackbar--closing': this.state.closing,
+            'Snackbar--touched': this.state.touched,
+            'Snackbar--desktop': this.isDesktop,
+          })}
         >
-          <div className="Snackbar__body" ref={this.bodyElRef}>
-            {before &&
-            <div className="Snackbar__before">
-              {before}
-            </div>}
+          <Touch
+            className="Snackbar__in"
+            getRootRef={this.getInnerRef}
+            onStart={this.onTouchStart}
+            onMoveX={this.onTouchMoveX}
+            onEnd={this.onTouchEnd}
+          >
+            <div className="Snackbar__body" ref={this.bodyElRef}>
+              {before &&
+              <div className="Snackbar__before">
+                {before}
+              </div>}
 
-            <div className="Snackbar__content">
-              <div className="Snackbar__content-text">{children}</div>
+              <div className="Snackbar__content">
+                <Text weight="regular" className="Snackbar__content-text">{children}</Text>
 
-              {action &&
-              <button className="Snackbar__action" onClick={this.onActionClick}>
-                <div className="Snackbar__action-self">{action}</div>
-              </button>}
+                {action &&
+                <Button align="left" hasHover={false} mode="tertiary" size="s" className="Snackbar__action" onClick={this.onActionClick}>
+                  {action}
+                </Button>}
+              </div>
+
+              {after &&
+              <div className="Snackbar__after">
+                {after}
+              </div>}
             </div>
-
-            {after &&
-            <div className="Snackbar__after">
-              {after}
-            </div>}
-          </div>
-        </Touch>
-      </FixedLayout>
+          </Touch>
+        </FixedLayout>
+      </AppRootPortal>
     );
   }
 }
 
-export default withPlatform(Snackbar);
+export default withPlatform(withAdaptivity(Snackbar, {
+  viewWidth: true,
+}));

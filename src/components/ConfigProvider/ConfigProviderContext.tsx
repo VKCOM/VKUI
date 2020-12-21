@@ -1,5 +1,6 @@
 import { createContext } from 'react';
-import { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
+import vkBridge, { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
+import { PlatformType, platform } from '../../lib/platform';
 
 export enum Appearance {
   DARK = 'dark',
@@ -11,7 +12,10 @@ export enum Scheme {
   DEPRECATED_CLIENT_DARK = 'client_dark',
   BRIGHT_LIGHT = 'bright_light',
   SPACE_GRAY = 'space_gray',
+  VKCOM = 'vkcom'
 }
+
+export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM;
 
 export enum WebviewType {
   VKAPPS = 'vkapps',
@@ -22,7 +26,7 @@ export interface ConfigProviderContextInterface {
   /**
    * Цветовая схема приложения
    */
-  scheme?: AppearanceSchemeType;
+  scheme?: AppearanceScheme;
   /**
    * Подсказывает приложению, обёрнутому в `ConfigProvider`, где открыто приложение: внутри webview или в мобильном браузере
    */
@@ -44,6 +48,19 @@ export interface ConfigProviderContextInterface {
    * Включена ли анимация переходов между экранами в `Root` и `View`
    */
   transitionMotionEnabled?: boolean;
+  /**
+   * Платформа
+   */
+  platform?: PlatformType;
 }
 
-export const ConfigProviderContext = createContext<ConfigProviderContextInterface>({});
+export const defaultConfigProviderProps = {
+  webviewType: WebviewType.VKAPPS,
+  isWebView: vkBridge.isWebView(),
+  scheme: Scheme.BRIGHT_LIGHT,
+  appearance: Appearance.LIGHT,
+  transitionMotionEnabled: true,
+  platform: platform(),
+};
+
+export const ConfigProviderContext = createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);

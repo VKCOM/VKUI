@@ -1,18 +1,8 @@
 .View--ios {
   }
 
-.View--ios.View--header .Panel__in {
-  padding-top: 64px;
-  padding-top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
-  }
-
 .View--ios .Panel__in {
   padding-bottom: var(--safe-area-inset-bottom);
-  }
-
-.View--ios.View--header .FixedLayout--top {
-  top: 64px;
-  top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
   }
 
 .View--ios .Panel__in {

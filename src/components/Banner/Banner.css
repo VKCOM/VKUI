@@ -21,23 +21,11 @@
   height: 100%;
   content: '';
   display: block;
-  border: 1px solid var(--image_border);
+  border: var(--thin-border) solid var(--image_border);
   z-index: 3;
   box-sizing: border-box;
   border-radius: inherit;
   pointer-events: none;
-}
-
-@media (min-resolution: 2dppx) {
-  .Banner__in::before {
-    border-width: .5px;
-  }
-}
-
-@media (min-resolution: 3dppx) {
-  .Banner__in::before {
-    border-width: .33px;
-  }
 }
 
 .Banner__before {
@@ -45,25 +33,15 @@
 }
 
 .Banner__content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   flex: 1;
   min-width: 0;
 }
 
-.Banner__header {
-  font-weight: 600;
-}
-
-.Banner__before + .Banner__content .Banner__header {
-  margin-top: 2px;
-}
-
 .Banner__subheader {
   color: var(--text_subhead);
-}
-
-.Banner__text {
-  font-size: 15px;
-  line-height: 20px;
 }
 
 .Banner__bg {
@@ -142,16 +120,6 @@
  * Size "s"
  */
 
-.Banner--sz-s .Banner__header {
-  line-height: 20px;
-  font-size: 16px;
-}
-
-.Banner--sz-s .Banner__subheader {
-  line-height: 16px;
-  font-size: 13px;
-}
-
 .Banner--sz-s .Banner__subheader:not(:first-child),
 .Banner--sz-s .Banner__text:not(:first-child) {
   margin-top: 2px;
@@ -160,16 +128,6 @@
 /**
  * Size "m"
  */
-
-.Banner--sz-m .Banner__header {
-  line-height: 24px;
-  font-size: 20px;
-}
-
-.Banner--sz-m .Banner__subheader {
-  line-height: 20px;
-  font-size: 15px;
-}
 
 .Banner--sz-m .Banner__subheader:not(:first-child),
 .Banner--sz-m .Banner__text:not(:first-child) {
@@ -255,21 +213,25 @@
 }
 
 /**
- * Android
+ * Android & VKCOM
  */
 
-.Banner--android {
+.Banner--android,
+.Banner--vkcom {
   padding: 0 16px;
 }
 
-.Banner--android .Banner__in {
+.Banner--android .Banner__in,
+.Banner--vkcom .Banner__in {
   border-radius: 8px;
 }
 
-.Banner--android .Banner__dismissIcon {
+.Banner--android .Banner__dismissIcon,
+.Banner--vkcom .Banner__dismissIcon {
   color: var(--icon_secondary);
 }
 
-.Banner--android.Banner--md-image .Banner__dismissIcon {
+.Banner--android.Banner--md-image .Banner__dismissIcon,
+.Banner--vkcom.Banner--md-image .Banner__dismissIcon {
   color: var(--white);
 }

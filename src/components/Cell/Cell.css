@@ -4,299 +4,116 @@
   padding: 0;
   font-size: 16px;
   line-height: 22px;
-  }
+}
 
 .List--dragging .Cell:not(.Cell--dragging) {
   transition: transform .3s ease;
-  }
+}
 
 .List--dragging .Cell--dragging,
 .Cell--dragging {
   background-color: var(--background_content);
   box-shadow: 0 0 5px rgba(0, 0, 0, .25);
   z-index: 3;
-  }
+}
 
-  .Cell__in {
-    position: relative;
-    display: flex;
-    max-width: 100%;
-    overflow: hidden;
-    text-decoration: none;
-    }
+.Cell__dragger {
+  position: relative;
+}
 
-  .Cell--m .Cell__in {
-    align-items: center;
-    }
+.Cell .Cell__dragger .Icon {
+  color: var(--icon_secondary);
+}
 
-  .Cell--l .Cell__in {
-    align-items: flex-start;
-    }
+.Cell__checkbox {
+  display: none;
+}
 
-    .Cell__checkbox {
-      display: none;
-      }
+.Cell__marker {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--icon_secondary);
+  color: transparent;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
 
-    .Cell__before {
-      position: relative;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      align-self: stretch;
-      }
-
-      .Cell--l .Cell__before-in {
-        align-self: flex-start;
-        }
-
-      .Cell__before-in {
-        flex-shrink: 0;
-        color: var(--accent);
-        }
-
-      .Cell__checkbox-marker {
-        box-sizing: border-box;
-        }
-
-    .Cell__main {
-      flex-grow: 1;
-      max-width: 100%;
-      color: var(--text_primary);
-      white-space: nowrap;
-      overflow: hidden;
-      }
-
-    .Cell--multiline .Cell__main {
-      white-space: normal;
-      }
-
-      .Cell__description {
-        color: var(--text_secondary);
-        margin-top: 2px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        }
-
-      .Cell--l .Cell__description {
-        margin-top: 0;
-        }
-
-      .Cell__children {
-        font-size: 16px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        }
-
-      .Cell--l .Cell__children {
-        font-size: 15px;
-        font-weight: 500;
-        }
-
-      .Cell__bottom {
-        margin-top: 8px;
-        }
-
-    .Cell__indicator,
-    .Cell__aside {
-      overflow: hidden;
-      max-width: 75%;
-      color: var(--text_secondary);
-      text-align: right;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .Cell__aside {
-      flex-shrink: 0;
-      overflow: visible;
-      }
-
-    .Cell--l .Cell__aside {
-      align-self: center;
-      }
-
-    .Cell__indicator + .Cell__aside:not(:empty) {
-      padding-left: 8px;
-      }
-
-      .Cell__dragger {
-        position: relative;
-        color: var(--icon_secondary);
-        }
-
-        .Cell__dragger::after {
-          position: absolute;
-          display: block;
-          box-sizing: border-box;
-          content: '';
-          }
+.Cell__checkbox:checked ~ .Cell__marker {
+  border: none;
+  color: var(--white);
+  background-color: var(--accent);
+  padding: 4px;
+}
 
 /* iOS */
-.Cell--ios {
+
+.Cell--ios .Cell__in {
+  transition: transform .6s var(--ios-easing);
+}
+
+.Cell--ios.Cell--removable {
   overflow: hidden;
-  }
+}
 
-  .Cell--ios .Cell__remove {
-    position: absolute;
-    left: 100%;
-    height: 100%;
-    top: 0;
-    background-color: var(--destructive);
-    color: var(--white);
-    padding: 0 10px;
-    line-height: 45px;
-    font-size: 15px;
-    transition: transform .6s var(--ios-easing);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    }
+.Cell--ios .Cell__remove {
+  position: absolute;
+  left: 100%;
+  height: 100%;
+  top: 0;
+  background-color: var(--destructive);
+  color: var(--white);
+  padding: 0 10px;
+  line-height: 45px;
+  font-size: 15px;
+  transition: transform .6s var(--ios-easing);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
 
-    .Cell--ios .Cell__remove-in {
-      flex-shrink: 0;
-      }
+.Cell--ios .Cell__remove-in {
+  flex-shrink: 0;
+}
 
-  .Cell--ios .Cell__chevron {
-    color: var(--icon_tertiary);
-    }
+.Cell--ios .Cell__remove-marker {
+  margin-right: 12px;
+  width: 21px;
+  height: 21px;
+  background-color: var(--destructive);
+  border-radius: 50%;
+  position: relative;
+}
 
-  .Cell--ios .Cell__in {
-    padding: 0 12px;
-    transition: background-color .15s ease-out, transform .6s var(--ios-easing);
-    }
+.Cell--ios .Cell__remove-marker::before {
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  width: 9px;
+  height: 1px;
+  background-color: var(--white);
+  content: '';
+  display: block;
+}
 
-      .Cell--ios .Cell__before-in > .Icon {
-        padding: 10px 16px 10px 0;
-        }
-
-      .Cell--ios.Cell--m .Cell__before-in > .Avatar {
-        padding: 4px 12px 4px 0;
-        }
-
-      .Cell--ios .Cell__dragger::after {
-        width: calc(100% + 20px);
-        height: calc(100% + 20px);
-        right: -10px;
-        top: -10px;
-        }
-
-      .Cell--ios.Cell--l .Cell__before-in > .Avatar {
-        padding: 12px 12px 12px 0;
-        }
-
-      .Cell--ios .Cell__checkbox-marker {
-        margin: 10px 16px 10px 0;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        border: 2px solid var(--icon_secondary);
-        color: transparent;
-        }
-
-      .Cell--ios .Cell__checkbox:checked ~ .Cell__before .Cell__checkbox-marker {
-        border: none;
-        color: var(--white);
-        background-color: var(--accent);
-        padding: 4px;
-        }
-
-      .Cell--ios .Cell__remove-marker {
-        margin: 10px 16px 10px 0;
-        width: 21px;
-        height: 21px;
-        background-color: var(--destructive);
-        border-radius: 50%;
-        position: relative;
-        box-shadow: 0 2px 0 0 rgba(0, 0, 0, .06);
-        }
-
-        .Cell--ios .Cell__remove-marker::before {
-          position: absolute;
-          left: 6px;
-          top: 10px;
-          width: 9px;
-          height: 1px;
-          background-color: var(--white);
-          content: '';
-          display: block;
-          }
-
-    .Cell--ios .Cell__main {
-      padding: 11px 8px 11px 0;
-      }
-
-      .Cell--ios .Cell__description:not(:empty) {
-        font-size: 13px;
-        line-height: 15px;
-        }
-
-    .Cell--ios .Cell__indicator,
-    .Cell--ios .Cell__aside {
-      padding-top: 10px;
-      padding-bottom: 10px;
-      }
+.Cell--ios .Cell__marker {
+  margin-right: 12px;
+}
 
 /* Android */
-.Cell--android {
-  font-size: 16px;
-  }
 
-  .Cell--android .Cell__in {
-    padding: 0 16px;
-    }
+.Cell--android .Cell__dragger,
+.Cell--vkcom .Cell__dragger {
+  padding-right: 16px;
+}
 
-    .Cell--android .Cell__before-in > .Icon,
-    .Cell--android .Cell__dragger > .Icon {
-      padding: 12px 16px 12px 0;
-      }
+.Cell--android .Cell__remove-marker,
+.Cell--vkcom .Cell__remove-marker {
+  color: var(--icon_secondary);
+}
 
-    .Cell--android .Cell__dragger::after {
-      width: calc(100% + 16px);
-      height: 100%;
-      right: 0;
-      top: 0;
-      }
-
-    .Cell--android .Cell__before-in > .Avatar {
-      padding: 8px 12px 8px 0;
-      }
-
-    .Cell--android.Cell--l .Cell__before-in > .Avatar {
-      padding: 12px 12px 12px 0;
-      }
-
-    .Cell--android .Cell__main {
-      padding: 14px 8px 14px 0;
-      line-height: 20px;
-      }
-
-    .Cell--android.Cell--l .Cell__main {
-      padding: 12px 8px 12px 0;
-      }
-
-      .Cell--android .Cell__description:not(:empty) {
-        font-size: 14px;
-        line-height: 18px;
-        }
-
-    .Cell--android .Cell__checkbox-marker {
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--icon_secondary);
-      color: transparent;
-      border-radius: 3px;
-      }
-
-    .Cell--android .Cell__checkbox:checked ~ .Cell__aside .Cell__checkbox-marker {
-      color: #fff;
-      border: none;
-      padding: 1px;
-      background-color: var(--accent);
-      }
-
-    .Cell--android .Cell__indicator,
-    .Cell--android .Cell__aside {
-      padding-top: 12px;
-      padding-bottom: 12px;
-      }
+.Cell--android .Cell__marker,
+.Cell--vkcom .Cell__marker {
+  margin-right: 16px;
+}

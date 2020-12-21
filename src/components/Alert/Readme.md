@@ -12,11 +12,12 @@
 
 **Важно:**
 
-* Кнопка со стилем `cancel` должна быть одна на алерт.
-* Кнопку со стилем `cancel` нужно располагать либо слева, либо снизу, в зависимости от выбранного
+1. Кнопка со стилем `cancel` должна быть одна на алерт.
+2. Кнопку со стилем `cancel` нужно располагать либо слева, либо снизу, в зависимости от выбранного
 `actionsLayout`.
-* В Android версии игнорируется стиль `cancel`, и жирность всех кнопок одинаковая.
-* Порядок кнопок должен быть одинаковым на всех платформах (см. пункт 2).
+3. В Android версии игнорируется стили `cancel` и `destructive`, и жирность всех кнопок одинаковая.
+4. В VKCOM версии возможно только горизонтальное расположение кнопок.
+5.  Порядок кнопок должен быть одинаковым на всех платформах (см. пункт 2).
 
 ```jsx
 class Example extends React.Component {
@@ -28,14 +29,14 @@ class Example extends React.Component {
       actionsLog: [],
     };
 
-    this.openDefault = this.openDefault.bind(this);
-    this.openDestructive = this.openDestructive.bind(this);
+    this.openAction = this.openAction.bind(this);
+    this.openDeleteion = this.openDeleteion.bind(this);
     this.closePopout = this.closePopout.bind(this);
     this.addActionLogItem = this.addActionLogItem.bind(this);
   }
 
   componentDidMount() {
-    this.openDestructive()
+    this.openDeleteion()
   }
 
   addActionLogItem(value) {
@@ -44,45 +45,45 @@ class Example extends React.Component {
     });
   }
 
-  openDefault () {
+  openAction () {
     this.setState({ popout:
       <Alert
         actions={[{
+          title: 'Лишить права',
+          mode: 'destructive',
+          autoclose: true,
+          action: () => this.addActionLogItem('Право на модерацию контента убрано.'),
+        }, {
           title: 'Отмена',
           autoclose: true,
           mode: 'cancel'
-        }, {
-          title: 'Добавить',
-          autoclose: true,
-          action: () => this.addActionLogItem('Право на модерацию контента добавлено.'),
         }]}
+        actionsLayout="vertical"
         onClose={this.closePopout}
-      >
-        <h2>Подтвердите действие</h2>
-        <p>Добавить пользователю право на модерацию контента.</p>
-      </Alert>
+        header="Подтвердите действие"
+        text="Вы уверены, что хотите лишить пользователя права на модерацию контента?"
+      />
     });
   }
 
-  openDestructive () {
+  openDeleteion () {
     this.setState({ popout:
       <Alert
-        actionsLayout="vertical"
         actions={[{
-          title: 'Лишить права',
-          autoclose: true,
-          mode: 'destructive',
-          action: () => this.addActionLogItem('Пользователь больше не может модерировать контент.'),
-        }, {
           title: 'Отмена',
           autoclose: true,
           mode: 'cancel'
+        }, {
+          title: 'Удалить',
+          autoclose: true,
+          mode: 'destructive',
+          action: () => this.addActionLogItem('Документ удален.'),
         }]}
+        actionsLayout="horizontal"
         onClose={this.closePopout}
-      >
-        <h2>Подтвердите действие</h2>
-        <p>Вы уверены, что хотите лишить пользователя права на модерацию контента?</p>
-      </Alert>
+        header="Удаление документа"
+        text="Вы уверены, что хотите удалить этот документ?"
+      />
     });
   }
 
@@ -94,10 +95,12 @@ class Example extends React.Component {
     return (
       <View popout={this.state.popout} activePanel="alert">
         <Panel id="alert">
-          <CellButton onClick={this.openDefault}>Добавить право</CellButton>
-          <CellButton mode="danger" onClick={this.openDestructive}>Лишить права</CellButton>
-
-          {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
+          <PanelHeader>Alert</PanelHeader>
+          <Group>
+            <CellButton onClick={this.openAction}>Лишить права</CellButton>
+            <CellButton onClick={this.openDeleteion}>Удалить документ</CellButton>
+            {this.state.actionsLog.map((value, i) => <Div key={i}>{value}</Div>)}
+          </Group>
         </Panel>
       </View>
     )

@@ -1,13 +1,12 @@
 import React, { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import withInsets from '../../hoc/withInsets';
-import { isNumeric } from '../../lib/utils';
-import { HasInsets } from '../../types';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import usePlatform from '../../hooks/usePlatform';
+import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
+import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
-export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, HasInsets {
+export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   id: string;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
@@ -31,26 +30,36 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     children,
     className,
     header,
-    insets,
+    viewWidth,
+    viewHeight,
+    onClose,
   } = props;
 
   useEffect(() => {
     updateModalHeight();
   }, [children]);
 
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.MEDIUM;
+  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+
   return (
-    <div className={classNames(getClassName('ModalPage', platform), className)}>
+    <div className={classNames(getClassName('ModalPage', platform), className, {
+      'ModalPage--desktop': isDesktop,
+    })}>
       <div className="ModalPage__in-wrap">
         <div className="ModalPage__in">
           <div className="ModalPage__header">
             {header}
           </div>
 
-          <div className="ModalPage__content">
-            <div className="ModalPage__content-in" style={isNumeric(insets.bottom) ? { paddingBottom: insets.bottom } : null}>
-              {children}
+          <div className="ModalPage__content-wrap">
+            <div className="ModalPage__content">
+              <div className="ModalPage__content-in">
+                {children}
+              </div>
             </div>
           </div>
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
         </div>
       </div>
     </div>
@@ -59,7 +68,9 @@ const ModalPage: FC<ModalPageProps> = (props) => {
 
 ModalPage.defaultProps = {
   settlingHeight: 75,
-  insets: {},
 };
 
-export default withInsets(ModalPage);
+export default withAdaptivity(ModalPage, {
+  viewWidth: true,
+  viewHeight: true,
+});
