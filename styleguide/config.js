@@ -14,30 +14,34 @@ module.exports = {
     StyleGuideRenderer: path.join(__dirname, './Components/StyleGuideRenderer'),
     PathlineRenderer: path.join(__dirname, './Components/PathlineRenderer')
   },
+  assetsDir:  path.join(__dirname, `assets`),
   sections: [
     {
-      name: 'Intro',
       content: './pages/intro.md'
     }, {
-      name: 'Installation',
-      content: './pages/installation.md'
-    }, {
-      name: 'HTML',
-      content: './pages/html.md'
-    }, {
-      name: 'Hello World',
-      content: './pages/hello_world.md'
-    }, {
-      name: 'Concept',
-      content: './pages/concept.md'
-    }, {
-      name: 'Adaptivity',
-      content: './pages/adaptivity.md',
-      components: () => [
-        '../src/components/AppRoot/AppRoot.tsx',
-        '../src/components/AdaptivityProvider/AdaptivityProvider.tsx',
-        '../src/components/SplitLayout/SplitLayout.tsx',
-        '../src/components/SplitCol/SplitCol.tsx',
+      name: 'Начало работы',
+      content: './pages/getting_started.md',
+      sections: [
+        {
+          name: 'Установка',
+          content: './pages/installation.md'
+        },
+        {
+          name: 'Подготовка HTML',
+          content: './pages/html.md'
+        }, {
+          name: 'Hello World',
+          content: './pages/hello_world.md'
+        }, {
+          name: 'Концепция',
+          content: './pages/concept.md',
+        }, {
+          name: 'Структура экранов',
+          content: './pages/structure.md'
+        }, {
+          name: 'Режимы подключения',
+          content: './pages/modes.md'
+        },
       ]
     }, {
       name: 'Components',
@@ -79,6 +83,13 @@ module.exports = {
           '../src/components/ModalPageHeader/ModalPageHeader.tsx',
           '../src/components/ModalCard/ModalCard.tsx',
           '../src/components/ModalDismissButton/ModalDismissButton.tsx'
+        ]
+      }, {
+        name: 'Adaptivity',
+        components: () => [
+          '../src/components/AdaptivityProvider/AdaptivityProvider.tsx',
+          '../src/components/SplitLayout/SplitLayout.tsx',
+          '../src/components/SplitCol/SplitCol.tsx',
         ]
       }, {
         name: 'Blocks',
@@ -170,7 +181,10 @@ module.exports = {
         components: () => [
           '../src/components/ChipsSelect/ChipsSelect.tsx',
         ]
-      }, {
+      }]
+    }, {
+      name: 'Other',
+      sections: [{
         name: 'Helpers',
         content: './pages/helpers.md'
       },
