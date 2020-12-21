@@ -143,6 +143,7 @@
 
 .vkui__root--embedded {
   transform: translate3d(0, 0, 0);
+  overflow-x: hidden;
 }
 
 .AppRoot {
