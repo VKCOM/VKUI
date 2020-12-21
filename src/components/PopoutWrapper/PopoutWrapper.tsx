@@ -15,6 +15,7 @@ export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasP
   alignX?: 'left' | 'center' | 'right';
   closing?: boolean;
   window?: Window;
+  document?: Document;
 }
 
 export interface PopoutWrapperState {
@@ -86,7 +87,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   preventTouch: WindowTouchListener = (e: Event) => e.preventDefault();
 
   render() {
-    const { alignY, alignX, closing, children, hasMask, fixed, className, platform, onClick, ...restProps } = this.props;
+    const { alignY, alignX, closing, children, hasMask, fixed, className, platform, onClick, window, document, ...restProps } = this.props;
     const baseClassNames = getClassName('PopoutWrapper', platform);
 
     return (
@@ -113,4 +114,4 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   }
 }
 
-export default withFrame(withPlatform(PopoutWrapper));
+export default withFrame<PopoutWrapperProps>(withPlatform(PopoutWrapper));
