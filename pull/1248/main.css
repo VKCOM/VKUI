@@ -1565,7 +1565,7 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .vkui>body{overflow-x:hidden}
 .vkui,.vkui>body,.vkui__root{margin:0;padding:0;height:100%}
 .vkui,.vkui>body,.vkui__root,.vkui__portal-root{-webkit-font-smoothing:subpixel-antialiased;-webkit-tap-highlight-color:transparent;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;font-family:-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-common);color:#000;color:#000;color:var(--text_primary)}
-.vkui__root--embedded{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
+.vkui__root--embedded{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);overflow-x:hidden}
 .AppRoot{height:100%}
 .vkui__root--embedded .AppRoot{overflow:auto}
 .vkui--sizeX-regular{background:#ebedf0;background:#ebedf0;background:var(--background_page)}
