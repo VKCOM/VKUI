@@ -6,6 +6,7 @@ import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import { StyleGuideContext } from './StyleGuideRenderer';
 import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
+import { IntegrationSelect } from './IntegrationSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
 import { ViewHeightSelect } from './ViewHeightSelect';
@@ -28,6 +29,11 @@ export function PathlineRenderer({ classes, children }) {
       {(styleGuideContext) => {
         return (
           <div className={classes.pathline}>
+            <IntegrationSelect
+              onChange={(e) => styleGuideContext.setContext({ integration: e.target.value })}
+              value={styleGuideContext.integration}
+            />
+            &nbsp;|&nbsp;
             <PlatformSelect
               onChange={(e) => styleGuideContext.setContext({ platform: e.target.value })}
               value={styleGuideContext.platform}

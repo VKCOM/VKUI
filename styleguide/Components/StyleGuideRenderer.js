@@ -9,6 +9,7 @@ import pkg from '../../package.json';
 import { Scheme, WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
 import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
+import { IntegrationSelect } from './IntegrationSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { DESKTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from '../../src/components/AdaptivityProvider/AdaptivityProvider';
 import { defaultConfigProviderProps } from '../../src/components/ConfigProvider/ConfigProviderContext';
@@ -83,6 +84,7 @@ const styles = ({ color, fontFamily, fontSize, mq, space }) => ({
 
 let initialState = {
   ...defaultConfigProviderProps,
+  integration: "full",
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
   height: SMALL_HEIGHT,
@@ -142,7 +144,10 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
             <Logo>{title}</Logo>
           </div>
           <div className={classes.os}>
-            <PlatformSelect onChange={ (e) => setContext({ platform: e.target.value })} value={platform} />
+            <IntegrationSelect onChange={ (e) => setContext({ integration: e.target.value })} value={state.integration} />
+            <div style={{ marginTop: 4 }}>
+              <PlatformSelect onChange={ (e) => setContext({ platform: e.target.value })} value={platform} />
+            </div>
             <div style={{ marginTop: 4 }}>
               <SchemeSelect
                 onChange={ (e) => setContext({ scheme: e.target.value })}

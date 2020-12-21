@@ -117,12 +117,22 @@
 /* Advertisement */
 @import '../components/PromoBanner/PromoBanner.css';
 
-html,
-body,
-div#root {
+.vkui > body {
+  overflow-x: hidden;
+}
+
+.vkui,
+.vkui > body,
+.vkui__root {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+.vkui,
+.vkui > body,
+.vkui__root,
+.vkui__portal-root {
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
@@ -131,25 +141,35 @@ div#root {
   color: var(--text_primary);
 }
 
-body {
-  overflow-x: hidden;
+.vkui__root--embedded {
+  transform: translate3d(0, 0, 0);
 }
 
-.vkui-sizeX-regular {
+.AppRoot {
+  height: 100%;
+  overflow: auto;
+}
+
+.vkui--sizeX-regular {
   background: var(--background_page);
 }
 
-input,
-textarea,
-select,
-button {
-  font-family: inherit;
-  }
-
-#root {
+.AppRoot--no-mouse {
   user-select: none;
-  }
+}
 
-a:focus {
+.AppRoot__wrapper {
+  height: 100%;
+  overflow: auto;
+}
+
+.vkui__root input,
+.vkui__root textarea,
+.vkui__root select,
+.vkui__root button {
+  font-family: inherit;
+}
+
+.vkui__root a:focus {
   outline: none;
-  }
+}
