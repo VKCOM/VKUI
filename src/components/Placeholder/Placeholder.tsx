@@ -1,7 +1,11 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
+import React, { FC, HTMLAttributes, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
+import { hasReactNode } from '../../lib/utils';
+import Title from '../Typography/Title/Title';
+import Headline from '../Typography/Headline/Headline';
+import { HasRootRef } from '../../types';
 
-export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement> {
+export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   /**
    * Иконка
    */
@@ -20,7 +24,7 @@ export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement> {
   stretched?: boolean;
 }
 
-const Placeholder: FunctionComponent<PlaceholderProps> = (props) => {
+const Placeholder: FC<PlaceholderProps> = (props) => {
   const {
     className,
     icon,
@@ -28,21 +32,23 @@ const Placeholder: FunctionComponent<PlaceholderProps> = (props) => {
     action,
     children,
     stretched,
+    getRootRef,
     ...restProps
   } = props;
 
   return (
     <div
       {...restProps}
+      ref={getRootRef}
       className={classNames('Placeholder', {
         'Placeholder--stretched': stretched,
       }, className)}
     >
       <div className="Placeholder__in">
-        {icon && <div className="Placeholder__icon">{icon}</div>}
-        {header && <div className="Placeholder__header">{header}</div>}
-        {children && <div className="Placeholder__text">{children}</div>}
-        {action && <div className="Placeholder__action">{action}</div>}
+        {hasReactNode(icon) && <div className="Placeholder__icon">{icon}</div>}
+        {hasReactNode(header) && <Title level="2" weight="medium" className="Placeholder__header">{header}</Title>}
+        {hasReactNode(children) && <Headline weight="regular" className="Placeholder__text">{children}</Headline>}
+        {hasReactNode(action) && <div className="Placeholder__action">{action}</div>}
       </div>
     </div>
   );

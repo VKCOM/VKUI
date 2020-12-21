@@ -25,6 +25,7 @@ class Example extends React.Component {
           <PanelHeader>
             Fixed layout
           </PanelHeader>
+          <Group>
           <FixedLayout vertical="top">
             <Search />
           </FixedLayout>
@@ -56,6 +57,7 @@ class Example extends React.Component {
               >9 событий</TabsItem>
             </Tabs>
           </FixedLayout>
+          </Group>
         </Panel>
       </View>
     )

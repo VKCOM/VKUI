@@ -3,11 +3,12 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import usePlatform from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
 
 interface PanelHeaderContentProps extends HTMLAttributes<HTMLDivElement> {
-  aside: ReactNode;
-  before: ReactNode;
-  status: ReactNode;
+  aside?: ReactNode;
+  before?: ReactNode;
+  status?: ReactNode;
 }
 
 const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
@@ -28,14 +29,14 @@ const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
 
   return (
     <div {...rootProps} className={classNames(baseClassNames, className)} style={style}>
-      {before && <div className="PanelHeaderContent__before">{before}</div>}
+      {hasReactNode(before) && <div className="PanelHeaderContent__before">{before}</div>}
       <InComponent {...inProps} className="PanelHeaderContent__in" onClick={onClick}>
-        {status && <div className="PanelHeaderContent__status">{status}</div>}
+        {hasReactNode(status) && <div className="PanelHeaderContent__status">{status}</div>}
         <div className="PanelHeaderContent__children">
           <span className="PanelHeaderContent__children-in">{children}</span>
-          {aside && <div className="PanelHeaderContent__aside">{aside}</div>}
+          {hasReactNode(aside) && <div className="PanelHeaderContent__aside">{aside}</div>}
         </div>
-        {before && <div className="PanelHeaderContent__width" />}
+        {hasReactNode(before) && <div className="PanelHeaderContent__width" />}
       </InComponent>
     </div>
   );

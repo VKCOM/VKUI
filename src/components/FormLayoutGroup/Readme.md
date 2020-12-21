@@ -1,12 +1,22 @@
-Компонент помогает сгруппировать несколько элементов форм по какому-то признаку. Пример: форма ввода пароля.
+Компонент помогает сгруппировать несколько `FormItem` по какому-то признаку, расположив их по-вертикали или
+по-горизонтали.
 
-```jsx static
-import { FormLayout, FormLayoutGroup, Input } from '@vkontakte/vkui';
-
-<FormLayout>
-  <FormLayoutGroup top="Пароль" bottom="Пароль может содержать только латинские буквы и цифры.">
-    <Input type="password" placeholder="Введите пароль" />
-    <Input type="password" placeholder="Повторите пароль" />
-  </FormLayoutGroup>
-</FormLayout>
+```jsx
+<View activePanel="FormLayoutGroup">
+  <Panel id="FormLayoutGroup">
+    <PanelHeader>FormLayoutGroup</PanelHeader>
+    <Group>
+      <FormLayout>
+        <FormLayoutGroup mode="horizontal">
+          <FormItem top="Имя">    
+            <Input />
+          </FormItem>
+          <FormItem top="Фамилия">    
+            <Input />
+          </FormItem>
+        </FormLayoutGroup>
+      </FormLayout>
+    </Group>
+  </Panel>
+</View>
 ```

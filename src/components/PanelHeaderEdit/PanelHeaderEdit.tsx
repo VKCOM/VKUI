@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import Icon28EditOutline from '@vkontakte/icons/dist/28/edit_outline';
 import Icon28DoneOutline from '@vkontakte/icons/dist/28/done_outline';
 import usePlatform from '../../hooks/usePlatform';
@@ -32,7 +32,7 @@ const PanelHeaderEdit: FunctionComponent<PanelHeaderEditProps> = ({
 
   return (
     <PanelHeaderButton {...restProps}>
-      {platform === ANDROID ? AndroidIcon : iOSText}
+      {platform === ANDROID || platform === VKCOM ? AndroidIcon : iOSText}
     </PanelHeaderButton>
   );
 };

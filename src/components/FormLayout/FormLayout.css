@@ -1,124 +1,16 @@
 .FormLayout {
   position: relative;
-  }
+}
 
-  .FormLayout__row {
-    display: block;
-    padding: 12px 0;
-    }
-
-  .FormLayout__row-top {
-    font-size: 14px;
-    line-height: 18px;
-    color: var(--text_secondary);
-    }
-
-  .FormLayout__row-bottom {
-    font-size: 13px;
-    line-height: 16px;
-    color: var(--text_secondary);
-    }
-
-  .FormLayout__submit {
-    position: absolute;
-    visibility: hidden;
-    pointer-events: none;
-    left: 0;
-    top: 0;
-    padding: 0;
-    width: 0;
-    height: 0;
-    appearance: none;
-    border: none;
-    }
-
-.FormLayout--ios {}
-
-    .FormLayout--ios .FormLayout__row .Checkbox:first-child,
-    .FormLayout--ios .FormLayout__row .Radio:first-child,
-    .FormLayout--ios .FormLayout__row .Cell:first-child,
-    .FormLayout--ios .FormLayout__row .CellButton:first-child {
-      margin-top: -4px;
-      }
-
-    .FormLayout--ios .FormLayout__row .Checkbox:last-child,
-    .FormLayout--ios .FormLayout__row .Radio:last-child,
-    .FormLayout--ios .FormLayout__row .Cell:last-child,
-    .FormLayout--ios .FormLayout__row .CellButton:last-child {
-      margin-bottom: -4px;
-      }
-
-    .FormLayout--ios .FormLayout__row .Button--sz-xl {
-      width: calc(100% - 2 * 12px);
-      }
-
-    .FormLayout--ios .FormLayout__row .FormField,
-    .FormLayout--ios .FormLayout__row .Button,
-    .FormLayout--ios .FormLayout__row .FormStatus {
-      margin-left: 12px;
-      margin-right: 12px;
-      }
-
-    .FormLayout--ios .FormLayout__row .Slider,
-    .FormLayout--ios .FormLayout__row .RangeSlider {
-      margin-left: 26px;
-      margin-right: 26px;
-      }
-
-    .FormLayout--ios .FormLayout__row-top {
-      padding: 2px 12px 8px;
-      }
-
-    .FormLayout--ios .FormLayout__row-bottom {
-      padding: 8px 12px 0;
-      }
-
-.FormLayout--android {}
-
-    .FormLayout--android .FormLayout__row .Checkbox:first-child,
-    .FormLayout--android .FormLayout__row .Radio:first-child,
-    .FormLayout--android .FormLayout__row .Cell:first-child,
-    .FormLayout--android .FormLayout__row .CellButton:first-child {
-      margin-top: -4px;
-      }
-
-    .FormLayout--android .FormLayout__row .Checkbox:last-child,
-    .FormLayout--android .FormLayout__row .Radio:last-child,
-    .FormLayout--android .FormLayout__row .Cell:last-child,
-    .FormLayout--android .FormLayout__row .CellButton:last-child {
-      margin-bottom: -4px;
-      }
-
-    .FormLayout--android .FormLayout__row .Button--sz-xl {
-      width: calc(100% - 2 * 16px);
-      }
-
-    .FormLayout--android .FormLayout__row .FormField,
-    .FormLayout--android .FormLayout__row .Button,
-    .FormLayout--android .FormLayout__row .FormStatus {
-      margin-left: 16px;
-      margin-right: 16px;
-      }
-
-    .FormLayout--android .FormLayout__row .Slider,
-    .FormLayout--android .FormLayout__row .RangeSlider {
-      margin-left: 30px;
-      margin-right: 30px;
-      }
-
-    .FormLayout--android .FormLayout__row-top {
-      padding: 2px 16px 8px;
-      }
-
-    .FormLayout--android .FormLayout__row-bottom {
-      padding: 8px 16px 0;
-      }
-
-    .FormLayout__row--s-error .FormLayout__row-bottom {
-      color: var(--field_error_border);
-      }
-
-    .FormLayout__row--s-valid .FormLayout__row-bottom,
-    .FormLayout__row--s-verified .FormLayout__row-bottom {
-      color: var(--field_valid_border);
-      }
+.FormLayout__submit {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  padding: 0;
+  width: 0;
+  height: 0;
+  appearance: none;
+  border: none;
+}

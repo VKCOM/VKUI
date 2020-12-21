@@ -14,7 +14,7 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  max-width: 480px;
+  max-width: 360px;
   padding: 8px;
   transform: translateY(100%);
   box-sizing: border-box;
@@ -68,7 +68,7 @@
 }
 
 .ModalCard .UsersStack {
-  margin-top: 12px;
+  margin-top: 20px;
 }
 
 .ModalCard__icon {
@@ -84,7 +84,7 @@
 }
 
 .ModalCard .UsersStack + .ModalCard__actions {
-  margin-top: 24px;
+  margin-top: 32px;
 }
 
 .ModalCard__header + .ModalCard__actions,
@@ -127,16 +127,43 @@
 }
 
 /**
- * Android
+ * Android + vkcom
  */
 
-.ModalCard--android .ModalCard__in {
+.ModalCard--vkcom .ModalCard__in {
+  max-width: 416px;
+}
+
+.ModalCard--android .ModalCard__in,
+.ModalCard--vkcom .ModalCard__in {
   transition: transform 340ms var(--android-easing);
 }
 
-.ModalCard--android .ModalCard__container {
+.ModalCard--android .ModalCard__container,
+.ModalCard--vkcom .ModalCard__container {
   border-radius: 12px;
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .08);
+}
+
+/**
+ * Desktop
+ */
+
+.ModalCard--desktop {
+  align-items: center;
+}
+
+.ModalCard--desktop .ModalCard__in {
+  transform: unset;
+  opacity: 0;
+  transition: opacity 340ms var(--android-easing);
+}
+
+.ModalCard--desktop .ModalCard__container {
+  border-radius: 8px;
+  box-shadow:
+          0 16px 16px rgba(0, 0, 0, .16),
+          0 0 8px rgba(0, 0, 0, .12);
 }
 
 /**

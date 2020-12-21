@@ -1,14 +1,23 @@
 .Link {
   color: var(--accent);
   text-decoration: none;
-  }
+  border: 0;
+  background: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  font-size: inherit;
+  display: inline;
+}
 
-  .Link .Icon {
-    display: inline-block;
-    margin-left: 4px;
-    }
+.Link .Icon {
+  margin-left: 4px;
+  display: inline-block;
+  vertical-align: middle;
+}
 
-  .Link .Icon--dropdown_16 {
-    position: relative;
-    top: 1px;
-    }
+.Link.Tappable--shadowHovered,
+.Link.Tappable--active {
+  opacity: .72;
+}

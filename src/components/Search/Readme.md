@@ -51,16 +51,15 @@
         <React.Fragment>
           <PanelHeader
             right={<PanelHeaderButton onClick={this.props.goHeaderSearch}><Icon28AddOutline /></PanelHeaderButton>}
-            separator={false}
+            separator={this.props.sizeX === SizeType.REGULAR}
           >
             Выбор тематики
           </PanelHeader>
-          <Search value={this.state.search} onChange={this.onChange} after={null}/>
-          {this.thematics.length > 0 &&
-            <List>
-              {this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
-            </List>
-          }
+          <Group>
+            <Search value={this.state.search} onChange={this.onChange} after={null}/>  
+            {this.thematics.length > 0 && this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
+            {this.thematics.length === 0 && <Footer>Ничего не найдено</Footer>}
+          </Group>
         </React.Fragment>
       );
     }
@@ -85,24 +84,27 @@
     }
 
     render () {
+      const { platform, sizeX, goSearch, onFiltersClick } = this.props;
       return (
         <React.Fragment>
-          <PanelHeader left={<PanelHeaderBack onClick={this.props.goSearch} />} separator={false}>
+          <PanelHeader left={platform !== VKCOM && <PanelHeaderBack onClick={goSearch} />} separator={sizeX === SizeType.REGULAR}>
             <Search
               value={this.state.search}
               onChange={this.onChange}
               icon={<Icon24Filter />}
-              onIconClick={this.props.onFiltersClick}
+              onIconClick={onFiltersClick}
             />
           </PanelHeader>
-          <List>
-            {this.users.map((user) => (
-              <Cell
+          <Group>
+            {this.users.length > 0 && this.users.map((user) => (
+              <SimpleCell
                 before={<Avatar size={40} src={user.photo_100} />}
                 key={user.id}
-              >{user.name}</Cell>
+                onClick={goSearch}
+              >{user.name}</SimpleCell>
             ))}
-          </List>
+            {this.users.length === 0 && <Footer>Ничего не найдено</Footer>}
+          </Group>
         </React.Fragment>
       );
     }
@@ -128,6 +130,7 @@
     hideModal() { this.setState({ activeModal: null }); }
 
     render () {
+      const { platform } = this.props;
       return (
         <View
          activePanel={this.state.activePanel}
@@ -138,36 +141,42 @@
                onClose={this.hideModal}
                header={
                  <ModalPageHeader
-                   left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.hideModal}><Icon24Cancel /></PanelHeaderButton>}
-                   right={<PanelHeaderButton onClick={this.hideModal}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+                   left={platform === ANDROID && <PanelHeaderButton onClick={this.hideModal}><Icon24Cancel /></PanelHeaderButton>}
+                   right={<PanelHeaderButton onClick={this.hideModal}>{platform === IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
                  >
                    Фильтры
                  </ModalPageHeader>
                }
              >
-               <FormLayout>
-                 <SelectMimicry top="Страна" placeholder="Не выбрана" />
-                 <SelectMimicry top="Город" placeholder="Не выбран" />
-                 <FormLayoutGroup top="Пол">
+               <Group>
+                 <FormItem top="Страна">
+                   <SelectMimicry placeholder="Не выбрана" />
+                 </FormItem>
+                 <FormItem top="Город">
+                   <SelectMimicry placeholder="Не выбран" />
+                 </FormItem>
+                 <FormItem top="Пол">
                    <Radio name="sex" value="male" defaultChecked>Любой</Radio>
                    <Radio name="sex" value="male">Мужской</Radio>
                    <Radio name="sex" value="female">Женский</Radio>
-                 </FormLayoutGroup>
-               </FormLayout>
+                 </FormItem>
+               </Group>
              </ModalPage>
            </ModalRoot>
          }
        >
           <Panel id="search">
-            <SimpleSearch goHeaderSearch={this.goHeaderSearch}/>
+            <SimpleSearch sizeX={this.props.sizeX} goHeaderSearch={this.goHeaderSearch} platform={platform} />
           </Panel>
           <Panel id="header-search">
-            <HeaderSearch onFiltersClick={() => this.setState({ activeModal: 'filters' })} goSearch={this.goSearch}/>
+            <HeaderSearch sizeX={this.props.sizeX} onFiltersClick={() => this.setState({ activeModal: 'filters' })} goSearch={this.goSearch} platform={platform} />
           </Panel>
         </View>
       );
     }
   }
+  
+  const AdaptivitySearch = withPlatform(withAdaptivity(SearchExample, { sizeX: true }));
 
-  <SearchExample />
+  <AdaptivitySearch />
 ```

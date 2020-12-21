@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent, RefCallback } from 'react';
+import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent as ReactMouseEvent, RefCallback } from 'react';
 import PropTypes, { Requireable } from 'prop-types';
 import {
   getSupportedEvents,
@@ -10,8 +10,11 @@ import {
 } from '../../lib/touch';
 import { HasRootRef } from '../../types';
 import { canUseDOM } from '../../lib/dom';
+import { setRef } from '../../lib/utils';
 
 export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+  onEnter?(outputEvent: MouseEvent): void;
+  onLeave?(outputEvent: MouseEvent): void;
   onStart?(outputEvent: TouchEvent): void;
   onStartX?(outputEvent: TouchEvent): void;
   onStartY?(outputEvent: TouchEvent): void;
@@ -22,6 +25,7 @@ export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTML
   onEndX?(outputEvent: TouchEvent): void;
   onEndY?(outputEvent: TouchEvent): void;
   useCapture?: boolean;
+  noSlideClick?: boolean;
   Component?: ElementType;
 }
 
@@ -50,18 +54,14 @@ export interface TouchEvent extends Gesture {
 }
 
 export type TouchEventHandler = (e: TouchEvent) => void;
-export type ClickHandler = (e: MouseEvent<HTMLElement>) => void;
+export type ClickHandler = (e: ReactMouseEvent<HTMLElement>) => void;
 export type DragHandler = (e: DragEvent<HTMLElement>) => void;
 
 const events = getSupportedEvents();
 
 export default class Touch extends Component<TouchProps> {
-  constructor(props: TouchProps) {
-    super(props);
-    this.cancelClick = false;
-  }
-
-  cancelClick: boolean;
+  preventClickDefault = false;
+  stopClickPropagation = false;
   gesture: Partial<Gesture> = {};
   container: HTMLElement;
 
@@ -69,6 +69,7 @@ export default class Touch extends Component<TouchProps> {
     Component: 'div',
     children: '',
     useCapture: false,
+    noSlideClick: false,
   };
 
   static contextTypes: TouchContext = {
@@ -83,13 +84,44 @@ export default class Touch extends Component<TouchProps> {
     if (canUseDOM) {
       this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
       touchEnabled && this.subscribe(this.container);
+
+      this.container.addEventListener('mouseenter', this.onEnter, { capture: this.props.useCapture, passive: true });
+      this.container.addEventListener('mouseleave', this.onLeave, { capture: this.props.useCapture, passive: true });
     }
   }
 
   componentWillUnmount() {
     this.container.removeEventListener(events[0], this.onStart);
     touchEnabled && this.unsubscribe(this.container);
+
+    this.container.removeEventListener('mouseenter', this.onEnter);
+    this.container.removeEventListener('mouseleave', this.onLeave);
   }
+
+  /**
+   * Обработчик событий mouseenter
+   *
+   * @param {Object} e Браузерное событие
+   * @return {void}
+   */
+  onEnter = (e: MouseEvent) => {
+    if (this.props.onEnter) {
+      this.props.onEnter(e);
+    }
+  };
+
+  /**
+   * Обработчик событий mouseleave
+   *
+   * @param {Object} e Браузерное событие
+   * @param {boolean} simulated флаг, с которым обработчик был вызван симулятивно
+   * @return {void}
+   */
+  onLeave = (e: MouseEvent) => {
+    if (this.props.onLeave) {
+      this.props.onLeave(e);
+    }
+  };
 
   /**
    * Обработчик событий touchstart
@@ -217,13 +249,20 @@ export default class Touch extends Component<TouchProps> {
       if (isSlideX && this.props.onEndX) {
         this.props.onEndX(outputEvent);
       }
+
+      this.stopClickPropagation = this.props.noSlideClick && isSlide;
     }
 
     const target = e.target as HTMLElement;
 
     // Если закончили жест на ссылке, выставляем флаг для отмены перехода
-    this.cancelClick = target.tagName === 'A' && isSlide;
+    this.preventClickDefault = target.tagName === 'A' && isSlide;
     this.gesture = {};
+
+    // Если это был тач-евент, симулируем отмену hover
+    if (e.type === 'touchend' || e.type === 'touchcancel') {
+      this.onLeave(e);
+    }
 
     !touchEnabled && this.unsubscribe(this.document);
   };
@@ -266,25 +305,22 @@ export default class Touch extends Component<TouchProps> {
    * @param {Object} e Браузерное событие
    * @return {void}
    */
-  onClick: ClickHandler = (e: MouseEvent<HTMLElement>) => {
-    if (this.cancelClick) {
-      this.cancelClick = false;
+  onClick: ClickHandler = (e: ReactMouseEvent<HTMLElement>) => {
+    if (this.preventClickDefault) {
+      this.preventClickDefault = false;
       e.preventDefault();
+    }
+    if (this.stopClickPropagation) {
+      this.stopClickPropagation = false;
+      e.stopPropagation();
+      return;
     }
     this.props.onClick && this.props.onClick(e);
   };
 
   getRef: RefCallback<HTMLElement> = (container) => {
     this.container = container;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(container);
-      } else {
-        getRootRef.current = container;
-      }
-    }
+    setRef(container, this.props.getRootRef);
   };
 
   render() {
@@ -295,6 +331,8 @@ export default class Touch extends Component<TouchProps> {
       onMove,
       onMoveX,
       onMoveY,
+      onLeave,
+      onEnter,
       onEnd,
       onEndX,
       onEndY,

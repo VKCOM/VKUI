@@ -1,15 +1,18 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { HasChildren, HasDangerHTML } from '../../types';
+import { HasDangerHTML } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
+import Headline from '../Typography/Headline/Headline';
+import Caption from '../Typography/Caption/Caption';
+import { hasReactNode } from '../../lib/utils';
 
-export interface FormStatusProps extends HTMLAttributes<HTMLDivElement>, HasChildren, HasDangerHTML {
+export interface FormStatusProps extends HTMLAttributes<HTMLDivElement>, HasDangerHTML {
   mode?: 'default' | 'error';
   header?: ReactNode;
 }
 
-const FormStatus: FunctionComponent<FormStatusProps> = ({
+export const FormStatus: FunctionComponent<FormStatusProps> = ({
   mode,
   header,
   children,
@@ -24,13 +27,11 @@ const FormStatus: FunctionComponent<FormStatusProps> = ({
       {...restProps}
       className={classNames(getClassName('FormStatus', platform), `FormStatus--${mode}`, className)}
     >
-      {header && <div className="FormStatus__header">{header}</div>}
+      {hasReactNode(header) && <Headline weight="medium" className="FormStatus__header">{header}</Headline>}
       {dangerouslySetInnerHTML &&
-        <div className="FormStatus__content" dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
+        <Caption level="1" weight="regular" dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
       }
-      {children && !dangerouslySetInnerHTML && <div className="FormStatus__content">{children}</div>}
+      {hasReactNode(children) && !dangerouslySetInnerHTML && <Caption level="1" weight="regular">{children}</Caption>}
     </div>
   );
 };
-
-export default FormStatus;

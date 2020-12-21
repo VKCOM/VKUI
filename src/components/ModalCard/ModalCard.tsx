@@ -1,24 +1,18 @@
-import React, { HTMLAttributes, MouseEventHandler, ReactNode, MouseEvent, FC } from 'react';
-import Button from '../Button/Button';
+import React, { HTMLAttributes, ReactNode, FC } from 'react';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import withInsets from '../../hoc/withInsets';
 import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
 import { IOS } from '../../lib/platform';
-import { hasReactNode, isNumeric } from '../../lib/utils';
+import { hasReactNode } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
-import { HasChildren, HasInsets, HasPlatform } from '../../types';
+import { HasChildren, HasPlatform } from '../../types';
+import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
+import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
-export interface ModalCardActionInterface {
-  title: string;
-  action?(event: MouseEvent): void;
-  mode?: 'secondary' | 'primary';
-}
-
-export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, HasInsets {
+export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, AdaptivityProps {
   /**
    * Иконка.
    *
@@ -34,12 +28,14 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   /**
    * Подзаголовок
    */
-  caption?: ReactNode;
+  subheader?: ReactNode;
 
   /**
-   * Список кнопок-действий
+   * Кнопки-действия.
+   *
+   * Рекомендуется использовать `<Button size="l" mode="primary" />` или `<Button size="l" mode="secondary" />`
    */
-  actions?: ModalCardActionInterface[];
+  actions?: ReactNode;
 
   /**
    * Тип отображения кнопок: вертикальный или горизонтальный
@@ -54,62 +50,45 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
 
 const ModalCard: FC<ModalCardProps> = (props) => {
   const {
-    insets,
     icon,
     header,
-    caption,
+    subheader,
     children,
     actions,
     actionsLayout,
     onClose,
     platform,
     className,
+    viewWidth,
+    viewHeight,
   } = props;
 
-  const onButtonClick: MouseEventHandler = (event: MouseEvent) => {
-    const target = event.currentTarget as HTMLButtonElement;
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const action = actions[Number(target.dataset.index)].action;
-    event.persist();
-
-    if (typeof action === 'function') {
-      action(event);
-    }
-  };
-
-  const canShowCloseBtn = platform === IOS;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.MEDIUM;
+  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+  const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
   return (
-    <div className={classNames(getClassName('ModalCard', platform), className)}>
+    <div className={classNames(getClassName('ModalCard', platform), {
+      'ModalCard--desktop': isDesktop,
+    }, className)}>
       <div className="ModalCard__in">
-        <div className="ModalCard__container" style={isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null}>
+        <div className="ModalCard__container">
           {hasReactNode(icon) && <div className="ModalCard__icon">{icon}</div>}
           {hasReactNode(header) && <Title level="2" weight="semibold" className="ModalCard__header">{header}</Title>}
-          {hasReactNode(caption) && <Subhead weight="regular" className="ModalCard__subheader">{caption}</Subhead>}
+          {hasReactNode(subheader) && <Subhead weight="regular" className="ModalCard__subheader">{subheader}</Subhead>}
 
           {children}
 
-          {actions.length > 0 &&
+          {hasReactNode(actions) &&
           <div className={classNames('ModalCard__actions', {
             'ModalCard__actions--v': actionsLayout === 'vertical',
           })}>
-            {actions.map(({ title, mode }: ModalCardActionInterface, i: number) => {
-              return (
-                <Button
-                  key={i}
-                  data-index={i}
-                  size="xl"
-                  mode={mode}
-                  onClick={onButtonClick}
-                >
-                  {title}
-                </Button>
-              );
-            })}
+            {actions}
           </div>
           }
 
-          {canShowCloseBtn &&
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
+          {canShowCloseBtnIos &&
           <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
             <Icon24Dismiss />
           </PanelHeaderButton>
@@ -121,9 +100,10 @@ const ModalCard: FC<ModalCardProps> = (props) => {
 };
 
 ModalCard.defaultProps = {
-  actions: [],
   actionsLayout: 'horizontal',
-  insets: {},
 };
 
-export default withPlatform(withInsets(ModalCard));
+export default withAdaptivity(withPlatform(ModalCard), {
+  viewWidth: true,
+  viewHeight: true,
+});

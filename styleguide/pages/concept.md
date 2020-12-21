@@ -1,84 +1,103 @@
-Каждое VKUI-приложение – это набор экранов. Есть два типа переходов между экранами.
+Основная концепция VKUI — это адаптивность. Все приложения должны поддерживать и реагировать на адаптивность. Для этого используются [`AdaptivityProvider`](#adaptivityprovider) и [`SplitLayout`](#splitlayout) компоненты.
 
-### Переход между панелями
-
-`Panel` – это компонент, в который передается `children`, видимый пользователю. Компонент `View` – это набор таких панелей. Пример:
-
-```jsx static
-import { View, Panel } from '@vkontakte/vkui';
-
-<View activePanel="greetings">
-  <Panel id="greetings">
-    {* panel content *}
-  </Panel>
-  <Panel id="form">
-    {* panel content *}
-  </Panel>
-  <Panel id="finish">
-    {* panel content *}
-  </Panel>
-</View>
-```
-
-В компонент `View` передается коллекция `Panel`. Свойство `activePanel` отвечает за то, какая `Panel` должна быть показана. [Демо](#!/View).
-
-### Переход между модальными окнами
-
-В каждом приложении есть какой-то основной пользовательский сценарий. И есть ответвления: check user action, поиск пользователя и т.д.
-Чтобы как-то отделить ветки от основного сценария, существуют модальные окна. Пример:
+Базовая структура приложения выглядит вот так:
+- `ConfigProvider` для определния темы и платформы устройства
+- `AdaptivityProvider` для определния размеров и способов ввода
+- `AppRoot` — основной контейнер приложения
 
 ```jsx static
-import { Root, View } from '@vkontakte/vkui';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AppRoot } from '@vkontakte/vkui';
+import '@vkontakte/vkui/dist/vkui.css';
 
-<Root activeView="main">
-  <View id="main" activePanel="general">
-    <Panel id="general">
-      {* general *}
-    </Panel>
-    <Panel id="education">
-      {* education *}
-    </Panel>
-  </View>
-  <View id="users-search" activePanel="users-search">
-    <Panel id="users-search">
-      {* modal window for users search *}
-    </Panel>
-  </View>
-  <View id="check-user-actions" activePanel="check-user-actions">
-    <Panel id="check-user-actions">
-      {* modal window for check user actions *}
-    </Panel>
-  </View>
-</Root>
+function App() {
+  return (
+    <ConfigProvider>
+      <AdaptivityProvider>
+        <AppRoot>
+          ...
+        </AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvier>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
-В компонент `Root` передается коллекция `View`, в каждой из которых содержится набор `Panel`. Свойство
-`activeView` отвечает за то, какая `View` должна быть показана. [Демо](#!/Root).
-
-### Еще раз :)
-Структура любого VKUI-приложения должна выглядеть так:
-
+Далее, нужно добавить `SplitLayout`.
+`SplitLayout` — компонент-обертка для отрисовки макета с одной или несколькими колонками. `SplitCol` — компонент для отрисовки колонки.
 ```jsx static
-import { Root, View, Panel } from '@vkontakte/vkui';
+// ...
 
-<Root activeView="view">
-  <View id="view" activePanel="panel">
-    <Panel id="panel" />
-  </View>
-</Root>
+function App() {
+  return (
+    <ConfigProvider>
+      <AdaptivityProvider>
+        <AppRoot>
+          <SplitLayout>
+            <SplitCol width="280px">
+              <SideCol />
+            </SplitCol>
+            <SplitCol>
+              <MainScreens />
+            </SplitCol>
+          </SplitLayout>
+        </AppRoot>
+      </AdaptivityProvider>
+    </ConfigProvier>
+  );
+}
+
+const MainScreens = () => {
+  return (
+    <View activePanel="profile">
+      <Panel id="profile">Profile</Panel>
+    </View>
+  )
+};
+
+const SideCol = () => {
+  return (
+    <Panel id="nav">Navigation</Panel>
+  );
+};
+
+// ...
 ```
 
-Или так:
-
+Почти готово. Теперь нам нужно как-то сообщить приложению, что левая колонка нужна только на больших экранах. Для доступа
+к рассчитанным в `AdaptivityProvider` свойствам, достаточно обернуть приложение в HOC `withAdaptivity`.
 ```jsx static
-import { View, Panel } from '@vkontakte/vkui';
+function App({ viewWidth }) {
+  // ...
+    <SplitLayout header={viewWidth >= ViewWidth.SMALL_TABLET && <PanelHeader separator={false} />}>
+      {viewWidth === ViewWidth.DESKTOP &&
+        <SplitCol width="280px">
+          <Panel id="nav">Navigation</Panel>
+        </SplitCol>
+      }
+      <SplitCol spaced={viewWidth >= ViewWidth.SMALL_TABLET} animate={viewWidth <= ViewWidth.MOBILE}>
+        <View activePanel="profile">
+          <Panel id="profile">Profile</Panel>
+        </View>
+      </SplitCol>
+    </SplitLayout>
+  // ...
+}
 
-<View id="view" activePanel="panel">
-  <Panel id="panel" />
-</View>
+App = withAdaptivity(App, { viewWidth: true });
 ```
 
-**Важно:** эта структура должна быть постоянной и не должна меняться в рантайме. То есть нельзя на лету добавлять и
-удалять `Panel` или `View`. Нельзя так же менять `id` у `Panel` или `View`. Структура – это *декларация* приложения.
-Единственный способ для перехода между `Panel` в пределах `View` и `View` в пределах `Root` – это обновление свойств `activePanel`
-и `activeView` соответственно.
+Адаптивность базируется на четырёх свойствах: `viewWidth`, `viewHeight`, `sizeX`, `sizeY`. Эти свойства вычисляются в `AdaptivityProvider`,
+доступ к ним можно получить через HOC `withAdaptivty` (либо через hook `useAdaptivity`).
+* `sizeX` и `sizeY` принимают значения `SizeType.REGULAR | SizeType.COMPACT`
+* `viewWidth` — `ViewWidth.SMALL_MOBILE | ViewWidth.MOBILE | ViewWidth.SMALL_TABLET | ViewWidth.TABLET | ViewWidth.DESKTOP`
+* `viewHeight` — `ViewHeight.SMALL | ViewHeight.MEDIUM`
+
+Нюансы:
+
+* Свойство `SplitLayout.header` нужно для создания сквозной шапки, когда интерфейс состоит из нескольких колонок (или одной центрированной)
+* Анимация перехода между панелями должна быть отключена при размерах `ViewWidth.TABLET` и более (`SplitCol.animate`)
+* Если интерфейс состоит из нескольких колонок, то у центральных колонок должны быть отступы (в трёх-колоночном режиме это одна центральная колонка) (`SplitCol.spaced`)

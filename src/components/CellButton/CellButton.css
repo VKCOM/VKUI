@@ -1,83 +1,43 @@
 .CellButton {
-  display: block;
   box-sizing: border-box;
   outline: none;
   text-decoration: none;
   margin: 0;
-  padding: 0;
   border: none;
-  cursor: default;
+  cursor: pointer;
   width: 100%;
   background: transparent;
-  position: relative;
-  }
+  text-align: left;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 
 .CellButton[disabled] {
   opacity: .4;
-  }
+}
 
-.CellButton__in {
-  display: flex;
-  align-items: center;
-  }
-
-.CellButton--aln-left .CellButton__in {
-  justify-content: flex-start;
-  text-align: left;
-  }
-
-.CellButton--aln-center .CellButton__in {
+.CellButton--centered {
   justify-content: center;
   text-align: center;
   }
 
-.CellButton--aln-right .CellButton__in {
-  justify-content: flex-end;
-  text-align: right;
-  }
+.CellButton--centered .SimpleCell__main {
+  flex-grow: initial;
+  max-width: initial;
+}
 
-.CellButton.Tappable--active {
-  z-index: 2;
-  }
+.CellButton--centered > .Icon {
+  padding-right: 8px;
+}
 
-.CellButton--lvl-primary {
+.CellButton--primary,
+.CellButton--primary > .Icon,
+.CellButton--primary > .Avatar .Icon {
   color: var(--accent);
-  }
+}
 
-.CellButton--lvl-danger {
+.CellButton--danger,
+.CellButton--danger > .Icon,
+.CellButton--danger > .Avatar .Icon {
   color: var(--destructive);
-  }
-
-/*
-  iOS
- */
-.CellButton--ios {
-  padding: 0 12px;
-  }
-
-.CellButton .CellButton__content {
-  line-height: 20px;
-  font-size: 17px;
-  padding: 12px 0;
-  }
-
-.CellButton--ios .CellButton__before .Icon {
-  margin-right: 16px;
-  }
-
-/*
-  Android
- */
-.CellButton--android {
-  padding: 0 16px;
-  }
-
-.CellButton--android .CellButton__content {
-  font-size: 16px;
-  line-height: 20px;
-  padding: 14px 0;
-  }
-
-.CellButton--android .CellButton__before .Icon {
-  margin-right: 16px;
-  }
+}

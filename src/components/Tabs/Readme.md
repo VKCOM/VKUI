@@ -31,7 +31,7 @@
             <PanelHeader
               left={<PanelHeaderButton><Icon28CameraOutline /></PanelHeaderButton>}
               right={<PanelHeaderButton><Icon28AddOutline /></PanelHeaderButton>}
-              separator={false}
+              separator={this.props.sizeX === SizeType.REGULAR}
             >
               <Tabs>
                 <TabsItem
@@ -65,7 +65,7 @@
               <List>
                 <Cell
                   before={<Icon28UsersOutline />}
-                  asideContent={this.state.mode === 'all' ? <Icon24Done fill="var(--accent)" /> : null}
+                  after={this.state.mode === 'all' ? <Icon24Done fill="var(--accent)" /> : null}
                   onClick={this.select}
                   data-mode="all"
                 >
@@ -73,7 +73,7 @@
                 </Cell>
                 <Cell
                   before={<Icon28SettingsOutline />}
-                  asideContent={this.state.mode === 'managed' ? <Icon24Done fill="var(--accent)" /> : null}
+                  after={this.state.mode === 'managed' ? <Icon24Done fill="var(--accent)" /> : null}
                   onClick={this.select}
                   data-mode="managed"
                 >
@@ -81,77 +81,77 @@
                 </Cell>
               </List>
             </PanelHeaderContext>
-            <CellButton onClick={() => this.setState({ activePanel: 'panel2' })}>Под шапкой</CellButton>
+            <Group>
+              <CellButton onClick={() => this.setState({ activePanel: 'panel2' })}>Под шапкой</CellButton>
+            </Group>
           </Panel>
           <Panel id="panel2">
             <PanelHeader
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}
-              separator={false}
+              separator={this.props.sizeX === SizeType.REGULAR}
             >
-              <Search />
+              Музыка
             </PanelHeader>
-            <Tabs>
-              <TabsItem
-                onClick={() => this.setState({ activeTab2: 'music' })}
-                selected={this.state.activeTab2 === 'music'}
-              >
-                Моя музыка
-              </TabsItem>
-              <TabsItem
-                onClick={() => this.setState({ activeTab2: 'recomendations' })}
-                selected={this.state.activeTab2 === 'recomendations'}
-              >
-                Рекомендации
-              </TabsItem>
-            </Tabs>
-            <Separator />
             <Group>
+              <Tabs>
+                <TabsItem
+                  onClick={() => this.setState({ activeTab2: 'music' })}
+                  selected={this.state.activeTab2 === 'music'}
+                >
+                  Моя музыка
+                </TabsItem>
+                <TabsItem
+                  onClick={() => this.setState({ activeTab2: 'recomendations' })}
+                  selected={this.state.activeTab2 === 'recomendations'}
+                >
+                  Рекомендации
+                </TabsItem>
+              </Tabs>
               <CellButton onClick={() => this.setState({ activePanel: 'panel3' })}>Со скроллом</CellButton>
             </Group>
           </Panel>
           <Panel id="panel3">
             <PanelHeader
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel2' })}/>}
-              separator={false}
+              separator={this.props.sizeX === SizeType.REGULAR}
             >
               Новости
             </PanelHeader>
-            <Tabs>
-              <HorizontalScroll>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab3: 'news' })}
-                  selected={this.state.activeTab3 === 'news'}
-                >
-                  Лента
-                </TabsItem>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab3: 'recomendations' })}
-                  selected={this.state.activeTab3 === 'recomendations'}
-                >
-                  Рекомендации
-                </TabsItem>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab3: 'friends' })}
-                  selected={this.state.activeTab3 === 'friends'}
-                >
-                  Друзья
-                </TabsItem>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab3: 'photos' })}
-                  selected={this.state.activeTab3 === 'photos'}
-                >
-                  Фотографии
-                </TabsItem>
-                <TabsItem
-                  onClick={() => this.setState({ activeTab3: 'groups' })}
-                  selected={this.state.activeTab3 === 'groups'}
-                >
-                  Сообщества
-                </TabsItem>
-              </HorizontalScroll>
-            </Tabs>
-            <Separator />
             <Group>
+              <Tabs>
+                <HorizontalScroll>
+                  <TabsItem
+                    onClick={() => this.setState({ activeTab3: 'news' })}
+                    selected={this.state.activeTab3 === 'news'}
+                  >
+                    Лента
+                  </TabsItem>
+                  <TabsItem
+                    onClick={() => this.setState({ activeTab3: 'recomendations' })}
+                    selected={this.state.activeTab3 === 'recomendations'}
+                  >
+                    Рекомендации
+                  </TabsItem>
+                  <TabsItem
+                    onClick={() => this.setState({ activeTab3: 'friends' })}
+                    selected={this.state.activeTab3 === 'friends'}
+                  >
+                    Друзья
+                  </TabsItem>
+                  <TabsItem
+                    onClick={() => this.setState({ activeTab3: 'photos' })}
+                    selected={this.state.activeTab3 === 'photos'}
+                  >
+                    Фотографии
+                  </TabsItem>
+                  <TabsItem
+                    onClick={() => this.setState({ activeTab3: 'groups' })}
+                    selected={this.state.activeTab3 === 'groups'}
+                  >
+                    Сообщества
+                  </TabsItem>
+                </HorizontalScroll>
+              </Tabs>
               <CellButton onClick={() => this.setState({ activePanel: 'panel4' })}>Табы-кнопки</CellButton>
             </Group>
           </Panel>
@@ -161,49 +161,55 @@
             >
               Кнопки
             </PanelHeader>
-            <Tabs mode="buttons">
-              <TabsItem
-                onClick={() => this.setState({ activeTab4: 'all' })}
-                selected={this.state.activeTab4 === 'all'}
-              >
-                Все записи
-              </TabsItem>
-              <TabsItem
-                onClick={() => this.setState({ activeTab4: 'user' })}
-                selected={this.state.activeTab4 === 'user'}
-              >
-                Записи Павла
-              </TabsItem>
-            </Tabs>
-            <CellButton onClick={() => this.setState({ activePanel: 'panel5' })}>Segmented (iOS only)</CellButton>
+            <Group>
+              <Tabs mode="buttons">
+                <TabsItem
+                  onClick={() => this.setState({ activeTab4: 'all' })}
+                  selected={this.state.activeTab4 === 'all'}
+                >
+                  Все записи
+                </TabsItem>
+                <TabsItem
+                  onClick={() => this.setState({ activeTab4: 'user' })}
+                  selected={this.state.activeTab4 === 'user'}
+                >
+                  Записи Павла
+                </TabsItem>
+              </Tabs>
+              <CellButton onClick={() => this.setState({ activePanel: 'panel5' })}>Segmented (iOS only)</CellButton>
+            </Group>
           </Panel>
           <Panel id="panel5">
             <PanelHeader
               left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel4' })}/>}
-              separator={false}
+              separator={this.props.sizeX === SizeType.REGULAR}
             >
-              <Search />
+              Лента
             </PanelHeader>
-            <Tabs mode="segmented">
-              <TabsItem
-                onClick={() => this.setState({ activeTab5: 'all' })}
-                selected={this.state.activeTab5 === 'all'}
-              >
-                Все записи
-              </TabsItem>
-              <TabsItem
-                onClick={() => this.setState({ activeTab5: 'user' })}
-                selected={this.state.activeTab5 === 'user'}
-                after={<Counter>3</Counter>}
-              >
-                Записи Павла
-              </TabsItem>
-            </Tabs>
+            <Group>
+              <Tabs mode="segmented">
+                <TabsItem
+                  onClick={() => this.setState({ activeTab5: 'all' })}
+                  selected={this.state.activeTab5 === 'all'}
+                >
+                  Все записи
+                </TabsItem>
+                <TabsItem
+                  onClick={() => this.setState({ activeTab5: 'user' })}
+                  selected={this.state.activeTab5 === 'user'}
+                  after={<Counter>3</Counter>}
+                >
+                  Записи Павла
+                </TabsItem>
+              </Tabs>
+            </Group>
           </Panel>
         </View>
       )
     }
   }
+  
+  const AdaptivityExample = withAdaptivity(Example, { sizeX: true });
 
-  <Example />
+  <AdaptivityExample />
 ```

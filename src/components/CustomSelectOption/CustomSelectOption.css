@@ -1,0 +1,31 @@
+.CustomSelectOption {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  font-size: 15px;
+  padding: 10px 36px 10px 12px;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+}
+
+.CustomSelectOption--hover {
+  background-color: var(--button_muted_background);
+}
+
+.CustomSelectOption__before {
+  margin-right: 7px;
+}
+
+.CustomSelectOption__after {
+  margin-left: 7px;
+}
+
+.CustomSelectOption__selectedIcon {
+  position: absolute;
+  top: 15px;
+  right: 12px;
+}

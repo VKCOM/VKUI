@@ -8,14 +8,19 @@ import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
 import { HasPlatform, HasRootRef, RefWithCurrent } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
+import { hasHover } from '@vkontakte/vkjs/lib/InputUtils';
+import { setRef } from '../../lib/utils';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform {
+export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;
   activeEffectDelay?: number;
   disabled?: boolean;
   stopPropagation?: boolean;
   href?: string;
   target?: string;
+  hasHover?: boolean;
+  hasActive?: boolean;
 }
 
 export interface TappableState {
@@ -25,8 +30,11 @@ export interface TappableState {
       y: number;
     };
   };
+  hovered?: boolean;
   active?: boolean;
   ts?: number;
+  hasHover?: boolean;
+  hasActive?: boolean;
 }
 
 export interface RootComponentProps extends TouchProps {
@@ -65,6 +73,8 @@ function deactivateOtherInstances(exclude?: string) {
   });
 }
 
+const TappableContext = React.createContext<{ insideTappable?: boolean; onEnter?: VoidFunction; onLeave?: VoidFunction }>({ insideTappable: false });
+
 class Tappable extends Component<TappableProps, TappableState> {
   constructor(props: TappableProps) {
     super(props);
@@ -73,6 +83,8 @@ class Tappable extends Component<TappableProps, TappableState> {
       clicks: {},
       active: false,
       ts: null,
+      hasHover: props.hasHover,
+      hasActive: props.hasActive,
     };
     this.isSlide = false;
   }
@@ -89,11 +101,13 @@ class Tappable extends Component<TappableProps, TappableState> {
 
   wavesTimeout: number;
 
-  static defaultProps: TappableProps = {
+  static defaultProps = {
     Component: 'div',
     role: 'button',
     stopPropagation: false,
     disabled: false,
+    hasHover,
+    hasActive: true,
     activeEffectDelay: ACTIVE_EFFECT_DELAY,
   };
 
@@ -102,19 +116,21 @@ class Tappable extends Component<TappableProps, TappableState> {
    */
   onStart: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
-    if (originalEvent.touches && originalEvent.touches.length > 1) {
-      deactivateOtherInstances();
-      return;
-    }
+    if (this.state.hasActive) {
+      if (originalEvent.touches && originalEvent.touches.length > 1) {
+        deactivateOtherInstances();
+        return;
+      }
 
-    if (this.props.platform === ANDROID) {
-      this.onDown(originalEvent);
-    }
+      if (this.props.platform === ANDROID) {
+        this.onDown(originalEvent);
+      }
 
-    storage[this.id] = {
-      stop: this.stop,
-      activeTimeout: window.setTimeout(this.start, ACTIVE_DELAY),
-    };
+      storage[this.id] = {
+        stop: this.stop,
+        activeTimeout: window.setTimeout(this.start, ACTIVE_DELAY),
+      };
+    }
   };
 
   /*
@@ -203,11 +219,19 @@ class Tappable extends Component<TappableProps, TappableState> {
     }
   };
 
+  onEnter = () => {
+    this.setState({ hovered: true });
+  };
+
+  onLeave = () => {
+    this.setState({ hovered: false });
+  };
+
   /*
    * Устанавливает активное выделение
    */
   start: VoidFunction = () => {
-    if (!this.state.active) {
+    if (!this.state.active && this.state.hasActive) {
       this.setState({
         active: true,
         ts: ts(),
@@ -244,15 +268,23 @@ class Tappable extends Component<TappableProps, TappableState> {
    */
   getRef: RefCallback<HTMLElement> = (container) => {
     this.container = container;
+    setRef(container, this.props.getRootRef);
+  };
 
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(container);
-      } else {
-        getRootRef.current = container;
-      }
+  containerHasTransparentBackground = (): boolean => {
+    if (!this.container) {
+      return true;
     }
+
+    if (!this.container.style.backgroundColor) {
+      return true;
+    }
+
+    if (this.container.style.backgroundColor === 'transparent') {
+      return true;
+    }
+
+    return false;
   };
 
   componentWillUnmount() {
@@ -266,17 +298,36 @@ class Tappable extends Component<TappableProps, TappableState> {
     clearTimeout(this.wavesTimeout);
   }
 
+  componentDidUpdate(prevProps: TappableProps) {
+    if (prevProps.hasHover !== this.props.hasHover || prevProps.hasActive !== this.props.hasActive) {
+      this.setState({ hasHover: this.props.hasHover, hasActive: this.props.hasActive });
+    }
+  }
+
   render() {
-    const { clicks, active } = this.state;
+    const { clicks, active, hovered, hasHover, hasActive } = this.state;
     const { children, className, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, ...restProps } = this.props;
+      stopPropagation, getRootRef, platform, sizeX, hasMouse, hasHover: propsHasHover, hasActive: propsHasActive, ...restProps } = this.props;
 
-    const classes = classNames(getClassName('Tappable', platform), className, {
-      'Tappable--active': active,
-      'Tappable--inactive': !active,
-    });
+    const hoverClassModificator = this.containerHasTransparentBackground()
+      ? 'shadowHovered'
+      : 'opacityHovered';
 
-    const RootComponent = !restProps.disabled ? Touch : Component;
+    const classes = classNames(
+      getClassName('Tappable', platform),
+      className,
+      `Tappable--sizeX-${sizeX}`,
+      {
+        'Tappable--active': hasActive && active,
+        'Tappable--inactive': !active,
+        'Tappable--mouse': hasMouse,
+        [`Tappable--${hoverClassModificator}`]: hasHover && hovered,
+      });
+
+    const RootComponent = restProps.disabled
+      ? Component
+      : Touch;
+
     let props: RootComponentProps = {};
     if (!restProps.disabled) {
       props.Component = Component;
@@ -291,28 +342,54 @@ class Tappable extends Component<TappableProps, TappableState> {
     }
 
     return (
-      <TouchRootContext.Consumer>
-        {(insideTouchRoot: boolean) => {
-          this.insideTouchRoot = insideTouchRoot;
-
+      <TappableContext.Consumer>
+        {({ insideTappable, onEnter, onLeave }) => {
           return (
-            <RootComponent {...restProps} className={classes} {...props}>
-              {platform === ANDROID &&
-              <span className="Tappable__waves">
-                {Object.keys(clicks).map((k: string) => {
-                  return (
-                    <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
-                  );
-                })}
-              </span>
-              }
-              {children}
-            </RootComponent>
+            <TouchRootContext.Consumer>
+              {(insideTouchRoot: boolean) => {
+                this.insideTouchRoot = insideTouchRoot;
+
+                return (
+                  <RootComponent
+                    onEnter={() => {
+                      insideTappable && onEnter();
+                      !restProps.disabled && this.onEnter();
+                    }}
+                    onLeave={() => {
+                      insideTappable && onLeave();
+                      !restProps.disabled && this.onLeave();
+                    }}
+                    {...restProps}
+                    className={classes}
+                    {...props}>
+                    <TappableContext.Provider
+                      value={{
+                        insideTappable: true,
+                        onEnter: () => this.setState({ hasHover: false, hasActive: false }),
+                        onLeave: () => this.setState({ hasHover: propsHasHover, hasActive: propsHasActive }),
+                      }}
+                    >
+                      {children}
+                    </TappableContext.Provider>
+                    {platform === ANDROID && !hasMouse &&
+                    <span className="Tappable__waves">
+                      {Object.keys(clicks).map((k: string) => {
+                        return (
+                          <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                        );
+                      })}
+                    </span>
+                    }
+                    {hasHover && <span className="Tappable__hoverShadow" />}
+                  </RootComponent>
+                );
+              }}
+            </TouchRootContext.Consumer>
           );
         }}
-      </TouchRootContext.Consumer>
+      </TappableContext.Consumer>
     );
   }
 }
 
-export default withPlatform(Tappable);
+export default withAdaptivity(withPlatform(Tappable), { sizeX: true, hasMouse: true });

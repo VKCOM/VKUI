@@ -1,54 +1,42 @@
-import React, { ButtonHTMLAttributes, ElementType } from 'react';
-import Tappable from '../Tappable/Tappable';
+import React, { ButtonHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasAlign } from '../../types';
+import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 
-export interface CellButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasAlign {
+export interface CellButtonProps extends ButtonHTMLAttributes<HTMLElement>, SimpleCellProps {
   mode?: 'primary' | 'danger';
-  before?: React.ReactNode;
-  Component?: ElementType;
   stopPropagation?: boolean;
-  href?: string;
-  target?: string;
+  centered?: boolean;
 }
 
 const CellButton: React.FunctionComponent<CellButtonProps> = ({
   className,
-  align,
+  centered,
   mode,
-  before,
-  children,
-  stopPropagation,
-  Component,
   ...restProps
 }: CellButtonProps) => {
   const platform = usePlatform();
 
   return (
-    <Tappable
+    <SimpleCell
       {...restProps}
       className={classNames(
         getClassName('CellButton', platform),
+        `CellButton--${mode}`,
+        {
+          ['CellButton--centered']: centered,
+        },
         className,
-        `CellButton--lvl-${mode}`,
-        `CellButton--aln-${align}`,
       )}
-      Component={restProps.href ? 'a' : Component}
-    >
-      <div className="CellButton__in">
-        {before && <div className="CellButton__before">{before}</div>}
-        {children && <div className="CellButton__content">{children}</div>}
-      </div>
-    </Tappable>
+    />
   );
 };
 
 CellButton.defaultProps = {
   mode: 'primary',
   Component: 'button',
-  align: 'left',
+  centered: false,
   stopPropagation: true,
 };
 

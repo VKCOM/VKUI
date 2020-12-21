@@ -27,46 +27,45 @@ class PlaceholderExample extends React.Component {
       <View activePanel={this.state.activePanel}>
         <Panel id="example-1">
           <PanelHeader>Плейсхолдеры</PanelHeader>
-          <Placeholder
-            icon={<Icon56UsersOutline />}
-            header="Уведомления от сообществ"
-            action={<Button size="l">Подключить сообщества</Button>}
-          >
-            Подключите сообщества, от которых Вы хотите получать уведомления
-          </Placeholder>
-          <Separator wide />
-          <Placeholder
-            icon={<Icon56MentionOutline />}
-          >
-            Введите адрес страницы в поле поиска
-          </Placeholder>
-
-          <Div>
-            <Button size="xl" onClick={this.onNavClick} data-to="example-2">Ещё примеры</Button>
-          </Div>
+          <Group>
+            <Placeholder
+              icon={<Icon56UsersOutline />}
+              header="Уведомления от сообществ"
+              action={<Button size="m">Подключить сообщества</Button>}
+            >
+              Подключите сообщества, от которых Вы хотите получать уведомления
+            </Placeholder>
+            <Separator />
+            <Placeholder
+              icon={<Icon56MentionOutline />}
+            >
+              Введите адрес страницы в поле поиска
+            </Placeholder>
+          </Group>
+          <Group>
+            <CellButton onClick={this.onNavClick} data-to="example-2">Ещё примеры</CellButton>
+          </Group>
         </Panel>
 
         <Panel id="example-2">
           <PanelHeader
             left={<PanelHeaderBack onClick={this.onNavClick} data-to="example-1" />}
           >Плейсхолдеры</PanelHeader>
-
-          <Placeholder>
-            Доступ запрещён
-          </Placeholder>
-          <Separator wide />
-
-          <Placeholder
-            header="Находите друзей"
-            action={<Button size="l">Найти друзей</Button>}
-          >
-            Здесь будут отображаться люди, которых вы добавите в друзья
-          </Placeholder>
-          <Separator wide />
-
-          <Div>
-            <Button size="xl" onClick={this.onNavClick} data-to="example-3">Полноэкранный плейсхолдер</Button>
-          </Div>
+          <Group>
+            <Placeholder>
+              Доступ запрещён
+            </Placeholder>
+            <Separator />
+            <Placeholder
+              header="Находите друзей"
+              action={<Button size="m">Найти друзей</Button>}
+            >
+              Здесь будут отображаться люди, которых вы добавите в друзья
+            </Placeholder>
+          </Group>
+          <Group>
+            <CellButton onClick={this.onNavClick} data-to="example-3">Полноэкранный плейсхолдер</CellButton>
+          </Group>
         </Panel>
 
         <Panel id="example-3">
@@ -76,7 +75,7 @@ class PlaceholderExample extends React.Component {
 
           <Placeholder
             icon={<Icon56MessageReadOutline />}
-            action={<Button size="l" mode="tertiary">Показать все сообщения</Button>}
+            action={<Button size="m" mode="tertiary">Показать все сообщения</Button>}
             stretched
           >
             Нет непрочитанных<br />сообщений

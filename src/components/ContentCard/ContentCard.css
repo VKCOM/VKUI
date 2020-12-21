@@ -1,0 +1,42 @@
+.ContentCard__body {
+  padding: 12px 16px;
+}
+
+.ContentCard__img {
+  object-fit: cover;
+  display: block;
+}
+
+.ContentCard__caption:not(:last-child),
+.ContentCard__title:not(:last-child),
+.ContentCard__text:not(:last-child) {
+  margin-bottom: 4px;
+}
+
+.ContentCard__caption {
+  color: var(--text_secondary);
+}
+
+/*
+* iOS
+* */
+.ContentCard--ios .ContentCard__tappable {
+  border-radius: 10px;
+}
+
+.ContentCard--ios .ContentCard__img {
+  border-radius: 10px 10px 0 0;
+}
+
+/*
+* Android and vkcom
+* */
+.ContentCard--android .ContentCard__tappable,
+.ContentCard--vkcom .ContentCard__tappable {
+  border-radius: 8px;
+}
+
+.ContentCard--android .ContentCard__img,
+.ContentCard--vkcom .ContentCard__img {
+  border-radius: 8px 8px 0 0;
+}

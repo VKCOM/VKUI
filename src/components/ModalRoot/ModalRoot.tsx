@@ -7,12 +7,17 @@ import classNames from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasChildren, HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
+import withContext from '../../hoc/withContext';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
-import { WebviewType } from '../ConfigProvider/ConfigProviderContext';
+import {
+  ConfigProviderContext,
+  ConfigProviderContextInterface,
+  WebviewType,
+} from '../ConfigProvider/ConfigProviderContext';
 import { ModalsState, ModalsStateEntry, ModalType, TranslateRange } from './types';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
 
@@ -31,9 +36,13 @@ export interface ModalRootProps extends HasChildren, HasPlatform {
    * Будет вызвано при закрытии активной модалки с её id
    */
   onClose?(modalId: string): void;
+  /**
+   * @ignore
+   */
+  configProvider?: ConfigProviderContextInterface;
 }
 
-export interface ModalRootState {
+interface ModalRootState {
   activeModal?: string;
   prevModal?: string;
   nextModal?: string;
@@ -47,7 +56,7 @@ export interface ModalRootState {
   dragging?: boolean;
 }
 
-class ModalRoot extends Component<ModalRootProps, ModalRootState> {
+class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -74,6 +83,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      isInsideModal: true,
     };
 
     this.frameIds = {};
@@ -92,7 +102,6 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   static contextTypes = {
     window: PropTypes.any,
     document: PropTypes.any,
-    webviewType: PropTypes.oneOf([WebviewType.VKAPPS, WebviewType.INTERNAL]),
   };
 
   get document(): Document {
@@ -101,10 +110,6 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
   get window(): Window {
     return this.context.window || window;
-  }
-
-  get webviewType(): WebviewType {
-    return this.context.webviewType || WebviewType.VKAPPS;
   }
 
   getModals(): ReactElement[] {
@@ -350,7 +355,6 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
       if (needAnimate) {
         this.animateTranslate(modalState, modalState.translateY);
-        this.animatePageHeader(modalState);
       }
     }
   }
@@ -452,7 +456,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       !this.state.dragging && this.setState({ dragging: true });
 
       const shiftYPercent = shiftY / this.window.innerHeight * 100;
-      const shiftYCurrent = rubber(shiftYPercent, 72, 0.8, this.props.platform === ANDROID);
+      const shiftYCurrent = rubber(shiftYPercent, 72, 0.8, this.props.platform === ANDROID || this.props.platform === VKCOM);
 
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = rangeTranslate(modalState.translateY + shiftYCurrent);
@@ -472,7 +476,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
       }
 
       const shiftYPercent = shiftY / modalState.innerElement.offsetHeight * 100;
-      const shiftYCurrent = rubber(shiftYPercent, 72, 1.2, this.props.platform === ANDROID);
+      const shiftYCurrent = rubber(shiftYPercent, 72, 1.2, this.props.platform === ANDROID || this.props.platform === VKCOM);
 
       modalState.touchShiftYPercent = shiftYPercent;
       modalState.translateYCurrent = Math.max(0, modalState.translateY + shiftYCurrent);
@@ -617,7 +621,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
 
       modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
     } else {
-      setTimeout(eventHandler, this.props.platform === ANDROID ? 320 : 400);
+      setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400);
     }
   }
 
@@ -691,8 +695,8 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   /**
    * Анимирует сдвиг модалки
    *
-   * @param modalState
-   * @param percent Процент сдвига: 0 – полностью открыта, 100 – полностью закрыта
+   * @param {ModalsStateEntry} modalState
+   * @param {number} percent Процент сдвига: 0 – полностью открыта, 100 – полностью закрыта
    */
   animateTranslate(modalState: ModalsStateEntry, percent: number) {
     const frameId = `animateTranslateFrame${modalState.id}`;
@@ -707,25 +711,6 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
         const factor = modalState.innerElement.offsetHeight * (percent / 100);
 
         setTransformStyle(modalState.footerElement, `translateY(calc(${footerHeight}px * -${factor / footerHeight}))`);
-      }
-    });
-
-    if (modalState.type === ModalType.PAGE && modalState.expandable) {
-      this.animatePageHeader(modalState, percent);
-    }
-  }
-
-  /* Анимирует тень шапки */
-  animatePageHeader(modalState: ModalsStateEntry, currentPercent: number = null) {
-    if (currentPercent === null) {
-      currentPercent = modalState.translateY;
-    }
-    const headerOpenPercent = currentPercent < 15 ? Math.max(0, 15 - currentPercent) / 15 : 0;
-
-    requestAnimationFrame(() => {
-      const headerShadow: HTMLElement = modalState.headerElement.querySelector('.ModalPageHeader__shadow');
-      if (headerShadow) {
-        headerShadow.style.opacity = headerOpenPercent.toString();
       }
     });
   }
@@ -786,7 +771,7 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
         <ModalRootContext.Provider value={this.modalRootContext}>
           <Touch
             className={classNames(getClassName('ModalRoot', this.props.platform), {
-              'ModalRoot--vkapps': this.webviewType === WebviewType.VKAPPS,
+              'ModalRoot--vkapps': this.props.configProvider.webviewType === WebviewType.VKAPPS,
               'ModalRoot--touched': touchDown,
               'ModalRoot--switching': switching,
             })}
@@ -836,4 +821,4 @@ class ModalRoot extends Component<ModalRootProps, ModalRootState> {
   }
 }
 
-export default withPlatform(ModalRoot);
+export const ModalRootTouch = withContext(withPlatform(ModalRootTouchComponent), ConfigProviderContext, 'configProvider');

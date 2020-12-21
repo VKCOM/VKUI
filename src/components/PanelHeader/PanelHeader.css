@@ -2,21 +2,13 @@
   position: relative;
 }
 
-.PanelHeader--vis::before {
+.PanelHeader--vis.PanelHeader--fixed::before {
   display: block;
   content: '';
 }
 
-.FixedLayout.PanelHeader__fixed {
-  z-index: 10;
-}
-
 .PanelHeader__fixed {
-  background: var(--header_background);
-}
-
-.PanelHeader--trnsp .PanelHeader__fixed {
-  background: transparent;
+  z-index: 10;
 }
 
 .PanelHeader__in {
@@ -25,6 +17,15 @@
   align-items: center;
   white-space: nowrap;
   position: relative;
+  background: var(--header_background);
+}
+
+.PanelHeader--trnsp .PanelHeader__in {
+  background: transparent;
+}
+
+.PanelHeader--shadow .PanelHeader__in {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .08);
 }
 
 .PanelHeader__left {
@@ -40,10 +41,15 @@
 
 .PanelHeader__content {
   overflow: hidden;
-  text-overflow: ellipsis;
   color: var(--header_text);
   font-weight: 800;
   font-family: var(--font-tt);
+}
+
+.PanelHeader__content > * {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .PanelHeader__right {
@@ -61,7 +67,7 @@
   min-width: 90px;
 }
 
-.PanelHeader__separator {
+.PanelHeader--sizeX-compact .PanelHeader__separator {
   padding-top: 4px;
 }
 
@@ -69,7 +75,8 @@
  * iOS
  */
 
-.PanelHeader--ios ~ .FixedLayout--top {
+.PanelHeader--ios ~ .FixedLayout--top,
+.PanelHeader--ios ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
   top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
 }
 
@@ -148,7 +155,15 @@
  * Android
  */
 
-.PanelHeader--android ~ .FixedLayout--top {
+@supports not (padding-top: env(safe-area-inset-top)) {
+  .PanelHeader--android,
+  .PanelHeader--vkcom {
+    --safe-area-inset-top: 0px;
+  }
+}
+
+.PanelHeader--android ~ .FixedLayout--top,
+.PanelHeader--android ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
   top: calc(var(--panelheader_height_android) + var(--safe-area-inset-top));
 }
 
@@ -163,8 +178,7 @@
 }
 
 .PanelHeader--android .PanelHeader__content {
-  font-size: 20px;
-  display: flex;
+  font-size: 23px;
   align-items: center;
   flex-grow: 1;
   max-width: 100%;
@@ -174,11 +188,13 @@
   padding: 0 12px;
 }
 
-.PanelHeader--android .Search {
+.PanelHeader--android .Search,
+.PanelHeader--vkcom .Search {
   padding: 0 4px;
 }
 
-.PanelHeader--android.PanelHeader--no-left .PanelHeader__content > * {
+.PanelHeader--android.PanelHeader--no-left .PanelHeader__content > *,
+.PanelHeader--vkcom.PanelHeader--no-left .PanelHeader__content > * {
   padding-left: 0;
 }
 
@@ -186,7 +202,12 @@
   padding-left: 16px;
 }
 
-.PanelHeader--android.PanelHeader--no-right .PanelHeader__content > * {
+.SplitCol--spaced .PanelHeader--android.PanelHeader--no-left .PanelHeader__content {
+  padding-left: 0;
+}
+
+.PanelHeader--android.PanelHeader--no-right .PanelHeader__content > *,
+.PanelHeader--vkcom.PanelHeader--no-right .PanelHeader__content > * {
   padding-right: 0;
 }
 
@@ -194,6 +215,57 @@
   padding-right: 16px;
 }
 
-.PanelHeader--android .PanelHeader__right:not(:empty) {
+.SplitCol--spaced .PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
+  padding-right: 0;
+}
+
+.PanelHeader--android .PanelHeader__right:not(:empty),
+.PanelHeader--vkcom .PanelHeader__right:not(:empty) {
   padding: 4px 4px 4px 0;
+}
+
+/**
+ * VKCOM
+ */
+
+.PanelHeader--vkcom {
+  position: relative;
+  z-index: 10;
+}
+
+.PanelHeader--vkcom ~ .FixedLayout--top,
+.PanelHeader--vkcom ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
+  top: calc(var(--panelheader_height_vkcom) + var(--safe-area-inset-top));
+}
+
+.PanelHeader--vkcom .PanelHeader__in {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 0 0 0 var(--thin-border) var(--input_border) inset;
+  border-bottom: none;
+}
+
+.PanelHeader--vkcom .PanelHeader__content {
+  text-align: center;
+}
+
+.PanelHeader--vkcom::before,
+.PanelHeader--vkcom .PanelHeader__in {
+  height: var(--panelheader_height_vkcom);
+  padding-top: var(--safe-area-inset-top);
+}
+
+.PanelHeader--vkcom .PanelHeader__left:not(:empty) {
+  padding: 0 0 0 4px;
+}
+
+.PanelHeader--vkcom .PanelHeader__content {
+  font-family: inherit;
+}
+
+.PanelHeader--vkcom .PanelHeader__left,
+.PanelHeader--vkcom .PanelHeader__right {
+  flex-basis: 0;
+  flex-shrink: 0;
+  flex-grow: 1;
 }

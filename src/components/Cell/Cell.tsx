@@ -1,66 +1,37 @@
-import React, { Component, InputHTMLAttributes, ReactNode, MouseEvent } from 'react';
+import React, { Component, ReactNode, MouseEvent, Fragment, InputHTMLAttributes } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import Tappable from '../Tappable/Tappable';
+import IconButton from '../IconButton/IconButton';
 import Touch, { TouchEvent } from '../Touch/Touch';
-import { ANDROID, IOS } from '../../lib/platform';
-import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
-import Icon16Done from '@vkontakte/icons/dist/16/done';
+import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon24Reorder from '@vkontakte/icons/dist/24/reorder';
 import Icon24ReorderIos from '@vkontakte/icons/dist/24/reorder_ios';
-import { HasChildren, HasPlatform, HasRootRef } from '../../types';
+import Icon16Done from '@vkontakte/icons/dist/16/done';
 import withPlatform from '../../hoc/withPlatform';
+import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
+import { HasPlatform } from '../../types';
+import { setRef } from '../../lib/utils';
 
-type ProxyInputHTMLAttributes = Omit<InputHTMLAttributes<HTMLElement>, 'size'>;
-
-export interface CellProps extends ProxyInputHTMLAttributes, HasChildren, HasRootRef<HTMLElement>, HasPlatform {
+export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'> {
   /**
-   * Контейнер для контента слева от `children`.
+   * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
-  before?: ReactNode;
+  draggable?: boolean;
   /**
-   * Контейнер для текста справа от `children`.
-   */
-  indicator?: ReactNode;
-  /**
-   * Контейнер для контента справа от `children` и `indicator`.
-   */
-  asideContent?: ReactNode;
-  /**
-   * Выставляйте этот флаг, если клик по ячейке вызывает переход на другую панель. Флаг нужен для корректной
-   * стилизации такой ячейки.
-   */
-  expandable?: boolean;
-  /**
-   * Добавляет возможность переноса содержимого `children` и `description`. Без этого флага текст будет уходить
-   * в троеточие.
-   */
-  multiline?: boolean;
-  /**
-   * Контейнер для дополнительного содержимого под `children`.
-   */
-  description?: ReactNode;
-  /**
-   * Контейнер для произвольного содержимого под `description`. Рисуется только если передать `size="l"`.
-   */
-  bottomContent?: ReactNode;
-  /**
-   * Размер влияет на выравнивание блоков по вертикали, вид сепаратора (iOS) и возможность вставлять `bottomContent`.
-   */
-  size?: 'm' | 'l';
-  /**
-   * Флаг для перехода в режим ячеек-чекбоксов.
-   * **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
-   * **Важно:** этот режим несовместим с `draggable`. В случае истинности двух этих флагов, приоритет отдается
-   * `draggable`.
-   */
-  selectable?: boolean;
-  /**
-   * Флаг для перехода в режим удаляемых ячеек. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
+   * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
   removable?: boolean;
+  selectable?: boolean;
+  /**
+   * В режиме selectable реагирует на входящие значения пропса cheсked, как зависящий напрямую от входящего значения
+   */
+  checked?: boolean;
+  /**
+   * В режиме selectable реагирует на входящие значения пропса defaultChecked как неконтролируемый компонент
+   */
+  defaultChecked?: boolean;
   /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
@@ -70,24 +41,19 @@ export interface CellProps extends ProxyInputHTMLAttributes, HasChildren, HasRoo
    */
   removePlaceholder?: ReactNode;
   /**
-   * Флаг для перехода в режим перетаскивания. **Важно:** в этом режиме обработчик `onClick` вызываться не будет.
-   */
-  draggable?: boolean;
-  /**
    * Коллбэк срабатывает при завершении перетаскивания.
    * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
   onDragFinish?({ from, to }: { from: number; to: number }): void;
-  href?: string;
-  target?: string;
 }
 
 export interface CellState {
   isRemoveActivated: boolean;
   removeOffset: number;
   dragging: boolean;
+  checked?: boolean;
 }
 
 class Cell extends Component<CellProps, CellState> {
@@ -105,14 +71,6 @@ class Cell extends Component<CellProps, CellState> {
   removeButton: HTMLDivElement;
 
   static defaultProps = {
-    indicator: '',
-    asideContent: '',
-    expandable: false,
-    children: '',
-    selectable: false,
-    multiline: false,
-    removable: false,
-    size: 'm',
     removePlaceholder: 'Удалить',
   };
 
@@ -122,24 +80,9 @@ class Cell extends Component<CellProps, CellState> {
 
   get document() {return this.context.document || document;}
 
-  /*
-   * предотвращает двойное срабатывание в случае с input
-   * (https://github.com/vuejs/vue/issues/3699#issuecomment-247957931)
-   * предотвращает клик в случае, когда включен режим removable
-   */
-  private readonly onClick = (e: MouseEvent<HTMLElement>): void => {
-    const { removable, onClick } = this.props;
-    const target = e.target as HTMLElement;
-    if (target.tagName.toLowerCase() === 'input') {
-      e.stopPropagation();
-    } else if (removable) {
-      return null;
-    } else {
-      onClick && onClick(e);
-    }
-  };
-
-  activateRemove = () => {
+  private readonly onRemoveActivateClick = (e: MouseEvent) => {
+    e.nativeEvent.stopPropagation();
+    e.preventDefault();
     this.setState({ isRemoveActivated: true });
     this.document.addEventListener('click', this.deactivateRemove);
   };
@@ -169,15 +112,7 @@ class Cell extends Component<CellProps, CellState> {
 
   getRootRef = (element: HTMLElement) => {
     this.rootEl = element;
-
-    const getRootRef = this.props.getRootRef;
-    if (getRootRef) {
-      if (typeof getRootRef === 'function') {
-        getRootRef(element);
-      } else {
-        getRootRef.current = element;
-      }
-    }
+    setRef(element, this.props.getRootRef);
   };
 
   dragShift: number;
@@ -247,104 +182,99 @@ class Cell extends Component<CellProps, CellState> {
     delete this.dragDirection;
   };
 
+  private readonly onDragClick = (e: MouseEvent) => {
+    e.nativeEvent.stopPropagation();
+    e.preventDefault();
+  };
+
   render() {
     let {
-      before,
-      indicator,
-      asideContent,
-      expandable,
-      onClick,
-      children,
-      getRootRef,
-      description,
-      selectable,
-      multiline,
-      className,
       onRemove,
-      removable,
       removePlaceholder,
-      draggable,
       onDragFinish,
-      href,
-      size,
-      bottomContent,
+      className,
+      style,
+      getRootRef,
       platform,
+      before,
+      after,
+      disabled,
+      removable,
+      draggable,
+      selectable,
+      Component,
       onChange,
+      name,
+      checked,
+      defaultChecked,
       ...restProps
     } = this.props;
 
-    selectable = selectable && !draggable;
-
-    const rootProps = selectable ? {} : restProps;
-    const inputProps = selectable ? { ...restProps, onChange } : {};
-    const linkProps = href ? restProps : {};
-    const IS_PLATFORM_ANDROID = platform === ANDROID;
-    const IS_PLATFORM_IOS = platform === IOS;
-
     return (
       <div
-        {...rootProps}
-        onClick={href || draggable ? null : this.onClick}
         className={classNames(getClassName('Cell', platform), {
-          'Cell--expandable': expandable,
-          'Cell--multiline': multiline,
           'Cell--dragging': this.state.dragging,
-          'Cell--draggable': draggable,
-        }, `Cell--${size}`, className)}
+          'Cell--removable': removable,
+        }, className)}
+        style={style}
         ref={this.getRootRef}
       >
-        <Tappable
-          {...linkProps}
-          onClick={href ? this.onClick : null}
-          Component={selectable ? 'label' : href ? 'a' : 'div'}
+        <div
           className="Cell__in"
-          href={href}
-          disabled={(!selectable && !onClick && !href || removable || draggable)}
-          style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
+          style={platform === IOS && removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
         >
-          {selectable && <input {...inputProps} type="checkbox" className="Cell__checkbox" />}
-          <div className="Cell__before">
-            {selectable && IS_PLATFORM_IOS && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
-            {removable && IS_PLATFORM_IOS && <div className="Cell__remove-marker" onClick={this.activateRemove} />}
-            {IS_PLATFORM_ANDROID && draggable &&
-            <Touch
-              onStart={this.onDragStart}
-              onMoveY={this.onDragMove}
-              onEnd={this.onDragEnd}
-              className="Cell__dragger"
-            ><Icon24Reorder /></Touch>
+          <SimpleCell
+            {...restProps}
+            disabled={draggable || removable || disabled}
+            Component={selectable ? 'label' : Component}
+            before={
+              <Fragment>
+                {platform === IOS && removable && <div className="Cell__remove-marker" onClick={this.onRemoveActivateClick} />}
+                {selectable &&
+                  <Fragment>
+                    <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
+                    <div className="Cell__marker"><Icon16Done /></div>
+                  </Fragment>
+                }
+                {(platform === ANDROID || platform === VKCOM) && draggable &&
+                <Touch
+                  onStart={this.onDragStart}
+                  onMoveY={this.onDragMove}
+                  onEnd={this.onDragEnd}
+                  onClick={this.onDragClick}
+                  className="Cell__dragger"
+                ><Icon24Reorder /></Touch>
+                }
+                {before}
+              </Fragment>
             }
-            {before && <div className="Cell__before-in">{before}</div>}
-          </div>
-          <div className="Cell__main">
-            <div className="Cell__children">{children}</div>
-            {description && <div className="Cell__description">{description}</div>}
-            {size === 'l' && bottomContent && <div className="Cell__bottom">{bottomContent}</div>}
-          </div>
-          <div className="Cell__indicator">{indicator}</div>
-          <div className="Cell__aside">
-            {asideContent}
-            {selectable && IS_PLATFORM_ANDROID && <div className="Cell__checkbox-marker"><Icon16Done /></div>}
-            {removable && IS_PLATFORM_ANDROID &&
-            <div className="Cell__remove-marker" onClick={this.onRemoveClick}><Icon24Cancel /></div>
+            after={
+              <Fragment>
+                {(platform === ANDROID || platform === VKCOM) && removable &&
+                <div className="Cell__remove-marker">
+                  <IconButton icon={<Icon24Cancel />} onClick={this.onRemoveClick} />
+                </div>
+                }
+                {platform === IOS && draggable &&
+                <Touch
+                  className="Cell__dragger"
+                  onStart={this.onDragStart}
+                  onMoveY={this.onDragMove}
+                  onEnd={this.onDragEnd}
+                  onClick={this.onDragClick}
+                ><Icon24ReorderIos /></Touch>
+                }
+                {after}
+              </Fragment>
             }
-            {IS_PLATFORM_IOS && expandable && !draggable && <Icon24Chevron className="Cell__chevron" />}
-            {IS_PLATFORM_IOS && draggable &&
-            <Touch
-              className="Cell__dragger"
-              onStart={this.onDragStart}
-              onMoveY={this.onDragMove}
-              onEnd={this.onDragEnd}
-            ><Icon24ReorderIos /></Touch>
-            }
-          </div>
-        </Tappable>
-        {removable && IS_PLATFORM_IOS &&
+          />
+        </div>
+        {platform === IOS && removable &&
         <div
           ref={this.getRemoveRef}
           className="Cell__remove"
           onClick={this.onRemoveClick}
-          style={removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
+          style={{ transform: `translateX(-${this.state.removeOffset}px)` }}
         >
           <span className="Cell__remove-in">{removePlaceholder}</span>
         </div>

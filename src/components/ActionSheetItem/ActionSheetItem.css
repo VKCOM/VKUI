@@ -1,0 +1,299 @@
+.ActionSheetItem {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text_primary);
+}
+
+.ActionSheetItem__container,
+.ActionSheetItem__before,
+.ActionSheetItem__after {
+  position: relative;
+  z-index: 2;
+}
+
+.ActionSheetItem__before,
+.ActionSheetItem__after {
+  flex-shrink: 0;
+}
+
+.ActionSheetItem__container {
+  max-width: 100%;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ActionSheetItem__content {
+  display: flex;
+  align-items: baseline;
+  overflow: hidden;
+}
+
+.ActionSheetItem__children {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ActionSheetItem__subtitle {
+  color: var(--text_secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ActionSheetItem__meta {
+  color: var(--text_secondary);
+  margin-left: 6px;
+  flex-shrink: 0;
+}
+
+.ActionSheetItem__before {
+  color: var(--action_sheet_action_foreground);
+}
+
+.ActionSheetItem--destructive .ActionSheetItem__container:first-child {
+  color: var(--destructive);
+}
+
+.ActionSheetItem--destructive .ActionSheetItem__before {
+  color: var(--destructive);
+}
+
+.ActionSheetItem--compact .ActionSheetItem__container {
+  color: var(--text_primary);
+}
+
+.ActionSheetItem__radio {
+  display: none;
+}
+
+.ActionSheetItem__marker {
+  display: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent);
+  color: var(--white);
+  margin-left: 4px;
+}
+
+.ActionSheetItem__radio:checked ~ .ActionSheetItem__marker {
+  display: flex;
+}
+
+/**
+ * iOS
+ */
+
+.ActionSheetItem--ios {
+  padding: 0 20px;
+  min-height: 56px;
+  border-radius: 0;
+  color: var(--action_sheet_action_foreground);
+}
+
+.ActionSheetItem--ios.ActionSheetItem--destructive {
+  color: var(--destructive);
+}
+
+.ActionSheetItem--ios:first-child {
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+.ActionSheetItem--ios:nth-last-child(2) {
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+.ActionSheetItem--ios::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--modal_card_background);
+  z-index: 1;
+  content: '';
+  transition: opacity .15s ease-out, background-color .15s ease-out;
+}
+
+.ActionSheetItem--ios::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 1px;
+  content: '';
+  top: 0;
+  background: var(--action_sheet_separator);
+  transform-origin: center bottom;
+}
+
+@media (min-resolution: 2dppx) {
+  .ActionSheetItem--ios::after {
+    transform: scaleY(.5);
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  .ActionSheetItem--ios::after {
+    transform: scaleY(.33);
+  }
+}
+
+.ActionSheetItem--ios:first-child::after,
+.ActionSheetItem--cancel::after {
+  content: none;
+}
+
+.ActionSheet--ios .ActionSheetItem--last::after,
+.ActionSheet--ios .ActionSheet__header:empty {
+  content: none;
+}
+
+.ActionSheetItem--ios.Tappable--active::before {
+  background: var(--separator_common);
+  opacity: 1;
+  transition: none;
+}
+
+.ActionSheetItem--ios .ActionSheetItem__container {
+  padding: 13px 0;
+}
+
+.ActionSheetItem--ios .ActionSheetItem__content {
+  justify-content: center;
+}
+
+.ActionSheetItem--ios .ActionSheetItem__subtitle {
+  margin-top: 2px;
+}
+
+.ActionSheetItem--ios.ActionSheetItem--compact .ActionSheetItem__content,
+.ActionSheetItem--ios .ActionSheetItem__before + .ActionSheetItem__container .ActionSheetItem__content {
+  justify-content: flex-start;
+}
+
+.ActionSheetItem--ios .ActionSheetItem__before {
+  margin-right: 18px;
+  margin-left: -2px;
+}
+
+.ActionSheetItem--cancel {
+  margin-top: 7px;
+  margin-bottom: var(--safe-area-inset-bottom);
+  border-radius: 14px;
+  min-height: 52px;
+}
+
+/**
+ * Android
+ */
+
+.ActionSheetItem--android {
+  padding: 0 20px;
+  min-height: 48px;
+  border-radius: 0;
+}
+
+.ActionSheetItem--android.Tappable--active {
+  background-color: var(--action_sheet_separator);
+}
+
+.ActionSheetItem--android .ActionSheetItem__before {
+  margin-right: 18px;
+  margin-left: -2px;
+}
+
+.ActionSheetItem--android .ActionSheetItem__container {
+  padding: 11px 0;
+}
+
+.ActionSheetItem--android .ActionSheetItem__subtitle {
+  margin-top: 1px;
+  margin-bottom: -1px;
+}
+
+/**
+ * VKCOM
+ */
+ .ActionSheetItem--vkcom {
+   padding: 0 20px;
+   min-height: 48px;
+   border-radius: 0;
+ }
+
+ .ActionSheetItem--vkcom.Tappable--active {
+   background-color: var(--action_sheet_separator);
+ }
+
+ .ActionSheetItem--vkcom .ActionSheetItem__before {
+   margin-right: 17px;
+   margin-left: -1px;
+ }
+
+ .ActionSheetItem--vkcom .ActionSheetItem__subtitle {
+   margin-top: 2px;
+   margin-bottom: -2px;
+ }
+
+ .ActionSheetItem--vkcom .ActionSheetItem__marker {
+   margin-left: 26px;
+   color: var(--accent);
+   background-color: transparent;
+ }
+
+/**
+ * Desktop
+ */
+
+.ActionSheetItem--desktop {
+  width: auto;
+  cursor: pointer;
+}
+
+.ActionSheetItem--desktop.ActionSheetItem--ios:nth-last-child(2) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/**
+ * Disabled
+ */
+
+.ActionSheetItem[disabled] .ActionSheetItem__children,
+.ActionSheetItem[disabled] .ActionSheetItem__meta,
+.ActionSheetItem[disabled] .ActionSheetItem__subtitle {
+  color: var(--text_secondary);
+}
+
+.ActionSheetItem[disabled] .ActionSheetItem__before {
+  color: var(--icon_secondary);
+}
+
+.ActionSheetItem[disabled] .ActionSheetItem__marker {
+  background: var(--icon_secondary);
+}
+
+/**
+ * SizeY = compact
+ */
+
+.ActionSheetItem--sizeY-compact {
+  min-height: 44px;
+}
+
+.ActionSheetItem--sizeY-compact .ActionSheetItem__container {
+  padding: 12px 0;
+}
+
+.ActionSheetItem--sizeY-compact.ActionSheetItem--withSubtitle .ActionSheetItem__container {
+  padding: 10px 0;
+}

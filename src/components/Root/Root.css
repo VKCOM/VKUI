@@ -15,7 +15,7 @@
     }
 
   .Root--transition .Root__view:not(.Root__view--hide-forward) {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
     }
@@ -139,11 +139,13 @@
 .Root--android {
   }
 
-  .Root--android .Root__view--show-forward {
+  .Root--android .Root__view--show-forward,
+  .Root--vkcom .Root__view--show-forward {
     animation: root-android-animation-show-forward .3s var(--android-easing);
     }
 
-  .Root--android .Root__view--hide-back {
+  .Root--android .Root__view--hide-back,
+  .Root--vkcom .Root__view--hide-back {
     animation: root-android-animation-hide-back .3s var(--android-easing);
     }
 
@@ -174,6 +176,7 @@
 /* iOS + Android */
 
 .Root--ios.Root--no-motion .Root__view,
-.Root--android.Root--no-motion .Root__view {
+.Root--android.Root--no-motion .Root__view,
+.Root--vkcom.Root--no-motion .Root__view {
   animation: none;
 }

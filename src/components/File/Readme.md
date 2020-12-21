@@ -7,12 +7,16 @@
       <PanelHeader>
         File
       </PanelHeader>
-      <FormLayout>
-        <File top="Загрузите ваше фото" before={<Icon24Camera />} controlSize="l">
-          Открыть галерею
-        </File>
-        <File top="Загрузите документы" before={<Icon24Document />} controlSize="xl" mode="secondary" />
-      </FormLayout>
+      <Group>
+        <FormItem top="Загрузите ваше фото">
+          <File before={<Icon24Camera />} controlSize="m">
+            Открыть галерею
+          </File>
+        </FormItem>
+        <FormItem top="Загрузите документы">
+          <File before={<Icon24Document />} controlSize="l" mode="secondary" />
+        </FormItem>
+      </Group>
     </Panel>
   </View>
 ```

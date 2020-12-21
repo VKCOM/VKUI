@@ -4,7 +4,7 @@ import Touch, { TouchProps, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import classNames from '../../lib/classNames';
-import { IOS, ANDROID } from '../../lib/platform';
+import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
 import withPlatform from '../../hoc/withPlatform';
@@ -73,12 +73,12 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
     super(props);
 
     this.params = {
-      start: props.platform === ANDROID ? -45 : -10,
-      max: props.platform === ANDROID ? 80 : 50,
-      maxY: props.platform === ANDROID ? 80 : 400,
-      refreshing: props.platform === ANDROID ? 50 : 36,
+      start: props.platform === ANDROID || props.platform === VKCOM ? -45 : -10,
+      max: props.platform === ANDROID || props.platform === VKCOM ? 80 : 50,
+      maxY: props.platform === ANDROID || props.platform === VKCOM ? 80 : 400,
+      refreshing: props.platform === ANDROID || props.platform === VKCOM ? 50 : 36,
 
-      positionMultiplier: props.platform === ANDROID ? 1 : 0.21,
+      positionMultiplier: props.platform === ANDROID || props.platform === VKCOM ? 1 : 0.21,
     };
 
     this.state = {
@@ -220,7 +220,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
     if (!this.state.refreshing && this.props.onRefresh) {
       this.setState({
         refreshing: true,
-        spinnerY: this.props.platform === ANDROID ? this.params.refreshing : this.state.spinnerY,
+        spinnerY: this.props.platform === ANDROID || this.props.platform === VKCOM ? this.params.refreshing : this.state.spinnerY,
       });
 
       this.props.onRefresh();
@@ -257,7 +257,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
 
     if (platform === IOS && refreshing && !touchDown) {
       contentTransform = 'translate3d(0, 100px, 0)';
-    } else if (platform === IOS && contentShift) {
+    } else if (platform === IOS && (contentShift || refreshing)) {
       contentTransform = `translate3d(0, ${contentShift}px, 0)`;
     }
 

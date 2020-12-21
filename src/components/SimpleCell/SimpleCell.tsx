@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, FC } from 'react';
+import React, { HTMLAttributes, ReactNode, FC, ElementType } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
@@ -7,8 +7,9 @@ import { HasLinkProps, HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface SimpleCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasLinkProps {
+export interface SimpleCellOwnProps extends HasLinkProps {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
@@ -25,13 +26,19 @@ export interface SimpleCellProps extends HTMLAttributes<HTMLElement>, HasRootRef
    * Контейнер для текста под `children`.
    */
   description?: ReactNode;
+  /**
+   * Убирает анимацию нажатия
+   */
   disabled?: boolean;
   /**
-   * В iOS добавляет chevron справа. Передавать `true`, если предполагается кликабельность ячейки.
+   * В iOS добавляет chevron справа. Передавать `true`, если предполагается переход при клике по ячейке.
    */
   expandable?: boolean;
   multiline?: boolean;
+  Component?: ElementType;
 }
+
+export interface SimpleCellProps extends SimpleCellOwnProps, HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, AdaptivityProps {}
 
 const SimpleCell: FC<SimpleCellProps> = ({
   before,
@@ -42,15 +49,25 @@ const SimpleCell: FC<SimpleCellProps> = ({
   className,
   expandable,
   multiline,
+  Component,
+  onClick,
+  sizeY,
   ...restProps
 }) => {
   const platform = usePlatform();
   const hasAfter = hasReactNode(after) || expandable && platform === IOS;
+  const RootComponent = restProps.disabled ? Component : Tappable;
+
+  const props: SimpleCellProps = restProps;
+
+  if (!restProps.disabled) {
+    props.Component = restProps.href ? 'a' : Component;
+    props.onClick = onClick;
+  }
 
   return (
-    <Tappable
-      {...restProps}
-      Component={restProps.href ? 'a' : 'div'}
+    <RootComponent
+      {...props}
       className={
         classNames(
           className,
@@ -59,6 +76,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
             'SimpleCell--exp': expandable,
             'SimpleCell--mult': multiline,
           },
+          `SimpleCell--sizeY-${sizeY}`,
         )
       }
     >
@@ -78,8 +96,12 @@ const SimpleCell: FC<SimpleCellProps> = ({
           {expandable && platform === IOS && <Icon24Chevron />}
         </div>
       }
-    </Tappable>
+    </RootComponent>
   );
 };
 
-export default SimpleCell;
+SimpleCell.defaultProps = {
+  Component: 'div',
+};
+
+export default withAdaptivity(SimpleCell, { sizeY: true });

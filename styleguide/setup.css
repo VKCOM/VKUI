@@ -13,3 +13,8 @@
   src: url("./fonts/TTCommons-DemiBold.woff") format("woff");
   font-weight: 800;
   }
+
+.logo {
+  margin-left: -44px;
+  display: block;
+}

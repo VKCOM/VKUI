@@ -1,16 +1,16 @@
-Структура html файла:
+Пример структуры html файла:
 
-```html 
+```html
 <!DOCTYPE html>
 <html>
   <head>
-      <meta charset="utf-8">
-      <meta 
-        name="viewport" 
-        content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
-      >
-      <title>{{app_title}}</title>
-      <link href={{path/to/css}} rel="stylesheet">
+    <meta charset="utf-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+    >
+    <title>{{app_title}}</title>
+    <link href={{path/to/css}} rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>
@@ -18,10 +18,14 @@
   </body>
 </html>
 ```
+_В этом примере показан режим подключения `full`_
 
-Важно отметить два момента:
+**Важно:** В мета теге `viewport` должно обязательно быть правило `viewport-fit=cover`. Это нужно для корректного расчитывания отступов на определённых устройствах, например, на iPhone. Прочитать подробнее [можно тут](https://css-tricks.com/the-notch-and-css/).
 
-* В `body` обязательно должен быть дочерний элемент с `id="root"`, в который нужно
-рендерить приложение.
-* В мета тег `viewport` нужно дописать правило `viewport-fit=cover`. Если интересно, что это, то 
-[вот](https://css-tricks.com/the-notch-and-css/) подробная статья.
+VKUI поддерживает 3 режима использования:
+- `full` — приложение полностью написано и контролируется VKUI
+- `embedded` — встраивание VKUI приложения в существующее приложение
+- `partial` — UI компоненты используются в существующем приложении без лаяут компонентов
+
+Для примеров и полного описания режимов, см. [Режимы подключения](#section-режимы-подключения).
+

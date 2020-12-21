@@ -20,11 +20,6 @@ export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
   after?: ReactNode;
 
   /**
-   * @deprecated Будет удалено в v4. Используйте свойство `textWrap`.
-   */
-  multiline?: boolean;
-
-  /**
    * Тип ячейки:
    *
    * - `base` – базовая ячейка с серой иконкой и серым текстом.<br />
@@ -60,21 +55,19 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props) => {
     mode,
     textWrap,
     textLevel,
-    multiline,
     children,
     className,
     ...restProps
   } = props;
 
   const Component: ElementType = restProps.onClick ? Tappable : 'div';
-  const finalTextWrap: typeof textWrap = multiline ? 'short' : textWrap;
 
   return (
     <Component
       {...restProps}
       className={classNames(getClassName('MiniInfoCell', platform), {
         [`MiniInfoCell--md-${mode}`]: mode !== 'base',
-        [`MiniInfoCell--wr-${finalTextWrap}`]: finalTextWrap !== 'nowrap',
+        [`MiniInfoCell--wr-${textWrap}`]: textWrap !== 'nowrap',
       }, `MiniInfoCell--lvl-${textLevel}`, className)}
     >
       <div className="MiniInfoCell__icon">

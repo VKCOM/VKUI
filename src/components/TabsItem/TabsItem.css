@@ -14,6 +14,7 @@
   line-height: 20px;
   color: var(--text_secondary);
   max-width: 100%;
+  min-width: 0;
   flex-basis: 0;
   flex-shrink: 0;
   flex-grow: 1;
@@ -23,6 +24,8 @@
   }
 
   .Tabs--default .TabsItem__in {
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 14px 0;
     }
 
@@ -114,13 +117,11 @@
   }
 
 .Tabs--ios.Tabs--segmented .TabsItem:last-child {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: 0 10px 10px 0;
   }
 
 .Tabs--ios.Tabs--segmented .TabsItem:first-child {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border-radius: 10px 0 0 10px;
   }
 
 .Tabs--ios.Tabs--segmented .TabsItem {
@@ -158,6 +159,27 @@
   Android
  */
 
-.TabsItem--android .Tappable__waves {
+.TabsItem--android .Tappable__waves,
+.TabsItem--vkcom .Tappable__waves {
   display: none;
+  }
+
+  /*
+  VKCOM
+  */
+
+  .Tabs--vkcom .TabsItem--vkcom {
+    flex-grow: 0;
+    min-width: auto;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .Tabs--vkcom .TabsItem--vkcom::after {
+    left: 2px;
+    bottom: 0;
+    width: calc(100% - 4px);
   }

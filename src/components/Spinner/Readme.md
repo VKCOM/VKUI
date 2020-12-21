@@ -5,12 +5,14 @@
 <View activePanel="spinner">
   <Panel id="spinner">
     <PanelHeader>Spinner</PanelHeader>
-    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-      <Spinner size="large" style={{ marginTop: 20 }} />
-      <Spinner size="medium" style={{ marginTop: 20 }} />
-      <Spinner size="regular" style={{ marginTop: 20 }} />
-      <Spinner size="small" style={{ marginTop: 20 }} />
-    </div>
+    <Group>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+        <Spinner size="large" style={{ margin: '20px 0' }} />
+        <Spinner size="medium" style={{ margin: '20px 0' }} />
+        <Spinner size="regular" style={{ margin: '20px 0' }} />
+        <Spinner size="small" style={{ margin: '20px 0' }} />
+      </div>
+    </Group>
   </Panel>
 </View>
 ```

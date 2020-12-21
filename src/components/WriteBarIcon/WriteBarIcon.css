@@ -1,0 +1,82 @@
+.WriteBarIcon {
+  background: none;
+  border: 0;
+  outline: none;
+  position: relative;
+  color: var(--writebar_icon);
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.WriteBarIcon--disabled {
+  opacity: .4;
+  pointer-events: none;
+}
+
+.WriteBarIcon:active {
+  opacity: .6;
+}
+
+.WriteBarIcon__count {
+  box-sizing: border-box;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 2px;
+  border: 2px solid var(--background_content);
+  text-align: center;
+  color: var(--button_commerce_foreground);
+  background: var(--button_commerce_background);
+  border-radius: 50%;
+}
+
+.WriteBarIcon--send:not(.WriteBarIcon--disabled) {
+  color: var(--accent);
+}
+
+/* iOS */
+
+.WriteBarIcon--ios {
+  width: 44px;
+  color: var(--writebar_icon);
+}
+
+.WriteBarIcon--ios.WriteBarIcon--send,
+.WriteBarIcon--ios.WriteBarIcon--done {
+  width: 48px;
+}
+
+.WriteBarIcon--ios.WriteBarIcon--send:first-child,
+.WriteBarIcon--ios.WriteBarIcon--done:first-child {
+  margin-left: -4px;
+}
+
+.WriteBarIcon--ios.WriteBarIcon--send:last-child,
+.WriteBarIcon--ios.WriteBarIcon--done:last-child {
+  margin-right: -4px;
+}
+
+/**
+ * Android + vkcom
+ */
+
+.WriteBarIcon--android,
+.WriteBarIcon--vkcom {
+  width: 44px;
+  color: var(--icon_secondary);
+}
+
+.WriteBarIcon--android.WriteBarIcon--send,
+.WriteBarIcon--vkcom.WriteBarIcon--send,
+.WriteBarIcon--android.WriteBarIcon--done,
+.WriteBarIcon--vkcom.WriteBarIcon--done {
+  color: var(--accent);
+}

@@ -1,10 +1,29 @@
-.FormLayoutGroup > * ~ * {
-  margin-top: 12px;
-  }
+.FormLayoutGroup--horizontal {
+  flex-direction: row;
+  display: flex;
+}
 
-.FormLayoutGroup > .Radio,
-.FormLayoutGroup > .Checkbox,
-.FormLayoutGroup > .Cell,
-.FormLayoutGroup > .CellButton {
-  margin-top: 0;
-  }
+.FormLayoutGroup--horizontal > .FormItem {
+  max-width: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  padding-left: 0;
+  padding-right: 0;
+  min-width: 0;
+}
+
+.FormLayoutGroup--horizontal > .FormItem + .FormItem {
+  margin-left: 24px;
+}
+
+.FormLayoutGroup--ios.FormLayoutGroup--horizontal {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.FormLayoutGroup--android.FormLayoutGroup--horizontal,
+.FormLayoutGroup--vkcom.FormLayoutGroup--horizontal {
+  padding-left: 16px;
+  padding-right: 16px;
+}

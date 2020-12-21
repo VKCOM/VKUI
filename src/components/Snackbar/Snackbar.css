@@ -1,9 +1,10 @@
 .Snackbar {
   user-select: none;
+  z-index: 101;
 }
 
 .Snackbar__in {
-  padding: 10px;
+  padding: 8px;
 }
 
 .Snackbar--closing .Snackbar__in {
@@ -47,35 +48,18 @@
 
 .Snackbar__content-text {
   color: var(--text_primary);
-  font-size: 15px;
-  line-height: 19px;
 }
 
-.Snackbar__action {
-  font-family: inherit;
-  display: inline-block;
-  box-sizing: border-box;
-  outline: none;
-  border: none;
-  box-shadow: none;
-  user-select: none;
-  font-size: 14px;
-  line-height: 30px;
-  font-weight: 500;
-  color: var(--accent);
-  background: none;
-  padding: 0 16px;
-  margin: 0 -16px;
-  white-space: nowrap;
-}
-
-.Snackbar__action:active {
-  opacity: .4;
+.Snackbar--l-horizontal .Snackbar__action {
+  margin-right: -16px;
+  position: relative;
+  top: 2px;
 }
 
 .Snackbar--l-vertical .Snackbar__action {
   margin-top: 2px;
   margin-bottom: -6px;
+  margin-left: -16px;
 }
 
 .ModalRoot .Snackbar {
@@ -89,7 +73,7 @@
 }
 
 .Snackbar--ios .Snackbar__in {
-  animation: animation-snackbarIntro 340ms var(--ios-easing);
+  animation: animation-snackbar-intro-vertical 340ms var(--ios-easing);
 }
 
 .Snackbar--ios .Snackbar__body {
@@ -98,16 +82,39 @@
 
 /* Android */
 .Snackbar--android .Snackbar__in,
-.Snackbar--android .Snackbar__body {
+.Snackbar--android .Snackbar__body,
+.Snackbar--vkcom .Snackbar__in,
+.Snackbar--vkcom .Snackbar__body {
   transition: transform 320ms var(--android-easing);
 }
 
-.Snackbar--android .Snackbar__in {
-  animation: animation-snackbarIntro 340ms var(--android-easing);
+.Snackbar--android .Snackbar__in,
+.Snackbar--vkcom .Snackbar__in {
+  animation: animation-snackbar-intro-vertical 340ms var(--android-easing);
 }
 
-.Snackbar--android .Snackbar__body {
+.Snackbar--android .Snackbar__body,
+.Snackbar--vkcom .Snackbar__body {
   border-radius: 8px;
+}
+
+/**
+ * Desktop
+ */
+
+.Snackbar--desktop {
+  max-width: 328px;
+  left: 0;
+  bottom: 0;
+}
+
+.Snackbar--desktop .Snackbar__in {
+  padding: 12px;
+  animation-name: animation-snackbar-intro-horizontal;
+}
+
+.Snackbar--desktop.Snackbar--closing .Snackbar__in {
+  transform: translate3d(-140%, 0, 0);
 }
 
 /**
@@ -120,9 +127,19 @@
 /**
  * Animations
  */
-@keyframes animation-snackbarIntro {
+@keyframes animation-snackbar-intro-vertical {
   from {
     transform: translate3d(0, 140%, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes animation-snackbar-intro-horizontal {
+  from {
+    transform: translate3d(-140%, 0, 0);
   }
 
   to {

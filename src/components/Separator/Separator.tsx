@@ -8,9 +8,10 @@ export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
    * С этим свойством компонент не будет иметь отступы слева и справа
    */
   wide?: boolean;
+  expanded?: boolean;
 }
 
-const Separator: FunctionComponent<SeparatorProps> = ({ className, wide, ...restProps }: SeparatorProps) => {
+let Separator: FunctionComponent<SeparatorProps> = ({ className, wide, expanded, ...restProps }: SeparatorProps) => {
   const platform = usePlatform();
 
   return (
@@ -20,7 +21,9 @@ const Separator: FunctionComponent<SeparatorProps> = ({ className, wide, ...rest
         'Separator--wide': wide,
       })}
     >
-      <div className="Separator__in" />
+      <div className={classNames('Separator__in', {
+        'Separator__in--expanded': expanded,
+      })} />
     </div>
   );
 };

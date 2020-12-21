@@ -1,24 +1,25 @@
-import React, { Children, Component, HTMLAttributes, ReactElement } from 'react';
+import React, { Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
 import { transitionEvent } from '../../lib/supportEvents';
-import withInsets from '../../hoc/withInsets';
 import withPlatform from '../../hoc/withPlatform';
-import { isNumeric } from '../../lib/utils';
-import { HasInsets, HasPlatform } from '../../types';
-import { ANDROID, IOS } from '../../lib/platform';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import { HasPlatform } from '../../types';
+import { ANDROID, IOS, VKCOM } from '../../lib/platform';
+import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
+import ActionSheetDropdown from './ActionSheetDropdown';
+import { hasReactNode } from '../../lib/utils';
+import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
+import Caption from '../Typography/Caption/Caption';
 
-export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasInsets {
-  /**
-   * iOS only
-   */
+export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   header?: React.ReactNode;
-  /**
-   * iOS only
-   */
   text?: React.ReactNode;
   onClose(): void;
+  /**
+   * Desktop only
+   */
+  toggleRef: Element;
+  iosCloseItem: React.ReactNode;
 }
 
 export interface ActionSheetState {
@@ -27,15 +28,7 @@ export interface ActionSheetState {
 
 export type CloseCallback = () => void;
 
-export type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
-
-export type ActionType = (event: React.MouseEvent) => void;
-
-export type ItemClickHandler = (action: ActionType, autoclose: boolean) => (event: React.MouseEvent) => void;
-
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
-
-export type IsItemLast = (index: number) => boolean;
 
 class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   constructor(props: ActionSheetProps) {
@@ -56,13 +49,13 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     this.waitTransitionFinish(this.props.onClose);
   };
 
-  onItemClick: ItemClickHandler = (action: ActionType, autoclose: boolean) => (event: React.MouseEvent) => {
+  onItemClick: ItemClickHandler = (action, autoclose) => (event) => {
     event.persist();
 
     if (autoclose) {
       this.setState({ closing: true });
       this.waitTransitionFinish(() => {
-        autoclose && this.props.onClose();
+        this.props.onClose();
         action && action(event);
       });
     } else {
@@ -70,33 +63,38 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   };
 
-  stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
-
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
+    if (this.props.viewWidth >= ViewWidth.TABLET) {
+      eventHandler();
+    }
+
     if (transitionEvent.supported) {
       this.elRef.current.removeEventListener(transitionEvent.name, eventHandler);
       this.elRef.current.addEventListener(transitionEvent.name, eventHandler);
     } else {
       clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID ? 200 : 300);
+      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300);
     }
   }
 
-  isItemLast: IsItemLast = (index: number) => {
-    const childrenArray = Children.toArray(this.props.children);
-    const lastElement = childrenArray[childrenArray.length - 1] as ReactElement;
-
-    if (index === childrenArray.length - 1) {
-      return true;
-    } else if (index === childrenArray.length - 2 && lastElement.props.mode === 'cancel') {
-      return true;
-    }
-
-    return false;
-  };
-
   render() {
-    const { children, className, header, text, style, insets, platform, ...restProps } = this.props;
+    const {
+      children,
+      className,
+      header,
+      text,
+      style,
+      platform,
+      viewWidth,
+      iosCloseItem,
+      ...restProps
+    } = this.props;
+
+    const isDesktop = viewWidth >= ViewWidth.TABLET;
+
+    const DropdownComponent = isDesktop
+      ? ActionSheetDropdownDesktop
+      : ActionSheetDropdown;
 
     return (
       <PopoutWrapper
@@ -105,32 +103,39 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
         className={className}
         style={style}
         onClick={this.onClose}
+        hasMask={!isDesktop}
+        fixed={!isDesktop}
       >
-        <div
-          {...restProps}
-          ref={this.elRef}
-          onClick={this.stopPropagation}
-          className={classNames(getClassName('ActionSheet', platform), {
-            'ActionSheet--closing': this.state.closing,
-          })}
-        >
-          {platform === IOS &&
-          <header className="ActionSheet__header">
-            {header && <div className="ActionSheet__title">{header}</div>}
-            {text && <div className="ActionSheet__text">{text}</div>}
-          </header>
-          }
-          {Children.toArray(children).map((child: React.ReactElement, index: number, arr: []) =>
-            child && React.cloneElement(child, {
-              onClick: this.onItemClick(child.props.onClick, child.props.autoclose),
-              style: index === arr.length - 1 && isNumeric(insets.bottom) ? { marginBottom: insets.bottom } : null,
-              isLast: this.isItemLast(index),
-            }),
-          )}
-        </div>
+        <ActionSheetContext.Provider
+          value={{
+            onItemClick: this.onItemClick,
+            isDesktop,
+          }}>
+          <DropdownComponent
+            closing={this.state.closing}
+            onClose={this.onClose}
+            elementRef={this.elRef}
+            {...restProps}
+          >
+            {(hasReactNode(header) || hasReactNode(text)) &&
+              <header className="ActionSheet__header">
+                {hasReactNode(header) &&
+                  <Caption level="1" weight={platform === IOS ? 'semibold' : 'medium'} className="ActionSheet__title">
+                    {header}
+                  </Caption>
+                }
+                {hasReactNode(text) && <Caption level="1" weight="regular" className="ActionSheet__text">{text}</Caption>}
+              </header>
+            }
+            {children}
+            {platform === IOS && !isDesktop && iosCloseItem}
+          </DropdownComponent>
+        </ActionSheetContext.Provider>
       </PopoutWrapper>
     );
   }
 }
 
-export default withPlatform(withInsets(ActionSheet));
+export default withAdaptivity(withPlatform(ActionSheet), {
+  viewWidth: true,
+});

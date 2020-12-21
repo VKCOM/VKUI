@@ -8,7 +8,7 @@
   outline: none;
   }
 
-  .Select select {
+  .Select__el {
     display: block;
     position: absolute;
     appearance: none;
@@ -26,16 +26,26 @@
   .Select__container {
     line-height: 19px;
     font-size: 16px;
-    padding: 13px 40px 12px 12px;
+    padding: 12px 39px 11px 11px;
     color: var(--text_primary);
     box-sizing: border-box;
-    height: 44px;
+    height: 42px;
     position: relative;
     z-index: 2;
+    cursor: pointer;
     }
+
+  .Select__el {
+    cursor: pointer;
+  }
+
+  .Select--disabled .Select__el {
+    cursor: default;
+  }
 
   .Select--disabled .Select__container {
     opacity: .4;
+    cursor: default;
     }
 
     .Select:not(.Select--multiline) .Select__title {
@@ -70,5 +80,25 @@
 
 .Select--multiline .Select__container {
   height: auto;
-  min-height: 44px;
+  min-height: 42px;
   }
+
+.Select--sizeY--compact .Select__container {
+  padding: 11px 35px 11px 11px;
+  }
+
+  .Select--sizeX--compact .Icon--h-12 {
+    margin-top: -6px;
+  }
+
+.Select--sizeY--compact .Select__container {
+  height: 34px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.Select--sizeY--compact .Icon--h-16 {
+  margin-top: -8px;
+}

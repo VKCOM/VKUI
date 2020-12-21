@@ -1,17 +1,29 @@
 import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
-import PropTypes, { Requireable, Validator } from 'prop-types';
+import PropTypes, { Requireable } from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
-import { ANDROID } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import withPlatform from '../../hoc/withPlatform';
+import withContext from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
+import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
+import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   popout?: ReactNode;
   modal?: ReactNode;
+  /**
+   * @ignore
+   */
+  splitCol?: SplitColContextProps;
+  /**
+   * @ignore
+   */
+  configProvider?: ConfigProviderContextInterface;
 }
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
@@ -31,7 +43,6 @@ export interface RootState {
 export interface RootContext {
   document: Requireable<object>;
   window: Requireable<object>;
-  transitionMotionEnabled: Validator<boolean>;
 }
 
 class Root extends Component<RootProps, RootState> {
@@ -56,7 +67,6 @@ class Root extends Component<RootProps, RootState> {
   static contextTypes: RootContext = {
     window: PropTypes.any,
     document: PropTypes.any,
-    transitionMotionEnabled: PropTypes.bool,
   };
 
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
@@ -120,7 +130,8 @@ class Root extends Component<RootProps, RootState> {
   }
 
   shouldDisableTransitionMotion(): boolean {
-    return this.context.transitionMotionEnabled === false;
+    return this.props.configProvider.transitionMotionEnabled === false ||
+      !this.props.splitCol.animate;
   }
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEndCallback) {
@@ -134,7 +145,7 @@ class Root extends Component<RootProps, RootState> {
       elem.addEventListener(animationEvent.name, eventHandler);
     } else {
       clearTimeout(this.animationFinishTimeout);
-      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID ? 300 : 600);
+      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
     }
   }
 
@@ -196,11 +207,17 @@ class Root extends Component<RootProps, RootState> {
             </div>
           );
         })}
-        {!!popout && <div className="Root__popout">{popout}</div>}
-        {!!modal && <div className="Root__modal">{modal}</div>}
+        <AppRootPortal className="Root__portal">
+          {!!popout && <div className="Root__popout">{popout}</div>}
+          {!!modal && <div className="Root__modal">{modal}</div>}
+        </AppRootPortal>
       </div>
     );
   }
 }
 
-export default withPlatform(Root);
+export default withContext(withContext(
+  withPlatform(Root),
+  SplitColContext,
+  'splitCol',
+), ConfigProviderContext, 'configProvider');

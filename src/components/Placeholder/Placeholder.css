@@ -29,15 +29,10 @@
 }
 
 .Placeholder__header {
-  font-size: 20px;
-  line-height: 24px;
-  font-weight: 500;
   color: var(--text_primary);
 }
 
 .Placeholder__text {
-  font-size: 16px;
-  line-height: 20px;
   color: var(--text_placeholder);
 }
 
@@ -50,5 +45,5 @@
 }
 
 .Placeholder__action .Button--lvl-tertiary {
-  margin-top: -8px;
+  top: -8px;
 }

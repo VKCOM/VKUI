@@ -2,193 +2,177 @@
   user-select: none;
   color: var(--text_primary);
   position: relative;
-  overflow: hidden;
-  }
+  max-width: 416px;
+}
 
-  .Alert::before {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--modal_card_background);
-    z-index: 1;
-    content: '';
-    }
+.Alert::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--modal_card_background);
+  z-index: 1;
+  content: '';
+  border-radius: inherit;
+}
 
-  .Alert__content {
-    position: relative;
-    z-index: 2;
-    }
+.Alert__content {
+  position: relative;
+  z-index: 2;
+}
 
-  .Alert__btn {
-    white-space: nowrap;
-    background: transparent;
-    }
+.Alert__action {
+  white-space: nowrap;
+  background: transparent;
+}
 
-  .Alert__footer {
-    display: flex;
-    max-width: 100%;
-    position: relative;
-    z-index: 2;
-    }
+.Alert__actions {
+  display: flex;
+  max-width: 100%;
+  position: relative;
+  z-index: 2;
+}
 
 /**
  * iOS version
  */
 .Alert--ios {
   width: 270px;
-  flex: 0 0 auto;
   border-radius: 12px;
+  overflow: hidden;
   animation: animation-ios-alert-intro .3s var(--ios-easing);
-  }
+}
 
 .Alert--ios.Alert--closing {
   opacity: 0;
   transition: opacity .3s var(--ios-easing);
-  }
+}
 
-  /**
-   * Content container
-   */
-  .Alert--ios .Alert__content {
-    padding: 19px 16px 20px;
-    font-size: 13px;
-    line-height: 16px;
-    text-align: center;
-    }
+.Alert--ios .Alert__content {
+  padding: 19px 16px 20px;
+  text-align: center;
+}
 
-  .Alert--ios .Alert__content::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    height: 1px;
-    right: 0;
-    left: 0;
-    background: var(--action_sheet_separator);
-    transform-origin: center bottom;
-    }
+.Alert--ios .Alert__header:not(:last-child) {
+  margin-bottom: 7px;
+}
 
-    .Alert--ios .Alert__content h2 {
-      margin: 0 0 7px;
-      font-weight: bold;
-      font-size: 17px;
-      line-height: 22px;
-      }
+.Alert--ios .Alert__content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  height: 1px;
+  right: 0;
+  left: 0;
+  background: var(--action_sheet_separator);
+  transform-origin: center bottom;
+}
 
-    .Alert--ios .Alert__content p {
-      margin: 0;
-      }
+.Alert--ios.Alert--v .Alert__actions {
+  flex-direction: column;
+}
 
-  /**
-   * Footer
-   */
-  .Alert--ios.Alert--v .Alert__footer {
-    flex-direction: column;
-    }
+.Alert--ios .Alert__action {
+  position: relative;
+  font-size: 17px;
+  line-height: 44px;
+  color: var(--accent);
+  border: 0;
+  padding: 0 6px;
+  margin: 0;
+  height: 44px;
+  display: block;
+  outline: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 0;
+}
 
-    /**
-     * iOS Alert button
-     */
-    .Alert--ios .Alert__btn {
-      position: relative;
-      font-size: 17px;
-      line-height: 44px;
-      color: var(--accent);
-      border: 0;
-      padding: 0 6px;
-      margin: 0;
-      height: 44px;
-      display: block;
-      outline: none;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      }
+.Alert--ios .Alert__action:active {
+  z-index: 1;
+}
 
-    .Alert--ios .Alert__btn:active {
-      z-index: 1;
-      }
+.Alert--ios .Alert__action::after {
+  content: '';
+  position: absolute;
+  background: var(--action_sheet_separator);
+}
 
-    .Alert--ios .Alert__btn::after {
-      content: '';
-      position: absolute;
-      background: var(--action_sheet_separator);
-      }
+.Alert--ios.Alert--h .Alert__action::after {
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  transform-origin: right center;
+}
 
-    .Alert--ios.Alert--h .Alert__btn::after {
-      top: 0;
-      right: 0;
-      width: 1px;
-      height: 100%;
-      transform-origin: right center;
-      }
+.Alert--ios.Alert--h .Alert__action:last-child::after {
+  content: none;
+}
 
-    .Alert--ios.Alert--h .Alert__btn:last-child::after {
-      content: none;
-      }
+.Alert--ios.Alert--h .Alert__action {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
 
-    .Alert--ios.Alert--h .Alert__btn {
-      flex-grow: 1;
-      flex-shrink: 1;
-      flex-basis: 0;
-      }
+.Alert--ios.Alert--h .Alert__action:first-child {
+  border-bottom-left-radius: 12px;
+}
 
-    .Alert--ios.Alert--h .Alert__btn:first-child {
-      border-bottom-left-radius: 12px;
-      }
+.Alert--ios.Alert--h .Alert__action:last-child {
+  border-bottom-right-radius: 12px;
+}
 
-    .Alert--ios.Alert--h .Alert__btn:last-child {
-      border-bottom-right-radius: 12px;
-      }
+.Alert--ios.Alert--v .Alert__action::after {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  transform-origin: center bottom;
+}
 
-    .Alert--ios.Alert--v .Alert__btn::after {
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
-      transform-origin: center bottom;
-      }
+.Alert--ios.Alert--v .Alert__action:last-child::after {
+  content: none;
+}
 
-    .Alert--ios.Alert--v .Alert__btn:last-child::after {
-      content: none;
-      }
-
-    .Alert--ios.Alert--v .Alert__btn:last-child {
-      border-radius: 0 0 12px 12px;
-      }
+.Alert--ios.Alert--v .Alert__action:last-child {
+  border-radius: 0 0 12px 12px;
+}
 
 @media (min-resolution: 2dppx) {
   .Alert--ios .Alert__content::after,
-  .Alert--ios.Alert--v .Alert__btn::after {
+  .Alert--ios.Alert--v .Alert__action::after {
     transform: scaleY(.5);
-    }
-
-    .Alert--ios.Alert--h .Alert__btn::after {
-      transform: scaleX(.5);
-      }
   }
+
+    .Alert--ios.Alert--h .Alert__action::after {
+      transform: scaleX(.5);
+    }
+}
 
 @media (min-resolution: 3dppx) {
   .Alert--ios .Alert__content::after,
-  .Alert--ios.Alert--v .Alert__btn::after {
+  .Alert--ios.Alert--v .Alert__action::after {
     transform: scaleY(.33);
-    }
-
-  .Alert--ios.Alert--h .Alert__btn::after {
-    transform: scaleX(.33);
-    }
   }
 
-  .Alert--ios .Alert__btn--cancel {
-    font-weight: 600;
-    }
+  .Alert--ios.Alert--h .Alert__action::after {
+    transform: scaleX(.33);
+  }
+}
 
-  .Alert--ios .Alert__btn--destructive {
-    color: var(--destructive);
-    }
+.Alert--ios .Alert__action--cancel {
+  font-weight: 600;
+}
+
+.Alert--ios .Alert__action--destructive {
+  color: var(--destructive);
+}
 
 /**
- * Android version
+ * Android & VKCOM
  */
 .Alert--android {
   min-width: 280px;
@@ -196,72 +180,88 @@
   box-shadow: 0 20px 35px 0 rgba(0, 0, 0, .3), 0 0 35px 0 rgba(0, 0, 0, .22);
   border-radius: 12px;
   animation: animation-android-alert-intro .2s ease;
-  }
+}
 
-.Alert--android.Alert--closing {
+.Alert--android.Alert--closing,
+.Alert--vkcom.Alert--closing {
   transform: scale(.95);
   opacity: 0;
   transition: transform .2s var(--android-easing), opacity .2s var(--android-easing);
-  }
+}
 
-  /**
-   * Content container
-   */
-  .Alert--android .Alert__content {
-    padding: 20px 24px 8px;
-    font-size: 16px;
-    line-height: 24px;
-    }
+.Alert--android .Alert__content {
+  padding: 24px 24px 20px;
+}
 
-    .Alert--android .Alert__content h2 {
-      margin: 0 0 8px;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 28px;
-      }
+.Alert--android .Alert__header,
+.Alert--vkcom .Alert__header {
+  margin-bottom: 8px;
+}
 
-    .Alert--android .Alert__content p {
-      margin: 0;
-      }
+.Alert--android .Alert__text,
+.Alert--vkcom .Alert__text {
+  color: var(--text_secondary);
+}
 
-    .Alert--android .Alert__content p + p {
-      margin: 24px 0 0;
-      }
+.Alert--android .Alert__actions {
+  padding: 0 16px 16px;
+}
 
-  /**
-   * Footer
-   */
-  .Alert--android .Alert__footer {
-    padding: 12px 16px 16px;
-    display: flex;
-    justify-content: flex-end;
-    flex-flow: wrap;
-    }
+.Alert--android.Alert--h .Alert__actions,
+.Alert--vkcom.Alert--h .Alert__actions {
+  justify-content: flex-end;
+}
 
-  .Alert--android.Alert--v .Alert__footer {
-    flex-direction: column;
-    align-items: flex-end;
-    }
+.Alert--android.Alert--v .Alert__actions {
+  flex-direction: column;
+  align-items: flex-end;
+}
 
-    .Alert--android .Alert__btn {
-      margin: 4px 0 0 8px;
-      border: 0;
-      flex: 0 1 auto;
-      text-transform: uppercase;
-      font-weight: 500;
-      font-size: 15px;
-      line-height: 20px;
-      padding: 8px 16px;
-      border-radius: 8px;
-      color: var(--accent);
-      outline: none;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      }
+.Alert--android.Alert--v .Alert__button {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
 
-    .Alert--android .Alert__btn--destructive {
-      color: var(--destructive);
-      }
+.Alert--android.Alert--v .Alert__button:first-child {
+  margin-top: 0;
+}
+
+.Alert--android.Alert--v .Alert__button:last-child {
+  margin-bottom: 0;
+}
+
+.Alert--android.Alert--h .Alert__button,
+.Alert--vkcom.Alert--h .Alert__button {
+  margin-left: 8px;
+}
+
+/**
+ * VKCOM
+ */
+
+.Alert--vkcom {
+  box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 0 96px rgba(0, 0, 0, .16);
+  border-radius: 8px;
+  min-width: 400px;
+  margin: auto 24px;
+  animation: animation-android-alert-intro .2s ease;
+}
+
+.Alert--vkcom .Alert__content {
+  padding: 24px;
+}
+
+.Alert--vkcom .Alert__actions {
+  padding: 0 24px 16px;
+}
+
+.Alert--vkcom .Alert__button {
+  order: 2;
+}
+
+.Alert--vkcom .Alert__button--cancel {
+  order: 1;
+}
 
 /**
  * Animations
@@ -270,22 +270,22 @@
   from {
     opacity: 0;
     transform: scale(1.05);
-    }
+  }
 
   to {
     opacity: 1;
     transform: scale(1);
-    }
   }
+}
 
 @keyframes animation-android-alert-intro {
   from {
     opacity: 0;
     transform: scale(.95);
-    }
+  }
 
   to {
     opacity: 1;
     transform: scale(1);
-    }
   }
+}
