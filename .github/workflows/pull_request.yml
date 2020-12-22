@@ -92,7 +92,7 @@ jobs:
           CLEAN: true
       - name: Update deployment
         if: success()
-        uses: chrnorm/deployment-action@releases/v1
+        uses: chrnorm/deployment-status@releases/v1
         with:
           token: "${{ github.token }}"
           target_url: "https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/"
