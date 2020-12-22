@@ -74,7 +74,8 @@ jobs:
         with:
           name: styleguide
           path: tmp
-      - uses: strumwolf/delete-deployment-environment@1.1.0
+      - name: cleanup
+        uses: strumwolf/delete-deployment-environment@1.1.0
         with:
           token: ${{ github.token }}
           environment: production
