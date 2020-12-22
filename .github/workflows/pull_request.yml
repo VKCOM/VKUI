@@ -74,18 +74,13 @@ jobs:
         with:
           name: styleguide
           path: tmp
-      - name: cleanup
-        uses: strumwolf/delete-deployment-environment@1.0.1
+      - uses: strumwolf/delete-deployment-environment@main
         with:
           token: ${{ github.token }}
-          environment: production
-      - name: Create deployment
-        id: deployment
-        uses: chrnorm/deployment-action@releases/v1
+      - uses: strumwolf/delete-deployment-environment@main
         with:
+          token: ${{ github.token }}
           environment: pr-preview
-          token: "${{ github.token }}"
-          target_url: "https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/"
       - name: Publishing styleguide to GitHub pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
@@ -95,15 +90,6 @@ jobs:
           FOLDER: tmp
           TARGET_FOLDER: pull/${{ github.event.pull_request.number }}
           CLEAN: true
-      - name: Update deployment
-        if: success()
-        uses: chrnorm/deployment-status@releases/v1
-        with:
-          token: "${{ github.token }}"
-          target_url: "https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/"
-          state: "success"
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          description: "Preview PR #${{github.event.pull_request.number}}"
       - name: Find styleguide URL comment
         uses: peter-evans/find-comment@v1
         id: find_url_comment
