@@ -1177,7 +1177,7 @@ to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
 .Tooltip--light .Tooltip__corner{background-image:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIyMHB4IiBoZWlnaHQ9IjhweCIgdmlld0JveD0iMCAwIDIwIDgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+ICAgICAgICA8dGl0bGU+dG9vbHRpcF90aXA8L3RpdGxlPiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4gICAgPGRlZnM+PC9kZWZzPiAgICA8ZyBpZD0iTWFzdGVyLUtpdCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+ICAgICAgICA8cGF0aCBkPSJNMTAsMCBDMTMuNSwwIDE1LjUsOCAyMCw4IEwwLDggQzQuNSw4IDYuNSwwIDEwLDAgWiIgaWQ9InRvb2x0aXBfdGlwIiBmaWxsPSIjZmZmIiBmaWxsLXJ1bGU9Im5vbnplcm8iPjwvcGF0aD4gICAgPC9nPjwvc3ZnPg==)}
 .Tooltip--y-bottom .Tooltip__corner{bottom:100%}
 .Tooltip--y-top .Tooltip__corner{-webkit-transform:rotate(180deg);transform:rotate(180deg);top:100%}
-.Tooltip__content{background-color:#47a3ff;box-shadow:0 4px 32px 0 rgba(0,0,0,.16),0 0 4px 0 rgba(0,0,0,.04);padding:8.5px 12px 9.5px;border-radius:10px;font-size:14px;color:#fff;line-height:1.29;max-width:220px}
+.Tooltip__content{background-color:#47a3ff;box-shadow:0 4px 32px 0 rgba(0,0,0,.16),0 0 4px 0 rgba(0,0,0,.04);padding:8px 12px 10px;border-radius:10px;font-size:14px;color:#fff;line-height:1.29;max-width:220px}
 .Tooltip--light .Tooltip__content{background:#fff;color:#2c2d2e}
 .Tooltip__title{font-weight:600}
 .PullToRefresh{flex-grow:1}
