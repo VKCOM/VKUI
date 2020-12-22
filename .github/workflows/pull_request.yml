@@ -74,6 +74,10 @@ jobs:
         with:
           name: styleguide
           path: tmp
+      - uses: strumwolf/delete-deployment-environment@1.1.0
+        with:
+          token: ${{ github.token }}
+          environment: production
       - name: Create deployment
         id: deployment
         uses: chrnorm/deployment-action@releases/v1
