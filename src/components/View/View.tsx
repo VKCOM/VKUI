@@ -25,6 +25,8 @@ interface Scrolls {
 
 export type TransitionStartEventDetail = {
   scrolls: Scrolls;
+  from: string;
+  to: string;
 };
 
 interface ViewsScrolls {
@@ -197,7 +199,14 @@ class View extends Component<ViewProps, ViewState> {
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
-      this.document.dispatchEvent(createCustomEvent(this.window, transitionStartEventName, { detail: { scrolls } }));
+      const transitionStartEventData = {
+        detail: {
+          from: this.state.prevPanel,
+          to: this.state.nextPanel,
+          scrolls,
+        },
+      };
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, transitionStartEventData));
       const nextPanelElement = this.pickPanel(this.state.nextPanel);
       const prevPanelElement = this.pickPanel(this.state.prevPanel);
 
@@ -210,7 +219,14 @@ class View extends Component<ViewProps, ViewState> {
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
-      this.document.dispatchEvent(createCustomEvent(this.window, transitionStartEventName, { detail: { scrolls } }));
+      const transitionStartEventData = {
+        detail: {
+          from: this.state.swipeBackPrevPanel,
+          to: this.state.swipeBackNextPanel,
+          scrolls,
+        },
+      };
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, transitionStartEventData));
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
       const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
       const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
