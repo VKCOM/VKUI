@@ -74,6 +74,13 @@ jobs:
         with:
           name: styleguide
           path: tmp
+      - name: Create deployment
+        id: deployment
+        uses: chrnorm/deployment-action@releases/v1
+        with:
+          environment: pr-preview
+          token: "${{ github.token }}"
+          target_url: "https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/"
       - name: Publishing styleguide to GitHub pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
@@ -83,6 +90,15 @@ jobs:
           FOLDER: tmp
           TARGET_FOLDER: pull/${{ github.event.pull_request.number }}
           CLEAN: true
+      - name: Update deployment
+        if: success()
+        uses: chrnorm/deployment-action@releases/v1
+        with:
+          token: "${{ github.token }}"
+          target_url: "https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/"
+          state: "success"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          description: "Preview PR #${{github.event.pull_request.number}}"
       - name: Find styleguide URL comment
         uses: peter-evans/find-comment@v1
         id: find_url_comment
@@ -90,14 +106,6 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body-includes: <!-- styleguide_url -->
-      - name: Publish preview deployment
-        if: success()
-        uses: chrnorm/deployment-status@releases/v1
-        with:
-          token: "${{ github.token }}"
-          target_url: "https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/"
-          state: "success"
-          deployment_id: ${{ github.event.pull_request.number }}
       - name: Post styleguide URL to PR
         if: steps.find_url_comment.outputs.comment-id == 0
         uses: peter-evans/create-or-update-comment@v1
