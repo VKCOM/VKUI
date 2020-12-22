@@ -77,6 +77,7 @@ jobs:
       - uses: strumwolf/delete-deployment-environment@main
         with:
           token: ${{ github.token }}
+          environment: production
       - uses: strumwolf/delete-deployment-environment@main
         with:
           token: ${{ github.token }}
