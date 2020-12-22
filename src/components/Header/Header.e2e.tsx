@@ -17,6 +17,6 @@ describe('Header', () => {
   }, {
     subtitle: ['Поздаголовок'],
   }, {
-    aside: ['Текст', <Link key="">Ссылка</Link>, <Icon24Add key="" />],
+    aside: ['Текст', <Link key="">Ссылка</Link>, <Icon24Add key="" />, <><Icon24Add key="" /><Icon24Add key="" /></>],
   }]);
 });

@@ -70,6 +70,7 @@
 
 .Header__aside {
   white-space: nowrap;
+  display: flex;
   margin-left: 12px;
 }
 
@@ -88,6 +89,10 @@
 
 .Header__aside > .Icon--16 {
   top: 1px;
+}
+
+.Header__aside > .Icon:not(:last-child) {
+  margin-right: 6px;
 }
 
 /**
