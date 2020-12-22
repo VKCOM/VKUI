@@ -33,16 +33,20 @@ function resolveInsets(e: BridgeEvent): Insets | null {
   return null;
 }
 
+function updateInsets(insets: Insets) {
+  const htmlElement = window.document.documentElement;
+  for (let key in insets) {
+    if (insets.hasOwnProperty(key)) {
+      htmlElement.style.setProperty(`--safe-area-inset-${key}`, `${insets[key as keyof Insets]}px`);
+    }
+  }
+  initialState = insets;
+}
+
 vkBridge.subscribe((e: BridgeEvent) => {
   const insets = resolveInsets(e);
   if (insets) {
-    const htmlElement = window.document.documentElement;
-    for (let key in insets) {
-      if (insets.hasOwnProperty(key) && insets[key as keyof Insets] > 0) {
-        htmlElement.style.setProperty(`--safe-area-inset-${key}`, `${insets[key as keyof Insets]}px`);
-      }
-    }
-    initialState = insets;
+    updateInsets(insets);
   }
 });
 
