@@ -10,9 +10,7 @@ import React, {
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import getClassname from '../../helpers/getClassName';
-import Icon16SearchOutline from '@vkontakte/icons/dist/16/search_outline';
-import Icon16Clear from '@vkontakte/icons/dist/16/clear';
-import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
+import { Icon16SearchOutline, Icon16Clear, Icon24Cancel } from '@vkontakte/icons';
 import { IOS, VKCOM } from '../../lib/platform';
 import { HasPlatform, HasRef } from '../../types';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';

@@ -2,7 +2,7 @@ import React, { HTMLAttributes, ReactNode, FC, ElementType } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
-import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
+import { Icon24Chevron } from '@vkontakte/icons';
 import { HasLinkProps, HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';

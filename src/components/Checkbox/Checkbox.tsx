@@ -4,10 +4,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IOS, VKCOM } from '../../lib/platform';
 
-import Icon20CheckboxOn from '@vkontakte/icons/dist/20/check_box_on';
-import Icon20CheckboxOff from '@vkontakte/icons/dist/20/check_box_off';
-import Icon24CheckboxOn from '@vkontakte/icons/dist/24/check_box_on';
-import Icon24CheckboxOff from '@vkontakte/icons/dist/24/check_box_off';
+import { Icon20CheckBoxOn, Icon20CheckBoxOff, Icon24CheckBoxOn, Icon24CheckBoxOff } from '@vkontakte/icons';
 
 import { HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
@@ -47,16 +44,16 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
       <div className="Checkbox__container">
         <div className="Checkbox__icon Checkbox__icon--on">
           {sizeY === SizeType.COMPACT || platform === VKCOM ?
-            <Icon20CheckboxOn />
+            <Icon20CheckBoxOn />
             :
-            <Icon24CheckboxOn />
+            <Icon24CheckBoxOn />
           }
         </div>
         <div className="Checkbox__icon Checkbox__icon--off">
           {sizeY === SizeType.COMPACT || platform === VKCOM ?
-            <Icon20CheckboxOff />
+            <Icon20CheckBoxOff />
             :
-            <Icon24CheckboxOff />
+            <Icon24CheckBoxOff />
           }
         </div>
         <ContentComponent weight="regular" className="Checkbox__content">{children}</ContentComponent>

@@ -5,8 +5,7 @@
 
 ```jsx static
 import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
-import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
-import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
+import { Icon28Notifications, Icon28SettingsOutline } from '@vkontakte/icons';
 
 <PanelHeader
   left={<PanelHeaderButton><Icon28Notifications/></PanelHeaderButton>}
@@ -18,8 +17,7 @@ import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 
 ```jsx static
 import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
-import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
-import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
+import { Icon28SettingsOutline, Icon28Notifications } from '@vkontakte/icons';
 
 <PanelHeader
   right={

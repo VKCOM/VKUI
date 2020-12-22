@@ -2,7 +2,7 @@ import React, { HTMLAttributes, ReactNode, FC } from 'react';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
+import { Icon24Dismiss } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
