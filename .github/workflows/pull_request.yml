@@ -97,7 +97,6 @@ jobs:
           token: "${{ github.token }}"
           target_url: "https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/"
           state: "success"
-          environment: "preview"
           deployment_id: ${{ github.event.pull_request.number }}
       - name: Post styleguide URL to PR
         if: steps.find_url_comment.outputs.comment-id == 0
