@@ -90,6 +90,15 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body-includes: <!-- styleguide_url -->
+      - name: Publish preview deployment
+        if: success()
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: "${{ github.token }}"
+          target_url: "https://vkcom.github.io/VKUI/pull/${{ github.event.pull_request.number }}/"
+          state: "success"
+          environment: "preview"
+          deployment_id: ${{ github.event.pull_request.number }}
       - name: Post styleguide URL to PR
         if: steps.find_url_comment.outputs.comment-id == 0
         uses: peter-evans/create-or-update-comment@v1
