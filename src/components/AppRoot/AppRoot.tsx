@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+import { canUseDOM } from '@vkontakte/vkjs/lib/dom';
 import { HasChildren } from 'types';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
@@ -33,6 +34,10 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
 
   const initialized = useRef(false);
 
+  if (canUseDOM && !initialized.current && !embedded) {
+    doc.classList.add('vkui');
+  }
+
   // one time initialization and cleanup
   useIsomorphicLayoutEffect(() => {
     const parentNode = rootRef.current.parentElement;
@@ -45,7 +50,6 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
         setPortalRoot(portal);
         parentNode.classList.add('vkui__root', 'vkui__root--embedded');
       } else {
-        doc.classList.add('vkui');
         parentNode.classList.add('vkui__root');
       }
       initialized.current = true;
