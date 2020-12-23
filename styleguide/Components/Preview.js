@@ -141,8 +141,10 @@ export default class Preview extends PreviewParent {
                     {this.state.hideEmbeddedApp ? "mount embedded app" : "unmount embedded app"}
                   </button>
                 )}
-                {isEmbedded && this.state.hideEmbeddedApp ? null : 
-                  <div className={isPartial ? "vkui__root" : null} style={isEmbedded ? {
+                <div
+                  key={`vkui-${styleGuideContext.integration}`}
+                  className={isPartial ? "vkui__root" : null}
+                  style={isEmbedded ? {
                     marginTop: 8,
                     position: 'relative',
                     border: '1px solid #000',
@@ -152,7 +154,9 @@ export default class Preview extends PreviewParent {
                   } : {
                     position: 'relative',
                     height: '100%'
-                  }}>
+                  }
+                }>
+                {isEmbedded && this.state.hideEmbeddedApp ? null : 
                     <PrepareFrame integration={styleGuideContext.integration}>
                       {({ window }) => (
                         <ConfigProvider
@@ -173,8 +177,8 @@ export default class Preview extends PreviewParent {
                         </ConfigProvider>
                       )}
                     </PrepareFrame>
-                  </div>
-                }
+                  }
+                </div>
               </ReactFrame>
             )
           }}
