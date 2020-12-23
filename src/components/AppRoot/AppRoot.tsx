@@ -1,6 +1,9 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { HasChildren } from 'types';
 import classNames from '../../lib/classNames';
+import { noop } from '../../lib/utils';
+import { canUseDOM } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { AppRootContext } from './AppRootContext';
 import withAdaptivity, { SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 
@@ -28,7 +31,7 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     rootRef.current.parentElement.classList.add('vkui__root');
 
     return () => {
@@ -36,45 +39,45 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
     };
   }, []);
 
-  useEffect(() => {
-    const parentNode = rootRef.current.parentElement;
-    const doc = window.document.documentElement;
-    const body = window.document.body;
-
-    if (embedded) {
-      // prepare portal root
-      const portal = document.createElement('div');
-      portal.classList.add('vkui__portal-root');
-      body.appendChild(portal);
-      setPortalRoot(portal);
-
-      // apply embedded styles
-      parentNode.classList.add('vkui__root--embedded');
-
-      // cleanup possible previous state
-      doc.classList.remove('vkui');
-      body.classList.remove('vkui--sizeX-regular');
-
-      applyAdaptivityStyles(parentNode, sizeX);
-    } else {
-      // apply global styles
-      doc.classList.add('vkui');
-
-      // cleanup possible previous state
-      setPortalRoot(null);
-      cleanupPortalRoots(window);
-      parentNode.classList.remove('vkui__root--embedded');
-      parentNode.classList.remove('vkui--sizeX-regular');
-
-      applyAdaptivityStyles(body, sizeX);
+  useIsomorphicLayoutEffect(() => {
+    if (!embedded) {
+      return noop;
     }
 
+    const parentNode = rootRef.current.parentElement;
+    const body = window.document.body;
+
+    // prepare portal root
+    const portal = document.createElement('div');
+    portal.classList.add('vkui__portal-root');
+    body.appendChild(portal);
+    setPortalRoot(portal);
+
+    // apply embedded styles
+    parentNode.classList.add('vkui__root--embedded');
+    applyAdaptivityStyles(parentNode, sizeX);
+
     return () => {
-      if (embedded) {
-        cleanupPortalRoots(window);
-      }
+      cleanupPortalRoots(window);
+      setPortalRoot(null);
+      parentNode.classList.remove('vkui__root--embedded', 'vkui--sizeX-regular');
     };
   }, [embedded, sizeX]);
+
+  const { body, documentElement } = window.document;
+  const globalStylesApplied = useRef(false);
+  if (!embedded && canUseDOM && !globalStylesApplied.current) {
+    // apply global styles
+    documentElement.classList.add('vkui');
+    applyAdaptivityStyles(body, sizeX);
+    globalStylesApplied.current = true;
+  }
+  useIsomorphicLayoutEffect(() => () => {
+    if (globalStylesApplied.current) {
+      documentElement.classList.remove('vkui');
+      body.classList.remove('vkui--sizeX-regular');
+    }
+  });
 
   return (
     <div ref={rootRef} className={classNames('AppRoot', {
