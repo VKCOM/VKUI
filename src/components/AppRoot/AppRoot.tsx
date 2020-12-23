@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import { canUseDOM } from '@vkontakte/vkjs/lib/dom';
 import { HasChildren } from 'types';
 import classNames from '../../lib/classNames';
@@ -42,18 +42,17 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
   useIsomorphicLayoutEffect(() => {
     const parentNode = rootRef.current.parentElement;
 
-    if (!initialized.current) {
-      if (embedded) {
-        const portal = document.createElement('div');
-        portal.classList.add('vkui__portal-root');
-        body.appendChild(portal);
-        setPortalRoot(portal);
-        parentNode.classList.add('vkui__root', 'vkui__root--embedded');
-      } else {
-        parentNode.classList.add('vkui__root');
-      }
-      initialized.current = true;
+    if (embedded) {
+      const portal = document.createElement('div');
+      portal.classList.add('vkui__portal-root');
+      body.appendChild(portal);
+      setPortalRoot(portal);
+      parentNode.classList.add('vkui__root', 'vkui__root--embedded');
+    } else {
+      parentNode.classList.add('vkui__root');
     }
+
+    initialized.current = true;
 
     return () => {
       if (embedded) {
@@ -68,7 +67,10 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
   }, []);
 
   // adaptivity handler
-  useEffect(() => applyAdaptivityStyles(embedded ? rootRef.current.parentElement : body, sizeX), [sizeX]);
+  useIsomorphicLayoutEffect(
+    () => applyAdaptivityStyles(embedded ? rootRef.current.parentElement : body, sizeX),
+    [sizeX],
+  );
 
   return (
     <div ref={rootRef} className={classNames('AppRoot', {
