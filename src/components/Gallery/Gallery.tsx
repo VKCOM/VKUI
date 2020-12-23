@@ -87,7 +87,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
     return this.props.slideWidth === 'custom' && this.props.align === 'center';
   }
 
-  initializeSlides() {
+  initializeSlides(options: { animation?: boolean } = {}) {
     const slides: GallerySlidesState[] = React.Children.map(
       this.props.children,
       (_item: ReactElement, i: number): GallerySlidesState => {
@@ -109,9 +109,12 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
       if (this.state.shiftX === shiftX) {
         return;
       }
-      // переходим без анимации
-      this.setState({ shiftX, animation: false }, () => {
-        this.props.window.requestAnimationFrame(() => this.setState({ animation: true }));
+      const isValidShift = this.state.shiftX === this.validateIndent(this.state.shiftX);
+      const { animation = isValidShift } = options;
+      this.setState({ shiftX, animation }, () => {
+        if (!this.state.animation) {
+          this.props.window.requestAnimationFrame(() => this.setState({ animation: true }));
+        }
       });
     });
   }
@@ -266,7 +269,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
     }
   };
 
-  onResize: VoidFunction = () => this.initializeSlides();
+  onResize: VoidFunction = () => this.initializeSlides({ animation: false });
 
   get canSlideLeft() {
     return !this.isFullyVisible && this.props.slideIndex > 0;
@@ -305,7 +308,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   };
 
   componentDidMount() {
-    this.initializeSlides();
+    this.initializeSlides({ animation: false });
     this.props.window.addEventListener('resize', this.onResize);
   }
 
