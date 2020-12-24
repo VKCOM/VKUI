@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { HasChildren } from 'types';
+import { HasChildren } from '../../types';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 import withAdaptivity, { SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
