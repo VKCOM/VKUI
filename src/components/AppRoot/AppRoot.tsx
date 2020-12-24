@@ -1,5 +1,5 @@
 import React, { FC, useRef, useState } from 'react';
-import { canUseDOM } from '@vkontakte/vkjs/lib/dom';
+import { canUseDOM } from '../../lib/dom';
 import { HasChildren } from 'types';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
