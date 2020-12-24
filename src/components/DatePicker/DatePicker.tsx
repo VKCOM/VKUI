@@ -18,7 +18,7 @@ export interface SelectOption {
   label: string;
 }
 
-interface DateFormat {
+export interface DateFormat {
   day: number;
   month: number;
   year: number;
@@ -37,7 +37,7 @@ interface Props extends Attrs, HasPlatform, AdaptivityProps {
   dayPlaceholder?: string;
   monthPlaceholder?: string;
   yearPlaceholder?: string;
-  onDateChange?: (value: State) => void;
+  onDateChange?: (value: DateFormat) => void;
 }
 
 type GetOptions = () => SelectOption[];

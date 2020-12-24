@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
 import { canUseDOM } from '../../lib/dom';
-import { HasChildren } from 'types';
+import { HasChildren } from '../../types';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 import withAdaptivity, { SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
