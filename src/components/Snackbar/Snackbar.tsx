@@ -222,7 +222,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     const resolvedLayout = after || this.isDesktop ? 'vertical' : layout;
 
     return (
-      <AppRootPortal className="Snackbar__portal">
+      <AppRootPortal>
         <FixedLayout
           vertical="bottom"
           className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
