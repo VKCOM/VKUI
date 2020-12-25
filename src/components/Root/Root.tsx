@@ -207,7 +207,7 @@ class Root extends Component<RootProps, RootState> {
             </div>
           );
         })}
-        <AppRootPortal className="Root__portal">
+        <AppRootPortal>
           {!!popout && <div className="Root__popout">{popout}</div>}
           {!!modal && <div className="Root__modal">{modal}</div>}
         </AppRootPortal>

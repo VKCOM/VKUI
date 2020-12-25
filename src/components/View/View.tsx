@@ -512,7 +512,7 @@ class View extends Component<ViewProps, ViewState> {
             );
           })}
         </div>
-        <AppRootPortal className="View__portal">
+        <AppRootPortal>
           {hasPopout && <div className="View__popout">{popout}</div>}
           {hasModal && <div className="View__modal">{modal}</div>}
         </AppRootPortal>
