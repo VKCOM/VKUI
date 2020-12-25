@@ -38,7 +38,7 @@ vkBridge.subscribe((e: BridgeEvent) => {
   if (insets) {
     const htmlElement = window.document.documentElement;
     for (let key in insets) {
-      if (insets.hasOwnProperty(key) && insets[key as keyof Insets] > 0) {
+      if (insets.hasOwnProperty(key) && (insets[key as keyof Insets] > 0 || key === 'bottom')) {
         htmlElement.style.setProperty(`--safe-area-inset-${key}`, `${insets[key as keyof Insets]}px`);
       }
     }
