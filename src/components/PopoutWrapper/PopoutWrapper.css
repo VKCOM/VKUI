@@ -53,6 +53,11 @@
   justify-content: center;
   width: 100%;
   z-index: 2;
+  pointer-events: none;
+}
+
+.PopoutWrapper__content > * {
+  pointer-events: auto;
 }
 
 .PopoutWrapper--v-center .PopoutWrapper__container {

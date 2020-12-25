@@ -3,8 +3,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasChildren } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
-import { AdaptivityProps } from 'index';
-import withAdaptivity, { ViewWidth } from '../../hoc/withAdaptivity';
+import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { ScrollSaver } from './ScrollSaver';
 
 export interface EpicProps extends HTMLAttributes<HTMLDivElement>, HasChildren, AdaptivityProps {

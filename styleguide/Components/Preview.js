@@ -96,12 +96,28 @@ export default class Preview extends PreviewParent {
   }
 
   componentDidMount() {
-    return;
+    if (!window.IntersectionObserver) {
+      return this.setState({ isVisible: true });
+    }
+    this.onScreenObserver = new IntersectionObserver(([{ isIntersecting }]) => {
+      if (Boolean(this.state.isVisible) !== isIntersecting) {
+        this.setState({ isVisible: isIntersecting });
+      }
+    }, {
+      rootMargin: '100% 0px',
+    });
+    this.onScreenObserver.observe(this.frameRef.current);
   }
+
+  componentWillUnmount() {
+    this.onScreenObserver.disconnect();
+  }
+
+  frameRef = React.createRef();
 
   render() {
     const { code } = this.props;
-    const { error } = this.state;
+    const { error, isVisible } = this.state;
     return (
       error ?
         <PlaygroundError message={error} /> :
@@ -121,15 +137,22 @@ export default class Preview extends PreviewParent {
               </Layout>
             );
 
-            return (
+            const frameStyle = {
+              height: styleGuideContext.height,
+              width: styleGuideContext.width,
+              border: '1px solid rgba(0, 0, 0, .12)',
+              display: 'block',
+              margin: 'auto',
+            }
+
+            const frame = (
               <ReactFrame
                 mountTarget="body"
                 style={{
                   height: styleGuideContext.height,
                   width: styleGuideContext.width,
-                  border: '1px solid rgba(0, 0, 0, .12)',
+                  border: 'none',
                   display: 'block',
-                  margin: 'auto',
                 }}
                 initialContent={initialFrameContent}
               >
@@ -141,8 +164,10 @@ export default class Preview extends PreviewParent {
                     {this.state.hideEmbeddedApp ? "mount embedded app" : "unmount embedded app"}
                   </button>
                 )}
-                {isEmbedded && this.state.hideEmbeddedApp ? null : 
-                  <div className={isPartial ? "vkui__root" : null} style={isEmbedded ? {
+                <div
+                  key={`vkui-${styleGuideContext.integration}`}
+                  className={isPartial ? "vkui__root" : null}
+                  style={isEmbedded ? {
                     marginTop: 8,
                     position: 'relative',
                     border: '1px solid #000',
@@ -152,7 +177,9 @@ export default class Preview extends PreviewParent {
                   } : {
                     position: 'relative',
                     height: '100%'
-                  }}>
+                  }
+                }>
+                {isEmbedded && this.state.hideEmbeddedApp ? null :
                     <PrepareFrame integration={styleGuideContext.integration}>
                       {({ window }) => (
                         <ConfigProvider
@@ -173,12 +200,18 @@ export default class Preview extends PreviewParent {
                         </ConfigProvider>
                       )}
                     </PrepareFrame>
-                  </div>
-                }
+                  }
+                </div>
               </ReactFrame>
-            )
+            );
+
+            return (
+              <div ref={this.frameRef} style={frameStyle}>
+                {isVisible && frame}
+              </div>
+            );
           }}
         </StyleGuideContext.Consumer>
-    )
+    );
   }
 }

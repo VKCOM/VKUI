@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState } from 'react';
+import React, { Children, Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
@@ -62,7 +62,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
       deltaX: 0,
       shiftX: 0,
       slides: [],
-      animation: false,
+      animation: true,
       duration: 0.24,
     };
 
@@ -87,7 +87,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
     return this.props.slideWidth === 'custom' && this.props.align === 'center';
   }
 
-  initializeSlides() {
+  initializeSlides(options: { animation?: boolean } = {}) {
     const slides: GallerySlidesState[] = React.Children.map(
       this.props.children,
       (_item: ReactElement, i: number): GallerySlidesState => {
@@ -105,7 +105,17 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
     const max = this.calcMax({ slides });
 
     this.setState({ min, max, layerWidth, containerWidth, slides }, () => {
-      this.setState({ shiftX: this.calculateIndent(this.props.slideIndex) });
+      const shiftX = this.calculateIndent(this.props.slideIndex);
+      if (this.state.shiftX === shiftX) {
+        return;
+      }
+      const isValidShift = this.state.shiftX === this.validateIndent(this.state.shiftX);
+      const { animation = isValidShift } = options;
+      this.setState({ shiftX, animation }, () => {
+        if (!this.state.animation) {
+          this.props.window.requestAnimationFrame(() => this.setState({ animation: true }));
+        }
+      });
     });
   }
 
@@ -259,15 +269,7 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
     }
   };
 
-  onResize: VoidFunction = () => {
-    this.initializeSlides();
-
-    this.setState({
-      animation: false,
-    }, () => {
-      this.props.window.requestAnimationFrame(() => this.setState({ animation: true }));
-    });
-  };
+  onResize: VoidFunction = () => this.initializeSlides({ animation: false });
 
   get canSlideLeft() {
     return !this.isFullyVisible && this.props.slideIndex > 0;
@@ -306,17 +308,20 @@ class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityPr
   };
 
   componentDidMount() {
-    this.initializeSlides();
+    this.initializeSlides({ animation: false });
     this.props.window.addEventListener('resize', this.onResize);
   }
 
   componentDidUpdate(prevProps: GalleryProps) {
-    // NOTE: this is always called, because children ref is unstable
-    if (this.props.children !== prevProps.children) {
-      this.initializeSlides();
-    }
+    const widthChanged = this.props.slideWidth !== prevProps.slideWidth;
+    const isPropUpdate = this.props !== prevProps;
+    const slideCountChanged = Children.count(this.props.children) !== Children.count(prevProps.children);
+    const isCustomWidth = this.props.slideWidth === 'custom';
 
-    if (this.props.slideIndex !== prevProps.slideIndex) {
+    // в любом из этих случаев позиция могла поменяться
+    if (widthChanged || slideCountChanged || isCustomWidth && isPropUpdate) {
+      this.initializeSlides();
+    } else if (this.props.slideIndex !== prevProps.slideIndex) {
       this.setState({
         animation: true,
         deltaX: 0,

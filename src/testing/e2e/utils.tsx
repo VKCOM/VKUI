@@ -16,6 +16,7 @@ import AdaptivityProvider, {
 import { SizeType, ViewWidth } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProps } from '../../hoc/withAdaptivity';
 import View from '../../components/View/View';
+import AppRoot from '../../components/AppRoot/AppRoot';
 import Group from '../../components/Group/Group';
 
 type AdaptivityFlag = boolean | 'x' | 'y';
@@ -111,22 +112,24 @@ export function describeScreenshotFuzz<Props>(
         it(scheme, async () => {
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>
-              <div style={{ width, position: 'absolute' }}>
-                <AdaptivityProvider {...adaptivityProps}>
-                  <View activePanel="panel">
-                    <Panel id="panel">
-                      <Group>
-                        {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
-                          <Fragment key={i}>
-                            <div>{prettyProps(props)}</div>
-                            <div><Component {...props as any} /></div>
-                          </Fragment>
-                        ))}
-                      </Group>
-                    </Panel>
-                  </View>
-                </AdaptivityProvider>
-              </div>
+              <AdaptivityProvider {...adaptivityProps}>
+                <div style={{ width, position: 'absolute', height: 'auto' }}>
+                  <AppRoot embedded>
+                    <View activePanel="panel">
+                      <Panel id="panel">
+                        <Group>
+                          {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
+                            <Fragment key={i}>
+                              <div>{prettyProps(props)}</div>
+                              <div><Component {...props as any} /></div>
+                            </Fragment>
+                          ))}
+                        </Group>
+                      </Panel>
+                    </View>
+                  </AppRoot>
+                </div>
+              </AdaptivityProvider>
             </ConfigProvider>
           ))).toMatchImageSnapshot(matchScreenshot);
         });

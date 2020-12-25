@@ -19,14 +19,16 @@ export async function screenshot(jsx: ReactElement) {
   /* istanbul ignore next */
   await page.evaluate(() => (document as any).fonts.ready);
   /* istanbul ignore next */
-  const { width, height } = await page.evaluate(() => {
-    const size = { width: 0, height: 0 };
+  const { x, y, bottom, right } = await page.evaluate(() => {
+    const size = { right: 0, bottom: 0, x: Infinity, y: Infinity };
     document.querySelectorAll('#mount > *').forEach((node) => {
-      const { right, bottom } = node.getBoundingClientRect();
-      size.width = Math.max(size.width, right);
-      size.height = Math.max(size.height, bottom);
+      const { x, y, right, bottom } = node.getBoundingClientRect();
+      size.right = Math.max(size.right, right);
+      size.bottom = Math.max(size.bottom, bottom);
+      size.x = Math.min(size.x, x);
+      size.y = Math.min(size.y, y);
     });
     return size;
   });
-  return page.screenshot({ fullPage: true, clip: { x: 0, y: 0, width, height } });
+  return page.screenshot({ fullPage: true, clip: { x, y, width: right - x, height: bottom - y } });
 }
