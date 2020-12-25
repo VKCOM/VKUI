@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import Icon28EditOutline from '@vkontakte/icons/dist/28/edit_outline';
-import Icon28DoneOutline from '@vkontakte/icons/dist/28/done_outline';
+import { Icon28EditOutline, Icon28DoneOutline } from '@vkontakte/icons';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface PanelHeaderEditProps extends PanelHeaderButtonProps {

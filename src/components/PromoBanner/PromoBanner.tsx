@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, useEffect, useMemo, useState, useCallback } from 'react';
-import Icon24Dismiss from '@vkontakte/icons/dist/24/dismiss';
+import { Icon24Dismiss } from '@vkontakte/icons';
 import Button from '../Button/Button';
 import SimpleCell from '../SimpleCell/SimpleCell';
 import Avatar from '../Avatar/Avatar';

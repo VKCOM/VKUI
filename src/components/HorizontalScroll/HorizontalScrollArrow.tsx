@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Icon24Chevron from '@vkontakte/icons/dist/24/chevron_right';
+import { Icon24Chevron } from '@vkontakte/icons';
 
 export interface HorizontalScrollArrowProps {
   onClick: () => void;

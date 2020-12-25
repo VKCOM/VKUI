@@ -5,7 +5,7 @@ import React, {
   FocusEvent,
   KeyboardEvent, ReactNode, useEffect,
 } from 'react';
-import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
+import { Icon20Dropdown } from '@vkontakte/icons';
 import classNames from '../../lib/classNames';
 import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
