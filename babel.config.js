@@ -12,11 +12,11 @@ const testFiles = [
 
 module.exports = {
   presets: [
-    ['@babel/preset-env', { modules: useModules ? false : 'commonjs' }],
+    ['@babel/preset-env', { modules: 'commonjs' }],
     '@babel/preset-react',
     '@babel/preset-typescript'
   ],
-  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-runtime'],
+  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-runtime', '@babel/plugin-transform-modules-commonjs'],
   ignore: ['./src/vkui.js'].concat(
     isProduction ? ['./src/**/*.test.ts', './src/**/*.test.tsx', './src/**/*.spec.ts', './src/**/*.spec.tsx', './e2e', './src/testing'] : []),
 };
