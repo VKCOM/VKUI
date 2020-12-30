@@ -29,17 +29,17 @@ function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
 const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
-  const doc = window.document.documentElement;
-  const body = window.document.body;
 
   const initialized = useRef(false);
 
   if (canUseDOM && !initialized.current && !embedded) {
-    doc.classList.add('vkui');
+    window.document.documentElement.classList.add('vkui');
   }
 
   // one time initialization and cleanup
   useIsomorphicLayoutEffect(() => {
+    const doc = window.document.documentElement;
+    const body = window.document.body;
     const parentNode = rootRef.current.parentElement;
 
     if (embedded) {
@@ -68,7 +68,7 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
 
   // adaptivity handler
   useIsomorphicLayoutEffect(
-    () => applyAdaptivityStyles(embedded ? rootRef.current.parentElement : body, sizeX),
+    () => applyAdaptivityStyles(embedded ? rootRef.current.parentElement : window.document.body, sizeX),
     [sizeX],
   );
 
@@ -88,7 +88,7 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
 };
 
 AppRoot.defaultProps = {
-  window: window,
+  window: canUseDOM && window,
 };
 
 export default withAdaptivity(AppRoot, {

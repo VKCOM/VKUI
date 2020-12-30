@@ -1,5 +1,6 @@
 import React, { Component, ComponentType } from 'react';
 import { any } from 'prop-types';
+import { canUseDOM } from '../lib/dom';
 
 export type FrameProps = {
   window?: Window;
@@ -19,8 +20,8 @@ export function withFrame<Props>(Cmp: ComponentType<Props & FrameProps>): Compon
     render() {
       return (
         <Cmp
-          window={this.context.window || window}
-          document={this.context.document || document}
+          window={this.context.window || canUseDOM && window}
+          document={this.context.document || canUseDOM && document}
           {...this.props}
         >{this.props.children}</Cmp>
       );

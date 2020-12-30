@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { DOMProps, HasChildren } from '../../types';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
+import { canUseDOM } from '../../lib/dom';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {}
 
@@ -52,7 +53,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 }
 
 AdaptivityProvider.defaultProps = {
-  window: window,
+  window: canUseDOM && window,
 };
 
 function calculateAdaptivity(windowWidth: number, windowHeight: number, props: AdaptivityProviderProps) {

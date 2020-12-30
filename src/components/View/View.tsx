@@ -13,6 +13,7 @@ import { ConfigProviderContext, ConfigProviderContextInterface } from '../Config
 import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { canUseDOM } from '../../lib/dom';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -129,11 +130,11 @@ class View extends Component<ViewProps, ViewState> {
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   get document() {
-    return this.context.document || document;
+    return this.context.document || canUseDOM && document;
   }
 
   get window() {
-    return this.context.window || window;
+    return this.context.window || canUseDOM && window;
   }
 
   get panels() {
@@ -190,7 +191,7 @@ class View extends Component<ViewProps, ViewState> {
         scrolls: removeObjectKeys(prevState.scrolls, [prevState.swipeBackPrevPanel]),
       }, () => {
         this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
-        window.scrollTo(0, prevState.scrolls[this.state.activePanel]);
+        this.window.scrollTo(0, prevState.scrolls[this.state.activePanel]);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
     }
