@@ -3,20 +3,13 @@ const isProduction = NODE_ENV === 'production';
 const isDevelopment = NODE_ENV === 'development';
 const useModules = isProduction || isDevelopment;
 
-const testFiles = [
-  './src/**/*.test.ts', './src/**/*.test.tsx',
-  './src/**/*.spec.ts', './src/**/*.spec.tsx',
-  './src/**/*.e2e.ts', './src/**/*.e2e.tsx',
-  './e2e/', './src/testing/',
-];
-
 module.exports = {
   presets: [
-    ['@babel/preset-env', { modules: 'commonjs' }],
+    ['@babel/preset-env', { modules: useModules ? false : 'commonjs' }],
     '@babel/preset-react',
     '@babel/preset-typescript'
   ],
-  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-runtime', '@babel/plugin-transform-modules-commonjs'],
+  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-runtime'],
   ignore: ['./src/vkui.js'].concat(
     isProduction ? ['./src/**/*.test.ts', './src/**/*.test.tsx', './src/**/*.spec.ts', './src/**/*.spec.tsx', './e2e', './src/testing'] : []),
 };
