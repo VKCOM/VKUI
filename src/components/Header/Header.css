@@ -11,9 +11,6 @@
 .Header__main {
   min-width: 0;
   overflow: hidden;
-}
-
-.Header__main .Title {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
