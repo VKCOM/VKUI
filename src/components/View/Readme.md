@@ -66,7 +66,7 @@ class Example extends React.Component {
 Он внутри себя определяет, открыто приложение внутри webview или в мобильном браузере. Для тестов в браузере
 можно явно передать в `СonfigProvider` свойство `isWebView={true}`.
 
-* При попадании на первую панель слать `vkui-сonnect` событие `VKWebAppEnableSwipeBack`. При уходе с первой панели –
+* При попадании на первую панель слать `vk-bridge` событие `VKWebAppEnableSwipeBack`. При уходе с первой панели –
 слать `VKWebAppDisableSwipeBack`. Таким образом VKUI свайп не будет конфликтовать со свайпом нативного клиента.
 
 Пример:
