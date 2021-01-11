@@ -61,10 +61,11 @@ const ModalCard: FC<ModalCardProps> = (props) => {
     className,
     viewWidth,
     viewHeight,
+    hasMouse,
     ...restProps
   } = props;
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.MEDIUM;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
@@ -110,4 +111,5 @@ ModalCard.defaultProps = {
 export default withAdaptivity(withPlatform(ModalCard), {
   viewWidth: true,
   viewHeight: true,
+  hasMouse: true,
 });
