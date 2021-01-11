@@ -86,11 +86,12 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       style,
       platform,
       viewWidth,
+      hasMouse,
       iosCloseItem,
       ...restProps
     } = this.props;
 
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const isDesktop = hasMouse || viewWidth >= ViewWidth.SMALL_TABLET;
 
     const DropdownComponent = isDesktop
       ? ActionSheetDropdownDesktop
@@ -138,4 +139,5 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
 export default withAdaptivity(withPlatform(ActionSheet), {
   viewWidth: true,
+  hasMouse: true,
 });
