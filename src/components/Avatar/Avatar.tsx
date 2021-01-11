@@ -43,7 +43,7 @@ const Avatar: FunctionComponent<AvatarProps> = ({
       size > 40 && size < 56 && (borderRadius = 10);
       size >= 56 && size < 64 && (borderRadius = 12);
       size >= 64 && size < 84 && (borderRadius = 16);
-      size >= 84 && size < 84 && (borderRadius = 18);
+      size >= 84 && (borderRadius = 18);
       break;
   }
 

@@ -1,4 +1,5 @@
 Компонент принимает все валидные для `<img />` свойства
+
 ```jsx
 const Example = () => {
   return (
@@ -8,7 +9,7 @@ const Example = () => {
           ContentCardExample
         </PanelHeader>
         <Group>
-          <CardGrid>
+          <CardGrid size="l">
             <ContentCard
               subtitle="VKUI"
               header="ContentCard example"
