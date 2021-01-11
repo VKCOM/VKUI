@@ -32,6 +32,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     header,
     viewWidth,
     viewHeight,
+    hasMouse,
     onClose,
     id,
     settlingHeight,
@@ -43,7 +44,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     updateModalHeight();
   }, [children]);
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.MEDIUM;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   return (
@@ -80,4 +81,5 @@ ModalPage.defaultProps = {
 export default withAdaptivity(ModalPage, {
   viewWidth: true,
   viewHeight: true,
+  hasMouse: true,
 });
