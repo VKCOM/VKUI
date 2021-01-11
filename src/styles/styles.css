@@ -1,5 +1,6 @@
 @import './bright_light.css';
 @import './space_gray.css';
+@import './vkcom.css';
 @import './constants.css';
 @import './animations.css';
 
@@ -18,12 +19,16 @@
 @import '../components/Tappable/Tappable.css';
 @import '../components/FixedLayout/FixedLayout.css';
 
+/* Primitives */
+@import '../components/Button/Button.css';
+
 /* Layout */
 @import '../components/Root/Root.css';
 @import '../components/View/View.css';
 @import '../components/Panel/Panel.css';
 @import '../components/PanelHeader/PanelHeader.css';
 @import '../components/PanelHeaderButton/PanelHeaderButton.css';
+@import '../components/PanelHeaderBack/PanelHeaderBack.css';
 @import '../components/PanelHeaderContent/PanelHeaderContent.css';
 @import '../components/PanelHeaderContext/PanelHeaderContext.css';
 @import '../components/PopoutRoot/PopoutRoot.css';
@@ -33,6 +38,7 @@
 @import '../components/Tabbar/Tabbar.css';
 @import '../components/TabbarItem/TabbarItem.css';
 @import '../components/HorizontalScroll/HorizontalScroll.css';
+@import '../components/HorizontalScroll/HorizontalScrollArrow.css';
 
 /* Popouts */
 @import '../components/PopoutWrapper/PopoutWrapper.css';
@@ -46,10 +52,10 @@
 @import '../components/ModalRoot/ModalRoot.css';
 @import '../components/ModalCard/ModalCard.css';
 @import '../components/ModalPage/ModalPage.css';
+@import '../components/ModalDismissButton/ModalDismissButton.css';
 @import '../components/ModalPageHeader/ModalPageHeader.css';
 
 /* Blocks */
-@import '../components/Button/Button.css';
 @import '../components/IconButton/IconButton.css';
 @import '../components/Card/Card.css';
 @import '../components/CardGrid/CardGrid.css';
@@ -111,12 +117,22 @@
 /* Advertisement */
 @import '../components/PromoBanner/PromoBanner.css';
 
-html,
-body,
-div#root {
+.vkui > body {
+  overflow-x: hidden;
+}
+
+.vkui,
+.vkui > body,
+.vkui__root {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+.vkui,
+.vkui > body,
+.vkui__root,
+.vkui__portal-root {
   -webkit-font-smoothing: subpixel-antialiased;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
@@ -125,25 +141,34 @@ div#root {
   color: var(--text_primary);
 }
 
-body {
+.vkui__root--embedded {
+  transform: translate3d(0, 0, 0);
   overflow-x: hidden;
 }
 
-.vkui-sizeX-regular {
+.AppRoot {
+  height: 100%;
+}
+
+.vkui__root--embedded .AppRoot {
+  overflow: auto;
+}
+
+.vkui--sizeX-regular {
   background: var(--background_page);
 }
 
-input,
-textarea,
-select,
-button {
-  font-family: inherit;
-  }
-
-#root {
+.AppRoot--no-mouse {
   user-select: none;
-  }
+}
 
-a:focus {
+.vkui__root input,
+.vkui__root textarea,
+.vkui__root select,
+.vkui__root button {
+  font-family: inherit;
+}
+
+.vkui__root a:focus {
   outline: none;
-  }
+}

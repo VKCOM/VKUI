@@ -6,12 +6,16 @@ import { animationEvent } from '../../lib/supportEvents';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { canUseDOM } from '../../lib/dom';
+import { withFrame } from '../../hoc/withFrame';
 
 export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   hasMask?: boolean;
+  fixed?: boolean;
   alignY?: 'top' | 'center' | 'bottom';
   alignX?: 'left' | 'center' | 'right';
   closing?: boolean;
+  window?: Window;
+  document?: Document;
 }
 
 export interface PopoutWrapperState {
@@ -35,9 +39,11 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
   static defaultProps: PopoutWrapperProps = {
     hasMask: true,
+    fixed: true,
     alignY: 'center',
     alignX: 'center',
     closing: false,
+    window: window,
   };
 
   elRef: React.RefObject<HTMLDivElement>;
@@ -46,7 +52,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
 
   componentDidMount() {
     if (canUseDOM) {
-      window.addEventListener('touchmove', this.preventTouch, { passive: false });
+      this.props.window.addEventListener('touchmove', this.preventTouch, { passive: false });
       this.waitAnimationFinish(this.elRef.current, this.onFadeInEnd);
     }
   }
@@ -57,7 +63,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
     // https://github.com/VKCOM/VKUI/issues/444
     if (canUseDOM) {
       // @ts-ignore (В интерфейсе EventListenerOptions нет поля passive)
-      window.removeEventListener('touchmove', this.preventTouch, { passive: false });
+      this.props.window.removeEventListener('touchmove', this.preventTouch, { passive: false });
       clearTimeout(this.animationFinishTimeout);
     }
   }
@@ -81,7 +87,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   preventTouch: WindowTouchListener = (e: Event) => e.preventDefault();
 
   render() {
-    const { alignY, alignX, closing, children, hasMask, className, platform, ...restProps } = this.props;
+    const { alignY, alignX, closing, children, hasMask, fixed, className, platform, onClick, window, document, ...restProps } = this.props;
     const baseClassNames = getClassName('PopoutWrapper', platform);
 
     return (
@@ -90,15 +96,22 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
         className={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
           'PopoutWrapper--closing': closing,
           'PopoutWrapper--opened': this.state.opened,
-          'PopoutWrapper--fixed': hasMask,
+          'PopoutWrapper--fixed': fixed,
+          'PopoutWrapper--masked': hasMask,
         }, className)}
         ref={this.elRef}
       >
-        {hasMask && <div className="PopoutWrapper__mask" />}
-        <div className="PopoutWrapper__container">{children}</div>
+        <div className="PopoutWrapper__container">
+          <div
+            className="PopoutWrapper__overlay"
+            onClick={onClick} />
+          <div className="PopoutWrapper__content">
+            {children}
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default withPlatform(PopoutWrapper);
+export default withFrame<PopoutWrapperProps>(withPlatform(PopoutWrapper));

@@ -6,9 +6,11 @@ import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
 import { StyleGuideContext } from './StyleGuideRenderer';
 import { PlatformSelect } from './PlatformSelect';
 import { SchemeSelect } from './SchemeSelect';
+import { IntegrationSelect } from './IntegrationSelect';
 import { WebviewTypeSelect } from './WebviewTypeSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
-import { SizeYSelect } from './SizeYSelect';
+import { ViewHeightSelect } from './ViewHeightSelect';
+import { HasMouseCheckbox } from './HasMouseCheckbox';
 import { VKCOM } from '../../src/lib/platform';
 
 export const styles = ({ fontFamily, fontSize }) => ({
@@ -27,6 +29,11 @@ export function PathlineRenderer({ classes, children }) {
       {(styleGuideContext) => {
         return (
           <div className={classes.pathline}>
+            <IntegrationSelect
+              onChange={(e) => styleGuideContext.setContext({ integration: e.target.value })}
+              value={styleGuideContext.integration}
+            />
+            &nbsp;|&nbsp;
             <PlatformSelect
               onChange={(e) => styleGuideContext.setContext({ platform: e.target.value })}
               value={styleGuideContext.platform}
@@ -35,6 +42,7 @@ export function PathlineRenderer({ classes, children }) {
             <SchemeSelect
               onChange={(e) => styleGuideContext.setContext({ scheme: e.target.value })}
               value={styleGuideContext.scheme}
+              disabled={styleGuideContext.platform === VKCOM}
             />
             &nbsp;|&nbsp;
             <WebviewTypeSelect
@@ -49,10 +57,14 @@ export function PathlineRenderer({ classes, children }) {
               isVKCOM={styleGuideContext.platform === VKCOM}
             />
             &nbsp;|&nbsp;
-            <SizeYSelect
-              onChange={(e) => styleGuideContext.setContext({ sizeY: e.target.value })}
-              value={styleGuideContext.sizeY}
-              disabled={styleGuideContext.platform === VKCOM}
+            <ViewHeightSelect
+              onChange={(e) => styleGuideContext.setContext({ height: Number(e.target.value) })}
+              value={styleGuideContext.height}
+            />
+            &nbsp;|&nbsp;
+            <HasMouseCheckbox 
+              onChange={(e) => styleGuideContext.setContext({ hasMouse: e.target.checked })}
+              value={styleGuideContext.hasMouse}
             />
             &nbsp;|&nbsp;
             <span className={classes.link}>

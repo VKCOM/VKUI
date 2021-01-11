@@ -1,14 +1,14 @@
-import React, { FunctionComponent, HTMLAttributes, useRef, useEffect, useState, useCallback } from 'react';
+import React, { HTMLAttributes, useRef, useEffect, useState, useCallback, FC } from 'react';
 import classNames from '../../lib/classNames';
-import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
-import Icon24Chevron from '@vkontakte/icons/dist/24/chevron_right';
 import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import HorizontalScrollArrow from './HorizontalScrollArrow';
 
 type GetScrollPositionCallback = (currentPosition: number) => number;
 type Callback = () => void;
 type ScrollContext = {
-  scrollElement: HTMLElement;
+  scrollElement: HTMLElement | null;
   scrollAnimationDuration: number;
   animationQueue: Callback[];
   getScrollPosition: GetScrollPositionCallback;
@@ -22,16 +22,11 @@ type ScrollContext = {
   initialScrollWidth: number;
 };
 
-interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement> {
+interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   getScrollToLeft?: GetScrollPositionCallback;
   getScrollToRight?: GetScrollPositionCallback;
   showArrows?: boolean;
   scrollAnimationDuration?: number;
-}
-
-interface HorizontalScrollArrowProps {
-  onClick: () => void;
-  direction: 'left' | 'right';
 }
 
 /**
@@ -101,7 +96,7 @@ function doScroll({
     const currentLeft = startLeft + (endLeft - startLeft) * value;
     scrollElement.scrollLeft = Math.ceil(currentLeft);
 
-    if (scrollElement.scrollLeft !== endLeft) {
+    if (scrollElement.scrollLeft !== Math.max(0, endLeft)) {
       requestAnimationFrame(scroll);
       return;
     }
@@ -114,19 +109,8 @@ function doScroll({
   })();
 }
 
-const HorizontalScrollArrow: FunctionComponent<HorizontalScrollArrowProps> = (props: HorizontalScrollArrowProps) => {
-  const { onClick, direction } = props;
-  return (
-    <div className={`HorizontalScroll__arrow HorizontalScroll__arrow-${direction}`} onClick={onClick}>
-      <div className="HorizontalScroll__arrow-icon">
-        <Icon24Chevron />
-      </div>
-    </div>
-  );
-};
-
-const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
-  const { children, getScrollToLeft, getScrollToRight, showArrows = false, scrollAnimationDuration, className, ...restProps } = props;
+const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
+  const { children, getScrollToLeft, getScrollToRight, showArrows = false, scrollAnimationDuration, className, hasMouse, ...restProps } = props;
 
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -162,7 +146,7 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
       setCanScrollLeft(scrollerRef.current.scrollLeft > 0);
       setCanScrollRight(scrollerRef.current.scrollLeft + scrollerRef.current.offsetWidth < scrollerRef.current.scrollWidth);
     }
-  }, []);
+  }, [hasMouse]);
 
   useEffect(() => {
     scrollerRef.current && scrollerRef.current.addEventListener('scroll', onscroll);
@@ -187,4 +171,6 @@ const HorizontalScroll: FunctionComponent<HorizontalScrollProps> = (props: Horiz
   );
 };
 
-export default HorizontalScroll;
+export default withAdaptivity(HorizontalScroll, {
+  hasMouse: true,
+});

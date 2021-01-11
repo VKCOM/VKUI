@@ -28,7 +28,7 @@ class Example extends React.Component {
           </Group>
         </Panel>
         <Panel id="panel2">
-          <PanelHeader left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}>
+          <PanelHeader separator={false} left={<PanelHeaderBack onClick={() => this.setState({ activePanel: 'panel1' })}/>}>
             Communities
           </PanelHeader>
           <Group>

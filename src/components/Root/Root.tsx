@@ -1,5 +1,5 @@
 import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
@@ -9,6 +9,7 @@ import withContext from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
@@ -39,11 +40,6 @@ export interface RootState {
   transition: boolean;
 }
 
-export interface RootContext {
-  document: Requireable<object>;
-  window: Requireable<object>;
-}
-
 class Root extends Component<RootProps, RootState> {
   constructor(props: RootProps) {
     super(props);
@@ -63,7 +59,7 @@ class Root extends Component<RootProps, RootState> {
     popout: null,
   };
 
-  static contextTypes: RootContext = {
+  static contextTypes = {
     window: PropTypes.any,
     document: PropTypes.any,
   };
@@ -76,10 +72,6 @@ class Root extends Component<RootProps, RootState> {
 
   get window() {
     return this.context.window || window;
-  }
-
-  get arrayChildren() {
-    return [].concat(this.props.children);
   }
 
   componentDidUpdate(prevProps: RootProps, prevState: RootState) {
@@ -179,10 +171,14 @@ class Root extends Component<RootProps, RootState> {
   }
 
   render() {
-    const { popout, modal, platform } = this.props;
+    const {
+      popout, modal, platform,
+      splitCol, configProvider, activeView: _1, onTransition,
+      ...restProps
+    } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
-    const Views = this.arrayChildren.filter((view: ReactElement) => {
+    const Views = React.Children.toArray(this.props.children).filter((view: ReactElement) => {
       return this.state.visibleViews.includes(view.props.id);
     });
 
@@ -192,7 +188,7 @@ class Root extends Component<RootProps, RootState> {
       <div className={classNames(baseClassName, this.props.className, {
         'Root--transition': transition,
         'Root--no-motion': this.shouldDisableTransitionMotion(),
-      })}>
+      })} {...restProps}>
         {Views.map((view: ReactElement) => {
           return (
             <div key={view.props.id} id={`view-${view.props.id}`} className={classNames('Root__view', {
@@ -206,8 +202,10 @@ class Root extends Component<RootProps, RootState> {
             </div>
           );
         })}
-        {!!popout && <div className="Root__popout">{popout}</div>}
-        {!!modal && <div className="Root__modal">{modal}</div>}
+        <AppRootPortal>
+          {!!popout && <div className="Root__popout">{popout}</div>}
+          {!!modal && <div className="Root__modal">{modal}</div>}
+        </AppRootPortal>
       </div>
     );
   }

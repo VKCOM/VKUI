@@ -3,11 +3,13 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import Icon24Chevron from '@vkontakte/icons/dist/24/chevron';
-import Icon24DismissSubstract from '@vkontakte/icons/dist/24/dismiss_substract';
-import Icon24DismissDark from '@vkontakte/icons/dist/24/dismiss_dark';
-import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
+import { Icon24Chevron, Icon24DismissSubstract, Icon24DismissDark, Icon24Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
+import Headline from '../Typography/Headline/Headline';
+import Caption from '../Typography/Caption/Caption';
+import Text from '../Typography/Text/Text';
+import { hasReactNode } from '../../lib/utils';
+import Title from '../Typography/Title/Title';
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -61,10 +63,28 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Кнопки, отображаемые в баннере.
    *
-   * - В режиме `tint` или в `image` со светлым фоном рекомендуется использовать только `<Button mode="primary" />` или `<Button mode="tertiary" />`.
+   * - В режиме `tint` или в `image` со светлым фоном рекомендуется использовать только `<Button mode="primary" />` или `<Button mode="tertiary" hasHover={false} />`.
    * - В режиме `image` с тёмным фоном – `<Button mode="overlay_primary" />`.
    */
   actions?: ReactNode;
+}
+
+function renderHeader({ size, header }: Pick<BannerProps, 'size' | 'header'>) {
+  switch (size) {
+    case 's':
+      return <Headline weight="medium" className="Banner__header">{header}</Headline>;
+    case 'm':
+      return <Title level="2" weight="medium" className="Banner__header">{header}</Title>;
+  }
+}
+
+function renderSubheader({ size, subheader }: Pick<BannerProps, 'size' | 'subheader'>) {
+  switch (size) {
+    case 's':
+      return <Caption level="1" weight="regular" className="Banner__subheader">{subheader}</Caption>;
+    case 'm':
+      return <Text weight="regular" className="Banner__subheader">{subheader}</Text>;
+  }
 }
 
 const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
@@ -98,10 +118,9 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
         {before && <div className="Banner__before">{before}</div>}
 
         <div className="Banner__content">
-          {header && <div className="Banner__header">{header}</div>}
-          {subheader && <div className="Banner__subheader">{subheader}</div>}
-          {text && <div className="Banner__text">{text}</div>}
-
+          {hasReactNode(header) && renderHeader({ size, header })}
+          {hasReactNode(subheader) && renderSubheader({ size, subheader })}
+          {hasReactNode(text) && <Text weight="regular" className="Banner__text">{text}</Text>}
           {actions &&
           <div className="Banner__actions">{actions}</div>
           }

@@ -34,7 +34,7 @@
     .Tooltip__content {
       background-color: #47a3ff;
       box-shadow: 0 4px 32px 0 rgba(0, 0, 0, .16), 0 0 4px 0 rgba(0, 0, 0, .04);
-      padding: 6px 16px;
+      padding: 8px 12px 10px;
       border-radius: 10px;
       font-size: 14px;
       color: #fff;

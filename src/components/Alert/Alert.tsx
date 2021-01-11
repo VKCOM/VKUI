@@ -7,13 +7,13 @@ import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Button from '../Button/Button';
 import { hasReactNode } from '../../lib/utils';
 import Headline from '../Typography/Headline/Headline';
 import Title from '../Typography/Title/Title';
 import Caption from '../Typography/Caption/Caption';
-import { Icon28CancelOutline } from '@vkontakte/icons';
+import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export interface AlertActionInterface {
   title: string;
@@ -163,6 +163,7 @@ class Alert extends Component<AlertProps, AlertState> {
     const { closing } = this.state;
 
     const resolvedActionsLayout: AlertProps['actionsLayout'] = platform === VKCOM ? 'horizontal' : actionsLayout;
+    const canShowCloseButton = platform === VKCOM || platform === ANDROID && viewWidth >= ViewWidth.SMALL_TABLET;
 
     return (
       <PopoutWrapper
@@ -181,11 +182,7 @@ class Alert extends Component<AlertProps, AlertState> {
             'Alert--closing': closing,
           })}
         >
-          {platform === VKCOM && (
-            <button className="Alert__close" onClick={this.onClose}>
-              <Icon28CancelOutline width={20} height={20} />
-            </button>
-          )}
+          {canShowCloseButton && <ModalDismissButton onClick={this.onClose} />}
           <div className="Alert__content">
             {hasReactNode(header) && this.renderHeader(header)}
             {hasReactNode(text) && this.renderText(text)}

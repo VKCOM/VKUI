@@ -5,7 +5,7 @@ import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/Playgr
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
-import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AdaptivityProvider, ConfigProvider } from '../../src';
+import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider } from '../../src';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -66,6 +66,21 @@ let Layout = ({ children, viewWidth }) => {
 
 Layout = withAdaptivity(Layout, { viewWidth: true, sizeY: true })
 
+const initialFrameContent = `
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #root {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+  </body>
+</html>
+`;
+
 export default class Preview extends PreviewParent {
 
   shouldComponentUpdate() {
@@ -81,52 +96,122 @@ export default class Preview extends PreviewParent {
   }
 
   componentDidMount() {
-    return;
+    if (!window.IntersectionObserver) {
+      return this.setState({ isVisible: true });
+    }
+    this.onScreenObserver = new IntersectionObserver(([{ isIntersecting }]) => {
+      if (Boolean(this.state.isVisible) !== isIntersecting) {
+        this.setState({ isVisible: isIntersecting });
+      }
+    }, {
+      rootMargin: '100% 0px',
+    });
+    this.onScreenObserver.observe(this.frameRef.current);
   }
+
+  componentWillUnmount() {
+    this.onScreenObserver.disconnect();
+  }
+
+  frameRef = React.createRef();
 
   render() {
     const { code } = this.props;
-    const { error } = this.state;
+    const { error, isVisible } = this.state;
     return (
       error ?
         <PlaygroundError message={error} /> :
         <StyleGuideContext.Consumer>
           {(styleGuideContext) => {
-            return (
+            const isEmbedded = styleGuideContext.integration === "embedded";
+            const isPartial = styleGuideContext.integration === "partial";
+
+            const example = (
+              <Layout>
+                <ReactExample
+                  code={code}
+                  evalInContext={this.props.evalInContext}
+                  onError={this.handleError}
+                  compilerConfig={this.context.config.compilerConfig}
+                  />
+              </Layout>
+            );
+
+            const frameStyle = {
+              height: styleGuideContext.height,
+              width: styleGuideContext.width,
+              border: '1px solid rgba(0, 0, 0, .12)',
+              display: 'block',
+              margin: 'auto',
+            }
+
+            const frame = (
               <ReactFrame
                 mountTarget="body"
                 style={{
-                  height: 667,
+                  height: styleGuideContext.height,
                   width: styleGuideContext.width,
-                  border: '1px solid rgba(0, 0, 0, .12)',
+                  border: 'none',
                   display: 'block',
-                  margin: 'auto'
                 }}
+                initialContent={initialFrameContent}
               >
-                <PrepareFrame>
-                  {({ window }) => (
-                    <ConfigProvider
-                      platform={styleGuideContext.platform}
-                      scheme={styleGuideContext.scheme}
-                      webviewType={styleGuideContext.webviewType}
-                    >
-                      <AdaptivityProvider window={window} sizeY={styleGuideContext.sizeY}>
-                        <Layout>
-                          <ReactExample
-                            code={code}
-                            evalInContext={this.props.evalInContext}
-                            onError={this.handleError}
-                            compilerConfig={this.context.config.compilerConfig}
-                          />
-                        </Layout>
-                      </AdaptivityProvider>
-                    </ConfigProvider>
-                  )}
-                </PrepareFrame>
+                {isEmbedded && (
+                  <button onClick={() => this.setState(s => ({
+                    ...s,
+                    hideEmbeddedApp:!s.hideEmbeddedApp
+                  }))}>
+                    {this.state.hideEmbeddedApp ? "mount embedded app" : "unmount embedded app"}
+                  </button>
+                )}
+                <div
+                  key={`vkui-${styleGuideContext.integration}`}
+                  className={isPartial ? "vkui__root" : null}
+                  style={isEmbedded ? {
+                    marginTop: 8,
+                    position: 'relative',
+                    border: '1px solid #000',
+                    maxWidth: 1024,
+                    width: "calc(100% - 10px)",
+                    height: 600
+                  } : {
+                    position: 'relative',
+                    height: '100%'
+                  }
+                }>
+                {isEmbedded && this.state.hideEmbeddedApp ? null :
+                    <PrepareFrame integration={styleGuideContext.integration}>
+                      {({ window }) => (
+                        <ConfigProvider
+                          platform={styleGuideContext.platform}
+                          scheme={styleGuideContext.scheme}
+                          webviewType={styleGuideContext.webviewType}
+                        >
+                          <AdaptivityProvider
+                            window={window}
+                            hasMouse={styleGuideContext.hasMouse}
+                          >
+                            {isPartial ? example : (
+                              <AppRoot embedded={isEmbedded} window={window}>
+                                {example}
+                              </AppRoot>
+                            )}
+                          </AdaptivityProvider>
+                        </ConfigProvider>
+                      )}
+                    </PrepareFrame>
+                  }
+                </div>
               </ReactFrame>
-            )
+            );
+
+            return (
+              <div ref={this.frameRef} style={frameStyle}>
+                {isVisible && frame}
+              </div>
+            );
           }}
         </StyleGuideContext.Consumer>
-    )
+    );
   }
 }

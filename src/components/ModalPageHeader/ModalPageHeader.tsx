@@ -4,6 +4,8 @@ import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRef } from '../../types';
 import { isPrimitiveReactNode } from '../../lib/utils';
+import { VKCOM } from '../../lib/platform';
+import Separator from '../Separator/Separator';
 
 export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement> {
   /**
@@ -14,16 +16,17 @@ export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, Ha
    * Иконки, отображаемые справа
    */
   right?: ReactNode;
-  noShadow?: boolean;
+  separator?: boolean;
 }
 
 const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
-  const { className, left, right, children, noShadow, getRef } = props;
+  const { className, left, right, children, separator, getRef, ...restProps } = props;
   const isPrimitive = isPrimitiveReactNode(children);
+  const hasSeparator = separator && platform === VKCOM;
 
   return (
-    <div className={classNames(getClassName('ModalPageHeader', platform), className)} ref={getRef}>
+    <div {...restProps} className={classNames(getClassName('ModalPageHeader', platform), className)} ref={getRef}>
       <div className="ModalPageHeader__in">
         <div className="ModalPageHeader__left">
           {left}
@@ -40,9 +43,13 @@ const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPa
         </div>
       </div>
 
-      {!noShadow && <div className="ModalPageHeader__shadow" />}
+      {hasSeparator && <Separator wide className="ModalPageHeader__separator" />}
     </div>
   );
+};
+
+ModalPageHeader.defaultProps = {
+  separator: true,
 };
 
 export default ModalPageHeader;

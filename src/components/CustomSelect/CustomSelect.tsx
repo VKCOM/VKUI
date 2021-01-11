@@ -1,52 +1,52 @@
-import React, { createRef, KeyboardEvent, MouseEvent, ReactNode } from 'react';
+import React, {
+  createRef,
+  KeyboardEvent,
+  MouseEvent,
+  ReactNode,
+  SelectHTMLAttributes,
+} from 'react';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
-import { debounce } from '../../lib/utils';
+import { debounce, setRef } from '../../lib/utils';
 import classNames from '../../lib/classNames';
-import { SelectProps } from '../NativeSelect/NativeSelect';
+import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
-import { HasRef } from '../../types';
 import withAdaptivity from '../../hoc/withAdaptivity';
 import withPlatform from '../../hoc/withPlatform';
-import { getClassName } from '../..';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
+import getClassName from '../../helpers/getClassName';
 
-type SelectValue = string | number | boolean;
+type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
 export interface SelectOption {
   value: SelectValue;
   label: string;
+  [index: string]: any;
 }
 
-interface State {
+interface CustomSelectState {
+  value: SelectValue;
   opened?: boolean;
   focused?: boolean;
   focusedOptionIndex: number;
   selectedOptionIndex: number;
 }
 
-export interface SelectChangeResult {
-  value: SelectValue;
-  name: string;
-}
-
-interface CustomSelectProps extends Omit<SelectProps, 'onChange' | 'getRef'>, HasRef<HTMLInputElement> {
+export interface CustomSelectProps extends NativeSelectProps {
   options: SelectOption[];
   popupDirection?: 'top' | 'bottom';
-  onChange?: (result: SelectChangeResult) => void;
-  onFocus?: () => void;
-  onBlur?: () => void;
-  renderOption: (props: CustomSelectOptionProps) => ReactNode;
+  renderOption?: (props: CustomSelectOptionProps) => ReactNode;
 }
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
-class CustomSelect extends React.Component<CustomSelectProps, State> {
-  static defaultProps = {
+class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
+  static defaultProps: CustomSelectProps = {
     renderOption(props: CustomSelectOptionProps): ReactNode {
       return (
         <CustomSelectOption {...props} />
       );
     },
+    options: [],
   };
 
   public constructor(props: CustomSelectProps) {
@@ -61,12 +61,14 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
       focused: false,
       focusedOptionIndex: -1,
       selectedOptionIndex: props.options.findIndex((option) => option.value === value),
+      value,
     };
   }
 
-  public state: State;
+  public state: CustomSelectState;
   private keyboardInput: string;
-  private node: Element;
+  private node: HTMLLabelElement;
+  private selectEl: HTMLSelectElement;
   private readonly scrollViewRef = createRef<CustomScrollView>();
 
   private readonly resetKeyboardInput = () => {
@@ -117,7 +119,7 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
   };
 
   select = (index: number) => {
-    const { onChange, name, options } = this.props;
+    const { options } = this.props;
 
     if (!this.isValidIndex(index)) {
       return;
@@ -125,13 +127,12 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
 
     const item = options[index];
 
-    this.setState(() => ({
+    this.setState({
       selectedOptionIndex: index,
-    }));
-
-    onChange && onChange({
       value: item.value,
-      name: name || '',
+    }, () => {
+      const event = new Event('change', { bubbles: true });
+      this.selectEl.dispatchEvent(event);
     });
     this.close();
   };
@@ -141,18 +142,15 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
   };
 
   onFocus = () => {
-    const { onFocus } = this.props;
-
     this.setState(() => ({
       focused: true,
     }));
 
-    onFocus && onFocus();
+    const event = new Event('focus');
+    this.selectEl.dispatchEvent(event);
   };
 
   onBlur = () => {
-    const { onBlur } = this.props;
-
     this.resetKeyboardInput();
 
     this.setState(() => ({
@@ -160,7 +158,8 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
       focused: false,
     }));
 
-    onBlur && onBlur();
+    const event = new Event('blur');
+    this.selectEl.dispatchEvent(event);
   };
 
   handleDocumentClick = (event: Event) => {
@@ -230,19 +229,9 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
   };
 
   handleOptionHover: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
-    const { options } = this.props;
-    const label = e.currentTarget.title;
-
-    if (!label) {
-      return;
-    }
-
-    const index = options.findIndex(
-      (option) => option.label === label);
-
-    this.setState(() => ({
-      focusedOptionIndex: index,
-    }));
+    this.setState({
+      focusedOptionIndex: Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget),
+    });
   };
 
   handleOptionDown: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
@@ -328,7 +317,7 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
     const selected = index === selectedOptionIndex;
 
     return (
-      <React.Fragment key={index}>
+      <React.Fragment key={`${option.value}`}>
         {renderOption({
           option,
           hovered,
@@ -342,25 +331,44 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
     );
   };
 
-  renderWithCustomScrollbar() {
-    const { opened } = this.state;
+  rootRef = (element: HTMLLabelElement) => {
+    this.node = element;
+    setRef(element, this.props.getRootRef);
+  };
+
+  selectRef = (element: HTMLSelectElement) => {
+    this.selectEl = element;
+    setRef(element, this.props.getRef);
+  };
+
+  render() {
+    const { opened, value } = this.state;
     const {
       name,
       className,
       getRef,
+      getRootRef,
       popupDirection,
       options,
       sizeY,
       platform,
+      style,
       onChange,
+      onBlur,
+      onFocus,
       renderOption,
+      children,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
-    const label = !selected ? '' : selected.label;
+    const label = selected ? selected.label : undefined;
 
     return (
-      <>
+      <label
+        className={classNames(getClassName('CustomSelect', platform), className)}
+        style={style}
+        ref={this.rootRef}
+      >
         <SelectMimicry
           {...restProps}
           aria-hidden={true}
@@ -370,39 +378,36 @@ class CustomSelect extends React.Component<CustomSelectProps, State> {
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           className={classNames({
-            ['CustomSelect__open']: opened,
-            ['CustomSelect__open--popupDirectionTop']: popupDirection === 'top',
+            'CustomSelect__open': opened,
+            'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
           }, className)}
         >
           {label}
         </SelectMimicry>
-        {name && <input type="hidden" ref={getRef} name={name} value={selected ? String(selected.value) : ''} />}
+        <select
+          ref={this.selectRef}
+          name={name}
+          onChange={onChange}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          value={value}
+          className="CustomSelect__control"
+        >
+          {options.map((item) => <option key={`${item.value}`} value={item.value} />)}
+        </select>
         {opened &&
-          <div
-            className={classNames({
-              [getClassName('CustomSelect__options', platform)]: opened,
-              ['CustomSelect__options--popupDirectionTop']: popupDirection === 'top',
-              [`CustomSelect__options--sizeY-${sizeY}`]: !!sizeY,
-            })}
-            onMouseLeave={this.resetFocusedOption}
-          >
-            <CustomScrollView ref={this.scrollViewRef}>
-              {options.map(this.renderOption)}
-            </CustomScrollView>
-          </div>
+        <div
+          className={classNames('CustomSelect__options', `CustomSelect__options--sizeY-${sizeY}`, {
+            'CustomSelect__options--popupDirectionTop': popupDirection === 'top',
+          })}
+          onMouseLeave={this.resetFocusedOption}
+        >
+          <CustomScrollView ref={this.scrollViewRef}>
+            {options.map(this.renderOption)}
+          </CustomScrollView>
+        </div>
         }
-      </>
-    );
-  }
-
-  render() {
-    return (
-      <div
-        className="CustomSelect"
-        ref={(node) => this.node = node}
-      >
-        {this.renderWithCustomScrollbar()}
-      </div>
+      </label>
     );
   }
 }

@@ -1,16 +1,14 @@
 import React, {
   Component,
-  ChangeEvent,
   ChangeEventHandler,
   HTMLAttributes,
 } from 'react';
-import { SelectChangeResult } from '../CustomSelect/CustomSelect';
 import Input from '../Input/Input';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
-import { hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
-import Select from '../Select/Select';
+import classNames from '../../lib/classNames';
+import CustomSelect from '../CustomSelect/CustomSelect';
 
 const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
@@ -21,7 +19,7 @@ export interface SelectOption {
   label: string;
 }
 
-interface DateFormat {
+export interface DateFormat {
   day: number;
   month: number;
   year: number;
@@ -40,11 +38,10 @@ interface Props extends Attrs, HasPlatform, AdaptivityProps {
   dayPlaceholder?: string;
   monthPlaceholder?: string;
   yearPlaceholder?: string;
-  onDateChange?: (value: State) => void;
+  onDateChange?: (value: DateFormat) => void;
 }
 
 type GetOptions = () => SelectOption[];
-type SelectChangeHandler = (result: SelectChangeResult) => void;
 
 class DatePicker extends Component<Props, Partial<State>> {
   constructor(props: Props) {
@@ -56,6 +53,11 @@ class DatePicker extends Component<Props, Partial<State>> {
       year: 0,
     };
   }
+
+  static defaultProps = {
+    min: { day: 0, month: 0, year: 0 },
+    max: { day: 31, month: 12, year: 2100 },
+  };
 
   // Переводим state к формату гг-мм-дд
   private convertToInputFormat(date: State) {
@@ -138,20 +140,19 @@ class DatePicker extends Component<Props, Partial<State>> {
     return yearOptions;
   };
 
-  onSelectChange: SelectChangeHandler = ({ value, name }) => {
+  onSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const { onDateChange } = this.props;
 
-    this.setState(() => ({
-      [name]: value,
-    }), () => {
+    this.setState({
+      [e.target.name]: Number(e.target.value),
+    }, () => {
       onDateChange && onDateChange(this.state as State);
     });
   };
 
-  onStringChange: ChangeEventHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+  onStringChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { onDateChange } = this.props;
-    const { value } = e.currentTarget;
-    const date = this.parseInputDate(value);
+    const date = this.parseInputDate(e.currentTarget.value);
 
     this.setState(() => ({
       ...date,
@@ -161,14 +162,22 @@ class DatePicker extends Component<Props, Partial<State>> {
   };
 
   customView() {
-    const { name, dayPlaceholder, monthPlaceholder, yearPlaceholder, popupDirection } = this.props;
+    const {
+      name, min, max,
+      dayPlaceholder, monthPlaceholder, yearPlaceholder,
+      popupDirection,
+      defaultValue,
+      className,
+      hasMouse,
+      ...restProps
+    } = this.props;
     const { day, month, year } = this.state;
 
     return (
-      <div className="DatePicker">
+      <div className={classNames('DatePicker', className)} {...restProps}>
         <div className="DatePicker__container">
           <div className="DatePicker__day">
-            <Select
+            <CustomSelect
               name="day"
               value={day}
               options={this.getDayOptions()}
@@ -178,7 +187,7 @@ class DatePicker extends Component<Props, Partial<State>> {
             />
           </div>
           <div className="DatePicker__month">
-            <Select
+            <CustomSelect
               name="month"
               value={month}
               options={this.getMonthOptions()}
@@ -188,7 +197,7 @@ class DatePicker extends Component<Props, Partial<State>> {
             />
           </div>
           <div className="DatePicker__year">
-            <Select
+            <CustomSelect
               name="year"
               value={year}
               options={this.getYearOptions()}
@@ -204,12 +213,20 @@ class DatePicker extends Component<Props, Partial<State>> {
   }
 
   nativeView() {
-    const { name, min, max } = this.props;
+    const {
+      name, min, max,
+      dayPlaceholder, monthPlaceholder, yearPlaceholder,
+      popupDirection,
+      defaultValue,
+      hasMouse,
+      ...restProps
+    } = this.props;
     const { day, month, year } = this.state;
 
     if (day && month && year) {
       return (
         <Input
+          {...restProps}
           name={name}
           type="date"
           defaultValue={this.convertToInputFormat(this.state as State)}
@@ -222,6 +239,7 @@ class DatePicker extends Component<Props, Partial<State>> {
 
     return (
       <Input
+        {...restProps}
         name={name}
         type="date"
         onChange={this.onStringChange}
@@ -232,8 +250,10 @@ class DatePicker extends Component<Props, Partial<State>> {
   }
 
   render() {
-    return hasMouse ? this.customView() : this.nativeView();
+    return this.props.hasMouse ? this.customView() : this.nativeView();
   }
 }
 
-export default withAdaptivity(DatePicker, {});
+export default withAdaptivity(DatePicker, {
+  hasMouse: true,
+});

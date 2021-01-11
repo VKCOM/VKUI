@@ -12,7 +12,10 @@ export enum Scheme {
   DEPRECATED_CLIENT_DARK = 'client_dark',
   BRIGHT_LIGHT = 'bright_light',
   SPACE_GRAY = 'space_gray',
+  VKCOM = 'vkcom'
 }
+
+export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM;
 
 export enum WebviewType {
   VKAPPS = 'vkapps',
@@ -23,7 +26,7 @@ export interface ConfigProviderContextInterface {
   /**
    * Цветовая схема приложения
    */
-  scheme?: AppearanceSchemeType;
+  scheme?: AppearanceScheme;
   /**
    * Подсказывает приложению, обёрнутому в `ConfigProvider`, где открыто приложение: внутри webview или в мобильном браузере
    */

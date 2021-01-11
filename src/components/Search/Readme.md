@@ -57,7 +57,8 @@
           </PanelHeader>
           <Group>
             <Search value={this.state.search} onChange={this.onChange} after={null}/>  
-            {this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
+            {this.thematics.length > 0 && this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
+            {this.thematics.length === 0 && <Footer>Ничего не найдено</Footer>}
           </Group>
         </React.Fragment>
       );
@@ -83,23 +84,26 @@
     }
 
     render () {
+      const { platform, sizeX, goSearch, onFiltersClick } = this.props;
       return (
         <React.Fragment>
-          <PanelHeader left={<PanelHeaderBack onClick={this.props.goSearch} />} separator={this.props.sizeX === SizeType.REGULAR}>
+          <PanelHeader left={platform !== VKCOM && <PanelHeaderBack onClick={goSearch} />} separator={sizeX === SizeType.REGULAR}>
             <Search
               value={this.state.search}
               onChange={this.onChange}
               icon={<Icon24Filter />}
-              onIconClick={this.props.onFiltersClick}
+              onIconClick={onFiltersClick}
             />
           </PanelHeader>
           <Group>
-            {this.users.map((user) => (
-              <Cell
+            {this.users.length > 0 && this.users.map((user) => (
+              <SimpleCell
                 before={<Avatar size={40} src={user.photo_100} />}
                 key={user.id}
-              >{user.name}</Cell>
+                onClick={goSearch}
+              >{user.name}</SimpleCell>
             ))}
+            {this.users.length === 0 && <Footer>Ничего не найдено</Footer>}
           </Group>
         </React.Fragment>
       );
@@ -126,6 +130,7 @@
     hideModal() { this.setState({ activeModal: null }); }
 
     render () {
+      const { platform } = this.props;
       return (
         <View
          activePanel={this.state.activePanel}
@@ -136,8 +141,8 @@
                onClose={this.hideModal}
                header={
                  <ModalPageHeader
-                   left={IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.hideModal}><Icon24Cancel /></PanelHeaderButton>}
-                   right={<PanelHeaderButton onClick={this.hideModal}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+                   left={platform === ANDROID && <PanelHeaderButton onClick={this.hideModal}><Icon24Cancel /></PanelHeaderButton>}
+                   right={<PanelHeaderButton onClick={this.hideModal}>{platform === IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
                  >
                    Фильтры
                  </ModalPageHeader>
@@ -161,17 +166,17 @@
          }
        >
           <Panel id="search">
-            <SimpleSearch sizeX={this.props.sizeX} goHeaderSearch={this.goHeaderSearch}/>
+            <SimpleSearch sizeX={this.props.sizeX} goHeaderSearch={this.goHeaderSearch} platform={platform} />
           </Panel>
           <Panel id="header-search">
-            <HeaderSearch sizeX={this.props.sizeX} onFiltersClick={() => this.setState({ activeModal: 'filters' })} goSearch={this.goSearch}/>
+            <HeaderSearch sizeX={this.props.sizeX} onFiltersClick={() => this.setState({ activeModal: 'filters' })} goSearch={this.goSearch} platform={platform} />
           </Panel>
         </View>
       );
     }
   }
   
-  const AdaptivitySearch = withAdaptivity(SearchExample, { sizeX: true });
+  const AdaptivitySearch = withPlatform(withAdaptivity(SearchExample, { sizeX: true }));
 
   <AdaptivitySearch />
 ```

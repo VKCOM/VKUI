@@ -1,7 +1,6 @@
 import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
-import animate from '../../lib/animate';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import getClassName from '../../helpers/getClassName';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
@@ -13,6 +12,7 @@ import withContext from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
+import { AppRootPortal } from '../AppRoot/AppRootPortal';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -25,6 +25,8 @@ interface Scrolls {
 
 export type TransitionStartEventDetail = {
   scrolls: Scrolls;
+  from: string;
+  to: string;
 };
 
 interface ViewsScrolls {
@@ -134,8 +136,8 @@ class View extends Component<ViewProps, ViewState> {
     return this.context.window || window;
   }
 
-  get panels(): ReactElement[] {
-    return [].concat(this.props.children);
+  get panels() {
+    return React.Children.toArray(this.props.children) as ReactElement[];
   }
 
   componentWillUnmount() {
@@ -197,7 +199,14 @@ class View extends Component<ViewProps, ViewState> {
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
-      this.document.dispatchEvent(createCustomEvent(this.window, transitionStartEventName, { detail: { scrolls } }));
+      const transitionStartEventData = {
+        detail: {
+          from: this.state.prevPanel,
+          to: this.state.nextPanel,
+          scrolls,
+        },
+      };
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, transitionStartEventData));
       const nextPanelElement = this.pickPanel(this.state.nextPanel);
       const prevPanelElement = this.pickPanel(this.state.prevPanel);
 
@@ -210,7 +219,14 @@ class View extends Component<ViewProps, ViewState> {
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
-      this.document.dispatchEvent(createCustomEvent(this.window, transitionStartEventName, { detail: { scrolls } }));
+      const transitionStartEventData = {
+        detail: {
+          from: this.state.swipeBackPrevPanel,
+          to: this.state.swipeBackNextPanel,
+          scrolls,
+        },
+      };
+      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, transitionStartEventData));
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
       const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
       const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
@@ -346,24 +362,6 @@ class View extends Component<ViewProps, ViewState> {
     });
   }
 
-  onScrollTop = (): void => {
-    const { activePanel } = this.state;
-
-    if (activePanel) {
-      const scrollTop = this.document.body.scrollTop || this.document.documentElement.scrollTop;
-
-      if (scrollTop) {
-        animate({
-          duration: 200,
-          timing: (n: number) => Math.sqrt(n),
-          draw: (val: number) => {
-            this.window.scrollTo(0, scrollTop - val * scrollTop);
-          },
-        });
-      }
-    }
-  };
-
   onMoveX = (e: TouchEvent): void => {
     const target = e.originalEvent.target as HTMLElement;
     if (
@@ -461,7 +459,12 @@ class View extends Component<ViewProps, ViewState> {
   }
 
   render() {
-    const { style, popout, modal, platform } = this.props;
+    const {
+      popout, modal, platform,
+      activePanel: _1, splitCol, configProvider, history, id,
+      onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
+      ...restProps
+    } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult } = this.state;
 
     const hasPopout = !!popout;
@@ -485,7 +488,7 @@ class View extends Component<ViewProps, ViewState> {
       <Touch
         Component="section"
         className={classNames(getClassName('View', platform), this.props.className, modifiers)}
-        style={style}
+        {...restProps}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
@@ -514,8 +517,10 @@ class View extends Component<ViewProps, ViewState> {
             );
           })}
         </div>
-        {hasPopout && <div className="View__popout">{popout}</div>}
-        {hasModal && <div className="View__modal">{modal}</div>}
+        <AppRootPortal>
+          {hasPopout && <div className="View__popout">{popout}</div>}
+          {hasModal && <div className="View__modal">{modal}</div>}
+        </AppRootPortal>
       </Touch>
     );
   }

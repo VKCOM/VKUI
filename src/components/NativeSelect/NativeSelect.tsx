@@ -1,7 +1,6 @@
 import React, { ChangeEvent, ChangeEventHandler, RefCallback, SelectHTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
-import Icon20Dropdown from '@vkontakte/icons/dist/20/dropdown';
-import Icon24Dropdown from '@vkontakte/icons/dist/24/dropdown';
+import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
@@ -9,7 +8,7 @@ import { setRef } from '../../lib/utils';
 import { getClassName, HasPlatform } from '../..';
 import withPlatform from '../../hoc/withPlatform';
 
-export interface SelectProps extends
+export interface NativeSelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
   HasRef<HTMLSelectElement>,
   HasRootRef<HTMLLabelElement>,
@@ -26,8 +25,8 @@ export interface SelectState {
   notSelected?: boolean;
 }
 
-class NativeSelect extends React.Component<SelectProps, SelectState> {
-  constructor(props: SelectProps) {
+class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
+  constructor(props: NativeSelectProps) {
     super(props);
     const state: SelectState = {
       title: '',
@@ -62,7 +61,7 @@ class NativeSelect extends React.Component<SelectProps, SelectState> {
     });
   };
 
-  componentDidUpdate(prevProps: SelectProps) {
+  componentDidUpdate(prevProps: NativeSelectProps) {
     if (prevProps.value !== this.props.value || prevProps.children !== this.props.children) {
       this.setTitle();
     }

@@ -13,6 +13,7 @@ import classNames from '../../lib/classNames';
 import Chip, { ChipProps } from '../Chip/Chip';
 import { noop } from '../../lib/utils';
 import { useChipsInput } from './useChipsInput';
+import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export type ChipsInputValue = string | number;
 
@@ -32,7 +33,8 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLDivElement>,
-  HasAlign {
+  HasAlign,
+  AdaptivityProps {
   value: Option[];
   inputValue?: string;
   onChange?: (o: Option[]) => void;
@@ -45,7 +47,8 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
 
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
   const { style, value, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className, inputValue,
-    getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, getNewOptionData, renderChip, ...restProps } = props;
+    getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, getNewOptionData, renderChip,
+    sizeY, ...restProps } = props;
   const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
 
@@ -85,7 +88,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
     <FormField
       Component="label"
       getRootRef={getRootRef}
-      className={classNames('ChipsInput', {
+      className={classNames('ChipsInput', `ChipsInput--sizeY-${sizeY}`, {
         'ChipsInput--focused': focused,
         'ChipsInput--disabled': disabled,
         'ChipsInput--withChips': !!selectedOptions.length,
@@ -126,7 +129,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   );
 };
 
-ChipsInput.defaultProps = {
+export const chipsInputDefaultProps: ChipsInputProps<any> = {
   type: 'text',
   onChange: noop,
   onInputChange: noop,
@@ -146,5 +149,6 @@ ChipsInput.defaultProps = {
     >{label}</Chip>;
   },
 };
+ChipsInput.defaultProps = chipsInputDefaultProps;
 
-export default ChipsInput;
+export default withAdaptivity(ChipsInput, { sizeY: true });

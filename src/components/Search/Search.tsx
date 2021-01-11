@@ -10,15 +10,14 @@ import React, {
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import getClassname from '../../helpers/getClassName';
-import Icon16SearchOutline from '@vkontakte/icons/dist/16/search_outline';
-import Icon16Clear from '@vkontakte/icons/dist/16/clear';
-import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
+import { Icon16SearchOutline, Icon16Clear, Icon24Cancel } from '@vkontakte/icons';
 import { IOS, VKCOM } from '../../lib/platform';
 import { HasPlatform, HasRef } from '../../types';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import { VKUITouchEvent } from '../../lib/touch';
 import { setRef } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
+import { Separator } from '../../index';
 
 let searchId = 0;
 
@@ -29,6 +28,7 @@ export interface SearchProps extends InputHTMLAttributes<HTMLInputElement>, HasR
    * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
   after?: ReactNode;
+  before?: ReactNode;
   icon?: ReactNode;
   onIconClick?: (e: VKUITouchEvent) => void;
   defaultValue?: string;
@@ -44,6 +44,7 @@ class Search extends Component<SearchProps, SearchState> {
     autoComplete: 'off',
     placeholder: 'Поиск',
     after: 'Отмена',
+    before: <Icon16SearchOutline />,
   };
 
   isControlledOutside: boolean;
@@ -118,6 +119,7 @@ class Search extends Component<SearchProps, SearchState> {
 
   render() {
     const {
+      before,
       className,
       onFocus,
       onBlur,
@@ -130,19 +132,23 @@ class Search extends Component<SearchProps, SearchState> {
       platform,
       icon,
       onIconClick,
+      style,
       ...inputProps
     } = this.props;
 
     return (
-      <div className={classNames(getClassname('Search', platform), {
-        'Search--focused': this.state.focused,
-        'Search--has-value': !!this.value,
-        'Search--has-after': !!after,
-        'Search--has-icon': !!icon,
-      }, className)}>
+      <div
+        className={classNames(getClassname('Search', platform), {
+          'Search--focused': this.state.focused,
+          'Search--has-value': !!this.value,
+          'Search--has-after': !!after,
+          'Search--has-icon': !!icon,
+        }, className)}
+        style={style}
+      >
         <div className="Search__in">
           <div className="Search__width" />
-          <div className="Search__control">
+          <label className="Search__control">
             <input
               {...inputProps}
               ref={this.inputRef}
@@ -156,13 +162,14 @@ class Search extends Component<SearchProps, SearchState> {
             {platform === IOS && after && <div className="Search__after-width">{after}</div>}
             <div className="Search__placeholder">
               <div className="Search__placeholder-in">
-                <Icon16SearchOutline />
+                {before}
                 <div className="Search__placeholder-text">
                   {platform === VKCOM ? <Text weight="regular">{placeholder}</Text> : placeholder}
                 </div>
               </div>
+              {this.state.focused && platform === IOS && after && <div className="Search__after-width">{after}</div>}
             </div>
-          </div>
+          </label>
           <div className="Search__after" onClick={this.onCancel}>
             <div className="Search__icons">
               {icon &&
@@ -185,6 +192,7 @@ class Search extends Component<SearchProps, SearchState> {
             }
           </div>
         </div>
+        {platform === VKCOM && <Separator className="Search__separator" wide />}
       </div>
     );
   }

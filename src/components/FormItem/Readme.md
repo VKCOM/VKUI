@@ -19,15 +19,10 @@ class Example extends React.Component {
     ];
 
     this.onChange = this.onChange.bind(this);
-    this.onSelectChange = this.onSelectChange.bind(this);
   }
 
   onChange(e) {
     const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
-  }
-
-  onSelectChange({ name, value }) {
     this.setState({ [name]: value });
   }
 
@@ -69,10 +64,13 @@ class Example extends React.Component {
               </FormItem>
             </FormLayoutGroup>
             <FormItem top="Пол">
-              <Select placeholder="Выберите пол">
-                <option value="m">Мужской</option>
-                <option value="f">Женский</option>
-              </Select>
+              <Select 
+                placeholder="Выберите пол"
+                options={[{
+                  value: '0', label: 'Мужской' }, { 
+                  value: '1', label: 'Женский' }
+                ]}
+              />
             </FormItem>
 
             <FormItem top="Тип документа">
@@ -88,14 +86,15 @@ class Example extends React.Component {
             <FormItem top="Цель поездки" bottom={purpose ? '' : 'Пожалуйста, укажите цель поездки'} status={purpose ? 'valid' : 'error'}>
               <Select
                 placeholder="Выберите цель поездки"
-                onChange={this.onSelectChange}
+                onChange={this.onChange}
                 value={purpose}
                 name="purpose"
-              >
-                <option value="0">Бизнес или работа</option>
-                <option value="1">Индивидуальный туризм</option>
-                <option value="2">Посещение близких родственников</option>
-              </Select>
+                options={[{
+                  value: '0', label: 'Бизнес или работа' }, { 
+                  value: '1', label: 'Индивидуальный туризм' }, {
+                  value: '2', label: 'Посещение близких родственников' }
+                ]}
+              />
             </FormItem>
             <FormItem top="О себе">
               <Textarea />

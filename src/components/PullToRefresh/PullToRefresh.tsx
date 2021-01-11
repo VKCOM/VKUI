@@ -1,5 +1,5 @@
 import React, { PureComponent, RefObject } from 'react';
-import PropTypes, { Requireable } from 'prop-types';
+import PropTypes from 'prop-types';
 import Touch, { TouchProps, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -35,11 +35,6 @@ export interface PullToRefreshState {
   spinnerY: PullToRefreshParams['start'];
   spinnerProgress: number;
   contentShift: number;
-}
-
-export interface PullToRefreshContext {
-  document: Requireable<{}>;
-  window: Requireable<{}>;
 }
 
 export interface PullToRefreshParams {
@@ -102,7 +97,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
 
   contentRef: RefObject<HTMLDivElement>;
 
-  static contextTypes: PullToRefreshContext = {
+  static contextTypes = {
     window: PropTypes.any,
     document: PropTypes.any,
   };
@@ -257,7 +252,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
 
     if (platform === IOS && refreshing && !touchDown) {
       contentTransform = 'translate3d(0, 100px, 0)';
-    } else if (platform === IOS && contentShift) {
+    } else if (platform === IOS && (contentShift || refreshing)) {
       contentTransform = `translate3d(0, ${contentShift}px, 0)`;
     }
 

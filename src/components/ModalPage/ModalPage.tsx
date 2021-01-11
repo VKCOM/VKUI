@@ -3,7 +3,8 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
+import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   id: string;
@@ -30,29 +31,43 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     className,
     header,
     viewWidth,
+    viewHeight,
+    hasMouse,
+    onClose,
+    id,
+    settlingHeight,
+    dynamicContentHeight,
+    ...restProps
   } = props;
 
   useEffect(() => {
     updateModalHeight();
   }, [children]);
 
-  const isDesktop = viewWidth >= ViewWidth.TABLET;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   return (
-    <div className={classNames(getClassName('ModalPage', platform), className, {
-      'ModalPage--desktop': isDesktop,
-    })}>
+    <div
+      {...restProps}
+      className={classNames(getClassName('ModalPage', platform), className, {
+        'ModalPage--desktop': isDesktop,
+      })}
+    >
       <div className="ModalPage__in-wrap">
         <div className="ModalPage__in">
           <div className="ModalPage__header">
             {header}
           </div>
 
-          <div className="ModalPage__content">
-            <div className="ModalPage__content-in">
-              {children}
+          <div className="ModalPage__content-wrap">
+            <div className="ModalPage__content">
+              <div className="ModalPage__content-in">
+                {children}
+              </div>
             </div>
           </div>
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
         </div>
       </div>
     </div>
@@ -65,4 +80,6 @@ ModalPage.defaultProps = {
 
 export default withAdaptivity(ModalPage, {
   viewWidth: true,
+  viewHeight: true,
+  hasMouse: true,
 });

@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, RefCallback } from 'react';
 import getClassName from '../../helpers/getClassName';
-import PropTypes, { Requireable } from 'prop-types';
+import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import withContext from '../../hoc/withContext';
@@ -36,11 +36,6 @@ export interface FixedLayoutState {
   width: string;
 }
 
-export interface FixedLayoutContext {
-  document: Requireable<{}>;
-  window: Requireable<Window>;
-}
-
 class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   state: FixedLayoutState = {
     position: 'absolute',
@@ -50,7 +45,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   el: HTMLDivElement;
 
-  static contextTypes: FixedLayoutContext = {
+  static contextTypes = {
     document: PropTypes.any,
     window: PropTypes.any,
   };
@@ -63,6 +58,25 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   get window() {
     return this.context.window || window;
+  }
+
+  get currentPanel(): HTMLElement {
+    const { panel: id } = this.props;
+    const elem = this.document.getElementById(id);
+
+    if (!elem) {
+      console.warn(`Element #${id} not found`);
+    }
+
+    return elem;
+  }
+
+  get canTargetPanelScroll() {
+    const panelEl = this.currentPanel;
+    if (!panelEl) {
+      return true; // Всегда предпологаем, что может быть скролл в случае, если нет document
+    }
+    return panelEl.scrollHeight > panelEl.clientHeight;
   }
 
   componentDidMount() {
@@ -83,11 +97,18 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
     let panelScroll = e.detail.scrolls[this.props.panel] || 0;
-    this.setState({
-      position: 'absolute',
-      top: this.el.offsetTop + panelScroll,
-      width: '',
-    });
+    const fromPanelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
+    const toPanelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
+
+    // Для панелей, с которых уходим всегда выставляется скролл
+    // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл
+    if (fromPanelHasScroll || toPanelHasScroll && this.canTargetPanelScroll) {
+      this.setState({
+        position: 'absolute',
+        top: this.el.offsetTop + panelScroll,
+        width: '',
+      });
+    }
   };
 
   onViewTransitionEnd: VoidFunction = () => {

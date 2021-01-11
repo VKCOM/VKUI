@@ -1,5 +1,5 @@
 import React, { FC, HTMLAttributes, ReactNode } from 'react';
-import SelectedIcon from '@vkontakte/icons/dist/16/done';
+import { Icon16Done } from '@vkontakte/icons';
 import classNames from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 
@@ -32,14 +32,14 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       className={classNames('CustomSelectOption', className, {
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
-      })}
+      }, className)}
     >
       {hasReactNode(before) && <div className="CustomSelectOption__before">{before}</div>}
       {children}
       {hasReactNode(after) && <div className="CustomSelectOption__after">{after}</div>}
       {selected && (
         <div className="CustomSelectOption__selectedIcon">
-          <SelectedIcon fill="var(--accent)" />
+          <Icon16Done fill="var(--accent)" />
         </div>
       )}
     </div>
