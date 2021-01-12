@@ -427,6 +427,10 @@ class View extends Component<ViewProps, ViewState> {
   };
 
   calcPanelSwipeStyles(panelId: string): CSSProperties {
+    if (!canUseDOM) {
+      return {};
+    }
+
     const isPrev = panelId === this.state.swipeBackPrevPanel;
     const isNext = panelId === this.state.swipeBackNextPanel;
 
