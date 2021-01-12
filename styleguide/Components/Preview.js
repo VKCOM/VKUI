@@ -189,6 +189,7 @@ export default class Preview extends PreviewParent {
                         >
                           <AdaptivityProvider
                             window={window}
+                            document={window.document}
                             hasMouse={styleGuideContext.hasMouse}
                           >
                             {isPartial ? example : (
