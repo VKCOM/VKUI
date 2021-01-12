@@ -202,10 +202,10 @@ const ChipsSelect = withFrame(<Option extends ChipsInputOption>(props: ChipsSele
   useEffect(() => {
     const index = focusedOption ? filteredOptions.findIndex(({ value }) => value === focusedOption.value) : -1;
 
-    if (index === -1 && !!filteredOptions.length && !creatable) {
+    if (index === -1 && !!filteredOptions.length && !creatable && closeAfterSelect) {
       setFocusedOption(filteredOptions[0]);
     }
-  }, [filteredOptions, focusedOption, creatable]);
+  }, [filteredOptions, focusedOption, creatable, closeAfterSelect]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
