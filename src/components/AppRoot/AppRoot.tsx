@@ -1,5 +1,5 @@
 import React, { FC, useRef, useState } from 'react';
-import { canUseDOM } from '../../lib/dom';
+import { useDOM } from '../../lib/dom';
 import { HasChildren } from '../../types';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
@@ -26,13 +26,14 @@ function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
   }
 }
 
-const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse }) => {
+const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
+  const { window } = useDOM();
 
   const initialized = useRef(false);
 
-  if (canUseDOM && !initialized.current && !embedded) {
+  if (window && !initialized.current && !embedded) {
     window.document.documentElement.classList.add('vkui');
   }
 
@@ -85,10 +86,6 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, window, sizeX, hasMouse
       </AppRootContext.Provider>
     </div>
   );
-};
-
-AppRoot.defaultProps = {
-  window: canUseDOM && window,
 };
 
 export default withAdaptivity(AppRoot, {

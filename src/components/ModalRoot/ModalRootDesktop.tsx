@@ -1,5 +1,4 @@
 import React, { Component, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import { isFunction } from '../../lib/utils';
 import { transitionEvent } from '../../lib/supportEvents';
@@ -15,8 +14,9 @@ import {
 import { ModalsStateEntry, ModalType } from './types';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
+import { DOMContextInterface, withDOM } from '../../lib/dom';
 
-export interface ModalRootProps extends HasChildren, HasPlatform {
+export interface ModalRootProps extends HasChildren, HasPlatform, DOMContextInterface {
   activeModal?: string | null;
   /**
    * @ignore
@@ -77,17 +77,12 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
 
   activeTransitions: number;
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   get document(): Document {
-    return this.context.document || document;
+    return this.props.document;
   }
 
   get window(): Window {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   get modals() {
@@ -444,4 +439,4 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
   }
 }
 
-export const ModalRootDesktop = withContext(withPlatform(ModalRootDesktopComponent), ConfigProviderContext, 'configProvider');
+export const ModalRootDesktop = withContext(withPlatform(withDOM(ModalRootDesktopComponent)), ConfigProviderContext, 'configProvider');

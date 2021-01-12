@@ -1,5 +1,4 @@
 import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import getClassName from '../../helpers/getClassName';
@@ -13,7 +12,7 @@ import { ConfigProviderContext, ConfigProviderContextInterface } from '../Config
 import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { canUseDOM } from '../../lib/dom';
+import { canUseDOM, withDOM, DOMContextInterface } from '../../lib/dom';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -42,7 +41,7 @@ let scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
-export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform {
+export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform, DOMContextInterface {
   activePanel: string;
   popout?: ReactNode;
   modal?: ReactNode;
@@ -121,20 +120,15 @@ class View extends Component<ViewProps, ViewState> {
     history: [],
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   private transitionFinishTimeout: ReturnType<typeof setTimeout>;
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   get document() {
-    return this.context.document || canUseDOM && document;
+    return this.props.document;
   }
 
   get window() {
-    return this.context.window || canUseDOM && window;
+    return this.props.window;
   }
 
   get panels() {
@@ -207,7 +201,7 @@ class View extends Component<ViewProps, ViewState> {
           scrolls,
         },
       };
-      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, transitionStartEventData));
+      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, transitionStartEventData));
       const nextPanelElement = this.pickPanel(this.state.nextPanel);
       const prevPanelElement = this.pickPanel(this.state.prevPanel);
 
@@ -227,7 +221,7 @@ class View extends Component<ViewProps, ViewState> {
           scrolls,
         },
       };
-      this.document.dispatchEvent(new this.window.CustomEvent(transitionStartEventName, transitionStartEventData));
+      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, transitionStartEventData));
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
       const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
       const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
@@ -291,7 +285,7 @@ class View extends Component<ViewProps, ViewState> {
 
   blurActiveElement(): void {
     if (typeof this.window !== 'undefined' && this.document.activeElement) {
-      this.document.activeElement.blur();
+      (this.document.activeElement as HTMLElement).blur();
     }
   }
 
@@ -302,7 +296,7 @@ class View extends Component<ViewProps, ViewState> {
       console.warn(`Element #${id} not found`);
     }
 
-    return elem && elem.parentNode.parentNode;
+    return elem && elem.parentNode.parentNode as HTMLElement;
   }
 
   transitionEndHandler = (e?: AnimationEvent): void => {
@@ -532,7 +526,7 @@ class View extends Component<ViewProps, ViewState> {
 }
 
 export default withContext(withContext(
-  withPlatform(View),
+  withPlatform(withDOM(View)),
   SplitColContext,
   'splitCol',
 ), ConfigProviderContext, 'configProvider');

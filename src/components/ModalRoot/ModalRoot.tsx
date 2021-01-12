@@ -1,5 +1,4 @@
 import React, { Component, ReactElement, SyntheticEvent } from 'react';
-import PropTypes from 'prop-types';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import getClassName from '../../helpers/getClassName';
@@ -20,6 +19,7 @@ import {
 } from '../ConfigProvider/ConfigProviderContext';
 import { ModalsState, ModalsStateEntry, ModalType, TranslateRange } from './types';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
+import { DOMContextInterface, withDOM } from '../../lib/dom';
 
 function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];
@@ -29,7 +29,7 @@ function rangeTranslate(number: number) {
   return Math.max(0, Math.min(98, number));
 }
 
-export interface ModalRootProps extends HasChildren, HasPlatform {
+export interface ModalRootProps extends HasChildren, HasPlatform, DOMContextInterface {
   activeModal?: string | null;
 
   /**
@@ -99,17 +99,12 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
     [index: string]: number;
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   get document(): Document {
-    return this.context.document || document;
+    return this.props.document;
   }
 
   get window(): Window {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   getModals() {
@@ -821,4 +816,4 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
   }
 }
 
-export const ModalRootTouch = withContext(withPlatform(ModalRootTouchComponent), ConfigProviderContext, 'configProvider');
+export const ModalRootTouch = withContext(withPlatform(withDOM(ModalRootTouchComponent)), ConfigProviderContext, 'configProvider');

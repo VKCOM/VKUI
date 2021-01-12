@@ -1,5 +1,4 @@
 import React, { Component, ReactNode, MouseEvent, Fragment, InputHTMLAttributes } from 'react';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import IconButton from '../IconButton/IconButton';
@@ -10,8 +9,9 @@ import withPlatform from '../../hoc/withPlatform';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { setRef } from '../../lib/utils';
+import { DOMContextInterface, withDOM } from '../../lib/dom';
 
-export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'> {
+export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'>, DOMContextInterface {
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
@@ -71,11 +71,9 @@ class Cell extends Component<CellProps, CellState> {
     removePlaceholder: 'Удалить',
   };
 
-  static contextTypes = {
-    document: PropTypes.any,
-  };
-
-  get document() {return this.context.document || document;}
+  get document() {
+    return this.props.document;
+  }
 
   private readonly onRemoveActivateClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
@@ -281,4 +279,4 @@ class Cell extends Component<CellProps, CellState> {
   }
 }
 
-export default withPlatform(Cell);
+export default withPlatform(withDOM(Cell));

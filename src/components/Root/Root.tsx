@@ -1,5 +1,4 @@
 import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
@@ -10,8 +9,9 @@ import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { DOMContextInterface, withDOM } from '../../lib/dom';
 
-export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, DOMContextInterface {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   popout?: ReactNode;
@@ -59,19 +59,14 @@ class Root extends Component<RootProps, RootState> {
     popout: null,
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   get document() {
-    return this.context.document || document;
+    return this.props.document;
   }
 
   get window() {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   componentDidUpdate(prevProps: RootProps, prevState: RootState) {
@@ -166,7 +161,7 @@ class Root extends Component<RootProps, RootState> {
 
   blurActiveElement() {
     if (typeof this.window !== 'undefined' && this.document.activeElement) {
-      this.document.activeElement.blur();
+      (this.document.activeElement as HTMLElement).blur();
     }
   }
 
@@ -212,7 +207,7 @@ class Root extends Component<RootProps, RootState> {
 }
 
 export default withContext(withContext(
-  withPlatform(Root),
+  withPlatform(withDOM(Root)),
   SplitColContext,
   'splitCol',
 ), ConfigProviderContext, 'configProvider');

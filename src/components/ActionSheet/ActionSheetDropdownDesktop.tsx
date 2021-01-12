@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types';
+import { HasChildren, HasPlatform } from '../../types';
 import { PointerEventsProperty } from 'csstype';
-import PropTypes from 'prop-types';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { DOMContextInterface, withDOM } from '../../lib/dom';
 
-interface Props extends HasPlatform, AdaptivityProps {
+interface Props extends HasPlatform, AdaptivityProps, HasChildren, DOMContextInterface {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;
@@ -26,12 +26,8 @@ class ActionSheetDropdownDesktop extends Component<Props> {
     },
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-  };
-
   get window(): Window {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   componentDidMount = () => {
@@ -95,6 +91,6 @@ class ActionSheetDropdownDesktop extends Component<Props> {
   }
 }
 
-export default withAdaptivity(withPlatform(ActionSheetDropdownDesktop), {
+export default withAdaptivity(withPlatform(withDOM(ActionSheetDropdownDesktop)), {
   sizeY: true,
 });

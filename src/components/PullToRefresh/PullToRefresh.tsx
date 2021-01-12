@@ -1,5 +1,4 @@
 import React, { PureComponent, RefObject } from 'react';
-import PropTypes from 'prop-types';
 import Touch, { TouchProps, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -9,10 +8,10 @@ import getClassName from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
 import withPlatform from '../../hoc/withPlatform';
 import { AnyFunction, HasPlatform } from '../../types';
-import { canUseDOM } from '../../lib/dom';
+import { canUseDOM, DOMContextInterface, withDOM } from '../../lib/dom';
 import { runTapticImpactOccurred } from '../../lib/taptic';
 
-export interface PullToRefreshProps extends TouchProps, HasPlatform {
+export interface PullToRefreshProps extends TouchProps, HasPlatform, DOMContextInterface {
   /**
    * Будет вызвана для обновления контента
    */
@@ -97,22 +96,18 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
 
   contentRef: RefObject<HTMLDivElement>;
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   get document() {
-    return this.context.document || document;
+    return this.props.document;
   }
 
   get window() {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   componentDidMount() {
     if (canUseDOM) {
       this.document.addEventListener('touchmove', this.onWindowTouchMove, {
+        // @ts-ignore
         cancelable: true,
         passive: false,
       });
@@ -125,6 +120,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
     // https://github.com/VKCOM/VKUI/issues/444
     if (canUseDOM) {
       this.document.removeEventListener('touchmove', this.onWindowTouchMove, {
+        // @ts-ignore
         cancelable: true,
         passive: false,
       });
@@ -296,4 +292,4 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
   }
 }
 
-export default withPlatform(PullToRefresh);
+export default withPlatform(withDOM(PullToRefresh));
