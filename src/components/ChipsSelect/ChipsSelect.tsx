@@ -1,23 +1,21 @@
 import React, {
-  FC,
   useRef,
   FocusEvent,
   ReactNode,
   useEffect,
 } from 'react';
-import PropTypes from 'prop-types';
 import { Icon20Dropdown } from '@vkontakte/icons';
 import classNames from '../../lib/classNames';
 import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderChip, chipsInputDefaultProps } from '../ChipsInput/ChipsInput';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
-import withLegacyContext from '../../hoc/withLegacyContext';
 import { useChipsSelect } from './useChipsSelect';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { setRef, noop } from '../../lib/utils';
+import { FrameProps, withFrame } from '../../hoc/withFrame';
 
-export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
+export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps, FrameProps {
   popupDirection?: 'top' | 'bottom';
   options?: Option[];
   filterFn?: (value?: string, option?: Option, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => boolean;
@@ -50,7 +48,6 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
    * Закрытие выпадающиего списка после выбора элемента
    */
   closeAfterSelect: boolean;
-  legacyContext?: { document: Document };
 }
 
 type focusActionType = 'next' | 'prev';
@@ -58,12 +55,12 @@ type focusActionType = 'next' | 'prev';
 const FOCUS_ACTION_NEXT: focusActionType = 'next';
 const FOCUS_ACTION_PREV: focusActionType = 'prev';
 
-const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
+const ChipsSelect = withFrame(<Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
     style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText, sizeY,
-    closeAfterSelect, onChangeStart, legacyContext, ...restProps
+    closeAfterSelect, onChangeStart, document, ...restProps
   } = props;
 
   const scrollViewRef = useRef<CustomScrollView>(null);
@@ -211,12 +208,10 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
   }, [filteredOptions, focusedOption, creatable]);
 
   useEffect(() => {
-    const curDocument = legacyContext.document || document;
-
-    curDocument.addEventListener('click', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
 
     return () => {
-      curDocument.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
@@ -329,7 +324,7 @@ const ChipsSelect: FC<ChipsSelectProps<ChipsInputOption>> = <Option extends Chip
       }
     </div>
   );
-};
+});
 
 ChipsSelect.defaultProps = {
   ...chipsInputDefaultProps,
@@ -351,4 +346,4 @@ ChipsSelect.defaultProps = {
   },
 };
 
-export default withAdaptivity(withLegacyContext(ChipsSelect, { document: PropTypes.shape({}) }), { sizeY: true });
+export default withAdaptivity(ChipsSelect, { sizeY: true });
