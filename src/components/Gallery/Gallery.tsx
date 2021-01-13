@@ -4,9 +4,8 @@ import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
-import { canUseDOM } from '../../lib/dom';
+import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
-import { withFrame, FrameProps } from '../../hoc/withFrame';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
 
@@ -53,7 +52,7 @@ export interface GallerySlidesState {
 
 type GetSlideRef = (index: number) => RefCallback<HTMLElement>;
 
-class BaseGallery extends Component<BaseGalleryProps & FrameProps & AdaptivityProps, GalleryState> {
+class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProps, GalleryState> {
   constructor(props: GalleryProps) {
     super(props);
 
@@ -406,7 +405,7 @@ const BaseGalleryAdaptive = withAdaptivity(BaseGallery, {
   hasMouse: true,
 });
 
-const Gallery = withFrame<GalleryProps>(({
+const Gallery = withDOM<GalleryProps>(({
   initialSlideIndex = 0,
   children,
   timeout,

@@ -1,20 +1,22 @@
-import React, { HTMLAttributes, useRef } from 'react';
+import React, { HTMLAttributes, useRef, FC } from 'react';
 import classNames from '../../lib/classNames';
 import getClassname from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
-import { withFrame } from '../../hoc/withFrame';
+import { useDOM } from '../../lib/dom';
 
 export interface CardScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   size?: 's' | 'm' | 'l';
 }
 
-const CardScroll = withFrame<CardScrollProps>(({ children, className, size, sizeX, window, document, ...restProps }) => {
+const CardScroll: FC<CardScrollProps> = ({ children, className, size, sizeX, ...restProps }) => {
   const platform = usePlatform();
 
   const refContainer = useRef<HTMLDivElement>(null);
   const gapRef = useRef<HTMLDivElement>(null);
+
+  const { window } = useDOM();
 
   function getScrollToLeft(offset: number): number {
     const containerWidth = refContainer.current.offsetWidth;
@@ -71,7 +73,7 @@ const CardScroll = withFrame<CardScrollProps>(({ children, className, size, size
       </HorizontalScroll>
     </div>
   );
-});
+};
 
 CardScroll.defaultProps = {
   size: 's',
