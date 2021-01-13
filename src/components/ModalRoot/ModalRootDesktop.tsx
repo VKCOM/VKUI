@@ -14,9 +14,9 @@ import {
 import { ModalsStateEntry, ModalType } from './types';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
-import { DOMContextInterface, withDOM } from '../../lib/dom';
+import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface ModalRootProps extends HasChildren, HasPlatform, DOMContextInterface {
+export interface ModalRootProps extends HasChildren, HasPlatform, DOMProps {
   activeModal?: string | null;
   /**
    * @ignore

@@ -5,9 +5,9 @@ import withPlatform from '../../hoc/withPlatform';
 import { HasChildren, HasPlatform } from '../../types';
 import { PointerEventsProperty } from 'csstype';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
-import { DOMContextInterface, withDOM } from '../../lib/dom';
+import { DOMProps, withDOM } from '../../lib/dom';
 
-interface Props extends HasPlatform, AdaptivityProps, HasChildren, DOMContextInterface {
+interface Props extends HasPlatform, AdaptivityProps, HasChildren, DOMProps {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;

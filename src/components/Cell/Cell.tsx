@@ -9,9 +9,9 @@ import withPlatform from '../../hoc/withPlatform';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { setRef } from '../../lib/utils';
-import { DOMContextInterface, withDOM } from '../../lib/dom';
+import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'>, DOMContextInterface {
+export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'>, DOMProps {
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */

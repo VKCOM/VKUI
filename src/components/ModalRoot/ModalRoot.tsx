@@ -19,7 +19,7 @@ import {
 } from '../ConfigProvider/ConfigProviderContext';
 import { ModalsState, ModalsStateEntry, ModalType, TranslateRange } from './types';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
-import { DOMContextInterface, withDOM } from '../../lib/dom';
+import { DOMProps, withDOM } from '../../lib/dom';
 
 function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];
@@ -29,7 +29,7 @@ function rangeTranslate(number: number) {
   return Math.max(0, Math.min(98, number));
 }
 
-export interface ModalRootProps extends HasChildren, HasPlatform, DOMContextInterface {
+export interface ModalRootProps extends HasChildren, HasPlatform, DOMProps {
   activeModal?: string | null;
 
   /**

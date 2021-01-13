@@ -9,9 +9,9 @@ import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { DOMContextInterface, withDOM } from '../../lib/dom';
+import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, DOMContextInterface {
+export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, DOMProps {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   popout?: ReactNode;

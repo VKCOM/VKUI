@@ -12,7 +12,7 @@ import { ConfigProviderContext, ConfigProviderContextInterface } from '../Config
 import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { canUseDOM, withDOM, DOMContextInterface } from '../../lib/dom';
+import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -41,7 +41,7 @@ let scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
-export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform, DOMContextInterface {
+export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform, DOMProps {
   activePanel: string;
   popout?: ReactNode;
   modal?: ReactNode;

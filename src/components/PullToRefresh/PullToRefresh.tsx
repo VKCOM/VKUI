@@ -8,10 +8,10 @@ import getClassName from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
 import withPlatform from '../../hoc/withPlatform';
 import { AnyFunction, HasPlatform } from '../../types';
-import { canUseDOM, DOMContextInterface, withDOM } from '../../lib/dom';
+import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { runTapticImpactOccurred } from '../../lib/taptic';
 
-export interface PullToRefreshProps extends TouchProps, HasPlatform, DOMContextInterface {
+export interface PullToRefreshProps extends TouchProps, HasPlatform, DOMProps {
   /**
    * Будет вызвана для обновления контента
    */

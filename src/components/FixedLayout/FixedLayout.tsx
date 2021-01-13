@@ -8,13 +8,13 @@ import withPlatform from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
-import { DOMContextInterface, withDOM } from '../../lib/dom';
+import { DOMProps, withDOM } from '../../lib/dom';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
   HasPlatform,
-  DOMContextInterface {
+  DOMProps {
   vertical?: 'top' | 'bottom';
   /**
    * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.

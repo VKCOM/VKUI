@@ -7,6 +7,8 @@ export interface DOMContextInterface {
   document?: Document;
 }
 
+export type DOMProps = DOMContextInterface;
+
 export const DOMContext = createContext<DOMContextInterface>({
   window: canUseDOM ? window : null,
   document: canUseDOM ? document : null,

@@ -3,9 +3,9 @@ import classNames from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
 import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { DOMContextInterface, withDOM } from '../../lib/dom';
+import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps, HasRootRef<HTMLDivElement>, DOMContextInterface {
+export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps, HasRootRef<HTMLDivElement>, DOMProps {
   popout?: ReactNode;
   modal?: ReactNode;
 }

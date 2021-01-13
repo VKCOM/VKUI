@@ -2,9 +2,9 @@ import React, { ReactElement, ReactNode, Component, Fragment, RefCallback, isVal
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
-import { canUseDOM, DOMContextInterface, withDOM } from '../../lib/dom';
+import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 
-interface TooltipPortalProps extends Partial<TooltipProps>, DOMContextInterface {
+interface TooltipPortalProps extends Partial<TooltipProps>, DOMProps {
   target?: HTMLElement;
 }
 

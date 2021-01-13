@@ -8,10 +8,10 @@ import {
   VKUITouchEventHander,
 } from '../../lib/touch';
 import { HasRootRef } from '../../types';
-import { canUseDOM, DOMContextInterface, withDOM } from '../../lib/dom';
+import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 
-export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, DOMContextInterface {
+export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, DOMProps {
   onEnter?(outputEvent: MouseEvent): void;
   onLeave?(outputEvent: MouseEvent): void;
   onStart?(outputEvent: TouchEvent): void;
