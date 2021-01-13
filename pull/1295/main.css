@@ -778,20 +778,18 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalPageHeader--vkcom .ModalPageHeader__content{max-width:100%}
 .ModalPageHeader--vkcom .ModalPageHeader__content-in{display:flex;align-items:center;font-size:15px;line-height:20px;font-weight:500}
 .ModalPageHeader--vkcom .ModalPageHeader__content-in>span{overflow:hidden;width:100%;text-overflow:ellipsis}
-.IconButton{-webkit-appearance:none;appearance:none;background:0 0;border:0;outline:0;box-shadow:none;display:block;color:currentColor;padding:0;margin:0;position:relative}
+.IconButton{-webkit-appearance:none;appearance:none;background:0 0;border:0;outline:0;box-shadow:none;display:block;color:currentColor;padding:0;margin:0;position:relative;height:48px}
+.IconButton--sizeY-compact{height:44px}
 .IconButton .Icon--16{padding:16px}
 .IconButton .Icon--16.Icon--w-8{padding:16px 14px}
-.IconButton.Tappable--sizeY-compact .Icon--16,.IconButton.Tappable--sizeY-compact .Icon--16.Icon--w-8{padding:14px}
+.IconButton--sizeY-compact .Icon--16,.IconButton--sizeY-compact .Icon--16.Icon--w-8{padding:14px}
 .IconButton .Icon--24{padding:12px}
-.IconButton.Tappable--sizeY-compact .Icon--24{padding:10px}
+.IconButton--sizeY-compact .Icon--24{padding:10px}
 .IconButton .Icon--28{padding:10px}
-.IconButton.Tappable--sizeY-compact .Icon--28{padding:8px}
+.IconButton--sizeY-compact .Icon--28{padding:8px}
 .IconButton[disabled]{opacity:.6}
-.IconButton--ios{height:48px}
-.IconButton--ios.Tappable--sizeY-compact{height:44px}
 .IconButton--ios.Tappable--active{opacity:.7}
-.IconButton--android,.IconButton--vkcom{height:48px;border-radius:24px}
-.IconButton--android.Tappable--sizeY-compact,.IconButton--vkcom.Tappable--sizeY-compact{height:44px;border-radius:22px}
+.IconButton--android,.IconButton--vkcom{border-radius:50%}
 .IconButton--android.Tappable--active .Icon,.IconButton--vkcom.Tappable--active .Icon{transition:inherit;border-radius:inherit;background-color:rgba(0,0,0,.08);background-color:rgba(0,0,0,.08);background-color:var(--background_highlighted)}
 .Card{position:relative;background:#f5f5f5;background:#f5f5f5;background:var(--content_tint_background)}
 .Card__in{position:relative;z-index:2;border-radius:inherit}
