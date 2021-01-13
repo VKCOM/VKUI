@@ -5,10 +5,14 @@ import { Icon24Spinner, Icon32Spinner, Icon44Spinner, Icon16Spinner } from '@vko
 import usePlatform from '../../hooks/usePlatform';
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: 'small' | 'regular' | 'large' | 'medium';
+  size?: 'small' | 'regular' | 'large' | 'medium' | number;
 }
 
 const svgSpinner = (size: SpinnerProps['size']): React.ReactElement => {
+  if (typeof size === 'number') {
+    return <Icon24Spinner width={size} height={size} className="Spinner__self" />;
+  }
+
   switch (size) {
     case 'large':
       return <Icon44Spinner className="Spinner__self" />;
