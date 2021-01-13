@@ -11,7 +11,7 @@ import { AnyFunction, HasPlatform } from '../../types';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { runTapticImpactOccurred } from '../../lib/taptic';
 
-export interface PullToRefreshProps extends TouchProps, HasPlatform, DOMProps {
+export interface PullToRefreshProps extends TouchProps, HasPlatform {
   /**
    * Будет вызвана для обновления контента
    */
@@ -62,7 +62,7 @@ function cancelEvent(event: any) {
   return false;
 }
 
-class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState> {
+class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToRefreshState> {
   constructor(props: PullToRefreshProps) {
     super(props);
 
@@ -292,4 +292,4 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
   }
 }
 
-export default withPlatform(withDOM(PullToRefresh));
+export default withPlatform(withDOM<PullToRefreshProps>(PullToRefresh));

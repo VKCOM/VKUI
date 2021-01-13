@@ -4,7 +4,7 @@ import getClassName from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 
-interface TooltipPortalProps extends Partial<TooltipProps>, DOMProps {
+interface TooltipPortalProps extends Partial<TooltipProps> {
   target?: HTMLElement;
 }
 
@@ -26,8 +26,8 @@ const isDOMTypeElement = (element: ReactElement) => {
 
 const baseClassName = getClassName('Tooltip');
 
-const TooltipPortal = withDOM(
-  class TooltipPortalClass extends Component<TooltipPortalProps, TooltipPortalState> {
+const TooltipPortal = withDOM<TooltipPortalProps>(
+  class TooltipPortalClass extends Component<TooltipPortalProps & DOMProps, TooltipPortalState> {
     constructor(props: TooltipPortalProps) {
       super(props);
 

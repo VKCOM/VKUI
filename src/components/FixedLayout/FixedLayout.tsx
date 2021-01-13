@@ -13,8 +13,7 @@ import { DOMProps, withDOM } from '../../lib/dom';
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
-  HasPlatform,
-  DOMProps {
+  HasPlatform {
   vertical?: 'top' | 'bottom';
   /**
    * Это свойство определяет, будет ли фон компонента окрашен в цвет фона контента.
@@ -37,7 +36,7 @@ export interface FixedLayoutState {
   width: string;
 }
 
-class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
+class FixedLayout extends React.Component<FixedLayoutProps & DOMProps, FixedLayoutState> {
   state: FixedLayoutState = {
     position: 'absolute',
     top: null,
@@ -153,7 +152,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 }
 
 export default withContext(
-  withPlatform(withPanelContext(withDOM(FixedLayout))),
+  withPlatform(withPanelContext(withDOM<FixedLayoutProps>(FixedLayout))),
   SplitColContext,
   'splitCol',
 );

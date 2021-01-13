@@ -11,7 +11,7 @@ import { HasPlatform } from '../../types';
 import { setRef } from '../../lib/utils';
 import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'>, DOMProps {
+export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'> {
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
@@ -53,7 +53,7 @@ export interface CellState {
   checked?: boolean;
 }
 
-class Cell extends Component<CellProps, CellState> {
+class Cell extends Component<CellProps & DOMProps, CellState> {
   constructor(props: CellProps) {
     super(props);
 
@@ -279,4 +279,4 @@ class Cell extends Component<CellProps, CellState> {
   }
 }
 
-export default withPlatform(withDOM(Cell));
+export default withPlatform(withDOM<CellProps>(Cell));

@@ -10,9 +10,9 @@ import {
 import { HasChildren } from '../../types';
 import { Platform, VKCOM } from '../../lib/platform';
 
-export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren, DOMProps {}
+export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
 
-export class ConfigProvider extends React.Component<ConfigProviderProps> {
+class ConfigProvider extends React.Component<ConfigProviderProps & DOMProps> {
   constructor(props: ConfigProviderProps) {
     super(props);
     if (canUseDOM) {
@@ -70,4 +70,4 @@ export class ConfigProvider extends React.Component<ConfigProviderProps> {
   }
 }
 
-export default withDOM(ConfigProvider);
+export default withDOM<ConfigProviderProps>(ConfigProvider);

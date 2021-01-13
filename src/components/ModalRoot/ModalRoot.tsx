@@ -29,7 +29,7 @@ function rangeTranslate(number: number) {
   return Math.max(0, Math.min(98, number));
 }
 
-export interface ModalRootProps extends HasChildren, HasPlatform, DOMProps {
+export interface ModalRootProps extends HasChildren, HasPlatform {
   activeModal?: string | null;
 
   /**
@@ -56,7 +56,7 @@ interface ModalRootState {
   dragging?: boolean;
 }
 
-class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> {
+class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -816,4 +816,4 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
   }
 }
 
-export const ModalRootTouch = withContext(withPlatform(withDOM(ModalRootTouchComponent)), ConfigProviderContext, 'configProvider');
+export const ModalRootTouch = withContext(withPlatform(withDOM<ModalRootProps>(ModalRootTouchComponent)), ConfigProviderContext, 'configProvider');

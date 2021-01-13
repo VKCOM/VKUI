@@ -5,12 +5,12 @@ import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdapti
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps, HasRootRef<HTMLDivElement>, DOMProps {
+export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps, HasRootRef<HTMLDivElement> {
   popout?: ReactNode;
   modal?: ReactNode;
 }
 
-class PopoutRoot extends Component<PopoutRootProps> {
+class PopoutRoot extends Component<PopoutRootProps & DOMProps> {
   static defaultProps: Partial<PopoutRootProps> = {
     popout: null,
   };
@@ -55,6 +55,6 @@ class PopoutRoot extends Component<PopoutRootProps> {
   }
 }
 
-export default withAdaptivity(withDOM(PopoutRoot), {
+export default withAdaptivity(withDOM<PopoutRootProps>(PopoutRoot), {
   viewWidth: true,
 });

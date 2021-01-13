@@ -7,7 +7,7 @@ import { PointerEventsProperty } from 'csstype';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { DOMProps, withDOM } from '../../lib/dom';
 
-interface Props extends HasPlatform, AdaptivityProps, HasChildren, DOMProps {
+interface Props extends HasPlatform, AdaptivityProps, HasChildren {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;
@@ -16,7 +16,7 @@ interface Props extends HasPlatform, AdaptivityProps, HasChildren, DOMProps {
 
 type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
 
-class ActionSheetDropdownDesktop extends Component<Props> {
+class ActionSheetDropdownDesktop extends Component<Props & DOMProps> {
   state = {
     dropdownStyles: {
       left: '0',
@@ -91,6 +91,6 @@ class ActionSheetDropdownDesktop extends Component<Props> {
   }
 }
 
-export default withAdaptivity(withPlatform(withDOM(ActionSheetDropdownDesktop)), {
+export default withAdaptivity(withPlatform(withDOM<Props>(ActionSheetDropdownDesktop)), {
   sizeY: true,
 });

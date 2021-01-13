@@ -41,7 +41,7 @@ let scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
-export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform, DOMProps {
+export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform {
   activePanel: string;
   popout?: ReactNode;
   modal?: ReactNode;
@@ -91,7 +91,7 @@ export interface ViewState {
   browserSwipe: boolean;
 }
 
-class View extends Component<ViewProps, ViewState> {
+class View extends Component<ViewProps & DOMProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
 
@@ -526,7 +526,7 @@ class View extends Component<ViewProps, ViewState> {
 }
 
 export default withContext(withContext(
-  withPlatform(withDOM(View)),
+  withPlatform(withDOM<ViewProps>(View)),
   SplitColContext,
   'splitCol',
 ), ConfigProviderContext, 'configProvider');

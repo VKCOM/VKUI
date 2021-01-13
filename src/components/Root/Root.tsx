@@ -11,7 +11,7 @@ import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, DOMProps {
+export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   popout?: ReactNode;
@@ -40,7 +40,7 @@ export interface RootState {
   transition: boolean;
 }
 
-class Root extends Component<RootProps, RootState> {
+class Root extends Component<RootProps & DOMProps, RootState> {
   constructor(props: RootProps) {
     super(props);
 
@@ -207,7 +207,7 @@ class Root extends Component<RootProps, RootState> {
 }
 
 export default withContext(withContext(
-  withPlatform(withDOM(Root)),
+  withPlatform(withDOM<RootProps>(Root)),
   SplitColContext,
   'splitCol',
 ), ConfigProviderContext, 'configProvider');

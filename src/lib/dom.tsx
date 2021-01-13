@@ -22,7 +22,10 @@ export const useDOM = () => {
   };
 };
 
-export const withDOM = <P extends DOMContextInterface>(Component: ComponentType<P>) => (props: Omit<P, keyof DOMContextInterface>) => {
-  const dom = useDOM();
-  return <Component {...props as P} {...dom} />;
-};
+export function withDOM<Props>(Component: ComponentType<Props & DOMProps>): ComponentType<Props> {
+  function WithDOM(props: Props) {
+    const dom = useDOM();
+    return <Component {...props} {...dom} />;
+  };
+  return WithDOM;
+}

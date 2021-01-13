@@ -16,7 +16,7 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface ModalRootProps extends HasChildren, HasPlatform, DOMProps {
+export interface ModalRootProps extends HasChildren, HasPlatform {
   activeModal?: string | null;
   /**
    * @ignore
@@ -41,7 +41,7 @@ interface ModalRootState {
   inited?: boolean;
 }
 
-class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState> {
+class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -439,4 +439,4 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
   }
 }
 
-export const ModalRootDesktop = withContext(withPlatform(withDOM(ModalRootDesktopComponent)), ConfigProviderContext, 'configProvider');
+export const ModalRootDesktop = withContext(withPlatform(withDOM<ModalRootProps>(ModalRootDesktopComponent)), ConfigProviderContext, 'configProvider');
