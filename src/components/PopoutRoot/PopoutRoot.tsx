@@ -36,7 +36,7 @@ class PopoutRoot extends Component<PopoutRootProps & DOMProps> {
   }
 
   render() {
-    const { popout, modal, viewWidth, children, className, getRootRef, ...restProps } = this.props;
+    const { popout, modal, viewWidth, children, className, getRootRef, window, document, ...restProps } = this.props;
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     return (

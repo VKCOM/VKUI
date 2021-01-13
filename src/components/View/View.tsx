@@ -462,6 +462,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
       popout, modal, platform,
       activePanel: _1, splitCol, configProvider, history, id,
       onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
+      window, document,
       ...restProps
     } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult } = this.state;

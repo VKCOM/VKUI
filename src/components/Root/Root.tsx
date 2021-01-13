@@ -169,6 +169,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     const {
       popout, modal, platform,
       splitCol, configProvider, activeView: _1, onTransition,
+      window, document,
       ...restProps
     } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;

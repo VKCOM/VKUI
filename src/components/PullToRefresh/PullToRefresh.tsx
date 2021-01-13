@@ -240,7 +240,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToR
   }
 
   render() {
-    const { children, className, onRefresh, isFetching, platform, ...restProps } = this.props;
+    const { children, className, onRefresh, isFetching, platform, window, document, ...restProps } = this.props;
     const { watching, refreshing, spinnerY, spinnerProgress, canRefresh, touchDown, contentShift } = this.state;
 
     const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;

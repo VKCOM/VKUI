@@ -202,6 +202,8 @@ class Cell extends Component<CellProps & DOMProps, CellState> {
       name,
       checked,
       defaultChecked,
+      window,
+      document,
       ...restProps
     } = this.props;
 

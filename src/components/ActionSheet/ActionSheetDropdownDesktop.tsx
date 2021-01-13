@@ -72,7 +72,7 @@ class ActionSheetDropdownDesktop extends Component<Props & DOMProps> {
   stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
   render() {
-    const { children, platform, elementRef, toggleRef, closing, sizeY, ...restProps } = this.props;
+    const { children, platform, elementRef, toggleRef, closing, sizeY, window, document, ...restProps } = this.props;
     const baseClaseName = getClassName('ActionSheet', platform);
 
     return (

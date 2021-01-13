@@ -336,6 +336,8 @@ class Touch extends Component<TouchProps & DOMProps> {
       Component,
       getRootRef,
       noSlideClick,
+      window,
+      document,
       ...restProps
     } = this.props;
 

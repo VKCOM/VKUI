@@ -1,10 +1,10 @@
-import React, { Children, Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState } from 'react';
+import React, { Children, Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState, FC } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
-import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
+import { canUseDOM, withDOM, useDOM, DOMProps } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
@@ -401,11 +401,11 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
   }
 }
 
-const BaseGalleryAdaptive = withAdaptivity(BaseGallery, {
+const BaseGalleryAdaptive = withAdaptivity(withDOM<BaseGalleryProps>(BaseGallery), {
   hasMouse: true,
 });
 
-const Gallery = withDOM<GalleryProps>(({
+const Gallery: FC<GalleryProps> = ({
   initialSlideIndex = 0,
   children,
   timeout,
@@ -419,6 +419,8 @@ const Gallery = withDOM<GalleryProps>(({
   const slides = React.Children.toArray(children).filter((item) => Boolean(item));
   const childCount = slides.length;
 
+  const { window } = useDOM();
+
   const handleChange: GalleryProps['onChange'] = useCallback((current) => {
     if (current === slideIndex) {
       return;
@@ -431,8 +433,8 @@ const Gallery = withDOM<GalleryProps>(({
     if (!timeout || !canUseDOM) {
       return undefined;
     }
-    const id = props.window.setTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
-    return () => props.window.clearTimeout(id);
+    const id = window.setTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
+    return () => window.clearTimeout(id);
   }, [timeout, slideIndex, childCount]);
   // prevent overflow
   useEffect(() => handleChange(Math.min(slideIndex, childCount - 1)), [childCount]);
@@ -445,6 +447,6 @@ const Gallery = withDOM<GalleryProps>(({
       onChange={handleChange}
     >{slides}</BaseGalleryAdaptive>
   );
-});
+};
 
 export default withPlatform(Gallery);

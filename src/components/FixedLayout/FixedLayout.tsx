@@ -134,7 +134,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps, FixedLayo
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panel, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panel, window, document, ...restProps } = this.props;
 
     return (
       <div
