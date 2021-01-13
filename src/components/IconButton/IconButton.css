@@ -67,13 +67,12 @@
 .IconButton--android,
 .IconButton--vkcom {
   height: 48px;
-  border-radius: 24px;
+  border-radius: 50%;
 }
 
 .IconButton--android.Tappable--sizeY-compact,
 .IconButton--vkcom.Tappable--sizeY-compact {
   height: 44px;
-  border-radius: 22px;
 }
 
 .IconButton--android.Tappable--active .Icon,
