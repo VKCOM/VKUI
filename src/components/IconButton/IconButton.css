@@ -9,6 +9,11 @@
   padding: 0;
   margin: 0;
   position: relative;
+  height: 48px;
+}
+
+.IconButton--sizeY-compact {
+  height: 44px;
 }
 
 .IconButton .Icon--16 {
@@ -19,8 +24,8 @@
   padding: 16px 14px;
 }
 
-.IconButton.Tappable--sizeY-compact .Icon--16,
-.IconButton.Tappable--sizeY-compact .Icon--16.Icon--w-8 {
+.IconButton--sizeY-compact .Icon--16,
+.IconButton--sizeY-compact .Icon--16.Icon--w-8 {
   padding: 14px;
 }
 
@@ -28,7 +33,7 @@
   padding: 12px;
 }
 
-.IconButton.Tappable--sizeY-compact .Icon--24 {
+.IconButton--sizeY-compact .Icon--24 {
   padding: 10px;
 }
 
@@ -36,7 +41,7 @@
   padding: 10px;
 }
 
-.IconButton.Tappable--sizeY-compact .Icon--28 {
+.IconButton--sizeY-compact .Icon--28 {
   padding: 8px;
 }
 
@@ -48,14 +53,6 @@
  * iOS
  */
 
-.IconButton--ios {
-  height: 48px;
-}
-
-.IconButton--ios.Tappable--sizeY-compact {
-  height: 44px;
-}
-
 .IconButton--ios.Tappable--active {
   opacity: .7;
 }
@@ -66,13 +63,7 @@
 
 .IconButton--android,
 .IconButton--vkcom {
-  height: 48px;
   border-radius: 50%;
-}
-
-.IconButton--android.Tappable--sizeY-compact,
-.IconButton--vkcom.Tappable--sizeY-compact {
-  height: 44px;
 }
 
 .IconButton--android.Tappable--active .Icon,
