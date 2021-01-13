@@ -39,7 +39,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapp
     fixed: true,
     alignY: 'center',
     alignX: 'center',
-    closing: false
+    closing: false,
   };
 
   elRef: React.RefObject<HTMLDivElement>;
