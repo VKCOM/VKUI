@@ -17,8 +17,8 @@ export const DOMContext = createContext<DOMContextInterface>({
 export const useDOM = () => {
   const dom = useContext(DOMContext);
   return {
-    window: dom.window || canUseDOM ? window : null,
-    document: dom.document || canUseDOM ? document : null,
+    window: dom.window || (canUseDOM ? window : null),
+    document: dom.document || (canUseDOM ? document : null),
   };
 };
 
