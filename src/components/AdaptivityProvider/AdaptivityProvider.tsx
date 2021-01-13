@@ -20,8 +20,12 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
   const { window } = useDOM();
 
-  if (window && !adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(window.innerWidth, window.innerHeight, props);
+  if (!adaptivityRef.current) {
+    adaptivityRef.current = calculateAdaptivity(
+      window ? window.innerWidth : 0,
+      window ? window.innerHeight : 0,
+      props,
+    );
   }
 
   useEffect(() => {
