@@ -935,6 +935,7 @@ body[scheme=space_gray] .Gradient--md-tint.Gradient--to-bottom{background:linear
 .SimpleCell--ios>.Icon--28,.SimpleCell--ios>.Avatar--sz-32,.SimpleCell--ios>.Avatar--sz-28{padding-left:4px}
 .SimpleCell--ios .SimpleCell__after .Icon--chevron_24{color:#b8c1cc;color:#b8c1cc;color:var(--icon_tertiary);padding-right:4px;padding-left:12px}
 .SimpleCell--ios .SimpleCell__after .IconButton .Icon--16,.SimpleCell--ios .SimpleCell__after .IconButton .Icon--16~*{margin-right:-12px}
+.SimpleCell--ios.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16,.SimpleCell--ios.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16~*{margin-right:-14px}
 .SimpleCell--android,.SimpleCell--vkcom{font-size:16px;line-height:20px;padding-left:16px;padding-right:16px}
 .SimpleCell--android .SimpleCell__main,.SimpleCell--android .SimpleCell__indicator,.SimpleCell--vkcom .SimpleCell__main,.SimpleCell--vkcom .SimpleCell__indicator{padding-top:11px;padding-bottom:10px}
 .SimpleCell--sizeY-compact{min-height:44px}
@@ -944,6 +945,10 @@ body[scheme=space_gray] .Gradient--md-tint.Gradient--to-bottom{background:linear
 .SimpleCell--sizeY-compact>.Icon,.SimpleCell--sizeY-compact>.Avatar--sz-32,.SimpleCell--sizeY-compact>.Avatar--sz-28{padding-top:8px;padding-bottom:8px}
 .SimpleCell--sizeY-compact,.SimpleCell--sizeY-compact>.Avatar:not(.Avatar--sz-32)~.SimpleCell__main,.SimpleCell--sizeY-compact>.Avatar:not(.Avatar--sz-32)~.SimpleCell__indicator{font-size:15px;line-height:20px}
 .SimpleCell--sizeY-compact .SimpleCell__description,.SimpleCell--sizeY-compact>.Avatar--sz-32~.SimpleCell__main .SimpleCell__description,.SimpleCell--sizeY-compact>.Avatar--sz-28~.SimpleCell__main .SimpleCell__description{margin-top:1px}
+.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--28,.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--28~*{margin-right:-6px}
+.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--24,.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--24~*{margin-right:-8px}
+.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16,.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--16~*{margin-right:-12px}
+.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--w-8,.SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--w-8~*{margin-right:-10px}
 .Cell{position:relative;margin:0;padding:0;font-size:16px;line-height:22px}
 .List--dragging .Cell:not(.Cell--dragging){transition:-webkit-transform .3s ease;transition:transform .3s ease;transition:transform .3s ease,-webkit-transform .3s ease;transition:transform .3s ease,-webkit-transform .3s ease}
 .List--dragging .Cell--dragging,.Cell--dragging{background-color:#fff;background-color:#fff;background-color:var(--background_content);box-shadow:0 0 5px rgba(0,0,0,.25);z-index:3}
