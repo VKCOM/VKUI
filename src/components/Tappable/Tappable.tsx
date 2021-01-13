@@ -373,13 +373,13 @@ class Tappable extends Component<TappableProps, TappableState> {
                       {children}
                     </TappableContext.Provider>
                     {platform === ANDROID && !hasMouse &&
-                      <span className="Tappable__waves">
-                        {Object.keys(clicks).map((k: string) => {
-                          return (
-                            <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x, }} key={k} />
-                          );
-                        })}
-                      </span>
+                    <span className="Tappable__waves">
+                      {Object.keys(clicks).map((k: string) => {
+                        return (
+                          <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                        );
+                      })}
+                    </span>
                     }
                     {hasHover && <span className="Tappable__hoverShadow" />}
                   </RootComponent>
