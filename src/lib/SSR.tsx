@@ -1,6 +1,7 @@
 import React, { createContext, FC } from 'react';
 import { PlatformType, platform } from './platform';
 import { BrowserInfo, computeBrowserInfo } from './browser';
+import { DOMContext, getDOM } from '../lib/dom';
 
 export interface SSRContextInterface {
   platform: PlatformType;
@@ -33,9 +34,14 @@ export const SSRWrapper: FC<SSRWrapperProps> = (props) => {
     userAgent,
   };
 
+  // TODO: move to state, and update in effect?
+  const dom = getDOM();
+
   return (
     <SSRContext.Provider value={contextValue}>
-      {children}
+      <DOMContext.Provider value={dom}>
+        {children}
+      </DOMContext.Provider>
     </SSRContext.Provider>
   );
 };

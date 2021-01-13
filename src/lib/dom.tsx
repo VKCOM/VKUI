@@ -9,10 +9,12 @@ export interface DOMContextInterface {
 
 export type DOMProps = DOMContextInterface;
 
-export const DOMContext = createContext<DOMContextInterface>({
+export const getDOM = () => ({
   window: canUseDOM ? window : null,
   document: canUseDOM ? document : null,
 });
+
+export const DOMContext = createContext<DOMContextInterface>(getDOM());
 
 export const useDOM = () => {
   const dom = useContext(DOMContext);
