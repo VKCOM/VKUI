@@ -781,17 +781,18 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .IconButton{-webkit-appearance:none;appearance:none;background:0 0;border:0;outline:0;box-shadow:none;display:block;color:currentColor;padding:0;margin:0;position:relative}
 .IconButton .Icon--16{padding:16px}
 .IconButton .Icon--16.Icon--w-8{padding:16px 14px}
+.IconButton.Tappable--sizeY-compact .Icon--16,.IconButton.Tappable--sizeY-compact .Icon--16.Icon--w-8{padding:14px}
 .IconButton .Icon--24{padding:12px}
+.IconButton.Tappable--sizeY-compact .Icon--24{padding:10px}
 .IconButton .Icon--28{padding:10px}
+.IconButton.Tappable--sizeY-compact .Icon--28{padding:8px}
 .IconButton[disabled]{opacity:.6}
 .IconButton--ios{height:48px}
+.IconButton--ios.Tappable--sizeY-compact{height:44px}
 .IconButton--ios.Tappable--active{opacity:.7}
 .IconButton--android,.IconButton--vkcom{height:48px;border-radius:24px}
 .IconButton--android.Tappable--sizeY-compact,.IconButton--vkcom.Tappable--sizeY-compact{height:44px;border-radius:22px}
 .IconButton--android.Tappable--active .Icon,.IconButton--vkcom.Tappable--active .Icon{transition:inherit;border-radius:inherit;background-color:rgba(0,0,0,.08);background-color:rgba(0,0,0,.08);background-color:var(--background_highlighted)}
-.IconButton--android.Tappable--sizeY-compact .Icon--16,.IconButton--vkcom.Tappable--sizeY-compact .Icon--16,.IconButton--android.Tappable--sizeY-compact .Icon--16.Icon--w-8,.IconButton--vkcom.Tappable--sizeY-compact .Icon--16.Icon--w-8{padding:14px}
-.IconButton--android.Tappable--sizeY-compact .Icon--24,.IconButton--vkcom.Tappable--sizeY-compact .Icon--24{padding:10px}
-.IconButton--android.Tappable--sizeY-compact .Icon--28,.IconButton--vkcom.Tappable--sizeY-compact .Icon--28{padding:8px}
 .Card{position:relative;background:#f5f5f5;background:#f5f5f5;background:var(--content_tint_background)}
 .Card__in{position:relative;z-index:2;border-radius:inherit}
 .Card--md-shadow{box-shadow:0 2px 24px 0 rgba(0,0,0,.08),0 0 2px 0 rgba(0,0,0,.08);background:#fff;background:#fff;background:var(--modal_card_background)}
