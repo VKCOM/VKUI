@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { DOMProps, HasChildren } from '../../types';
+import { HasChildren } from '../../types';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
-import { DOMContext, canUseDOM } from '../../lib/dom';
+import { DOMContext, canUseDOM, useDOM } from '../../lib/dom';
 
-export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren, DOMProps {}
+export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren {}
 
 export const DESKTOP_SIZE = 1280;
 export const TABLET_SIZE = 1024;
@@ -18,13 +18,15 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   const adaptivityRef = useRef<AdaptivityContextInterface>(null);
   const [, updateAdaptivity] = useState({});
 
+  const { window, document } = useDOM();
+
   if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
+    adaptivityRef.current = calculateAdaptivity(window.innerWidth, window.innerHeight, props);
   }
 
   useEffect(() => {
     function onResize() {
-      const calculated = calculateAdaptivity(props.window.innerWidth, props.window.innerHeight, props);
+      const calculated = calculateAdaptivity(window.innerWidth, window.innerHeight, props);
       const { viewWidth, viewHeight, sizeX, sizeY, hasMouse } = adaptivityRef.current;
 
       if (
@@ -40,18 +42,18 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     }
 
     onResize();
-    props.window.addEventListener('resize', onResize, false);
+    window.addEventListener('resize', onResize, false);
 
     return () => {
-      props.window.removeEventListener('resize', onResize, false);
+      window.removeEventListener('resize', onResize, false);
     };
   }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse]);
 
   return (
     <AdaptivityContext.Provider value={adaptivityRef.current}>
       <DOMContext.Provider value={{
-        window: props.window,
-        document: props.document || props.window.document,
+        window: window,
+        document: document || window.document,
       }}>
         {props.children}
       </DOMContext.Provider>

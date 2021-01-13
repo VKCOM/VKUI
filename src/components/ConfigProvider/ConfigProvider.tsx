@@ -1,5 +1,5 @@
 import React from 'react';
-import { canUseDOM } from '../../lib/dom';
+import { canUseDOM, withDOM, DOMContextInterface } from '../../lib/dom';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
@@ -7,23 +7,18 @@ import {
   AppearanceScheme,
   defaultConfigProviderProps,
 } from './ConfigProviderContext';
-import { HasChildren, DOMProps } from '../../types';
-import PropTypes from 'prop-types';
+import { HasChildren } from '../../types';
 import { Platform, VKCOM } from '../../lib/platform';
 
-export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
+export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren, DOMContextInterface {}
 
-export default class ConfigProvider extends React.Component<ConfigProviderProps> {
-  constructor(props: ConfigProviderProps, context: DOMProps) {
+export class ConfigProvider extends React.Component<ConfigProviderProps> {
+  constructor(props: ConfigProviderProps) {
     super(props);
     if (canUseDOM) {
-      this.setScheme(this.getScheme(props.platform, props.scheme), context);
+      this.setScheme(this.getScheme(props.platform, props.scheme));
     }
   }
-
-  static contextTypes = {
-    document: PropTypes.any,
-  };
 
   // Деструктуризация нужна из бага в react-docgen-typescript
   // https://github.com/styleguidist/react-docgen-typescript/issues/195
@@ -44,13 +39,13 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     return platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(scheme);
   };
 
-  setScheme = (scheme: AppearanceScheme, context: DOMProps): void => {
-    (context.document || document).body.setAttribute('scheme', scheme);
+  setScheme = (scheme: AppearanceScheme): void => {
+    (this.props.document || document).body.setAttribute('scheme', scheme);
   };
 
   componentDidUpdate(prevProps: ConfigProviderProps) {
     if (prevProps.scheme !== this.props.scheme) {
-      this.setScheme(this.getScheme(this.props.platform, this.props.scheme), this.context);
+      this.setScheme(this.getScheme(this.props.platform, this.props.scheme));
     }
   }
 
@@ -74,3 +69,5 @@ export default class ConfigProvider extends React.Component<ConfigProviderProps>
     );
   }
 }
+
+export default withDOM(ConfigProvider);
