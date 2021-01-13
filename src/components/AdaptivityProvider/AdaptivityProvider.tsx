@@ -20,7 +20,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
 
   const { window } = useDOM();
 
-  if (!adaptivityRef.current) {
+  if (window && !adaptivityRef.current) {
     adaptivityRef.current = calculateAdaptivity(window.innerWidth, window.innerHeight, props);
   }
 
