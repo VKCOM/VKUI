@@ -13,9 +13,9 @@ import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOpti
 import { useChipsSelect } from './useChipsSelect';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { setRef, noop } from '../../lib/utils';
-import { FrameProps, withFrame } from '../../hoc/withFrame';
+import { useDOM } from '../../lib/dom';
 
-export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps, FrameProps {
+export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
   options?: Option[];
   filterFn?: (value?: string, option?: Option, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => boolean;
@@ -55,13 +55,15 @@ type focusActionType = 'next' | 'prev';
 const FOCUS_ACTION_NEXT: focusActionType = 'next';
 const FOCUS_ACTION_PREV: focusActionType = 'prev';
 
-const ChipsSelect = withFrame(<Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
+const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
     style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText, sizeY,
-    closeAfterSelect, onChangeStart, document, ...restProps
+    closeAfterSelect, onChangeStart, ...restProps
   } = props;
+
+  const { document } = useDOM();
 
   const scrollViewRef = useRef<CustomScrollView>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -324,7 +326,7 @@ const ChipsSelect = withFrame(<Option extends ChipsInputOption>(props: ChipsSele
       }
     </div>
   );
-});
+};
 
 ChipsSelect.defaultProps = {
   ...chipsInputDefaultProps,
@@ -334,7 +336,7 @@ ChipsSelect.defaultProps = {
   showSelected: true,
   closeAfterSelect: true,
   options: [],
-  filterFn: (value, option, getOptionLabel) => {
+  filterFn: (value?: string, option?: ChipsInputOption, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => {
     return (
       !value || value && getOptionLabel(option)?.toLowerCase()?.startsWith(value?.toLowerCase())
     );
