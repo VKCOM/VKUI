@@ -37,6 +37,7 @@
             getAvatarUrl('user_vitalyavolyn'),
             getAvatarUrl('user_eee'),
           ]}
+          size="xs"
         >Иван и ещё 2 ваших друга подписаны</UsersStack>
       </Div>
     </Group>
