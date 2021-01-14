@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types';
+import { HasChildren, HasPlatform } from '../../types';
 import { PointerEventsProperty } from 'csstype';
-import PropTypes from 'prop-types';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { DOMProps, withDOM } from '../../lib/dom';
 
-interface Props extends HasPlatform, AdaptivityProps {
+interface Props extends HasPlatform, AdaptivityProps, HasChildren {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;
@@ -16,7 +16,7 @@ interface Props extends HasPlatform, AdaptivityProps {
 
 type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
 
-class ActionSheetDropdownDesktop extends Component<Props> {
+class ActionSheetDropdownDesktop extends Component<Props & DOMProps> {
   state = {
     dropdownStyles: {
       left: '0',
@@ -26,12 +26,8 @@ class ActionSheetDropdownDesktop extends Component<Props> {
     },
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-  };
-
   get window(): Window {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   componentDidMount = () => {
@@ -76,7 +72,7 @@ class ActionSheetDropdownDesktop extends Component<Props> {
   stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
 
   render() {
-    const { children, platform, elementRef, toggleRef, closing, sizeY, ...restProps } = this.props;
+    const { children, platform, elementRef, toggleRef, closing, sizeY, window, document, ...restProps } = this.props;
     const baseClaseName = getClassName('ActionSheet', platform);
 
     return (
@@ -95,6 +91,6 @@ class ActionSheetDropdownDesktop extends Component<Props> {
   }
 }
 
-export default withAdaptivity(withPlatform(ActionSheetDropdownDesktop), {
+export default withAdaptivity(withPlatform(withDOM<Props>(ActionSheetDropdownDesktop)), {
   sizeY: true,
 });

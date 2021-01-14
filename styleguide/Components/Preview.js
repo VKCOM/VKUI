@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
 import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider } from '../../src';
+import { DOMContext } from '../../src/lib/dom';
 
 class PrepareFrame extends React.Component {
   state = {
@@ -182,22 +183,21 @@ export default class Preview extends PreviewParent {
                 {isEmbedded && this.state.hideEmbeddedApp ? null :
                     <PrepareFrame integration={styleGuideContext.integration}>
                       {({ window }) => (
-                        <ConfigProvider
-                          platform={styleGuideContext.platform}
-                          scheme={styleGuideContext.scheme}
-                          webviewType={styleGuideContext.webviewType}
-                        >
-                          <AdaptivityProvider
-                            window={window}
-                            hasMouse={styleGuideContext.hasMouse}
+                        <DOMContext.Provider value={{ window: window, document: window.document }}>
+                          <ConfigProvider
+                            platform={styleGuideContext.platform}
+                            scheme={styleGuideContext.scheme}
+                            webviewType={styleGuideContext.webviewType}
                           >
-                            {isPartial ? example : (
-                              <AppRoot embedded={isEmbedded} window={window}>
-                                {example}
-                              </AppRoot>
-                            )}
-                          </AdaptivityProvider>
+                            <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
+                              {isPartial ? example : (
+                                <AppRoot embedded={isEmbedded} window={window}>
+                                  {example}
+                                </AppRoot>
+                              )}
+                            </AdaptivityProvider>
                         </ConfigProvider>
+                        </DOMContext.Provider>
                       )}
                     </PrepareFrame>
                   }

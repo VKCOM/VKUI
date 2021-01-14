@@ -1,5 +1,4 @@
 import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Touch, { TouchEvent } from '../Touch/Touch';
@@ -73,11 +72,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     layout: 'horizontal',
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   private innerEl: HTMLDivElement;
   private readonly bodyElRef: React.RefObject<HTMLDivElement>;
 
@@ -95,10 +89,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   componentWillUnmount() {
     this.clearCloseTimeout();
-  }
-
-  get window() {
-    return this.context.window || window;
   }
 
   setCloseTimeout = () => {

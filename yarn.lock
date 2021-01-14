@@ -2163,10 +2163,10 @@
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.1.5.tgz#eae6598c955a894421fd4b63f6f12abdfd0f4e6b"
 
-"@vkontakte/vkjs@0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.16.0.tgz#345a98453d8ed12dcc6c0d1316bcd520e44b748c"
-  integrity sha512-XkRSveyHtjAZTk7F7L9x4j172mZacsgLblJcnonQGavGvenixxHtHWG/LAk6XYTDLxC81thwnYdlRXYdZox+iA==
+"@vkontakte/vkjs@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.20.0.tgz#ddb9367649ab7e79754b9906c3f6e1960f624c37"
+  integrity sha512-bocEj9pcr6i6F0LN288xU3PX1MI4OJ3ZJXTa6kFx9IqEgk0CnoMtLAcuH2D7DzZAnc83DJCa/tuo9mT7XW035A==
 
 "@vxna/mini-html-webpack-template@^1.0.0":
   version "1.0.0"

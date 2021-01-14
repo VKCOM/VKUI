@@ -1,5 +1,4 @@
 import React, { PureComponent, RefObject } from 'react';
-import PropTypes from 'prop-types';
 import Touch, { TouchProps, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -9,7 +8,7 @@ import getClassName from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
 import withPlatform from '../../hoc/withPlatform';
 import { AnyFunction, HasPlatform } from '../../types';
-import { canUseDOM } from '../../lib/dom';
+import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { runTapticImpactOccurred } from '../../lib/taptic';
 
 export interface PullToRefreshProps extends TouchProps, HasPlatform {
@@ -63,7 +62,7 @@ function cancelEvent(event: any) {
   return false;
 }
 
-class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState> {
+class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToRefreshState> {
   constructor(props: PullToRefreshProps) {
     super(props);
 
@@ -97,22 +96,18 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
 
   contentRef: RefObject<HTMLDivElement>;
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   get document() {
-    return this.context.document || document;
+    return this.props.document;
   }
 
   get window() {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   componentDidMount() {
     if (canUseDOM) {
       this.document.addEventListener('touchmove', this.onWindowTouchMove, {
+        // @ts-ignore
         cancelable: true,
         passive: false,
       });
@@ -125,6 +120,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
     // https://github.com/VKCOM/VKUI/issues/444
     if (canUseDOM) {
       this.document.removeEventListener('touchmove', this.onWindowTouchMove, {
+        // @ts-ignore
         cancelable: true,
         passive: false,
       });
@@ -244,7 +240,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
   }
 
   render() {
-    const { children, className, onRefresh, isFetching, platform, ...restProps } = this.props;
+    const { children, className, onRefresh, isFetching, platform, window, document, ...restProps } = this.props;
     const { watching, refreshing, spinnerY, spinnerProgress, canRefresh, touchDown, contentShift } = this.state;
 
     const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
@@ -296,4 +292,4 @@ class PullToRefresh extends PureComponent<PullToRefreshProps, PullToRefreshState
   }
 }
 
-export default withPlatform(PullToRefresh);
+export default withPlatform(withDOM<PullToRefreshProps>(PullToRefresh));
