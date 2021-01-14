@@ -47,6 +47,7 @@ export { default as ModalDismissButton } from './components/ModalDismissButton/M
 /**
  * Blocks
  */
+export { default as Badge } from './components/Badge/Badge';
 export { default as Button } from './components/Button/Button';
 export { default as IconButton } from './components/IconButton/IconButton';
 export { default as Card } from './components/Card/Card';
