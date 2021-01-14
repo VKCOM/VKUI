@@ -50,6 +50,7 @@
 
 .UsersStack--size-xs:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
   margin-left: -1px;
+  clip-path: url(#users_stack_mask_16_left);
 }
 
 .UsersStack--size-s:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
