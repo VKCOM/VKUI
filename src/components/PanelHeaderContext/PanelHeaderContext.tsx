@@ -31,8 +31,7 @@ export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMP
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   get isDesktop(): boolean {
-    const { viewWidth, hasMouse } = this.props;
-    return viewWidth >= ViewWidth.SMALL_TABLET && hasMouse;
+    return this.props.viewWidth >= ViewWidth.SMALL_TABLET;
   }
 
   startClosing = (event: Event) => {
