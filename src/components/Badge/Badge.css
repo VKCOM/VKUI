@@ -1,3 +1,21 @@
 .Badge {
-  box-sizing: border-box;
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  color: var(--dynamic_blue);
+}
+
+.Badge__default {
+  display: inline;
+  width: 6px;
+  height: 6px;
+  margin: 2px;
+  background-color: var(--dynamic_blue);
+  border-radius: 50%;
 }

@@ -26,4 +26,8 @@ const Badge: FunctionComponent<BadgeProps> = ({
   );
 };
 
+Badge.defaultProps = {
+  icon: <i className="Badge__default"></i>,
+};
+
 export default Badge;
