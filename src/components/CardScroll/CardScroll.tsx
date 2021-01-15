@@ -10,7 +10,7 @@ export interface CardScrollProps extends HTMLAttributes<HTMLDivElement>, Adaptiv
   size?: 's' | 'm' | 'l';
 }
 
-const CardScroll: FC<CardScrollProps> = ({ children, className, size, sizeX, ...restProps }) => {
+const CardScroll: FC<CardScrollProps> = ({ children, className, size, sizeX, ...restProps }: CardScrollProps) => {
   const platform = usePlatform();
 
   const refContainer = useRef<HTMLDivElement>(null);

@@ -15,7 +15,7 @@ const Subhead: FunctionComponent<SubheadProps> = ({
   weight,
   Component,
   ...restProps
-}) => {
+}: SubheadProps) => {
   const platform = usePlatform();
 
   let SubheadComponent: React.ElementType = Component;

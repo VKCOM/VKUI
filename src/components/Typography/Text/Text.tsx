@@ -13,7 +13,7 @@ const Text: FunctionComponent<TextProps> = ({
   className,
   weight,
   ...restProps
-}) => {
+}: TextProps) => {
   const platform = usePlatform();
 
   let textWeight: TextProps['weight'] = weight;

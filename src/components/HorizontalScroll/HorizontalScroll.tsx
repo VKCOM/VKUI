@@ -5,16 +5,14 @@ import getClassName from '../../helpers/getClassName';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from './HorizontalScrollArrow';
 
-type GetScrollPositionCallback = (currentPosition: number) => number;
-type Callback = () => void;
 type ScrollContext = {
   scrollElement: HTMLElement | null;
   scrollAnimationDuration: number;
-  animationQueue: Callback[];
-  getScrollPosition: GetScrollPositionCallback;
-  onScrollToRightBorder: Callback;
-  onScrollEnd: Callback;
-  onScrollStart: Callback;
+  animationQueue: VoidFunction[];
+  getScrollPosition: (currentPosition: number) => number;
+  onScrollToRightBorder: VoidFunction;
+  onScrollEnd: VoidFunction;
+  onScrollStart: VoidFunction;
   /**
    * Начальная ширина прокрутки.
    * В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate
@@ -23,8 +21,14 @@ type ScrollContext = {
 };
 
 interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
-  getScrollToLeft?: GetScrollPositionCallback;
-  getScrollToRight?: GetScrollPositionCallback;
+  /**
+   * Функция для расчета величины прокрутки при клике на левую стрелку.
+   */
+  getScrollToLeft?: (currentPosition: number) => number;
+  /**
+   * Функция для расчета величины прокрутки при клике на правую стрелку.
+   */
+  getScrollToRight?: (currentPosition: number) => number;
   showArrows?: boolean;
   scrollAnimationDuration?: number;
 }
@@ -121,7 +125,7 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
 
   const scrollerRef = useRef<HTMLDivElement>(null);
 
-  const animationQueue = useRef<Callback[]>([]);
+  const animationQueue = useRef<VoidFunction[]>([]);
 
   const platform = usePlatform();
 

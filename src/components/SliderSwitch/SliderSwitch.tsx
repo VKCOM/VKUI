@@ -7,22 +7,24 @@ interface Option {
   name: string;
   value: string | number;
 }
-const nullOption: Option = { name: '', value: '' };
 
-interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform {
-  options: Option[];
+interface SliderSwitchProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+  options: Array<{
+    name: string;
+    value: string | number;
+  }>;
   activeValue?: Option['value'];
   name?: string;
   onSwitch?: (value: Option['value']) => void;
 }
 
-interface State {
+interface SliderSwitchState {
   activeValue: Option['value'];
   hoveredOptionId: number;
 }
 
-export default class SliderSwitch extends React.Component<Props, State> {
-  public constructor(props: Props) {
+export default class SliderSwitch extends React.Component<SliderSwitchProps, SliderSwitchState> {
+  public constructor(props: SliderSwitchProps) {
     super(props);
 
     this.state = {
@@ -35,7 +37,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
   }
 
   static defaultProps = {
-    options: [nullOption, nullOption],
+    options: [{ name: '', value: '' }, { name: '', value: '' }],
   };
 
   firstButton: RefObject<HTMLDivElement>;
@@ -102,7 +104,7 @@ export default class SliderSwitch extends React.Component<Props, State> {
     }
   };
 
-  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+  static getDerivedStateFromProps(nextProps: SliderSwitchProps, prevState: SliderSwitchState) {
     if (nextProps.activeValue && nextProps.activeValue !== prevState.activeValue) {
       return {
         activeValue: nextProps.activeValue,

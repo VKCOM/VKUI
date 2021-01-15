@@ -17,7 +17,7 @@ const Caption: FunctionComponent<CaptionProps> = ({
   level,
   caps,
   ...restProps
-}) => {
+}: CaptionProps) => {
   const platform = usePlatform();
 
   let captionWeight: CaptionProps['weight'] = weight;

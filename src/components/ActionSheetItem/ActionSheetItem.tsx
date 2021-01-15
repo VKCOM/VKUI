@@ -25,10 +25,6 @@ export interface ActionSheetItemProps extends
   subtitle?: React.ReactNode;
   autoclose?: boolean;
   selectable?: boolean;
-  /**
-   * @ignore
-   */
-  isLast?: boolean;
   disabled?: boolean;
 }
 
@@ -40,7 +36,6 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   meta,
   subtitle,
   before,
-  isLast,
   selectable,
   value,
   name,

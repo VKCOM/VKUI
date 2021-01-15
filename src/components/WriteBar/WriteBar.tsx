@@ -33,7 +33,7 @@ export interface WriteBarProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   children?: never;
 }
 
-export const WriteBar: FC<WriteBarProps> = (props) => {
+export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
   const platform = usePlatform();
   const {
     className,

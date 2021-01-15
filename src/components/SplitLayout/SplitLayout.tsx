@@ -24,7 +24,7 @@ export const SplitLayout: FC<SplitLayoutProps> = ({
   getRootRef,
   getRef,
   ...restProps
-}) => {
+}: SplitLayoutProps) => {
   const platform = usePlatform();
 
   return (
