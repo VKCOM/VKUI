@@ -487,8 +487,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     return (
       <Touch
         Component="section"
-        className={classNames(getClassName('View', platform), this.props.className, modifiers)}
         {...restProps}
+        className={classNames(getClassName('View', platform), this.props.className, modifiers)}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
