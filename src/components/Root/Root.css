@@ -6,6 +6,7 @@
 
 .Root--transition {
   pointer-events: none;
+  overflow: hidden;
   }
 
   .Root__view {
