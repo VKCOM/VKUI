@@ -51,7 +51,7 @@
           <TabsItem selected after={<Counter size="s">24</Counter>}>
             Люди
           </TabsItem>
-          <TabsItem after={<Counter size="s">2</Counter>}>
+          <TabsItem after={<Counter size="s" mode="primary">2</Counter>}>
             Сообщества
           </TabsItem>
           <TabsItem>
@@ -60,7 +60,7 @@
         </HorizontalScroll>
       </Tabs>
       <Tabs>
-        <TabsItem after={<Counter size="s">6</Counter>}>
+        <TabsItem after={<Counter size="s" mode="prominent">6</Counter>}>
           Диалоги
         </TabsItem>
         <TabsItem selected after={<Counter size="s">24</Counter>}>
