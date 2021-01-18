@@ -74,6 +74,10 @@
   margin-top: 2px;
 }
 
+.SimpleCell__content {
+  display: inline-block;
+}
+
 .SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
   display: inline-flex;
   flex-flow: row nowrap;
@@ -90,19 +94,27 @@
 }
 
 .SimpleCell__badge {
+  display: inline-block;
   flex-grow: 0;
   flex-shrink: 0;
-  display: inline-flex;
-  flex-flow: row nowrap;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
   margin-left: 4px;
   color: #5c9ce6; /* blue_200 */
 }
 
 .SimpleCell__badge .Badge {
-  margin-top: 2px;
+  margin-top: 3px;
+}
+
+.SimpleCell--mult .SimpleCell__badge {
+  vertical-align: top;
+}
+
+.SimpleCell--mult .SimpleCell__badge .Icon {
+  transform: translateY(2px);
+}
+
+.SimpleCell--mult .SimpleCell__badge .Badge {
+  margin-top: 8px;
 }
 
 .SimpleCell__indicator {
@@ -283,5 +295,9 @@
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__badge .Badge {
+  transform: translateY(-.5px);
+}
+
+.SimpleCell--sizeY-compact.SimpleCell--mult .SimpleCell__badge .Badge {
   transform: translateY(.5px);
 }
