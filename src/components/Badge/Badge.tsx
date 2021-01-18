@@ -1,16 +1,15 @@
-import React, { ReactNode, HTMLAttributes, FunctionComponent } from 'react';
+import React, { HTMLAttributes, FunctionComponent } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { hasReactNode } from '../../lib/utils';
 
-export interface BadgeProps extends HTMLAttributes<HTMLElement>, AdaptivityProps {
-  icon: ReactNode;
-}
+export interface BadgeProps extends HTMLAttributes<HTMLElement>, AdaptivityProps {}
 
 const Badge: FunctionComponent<BadgeProps> = ({
+  children,
   className,
-  icon,
   sizeY,
   ...restProps
 }: BadgeProps) => {
@@ -24,13 +23,9 @@ const Badge: FunctionComponent<BadgeProps> = ({
         className,
       )}
       {...restProps}>
-      {icon}
+      {hasReactNode(children) ? children : <span className="Badge__new"></span>}
     </div>
   );
-};
-
-Badge.defaultProps = {
-  icon: <span className="Badge__new"></span>,
 };
 
 export default withAdaptivity(Badge, { sizeY: true });
