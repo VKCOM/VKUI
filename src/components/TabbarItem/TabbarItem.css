@@ -45,6 +45,12 @@
       left: calc(100% - 9px);
       }
 
+      .TabbarItem__badge {
+        position: absolute;
+        top: -6px;
+        right: -7px;
+      }
+
     .Tabbar--l-vertical .TabbarItem__text {
       font-size: 10px;
       line-height: 12px;
