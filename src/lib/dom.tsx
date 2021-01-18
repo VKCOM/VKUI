@@ -3,7 +3,13 @@ import { canUseDOM } from '@vkontakte/vkjs/lib/dom';
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs/lib/dom';
 
 export interface DOMContextInterface {
+  /**
+   * @ignore
+   */
   window?: Window;
+  /**
+   * @ignore
+   */
   document?: Document;
 }
 

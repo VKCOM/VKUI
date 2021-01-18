@@ -411,7 +411,7 @@ const Gallery: FC<GalleryProps> = ({
   timeout,
   onChange,
   ...props
-}) => {
+}: GalleryProps) => {
   const [localSlideIndex, setSlideIndex] = useState(initialSlideIndex);
   const isControlled = typeof props.slideIndex === 'number';
   const slideIndex = isControlled ? props.slideIndex : localSlideIndex;

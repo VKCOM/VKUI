@@ -42,7 +42,7 @@ const Title: FunctionComponent<TitleProps> = ({
   level,
   Component,
   ...restProps
-}) => {
+}: TitleProps) => {
   const platform = usePlatform();
   const TitleComponent = Component || getComponent(level);
   let titleWeight = platform === ANDROID ? getAndroidTitleWeight(level, weight) : weight;

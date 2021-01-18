@@ -11,7 +11,7 @@ export interface EpicProps extends HTMLAttributes<HTMLDivElement>, HasChildren, 
   activeStory: string;
 }
 
-export const Epic: FC<EpicProps> = (props) => {
+export const Epic: FC<EpicProps> = (props: EpicProps) => {
   const platform = usePlatform();
   const scroll = useRef<{ [key: string]: number }>({}).current;
   const { className, activeStory, tabbar, children, viewWidth, ...restProps } = props;

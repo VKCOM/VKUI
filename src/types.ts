@@ -20,12 +20,6 @@ export interface HasRef<T> {
   getRef?: Ref<T>;
 }
 
-export interface HasDangerHTML {
-  dangerouslySetInnerHTML?: {
-    __html: string;
-  };
-}
-
 export interface HasAlign {
   align?: AlignType;
 }

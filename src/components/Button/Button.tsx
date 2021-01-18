@@ -22,6 +22,7 @@ export interface VKUIButtonProps extends HasAlign {
 export interface ButtonProps extends TappableProps, ButtonHTMLAttributes<HTMLElement>, VKUIButtonProps {
   href?: string;
   target?: string;
+  rel?: string;
 }
 
 const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean, sizeY: AdaptivityProps['sizeY'], platform: Platform) => {
