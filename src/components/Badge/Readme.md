@@ -5,8 +5,16 @@
   <Panel id="badge">
     <PanelHeader>Badges</PanelHeader>
     
-      <Group header={<Header mode="secondary">Верифицированный пользователь</Header>}>
-        <Cell before={<Avatar />}>Артур Стамбульцян</Cell>
+      <Group header={<Header mode="secondary">Друзья</Header>}>
+        <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />} badge={<Badge icon={<Icon12Verified/>} />} description="Команда ВКонтакте" after={<Icon28MessageOutline />}
+        >Артур Стамбульцян</SimpleCell>
+
+        <SimpleCell multiline before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />} badge={<Badge icon={<Icon12Verified/>} />} description="Бот" after={<Icon28MessageOutline />}
+        >Константин Стамбульцян</SimpleCell>
+      </Group>
+    
+      <Group header={<Header mode="secondary">Новый пункт меню</Header>}>
+        <Cell expandable before={<Icon28Notifications />} badge={<Badge />}>Уведомления</Cell>
       </Group>
   </Panel>
 </View>
