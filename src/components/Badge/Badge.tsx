@@ -4,7 +4,7 @@ import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface BadgeProps extends HTMLAttributes<HTMLElement> {
-  mode: 'primary' | 'prominent';
+  mode: 'new' | 'prominent';
 };
 
 const Badge: FunctionComponent<BadgeProps> = ({
@@ -27,7 +27,7 @@ const Badge: FunctionComponent<BadgeProps> = ({
 };
 
 Badge.defaultProps = {
-  mode: 'primary',
+  mode: 'new',
 };
 
 export default Badge;
