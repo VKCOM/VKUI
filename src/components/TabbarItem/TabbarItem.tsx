@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode, HTMLAttributes, ElementType } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Counter from '../Counter/Counter';
-import Badge from '../Badge/Badge';
+import { Badge } from '../Badge/Badge';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasLinkProps } from '../../types';

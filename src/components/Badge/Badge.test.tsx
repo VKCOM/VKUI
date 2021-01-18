@@ -1,5 +1,5 @@
 import { baselineComponent } from '../../testing/utils';
-import Badge from './Badge';
+import { Badge } from './Badge';
 
 describe('Badge', () => {
   baselineComponent(Badge);

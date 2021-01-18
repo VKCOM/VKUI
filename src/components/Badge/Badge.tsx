@@ -7,7 +7,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLElement> {
   mode: 'new' | 'prominent';
 };
 
-const Badge: FunctionComponent<BadgeProps> = ({
+export const Badge: FunctionComponent<BadgeProps> = ({
   className,
   mode,
   ...restProps
@@ -29,5 +29,3 @@ const Badge: FunctionComponent<BadgeProps> = ({
 Badge.defaultProps = {
   mode: 'new',
 };
-
-export default Badge;
