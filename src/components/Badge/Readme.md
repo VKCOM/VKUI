@@ -1,21 +1,35 @@
-Используется для отображения информации рядом с именем пользователя.
+Индикатор, с помощью которого можно привлечь внимание пользователя к определенному разделу.
 
 ```jsx
 <View activePanel="badge">
   <Panel id="badge">
-    <PanelHeader>Badges</PanelHeader>
-    
-      <Group header={<Header mode="secondary">Друзья</Header>}>
-        <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />} badge={<Badge><Icon12Verified/></Badge>} description="Команда ВКонтакте" after={<Icon28MessageOutline />}
-        >Артур Стамбульцян</SimpleCell>
-
-        <SimpleCell multiline before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />} badge={<Badge><Icon12Verified/></Badge>} description="Бот" after={<Icon28MessageOutline />}
-        >Константин Стамбульцян</SimpleCell>
-      </Group>
-    
-      <Group header={<Header mode="secondary">Новый пункт меню</Header>}>
+    <PanelHeader>Бейдж</PanelHeader>
+      <Group header={<Header mode="secondary">В пунктах меню</Header>}>
         <Cell expandable before={<Icon28Notifications />} badge={<Badge />}>Уведомления</Cell>
       </Group>
+
+      <Group header={<Header mode="secondary">В переключателях</Header>}>
+        <Tabs>
+          <TabsItem after={<Badge mode="prominent" />}>
+            Диалоги
+          </TabsItem>
+          <TabsItem selected after={<Badge mode="prominent" />}>
+            Сообщения
+          </TabsItem>
+        </Tabs>
+      </Group>
+
+      <Tabbar>
+        <TabbarItem text="Новости">
+          <Icon28NewsfeedOutline />
+        </TabbarItem>
+        <TabbarItem label={12} text="Сообщения">
+          <Icon28MessageOutline />
+        </TabbarItem>
+        <TabbarItem badge text="Клипы">
+          <Icon28ClipOutline />
+        </TabbarItem>
+      </Tabbar>
   </Panel>
 </View>
 ```
