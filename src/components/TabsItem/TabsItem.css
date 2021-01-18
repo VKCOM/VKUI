@@ -94,6 +94,11 @@
   color: var(--panel_tab_active_text);
 }
 
+.TabsItem__after .Badge {
+  transform: translateY(-2px);
+  margin-left: 6px;
+}
+
 /*
   iOS
  */
