@@ -14,6 +14,9 @@ export interface SimpleCellOwnProps extends HasLinkProps {
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
   before?: ReactNode;
+  /**
+   * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
+   */
   badge?: ReactNode;
   /**
    * Контейнер для текста справа от `children`.

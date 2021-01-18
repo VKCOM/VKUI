@@ -37,7 +37,7 @@
             </Group>
             <Group>
               <Header mode="secondary">Список друзей</Header>
-              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />} after={<IconButton icon={<Icon28MessageOutline />} />} description="Команда ВКонтакте">Игорь Фёдоров</SimpleCell>
+              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />} badge={<Icon12Verified />} after={<IconButton icon={<Icon28MessageOutline />} />} description="Команда ВКонтакте">Игорь Фёдоров</SimpleCell>
               <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />} after={<IconButton icon={<Icon28MessageOutline />} />} description="Бот">Artur Stambultsian</SimpleCell>
             </Group>
           </Panel>

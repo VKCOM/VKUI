@@ -97,7 +97,8 @@
   align-content: center;
   align-items: center;
   justify-content: center;
-  padding-left: 4px;
+  margin-left: 4px;
+  color: #5c9ce6; /* blue_200 */
 }
 
 .SimpleCell__indicator {
