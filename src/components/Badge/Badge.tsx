@@ -3,13 +3,14 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
-import { hasReactNode } from '../../lib/utils';
 
-export interface BadgeProps extends HTMLAttributes<HTMLElement>, AdaptivityProps {}
+export interface BadgeProps extends HTMLAttributes<HTMLElement>, AdaptivityProps {
+  mode: 'primary' | 'prominent';
+};
 
 const Badge: FunctionComponent<BadgeProps> = ({
-  children,
   className,
+  mode,
   sizeY,
   ...restProps
 }: BadgeProps) => {
@@ -19,13 +20,18 @@ const Badge: FunctionComponent<BadgeProps> = ({
     <div
       className={classNames(
         getClassName('Badge', platform),
+        `Badge--${mode}`,
         `Badge--sizeY-${sizeY}`,
         className,
       )}
       {...restProps}>
-      {hasReactNode(children) ? children : <span className="Badge__new"></span>}
+      <span className="Badge__dot"></span>
     </div>
   );
+};
+
+Badge.defaultProps = {
+  mode: 'primary',
 };
 
 export default withAdaptivity(Badge, { sizeY: true });

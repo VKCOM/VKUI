@@ -6,21 +6,26 @@
   align-content: flex-start;
   justify-content: flex-start;
   align-items: center;
-  width: 16px;
-  height: 16px;
-  color: #5c9ce6; /* blue_200 */
+  width: 12px;
+  height: 12px;
 }
 
-.Badge__new {
-  display: inline;
+.Badge__dot {
   width: 6px;
   height: 6px;
-  margin-top: 2px;
+  margin-top: 1px;
   margin-left: 3px;
-  background-color: #5c9ce6; /* blue_200 */
   border-radius: 50%;
 }
 
-.Badge--sizeY-compact .Badge__new {
-  margin-top: 3px;
+.Badge--sizeY-compact .Badge__dot {
+  transform: translateY(.5px);
+}
+
+.Badge--primary .Badge__dot {
+  background-color: #5c9ce6; /* blue_200 */
+}
+
+.Badge--prominent .Badge__dot {
+  background-color: var(--counter_prominent_background);
 }
