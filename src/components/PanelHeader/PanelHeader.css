@@ -40,6 +40,7 @@
 }
 
 .PanelHeader__content {
+  height: 100%;
   overflow: hidden;
   color: var(--header_text);
   font-weight: 800;
@@ -113,7 +114,8 @@
 }
 
 .PanelHeader--ios .PanelHeader__content > * {
-  padding: 0 4px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .PanelHeader--ios.PanelHeader--no-left .PanelHeader__content > * {
@@ -185,7 +187,8 @@
 }
 
 .PanelHeader--android .PanelHeader__content > * {
-  padding: 0 12px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .PanelHeader--android .Search,

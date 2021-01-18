@@ -79,7 +79,15 @@
   iOS
  */
 .PanelHeaderContent--ios {
-  }
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.PanelHeaderContent--ios .PanelHeaderContent__in.Tappable {
+  padding: 0 8px;
+}
 
   .PanelHeaderContent--ios .PanelHeaderContent__in.Tappable--active {
     opacity: .7;
@@ -97,9 +105,36 @@
   Android
  */
 .PanelHeaderContent--android {
-  }
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.PanelHeaderContent--android .PanelHeaderContent__in.Tappable {
+  padding: 0 8px;
+  margin: 0 -8px;
+}
 
   .PanelHeaderContent--android .PanelHeaderContent__in.Tappable--active,
   .PanelHeaderContent--vkcom .PanelHeaderContent__in.Tappable--active {
     background-color: rgba(255, 255, 255, .1);
     }
+
+/*
+  VKCOM
+ */
+
+.PanelHeaderContent--vkcom .PanelHeaderContent__in.Tappable--shadowHovered > .Tappable__hoverShadow {
+  background: none !important;
+}
+
+.PanelHeaderContent--vkcom .PanelHeaderContent__in.Tappable {
+  transition: opacity .3s;
+  opacity: 1;
+}
+
+.PanelHeaderContent--vkcom .PanelHeaderContent__in.Tappable--shadowHovered,
+.PanelHeaderContent--vkcom .PanelHeaderContent__in.Tappable--active {
+  opacity: .7;
+}
