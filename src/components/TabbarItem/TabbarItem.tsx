@@ -13,11 +13,11 @@ export interface TabbarItemProps extends HTMLAttributes<HTMLElement>, HasLinkPro
    */
   text?: ReactNode;
   /**
-   * Счетчик рядом с иконкой
+   * `<Counter />` рядом с иконкой
    */
-  label?: ReactNode;
+  label?: number;
   /**
-   * Индикатор рядом с иконкой
+   * `<Badge />` рядом с иконкой
    */
   badge?: boolean;
 }
