@@ -15,7 +15,7 @@ const Headline: FunctionComponent<HeadlineProps> = ({
   weight,
   Component,
   ...restProps
-}) => {
+}: HeadlineProps) => {
   const platform = usePlatform();
   let HeadlineComponent = Component;
 

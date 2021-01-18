@@ -1,12 +1,10 @@
-import React, { ElementType, FunctionComponent, AnchorHTMLAttributes } from 'react';
+import React, { FunctionComponent, AnchorHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 
-export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, TappableProps {
-  Component?: ElementType;
-}
+export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, TappableProps {}
 
 const Link: FunctionComponent<LinkProps> = ({
   children,

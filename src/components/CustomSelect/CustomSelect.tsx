@@ -32,8 +32,15 @@ interface CustomSelectState {
 }
 
 export interface CustomSelectProps extends NativeSelectProps {
-  options: SelectOption[];
+  options: Array<{
+    value: SelectValue;
+    label: string;
+    [index: string]: any;
+  }>;
   popupDirection?: 'top' | 'bottom';
+  /**
+   * В качестве аргумента принимает валидные для [CustomSelectOption](#/CustomSelectOption) свойства
+   */
   renderOption?: (props: CustomSelectOptionProps) => ReactNode;
 }
 

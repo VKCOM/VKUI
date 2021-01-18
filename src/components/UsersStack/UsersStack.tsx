@@ -15,7 +15,7 @@ export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Размер аватарок
    */
-  size?: 's' | 'm';
+  size?: 'xs' | 's' | 'm';
   /**
    * Вертикальный режим рекомендуется использовать с размером `m`
    */

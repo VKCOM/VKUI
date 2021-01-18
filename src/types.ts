@@ -20,12 +20,6 @@ export interface HasRef<T> {
   getRef?: Ref<T>;
 }
 
-export interface HasDangerHTML {
-  dangerouslySetInnerHTML?: {
-    __html: string;
-  };
-}
-
 export interface HasAlign {
   align?: AlignType;
 }
@@ -58,9 +52,4 @@ export interface Version {
   major: number;
   minor?: number;
   patch?: number;
-}
-
-export interface DOMProps {
-  document?: Document;
-  window?: Window;
 }

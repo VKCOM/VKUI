@@ -6,7 +6,7 @@ import getClassName from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
-import { HasPlatform, HasRootRef, RefWithCurrent } from '../../types';
+import { HasPlatform, HasRootRef, Ref } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { hasHover } from '@vkontakte/vkjs/lib/InputUtils';
 import { setRef } from '../../lib/utils';
@@ -38,7 +38,7 @@ export interface TappableState {
 }
 
 export interface RootComponentProps extends TouchProps {
-  ref?: RefCallback<HTMLElement> | RefWithCurrent<HTMLElement>;
+  ref?: Ref<HTMLElement>;
 }
 
 export interface StorageItem {

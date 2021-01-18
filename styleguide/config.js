@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssConfig = require('../postcss.config');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { argv } = require('yargs');
+const { makeFsImporter } = require('react-docgen/dist/importer');
+const { findAllExportedComponentDefinitions } = require('react-docgen/dist/resolver');
 
 module.exports = {
   title: 'VKUI styleguide',
@@ -13,6 +15,12 @@ module.exports = {
     PlaygroundRenderer: path.join(__dirname, './Components/PlaygroundRenderer'),
     StyleGuideRenderer: path.join(__dirname, './Components/StyleGuideRenderer'),
     PathlineRenderer: path.join(__dirname, './Components/PathlineRenderer')
+  },
+  propsParser: (filePath, source) => {
+    return require('react-docgen').parse(source, findAllExportedComponentDefinitions, null, {
+      filename: filePath,
+      importer: makeFsImporter()
+    })
   },
   assetsDir:  path.join(__dirname, `assets`),
   sections: [

@@ -1,13 +1,12 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import { HasDangerHTML } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import Headline from '../Typography/Headline/Headline';
 import Caption from '../Typography/Caption/Caption';
 import { hasReactNode } from '../../lib/utils';
 
-export interface FormStatusProps extends HTMLAttributes<HTMLDivElement>, HasDangerHTML {
+export interface FormStatusProps extends HTMLAttributes<HTMLDivElement> {
   mode?: 'default' | 'error';
   header?: ReactNode;
 }

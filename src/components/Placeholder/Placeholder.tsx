@@ -24,7 +24,7 @@ export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement>, HasRoo
   stretched?: boolean;
 }
 
-const Placeholder: FC<PlaceholderProps> = (props) => {
+const Placeholder: FC<PlaceholderProps> = (props: PlaceholderProps) => {
   const {
     className,
     icon,

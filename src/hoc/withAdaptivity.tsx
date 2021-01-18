@@ -57,7 +57,16 @@ export default function withAdaptivity<T>(TargetComponent: T, config: Config): T
 export interface AdaptivityProps {
   sizeX?: SizeType;
   sizeY?: SizeType;
+  /**
+   * @ignore
+   */
   viewWidth?: ViewWidth;
+  /**
+   * @ignore
+   */
   viewHeight?: ViewHeight;
+  /**
+   * @ignore
+   */
   hasMouse?: boolean;
 }

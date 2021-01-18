@@ -8,7 +8,7 @@ import { HasPlatform } from '../../types';
 
 export interface PanelHeaderContextProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   opened: boolean;
-  onClose(): void;
+  onClose: VoidFunction;
 }
 
 export interface PanelHeaderContextState {

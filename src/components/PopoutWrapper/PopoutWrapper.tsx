@@ -5,8 +5,7 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import { animationEvent } from '../../lib/supportEvents';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
-import { canUseDOM } from '../../lib/dom';
-import { withFrame } from '../../hoc/withFrame';
+import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 
 export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   hasMask?: boolean;
@@ -14,8 +13,6 @@ export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasP
   alignY?: 'top' | 'center' | 'bottom';
   alignX?: 'left' | 'center' | 'right';
   closing?: boolean;
-  window?: Window;
-  document?: Document;
 }
 
 export interface PopoutWrapperState {
@@ -28,7 +25,7 @@ export type AnimationEndCallback = (e?: AnimationEvent) => void;
 
 export type ClickHandler = (e: MouseEvent<HTMLDivElement>) => void;
 
-class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
+class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapperState> {
   constructor(props: PopoutWrapperProps) {
     super(props);
     this.state = {
@@ -43,7 +40,6 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
     alignY: 'center',
     alignX: 'center',
     closing: false,
-    window: window,
   };
 
   elRef: React.RefObject<HTMLDivElement>;
@@ -114,4 +110,4 @@ class PopoutWrapper extends Component<PopoutWrapperProps, PopoutWrapperState> {
   }
 }
 
-export default withFrame<PopoutWrapperProps>(withPlatform(PopoutWrapper));
+export default withPlatform(withDOM<PopoutWrapperProps>(PopoutWrapper));
