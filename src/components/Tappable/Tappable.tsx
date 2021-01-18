@@ -348,17 +348,19 @@ class Tappable extends Component<TappableProps, TappableState> {
             <TouchRootContext.Consumer>
               {(insideTouchRoot: boolean) => {
                 this.insideTouchRoot = insideTouchRoot;
-
+                const touchProps = restProps.disabled ? {} : {
+                  onEnter: () => {
+                    insideTappable && onEnter();
+                    !restProps.disabled && this.onEnter();
+                  },
+                  onLeave: () => {
+                    insideTappable && onLeave();
+                    !restProps.disabled && this.onLeave();
+                  },
+                };
                 return (
                   <RootComponent
-                    onEnter={() => {
-                      insideTappable && onEnter();
-                      !restProps.disabled && this.onEnter();
-                    }}
-                    onLeave={() => {
-                      insideTappable && onLeave();
-                      !restProps.disabled && this.onLeave();
-                    }}
+                    {...touchProps}
                     {...restProps}
                     className={classes}
                     {...props}>
