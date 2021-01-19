@@ -9,10 +9,10 @@ export interface ModalRootProps extends AdaptivityProps {
   /**
    * Будет вызвано при закрытии активной модалки с её id
    */
-  onClose?(modalId: string): void;
+  onClose?: (modalId: string) => void;
 }
 
-const ModalRootComponent: FC<ModalRootProps> = (props) => {
+const ModalRootComponent: FC<ModalRootProps> = (props: ModalRootProps) => {
   const { viewWidth, viewHeight, hasMouse } = props;
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
