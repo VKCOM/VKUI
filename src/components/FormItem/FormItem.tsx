@@ -33,5 +33,5 @@ export const FormItem: FC<FormItemProps> = withAdaptivity(({ className, children
 
 FormItem.defaultProps = {
   status: 'default',
-  Component: 'label',
+  Component: 'div',
 };
