@@ -76,6 +76,10 @@
  * iOS
  */
 
+.PanelHeader--ios .PanelHeader__content {
+  line-height: var(--panelheader_height_ios);
+}
+
 .PanelHeader--ios ~ .FixedLayout--top,
 .PanelHeader--ios ~ * .FixedLayout--top:not(.PanelHeader__fixed) {
   top: calc(var(--panelheader_height_ios) + var(--safe-area-inset-top));
@@ -180,6 +184,7 @@
 }
 
 .PanelHeader--android .PanelHeader__content {
+  line-height: var(--panelheader_height_android);
   font-size: 23px;
   align-items: center;
   flex-grow: 1;
@@ -250,6 +255,10 @@
 
 .PanelHeader--vkcom .PanelHeader__content {
   text-align: center;
+  line-height: var(--panelheader_height_vkcom);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 }
 
 .PanelHeader--vkcom::before,
