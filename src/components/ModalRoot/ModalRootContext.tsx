@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 
 export interface ModalRootContextInterface {
-  updateModalHeight: () => void;
-  onClose?: () => void;
+  updateModalHeight: VoidFunction;
+  onClose?: VoidFunction;
   isInsideModal: boolean;
 }
 
