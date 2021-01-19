@@ -1,12 +1,11 @@
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, HTMLAttributes, useRef, useState } from 'react';
 import { useDOM } from '../../lib/dom';
-import { HasChildren } from '../../types';
 import classNames from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 import withAdaptivity, { SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
-export interface AppRootProps extends HasChildren, AdaptivityProps {
+export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   embedded?: boolean;
   window?: Window;
 }

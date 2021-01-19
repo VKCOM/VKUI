@@ -1,10 +1,10 @@
-import React, { ElementType, FunctionComponent, HTMLAttributes } from 'react';
+import React, { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
 import usePlatform from '../../../hooks/usePlatform';
 import classNames from '../../../lib/classNames';
 import getClassName from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';
 
-export interface SubheadProps extends HTMLAttributes<HTMLElement> {
+export interface SubheadProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold' | 'bold';
   Component?: ElementType;
 }

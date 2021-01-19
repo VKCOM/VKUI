@@ -1,4 +1,4 @@
-import React, { RefCallback } from 'react';
+import { RefCallback } from 'react';
 import { PlatformType } from './lib/platform';
 import { Insets } from '@vkontakte/vk-bridge';
 
@@ -36,16 +36,6 @@ export interface HasInsets {
    * @ignore
    */
   insets?: Partial<Insets>;
-}
-
-export interface HasChildren {
-  children?: React.ReactNode;
-}
-
-export interface HasLinkProps {
-  href?: string;
-  target?: string;
-  rel?: string;
 }
 
 export interface Version {

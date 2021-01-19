@@ -1,4 +1,4 @@
-import React, { ElementType, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
+import React, { AnchorHTMLAttributes, ElementType, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
@@ -8,7 +8,6 @@ import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import { HasLinkProps } from '../../types';
 import { Icon16Done, Icon24Done } from '@vkontakte/icons';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
@@ -16,7 +15,7 @@ import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptiv
 
 export interface ActionSheetItemProps extends
   HTMLAttributes<HTMLElement>,
-  HasLinkProps,
+  AnchorHTMLAttributes<HTMLElement>,
   Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'>,
   AdaptivityProps {
   mode?: 'default' | 'destructive' | 'cancel';

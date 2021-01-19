@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
-import { HasChildren } from '../../types';
 import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
 
-export interface ModalRootProps extends HasChildren, AdaptivityProps {
+export interface ModalRootProps extends AdaptivityProps {
   activeModal?: string | null;
 
   /**

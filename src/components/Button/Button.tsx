@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
@@ -19,11 +19,7 @@ export interface VKUIButtonProps extends HasAlign {
   after?: ReactNode;
 }
 
-export interface ButtonProps extends TappableProps, ButtonHTMLAttributes<HTMLElement>, VKUIButtonProps {
-  href?: string;
-  target?: string;
-  rel?: string;
-}
+export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
 
 const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean, sizeY: AdaptivityProps['sizeY'], platform: Platform) => {
   switch (size) {

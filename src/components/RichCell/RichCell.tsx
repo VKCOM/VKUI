@@ -1,15 +1,14 @@
-import React, { ElementType, FunctionComponent, HTMLAttributes, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
-import { HasLinkProps, HasRootRef } from '../../types';
-import Tappable from '../Tappable/Tappable';
+import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity from '../../hoc/withAdaptivity';
 
-export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasLinkProps, AdaptivityProps {
+export interface RichCellProps extends TappableProps {
   /**
    * Контейнер для текста под `children`.
    */
@@ -39,7 +38,6 @@ export interface RichCellProps extends HTMLAttributes<HTMLElement>, HasRootRef<H
    */
   disabled?: boolean;
   multiline?: boolean;
-  Component?: ElementType;
 }
 
 const RichCell: FunctionComponent<RichCellProps> = ({
