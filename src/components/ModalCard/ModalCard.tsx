@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, FC } from 'react';
+import React, { HTMLAttributes, ReactNode, FC, useContext } from 'react';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -11,6 +11,7 @@ import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../ho
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import ModalRootContext from '../ModalRoot/ModalRootContext';
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, AdaptivityProps {
   /**
@@ -69,6 +70,8 @@ const ModalCard: FC<ModalCardProps> = (props) => {
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
+  const modalContext = useContext(ModalRootContext);
+
   return (
     <div
       {...restProps}
@@ -92,9 +95,9 @@ const ModalCard: FC<ModalCardProps> = (props) => {
           </div>
           }
 
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
           {canShowCloseBtnIos &&
-          <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
+          <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose || modalContext.onClose}>
             <Icon24Dismiss />
           </PanelHeaderButton>
           }
