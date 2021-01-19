@@ -409,29 +409,14 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const { shiftY, startT, originalEvent } = event;
     const target = originalEvent.target as HTMLElement;
 
-    if (!event.isY) {
-      if (target.closest('.ModalPage')) {
-        originalEvent.preventDefault();
-      }
-      return;
-    }
-
-    if (!target.closest('.ModalPage__in')) {
-      return originalEvent.preventDefault();
-    }
-
     originalEvent.stopPropagation();
 
-    const { expandable, contentScrolled, collapsed, expanded } = modalState;
+    const { expandable, collapsed, expanded } = modalState;
 
     if (!this.state.touchDown) {
       modalState.touchStartTime = startT;
       modalState.touchStartContentScrollTop = modalState.contentElement.scrollTop;
       this.setState({ touchDown: true });
-    }
-
-    if (contentScrolled) {
-      return;
     }
 
     if (modalState.touchMovePositive === null) {
