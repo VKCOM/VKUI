@@ -76,22 +76,22 @@
   margin-left: 8px;
 }
 
-.Tabs .TabsItem .Counter.Counter--secondary {
+.Tabs .TabsItem .Counter--secondary {
   background: var(--panel_tab_inactive_text);
   color: var(--white);
 }
 
-.Tabs .TabsItem--selected .Counter.Counter--secondary {
+.Tabs .TabsItem--selected .Counter--secondary {
   background: var(--panel_tab_active_text);
   color: var(--panel_tab_active_background);
 }
 
-.Tabs--ios.Tabs--segmented .TabsItem .Counter.Counter--secondary {
+.Tabs--ios.Tabs--segmented .TabsItem .Counter--secondary {
   background: var(--segmented_control_tint);
   color: var(--background_content);
 }
 
-.Tabs--ios.Tabs--segmented .TabsItem--selected .Counter.Counter--secondary {
+.Tabs--ios.Tabs--segmented .TabsItem--selected .Counter--secondary {
   background: var(--background_content);
   color: var(--segmented_control_tint);
 }
