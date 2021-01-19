@@ -66,6 +66,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      onClose: this.triggerClose,
       isInsideModal: true,
     };
   }
@@ -388,7 +389,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
   /**
    * По клику на полупрозрачный черный фон нужно закрыть текущую модалку
    */
-  onMaskClick = () => {
+  triggerClose = () => {
     this.triggerActiveModalClose();
   };
 
@@ -408,7 +409,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
         >
           <div
             className="ModalRoot__mask"
-            onClick={this.onMaskClick}
+            onClick={this.triggerClose}
             ref={this.maskElementRef}
           />
           <div className="ModalRoot__viewport">

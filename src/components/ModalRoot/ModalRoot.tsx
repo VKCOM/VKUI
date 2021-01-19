@@ -83,6 +83,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      onClose: this.triggerClose,
       isInsideModal: true,
     };
 
@@ -750,7 +751,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   /**
    * По клику на полупрозрачный черный фон нужно закрыть текущую модалку
    */
-  onMaskClick = () => {
+  triggerClose = () => {
     this.triggerActiveModalClose();
   };
 
@@ -776,7 +777,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
           >
             <div
               className="ModalRoot__mask"
-              onClick={this.onMaskClick}
+              onClick={this.triggerClose}
               ref={this.maskElementRef}
             />
             <div className="ModalRoot__viewport">

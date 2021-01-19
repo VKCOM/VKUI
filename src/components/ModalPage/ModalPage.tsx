@@ -47,6 +47,8 @@ const ModalPage: FC<ModalPageProps> = (props) => {
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
+  const modalContext = useContext(ModalRootContext);
+
   return (
     <div
       {...restProps}
@@ -67,7 +69,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
               </div>
             </div>
           </div>
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
         </div>
       </div>
     </div>
