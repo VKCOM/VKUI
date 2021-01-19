@@ -74,10 +74,6 @@
   margin-top: 2px;
 }
 
-.SimpleCell__content {
-  display: inline-block;
-}
-
 .SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
   display: inline-flex;
   flex-flow: row nowrap;
