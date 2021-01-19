@@ -66,7 +66,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
-      onClose: this.triggerClose,
+      onClose: this.triggerActiveModalClose,
       isInsideModal: true,
     };
   }
@@ -369,12 +369,12 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
   /**
    * Закрывает текущую модалку
    */
-  triggerActiveModalClose() {
+  triggerActiveModalClose = () => {
     const activeModalState = this.modalsState[this.state.activeModal];
     if (activeModalState) {
       this.doCloseModal(activeModalState);
     }
-  }
+  };
 
   private readonly doCloseModal = (modalState: ModalsStateEntry) => {
     if (isFunction(modalState.onClose)) {
@@ -384,13 +384,6 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     } else {
       console.error('[ModalRoot] onClose is undefined');
     }
-  };
-
-  /**
-   * По клику на полупрозрачный черный фон нужно закрыть текущую модалку
-   */
-  triggerClose = () => {
-    this.triggerActiveModalClose();
   };
 
   render() {
@@ -409,7 +402,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
         >
           <div
             className="ModalRoot__mask"
-            onClick={this.triggerClose}
+            onClick={this.triggerActiveModalClose}
             ref={this.maskElementRef}
           />
           <div className="ModalRoot__viewport">
