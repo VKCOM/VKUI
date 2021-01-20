@@ -113,6 +113,11 @@ const App = withAdaptivity(class App extends React.Component {
             </ModalPageHeader>
           }
         >
+          <Group>
+            <FormItem>
+              <Textarea placeholder="Описание"/>
+            </FormItem>
+          </Group>
           <Group header={<Header aside={<Link>Показать все</Link>}>Мини-приложения</Header>}>
             <HorizontalScroll>
               <div style={{display: "flex"}}>

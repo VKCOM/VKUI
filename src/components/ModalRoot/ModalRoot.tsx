@@ -410,13 +410,21 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const target = originalEvent.target as HTMLElement;
 
     if (!event.isY) {
-      if (target.closest('.ModalPage') && !target.closest('.HorizontalScroll')) {
+      if (
+        target.closest('.ModalPage') &&
+        !target.closest('.HorizontalScroll') &&
+        !target.closest('textarea')
+      ) {
         originalEvent.preventDefault();
         return;
       }
     }
 
-    if (!target.closest('.ModalPage__in') && !target.closest('.HorizontalScroll__in')) {
+    if (
+      !target.closest('.ModalPage__in') &&
+      !target.closest('.HorizontalScroll__in') &&
+      !target.closest('textarea')
+    ) {
       return originalEvent.preventDefault();
     }
 
