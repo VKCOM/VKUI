@@ -383,7 +383,6 @@ const App = withAdaptivity(class App extends React.Component {
                 Открыть модальные карточки
               </CellButton>
             </Group>
-          <div style={{minHeight: 10000}}/>
         </Panel>
       </View>
     );
