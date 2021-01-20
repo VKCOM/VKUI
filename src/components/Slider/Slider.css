@@ -60,6 +60,10 @@
   right: -14px;
 }
 
+.Slider--disabled {
+  opacity: .4;
+}
+
 /**
  * sizeY COMPACT
  */
