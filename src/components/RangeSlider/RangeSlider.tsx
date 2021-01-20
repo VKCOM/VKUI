@@ -20,6 +20,7 @@ export interface RangeSliderProps extends
   step?: number;
   value?: Value;
   defaultValue?: Value;
+  disabled?: boolean;
   onChange?(value: Value, e: TouchEvent): void;
 }
 
@@ -33,6 +34,10 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
   thumbEnd = createRef<HTMLDivElement>();
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
+    if (this.props.disabled) {
+      return;
+    }
+
     const boundingRect = this.container.getBoundingClientRect();
     this.containerWidth = boundingRect.width;
 
@@ -45,6 +50,10 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
   };
 
   onMove: TouchEventHandler = (e: TouchEvent) => {
+    if (this.props.disabled) {
+      return;
+    }
+
     const value = this.offsetToValue(this.startX + (e.shiftX || 0));
     this.props.onChange(this.updateRange(value), e);
 
@@ -52,10 +61,18 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
   };
 
   onEnd: TouchEventHandler = () => {
+    if (this.props.disabled) {
+      return;
+    }
+
     this.dragging = false;
   };
 
   updateRange(value: number): Value {
+    if (this.props.disabled) {
+      return this.props.value;
+    }
+
     const [start, end] = this.props.value;
     const { dragging } = this;
     if (dragging === 'start') {
@@ -100,7 +117,7 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
 
   render() {
     const { className, min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, sizeY, ...restProps } = this.props;
+      onChange, getRootRef, platform, sizeY, disabled, ...restProps } = this.props;
     const percentStart = (value[0] - min) / (max - min) * 100;
     const percentEnd = (value[1] - min) / (max - min) * 100;
 
@@ -111,7 +128,12 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
         onStart={this.onStart}
         onMove={this.onMove}
         onEnd={this.onEnd}
-        className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
+        className={classNames(
+          getClassName('Slider', platform),
+          className,
+          `Slider--sizeY-${sizeY}`,
+          disabled && 'Slider--disabled',
+        )}
       >
         <div ref={this.getRef} className="Slider__in">
           <div
@@ -138,7 +160,7 @@ const RangeSlider: FC<RangeSliderProps> = ({ onChange, defaultValue, ...props })
   const value = [clamp(start, props.min, props.max), clamp(end, props.min, props.max)] as Value;
 
   const handleChange: RangeSliderProps['onChange'] = useCallback((nextValue, event) => {
-    if (value[0] === nextValue[0] && value[1] === nextValue[1]) {
+    if (props.disabled || value[0] === nextValue[0] && value[1] === nextValue[1]) {
       return;
     }
     !isControlled && setValue(nextValue);
