@@ -115,38 +115,38 @@ const App = withAdaptivity(class App extends React.Component {
         >
           <Group header={<Header aside={<Link>Показать все</Link>}>Мини-приложения</Header>}>
             <HorizontalScroll>
-              <div style={{display: 'flex'}}>
-                <HorizontalCell size='s' header='Промокот'>
-                  <Avatar size={56} mode='app'
-                          src='https://sun9-54.userapi.com/c850536/v850536134/15096d/6806J7q6YwM.jpg'/>
+              <div style={{display: "flex"}}>
+                <HorizontalCell size="s" header="Промокот">
+                  <Avatar size={56} mode="app"
+                          src="https://sun9-54.userapi.com/c850536/v850536134/15096d/6806J7q6YwM.jpg"/>
                 </HorizontalCell>
-                <HorizontalCell size='s' header='Разделите счёт'>
-                  <Avatar size={56} mode='app'
-                          src='https://sun9-20.userapi.com/c857416/v857416681/fc6d0/06XQvs4SyiE.jpg'/>
+                <HorizontalCell size="s" header="Разделите счёт">
+                  <Avatar size={56} mode="app"
+                          src="https://sun9-20.userapi.com/c857416/v857416681/fc6d0/06XQvs4SyiE.jpg"/>
                 </HorizontalCell>
-                <HorizontalCell size='s' header='Рассылки'>
-                  <Avatar size={56} mode='app'
-                          src='https://sun9-50.userapi.com/c850536/v850536397/129313/qdVJ7A7xd70.jpg'/>
+                <HorizontalCell size="s" header="Рассылки">
+                  <Avatar size={56} mode="app"
+                          src="https://sun9-50.userapi.com/c850536/v850536397/129313/qdVJ7A7xd70.jpg"/>
                 </HorizontalCell>
-                <HorizontalCell size='s' header='Тексты песен'>
-                  <Avatar size={56} mode='app'
-                          src='https://sun9-41.userapi.com/Zf2HluZJZDYjTbxhnSfeYnHtttBYsYbdjJ3QJQ/aDcJQrVVnbQ.jpg'/>
+                <HorizontalCell size="s" header="Тексты песен">
+                  <Avatar size={56} mode="app"
+                          src="https://sun9-41.userapi.com/Zf2HluZJZDYjTbxhnSfeYnHtttBYsYbdjJ3QJQ/aDcJQrVVnbQ.jpg"/>
                 </HorizontalCell>
-                <HorizontalCell size='s' header='Промокот'>
-                  <Avatar size={56} mode='app'
-                          src='https://sun9-54.userapi.com/c850536/v850536134/15096d/6806J7q6YwM.jpg'/>
+                <HorizontalCell size="s" header="Промокот">
+                  <Avatar size={56} mode="app"
+                          src="https://sun9-54.userapi.com/c850536/v850536134/15096d/6806J7q6YwM.jpg"/>
                 </HorizontalCell>
-                <HorizontalCell size='s' header='Разделите счёт'>
-                  <Avatar size={56} mode='app'
-                          src='https://sun9-20.userapi.com/c857416/v857416681/fc6d0/06XQvs4SyiE.jpg'/>
+                <HorizontalCell size="s" header="Разделите счёт">
+                  <Avatar size={56} mode="app"
+                          src="https://sun9-20.userapi.com/c857416/v857416681/fc6d0/06XQvs4SyiE.jpg"/>
                 </HorizontalCell>
-                <HorizontalCell size='s' header='Рассылки'>
-                  <Avatar size={56} mode='app'
-                          src='https://sun9-50.userapi.com/c850536/v850536397/129313/qdVJ7A7xd70.jpg'/>
+                <HorizontalCell size="s" header="Рассылки">
+                  <Avatar size={56} mode="app"
+                          src="https://sun9-50.userapi.com/c850536/v850536397/129313/qdVJ7A7xd70.jpg"/>
                 </HorizontalCell>
-                <HorizontalCell size='s' header='Тексты песен'>
-                  <Avatar size={56} mode='app'
-                          src='https://sun9-41.userapi.com/Zf2HluZJZDYjTbxhnSfeYnHtttBYsYbdjJ3QJQ/aDcJQrVVnbQ.jpg'/>
+                <HorizontalCell size="s" header="Тексты песен">
+                  <Avatar size={56} mode="app"
+                          src="https://sun9-41.userapi.com/Zf2HluZJZDYjTbxhnSfeYnHtttBYsYbdjJ3QJQ/aDcJQrVVnbQ.jpg"/>
                 </HorizontalCell>
               </div>
             </HorizontalScroll>
@@ -383,6 +383,7 @@ const App = withAdaptivity(class App extends React.Component {
                 Открыть модальные карточки
               </CellButton>
             </Group>
+          <div style={{minHeight: 10000}}/>
         </Panel>
       </View>
     );

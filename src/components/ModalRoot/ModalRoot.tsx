@@ -409,9 +409,24 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const { shiftY, startT, originalEvent } = event;
     const target = originalEvent.target as HTMLElement;
 
+    if (!event.isY) {
+      if (target.closest('.ModalPage') && !target.closest('.HorizontalScroll')) {
+        originalEvent.preventDefault();
+        return;
+      }
+    }
+
+    if (!target.closest('.ModalPage__in') && !target.closest('.HorizontalScroll__in')) {
+      return originalEvent.preventDefault();
+    }
+
     originalEvent.stopPropagation();
 
-    const { expandable, collapsed, expanded } = modalState;
+    const { expandable, contentScrolled, collapsed, expanded } = modalState;
+
+    if (contentScrolled) {
+      return;
+    }
 
     if (!this.state.touchDown) {
       modalState.touchStartTime = startT;
@@ -429,8 +444,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       expanded && modalState.touchMovePositive && modalState.touchStartContentScrollTop === 0 ||
       target.closest('.ModalPage__header')
     ) {
-      originalEvent.preventDefault();
       if (!expandable && shiftY < 0) {
+        originalEvent.preventDefault();
         return;
       }
 
