@@ -8,7 +8,7 @@
         value1: 24.4234,
         value2: 0.2,
         value3: 20,
-        value4: [10, 20]
+        value4: 15
       };
     }
 
@@ -58,6 +58,15 @@
                   onChange={value3 => this.setState({value3})}
                   defaultValue={this.state.value3}
                   bottom={`${this.state.value3}`}
+                />
+              </FormItem>
+              <FormItem top="Disabled">
+                <Slider
+                  min={10}
+                  max={30}
+                  defaultValue={this.state.value4}
+                  onChange={value4 => this.setState({value4})}
+                  disabled
                 />
               </FormItem>
             </Group>

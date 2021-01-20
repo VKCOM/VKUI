@@ -18,6 +18,15 @@
                   defaultValue={[12, 16]}
                 />
               </FormItem>
+              <FormItem top="Disabled">
+                <RangeSlider
+                  min={10}
+                  max={20}
+                  step={1}
+                  defaultValue={[12, 16]}
+                  disabled
+                />
+              </FormItem>
             </Group>
           </Panel>
         </View>
