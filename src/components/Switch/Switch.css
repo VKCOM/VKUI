@@ -78,7 +78,7 @@
 }
 
 /**
- * Android
+ * Android & VKCOM
  */
 
 .Switch--android,
@@ -86,26 +86,47 @@
   padding: 3px;
 }
 
+.Switch--android .Switch__pseudo::after,
+.Switch--vkcom .Switch__pseudo::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: background-color .1s ease;
+}
+
+.Switch--android .Switch__self:checked + .Switch__pseudo::after,
+.Switch--vkcom .Switch__self:checked + .Switch__pseudo::after {
+  background: var(--accent);
+  opacity: .48;
+}
+
+.Switch--android .Switch__self[disabled] + .Switch__pseudo,
+.Switch--vkcom .Switch__self[disabled] + .Switch__pseudo {
+  opacity: .4;
+}
+
+/**
+ * Android
+ */
+
 .Switch--android .Switch__pseudo {
   width: 34px;
   height: 14px;
+}
+
+.Switch--android .Switch__pseudo::after {
   background: #c6c5c5;
   border-radius: 7px;
-  transition: background-color .1s ease;
 }
 
 .Switch--android.Switch--sizeY-compact .Switch__pseudo {
   width: 32px;
   height: 12px;
+}
+
+.Switch--android.Switch--sizeY-compact .Switch__pseudo::after {
   border-radius: 6px;
-}
-
-.Switch--android .Switch__self:checked + .Switch__pseudo {
-  background: #a8bfdb;
-}
-
-.Switch--android .Switch__self[disabled] + .Switch__pseudo {
-  opacity: .4;
 }
 
 .Switch--android .Switch__pseudo::before {
@@ -143,23 +164,9 @@
 }
 
 .Switch--vkcom .Switch__pseudo::after {
-  content: '';
-  display: block;
   border-radius: 45px;
-  transition: background-color .1s ease;
-  width: 100%;
-  height: 100%;
   background: var(--icon_tertiary);
   opacity: .48;
-}
-
-.Switch--vkcom .Switch__self:checked + .Switch__pseudo::after {
-  background: var(--accent);
-  opacity: .48;
-}
-
-.Switch--vkcom .Switch__self[disabled] + .Switch__pseudo {
-  opacity: .4;
 }
 
 .Switch--vkcom .Switch__pseudo::before {
