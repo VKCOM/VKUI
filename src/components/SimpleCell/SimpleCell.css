@@ -99,6 +99,7 @@
 
 .SimpleCell__badge .Badge {
   margin-top: 2px;
+  margin-left: 3px;
 }
 
 .SimpleCell--mult .SimpleCell__badge {
