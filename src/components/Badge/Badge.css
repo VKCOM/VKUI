@@ -12,10 +12,10 @@
   border-radius: 50%;
 }
 
-.Badge.Badge--new {
+.Badge--new {
   background-color: #5c9ce6; /* blue_200 */
 }
 
-.Badge.Badge--prominent {
+.Badge--prominent {
   background-color: var(--counter_prominent_background);
 }
