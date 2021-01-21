@@ -9,6 +9,7 @@
 
 .HorizontalCell__content {
   word-break: break-all;
+  text-overflow: ellipsis;
 }
 
 .HorizontalCell__subtitle {
@@ -17,7 +18,7 @@
 }
 
 .HorizontalCell--s {
-  width: 72px;
+  max-width: 80px;
 }
 
 .HorizontalCell--s .HorizontalCell__image {
@@ -52,12 +53,12 @@
 .HorizontalCell--ios:first-child::before,
 .HorizontalCell--ios:last-child::after {
   content: "";
-  width: 4px;
+  min-width: 4px;
 }
 
 .HorizontalCell--ios.HorizontalCell--s:first-child,
 .HorizontalCell--ios.HorizontalCell--s:last-child {
-  width: 78px;
+  max-width: 88px;
 }
 
 .HorizontalCell--ios.HorizontalCell--m:first-child,
@@ -78,7 +79,7 @@
 .HorizontalCell--android.HorizontalCell--s:last-child,
 .HorizontalCell--vkcom.HorizontalCell--s:first-child,
 .HorizontalCell--vkcom.HorizontalCell--s:last-child {
-  width: 80px;
+  max-width: 88px;
 }
 
 .HorizontalCell--android.HorizontalCell--m:first-child,

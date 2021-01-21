@@ -1,10 +1,10 @@
 HorizontalCell автоматически ставит отступы по бокам в зависимости от платформы, поэтому его лучше использовать в HorizontalScroll.
-* При `size='s'` рекомендуется `<Avatar size={56}/>` или же любой компонент шириной 56 пикс.
-* При `size='m'` рекомендуется `<Avatar size={88} mode='app'/>` или же любой компонент шириной 96 пикс.
-* При `size='l'` рекомендуется `<Avatar size={128} mode='image/>` или же любой компонент.
+* При `size='s'` **для iOS** рекомендуется `<Avatar size={64}/>`, а для остальных платформ `<Avatar size={56}/>` или же любой компонент шириной до 64 пикс.
+* При `size='m'` рекомендуется `<Avatar size={88} mode='app'/>` или же любой компонент шириной до 96 пикс.
+* При `size='l'` рекомендуется `<Avatar size={128} mode='image/>` или же любой компонент произвольной ширины.
 
 ```jsx
-class HorizontalCellExample extends React.Component {
+const HorizontalCellExample = withPlatform(class HorizontalCellExample extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +17,8 @@ class HorizontalCellExample extends React.Component {
   }
 
   componentDidMount() {
+    const { platform } = this.props;
+    
     const largeImageStyles = {
       width: 220,
       height: 124,
@@ -30,7 +32,7 @@ class HorizontalCellExample extends React.Component {
     users.forEach((user) => {
       generatedUserItems.push(
         <HorizontalCell size='s' header={user.first_name}>
-          <Avatar size={56} src={user.photo_100}/>
+          <Avatar size={platform === 'ios' ? 64 : 56} src={user.photo_100}/>
         </HorizontalCell>
       )
     })
@@ -38,19 +40,19 @@ class HorizontalCellExample extends React.Component {
     
     let exampleMiniApps = [
       <HorizontalCell size='s' header='Промокот'>
-        <Avatar size={56} mode='app'
+        <Avatar size={platform === 'ios' ? 64 : 56} mode='app'
                 src='https://sun9-54.userapi.com/c850536/v850536134/15096d/6806J7q6YwM.jpg'/>
       </HorizontalCell>,
       <HorizontalCell size='s' header='Разделите счёт'>
-        <Avatar size={56} mode='app'
+        <Avatar size={platform === 'ios' ? 64 : 56} mode='app'
                 src='https://sun9-20.userapi.com/c857416/v857416681/fc6d0/06XQvs4SyiE.jpg'/>
       </HorizontalCell>,
       <HorizontalCell size='s' header='Рассылки'>
-        <Avatar size={56} mode='app'
+        <Avatar size={platform === 'ios' ? 64 : 56} mode='app'
                 src='https://sun9-50.userapi.com/c850536/v850536397/129313/qdVJ7A7xd70.jpg'/>
       </HorizontalCell>,
       <HorizontalCell size='s' header='Тексты песен'>
-        <Avatar size={56} mode='app'
+        <Avatar size={platform === 'ios' ? 64 : 56} mode='app'
                 src='https://sun9-41.userapi.com/Zf2HluZJZDYjTbxhnSfeYnHtttBYsYbdjJ3QJQ/aDcJQrVVnbQ.jpg'/>
       </HorizontalCell>];
     let generatedMiniAppsItems = [];
@@ -117,7 +119,7 @@ class HorizontalCellExample extends React.Component {
     this.setState({albumItems: generatedAlbums})
   }
 
-  render() {
+  render() { 
     return (
       <View activePanel="horizontalCell">
         <Panel id="horizontalCell">
@@ -163,7 +165,7 @@ class HorizontalCellExample extends React.Component {
       </View>
     )
   }
-}
+});
 
 <HorizontalCellExample/>
 ```
