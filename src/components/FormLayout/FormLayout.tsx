@@ -1,6 +1,6 @@
 import React, {
   FunctionComponent,
-  HTMLAttributes,
+  AllHTMLAttributes,
   FormEvent,
   ElementType,
 } from 'react';
@@ -11,7 +11,7 @@ import { HasRef } from '../../types';
 
 const preventDefault = (e: FormEvent) => e.preventDefault();
 
-export interface FormLayoutProps extends HTMLAttributes<HTMLElement>, HasRef<HTMLElement> {
+export interface FormLayoutProps extends AllHTMLAttributes<HTMLElement>, HasRef<HTMLElement> {
   Component?: ElementType;
 }
 

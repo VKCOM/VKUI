@@ -2,7 +2,7 @@ import React, { Component, ReactElement } from 'react';
 import classNames from '../../lib/classNames';
 import { isFunction } from '../../lib/utils';
 import { transitionEvent } from '../../lib/supportEvents';
-import { HasChildren, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
@@ -16,7 +16,7 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
 import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface ModalRootProps extends HasChildren, HasPlatform {
+export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
   /**
    * @ignore

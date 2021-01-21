@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import {
   ConfigProviderContext,
@@ -7,10 +7,11 @@ import {
   AppearanceScheme,
   defaultConfigProviderProps,
 } from './ConfigProviderContext';
-import { HasChildren } from '../../types';
 import { Platform, VKCOM } from '../../lib/platform';
 
-export interface ConfigProviderProps extends ConfigProviderContextInterface, HasChildren {}
+export interface ConfigProviderProps extends ConfigProviderContextInterface {
+  children?: ReactNode;
+}
 
 class ConfigProvider extends React.Component<ConfigProviderProps & DOMProps> {
   constructor(props: ConfigProviderProps) {

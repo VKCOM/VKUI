@@ -1,18 +1,15 @@
-import React, { ReactNode, ButtonHTMLAttributes, FunctionComponent } from 'react';
-import Tappable from '../Tappable/Tappable';
+import React, { ReactNode, FunctionComponent } from 'react';
+import Tappable, { TappableProps } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
-import { HasLinkProps } from '../../types';
+import withAdaptivity from '../../hoc/withAdaptivity';
 
-export interface IconButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasLinkProps {
+export interface IconButtonProps extends TappableProps {
   /**
    * @deprecated будет удалено в 5.0.0. Используйте `children`
    */
   icon: ReactNode;
-  href?: string;
-  sizeY?: AdaptivityProps['sizeY'];
 }
 
 const IconButton: FunctionComponent<IconButtonProps> = ({

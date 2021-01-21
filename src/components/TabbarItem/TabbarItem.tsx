@@ -1,12 +1,11 @@
-import React, { FunctionComponent, ReactNode, HTMLAttributes, ElementType } from 'react';
+import React, { FunctionComponent, ReactNode, HTMLAttributes, ElementType, AnchorHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Counter from '../Counter/Counter';
 import { Badge } from '../Badge/Badge';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
-import { HasLinkProps } from '../../types';
 
-export interface TabbarItemProps extends HTMLAttributes<HTMLElement>, HasLinkProps {
+export interface TabbarItemProps extends HTMLAttributes<HTMLElement>, AnchorHTMLAttributes<HTMLElement> {
   selected?: boolean;
   /**
    * Тест рядом с иконкой

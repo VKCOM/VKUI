@@ -6,14 +6,14 @@ import { Icon24Dismiss } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
-import { HasChildren, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import ModalRootContext from '../ModalRoot/ModalRootContext';
 
-export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, AdaptivityProps {
+export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
    * Иконка.
    *

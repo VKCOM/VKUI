@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import { HasChildren, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 
-interface Props extends HasPlatform, HasChildren {
+interface Props extends HasPlatform {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;
