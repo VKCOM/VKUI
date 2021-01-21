@@ -7,7 +7,7 @@
 }
 
 .Badge--new {
-  background-color: #5c9ce6; /* blue_200 */
+  background-color: var(--blue_200);
 }
 
 .Badge--prominent {
