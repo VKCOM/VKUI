@@ -1,14 +1,8 @@
 .Badge {
   flex-grow: 0;
   flex-shrink: 0;
-  display: flex;
-  flex-flow: row nowrap;
-  align-content: flex-start;
-  justify-content: flex-start;
-  align-items: center;
   width: 6px;
   height: 6px;
-  margin-left: 3px;
   border-radius: 50%;
 }
 
