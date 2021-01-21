@@ -75,7 +75,7 @@
 }
 
 .SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
-  display: inline-flex;
+  display: flex;
   flex-flow: row nowrap;
   align-content: flex-start;
   align-items: center;
