@@ -94,7 +94,7 @@
   flex-grow: 0;
   flex-shrink: 0;
   margin-left: 4px;
-  color: #5c9ce6; /* blue_200 */
+  color: var(--blue_200);
 }
 
 .SimpleCell__badge .Badge {
