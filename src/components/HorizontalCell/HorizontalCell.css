@@ -1,5 +1,4 @@
 .HorizontalCell {
-  padding-bottom: 6px;
   display: flex;
 }
 
@@ -26,7 +25,7 @@
 }
 
 .HorizontalCell--s .HorizontalCell__content {
-  padding: 2px 4px;
+  padding: 2px 4px 8px 4px;
   text-align: center;
 }
 
@@ -45,7 +44,7 @@
 
 .HorizontalCell--m .HorizontalCell__content,
 .HorizontalCell--l .HorizontalCell__content {
-  padding: 2px 6px;
+  padding: 2px 6px 8px 6px;
   text-align: left;
 }
 
