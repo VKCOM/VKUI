@@ -5,7 +5,7 @@ import getClassName from '../../helpers/getClassName';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import removeObjectKeys from '../../lib/removeObjectKeys';
-import { HasChildren, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
@@ -41,7 +41,7 @@ let scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
-export interface ViewProps extends HTMLAttributes<HTMLElement>, HasChildren, HasPlatform {
+export interface ViewProps extends HTMLAttributes<HTMLElement>, HasPlatform {
   activePanel: string;
   popout?: ReactNode;
   modal?: ReactNode;

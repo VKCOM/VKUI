@@ -1,4 +1,11 @@
-import React, { Component, HTMLAttributes, DragEvent, ElementType, MouseEvent as ReactMouseEvent, RefCallback } from 'react';
+import React, {
+  Component,
+  DragEvent,
+  ElementType,
+  MouseEvent as ReactMouseEvent,
+  RefCallback,
+  AllHTMLAttributes,
+} from 'react';
 import {
   getSupportedEvents,
   coordX,
@@ -11,7 +18,7 @@ import { HasRootRef } from '../../types';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 
-export interface TouchProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface TouchProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   onEnter?(outputEvent: MouseEvent): void;
   onLeave?(outputEvent: MouseEvent): void;
   onStart?(outputEvent: TouchEvent): void;

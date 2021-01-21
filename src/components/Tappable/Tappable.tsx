@@ -1,4 +1,4 @@
-import React, { Component, ElementType, HTMLAttributes, RefCallback } from 'react';
+import React, { AllHTMLAttributes, Component, ElementType, RefCallback } from 'react';
 import Touch, { TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import classNames from '../../lib/classNames';
@@ -12,13 +12,10 @@ import { hasHover } from '@vkontakte/vkjs/lib/InputUtils';
 import { setRef } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
+export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;
   activeEffectDelay?: number;
-  disabled?: boolean;
   stopPropagation?: boolean;
-  href?: string;
-  target?: string;
   hasHover?: boolean;
   hasActive?: boolean;
 }
