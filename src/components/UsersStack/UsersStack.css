@@ -19,8 +19,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
   color: #fff;
   background: var(--content_placeholder_icon);
 }
@@ -73,8 +71,6 @@
   min-width: 0;
   flex: 1;
   margin: 0 0 0 8px;
-  font-size: 13px;
-  line-height: 16px;
 }
 
 /* Vertical layout */
