@@ -5,12 +5,12 @@
 
 const CustomPopout = withAdaptivity(({ onClose, viewWidth }) => {
   return (
-    <PopoutWrapper>
+    <PopoutWrapper onClick={onClose}>
       <div style={{
         backgroundColor: "var(--background_content)",
-        padding: 16,
         borderRadius: 8,
-        position: "relative"
+        position: "relative",
+        padding: "12px"
       }}>
         <h4>Кастомное модальное окно</h4>
         {viewWidth >= ViewWidth.SMALL_TABLET && <ModalDismissButton onClick={onClose} />}
