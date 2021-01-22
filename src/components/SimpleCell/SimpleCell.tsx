@@ -7,6 +7,8 @@ import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import withAdaptivity from '../../hoc/withAdaptivity';
+import Title from '../Typography/Title/Title';
+import Caption from '../Typography/Caption/Caption';
 
 export interface SimpleCellOwnProps {
   /**
@@ -87,14 +89,14 @@ const SimpleCell: FC<SimpleCellProps> = ({
       {before}
       <div className="SimpleCell__main">
         <div className="SimpleCell__content">
-          <span className="SimpleCell__children">{children}</span>
+          <Title level="3" weight="regular" className="SimpleCell__children">{children}</Title>
           {hasReactNode(badge) &&
             <span className="SimpleCell__badge">
               {badge}
             </span>
           }
         </div>
-        {description && <div className="SimpleCell__description">{description}</div>}
+        {description && <Caption weight="regular" level="1" className="SimpleCell__description">{description}</Caption>}
       </div>
       {hasReactNode(indicator) &&
         <div className="SimpleCell__indicator">
