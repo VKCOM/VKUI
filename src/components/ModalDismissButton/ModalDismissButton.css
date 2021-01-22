@@ -13,6 +13,7 @@
   transition: opacity .15s ease-out;
 }
 
+/* fixes icon misplacement on Safari in some cases */
 .ModalDismissButton .Icon {
   -webkit-transform: translateX(0);
 }
