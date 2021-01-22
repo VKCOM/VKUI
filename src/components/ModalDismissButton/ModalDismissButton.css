@@ -1,16 +1,16 @@
 .ModalDismissButton {
   position: absolute;
-  justify-content: center;
   width: 28px;
   height: 28px;
   top: 14px;
-  padding: 4px;
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, .35);
   color: var(--white);
   border-radius: 50%;
   right: -42px;
-  transition: opacity .15s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ModalDismissButton--ios {
@@ -18,9 +18,9 @@
 }
 
 .ModalDismissButton.Tappable--shadowHovered {
-  opacity: .6;
+  filter: opacity(.6);
 }
 
 .ModalDismissButton.Tappable--shadowHovered.Tappable--active {
-  opacity: 1;
+  filter: opacity(1);
 }

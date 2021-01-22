@@ -3,11 +3,11 @@
 
 ```jsx
 
-const CustomPoput = withAdaptivity(({ onClose, viewWidth }) => {
+const CustomPopout = withAdaptivity(({ onClose, viewWidth }) => {
   return (
     <PopoutWrapper>
       <div style={{
-        backgroundColor: "#fff",
+        backgroundColor: "var(--background_content)",
         padding: 16,
         borderRadius: 8,
         position: "relative"
@@ -22,10 +22,10 @@ const CustomPoput = withAdaptivity(({ onClose, viewWidth }) => {
 })
 
 const Example = () => {
-  const [popout, setPoput] = React.useState(null);
+  const [popout, setPopout] = React.useState(null);
   
-  const onClick = () => setPoput(
-    <CustomPoput onClose={() => setPoput(null)} />
+  const onClick = () => setPopout(
+    <CustomPopout onClose={() => setPopout(null)} />
   );
 
   return (
