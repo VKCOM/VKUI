@@ -39,13 +39,13 @@
   position: relative;
 }
 
-.TabbarItem__label {
+.TabbarItem__label .Counter {
   position: absolute;
   top: -2px;
   right: -9px;
 }
 
-.TabbarItem__badge {
+.TabbarItem__label .Badge {
   position: absolute;
   top: -2px;
   right: -4px;

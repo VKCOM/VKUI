@@ -1,9 +1,9 @@
 import React, { FunctionComponent, ReactNode, HTMLAttributes, ElementType, AnchorHTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Counter from '../Counter/Counter';
-import { Badge } from '../Badge/Badge';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
 
 export interface TabbarItemProps extends HTMLAttributes<HTMLElement>, AnchorHTMLAttributes<HTMLElement> {
   selected?: boolean;
@@ -12,17 +12,17 @@ export interface TabbarItemProps extends HTMLAttributes<HTMLElement>, AnchorHTML
    */
   text?: ReactNode;
   /**
-   * `<Counter />` рядом с иконкой
+   * Индикатор над иконкой. Принимает `<Badge mode="prominent" />` или `<Counter size="s" mode="prominent" />`
    */
-  label?: number;
+  indicator?: ReactNode;
   /**
-   * `<Badge />` рядом с иконкой
+   * @deprecated будет удалено в 5.0.0. Используйте `indicator`
    */
-  badge?: boolean;
+  label?: ReactNode;
 }
 
 const TabbarItem: FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) => {
-  const { className, children, selected, label, text, badge, ...restProps } = props;
+  const { className, children, selected, label, indicator, text, ...restProps } = props;
   const platform = usePlatform();
   const Component: ElementType = restProps.href ? 'a' : 'div';
 
@@ -37,8 +37,10 @@ const TabbarItem: FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) 
       <div className="TabbarItem__in">
         <div className="TabbarItem__icon">
           {children}
-          {badge && <Badge className="TabbarItem__badge" mode="prominent" />}
-          {label && <Counter className="TabbarItem__label" size="s" mode="prominent">{label}</Counter>}
+          <div className="TabbarItem__label">
+            {hasReactNode(indicator) && indicator}
+            {!indicator && label && <Counter size="s" mode="prominent">{label}</Counter>}
+          </div>
         </div>
         {text && <div className="TabbarItem__text">{text}</div>}
       </div>
