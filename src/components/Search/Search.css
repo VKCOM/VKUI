@@ -99,8 +99,6 @@
 
 .Search__placeholder-text {
   margin-left: 8px;
-  line-height: 22px;
-  font-size: 17px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
