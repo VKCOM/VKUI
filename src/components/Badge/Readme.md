@@ -23,10 +23,10 @@
         <TabbarItem text="Новости">
           <Icon28NewsfeedOutline />
         </TabbarItem>
-        <TabbarItem label={12} text="Сообщения">
+        <TabbarItem indicator={<Counter size="s" mode="prominent">12</Counter>} text="Сообщения">
           <Icon28MessageOutline />
         </TabbarItem>
-        <TabbarItem badge text="Клипы">
+        <TabbarItem indicator={<Badge mode="prominent" />} text="Клипы">
           <Icon28ClipOutline />
         </TabbarItem>
       </Tabbar>
