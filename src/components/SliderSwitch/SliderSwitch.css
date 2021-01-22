@@ -22,10 +22,6 @@
   box-sizing: border-box;
   cursor: pointer;
   background: transparent;
-  line-height: 20px;
-  font-family: inherit;
-  font-weight: 500;
-  font-size: 15px;
   color: var(--text_subhead);
   transition: color 100ms ease-out;
   outline: none;
