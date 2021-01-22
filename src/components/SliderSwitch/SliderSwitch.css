@@ -73,12 +73,13 @@
 
 .SliderSwitch__slider {
   position: absolute;
+  top: 0;
+  left: 0;
   width: calc(50% - 4px);
   height: 40px;
   margin: 2px;
   border-radius: 6px;
-  /*todo: изменить на transform*/
-  transition: margin-left 150ms;
+  transition: transform 150ms;
 }
 
 .SliderSwitch--firstActive {
@@ -87,6 +88,6 @@
 }
 
 .SliderSwitch--secondActive {
-  margin-left: calc(50% + 2px);
+  transform: translateX(100%) translateX(4px);
   background-color: var(--background_content);
 }
