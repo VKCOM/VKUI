@@ -5,6 +5,7 @@ import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
 import { IOS } from '../../lib/platform';
+import './IconButton.css';
 
 export interface IconButtonProps extends TappableProps {
   /**

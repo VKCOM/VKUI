@@ -13,6 +13,7 @@ import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
+import './View.css';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';

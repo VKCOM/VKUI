@@ -4,6 +4,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from './HorizontalScrollArrow';
 import { easeInOutSine } from '../../lib/fx';
+import './HorizontalScroll.css';
 
 interface ScrollContext {
   scrollElement: HTMLElement | null;

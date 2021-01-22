@@ -4,6 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { HasRef, HasRootRef } from '../../types';
 import PopoutRoot from '../PopoutRoot/PopoutRoot';
 import { usePlatform } from '../../hooks/usePlatform';
+import './SplitLayout.css';
 
 export interface SplitLayoutProps extends
   HTMLAttributes<HTMLDivElement>,

@@ -15,6 +15,7 @@ import { noop } from '../../lib/utils';
 import { useChipsInput } from './useChipsInput';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { prefixClass } from '../../lib/prefixClass';
+import './ChipsInput.css';
 
 export type ChipsInputValue = string | number;
 

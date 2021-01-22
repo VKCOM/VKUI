@@ -14,6 +14,7 @@ import Headline from '../Typography/Headline/Headline';
 import Title from '../Typography/Title/Title';
 import Caption from '../Typography/Caption/Caption';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import './Alert.css';
 
 export type AlertActionInterface = AlertProps['actions'][0];
 

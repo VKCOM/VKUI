@@ -2,6 +2,7 @@ import { FunctionComponent, HTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
+import './Progress.css';
 
 export interface ProgressProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   value?: number;

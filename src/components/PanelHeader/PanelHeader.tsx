@@ -11,6 +11,7 @@ import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptiv
 import { isPrimitiveReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
+import './PanelHeader.css';
 
 export interface PanelHeaderProps extends
   HTMLAttributes<HTMLDivElement>,

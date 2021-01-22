@@ -3,6 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
+import './Avatar.css';
 
 export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
   /**

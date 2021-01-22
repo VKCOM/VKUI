@@ -10,6 +10,7 @@ import { withPlatform } from '../../hoc/withPlatform';
 import Headline from '../Typography/Headline/Headline';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
+import '../Select/Select.css';
 
 export interface NativeSelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,

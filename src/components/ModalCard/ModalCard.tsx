@@ -13,6 +13,7 @@ import Title from '../Typography/Title/Title';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import ModalRootContext, { useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
+import './ModalCard.css';
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**

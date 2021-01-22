@@ -10,6 +10,7 @@ import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Subhead from '../Typography/Subhead/Subhead';
+import './Header.css';
 
 export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   mode?: 'primary' | 'secondary' | 'tertiary';

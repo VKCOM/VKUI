@@ -10,6 +10,7 @@ import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
+import './Banner.css';
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**

@@ -14,6 +14,7 @@ import { withAdaptivity } from '../../hoc/withAdaptivity';
 import { withPlatform } from '../../hoc/withPlatform';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { getClassName } from '../../helpers/getClassName';
+import './CustomSelect.css';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 

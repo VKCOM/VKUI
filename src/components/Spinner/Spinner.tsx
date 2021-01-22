@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { Icon24Spinner, Icon32Spinner, Icon44Spinner, Icon16Spinner } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
+import './Spinner.css';
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'small' | 'regular' | 'large' | 'medium';

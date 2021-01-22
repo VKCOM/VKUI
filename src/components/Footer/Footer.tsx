@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 import { DivProps } from '../Div/Div';
 import Caption from '../Typography/Caption/Caption';
+import './Footer.css';
 
 const Footer: FunctionComponent<DivProps> = ({ children, ...restProps }: DivProps) => {
   return (

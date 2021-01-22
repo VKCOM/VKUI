@@ -3,6 +3,7 @@ import { HasPlatform, HasRootRef } from '../../types';
 import { withAdaptivity, ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { DOMProps, withDOM } from '../../lib/dom';
+import './PopoutRoot.css';
 
 export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps, HasRootRef<HTMLDivElement> {
   popout?: ReactNode;

@@ -11,6 +11,7 @@ import { withPlatform } from '../../hoc/withPlatform';
 import { hasHover } from '@vkontakte/vkjs/lib/InputUtils';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import './Tappable.css';
 
 export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;

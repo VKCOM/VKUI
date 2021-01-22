@@ -3,6 +3,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ListContext } from './ListContext';
+import './List.css';
 
 const List: FunctionComponent<HTMLAttributes<HTMLDivElement>> = ({
   children,

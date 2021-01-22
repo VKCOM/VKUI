@@ -2,6 +2,7 @@ import { FC, HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
+import './Spacing.css';
 
 export interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
   /**

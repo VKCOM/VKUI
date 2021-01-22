@@ -8,6 +8,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
+import './ContentCard.css';
 
 export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAttributes<HTMLImageElement>, HasRef<HTMLImageElement>{
   /**

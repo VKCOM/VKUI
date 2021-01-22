@@ -6,6 +6,7 @@ import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { getClassName, HasPlatform } from '../..';
 import { withPlatform } from '../../hoc/withPlatform';
+import './Textarea.css';
 
 export interface TextareaProps extends
   TextareaHTMLAttributes<HTMLTextAreaElement>,

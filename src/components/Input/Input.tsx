@@ -5,6 +5,7 @@ import FormField from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
+import './Input.css';
 
 export interface InputProps extends
   InputHTMLAttributes<HTMLInputElement>,

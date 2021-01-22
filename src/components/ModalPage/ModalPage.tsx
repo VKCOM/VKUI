@@ -8,6 +8,7 @@ import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { Ref } from '../../types';
 import { multiRef } from '../../lib/utils';
 import { ModalType } from '../ModalRoot/types';
+import './ModalPage.css';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   /**

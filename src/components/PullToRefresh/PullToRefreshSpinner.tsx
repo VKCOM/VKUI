@@ -1,5 +1,6 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
+import './PullToRefresh.css';
 
 function calcStrokeDashOffset(value: number, radius: number) {
   const progress = value / 100;

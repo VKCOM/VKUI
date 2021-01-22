@@ -10,6 +10,7 @@ import { ConfigProviderContext, ConfigProviderContextInterface } from '../Config
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { DOMProps, withDOM } from '../../lib/dom';
+import './Root.css';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;

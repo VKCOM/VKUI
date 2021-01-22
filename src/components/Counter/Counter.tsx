@@ -6,6 +6,7 @@ import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
+import './Counter.css';
 
 interface CounterTypographyProps extends HTMLAttributes<HTMLDivElement> {
   size: CounterProps['size'];

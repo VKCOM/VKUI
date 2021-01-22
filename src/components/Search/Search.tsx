@@ -19,6 +19,7 @@ import { setRef } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 import { Separator } from '../../index';
+import './Search.css';
 
 let searchId = 0;
 

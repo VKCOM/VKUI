@@ -20,6 +20,7 @@ import {
 import { ModalsState, ModalsStateEntry, ModalType, TranslateRange } from './types';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
 import { DOMProps, withDOM } from '../../lib/dom';
+import './ModalRoot.css';
 
 function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];

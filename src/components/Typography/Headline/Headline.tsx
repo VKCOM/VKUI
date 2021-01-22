@@ -3,6 +3,7 @@ import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';
+import './Headline.css';
 
 export interface HeadlineProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold';

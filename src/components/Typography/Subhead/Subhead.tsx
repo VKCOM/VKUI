@@ -3,6 +3,7 @@ import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';
+import './Subhead.css';
 
 export interface SubheadProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold' | 'bold';

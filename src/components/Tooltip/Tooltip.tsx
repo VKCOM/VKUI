@@ -6,6 +6,7 @@ import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import { tooltipContainerAttr } from './TooltipContainer';
+import './Tooltip.css';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
   target?: HTMLElement;

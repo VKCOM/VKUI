@@ -4,6 +4,7 @@ import Button, { VKUIButtonProps } from '../Button/Button';
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { setRef } from '../../lib/utils';
+import './File.css';
 
 export interface FileProps extends
   Omit<VKUIButtonProps, 'size' | 'type'>,

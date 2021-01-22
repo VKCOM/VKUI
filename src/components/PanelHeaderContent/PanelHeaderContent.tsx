@@ -6,6 +6,7 @@ import { hasReactNode } from '../../lib/utils';
 import Caption from '../Typography/Caption/Caption';
 import Headline from '../Typography/Headline/Headline';
 import { IOS } from '../..';
+import './PanelHeaderContent.css';
 
 export interface PanelHeaderContentProps extends HTMLAttributes<HTMLDivElement> {
   aside?: ReactNode;

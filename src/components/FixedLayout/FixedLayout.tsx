@@ -11,6 +11,7 @@ import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { PanelContextProps } from '../Panel/PanelContext';
 import { DOMProps, withDOM } from '../../lib/dom';
+import './FixedLayout.css';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,

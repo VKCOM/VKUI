@@ -7,6 +7,7 @@ import { useDOM } from '../../lib/dom';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';
 import IconButton from '../IconButton/IconButton';
+import './Removable.css';
 
 export interface RemovePlaceholderProps {
   /**

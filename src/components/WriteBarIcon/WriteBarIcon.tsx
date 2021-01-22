@@ -12,6 +12,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS } from '../../lib/platform';
 import Caption from '../Typography/Caption/Caption';
+import './WriteBarIcon.css';
 
 export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**

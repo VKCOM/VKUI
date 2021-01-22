@@ -10,6 +10,7 @@ import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptiv
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
+import './SimpleCell.css';
 
 interface SimpleCellTypographyProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {}
 

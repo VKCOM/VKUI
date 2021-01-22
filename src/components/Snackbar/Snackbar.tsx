@@ -12,6 +12,7 @@ import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdapti
 import Text from '../Typography/Text/Text';
 import Button from '../Button/Button';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import './Snackbar.css';
 
 export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**

@@ -4,6 +4,7 @@ import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';
 import Headline, { HeadlineProps } from '../Headline/Headline';
+import './Title.css';
 
 export interface TitleProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'heavy' | 'bold' | 'semibold' | 'medium' | 'regular';

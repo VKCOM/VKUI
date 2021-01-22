@@ -8,6 +8,7 @@ import { canUseDOM, withDOM, useDOM, DOMProps } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
+import './Gallery.css';
 
 export interface BaseGalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
