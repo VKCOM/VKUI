@@ -47,7 +47,7 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
   /**
    * Закрытие выпадающиего списка после выбора элемента
    */
-  closeAfterSelect: boolean;
+  closeAfterSelect?: boolean;
 }
 
 type focusActionType = 'next' | 'prev';
