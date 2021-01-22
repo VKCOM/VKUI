@@ -56,6 +56,7 @@
 @import '../components/ModalPageHeader/ModalPageHeader.css';
 
 /* Blocks */
+@import '../components/Badge/Badge.css';
 @import '../components/IconButton/IconButton.css';
 @import '../components/Card/Card.css';
 @import '../components/CardGrid/CardGrid.css';

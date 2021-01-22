@@ -14,6 +14,10 @@ export interface SimpleCellOwnProps {
    */
   before?: ReactNode;
   /**
+   * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
+   */
+  badge?: ReactNode;
+  /**
    * Контейнер для текста справа от `children`.
    */
   indicator?: ReactNode;
@@ -40,6 +44,7 @@ export interface SimpleCellOwnProps {
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
 const SimpleCell: FC<SimpleCellProps> = ({
+  badge,
   before,
   indicator,
   children,
@@ -81,7 +86,14 @@ const SimpleCell: FC<SimpleCellProps> = ({
     >
       {before}
       <div className="SimpleCell__main">
-        <div className="SimpleCell__children">{children}</div>
+        <div className="SimpleCell__content">
+          <span className="SimpleCell__children">{children}</span>
+          {hasReactNode(badge) &&
+            <span className="SimpleCell__badge">
+              {badge}
+            </span>
+          }
+        </div>
         {description && <div className="SimpleCell__description">{description}</div>}
       </div>
       {hasReactNode(indicator) &&

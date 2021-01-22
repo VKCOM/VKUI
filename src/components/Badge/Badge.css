@@ -1,0 +1,15 @@
+.Badge {
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.Badge--new {
+  background-color: var(--blue_200);
+}
+
+.Badge--prominent {
+  background-color: var(--counter_prominent_background);
+}

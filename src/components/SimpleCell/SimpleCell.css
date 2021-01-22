@@ -74,10 +74,44 @@
   margin-top: 2px;
 }
 
+.SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: flex-start;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+
 .SimpleCell__children {
   color: inherit;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.SimpleCell__badge {
+  display: inline-block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-left: 4px;
+  color: var(--blue_200);
+}
+
+.SimpleCell__badge .Badge {
+  margin-top: 2px;
+  margin-left: 3px;
+}
+
+.SimpleCell--mult .SimpleCell__badge {
+  vertical-align: top;
+}
+
+.SimpleCell--mult .SimpleCell__badge .Icon {
+  transform: translateY(2px);
+}
+
+.SimpleCell--mult .SimpleCell__badge .Badge {
+  margin-top: 8px;
 }
 
 .SimpleCell__indicator {
@@ -255,4 +289,8 @@
 .SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--w-8,
 .SimpleCell--sizeY-compact .SimpleCell__after .IconButton .Icon--w-8 ~ * {
   margin-right: -10px;
+}
+
+.SimpleCell--sizeY-compact .SimpleCell__badge .Badge {
+  transform: translateY(.5px);
 }

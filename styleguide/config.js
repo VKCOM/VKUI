@@ -102,6 +102,7 @@ module.exports = {
       }, {
         name: 'Blocks',
         components: () => [
+          "../src/components/Badge/Badge.tsx",
           '../src/components/Button/Button.tsx',
           '../src/components/CellButton/CellButton.tsx',
           '../src/components/IconButton/IconButton.tsx',

@@ -7,7 +7,7 @@
   display: flex;
   align-items: baseline;
   justify-content: center;
-  }
+}
 
 .Tabs--default .TabsItem {
   font-size: 16px;
@@ -21,13 +21,13 @@
   position: relative;
   padding-left: 16px;
   padding-right: 16px;
-  }
+}
 
-  .Tabs--default .TabsItem__in {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 14px 0;
-    }
+.Tabs--default .TabsItem__in {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 14px 0;
+}
 
 .Tabs--default .TabsItem::after {
   content: '';
@@ -38,15 +38,15 @@
   width: calc(100% - 32px);
   height: 2px;
   border-radius: 2px;
-  }
+}
 
 .Tabs--default .TabsItem--selected {
   color: var(--text_primary);
-  }
+}
 
 .Tabs--default .TabsItem--selected::after {
   background: var(--accent);
-  }
+}
 
 .HorizontalScroll .TabsItem {
   min-width: 64px;
@@ -60,39 +60,44 @@
   font-size: 14px;
   line-height: 18px;
   font-weight: 500;
-  }
+}
 
-  .Tabs--buttons .TabsItem__in {
-    padding: 6px 0;
-    }
+.Tabs--buttons .TabsItem__in {
+  padding: 6px 0;
+}
 
 /* Для случая, когда внутри Tabs нет HorizontalScroll */
 .Tabs--buttons .Tabs__in > .TabsItem:first-child {
   margin-left: 8px;
-  }
+}
 
 .Tabs--buttons .TabsItem:not(:last-child) {
   margin-right: 8px;
-  }
+}
 
 .Tabs--buttons .TabsItem {
   background-color: var(--header_background);
   color: var(--header_tab_inactive_text);
-  }
+}
 
 .Tabs--buttons .TabsItem--selected {
   background-color: var(--header_tab_active_background);
   color: var(--header_tab_active_text);
-  }
+}
 
 .Tabs--buttons .TabsItem {
   color: var(--panel_tab_inactive_text);
-  }
+}
 
 .Tabs--buttons .TabsItem--selected {
   background-color: var(--panel_tab_active_background);
   color: var(--panel_tab_active_text);
-  }
+}
+
+.TabsItem__after .Badge {
+  transform: translateY(-2px);
+  margin-left: 6px;
+}
 
 /*
   iOS
@@ -106,54 +111,54 @@
   flex-basis: 0;
   flex-shrink: 0;
   flex-grow: 1;
-  }
+}
 
-  .Tabs--ios.Tabs--segmented .TabsItem__in {
-    padding: 7px 0;
-    }
+.Tabs--ios.Tabs--segmented .TabsItem__in {
+  padding: 7px 0;
+}
 
 .Tabs--ios.Tabs--segmented .TabsItem:not(:first-child) {
   border-left: none;
-  }
+}
 
 .Tabs--ios.Tabs--segmented .TabsItem:last-child {
   border-radius: 0 10px 10px 0;
-  }
+}
 
 .Tabs--ios.Tabs--segmented .TabsItem:first-child {
   border-radius: 10px 0 0 10px;
-  }
+}
 
 .Tabs--ios.Tabs--segmented .TabsItem {
   border-color: var(--segmented_control_tint);
   color: var(--segmented_control_tint);
-  }
+}
 
 .Tabs--ios.Tabs--segmented .TabsItem--selected {
   background-color: var(--segmented_control_tint);
-  }
+}
 
 .Tabs--ios.Tabs--segmented .TabsItem--selected {
   color: var(--background_content);
-  }
+}
 
 .Tabs--ios.Tabs--segmented .TabsItem:not(.TabsItem--selected).Tappable--active {
   background: var(--separator_common);
-  }
+}
 
 .PanelHeader--ios .Tabs--segmented.TabsItem:not(.TabsItem--selected).Tappable--active .TabsItem__in {
   opacity: .7;
-  }
+}
 
 .PanelHeader--ios .Tabs--segmented .TabsItem {
   border-color: var(--header_tint);
   color: var(--header_tint);
-  }
+}
 
 .Tabs--ios.Tabs--segmented.Tabs--header .TabsItem--selected {
   background-color: var(--header_tint);
   color: var(--header_background);
-  }
+}
 
 /*
   Android
@@ -162,24 +167,24 @@
 .TabsItem--android .Tappable__waves,
 .TabsItem--vkcom .Tappable__waves {
   display: none;
-  }
+}
 
-  /*
+/*
   VKCOM
   */
 
-  .Tabs--vkcom .TabsItem--vkcom {
-    flex-grow: 0;
-    min-width: auto;
-    font-size: 15px;
-    line-height: 20px;
-    font-weight: 400;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+.Tabs--vkcom .TabsItem--vkcom {
+  flex-grow: 0;
+  min-width: auto;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 400;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
-  .Tabs--vkcom .TabsItem--vkcom::after {
-    left: 2px;
-    bottom: 0;
-    width: calc(100% - 4px);
-  }
+.Tabs--vkcom .TabsItem--vkcom::after {
+  left: 2px;
+  bottom: 0;
+  width: calc(100% - 4px);
+}
