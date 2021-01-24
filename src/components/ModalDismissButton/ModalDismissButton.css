@@ -15,7 +15,7 @@
 
 /* fixes icon misplacement on Safari in some cases */
 .ModalDismissButton .Icon {
-  -webkit-transform: translateX(0);
+  transform: translateX(0);
 }
 
 .ModalDismissButton--ios {
