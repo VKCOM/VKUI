@@ -457,8 +457,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       expanded && modalState.touchMovePositive && modalState.touchStartContentScrollTop === 0 ||
       target.closest('.ModalPage__header')
     ) {
+      originalEvent.preventDefault();
       if (!expandable && shiftY < 0) {
-        originalEvent.preventDefault();
         return;
       }
 
