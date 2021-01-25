@@ -18,7 +18,6 @@ export interface HorizontalCellProps extends HTMLAttributes<HTMLDivElement>, Has
 export const HorizontalCell: FC<HorizontalCellProps> = (props) => {
   const { className, header, subtitle, size, style, children, getRootRef, getRef, ...restProps } = props;
   const platform = usePlatform();
-  const weight = 'regular';
 
   return (
     <div className={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`, className)} ref={getRootRef} style={style}>
@@ -27,8 +26,8 @@ export const HorizontalCell: FC<HorizontalCellProps> = (props) => {
         <div className="HorizontalCell__content">
           {hasReactNode(header)
             ? size === 's'
-              ? <Caption level="2" weight={weight} className="HorizontalCell__title">{header}</Caption>
-              : <Subhead weight={weight} className="HorizontalCell__title">{header}</Subhead>
+              ? <Caption level="2" weight="regular" className="HorizontalCell__title">{header}</Caption>
+              : <Subhead weight="regular" className="HorizontalCell__title">{header}</Subhead>
             : null
           }
           {hasReactNode(subtitle) && <Caption weight="regular" level="1" className="HorizontalCell__subtitle">{subtitle}</Caption>}
