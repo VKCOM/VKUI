@@ -4,8 +4,9 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { isPrimitiveReactNode } from '../../lib/utils';
-import { VKCOM } from '../../lib/platform';
+import { IOS, VKCOM } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
+import Title from '../Typography/Title/Title';
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   primary?: boolean;
@@ -24,8 +25,8 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
 
-  const childrenComponent = isPrimitive && platform === VKCOM ? <Text weight="regular">{children}</Text> : children;
-  const labelComponent = isPrimitiveLabel && platform === VKCOM ? <Text weight="regular">{label}</Text> : label;
+  const textWeight = platform === VKCOM ? 'regular' : 'medium';
+  const titleWeight = primary ? 'semibold' : 'regular';
 
   return (
     <Tappable
@@ -42,8 +43,18 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
         },
       )}
     >
-      {childrenComponent}
-      {labelComponent}
+      {isPrimitive
+        ? platform !== IOS
+          ? <Text Component="span" weight={textWeight}>{children}</Text>
+          : <Title Component="span" level="3" weight={titleWeight}>{children}</Title>
+        : children
+      }
+      {isPrimitiveLabel
+        ? platform !== IOS
+          ? <Text Component="span" weight={textWeight}>{label}</Text>
+          : <Title Component="span" level="3" weight={titleWeight}>{label}</Title>
+        : label
+      }
     </Tappable>
   );
 };
