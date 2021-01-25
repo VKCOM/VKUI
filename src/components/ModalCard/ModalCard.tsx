@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, FC } from 'react';
+import React, { HTMLAttributes, ReactNode, FC, useContext } from 'react';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -6,13 +6,14 @@ import { Icon24Dismiss } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
 import withPlatform from '../../hoc/withPlatform';
-import { HasChildren, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import ModalRootContext from '../ModalRoot/ModalRootContext';
 
-export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, HasChildren, AdaptivityProps {
+export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
    * Иконка.
    *
@@ -45,7 +46,7 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   /**
    * Будет вызван при закрытии карточки жестом
    */
-  onClose?(): void;
+  onClose?: VoidFunction;
 }
 
 const ModalCard: FC<ModalCardProps> = (props) => {
@@ -68,6 +69,8 @@ const ModalCard: FC<ModalCardProps> = (props) => {
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
+
+  const modalContext = useContext(ModalRootContext);
 
   return (
     <div
@@ -92,9 +95,9 @@ const ModalCard: FC<ModalCardProps> = (props) => {
           </div>
           }
 
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
           {canShowCloseBtnIos &&
-          <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose}>
+          <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose || modalContext.onClose}>
             <Icon24Dismiss />
           </PanelHeaderButton>
           }

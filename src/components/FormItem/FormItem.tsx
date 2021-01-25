@@ -1,4 +1,4 @@
-import React, { ElementType, FC, LabelHTMLAttributes, ReactNode } from 'react';
+import React, { AllHTMLAttributes, ElementType, FC, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -7,7 +7,7 @@ import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface FormItemProps extends LabelHTMLAttributes<HTMLElement> {
+export interface FormItemProps extends AllHTMLAttributes<HTMLElement> {
   top?: ReactNode;
   bottom?: ReactNode;
   status?: 'default' | 'error' | 'valid';
@@ -33,5 +33,5 @@ export const FormItem: FC<FormItemProps> = withAdaptivity(({ className, children
 
 FormItem.defaultProps = {
   status: 'default',
-  Component: 'label',
+  Component: 'div',
 };

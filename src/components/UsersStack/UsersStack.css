@@ -25,6 +25,11 @@
   background: var(--content_placeholder_icon);
 }
 
+.UsersStack--size-xs .UsersStack__photo {
+  width: 16px;
+  height: 16px;
+}
+
 .UsersStack--size-s .UsersStack__photo {
   width: 24px;
   height: 24px;
@@ -41,6 +46,11 @@
 
 .UsersStack:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
   margin-left: -2px;
+}
+
+.UsersStack--size-xs:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
+  margin-left: -1px;
+  clip-path: url(#users_stack_mask_16_left);
 }
 
 .UsersStack--size-s:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {

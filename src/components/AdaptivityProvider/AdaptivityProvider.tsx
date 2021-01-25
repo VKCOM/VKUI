@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { HasChildren } from '../../types';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
 import { canUseDOM, useDOM } from '../../lib/dom';
 
-export interface AdaptivityProviderProps extends AdaptivityContextInterface, HasChildren {}
+export interface AdaptivityProviderProps extends AdaptivityContextInterface {
+  children?: ReactNode;
+}
 
 export const DESKTOP_SIZE = 1280;
 export const TABLET_SIZE = 1024;

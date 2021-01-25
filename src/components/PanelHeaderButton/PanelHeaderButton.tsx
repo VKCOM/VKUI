@@ -1,5 +1,5 @@
-import React, { ButtonHTMLAttributes, FunctionComponent, ReactNode } from 'react';
-import Tappable from '../Tappable/Tappable';
+import React, { FunctionComponent, ReactNode } from 'react';
+import Tappable, { TappableProps } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
@@ -7,10 +7,8 @@ import { isPrimitiveReactNode } from '../../lib/utils';
 import { VKCOM } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
 
-export interface PanelHeaderButtonProps extends ButtonHTMLAttributes<HTMLElement> {
+export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   primary?: boolean;
-  href?: string;
-  target?: string;
   label?: ReactNode;
 }
 

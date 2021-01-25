@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, HTMLAttributes } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import { HasChildren, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 import { PointerEventsProperty } from 'csstype';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { DOMProps, withDOM } from '../../lib/dom';
 
-interface Props extends HasPlatform, AdaptivityProps, HasChildren {
+interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;

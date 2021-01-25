@@ -20,7 +20,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   after,
   className,
   ...restProps
-}) => {
+}: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : null;
 
   return (

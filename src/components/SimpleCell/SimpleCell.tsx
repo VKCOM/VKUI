@@ -1,19 +1,22 @@
-import React, { HTMLAttributes, ReactNode, FC, ElementType } from 'react';
+import React, { ReactNode, FC, ElementType } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import Tappable from '../Tappable/Tappable';
+import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { Icon24Chevron } from '@vkontakte/icons';
-import { HasLinkProps, HasRootRef } from '../../types';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import withAdaptivity from '../../hoc/withAdaptivity';
 
-export interface SimpleCellOwnProps extends HasLinkProps {
+export interface SimpleCellOwnProps {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
   before?: ReactNode;
+  /**
+   * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
+   */
+  badge?: ReactNode;
   /**
    * Контейнер для текста справа от `children`.
    */
@@ -38,9 +41,10 @@ export interface SimpleCellOwnProps extends HasLinkProps {
   Component?: ElementType;
 }
 
-export interface SimpleCellProps extends SimpleCellOwnProps, HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, AdaptivityProps {}
+export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
 const SimpleCell: FC<SimpleCellProps> = ({
+  badge,
   before,
   indicator,
   children,
@@ -82,7 +86,14 @@ const SimpleCell: FC<SimpleCellProps> = ({
     >
       {before}
       <div className="SimpleCell__main">
-        <div className="SimpleCell__children">{children}</div>
+        <div className="SimpleCell__content">
+          <span className="SimpleCell__children">{children}</span>
+          {hasReactNode(badge) &&
+            <span className="SimpleCell__badge">
+              {badge}
+            </span>
+          }
+        </div>
         {description && <div className="SimpleCell__description">{description}</div>}
       </div>
       {hasReactNode(indicator) &&

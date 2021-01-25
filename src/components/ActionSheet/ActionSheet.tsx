@@ -14,11 +14,14 @@ import Caption from '../Typography/Caption/Caption';
 export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   header?: React.ReactNode;
   text?: React.ReactNode;
-  onClose(): void;
+  onClose?: VoidFunction;
   /**
    * Desktop only
    */
   toggleRef: Element;
+  /**
+   * iOS only
+   */
   iosCloseItem: React.ReactNode;
 }
 

@@ -3,14 +3,14 @@
 
 ```jsx
 
-const CustomPoput = withAdaptivity(({ onClose, viewWidth }) => {
+const CustomPopout = withAdaptivity(({ onClose, viewWidth }) => {
   return (
-    <PopoutWrapper>
+    <PopoutWrapper onClick={onClose}>
       <div style={{
-        backgroundColor: "#fff",
-        padding: 16,
+        backgroundColor: "var(--background_content)",
         borderRadius: 8,
-        position: "relative"
+        position: "relative",
+        padding: "12px"
       }}>
         <h4>Кастомное модальное окно</h4>
         {viewWidth >= ViewWidth.SMALL_TABLET && <ModalDismissButton onClick={onClose} />}
@@ -22,10 +22,10 @@ const CustomPoput = withAdaptivity(({ onClose, viewWidth }) => {
 })
 
 const Example = () => {
-  const [popout, setPoput] = React.useState(null);
+  const [popout, setPopout] = React.useState(null);
   
-  const onClick = () => setPoput(
-    <CustomPoput onClose={() => setPoput(null)} />
+  const onClick = () => setPopout(
+    <CustomPopout onClose={() => setPopout(null)} />
   );
 
   return (

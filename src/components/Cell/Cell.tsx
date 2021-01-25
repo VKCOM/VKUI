@@ -1,4 +1,4 @@
-import React, { Component, ReactNode, MouseEvent, Fragment, InputHTMLAttributes } from 'react';
+import React, { Component, ReactNode, MouseEvent, Fragment } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import IconButton from '../IconButton/IconButton';
@@ -11,7 +11,7 @@ import { HasPlatform } from '../../types';
 import { setRef } from '../../lib/utils';
 import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'defaultChecked'> {
+export interface CellProps extends SimpleCellProps, HasPlatform {
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
@@ -20,6 +20,10 @@ export interface CellProps extends SimpleCellProps, HasPlatform, Pick<InputHTMLA
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
   removable?: boolean;
+  /**
+   * Имя для input в режиме selectable
+   */
+  name?: string;
   selectable?: boolean;
   /**
    * В режиме selectable реагирует на входящие значения пропса cheсked, как зависящий напрямую от входящего значения

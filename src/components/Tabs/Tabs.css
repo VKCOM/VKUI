@@ -1,7 +1,3 @@
-.Tabs {
-
-  }
-
 .Tabs__in,
 .Tabs .HorizontalScroll__in-wrapper {
   display: flex;
@@ -21,22 +17,22 @@
 
 .Tabs .HorizontalScroll {
   min-width: 100%;
-  }
+}
 
 .Tabs--buttons {
   padding-top: 8px;
   padding-bottom: 8px;
-  }
+}
 
 .Tabs--default,
 .Tabs--default .HorizontalScroll__in-wrapper {
   justify-content: center;
-  }
+}
 
 .Tabs--buttons,
 .Tabs--default .HorizontalScroll__in-wrapper {
   justify-content: flex-start;
-  }
+}
 
 .Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::after,
 .Tabs--sizeX-compact.Tabs--buttons .HorizontalScroll__in-wrapper::before {
@@ -45,18 +41,15 @@
   flex-shrink: 0;
   height: 1px;
   content: '';
-  }
+}
 
 /*
  iOS
  */
 
-.Tabs--ios {
-  }
-
 .Tabs--ios.Tabs--segmented {
   padding: 4px 12px 8px;
-  }
+}
 
 /* Нужно для закрашивания прозрачной области нижнего инсета на iphone x */
 .FixedLayout--ios.FixedLayout--bottom .Tabs::after {
@@ -67,19 +60,13 @@
   height: 100%;
   content: '';
   background: var(--background_content);
-  }
+}
 
-  .FixedLayout--ios.FixedLayout--bottom .Tabs__in,
-  .FixedLayout--ios.FixedLayout--bottom .Separator {
-    position: relative;
-    z-index: 2;
-    }
-
-/*
-  Android
- */
-.Tabs--android {
-  }
+.FixedLayout--ios.FixedLayout--bottom .Tabs__in,
+.FixedLayout--ios.FixedLayout--bottom .Separator {
+  position: relative;
+  z-index: 2;
+}
 
 /**
  * Counter inside TabsItem
@@ -87,29 +74,29 @@
 
 .TabsItem .Counter {
   margin-left: 8px;
-  }
+}
 
-.Tabs .TabsItem .Counter {
+.Tabs .TabsItem .Counter--secondary {
   background: var(--panel_tab_inactive_text);
   color: var(--white);
-  }
+}
 
-.Tabs .TabsItem--selected .Counter {
+.Tabs .TabsItem--selected .Counter--secondary {
   background: var(--panel_tab_active_text);
   color: var(--panel_tab_active_background);
-  }
+}
 
-.Tabs--ios.Tabs--segmented .TabsItem .Counter {
+.Tabs--ios.Tabs--segmented .TabsItem .Counter--secondary {
   background: var(--segmented_control_tint);
   color: var(--background_content);
-  }
+}
 
-.Tabs--ios.Tabs--segmented .TabsItem--selected .Counter {
+.Tabs--ios.Tabs--segmented .TabsItem--selected .Counter--secondary {
   background: var(--background_content);
   color: var(--segmented_control_tint);
-  }
+}
 
 .Tabs--ios.Tabs--segmented .TabsItem .Counter--s-m {
   position: relative;
   top: 1px;
-  }
+}

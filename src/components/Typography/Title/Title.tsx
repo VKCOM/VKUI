@@ -1,11 +1,11 @@
-import React, { ElementType, FunctionComponent, HTMLAttributes } from 'react';
+import React, { ElementType, FunctionComponent, AllHTMLAttributes } from 'react';
 import usePlatform from '../../../hooks/usePlatform';
 import classNames from '../../../lib/classNames';
 import getClassName from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';
 import Headline, { HeadlineProps } from '../Headline/Headline';
 
-export interface TitleProps extends HTMLAttributes<HTMLElement> {
+export interface TitleProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'heavy' | 'bold' | 'semibold' | 'medium' | 'regular';
   level: '1' | '2' | '3';
   Component?: ElementType;
@@ -42,7 +42,7 @@ const Title: FunctionComponent<TitleProps> = ({
   level,
   Component,
   ...restProps
-}) => {
+}: TitleProps) => {
   const platform = usePlatform();
   const TitleComponent = Component || getComponent(level);
   let titleWeight = platform === ANDROID ? getAndroidTitleWeight(level, weight) : weight;
