@@ -406,32 +406,31 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   };
 
   onPageTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
-    const { shiftY, startT, originalEvent } = event;
+    const { shiftY, startT, originalEvent, isY, isX } = event;
     const target = originalEvent.target as HTMLElement;
 
+    const targetTextarea = target.closest('textarea');
+    const targetHorizontalScroll = target.closest<HTMLDivElement>('.HorizontalScroll__in');
+
+    // check if textarea is scrollable on Y or HorizontalScroll is scrollable on X
+    const isScrollableTarget = isY && targetTextarea && targetTextarea.offsetHeight < targetTextarea.scrollHeight
+      || isX && targetHorizontalScroll && targetHorizontalScroll.offsetWidth < targetHorizontalScroll.scrollWidth;
+
     if (!event.isY) {
-      if (
-        target.closest('.ModalPage') &&
-        !target.closest('.HorizontalScroll') &&
-        !target.closest('textarea')
-      ) {
+      if (target.closest('.ModalPage') && !isScrollableTarget) {
         originalEvent.preventDefault();
         return;
       }
     }
 
-    if (
-      !target.closest('.ModalPage__in') &&
-      !target.closest('.HorizontalScroll__in') &&
-      !target.closest('textarea')
-    ) {
+    if (!target.closest('.ModalPage__in') && !isScrollableTarget) {
       return originalEvent.preventDefault();
     }
 
     originalEvent.stopPropagation();
 
     // запрещаем дальнейшие вычисления, если внутри скролла
-    if (target.closest('.HorizontalScroll__in') || target.closest('textarea')) {
+    if (isScrollableTarget) {
       return;
     }
 
