@@ -63,6 +63,8 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     closeAfterSelect, onChangeStart, ...restProps
   } = props;
 
+  const isCreatebleOption = Boolean(creatable && creatableText);
+
   const { document } = useDOM();
 
   const scrollViewRef = useRef<CustomScrollView>(null);
@@ -115,7 +117,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
   };
 
   const focusOptionByIndex = (index: number, oldIndex: number) => {
-    const length = filteredOptions.length + Number(creatable);
+    const length = filteredOptions.length + Number(isCreatebleOption);
 
     if (index < 0) {
       index = length - 1;
@@ -169,7 +171,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     }
 
     if (e.key === 'Enter' && !e.defaultPrevented && opened) {
-      const option = filteredOptions[focusedOptionIndex - Number(creatable)];
+      const option = filteredOptions[focusedOptionIndex - Number(isCreatebleOption)];
 
       if (option) {
         onChangeStart(e, option);
@@ -192,22 +194,22 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
   };
 
   useEffect(() => {
-    let index = focusedOptionIndex - Number(creatable);
+    let index = focusedOptionIndex - Number(isCreatebleOption);
 
     if (filteredOptions[index]) {
       setFocusedOption(filteredOptions[index]);
     } else if (focusedOptionIndex === null || focusedOptionIndex === 0) {
       setFocusedOption(null);
     }
-  }, [focusedOptionIndex, creatable, selectedOptions]);
+  }, [focusedOptionIndex, isCreatebleOption, selectedOptions]);
 
   useEffect(() => {
     const index = focusedOption ? filteredOptions.findIndex(({ value }) => value === focusedOption.value) : -1;
 
-    if (index === -1 && !!filteredOptions.length && !creatable && closeAfterSelect) {
+    if (index === -1 && !!filteredOptions.length && !isCreatebleOption && closeAfterSelect) {
       setFocusedOption(filteredOptions[0]);
     }
-  }, [filteredOptions, focusedOption, creatable, closeAfterSelect]);
+  }, [filteredOptions, focusedOption, isCreatebleOption, closeAfterSelect]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -276,7 +278,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
               </div>
             ) : (
               <>
-                {creatable && (
+                {isCreatebleOption && (
                   <CustomSelectOption
                     hovered={focusedOptionIndex === 0}
                     onMouseDown={addOptionFromInput}
@@ -285,11 +287,11 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                     {creatableText}
                   </CustomSelectOption>
                 )}
-                {!filteredOptions?.length && !creatable && emptyText ? (
+                {!filteredOptions?.length && !isCreatebleOption && emptyText ? (
                   <div className="ChipsSelect__empty">{emptyText}</div>
                 ) :
                   filteredOptions.map((option: Option, i: number) => {
-                    const index = creatable ? i + 1 : i;
+                    const index = isCreatebleOption ? i + 1 : i;
                     const label = getOptionLabel(option);
                     const hovered = focusedOption && getOptionValue(option) === getOptionValue(focusedOption);
                     const selected = selectedOptions.find((selectedOption: Option) => {

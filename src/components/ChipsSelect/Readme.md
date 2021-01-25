@@ -26,7 +26,8 @@ const Example = () => {
     top:"Выберите или добавьте цвета",
     placeholder:"Не выбраны",
     creatable: true,
-    creatableText: 'Создать значение'
+    creatableText: 'Создать значение',
+    emptyText: 'Ничего не найдено',
   } 
 
   return (
@@ -69,6 +70,9 @@ const Example = () => {
           </FormItem>
           <FormItem top="Выберите или добавьте цвета">
             <ChipsSelect {...colorsChipsProps}/>
+          </FormItem>
+          <FormItem top="Выберите или добавьте цвета (creatable без кнопки создания)">
+            <ChipsSelect {...colorsChipsProps} creatableText={false} />
           </FormItem>
         </Group>
       </Panel>
