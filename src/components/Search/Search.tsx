@@ -181,10 +181,9 @@ class Search extends Component<SearchProps, SearchState> {
               }
               {!!this.value &&
                 <Touch onStart={this.onIconCancelClickStart} className="Search__icon">
-                  {platform === VKCOM ?
-                    <Icon24Cancel />
-                    :
-                    <Icon16Clear />
+                  {platform === VKCOM
+                    ? <Icon24Cancel />
+                    : <Icon16Clear />
                   }
                 </Touch>
               }
