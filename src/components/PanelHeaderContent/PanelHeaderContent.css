@@ -24,7 +24,8 @@
     }
 
   .PanelHeaderContent__status,
-  .PanelHeaderContent__children-in {
+  .PanelHeaderContent__children-in,
+  .PanelHeaderContent__children .Headline {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -32,20 +33,9 @@
 
     .PanelHeaderContent__status {
       order: 1;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 16px;
       margin-top: 1px;
       max-width: 100%;
-      font-family: var(--font-common);
       color: var(--header_text_secondary);
-      }
-
-    .PanelHeaderContent__status ~ .PanelHeaderContent__children .PanelHeaderContent__children-in {
-      font-weight: 500;
-      font-family: var(--font-common);
-      font-size: 16px;
-      line-height: 20px;
       }
 
     .PanelHeaderContent__children {
