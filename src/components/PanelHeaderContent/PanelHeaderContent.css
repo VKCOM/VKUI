@@ -78,9 +78,6 @@
 /*
   iOS
  */
-.PanelHeaderContent--ios {
-  }
-
   .PanelHeaderContent--ios .PanelHeaderContent__in.Tappable--active {
     opacity: .7;
     }
@@ -96,9 +93,6 @@
 /*
   Android
  */
-.PanelHeaderContent--android {
-  }
-
   .PanelHeaderContent--android .PanelHeaderContent__in.Tappable--active,
   .PanelHeaderContent--vkcom .PanelHeaderContent__in.Tappable--active {
     background-color: rgba(255, 255, 255, .1);
