@@ -8,6 +8,29 @@ import { IOS, VKCOM } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 
+interface ButtonTypographyProps {
+  primary?: PanelHeaderButtonProps['primary'];
+  children?: ReactNode;
+}
+
+const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, children }: ButtonTypographyProps) => {
+  const platform = usePlatform();
+
+  if (platform === IOS) {
+    return (
+      <Title Component="span" level="3" weight={primary ? 'semibold' : 'regular'}>
+        {children}
+      </Title>
+    );
+  }
+
+  return (
+    <Text Component="span" weight={platform === VKCOM ? 'regular' : 'medium'}>
+      {children}
+    </Text>
+  );
+};
+
 export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   primary?: boolean;
   label?: ReactNode;
@@ -25,9 +48,6 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
 
-  const textWeight = platform === VKCOM ? 'regular' : 'medium';
-  const titleWeight = primary ? 'semibold' : 'regular';
-
   return (
     <Tappable
       {...restProps}
@@ -44,15 +64,11 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
       )}
     >
       {isPrimitive
-        ? platform !== IOS
-          ? <Text Component="span" weight={textWeight}>{children}</Text>
-          : <Title Component="span" level="3" weight={titleWeight}>{children}</Title>
+        ? <ButtonTypography primary={primary}>{children}</ButtonTypography>
         : children
       }
       {isPrimitiveLabel
-        ? platform !== IOS
-          ? <Text Component="span" weight={textWeight}>{label}</Text>
-          : <Title Component="span" level="3" weight={titleWeight}>{label}</Title>
+        ? <ButtonTypography primary={primary}>{label}</ButtonTypography>
         : label
       }
     </Tappable>
