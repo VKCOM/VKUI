@@ -1,6 +1,8 @@
 .ModalRoot {
   width: 100%;
   height: 100%;
+  /* disable touch callout for iOS: that might cause scrolling issues */
+  -webkit-touch-callout: none;
 }
 
 .ModalRoot__mask {
