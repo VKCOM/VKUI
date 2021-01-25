@@ -14,6 +14,7 @@ import { useChipsSelect } from './useChipsSelect';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { setRef, noop } from '../../lib/utils';
 import { useDOM } from '../../lib/dom';
+import Caption from '../Typography/Caption/Caption';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
@@ -286,7 +287,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                   </CustomSelectOption>
                 )}
                 {!filteredOptions?.length && !creatable && emptyText ? (
-                  <div className="ChipsSelect__empty">{emptyText}</div>
+                  <Caption level="1" weight="regular" className="ChipsSelect__empty">{emptyText}</Caption>
                 ) :
                   filteredOptions.map((option: Option, i: number) => {
                     const index = creatable ? i + 1 : i;
