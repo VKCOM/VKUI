@@ -42,7 +42,11 @@ const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
         {left}
       </div>
       <div className="PanelHeader__content">
-        {isPrimitive ? platform === VKCOM ? <Text weight="medium">{children}</Text> : <span>{children}</span> : children}
+        {isPrimitive
+          ? platform === VKCOM
+            ? <Text Component="span" weight="medium">{children}</Text>
+            : <span className="PanelHeader__content-in">{children}</span>
+          : children}
       </div>
       <div className="PanelHeader__right">
         {webviewType !== WebviewType.VKAPPS && right}
