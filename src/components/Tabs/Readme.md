@@ -42,7 +42,7 @@
                   }}
                   selected={this.state.activeTab1 === 'news'}
                   after={<Icon16Dropdown style={{
-                    transform: `rotate(${this.state.contextOpened ? '180deg' : '0'}) translateY(${this.state.contextOpened ? '-2px' : '2px'})`
+                    transform: `rotate(${this.state.contextOpened ? '180deg' : '0'}) translateY(1px)`
                   }}/>}
                 >
                   Новости

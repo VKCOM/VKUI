@@ -101,7 +101,8 @@
 
 .TabsItem__after .Icon--dropdown_16 {
   color: var(--header_tint);
-  transform: translateY(2px);
+  transform-origin: 50% 55%;
+  transform: translateY(1px);
   margin-left: 6px;
 }
 
