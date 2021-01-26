@@ -422,11 +422,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     originalEvent.stopPropagation();
 
-    // запрещаем дальнейшие вычисления, если внутри скролла
-    if (target.closest('.HorizontalScroll__in') || target.closest('textarea')) {
-      return;
-    }
-
     const { expandable, contentScrolled, collapsed, expanded } = modalState;
 
     if (!this.state.touchDown) {
