@@ -410,21 +410,13 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const target = originalEvent.target as HTMLElement;
 
     if (!event.isY) {
-      if (
-        target.closest('.ModalPage') &&
-        !target.closest('.HorizontalScroll') &&
-        !target.closest('textarea')
-      ) {
+      if (target.closest('.ModalPage')) {
         originalEvent.preventDefault();
-        return;
       }
+      return;
     }
 
-    if (
-      !target.closest('.ModalPage__in') &&
-      !target.closest('.HorizontalScroll__in') &&
-      !target.closest('textarea')
-    ) {
+    if (!target.closest('.ModalPage__in')) {
       return originalEvent.preventDefault();
     }
 
@@ -437,14 +429,14 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     const { expandable, contentScrolled, collapsed, expanded } = modalState;
 
-    if (contentScrolled) {
-      return;
-    }
-
     if (!this.state.touchDown) {
       modalState.touchStartTime = startT;
       modalState.touchStartContentScrollTop = modalState.contentElement.scrollTop;
       this.setState({ touchDown: true });
+    }
+
+    if (contentScrolled) {
+      return;
     }
 
     if (modalState.touchMovePositive === null) {
@@ -457,8 +449,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       expanded && modalState.touchMovePositive && modalState.touchStartContentScrollTop === 0 ||
       target.closest('.ModalPage__header')
     ) {
+      originalEvent.preventDefault();
       if (!expandable && shiftY < 0) {
-        originalEvent.preventDefault();
         return;
       }
 
