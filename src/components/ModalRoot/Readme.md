@@ -118,17 +118,6 @@ const App = withAdaptivity(class App extends React.Component {
               <Textarea placeholder="Описание"/>
             </FormItem>
           </Group>
-          <Group header={<Header>Чеклист</Header>}>
-            <Checkbox>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Checkbox>
-            <Checkbox>
-              Изучить восстановление сервиса из кеша: https://vk.com/dev/vk_bridge_events_14?f=Восстановление%20сервиса%20из%20кэша
-            </Checkbox>
-            <Checkbox>
-              Выпустить мини-аппу
-            </Checkbox>
-          </Group>
           <Group header={<Header aside={<Link>Показать все</Link>}>Мини-приложения</Header>}>
             <HorizontalScroll>
               <div style={{display: "flex"}}>
