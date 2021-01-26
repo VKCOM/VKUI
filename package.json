@@ -186,5 +186,8 @@
   },
   "pre-commit": [
     "test:static"
-  ]
+  ],
+  "dependencies": {
+    "babel-plugin-module-resolver": "^4.1.0"
+  }
 }
