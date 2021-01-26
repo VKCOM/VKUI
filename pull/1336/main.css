@@ -1183,7 +1183,7 @@ to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
 .Tabs--buttons .TabsItem{color:#76787a;color:#76787a;color:var(--panel_tab_inactive_text)}
 .Tabs--buttons .TabsItem--selected{background-color:#ebedf0;background-color:#ebedf0;background-color:var(--panel_tab_active_background);color:#5d5f61;color:#5d5f61;color:var(--panel_tab_active_text)}
 .TabsItem__after .Badge{-webkit-transform:translateY(-2px);transform:translateY(-2px);margin-left:6px}
-.TabsItem__after .Icon--dropdown_16{color:#3f8ae0;color:#3f8ae0;color:var(--header_tint);-webkit-transform-origin:50% 55%;transform-origin:50% 55%;-webkit-transform:translateY(1px);transform:translateY(1px);margin-left:6px}
+.TabsItem__after .Icon--dropdown_16{color:#3f8ae0;color:#3f8ae0;color:var(--header_tint);-webkit-transform-origin:50% calc(50% + 1px);transform-origin:50% calc(50% + 1px);-webkit-transform:translateY(1px);transform:translateY(1px);margin-left:6px}
 .Tabs--ios.Tabs--segmented .TabsItem{border:1px solid;font-size:14px;line-height:18px;padding:0 12px;max-width:100%;flex-basis:0;flex-shrink:0;flex-grow:1}
 .Tabs--ios.Tabs--segmented .TabsItem__in{padding:7px 0}
 .Tabs--ios.Tabs--segmented .TabsItem:not(:first-child){border-left:none}
