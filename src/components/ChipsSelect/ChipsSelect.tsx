@@ -33,7 +33,7 @@ export interface ChipsSelectProps<Option extends ChipsInputOption> extends Chips
    */
   showSelected?: boolean;
   /**
-   * Текст для пункта создающего чипы при клике
+   * Текст для пункта создающего чипы при клике, так же отвечает за то будет ли показан этот пункт (показывается после того как в списке не отсанется опций)
    */
   creatableText?: string;
   /**
@@ -72,6 +72,8 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     filteredOptions, addOption, handleInputChange, clearInput,
     focusedOption, setFocusedOption, focusedOptionIndex, setFocusedOptionIndex,
   } = useChipsSelect(props);
+
+  const showCreatable = Boolean(creatable && creatableText && !filteredOptions.length && fieldValue);
 
   const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
     setOpened(true);
@@ -115,7 +117,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
   };
 
   const focusOptionByIndex = (index: number, oldIndex: number) => {
-    const length = filteredOptions.length + Number(creatable);
+    const { length } = filteredOptions;
 
     if (index < 0) {
       index = length - 1;
@@ -169,7 +171,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     }
 
     if (e.key === 'Enter' && !e.defaultPrevented && opened) {
-      const option = filteredOptions[focusedOptionIndex - Number(creatable)];
+      const option = filteredOptions[focusedOptionIndex];
 
       if (option) {
         onChangeStart(e, option);
@@ -192,22 +194,20 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
   };
 
   useEffect(() => {
-    let index = focusedOptionIndex - Number(creatable);
-
-    if (filteredOptions[index]) {
-      setFocusedOption(filteredOptions[index]);
+    if (filteredOptions[focusedOptionIndex]) {
+      setFocusedOption(filteredOptions[focusedOptionIndex]);
     } else if (focusedOptionIndex === null || focusedOptionIndex === 0) {
       setFocusedOption(null);
     }
-  }, [focusedOptionIndex, creatable, selectedOptions]);
+  }, [focusedOptionIndex, filteredOptions]);
 
   useEffect(() => {
     const index = focusedOption ? filteredOptions.findIndex(({ value }) => value === focusedOption.value) : -1;
 
-    if (index === -1 && !!filteredOptions.length && !creatable && closeAfterSelect) {
+    if (index === -1 && !!filteredOptions.length && !showCreatable && closeAfterSelect) {
       setFocusedOption(filteredOptions[0]);
     }
-  }, [filteredOptions, focusedOption, creatable, closeAfterSelect]);
+  }, [filteredOptions, focusedOption, showCreatable, closeAfterSelect]);
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
@@ -276,7 +276,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
               </div>
             ) : (
               <>
-                {creatable && (
+                {showCreatable && (
                   <CustomSelectOption
                     hovered={focusedOptionIndex === 0}
                     onMouseDown={addOptionFromInput}
@@ -285,11 +285,10 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                     {creatableText}
                   </CustomSelectOption>
                 )}
-                {!filteredOptions?.length && !creatable && emptyText ? (
+                {!filteredOptions?.length && !showCreatable && emptyText ? (
                   <div className="ChipsSelect__empty">{emptyText}</div>
                 ) :
-                  filteredOptions.map((option: Option, i: number) => {
-                    const index = creatable ? i + 1 : i;
+                  filteredOptions.map((option: Option, index: number) => {
                     const label = getOptionLabel(option);
                     const hovered = focusedOption && getOptionValue(option) === getOptionValue(focusedOption);
                     const selected = selectedOptions.find((selectedOption: Option) => {
@@ -330,6 +329,8 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
 
 ChipsSelect.defaultProps = {
   ...chipsInputDefaultProps,
+  emptyText: 'Ничего не найдено',
+  creatableText: 'Создать значение',
   onChangeStart: noop,
   creatable: false,
   fetching: false,

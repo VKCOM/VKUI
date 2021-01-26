@@ -32,7 +32,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       className={classNames('CustomSelectOption', className, {
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
-      }, className)}
+      })}
     >
       {hasReactNode(before) && <div className="CustomSelectOption__before">{before}</div>}
       {children}

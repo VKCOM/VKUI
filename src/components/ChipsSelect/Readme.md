@@ -10,14 +10,15 @@ const groups = [{ value: 'download', label: 'Скачать все и вся!', 
 const Example = () => {
   const [selectedGroups, setSelectedGroups] = React.useState([]);
   const [selectedColors, setSelectedColors] = React.useState([{value: '1', label: 'Красный'}]);
+  const [selectedColorsCopy, setSelectedColorsCopy] = React.useState([]);
   
   const groupsChipsProps = {
     value: selectedGroups,
     onChange: setSelectedGroups,
     options: groups,
     placeholder:"Не выбраны",
-    emptyText: 'Ничего не найдено',
-  }
+    emptyText: 'Совсем ничего не найдено',
+  };
 
   const colorsChipsProps = {
     value: selectedColors,
@@ -26,8 +27,17 @@ const Example = () => {
     top:"Выберите или добавьте цвета",
     placeholder:"Не выбраны",
     creatable: true,
-    creatableText: 'Создать значение'
-  } 
+  };
+
+  const colorsCopyChipsProps = {
+      value: selectedColorsCopy,
+      onChange: setSelectedColorsCopy,
+      options: colors,
+      top:"Выберите или добавьте цвета",
+      placeholder:"Не выбраны",
+      creatable: true,
+      creatableText: '',
+  };
 
   return (
     <View activePanel="profile" id="profile">
@@ -69,6 +79,9 @@ const Example = () => {
           </FormItem>
           <FormItem top="Выберите или добавьте цвета">
             <ChipsSelect {...colorsChipsProps}/>
+          </FormItem>
+          <FormItem top="Выберите или добавьте цвета (creatable без кнопки создания)">
+            <ChipsSelect {...colorsCopyChipsProps} />
           </FormItem>
         </Group>
       </Panel>
