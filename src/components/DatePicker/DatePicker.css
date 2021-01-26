@@ -10,10 +10,18 @@
   flex-direction: row;
 }
 
+.DatePicker__day {
+  min-width: 68px;
+}
+
 .DatePicker__month {
   display: flex;
   flex: 1 0 auto;
   padding: 0 8px;
+}
+
+.DatePicker__year {
+  min-width: 85px;
 }
 
 .DatePicker__month .Select {
