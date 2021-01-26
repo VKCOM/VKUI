@@ -33,6 +33,7 @@
     .Checkbox__content {
       flex-grow: 1;
       color: var(--text_primary);
+      word-break: break-word;
       }
 
     .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--on {
