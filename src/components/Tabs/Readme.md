@@ -24,7 +24,6 @@
     }
 
     render () {
-
       return (
         <View activePanel={this.state.activePanel}>
           <Panel id="panel1">
@@ -42,8 +41,8 @@
                     this.setState({ activeTab1: 'news' })
                   }}
                   selected={this.state.activeTab1 === 'news'}
-                  after={<Icon16Dropdown fill="var(--accent)" style={{
-                    transform: `rotate(${this.state.contextOpened ? '180deg' : '0'})`
+                  after={<Icon16Dropdown style={{
+                    transform: `rotate(${this.state.contextOpened ? '180deg' : '0'}) translateY(${this.state.contextOpened ? '-2px' : '2px'})`
                   }}/>}
                 >
                   Новости

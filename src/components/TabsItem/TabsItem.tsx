@@ -4,6 +4,7 @@ import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import classNames from '../../lib/classNames';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
 
 export interface TabsItemProps extends HTMLAttributes<HTMLElement> {
   after?: ReactNode;
@@ -26,7 +27,7 @@ const TabsItem: FunctionComponent<TabsItemProps> = ({
       activeEffectDelay={platform === IOS ? 0 : ACTIVE_EFFECT_DELAY}
     >
       <div className="TabsItem__in">{children}</div>
-      {after && <div className="TabsItem__after">{after}</div>}
+      {hasReactNode(after) && <div className="TabsItem__after">{after}</div>}
     </Tappable>
   );
 };
