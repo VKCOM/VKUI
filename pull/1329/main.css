@@ -130,7 +130,7 @@ to{-webkit-transform:scale(8);transform:scale(8);opacity:0}}
 .Root{width:100%;height:100%;position:relative}
 .Root--transition{pointer-events:none}
 .Root__view{width:100%;height:100%;position:relative}
-.Root--transition .Root__view:not(.Root__view--hide-forward){position:absolute;left:0;top:0}
+.Root--transition .Root__view:not(.Root__view--hide-forward){position:fixed;left:0;top:0}
 .Root--transition .Root__view:not(.Root__view--hide-forward) .View__panel{overflow:hidden}
 .Root__view--show-back,.Root__view--hide-forward{z-index:1}
 .Root__view--show-forward,.Root__view--hide-back{z-index:2}
@@ -742,7 +742,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalPage--desktop .ModalPage__in{max-height:calc(100vh - 32px)}}
 .ModalRoot--touched .ModalPage__in-wrap{transition:none}
 .ModalDismissButton{position:absolute;justify-content:center;width:28px;height:28px;top:14px;padding:4px;box-sizing:border-box;background-color:rgba(0,0,0,.35);color:#fff;color:#fff;color:var(--white);border-radius:50%;right:-42px;transition:opacity .15s ease-out}
-.ModalDismissButton .Icon{-webkit-transform:translateX(0)}
+.ModalDismissButton .Icon{-webkit-transform:translateX(0);transform:translateX(0)}
 .ModalDismissButton--ios{top:12px}
 .ModalDismissButton.Tappable--shadowHovered{opacity:.6}
 .ModalDismissButton.Tappable--shadowHovered.Tappable--active{opacity:1}
