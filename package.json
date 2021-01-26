@@ -129,6 +129,11 @@
       "name": "CSS, unstable",
       "path": "dist/unstable.css",
       "webpack": false
+    },
+    {
+      "name": "CSS + JS, minimal",
+      "import": "{ ConfigProvider, AdaptivityProvider, AppRoot, View, Panel, SplitLayout, SplitCol }",
+      "path": "dist/cssm/index.js"
     }
   ],
   "scripts": {
