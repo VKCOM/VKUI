@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     vkui: './dist/cssm/index.js',
     unstable: './dist/cssm/unstable/index.js',
+    default_scheme: './src/styles/bright_light.css',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
