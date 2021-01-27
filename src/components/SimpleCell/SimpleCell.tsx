@@ -1,4 +1,4 @@
-import React, { ReactNode, FC, ElementType } from 'react';
+import React, { ReactNode, FC, ElementType, HTMLAttributes } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
@@ -6,9 +6,22 @@ import { Icon24Chevron } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import withAdaptivity from '../../hoc/withAdaptivity';
+import withAdaptivity, { SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import Title from '../Typography/Title/Title';
+import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
+
+interface SimpleCellTypographyProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {}
+
+const SimpleCellTypography: FC<SimpleCellTypographyProps> = withAdaptivity((props: SimpleCellTypographyProps) => {
+  const { sizeY, children, ...restProps } = props;
+
+  if (sizeY === SizeType.COMPACT) {
+    return <Text weight="regular" {...restProps}>{children}</Text>;
+  }
+
+  return <Title level="3" weight="regular" {...restProps}>{children}</Title>;
+}, { sizeY: true });
 
 export interface SimpleCellOwnProps {
   /**
@@ -89,7 +102,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
       {before}
       <div className="SimpleCell__main">
         <div className="SimpleCell__content">
-          <Title level="3" weight="regular" className="SimpleCell__children">{children}</Title>
+          <SimpleCellTypography className="SimpleCell__children">{children}</SimpleCellTypography>
           {hasReactNode(badge) &&
             <span className="SimpleCell__badge">
               {badge}
@@ -99,9 +112,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
         {description && <Caption weight="regular" level="1" className="SimpleCell__description">{description}</Caption>}
       </div>
       {hasReactNode(indicator) &&
-        <div className="SimpleCell__indicator">
-          {indicator}
-        </div>
+        <SimpleCellTypography className="SimpleCell__indicator">{indicator}</SimpleCellTypography>
       }
       {hasAfter &&
         <div className="SimpleCell__after">
