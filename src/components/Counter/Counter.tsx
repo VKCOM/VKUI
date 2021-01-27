@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, FC } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
@@ -6,6 +6,22 @@ import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
+
+interface CounterTypographyProps extends HTMLAttributes<HTMLDivElement> {
+  size: CounterProps['size'];
+}
+
+const CounterTypography: FC<CounterTypographyProps> = ({ size, children, ...restProps }: CounterTypographyProps) => {
+  const platform = usePlatform();
+
+  if (size === 's') {
+    const weight = platform === VKCOM ? 'medium' : 'regular';
+
+    return <Caption level="2" weight={weight} {...restProps}>{children}</Caption>;
+  }
+
+  return <Text weight="medium" {...restProps}>{children}</Text>;
+};
 
 export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -15,11 +31,9 @@ export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
   size?: 's' | 'm';
 }
 
-const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => {
+const Counter: FC<CounterProps> = (props: CounterProps) => {
   const { mode, size, children, className, ...restProps } = props;
-
   const platform = usePlatform();
-  const captionWeight = platform === VKCOM ? 'medium' : 'regular';
 
   return (
     <div
@@ -31,12 +45,7 @@ const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => 
         className,
       )}
     >
-      {hasReactNode(children)
-        ? size === 's'
-          ? <Caption level="2" weight={captionWeight} className="Counter__in">{children}</Caption>
-          : <Text weight="medium" className="Counter__in">{children}</Text>
-        : null
-      }
+      {hasReactNode(children) && <CounterTypography size={size} className="Counter__in">{children}</CounterTypography>}
     </div>
   );
 };
