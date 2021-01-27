@@ -478,10 +478,12 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         panelId === swipeBackNextPanel;
     });
 
+    const disableAnimation = this.shouldDisableTransitionMotion();
+
     const modifiers = {
-      'View--animated': this.state.animated,
-      'View--swiping-back': this.state.swipingBack,
-      'View--no-motion': this.shouldDisableTransitionMotion(),
+      'View--animated': !disableAnimation && this.state.animated,
+      'View--swiping-back': !disableAnimation && this.state.swipingBack,
+      'View--no-motion': disableAnimation,
     };
 
     return (

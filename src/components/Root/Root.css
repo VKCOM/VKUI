@@ -15,7 +15,7 @@
     }
 
   .Root--transition .Root__view:not(.Root__view--hide-forward) {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     }
