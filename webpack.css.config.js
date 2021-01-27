@@ -5,7 +5,7 @@ module.exports = {
   // CSS is already optimized, we dont care about JS
   mode: 'none',
   entry: {
-    vkui: './dist/cssm/index.js',
+    stable: './dist/cssm/index.js',
     unstable: './dist/cssm/unstable/index.js',
     default_scheme: './src/styles/bright_light.css',
   },
@@ -13,17 +13,25 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js.tmp',
   },
+  optimization: {
+    splitChunks: {
+      chunks: chunk => ['stable', 'unstable'].includes(chunk.name),
+      cacheGroups: {
+        // capture all common deps between stable & unstable
+        vkui: {
+          name: 'vkui',
+          test: (_, chunks) => chunks.some(chunk => chunk.name === 'stable'),
+        }
+      },
+    }
+  },
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: 'css-loader',
-          },
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader' },
         ],
       },
     ],
