@@ -84,6 +84,6 @@
 }
 
 .SliderSwitch--secondActive {
-  transform: translateX(100%) translateX(4px);
+  transform: translateX(calc(100% + 4px));
   background-color: var(--background_content);
 }
