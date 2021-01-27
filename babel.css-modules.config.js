@@ -9,7 +9,6 @@ const testFiles = [
   './src/**/*.e2e.ts', './src/**/*.e2e.tsx',
   './e2e/', './src/testing/',
 ];
-
 module.exports = {
   presets: [
     ['@babel/preset-env', { modules: useModules ? false : 'commonjs' }],

@@ -1,4 +1,4 @@
 module.exports = {
-  extends: './babel.config.js',
+  extends: './babel.global-css.config.js',
   presets: [['@babel/preset-env', { modules: "commonjs" }]],
 };

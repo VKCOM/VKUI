@@ -1,5 +1,6 @@
 const path = require('path');
 const merge = require('webpack-merge');
+const babelConfig = require('./babel.css-modules.config');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -18,7 +19,10 @@ const config = {
       {
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: babelConfig
+        }
       },
       {
         test: /\.(jpeg|jpg|png|woff|svg|otf)$/,
