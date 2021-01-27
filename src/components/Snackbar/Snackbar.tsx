@@ -1,6 +1,5 @@
 import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
 import withPlatform from '../../hoc/withPlatform';
-import FixedLayout from '../FixedLayout/FixedLayout';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import { HasPlatform } from '../../types';
@@ -209,15 +208,17 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       before,
       after,
       viewWidth,
+      duration,
+      onActionClick,
+      onClose,
       ...restProps
     } = this.props;
     const resolvedLayout = after || this.isDesktop ? 'vertical' : layout;
 
     return (
       <AppRootPortal>
-        <FixedLayout
+        <div
           {...restProps}
-          vertical="bottom"
           className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
             'Snackbar--closing': this.state.closing,
             'Snackbar--touched': this.state.touched,
@@ -252,7 +253,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
               </div>}
             </div>
           </Touch>
-        </FixedLayout>
+        </div>
       </AppRootPortal>
     );
   }
