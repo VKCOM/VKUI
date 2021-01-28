@@ -47,6 +47,9 @@ module.exports = {
         }, {
           name: 'Режимы подключения',
           content: './pages/modes.md'
+        }, {
+          name: 'Оптимизация CSS',
+          content: './pages/modular-css.md'
         },
       ]
     }, {

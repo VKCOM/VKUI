@@ -8,6 +8,7 @@ module.exports = {
     stable: './dist/cssm/index.js',
     unstable: './dist/cssm/unstable/index.js',
     default_scheme: './src/styles/bright_light.css',
+    global: './dist/cssm/styles/global.css',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

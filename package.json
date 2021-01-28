@@ -12,6 +12,8 @@
   "sideEffects": [
     "./dist/lib/polyfills.js",
     "./dist/index.js",
+    "./dist/cssm/lib/polyfills.js",
+    "./dist/cssm/index.js",
     "./dist/cjs/lib/polyfills.js",
     "./dist/cjs/index.js",
     "*.css"
