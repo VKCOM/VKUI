@@ -83,6 +83,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
 
 ModalPage.defaultProps = {
   settlingHeight: 75,
+  fullscreen: false,
 };
 
 export default withAdaptivity(ModalPage, {
