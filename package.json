@@ -88,6 +88,7 @@
     "shx": "^0.3.2",
     "size-limit": "^4.9.1",
     "source-map-loader": "^0.2.4",
+    "style-loader": "^2.0.0",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
     "typescript": "3.8",

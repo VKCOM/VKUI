@@ -1,8 +1,6 @@
 const path = require('path');
 const webpackConfig = require('../webpack.config');
 const merge = require('webpack-merge');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const postcssConfig = require('../postcss.config');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { argv } = require('yargs');
 const { makeFsImporter } = require('react-docgen/dist/importer');
@@ -237,34 +235,6 @@ module.exports = {
     return webpackConfig;
   },
   webpackConfig: merge(webpackConfig, {
-    module: {
-      rules: [{
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              esModule: false,
-              importLoaders: 1
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: postcssConfig.plugins,
-              },
-            }
-          }
-        ]
-      }]
-    },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: '[name].css',
-      }),
-    ],
     resolve: {
       alias: {
         'rsg-components/Preview': path.join(__dirname, './Components/Preview')
