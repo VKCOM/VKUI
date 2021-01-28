@@ -130,7 +130,7 @@ to{-webkit-transform:scale(8);transform:scale(8);opacity:0}}
 .Root{width:100%;height:100%;position:relative}
 .Root--transition{pointer-events:none}
 .Root__view{width:100%;height:100%;position:relative}
-.Root--transition .Root__view:not(.Root__view--hide-forward){position:absolute;left:0;top:0}
+.Root--transition .Root__view:not(.Root__view--hide-forward){position:fixed;left:0;top:0}
 .Root--transition .Root__view:not(.Root__view--hide-forward) .View__panel{overflow:hidden}
 .Root__view--show-back,.Root__view--hide-forward{z-index:1}
 .Root__view--show-forward,.Root__view--hide-back{z-index:2}
@@ -647,7 +647,8 @@ to{opacity:1}}
 @keyframes screen-spinner-intro{
 0%{opacity:0}
 to{opacity:1}}
-.Snackbar{-webkit-user-select:none;user-select:none;z-index:101}
+.Snackbar{-webkit-user-select:none;user-select:none;z-index:101;position:fixed;bottom:0;left:auto;width:100%;padding-left:0;padding-left:0;padding-left:var(--safe-area-inset-left);padding-right:0;padding-right:0;padding-right:var(--safe-area-inset-right);padding-bottom:0;padding-bottom:0;padding-bottom:var(--safe-area-inset-bottom)}
+.Epic .Snackbar{padding-bottom:calc(48px + 0px);padding-bottom:calc(48px + 0px);padding-bottom:calc(var(--tabbar_height) + var(--safe-area-inset-bottom))}
 .Snackbar__in{padding:8px}
 .Snackbar--closing .Snackbar__in{-webkit-transform:translate3d(0,140%,0);transform:translate3d(0,140%,0)}
 .Snackbar__body{box-sizing:border-box;padding:12px 16px;min-height:56px;display:flex;align-items:center;background:#fff;background:#fff;background:var(--modal_card_background);box-shadow:0 0 24px 0 rgba(0,0,0,.24),0 0 2px 0 rgba(0,0,0,.08)}
@@ -742,7 +743,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalPage--desktop .ModalPage__in{max-height:calc(100vh - 32px)}}
 .ModalRoot--touched .ModalPage__in-wrap{transition:none}
 .ModalDismissButton{position:absolute;justify-content:center;width:28px;height:28px;top:14px;padding:4px;box-sizing:border-box;background-color:rgba(0,0,0,.35);color:#fff;color:#fff;color:var(--white);border-radius:50%;right:-42px;transition:opacity .15s ease-out}
-.ModalDismissButton .Icon{-webkit-transform:translateX(0)}
+.ModalDismissButton .Icon{-webkit-transform:translateX(0);transform:translateX(0)}
 .ModalDismissButton--ios{top:12px}
 .ModalDismissButton.Tappable--shadowHovered{opacity:.6}
 .ModalDismissButton.Tappable--shadowHovered.Tappable--active{opacity:1}
@@ -1475,7 +1476,7 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .Checkbox__icon{flex-shrink:0;box-sizing:border-box;margin-right:12px;border-radius:4px;display:flex;line-height:24px}
 .Checkbox__icon--on{color:#3f8ae0;color:#3f8ae0;color:var(--accent);display:none}
 .Checkbox__icon--off{color:#b8c1cc;color:#b8c1cc;color:var(--icon_tertiary)}
-.Checkbox__content{flex-grow:1;color:#000;color:#000;color:var(--text_primary)}
+.Checkbox__content{flex-grow:1;color:#000;color:#000;color:var(--text_primary);word-break:break-word}
 .Checkbox__input:checked~.Checkbox__container .Checkbox__icon--on{display:flex}
 .Checkbox__input:checked~.Checkbox__container .Checkbox__icon--off{display:none}
 .Checkbox__input[disabled]~.Checkbox__container{opacity:.6}
