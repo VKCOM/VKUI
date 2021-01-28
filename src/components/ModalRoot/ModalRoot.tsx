@@ -431,7 +431,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       this.setState({ touchDown: true });
     }
 
-    if (contentScrolled || fullscreen) {
+    if (contentScrolled) {
       return;
     }
 
@@ -446,6 +446,9 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       target.closest('.ModalPage__header')
     ) {
       originalEvent.preventDefault();
+      if (fullscreen && !target.closest('.ModalPage__header')) {
+        return;
+      }
       if (!expandable && shiftY < 0) {
         return;
       }
@@ -514,14 +517,23 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       const expectTranslateY = translateY / (Date.now() - modalState.touchStartTime.getTime()) * 240 * 0.6 * (modalState.touchShiftYPercent < 0 ? -1 : 1);
       translateY = rangeTranslate(translateY + expectTranslateY);
 
-      if (numberInRange(translateY, modalState.expandedRange)) {
-        translateY = modalState.expandedRange[0];
-      } else if (numberInRange(translateY, modalState.collapsedRange)) {
-        translateY = modalState.translateYFrom;
-      } else if (numberInRange(translateY, modalState.hiddenRange)) {
-        translateY = 100;
+      if (!modalState.fullscreen) {
+        if (numberInRange(translateY, modalState.expandedRange)) {
+          translateY = modalState.expandedRange[0];
+        } else if (numberInRange(translateY, modalState.collapsedRange)) {
+          translateY = modalState.translateYFrom;
+        } else if (numberInRange(translateY, modalState.hiddenRange)) {
+          translateY = 100;
+        } else {
+          translateY = modalState.translateYFrom;
+        }
       } else {
-        translateY = modalState.translateYFrom;
+        // Имитируем нативное поведение модалок
+        if (numberInRange(translateY, [0, 25])) {
+          translateY = 0;
+        } else {
+          translateY = 100;
+        }
       }
 
       if (translateY !== 100 && shiftYEndPercent >= 75) {
