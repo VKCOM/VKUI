@@ -21,6 +21,10 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
+  /**
+   * Раскрывает модальную страницу на максимальную высоту
+   */
+  fullscreen?: boolean;
 }
 
 const ModalPage: FC<ModalPageProps> = (props) => {
@@ -37,6 +41,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     id,
     settlingHeight,
     dynamicContentHeight,
+    fullscreen,
     ...restProps
   } = props;
 

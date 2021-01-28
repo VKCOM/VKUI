@@ -43,6 +43,7 @@ export interface ModalsStateEntry {
   expanded?: boolean;
   collapsed?: boolean;
   hidden?: boolean;
+  fullscreen?: boolean;
 
   contentScrolled?: boolean;
   contentScrollStopTimeout?: number;

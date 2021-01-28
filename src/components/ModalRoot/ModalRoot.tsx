@@ -119,6 +119,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
         id: Modal.props.id,
         onClose: Modal.props.onClose,
         dynamicContentHeight: !!modalProps.dynamicContentHeight,
+        fullscreen: Modal.props.fullscreen,
       };
 
       // ModalPage props
@@ -308,7 +309,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     }
 
     // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
-    if (modalState.expandable && translateY > prevTranslateY) {
+    if (modalState.expandable && translateY > prevTranslateY || modalState.fullscreen) {
       translateY = 0;
     }
 
@@ -422,7 +423,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     originalEvent.stopPropagation();
 
-    const { expandable, contentScrolled, collapsed, expanded } = modalState;
+    const { expandable, contentScrolled, collapsed, expanded, fullscreen } = modalState;
 
     if (!this.state.touchDown) {
       modalState.touchStartTime = startT;
@@ -430,7 +431,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       this.setState({ touchDown: true });
     }
 
-    if (contentScrolled) {
+    if (contentScrolled || fullscreen) {
       return;
     }
 

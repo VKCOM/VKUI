@@ -51,6 +51,7 @@ const MODAL_PAGE_FILTERS = 'filters';
 const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
 const MODAL_PAGE_USER_INFO = 'user-info';
+const MODAL_PAGE_FULLSCREEN = 'fullscreen';
 
 const MODAL_CARD_MONEY_SEND = 'money-send';
 const MODAL_CARD_APP_TO_MENU = 'app-to-menu';
@@ -101,6 +102,30 @@ const App = withAdaptivity(class App extends React.Component {
         activeModal={this.state.activeModal}
         onClose={this.modalBack}
       >
+        <ModalPage
+          id={MODAL_PAGE_FULLSCREEN}
+          onClose={this.modalBack}
+          fullscreen
+          settlingHeight={100}
+          header={
+            <ModalPageHeader
+              left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
+              right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+            >
+              Фильтры
+            </ModalPageHeader>
+          }
+        >
+          <Group>
+            <FormItem>
+              <Input placeholder="Название"/>
+            </FormItem>
+            <FormItem>
+              <Textarea placeholder="Описание"/>
+            </FormItem>
+          </Group>
+        </ModalPage>
+      
         <ModalPage
           id={MODAL_PAGE_FILTERS}
           onClose={this.modalBack}
@@ -340,6 +365,9 @@ const App = withAdaptivity(class App extends React.Component {
             <Group>
               <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
                 Открыть модальную страницу
+              </CellButton>
+              <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN)}>
+                Открыть полноэкранную модальную страницу
               </CellButton>
               <CellButton onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
                 Открыть модальные карточки
