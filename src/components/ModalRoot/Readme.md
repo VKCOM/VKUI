@@ -118,29 +118,27 @@ const App = withAdaptivity(class App extends React.Component {
             </ModalPageHeader>
           }
         >
-          <Group>
-            <Gradient style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              padding: 32,
-            }}>
-              <Avatar size={96} src={this.randomUser.photo_100}/>
-              <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="medium">{this.randomUser.first_name+" "+this.randomUser.last_name}</Title>
-              <Text style={{ marginBottom: 24, color: 'var(--text_secondary)' }}>ВКонтакте</Text>
-            </Gradient>
-            <Group mode="plain" header={<Header mode="secondary" indicator="25">Друзья</Header>}>
-              {this.users.map((user) => {
-                return (
-                  <SimpleCell
-                    before={<Avatar src={user.photo_100} />}
-                    key={user.id}
-                  >{user.name}</SimpleCell>
-                );
-              })}
-            </Group>
+          <Gradient style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            padding: 32,
+          }}>
+            <Avatar size={96} src={this.randomUser.photo_100}/>
+            <Title style={{marginBottom: 8, marginTop: 20}} level="2"
+                   weight="medium">{this.randomUser.first_name + " " + this.randomUser.last_name}</Title>
+          </Gradient>
+          <Group header={<Header mode="secondary" indicator="25">Друзья</Header>}>
+            {this.users.map((user) => {
+              return (
+                <SimpleCell
+                  before={<Avatar src={user.photo_100}/>}
+                  key={user.id}
+                >{user.name}</SimpleCell>
+              );
+            })}
           </Group>
         </ModalPage>
       
