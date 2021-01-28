@@ -71,6 +71,8 @@ const App = withAdaptivity(class App extends React.Component {
     this.users = 'k'.repeat(25).split('').map(() => {
       return getRandomUser();
     });
+    
+    this.randomUser = getRandomUser();
 
     this.modalBack = () => {
       this.setActiveModal(this.state.modalHistory[this.state.modalHistory.length - 2]);
@@ -112,17 +114,33 @@ const App = withAdaptivity(class App extends React.Component {
               left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
               right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
             >
-              Фильтры
+              @{this.randomUser.screen_name}
             </ModalPageHeader>
           }
         >
           <Group>
-            <FormItem>
-              <Input placeholder="Название"/>
-            </FormItem>
-            <FormItem>
-              <Textarea placeholder="Описание"/>
-            </FormItem>
+            <Gradient style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              padding: 32,
+            }}>
+              <Avatar size={96} src={this.randomUser.photo_100}/>
+              <Title style={{ marginBottom: 8, marginTop: 20 }} level="2" weight="medium">{this.randomUser.first_name+" "+this.randomUser.last_name}</Title>
+              <Text style={{ marginBottom: 24, color: 'var(--text_secondary)' }}>ВКонтакте</Text>
+            </Gradient>
+            <Group mode="plain" header={<Header mode="secondary" indicator="25">Друзья</Header>}>
+              {this.users.map((user) => {
+                return (
+                  <SimpleCell
+                    before={<Avatar src={user.photo_100} />}
+                    key={user.id}
+                  >{user.name}</SimpleCell>
+                );
+              })}
+            </Group>
           </Group>
         </ModalPage>
       
@@ -229,10 +247,10 @@ const App = withAdaptivity(class App extends React.Component {
           <Group>
             {this.users.map((user) => {
               return (
-                <Cell
+                <SimpleCell
                   before={<Avatar src={user.photo_100} />}
                   key={user.id}
-                >{user.name}</Cell>
+                >{user.name}</SimpleCell>
               );
             })}
           </Group>
