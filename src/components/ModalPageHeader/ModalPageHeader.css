@@ -172,7 +172,7 @@
 .ModalPageHeader--vkcom .ModalPageHeader__in {
   height: var(--panelheader_height_vkcom);
   justify-content: space-between;
-  padding: 0 8px;
+  padding: 0 2px;
 }
 
 .ModalPageHeader--vkcom .ModalPageHeader__left,
