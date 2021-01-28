@@ -54,10 +54,6 @@
  * iOS
  */
 
-.WriteBar--ios {
-
-}
-
 .WriteBar--ios .WriteBar__before,
 .WriteBar--ios .WriteBar__after {
   padding: 0 4px;
@@ -91,11 +87,6 @@
 /**
  * Android + vkcom
  */
-
-.WriteBar--android,
-.WriteBar--vkcom {
-
-}
 
 .WriteBar--android .WriteBar__before,
 .WriteBar--vkcom .WriteBar__before {

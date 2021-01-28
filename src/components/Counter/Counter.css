@@ -5,6 +5,9 @@
   }
 
   .Counter__in {
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
     text-align: center;
     box-sizing: border-box;
     }
@@ -26,39 +29,17 @@
 
 .Counter--s-m {
   height: 24px;
+  min-width: 24px;
   border-radius: 12px;
-  }
-
-  .Counter--s-m .Counter__in {
-    min-width: 24px;
-    padding: 2px 5px;
-    font-size: 15px;
-    line-height: 20px;
-    }
+}
 
 .Counter--s-s {
   height: 18px;
+  min-width: 18px;
   border-radius: 9px;
   }
-
-  .Counter--s-s .Counter__in {
-    min-width: 18px;
-    padding: 1px 5px;
-    font-size: 12px;
-    line-height: 16px;
-    }
-
-.Counter--vkcom.Counter--s-s .Counter__in {
-  font-weight: normal;
-  line-height: 14px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  letter-spacing: .2px;
-}
 
 .Counter--vkcom.Counter--s-m .Counter__in {
   padding-left: 6px;
   padding-right: 6px;
-  font-weight: 500;
-  letter-spacing: .2px;
 }

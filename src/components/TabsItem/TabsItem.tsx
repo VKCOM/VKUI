@@ -1,9 +1,13 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
+import React, { FunctionComponent, HTMLAttributes, ReactNode, useContext } from 'react';
 import getClassName from '../../helpers/getClassName';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import classNames from '../../lib/classNames';
-import { IOS } from '../../lib/platform';
+import { IOS, VKCOM } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
+import { TabsModeContext } from '../Tabs/Tabs';
+import Headline from '../Typography/Headline/Headline';
+import Subhead from '../Typography/Subhead/Subhead';
+import Text from '../Typography/Text/Text';
 
 export interface TabsItemProps extends HTMLAttributes<HTMLElement> {
   after?: ReactNode;
@@ -18,6 +22,13 @@ const TabsItem: FunctionComponent<TabsItemProps> = ({
   ...restProps
 }: TabsItemProps) => {
   const platform = usePlatform();
+  const mode = useContext(TabsModeContext);
+
+  const TypographyComponent = platform === VKCOM
+    ? Text
+    : mode === 'buttons' || mode === 'segmented'
+      ? Subhead
+      : Headline;
 
   return (
     <Tappable
@@ -25,7 +36,7 @@ const TabsItem: FunctionComponent<TabsItemProps> = ({
       className={classNames(getClassName('TabsItem', platform), { 'TabsItem--selected': selected }, className)}
       activeEffectDelay={platform === IOS ? 0 : ACTIVE_EFFECT_DELAY}
     >
-      <div className="TabsItem__in">{children}</div>
+      <TypographyComponent className="TabsItem__in" weight="medium">{children}</TypographyComponent>
       {after && <div className="TabsItem__after">{after}</div>}
     </Tappable>
   );

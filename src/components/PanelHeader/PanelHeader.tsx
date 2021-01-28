@@ -31,10 +31,17 @@ export interface PanelHeaderProps extends
   fixed?: boolean;
 }
 
+const PanelHeaderInTypography: FC<PanelHeaderProps> = ({ children }: PanelHeaderProps) => {
+  const platform = usePlatform();
+
+  return platform === VKCOM
+    ? <Text Component="span" weight="medium">{children}</Text>
+    : <span className="PanelHeader__content-in">{children}</span>;
+};
+
 const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
   const { webviewType } = useContext(ConfigProviderContext);
   const isPrimitive = isPrimitiveReactNode(children);
-  const platform = usePlatform();
 
   return (
     <div className="PanelHeader__in">
@@ -42,7 +49,7 @@ const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
         {left}
       </div>
       <div className="PanelHeader__content">
-        {isPrimitive ? platform === VKCOM ? <Text weight="medium">{children}</Text> : <span>{children}</span> : children}
+        {isPrimitive ? <PanelHeaderInTypography>{children}</PanelHeaderInTypography> : children}
       </div>
       <div className="PanelHeader__right">
         {webviewType !== WebviewType.VKAPPS && right}

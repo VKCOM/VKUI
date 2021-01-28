@@ -6,6 +6,7 @@ import { useBrowserInfo } from '../../hooks/useBrowserInfo';
 import usePlatform from '../../hooks/usePlatform';
 import { System } from '../../lib/browser';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import Caption from '../Typography/Caption/Caption';
 
 export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -63,25 +64,24 @@ const UsersStack: FC<UsersStackProps> = (props) => {
       }
     >
       <div className="UsersStack__photos">
-        {photosShown.map((photo, i) => {
-          return (
-            <div
-              key={i}
-              className="UsersStack__photo"
-              style={{ backgroundImage: `url(${photo})` }}
-            />
-          );
-        })}
+        {photosShown.map((photo, i) => (
+          <div
+            key={i}
+            className="UsersStack__photo"
+            style={{ backgroundImage: `url(${photo})` }}
+          />
+        ))}
 
         {canShowOthers &&
-        <div className={classNames('UsersStack__photo', 'UsersStack__photo--others')}>
-          {`+${othersCount}`}
-        </div>}
+          <Caption weight="medium" level="1" className="UsersStack__photo UsersStack__photo--others">
+            <span>+{othersCount}</span>
+          </Caption>
+        }
       </div>
       {children &&
-      <div className="UsersStack__text">
-        {children}
-      </div>
+        <Caption weight="regular" level="1" className="UsersStack__text">
+          {children}
+        </Caption>
       }
     </div>
   );

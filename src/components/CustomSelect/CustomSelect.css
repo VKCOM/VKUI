@@ -44,7 +44,6 @@
 .CustomSelect__options--sizeY-compact .CustomSelectOption {
   height: 36px;
   padding: 10px 9px;
-  font-size: 15px;
 }
 
 .CustomSelect__options--sizeY-compact .CustomSelectOption__selectedIcon {
