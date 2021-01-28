@@ -777,7 +777,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalPageHeader--android .ModalPageHeader__content-in{font-size:20px;font-weight:800;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-tt);display:flex;align-items:center}
 .ModalPageHeader--android .ModalPageHeader__right,.ModalPageHeader--vkcom .ModalPageHeader__right{padding-left:6px}
 .ModalPageHeader--android .ModalPageHeader__right:not(:empty){padding-right:4px}
-.ModalPageHeader--vkcom .ModalPageHeader__in{height:48px;height:48px;height:var(--panelheader_height_vkcom);justify-content:space-between;padding:0 8px}
+.ModalPageHeader--vkcom .ModalPageHeader__in{height:48px;height:48px;height:var(--panelheader_height_vkcom);justify-content:space-between;padding:0 2px}
 .ModalPageHeader--vkcom .ModalPageHeader__left,.ModalPageHeader--vkcom .ModalPageHeader__right{flex-grow:1;flex-basis:0}
 .ModalPageHeader--vkcom .ModalPageHeader__left{padding-right:1px}
 .ModalPageHeader--vkcom .ModalPageHeader__right{padding-left:1px}
