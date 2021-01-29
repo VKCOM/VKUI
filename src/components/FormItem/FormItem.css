@@ -37,6 +37,7 @@
 .FormItem .CellButton,
 .FormItem .Radio,
 .FormItem .Checkbox {
+  width: 100%;
   box-sizing: content-box;
   margin-left: -16px;
   margin-right: -16px;
