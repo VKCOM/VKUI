@@ -16,9 +16,6 @@ export interface CellProps extends SimpleCellProps, HasPlatform {
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
   draggable?: boolean;
-  /**
-   * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
-   */
   removable?: boolean;
   /**
    * Имя для input в режиме selectable
