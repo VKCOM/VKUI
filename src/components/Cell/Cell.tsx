@@ -1,15 +1,13 @@
-import React, { Component, ReactNode, MouseEvent, Fragment } from 'react';
+import React, { ReactNode, MouseEvent, FC, useState, useRef, useEffect } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
-import IconButton from '../IconButton/IconButton';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import { Icon24Cancel, Icon24Reorder, Icon24ReorderIos, Icon16Done } from '@vkontakte/icons';
-import withPlatform from '../../hoc/withPlatform';
+import { Icon24Reorder, Icon24ReorderIos, Icon16Done } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
-import { setRef } from '../../lib/utils';
-import { DOMProps, withDOM } from '../../lib/dom';
+import { Removable } from '../Removable/Removable';
+import usePlatform from '../../hooks/usePlatform';
 
 export interface CellProps extends SimpleCellProps, HasPlatform {
   /**
@@ -54,232 +52,197 @@ export interface CellState {
   checked?: boolean;
 }
 
-class Cell extends Component<CellProps & DOMProps, CellState> {
-  constructor(props: CellProps) {
-    super(props);
+const Cell: FC<CellProps> = (props: CellProps) => {
+  const {
+    onRemove,
+    removePlaceholder,
+    onDragFinish,
+    className,
+    style,
+    before,
+    after,
+    disabled,
+    removable,
+    draggable,
+    selectable,
+    Component,
+    onChange,
+    name,
+    checked,
+    defaultChecked,
+    ...restProps
+  } = props;
+  const rootElRef = useRef(null);
+  const platform = usePlatform();
 
-    this.state = {
-      isRemoveActivated: false,
-      removeOffset: 0,
-      dragging: false,
-    };
-  }
+  const [dragging, setDragging] = useState(false);
 
-  rootEl: HTMLElement;
-  removeButton: HTMLDivElement;
+  const [siblings, setSiblings] = useState<HTMLElement[]>(undefined);
+  const [dragStartIndex, setDragStartIndex] = useState<number>(undefined);
+  const [dragEndIndex, setDragEndIndex] = useState<number>(undefined);
+  const [dragShift, setDragShift] = useState<number>(0);
+  const [dragDirection, setDragDirection] = useState<'down' | 'up'>(undefined);
 
-  static defaultProps = {
-    removePlaceholder: 'Удалить',
+  const onDragStart = () => {
+    const rootEl = rootElRef?.current;
+
+    setDragging(true);
+
+    const _siblings: HTMLElement[] = Array.from(rootEl.parentElement.childNodes);
+
+    setDragStartIndex(_siblings.indexOf(rootEl));
+    setSiblings(_siblings);
+    setDragShift(0);
   };
 
-  get document() {
-    return this.props.document;
-  }
-
-  private readonly onRemoveActivateClick = (e: MouseEvent) => {
-    e.nativeEvent.stopPropagation();
-    e.preventDefault();
-    this.setState({ isRemoveActivated: true });
-    this.document.addEventListener('click', this.deactivateRemove);
-  };
-
-  deactivateRemove = () => {
-    this.setState({ isRemoveActivated: false, removeOffset: 0 });
-    this.document.removeEventListener('click', this.deactivateRemove);
-  };
-
-  private readonly onRemoveClick = (e: MouseEvent) => {
-    e.nativeEvent.stopImmediatePropagation();
-    e.preventDefault();
-    this.props.onRemove && this.props.onRemove(e, this.rootEl);
-  };
-
-  componentWillUnmount() {
-    this.document.removeEventListener('click', this.deactivateRemove);
-  }
-
-  componentDidUpdate(_prevProps: CellProps, prevState: CellState) {
-    if (prevState.isRemoveActivated !== this.state.isRemoveActivated && this.state.isRemoveActivated) {
-      this.setState({ removeOffset: this.removeButton.offsetWidth });
-    }
-  }
-
-  getRemoveRef = (el: HTMLDivElement) => this.removeButton = el;
-
-  getRootRef = (element: HTMLElement) => {
-    this.rootEl = element;
-    setRef(element, this.props.getRootRef);
-  };
-
-  dragShift: number;
-  listEl: HTMLElement;
-  siblings: HTMLElement[];
-  dragStartIndex: number;
-  dragEndIndex: number;
-  dragDirection: 'down' | 'up';
-
-  onDragStart = () => {
-    this.setState({ dragging: true });
-    this.dragShift = 0;
-    this.listEl = this.rootEl.closest('.List');
-    this.listEl && this.listEl.classList.add('List--dragging');
-    this.siblings = Array.prototype.slice.call(this.rootEl.parentElement.childNodes);
-    this.dragStartIndex = this.siblings.indexOf(this.rootEl);
-  };
-
-  onDragMove = (e: TouchEvent) => {
+  const onDragMove = (e: TouchEvent) => {
     e.originalEvent.preventDefault();
-    if (this.state.removeOffset) {
-      return;
-    }
 
-    this.rootEl.style.transform = `translateY(${e.shiftY}px)`;
-    const rootGesture = this.rootEl.getBoundingClientRect();
-    this.dragDirection = this.dragShift - e.shiftY < 0 ? 'down' : 'up';
-    this.dragShift = e.shiftY;
-    this.dragEndIndex = this.dragStartIndex;
+    const rootEl = rootElRef?.current;
 
-    this.siblings.forEach((sibling, siblingIndex) => {
+    rootEl.style.transform = `translateY(${e.shiftY}px)`;
+    setDragDirection(dragShift - e.shiftY < 0 ? 'down' : 'up');
+    setDragShift(e.shiftY);
+    setDragEndIndex(dragStartIndex);
+
+    siblings.forEach((sibling: HTMLElement, siblingIndex: number) => {
+      const rootGesture = rootEl.getBoundingClientRect();
+
       const siblingGesture = sibling.getBoundingClientRect();
-      if (this.dragStartIndex < siblingIndex) {
+
+      if (dragStartIndex < siblingIndex) {
         if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2) {
-          if (this.dragDirection === 'down') {
+          if (dragDirection === 'down') {
             sibling.style.transform = 'translateY(-100%)';
           }
-          this.dragEndIndex++;
+
+          setDragEndIndex((dragEndIndex) => dragEndIndex + 1);
         }
-        if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2 && this.dragDirection === 'up') {
+        if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2 && dragDirection === 'up') {
           sibling.style.transform = 'translateY(0)';
         }
-      } else if (this.dragStartIndex > siblingIndex) {
+      } else if (dragStartIndex > siblingIndex) {
         if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2) {
-          if (this.dragDirection === 'up') {
+          if (dragDirection === 'up') {
             sibling.style.transform = 'translateY(100%)';
           }
-          this.dragEndIndex--;
+
+          setDragEndIndex((dragEndIndex) => dragEndIndex - 1);
         }
-        if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2 && this.dragDirection === 'down') {
+        if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2 && dragDirection === 'down') {
           sibling.style.transform = 'translateY(0)';
         }
       }
     });
   };
 
-  onDragEnd = () => {
-    this.setState({ dragging: false });
-    this.listEl && this.listEl.classList.remove('List--dragging');
-    this.props.onDragFinish && this.props.onDragFinish({ from: this.dragStartIndex, to: this.dragEndIndex });
-    this.siblings.forEach((sibling) => sibling.style.transform = null);
-    delete this.dragShift;
-    delete this.listEl;
-    delete this.siblings;
-    delete this.dragStartIndex;
-    delete this.dragEndIndex;
-    delete this.dragDirection;
+  const onDragEnd = () => {
+    const [from, to] = [dragStartIndex, dragEndIndex];
+
+    siblings.forEach((sibling: HTMLElement) => {
+      sibling.style.transform = null;
+    });
+
+    setSiblings(undefined);
+    setDragEndIndex(undefined);
+    setDragStartIndex(undefined);
+    setDragDirection(undefined);
+    setDragShift(undefined);
+
+    setDragging(false);
+
+    props.onDragFinish && props.onDragFinish({ from, to });
   };
 
-  private readonly onDragClick = (e: MouseEvent) => {
+  const onDragClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
   };
 
-  render() {
-    let {
-      onRemove,
-      removePlaceholder,
-      onDragFinish,
-      className,
-      style,
-      getRootRef,
-      platform,
-      before,
-      after,
-      disabled,
-      removable,
-      draggable,
-      selectable,
-      Component,
-      onChange,
-      name,
-      checked,
-      defaultChecked,
-      window,
-      document,
-      ...restProps
-    } = this.props;
+  useEffect(() => {
+    const listEl = rootElRef?.current?.closest('.List');
+    const draggingClass = 'List--dragging';
 
-    return (
-      <div
-        className={classNames(getClassName('Cell', platform), {
-          'Cell--dragging': this.state.dragging,
-          'Cell--removable': removable,
-        }, className)}
-        style={style}
-        ref={this.getRootRef}
-      >
-        <div
-          className="Cell__in"
-          style={platform === IOS && removable ? { transform: `translateX(-${this.state.removeOffset}px)` } : null}
-        >
+    if (listEl) {
+      const hasDraggingClass = listEl?.classList.contains(draggingClass);
+
+      if (dragging && !hasDraggingClass) {
+        listEl.classList.add(draggingClass);
+      }
+
+      if (!dragging && hasDraggingClass) {
+        listEl.classList.remove(draggingClass);
+      }
+    }
+  }, [dragging]);
+
+  return (
+    <div
+      className={classNames(getClassName('Cell', platform), {
+        'Cell--dragging': dragging,
+        'Cell--removable': removable,
+      }, className)}
+      style={style}
+      ref={rootElRef}
+    >
+      {removable
+        ? (
+          <Removable removePlaceholder={removePlaceholder} onRemove={(e) => onRemove(e, rootElRef?.current)}>
+            <SimpleCell
+              {...restProps}
+              disabled={true}
+              Component={Component}
+              before={before}
+              after={after}
+            />
+          </Removable>
+        ) : (
           <SimpleCell
             {...restProps}
-            disabled={draggable || removable || disabled}
+            disabled={draggable || disabled}
             Component={selectable ? 'label' : Component}
             before={
-              <Fragment>
-                {platform === IOS && removable && <div className="Cell__remove-marker" onClick={this.onRemoveActivateClick} />}
-                {selectable &&
-                  <Fragment>
-                    <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
-                    <div className="Cell__marker"><Icon16Done /></div>
-                  </Fragment>
-                }
+              <>
                 {(platform === ANDROID || platform === VKCOM) && draggable &&
                 <Touch
-                  onStart={this.onDragStart}
-                  onMoveY={this.onDragMove}
-                  onEnd={this.onDragEnd}
-                  onClick={this.onDragClick}
+                  onStart={onDragStart}
+                  onMoveY={onDragMove}
+                  onEnd={onDragEnd}
+                  onClick={onDragClick}
                   className="Cell__dragger"
                 ><Icon24Reorder /></Touch>
                 }
+                {selectable &&
+                <>
+                  <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
+                  <div className="Cell__marker"><Icon16Done /></div>
+                </>
+                }
                 {before}
-              </Fragment>
+              </>
             }
             after={
-              <Fragment>
-                {(platform === ANDROID || platform === VKCOM) && removable &&
-                <div className="Cell__remove-marker">
-                  <IconButton onClick={this.onRemoveClick}><Icon24Cancel /></IconButton>
-                </div>
-                }
-                {platform === IOS && draggable &&
-                <Touch
-                  className="Cell__dragger"
-                  onStart={this.onDragStart}
-                  onMoveY={this.onDragMove}
-                  onEnd={this.onDragEnd}
-                  onClick={this.onDragClick}
-                ><Icon24ReorderIos /></Touch>
-                }
+              <>
+                {platform === IOS && draggable && (
+                  <Touch
+                    className="Cell__dragger"
+                    onStart={onDragStart}
+                    onMoveY={onDragMove}
+                    onEnd={onDragEnd}
+                    onClick={onDragClick}
+                  ><Icon24ReorderIos /></Touch>
+                )}
                 {after}
-              </Fragment>
+              </>
             }
           />
-        </div>
-        {platform === IOS && removable &&
-        <div
-          ref={this.getRemoveRef}
-          className="Cell__remove"
-          onClick={this.onRemoveClick}
-          style={{ transform: `translateX(-${this.state.removeOffset}px)` }}
-        >
-          <span className="Cell__remove-in">{removePlaceholder}</span>
-        </div>
-        }
-      </div>
-    );
-  }
-}
+        )}
+    </div>
+  );
+};
 
-export default withPlatform(withDOM<CellProps>(Cell));
+Cell.defaultProps = {
+  removePlaceholder: 'Удалить',
+};
+
+export default Cell;
