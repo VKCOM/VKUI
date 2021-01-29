@@ -1,19 +1,21 @@
-.Removable,
-.Removable__content {
+.Removable {
   position: relative;
   box-sizing: border-box;
+}
+
+.Removable__content {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  width: 100%;
+  max-width: 100%;
 }
 
-.Removable__children,
-.Removable__children > * {
+.Removable__children {
+  max-width: 100%;
   flex-grow: 1;
-  flex-shrink: 1;
-  width: 100%;
-  box-sizing: border-box;
+  min-width: 0;
+  flex-shrink: initial;
+  overflow: hidden;
 }
 
 /**
@@ -81,5 +83,7 @@
 
 .Removable--android .Removable__remove,
 .Removable--vkcom .Removable__remove {
+  flex-grow: 0;
+  flex-shrink: 0;
   color: var(--icon_secondary);
 }

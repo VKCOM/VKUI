@@ -76,22 +76,19 @@ export const Removable: FC<RemovableProps & AdaptivityProps> = withAdaptivity((p
         className,
       )}
     >
-      <div
-        className="Removable__content"
-        style={platform === IOS ? { transform: `translateX(-${removeOffset}px)` } : null}
-      >
+      <div className="Removable__content" style={platform === IOS ? { transform: `translateX(-${removeOffset}px)` } : null}>
         {platform === IOS && <button className="Removable__remove-marker" onClick={onRemoveActivateClick} />}
 
         <div className="Removable__children">
           {children}
         </div>
-      </div>
 
-      {(platform === ANDROID || platform === VKCOM) &&
-      <IconButton className="Removable__remove" onClick={onRemoveClick}>
-        <Icon24Cancel />
-      </IconButton>
-      }
+        {(platform === ANDROID || platform === VKCOM) &&
+          <IconButton className="Removable__remove" onClick={onRemoveClick}>
+            <Icon24Cancel />
+          </IconButton>
+        }
+      </div>
 
       {platform === IOS &&
         <button
