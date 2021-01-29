@@ -93,6 +93,13 @@
   margin-left: 6px;
 }
 
+.TabsItem__after .Icon--dropdown_16 {
+  color: var(--header_tint);
+  transform-origin: 50% calc(50% + 1px);
+  transform: translateY(1px);
+  margin-left: 6px;
+}
+
 /*
   iOS
  */

@@ -4,6 +4,7 @@ import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import classNames from '../../lib/classNames';
 import { IOS, VKCOM } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
 import { TabsModeContext } from '../Tabs/Tabs';
 import Headline from '../Typography/Headline/Headline';
 import Subhead from '../Typography/Subhead/Subhead';
@@ -37,7 +38,7 @@ const TabsItem: FunctionComponent<TabsItemProps> = ({
       activeEffectDelay={platform === IOS ? 0 : ACTIVE_EFFECT_DELAY}
     >
       <TypographyComponent className="TabsItem__in" weight="medium">{children}</TypographyComponent>
-      {after && <div className="TabsItem__after">{after}</div>}
+      {hasReactNode(after) && <div className="TabsItem__after">{after}</div>}
     </Tappable>
   );
 };
