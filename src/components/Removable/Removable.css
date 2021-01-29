@@ -1,27 +1,19 @@
-.Removable {
-  position: relative;
-  display: block;
-  box-sizing: border-box;
-}
-
 .Removable,
 .Removable__content {
+  position: relative;
+  box-sizing: border-box;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   width: 100%;
+  overflow: hidden;
 }
 
-.Removable__content,
-.Removable__children {
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-
+.Removable__children,
 .Removable__children > * {
-  width: 100%;
   flex-grow: 1;
   flex-shrink: 1;
+  width: 100%;
   box-sizing: border-box;
 }
 
