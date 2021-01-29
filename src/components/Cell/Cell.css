@@ -73,3 +73,13 @@
 .Cell--vkcom .Cell__marker {
   margin-right: 16px;
 }
+
+.Cell--android.Cell--removable .Removable,
+.Cell--vkcom.Cell--removable .Removable {
+  padding-right: 6px;
+}
+
+.Cell--android.Cell--removable .SimpleCell,
+.Cell--vkcom.Cell--removable .SimpleCell {
+  padding-right: 0;
+}

@@ -75,13 +75,15 @@ const Cell: FC<CellProps> = (props: CellProps) => {
   const rootElRef = useRef(null);
   const platform = usePlatform();
 
-  const [dragging, setDragging] = useState(false);
+  const [dragging, setDragging] = useState(undefined);
 
   const [siblings, setSiblings] = useState<HTMLElement[]>(undefined);
   const [dragStartIndex, setDragStartIndex] = useState<number>(undefined);
   const [dragEndIndex, setDragEndIndex] = useState<number>(undefined);
   const [dragShift, setDragShift] = useState<number>(0);
   const [dragDirection, setDragDirection] = useState<'down' | 'up'>(undefined);
+
+  const draggingClass = 'List--dragging';
 
   const onDragStart = () => {
     const rootEl = rootElRef?.current;
@@ -160,18 +162,19 @@ const Cell: FC<CellProps> = (props: CellProps) => {
   };
 
   useEffect(() => {
-    const listEl = rootElRef?.current?.closest('.List');
-    const draggingClass = 'List--dragging';
+    if (dragging != null) {
+      const listEl = rootElRef?.current?.closest('.List');
 
-    if (listEl) {
-      const hasDraggingClass = listEl?.classList.contains(draggingClass);
+      if (listEl) {
+        const hasDraggingClass = listEl?.classList.contains(draggingClass);
 
-      if (dragging && !hasDraggingClass) {
-        listEl.classList.add(draggingClass);
-      }
+        if (dragging && !hasDraggingClass) {
+          listEl.classList.add(draggingClass);
+        }
 
-      if (!dragging && hasDraggingClass) {
-        listEl.classList.remove(draggingClass);
+        if (!dragging && hasDraggingClass) {
+          listEl.classList.remove(draggingClass);
+        }
       }
     }
   }, [dragging]);
