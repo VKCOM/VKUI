@@ -409,6 +409,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   onPageTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
     const { shiftY, startT, originalEvent } = event;
     const target = originalEvent.target as HTMLElement;
+    const scrollable = target.closest('.ModalPage__content-wrap')?.clientHeight < target.closest('.ModalPage__content-in')?.scrollHeight;
 
     if (!event.isY) {
       if (target.closest('.ModalPage')) {
@@ -424,6 +425,10 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     originalEvent.stopPropagation();
 
     const { expandable, contentScrolled, collapsed, expanded, fullscreen } = modalState;
+
+    if (fullscreen && scrollable) {
+      return;
+    }
 
     if (!this.state.touchDown) {
       modalState.touchStartTime = startT;
@@ -446,9 +451,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       target.closest('.ModalPage__header')
     ) {
       originalEvent.preventDefault();
-      if (fullscreen && !target.closest('.ModalPage__header')) {
-        return;
-      }
+
       if (!expandable && shiftY < 0) {
         return;
       }
