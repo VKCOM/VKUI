@@ -9,7 +9,8 @@ class Example extends React.Component {
 
     this.state = {
       email: '',
-      purpose: ''
+      purpose: '',
+      showEmail: true
     }
 
     this.addressItems = [
@@ -19,6 +20,7 @@ class Example extends React.Component {
     ];
 
     this.onChange = this.onChange.bind(this);
+    this.onRemove = this.onRemove.bind(this);
   }
 
   onChange(e) {
@@ -26,9 +28,12 @@ class Example extends React.Component {
     this.setState({ [name]: value });
   }
 
+  onRemove(e) {
+    this.setState({ showEmail: false });
+  }
 
   render() {
-    const { email, purpose } = this.state;
+    const { email, purpose, showEmail } = this.state;
 
     return (
       <View activePanel="new-user">
@@ -36,18 +41,22 @@ class Example extends React.Component {
           <PanelHeader>Регистрация</PanelHeader>
           <Group>
           <FormLayout>
-            <FormItem
-              top="E-mail" 
-              status={email ? 'valid' : 'error'}
-              bottom={email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'}
-            >
-              <Input
-                type="email"
-                name="email"
-                value={email}
-                onChange={this.onChange}
-              />
-            </FormItem>
+            {showEmail && 
+              <FormItem
+                removable
+                onRemove={this.onRemove}
+                top="E-mail" 
+                status={email ? 'valid' : 'error'}
+                bottom={email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'}
+              >
+                <Input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={this.onChange}
+                />
+              </FormItem>
+            }
 
             <FormItem top="Пароль">
               <Input type="password"  placeholder="Введите пароль" />

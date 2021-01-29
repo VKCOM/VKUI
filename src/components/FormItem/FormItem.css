@@ -1,6 +1,5 @@
 .FormItem {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding: 12px 16px;
   display: block;
 }
 
@@ -32,6 +31,17 @@
   color: var(--field_valid_border);
 }
 
+.FormItem .Cell,
+.FormItem .SimpleCell,
+.FormItem .RichCell,
+.FormItem .CellButton,
+.FormItem .Radio,
+.FormItem .Checkbox {
+  box-sizing: content-box;
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
 /**
  * iOS
  */
@@ -47,36 +57,21 @@
 .FormItem--ios .CellButton,
 .FormItem--ios .Radio,
 .FormItem--ios .Checkbox {
-  width: 100%;
-  box-sizing: content-box;
   margin-left: -12px;
   margin-right: -12px;
 }
 
 /**
- * Android & VKCOM
+ * ANDROID & VKCOM
  */
 
-.FormItem--android,
-.FormItem--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
+.FormItem--android .Removable__remove,
+.FormItem--vkcom .Removable__remove {
+  margin-right: -16px;
 }
 
-.FormItem--android .Cell,
-.FormItem--vkcom .Cell,
-.FormItem--android .SimpleCell,
-.FormItem--vkcom .SimpleCell,
-.FormItem--android .RichCell,
-.FormItem--vkcom .RichCell,
-.FormItem--android .CellButton,
-.FormItem--vkcom .CellButton,
-.FormItem--android .Radio,
-.FormItem--vkcom .Radio,
-.FormItem--android .Checkbox,
-.FormItem--vkcom .Checkbox {
-  width: 100%;
-  box-sizing: content-box;
-  margin-left: -16px;
-  margin-right: -16px;
+.FormItem--android.FormItem--sizeY-compact .Removable__remove,
+.FormItem--vkcom.FormItem--sizeY-compact .Removable__remove {
+  margin-left: 2px;
+  margin-right: -14px;
 }
