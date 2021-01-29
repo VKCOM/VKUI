@@ -6,7 +6,6 @@
   flex-flow: row nowrap;
   align-items: center;
   width: 100%;
-  overflow: hidden;
 }
 
 .Removable__children,
