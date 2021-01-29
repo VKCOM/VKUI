@@ -9,7 +9,7 @@ export interface IconButtonProps extends TappableProps {
   /**
    * @deprecated будет удалено в 5.0.0. Используйте `children`
    */
-  icon: ReactNode;
+  icon?: ReactNode;
 }
 
 const IconButton: FunctionComponent<IconButtonProps> = ({
