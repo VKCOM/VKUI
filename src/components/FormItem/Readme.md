@@ -10,7 +10,7 @@ class Example extends React.Component {
     this.state = {
       email: '',
       purpose: '',
-      showEmail: true
+      showPatronym: false
     }
 
     this.addressItems = [
@@ -28,12 +28,16 @@ class Example extends React.Component {
     this.setState({ [name]: value });
   }
 
+  onShowPatronym() {
+    this.setState({ showPatronym: true });
+  }
+
   onRemove(e) {
-    this.setState({ showEmail: false });
+    this.setState({ showPatronym: false });
   }
 
   render() {
-    const { email, purpose, showEmail } = this.state;
+    const { email, purpose, showPatronym } = this.state;
 
     return (
       <View activePanel="new-user">
@@ -41,29 +45,27 @@ class Example extends React.Component {
           <PanelHeader>Регистрация</PanelHeader>
           <Group>
           <FormLayout>
-            {showEmail && 
-              <FormItem
-                removable
-                onRemove={this.onRemove}
-                top="E-mail" 
-                status={email ? 'valid' : 'error'}
-                bottom={email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'}
-              >
-                <Input
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={this.onChange}
-                />
-              </FormItem>
-            }
+            <FormItem
+              top="E-mail" 
+              status={email ? 'valid' : 'error'}
+              bottom={email ? 'Электронная почта введена верно!' : 'Пожалуйста, введите электронную почту'}
+            >
+              <Input
+                type="email"
+                name="email"
+                value={email}
+                onChange={this.onChange}
+              />
+            </FormItem>
 
             <FormItem top="Пароль">
               <Input type="password"  placeholder="Введите пароль" />
             </FormItem>
+            
             <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">
               <Input type="password" placeholder="Повторите пароль" />
             </FormItem>
+
             <FormLayoutGroup mode="horizontal">
               <FormItem top="Имя">            
                 <Input />
@@ -72,6 +74,12 @@ class Example extends React.Component {
                 <Input />
               </FormItem>
             </FormLayoutGroup>
+
+            {!this.state.showPatronym
+              ? <CellButton onClick={() => this.setState({ showPatronym: true })}>Добавить отчество</CellButton>
+              : <FormItem removable onRemove={this.onRemove} top="Отчество"><Input /></FormItem>
+            }
+
             <FormItem top="Пол">
               <Select 
                 placeholder="Выберите пол"
