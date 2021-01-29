@@ -41,15 +41,18 @@
 
 .PanelHeader__content {
   overflow: hidden;
-  color: var(--header_text);
-  font-weight: 800;
-  font-family: var(--font-tt);
 }
 
 .PanelHeader__content > * {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.PanelHeader__content-in {
+  color: var(--header_text);
+  font-weight: 800;
+  font-family: var(--font-tt);
 }
 
 .PanelHeader__right {
@@ -105,11 +108,14 @@
 }
 
 .PanelHeader--ios .PanelHeader__content {
-  font-size: 21px;
-  line-height: var(--panelheader_height_ios);
   text-align: center;
   opacity: 1;
   transition: opacity .3s var(--ios-easing);
+}
+
+.PanelHeader--ios .PanelHeader__content-in {
+  font-size: 21px;
+  line-height: var(--panelheader_height_ios);
 }
 
 .PanelHeader--ios .PanelHeader__content > * {
@@ -178,10 +184,13 @@
 }
 
 .PanelHeader--android .PanelHeader__content {
-  font-size: 23px;
   align-items: center;
   flex-grow: 1;
   max-width: 100%;
+}
+
+.PanelHeader--android .PanelHeader__content-in {
+  font-size: 23px;
 }
 
 .PanelHeader--android .PanelHeader__content > * {
@@ -257,10 +266,6 @@
 
 .PanelHeader--vkcom .PanelHeader__left:not(:empty) {
   padding: 0 0 0 4px;
-}
-
-.PanelHeader--vkcom .PanelHeader__content {
-  font-family: inherit;
 }
 
 .PanelHeader--vkcom .PanelHeader__left,

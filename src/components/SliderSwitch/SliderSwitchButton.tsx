@@ -4,6 +4,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
+import Text from '../Typography/Text/Text';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   active?: boolean;
@@ -39,7 +40,7 @@ const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) 
     onBlur={toggleFocus}
     tabIndex={0}
   >
-    {children}
+    <Text Component="span" weight="medium">{children}</Text>
   </Tappable>;
 };
 

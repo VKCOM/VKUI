@@ -1,14 +1,16 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import React, { FunctionComponent, HTMLAttributes, createContext } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
-import { ANDROID, VKCOM } from '../../lib/platform';
+import { IOS } from '../../lib/platform';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   mode?: 'default' | 'buttons' | 'segmented';
 }
+
+export const TabsModeContext = createContext<TabsProps['mode']>('default');
 
 const Tabs: FunctionComponent<TabsProps> = ({
   className,
@@ -21,7 +23,7 @@ const Tabs: FunctionComponent<TabsProps> = ({
 }: TabsProps) => {
   const platform = usePlatform();
 
-  if ((platform === ANDROID || platform === VKCOM) && mode === 'segmented') {
+  if (platform !== IOS && mode === 'segmented') {
     mode = 'default';
   }
 
@@ -33,7 +35,9 @@ const Tabs: FunctionComponent<TabsProps> = ({
       style={style}
     >
       <div className="Tabs__in">
-        {children}
+        <TabsModeContext.Provider value={mode}>
+          {children}
+        </TabsModeContext.Provider>
       </div>
     </div>
   );

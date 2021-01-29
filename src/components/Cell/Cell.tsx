@@ -253,7 +253,7 @@ class Cell extends Component<CellProps & DOMProps, CellState> {
               <Fragment>
                 {(platform === ANDROID || platform === VKCOM) && removable &&
                 <div className="Cell__remove-marker">
-                  <IconButton icon={<Icon24Cancel />} onClick={this.onRemoveClick} />
+                  <IconButton onClick={this.onRemoveClick}><Icon24Cancel /></IconButton>
                 </div>
                 }
                 {platform === IOS && draggable &&

@@ -18,7 +18,6 @@
       margin-right: 12px;
       border-radius: 4px;
       display: flex;
-      line-height: 24px;
       }
 
       .Checkbox__icon--on {
@@ -33,6 +32,7 @@
     .Checkbox__content {
       flex-grow: 1;
       color: var(--text_primary);
+      word-break: break-word;
       }
 
     .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--on {

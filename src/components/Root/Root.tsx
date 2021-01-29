@@ -179,11 +179,12 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     });
 
     const baseClassName = getClassName('Root', platform);
+    const disableAnimation = this.shouldDisableTransitionMotion();
 
     return (
       <div className={classNames(baseClassName, this.props.className, {
-        'Root--transition': transition,
-        'Root--no-motion': this.shouldDisableTransitionMotion(),
+        'Root--transition': !disableAnimation && transition,
+        'Root--no-motion': disableAnimation,
       })} {...restProps}>
         {Views.map((view: ReactElement) => {
           return (

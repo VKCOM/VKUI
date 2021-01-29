@@ -64,8 +64,6 @@
   color: var(--text_secondary);
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 13px;
-  line-height: 16px;
   margin-top: 3px;
 }
 
@@ -167,8 +165,6 @@
  */
 
 .SimpleCell--ios {
-  font-size: 17px;
-  line-height: 22px;
   padding-left: 12px;
   padding-right: 12px;
 }
@@ -177,12 +173,6 @@
 .SimpleCell--ios .SimpleCell__indicator {
   padding-top: 9px;
   padding-bottom: 11px;
-}
-
-.SimpleCell--ios > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main,
-.SimpleCell--ios > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__indicator {
-  font-size: 16px;
-  line-height: 20px;
 }
 
 .SimpleCell--ios > .Icon--28,
@@ -207,14 +197,18 @@
   margin-right: -14px;
 }
 
+.SimpleCell--ios.SimpleCell--sizeY-regular > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main .SimpleCell__children,
+.SimpleCell--ios.SimpleCell--sizeY-regular > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__indicator {
+  font-size: 16px;
+  line-height: 20px;
+}
+
 /**
  * Android & VKCOM
  */
 
 .SimpleCell--android,
 .SimpleCell--vkcom {
-  font-size: 16px;
-  line-height: 20px;
   padding-left: 16px;
   padding-right: 16px;
 }
@@ -256,13 +250,6 @@
 .SimpleCell--sizeY-compact > .Avatar--sz-28 {
   padding-top: 8px;
   padding-bottom: 8px;
-}
-
-.SimpleCell--sizeY-compact,
-.SimpleCell--sizeY-compact > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__main,
-.SimpleCell--sizeY-compact > .Avatar:not(.Avatar--sz-32) ~ .SimpleCell__indicator {
-  font-size: 15px;
-  line-height: 20px;
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__description,

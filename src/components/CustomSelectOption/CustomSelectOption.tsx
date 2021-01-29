@@ -2,6 +2,7 @@ import React, { FC, HTMLAttributes, ReactNode } from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import classNames from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
+import Text from '../Typography/Text/Text';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement> {
   option?: any;
@@ -24,15 +25,16 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   const title = typeof children === 'string' ? children : null;
 
   return (
-    <div
+    <Text
       {...restProps}
+      weight="regular"
       role="option"
       title={title}
       aria-selected={selected}
       className={classNames('CustomSelectOption', className, {
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
-      }, className)}
+      })}
     >
       {hasReactNode(before) && <div className="CustomSelectOption__before">{before}</div>}
       {children}
@@ -42,7 +44,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
           <Icon16Done fill="var(--accent)" />
         </div>
       )}
-    </div>
+    </Text>
   );
 };
 
