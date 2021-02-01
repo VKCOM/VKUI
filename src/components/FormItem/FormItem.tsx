@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent } from 'react';
+import React, { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent, useRef } from 'react';
 import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -6,28 +6,24 @@ import { hasReactNode } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
-import { Removable } from '../Removable/Removable';
+import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
 
-export interface FormItemProps extends AllHTMLAttributes<HTMLElement> {
+export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePlaceholderProps {
   top?: ReactNode;
   bottom?: ReactNode;
   status?: 'default' | 'error' | 'valid';
   Component?: ElementType;
   /**
-   * Для удаляемых `<Input/>`, `<Select/>`.
+   * Для строчек с `<Input/>` или `<Select/>`, которые можно удалить.
    */
   removable?: boolean;
   /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
-  onRemove?(e: MouseEvent): void;
-  /**
-   * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
-   */
-  removePlaceholder?: ReactNode;
+  onRemove?(e: MouseEvent, rootEl: HTMLElement): void;
 }
 
-export const FormItem: FC<FormItemProps & AdaptivityProps> = withAdaptivity((props: FormItemProps & AdaptivityProps) => {
+export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const {
     className,
     children,
@@ -42,6 +38,11 @@ export const FormItem: FC<FormItemProps & AdaptivityProps> = withAdaptivity((pro
     ...restProps
   } = props;
   const platform = usePlatform();
+  const rootElRef = useRef(null);
+
+  const onRemoveClick = (e: MouseEvent) => {
+    onRemove && onRemove(e, rootElRef?.current);
+  };
 
   return (
     <Component
@@ -54,11 +55,12 @@ export const FormItem: FC<FormItemProps & AdaptivityProps> = withAdaptivity((pro
         },
         className,
       )}
+      ref={rootElRef}
     >
       {hasReactNode(top) && <Subhead weight="regular" className="FormItem__top">{top}</Subhead>}
 
       {removable
-        ? <Removable onRemove={onRemove} removePlaceholder={removePlaceholder}>{children}</Removable>
+        ? <Removable onRemove={onRemoveClick} removePlaceholder={removePlaceholder}>{children}</Removable>
         : children
       }
 
