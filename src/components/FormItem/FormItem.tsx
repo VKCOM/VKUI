@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent, useRef } from 'react';
+import React, { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent } from 'react';
 import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -20,7 +20,7 @@ export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePla
   /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
-  onRemove?(e: MouseEvent, rootEl: HTMLElement): void;
+  onRemove?: (e: MouseEvent) => void;
 }
 
 export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
@@ -38,11 +38,6 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
     ...restProps
   } = props;
   const platform = usePlatform();
-  const rootElRef = useRef(null);
-
-  const onRemoveClick = (e: MouseEvent) => {
-    onRemove && onRemove(e, rootElRef?.current);
-  };
 
   return (
     <Component
@@ -55,12 +50,11 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
         },
         className,
       )}
-      ref={rootElRef}
     >
       {hasReactNode(top) && <Subhead weight="regular" className="FormItem__top">{top}</Subhead>}
 
       {removable
-        ? <Removable onRemove={onRemoveClick} removePlaceholder={removePlaceholder}>{children}</Removable>
+        ? <Removable onRemove={onRemove} removePlaceholder={removePlaceholder}>{children}</Removable>
         : children
       }
 
