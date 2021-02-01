@@ -10,7 +10,7 @@
       <FormItem top="Администратор">
         <Select
           placeholder="Не выбран" 
-          options={getRandomUsers(10).map(user => ({ label: user.name+"123123123123123123123123", value: user.id, avatar: user.photo_100 }))}
+          options={getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
           renderOption={({ option, ...restProps }) => (
             <CustomSelectOption {...restProps} before={<Avatar size={24} src={option.avatar} />} />
           )}
