@@ -1,4 +1,4 @@
-import React, { ReactNode, MouseEvent, FC, useState, useRef, useEffect } from 'react';
+import React, { MouseEvent, FC, useState, useRef, useEffect } from 'react';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import Touch, { TouchEvent } from '../Touch/Touch';
@@ -6,10 +6,10 @@ import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Reorder, Icon24ReorderIos, Icon16Done } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
-import { Removable } from '../Removable/Removable';
+import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
 import usePlatform from '../../hooks/usePlatform';
 
-export interface CellProps extends SimpleCellProps, HasPlatform {
+export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlaceholderProps {
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
@@ -33,23 +33,12 @@ export interface CellProps extends SimpleCellProps, HasPlatform {
    */
   onRemove?(e: MouseEvent, rootEl: HTMLElement): void;
   /**
-   * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
-   */
-  removePlaceholder?: ReactNode;
-  /**
    * Коллбэк срабатывает при завершении перетаскивания.
    * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
   onDragFinish?({ from, to }: { from: number; to: number }): void;
-}
-
-export interface CellState {
-  isRemoveActivated: boolean;
-  removeOffset: number;
-  dragging: boolean;
-  checked?: boolean;
 }
 
 const Cell: FC<CellProps> = (props: CellProps) => {
@@ -75,7 +64,7 @@ const Cell: FC<CellProps> = (props: CellProps) => {
   const rootElRef = useRef(null);
   const platform = usePlatform();
 
-  const [dragging, setDragging] = useState(undefined);
+  const [dragging, setDragging] = useState<boolean>(undefined);
 
   const [siblings, setSiblings] = useState<HTMLElement[]>(undefined);
   const [dragStartIndex, setDragStartIndex] = useState<number>(undefined);
@@ -206,21 +195,21 @@ const Cell: FC<CellProps> = (props: CellProps) => {
             Component={selectable ? 'label' : Component}
             before={
               <>
-                {(platform === ANDROID || platform === VKCOM) && draggable &&
-                <Touch
-                  onStart={onDragStart}
-                  onMoveY={onDragMove}
-                  onEnd={onDragEnd}
-                  onClick={onDragClick}
-                  className="Cell__dragger"
-                ><Icon24Reorder /></Touch>
-                }
-                {selectable &&
-                <>
-                  <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
-                  <div className="Cell__marker"><Icon16Done /></div>
-                </>
-                }
+                {(platform === ANDROID || platform === VKCOM) && draggable && (
+                  <Touch
+                    className="Cell__dragger"
+                    onStart={onDragStart}
+                    onMoveY={onDragMove}
+                    onEnd={onDragEnd}
+                    onClick={onDragClick}
+                  ><Icon24Reorder /></Touch>
+                )}
+                {selectable && (
+                  <>
+                    <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
+                    <div className="Cell__marker"><Icon16Done /></div>
+                  </>
+                )}
                 {before}
               </>
             }
