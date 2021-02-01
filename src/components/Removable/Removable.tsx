@@ -8,18 +8,18 @@ import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';
 import IconButton from '../IconButton/IconButton';
 
-export interface RemovableProps extends AllHTMLAttributes<HTMLElement> {
+export interface RemovePlaceholderProps {
   /**
-   * Коллбэк срабатывает при клике на контрол удаления.
-   */
-  onRemove?(e: MouseEvent): void;
-  /**
-   * iOS only. Текст в выезжаеющей кнопке для удаления ячейки.
+   * iOS only. Текст в выезжающей кнопке для удаления ячейки.
    */
   removePlaceholder?: ReactNode;
 }
 
-export const Removable: FC<RemovableProps & AdaptivityProps> = withAdaptivity((props: RemovableProps & AdaptivityProps) => {
+interface RemovableProps extends AllHTMLAttributes<HTMLElement>, RemovePlaceholderProps {
+  onRemove?(e: MouseEvent): void;
+}
+
+export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovableProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const {
     className,
     children,
