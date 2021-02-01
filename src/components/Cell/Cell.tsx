@@ -31,7 +31,7 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlacehold
   /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
-  onRemove?(e: MouseEvent, rootEl: HTMLElement): void;
+  onRemove?: (e: MouseEvent, rootEl: HTMLElement) => void;
   /**
    * Коллбэк срабатывает при завершении перетаскивания.
    * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
