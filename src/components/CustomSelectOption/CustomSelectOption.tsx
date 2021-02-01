@@ -37,7 +37,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       })}
     >
       {hasReactNode(before) && <div className="CustomSelectOption__before">{before}</div>}
-      {children}
+      <div className="CustomSelectOption__label">{children}</div>
       {hasReactNode(after) && <div className="CustomSelectOption__after">{after}</div>}
       {selected && (
         <div className="CustomSelectOption__selectedIcon">
