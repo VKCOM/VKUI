@@ -1,9 +1,9 @@
-.FormLayoutGroup--horizontal {
+.FormLayoutGroup--horizontal .FormLayoutGroup__children {
   flex-direction: row;
   display: flex;
 }
 
-.FormLayoutGroup--horizontal > .FormItem {
+.FormLayoutGroup--horizontal .FormLayoutGroup__children > .FormItem {
   max-width: 100%;
   flex-grow: 1;
   flex-shrink: 0;
@@ -13,17 +13,53 @@
   min-width: 0;
 }
 
-.FormLayoutGroup--horizontal > .FormItem + .FormItem {
+.FormLayoutGroup--horizontal .FormLayoutGroup__children > .FormItem + .FormItem {
   margin-left: 24px;
 }
 
+.FormLayoutGroup--horizontal {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/**
+ * iOS
+ */
+
 .FormLayoutGroup--ios.FormLayoutGroup--horizontal {
   padding-left: 12px;
+  padding-right: 0;
+}
+
+.FormLayoutGroup--ios.FormLayoutGroup--horizontal .Removable {
+  margin-left: -12px;
+  padding-left: 12px;
+}
+
+.FormLayoutGroup--ios.FormLayoutGroup--horizontal .FormLayoutGroup__children {
   padding-right: 12px;
 }
 
-.FormLayoutGroup--android.FormLayoutGroup--horizontal,
-.FormLayoutGroup--vkcom.FormLayoutGroup--horizontal {
-  padding-left: 16px;
-  padding-right: 16px;
+.FormLayoutGroup--ios.FormLayoutGroup--offset .Removable__remove-marker {
+  margin-top: 26px;
+}
+
+/**
+ * ANDROID & VKCOM
+ */
+
+.FormLayoutGroup--android .Removable__remove,
+.FormLayoutGroup--vkcom .Removable__remove {
+  margin-right: -16px;
+}
+
+.FormLayoutGroup--android.FormLayoutGroup--sizeY-compact .Removable__remove,
+.FormLayoutGroup--vkcom.FormLayoutGroup--sizeY-compact .Removable__remove {
+  margin-left: 2px;
+  margin-right: -14px;
+}
+
+.FormLayoutGroup--android.FormLayoutGroup--offset .Removable__remove,
+.FormLayoutGroup--vkcom.FormLayoutGroup--offset .Removable__remove {
+  margin-top: 26px;
 }
