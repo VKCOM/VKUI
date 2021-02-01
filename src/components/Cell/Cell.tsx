@@ -41,7 +41,7 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlacehold
   onDragFinish?({ from, to }: { from: number; to: number }): void;
 }
 
-const Cell: FC<CellProps> = (props: CellProps) => {
+export const Cell: FC<CellProps> = (props: CellProps) => {
   const {
     onRemove,
     removePlaceholder,
@@ -236,5 +236,3 @@ const Cell: FC<CellProps> = (props: CellProps) => {
 Cell.defaultProps = {
   removePlaceholder: 'Удалить',
 };
-
-export default Cell;
