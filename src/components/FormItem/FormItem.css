@@ -47,7 +47,8 @@
  * iOS
  */
 
-.FormItem--ios {
+.FormItem--ios,
+.FormItem--ios .Removable {
   padding-left: 12px;
   padding-right: 12px;
 }
@@ -57,7 +58,8 @@
 .FormItem--ios .RichCell,
 .FormItem--ios .CellButton,
 .FormItem--ios .Radio,
-.FormItem--ios .Checkbox {
+.FormItem--ios .Checkbox,
+.FormItem--ios .Removable {
   margin-left: -12px;
   margin-right: -12px;
 }
