@@ -38,7 +38,7 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlacehold
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
-  onDragFinish?({ from, to }: { from: number; to: number }): void;
+  onDragFinish?: ({ from, to }: { from: number; to: number }) => void;
 }
 
 export const Cell: FC<CellProps> = (props: CellProps) => {
