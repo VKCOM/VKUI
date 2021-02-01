@@ -16,7 +16,7 @@ export interface RemovePlaceholderProps {
 }
 
 interface RemovableProps extends AllHTMLAttributes<HTMLElement>, RemovePlaceholderProps {
-  onRemove?(e: MouseEvent): void;
+  onRemove?: (e: MouseEvent) => void;
 }
 
 export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovableProps & Pick<AdaptivityProps, 'sizeY'>) => {
