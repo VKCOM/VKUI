@@ -10,7 +10,7 @@ export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement> {
 const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = ({
   children,
   className,
-  mode = 'vertical',
+  mode,
   ...restProps
 }: FormLayoutGroupProps) => {
   const platform = usePlatform();
@@ -20,6 +20,11 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = ({
       {children}
     </div>
   );
+};
+
+FormLayoutGroup.defaultProps = {
+  mode: 'vertical',
+  removePlaceholder: 'Удалить',
 };
 
 export default FormLayoutGroup;
