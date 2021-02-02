@@ -610,6 +610,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
   waitTransitionFinish(modalState: ModalsStateEntry, eventHandler: () => void) {
     if (transitionEvent.supported) {
+      // Сбрасываем состояния, которые могут помешать закрытию модального окна
+      this.setState({ touchDown: false, switching: false });
       const onceHandler = () => {
         modalState.innerElement.removeEventListener(transitionEvent.name, onceHandler);
         eventHandler();
