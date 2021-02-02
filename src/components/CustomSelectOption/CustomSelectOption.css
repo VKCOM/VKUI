@@ -19,6 +19,11 @@
   margin-right: 7px;
 }
 
+.CustomSelectOption__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .CustomSelectOption__after {
   margin-left: 7px;
 }
