@@ -2,6 +2,7 @@ import React, { FC, HTMLAttributes, ReactNode, useCallback, MouseEvent } from 'r
 import classNames from '../../lib/classNames';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { getTitleFromChildren, hasReactNode, noop } from '../../lib/utils';
+import Caption from '../Typography/Caption/Caption';
 
 type ChipValue = string | number;
 
@@ -24,13 +25,13 @@ const Chip: FC<ChipProps> = (props: ChipProps) => {
     <div className={classNames('Chip', className)} {...restProps}>
       <div className="Chip__in">
         {hasReactNode(before) && <div className="Chip__before">{before}</div>}
-        <span className="Chip__content" title={title}>{children}</span>
+        <Caption level="1" weight="regular" className="Chip__content" title={title}>{children}</Caption>
         {hasReactNode(after) && <div className="Chip__after">{after}</div>}
-        {removable && <>
+        {removable &&
           <div className="Chip__remove" onClick={onRemoveWrapper}>
             <Icon16Cancel fill="var(--icon_secondary)" />
           </div>
-        </>}
+        }
       </div>
     </div>
   );

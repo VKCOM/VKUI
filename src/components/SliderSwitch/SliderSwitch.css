@@ -22,10 +22,6 @@
   box-sizing: border-box;
   cursor: pointer;
   background: transparent;
-  line-height: 20px;
-  font-family: inherit;
-  font-weight: 500;
-  font-size: 15px;
   color: var(--text_subhead);
   transition: color 100ms ease-out;
   outline: none;
@@ -73,12 +69,13 @@
 
 .SliderSwitch__slider {
   position: absolute;
+  top: 0;
+  left: 0;
   width: calc(50% - 4px);
   height: 40px;
   margin: 2px;
   border-radius: 6px;
-  /*todo: изменить на transform*/
-  transition: margin-left 150ms;
+  transition: transform 150ms;
 }
 
 .SliderSwitch--firstActive {
@@ -87,6 +84,6 @@
 }
 
 .SliderSwitch--secondActive {
-  margin-left: calc(50% + 2px);
+  transform: translateX(calc(100% + 4px));
   background-color: var(--background_content);
 }

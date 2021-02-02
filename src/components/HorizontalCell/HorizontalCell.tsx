@@ -9,6 +9,16 @@ import Subhead from '../Typography/Subhead/Subhead';
 import Avatar from '../Avatar/Avatar';
 import { HasRef, HasRootRef } from '../../types';
 
+interface CellTypographyProps extends HTMLAttributes<HTMLDivElement> {
+  size: HorizontalCellProps['size'];
+}
+
+const CellTypography: FC<CellTypographyProps> = ({ size, children, ...restProps }: CellTypographyProps) => {
+  return size === 's'
+    ? <Caption level="2" weight="regular" {...restProps}>{children}</Caption>
+    : <Subhead weight="regular" {...restProps}>{children}</Subhead>;
+};
+
 export interface HorizontalCellProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLDivElement> {
   size?: 's' | 'm' | 'l';
   header?: ReactNode;
@@ -16,16 +26,17 @@ export interface HorizontalCellProps extends HTMLAttributes<HTMLDivElement>, Has
 }
 
 export const HorizontalCell: FC<HorizontalCellProps> = (props) => {
-  const platform = usePlatform();
   const { className, header, subtitle, size, style, children, getRootRef, getRef, ...restProps } = props;
+  const platform = usePlatform();
+
   return (
     <div className={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`, className)} ref={getRootRef} style={style}>
       <Tappable getRootRef={getRef} {...restProps}>
         {hasReactNode(children) && <div className="HorizontalCell__image">{children}</div>}
         <div className="HorizontalCell__content">
-          {hasReactNode(header) &&
-            size === 's' ? <Caption weight="regular" level="2" className="HorizontalCell__title">{header}</Caption> :
-            <Subhead weight="regular" className="HorizontalCell__title">{header}</Subhead>}
+          {hasReactNode(header) && (
+            <CellTypography size={size} className="HorizontalCell__title">{header}</CellTypography>
+          )}
           {hasReactNode(subtitle) && <Caption weight="regular" level="1" className="HorizontalCell__subtitle">{subtitle}</Caption>}
         </div>
       </Tappable>

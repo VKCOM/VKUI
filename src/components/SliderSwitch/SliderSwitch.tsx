@@ -28,7 +28,7 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
     super(props);
 
     this.state = {
-      activeValue: props.activeValue || void 0,
+      activeValue: props.activeValue ?? '',
       hoveredOptionId: -1,
     };
 
@@ -115,7 +115,7 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
   }
 
   public render() {
-    const { name, options, className, ...restProps } = this.props;
+    const { name, options, className, activeValue: _activeValue, ...restProps } = this.props;
     const { activeValue, hoveredOptionId } = this.state;
 
     const [firstOption, secondOption] = options;

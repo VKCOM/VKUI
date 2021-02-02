@@ -3,6 +3,7 @@ import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
+import Subhead from '../Typography/Subhead/Subhead';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
   target?: HTMLElement;
@@ -108,8 +109,8 @@ const TooltipPortal = withDOM<TooltipPortalProps>(
           <div className="Tooltip__container" style={{ top: this.state.y, left: this.state.x }} ref={this.getRef}>
             <div className="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }} />
             <div className="Tooltip__content">
-              {header && <div className="Tooltip__title">{header}</div>}
-              {text && <div className="Tooltip__text">{text}</div>}
+              {header && <Subhead weight="semibold" className="Tooltip__title">{header}</Subhead>}
+              {text && <Subhead weight="regular" className="Tooltip__text">{text}</Subhead>}
             </div>
           </div>
         </div>, this.portalTarget);

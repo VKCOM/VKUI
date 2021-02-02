@@ -6,6 +6,9 @@ import { HasAlign, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import usePlatform from '../../hooks/usePlatform';
 import { getClassName } from '../..';
+import Headline from '../Typography/Headline/Headline';
+import Text from '../Typography/Text/Text';
+import { VKCOM } from '../../lib/platform';
 
 export interface SelectMimicryProps extends
   HTMLAttributes<HTMLElement>,
@@ -31,6 +34,9 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   ...restProps
 }: SelectMimicryProps) => {
   const platform = usePlatform();
+
+  const TypographyComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+
   return (
     <FormField
       {...restProps}
@@ -46,10 +52,10 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
       getRootRef={getRootRef}
       onClick={disabled ? null : onClick}
     >
-      <div className="Select__container">
+      <TypographyComponent weight="regular" className="Select__container">
         <div className="Select__title">{children || placeholder}</div>
         {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
-      </div>
+      </TypographyComponent>
     </FormField>
   );
 };

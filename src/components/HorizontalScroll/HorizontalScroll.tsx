@@ -4,8 +4,9 @@ import usePlatform from '../../hooks/usePlatform';
 import getClassName from '../../helpers/getClassName';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from './HorizontalScrollArrow';
+import { easeInOutSine } from '../../lib/fx';
 
-type ScrollContext = {
+interface ScrollContext {
   scrollElement: HTMLElement | null;
   scrollAnimationDuration: number;
   animationQueue: VoidFunction[];
@@ -18,7 +19,7 @@ type ScrollContext = {
    * В некоторых случаях может отличаться от текущей ширины прокрутки из-за transforms: translate
    */
   initialScrollWidth: number;
-};
+}
 
 interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   /**
@@ -31,14 +32,6 @@ interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
   getScrollToRight?: (currentPosition: number) => number;
   showArrows?: boolean;
   scrollAnimationDuration?: number;
-}
-
-/**
- * ease function
- * @param x absolute progress of the animation in bounds 0 (beginning) and 1 (end)
- */
-function easeInOutSine(x: number) {
-  return 0.5 * (1 - Math.cos(Math.PI * x));
 }
 
 /**
@@ -114,12 +107,19 @@ function doScroll({
 }
 
 const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
-  const { children, getScrollToLeft, getScrollToRight, showArrows = false, scrollAnimationDuration, className, hasMouse, ...restProps } = props;
+  const {
+    children,
+    getScrollToLeft,
+    getScrollToRight,
+    showArrows = false,
+    scrollAnimationDuration,
+    className,
+    hasMouse,
+    ...restProps
+  } = props;
 
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-
-  const [initialScrollWidth, setInitialScrollWidth] = useState(0);
 
   const isCustomScrollingRef = useRef(false);
 
@@ -130,14 +130,16 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
   const platform = usePlatform();
 
   function scrollTo(getScrollPosition: (offset: number) => number) {
+    const scrollElement = scrollerRef.current;
+
     animationQueue.current.push(() => doScroll({
-      scrollElement: scrollerRef.current,
+      scrollElement,
       getScrollPosition,
       animationQueue: animationQueue.current,
       onScrollToRightBorder: () => setCanScrollRight(false),
       onScrollEnd: () => isCustomScrollingRef.current = false,
       onScrollStart: () => isCustomScrollingRef.current = true,
-      initialScrollWidth,
+      initialScrollWidth: scrollElement?.firstElementChild?.scrollWidth || 0,
       scrollAnimationDuration,
     }));
     if (animationQueue.current.length === 1) {
@@ -147,25 +149,34 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
 
   const onscroll = useCallback(() => {
     if (showArrows && hasMouse && scrollerRef.current && !isCustomScrollingRef.current) {
-      setCanScrollLeft(scrollerRef.current.scrollLeft > 0);
-      setCanScrollRight(scrollerRef.current.scrollLeft + scrollerRef.current.offsetWidth < scrollerRef.current.scrollWidth);
+      const scrollElement = scrollerRef.current;
+
+      setCanScrollLeft(scrollElement.scrollLeft > 0);
+      setCanScrollRight(scrollElement.scrollLeft + scrollElement.offsetWidth < scrollElement.scrollWidth);
     }
   }, [hasMouse]);
 
   useEffect(() => {
     scrollerRef.current && scrollerRef.current.addEventListener('scroll', onscroll);
-    scrollerRef.current && setInitialScrollWidth(scrollerRef.current.scrollWidth);
     return () => scrollerRef.current && scrollerRef.current.removeEventListener('scroll', onscroll);
   }, []);
 
-  useEffect(onscroll, [scrollerRef]);
+  useEffect(onscroll, [scrollerRef, children]);
 
   return (
     <div {...restProps} className={classNames(className, getClassName('HorizontalScroll', platform))}>
-      {showArrows && hasMouse && canScrollLeft && <HorizontalScrollArrow direction="left"
-        onClick={() => scrollTo(getScrollToLeft)} />}
-      {showArrows && hasMouse && canScrollRight && <HorizontalScrollArrow direction="right"
-        onClick={() => scrollTo(getScrollToRight)} />}
+      {showArrows && hasMouse && canScrollLeft &&
+      <HorizontalScrollArrow
+        direction="left"
+        onClick={() => scrollTo(getScrollToLeft)}
+      />
+      }
+      {showArrows && hasMouse && canScrollRight &&
+      <HorizontalScrollArrow
+        direction="right"
+        onClick={() => scrollTo(getScrollToRight)}
+      />
+      }
       <div className="HorizontalScroll__in" ref={scrollerRef}>
         <div className="HorizontalScroll__in-wrapper">
           {children}

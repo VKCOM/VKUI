@@ -1,7 +1,6 @@
 .TabsItem {
   white-space: nowrap;
   text-align: center;
-  font-weight: 500;
   box-sizing: border-box;
   flex-shrink: 0;
   display: flex;
@@ -10,8 +9,6 @@
 }
 
 .Tabs--default .TabsItem {
-  font-size: 16px;
-  line-height: 20px;
   color: var(--text_secondary);
   max-width: 100%;
   min-width: 0;
@@ -57,9 +54,6 @@
   border-radius: 10px;
   box-sizing: border-box;
   padding: 0 16px;
-  font-size: 14px;
-  line-height: 18px;
-  font-weight: 500;
 }
 
 .Tabs--buttons .TabsItem__in {
@@ -99,13 +93,18 @@
   margin-left: 6px;
 }
 
+.TabsItem__after .Icon--dropdown_16 {
+  color: var(--header_tint);
+  transform-origin: 50% calc(50% + 1px);
+  transform: translateY(1px);
+  margin-left: 6px;
+}
+
 /*
   iOS
  */
 .Tabs--ios.Tabs--segmented .TabsItem {
   border: 1px solid;
-  font-size: 14px;
-  line-height: 18px;
   padding: 0 12px;
   max-width: 100%;
   flex-basis: 0;
@@ -176,9 +175,6 @@
 .Tabs--vkcom .TabsItem--vkcom {
   flex-grow: 0;
   min-width: auto;
-  font-size: 15px;
-  line-height: 20px;
-  font-weight: 400;
   padding-left: 10px;
   padding-right: 10px;
 }
