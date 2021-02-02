@@ -1,4 +1,4 @@
-import React, { Component, ElementType, HTMLAttributes, RefCallback } from 'react';
+import React, { AllHTMLAttributes, Component, ElementType, RefCallback } from 'react';
 import Touch, { TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import classNames from '../../lib/classNames';
@@ -6,19 +6,16 @@ import getClassName from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
-import { HasPlatform, HasRootRef, RefWithCurrent } from '../../types';
+import { HasPlatform, HasRootRef, Ref } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { hasHover } from '@vkontakte/vkjs/lib/InputUtils';
 import { setRef } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface TappableProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
+export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;
   activeEffectDelay?: number;
-  disabled?: boolean;
   stopPropagation?: boolean;
-  href?: string;
-  target?: string;
   hasHover?: boolean;
   hasActive?: boolean;
 }
@@ -38,7 +35,7 @@ export interface TappableState {
 }
 
 export interface RootComponentProps extends TouchProps {
-  ref?: RefCallback<HTMLElement> | RefWithCurrent<HTMLElement>;
+  ref?: Ref<HTMLElement>;
 }
 
 export interface StorageItem {
@@ -348,17 +345,19 @@ class Tappable extends Component<TappableProps, TappableState> {
             <TouchRootContext.Consumer>
               {(insideTouchRoot: boolean) => {
                 this.insideTouchRoot = insideTouchRoot;
-
+                const touchProps = restProps.disabled ? {} : {
+                  onEnter: () => {
+                    insideTappable && onEnter();
+                    !restProps.disabled && this.onEnter();
+                  },
+                  onLeave: () => {
+                    insideTappable && onLeave();
+                    !restProps.disabled && this.onLeave();
+                  },
+                };
                 return (
                   <RootComponent
-                    onEnter={() => {
-                      insideTappable && onEnter();
-                      !restProps.disabled && this.onEnter();
-                    }}
-                    onLeave={() => {
-                      insideTappable && onLeave();
-                      !restProps.disabled && this.onLeave();
-                    }}
+                    {...touchProps}
                     {...restProps}
                     className={classes}
                     {...props}>

@@ -20,6 +20,11 @@
   border-radius: 50%;
 }
 
+/* fixes icon misplacement on Safari in some cases */
+.ModalDismissButton .Icon {
+  transform: translateX(0);
+}
+
 .ModalDismissButton.Tappable--shadowHovered {
   opacity: .6;
 }

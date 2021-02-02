@@ -1,9 +1,8 @@
 import React, { Component, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import { isFunction } from '../../lib/utils';
 import { transitionEvent } from '../../lib/supportEvents';
-import { HasChildren, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
@@ -15,8 +14,9 @@ import {
 import { ModalsStateEntry, ModalType } from './types';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import getClassName from '../../helpers/getClassName';
+import { DOMProps, withDOM } from '../../lib/dom';
 
-export interface ModalRootProps extends HasChildren, HasPlatform {
+export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
   /**
    * @ignore
@@ -41,7 +41,7 @@ interface ModalRootState {
   inited?: boolean;
 }
 
-class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState> {
+class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -66,6 +66,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      onClose: this.triggerActiveModalClose,
       isInsideModal: true,
     };
   }
@@ -77,17 +78,12 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
 
   activeTransitions: number;
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   get document(): Document {
-    return this.context.document || document;
+    return this.props.document;
   }
 
   get window(): Window {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   get modals() {
@@ -373,12 +369,12 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
   /**
    * Закрывает текущую модалку
    */
-  triggerActiveModalClose() {
+  triggerActiveModalClose = () => {
     const activeModalState = this.modalsState[this.state.activeModal];
     if (activeModalState) {
       this.doCloseModal(activeModalState);
     }
-  }
+  };
 
   private readonly doCloseModal = (modalState: ModalsStateEntry) => {
     if (isFunction(modalState.onClose)) {
@@ -388,13 +384,6 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
     } else {
       console.error('[ModalRoot] onClose is undefined');
     }
-  };
-
-  /**
-   * По клику на полупрозрачный черный фон нужно закрыть текущую модалку
-   */
-  onMaskClick = () => {
-    this.triggerActiveModalClose();
   };
 
   render() {
@@ -413,7 +402,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
         >
           <div
             className="ModalRoot__mask"
-            onClick={this.onMaskClick}
+            onClick={this.triggerActiveModalClose}
             ref={this.maskElementRef}
           />
           <div className="ModalRoot__viewport">
@@ -444,4 +433,4 @@ class ModalRootDesktopComponent extends Component<ModalRootProps, ModalRootState
   }
 }
 
-export const ModalRootDesktop = withContext(withPlatform(ModalRootDesktopComponent), ConfigProviderContext, 'configProvider');
+export const ModalRootDesktop = withContext(withPlatform(withDOM<ModalRootProps>(ModalRootDesktopComponent)), ConfigProviderContext, 'configProvider');

@@ -1,6 +1,5 @@
 import React, { HTMLAttributes, RefCallback } from 'react';
 import getClassName from '../../helpers/getClassName';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import withContext from '../../hoc/withContext';
@@ -9,6 +8,7 @@ import withPlatform from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
+import { DOMProps, withDOM } from '../../lib/dom';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -36,7 +36,7 @@ export interface FixedLayoutState {
   width: string;
 }
 
-class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
+class FixedLayout extends React.Component<FixedLayoutProps & DOMProps, FixedLayoutState> {
   state: FixedLayoutState = {
     position: 'absolute',
     top: null,
@@ -45,19 +45,14 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 
   el: HTMLDivElement;
 
-  static contextTypes = {
-    document: PropTypes.any,
-    window: PropTypes.any,
-  };
-
   private onMountResizeTimeout: number;
 
   get document() {
-    return this.context.document || document;
+    return this.props.document;
   }
 
   get window() {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   get currentPanel(): HTMLElement {
@@ -139,7 +134,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panel, ...restProps } = this.props;
+    const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panel, window, document, ...restProps } = this.props;
 
     return (
       <div
@@ -157,7 +152,7 @@ class FixedLayout extends React.Component<FixedLayoutProps, FixedLayoutState> {
 }
 
 export default withContext(
-  withPlatform(withPanelContext(FixedLayout)),
+  withPlatform(withPanelContext(withDOM<FixedLayoutProps>(FixedLayout))),
   SplitColContext,
   'splitCol',
 );

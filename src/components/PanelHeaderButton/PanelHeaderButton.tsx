@@ -1,16 +1,37 @@
-import React, { ButtonHTMLAttributes, FunctionComponent, ReactNode } from 'react';
-import Tappable from '../Tappable/Tappable';
+import React, { FunctionComponent, AllHTMLAttributes, ReactNode } from 'react';
+import Tappable, { TappableProps } from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { isPrimitiveReactNode } from '../../lib/utils';
-import { VKCOM } from '../../lib/platform';
+import { IOS, VKCOM } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
+import Title from '../Typography/Title/Title';
 
-export interface PanelHeaderButtonProps extends ButtonHTMLAttributes<HTMLElement> {
+interface ButtonTypographyProps extends AllHTMLAttributes<HTMLElement> {
+  primary?: PanelHeaderButtonProps['primary'];
+}
+
+const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, children }: ButtonTypographyProps) => {
+  const platform = usePlatform();
+
+  if (platform === IOS) {
+    return (
+      <Title Component="span" level="3" weight={primary ? 'semibold' : 'regular'}>
+        {children}
+      </Title>
+    );
+  }
+
+  return (
+    <Text Component="span" weight={platform === VKCOM ? 'regular' : 'medium'}>
+      {children}
+    </Text>
+  );
+};
+
+export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   primary?: boolean;
-  href?: string;
-  target?: string;
   label?: ReactNode;
 }
 
@@ -25,9 +46,6 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   const isPrimitiveLabel = isPrimitiveReactNode(label);
   const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
-
-  const childrenComponent = isPrimitive && platform === VKCOM ? <Text weight="regular">{children}</Text> : children;
-  const labelComponent = isPrimitiveLabel && platform === VKCOM ? <Text weight="regular">{label}</Text> : label;
 
   return (
     <Tappable
@@ -44,8 +62,14 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
         },
       )}
     >
-      {childrenComponent}
-      {labelComponent}
+      {isPrimitive
+        ? <ButtonTypography primary={primary}>{children}</ButtonTypography>
+        : children
+      }
+      {isPrimitiveLabel
+        ? <ButtonTypography primary={primary}>{label}</ButtonTypography>
+        : label
+      }
     </Tappable>
   );
 };

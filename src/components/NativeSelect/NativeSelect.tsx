@@ -7,6 +7,9 @@ import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptiv
 import { setRef } from '../../lib/utils';
 import { getClassName, HasPlatform } from '../..';
 import withPlatform from '../../hoc/withPlatform';
+import Headline from '../Typography/Headline/Headline';
+import Text from '../Typography/Text/Text';
+import { VKCOM } from '../../lib/platform';
 
 export interface NativeSelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
@@ -84,6 +87,8 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
     const { style, value, defaultValue, onChange, align, placeholder, children, className,
       getRef, getRootRef, disabled, sizeX, sizeY, platform, ...restProps } = this.props;
 
+    const TypographyComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+
     return (
       <FormField
         Component="label"
@@ -108,10 +113,10 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
           {placeholder && <option value="">{placeholder}</option>}
           {children}
         </select>
-        <div className="Select__container">
+        <TypographyComponent weight="regular" className="Select__container">
           <div className="Select__title">{this.state.title}</div>
           {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
-        </div>
+        </TypographyComponent>
       </FormField>
     );
   }

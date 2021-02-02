@@ -1,4 +1,4 @@
-import React, { RefCallback } from 'react';
+import { RefCallback } from 'react';
 import { PlatformType } from './lib/platform';
 import { Insets } from '@vkontakte/vk-bridge';
 
@@ -20,12 +20,6 @@ export interface HasRef<T> {
   getRef?: Ref<T>;
 }
 
-export interface HasDangerHTML {
-  dangerouslySetInnerHTML?: {
-    __html: string;
-  };
-}
-
 export interface HasAlign {
   align?: AlignType;
 }
@@ -44,23 +38,8 @@ export interface HasInsets {
   insets?: Partial<Insets>;
 }
 
-export interface HasChildren {
-  children?: React.ReactNode;
-}
-
-export interface HasLinkProps {
-  href?: string;
-  target?: string;
-  rel?: string;
-}
-
 export interface Version {
   major: number;
   minor?: number;
   patch?: number;
-}
-
-export interface DOMProps {
-  document?: Document;
-  window?: Window;
 }

@@ -1,21 +1,20 @@
 import React, { FC } from 'react';
-import { HasChildren } from '../../types';
 import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import { ModalRootTouch } from './ModalRoot';
 import { ModalRootDesktop } from './ModalRootDesktop';
 
-export interface ModalRootProps extends HasChildren, AdaptivityProps {
+export interface ModalRootProps extends AdaptivityProps {
   activeModal?: string | null;
 
   /**
    * Будет вызвано при закрытии активной модалки с её id
    */
-  onClose?(modalId: string): void;
+  onClose?: (modalId: string) => void;
 }
 
-const ModalRootComponent: FC<ModalRootProps> = (props) => {
-  const { viewWidth, viewHeight } = props;
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.MEDIUM;
+const ModalRootComponent: FC<ModalRootProps> = (props: ModalRootProps) => {
+  const { viewWidth, viewHeight, hasMouse } = props;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
   const RootComponent = isDesktop ? ModalRootDesktop : ModalRootTouch;
 
@@ -29,4 +28,5 @@ ModalRootComponent.displayName = 'ModalRoot';
 export const ModalRoot = withAdaptivity(ModalRootComponent, {
   viewWidth: true,
   viewHeight: true,
+  hasMouse: true,
 });

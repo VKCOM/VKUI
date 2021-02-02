@@ -6,8 +6,6 @@ docs
 npm-debug.log
 stats.json
 dist/*.hot-update.*
-dist/index.js
-dist/index.js.map
 
 .idea
 .DS_Store

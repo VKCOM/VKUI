@@ -3,19 +3,21 @@ import FixedLayout from '../FixedLayout/FixedLayout';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
+import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import { DOMProps, withDOM } from '../../lib/dom';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 
-export interface PanelHeaderContextProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+export interface PanelHeaderContextProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   opened: boolean;
-  onClose(): void;
+  onClose: VoidFunction;
 }
 
 export interface PanelHeaderContextState {
   closing: boolean;
 }
 
-class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderContextState> {
+export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMProps, PanelHeaderContextState> {
   static defaultProps: Partial<PanelHeaderContextProps> = {
     opened: false,
   };
@@ -28,12 +30,41 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
 
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
+  get isDesktop(): boolean {
+    return this.props.viewWidth >= ViewWidth.SMALL_TABLET;
+  }
+
+  startClosing = (event: Event) => {
+    if (this.elementRef && this.elementRef.current && !this.elementRef.current.contains(event.target as Node)) {
+      this.props.onClose();
+      this.props.document.removeEventListener('click', this.startClosing);
+    }
+  };
+
+  componentDidMount() {
+    if (this.props.opened && this.isDesktop) {
+      this.props.document.addEventListener('click', this.startClosing);
+    }
+  }
+
   componentDidUpdate(prevProps: PanelHeaderContextProps) {
-    if (this.props.opened !== prevProps.opened) {
-      if (this.props.opened === false) {
+    if (this.props.opened !== prevProps.opened || this.props.viewWidth !== prevProps.viewWidth) {
+      if (this.props.opened === false && !this.state.closing) {
         this.setState({ closing: true });
         this.waitAnimationFinish(this.onAnimationFinish);
       }
+
+      if (this.isDesktop && this.props.opened) {
+        this.props.document.addEventListener('click', this.startClosing);
+      } else {
+        this.props.document.removeEventListener('click', this.startClosing);
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.isDesktop) {
+      this.props.document.removeEventListener('click', this.startClosing);
     }
   }
 
@@ -54,7 +85,7 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
   };
 
   render() {
-    const { children, className, opened, onClose, platform, ...restProps } = this.props;
+    const { children, className, opened, onClose, platform, viewWidth, hasMouse, window, document, ...restProps } = this.props;
     const { closing } = this.state;
     const baseClassNames = getClassName('PanelHeaderContext', platform);
 
@@ -62,14 +93,20 @@ class PanelHeaderContext extends Component<PanelHeaderContextProps, PanelHeaderC
       <FixedLayout {...restProps} className={classNames(baseClassNames, {
         'PanelHeaderContext--opened': opened,
         'PanelHeaderContext--closing': closing,
+        'PanelHeaderContext--desktop': this.isDesktop,
       }, className)} vertical="top">
         <div className="PanelHeaderContext__in" ref={this.elementRef}>
-          {(opened || closing) && children}
+          <div className="PanelHeaderContext__content">
+            {(opened || closing) && children}
+          </div>
         </div>
-        {(opened || closing) && <div onClick={onClose} className="PanelHeaderContext__fade" />}
+        {!this.isDesktop && (opened || closing) && <div onClick={onClose} className="PanelHeaderContext__fade" />}
       </FixedLayout>
     );
   }
 }
 
-export default withPlatform(PanelHeaderContext);
+export default withAdaptivity(withPlatform(withDOM(PanelHeaderContext)), {
+  viewWidth: true,
+  hasMouse: true,
+});

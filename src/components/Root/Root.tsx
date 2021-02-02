@@ -1,5 +1,4 @@
 import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import classNames from '../../lib/classNames';
 import getClassName from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
@@ -10,6 +9,7 @@ import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
+import { DOMProps, withDOM } from '../../lib/dom';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
@@ -40,7 +40,7 @@ export interface RootState {
   transition: boolean;
 }
 
-class Root extends Component<RootProps, RootState> {
+class Root extends Component<RootProps & DOMProps, RootState> {
   constructor(props: RootProps) {
     super(props);
 
@@ -59,19 +59,14 @@ class Root extends Component<RootProps, RootState> {
     popout: null,
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   get document() {
-    return this.context.document || document;
+    return this.props.document;
   }
 
   get window() {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   componentDidUpdate(prevProps: RootProps, prevState: RootState) {
@@ -166,7 +161,7 @@ class Root extends Component<RootProps, RootState> {
 
   blurActiveElement() {
     if (typeof this.window !== 'undefined' && this.document.activeElement) {
-      this.document.activeElement.blur();
+      (this.document.activeElement as HTMLElement).blur();
     }
   }
 
@@ -174,6 +169,7 @@ class Root extends Component<RootProps, RootState> {
     const {
       popout, modal, platform,
       splitCol, configProvider, activeView: _1, onTransition,
+      window, document,
       ...restProps
     } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
@@ -183,11 +179,12 @@ class Root extends Component<RootProps, RootState> {
     });
 
     const baseClassName = getClassName('Root', platform);
+    const disableAnimation = this.shouldDisableTransitionMotion();
 
     return (
       <div className={classNames(baseClassName, this.props.className, {
-        'Root--transition': transition,
-        'Root--no-motion': this.shouldDisableTransitionMotion(),
+        'Root--transition': !disableAnimation && transition,
+        'Root--no-motion': disableAnimation,
       })} {...restProps}>
         {Views.map((view: ReactElement) => {
           return (
@@ -212,7 +209,7 @@ class Root extends Component<RootProps, RootState> {
 }
 
 export default withContext(withContext(
-  withPlatform(Root),
+  withPlatform(withDOM<RootProps>(Root)),
   SplitColContext,
   'splitCol',
 ), ConfigProviderContext, 'configProvider');

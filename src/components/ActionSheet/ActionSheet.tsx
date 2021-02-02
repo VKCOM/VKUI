@@ -2,7 +2,7 @@ import React, { Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { transitionEvent } from '../../lib/supportEvents';
 import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import withAdaptivity, { AdaptivityProps, ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
@@ -14,11 +14,14 @@ import Caption from '../Typography/Caption/Caption';
 export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   header?: React.ReactNode;
   text?: React.ReactNode;
-  onClose(): void;
+  onClose?: VoidFunction;
   /**
    * Desktop only
    */
   toggleRef: Element;
+  /**
+   * iOS only
+   */
   iosCloseItem: React.ReactNode;
 }
 
@@ -63,8 +66,13 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   };
 
+  get isDesktop() {
+    const { viewWidth, viewHeight, hasMouse } = this.props;
+    return viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+  }
+
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
-    if (this.props.viewWidth >= ViewWidth.TABLET) {
+    if (this.isDesktop) {
       eventHandler();
     }
 
@@ -86,11 +94,13 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       style,
       platform,
       viewWidth,
+      viewHeight,
+      hasMouse,
       iosCloseItem,
       ...restProps
     } = this.props;
 
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
+    const isDesktop = this.isDesktop;
 
     const DropdownComponent = isDesktop
       ? ActionSheetDropdownDesktop
@@ -138,4 +148,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
 export default withAdaptivity(withPlatform(ActionSheet), {
   viewWidth: true,
+  viewHeight: true,
+  hasMouse: true,
 });

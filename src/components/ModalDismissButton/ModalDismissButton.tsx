@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, FC } from 'react';
-import { Icon28CancelOutline } from '@vkontakte/icons';
+import { Icon20Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
@@ -12,7 +12,7 @@ const ModalDismissButton: FC<ModalDismissButtonProps> = ({ className, ...props }
   return (
     <Tappable className={classNames(getClassName('ModalDismissButton', platform), className)} {...props}>
       <div className="ModalDismissButton__bg">
-        <Icon28CancelOutline width={20} height={20} />
+        <Icon20Cancel />
       </div>
     </Tappable>
   );

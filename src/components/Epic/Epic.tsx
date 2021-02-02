@@ -1,17 +1,16 @@
 import React, { HTMLAttributes, ReactNode, ReactElement, FC, useEffect, useRef } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasChildren } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { ScrollSaver } from './ScrollSaver';
 
-export interface EpicProps extends HTMLAttributes<HTMLDivElement>, HasChildren, AdaptivityProps {
+export interface EpicProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   tabbar?: ReactNode;
   activeStory: string;
 }
 
-export const Epic: FC<EpicProps> = (props) => {
+export const Epic: FC<EpicProps> = (props: EpicProps) => {
   const platform = usePlatform();
   const scroll = useRef<{ [key: string]: number }>({}).current;
   const { className, activeStory, tabbar, children, viewWidth, ...restProps } = props;

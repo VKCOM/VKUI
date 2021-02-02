@@ -1,13 +1,12 @@
 import React, { HTMLAttributes, ReactNode, FC } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
-import { HasChildren, HasRef, HasRootRef } from '../../types';
+import { HasRef, HasRootRef } from '../../types';
 import PopoutRoot from '../PopoutRoot/PopoutRoot';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface SplitLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
-  HasChildren,
   HasRootRef<HTMLDivElement>,
   HasRef<HTMLDivElement> {
   popout?: ReactNode;
@@ -24,7 +23,7 @@ export const SplitLayout: FC<SplitLayoutProps> = ({
   getRootRef,
   getRef,
   ...restProps
-}) => {
+}: SplitLayoutProps) => {
   const platform = usePlatform();
 
   return (

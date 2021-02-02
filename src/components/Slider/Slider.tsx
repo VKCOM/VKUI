@@ -7,6 +7,7 @@ import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { precisionRound } from '../../helpers/math';
 
 export interface SliderProps extends
   HasRootRef<HTMLDivElement>,
@@ -17,6 +18,7 @@ export interface SliderProps extends
   max?: number;
   value?: number;
   step?: number;
+  disabled?: boolean;
   onChange?(value: number, e: TouchEvent): void;
   defaultValue?: number;
 }
@@ -25,11 +27,6 @@ export interface SliderState {
   startX: number;
   percentPosition: number;
   containerWidth: number;
-}
-
-export function precisionRound(number: number, precision: number) {
-  let factor = Math.pow(10, precision || 1);
-  return Math.round(number * factor) / factor;
 }
 
 class Slider extends Component<SliderProps, SliderState> {
@@ -54,6 +51,10 @@ class Slider extends Component<SliderProps, SliderState> {
   container: HTMLDivElement;
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
+    if (this.props.disabled) {
+      return;
+    }
+
     const boundingRect = this.container.getBoundingClientRect();
     this.setState({
       containerWidth: boundingRect.width,
@@ -75,6 +76,10 @@ class Slider extends Component<SliderProps, SliderState> {
   };
 
   onMoveX: TouchEventHandler = (e: TouchEvent) => {
+    if (this.props.disabled) {
+      return;
+    }
+
     const absolutePosition = this.validateAbsolute(this.state.startX + (e.shiftX || 0));
     const percentPosition = this.absoluteToPecent(absolutePosition);
 
@@ -88,6 +93,10 @@ class Slider extends Component<SliderProps, SliderState> {
   };
 
   onChange(value: number, e: TouchEvent) {
+    if (this.props.disabled) {
+      return;
+    }
+
     this.props.onChange && this.props.onChange(value, e);
   }
 
@@ -159,12 +168,17 @@ class Slider extends Component<SliderProps, SliderState> {
 
   render() {
     const { className, min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, sizeY, ...restProps } = this.props;
+      onChange, getRootRef, platform, sizeY, disabled, ...restProps } = this.props;
 
     return (
       <div
         {...restProps}
-        className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
+        className={classNames(
+          getClassName('Slider', platform),
+          className,
+          `Slider--sizeY-${sizeY}`,
+          disabled && 'Slider--disabled',
+        )}
       >
         <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} className="Slider__in">
           <div className="Slider__dragger" style={{ width: `${this.state.percentPosition}%` }}>

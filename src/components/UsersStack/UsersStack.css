@@ -19,10 +19,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
   color: #fff;
   background: var(--content_placeholder_icon);
+}
+
+.UsersStack--size-xs .UsersStack__photo {
+  width: 16px;
+  height: 16px;
 }
 
 .UsersStack--size-s .UsersStack__photo {
@@ -41,6 +44,11 @@
 
 .UsersStack:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
   margin-left: -2px;
+}
+
+.UsersStack--size-xs:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
+  margin-left: -1px;
+  clip-path: url(#users_stack_mask_16_left);
 }
 
 .UsersStack--size-s:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
@@ -63,8 +71,6 @@
   min-width: 0;
   flex: 1;
   margin: 0 0 0 8px;
-  font-size: 13px;
-  line-height: 16px;
 }
 
 /* Vertical layout */

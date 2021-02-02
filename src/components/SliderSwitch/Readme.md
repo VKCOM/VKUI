@@ -1,4 +1,4 @@
-```
+```jsx
   <View activePanel="progress">
     <Panel id="progress">
       <PanelHeader>

@@ -32,13 +32,13 @@
             </Group>
             <Group>
               <Header mode="secondary">Список диалогов</Header>
-              <SimpleCell before={<Avatar size={40} src={getAvatarUrl('user_xyz')} />} after={<IconButton icon={<Icon28MessageOutline />} />}>Игорь Фёдоров</SimpleCell>
-              <SimpleCell before={<Avatar size={40} src={getAvatarUrl('user_arthurstam')} />} after={<IconButton icon={<Icon28MessageOutline />} />}>Artur Stambultsian</SimpleCell>
+              <SimpleCell before={<Avatar size={40} src={getAvatarUrl('user_xyz')} />} after={<IconButton><Icon28MessageOutline /></IconButton>}>Игорь Фёдоров</SimpleCell>
+              <SimpleCell before={<Avatar size={40} src={getAvatarUrl('user_arthurstam')} />} after={<IconButton><Icon28MessageOutline /></IconButton>}>Artur Stambultsian</SimpleCell>
             </Group>
             <Group>
               <Header mode="secondary">Список друзей</Header>
-              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />} after={<IconButton icon={<Icon28MessageOutline />} />} description="Команда ВКонтакте">Игорь Фёдоров</SimpleCell>
-              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />} after={<IconButton icon={<Icon28MessageOutline />} />} description="Бот">Artur Stambultsian</SimpleCell>
+              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_xyz')} />} badge={<Icon12Verified />} after={<IconButton><Icon28MessageOutline /></IconButton>} description="Команда ВКонтакте">Игорь Фёдоров</SimpleCell>
+              <SimpleCell before={<Avatar size={48} src={getAvatarUrl('user_arthurstam')} />} after={<IconButton><Icon28MessageOutline /></IconButton>} description="Бот">Artur Stambultsian</SimpleCell>
             </Group>
           </Panel>
           <Panel id="nothing">

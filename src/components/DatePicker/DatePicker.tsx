@@ -8,43 +8,41 @@ import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
 import classNames from '../../lib/classNames';
-import CustomSelect from '../CustomSelect/CustomSelect';
+import CustomSelect, { SelectOption } from '../CustomSelect/CustomSelect';
 
 const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
 ];
 
-export interface SelectOption {
-  value: number;
-  label: string;
-}
-
-export interface DateFormat {
+export type DateFormat = {
   day: number;
   month: number;
   year: number;
-}
+};
 
-type State = DateFormat;
-type Attrs = Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>;
+type DatePickerState = Partial<DateFormat>;
 
-interface Props extends Attrs, HasPlatform, AdaptivityProps {
-  min: State;
-  max: State;
+interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>, HasPlatform, AdaptivityProps {
+  min: DateFormat;
+  max: DateFormat;
   name?: string;
-  defaultValue?: State;
+  defaultValue?: DateFormat;
   popupDirection?: 'top' | 'bottom';
   monthNames?: string[];
   dayPlaceholder?: string;
   monthPlaceholder?: string;
   yearPlaceholder?: string;
-  onDateChange?: (value: DateFormat) => void;
+  onDateChange?: (value: {
+    day: number;
+    month: number;
+    year: number;
+  }) => void;
 }
 
 type GetOptions = () => SelectOption[];
 
-class DatePicker extends Component<Props, Partial<State>> {
-  constructor(props: Props) {
+class DatePicker extends Component<DatePickerProps, DatePickerState> {
+  constructor(props: DatePickerProps) {
     super(props);
 
     this.state = props.defaultValue ? props.defaultValue : {
@@ -60,7 +58,7 @@ class DatePicker extends Component<Props, Partial<State>> {
   };
 
   // Переводим state к формату гг-мм-дд
-  private convertToInputFormat(date: State) {
+  private convertToInputFormat(date: DatePickerState) {
     const { day, month, year } = date;
 
     return `${year}-${leadingZero(month)}-${leadingZero(day)}`;
@@ -146,7 +144,7 @@ class DatePicker extends Component<Props, Partial<State>> {
     this.setState({
       [e.target.name]: Number(e.target.value),
     }, () => {
-      onDateChange && onDateChange(this.state as State);
+      onDateChange && onDateChange(this.state as DateFormat);
     });
   };
 
@@ -207,7 +205,7 @@ class DatePicker extends Component<Props, Partial<State>> {
             />
           </div>
         </div>
-        <input type="hidden" name={name} value={this.convertToInputFormat(this.state as State)} />
+        <input type="hidden" name={name} value={this.convertToInputFormat(this.state as DatePickerState)} />
       </div>
     );
   }
@@ -229,7 +227,7 @@ class DatePicker extends Component<Props, Partial<State>> {
           {...restProps}
           name={name}
           type="date"
-          defaultValue={this.convertToInputFormat(this.state as State)}
+          defaultValue={this.convertToInputFormat(this.state as DatePickerState)}
           onChange={this.onStringChange}
           min={this.convertToInputFormat(min)}
           max={this.convertToInputFormat(max)}

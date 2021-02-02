@@ -12,7 +12,7 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
   header: ReactNode;
-  onClose?(): void;
+  onClose?: VoidFunction;
   /**
    * Процент, на который изначально будет открыта модальная страница
    */
@@ -32,6 +32,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     header,
     viewWidth,
     viewHeight,
+    hasMouse,
     onClose,
     id,
     settlingHeight,
@@ -43,8 +44,10 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     updateModalHeight();
   }, [children]);
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && viewHeight >= ViewHeight.MEDIUM;
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+
+  const modalContext = useContext(ModalRootContext);
 
   return (
     <div
@@ -66,7 +69,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
               </div>
             </div>
           </div>
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
         </div>
       </div>
     </div>
@@ -80,4 +83,5 @@ ModalPage.defaultProps = {
 export default withAdaptivity(ModalPage, {
   viewWidth: true,
   viewHeight: true,
+  hasMouse: true,
 });

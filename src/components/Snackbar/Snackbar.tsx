@@ -1,7 +1,5 @@
 import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import withPlatform from '../../hoc/withPlatform';
-import FixedLayout from '../FixedLayout/FixedLayout';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import { HasPlatform } from '../../types';
@@ -73,11 +71,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
     layout: 'horizontal',
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   private innerEl: HTMLDivElement;
   private readonly bodyElRef: React.RefObject<HTMLDivElement>;
 
@@ -95,10 +88,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
 
   componentWillUnmount() {
     this.clearCloseTimeout();
-  }
-
-  get window() {
-    return this.context.window || window;
   }
 
   setCloseTimeout = () => {
@@ -219,15 +208,17 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       before,
       after,
       viewWidth,
+      duration,
+      onActionClick,
+      onClose,
       ...restProps
     } = this.props;
     const resolvedLayout = after || this.isDesktop ? 'vertical' : layout;
 
     return (
       <AppRootPortal>
-        <FixedLayout
+        <div
           {...restProps}
-          vertical="bottom"
           className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
             'Snackbar--closing': this.state.closing,
             'Snackbar--touched': this.state.touched,
@@ -262,7 +253,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
               </div>}
             </div>
           </Touch>
-        </FixedLayout>
+        </div>
       </AppRootPortal>
     );
   }

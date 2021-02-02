@@ -1,12 +1,11 @@
-import React, { Component, createRef, HTMLAttributes, RefObject, RefCallback } from 'react';
+import React, { Component, FC, createRef, HTMLAttributes, RefCallback, useCallback, useState } from 'react';
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
-import { precisionRound } from '../Slider/Slider';
 import withPlatform from '../../hoc/withPlatform';
-import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
+import { rescale, clamp } from '../../helpers/math';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export type Value = [number, number];
@@ -21,166 +20,94 @@ export interface RangeSliderProps extends
   step?: number;
   value?: Value;
   defaultValue?: Value;
+  disabled?: boolean;
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-export interface RangeSliderState {
-  startX: number;
-  percentStart: number;
-  percentEnd: number;
-  containerWidth: number;
-}
-
-class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
-  constructor(props: RangeSliderProps) {
-    super(props);
-    this.state = {
-      startX: 0,
-      percentStart: 0,
-      percentEnd: 0,
-      containerWidth: 0,
-    };
-    this.isControlledOutside = this.props.hasOwnProperty('value');
-    this.thumbStart = createRef();
-    this.thumbEnd = createRef();
-  }
-
-  static defaultProps: RangeSliderProps = {
-    min: 0,
-    max: 100,
-    step: 0,
-  };
-
-  isControlledOutside: boolean;
+class RangeSliderDumb extends Component<RangeSliderProps> {
+  dragging: false | 'start' | 'end' = false;
+  startX = 0;
+  containerWidth = 0;
 
   container: HTMLDivElement;
-
-  thumbStart: RefObject<HTMLDivElement>;
-  thumbEnd: RefObject<HTMLDivElement>;
+  thumbStart = createRef<HTMLDivElement>();
+  thumbEnd = createRef<HTMLDivElement>();
 
   onStart: TouchEventHandler = (e: TouchEvent) => {
+    if (this.props.disabled) {
+      return;
+    }
+
     const boundingRect = this.container.getBoundingClientRect();
-    this.setState({
-      containerWidth: boundingRect.width,
-    }, () => {
-      const absolutePosition = this.validateAbsolute(e.startX - boundingRect.left);
-      const percentPosition = this.absoluteToPecent(absolutePosition);
-      const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
+    this.containerWidth = boundingRect.width;
 
-      this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
+    const absolutePosition = e.startX - boundingRect.left;
+    const value = this.offsetToValue(absolutePosition);
+    this.dragging = this.snapDirection(value, e.originalEvent.target);
+    this.startX = absolutePosition;
 
-      if (this.isControlledOutside) {
-        this.setState({ startX: absolutePosition });
-      } else {
-        this.setState({
-          startX: absolutePosition,
-          percentStart,
-          percentEnd,
-        });
-      }
-    });
+    this.props.onChange(this.updateRange(value), e);
   };
 
-  onMoveX: TouchEventHandler = (e: TouchEvent) => {
-    const absolutePosition = this.validateAbsolute(this.state.startX + (e.shiftX || 0));
-    const percentPosition = this.absoluteToPecent(absolutePosition);
-    const { percentStart, percentEnd } = this.calcPercentRange(percentPosition);
-
-    this.onChange([this.percentToValue(percentStart), this.percentToValue(percentEnd)], e);
-
-    if (!this.isControlledOutside) {
-      this.setState({
-        percentStart,
-        percentEnd,
-      });
+  onMove: TouchEventHandler = (e: TouchEvent) => {
+    if (this.props.disabled) {
+      return;
     }
+
+    const value = this.offsetToValue(this.startX + (e.shiftX || 0));
+    this.props.onChange(this.updateRange(value), e);
 
     e.originalEvent.preventDefault();
   };
 
-  onChange(value: Value, e: TouchEvent) {
-    this.props.onChange && this.props.onChange(value, e);
-  }
-
-  validateAbsolute(absolute: number) {
-    let res = Math.max(0, Math.min(absolute, this.state.containerWidth));
-
-    if (this.props.step > 0) {
-      const stepCount = (this.props.max - this.props.min) / this.props.step;
-      const absStep = this.state.containerWidth / stepCount;
-
-      res = Math.floor(res / absStep) * absStep;
+  onEnd: TouchEventHandler = () => {
+    if (this.props.disabled) {
+      return;
     }
 
-    return res;
-  }
+    this.dragging = false;
+  };
 
-  validatePercent({ percentStart, percentEnd }: { percentStart: number; percentEnd: number }) {
-    return {
-      percentStart: Math.max(0, Math.min(percentStart, 100)),
-      percentEnd: Math.max(0, Math.min(percentEnd, 100)),
-    };
-  }
-
-  absoluteToPecent(absolute: number) {
-    return absolute * 100 / this.state.containerWidth;
-  }
-
-  calcPercentRange(percent: number) {
-    const { percentStart, percentEnd } = this.state;
-
-    if (percentStart === 100) {
-      return { percentStart: percent, percentEnd };
-    } else if (percentEnd === 0) {
-      return { percentEnd: percent, percentStart };
-    } else if (Math.abs(percentStart - percent) <= Math.abs(percentEnd - percent)) {
-      return { percentStart: percent, percentEnd };
-    } else {
-      return { percentEnd: percent, percentStart };
-    }
-  }
-
-  percentToValue(percent: number) {
-    const res = percent * (this.props.max - this.props.min) / 100 + this.props.min;
-    if (this.props.step > 0) {
-      const stepFloatPart = `${this.props.step}`.split('.')[1] || '';
-      return precisionRound(res, stepFloatPart.length);
-    }
-    return res;
-  }
-
-  valueToPercent([valueStart, valueEnd]: Value) {
-    return {
-      percentStart: (valueStart - this.props.min) * 100 / (this.props.max - this.props.min),
-      percentEnd: (valueEnd - this.props.min) * 100 / (this.props.max - this.props.min),
-    };
-  }
-
-  get value(): Value {
-    if (this.isControlledOutside) {
+  updateRange(value: number): Value {
+    if (this.props.disabled) {
       return this.props.value;
-    } else if (this.props.hasOwnProperty('defaultValue')) {
-      return this.props.defaultValue;
-    } else {
-      return [this.props.min, this.props.max];
     }
+
+    const [start, end] = this.props.value;
+    const { dragging } = this;
+    if (dragging === 'start') {
+      if (value > end) {
+        // "перехватиться", если перетянули за конец
+        this.dragging = 'end';
+        return [end, value];
+      }
+      return [value, end];
+    }
+    if (dragging === 'end') {
+      if (value < start) {
+        // "перехватиться", если перетянули за начало
+        this.dragging = 'start';
+        return [value, start];
+      }
+      return [start, value];
+    }
+    return this.props.value;
+  };
+
+  offsetToValue(absolute: number) {
+    const { min, max, step } = this.props;
+    return rescale(absolute, [0, this.containerWidth], [min, max], { step });
   }
 
-  componentDidMount() {
-    if (canUseDOM) {
-      const boundingRect = this.container.getBoundingClientRect();
-      this.setState({
-        containerWidth: boundingRect.width,
-      }, () => {
-        this.setState(this.validatePercent(this.valueToPercent(this.value)));
-      });
+  snapDirection(value: number, target: EventTarget) {
+    if (target === this.thumbStart.current) {
+      return 'start';
     }
-  }
-
-  componentDidUpdate(prevProps: RangeSliderProps) {
-    if (this.isControlledOutside && prevProps.value !== this.props.value) {
-      this.setState(this.validatePercent(this.valueToPercent(this.props.value)));
+    if (target === this.thumbEnd.current) {
+      return 'end';
     }
+    const [start, end] = this.props.value;
+    return Math.abs(start - value) <= Math.abs(end - value) ? 'start' : 'end';
   }
 
   getRef: RefCallback<HTMLDivElement> = (container) => {
@@ -190,35 +117,64 @@ class RangeSlider extends Component<RangeSliderProps, RangeSliderState> {
 
   render() {
     const { className, min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, sizeY, ...restProps } = this.props;
+      onChange, getRootRef, platform, sizeY, disabled, ...restProps } = this.props;
+    const percentStart = (value[0] - min) / (max - min) * 100;
+    const percentEnd = (value[1] - min) / (max - min) * 100;
 
     return (
-      <div
+      <Touch
+        data-value={value.join(',')}
         {...restProps}
-        className={classNames(getClassName('Slider', platform), className, `Slider--sizeY-${sizeY}`)}
+        onStart={this.onStart}
+        onMove={this.onMove}
+        onEnd={this.onEnd}
+        className={classNames(
+          getClassName('Slider', platform),
+          className,
+          `Slider--sizeY-${sizeY}`,
+          disabled && 'Slider--disabled',
+        )}
       >
-        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} className="Slider__in">
+        <div ref={this.getRef} className="Slider__in">
           <div
             className="Slider__dragger"
             style={{
-              width: `${this.state.percentEnd - this.state.percentStart}%`,
-              left: `${this.state.percentStart}%`,
+              width: `${percentEnd - percentStart}%`,
+              left: `${percentStart}%`,
             }}
           >
-            <span
-              className={classNames('Slider__thumb', 'Slider__thumb--start')}
-              ref={this.thumbStart}
-            />
-            <span
-              className={classNames('Slider__thumb', 'Slider__thumb--end')}
-              ref={this.thumbEnd}
-            />
+            <span className={classNames('Slider__thumb', 'Slider__thumb--start')} ref={this.thumbStart} />
+            <span className={classNames('Slider__thumb', 'Slider__thumb--end')} ref={this.thumbEnd} />
           </div>
-        </Touch>
-      </div>
+        </div>
+      </Touch>
     );
   }
 }
+
+const RangeSlider: FC<RangeSliderProps> = ({ onChange, defaultValue, ...props }) => {
+  const isControlled = Boolean(props.value);
+
+  const [localValue, setValue] = useState(defaultValue || [props.min, props.max] as Value);
+  const [start, end] = props.value || localValue;
+  const value = [clamp(start, props.min, props.max), clamp(end, props.min, props.max)] as Value;
+
+  const handleChange: RangeSliderProps['onChange'] = useCallback((nextValue, event) => {
+    if (props.disabled || value[0] === nextValue[0] && value[1] === nextValue[1]) {
+      return;
+    }
+    !isControlled && setValue(nextValue);
+    onChange && onChange(nextValue, event);
+  }, [onChange, isControlled, value]);
+
+  return <RangeSliderDumb {...props} value={value} onChange={handleChange} />;
+};
+
+RangeSlider.defaultProps = {
+  min: 0,
+  max: 100,
+  step: 0,
+};
 
 export default withAdaptivity(withPlatform(RangeSlider), {
   sizeY: true,

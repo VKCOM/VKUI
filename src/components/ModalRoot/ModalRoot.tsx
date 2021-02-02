@@ -1,5 +1,4 @@
 import React, { Component, ReactElement, SyntheticEvent } from 'react';
-import PropTypes from 'prop-types';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import getClassName from '../../helpers/getClassName';
@@ -9,7 +8,7 @@ import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { transitionEvent } from '../../lib/supportEvents';
-import { HasChildren, HasPlatform } from '../../types';
+import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
@@ -20,6 +19,7 @@ import {
 } from '../ConfigProvider/ConfigProviderContext';
 import { ModalsState, ModalsStateEntry, ModalType, TranslateRange } from './types';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
+import { DOMProps, withDOM } from '../../lib/dom';
 
 function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];
@@ -29,7 +29,7 @@ function rangeTranslate(number: number) {
   return Math.max(0, Math.min(98, number));
 }
 
-export interface ModalRootProps extends HasChildren, HasPlatform {
+export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
 
   /**
@@ -56,7 +56,7 @@ interface ModalRootState {
   dragging?: boolean;
 }
 
-class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> {
+class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -83,6 +83,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      onClose: this.triggerActiveModalClose,
       isInsideModal: true,
     };
 
@@ -99,17 +100,12 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
     [index: string]: number;
   };
 
-  static contextTypes = {
-    window: PropTypes.any,
-    document: PropTypes.any,
-  };
-
   get document(): Document {
-    return this.context.document || document;
+    return this.props.document;
   }
 
   get window(): Window {
-    return this.context.window || window;
+    return this.props.window;
   }
 
   getModals() {
@@ -735,12 +731,12 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
   /**
    * Закрывает текущую модалку
    */
-  triggerActiveModalClose() {
+  triggerActiveModalClose = () => {
     const activeModalState = this.modalsState[this.state.activeModal];
     if (activeModalState) {
       this.doCloseModal(activeModalState);
     }
-  }
+  };
 
   private readonly doCloseModal = (modalState: ModalsStateEntry) => {
     if (isFunction(modalState.onClose)) {
@@ -750,13 +746,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
     } else {
       console.error('[ModalRoot] onClose is undefined');
     }
-  };
-
-  /**
-   * По клику на полупрозрачный черный фон нужно закрыть текущую модалку
-   */
-  onMaskClick = () => {
-    this.triggerActiveModalClose();
   };
 
   render() {
@@ -781,7 +770,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
           >
             <div
               className="ModalRoot__mask"
-              onClick={this.onMaskClick}
+              onClick={this.triggerActiveModalClose}
               ref={this.maskElementRef}
             />
             <div className="ModalRoot__viewport">
@@ -821,4 +810,4 @@ class ModalRootTouchComponent extends Component<ModalRootProps, ModalRootState> 
   }
 }
 
-export const ModalRootTouch = withContext(withPlatform(ModalRootTouchComponent), ConfigProviderContext, 'configProvider');
+export const ModalRootTouch = withContext(withPlatform(withDOM<ModalRootProps>(ModalRootTouchComponent)), ConfigProviderContext, 'configProvider');
