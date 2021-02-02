@@ -1,7 +1,10 @@
+.FormLayoutGroup--horizontal {
+  padding: 12px 0;
+}
+
 .FormLayoutGroup--horizontal .FormLayoutGroup__children {
   display: flex;
   flex-direction: row;
-  padding: 12px 0;
 }
 
 .FormLayoutGroup--horizontal .FormLayoutGroup__children > .FormItem {
@@ -40,12 +43,17 @@
   padding-right: 12px;
 }
 
+.FormLayoutGroup--ios.FormLayoutGroup--horizontal .Removable__remove-marker {
+  align-self: flex-end;
+}
+
 /**
  * ANDROID & VKCOM
  */
 
 .FormLayoutGroup--android .Removable__remove,
 .FormLayoutGroup--vkcom .Removable__remove {
+  align-self: flex-end;
   margin-right: -16px;
 }
 
