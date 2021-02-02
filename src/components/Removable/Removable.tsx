@@ -77,7 +77,11 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
       )}
     >
       <div className="Removable__content" style={platform === IOS ? { transform: `translateX(-${removeOffset}px)` } : null}>
-        {platform === IOS && <button className="Removable__remove-marker" onClick={onRemoveActivateClick} />}
+        {platform === IOS && (
+          <button className="Removable__remove-marker" onClick={onRemoveActivateClick}>
+            <i className="Removable__remove-marker-in" />
+          </button>
+        )}
 
         <div className="Removable__children">
           {children}
