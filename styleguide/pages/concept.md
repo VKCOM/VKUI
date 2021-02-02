@@ -19,7 +19,7 @@ function App() {
           ...
         </AppRoot>
       </AdaptivityProvider>
-    </ConfigProvier>
+    </ConfigProvider>
   );
 }
 
@@ -46,7 +46,7 @@ function App() {
           </SplitLayout>
         </AppRoot>
       </AdaptivityProvider>
-    </ConfigProvier>
+    </ConfigProvider>
   );
 }
 
