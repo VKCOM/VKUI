@@ -383,6 +383,7 @@ to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
 .PanelHeaderContent--ios .PanelHeaderContent__before~.PanelHeaderContent__in{align-items:flex-start}
 .PanelHeaderContent--ios .PanelHeaderContent__in{align-items:center}
 .PanelHeaderContent--android{height:100%;box-sizing:border-box;padding-top:4px;padding-bottom:4px}
+.PanelHeaderContent--desktop.PanelHeaderContent--android .PanelHeaderContent__in{flex-grow:0}
 .PanelHeaderContent--android .PanelHeaderContent__in.Tappable{padding:0 8px;margin:0 -8px;border-radius:8px}
 .PanelHeaderContent--android .PanelHeaderContent__in.Tappable--active,.PanelHeaderContent--vkcom .PanelHeaderContent__in.Tappable--active{background-color:rgba(255,255,255,.1)}
 .PanelHeaderContent--vkcom .PanelHeaderContent__in.Tappable--shadowHovered>.Tappable__hoverShadow{background:0 0!important}
