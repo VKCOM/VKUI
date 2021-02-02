@@ -12,10 +12,6 @@ export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, Re
    */
   removable?: boolean;
   /**
-   * Только для removable. Визуально сдвигает кнопки удаления ниже, компенсируя высоту лейбла (например, свойство `top` у `<Input/>`).
-   */
-  removeButtonOffset?: boolean;
-  /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
   onRemove?: (e: MouseEvent) => void;
@@ -27,7 +23,6 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
   mode,
   removable,
   removePlaceholder,
-  removeButtonOffset,
   onRemove,
   sizeY,
   ...restProps
@@ -42,9 +37,6 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
         getClassName('FormLayoutGroup', platform),
         `FormLayoutGroup--sizeY-${sizeY}`,
         `FormLayoutGroup--${mode}`,
-        {
-          'FormLayoutGroup--offset': removable && removeButtonOffset,
-        },
         className,
       )}
       {...restProps}>

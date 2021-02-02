@@ -36,7 +36,7 @@ class Example extends React.Component {
               {!showDates
                 ? <CellButton onClick={() => this.toggleDates(true)}>Указать даты поездки</CellButton>
                 : (
-                  <FormLayoutGroup mode="horizontal" removable removeButtonOffset onRemove={() => this.toggleDates(false)}>
+                  <FormLayoutGroup mode="horizontal" removable onRemove={() => this.toggleDates(false)}>
                     <FormItem top="Начало">
                       <Input />
                     </FormItem>

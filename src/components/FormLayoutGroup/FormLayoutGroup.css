@@ -1,6 +1,7 @@
 .FormLayoutGroup--horizontal .FormLayoutGroup__children {
-  flex-direction: row;
   display: flex;
+  flex-direction: row;
+  padding: 12px 0;
 }
 
 .FormLayoutGroup--horizontal .FormLayoutGroup__children > .FormItem {
@@ -8,8 +9,7 @@
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 0;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0;
   min-width: 0;
 }
 
@@ -40,10 +40,6 @@
   padding-right: 12px;
 }
 
-.FormLayoutGroup--ios.FormLayoutGroup--offset .Removable__remove-marker {
-  margin-top: 26px;
-}
-
 /**
  * ANDROID & VKCOM
  */
@@ -57,9 +53,4 @@
 .FormLayoutGroup--vkcom.FormLayoutGroup--sizeY-compact .Removable__remove {
   margin-left: 2px;
   margin-right: -14px;
-}
-
-.FormLayoutGroup--android.FormLayoutGroup--offset .Removable__remove,
-.FormLayoutGroup--vkcom.FormLayoutGroup--offset .Removable__remove {
-  margin-top: 26px;
 }
