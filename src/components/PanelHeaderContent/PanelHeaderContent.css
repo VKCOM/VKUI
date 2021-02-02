@@ -106,6 +106,7 @@
 .PanelHeaderContent--android .PanelHeaderContent__in.Tappable {
   padding: 0 8px;
   margin: 0 -8px;
+  border-radius: 8px;
 }
 
   .PanelHeaderContent--android .PanelHeaderContent__in.Tappable--active,
