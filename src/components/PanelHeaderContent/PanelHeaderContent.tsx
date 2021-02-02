@@ -6,6 +6,8 @@ import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import Caption from '../Typography/Caption/Caption';
 import Headline from '../Typography/Headline/Headline';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { ViewWidth } from '../../hoc/withAdaptivity';
 
 interface PanelHeaderContentProps extends HTMLAttributes<HTMLDivElement> {
   aside?: ReactNode;
@@ -27,10 +29,13 @@ const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
   const rootProps = onClick ? {} : restProps;
   const inProps = onClick ? { ...restProps, activeEffectDelay: 200 } : {};
   const platform = usePlatform();
+  const { viewWidth } = useAdaptivity();
   const baseClassNames = getClassName('PanelHeaderContent', platform);
 
   return (
-    <div {...rootProps} className={classNames(baseClassNames, className)} style={style}>
+    <div {...rootProps} className={classNames(baseClassNames, className, {
+      'PanelHeaderContent--desktop': viewWidth >= ViewWidth.SMALL_TABLET,
+    })} style={style}>
       {hasReactNode(before) && <div className="PanelHeaderContent__before">{before}</div>}
       <InComponent {...inProps} className="PanelHeaderContent__in" onClick={onClick}>
         {hasReactNode(status) &&

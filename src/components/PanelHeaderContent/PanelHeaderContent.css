@@ -103,6 +103,10 @@
   padding-bottom: 4px;
 }
 
+.PanelHeaderContent--desktop.PanelHeaderContent--android .PanelHeaderContent__in {
+  flex-grow: 0;
+}
+
 .PanelHeaderContent--android .PanelHeaderContent__in.Tappable {
   padding: 0 8px;
   margin: 0 -8px;
