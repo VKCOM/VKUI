@@ -31,14 +31,29 @@ export function baselineComponent<Props extends BasicProps>(
     expect(() => api.unmount()).not.toThrow();
   });
   forward && it('forwards attributes', () => {
-    render(<Component data-testid="__cmp__" className="__cls__" style={{ background: 'red' }} />);
+    const { rerender } = render((
+      <Component data-testid="__cmp__" className="__cls__" style={{ background: 'red' }} />
+    ));
     // forward DOM attributes
     domAttr && expect(screen.queryByTestId('__cmp__')).toBeTruthy();
-    const styledNode = document.querySelector('.__cls__');
-    // forwards className
-    className && expect(styledNode).toBeTruthy();
-    // forwards style
-    style && expect((styledNode as HTMLElement).style.background).toBe('red');
+
+    if (className || style) {
+      const styledNode = document.querySelector<HTMLElement>('.__cls__');
+      // forwards className
+      className && expect(styledNode).toBeTruthy();
+      const customClassList = Array.from(styledNode.classList).filter((cls) => cls !== '__cls__');
+      // forwards style
+      style && expect(styledNode.style.background).toBe('red');
+      const customStyleCount = styledNode.style.length;
+
+      rerender(<Component />);
+
+      // does not replace default className
+      className && expect(Array.from(styledNode.classList)).toEqual(customClassList);
+      // does not replace default styles
+      style && expect(styledNode.style.length)
+        .toEqual(styledNode.style.background ? customStyleCount : customStyleCount - 1);
+    }
   });
 }
 
