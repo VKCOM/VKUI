@@ -9,13 +9,13 @@
   position: relative;
   border-radius: 10px;
   transition: background-color .15s ease-out;
-  }
+}
 
 /** TODO: Переписать без использования !important */
 .Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ActionSheetItem):not(.Banner__in):not(.ModalDismissButton) {
   background: var(--background_highlighted) !important;
   transition: none;
-  }
+}
 
 /**
  * Android tappable
@@ -24,57 +24,57 @@
   position: relative;
   transition: background-color .15s ease-out;
   border-radius: 8px;
-  }
+}
 
 .Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton) {
   background: var(--background_highlighted) !important;
-  }
+}
 
 /**
  * VKCOM tappable
  */
- .Tappable--vkcom {
+.Tappable--vkcom {
   position: relative;
   transition: background-color .15s ease-out;
   border-radius: 8px;
-  }
+}
 
 .Tappable--vkcom.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton) {
   background: var(--background_highlighted) !important;
-  }
+}
 
-  /**
-   * Waves container
-   */
-  .Tappable--android .Tappable__waves {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    pointer-events: none;
-    overflow: hidden;
-    border-radius: inherit;
-    /* Fix for Safari: css animation + border-radius + overflow ignores parent border-radius */
-    will-change: transform;
-    }
+/**
+ * Waves container
+ */
+.Tappable--android .Tappable__waves {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  /* Fix for Safari: css animation + border-radius + overflow ignores parent border-radius */
+  will-change: transform;
+}
 
-    /**
-     * Wave
-     */
-    .Tappable--android .Tappable__wave {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 24px;
-      height: 24px;
-      margin: -12px 0 0 -12px;
-      opacity: 0;
-      content: '';
-      border-radius: 50%;
-      background: rgba(127, 127, 127, .1);
-      animation: animation-wave .3s var(--android-easing);
-      }
+/**
+ * Wave
+ */
+.Tappable--android .Tappable__wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  opacity: 0;
+  content: '';
+  border-radius: 50%;
+  background: rgba(127, 127, 127, .1);
+  animation: animation-wave .3s var(--android-easing);
+}
 
 .Tappable__hoverShadow {
   position: absolute;

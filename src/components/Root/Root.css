@@ -2,176 +2,176 @@
   width: 100%;
   height: 100%;
   position: relative;
-  }
+}
 
 .Root--transition {
   pointer-events: none;
-  }
+}
 
-  .Root__view {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    }
+.Root__view {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 
-  .Root--transition .Root__view:not(.Root__view--hide-forward) {
-    position: fixed;
-    left: 0;
-    top: 0;
-    }
+.Root--transition .Root__view:not(.Root__view--hide-forward) {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
 
-  .Root--transition .Root__view:not(.Root__view--hide-forward) .View__panel {
-    overflow: hidden;
-    }
+.Root--transition .Root__view:not(.Root__view--hide-forward) .View__panel {
+  overflow: hidden;
+}
 
-  .Root__view--show-back,
-  .Root__view--hide-forward {
-    z-index: 1;
-    }
+.Root__view--show-back,
+.Root__view--hide-forward {
+  z-index: 1;
+}
 
-  .Root__view--show-forward,
-  .Root__view--hide-back {
-    z-index: 2;
-    }
+.Root__view--show-forward,
+.Root__view--hide-back {
+  z-index: 2;
+}
 
-  .Root__popout {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
-    width: 100%;
-    height: 100%;
-    }
+.Root__popout {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
 
-  .Root__modal {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 99;
-    width: 100%;
-    height: 100%;
-    }
+.Root__modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+}
 
-  .Root__modal:empty {
-    display: none;
-  }
+.Root__modal:empty {
+  display: none;
+}
 
 /**
  * iOS
  */
 
 .Root--ios {
-  }
+}
 
-  .Root--ios .Root__view--show-back::after,
-  .Root--ios .Root__view--hide-forward::after {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    display: block;
-    content: '';
-    background-color: #000;
-    z-index: 6;
-    }
+.Root--ios .Root__view--show-back::after,
+.Root--ios .Root__view--hide-forward::after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: block;
+  content: '';
+  background-color: #000;
+  z-index: 6;
+}
 
-  .Root--ios .Root__view--show-back::after {
-    animation: root-ios-animation-show-back .6s var(--ios-easing);
-    }
+.Root--ios .Root__view--show-back::after {
+  animation: root-ios-animation-show-back .6s var(--ios-easing);
+}
 
-  .Root--ios .Root__view--hide-forward::after {
-    animation: root-ios-animation-hide-forward .6s var(--ios-easing);
-    }
+.Root--ios .Root__view--hide-forward::after {
+  animation: root-ios-animation-hide-forward .6s var(--ios-easing);
+}
 
-  .Root--ios .Root__view--show-forward {
-    animation: root-ios-animation-show-forward .6s var(--ios-easing);
-    }
+.Root--ios .Root__view--show-forward {
+  animation: root-ios-animation-show-forward .6s var(--ios-easing);
+}
 
-  .Root--ios .Root__view--hide-back {
-    animation: root-ios-animation-hide-back .6s var(--ios-easing);
-    }
+.Root--ios .Root__view--hide-back {
+  animation: root-ios-animation-hide-back .6s var(--ios-easing);
+}
 
 @keyframes root-ios-animation-show-back {
   from {
     opacity: .3;
-    }
+  }
 
   to {
     opacity: 0;
-    }
   }
+}
 
 @keyframes root-ios-animation-hide-forward {
   from {
     opacity: 0;
-    }
+  }
 
   to {
     opacity: .3;
-    }
   }
+}
 
 @keyframes root-ios-animation-hide-back {
   from {
     transform: translate3d(0, 0, 0);
-    }
+  }
 
   to {
     transform: translate3d(0, 100%, 0);
-    }
   }
+}
 
 @keyframes root-ios-animation-show-forward {
   from {
     transform: translate3d(0, 100%, 0);
-    }
+  }
 
   to {
     transform: translate3d(0, 0, 0);
-    }
   }
+}
 
 /**
  * Android
  */
 
 .Root--android {
-  }
+}
 
-  .Root--android .Root__view--show-forward,
-  .Root--vkcom .Root__view--show-forward {
-    animation: root-android-animation-show-forward .3s var(--android-easing);
-    }
+.Root--android .Root__view--show-forward,
+.Root--vkcom .Root__view--show-forward {
+  animation: root-android-animation-show-forward .3s var(--android-easing);
+}
 
-  .Root--android .Root__view--hide-back,
-  .Root--vkcom .Root__view--hide-back {
-    animation: root-android-animation-hide-back .3s var(--android-easing);
-    }
+.Root--android .Root__view--hide-back,
+.Root--vkcom .Root__view--hide-back {
+  animation: root-android-animation-hide-back .3s var(--android-easing);
+}
 
 @keyframes root-android-animation-hide-back {
   from {
     transform: scale(1);
     opacity: 1;
-    }
+  }
 
   to {
     transform: scale(1.05);
     opacity: 0;
-    }
   }
+}
 
 @keyframes root-android-animation-show-forward {
   from {
     transform: scale(1.05);
     opacity: 0;
-    }
+  }
 
   to {
     transform: scale(1);
     opacity: 1;
-    }
   }
+}
 
 /* iOS + Android */
 

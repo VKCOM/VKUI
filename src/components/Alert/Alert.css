@@ -147,9 +147,9 @@
     transform: scaleY(.5);
   }
 
-    .Alert--ios.Alert--h .Alert__action::after {
-      transform: scaleX(.5);
-    }
+  .Alert--ios.Alert--h .Alert__action::after {
+    transform: scaleX(.5);
+  }
 }
 
 @media (min-resolution: 3dppx) {

@@ -2,15 +2,15 @@
   position: relative;
   line-height: 19px;
   font-size: 16px;
-  }
+}
 
 .Input--center .Input__el {
   text-align: center;
-  }
+}
 
 .Input--right .Input__el {
   text-align: right;
-  }
+}
 
 .Input__el {
   margin: 0;
@@ -30,7 +30,7 @@
   position: relative;
   z-index: 2;
   background: transparent;
-  }
+}
 
 .Input--sizeY-compact .Input__el {
   height: 34px;

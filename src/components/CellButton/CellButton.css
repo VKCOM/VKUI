@@ -19,7 +19,7 @@
 .CellButton--centered {
   justify-content: center;
   text-align: center;
-  }
+}
 
 .CellButton--centered .SimpleCell__main {
   flex-grow: initial;

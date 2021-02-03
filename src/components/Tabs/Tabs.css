@@ -2,7 +2,7 @@
 .Tabs .HorizontalScroll__in-wrapper {
   display: flex;
   align-items: center;
-  }
+}
 
 .PanelHeader .Tabs {
   overflow: hidden;
