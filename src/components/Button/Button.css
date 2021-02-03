@@ -7,16 +7,16 @@
   margin: 0;
   padding: 0;
   user-select: none;
-  }
+}
 
-  .Button__in {
-    display: flex;
-    align-items: center;
-    }
+.Button__in {
+  display: flex;
+  align-items: center;
+}
 
-  .Button__before:not(:last-child) {
-    margin-left: -4px;
-    }
+.Button__before:not(:last-child) {
+  margin-left: -4px;
+}
 
 .Button.Tappable--active {
   opacity: .6;
@@ -24,64 +24,64 @@
 
 .Button[disabled] {
   opacity: .4;
-  }
+}
 
-  .Button--aln-left .Button__in {
-    justify-content: flex-start;
-    text-align: left;
-    }
+.Button--aln-left .Button__in {
+  justify-content: flex-start;
+  text-align: left;
+}
 
-  .Button--aln-center .Button__in {
-    justify-content: center;
-    text-align: center;
-    }
+.Button--aln-center .Button__in {
+  justify-content: center;
+  text-align: center;
+}
 
-  .Button--aln-right .Button__in {
-    justify-content: flex-end;
-    text-align: right;
-    }
+.Button--aln-right .Button__in {
+  justify-content: flex-end;
+  text-align: right;
+}
 
 .Button--str {
   display: block;
   width: 100%;
   flex-grow: 1;
   flex-basis: 0;
-  }
+}
 
-  .Button--str .Button__in {
-    justify-content: center;
-    }
+.Button--str .Button__in {
+  justify-content: center;
+}
 
 .Button--lvl-primary {
   background-color: var(--button_primary_background);
   color: var(--button_primary_foreground);
-  }
+}
 
 .Button--lvl-secondary {
   background-color: var(--button_secondary_background);
   color: var(--button_secondary_foreground);
-  }
+}
 
 .Button--lvl-tertiary {
   background-color: var(--button_tertiary_background);
   color: var(--button_tertiary_foreground);
-  }
+}
 
 .Button--lvl-commerce {
   background-color: var(--button_commerce_background);
   color: var(--button_commerce_foreground);
-  }
+}
 
 .Button--lvl-outline {
   background-color: transparent;
   border: 1px solid var(--button_outline_border);
   color: var(--button_outline_foreground);
-  }
+}
 
 .Button--lvl-destructive {
   background-color: var(--destructive);
   color: #fff;
-  }
+}
 
 .Button--lvl-overlay_primary {
   background-color: var(--media_overlay_button_background);
@@ -102,57 +102,57 @@
 .Button--sz-s {
   min-height: 30px;
   padding: 0 15px;
-  }
+}
 
-  .Button--sz-s .Button__before:not(:last-child) {
-    margin-right: 6px;
-    }
+.Button--sz-s .Button__before:not(:last-child) {
+  margin-right: 6px;
+}
 
-  .Button--sz-s .Button__after:not(:first-child) {
-    margin-left: 6px;
-    }
+.Button--sz-s .Button__after:not(:first-child) {
+  margin-left: 6px;
+}
 
-  .Button--sz-s .Button__content {
-    padding: 4px 0 6px;
-    }
+.Button--sz-s .Button__content {
+  padding: 4px 0 6px;
+}
 
-  .Button--sz-s .Button__content--caps {
-    padding: 7px 0;
-    }
+.Button--sz-s .Button__content--caps {
+  padding: 7px 0;
+}
 
 .Button--sz-m {
   padding: 0 15px;
   min-height: 36px;
-  }
+}
 
-  .Button--sz-m .Button__before:not(:last-child) {
-    margin-right: 6px;
-    }
+.Button--sz-m .Button__before:not(:last-child) {
+  margin-right: 6px;
+}
 
-  .Button--sz-m .Button__after:not(:first-child) {
-    margin-left: 6px;
-    }
+.Button--sz-m .Button__after:not(:first-child) {
+  margin-left: 6px;
+}
 
-  .Button--sz-m .Button__content {
-    padding: 6px 0 8px;
-    }
+.Button--sz-m .Button__content {
+  padding: 6px 0 8px;
+}
 
 .Button--sz-l {
   padding: 0 19px;
   min-height: 44px;
-  }
+}
 
-  .Button--sz-l .Button__before:not(:last-child) {
-    margin-right: 8px;
-    }
+.Button--sz-l .Button__before:not(:last-child) {
+  margin-right: 8px;
+}
 
-  .Button--sz-l .Button__after:not(:first-child) {
-    margin-left: 8px;
-    }
+.Button--sz-l .Button__after:not(:first-child) {
+  margin-left: 8px;
+}
 
-  .Button--sz-l .Button__in {
-    justify-content: center;
-    }
+.Button--sz-l .Button__in {
+  justify-content: center;
+}
 
 /*
   iOS
@@ -226,27 +226,27 @@
 .Button--lvl-primary .Counter {
   background-color: var(--button_primary_foreground);
   color: var(--button_primary_background);
-  }
+}
 
 .Button--lvl-secondary .Counter {
   background-color: var(--button_secondary_foreground);
   color: var(--background_content);
-  }
+}
 
 .Button--lvl-tertiary .Counter {
   background-color: var(--button_tertiary_foreground);
   color: var(--background_content);
-  }
+}
 
 .Button--lvl-outline .Counter {
   background-color: var(--button_outline_foreground);
   color: var(--background_content);
-  }
+}
 
 .Button--lvl-commerce .Counter {
   background-color: var(--button_commerce_foreground);
   color: var(--button_commerce_background);
-  }
+}
 
 .Button--vkcom.Button--lvl-secondary .Counter,
 .Button--vkcom.Button--lvl-tertiary .Counter,

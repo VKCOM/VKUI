@@ -14,14 +14,14 @@
 .FixedLayout--top {
   width: 100%;
   top: 0;
-  }
+}
 
 .FixedLayout--bottom {
   width: 100%;
   bottom: 0;
   padding-bottom: var(--safe-area-inset-bottom);
-  }
+}
 
-  .Epic .FixedLayout--bottom {
-    padding-bottom: calc(var(--tabbar_height) + var(--safe-area-inset-bottom));
-    }
+.Epic .FixedLayout--bottom {
+  padding-bottom: calc(var(--tabbar_height) + var(--safe-area-inset-bottom));
+}
