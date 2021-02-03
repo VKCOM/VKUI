@@ -446,15 +446,16 @@ to{opacity:0}}
 @media (-webkit-min-device-pixel-ratio:3),(min-resolution:3dppx){
 .Tabbar--ios::before{-webkit-transform:scaleY(.33);transform:scaleY(.33)}}
 .Tabbar--android.Tabbar--shadow,.Tabbar--vkcom.Tabbar--shadow{box-shadow:0 -2px 4px 0 rgba(0,0,0,.06),0 0 2px 0 rgba(0,0,0,.08)}
-.TabbarItem{flex-shrink:0;max-width:100%;flex-grow:1;flex-basis:0;display:flex;align-items:center;justify-content:center;color:#99a2ad;color:#99a2ad;color:var(--tabbar_inactive_icon);text-decoration:none}
+.TabbarItem{flex-shrink:0;max-width:100%;flex-grow:1;flex-basis:0;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#99a2ad;color:#99a2ad;color:var(--tabbar_inactive_icon);text-decoration:none}
 .Tabbar--l-vertical .TabbarItem.TabbarItem--text{position:relative;top:2px}
 .TabbarItem--selected{color:#2975cc;color:#2975cc;color:var(--tabbar_active_icon)}
-.TabbarItem__in{align-self:center;display:flex}
+.TabbarItem__in{align-self:center;display:flex;max-width:100%;padding:0 2px;box-sizing:border-box}
 .Tabbar--l-vertical .TabbarItem__in{flex-direction:column;align-items:center;justify-content:center}
 .Tabbar--l-horizontal .TabbarItem__in{flex-direction:row;align-items:center}
 .TabbarItem__icon{position:relative}
 .TabbarItem__label .Counter{position:absolute;top:-2px;right:-9px}
 .TabbarItem__label .Badge{position:absolute;top:-2px;right:-4px}
+.TabbarItem__text{white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .Tabbar--l-vertical .TabbarItem__text{font-size:10px;line-height:12px;font-weight:500;margin-top:2px}
 .Tabbar--l-horizontal .TabbarItem__text{font-size:13px;font-weight:500;margin-left:8px}
 .HorizontalScroll{position:relative;overflow:hidden}
@@ -693,7 +694,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalRoot--vkapps.ModalRoot--ios .ModalRoot__viewport{top:calc(20px + 52px);top:calc(20px + 52px);top:calc(var(--safe-area-inset-top) + var(--panelheader_height_ios))}
 .ModalRoot__modal{position:absolute;width:100%;height:100%;box-sizing:border-box;z-index:1}
 .ModalCard{box-sizing:border-box;position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:flex-end;z-index:1}
-.ModalCard__in{width:100%;margin-left:auto;margin-right:auto;padding:8px;-webkit-transform:translateY(100%);transform:translateY(100%);box-sizing:border-box}
+.ModalCard__in{width:100%;margin-left:auto;margin-right:auto;padding:8px;-webkit-transform:translateY(100%);transform:translateY(100%)}
 .ModalCard__container{box-sizing:border-box;position:relative;background:#fff;background:#fff;background:var(--modal_card_background);border-radius:18px;padding:16px;margin-bottom:0;margin-bottom:0;margin-bottom:var(--safe-area-inset-bottom);display:flex;flex-direction:column;justify-content:center;pointer-events:initial}
 .ModalCard__dismiss{position:absolute;top:4px;right:4px;width:48px;height:48px;color:#99a2ad;color:#99a2ad;color:var(--placeholder_icon_foreground_primary);justify-content:center}
 .ModalCard__header,.ModalCard__subheader{text-align:center;margin:0;padding:0 8px}
@@ -710,10 +711,10 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalCard__actions--v{flex-direction:column;margin-left:0;margin-right:0}
 .ModalCard__actions--v .Button{margin-left:0;margin-right:0}
 .ModalCard__actions--v .Button+.Button{margin-top:12px}
-.ModalCard--ios .ModalCard__in{transition:-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:-webkit-transform 340ms var(--ios-easing);transition:transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms var(--ios-easing);transition:transform 340ms var(--ios-easing),-webkit-transform 340ms var(--ios-easing);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms var(--ios-easing),-webkit-transform 340ms var(--ios-easing);max-width:430px}
+.ModalCard--ios .ModalCard__in{transition:-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:-webkit-transform 340ms var(--ios-easing);transition:transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms var(--ios-easing);transition:transform 340ms var(--ios-easing),-webkit-transform 340ms var(--ios-easing);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms var(--ios-easing),-webkit-transform 340ms var(--ios-easing);max-width:414px}
 .ModalCard--ios .ModalCard__header:first-child{padding-left:36px;padding-right:36px}
-.ModalCard--android .ModalCard__in{max-width:456px}
-.ModalCard--vkcom .ModalCard__in{max-width:416px}
+.ModalCard--android .ModalCard__in{max-width:440px}
+.ModalCard--vkcom .ModalCard__in{max-width:400px}
 .ModalCard--android .ModalCard__in,.ModalCard--vkcom .ModalCard__in{transition:-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms cubic-bezier(.4,0,.2,1),-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms cubic-bezier(.4,0,.2,1),-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:-webkit-transform 340ms var(--android-easing);transition:transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms cubic-bezier(.4,0,.2,1),-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms var(--android-easing);transition:transform 340ms var(--android-easing),-webkit-transform 340ms var(--android-easing);transition:transform 340ms cubic-bezier(.4,0,.2,1),-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms var(--android-easing),-webkit-transform 340ms var(--android-easing)}
 .ModalCard--android .ModalCard__container,.ModalCard--vkcom .ModalCard__container{border-radius:12px;box-shadow:0 8px 8px 0 rgba(0,0,0,.16),0 0 4px 0 rgba(0,0,0,.08)}
 .ModalCard--desktop{align-items:center}
@@ -903,6 +904,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .Group--card>.Group__inner>.Header:not(.Header--mode-tertiary):first-child,.Group--card>.Group__inner>.Tabs--default:first-child{margin-top:-4px}
 .Group--plain>.Group__separator{padding-top:8px;padding-bottom:8px}
 .Group--sizeX-regular.Group--plain>.Group__separator{padding:8px}
+.Group--sizeY-compact.Group--plain>.Group__separator{padding-top:0;padding-bottom:0}
 .Group:last-of-type>.Group__separator{display:none}
 .Group:last-of-type>.Group__separator--force,.Group--sizeX-regular.Group--card:last-of-type>.Group__separator{display:block}
 .Group__description{color:#818c99;color:#818c99;color:var(--text_secondary)}
@@ -1183,6 +1185,7 @@ to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
 .Tabs--buttons .TabsItem{color:#76787a;color:#76787a;color:var(--panel_tab_inactive_text)}
 .Tabs--buttons .TabsItem--selected{background-color:#ebedf0;background-color:#ebedf0;background-color:var(--panel_tab_active_background);color:#5d5f61;color:#5d5f61;color:var(--panel_tab_active_text)}
 .TabsItem__after .Badge{-webkit-transform:translateY(-2px);transform:translateY(-2px);margin-left:6px}
+.TabsItem__after .Icon--dropdown_16{color:#3f8ae0;color:#3f8ae0;color:var(--header_tint);-webkit-transform-origin:50% calc(50% + 1px);transform-origin:50% calc(50% + 1px);-webkit-transform:translateY(1px);transform:translateY(1px);margin-left:6px}
 .Tabs--ios.Tabs--segmented .TabsItem{border:1px solid;padding:0 12px;max-width:100%;flex-basis:0;flex-shrink:0;flex-grow:1}
 .Tabs--ios.Tabs--segmented .TabsItem__in{padding:7px 0}
 .Tabs--ios.Tabs--segmented .TabsItem:not(:first-child){border-left:none}
@@ -1562,6 +1565,7 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .CustomSelectOption{width:100%;height:44px;display:flex;align-items:center;position:relative;box-sizing:border-box;padding:10px 36px 10px 12px;white-space:nowrap;-webkit-user-select:none;user-select:none;cursor:pointer}
 .CustomSelectOption--hover{background-color:#f2f3f5;background-color:#f2f3f5;background-color:var(--button_muted_background)}
 .CustomSelectOption__before{margin-right:7px}
+.CustomSelectOption__label{overflow:hidden;text-overflow:ellipsis}
 .CustomSelectOption__after{margin-left:7px}
 .CustomSelectOption__selectedIcon{position:absolute;top:15px;right:12px}
 .DatePicker{margin:0;padding:0;border:0}
