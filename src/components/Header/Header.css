@@ -79,16 +79,16 @@
   color: var(--icon_secondary);
 }
 
+.Header__aside > .Icon--28 {
+  top: 7px;
+}
+
 .Header__aside > .Icon--24 {
+  top: 5px;
+}
+
+.Header__aside > .Icon--16 {
   top: 3px;
-}
-
-.Header__aside > .Icon--16 {
-  top: 1px;
-}
-
-.Header__aside > .Icon--16 {
-  top: 1px;
 }
 
 .Header__aside > .Icon:not(:last-child) {
@@ -179,4 +179,8 @@
 
 .Header--vkcom .Header__main {
   color: var(--text_primary);
+}
+
+.Header--vkcom .Header__aside > .Icon {
+  position: static;
 }

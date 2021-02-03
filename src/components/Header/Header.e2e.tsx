@@ -1,4 +1,5 @@
 import { Icon24Add } from '@vkontakte/icons';
+import { Fragment } from 'react';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import Counter from '../Counter/Counter';
 import Link from '../Link/Link';
@@ -17,6 +18,11 @@ describe('Header', () => {
   }, {
     subtitle: ['Поздаголовок'],
   }, {
-    aside: ['Текст', <Link key="">Ссылка</Link>, <Icon24Add key="" />, <><Icon24Add key="" /><Icon24Add key="" /></>],
+    aside: [
+      'Текст',
+      <Link key="">Ссылка</Link>,
+      <Icon24Add key="" />,
+      <Fragment key=""><Icon24Add key="" /><Icon24Add key="" /></Fragment>,
+    ],
   }]);
 });
