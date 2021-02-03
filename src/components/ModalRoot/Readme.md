@@ -249,7 +249,7 @@ const App = withAdaptivity(class App extends React.Component {
           onClose={() => this.setActiveModal(null)}
           icon={<Icon56MoneyTransferOutline />}
           header="Отправляйте деньги друзьям, используя банковскую карту"
-          caption="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
+          subheader="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
           actions={
             <Button size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_APP_TO_MENU)}>
               Попробовать
@@ -264,7 +264,7 @@ const App = withAdaptivity(class App extends React.Component {
           onClose={() => this.setActiveModal(null)}
           icon={<Avatar mode="app" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
           header="Добавить игру «Загадки детства» в меню?"
-          caption="Игра появится под списком разделов на экране меню и будет всегда под рукой."
+          subheader="Игра появится под списком разделов на экране меню и будет всегда под рукой."
           actions={
             <Button size="l" mode="primary" onClick={() => this.setActiveModal(MODAL_CARD_ABOUT)}>
               Добавить в меню
@@ -305,7 +305,7 @@ const App = withAdaptivity(class App extends React.Component {
           onClose={() => this.setActiveModal(null)}
           icon={<Avatar src={getAvatarUrl('chat_basketball', 200)} size={72} />}
           header="Баскетбол на выходных"
-          caption="Приглашение в беседу"
+          subheader="Приглашение в беседу"
           actions={[
             <Button key="join" size="l" mode="primary" onClick={() => this.setActiveModal(null)}>
               Присоединиться
