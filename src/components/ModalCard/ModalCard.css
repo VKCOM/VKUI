@@ -16,7 +16,6 @@
   margin-right: auto;
   padding: 8px;
   transform: translateY(100%);
-  box-sizing: border-box;
 }
 
 .ModalCard__container {
@@ -118,7 +117,7 @@
 
 .ModalCard--ios .ModalCard__in {
   transition: transform 340ms var(--ios-easing);
-  max-width: 430px;
+  max-width: 414px;
 }
 
 .ModalCard--ios .ModalCard__header:first-child {
@@ -131,13 +130,11 @@
  */
 
  .ModalCard--android .ModalCard__in {
-  /* 400px card width with paddings */
-  max-width: 456px;
+  max-width: 440px;
 }
 
 .ModalCard--vkcom .ModalCard__in {
-  /* 400px card width with paddings */
-  max-width: 416px;
+  max-width: 400px;
 }
 
 .ModalCard--android .ModalCard__in,
