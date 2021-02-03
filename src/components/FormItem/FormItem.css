@@ -77,4 +77,6 @@
 .FormItem--vkcom.FormItem--sizeY-compact .Removable__remove {
   margin-left: 2px;
   margin-right: -14px;
+  margin-top: -4px;
+  margin-bottom: -4px;
 }
