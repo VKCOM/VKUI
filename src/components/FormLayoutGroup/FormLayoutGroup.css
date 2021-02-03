@@ -1,5 +1,5 @@
 .FormLayoutGroup--horizontal {
-  padding: 12px 0;
+  padding: 12px 16px;
 }
 
 .FormLayoutGroup--horizontal .FormLayoutGroup__children {
@@ -20,30 +20,23 @@
   margin-left: 24px;
 }
 
-.FormLayoutGroup--horizontal {
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
 /**
  * iOS
  */
 
 .FormLayoutGroup--ios.FormLayoutGroup--horizontal {
   padding-left: 12px;
-  padding-right: 0;
-}
-
-.FormLayoutGroup--ios.FormLayoutGroup--horizontal .Removable {
-  margin-left: -12px;
-  padding-left: 12px;
-}
-
-.FormLayoutGroup--ios.FormLayoutGroup--horizontal .FormLayoutGroup__children {
   padding-right: 12px;
 }
 
-.FormLayoutGroup--ios.FormLayoutGroup--horizontal .Removable__remove-marker {
+.FormLayoutGroup--ios .Removable {
+  margin-left: -12px;
+  margin-right: -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.FormLayoutGroup--ios .Removable__remove-marker {
   align-self: flex-end;
 }
 
@@ -54,6 +47,8 @@
 .FormLayoutGroup--android .Removable__remove,
 .FormLayoutGroup--vkcom .Removable__remove {
   align-self: flex-end;
+  margin-top: -2px;
+  margin-bottom: -2px;
   margin-right: -16px;
 }
 
@@ -61,4 +56,6 @@
 .FormLayoutGroup--vkcom.FormLayoutGroup--sizeY-compact .Removable__remove {
   margin-left: 2px;
   margin-right: -14px;
+  margin-top: -4px;
+  margin-bottom: -4px;
 }
