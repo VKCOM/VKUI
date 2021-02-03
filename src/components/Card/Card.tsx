@@ -8,13 +8,12 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HT
   mode?: 'tint' | 'shadow' | 'outline';
 }
 
-const Card: FunctionComponent<CardProps> = ({ mode, children, style, className, getRootRef, ...restProps }: CardProps) => {
+const Card: FunctionComponent<CardProps> = ({ mode, children, className, getRootRef, ...restProps }: CardProps) => {
   const platform = usePlatform();
 
   return (
     <div
       {...restProps}
-      style={style}
       ref={getRootRef}
       className={classNames(className, getClassname('Card', platform), `Card--md-${mode}`)}
     >

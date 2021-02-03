@@ -15,7 +15,6 @@ export const TabsModeContext = createContext<TabsProps['mode']>('default');
 const Tabs: FunctionComponent<TabsProps> = ({
   className,
   children,
-  style,
   mode,
   getRootRef,
   sizeX,
@@ -32,7 +31,6 @@ const Tabs: FunctionComponent<TabsProps> = ({
       {...restProps}
       ref={getRootRef}
       className={classNames(getClassName('Tabs', platform), `Tabs--${mode}`, `Tabs--sizeX-${sizeX}`, className)}
-      style={style}
     >
       <div className="Tabs__in">
         <TabsModeContext.Provider value={mode}>
