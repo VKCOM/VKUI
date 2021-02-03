@@ -11,9 +11,7 @@ const ModalDismissButton: FC<ModalDismissButtonProps> = ({ className, ...props }
   const platform = usePlatform();
   return (
     <Tappable className={classNames(getClassName('ModalDismissButton', platform), className)} {...props}>
-      <div className="ModalDismissButton__bg">
-        <Icon20Cancel />
-      </div>
+      <Icon20Cancel />
     </Tappable>
   );
 };

@@ -5,19 +5,22 @@
   right: -56px;
   width: 56px;
   height: 56px;
-  padding: 14px;
+  padding: 18px;
   box-sizing: border-box;
   color: var(--white);
   transition: opacity .15s ease-out;
 }
 
-.ModalDismissButton__bg {
-  box-sizing: border-box;
-  width: 28px;
-  height: 28px;
-  padding: 4px;
+.ModalDismissButton::before {
+  display: block;
+  content: "";
+  top: 14px;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
   background-color: rgba(0, 0, 0, .35);
   border-radius: 50%;
+  position: absolute;
 }
 
 /* fixes icon misplacement on Safari in some cases */
