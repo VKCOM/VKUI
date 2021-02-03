@@ -22,6 +22,10 @@
   transform: translateX(20px);
 }
 
+.Switch__self[disabled] + .Switch__pseudo {
+  opacity: .4;
+}
+
 /**
  * iOS
  */
@@ -47,10 +51,6 @@
 .Switch--ios .Switch__self:checked + .Switch__pseudo {
   border-color: var(--accent);
   background: var(--accent);
-}
-
-.Switch--ios .Switch__self[disabled] + .Switch__pseudo {
-  opacity: .4;
 }
 
 .Switch--ios .Switch__pseudo::before {
@@ -99,11 +99,6 @@
 .Switch--vkcom .Switch__self:checked + .Switch__pseudo::after {
   background: var(--accent);
   opacity: .48;
-}
-
-.Switch--android .Switch__self[disabled] + .Switch__pseudo,
-.Switch--vkcom .Switch__self[disabled] + .Switch__pseudo {
-  opacity: .4;
 }
 
 /**
