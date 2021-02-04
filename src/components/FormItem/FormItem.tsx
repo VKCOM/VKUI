@@ -39,6 +39,14 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
   } = props;
   const platform = usePlatform();
 
+  const wrappedChildren = (
+    <>
+      {hasReactNode(top) && <Subhead weight="regular" className="FormItem__top">{top}</Subhead>}
+      {children}
+      {hasReactNode(bottom) && <Caption level="1" weight="regular" className="FormItem__bottom">{bottom}</Caption>}
+    </>
+  );
+
   return (
     <Component
       {...restProps}
@@ -46,17 +54,16 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
         getClassName('FormItem', platform),
         `FormItem--${status}`,
         `FormItem--sizeY-${sizeY}`,
+        {
+          'FormItem--offsetRemoveButton': removable && hasReactNode(top),
+        },
         className,
       )}
     >
-      {hasReactNode(top) && <Subhead weight="regular" className="FormItem__top">{top}</Subhead>}
-
       {removable
-        ? <Removable onRemove={onRemove} removePlaceholder={removePlaceholder}>{children}</Removable>
-        : children
+        ? <Removable align="start" onRemove={onRemove} removePlaceholder={removePlaceholder}>{wrappedChildren}</Removable>
+        : wrappedChildren
       }
-
-      {hasReactNode(bottom) && <Caption level="1" weight="regular" className="FormItem__bottom">{bottom}</Caption>}
     </Component>
   );
 }, {

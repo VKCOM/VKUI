@@ -67,12 +67,22 @@
   margin-right: -12px;
 }
 
+.FormItem--ios.FormItem--offsetRemoveButton .Removable__indicator {
+  margin-top: 28px;
+}
+
+.FormItem--ios.FormItem--offsetRemoveButton.FormItem--sizeY-compact .Removable__indicator {
+  margin-top: 26px;
+}
+
 /**
  * ANDROID & VKCOM
  */
 
 .FormItem--android .Removable__remove,
 .FormItem--vkcom .Removable__remove {
+  margin-top: -2px;
+  margin-bottom: -2px;
   margin-right: -16px;
 }
 
@@ -82,4 +92,14 @@
   margin-right: -14px;
   margin-top: -4px;
   margin-bottom: -4px;
+}
+
+.FormItem--android.FormItem--offsetRemoveButton .Removable__remove,
+.FormItem--vkcom.FormItem--offsetRemoveButton .Removable__remove {
+  margin-top: 26px;
+}
+
+.FormItem--android.FormItem--offsetRemoveButton.FormItem--sizeY-compact .Removable__remove,
+.FormItem--vkcom.FormItem--offsetRemoveButton.FormItem--sizeY-compact .Removable__remove {
+  margin-top: 22px;
 }
