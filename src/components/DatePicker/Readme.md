@@ -19,9 +19,9 @@
           min={{day: 1, month: 1, year: 1901}}
           max={{day: 1, month: 1, year: 2006}}
           onDateChange={(value) => {console.log(value)}}
-          dayPlaceholder="Д"
-          monthPlaceholder="ММ"
-          yearPlaceholder="ГГ"
+          dayPlaceholder="ДД"
+          monthPlaceholder="ММММ"
+          yearPlaceholder="ГГГГ"
         />
       </FormItem>
       <FormItem top="Дата рождения">
