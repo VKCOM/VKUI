@@ -120,6 +120,7 @@
 
 .vkui > body {
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .vkui,
