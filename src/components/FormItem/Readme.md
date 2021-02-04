@@ -10,7 +10,7 @@ class Example extends React.Component {
     this.state = {
       email: '',
       purpose: '',
-      showPatronym: false
+      showPatronym: true
     }
 
     this.addressItems = [
@@ -59,7 +59,7 @@ class Example extends React.Component {
             </FormItem>
 
             <FormItem top="Пароль">
-              <Input type="password"  placeholder="Введите пароль" />
+              <Input type="password" placeholder="Введите пароль" />
             </FormItem>
             
             <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">
@@ -76,8 +76,8 @@ class Example extends React.Component {
             </FormLayoutGroup>
 
             {!this.state.showPatronym
-              ? <CellButton onClick={() => this.setState({ showPatronym: true })}>Добавить отчество</CellButton>
-              : <FormItem removable onRemove={this.onRemove} top="Отчество"><Input /></FormItem>
+              ? <CellButton onClick={() => this.setState({ showPatronym: true })}>Указать отчество</CellButton>
+              : <FormItem removable onRemove={this.onRemove} top="Отчество" bottom="Если у вас нет отчества — удалите этот пункт."><Input /></FormItem>
             }
 
             <FormItem top="Пол">
