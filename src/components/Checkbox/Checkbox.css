@@ -1,100 +1,100 @@
 .Checkbox {
   display: block;
-  }
+}
 
-  .Checkbox__input {
-    display: none;
-    }
+.Checkbox__input {
+  display: none;
+}
 
-  .Checkbox__container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    }
+.Checkbox__container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
 
-    .Checkbox__icon {
-      flex-shrink: 0;
-      box-sizing: border-box;
-      margin-right: 12px;
-      border-radius: 4px;
-      display: flex;
-      }
+.Checkbox__icon {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin-right: 12px;
+  border-radius: 4px;
+  display: flex;
+}
 
-      .Checkbox__icon--on {
-        color: var(--accent);
-        display: none;
-      }
+.Checkbox__icon--on {
+  color: var(--accent);
+  display: none;
+}
 
-      .Checkbox__icon--off {
-        color: var(--icon_tertiary);
-      }
+.Checkbox__icon--off {
+  color: var(--icon_tertiary);
+}
 
-    .Checkbox__content {
-      flex-grow: 1;
-      color: var(--text_primary);
-      word-break: break-word;
-      }
+.Checkbox__content {
+  flex-grow: 1;
+  color: var(--text_primary);
+  word-break: break-word;
+}
 
-    .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--on {
-      display: flex;
-    }
+.Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--on {
+  display: flex;
+}
 
-    .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--off {
-      display: none;
-    }
+.Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--off {
+  display: none;
+}
 
-  .Checkbox__input[disabled] ~ .Checkbox__container {
-    opacity: .6;
-    }
+.Checkbox__input[disabled] ~ .Checkbox__container {
+  opacity: .6;
+}
 
 .Checkbox--ios {
   padding: 0 12px;
-  }
+}
 
-  .Checkbox--ios .Checkbox__icon {
-    margin-top: 10px;
-    }
+.Checkbox--ios .Checkbox__icon {
+  margin-top: 10px;
+}
 
-  .Checkbox--ios.Checkbox--sizeY-compact .Checkbox__icon {
-    margin-top: 8px;
-    }
+.Checkbox--ios.Checkbox--sizeY-compact .Checkbox__icon {
+  margin-top: 8px;
+}
 
-  .Checkbox--ios .Checkbox__content {
-    margin-top: 12px;
-    margin-bottom: 12px;
-    }
+.Checkbox--ios .Checkbox__content {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
 
 .Checkbox--android {
   padding: 0 16px;
-  }
+}
 
-  .Checkbox--android .Checkbox__icon {
-    margin-top: 10px;
-    }
+.Checkbox--android .Checkbox__icon {
+  margin-top: 10px;
+}
 
-  .Checkbox--android.Checkbox--sizeY-compact .Checkbox__icon {
-    margin-top: 8px;
-    }
+.Checkbox--android.Checkbox--sizeY-compact .Checkbox__icon {
+  margin-top: 8px;
+}
 
-  .Checkbox--android .Checkbox__content {
-    margin-top: 12px;
-    margin-bottom: 12px;
-    }
+.Checkbox--android .Checkbox__content {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
 
 .Checkbox--vkcom {
   padding: 0 16px;
-  }
+}
 
-  .Checkbox--vkcom .Checkbox__icon {
-    border-radius: 3px;
-    padding: 1px;
-    border-width: 1px;
-    margin-top: 8px;
-    }
+.Checkbox--vkcom .Checkbox__icon {
+  border-radius: 3px;
+  padding: 1px;
+  border-width: 1px;
+  margin-top: 8px;
+}
 
-  .Checkbox--vkcom .Checkbox__input[disabled] ~ .Checkbox__container {
-    opacity: .4;
-    }
+.Checkbox--vkcom .Checkbox__input[disabled] ~ .Checkbox__container {
+  opacity: .4;
+}
 
 .Checkbox--sizeY-compact .Checkbox__content {
   margin-top: 8px;
