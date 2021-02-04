@@ -744,9 +744,9 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 @media (max-height:672px){
 .ModalPage--desktop .ModalPage__in{max-height:calc(100vh - 32px)}}
 .ModalRoot--touched .ModalPage__in-wrap{transition:none}
-.ModalDismissButton{position:absolute;justify-content:center;width:28px;height:28px;top:14px;padding:4px;box-sizing:border-box;background-color:rgba(0,0,0,.35);color:#fff;color:#fff;color:var(--white);border-radius:50%;right:-42px;transition:opacity .15s ease-out}
+.ModalDismissButton{position:absolute;justify-content:center;top:0;right:-56px;width:56px;height:56px;padding:18px;box-sizing:border-box;color:#fff;color:#fff;color:var(--white);transition:opacity .15s ease-out}
+.ModalDismissButton::before{display:block;content:"";top:14px;right:14px;bottom:14px;left:14px;background-color:rgba(0,0,0,.35);border-radius:50%;position:absolute}
 .ModalDismissButton .Icon{-webkit-transform:translateX(0);transform:translateX(0)}
-.ModalDismissButton--ios{top:12px}
 .ModalDismissButton.Tappable--shadowHovered{opacity:.6}
 .ModalDismissButton.Tappable--shadowHovered.Tappable--active{opacity:1}
 .ModalPageHeader__in,.ModalPageHeader__left,.ModalPageHeader__right{box-sizing:border-box}
@@ -1570,7 +1570,9 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .CustomSelectOption__selectedIcon{position:absolute;top:15px;right:12px}
 .DatePicker{margin:0;padding:0;border:0}
 .DatePicker__container{width:100%;display:flex;flex-direction:row}
+.DatePicker__day{min-width:72px}
 .DatePicker__month{display:flex;flex:1 0 auto;padding:0 8px}
+.DatePicker__year{min-width:92px}
 .DatePicker__month .Select{width:100%}
 .SliderSwitch{display:flex;position:relative;width:100%;height:44px;border-radius:8px;box-sizing:border-box;background-color:#f2f3f5;background-color:#f2f3f5;background-color:var(--field_background);transition:all 100ms ease-out;outline:0}
 .SliderSwitch__button{width:50%;height:100%;margin:0;padding:0;border:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;cursor:pointer;background:0 0;color:#6d7885;color:#6d7885;color:var(--text_subhead);transition:color 100ms ease-out;outline:0;-webkit-user-select:none;user-select:none;z-index:1;-webkit-appearance:none;-webkit-tap-highlight-color:transparent}
