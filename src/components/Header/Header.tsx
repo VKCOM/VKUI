@@ -25,36 +25,34 @@ export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<
   multiline?: boolean;
 }
 
-function renderChildren({ children, platform, mode, multiline }: Pick<HeaderProps, 'children' | 'mode' | 'multiline'> & HasPlatform) {
-  const contentClassNames = classNames('Header__content', { 'Header--multiline': multiline });
-
+function renderChildren({ children, platform, mode }: Pick<HeaderProps, 'children' | 'mode'> & HasPlatform) {
   switch (platform) {
     case Platform.ANDROID:
       switch (mode) {
         case 'primary':
-          return <Headline className={contentClassNames} weight="medium">{children}</Headline>;
+          return <Headline className="Header__content" weight="medium">{children}</Headline>;
         case 'secondary':
-          return <Caption className={contentClassNames} level="1" weight="medium" caps>{children}</Caption>;
+          return <Caption className="Header__content" level="1" weight="medium" caps>{children}</Caption>;
         case 'tertiary':
-          return <Headline className={contentClassNames} weight="medium">{children}</Headline>;
+          return <Headline className="Header__content" weight="medium">{children}</Headline>;
       }
       break;
     case Platform.IOS:
       switch (mode) {
         case 'primary':
         case 'tertiary':
-          return <Title className={contentClassNames} weight="semibold" level="3">{children}</Title>;
+          return <Title className="Header__content" weight="semibold" level="3">{children}</Title>;
         case 'secondary':
-          return <Caption className={contentClassNames} level="1" weight="semibold" caps>{children}</Caption>;
+          return <Caption className="Header__content" level="1" weight="semibold" caps>{children}</Caption>;
       }
       break;
     case Platform.VKCOM:
       switch (mode) {
         case 'primary':
-          return <Headline className={contentClassNames} weight="regular">{children}</Headline>;
+          return <Headline className="Header__content" weight="regular">{children}</Headline>;
         case 'secondary':
         case 'tertiary':
-          return <Caption className={contentClassNames} level="1" weight="regular">{children}</Caption>;
+          return <Caption className="Header__content" level="1" weight="regular">{children}</Caption>;
       }
   }
 }
@@ -93,13 +91,12 @@ const Header: FunctionComponent<HeaderProps> = ({
           {renderChildren({
             children: (
               <Fragment>
-                <div className="Header__content-base">{children}</div>
+                <div className={multiline ? null : 'Header__content-base'}>{children}</div>
                 {hasReactNode(indicator) && <Caption className="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
               </Fragment>
             ),
             platform,
             mode,
-            multiline,
           })}
           {hasReactNode(subtitle) && <Caption className="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
         </div>
