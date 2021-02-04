@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, FC, ReactNode, MouseEvent, useState, useEffect, useRef } from 'react';
+import React, { AllHTMLAttributes, FC, ReactNode, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -41,16 +41,18 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
   const [isRemoveActivated, setRemoveActivated] = useState(false);
   const [removeOffset, updateRemoveOffset] = useState(0);
 
-  const deactivateRemove = () => {
+  const deactivateRemove = useCallback(() => {
     setRemoveActivated(false);
     updateRemoveOffset(0);
+
     document.removeEventListener('click', deactivateRemove);
-  };
+  }, [setRemoveActivated, updateRemoveOffset]);
 
   const onRemoveActivateClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
     setRemoveActivated(true);
+
     document.addEventListener('click', deactivateRemove);
   };
 
@@ -70,7 +72,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
     return () => {
       document.removeEventListener('click', deactivateRemove);
     };
-  }, []);
+  }, [deactivateRemove]);
 
   return (
     <div
