@@ -18,7 +18,7 @@
   overflow: hidden;
 }
 
-.Removable__remove-marker:focus,
+.Removable__indicator:focus,
 .Removable__remove:focus {
   outline: none;
 }
@@ -54,7 +54,7 @@
   border: none;
 }
 
-.Removable--ios .Removable__remove-marker {
+.Removable--ios .Removable__indicator {
   flex-grow: 0;
   flex-shrink: 0;
   display: block;
@@ -67,13 +67,13 @@
   background: none;
 }
 
-.Removable--ios.Removable--sizeY-compact .Removable__remove-marker {
+.Removable--ios.Removable--sizeY-compact .Removable__indicator {
   height: 36px;
   padding-top: 7px;
   padding-bottom: 7px;
 }
 
-.Removable--ios .Removable__remove-marker-in {
+.Removable--ios .Removable__indicator-in {
   position: relative;
   display: block;
   width: 22px;
@@ -83,7 +83,7 @@
   border: none;
 }
 
-.Removable--ios .Removable__remove-marker-in::before {
+.Removable--ios .Removable__indicator-in::before {
   content: "";
   position: absolute;
   top: 10px;
