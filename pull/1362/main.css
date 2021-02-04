@@ -130,14 +130,15 @@ to{-webkit-transform:scale(8);transform:scale(8);opacity:0}}
 .Removable{position:relative;box-sizing:border-box}
 .Removable__content{display:flex;flex-flow:row nowrap;align-items:center;max-width:100%}
 .Removable__children{max-width:100%;flex-grow:1;min-width:0;flex-shrink:initial;overflow:hidden}
-.Removable__remove-marker:focus,.Removable__remove:focus{outline:0}
+.Removable__indicator:focus,.Removable__remove:focus{outline:0}
+.Removable--align-start .Removable__remove,.Removable--align-start .Removable__indicator{align-self:flex-start}
 .Removable--ios{overflow:hidden}
 .Removable--ios .Removable__content{transition:-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:-webkit-transform .6s var(--ios-easing);transition:transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s var(--ios-easing);transition:transform .6s var(--ios-easing),-webkit-transform .6s var(--ios-easing);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s var(--ios-easing),-webkit-transform .6s var(--ios-easing)}
 .Removable--ios .Removable__remove{position:absolute;left:100%;height:100%;top:0;background-color:#e64646;background-color:#e64646;background-color:var(--destructive);color:#fff;color:#fff;color:var(--white);padding:0 10px;line-height:45px;font-size:15px;transition:-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:-webkit-transform .6s var(--ios-easing);transition:transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s var(--ios-easing);transition:transform .6s var(--ios-easing),-webkit-transform .6s var(--ios-easing);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s var(--ios-easing),-webkit-transform .6s var(--ios-easing);display:flex;align-items:center;justify-content:center;flex-grow:0;flex-shrink:0;border:0}
-.Removable--ios .Removable__remove-marker{flex-grow:0;flex-shrink:0;display:block;width:44px;height:44px;margin-left:-10px;margin-right:2px;padding:11px;border:0;background:0 0}
-.Removable--ios.Removable--sizeY-compact .Removable__remove-marker{height:36px;padding-top:7px;padding-bottom:7px}
-.Removable--ios .Removable__remove-marker-in{position:relative;display:block;width:22px;height:22px;background-color:#e64646;background-color:#e64646;background-color:var(--destructive);border-radius:50%;border:0}
-.Removable--ios .Removable__remove-marker-in::before{content:"";position:absolute;top:10px;left:5px;display:block;width:12px;height:2px;background-color:#fff;background-color:#fff;background-color:var(--white)}
+.Removable--ios .Removable__indicator{flex-grow:0;flex-shrink:0;display:block;width:44px;height:44px;margin-left:-10px;margin-right:2px;padding:11px;border:0;background:0 0}
+.Removable--ios.Removable--sizeY-compact .Removable__indicator{height:36px;padding-top:7px;padding-bottom:7px}
+.Removable--ios .Removable__indicator-in{position:relative;display:block;width:22px;height:22px;background-color:#e64646;background-color:#e64646;background-color:var(--destructive);border-radius:50%;border:0}
+.Removable--ios .Removable__indicator-in::before{content:"";position:absolute;top:10px;left:5px;display:block;width:12px;height:2px;background-color:#fff;background-color:#fff;background-color:var(--white)}
 .Removable--android .Removable__remove,.Removable--vkcom .Removable__remove{flex-grow:0;flex-shrink:0;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
 .Root{width:100%;height:100%;position:relative}
 .Root--transition{pointer-events:none}
@@ -706,7 +707,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalRoot--vkapps.ModalRoot--ios .ModalRoot__viewport{top:calc(20px + 52px);top:calc(20px + 52px);top:calc(var(--safe-area-inset-top) + var(--panelheader_height_ios))}
 .ModalRoot__modal{position:absolute;width:100%;height:100%;box-sizing:border-box;z-index:1}
 .ModalCard{box-sizing:border-box;position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:flex-end;z-index:1}
-.ModalCard__in{width:100%;margin-left:auto;margin-right:auto;max-width:360px;padding:8px;-webkit-transform:translateY(100%);transform:translateY(100%);box-sizing:border-box}
+.ModalCard__in{width:100%;margin-left:auto;margin-right:auto;padding:8px;-webkit-transform:translateY(100%);transform:translateY(100%)}
 .ModalCard__container{box-sizing:border-box;position:relative;background:#fff;background:#fff;background:var(--modal_card_background);border-radius:18px;padding:16px;margin-bottom:0;margin-bottom:0;margin-bottom:var(--safe-area-inset-bottom);display:flex;flex-direction:column;justify-content:center;pointer-events:initial}
 .ModalCard__dismiss{position:absolute;top:4px;right:4px;width:48px;height:48px;color:#99a2ad;color:#99a2ad;color:var(--placeholder_icon_foreground_primary);justify-content:center}
 .ModalCard__header,.ModalCard__subheader{text-align:center;margin:0;padding:0 8px}
@@ -723,9 +724,10 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalCard__actions--v{flex-direction:column;margin-left:0;margin-right:0}
 .ModalCard__actions--v .Button{margin-left:0;margin-right:0}
 .ModalCard__actions--v .Button+.Button{margin-top:12px}
-.ModalCard--ios .ModalCard__in{transition:-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:-webkit-transform 340ms var(--ios-easing);transition:transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms var(--ios-easing);transition:transform 340ms var(--ios-easing),-webkit-transform 340ms var(--ios-easing);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms var(--ios-easing),-webkit-transform 340ms var(--ios-easing)}
+.ModalCard--ios .ModalCard__in{transition:-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:-webkit-transform 340ms var(--ios-easing);transition:transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms var(--ios-easing);transition:transform 340ms var(--ios-easing),-webkit-transform 340ms var(--ios-easing);transition:transform 340ms cubic-bezier(.36,.66,.04,1),-webkit-transform 340ms cubic-bezier(.36,.66,.04,1);transition:transform 340ms var(--ios-easing),-webkit-transform 340ms var(--ios-easing);max-width:414px}
 .ModalCard--ios .ModalCard__header:first-child{padding-left:36px;padding-right:36px}
-.ModalCard--vkcom .ModalCard__in{max-width:416px}
+.ModalCard--android .ModalCard__in{max-width:440px}
+.ModalCard--vkcom .ModalCard__in{max-width:400px}
 .ModalCard--android .ModalCard__in,.ModalCard--vkcom .ModalCard__in{transition:-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms cubic-bezier(.4,0,.2,1),-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms cubic-bezier(.4,0,.2,1),-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:-webkit-transform 340ms var(--android-easing);transition:transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms cubic-bezier(.4,0,.2,1),-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms var(--android-easing);transition:transform 340ms var(--android-easing),-webkit-transform 340ms var(--android-easing);transition:transform 340ms cubic-bezier(.4,0,.2,1),-webkit-transform 340ms cubic-bezier(.4,0,.2,1);transition:transform 340ms var(--android-easing),-webkit-transform 340ms var(--android-easing)}
 .ModalCard--android .ModalCard__container,.ModalCard--vkcom .ModalCard__container{border-radius:12px;box-shadow:0 8px 8px 0 rgba(0,0,0,.16),0 0 4px 0 rgba(0,0,0,.08)}
 .ModalCard--desktop{align-items:center}
@@ -755,9 +757,9 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 @media (max-height:672px){
 .ModalPage--desktop .ModalPage__in{max-height:calc(100vh - 32px)}}
 .ModalRoot--touched .ModalPage__in-wrap{transition:none}
-.ModalDismissButton{position:absolute;justify-content:center;width:28px;height:28px;top:14px;padding:4px;box-sizing:border-box;background-color:rgba(0,0,0,.35);color:#fff;color:#fff;color:var(--white);border-radius:50%;right:-42px;transition:opacity .15s ease-out}
+.ModalDismissButton{position:absolute;justify-content:center;top:0;right:-56px;width:56px;height:56px;padding:18px;box-sizing:border-box;color:#fff;color:#fff;color:var(--white);transition:opacity .15s ease-out}
+.ModalDismissButton::before{display:block;content:"";top:14px;right:14px;bottom:14px;left:14px;background-color:rgba(0,0,0,.35);border-radius:50%;position:absolute}
 .ModalDismissButton .Icon{-webkit-transform:translateX(0);transform:translateX(0)}
-.ModalDismissButton--ios{top:12px}
 .ModalDismissButton.Tappable--shadowHovered{opacity:.6}
 .ModalDismissButton.Tappable--shadowHovered.Tappable--active{opacity:1}
 .ModalPageHeader__in,.ModalPageHeader__left,.ModalPageHeader__right{box-sizing:border-box}
@@ -1370,7 +1372,7 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .FormLayout{position:relative}
 .FormLayout__submit{position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;padding:0;width:0;height:0;-webkit-appearance:none;appearance:none;border:0}
 .FormItem{padding:12px 16px;display:block}
-.FormItem__top{padding-top:2px;padding-bottom:8px;color:#818c99;color:#818c99;color:var(--text_secondary)}
+.FormItem__top{padding-top:2px;padding-bottom:8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#818c99;color:#818c99;color:var(--text_secondary)}
 .FormItem--sizeY-compact .FormItem__top{padding-bottom:6px}
 .FormItem__bottom{color:#818c99;color:#818c99;color:var(--text_secondary);padding-top:8px}
 .FormItem--sizeY-compact .FormItem__bottom{padding-top:6px}
@@ -1379,17 +1381,24 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .FormItem .Cell,.FormItem .SimpleCell,.FormItem .RichCell,.FormItem .CellButton,.FormItem .Radio,.FormItem .Checkbox{width:100%;box-sizing:content-box;margin-left:-16px;margin-right:-16px}
 .FormItem--ios,.FormItem--ios .Removable{padding-left:12px;padding-right:12px}
 .FormItem--ios .Cell,.FormItem--ios .SimpleCell,.FormItem--ios .RichCell,.FormItem--ios .CellButton,.FormItem--ios .Radio,.FormItem--ios .Checkbox,.FormItem--ios .Removable{margin-left:-12px;margin-right:-12px}
-.FormItem--android .Removable__remove,.FormItem--vkcom .Removable__remove{margin-right:-16px}
+.FormItem--ios.FormItem--offsetRemoveButton .Removable__indicator{margin-top:28px}
+.FormItem--ios.FormItem--offsetRemoveButton.FormItem--sizeY-compact .Removable__indicator{margin-top:26px}
+.FormItem--android .Removable__remove,.FormItem--vkcom .Removable__remove{margin-top:-2px;margin-bottom:-2px;margin-right:-16px}
 .FormItem--android.FormItem--sizeY-compact .Removable__remove,.FormItem--vkcom.FormItem--sizeY-compact .Removable__remove{margin-left:2px;margin-right:-14px;margin-top:-4px;margin-bottom:-4px}
+.FormItem--android.FormItem--offsetRemoveButton .Removable__remove,.FormItem--vkcom.FormItem--offsetRemoveButton .Removable__remove{margin-top:26px}
+.FormItem--android.FormItem--offsetRemoveButton.FormItem--sizeY-compact .Removable__remove,.FormItem--vkcom.FormItem--offsetRemoveButton.FormItem--sizeY-compact .Removable__remove{margin-top:22px}
 .FormLayoutGroup--horizontal{padding:12px 16px}
 .FormLayoutGroup--horizontal .FormLayoutGroup__children{display:flex;flex-direction:row}
 .FormLayoutGroup--horizontal .FormLayoutGroup__children>.FormItem{max-width:100%;flex-grow:1;flex-shrink:0;flex-basis:0;padding:0;min-width:0}
 .FormLayoutGroup--horizontal .FormLayoutGroup__children>.FormItem+.FormItem{margin-left:24px}
 .FormLayoutGroup--ios.FormLayoutGroup--horizontal{padding-left:12px;padding-right:12px}
 .FormLayoutGroup--ios .Removable{margin-left:-12px;margin-right:-12px;padding-left:12px;padding-right:12px}
-.FormLayoutGroup--ios .Removable__remove-marker{align-self:flex-end}
-.FormLayoutGroup--android .Removable__remove,.FormLayoutGroup--vkcom .Removable__remove{align-self:flex-end;margin-top:-2px;margin-bottom:-2px;margin-right:-16px}
+.FormLayoutGroup--ios.FormLayoutGroup--offsetRemoveButton .Removable__indicator{margin-top:26px}
+.FormLayoutGroup--ios.FormLayoutGroup--offsetRemoveButton.FormLayoutGroup--sizeY-compact .Removable__indicator{margin-top:28px}
+.FormLayoutGroup--android .Removable__remove,.FormLayoutGroup--vkcom .Removable__remove{margin-top:-2px;margin-bottom:-2px;margin-right:-16px}
 .FormLayoutGroup--android.FormLayoutGroup--sizeY-compact .Removable__remove,.FormLayoutGroup--vkcom.FormLayoutGroup--sizeY-compact .Removable__remove{margin-left:2px;margin-right:-14px;margin-top:-4px;margin-bottom:-4px}
+.FormLayoutGroup--android.FormLayoutGroup--offsetRemoveButton .Removable__remove,.FormLayoutGroup--vkcom.FormLayoutGroup--offsetRemoveButton .Removable__remove{margin-top:26px}
+.FormLayoutGroup--android.FormLayoutGroup--offsetRemoveButton.FormLayoutGroup--sizeY-compact .Removable__remove,.FormLayoutGroup--vkcom.FormLayoutGroup--offsetRemoveButton.FormLayoutGroup--sizeY-compact .Removable__remove{margin-top:22px}
 .FormStatus{border-radius:10px;padding:12px;background:#f2f3f5;background:#f2f3f5;background:var(--field_background);color:#6d7885;color:#6d7885;color:var(--text_subhead)}
 .FormStatus__header,.FormStatus b:first-child{color:#000;color:#000;color:var(--text_primary)}
 .FormStatus__header:not(:last-child),.FormStatus b:first-child{margin-bottom:2px}
