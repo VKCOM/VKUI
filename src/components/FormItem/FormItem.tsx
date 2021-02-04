@@ -14,7 +14,7 @@ export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePla
   status?: 'default' | 'error' | 'valid';
   Component?: ElementType;
   /**
-   * Для строчек с `<Input/>` или `<Select/>`, которые можно удалить.
+   * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
    */
   removable?: boolean;
   /**
@@ -45,7 +45,8 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
       className={classNames(
         getClassName('FormItem', platform),
         `FormItem--${status}`,
-        `FormItem--sizeY-${sizeY}`, {
+        `FormItem--sizeY-${sizeY}`,
+        {
           'FormItem--removable': removable,
         },
         className,
