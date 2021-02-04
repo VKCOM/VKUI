@@ -54,7 +54,7 @@
   margin-right: 12px;
 }
 
-.Cell--ios.Cell--removable .Removable {
+.Cell--ios .Removable {
   padding-left: 12px;
 }
 
@@ -74,8 +74,8 @@
   margin-right: 16px;
 }
 
-.Cell--android.Cell--removable .Removable,
-.Cell--vkcom.Cell--removable .Removable {
+.Cell--android .Removable,
+.Cell--vkcom .Removable {
   padding-right: 6px;
 }
 
