@@ -865,6 +865,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .Header__main{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .Header__content{display:flex;align-items:baseline}
 .Header__content-base{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.Header__content-base--multiline{word-break:break-all}
 .Header--multiline{white-space:normal}
 .Header__subtitle{color:#818c99;color:#818c99;color:var(--text_secondary)}
 .Header--mode-primary .Header__main{color:#000;color:#000;color:var(--text_primary)}
