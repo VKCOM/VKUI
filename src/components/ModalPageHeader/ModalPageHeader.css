@@ -179,8 +179,16 @@
   padding: 0 8px;
 }
 
+.ModalPageHeader--android .ModalPageHeader__left:empty {
+  padding-right: 14px;
+}
+
 .ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__left:not(:empty) {
   padding-left: 0;
+}
+
+.ModalPageHeader--android .ModalPageHeader__right:empty {
+  padding-left: 14px;
 }
 
 .ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__right:not(:empty) {
