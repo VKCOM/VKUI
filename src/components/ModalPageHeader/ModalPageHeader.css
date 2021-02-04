@@ -120,6 +120,18 @@
   padding-right: 16px;
 }
 
+.ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__in {
+  padding: 0 8px;
+}
+
+.ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__left:not(:empty) {
+  padding-left: 0;
+}
+
+.ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__right:not(:empty) {
+  padding-right: 0;
+}
+
 /**
  * Android
  */
@@ -161,6 +173,18 @@
 
 .ModalPageHeader--android .ModalPageHeader__right:not(:empty) {
   padding-right: 4px;
+}
+
+.ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__in {
+  padding: 0 8px;
+}
+
+.ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__left:not(:empty) {
+  padding-left: 0;
+}
+
+.ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__right:not(:empty) {
+  padding-right: 0;
 }
 
 /**
