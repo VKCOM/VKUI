@@ -8,7 +8,7 @@ import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, RemovePlaceholderProps {
   mode?: 'vertical' | 'horizontal';
   /**
-   * Только для режима horizontal.
+   * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.
    */
   removable?: boolean;
   /**
@@ -28,8 +28,23 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
   ...restProps
 }: FormLayoutGroupProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const platform = usePlatform();
+  const isRemovable = removable && mode === 'horizontal';
 
   const wrappedChildren = <div className="FormLayoutGroup__children">{children}</div>;
+
+  let offsetRemoveButton = false;
+  if (isRemovable) {
+    const childrenArray = React.Children.toArray(children);
+
+    for (let i = 0; i < childrenArray.length; i++) {
+      let child = childrenArray[i];
+
+      if (React.isValidElement(child) && child.props?.top) {
+        offsetRemoveButton = true;
+        break;
+      }
+    }
+  }
 
   return (
     <div
@@ -37,12 +52,16 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
         getClassName('FormLayoutGroup', platform),
         `FormLayoutGroup--sizeY-${sizeY}`,
         `FormLayoutGroup--${mode}`,
+        {
+          'FormLayoutGroup--offsetRemoveButton': isRemovable && offsetRemoveButton,
+        },
         className,
       )}
       {...restProps}>
-      {removable && mode === 'horizontal'
+      {isRemovable
         ? <Removable removePlaceholder={removePlaceholder} onRemove={onRemove}>{wrappedChildren}</Removable>
-        : wrappedChildren}
+        : wrappedChildren
+      }
     </div>
   );
 }, {

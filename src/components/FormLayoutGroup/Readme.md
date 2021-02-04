@@ -37,10 +37,10 @@ class Example extends React.Component {
                 ? <CellButton onClick={() => this.toggleDates(true)}>Указать даты поездки</CellButton>
                 : (
                   <FormLayoutGroup mode="horizontal" removable onRemove={() => this.toggleDates(false)}>
-                    <FormItem top="Начало">
+                    <FormItem bottom="Дата начала поездки">
                       <Input />
                     </FormItem>
-                    <FormItem top="Конец">
+                    <FormItem bottom="Дата конца поездки">
                       <Input />
                     </FormItem>
                   </FormLayoutGroup>
