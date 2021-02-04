@@ -784,7 +784,9 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalPageHeader--android .ModalPageHeader__right,.ModalPageHeader--vkcom .ModalPageHeader__right{padding-left:6px}
 .ModalPageHeader--android .ModalPageHeader__right:not(:empty){padding-right:4px}
 .ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__in{padding:0 8px}
+.ModalPageHeader--android .ModalPageHeader__left:empty{padding-right:14px}
 .ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__left:not(:empty){padding-left:0}
+.ModalPageHeader--android .ModalPageHeader__right:empty{padding-left:14px}
 .ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__right:not(:empty){padding-right:0}
 .ModalPageHeader--vkcom .ModalPageHeader__in{height:48px;height:48px;height:var(--panelheader_height_vkcom);justify-content:space-between;padding:0 2px}
 .ModalPageHeader--vkcom .ModalPageHeader__left,.ModalPageHeader--vkcom .ModalPageHeader__right{flex-grow:1;flex-basis:0}
