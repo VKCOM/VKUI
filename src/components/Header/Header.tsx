@@ -91,7 +91,7 @@ const Header: FunctionComponent<HeaderProps> = ({
           {renderChildren({
             children: (
               <Fragment>
-                <div className={multiline ? null : 'Header__content-base'}>{children}</div>
+                <div className={multiline ? 'Header__content-base--multiline' : 'Header__content-base'}>{children}</div>
                 {hasReactNode(indicator) && <Caption className="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
               </Fragment>
             ),

@@ -25,6 +25,10 @@
   overflow: hidden;
 }
 
+.Header__content-base--multiline {
+  word-break: break-all;
+}
+
 .Header--multiline {
   white-space: normal;
 }
