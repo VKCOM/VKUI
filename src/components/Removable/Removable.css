@@ -23,6 +23,11 @@
   outline: none;
 }
 
+.Removable--align-start .Removable__remove,
+.Removable--align-start .Removable__indicator {
+  align-self: flex-start;
+}
+
 /**
  * iOS
  */

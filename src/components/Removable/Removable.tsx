@@ -16,6 +16,10 @@ export interface RemovePlaceholderProps {
 }
 
 interface RemovableProps extends AllHTMLAttributes<HTMLElement>, RemovePlaceholderProps {
+  /**
+   * Расположение кнопки удаления.
+   */
+  align?: 'start' | 'center';
   onRemove?: (e: MouseEvent) => void;
 }
 
@@ -26,6 +30,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
     sizeY,
     onRemove,
     removePlaceholder,
+    align,
     ...restProps
   } = props;
   const platform = usePlatform();
@@ -72,6 +77,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
       {...restProps}
       className={classNames(
         getClassName('Removable', platform),
+        `Removable--align-${align}`,
         `Removable--sizeY-${sizeY}`,
         className,
       )}
@@ -111,5 +117,6 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
 });
 
 Removable.defaultProps = {
+  align: 'center',
   removePlaceholder: 'Удалить',
 };
