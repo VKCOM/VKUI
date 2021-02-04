@@ -6,6 +6,9 @@
 .FormItem__top {
   padding-top: 2px;
   padding-bottom: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: var(--text_secondary);
 }
 
