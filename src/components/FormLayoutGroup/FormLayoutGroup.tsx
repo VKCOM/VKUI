@@ -59,7 +59,7 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
       )}
       {...restProps}>
       {isRemovable
-        ? <Removable removePlaceholder={removePlaceholder} onRemove={onRemove}>{wrappedChildren}</Removable>
+        ? <Removable align="start" removePlaceholder={removePlaceholder} onRemove={onRemove}>{wrappedChildren}</Removable>
         : wrappedChildren
       }
     </div>

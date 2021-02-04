@@ -36,12 +36,12 @@
   padding-right: 12px;
 }
 
-.FormLayoutGroup--ios .Removable__indicator {
-  align-self: flex-start;
-}
-
 .FormLayoutGroup--ios.FormLayoutGroup--offsetRemoveButton .Removable__indicator {
   margin-top: 26px;
+}
+
+.FormLayoutGroup--ios.FormLayoutGroup--offsetRemoveButton.FormLayoutGroup--sizeY-compact .Removable__indicator {
+  margin-top: 28px;
 }
 
 /**
@@ -50,7 +50,6 @@
 
 .FormLayoutGroup--android .Removable__remove,
 .FormLayoutGroup--vkcom .Removable__remove {
-  align-self: flex-start;
   margin-top: -2px;
   margin-bottom: -2px;
   margin-right: -16px;
