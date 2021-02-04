@@ -46,9 +46,6 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
         getClassName('FormItem', platform),
         `FormItem--${status}`,
         `FormItem--sizeY-${sizeY}`,
-        {
-          'FormItem--removable': removable,
-        },
         className,
       )}
     >
