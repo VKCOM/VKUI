@@ -119,7 +119,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
         id: Modal.props.id,
         onClose: Modal.props.onClose,
         dynamicContentHeight: !!modalProps.dynamicContentHeight,
-        fullscreen: Modal.props.fullscreen,
       };
 
       // ModalPage props
@@ -309,7 +308,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     }
 
     // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
-    if (modalState.expandable && translateY > prevTranslateY || modalState.fullscreen) {
+    if (modalState.expandable && translateY > prevTranslateY || modalState.settlingHeight === 100) {
       translateY = 0;
     }
 
@@ -515,7 +514,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       const expectTranslateY = translateY / (Date.now() - modalState.touchStartTime.getTime()) * 240 * 0.6 * (modalState.touchShiftYPercent < 0 ? -1 : 1);
       translateY = rangeTranslate(translateY + expectTranslateY);
 
-      if (!modalState.fullscreen) {
+      if (modalState.settlingHeight !== 100) {
         if (numberInRange(translateY, modalState.expandedRange)) {
           translateY = modalState.expandedRange[0];
         } else if (numberInRange(translateY, modalState.collapsedRange)) {

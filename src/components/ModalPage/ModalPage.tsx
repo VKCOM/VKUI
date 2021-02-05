@@ -14,17 +14,13 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
   header: ReactNode;
   onClose?: VoidFunction;
   /**
-   * Процент, на который изначально будет открыта модальная страница
+   * Процент, на который изначально будет открыта модальная страница.
    */
   settlingHeight?: number;
   /**
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
-  /**
-   * Раскрывает модальную страницу на максимальную высоту
-   */
-  fullscreen?: boolean;
 }
 
 const ModalPage: FC<ModalPageProps> = (props) => {
@@ -41,7 +37,6 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     id,
     settlingHeight,
     dynamicContentHeight,
-    fullscreen,
     ...restProps
   } = props;
 
@@ -83,7 +78,6 @@ const ModalPage: FC<ModalPageProps> = (props) => {
 
 ModalPage.defaultProps = {
   settlingHeight: 75,
-  fullscreen: false,
 };
 
 export default withAdaptivity(ModalPage, {

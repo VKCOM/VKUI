@@ -52,7 +52,6 @@ const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
 const MODAL_PAGE_USER_INFO = 'user-info';
 const MODAL_PAGE_FULLSCREEN = 'fullscreen';
-const MODAL_PAGE_FULLSCREEN_UNSCROLLABLE = 'fullscreen-unscrollable';
 
 const MODAL_CARD_MONEY_SEND = 'money-send';
 const MODAL_CARD_APP_TO_MENU = 'app-to-menu';
@@ -141,29 +140,6 @@ const App = withAdaptivity(class App extends React.Component {
               );
             })}
           </Group>
-        </ModalPage>
-
-        <ModalPage
-          id={MODAL_PAGE_FULLSCREEN_UNSCROLLABLE}
-          onClose={this.modalBack}
-          fullscreen
-          settlingHeight={100}
-          header={
-            <ModalPageHeader
-              left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
-              right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
-            >
-              @{this.randomUser.screen_name}
-            </ModalPageHeader>
-          }
-        >
-            <Group>
-              <FormItem top="Пол">
-                <Radio name="sex" value={0} defaultChecked>Любой</Radio>
-                <Radio name="sex" value={1}>Мужской</Radio>
-                <Radio name="sex" value={2}>Женский</Radio>
-              </FormItem>
-            </Group>
         </ModalPage>
       
         <ModalPage
@@ -408,9 +384,6 @@ const App = withAdaptivity(class App extends React.Component {
               </CellButton>
               <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN)}>
                 Открыть полноэкранную модальную страницу
-              </CellButton>
-              <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN_UNSCROLLABLE)}>
-                Открыть полноэкранную модальную страницу без скролла внутри
               </CellButton>
               <CellButton onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
                 Открыть модальные карточки
