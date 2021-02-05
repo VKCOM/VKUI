@@ -24,9 +24,32 @@ describe('ModalPageHeader', () => {
   });
   describeScreenshotFuzz(ModalPageHeader, [{
     children,
+    left: [null, cancel],
+    right: [null, done],
+  }], {
+    platforms: [Platform.ANDROID, Platform.VKCOM],
+    adaptivity: {
+      viewWidth: ViewWidth.DESKTOP,
+    },
+  });
+  describeScreenshotFuzz(ModalPageHeader, [{
+    children,
     right: [dismiss, dismissText],
     left: [null, cancel],
   }], {
     platforms: [Platform.IOS],
+    adaptivity: {
+      viewWidth: ViewWidth.MOBILE,
+    },
+  });
+  describeScreenshotFuzz(ModalPageHeader, [{
+    children,
+    right: [dismiss, dismissText],
+    left: [null, cancel],
+  }], {
+    platforms: [Platform.IOS],
+    adaptivity: {
+      viewWidth: ViewWidth.DESKTOP,
+    },
   });
 });

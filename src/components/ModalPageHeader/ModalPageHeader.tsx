@@ -6,6 +6,7 @@ import { HasRef } from '../../types';
 import { isPrimitiveReactNode } from '../../lib/utils';
 import { VKCOM } from '../../lib/platform';
 import Separator from '../Separator/Separator';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 
 export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement> {
   /**
@@ -21,12 +22,17 @@ export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, Ha
 
 const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
+  const { sizeX } = useAdaptivity();
   const { className, left, right, children, separator, getRef, ...restProps } = props;
   const isPrimitive = isPrimitiveReactNode(children);
   const hasSeparator = separator && platform === VKCOM;
 
   return (
-    <div {...restProps} className={classNames(getClassName('ModalPageHeader', platform), className)} ref={getRef}>
+    <div
+      {...restProps}
+      className={classNames(getClassName('ModalPageHeader', platform), className, `ModalPageHeader--sizeX-${sizeX}`)}
+      ref={getRef}
+    >
       <div className="ModalPageHeader__in">
         <div className="ModalPageHeader__left">
           {left}
