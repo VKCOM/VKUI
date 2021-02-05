@@ -7,14 +7,14 @@ import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../ho
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
-  id: string;
+  id?: string;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
-  header: ReactNode;
+  header?: ReactNode;
   onClose?: VoidFunction;
   /**
-   * Процент, на который изначально будет открыта модальная страница.
+   * Процент, на который изначально будет открыта модальная страница. При `settlingHeight={100}` модальная страница раскрывается на всю высоту.
    */
   settlingHeight?: number;
   /**
@@ -23,7 +23,7 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
   dynamicContentHeight?: boolean;
 }
 
-const ModalPage: FC<ModalPageProps> = (props) => {
+const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
   const platform = usePlatform();
   const { updateModalHeight } = useContext(ModalRootContext);
   const {
