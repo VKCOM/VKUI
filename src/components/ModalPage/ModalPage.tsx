@@ -7,7 +7,6 @@ import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../ho
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
-  id?: string;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
@@ -34,7 +33,6 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
     viewHeight,
     hasMouse,
     onClose,
-    id,
     settlingHeight,
     dynamicContentHeight,
     ...restProps
