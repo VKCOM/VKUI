@@ -22,6 +22,7 @@ export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<
    * Допускаются текст, Indicator
    */
   indicator?: ReactNode;
+  multiline?: boolean;
 }
 
 function renderChildren({ children, platform, mode }: Pick<HeaderProps, 'children' | 'mode'> & HasPlatform) {
@@ -71,6 +72,7 @@ const Header: FunctionComponent<HeaderProps> = ({
   indicator,
   aside,
   getRootRef,
+  multiline,
   ...restProps
 }: HeaderProps) => {
   const platform = usePlatform();
@@ -89,7 +91,7 @@ const Header: FunctionComponent<HeaderProps> = ({
           {renderChildren({
             children: (
               <Fragment>
-                {children}
+                <div className={multiline ? 'Header__content-base--multiline' : 'Header__content-base'}>{children}</div>
                 {hasReactNode(indicator) && <Caption className="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
               </Fragment>
             ),
