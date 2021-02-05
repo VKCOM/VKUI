@@ -151,7 +151,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
   };
 
   useEffect(() => {
-    if (dragging != null) {
+    if (dragging !== undefined) {
       const listEl = rootElRef?.current?.closest('.List');
 
       if (listEl) {
