@@ -723,6 +723,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalRoot--touched .ModalCard__in{transition:none}
 .ModalPage{width:100%;height:100%;overflow:hidden;position:absolute;box-sizing:border-box;z-index:1;pointer-events:none}
 .ModalPage--desktop{display:flex;align-items:center;justify-content:center}
+.ModalPage--sizeX-regular .Separator:not(.Separator--wide){padding-left:8px;padding-right:8px}
 .ModalPage__in-wrap{width:100%;height:100%;position:absolute;bottom:0;display:flex;align-items:flex-end;pointer-events:initial;-webkit-transform:translateY(100%);transform:translateY(100%)}
 .ModalRoot--switching .ModalPage__in-wrap{pointer-events:none}
 .ModalPage__in{width:416px;max-width:100%;margin:0 auto;background:#fff;background:#fff;background:var(--background_content);overflow:visible;position:relative;box-sizing:border-box;height:100%;display:flex;flex-direction:column}
@@ -754,31 +755,37 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalPage--android .ModalPageHeader__in{height:56px;height:56px;height:var(--modalheader_height_android);padding:0 4px}
 .ModalPage--ios .ModalPageHeader__in{height:52px;height:52px;height:var(--modalheader_height_ios);padding:0 4px}
 .ModalPageHeader__separator{margin-top:-1px}
-.ModalPageHeader__left,.ModalPageHeader__right{color:#3f8ae0;color:#3f8ae0;color:var(--header_tint_alternate)}
-.ModalPageHeader__left{flex-shrink:0;display:flex;align-items:center}
-.ModalPageHeader__content{overflow:hidden;text-overflow:ellipsis}
-.ModalPageHeader__content-in{overflow:hidden;text-overflow:ellipsis;font-weight:500}
-.ModalPageHeader__right{display:flex;justify-content:flex-end;align-items:center;flex-shrink:0;text-align:right}
+.ModalPageHeader__left,.ModalPageHeader__right{flex:0 0;display:flex;align-items:center;color:#3f8ae0;color:#3f8ae0;color:var(--header_tint_alternate)}
+.ModalPageHeader__content{display:flex;align-items:center;overflow:hidden}
+.ModalPageHeader__content-in{overflow:hidden;text-overflow:ellipsis;font-weight:800}
+.ModalPageHeader__right{justify-content:flex-end;text-align:right}
 .ModalPageHeader .PanelHeaderButton .Icon--dismiss_24{color:#99a2ad;color:#99a2ad;color:var(--placeholder_icon_foreground_primary)}
 .ModalPageHeader .PanelHeaderButton .Icon--cancel_24{color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
 .ModalPageHeader--ios .ModalPageHeader__in{justify-content:space-between}
 .ModalPageHeader--ios .ModalPageHeader__left{flex-grow:1;flex-basis:0;padding-right:12px;font-size:17px}
 .ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton .Icon--24{padding-left:12px;padding-right:12px}
 .ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton--primitive{padding-left:16px}
-.ModalPageHeader--ios .ModalPageHeader__content{position:relative;z-index:1}
-.ModalPageHeader--ios .ModalPageHeader__content-in{font-weight:800;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-tt);font-size:21px;text-align:center}
+.ModalPageHeader--ios .ModalPageHeader__content{position:relative;z-index:1;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-tt);flex:2 1;font-size:21px;justify-content:center}
 .ModalPageHeader--ios .ModalPageHeader__right{flex-grow:1;flex-basis:0;padding-left:12px;font-size:17px}
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton:not(:first-child){padding-left:12px}
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton .Icon--24{padding-left:12px;padding-right:12px}
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton--primitive{padding-right:16px}
+.ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__in{padding:0 8px}
+.ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__left:not(:empty){padding-left:0}
+.ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__right:not(:empty){padding-right:0}
 .ModalPageHeader--android .ModalPageHeader__left,.ModalPageHeader--vkcom .ModalPageHeader__left{padding-right:6px}
 .ModalPageHeader--android .ModalPageHeader__left:empty{padding-right:12px}
 .ModalPageHeader--android .ModalPageHeader__left:not(:empty){padding-left:4px}
 .ModalPageHeader--android .ModalPageHeader__dismiss,.ModalPageHeader--vkcom .ModalPageHeader__dismiss{color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
 .ModalPageHeader--android .ModalPageHeader__content{max-width:100%;flex-grow:2}
-.ModalPageHeader--android .ModalPageHeader__content-in{font-size:20px;font-weight:800;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-tt);display:flex;align-items:center}
+.ModalPageHeader--android .ModalPageHeader__content-in{font-size:20px;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-tt)}
 .ModalPageHeader--android .ModalPageHeader__right,.ModalPageHeader--vkcom .ModalPageHeader__right{padding-left:6px}
 .ModalPageHeader--android .ModalPageHeader__right:not(:empty){padding-right:4px}
+.ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__in{padding:0 8px}
+.ModalPageHeader--android .ModalPageHeader__left:empty{padding-right:14px}
+.ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__left:not(:empty){padding-left:0}
+.ModalPageHeader--android .ModalPageHeader__right:empty{padding-left:14px}
+.ModalPageHeader--android.ModalPageHeader--sizeX-regular .ModalPageHeader__right:not(:empty){padding-right:0}
 .ModalPageHeader--vkcom .ModalPageHeader__in{height:48px;height:48px;height:var(--panelheader_height_vkcom);justify-content:space-between;padding:0 2px}
 .ModalPageHeader--vkcom .ModalPageHeader__left,.ModalPageHeader--vkcom .ModalPageHeader__right{flex-grow:1;flex-basis:0}
 .ModalPageHeader--vkcom .ModalPageHeader__left{padding-right:1px}
@@ -862,14 +869,17 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .Link.Tappable--shadowHovered,.Link.Tappable--active{opacity:.72}
 .Header{-webkit-user-select:text;user-select:text}
 .Header__in{display:flex;align-items:baseline;justify-content:space-between}
-.Header__main{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.Header__main{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .Header__content{display:flex;align-items:baseline}
+.Header__content-base{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.Header__content-base--multiline{word-break:break-all}
+.Header--multiline{white-space:normal}
 .Header__subtitle{color:#818c99;color:#818c99;color:var(--text_secondary)}
 .Header--mode-primary .Header__main{color:#000;color:#000;color:var(--text_primary)}
 .Header--mode-secondary .Header__main{color:#818c99;color:#818c99;color:var(--text_secondary)}
 .Header--pi .Header__main{color:#000;color:#000;color:var(--text_primary)}
 .Header--mode-tertiary .Header__main{color:#818c99;color:#818c99;color:var(--text_secondary)}
-.Header__indicator{color:#818c99;color:#818c99;color:var(--text_secondary);margin-left:6px}
+.Header__indicator{color:#818c99;color:#818c99;color:var(--text_secondary);margin-left:6px;flex-shrink:0}
 .Header:not(.Header--pi) .Header__indicator{align-self:center}
 .Header--mode-secondary .Header__indicator{margin-left:8px}
 .Header__aside{white-space:nowrap;margin-left:12px}
@@ -1570,7 +1580,9 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .CustomSelectOption__selectedIcon{position:absolute;top:15px;right:12px}
 .DatePicker{margin:0;padding:0;border:0}
 .DatePicker__container{width:100%;display:flex;flex-direction:row}
+.DatePicker__day{min-width:72px}
 .DatePicker__month{display:flex;flex:1 0 auto;padding:0 8px}
+.DatePicker__year{min-width:92px}
 .DatePicker__month .Select{width:100%}
 .SliderSwitch{display:flex;position:relative;width:100%;height:44px;border-radius:8px;box-sizing:border-box;background-color:#f2f3f5;background-color:#f2f3f5;background-color:var(--field_background);transition:all 100ms ease-out;outline:0}
 .SliderSwitch__button{width:50%;height:100%;margin:0;padding:0;border:0;display:flex;align-items:center;justify-content:center;box-sizing:border-box;cursor:pointer;background:0 0;color:#6d7885;color:#6d7885;color:var(--text_subhead);transition:color 100ms ease-out;outline:0;-webkit-user-select:none;user-select:none;z-index:1;-webkit-appearance:none;-webkit-tap-highlight-color:transparent}
