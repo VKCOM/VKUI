@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, MouseEvent } from 'react';
+import React, { FunctionComponent, HTMLAttributes, MouseEvent, useEffect, useRef, useState } from 'react';
 import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
@@ -29,22 +29,18 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
 }: FormLayoutGroupProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const platform = usePlatform();
   const isRemovable = removable && mode === 'horizontal';
+  const [padded, togglePadded] = useState<boolean>(false);
+  const childrenRef = useRef<HTMLDivElement>(null);
 
-  const wrappedChildren = <div className="FormLayoutGroup__children">{children}</div>;
+  const wrappedChildren = <div ref={childrenRef} className="FormLayoutGroup__children">{children}</div>;
 
-  let offsetRemoveButton = false;
-  if (isRemovable) {
-    const childrenArray = React.Children.toArray(children);
+  useEffect(() => {
+    if (isRemovable) {
+      const hasChildWithTop = childrenRef?.current?.querySelector('.FormItem__top') != null;
 
-    for (let i = 0; i < childrenArray.length; i++) {
-      let child = childrenArray[i];
-
-      if (React.isValidElement(child) && child.props?.top) {
-        offsetRemoveButton = true;
-        break;
-      }
+      togglePadded(hasChildWithTop);
     }
-  }
+  }, [childrenRef, isRemovable]);
 
   return (
     <div
@@ -53,7 +49,7 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
         `FormLayoutGroup--sizeY-${sizeY}`,
         `FormLayoutGroup--${mode}`,
         {
-          'FormLayoutGroup--offsetRemoveButton': isRemovable && offsetRemoveButton,
+          'FormLayoutGroup--padded': isRemovable && padded,
         },
         className,
       )}

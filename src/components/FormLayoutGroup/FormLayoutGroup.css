@@ -20,6 +20,22 @@
   margin-left: 24px;
 }
 
+.FormLayoutGroup--padded .Removable__content {
+  padding-top: 28px;
+}
+
+.FormLayoutGroup--padded .Removable__children {
+  margin-top: -28px;
+}
+
+.FormLayoutGroup--padded.FormLayoutGroup--sizeY-compact .Removable__content {
+  padding-top: 26px;
+}
+
+.FormLayoutGroup--padded.FormLayoutGroup--sizeY-compact .Removable__children {
+  margin-top: -26px;
+}
+
 /**
  * iOS
  */
@@ -34,14 +50,6 @@
   margin-right: -12px;
   padding-left: 12px;
   padding-right: 12px;
-}
-
-.FormLayoutGroup--ios.FormLayoutGroup--offsetRemoveButton .Removable__indicator {
-  margin-top: 26px;
-}
-
-.FormLayoutGroup--ios.FormLayoutGroup--offsetRemoveButton.FormLayoutGroup--sizeY-compact .Removable__indicator {
-  margin-top: 28px;
 }
 
 /**
@@ -61,14 +69,4 @@
   margin-right: -14px;
   margin-top: -4px;
   margin-bottom: -4px;
-}
-
-.FormLayoutGroup--android.FormLayoutGroup--offsetRemoveButton .Removable__remove,
-.FormLayoutGroup--vkcom.FormLayoutGroup--offsetRemoveButton .Removable__remove {
-  margin-top: 26px;
-}
-
-.FormLayoutGroup--android.FormLayoutGroup--offsetRemoveButton.FormLayoutGroup--sizeY-compact .Removable__remove,
-.FormLayoutGroup--vkcom.FormLayoutGroup--offsetRemoveButton.FormLayoutGroup--sizeY-compact .Removable__remove {
-  margin-top: 22px;
 }
