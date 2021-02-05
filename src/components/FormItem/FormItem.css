@@ -46,6 +46,22 @@
   margin-right: -16px;
 }
 
+.FormItem--padded .Removable__content {
+  padding-top: 28px;
+}
+
+.FormItem--padded .Removable__children {
+  margin-top: -28px;
+}
+
+.FormItem--padded.FormItem--sizeY-compact .Removable__content {
+  padding-top: 26px;
+}
+
+.FormItem--padded.FormItem--sizeY-compact .Removable__children {
+  margin-top: -26px;
+}
+
 /**
  * iOS
  */
@@ -67,14 +83,6 @@
   margin-right: -12px;
 }
 
-.FormItem--ios.FormItem--offsetRemoveButton .Removable__indicator {
-  margin-top: 28px;
-}
-
-.FormItem--ios.FormItem--offsetRemoveButton.FormItem--sizeY-compact .Removable__indicator {
-  margin-top: 26px;
-}
-
 /**
  * ANDROID & VKCOM
  */
@@ -92,14 +100,4 @@
   margin-right: -14px;
   margin-top: -4px;
   margin-bottom: -4px;
-}
-
-.FormItem--android.FormItem--offsetRemoveButton .Removable__remove,
-.FormItem--vkcom.FormItem--offsetRemoveButton .Removable__remove {
-  margin-top: 26px;
-}
-
-.FormItem--android.FormItem--offsetRemoveButton.FormItem--sizeY-compact .Removable__remove,
-.FormItem--vkcom.FormItem--offsetRemoveButton.FormItem--sizeY-compact .Removable__remove {
-  margin-top: 22px;
 }

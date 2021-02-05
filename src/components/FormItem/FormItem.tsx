@@ -55,7 +55,7 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
         `FormItem--${status}`,
         `FormItem--sizeY-${sizeY}`,
         {
-          'FormItem--offsetRemoveButton': removable && hasReactNode(top),
+          'FormItem--padded': removable && hasReactNode(top),
         },
         className,
       )}
