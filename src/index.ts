@@ -59,7 +59,7 @@ export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
 export { default as Gradient } from './components/Gradient/Gradient';
 export { default as List } from './components/List/List';
-export { default as Cell } from './components/Cell/Cell';
+export { Cell } from './components/Cell/Cell';
 export { default as RichCell } from './components/RichCell/RichCell';
 export { default as SimpleCell } from './components/SimpleCell/SimpleCell';
 export { HorizontalCell } from './components/HorizontalCell/HorizontalCell';

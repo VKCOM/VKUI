@@ -9,7 +9,8 @@ class Example extends React.Component {
 
     this.state = {
       email: '',
-      purpose: ''
+      purpose: '',
+      showPatronym: true
     }
 
     this.addressItems = [
@@ -19,6 +20,7 @@ class Example extends React.Component {
     ];
 
     this.onChange = this.onChange.bind(this);
+    this.onRemove = this.onRemove.bind(this);
   }
 
   onChange(e) {
@@ -26,9 +28,16 @@ class Example extends React.Component {
     this.setState({ [name]: value });
   }
 
+  onShowPatronym() {
+    this.setState({ showPatronym: true });
+  }
+
+  onRemove(e) {
+    this.setState({ showPatronym: false });
+  }
 
   render() {
-    const { email, purpose } = this.state;
+    const { email, purpose, showPatronym } = this.state;
 
     return (
       <View activePanel="new-user">
@@ -50,11 +59,13 @@ class Example extends React.Component {
             </FormItem>
 
             <FormItem top="Пароль">
-              <Input type="password"  placeholder="Введите пароль" />
+              <Input type="password" placeholder="Введите пароль" />
             </FormItem>
+            
             <FormItem bottom="Пароль может содержать только латинские буквы и цифры.">
               <Input type="password" placeholder="Повторите пароль" />
             </FormItem>
+
             <FormLayoutGroup mode="horizontal">
               <FormItem top="Имя">            
                 <Input />
@@ -63,6 +74,12 @@ class Example extends React.Component {
                 <Input />
               </FormItem>
             </FormLayoutGroup>
+
+            {!this.state.showPatronym
+              ? <CellButton onClick={() => this.setState({ showPatronym: true })}>Указать отчество</CellButton>
+              : <FormItem removable onRemove={this.onRemove} top="Отчество" bottom="Если у вас нет отчества — удалите этот пункт."><Input /></FormItem>
+            }
+
             <FormItem top="Пол">
               <Select 
                 placeholder="Выберите пол"
