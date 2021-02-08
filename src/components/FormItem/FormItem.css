@@ -46,22 +46,6 @@
   margin-right: -16px;
 }
 
-.FormItem--padded .Removable__content {
-  padding-top: 28px;
-}
-
-.FormItem--padded .Removable__children {
-  margin-top: -28px;
-}
-
-.FormItem--padded.FormItem--sizeY-compact .Removable__content {
-  padding-top: 26px;
-}
-
-.FormItem--padded.FormItem--sizeY-compact .Removable__children {
-  margin-top: -26px;
-}
-
 /**
  * iOS
  */

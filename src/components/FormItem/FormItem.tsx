@@ -54,14 +54,11 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
         getClassName('FormItem', platform),
         `FormItem--${status}`,
         `FormItem--sizeY-${sizeY}`,
-        {
-          'FormItem--padded': removable && hasReactNode(top),
-        },
         className,
       )}
     >
       {removable
-        ? <Removable align="start" onRemove={onRemove} removePlaceholder={removePlaceholder}>{wrappedChildren}</Removable>
+        ? <Removable align="start" paddedTop={hasReactNode(top)} onRemove={onRemove} removePlaceholder={removePlaceholder}>{wrappedChildren}</Removable>
         : wrappedChildren
       }
     </Component>
