@@ -8,6 +8,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   embedded?: boolean;
   window?: Window;
+  showScrollbar?: boolean;
 }
 
 function cleanupPortalRoots(window: Window) {
@@ -25,7 +26,7 @@ function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
   }
 }
 
-const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
+const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, showScrollbar }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
   const { window } = useDOM();
@@ -33,7 +34,8 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
   const initialized = useRef(false);
 
   if (window && !initialized.current && !embedded) {
-    window.document.documentElement.classList.add('vkui');
+    const classes = showScrollbar ? ['vkui', 'vkui--show-scrollbar'] : ['vkui'];
+    window.document.documentElement.classList.add(...classes);
   }
 
   // one time initialization and cleanup
@@ -85,6 +87,10 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
       </AppRootContext.Provider>
     </div>
   );
+};
+
+AppRoot.defaultProps = {
+  showScrollbar: true,
 };
 
 export default withAdaptivity(AppRoot, {
