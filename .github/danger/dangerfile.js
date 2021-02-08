@@ -43,8 +43,9 @@ function coverage() {
 }
 
 const updateScreensActionLink = `https://github.com/VKCOM/VKUI/actions?query=workflow%3A"Update+screenshots"`;
-const UPLOAD_BUCKET = 'vkui-screenshots';
+const UPLOAD_BUCKET = 'vkui-screenshot';
 const awsHost = `${UPLOAD_BUCKET}.${AWS_ENDPOINT}`;
+console.log('AWS:', awsHost);
 const diffDir = path.join(rootDir, '__diff_output__');
 async function uploadFailedScreenshots() {
   const { github } = danger;
@@ -82,7 +83,7 @@ async function uploadFailedScreenshots() {
 
   for (const failedScreen of failedScreens) {
     const screenName = path.parse(failedScreen).name;
-    const fileContents = await readFile(failedScreen);
+    const fileContents = await readFile(path.join(diffDir, failedScreen));
     const key = `${pathPrefix}/${screenName}-${md5(fileContents)}.png`;
     try {
       await s3.putObject({
@@ -94,7 +95,7 @@ async function uploadFailedScreenshots() {
       }).promise();
       markdown(`
         <details>
-          <summary>Screenshot <code>${screenName}</code> failed</summary>
+          <summary>Screenshot <code>${screenName}</code> changed</summary>
           <img src="https://${awsHost}/${key}">
         </details>
       `.replace(/(^|\n) +/g, ''));
@@ -125,10 +126,21 @@ async function removeDiffs(s3, prefix) {
   }
 }
 
+async function checkFailedScreenTests({ testResultsJsonPath }) {
+  const { numFailedTests, snapshot, testResults } = JSON.parse(await readFile(testResultsJsonPath));
+  // ignore failed screnshots
+  if (numFailedTests > snapshot.unmatched) {
+    testResults
+      .filter(suite => suite.status !== 'failed')
+      .forEach(failed => fail(failed.message));
+  }
+}
+
 Promise.all([
   dangerJest({ testResultsJsonPath: path.join(rootDir, 'test-results.json') }),
   lint(),
   coverage(),
   uploadFailedScreenshots(),
+  checkFailedScreenTests({ testResultsJsonPath: path.join(rootDir, 'e2e-results.json') }),
   checkUpdatedScreenshots(),
 ]);
