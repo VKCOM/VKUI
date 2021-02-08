@@ -10,6 +10,9 @@
       "spread": true
     }
   },
+  "plugins": [
+    "eslint-plugin-local-rules"
+  ],
   "globals": {
     "Element": true
   },
@@ -25,6 +28,7 @@
     "@typescript-eslint/no-unused-vars": ["error", {
       "ignoreRestSiblings": true
     }],
+    "local-rules/import-css-last": "error",
     "no-restricted-imports": ["error", {
       "paths": [
         // prevent absolute imports from src subfolders like `import { ... } from "lib"`

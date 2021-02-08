@@ -1,3 +1,4 @@
+// eslint-disable-next-line local-rules/import-css-last
 import './styles/global.css';
 
 import './lib/polyfills';
