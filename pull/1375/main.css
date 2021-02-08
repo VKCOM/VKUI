@@ -77,7 +77,7 @@ to{-webkit-transform:scale(8);transform:scale(8);opacity:0}}
 .FixedLayout--top{width:100%;top:0}
 .FixedLayout--bottom{width:100%;bottom:0;padding-bottom:0;padding-bottom:0;padding-bottom:var(--safe-area-inset-bottom)}
 .Epic .FixedLayout--bottom{padding-bottom:calc(48px + 0px);padding-bottom:calc(48px + 0px);padding-bottom:calc(var(--tabbar_height) + var(--safe-area-inset-bottom))}
-.Button{display:none;box-sizing:border-box;outline:0;text-decoration:none;border:1px solid transparent;margin:0;padding:0;-webkit-user-select:none;user-select:none}
+.Button{display:inline-block;box-sizing:border-box;outline:0;text-decoration:none;border:1px solid transparent;margin:0;padding:0;-webkit-user-select:none;user-select:none}
 .Button__in{display:flex;align-items:center}
 .Button__before:not(:last-child){margin-left:-4px}
 .Button.Tappable--active{opacity:.6}
