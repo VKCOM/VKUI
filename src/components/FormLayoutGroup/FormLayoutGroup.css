@@ -20,22 +20,6 @@
   margin-left: 24px;
 }
 
-.FormLayoutGroup--padded .Removable__content {
-  padding-top: 28px;
-}
-
-.FormLayoutGroup--padded .Removable__children {
-  margin-top: -28px;
-}
-
-.FormLayoutGroup--padded.FormLayoutGroup--sizeY-compact .Removable__content {
-  padding-top: 26px;
-}
-
-.FormLayoutGroup--padded.FormLayoutGroup--sizeY-compact .Removable__children {
-  margin-top: -26px;
-}
-
 /**
  * iOS
  */

@@ -29,16 +29,16 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
 }: FormLayoutGroupProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const platform = usePlatform();
   const isRemovable = removable && mode === 'horizontal';
-  const [padded, togglePadded] = useState<boolean>(false);
+  const [paddedTop, togglePaddedTop] = useState<boolean>(false);
   const childrenRef = useRef<HTMLDivElement>(null);
 
   const wrappedChildren = <div ref={childrenRef} className="FormLayoutGroup__children">{children}</div>;
 
   useEffect(() => {
     if (isRemovable) {
-      const hasChildWithTop = childrenRef?.current?.querySelector('.FormItem__top') != null;
+      const hasChildWithTop = childrenRef?.current?.querySelector('.FormItem__top') !== null;
 
-      togglePadded(hasChildWithTop);
+      togglePaddedTop(hasChildWithTop);
     }
   }, [childrenRef, isRemovable]);
 
@@ -48,14 +48,11 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
         getClassName('FormLayoutGroup', platform),
         `FormLayoutGroup--sizeY-${sizeY}`,
         `FormLayoutGroup--${mode}`,
-        {
-          'FormLayoutGroup--padded': isRemovable && padded,
-        },
         className,
       )}
       {...restProps}>
       {isRemovable
-        ? <Removable align="start" removePlaceholder={removePlaceholder} onRemove={onRemove}>{wrappedChildren}</Removable>
+        ? <Removable align="start" paddedTop={paddedTop} removePlaceholder={removePlaceholder} onRemove={onRemove}>{wrappedChildren}</Removable>
         : wrappedChildren
       }
     </div>
