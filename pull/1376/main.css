@@ -51,11 +51,11 @@ to{opacity:1}}
 .Text--w-semibold{font-weight:600}
 .Tappable:not([disabled]){cursor:pointer}
 .Tappable--ios{position:relative;border-radius:10px;transition:background-color .15s ease-out}
-.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ActionSheetItem):not(.Banner__in):not(.ModalDismissButton):not(.SubnavigatonButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important;transition:none}
+.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ActionSheetItem):not(.Banner__in):not(.ModalDismissButton):not(.SubnavigationButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important;transition:none}
 .Tappable--android{position:relative;transition:background-color .15s ease-out;border-radius:8px}
-.Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton):not(.SubnavigatonButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important}
+.Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton):not(.SubnavigationButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important}
 .Tappable--vkcom{position:relative;transition:background-color .15s ease-out;border-radius:8px}
-.Tappable--vkcom.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton):not(.SubnavigatonButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important}
+.Tappable--vkcom.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton):not(.SubnavigationButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important}
 .Tappable--android .Tappable__waves{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;overflow:hidden;border-radius:inherit;will-change:transform}
 .Tappable--android .Tappable__wave{position:absolute;top:0;left:0;width:24px;height:24px;margin:-12px 0 0 -12px;opacity:0;content:'';border-radius:50%;background:rgba(127,127,127,.1);-webkit-animation:animation-wave .3s cubic-bezier(.4,0,.2,1);animation:animation-wave .3s cubic-bezier(.4,0,.2,1);-webkit-animation:animation-wave .3s cubic-bezier(.4,0,.2,1);-webkit-animation:animation-wave .3s var(--android-easing);animation:animation-wave .3s cubic-bezier(.4,0,.2,1);animation:animation-wave .3s var(--android-easing)}
 .Tappable__hoverShadow{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;overflow:hidden;border-radius:inherit}
@@ -1384,31 +1384,30 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .WriteBarIcon--ios.WriteBarIcon--send:last-child,.WriteBarIcon--ios.WriteBarIcon--done:last-child{margin-right:-4px}
 .WriteBarIcon--android,.WriteBarIcon--vkcom{width:44px;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
 .WriteBarIcon--android.WriteBarIcon--send,.WriteBarIcon--vkcom.WriteBarIcon--send,.WriteBarIcon--android.WriteBarIcon--done,.WriteBarIcon--vkcom.WriteBarIcon--done{color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
-.SubnavigatonBar__in{margin:-8px 0}
-.SubnavigatonBar__scrollIn{padding:20px 0;display:flex}
-.SubnavigatonBar .SubnavigatonButton+.SubnavigatonButton{margin-left:8px}
-.SubnavigatonBar--md-fixed .SubnavigatonButton{flex:1;min-width:0}
-.SubnavigatonBar--ios .SubnavigatonBar__gap{min-width:12px}
-.SubnavigatonBar--android .SubnavigatonBar__gap,.SubnavigatonBar--vkcom .SubnavigatonBar__gap{min-width:16px}
-.SubnavigatonButton{display:inline-block;box-shadow:0 0 2px rgba(0,0,0,.08),0 2px 24px rgba(0,0,0,.08);-webkit-user-select:none;user-select:none}
-.SubnavigatonButton__in{display:flex;align-items:center;justify-content:center}
-.SubnavigatonButton__before{margin-right:8px}
-.SubnavigatonButton__before .Icon--24{margin-left:-4px}
-.SubnavigatonButton__label{flex-grow:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.SubnavigatonButton__counter{margin-left:8px}
-.SubnavigatonButton__expandableIcon{margin-left:8px;margin-top:1px}
-.SubnavigatonButton--md-regular{background-color:#fff;background-color:#fff;background-color:var(--modal_card_background);color:#000;color:#000;color:var(--text_primary)}
-.SubnavigatonButton--md-regular .SubnavigatonButton__before{color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
-.SubnavigatonButton--md-regular .SubnavigatonButton__expandableIcon{color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
-.SubnavigatonButton--md-active{background-color:#4986cc;background-color:#4986cc;background-color:var(--button_primary_background);color:#fff;color:#fff;color:var(--button_primary_foreground)}
-.SubnavigatonButton--md-active .SubnavigatonButton__before{color:inherit}
-.SubnavigatonButton--md-active .SubnavigatonButton__before{color:inherit}
-.SubnavigatonButton--md-active .Counter{background-color:#fff;background-color:#fff;background-color:var(--button_primary_foreground);color:#4986cc;color:#4986cc;color:var(--button_primary_background)}
-.SubnavigatonButton--sz-m .SubnavigatonButton__in{height:36px;padding:0 14px}
-.SubnavigatonButton--sz-l .SubnavigatonButton__in{height:44px;padding:0 14px}
-.SubnavigatonButton--ios{border-radius:10px}
-.SubnavigatonButton--android{border-radius:8px}
-.SubnavigatonButton--vkcom{border-radius:4px}
+.SubnavigationBar__in{margin:-8px 0}
+.SubnavigationBar__scrollIn{padding:20px 0;display:flex}
+.SubnavigationBar .SubnavigationButton+.SubnavigationButton{margin-left:8px}
+.SubnavigationBar--md-fixed .SubnavigationButton{flex:1;min-width:0}
+.SubnavigationBar--ios .SubnavigationBar__gap{min-width:12px}
+.SubnavigationBar--android .SubnavigationBar__gap,.SubnavigationBar--vkcom .SubnavigationBar__gap{min-width:16px}
+.SubnavigationButton{display:inline-block;box-shadow:0 0 2px rgba(0,0,0,.08),0 2px 24px rgba(0,0,0,.08);-webkit-user-select:none;user-select:none}
+.SubnavigationButton__in{display:flex;align-items:center;justify-content:center}
+.SubnavigationButton__before{margin-right:8px}
+.SubnavigationButton__before .Icon--24{margin-left:-4px}
+.SubnavigationButtonn__label{flex-grow:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.SubnavigationButton__counter{margin-left:8px}
+.SubnavigationButton__expandableIcon{margin-left:8px;margin-top:1px}
+.SubnavigationButton--md-regular{background-color:#fff;background-color:#fff;background-color:var(--modal_card_background);color:#000;color:#000;color:var(--text_primary)}
+.SubnavigationButton--md-regular .SubnavigationButton__before{color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
+.SubnavigationButton--md-regular .SubnavigationButton__expandableIcon{color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
+.SubnavigationButton--md-active{background-color:#4986cc;background-color:#4986cc;background-color:var(--button_primary_background);color:#fff;color:#fff;color:var(--button_primary_foreground)}
+.SubnavigationButton--md-active .SubnavigationButton__before{color:inherit}
+.SubnavigationButton--md-active .Counter{background-color:#fff;background-color:#fff;background-color:var(--button_primary_foreground);color:#4986cc;color:#4986cc;color:var(--button_primary_background)}
+.SubnavigationButton--sz-m .SubnavigationButton__in{height:36px;padding:0 14px}
+.SubnavigationButton--sz-l .SubnavigationButton__in{height:44px;padding:0 14px}
+.SubnavigationButton--ios{border-radius:10px}
+.SubnavigationButton--android{border-radius:8px}
+.SubnavigationButton--vkcom{border-radius:4px}
 .FormLayout{position:relative}
 .FormLayout__submit{position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;padding:0;width:0;height:0;-webkit-appearance:none;appearance:none;border:0}
 .FormItem{padding:12px 16px;display:block}
