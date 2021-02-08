@@ -169,6 +169,48 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     }
   }, [dragging]);
 
+  const simpleCell = (
+    <SimpleCell
+      {...restProps}
+      disabled={draggable || removable || disabled}
+      Component={selectable ? 'label' : Component}
+      before={
+        <>
+          {(platform === ANDROID || platform === VKCOM) && draggable && (
+            <Touch
+              className="Cell__dragger"
+              onStart={onDragStart}
+              onMoveY={onDragMove}
+              onEnd={onDragEnd}
+              onClick={onDragClick}
+            ><Icon24Reorder /></Touch>
+          )}
+          {selectable && (
+            <>
+              <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
+              <div className="Cell__marker"><Icon16Done /></div>
+            </>
+          )}
+          {before}
+        </>
+      }
+      after={
+        <>
+          {platform === IOS && draggable && (
+            <Touch
+              className="Cell__dragger"
+              onStart={onDragStart}
+              onMoveY={onDragMove}
+              onEnd={onDragEnd}
+              onClick={onDragClick}
+            ><Icon24ReorderIos /></Touch>
+          )}
+          {after}
+        </>
+      }
+    />
+  );
+
   return (
     <div
       className={classNames(getClassName('Cell', platform), {
@@ -179,57 +221,9 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
       ref={rootElRef}
     >
       {removable
-        ? (
-          <Removable removePlaceholder={removePlaceholder} onRemove={(e) => onRemove(e, rootElRef?.current)}>
-            <SimpleCell
-              {...restProps}
-              disabled={true}
-              Component={Component}
-              before={before}
-              after={after}
-            />
-          </Removable>
-        ) : (
-          <SimpleCell
-            {...restProps}
-            disabled={draggable || disabled}
-            Component={selectable ? 'label' : Component}
-            before={
-              <>
-                {(platform === ANDROID || platform === VKCOM) && draggable && (
-                  <Touch
-                    className="Cell__dragger"
-                    onStart={onDragStart}
-                    onMoveY={onDragMove}
-                    onEnd={onDragEnd}
-                    onClick={onDragClick}
-                  ><Icon24Reorder /></Touch>
-                )}
-                {selectable && (
-                  <>
-                    <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
-                    <div className="Cell__marker"><Icon16Done /></div>
-                  </>
-                )}
-                {before}
-              </>
-            }
-            after={
-              <>
-                {platform === IOS && draggable && (
-                  <Touch
-                    className="Cell__dragger"
-                    onStart={onDragStart}
-                    onMoveY={onDragMove}
-                    onEnd={onDragEnd}
-                    onClick={onDragClick}
-                  ><Icon24ReorderIos /></Touch>
-                )}
-                {after}
-              </>
-            }
-          />
-        )}
+        ? <Removable removePlaceholder={removePlaceholder} onRemove={(e) => onRemove(e, rootElRef?.current)}>{simpleCell}</Removable>
+        : simpleCell
+      }
     </div>
   );
 };
