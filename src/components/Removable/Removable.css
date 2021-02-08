@@ -15,7 +15,6 @@
   flex-grow: 1;
   min-width: 0;
   flex-shrink: initial;
-  overflow: hidden;
 }
 
 .Removable__indicator,
