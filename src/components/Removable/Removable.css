@@ -35,6 +35,22 @@
   align-self: flex-start;
 }
 
+.Removable--paddedTop .Removable__content {
+  padding-top: 28px;
+}
+
+.Removable--paddedTop .Removable__children {
+  margin-top: -28px;
+}
+
+.Removable--paddedTop.Removable--sizeY-compact .Removable__content {
+  padding-top: 26px;
+}
+
+.Removable--paddedTop.Removable--sizeY-compact .Removable__children {
+  margin-top: -26px;
+}
+
 /**
  * iOS
  */

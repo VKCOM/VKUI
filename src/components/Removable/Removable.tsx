@@ -20,6 +20,10 @@ interface RemovableProps extends AllHTMLAttributes<HTMLElement>, RemovePlacehold
    * Расположение кнопки удаления.
    */
   align?: 'start' | 'center';
+  /**
+   * Отступ сверху.
+   */
+  paddedTop?: boolean;
   onRemove?: (e: MouseEvent) => void;
 }
 
@@ -31,6 +35,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
     onRemove,
     removePlaceholder,
     align,
+    paddedTop,
     ...restProps
   } = props;
   const platform = usePlatform();
@@ -81,6 +86,9 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
         getClassName('Removable', platform),
         `Removable--align-${align}`,
         `Removable--sizeY-${sizeY}`,
+        {
+          'Removable--paddedTop': paddedTop,
+        },
         className,
       )}
     >
