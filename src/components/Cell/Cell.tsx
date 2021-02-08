@@ -59,6 +59,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     name,
     checked,
     defaultChecked,
+    getRootRef,
     ...restProps
   } = props;
   const rootElRef = useRef(null);
