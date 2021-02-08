@@ -32,6 +32,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     header,
     viewWidth,
     viewHeight,
+    sizeX,
     hasMouse,
     onClose,
     id,
@@ -52,7 +53,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('ModalPage', platform), className, {
+      className={classNames(getClassName('ModalPage', platform), className, `ModalPage--sizeX-${sizeX}`, {
         'ModalPage--desktop': isDesktop,
       })}
     >
@@ -83,5 +84,6 @@ ModalPage.defaultProps = {
 export default withAdaptivity(ModalPage, {
   viewWidth: true,
   viewHeight: true,
+  sizeX: true,
   hasMouse: true,
 });

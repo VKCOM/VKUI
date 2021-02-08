@@ -373,6 +373,9 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   };
 
   closeActiveModal() {
+    // Сбрасываем состояния, которые могут помешать закрытию модального окна
+    this.setState({ touchDown: false, switching: false });
+
     const { prevModal } = this.state;
     if (!prevModal) {
       return console.warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
@@ -739,6 +742,9 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   };
 
   private readonly doCloseModal = (modalState: ModalsStateEntry) => {
+    // Сбрасываем состояния, которые могут помешать закрытию модального окна
+    this.setState({ touchDown: false, switching: false });
+
     if (isFunction(modalState.onClose)) {
       modalState.onClose();
     } else if (isFunction(this.props.onClose)) {

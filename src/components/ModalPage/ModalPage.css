@@ -14,6 +14,11 @@
   justify-content: center;
 }
 
+.ModalPage--sizeX-regular .Separator:not(.Separator--wide) {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 .ModalPage__in-wrap {
   width: 100%;
   height: 100%;
