@@ -129,10 +129,10 @@ to{-webkit-transform:scale(8);transform:scale(8);opacity:0}}
 .Button--vkcom.Button--lvl-secondary .Counter,.Button--vkcom.Button--lvl-tertiary .Counter,.Button--vkcom.Button--lvl-outline .Counter,.Button--vkcom.Button--lvl-secondary .Icon,.Button--vkcom.Button--lvl-tertiary .Icon,.Button--vkcom.Button--lvl-outline .Icon{opacity:.72}
 .Removable{position:relative;box-sizing:border-box}
 .Removable__content{display:flex;flex-flow:row nowrap;align-items:center;max-width:100%}
-.Removable__children{max-width:100%;flex-grow:1;min-width:0;flex-shrink:initial;overflow:hidden}
+.Removable__children{max-width:100%;flex-grow:1;min-width:0;flex-shrink:initial}
 .Removable__indicator,.Removable__remove{flex-grow:0;flex-shrink:0;border:0}
 .Removable__indicator:focus,.Removable__remove:focus{outline:0}
-.Removable--align-start .Removable__indicator,.Removable--align-start .Removable__remove{align-self:flex-start}
+.Removable--start .Removable__indicator,.Removable--start .Removable__remove{align-self:flex-start}
 .Removable--paddedTop .Removable__content{padding-top:28px}
 .Removable--paddedTop .Removable__children{margin-top:-28px}
 .Removable--paddedTop.Removable--sizeY-compact .Removable__content{padding-top:26px}
