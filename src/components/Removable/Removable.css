@@ -29,8 +29,8 @@
   outline: none;
 }
 
-.Removable--align-start .Removable__indicator,
-.Removable--align-start .Removable__remove {
+.Removable--start .Removable__indicator,
+.Removable--start .Removable__remove {
   align-self: flex-start;
 }
 

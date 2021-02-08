@@ -84,7 +84,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
       {...restProps}
       className={classNames(
         getClassName('Removable', platform),
-        `Removable--align-${align}`,
+        `Removable--${align}`,
         `Removable--sizeY-${sizeY}`,
         {
           'Removable--paddedTop': paddedTop,
