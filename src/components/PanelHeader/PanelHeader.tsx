@@ -1,6 +1,6 @@
 import React, { FC, HTMLAttributes, ReactNode, useContext } from 'react';
 import usePlatform from '../../hooks/usePlatform';
-import getClassname from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Separator from '../Separator/Separator';
@@ -85,7 +85,7 @@ const PanelHeader: FC<PanelHeaderProps> = (props) => {
       {...restProps}
       className={
         classNames(
-          getClassname('PanelHeader', platform),
+          getClassName('PanelHeader', platform),
           {
             'PanelHeader--trnsp': transparent,
             'PanelHeader--shadow': needShadow,

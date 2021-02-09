@@ -1,5 +1,5 @@
 import React, { Children, Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState, FC } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import classNames from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';

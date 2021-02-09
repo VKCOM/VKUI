@@ -5,7 +5,7 @@ import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { SizeType } from '../../hoc/withAdaptivity';
 import { AdaptivityProps } from '../..';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 
 const PanelHeaderBack: FunctionComponent<PanelHeaderButtonProps & AdaptivityProps> = ({ label, sizeX, ...props }: PanelHeaderButtonProps & AdaptivityProps) => {

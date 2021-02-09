@@ -1,5 +1,5 @@
 import React, { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
 import usePlatform from '../../hooks/usePlatform';

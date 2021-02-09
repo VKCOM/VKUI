@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, RefCallback } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import withContext from '../../hoc/withContext';

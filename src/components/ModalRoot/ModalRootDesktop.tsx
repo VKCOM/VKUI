@@ -13,7 +13,7 @@ import {
 } from '../ConfigProvider/ConfigProviderContext';
 import { ModalsStateEntry, ModalType } from './types';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import { DOMProps, withDOM } from '../../lib/dom';
 
 export interface ModalRootProps extends HasPlatform {

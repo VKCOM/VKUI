@@ -1,5 +1,5 @@
 import React, { FunctionComponent, HTMLAttributes, MouseEvent, useEffect, useRef, useState } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { Removable, RemovePlaceholderProps } from '../Removable/Removable';

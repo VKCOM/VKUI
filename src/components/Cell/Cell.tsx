@@ -1,6 +1,6 @@
 import React, { MouseEvent, FC, useState, useRef, useEffect } from 'react';
 import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Reorder, Icon24ReorderIos, Icon16Done } from '@vkontakte/icons';

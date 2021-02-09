@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import Title from '../Typography/Title/Title';

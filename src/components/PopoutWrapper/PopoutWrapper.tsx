@@ -1,5 +1,5 @@
 import React, { Component, HTMLAttributes, MouseEvent } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { animationEvent } from '../../lib/supportEvents';

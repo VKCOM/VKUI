@@ -5,7 +5,7 @@ import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Tappable from '../Tappable/Tappable';
 import classNames from '../../lib/classNames';
-import getClassname from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
@@ -54,7 +54,7 @@ const ContentCard: FC<ContentCardProps> = (props) => {
   const platform = usePlatform();
 
   return (
-    <Card mode={mode} getRootRef={getRootRef} className={classNames(className, getClassname('ContentCard', platform))} style={style}>
+    <Card mode={mode} getRootRef={getRootRef} className={classNames(className, getClassName('ContentCard', platform))} style={style}>
       <Tappable disabled={disabled} onClick={onClick} className="ContentCard__tappable">
         {image && <img {...restProps} ref={getRef} src={image} alt={alt} className="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
         <div className="ContentCard__body">

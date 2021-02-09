@@ -13,7 +13,7 @@ import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import withAdaptivity from '../../hoc/withAdaptivity';
 import withPlatform from '../../hoc/withPlatform';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 

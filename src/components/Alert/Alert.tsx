@@ -1,7 +1,7 @@
 import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';

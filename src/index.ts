@@ -167,7 +167,7 @@ export { default as animate } from './lib/animate';
 export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 export { platform, ANDROID, IOS, VKCOM, Platform, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
-export { default as getClassName } from './helpers/getClassName';
+export { getClassName } from './helpers/getClassName';
 export { ViewWidth, ViewHeight, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
 
 /**

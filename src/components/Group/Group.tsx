@@ -1,5 +1,5 @@
 import React, { FC, HTMLAttributes, ReactNode, useContext } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';

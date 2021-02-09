@@ -1,6 +1,6 @@
 import React, { FunctionComponent, InputHTMLAttributes, ReactNode } from 'react';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import { IOS, VKCOM } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
