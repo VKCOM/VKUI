@@ -5,7 +5,7 @@ import { transitionEndEventName, TransitionStartEventDetail, transitionStartEven
 import withContext from '../../hoc/withContext';
 import { HasPlatform, HasRootRef } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
-import withPanelContext from '../Panel/withPanelContext';
+import { withPanelContext } from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { DOMProps, withDOM } from '../../lib/dom';
