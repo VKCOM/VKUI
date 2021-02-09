@@ -141,6 +141,8 @@ module.exports = {
           '../src/components/MiniInfoCell/MiniInfoCell.tsx',
           '../src/components/WriteBar/WriteBar.tsx',
           '../src/components/WriteBarIcon/WriteBarIcon.tsx',
+          '../src/components/SubnavigationBar/SubnavigationBar.tsx',
+          '../src/components/SubnavigationButton/SubnavigationButton.tsx',
         ]
       }, {
         name: 'Forms',

@@ -94,6 +94,8 @@
 @import '../components/MiniInfoCell/MiniInfoCell.css';
 @import '../components/WriteBar/WriteBar.css';
 @import '../components/WriteBarIcon/WriteBarIcon.css';
+@import '../components/SubnavigationBar/SubnavigationBar.css';
+@import '../components/SubnavigationButton/SubnavigationButton.css';
 
 /* Forms */
 @import '../components/FormLayout/FormLayout.css';

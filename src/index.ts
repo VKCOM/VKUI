@@ -83,6 +83,8 @@ export { default as Banner } from './components/Banner/Banner';
 export { MiniInfoCell } from './components/MiniInfoCell/MiniInfoCell';
 export { WriteBar } from './components/WriteBar/WriteBar';
 export { WriteBarIcon } from './components/WriteBarIcon/WriteBarIcon';
+export { SubnavigationBar } from './components/SubnavigationBar/SubnavigationBar';
+export { SubnavigationButton } from './components/SubnavigationButton/SubnavigationButton';
 
 /**
  * Forms
