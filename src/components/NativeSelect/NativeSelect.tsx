@@ -1,5 +1,5 @@
 import React, { ChangeEvent, ChangeEventHandler, RefCallback, SelectHTMLAttributes } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';

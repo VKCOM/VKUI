@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 

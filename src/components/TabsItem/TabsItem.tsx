@@ -1,7 +1,7 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode, useContext } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { IOS, VKCOM } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';

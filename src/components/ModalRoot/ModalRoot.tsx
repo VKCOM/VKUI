@@ -1,8 +1,8 @@
 import React, { Component, ReactElement, SyntheticEvent } from 'react';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';

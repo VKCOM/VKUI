@@ -1,6 +1,6 @@
 import React, { FC, HTMLAttributes } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { createMasks } from './masks';
 import { useBrowserInfo } from '../../hooks/useBrowserInfo';
 import usePlatform from '../../hooks/usePlatform';

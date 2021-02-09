@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, KeyboardEvent, RefObject, createRef } from 'react';
 import SliderSwitchButton from './SliderSwitchButton';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
 
 interface Option {

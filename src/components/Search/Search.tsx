@@ -7,9 +7,9 @@ import React, {
   ChangeEvent,
   ChangeEventHandler,
 } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
-import getClassname from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import { Icon16SearchOutline, Icon16Clear, Icon24Cancel } from '@vkontakte/icons';
 import { IOS, VKCOM } from '../../lib/platform';
 import { HasPlatform, HasRef } from '../../types';
@@ -139,7 +139,7 @@ class Search extends Component<SearchProps, SearchState> {
 
     return (
       <div
-        className={classNames(getClassname('Search', platform), {
+        className={classNames(getClassName('Search', platform), {
           'Search--focused': this.state.focused,
           'Search--has-value': !!this.value,
           'Search--has-after': !!after,

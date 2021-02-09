@@ -1,6 +1,6 @@
 import React, { ReactNode, FC, ElementType, HTMLAttributes } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { Icon24Chevron } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';

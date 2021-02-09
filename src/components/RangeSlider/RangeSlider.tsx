@@ -1,7 +1,7 @@
 import React, { Component, FC, createRef, HTMLAttributes, RefCallback, useCallback, useState } from 'react';
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { setRef } from '../../lib/utils';

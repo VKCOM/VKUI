@@ -1,6 +1,6 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react';
-import classNames from '../../lib/classNames';
-import getClassname from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 
@@ -15,7 +15,7 @@ const Card: FunctionComponent<CardProps> = ({ mode, children, className, getRoot
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNames(className, getClassname('Card', platform), `Card--md-${mode}`)}
+      className={classNames(className, getClassName('Card', platform), `Card--md-${mode}`)}
     >
       <div className="Card__in">
         {children}

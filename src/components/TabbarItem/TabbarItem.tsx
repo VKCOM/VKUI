@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode, HTMLAttributes, ElementType, AnchorHTMLAttributes } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import Counter from '../Counter/Counter';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 

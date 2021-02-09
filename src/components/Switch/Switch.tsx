@@ -1,6 +1,6 @@
 import React, { FunctionComponent, InputHTMLAttributes } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';

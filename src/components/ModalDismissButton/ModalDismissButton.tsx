@@ -1,8 +1,8 @@
 import React, { HTMLAttributes, FC } from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 
 export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement>;

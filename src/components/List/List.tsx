@@ -1,6 +1,6 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 
 const List: FunctionComponent<HTMLAttributes<HTMLDivElement>> = ({

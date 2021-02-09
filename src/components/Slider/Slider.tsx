@@ -1,7 +1,7 @@
 import React, { Component, HTMLAttributes, RefCallback } from 'react';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';

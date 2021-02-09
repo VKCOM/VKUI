@@ -1,7 +1,7 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import Subhead from '../Typography/Subhead/Subhead';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import Headline from '../Typography/Headline/Headline';
 import { hasReactNode } from '../../lib/utils';

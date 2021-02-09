@@ -1,6 +1,6 @@
 import React, { AnchorHTMLAttributes, ElementType, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode, noop } from '../../lib/utils';
