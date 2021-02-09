@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef } from '../../types';
 
 const preventDefault = (e: FormEvent) => e.preventDefault();

@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
@@ -8,7 +8,7 @@ import { canUseDOM } from '../../lib/dom';
 import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
 import Button from '../Button/Button';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';

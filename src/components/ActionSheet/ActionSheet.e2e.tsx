@@ -2,7 +2,7 @@ import React from 'react';
 import ActionSheet, { ActionSheetProps } from './ActionSheet';
 import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 
 describe('ActionSheet', () => {
   const cancel = <ActionSheetItem mode="cancel">Отменить</ActionSheetItem>;

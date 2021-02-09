@@ -7,10 +7,10 @@ import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
 import { HasPlatform, HasRootRef, Ref } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import { hasHover } from '@vkontakte/vkjs/lib/InputUtils';
 import { setRef } from '../../lib/utils';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;

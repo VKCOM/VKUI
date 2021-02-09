@@ -37,7 +37,7 @@ export { default as Snackbar } from './components/Snackbar/Snackbar';
  * Modals
  */
 export { ModalRoot } from './components/ModalRoot/ModalRootAdaptive';
-export { default as withModalRootContext } from './components/ModalRoot/withModalRootContext';
+export { withModalRootContext } from './components/ModalRoot/withModalRootContext';
 export { default as ModalRootContext } from './components/ModalRoot/ModalRootContext';
 export { default as ModalPage } from './components/ModalPage/ModalPage';
 export { default as ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
@@ -148,15 +148,15 @@ export { default as Subhead } from './components/Typography/Subhead/Subhead';
 /**
  * HOCs
  */
-export { default as withInsets } from './hoc/withInsets';
-export { default as withPlatform } from './hoc/withPlatform';
-export { default as withAdaptivity } from './hoc/withAdaptivity';
+export { withInsets } from './hoc/withInsets';
+export { withPlatform } from './hoc/withPlatform';
+export { withAdaptivity } from './hoc/withAdaptivity';
 
 /**
  * Hooks
  */
-export { default as useInsets } from './hooks/useInsets';
-export { default as usePlatform } from './hooks/usePlatform';
+export { useInsets } from './hooks/useInsets';
+export { usePlatform } from './hooks/usePlatform';
 export { useAdaptivity } from './hooks/useAdaptivity';
 
 /**

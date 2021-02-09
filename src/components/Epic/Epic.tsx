@@ -1,8 +1,8 @@
 import React, { HTMLAttributes, ReactNode, ReactElement, FC, useEffect, useRef } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { withAdaptivity, ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { ScrollSaver } from './ScrollSaver';
 
 export interface EpicProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {

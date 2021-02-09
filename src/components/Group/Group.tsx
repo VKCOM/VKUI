@@ -2,11 +2,11 @@ import React, { FC, HTMLAttributes, ReactNode, useContext } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import Separator from '../Separator/Separator';
 import { hasReactNode } from '../../lib/utils';
 import Caption from '../Typography/Caption/Caption';
-import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import ModalRootContext from '../ModalRoot/ModalRootContext';
 
 export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<HTMLDivElement>, AdaptivityProps {

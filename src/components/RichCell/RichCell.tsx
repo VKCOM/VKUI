@@ -1,12 +1,12 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
-import withAdaptivity from '../../hoc/withAdaptivity';
+import { withAdaptivity } from '../../hoc/withAdaptivity';
 
 export interface RichCellProps extends TappableProps {
   /**

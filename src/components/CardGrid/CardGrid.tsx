@@ -1,8 +1,8 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface CardGridProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   size: 's' | 'm' | 'l';

@@ -9,8 +9,8 @@ import { isFunction } from '../../lib/utils';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasPlatform } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
-import withContext from '../../hoc/withContext';
+import { withPlatform } from '../../hoc/withPlatform';
+import { withContext } from '../../hoc/withContext';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 import {
   ConfigProviderContext,

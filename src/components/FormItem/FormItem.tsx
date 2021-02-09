@@ -1,11 +1,11 @@
 import React, { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent } from 'react';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { hasReactNode } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
 
 export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePlaceholderProps {

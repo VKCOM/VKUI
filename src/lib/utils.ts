@@ -92,7 +92,7 @@ export function createCustomEvent(window: any, type: string, eventInitDict?: any
   }
 
   return new window.CustomEvent(type, eventInitDict);
-};
+}
 
 export function getTitleFromChildren(children: ReactNode): string {
   let label = '';

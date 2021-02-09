@@ -1,5 +1,5 @@
 import React, { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
-import usePlatform from '../../../hooks/usePlatform';
+import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';

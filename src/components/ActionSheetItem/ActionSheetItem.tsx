@@ -2,7 +2,7 @@ import React, { AnchorHTMLAttributes, ElementType, HTMLAttributes, InputHTMLAttr
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode, noop } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
@@ -11,7 +11,7 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import { Icon16Done, Icon24Done } from '@vkontakte/icons';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
-import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface ActionSheetItemProps extends
   HTMLAttributes<HTMLElement>,

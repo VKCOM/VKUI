@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Icon28CancelOutline } from '@vkontakte/icons';
 import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 
 const PanelHeaderClose: FunctionComponent<PanelHeaderButtonProps> = ({ children, ...restProps }: PanelHeaderButtonProps) => {
   const platform = usePlatform();

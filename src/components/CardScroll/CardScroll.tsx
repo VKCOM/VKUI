@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, useRef, FC } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useDOM } from '../../lib/dom';
 
 export interface CardScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {

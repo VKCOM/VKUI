@@ -2,8 +2,8 @@ import React, { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'rea
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
-import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {

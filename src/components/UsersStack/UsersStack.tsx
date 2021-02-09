@@ -3,7 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { createMasks } from './masks';
 import { useBrowserInfo } from '../../hooks/useBrowserInfo';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { System } from '../../lib/browser';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import Caption from '../Typography/Caption/Caption';
