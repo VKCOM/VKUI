@@ -1,6 +1,6 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 
 export interface TabbarProps extends HTMLAttributes<HTMLDivElement> {

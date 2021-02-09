@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, useRef, FC } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';

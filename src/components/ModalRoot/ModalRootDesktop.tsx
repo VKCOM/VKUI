@@ -1,5 +1,5 @@
 import React, { Component, ReactElement } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { isFunction } from '../../lib/utils';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasPlatform } from '../../types';

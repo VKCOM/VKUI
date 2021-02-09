@@ -1,5 +1,5 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import Headline from '../Typography/Headline/Headline';

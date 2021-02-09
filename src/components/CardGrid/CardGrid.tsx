@@ -1,5 +1,5 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';

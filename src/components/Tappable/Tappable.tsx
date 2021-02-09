@@ -1,7 +1,7 @@
 import React, { AllHTMLAttributes, Component, ElementType, RefCallback } from 'react';
 import Touch, { TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';

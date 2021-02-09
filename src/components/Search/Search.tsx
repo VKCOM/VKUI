@@ -7,7 +7,7 @@ import React, {
   ChangeEvent,
   ChangeEventHandler,
 } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { Icon16SearchOutline, Icon16Clear, Icon24Cancel } from '@vkontakte/icons';

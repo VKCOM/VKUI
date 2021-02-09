@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, ReactNode, FC } from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { HasRef, HasRootRef } from '../../types';
 import PopoutRoot from '../PopoutRoot/PopoutRoot';
 import usePlatform from '../../hooks/usePlatform';

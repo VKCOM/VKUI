@@ -2,7 +2,7 @@ import React, { PureComponent, RefObject } from 'react';
 import Touch, { TouchProps, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import FixedLayout from '../FixedLayout/FixedLayout';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import { getClassName } from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';

@@ -162,7 +162,7 @@ export { useAdaptivity } from './hooks/useAdaptivity';
 /**
  * Utils
  */
-export { default as classNames } from './lib/classNames';
+export { classNames } from './lib/classNames';
 export { default as animate } from './lib/animate';
 export { default as removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';

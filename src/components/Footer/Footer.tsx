@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { DivProps } from '../Div/Div';
 import Caption from '../Typography/Caption/Caption';
 

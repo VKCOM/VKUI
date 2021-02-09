@@ -1,7 +1,7 @@
 import React, { FC, HTMLAttributes, ReactNode, useContext } from 'react';
 import usePlatform from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Separator from '../Separator/Separator';
 import { VKCOM } from '../../lib/platform';

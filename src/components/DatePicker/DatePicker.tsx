@@ -7,7 +7,7 @@ import Input from '../Input/Input';
 import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import CustomSelect, { SelectOption } from '../CustomSelect/CustomSelect';
 
 const DefaultMonths: string[] = [

@@ -1,5 +1,5 @@
 import React, { FC, HTMLAttributes, ReactNode } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';

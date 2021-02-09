@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, FC, Children } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import usePlatform from '../../hooks/usePlatform';
 import Caption from '../Typography/Caption/Caption';

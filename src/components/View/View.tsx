@@ -1,5 +1,5 @@
 import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';

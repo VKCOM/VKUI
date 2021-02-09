@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode, Component, Fragment, RefCallback, isValidElement } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';

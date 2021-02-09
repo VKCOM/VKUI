@@ -5,7 +5,7 @@ import React, {
   useEffect,
 } from 'react';
 import { Icon20Dropdown } from '@vkontakte/icons';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import Spinner from '../Spinner/Spinner';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderChip, chipsInputDefaultProps } from '../ChipsInput/ChipsInput';
