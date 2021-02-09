@@ -2,24 +2,136 @@
 За это отвечает свойство `textLevel` у `SubnavigationButton`.
 
 ```jsx
-const SubnavigationBarExample = () => {
-  const [sizeSelected, setSizeSelected] = React.useState(false);
-  const [inStockSelected, setInStockSelected] = React.useState(false);
-  const [highRatingSelected, setHighRatingSelected] = React.useState(false);
+import { useState } from 'react';
 
+const MODAL_NAME = 'filters';
+
+const FILTERS_SIZE = [
+  { value: 36, label: 36 },
+  { value: 37, label: 37 },
+  { value: 38, label: 38 },
+  { value: 39, label: 39 },
+];
+
+const FILTERS_STYLE = [
+  { value: 'Вечерний', label: 'Вечерний' },
+  { value: 'Деловой', label: 'Деловой' },
+  { value: 'Повседневный', label: 'Повседневный' },
+  { value: 'Спортивный', label: 'Спортивный' },
+];
+
+const SubnavigationBarExample = () => {
+  const platform = usePlatform();
   const { viewWidth } = useAdaptivity();
 
+  const [filtersModalOpened, setFiltersModalOpened] = useState(false);
+  const [filtersCount, setFiltersCount] = useState(1);
+  
+  const [filterSizes, setFilterSizes] = useState([36]);
+  const [filterStyles, setFilterStyles] = useState([]);
+
+  const [sizeSelected, setSizeSelected] = useState(false);
+  const [inStockSelected, setInStockSelected] = useState(false);
+  const [highRatingSelected, setHighRatingSelected] = useState(false);
+  const [faveSelected, setFaveSelected] = useState(false);
+
+  const openModal = () => {
+    setFiltersModalOpened(true);
+  };
+
+  const closeModal = () => {
+    setFiltersModalOpened(false);
+  };
+  
+  const onChangeFilterSize = (e) => {
+    const { value, checked } = e.currentTarget;
+    if (checked) {
+      setFilterSizes([...filterSizes, +value]);
+    } else {
+      setFilterSizes(filterSizes.filter((v) => v !== +value));
+    }
+  };
+
+  const onChangeFilterStyle = (e) => {
+    const { value, checked } = e.currentTarget;
+    if (checked) {
+      setFilterStyles([...filterStyles, value]);
+    } else {
+      setFilterStyles(filterStyles.filter((v) => v !== value));
+    }
+  };
+  
+  const applyFilters = () => {
+    let count = 0;
+
+    filterSizes.length && (count++);
+    filterStyles.length && (count++);
+
+    closeModal();
+    setFiltersCount(count);
+  };
+
+  const modal = (
+    <ModalRoot
+      activeModal={filtersModalOpened ? MODAL_NAME : null}
+      onClose={closeModal}
+    >
+      <ModalPage
+        id={MODAL_NAME}
+        header={
+          <ModalPageHeader
+            left={platform !== IOS && <PanelHeaderClose onClick={closeModal} />}
+            right={platform === IOS && <PanelHeaderButton onClick={closeModal}><Icon24Dismiss /></PanelHeaderButton>}
+          >
+            Фильтры
+          </ModalPageHeader>
+        }
+      >
+        <FormLayout>
+          <FormItem top="Размер">
+            {FILTERS_SIZE.map(({ value, label }) => {
+              return (
+                <Checkbox
+                  value={value}
+                  checked={filterSizes.includes(value)}
+                  onChange={onChangeFilterSize}
+                >{label}</Checkbox>
+              );
+            })}
+          </FormItem>
+
+          <FormItem top="Стиль">
+            {FILTERS_STYLE.map(({ value, label }) => {
+              return (
+                <Checkbox
+                  value={value}
+                  checked={filterStyles.includes(value)}
+                  onChange={onChangeFilterStyle}
+                >{label}</Checkbox>
+              );
+            })}
+          </FormItem>
+
+          <FormItem>
+            <Button size="l" stretched onClick={applyFilters}>Показать результаты</Button>
+          </FormItem>
+        </FormLayout>
+      </ModalPage>
+    </ModalRoot>
+  );
+
   return (
-    <View activePanel="example">
+    <View activePanel="example" modal={modal}>
       <Panel id="example">
         <PanelHeader>SubnavigationBar</PanelHeader>
         <Group>
           <SubnavigationBar>
             <SubnavigationButton
               before={<Icon24Filter/>}
-              selected
+              selected={filtersCount > 0}
               expandable
-              after={<Counter mode="primary" size="s">3</Counter>}
+              after={filtersCount > 0 && <Counter mode="primary" size="s">{filtersCount}</Counter>}
+              onClick={openModal}
             >
               Фильтры
             </SubnavigationButton>
@@ -47,6 +159,8 @@ const SubnavigationBarExample = () => {
 
             <SubnavigationButton
               before={<Icon24FavoriteOutline/>}
+              selected={faveSelected}
+              onClick={() => setFaveSelected(!faveSelected)}
             >
               Избранное
             </SubnavigationButton>
