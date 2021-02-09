@@ -164,7 +164,7 @@ export { useAdaptivity } from './hooks/useAdaptivity';
  */
 export { classNames } from './lib/classNames';
 export { default as animate } from './lib/animate';
-export { default as removeObjectKeys } from './lib/removeObjectKeys';
+export { removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 export { platform, ANDROID, IOS, VKCOM, Platform, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
 export { getClassName } from './helpers/getClassName';
