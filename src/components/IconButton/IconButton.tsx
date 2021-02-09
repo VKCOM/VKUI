@@ -27,6 +27,7 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
       {...restProps}
       Component={Component}
       activeEffectDelay={200}
+      activeHighlighted={false}
       className={classNames(
         getClassName('IconButton', platform),
         className,

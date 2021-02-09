@@ -10,7 +10,12 @@ export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement>;
 const ModalDismissButton: FC<ModalDismissButtonProps> = ({ className, ...props }) => {
   const platform = usePlatform();
   return (
-    <Tappable className={classNames(getClassName('ModalDismissButton', platform), className)} {...props}>
+    <Tappable
+      className={classNames(getClassName('ModalDismissButton', platform), className)}
+      {...props}
+      activeHighlighted={false}
+      hoverBackground={false}
+    >
       <Icon20Cancel />
     </Tappable>
   );

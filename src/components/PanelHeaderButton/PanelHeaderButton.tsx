@@ -50,6 +50,8 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   return (
     <Tappable
       {...restProps}
+      activeHighlighted={false}
+      hoverBackground={platform !== VKCOM}
       Component={Component}
       activeEffectDelay={200}
       className={classNames(

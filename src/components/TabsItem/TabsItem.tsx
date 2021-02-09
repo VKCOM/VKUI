@@ -36,6 +36,7 @@ const TabsItem: FunctionComponent<TabsItemProps> = ({
       {...restProps}
       className={classNames(getClassName('TabsItem', platform), { 'TabsItem--selected': selected }, className)}
       activeEffectDelay={platform === IOS ? 0 : ACTIVE_EFFECT_DELAY}
+      activeHighlighted={false}
     >
       <TypographyComponent className="TabsItem__in" weight="medium">{children}</TypographyComponent>
       {hasReactNode(after) && <div className="TabsItem__after">{after}</div>}

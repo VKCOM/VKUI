@@ -29,6 +29,8 @@ const Link: FunctionComponent<LinkProps> = ({
       Component={Component}
       {...restProps}
       className={classNames(baseClassName, className)}
+      activeHighlighted={false}
+      hoverBackground={false}
     >{children}</Tappable>
   );
 };

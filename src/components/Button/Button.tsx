@@ -101,6 +101,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     }
     getRootRef={getRootRef}
     Component={restProps.href ? 'a' : Component}
+    activeHighlighted={false}
   >
     <div className="Button__in">
       {before && <div className="Button__before">{before}</div>}

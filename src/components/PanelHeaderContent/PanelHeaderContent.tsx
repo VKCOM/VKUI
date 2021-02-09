@@ -32,7 +32,7 @@ const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
   return (
     <div {...rootProps} className={classNames(baseClassNames, className)} style={style}>
       {hasReactNode(before) && <div className="PanelHeaderContent__before">{before}</div>}
-      <InComponent {...inProps} className="PanelHeaderContent__in" onClick={onClick}>
+      <InComponent {...inProps} className="PanelHeaderContent__in" onClick={onClick} activeHighlighted={false}>
         {hasReactNode(status) &&
           <Caption level="1" weight="regular" className="PanelHeaderContent__status">
             {status}
