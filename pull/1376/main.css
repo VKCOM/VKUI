@@ -1394,7 +1394,7 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .SubnavigationButton__in{display:flex;align-items:center;justify-content:center}
 .SubnavigationButton__before{margin-right:8px;color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
 .SubnavigationButton__before .Icon--24{margin-left:-4px}
-.SubnavigationButtonn__label{flex-grow:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.SubnavigationButton__label{flex-grow:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .SubnavigationButton__after{margin-left:8px}
 .SubnavigationButton__expandableIcon{margin-left:8px;margin-top:1px;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
 .SubnavigationButton--selected{background-color:#4986cc;background-color:#4986cc;background-color:var(--button_primary_background);color:#fff;color:#fff;color:var(--button_primary_foreground)}
