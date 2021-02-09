@@ -12,7 +12,7 @@
   margin-left: 8px;
 }
 
-.SubnavigationBar--md-fixed .SubnavigationButton {
+.SubnavigationBar--fixed .SubnavigationButton {
   flex: 1;
   min-width: 0;
 }

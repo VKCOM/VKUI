@@ -22,7 +22,7 @@ export const SubnavigationBar: FC<SubnavigationBarProps> = (props: Subnavigation
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('SubnavigationBar', platform), `SubnavigationBar--md-${mode}`, className)}
+      className={classNames(getClassName('SubnavigationBar', platform), `SubnavigationBar--${mode}`, className)}
     >
       <ScrollWrapper className="SubnavigationBar__in">
         <div className="SubnavigationBar__scrollIn">
