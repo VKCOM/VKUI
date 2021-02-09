@@ -24,11 +24,12 @@ const SubnavigationBarExample = () => {
   const platform = usePlatform();
   const { viewWidth } = useAdaptivity();
 
+  const [activePanel, setActivePanel] = useState('example');
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
-  const [filtersCount, setFiltersCount] = useState(1);
+  const [filtersCount, setFiltersCount] = useState(2);
   
   const [filterSizes, setFilterSizes] = useState([36]);
-  const [filterStyles, setFilterStyles] = useState([]);
+  const [filterStyles, setFilterStyles] = useState(['Вечерний']);
 
   const [sizeSelected, setSizeSelected] = useState(false);
   const [inStockSelected, setInStockSelected] = useState(false);
@@ -121,7 +122,7 @@ const SubnavigationBarExample = () => {
   );
 
   return (
-    <View activePanel="example" modal={modal}>
+    <View activePanel={activePanel} modal={modal}>
       <Panel id="example">
         <PanelHeader>SubnavigationBar</PanelHeader>
         <Group>
@@ -173,6 +174,7 @@ const SubnavigationBarExample = () => {
               before={<Icon24ScanViewfinderOutline />}
               size="l"
               textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+              onClick={() => setActivePanel('add_friend')}
             >
               Сканировать QR
             </SubnavigationButton>
@@ -181,12 +183,24 @@ const SubnavigationBarExample = () => {
               before={<Icon24UserAddOutline />}
               size="l"
               textLevel={viewWidth <= ViewWidth.MOBILE ? 3 : 1}
+              onClick={() => setActivePanel('add_friend')}
             >
               Добавить друга
             </SubnavigationButton>
           </SubnavigationBar>
 
           <Header>Важные</Header>
+          <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>Иван Барышев</SimpleCell>
+          <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>Михаил Лихачёв</SimpleCell>
+          <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>Artur Stambultsian</SimpleCell>
+        </Group>
+      </Panel>
+      <Panel id="add_friend">
+        <PanelHeader
+          left={<PanelHeaderBack onClick={() => setActivePanel('example')} />}
+        >Добавить друга</PanelHeader>
+
+        <Group>
           <SimpleCell before={<Avatar src={getAvatarUrl('user_wayshev')} />}>Иван Барышев</SimpleCell>
           <SimpleCell before={<Avatar src={getAvatarUrl('user_lihachyov')} />}>Михаил Лихачёв</SimpleCell>
           <SimpleCell before={<Avatar src={getAvatarUrl('user_arthurstam')} />}>Artur Stambultsian</SimpleCell>
