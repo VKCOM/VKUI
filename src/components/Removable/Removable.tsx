@@ -2,7 +2,7 @@ import React, { AllHTMLAttributes, FC, ReactNode, MouseEvent, useCallback, useEf
 import { classNames } from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useDOM } from '../../lib/dom';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';

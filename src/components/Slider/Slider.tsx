@@ -6,7 +6,7 @@ import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { canUseDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { precisionRound } from '../../helpers/math';
 
 export interface SliderProps extends

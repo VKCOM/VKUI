@@ -7,7 +7,7 @@ import Separator from '../Separator/Separator';
 import { VKCOM } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
-import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { isPrimitiveReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 

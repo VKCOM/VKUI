@@ -4,7 +4,7 @@ import { classNames } from '../../lib/classNames';
 import Touch from '../Touch/Touch';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform, HasRootRef } from '../../types';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { PanelContext, PanelContextProps } from './PanelContext';
 import { IOS } from '../../lib/platform';
 import { setRef } from '../../lib/utils';

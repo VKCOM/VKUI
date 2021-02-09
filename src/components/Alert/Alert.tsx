@@ -7,7 +7,7 @@ import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Button from '../Button/Button';
 import { hasReactNode } from '../../lib/utils';
 import Headline from '../Typography/Headline/Headline';

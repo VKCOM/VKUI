@@ -3,7 +3,7 @@ import { Icon28ChevronBack, Icon28ChevronLeftOutline, Icon28ArrowLeftOutline } f
 import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { SizeType } from '../../hoc/withAdaptivity';
+import { withAdaptivity, SizeType } from '../../hoc/withAdaptivity';
 import { AdaptivityProps } from '../..';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';

@@ -13,7 +13,7 @@ import { classNames } from '../../lib/classNames';
 import Chip, { ChipProps } from '../Chip/Chip';
 import { noop } from '../../lib/utils';
 import { useChipsInput } from './useChipsInput';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export type ChipsInputValue = string | number;
 

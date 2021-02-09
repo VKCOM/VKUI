@@ -11,7 +11,7 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import { Icon16Done, Icon24Done } from '@vkontakte/icons';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
-import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 
 export interface ActionSheetItemProps extends
   HTMLAttributes<HTMLElement>,

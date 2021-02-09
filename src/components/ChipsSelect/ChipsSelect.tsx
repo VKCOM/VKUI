@@ -11,7 +11,7 @@ import CustomScrollView from '../CustomScrollView/CustomScrollView';
 import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderChip, chipsInputDefaultProps } from '../ChipsInput/ChipsInput';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { useChipsSelect } from './useChipsSelect';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { setRef, noop } from '../../lib/utils';
 import { useDOM } from '../../lib/dom';
 import Caption from '../Typography/Caption/Caption';

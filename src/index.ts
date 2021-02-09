@@ -150,7 +150,7 @@ export { default as Subhead } from './components/Typography/Subhead/Subhead';
  */
 export { withInsets } from './hoc/withInsets';
 export { default as withPlatform } from './hoc/withPlatform';
-export { default as withAdaptivity } from './hoc/withAdaptivity';
+export { withAdaptivity } from './hoc/withAdaptivity';
 
 /**
  * Hooks

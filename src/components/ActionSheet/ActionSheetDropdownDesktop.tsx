@@ -4,7 +4,7 @@ import { classNames } from '../../lib/classNames';
 import withPlatform from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { PointerEventsProperty } from 'csstype';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { DOMProps, withDOM } from '../../lib/dom';
 
 interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {

@@ -2,7 +2,7 @@ import React, { FC, HTMLAttributes, useRef, useState } from 'react';
 import { useDOM } from '../../lib/dom';
 import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
-import withAdaptivity, { SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {

@@ -6,7 +6,7 @@ import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
-import withAdaptivity from '../../hoc/withAdaptivity';
+import { withAdaptivity } from '../../hoc/withAdaptivity';
 
 export interface RichCellProps extends TappableProps {
   /**

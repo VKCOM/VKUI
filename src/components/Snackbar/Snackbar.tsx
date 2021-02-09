@@ -8,7 +8,7 @@ import { canUseDOM } from '../../lib/dom';
 import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
 import Button from '../Button/Button';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';

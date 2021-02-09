@@ -6,7 +6,7 @@ import { HasPlatform, HasRootRef } from '../../types';
 import withPlatform from '../../hoc/withPlatform';
 import { setRef } from '../../lib/utils';
 import { rescale, clamp } from '../../helpers/math';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export type Value = [number, number];
 

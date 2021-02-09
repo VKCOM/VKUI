@@ -4,7 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
 import { IOS } from '../../lib/platform';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   mode?: 'default' | 'buttons' | 'segmented';

@@ -8,7 +8,7 @@ import { Icon20CheckBoxOn, Icon20CheckBoxOff, Icon24CheckBoxOn, Icon24CheckBoxOf
 
 import { HasRef, HasRootRef } from '../../types';
 import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
 import Headline from '../Typography/Headline/Headline';
 

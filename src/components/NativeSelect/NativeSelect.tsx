@@ -3,7 +3,7 @@ import { classNames } from '../../lib/classNames';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
-import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { setRef } from '../../lib/utils';
 import { getClassName, HasPlatform } from '../..';
 import withPlatform from '../../hoc/withPlatform';
