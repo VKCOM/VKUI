@@ -1,7 +1,7 @@
 import React, { Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { transitionEvent } from '../../lib/supportEvents';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import { withAdaptivity, AdaptivityProps, ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';

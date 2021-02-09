@@ -4,7 +4,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { IOS, VKCOM } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { hasReactNode } from '../../lib/utils';
 import Caption from '../../components/Typography/Caption/Caption';

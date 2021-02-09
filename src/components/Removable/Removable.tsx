@@ -1,6 +1,6 @@
 import React, { AllHTMLAttributes, FC, ReactNode, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useDOM } from '../../lib/dom';

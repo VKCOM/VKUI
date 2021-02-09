@@ -5,7 +5,7 @@ import { classNames } from '../../lib/classNames';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import Subhead from '../Typography/Subhead/Subhead';

@@ -7,7 +7,7 @@ import Text from '../Typography/Text/Text';
 import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
 import { HasAlign } from '../../types';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { Platform, VKCOM } from '../../lib/platform';
 

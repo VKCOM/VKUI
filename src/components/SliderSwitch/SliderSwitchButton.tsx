@@ -3,7 +3,7 @@ import Tappable from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import Text from '../Typography/Text/Text';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {

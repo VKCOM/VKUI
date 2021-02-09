@@ -3,7 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import { classNames } from '../../lib/classNames';
 import { IOS, VKCOM } from '../../lib/platform';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { TabsModeContext } from '../Tabs/Tabs';
 import Headline from '../Typography/Headline/Headline';

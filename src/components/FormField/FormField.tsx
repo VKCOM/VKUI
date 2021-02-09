@@ -1,7 +1,7 @@
 import React, { AllHTMLAttributes, ElementType, useState } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 
 export interface FormFieldProps extends

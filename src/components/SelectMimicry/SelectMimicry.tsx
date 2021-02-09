@@ -4,7 +4,7 @@ import { Icon24Dropdown, Icon20Dropdown } from '@vkontakte/icons';
 import FormField from '../FormField/FormField';
 import { HasAlign, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../..';
 import Headline from '../Typography/Headline/Headline';
 import Text from '../Typography/Text/Text';

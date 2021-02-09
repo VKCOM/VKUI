@@ -2,7 +2,7 @@ import React, { ReactNode, FunctionComponent } from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
 
 export interface IconButtonProps extends TappableProps {

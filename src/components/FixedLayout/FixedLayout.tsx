@@ -4,7 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import withContext from '../../hoc/withContext';
 import { HasPlatform, HasRootRef } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import withPanelContext from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';

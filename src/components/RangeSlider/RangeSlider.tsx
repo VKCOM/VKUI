@@ -3,7 +3,7 @@ import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import { setRef } from '../../lib/utils';
 import { rescale, clamp } from '../../helpers/math';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';

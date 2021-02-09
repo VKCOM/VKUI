@@ -1,7 +1,7 @@
 import React, { Component, HTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { PointerEventsProperty } from 'csstype';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';

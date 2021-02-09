@@ -2,7 +2,7 @@ import React, { Component, HTMLAttributes, RefCallback } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Touch from '../Touch/Touch';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { PanelContext, PanelContextProps } from './PanelContext';

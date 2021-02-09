@@ -3,7 +3,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import withContext from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';

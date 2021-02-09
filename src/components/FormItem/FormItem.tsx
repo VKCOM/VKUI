@@ -1,6 +1,6 @@
 import React, { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent } from 'react';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { hasReactNode } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';

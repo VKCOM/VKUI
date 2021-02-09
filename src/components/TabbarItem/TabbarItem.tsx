@@ -2,7 +2,7 @@ import React, { FunctionComponent, ReactNode, HTMLAttributes, ElementType, Ancho
 import { getClassName } from '../../helpers/getClassName';
 import Counter from '../Counter/Counter';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 
 export interface TabbarItemProps extends HTMLAttributes<HTMLElement>, AnchorHTMLAttributes<HTMLElement> {

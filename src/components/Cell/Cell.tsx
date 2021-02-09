@@ -7,7 +7,7 @@ import { Icon24Reorder, Icon24ReorderIos, Icon16Done } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlaceholderProps {
   /**

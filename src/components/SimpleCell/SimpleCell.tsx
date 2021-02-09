@@ -4,7 +4,7 @@ import { getClassName } from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { Icon24Chevron } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import Title from '../Typography/Title/Title';

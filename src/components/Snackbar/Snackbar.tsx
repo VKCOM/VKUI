@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';

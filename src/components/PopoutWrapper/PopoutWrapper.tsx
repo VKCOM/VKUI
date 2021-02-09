@@ -3,7 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { animationEvent } from '../../lib/supportEvents';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 

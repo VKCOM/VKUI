@@ -6,7 +6,7 @@ import Text from '../Typography/Text/Text';
 import Tappable from '../Tappable/Tappable';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
 

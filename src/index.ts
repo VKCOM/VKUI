@@ -149,14 +149,14 @@ export { default as Subhead } from './components/Typography/Subhead/Subhead';
  * HOCs
  */
 export { withInsets } from './hoc/withInsets';
-export { default as withPlatform } from './hoc/withPlatform';
+export { withPlatform } from './hoc/withPlatform';
 export { withAdaptivity } from './hoc/withAdaptivity';
 
 /**
  * Hooks
  */
 export { useInsets } from './hooks/useInsets';
-export { default as usePlatform } from './hooks/usePlatform';
+export { usePlatform } from './hooks/usePlatform';
 export { useAdaptivity } from './hooks/useAdaptivity';
 
 /**
