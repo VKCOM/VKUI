@@ -51,11 +51,11 @@ to{opacity:1}}
 .vkui__vkui__Text--w-semibold{font-weight:600}
 .vkui__vkui__Tappable:not([disabled]){cursor:pointer}
 .vkui__vkui__Tappable--ios{position:relative;border-radius:10px;transition:background-color .15s ease-out}
-.vkui__vkui__Tappable--ios.vkui__vkui__Tappable--active:not([disabled]):not(.vkui__vkui__TabsItem):not(.vkui__vkui__PanelHeaderButton):not(.vkui__vkui__IconButton):not(.vkui__vkui__Button):not(.vkui__vkui__Link):not(.vkui__vkui__SliderSwitch__button):not(.vkui__vkui__PanelHeaderContent__in):not(.vkui__vkui__ActionSheetItem):not(.vkui__vkui__Banner__in):not(.vkui__vkui__ModalDismissButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important;transition:none}
+.vkui__vkui__Tappable--ios.vkui__vkui__Tappable--active:not([disabled]):not(.vkui__vkui__TabsItem):not(.vkui__vkui__PanelHeaderButton):not(.vkui__vkui__IconButton):not(.vkui__vkui__Button):not(.vkui__vkui__Link):not(.vkui__vkui__SliderSwitch__button):not(.vkui__vkui__PanelHeaderContent__in):not(.vkui__vkui__ActionSheetItem):not(.vkui__vkui__Banner__in):not(.vkui__vkui__ModalDismissButton):not(.vkui__vkui__SubnavigationButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important;transition:none}
 .vkui__vkui__Tappable--android{position:relative;transition:background-color .15s ease-out;border-radius:8px}
-.vkui__vkui__Tappable--android.vkui__vkui__Tappable--active:not([disabled]):not(.vkui__vkui__TabsItem):not(.vkui__vkui__PanelHeaderButton):not(.vkui__vkui__IconButton):not(.vkui__vkui__Button):not(.vkui__vkui__Link):not(.vkui__vkui__SliderSwitch__button):not(.vkui__vkui__PanelHeaderContent__in):not(.vkui__vkui__ModalDismissButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important}
+.vkui__vkui__Tappable--android.vkui__vkui__Tappable--active:not([disabled]):not(.vkui__vkui__TabsItem):not(.vkui__vkui__PanelHeaderButton):not(.vkui__vkui__IconButton):not(.vkui__vkui__Button):not(.vkui__vkui__Link):not(.vkui__vkui__SliderSwitch__button):not(.vkui__vkui__PanelHeaderContent__in):not(.vkui__vkui__ModalDismissButton):not(.vkui__vkui__SubnavigationButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important}
 .vkui__vkui__Tappable--vkcom{position:relative;transition:background-color .15s ease-out;border-radius:8px}
-.vkui__vkui__Tappable--vkcom.vkui__vkui__Tappable--active:not([disabled]):not(.vkui__vkui__TabsItem):not(.vkui__vkui__PanelHeaderButton):not(.vkui__vkui__IconButton):not(.vkui__vkui__Button):not(.vkui__vkui__Link):not(.vkui__vkui__SliderSwitch__button):not(.vkui__vkui__PanelHeaderContent__in):not(.vkui__vkui__ModalDismissButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important}
+.vkui__vkui__Tappable--vkcom.vkui__vkui__Tappable--active:not([disabled]):not(.vkui__vkui__TabsItem):not(.vkui__vkui__PanelHeaderButton):not(.vkui__vkui__IconButton):not(.vkui__vkui__Button):not(.vkui__vkui__Link):not(.vkui__vkui__SliderSwitch__button):not(.vkui__vkui__PanelHeaderContent__in):not(.vkui__vkui__ModalDismissButton):not(.vkui__vkui__SubnavigationButton){background:rgba(0,0,0,.08)!important;background:rgba(0,0,0,.08)!important;background:var(--background_highlighted)!important}
 .vkui__vkui__Tappable--android .vkui__vkui__Tappable__waves{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;overflow:hidden;border-radius:inherit;will-change:transform}
 .vkui__vkui__Tappable--android .vkui__vkui__Tappable__wave{position:absolute;top:0;left:0;width:24px;height:24px;margin:-12px 0 0 -12px;opacity:0;content:'';border-radius:50%;background:rgba(127,127,127,.1);-webkit-animation:animation-wave .3s cubic-bezier(.4,0,.2,1);animation:animation-wave .3s cubic-bezier(.4,0,.2,1);-webkit-animation:animation-wave .3s cubic-bezier(.4,0,.2,1);-webkit-animation:animation-wave .3s var(--android-easing);animation:animation-wave .3s cubic-bezier(.4,0,.2,1);animation:animation-wave .3s var(--android-easing)}
 .vkui__vkui__Tappable__hoverShadow{position:absolute;top:0;right:0;bottom:0;left:0;pointer-events:none;overflow:hidden;border-radius:inherit}
@@ -1306,7 +1306,7 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .vkui__vkui__Banner{color:#000;color:#000;color:var(--text_primary);margin:12px 0}
 .vkui__vkui__Banner__in{display:flex;position:relative;overflow:hidden}
 .vkui__vkui__Banner__in.vkui__vkui__Tappable--active{opacity:.6}
-.vkui__vkui__Banner__in::before{position:absolute;left:0;top:0;width:100%;height:100%;content:'';display:block;border:1px solid rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.08);border:var(--thin-border) solid var(--image_border);z-index:3;box-sizing:border-box;border-radius:inherit;pointer-events:none}
+.vkui__vkui__Banner__in::before{position:absolute;left:0;top:0;width:100%;height:100%;content:'';display:block;border:1px solid rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.08);border:var(--thin-border) solid var(--image_border);z-index:2;box-sizing:border-box;border-radius:inherit;pointer-events:none}
 .vkui__vkui__Banner__before{margin-right:12px}
 .vkui__vkui__Banner__content{display:flex;justify-content:center;flex-direction:column;flex:1;min-width:0}
 .vkui__vkui__Banner__subheader{color:#6d7885;color:#6d7885;color:var(--text_subhead)}
@@ -1385,6 +1385,28 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .vkui__vkui__WriteBarIcon--ios.vkui__vkui__WriteBarIcon--send:last-child,.vkui__vkui__WriteBarIcon--ios.vkui__vkui__WriteBarIcon--done:last-child{margin-right:-4px}
 .vkui__vkui__WriteBarIcon--android,.vkui__vkui__WriteBarIcon--vkcom{width:44px;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
 .vkui__vkui__WriteBarIcon--android.vkui__vkui__WriteBarIcon--send,.vkui__vkui__WriteBarIcon--vkcom.vkui__vkui__WriteBarIcon--send,.vkui__vkui__WriteBarIcon--android.vkui__vkui__WriteBarIcon--done,.vkui__vkui__WriteBarIcon--vkcom.vkui__vkui__WriteBarIcon--done{color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
+.vkui__vkui__SubnavigationBar__in{margin:-8px 0}
+.vkui__vkui__SubnavigationBar__scrollIn{padding:20px 0;display:flex}
+.vkui__vkui__SubnavigationBar .vkui__vkui__SubnavigationButton+.vkui__vkui__SubnavigationButton{margin-left:8px}
+.vkui__vkui__SubnavigationBar--fixed .vkui__vkui__SubnavigationButton{flex:1;min-width:0}
+.vkui__vkui__SubnavigationBar--ios .vkui__vkui__SubnavigationBar__gap{min-width:12px}
+.vkui__vkui__SubnavigationBar--android .vkui__vkui__SubnavigationBar__gap,.vkui__vkui__SubnavigationBar--vkcom .vkui__vkui__SubnavigationBar__gap{min-width:16px}
+.vkui__vkui__SubnavigationButton{display:inline-block;background-color:#fff;background-color:#fff;background-color:var(--modal_card_background);color:#000;color:#000;color:var(--text_primary);box-shadow:0 0 2px rgba(0,0,0,.08),0 2px 24px rgba(0,0,0,.08);-webkit-user-select:none;user-select:none}
+.vkui__vkui__SubnavigationButton__in{display:flex;align-items:center;justify-content:center}
+.vkui__vkui__SubnavigationButton__before{margin-right:8px;color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
+.vkui__vkui__SubnavigationButton__before .vkui__vkui__Icon--24{margin-left:-4px}
+.vkui__vkui__SubnavigationButton__label{flex-grow:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vkui__vkui__SubnavigationButton__after{margin-left:8px}
+.vkui__vkui__SubnavigationButton__expandableIcon{margin-left:8px;margin-top:1px;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
+.vkui__vkui__SubnavigationButton--selected{background-color:#4986cc;background-color:#4986cc;background-color:var(--button_primary_background);color:#fff;color:#fff;color:var(--button_primary_foreground)}
+.vkui__vkui__SubnavigationButton--selected .vkui__vkui__SubnavigationButton__before{color:inherit}
+.vkui__vkui__SubnavigationButton--selected .vkui__vkui__Counter{background-color:#fff;background-color:#fff;background-color:var(--button_primary_foreground);color:#4986cc;color:#4986cc;color:var(--button_primary_background)}
+.vkui__vkui__SubnavigationButton--selected .vkui__vkui__SubnavigationButton__expandableIcon{color:inherit}
+.vkui__vkui__SubnavigationButton--m .vkui__vkui__SubnavigationButton__in{height:36px;padding:0 14px}
+.vkui__vkui__SubnavigationButton--l .vkui__vkui__SubnavigationButton__in{height:44px;padding:0 14px}
+.vkui__vkui__SubnavigationButton--ios{border-radius:10px}
+.vkui__vkui__SubnavigationButton--android{border-radius:8px}
+.vkui__vkui__SubnavigationButton--vkcom{border-radius:4px}
 .vkui__vkui__FormLayout{position:relative}
 .vkui__vkui__FormLayout__submit{position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;padding:0;width:0;height:0;-webkit-appearance:none;appearance:none;border:0}
 .vkui__vkui__FormItem{padding:12px 16px;display:block}
