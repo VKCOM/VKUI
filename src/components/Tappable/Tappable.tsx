@@ -18,6 +18,8 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
   stopPropagation?: boolean;
   hasHover?: boolean;
   hasActive?: boolean;
+  activeHighlighted?: boolean;
+  hoverBackground?: boolean;
 }
 
 export interface TappableState {
@@ -106,6 +108,8 @@ class Tappable extends Component<TappableProps, TappableState> {
     hasHover,
     hasActive: true,
     activeEffectDelay: ACTIVE_EFFECT_DELAY,
+    activeHighlighted: true,
+    hoverBackground: true,
   };
 
   /*
@@ -304,7 +308,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   render() {
     const { clicks, active, hovered, hasHover, hasActive } = this.state;
     const { children, className, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, sizeX, hasMouse, hasHover: propsHasHover, hasActive: propsHasActive, ...restProps } = this.props;
+      stopPropagation, getRootRef, platform, sizeX, hasMouse, hasHover: propsHasHover, hasActive: propsHasActive, activeHighlighted, hoverBackground, ...restProps } = this.props;
 
     const hoverClassModificator = this.containerHasTransparentBackground()
       ? 'shadowHovered'
@@ -319,6 +323,8 @@ class Tappable extends Component<TappableProps, TappableState> {
         'Tappable--inactive': !active,
         'Tappable--mouse': hasMouse,
         [`Tappable--${hoverClassModificator}`]: hasHover && hovered,
+        'Tappable--activeHighlighted': activeHighlighted,
+        'Tappable--hoverBackground': hoverBackground,
       });
 
     const RootComponent = restProps.disabled

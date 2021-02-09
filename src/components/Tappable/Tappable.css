@@ -11,9 +11,11 @@
   transition: background-color .15s ease-out;
 }
 
-/** TODO: Переписать без использования !important */
-.Tappable--ios.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ActionSheetItem):not(.Banner__in):not(.ModalDismissButton) {
-  background: var(--background_highlighted) !important;
+.Tappable--activeHighlighted.Tappable--active:not([disabled]) {
+  background: var(--background_highlighted);
+}
+
+.Tappable--ios.Tappable--activeHighlighted.Tappable--active:not([disabled]) {
   transition: none;
 }
 
@@ -26,10 +28,6 @@
   border-radius: 8px;
 }
 
-.Tappable--android.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton) {
-  background: var(--background_highlighted) !important;
-}
-
 /**
  * VKCOM tappable
  */
@@ -37,10 +35,6 @@
   position: relative;
   transition: background-color .15s ease-out;
   border-radius: 8px;
-}
-
-.Tappable--vkcom.Tappable--active:not([disabled]):not(.TabsItem):not(.PanelHeaderButton):not(.IconButton):not(.Button):not(.Link):not(.SliderSwitch__button):not(.PanelHeaderContent__in):not(.ModalDismissButton) {
-  background: var(--background_highlighted) !important;
 }
 
 /**
@@ -87,7 +81,7 @@
   border-radius: inherit;
 }
 
-.Tappable:not(.SliderSwitch__button):not(.ModalDismissButton):not(.Link):not(.PanelHeaderButton--vkcom).Tappable--shadowHovered > .Tappable__hoverShadow {
+.Tappable--hoverBackground.Tappable--shadowHovered > .Tappable__hoverShadow {
   background: var(--background_hover);
 }
 
