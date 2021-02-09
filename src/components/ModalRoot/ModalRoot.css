@@ -38,8 +38,7 @@
   top: var(--safe-area-inset-top);
 }
 
-.ModalRoot--vkapps.ModalRoot--android .ModalRoot__viewport,
-.ModalRoot--vkapps.ModalRoot--vkcom .ModalRoot__viewport {
+.ModalRoot--vkapps.ModalRoot--android .ModalRoot__viewport {
   top: var(--panelheader_height_android);
 }
 
