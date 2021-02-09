@@ -72,7 +72,7 @@ export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: Subnavi
       {...restProps}
       className={classNames(
         getClassName('SubnavigationButton', platform),
-        `SubnavigationButton--sz-${size}`,
+        `SubnavigationButton--${size}`,
         {
           'SubnavigationButton--selected': selected,
         },

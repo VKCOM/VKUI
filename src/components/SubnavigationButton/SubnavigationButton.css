@@ -64,7 +64,7 @@
  * size m
  */
 
-.SubnavigationButton--sz-m .SubnavigationButton__in {
+.SubnavigationButton--m .SubnavigationButton__in {
   height: 36px;
   padding: 0 14px;
 }
@@ -73,7 +73,7 @@
  * size l
  */
 
-.SubnavigationButton--sz-l .SubnavigationButton__in {
+.SubnavigationButton--l .SubnavigationButton__in {
   height: 44px;
   padding: 0 14px;
 }
