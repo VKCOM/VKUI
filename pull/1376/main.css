@@ -1387,7 +1387,7 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .SubnavigationBar__in{margin:-8px 0}
 .SubnavigationBar__scrollIn{padding:20px 0;display:flex}
 .SubnavigationBar .SubnavigationButton+.SubnavigationButton{margin-left:8px}
-.SubnavigationBar--md-fixed .SubnavigationButton{flex:1;min-width:0}
+.SubnavigationBar--fixed .SubnavigationButton{flex:1;min-width:0}
 .SubnavigationBar--ios .SubnavigationBar__gap{min-width:12px}
 .SubnavigationBar--android .SubnavigationBar__gap,.SubnavigationBar--vkcom .SubnavigationBar__gap{min-width:16px}
 .SubnavigationButton{display:inline-block;background-color:#fff;background-color:#fff;background-color:var(--modal_card_background);color:#000;color:#000;color:var(--text_primary);box-shadow:0 0 2px rgba(0,0,0,.08),0 2px 24px rgba(0,0,0,.08);-webkit-user-select:none;user-select:none}
@@ -1401,8 +1401,8 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .SubnavigationButton--selected .SubnavigationButton__before{color:inherit}
 .SubnavigationButton--selected .Counter{background-color:#fff;background-color:#fff;background-color:var(--button_primary_foreground);color:#4986cc;color:#4986cc;color:var(--button_primary_background)}
 .SubnavigationButton--selected .SubnavigationButton__expandableIcon{color:inherit}
-.SubnavigationButton--sz-m .SubnavigationButton__in{height:36px;padding:0 14px}
-.SubnavigationButton--sz-l .SubnavigationButton__in{height:44px;padding:0 14px}
+.SubnavigationButton--m .SubnavigationButton__in{height:36px;padding:0 14px}
+.SubnavigationButton--l .SubnavigationButton__in{height:44px;padding:0 14px}
 .SubnavigationButton--ios{border-radius:10px}
 .SubnavigationButton--android{border-radius:8px}
 .SubnavigationButton--vkcom{border-radius:4px}
