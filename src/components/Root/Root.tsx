@@ -4,7 +4,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { withPlatform } from '../../hoc/withPlatform';
-import withContext from '../../hoc/withContext';
+import { withContext } from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';

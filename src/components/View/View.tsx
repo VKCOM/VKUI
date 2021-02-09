@@ -7,7 +7,7 @@ import Touch, { TouchEvent } from '../Touch/Touch';
 import { removeObjectKeys } from '../../lib/removeObjectKeys';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
-import withContext from '../../hoc/withContext';
+import { withContext } from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
