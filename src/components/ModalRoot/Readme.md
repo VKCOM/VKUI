@@ -51,6 +51,7 @@ const MODAL_PAGE_FILTERS = 'filters';
 const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
 const MODAL_PAGE_USER_INFO = 'user-info';
+const MODAL_PAGE_FULLSCREEN = 'fullscreen';
 
 const MODAL_CARD_MONEY_SEND = 'money-send';
 const MODAL_CARD_APP_TO_MENU = 'app-to-menu';
@@ -70,6 +71,8 @@ const App = withAdaptivity(class App extends React.Component {
     this.users = 'k'.repeat(25).split('').map(() => {
       return getRandomUser();
     });
+    
+    this.randomUser = getRandomUser();
 
     this.modalBack = () => {
       this.setActiveModal(this.state.modalHistory[this.state.modalHistory.length - 2]);
@@ -101,6 +104,44 @@ const App = withAdaptivity(class App extends React.Component {
         activeModal={this.state.activeModal}
         onClose={this.modalBack}
       >
+        <ModalPage
+          id={MODAL_PAGE_FULLSCREEN}
+          onClose={this.modalBack}
+          fullscreen
+          settlingHeight={100}
+          header={
+            <ModalPageHeader
+              left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
+              right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+            >
+              @{this.randomUser.screen_name}
+            </ModalPageHeader>
+          }
+        >
+          <Gradient style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            padding: 32,
+          }}>
+            <Avatar size={96} src={this.randomUser.photo_100}/>
+            <Title style={{marginBottom: 8, marginTop: 20}} level="2"
+                   weight="medium">{this.randomUser.first_name + " " + this.randomUser.last_name}</Title>
+          </Gradient>
+          <Group header={<Header mode="secondary" indicator="25">Друзья</Header>}>
+            {this.users.map((user) => {
+              return (
+                <SimpleCell
+                  before={<Avatar src={user.photo_100}/>}
+                  key={user.id}
+                >{user.name}</SimpleCell>
+              );
+            })}
+          </Group>
+        </ModalPage>
+      
         <ModalPage
           id={MODAL_PAGE_FILTERS}
           onClose={this.modalBack}
@@ -204,10 +245,10 @@ const App = withAdaptivity(class App extends React.Component {
           <Group>
             {this.users.map((user) => {
               return (
-                <Cell
+                <SimpleCell
                   before={<Avatar src={user.photo_100} />}
                   key={user.id}
-                >{user.name}</Cell>
+                >{user.name}</SimpleCell>
               );
             })}
           </Group>
@@ -340,6 +381,9 @@ const App = withAdaptivity(class App extends React.Component {
             <Group>
               <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
                 Открыть модальную страницу
+              </CellButton>
+              <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN)}>
+                Открыть полноэкранную модальную страницу
               </CellButton>
               <CellButton onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
                 Открыть модальные карточки

@@ -308,7 +308,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     }
 
     // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
-    if (modalState.expandable && translateY > prevTranslateY) {
+    if (modalState.expandable && translateY > prevTranslateY || modalState.settlingHeight === 100) {
       translateY = 0;
     }
 
@@ -448,6 +448,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       target.closest('.ModalPage__header')
     ) {
       originalEvent.preventDefault();
+
       if (!expandable && shiftY < 0) {
         return;
       }
@@ -516,14 +517,22 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       const expectTranslateY = translateY / (Date.now() - modalState.touchStartTime.getTime()) * 240 * 0.6 * (modalState.touchShiftYPercent < 0 ? -1 : 1);
       translateY = rangeTranslate(translateY + expectTranslateY);
 
-      if (numberInRange(translateY, modalState.expandedRange)) {
-        translateY = modalState.expandedRange[0];
-      } else if (numberInRange(translateY, modalState.collapsedRange)) {
-        translateY = modalState.translateYFrom;
-      } else if (numberInRange(translateY, modalState.hiddenRange)) {
-        translateY = 100;
+      if (modalState.settlingHeight !== 100) {
+        if (numberInRange(translateY, modalState.expandedRange)) {
+          translateY = modalState.expandedRange[0];
+        } else if (numberInRange(translateY, modalState.collapsedRange)) {
+          translateY = modalState.translateYFrom;
+        } else if (numberInRange(translateY, modalState.hiddenRange)) {
+          translateY = 100;
+        } else {
+          translateY = modalState.translateYFrom;
+        }
       } else {
-        translateY = modalState.translateYFrom;
+        if (numberInRange(translateY, [0, 25])) {
+          translateY = 0;
+        } else {
+          translateY = 100;
+        }
       }
 
       if (translateY !== 100 && shiftYEndPercent >= 75) {
