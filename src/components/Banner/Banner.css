@@ -22,7 +22,7 @@
   content: '';
   display: block;
   border: var(--thin-border) solid var(--image_border);
-  z-index: 3;
+  z-index: 2;
   box-sizing: border-box;
   border-radius: inherit;
   pointer-events: none;
