@@ -328,7 +328,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   swipingBackTransitionEndHandler = (e?: TransitionEvent): void => {
     // indexOf because of vendor prefixes in old browsers
     const target = e.target as HTMLElement;
-    if (e.propertyName.includes('transform') && target.classList.contains('View__panel--swipe-back-next')) {
+    if (e.propertyName.includes('transform') && target === this.pickPanel(this.state.swipeBackNextPanel)) {
       switch (this.state.swipeBackResult) {
         case SwipeBackResults.fail:
           this.onSwipeBackCancel();
