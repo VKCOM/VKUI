@@ -398,7 +398,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
         <div
           className={classNames(getClassName('ModalRoot', this.props.platform), {
             'ModalRoot--vkapps': this.props.configProvider.webviewType === WebviewType.VKAPPS,
-          })}
+          }, 'ModalRoot--desktop')}
         >
           <div
             className="ModalRoot__mask"
