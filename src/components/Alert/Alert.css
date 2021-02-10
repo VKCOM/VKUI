@@ -2,7 +2,7 @@
   user-select: none;
   color: var(--text_primary);
   position: relative;
-  max-width: 416px;
+  width: 416px;
 }
 
 .Alert::before {
