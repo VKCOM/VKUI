@@ -112,7 +112,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
         alignY="bottom"
         className={className}
         style={style}
-        onClick={this.onClose}
+        onClick={!isDesktop ? this.onClose : null}
         hasMask={!isDesktop}
         fixed={!isDesktop}
       >
