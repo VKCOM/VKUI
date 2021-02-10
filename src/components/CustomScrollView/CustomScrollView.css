@@ -12,18 +12,21 @@
   overflow-x: hidden;
   padding-right: 100px;
   scrollbar-width: none;
+  position: relative;
+  z-index: 0;
 }
 
 .CustomScrollView__box::-webkit-scrollbar {
   display: none;
 }
 
-.CustomScrollView__box--dragging {
+.CustomScrollView__barY:active + .CustomScrollView__box {
   pointer-events: none;
 }
 
 .CustomScrollView__barY {
   position: absolute;
+  z-index: 1;
   top: 0;
   right: 0;
   height: 100%;
@@ -52,7 +55,7 @@
 }
 
 .CustomScrollView__trackerY:hover::before,
-.CustomScrollView__trackerY--dragging::before {
+.CustomScrollView__trackerY:active::before {
   opacity: .56;
   transform: scaleX(1.34);
 }

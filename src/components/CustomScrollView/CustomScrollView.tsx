@@ -101,8 +101,6 @@ export default class CustomScrollView extends React.Component<Props> {
 
     document.addEventListener('mousemove', this.onMove);
     document.addEventListener('mouseup', this.onUp);
-    this.trackerY.current.classList.add('CustomScrollView__trackerY--dragging');
-    this.box.current.classList.add('CustomScrollView__box--dragging');
   };
 
   onMove = (e: MouseEvent) => {
@@ -115,21 +113,18 @@ export default class CustomScrollView extends React.Component<Props> {
 
   onUp = (e: MouseEvent) => {
     e.preventDefault();
-
     document.removeEventListener('mousemove', this.onMove);
     document.removeEventListener('mouseup', this.onUp);
-    this.trackerY.current.classList.remove('CustomScrollView__trackerY--dragging');
-    this.box.current.classList.remove('CustomScrollView__box--dragging');
   };
 
   render() {
     return <div className="CustomScrollView">
-      <div className="CustomScrollView__box" tabIndex={-1} ref={this.box} onScroll={this.scroll}>
-        {this.props.children}
-      </div>
-
       <div className="CustomScrollView__barY" ref={this.barY}>
         <div className="CustomScrollView__trackerY" ref={this.trackerY} onMouseDown={this.onDragStart} />
+      </div>
+
+      <div className="CustomScrollView__box" tabIndex={-1} ref={this.box} onScroll={this.scroll}>
+        {this.props.children}
       </div>
     </div>;
   }
