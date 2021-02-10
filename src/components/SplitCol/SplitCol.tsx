@@ -11,7 +11,7 @@ export const SplitColContext = React.createContext<SplitColContextProps>({
   animate: true,
 });
 
-interface SplitColProps extends HTMLAttributes<HTMLDivElement> {
+export interface SplitColProps extends HTMLAttributes<HTMLDivElement> {
   width?: string;
   maxWidth?: string;
   minWidth?: string;

@@ -17,7 +17,7 @@ import { getClassName } from '../../helpers/getClassName';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
-export interface SelectOption {
+export interface CustomSelectOptionInterface {
   value: SelectValue;
   label: string;
   [index: string]: any;
@@ -317,7 +317,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   }
 
-  renderOption = (option: SelectOption, index: number) => {
+  renderOption = (option: CustomSelectOptionInterface, index: number) => {
     const { focusedOptionIndex, selectedOptionIndex } = this.state;
     const { renderOption } = this.props;
     const hovered = index === focusedOptionIndex;

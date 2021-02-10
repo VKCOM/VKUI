@@ -5,7 +5,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 
-interface ScreenSpinnerProps extends HTMLAttributes<HTMLDivElement>, SpinnerProps {}
+export interface ScreenSpinnerProps extends HTMLAttributes<HTMLDivElement>, SpinnerProps {}
 
 const ScreenSpinner: FunctionComponent<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
   const { style, className, ...restProps } = props;

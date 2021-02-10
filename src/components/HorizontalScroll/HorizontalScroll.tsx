@@ -21,7 +21,7 @@ interface ScrollContext {
   initialScrollWidth: number;
 }
 
-interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+export interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   /**
    * Функция для расчета величины прокрутки при клике на левую стрелку.
    */

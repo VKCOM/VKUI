@@ -3,23 +3,23 @@ import SliderSwitchButton from './SliderSwitchButton';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
 
-interface Option {
+export interface SliderSwitchOptionInterface {
   name: string;
   value: string | number;
 }
 
-interface SliderSwitchProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+export interface SliderSwitchProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   options: Array<{
     name: string;
     value: string | number;
   }>;
-  activeValue?: Option['value'];
+  activeValue?: SliderSwitchOptionInterface['value'];
   name?: string;
-  onSwitch?: (value: Option['value']) => void;
+  onSwitch?: (value: SliderSwitchOptionInterface['value']) => void;
 }
 
 interface SliderSwitchState {
-  activeValue: Option['value'];
+  activeValue: SliderSwitchOptionInterface['value'];
   hoveredOptionId: number;
 }
 
@@ -43,7 +43,7 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
   firstButton: RefObject<HTMLDivElement>;
   secondButton: RefObject<HTMLDivElement>;
 
-  onSwitch = (value: Option['value']) => {
+  onSwitch = (value: SliderSwitchOptionInterface['value']) => {
     const { onSwitch } = this.props;
 
     this.setState(() => ({
