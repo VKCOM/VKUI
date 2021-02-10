@@ -1,7 +1,7 @@
-import React, { HTMLAttributes, FC } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
-import usePlatform from '../../hooks/usePlatform';
+import React, { HTMLAttributes, FC, Children } from 'react';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { usePlatform } from '../../hooks/usePlatform';
 import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
@@ -34,6 +34,10 @@ export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
 const Counter: FC<CounterProps> = (props: CounterProps) => {
   const { mode, size, children, className, ...restProps } = props;
   const platform = usePlatform();
+
+  if (Children.count(children) === 0) {
+    return null;
+  }
 
   return (
     <div

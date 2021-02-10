@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { Icon28DoneOutline } from '@vkontakte/icons';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 
 const PanelHeaderSubmit: FunctionComponent<PanelHeaderButtonProps> = ({
   children,

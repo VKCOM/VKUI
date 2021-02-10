@@ -1,8 +1,9 @@
 import React, { ReactElement, ReactNode, Component, Fragment, RefCallback, isValidElement } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
+import { setRef } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
@@ -21,7 +22,7 @@ type GetBoundingTargetRect = () => {
   height: number;
 };
 
-const isDOMTypeElement = (element: ReactElement) => {
+const isDOMTypeElement = (element: ReactElement): element is React.DOMElement<any, any> => {
   return React.isValidElement(element) && typeof element.type === 'string';
 };
 
@@ -191,7 +192,14 @@ export default class Tooltip extends Component<TooltipProps, TooltipState> {
     }
   }
 
-  getRef: RefCallback<HTMLDivElement> = (el) => this.targetEl = el;
+  getRef: RefCallback<HTMLDivElement> = (el) => {
+    this.targetEl = el;
+
+    const { children } = this.props;
+    if (isValidElement(children)) {
+      setRef(el, isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
+    }
+  };
 
   render() {
     const { children = null, isShown, ...portalProps } = this.props;

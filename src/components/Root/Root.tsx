@@ -1,10 +1,10 @@
 import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import withPlatform from '../../hoc/withPlatform';
-import withContext from '../../hoc/withContext';
+import { withPlatform } from '../../hoc/withPlatform';
+import { withContext } from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
@@ -182,10 +182,10 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     const disableAnimation = this.shouldDisableTransitionMotion();
 
     return (
-      <div className={classNames(baseClassName, this.props.className, {
+      <div {...restProps} className={classNames(baseClassName, this.props.className, {
         'Root--transition': !disableAnimation && transition,
         'Root--no-motion': disableAnimation,
-      })} {...restProps}>
+      })}>
         {Views.map((view: ReactElement) => {
           return (
             <div key={view.props.id} id={`view-${view.props.id}`} className={classNames('Root__view', {

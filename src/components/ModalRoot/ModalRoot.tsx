@@ -1,16 +1,16 @@
 import React, { Component, ReactElement, SyntheticEvent } from 'react';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasPlatform } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
-import withContext from '../../hoc/withContext';
+import { withPlatform } from '../../hoc/withPlatform';
+import { withContext } from '../../hoc/withContext';
 import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 import {
   ConfigProviderContext,
@@ -308,7 +308,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     }
 
     // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
-    if (modalState.expandable && translateY > prevTranslateY) {
+    if (modalState.expandable && translateY > prevTranslateY || modalState.settlingHeight === 100) {
       translateY = 0;
     }
 
@@ -373,6 +373,9 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   };
 
   closeActiveModal() {
+    // Сбрасываем состояния, которые могут помешать закрытию модального окна
+    this.setState({ touchDown: false, switching: false });
+
     const { prevModal } = this.state;
     if (!prevModal) {
       return console.warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
@@ -445,6 +448,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       target.closest('.ModalPage__header')
     ) {
       originalEvent.preventDefault();
+
       if (!expandable && shiftY < 0) {
         return;
       }
@@ -513,14 +517,22 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       const expectTranslateY = translateY / (Date.now() - modalState.touchStartTime.getTime()) * 240 * 0.6 * (modalState.touchShiftYPercent < 0 ? -1 : 1);
       translateY = rangeTranslate(translateY + expectTranslateY);
 
-      if (numberInRange(translateY, modalState.expandedRange)) {
-        translateY = modalState.expandedRange[0];
-      } else if (numberInRange(translateY, modalState.collapsedRange)) {
-        translateY = modalState.translateYFrom;
-      } else if (numberInRange(translateY, modalState.hiddenRange)) {
-        translateY = 100;
+      if (modalState.settlingHeight !== 100) {
+        if (numberInRange(translateY, modalState.expandedRange)) {
+          translateY = modalState.expandedRange[0];
+        } else if (numberInRange(translateY, modalState.collapsedRange)) {
+          translateY = modalState.translateYFrom;
+        } else if (numberInRange(translateY, modalState.hiddenRange)) {
+          translateY = 100;
+        } else {
+          translateY = modalState.translateYFrom;
+        }
       } else {
-        translateY = modalState.translateYFrom;
+        if (numberInRange(translateY, [0, 25])) {
+          translateY = 0;
+        } else {
+          translateY = 100;
+        }
       }
 
       if (translateY !== 100 && shiftYEndPercent >= 75) {
@@ -739,6 +751,9 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   };
 
   private readonly doCloseModal = (modalState: ModalsStateEntry) => {
+    // Сбрасываем состояния, которые могут помешать закрытию модального окна
+    this.setState({ touchDown: false, switching: false });
+
     if (isFunction(modalState.onClose)) {
       modalState.onClose();
     } else if (isFunction(this.props.onClose)) {

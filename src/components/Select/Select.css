@@ -2,92 +2,92 @@
   display: block;
   position: relative;
   box-sizing: border-box;
-  }
+}
 
 .Select--mimicry:focus {
   outline: none;
-  }
+}
 
-  .Select__el {
-    display: block;
-    position: absolute;
-    appearance: none;
-    outline: none;
-    border: none;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    z-index: 3;
-    font-size: 16px;
-    }
+.Select__el {
+  display: block;
+  position: absolute;
+  appearance: none;
+  outline: none;
+  border: none;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 3;
+  font-size: 16px;
+}
 
-  .Select__container {
-    padding: 11px 39px 12px 11px;
-    color: var(--text_primary);
-    box-sizing: border-box;
-    height: 42px;
-    position: relative;
-    z-index: 2;
-    cursor: pointer;
-    }
+.Select__container {
+  padding: 11px 39px 12px 11px;
+  color: var(--text_primary);
+  box-sizing: border-box;
+  height: 42px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
 
-  .Select__el {
-    cursor: pointer;
-  }
+.Select__el {
+  cursor: pointer;
+}
 
-  .Select--disabled .Select__el {
-    cursor: default;
-  }
+.Select--disabled .Select__el {
+  cursor: default;
+}
 
-  .Select--disabled .Select__container {
-    opacity: .4;
-    cursor: default;
-    }
+.Select--disabled .Select__container {
+  opacity: .4;
+  cursor: default;
+}
 
-    .Select:not(.Select--multiline) .Select__title {
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      }
+.Select:not(.Select--multiline) .Select__title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
-    .Select--not-selected .Select__title {
-      color: var(--field_text_placeholder);
-      }
+.Select--not-selected .Select__title {
+  color: var(--field_text_placeholder);
+}
 
-    .Select--disabled.Select--not-selected .Select__title {
-      color: var(--text_secondary);
-    }
+.Select--disabled.Select--not-selected .Select__title {
+  color: var(--text_secondary);
+}
 
-    .Select--align-right .Select__title {
-      text-align: right;
-      }
+.Select--align-right .Select__title {
+  text-align: right;
+}
 
-    .Select--align-center .Select__title {
-      text-align: center;
-      }
+.Select--align-center .Select__title {
+  text-align: center;
+}
 
-    .Select .Icon {
-      position: absolute;
-      top: 50%;
-      margin-top: -12px;
-      right: 10px;
-      color: var(--icon_secondary);
-      }
+.Select .Icon {
+  position: absolute;
+  top: 50%;
+  margin-top: -12px;
+  right: 10px;
+  color: var(--icon_secondary);
+}
 
 .Select--multiline .Select__container {
   height: auto;
   min-height: 42px;
-  }
+}
 
 .Select--sizeY--compact .Select__container {
   padding: 11px 35px 11px 11px;
-  }
+}
 
-  .Select--sizeX--compact .Icon--h-12 {
-    margin-top: -6px;
-  }
+.Select--sizeX--compact .Icon--h-12 {
+  margin-top: -6px;
+}
 
 .Select--sizeY--compact .Select__container {
   height: 34px;

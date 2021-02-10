@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, useRef, FC } from 'react';
-import classNames from '../../lib/classNames';
-import getClassname from '../../helpers/getClassName';
-import usePlatform from '../../hooks/usePlatform';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { usePlatform } from '../../hooks/usePlatform';
 import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useDOM } from '../../lib/dom';
 
 export interface CardScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
@@ -59,7 +59,7 @@ const CardScroll: FC<CardScrollProps> = ({ children, className, size, sizeX, ...
       {...restProps}
       className={classNames(
         className,
-        getClassname('CardScroll', platform),
+        getClassName('CardScroll', platform),
         `CardScroll--${size}`,
         `CardScroll--sizeX-${sizeX}`,
       )}

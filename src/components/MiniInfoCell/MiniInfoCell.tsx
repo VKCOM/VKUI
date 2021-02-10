@@ -1,7 +1,7 @@
 import React, { ElementType, FC, HTMLAttributes, ReactNode } from 'react';
-import classNames from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
-import getClassName from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
 import Text from '../Typography/Text/Text';
 import Tappable from '../../components/Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';

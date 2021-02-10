@@ -1,10 +1,10 @@
 .ScreenSpinner .PopoutWrapper__overlay {
   background: none;
-  }
+}
 
 .ScreenSpinner {
   animation: screen-spinner-intro .3s ease;
-  }
+}
 
 .ScreenSpinner--ios .ScreenSpinner__container {
   width: 88px;
@@ -12,11 +12,11 @@
   background: var(--modal_card_background);
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 0 96px 0 rgba(0, 0, 0, .16);
   border-radius: 10px;
-  }
+}
 
 .ScreenSpinner--ios .ScreenSpinner__container .Spinner {
   color: var(--overlay_status_icon);
-  }
+}
 
 .ScreenSpinner--android .ScreenSpinner__container,
 .ScreenSpinner--vkcom .ScreenSpinner__container {
@@ -25,19 +25,19 @@
   background: var(--tabbar_background);
   box-shadow: 0 16px 32px 0 rgba(0, 0, 0, .08), 0 0 8px 0 rgba(0, 0, 0, .08);
   border-radius: 8px;
-  }
+}
 
 .ScreenSpinner--android .ScreenSpinner__container .Spinner,
 .ScreenSpinner--vkcom .ScreenSpinner__container .Spinner {
   color: var(--icon_outline_secondary);
-  }
+}
 
 @keyframes screen-spinner-intro {
   from {
     opacity: 0;
-    }
+  }
 
   to {
     opacity: 1;
-    }
   }
+}

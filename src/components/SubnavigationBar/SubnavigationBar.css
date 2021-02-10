@@ -1,0 +1,35 @@
+.SubnavigationBar__in {
+  /* Отрицательный margin нужен, чтобы компенсировать увеличенный из-за тени padding (12px -> 20px) */
+  margin: -8px 0;
+}
+
+.SubnavigationBar__scrollIn {
+  padding: 20px 0;
+  display: flex;
+}
+
+.SubnavigationBar .SubnavigationButton + .SubnavigationButton {
+  margin-left: 8px;
+}
+
+.SubnavigationBar--fixed .SubnavigationButton {
+  flex: 1;
+  min-width: 0;
+}
+
+/**
+ * iOS
+ */
+
+.SubnavigationBar--ios .SubnavigationBar__gap {
+  min-width: 12px;
+}
+
+/**
+ * Android + vkcom
+ */
+
+.SubnavigationBar--android .SubnavigationBar__gap,
+.SubnavigationBar--vkcom .SubnavigationBar__gap {
+  min-width: 16px;
+}

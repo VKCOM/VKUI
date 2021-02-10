@@ -1,6 +1,6 @@
 import React, { FC, HTMLAttributes, ReactNode } from 'react';
 import { Icon16Done } from '@vkontakte/icons';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 
@@ -37,7 +37,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       })}
     >
       {hasReactNode(before) && <div className="CustomSelectOption__before">{before}</div>}
-      {children}
+      <div className="CustomSelectOption__label">{children}</div>
       {hasReactNode(after) && <div className="CustomSelectOption__after">{after}</div>}
       {selected && (
         <div className="CustomSelectOption__selectedIcon">

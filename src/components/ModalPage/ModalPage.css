@@ -14,6 +14,11 @@
   justify-content: center;
 }
 
+.ModalPage--sizeX-regular .Separator:not(.Separator--wide) {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 .ModalPage__in-wrap {
   width: 100%;
   height: 100%;
@@ -137,8 +142,8 @@
   height: auto;
   max-height: 640px;
   box-shadow:
-          0 16px 16px rgba(0, 0, 0, .16),
-          0 0 8px rgba(0, 0, 0, .12);
+    0 16px 16px rgba(0, 0, 0, .16),
+    0 0 8px rgba(0, 0, 0, .12);
   border-radius: 8px;
 }
 

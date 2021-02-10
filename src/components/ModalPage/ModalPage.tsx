@@ -1,20 +1,19 @@
 import React, { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
-import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
-  id: string;
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
-  header: ReactNode;
+  header?: ReactNode;
   onClose?: VoidFunction;
   /**
-   * Процент, на который изначально будет открыта модальная страница
+   * Процент, на который изначально будет открыта модальная страница. При `settlingHeight={100}` модальная страница раскрывается на всю высоту.
    */
   settlingHeight?: number;
   /**
@@ -23,7 +22,7 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
   dynamicContentHeight?: boolean;
 }
 
-const ModalPage: FC<ModalPageProps> = (props) => {
+const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
   const platform = usePlatform();
   const { updateModalHeight } = useContext(ModalRootContext);
   const {
@@ -32,9 +31,9 @@ const ModalPage: FC<ModalPageProps> = (props) => {
     header,
     viewWidth,
     viewHeight,
+    sizeX,
     hasMouse,
     onClose,
-    id,
     settlingHeight,
     dynamicContentHeight,
     ...restProps
@@ -52,7 +51,7 @@ const ModalPage: FC<ModalPageProps> = (props) => {
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('ModalPage', platform), className, {
+      className={classNames(getClassName('ModalPage', platform), className, `ModalPage--sizeX-${sizeX}`, {
         'ModalPage--desktop': isDesktop,
       })}
     >
@@ -83,5 +82,6 @@ ModalPage.defaultProps = {
 export default withAdaptivity(ModalPage, {
   viewWidth: true,
   viewHeight: true,
+  sizeX: true,
   hasMouse: true,
 });

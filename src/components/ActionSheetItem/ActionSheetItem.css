@@ -224,31 +224,31 @@
 /**
  * VKCOM
  */
- .ActionSheetItem--vkcom {
-   padding: 0 20px;
-   min-height: 48px;
-   border-radius: 0;
- }
+.ActionSheetItem--vkcom {
+  padding: 0 20px;
+  min-height: 48px;
+  border-radius: 0;
+}
 
- .ActionSheetItem--vkcom.Tappable--active {
-   background-color: var(--action_sheet_separator);
- }
+.ActionSheetItem--vkcom.Tappable--active {
+  background-color: var(--action_sheet_separator);
+}
 
- .ActionSheetItem--vkcom .ActionSheetItem__before {
-   margin-right: 17px;
-   margin-left: -1px;
- }
+.ActionSheetItem--vkcom .ActionSheetItem__before {
+  margin-right: 17px;
+  margin-left: -1px;
+}
 
- .ActionSheetItem--vkcom .ActionSheetItem__subtitle {
-   margin-top: 2px;
-   margin-bottom: -2px;
- }
+.ActionSheetItem--vkcom .ActionSheetItem__subtitle {
+  margin-top: 2px;
+  margin-bottom: -2px;
+}
 
- .ActionSheetItem--vkcom .ActionSheetItem__marker {
-   margin-left: 26px;
-   color: var(--accent);
-   background-color: transparent;
- }
+.ActionSheetItem--vkcom .ActionSheetItem__marker {
+  margin-left: 26px;
+  color: var(--accent);
+  background-color: transparent;
+}
 
 /**
  * Desktop

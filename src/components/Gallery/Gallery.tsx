@@ -1,12 +1,12 @@
 import React, { Children, Component, HTMLAttributes, ReactElement, RefCallback, useCallback, useEffect, useState, FC } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
-import classNames from '../../lib/classNames';
-import withPlatform from '../../hoc/withPlatform';
+import { classNames } from '../../lib/classNames';
+import { withPlatform } from '../../hoc/withPlatform';
 import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
 import { canUseDOM, withDOM, useDOM, DOMProps } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
 
 export interface BaseGalleryProps extends
@@ -350,6 +350,8 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
       platform,
       hasMouse,
       showArrows,
+      window,
+      document,
       ...restProps
     } = this.props;
 

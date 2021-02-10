@@ -3,6 +3,7 @@
   max-width: 100%;
   flex-grow: 1;
   flex-basis: 0;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,6 +23,9 @@
 .TabbarItem__in {
   align-self: center;
   display: flex;
+  max-width: 100%;
+  padding: 0 2px;
+  box-sizing: border-box;
 }
 
 .Tabbar--l-vertical .TabbarItem__in {
@@ -49,6 +53,13 @@
   position: absolute;
   top: -2px;
   right: -4px;
+}
+
+.TabbarItem__text {
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Tabbar--l-vertical .TabbarItem__text {

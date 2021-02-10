@@ -2,11 +2,11 @@ import React, { PureComponent, RefObject } from 'react';
 import Touch, { TouchProps, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import FixedLayout from '../FixedLayout/FixedLayout';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import PullToRefreshSpinner from './PullToRefreshSpinner';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import { AnyFunction, HasPlatform } from '../../types';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { runTapticImpactOccurred } from '../../lib/taptic';
@@ -53,7 +53,7 @@ function cancelEvent(event: any) {
   while (event.originalEvent) {
     event = event.originalEvent;
   }
-  if (event.preventDefault) {
+  if (event.preventDefault && event.cancelable) {
     event.preventDefault();
   }
   if (event.stopPropagation) {

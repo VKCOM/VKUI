@@ -11,7 +11,7 @@
   box-sizing: content-box;
   background: var(--header_alternate_background);
   padding-bottom: var(--safe-area-inset-bottom);
-  }
+}
 
 .Tabbar--ios.Tabbar--shadow::before {
   position: absolute;
@@ -22,21 +22,21 @@
   background: var(--separator_common);
   transform-origin: center bottom;
   content: '';
-  }
+}
 
 @media (min-resolution: 2dppx) {
   .Tabbar--ios::before {
     transform: scaleY(.5);
-    }
   }
+}
 
 @media (min-resolution: 3dppx) {
   .Tabbar--ios::before {
     transform: scaleY(.33);
-    }
   }
+}
 
 .Tabbar--android.Tabbar--shadow,
 .Tabbar--vkcom.Tabbar--shadow {
   box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, .06), 0 0 2px 0 rgba(0, 0, 0, .08);
-  }
+}
