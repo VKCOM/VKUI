@@ -2,7 +2,7 @@
   user-select: none;
   color: var(--text_primary);
   position: relative;
-  width: 416px;
+  max-width: 416px;
 }
 
 .Alert::before {
@@ -245,6 +245,7 @@
   min-width: 400px;
   margin: auto 24px;
   animation: animation-android-alert-intro .2s ease;
+  width: 416px;
 }
 
 .Alert--vkcom .Alert__content {
