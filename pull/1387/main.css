@@ -595,7 +595,7 @@ to{-webkit-transform:translateY(0);transform:translateY(0)}}
 .ActionSheetItem--sizeY-compact{min-height:44px}
 .ActionSheetItem--sizeY-compact .ActionSheetItem__container{padding:12px 0}
 .ActionSheetItem--sizeY-compact.ActionSheetItem--withSubtitle .ActionSheetItem__container{padding:10px 0}
-.Alert{-webkit-user-select:none;user-select:none;color:#000;color:#000;color:var(--text_primary);position:relative;width:416px}
+.Alert{-webkit-user-select:none;user-select:none;color:#000;color:#000;color:var(--text_primary);position:relative;max-width:416px}
 .Alert::before{position:absolute;left:0;top:0;width:100%;height:100%;background-color:#fff;background-color:#fff;background-color:var(--modal_card_background);z-index:1;content:'';border-radius:inherit}
 .Alert__content{position:relative;z-index:2}
 .Alert__action{white-space:nowrap;background:0 0}
@@ -637,7 +637,7 @@ to{-webkit-transform:translateY(0);transform:translateY(0)}}
 .Alert--android.Alert--v .Alert__button:first-child{margin-top:0}
 .Alert--android.Alert--v .Alert__button:last-child{margin-bottom:0}
 .Alert--android.Alert--h .Alert__button,.Alert--vkcom.Alert--h .Alert__button{margin-left:8px}
-.Alert--vkcom{box-shadow:0 0 2px rgba(0,0,0,.12),0 0 96px rgba(0,0,0,.16);border-radius:8px;min-width:400px;margin:auto 24px;-webkit-animation:animation-android-alert-intro .2s ease;animation:animation-android-alert-intro .2s ease}
+.Alert--vkcom{box-shadow:0 0 2px rgba(0,0,0,.12),0 0 96px rgba(0,0,0,.16);border-radius:8px;min-width:400px;margin:auto 24px;-webkit-animation:animation-android-alert-intro .2s ease;animation:animation-android-alert-intro .2s ease;width:416px}
 .Alert--vkcom .Alert__content{padding:24px}
 .Alert--vkcom .Alert__actions{padding:0 24px 16px}
 .Alert--vkcom .Alert__button{order:2}
