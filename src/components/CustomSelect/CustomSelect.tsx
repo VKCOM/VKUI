@@ -76,7 +76,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   private keyboardInput: string;
   private node: HTMLLabelElement;
   private selectEl: HTMLSelectElement;
-  private readonly scrollViewRef = createRef<CustomScrollView>();
+  private readonly scrollBoxRef = createRef<HTMLDivElement>();
 
   private readonly resetKeyboardInput = () => {
     this.keyboardInput = '';
@@ -178,8 +178,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   private scrollToElement(index: number, center = false) {
-    const scrollView = this.scrollViewRef.current;
-    const dropdown = scrollView.box.current;
+    const dropdown = this.scrollBoxRef.current;
     const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
 
     if (!item) {
@@ -409,7 +408,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           })}
           onMouseLeave={this.resetFocusedOption}
         >
-          <CustomScrollView ref={this.scrollViewRef}>
+          <CustomScrollView boxRef={this.scrollBoxRef}>
             {options.map(this.renderOption)}
           </CustomScrollView>
         </div>
