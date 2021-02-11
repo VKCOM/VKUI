@@ -1,4 +1,4 @@
-import React, { Component, ReactElement, SyntheticEvent } from 'react';
+import React, { Component, createRef, ReactElement, SyntheticEvent } from 'react';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { getClassName } from '../../helpers/getClassName';
@@ -94,6 +94,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   private documentScrolling: boolean;
   private activeTransitions: number;
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
+  private readonly viewportRef = createRef<HTMLDivElement>();
   private maskAnimationFrame: number;
   private readonly modalRootContext: ModalRootContextInterface;
   private readonly frameIds: {
@@ -413,13 +414,13 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const target = originalEvent.target as HTMLElement;
 
     if (!event.isY) {
-      if (target.closest('.ModalPage')) {
+      if (this.viewportRef.current.contains(target)) {
         originalEvent.preventDefault();
       }
       return;
     }
 
-    if (!target.closest('.ModalPage__in')) {
+    if (!modalState.innerElement.contains(target)) {
       return originalEvent.preventDefault();
     }
 
@@ -445,7 +446,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       !modalState.expandable ||
       collapsed ||
       expanded && modalState.touchMovePositive && modalState.touchStartContentScrollTop === 0 ||
-      target.closest('.ModalPage__header')
+      modalState.headerElement.contains(target)
     ) {
       originalEvent.preventDefault();
 
@@ -469,7 +470,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   onCardTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
     const { originalEvent, shiftY, startT } = event;
     const target = originalEvent.target as HTMLElement;
-    if (target.closest('.ModalCard__container')) {
+    if (modalState.innerElement.contains(target)) {
       if (!this.state.touchDown) {
         modalState.touchStartTime = startT;
         this.setState({ touchDown: true, dragging: true });
@@ -606,8 +607,11 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     const target = e.target as HTMLElement;
 
-    if (activeModal && target.closest('.ModalPage__content')) {
-      const modalState = this.modalsState[activeModal];
+    if (!activeModal) {
+      return;
+    }
+    const modalState = this.modalsState[activeModal];
+    if (modalState.type === ModalType.PAGE && modalState.contentElement.contains(target)) {
       modalState.contentScrolled = true;
 
       clearTimeout(modalState.contentScrollStopTimeout);
@@ -788,7 +792,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
               onClick={this.triggerActiveModalClose}
               ref={this.maskElementRef}
             />
-            <div className="ModalRoot__viewport">
+            <div className="ModalRoot__viewport" ref={this.viewportRef}>
               {this.getModals().map((Modal) => {
                 const modalId = Modal.props.id;
                 if (!visibleModals.includes(Modal.props.id)) {
