@@ -246,13 +246,9 @@
 .Alert--vkcom {
   box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 0 96px rgba(0, 0, 0, .16);
   border-radius: 8px;
-  min-width: 400px;
+  width: 400px;
   margin: auto 24px;
   animation: animation-android-alert-intro .2s ease;
-}
-
-.Alert--desktop.Alert--vkcom {
-  width: 400px;
 }
 
 .Alert--vkcom .Alert__content {
