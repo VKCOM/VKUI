@@ -59,7 +59,7 @@ const MODAL_CARD_ABOUT = 'say-about';
 const MODAL_CARD_NOTIFICATIONS = 'notifications';
 const MODAL_CARD_CHAT_INVITE = 'chat-invite';
 
-const App = withAdaptivity(class App extends React.Component {
+const App = withPlatform(withAdaptivity(class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -99,6 +99,8 @@ const App = withAdaptivity(class App extends React.Component {
 
   render() {
     const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
+    const platform = this.props.platform;
+    
     const modal = (
       <ModalRoot
         activeModal={this.state.activeModal}
@@ -111,8 +113,8 @@ const App = withAdaptivity(class App extends React.Component {
           settlingHeight={100}
           header={
             <ModalPageHeader
-              left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
-              right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+              left={isMobile && platform === 'android' && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
+              right={<PanelHeaderButton onClick={this.modalBack}>{platform === 'ios' ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
             >
               @{this.randomUser.screen_name}
             </ModalPageHeader>
@@ -147,8 +149,8 @@ const App = withAdaptivity(class App extends React.Component {
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
-              right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+              left={isMobile && platform === 'android' && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
+              right={<PanelHeaderButton onClick={this.modalBack}>{platform === 'ios' ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
             >
               Фильтры
             </ModalPageHeader>
@@ -209,7 +211,7 @@ const App = withAdaptivity(class App extends React.Component {
           header={
             <ModalPageHeader
               left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
-              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
+              right={platform === 'ios' && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Выберите страну
             </ModalPageHeader>
@@ -235,7 +237,7 @@ const App = withAdaptivity(class App extends React.Component {
           header={
             <ModalPageHeader
               left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
-              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
+              right={platform === 'ios' && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Просмотры истории
             </ModalPageHeader>
@@ -260,7 +262,7 @@ const App = withAdaptivity(class App extends React.Component {
           header={
             <ModalPageHeader
               left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
-              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
+              right={platform === 'ios' && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Информация о пользователе
             </ModalPageHeader>
@@ -395,7 +397,7 @@ const App = withAdaptivity(class App extends React.Component {
   }
 }, {
   viewWidth: true
-});
+}));
 
 <App />
 ```
