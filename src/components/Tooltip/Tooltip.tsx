@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
+import { tooltipContainerAttr } from './TooltipContainer';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
   target?: HTMLElement;
@@ -38,18 +39,9 @@ const TooltipPortal = withDOM<TooltipPortalProps>(
         y: 0,
       };
 
-      this.fixedPortal = false;
-
       const { target } = props;
-      const closestFixed = target.closest<HTMLElement>('.FixedLayout');
-      const closestHeader = target.closest<HTMLElement>('.PanelHeader__in');
-      const closestPanel = target.closest<HTMLElement>('.Panel__in');
-
-      if (closestFixed || closestHeader) {
-        this.fixedPortal = true;
-      }
-
-      this.portalTarget = closestFixed || closestHeader || closestPanel;
+      this.fixedPortal = props.target.closest(`[${tooltipContainerAttr}=fixed]`) != null;
+      this.portalTarget = target.closest(`[${tooltipContainerAttr}]`);
     }
 
     get document() {

@@ -8,6 +8,7 @@ import { withPlatform } from '../../hoc/withPlatform';
 import { withPanelContext } from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
+import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { DOMProps, withDOM } from '../../lib/dom';
 
 export interface FixedLayoutProps extends
@@ -137,8 +138,9 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps, FixedLayo
     const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panel, window, document, ...restProps } = this.props;
 
     return (
-      <div
+      <TooltipContainer
         {...restProps}
+        fixed
         ref={this.getRef}
         className={classNames(getClassName('FixedLayout', platform), {
           'FixedLayout--filled': filled,
@@ -146,7 +148,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps, FixedLayo
         style={{ ...style, ...this.state }}
       >
         <div className="FixedLayout__in">{children}</div>
-      </div>
+      </TooltipContainer>
     );
   }
 }

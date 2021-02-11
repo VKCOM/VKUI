@@ -2,6 +2,7 @@ import React, { Component, HTMLAttributes, RefCallback } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Touch from '../Touch/Touch';
+import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -49,7 +50,7 @@ class Panel extends Component<PanelProps> {
             [`Panel--sizeX-${sizeX}`]: true,
           })}
         >
-          <Touch className="Panel__in">
+          <Touch Component={TooltipContainer} className="Panel__in">
             {platform === IOS && <div className="Panel__fade" />}
             <div className="Panel__in-before" />
             {centered ? <div className="Panel__centered">{children}</div> : children}
