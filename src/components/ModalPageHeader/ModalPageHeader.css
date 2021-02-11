@@ -79,8 +79,9 @@
   padding-right: 12px;
 }
 
-.ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton--primitive {
-  padding-left: 16px;
+.ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton--primitive,
+.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton--primitive {
+  padding: 0 16px;
 }
 
 .ModalPageHeader--ios .ModalPageHeader__content {
@@ -106,10 +107,6 @@
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton .Icon--24 {
   padding-left: 12px;
   padding-right: 12px;
-}
-
-.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton--primitive {
-  padding-right: 16px;
 }
 
 .ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__in {
