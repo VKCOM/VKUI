@@ -76,8 +76,7 @@
   background: var(--modal_card_background);
 }
 
-.ActionSheet--android.ActionSheet--closing,
-.ActionSheet--vkcom.ActionSheet--closing {
+.ActionSheet--android.ActionSheet--closing {
   transform: translateY(calc(100% + 20px));
   transition: transform .2s var(--android-easing);
 }

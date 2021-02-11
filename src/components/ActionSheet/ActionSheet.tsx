@@ -73,7 +73,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
     if (this.isDesktop) {
-      eventHandler();
+      return eventHandler();
     }
 
     if (transitionEvent.supported) {
