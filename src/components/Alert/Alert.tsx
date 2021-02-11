@@ -178,6 +178,7 @@ class Alert extends Component<AlertProps, AlertState> {
             'Alert--v': resolvedActionsLayout === 'vertical',
             'Alert--h': resolvedActionsLayout === 'horizontal',
             'Alert--closing': closing,
+            'Alert--desktop': canShowCloseButton,
           })}
         >
           {canShowCloseButton && <ModalDismissButton onClick={this.onClose} />}

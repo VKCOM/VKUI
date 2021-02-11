@@ -182,6 +182,10 @@
   animation: animation-android-alert-intro .2s ease;
 }
 
+.Alert--desktop .Alert--android {
+  width: 416px;
+}
+
 .Alert--android.Alert--closing,
 .Alert--vkcom.Alert--closing {
   transform: scale(.95);
@@ -245,7 +249,10 @@
   min-width: 400px;
   margin: auto 24px;
   animation: animation-android-alert-intro .2s ease;
-  width: 416px;
+}
+
+.Alert--desktop .Alert--vkcom {
+  width: 400px;
 }
 
 .Alert--vkcom .Alert__content {
