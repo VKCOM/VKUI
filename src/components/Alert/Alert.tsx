@@ -15,6 +15,8 @@ import Title from '../Typography/Title/Title';
 import Caption from '../Typography/Caption/Caption';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
+export type AlertActionInterface = AlertProps['actions'][0];
+
 export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   actionsLayout?: 'vertical' | 'horizontal';
   actions?: Array<{
@@ -34,7 +36,7 @@ export interface AlertState {
 
 type TransitionEndHandler = (e?: TransitionEvent) => void;
 
-type ItemClickHander = (item: AlertProps['actions'][0]) => () => void;
+type ItemClickHander = (item: AlertActionInterface) => () => void;
 
 class Alert extends Component<AlertProps, AlertState> {
   constructor(props: AlertProps) {
@@ -54,7 +56,7 @@ class Alert extends Component<AlertProps, AlertState> {
     actions: [],
   };
 
-  onItemClick: ItemClickHander = (item: AlertProps['actions'][0]) => () => {
+  onItemClick: ItemClickHander = (item: AlertActionInterface) => () => {
     const { action, autoclose } = item;
 
     if (autoclose) {
@@ -115,7 +117,7 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
-  renderAction = (action: AlertProps['actions'][0], i: number) => {
+  renderAction = (action: AlertActionInterface, i: number) => {
     const { platform } = this.props;
     switch (platform) {
       case ANDROID:
