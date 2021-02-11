@@ -182,7 +182,7 @@
   animation: animation-android-alert-intro .2s ease;
 }
 
-.Alert--desktop .Alert--android {
+.Alert--desktop.Alert--android {
   width: 416px;
 }
 
@@ -251,7 +251,7 @@
   animation: animation-android-alert-intro .2s ease;
 }
 
-.Alert--desktop .Alert--vkcom {
+.Alert--desktop.Alert--vkcom {
   width: 400px;
 }
 
