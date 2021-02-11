@@ -15,12 +15,7 @@ import Title from '../Typography/Title/Title';
 import Caption from '../Typography/Caption/Caption';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
-export interface AlertActionInterface {
-  title: string;
-  action?: VoidFunction;
-  autoclose?: boolean;
-  mode: 'cancel' | 'destructive' | 'default';
-}
+export type AlertActionInterface = AlertProps['actions'][0];
 
 export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   actionsLayout?: 'vertical' | 'horizontal';
