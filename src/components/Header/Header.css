@@ -11,13 +11,26 @@
 .Header__main {
   min-width: 0;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 .Header__content {
   display: flex;
   align-items: baseline;
+}
+
+.Header__content-base {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.Header__content-base--multiline {
+  word-break: break-all;
+}
+
+.Header--multiline {
+  white-space: normal;
 }
 
 .Header__subtitle {
@@ -43,6 +56,7 @@
 .Header__indicator {
   color: var(--text_secondary);
   margin-left: 6px;
+  flex-shrink: 0;
 }
 
 .Header:not(.Header--pi) .Header__indicator {

@@ -37,7 +37,7 @@ export { default as Snackbar } from './components/Snackbar/Snackbar';
  * Modals
  */
 export { ModalRoot } from './components/ModalRoot/ModalRootAdaptive';
-export { default as withModalRootContext } from './components/ModalRoot/withModalRootContext';
+export { withModalRootContext } from './components/ModalRoot/withModalRootContext';
 export { default as ModalRootContext } from './components/ModalRoot/ModalRootContext';
 export { default as ModalPage } from './components/ModalPage/ModalPage';
 export { default as ModalPageHeader } from './components/ModalPageHeader/ModalPageHeader';
@@ -59,7 +59,7 @@ export { default as Header } from './components/Header/Header';
 export { default as Group } from './components/Group/Group';
 export { default as Gradient } from './components/Gradient/Gradient';
 export { default as List } from './components/List/List';
-export { default as Cell } from './components/Cell/Cell';
+export { Cell } from './components/Cell/Cell';
 export { default as RichCell } from './components/RichCell/RichCell';
 export { default as SimpleCell } from './components/SimpleCell/SimpleCell';
 export { HorizontalCell } from './components/HorizontalCell/HorizontalCell';
@@ -83,6 +83,8 @@ export { default as Banner } from './components/Banner/Banner';
 export { MiniInfoCell } from './components/MiniInfoCell/MiniInfoCell';
 export { WriteBar } from './components/WriteBar/WriteBar';
 export { WriteBarIcon } from './components/WriteBarIcon/WriteBarIcon';
+export { SubnavigationBar } from './components/SubnavigationBar/SubnavigationBar';
+export { SubnavigationButton } from './components/SubnavigationButton/SubnavigationButton';
 
 /**
  * Forms
@@ -146,26 +148,26 @@ export { default as Subhead } from './components/Typography/Subhead/Subhead';
 /**
  * HOCs
  */
-export { default as withInsets } from './hoc/withInsets';
-export { default as withPlatform } from './hoc/withPlatform';
-export { default as withAdaptivity } from './hoc/withAdaptivity';
+export { withInsets } from './hoc/withInsets';
+export { withPlatform } from './hoc/withPlatform';
+export { withAdaptivity } from './hoc/withAdaptivity';
 
 /**
  * Hooks
  */
-export { default as useInsets } from './hooks/useInsets';
-export { default as usePlatform } from './hooks/usePlatform';
+export { useInsets } from './hooks/useInsets';
+export { usePlatform } from './hooks/usePlatform';
 export { useAdaptivity } from './hooks/useAdaptivity';
 
 /**
  * Utils
  */
-export { default as classNames } from './lib/classNames';
+export { classNames } from './lib/classNames';
 export { default as animate } from './lib/animate';
-export { default as removeObjectKeys } from './lib/removeObjectKeys';
+export { removeObjectKeys } from './lib/removeObjectKeys';
 export { SSRWrapper } from './lib/SSR';
 export { platform, ANDROID, IOS, VKCOM, Platform, IS_PLATFORM_ANDROID, IS_PLATFORM_IOS } from './lib/platform';
-export { default as getClassName } from './helpers/getClassName';
+export { getClassName } from './helpers/getClassName';
 export { ViewWidth, ViewHeight, SizeType } from './components/AdaptivityProvider/AdaptivityContext';
 
 /**

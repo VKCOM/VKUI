@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, FunctionComponent, InputHTMLAttributes, useRef } from 'react';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import Button, { VKUIButtonProps } from '../Button/Button';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { HasRef, HasRootRef } from '../../types';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { setRef } from '../../lib/utils';
 
 export interface FileProps extends

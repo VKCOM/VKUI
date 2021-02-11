@@ -2,7 +2,7 @@ import React from 'react';
 import { SSRContext } from '../lib/SSR';
 import { ConfigProviderContext } from '../components/ConfigProvider/ConfigProviderContext';
 
-export default function withPlatform<T>(Component: T): T {
+export function withPlatform<T>(Component: T): T {
   function WithPlatform(props: {}) {
     const ssrContext = React.useContext(SSRContext);
     const { platform } = React.useContext(ConfigProviderContext);

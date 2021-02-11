@@ -22,5 +22,6 @@ jobs:
       - name: Push updated screenshots
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
+          # dangerfile depends on this message
           commit_message: "CHORE: Update screenshots"
           file_pattern: './**/*.png'

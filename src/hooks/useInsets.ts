@@ -46,7 +46,7 @@ vkBridge.subscribe((e: BridgeEvent) => {
   }
 });
 
-export default function useInsets(): Insets {
+export function useInsets(): Insets {
   const [insets, setInsets] = useState<Insets>(initialState);
 
   useEffect(() => {

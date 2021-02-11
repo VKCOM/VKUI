@@ -1,13 +1,13 @@
 import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
-import removeObjectKeys from '../../lib/removeObjectKeys';
+import { removeObjectKeys } from '../../lib/removeObjectKeys';
 import { HasPlatform } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
-import withContext from '../../hoc/withContext';
+import { withPlatform } from '../../hoc/withPlatform';
+import { withContext } from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';

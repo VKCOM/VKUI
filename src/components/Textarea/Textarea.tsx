@@ -1,11 +1,11 @@
 import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes, RefCallback } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 import { HasRef, HasRootRef } from '../../types';
 import { setRef } from '../../lib/utils';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { getClassName, HasPlatform } from '../..';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 
 export interface TextareaProps extends
   TextareaHTMLAttributes<HTMLTextAreaElement>,

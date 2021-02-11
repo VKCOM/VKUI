@@ -9,11 +9,11 @@ import React, {
 } from 'react';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import FormField from '../FormField/FormField';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import Chip, { ChipProps } from '../Chip/Chip';
 import { noop } from '../../lib/utils';
 import { useChipsInput } from './useChipsInput';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export type ChipsInputValue = string | number;
 
@@ -52,7 +52,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
 
-  const handleKeDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown(e);
 
     if (e.key === 'Backspace' && !e.defaultPrevented && !fieldValue && selectedOptions.length) {
@@ -117,7 +117,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
             tabIndex={disabled ? null : tabIndex}
             className="ChipsInput__el"
             onChange={handleInputChange}
-            onKeyDown={handleKeDown}
+            onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
             disabled={disabled}

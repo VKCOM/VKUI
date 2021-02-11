@@ -1,10 +1,10 @@
 import React, { FunctionComponent, HTMLAttributes, createContext } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { IOS } from '../../lib/platform';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   mode?: 'default' | 'buttons' | 'segmented';
@@ -15,7 +15,6 @@ export const TabsModeContext = createContext<TabsProps['mode']>('default');
 const Tabs: FunctionComponent<TabsProps> = ({
   className,
   children,
-  style,
   mode,
   getRootRef,
   sizeX,
@@ -32,7 +31,6 @@ const Tabs: FunctionComponent<TabsProps> = ({
       {...restProps}
       ref={getRootRef}
       className={classNames(getClassName('Tabs', platform), `Tabs--${mode}`, `Tabs--sizeX-${sizeX}`, className)}
-      style={style}
     >
       <div className="Tabs__in">
         <TabsModeContext.Provider value={mode}>

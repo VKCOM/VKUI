@@ -1,13 +1,13 @@
 import React, { FC, HTMLAttributes, ReactNode, useContext } from 'react';
-import usePlatform from '../../hooks/usePlatform';
-import getClassname from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Separator from '../Separator/Separator';
 import { VKCOM } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
-import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { isPrimitiveReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 
@@ -85,7 +85,7 @@ const PanelHeader: FC<PanelHeaderProps> = (props) => {
       {...restProps}
       className={
         classNames(
-          getClassname('PanelHeader', platform),
+          getClassName('PanelHeader', platform),
           {
             'PanelHeader--trnsp': transparent,
             'PanelHeader--shadow': needShadow,

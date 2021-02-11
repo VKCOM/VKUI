@@ -1,5 +1,5 @@
 import React, { FunctionComponent, HTMLAttributes } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 
 export interface GradientProps extends HTMLAttributes<HTMLDivElement> {
   mode?: 'tint' | 'white' | 'black';

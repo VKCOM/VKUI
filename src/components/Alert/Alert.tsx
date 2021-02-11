@@ -1,13 +1,13 @@
 import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import { withPlatform } from '../../hoc/withPlatform';
+import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Button from '../Button/Button';
 import { hasReactNode } from '../../lib/utils';
 import Headline from '../Typography/Headline/Headline';

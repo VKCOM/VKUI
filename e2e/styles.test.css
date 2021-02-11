@@ -24,6 +24,7 @@
 #mount {
   /* Force use embedded Roboto font for cross-platformity */
   --font-common: 'Roboto';
+  --font-tt: 'Roboto';
   font-family: 'Roboto';
   -webkit-font-smoothing: antialiased;
 }

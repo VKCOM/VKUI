@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, FunctionComponent } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
 
 export interface BadgeProps extends HTMLAttributes<HTMLElement> {
   mode: 'new' | 'prominent';

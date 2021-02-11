@@ -11,7 +11,7 @@ interface Config {
 
 export { SizeType, ViewWidth, ViewHeight };
 
-export default function withAdaptivity<T>(TargetComponent: T, config: Config): T {
+export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
   function AdaptivityConsumer(props: AdaptivityProps) {
     const context = useContext(AdaptivityContext);
     let update = false;

@@ -109,7 +109,7 @@ export function describeScreenshotFuzz<Props>(
         isVkCom ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
         adaptivity);
       (isVkCom ? [Scheme.VKCOM] : mobileSchemes).forEach((scheme) => {
-        it(scheme, async () => {
+        it(`${scheme}${adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ''}`, async () => {
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>
               <AdaptivityProvider {...adaptivityProps}>

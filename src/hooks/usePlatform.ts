@@ -8,5 +8,3 @@ export function usePlatform(): PlatformType {
   const { platform } = useContext(ConfigProviderContext);
   return ssrContext.platform || platform;
 }
-
-export default usePlatform;
