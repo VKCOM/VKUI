@@ -162,6 +162,7 @@ class Alert extends Component<AlertProps, AlertState> {
 
     const resolvedActionsLayout: AlertProps['actionsLayout'] = platform === VKCOM ? 'horizontal' : actionsLayout;
     const canShowCloseButton = platform === VKCOM || platform === ANDROID && viewWidth >= ViewWidth.SMALL_TABLET;
+    const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
 
     return (
       <PopoutWrapper
@@ -178,7 +179,7 @@ class Alert extends Component<AlertProps, AlertState> {
             'Alert--v': resolvedActionsLayout === 'vertical',
             'Alert--h': resolvedActionsLayout === 'horizontal',
             'Alert--closing': closing,
-            'Alert--desktop': canShowCloseButton,
+            'Alert--desktop': isDesktop,
           })}
         >
           {canShowCloseButton && <ModalDismissButton onClick={this.onClose} />}
