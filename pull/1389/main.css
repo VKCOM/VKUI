@@ -329,7 +329,7 @@ to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
 .PanelHeader--ios~.FixedLayout--top,.PanelHeader--ios~* .FixedLayout--top:not(.PanelHeader__fixed){top:calc(52px + 20px);top:calc(52px + 20px);top:calc(var(--panelheader_height_ios) + var(--safe-area-inset-top))}
 .PanelHeader--ios::before,.PanelHeader--ios .PanelHeader__in{height:52px;height:52px;height:var(--panelheader_height_ios);padding-top:20px;padding-top:20px;padding-top:var(--safe-area-inset-top)}
 .PanelHeader--ios .PanelHeader__left{flex-basis:0;flex-shrink:0;flex-grow:1;opacity:1;transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s var(--ios-easing);padding:4px 0 4px 4px}
-.PanelHeader--ios .PanelHeader__left .PanelHeaderButton--primitive{padding-left:12px}
+.PanelHeader--ios .PanelHeader__left .PanelHeaderButton--primitive,.PanelHeader--ios .PanelHeader__right .PanelHeaderButton--primitive{padding:0 12px}
 .PanelHeader--ios .PanelHeader__left .PanelHeaderButton+.PanelHeaderButton--primitive{margin-left:-6px;padding-left:0}
 .PanelHeader--ios .PanelHeader__content{text-align:center;opacity:1;transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s var(--ios-easing)}
 .PanelHeader--ios .PanelHeader__content-in{font-size:21px;line-height:52px;line-height:52px;line-height:var(--panelheader_height_ios)}
@@ -782,7 +782,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalPageHeader--ios .ModalPageHeader__in{justify-content:space-between}
 .ModalPageHeader--ios .ModalPageHeader__left{flex-grow:1;flex-basis:0;font-size:17px}
 .ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton .Icon--24{padding-left:12px;padding-right:12px}
-.ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton--primitive,.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton--primitive{padding:0 16px}
+.ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton--primitive,.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton--primitive{padding:0 12px}
 .ModalPageHeader--ios .ModalPageHeader__content{position:relative;z-index:1;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-tt);flex:2 1;font-size:21px;justify-content:center}
 .ModalPageHeader--ios .ModalPageHeader__right{flex-grow:1;flex-basis:0;font-size:17px}
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton:not(:first-child){padding-left:12px}
