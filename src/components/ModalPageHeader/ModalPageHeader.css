@@ -70,7 +70,6 @@
 .ModalPageHeader--ios .ModalPageHeader__left {
   flex-grow: 1;
   flex-basis: 0;
-  padding-right: 12px;
   font-size: 17px;
 }
 
@@ -96,7 +95,6 @@
 .ModalPageHeader--ios .ModalPageHeader__right {
   flex-grow: 1;
   flex-basis: 0;
-  padding-left: 12px;
   font-size: 17px;
 }
 
