@@ -509,6 +509,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
                   'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
                   'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
                 })}
+                data-vkui-active-panel={panelId === activePanel ? 'true' : ''}
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
