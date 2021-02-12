@@ -10,13 +10,6 @@ export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, Adaptivity
   window?: Window;
 }
 
-function cleanupPortalRoots(window: Window) {
-  const portalRoots = window.document.querySelector('.vkui__portal-root');
-  if (portalRoots) {
-    window.document.body.removeChild(portalRoots);
-  }
-}
-
 function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
   if (sizeX === SizeType.REGULAR) {
     container.classList.add('vkui--sizeX-regular');
@@ -42,8 +35,9 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
     const body = window.document.body;
     const parentNode = rootRef.current.parentElement;
 
+    let portal: HTMLDivElement;
     if (embedded) {
-      const portal = document.createElement('div');
+      portal = document.createElement('div');
       portal.classList.add('vkui__portal-root');
       body.appendChild(portal);
       setPortalRoot(portal);
@@ -57,7 +51,7 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
     return () => {
       if (embedded) {
         parentNode.classList.remove('vkui__root', 'vkui__root--embedded', 'vkui--sizeX-regular');
-        cleanupPortalRoots(window);
+        portal.parentElement.removeChild(portal);
       } else {
         parentNode.classList.remove('vkui__root');
         body.classList.remove('vkui__root', 'vkui--sizeX-regular');

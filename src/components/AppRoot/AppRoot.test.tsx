@@ -24,5 +24,20 @@ describe('AppRoot', () => {
       unmount();
       expect(document.body).not.toContainElement(portalRoot);
     });
+    it('Supports multi-instance mode', () => {
+      let portalRoot1: HTMLElement;
+      render((
+        <AppRoot embedded>
+          <AppRootContext.Consumer>
+            {(ctx) => {
+              portalRoot1 = ctx.portalRoot;
+              return null;
+            }}
+          </AppRootContext.Consumer>
+        </AppRoot>
+      ));
+      render(<AppRoot embedded />).unmount();
+      expect(document.body).toContainElement(portalRoot1);
+    });
   });
 });
