@@ -89,13 +89,10 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     }
   };
 
+  const chipsSelectOptions = useRef<HTMLElement[]>([]).current;
+
   const scrollToElement = (index: number, center = false) => {
     const dropdown = scrollBoxRef.current;
-
-    const chipsSelectOptions: HTMLElement[] = Array.prototype.filter.call(dropdown.children, (item: HTMLElement) => {
-      return item.classList.contains('ChipsSelect__option');
-    });
-
     const item = chipsSelectOptions[index];
 
     if (!item) {
@@ -303,6 +300,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                           hovered,
                           children: label,
                           selected: !!selected,
+                          getRootRef: (e) => chipsSelectOptions[index] = e,
                           onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => {
                             onChangeStart(e, option);
 
