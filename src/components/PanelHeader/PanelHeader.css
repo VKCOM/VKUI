@@ -98,8 +98,9 @@
   padding: 4px 0 4px 4px;
 }
 
-.PanelHeader--ios .PanelHeader__left .PanelHeaderButton--primitive {
-  padding-left: 12px;
+.PanelHeader--ios .PanelHeader__left .PanelHeaderButton--primitive,
+.PanelHeader--ios .PanelHeader__right .PanelHeaderButton--primitive {
+  padding: 0 12px;
 }
 
 .PanelHeader--ios .PanelHeader__left .PanelHeaderButton + .PanelHeaderButton--primitive {

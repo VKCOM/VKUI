@@ -80,7 +80,7 @@
 
 .ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton--primitive,
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton--primitive {
-  padding: 0 16px;
+  padding: 0 12px;
 }
 
 .ModalPageHeader--ios .ModalPageHeader__content {
