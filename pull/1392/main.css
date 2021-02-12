@@ -129,6 +129,7 @@ to{-webkit-transform:scale(8);transform:scale(8);opacity:0}}
 .Button--vkcom.Button--lvl-secondary .Counter,.Button--vkcom.Button--lvl-tertiary .Counter,.Button--vkcom.Button--lvl-outline .Counter,.Button--vkcom.Button--lvl-secondary .Icon,.Button--vkcom.Button--lvl-tertiary .Icon,.Button--vkcom.Button--lvl-outline .Icon{opacity:.72}
 .Removable{position:relative;box-sizing:border-box;min-width:0;flex-grow:1}
 .Removable__content{display:flex;flex-flow:row nowrap;align-items:center;max-width:100%}
+.Removable__content>*{flex-grow:1}
 .Removable__indicator{order:-1}
 .Removable__indicator,.Removable__remove{flex-grow:0;flex-shrink:0;border:0}
 .Removable__indicator:focus,.Removable__remove:focus{outline:0}
