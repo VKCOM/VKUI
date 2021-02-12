@@ -238,15 +238,16 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     const modalElement = this.pickModal(activeModal);
     const modalState = this.modalsState[activeModal];
+    modalState.modalElement = modalElement;
 
     switch (modalState.type) {
       case ModalType.PAGE:
         modalState.settlingHeight = modalState.settlingHeight || MODAL_PAGE_DEFAULT_PERCENT_HEIGHT;
-        this.initPageModal(modalState, modalElement);
+        this.initPageModal(modalState);
         break;
 
       case ModalType.CARD:
-        this.initCardModal(modalState, modalElement);
+        this.initCardModal(modalState);
         break;
 
       default:
@@ -256,15 +257,13 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     this.setState({ inited: true, switching: true });
   }
 
-  initPageModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
+  initPageModal(modalState: ModalsStateEntry) {
     const { contentElement } = modalState;
     const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
 
     let prevTranslateY = modalState.translateY;
 
     modalState.expandable = contentHeight > contentElement.clientHeight;
-
-    modalState.modalElement = modalElement;
 
     let collapsed = false;
     let expanded = false;
@@ -313,8 +312,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     modalState.expanded = expanded;
   }
 
-  initCardModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
-    modalState.modalElement = modalElement;
+  initCardModal(modalState: ModalsStateEntry) {
     modalState.translateY = 0;
   }
 
@@ -326,7 +324,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       const modalState = this.modalsState[activeModal];
 
       const prevModalState = { ...modalState };
-      this.initPageModal(modalState, modalElement);
+      this.initPageModal(modalState);
       const currentModalState = { ...modalState };
 
       let needAnimate = false;

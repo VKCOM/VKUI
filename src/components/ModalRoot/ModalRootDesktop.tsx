@@ -65,7 +65,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     this.initModalsState();
 
     this.modalRootContext = {
-      updateModalHeight: this.updateModalHeight,
+      updateModalHeight: () => undefined,
       registerModal: ({ id, ...data }) => Object.assign(this.modalsState[id], data),
       onClose: this.triggerActiveModalClose,
       isInsideModal: true,
@@ -185,15 +185,14 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
     const modalElement = this.pickModal(activeModal);
     const modalState = this.modalsState[activeModal];
+    modalState.modalElement = modalElement;
 
     switch (modalState.type) {
       case ModalType.PAGE:
         modalState.settlingHeight = modalState.settlingHeight || 75;
-        this.initPageModal(modalState, modalElement);
         break;
 
       case ModalType.CARD:
-        this.initCardModal(modalState, modalElement);
         break;
 
       default:
@@ -202,42 +201,6 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
     this.setState({ inited: true, switching: true });
   }
-
-  initPageModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
-    modalState.modalElement = modalElement;
-  }
-
-  initCardModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
-    modalState.modalElement = modalElement;
-  }
-
-  checkPageContentHeight() {
-    const activeModal = this.state.activeModal;
-
-    const modalElement = this.pickModal(activeModal);
-    if (modalElement) {
-      const modalState = this.modalsState[activeModal];
-
-      this.initPageModal(modalState, modalElement);
-    }
-  }
-
-  updateModalHeight = () => {
-    const { activeModal, nextModal } = this.state;
-
-    const modalId = activeModal || nextModal;
-    const modalState = modalId ? this.modalsState[modalId] : undefined;
-
-    if (modalState && modalState.type === ModalType.PAGE && modalState.dynamicContentHeight) {
-      if (this.state.switching) {
-        this.waitTransitionFinish(modalState, () => {
-          requestAnimationFrame(() => this.checkPageContentHeight());
-        });
-      } else {
-        requestAnimationFrame(() => this.checkPageContentHeight());
-      }
-    }
-  };
 
   closeActiveModal() {
     const { prevModal } = this.state;
