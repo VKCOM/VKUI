@@ -223,10 +223,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     return false;
   };
 
-  pickModal(modalId: string) {
-    return this.document.getElementById('modal-' + modalId);
-  }
-
   /**
    * Инициализирует модалку перед анимацией открытия
    */
@@ -236,9 +232,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       return;
     }
 
-    const modalElement = this.pickModal(activeModal);
     const modalState = this.modalsState[activeModal];
-    modalState.modalElement = modalElement;
 
     switch (modalState.type) {
       case ModalType.PAGE:
@@ -319,10 +313,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   checkPageContentHeight() {
     const activeModal = this.state.activeModal;
 
-    const modalElement = this.pickModal(activeModal);
-    if (modalElement) {
-      const modalState = this.modalsState[activeModal];
-
+    const modalState = this.modalsState[activeModal];
+    if (modalState.modalElement) {
       const prevModalState = { ...modalState };
       this.initPageModal(modalState);
       const currentModalState = { ...modalState };
@@ -793,7 +785,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
                 return (
                   <div
                     key={key}
-                    id={key}
+                    ref={(e) => this.modalsState[modalId].modalElement = e}
                     className={classNames('ModalRoot__modal', {
                       'ModalRoot__modal--active': modalId === activeModal,
                       'ModalRoot__modal--prev': modalId === prevModal,

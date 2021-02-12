@@ -170,10 +170,6 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     }
   }
 
-  pickModal(modalId: string) {
-    return this.document.getElementById('modal-' + modalId);
-  }
-
   /**
    * Инициализирует модалку перед анимацией открытия
    */
@@ -183,9 +179,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
       return;
     }
 
-    const modalElement = this.pickModal(activeModal);
     const modalState = this.modalsState[activeModal];
-    modalState.modalElement = modalElement;
 
     switch (modalState.type) {
       case ModalType.PAGE:
@@ -370,7 +364,6 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
               return (
                 <div
                   key={key}
-                  id={key}
                   className={classNames('ModalRoot__modal', {
                     'ModalRoot__modal--active': modalId === activeModal,
                     'ModalRoot__modal--prev': modalId === prevModal,
