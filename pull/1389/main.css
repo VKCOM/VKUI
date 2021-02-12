@@ -780,11 +780,11 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .ModalPageHeader .PanelHeaderButton .Icon--dismiss_24{color:#99a2ad;color:#99a2ad;color:var(--placeholder_icon_foreground_primary)}
 .ModalPageHeader .PanelHeaderButton .Icon--cancel_24{color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
 .ModalPageHeader--ios .ModalPageHeader__in{justify-content:space-between}
-.ModalPageHeader--ios .ModalPageHeader__left{flex-grow:1;flex-basis:0;padding-right:12px;font-size:17px}
+.ModalPageHeader--ios .ModalPageHeader__left{flex-grow:1;flex-basis:0;font-size:17px}
 .ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton .Icon--24{padding-left:12px;padding-right:12px}
 .ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton--primitive,.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton--primitive{padding:0 16px}
 .ModalPageHeader--ios .ModalPageHeader__content{position:relative;z-index:1;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-tt);flex:2 1;font-size:21px;justify-content:center}
-.ModalPageHeader--ios .ModalPageHeader__right{flex-grow:1;flex-basis:0;padding-left:12px;font-size:17px}
+.ModalPageHeader--ios .ModalPageHeader__right{flex-grow:1;flex-basis:0;font-size:17px}
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton:not(:first-child){padding-left:12px}
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton .Icon--24{padding-left:12px;padding-right:12px}
 .ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__in{padding:0 8px}
