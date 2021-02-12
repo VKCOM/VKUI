@@ -66,6 +66,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      registerModal: ({ id, ...data }) => Object.assign(this.modalsState[id], data),
       onClose: this.triggerActiveModalClose,
       isInsideModal: true,
     };
@@ -185,12 +186,6 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     const modalElement = this.pickModal(activeModal);
     const modalState = this.modalsState[activeModal];
 
-    if (modalElement.querySelector('.ModalPage')) {
-      modalState.type = ModalType.PAGE;
-    } else if (modalElement.querySelector('.ModalCard')) {
-      modalState.type = ModalType.CARD;
-    }
-
     switch (modalState.type) {
       case ModalType.PAGE:
         modalState.settlingHeight = modalState.settlingHeight || 75;
@@ -210,15 +205,10 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
   initPageModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
     modalState.modalElement = modalElement;
-    modalState.innerElement = modalElement.querySelector('.ModalPage__in-wrap');
-    modalState.headerElement = modalElement.querySelector('.ModalPage__header');
-    modalState.contentElement = modalElement.querySelector('.ModalPage__content');
-    modalState.footerElement = modalElement.querySelector('.ModalPage__footer');
   }
 
   initCardModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
     modalState.modalElement = modalElement;
-    modalState.innerElement = modalElement.querySelector('.ModalCard__in');
   }
 
   checkPageContentHeight() {

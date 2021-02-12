@@ -83,6 +83,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      registerModal: ({ id, ...data }) => Object.assign(this.modalsState[id], data),
       onClose: this.triggerActiveModalClose,
       isInsideModal: true,
     };
@@ -238,12 +239,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const modalElement = this.pickModal(activeModal);
     const modalState = this.modalsState[activeModal];
 
-    if (modalElement.querySelector('.ModalPage')) {
-      modalState.type = ModalType.PAGE;
-    } else if (modalElement.querySelector('.ModalCard')) {
-      modalState.type = ModalType.CARD;
-    }
-
     switch (modalState.type) {
       case ModalType.PAGE:
         modalState.settlingHeight = modalState.settlingHeight || MODAL_PAGE_DEFAULT_PERCENT_HEIGHT;
@@ -262,7 +257,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   }
 
   initPageModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
-    const contentElement: HTMLElement = modalElement.querySelector('.ModalPage__content');
+    const { contentElement } = modalState;
     const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
 
     let prevTranslateY = modalState.translateY;
@@ -270,10 +265,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     modalState.expandable = contentHeight > contentElement.clientHeight;
 
     modalState.modalElement = modalElement;
-    modalState.innerElement = modalElement.querySelector('.ModalPage__in-wrap');
-    modalState.headerElement = modalElement.querySelector('.ModalPage__header');
-    modalState.contentElement = modalElement.querySelector('.ModalPage__content');
-    modalState.footerElement = modalElement.querySelector('.ModalPage__footer');
 
     let collapsed = false;
     let expanded = false;
@@ -324,8 +315,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
   initCardModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
     modalState.modalElement = modalElement;
-    modalState.innerElement = modalElement.querySelector('.ModalCard__in');
-
     modalState.translateY = 0;
   }
 
