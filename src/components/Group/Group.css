@@ -39,11 +39,6 @@
   padding: 8px;
 }
 
-.Group--sizeY-compact.Group--plain > .Group__separator {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .Group:last-of-type > .Group__separator {
   display: none;
 }
