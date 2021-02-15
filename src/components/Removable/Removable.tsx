@@ -20,10 +20,6 @@ interface RemovableProps extends AllHTMLAttributes<HTMLElement>, RemovePlacehold
    * Расположение кнопки удаления.
    */
   align?: 'start' | 'center';
-  /**
-   * Отступ сверху.
-   */
-  paddedTop?: boolean;
   onRemove?: (e: MouseEvent) => void;
 }
 
@@ -35,7 +31,6 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
     onRemove,
     removePlaceholder,
     align,
-    paddedTop,
     ...restProps
   } = props;
   const platform = usePlatform();
@@ -86,28 +81,22 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
         getClassName('Removable', platform),
         `Removable--${align}`,
         `Removable--sizeY-${sizeY}`,
-        {
-          'Removable--paddedTop': paddedTop,
-        },
         className,
       )}
     >
       <div className="Removable__content" style={platform === IOS ? { transform: `translateX(-${removeOffset}px)` } : null}>
-        {platform === IOS && (
-          <button className="Removable__indicator" onClick={onRemoveActivateClick}>
-            <i className="Removable__indicator-in" />
-          </button>
-        )}
-
-        <div className="Removable__children">
-          {children}
-        </div>
+        {children}
 
         {(platform === ANDROID || platform === VKCOM) &&
-          <IconButton className="Removable__remove" onClick={onRemoveClick}>
+          <IconButton className="Removable__control Removable__remove" onClick={onRemoveClick}>
             <Icon24Cancel />
           </IconButton>
         }
+        {platform === IOS && (
+          <button className="Removable__control Removable__indicator" onClick={onRemoveActivateClick}>
+            <i className="Removable__indicator-in" />
+          </button>
+        )}
       </div>
 
       {platform === IOS &&

@@ -1,6 +1,8 @@
 .Removable {
   position: relative;
   box-sizing: border-box;
+  min-width: 0;
+  flex-grow: 1;
 }
 
 .Removable__content {
@@ -10,11 +12,12 @@
   max-width: 100%;
 }
 
-.Removable__children {
-  max-width: 100%;
+.Removable__content > * {
   flex-grow: 1;
-  min-width: 0;
-  flex-shrink: initial;
+}
+
+.Removable__indicator {
+  order: -1;
 }
 
 .Removable__indicator,
@@ -29,25 +32,19 @@
   outline: none;
 }
 
-.Removable--start .Removable__indicator,
-.Removable--start .Removable__remove {
+.Removable--start .Removable__control {
   align-self: flex-start;
 }
 
-.Removable--paddedTop .Removable__content {
-  padding-top: 28px;
+.FormItem--withTop .Removable__control,
+.FormItem--withTop ~ .Removable__control {
+  position: relative;
+  top: 28px;
 }
 
-.Removable--paddedTop .Removable__children {
-  margin-top: -28px;
-}
-
-.Removable--paddedTop.Removable--sizeY-compact .Removable__content {
-  padding-top: 26px;
-}
-
-.Removable--paddedTop.Removable--sizeY-compact .Removable__children {
-  margin-top: -26px;
+.FormItem--withTop .Removable--sizeY-compact .Removable__control,
+.Removable--sizeY-compact .FormItem--withTop ~ .Removable__control {
+  top: 26px;
 }
 
 /**
