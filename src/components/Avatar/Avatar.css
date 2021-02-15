@@ -4,7 +4,7 @@
 
 .Avatar__in {
   position: relative;
-  color: var(--icon_secondary);
+  color: var(--placeholder_icon_foreground_secondary);
 }
 
 .Avatar__img {
