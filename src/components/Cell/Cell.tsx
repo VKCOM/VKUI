@@ -66,7 +66,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
   const rootElRef = useRef(null);
   const platform = usePlatform();
 
-  const [dragging, setDragging] = useState<boolean>(undefined);
+  const [dragging, setDragging] = useState<boolean>(false);
 
   const [siblings, setSiblings] = useState<HTMLElement[]>(undefined);
   const [dragStartIndex, setDragStartIndex] = useState<number>(undefined);
@@ -152,9 +152,11 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
 
   const { toggleDrag } = useContext(ListContext);
   useEffect(() => {
-    if (dragging !== undefined) {
-      toggleDrag(dragging);
+    if (dragging) {
+      toggleDrag(true);
+      return () => toggleDrag(false);
     }
+    return undefined;
   }, [dragging]);
 
   const simpleCell = (
