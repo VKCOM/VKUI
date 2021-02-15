@@ -66,7 +66,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
 
   const { document } = useDOM();
 
-  const scrollViewRef = useRef<CustomScrollView>(null);
+  const scrollBoxRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const {
     fieldValue, selectedOptions, opened, setOpened, addOptionFromInput,
@@ -89,14 +89,10 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     }
   };
 
+  const chipsSelectOptions = useRef<HTMLElement[]>([]).current;
+
   const scrollToElement = (index: number, center = false) => {
-    const scrollView = scrollViewRef.current;
-    const dropdown = scrollView.box.current;
-
-    const chipsSelectOptions: HTMLElement[] = Array.prototype.filter.call(dropdown.children, (item: HTMLElement) => {
-      return item.classList.contains('ChipsSelect__option');
-    });
-
+    const dropdown = scrollBoxRef.current;
     const item = chipsSelectOptions[index];
 
     if (!item) {
@@ -270,7 +266,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
           })}
           onMouseLeave={() => setFocusedOptionIndex(null)}
         >
-          <CustomScrollView ref={scrollViewRef}>
+          <CustomScrollView boxRef={scrollBoxRef}>
             {fetching ? (
               <div className="ChipsSelect__fetching">
                 <Spinner size="small" />
@@ -304,6 +300,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                           hovered,
                           children: label,
                           selected: !!selected,
+                          getRootRef: (e) => chipsSelectOptions[index] = e,
                           onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => {
                             onChangeStart(e, option);
 
