@@ -1103,10 +1103,10 @@ to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
 .InfoRow{-webkit-user-select:text;user-select:text;text-overflow:ellipsis;overflow:hidden}
 .InfoRow__header{margin-bottom:2px;color:#6d7885;color:#6d7885;color:var(--text_subhead);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .Avatar{box-sizing:border-box}
-.Avatar__in{position:relative;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
-.Avatar__img{background:rgba(0,28,61,.08);background:rgba(0,28,61,.08);background:var(--placeholder_icon_background);border:0;display:block;width:100%;height:100%;position:relative;z-index:1}
-.Avatar__shadow{position:absolute;left:0;top:0;width:100%;height:100%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);box-shadow:inset 0 0 0 1px var(--image_border);pointer-events:none;z-index:2}
-.Avatar__children{position:absolute;left:0;top:0;z-index:2;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.Avatar__in{position:relative;color:#aeb7c2;color:#aeb7c2;color:var(--placeholder_icon_foreground_secondary)}
+.Avatar__img{background:rgba(0,28,61,.08);background:rgba(0,28,61,.08);background:var(--placeholder_icon_background);border:0;display:block;width:100%;height:100%;position:relative;z-index:1;border-radius:inherit}
+.Avatar__shadow{position:absolute;left:0;top:0;width:100%;height:100%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);box-shadow:inset 0 0 0 1px var(--image_border);pointer-events:none;z-index:2;border-radius:inherit}
+.Avatar__children{position:absolute;left:0;top:0;z-index:2;width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:inherit}
 .Gallery{position:relative;overflow:hidden;height:100px}
 .Gallery__viewport{margin:0;height:100%;position:relative}
 .Gallery--center .Gallery__viewport{margin:0 auto}
@@ -1597,13 +1597,13 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .Textarea__el:disabled::placeholder{color:#818c99;color:#818c99;color:var(--text_secondary)}
 .File__input{display:none}
 .CustomScrollView{width:100%;height:100%;overflow:hidden;position:relative}
-.CustomScrollView__box{width:100%;height:100%;overflow-y:scroll;overflow-x:hidden;padding-right:100px;scrollbar-width:none}
+.CustomScrollView__box{width:100%;height:100%;overflow-y:scroll;overflow-x:hidden;padding-right:100px;scrollbar-width:none;position:relative;z-index:0}
 .CustomScrollView__box::-webkit-scrollbar{display:none}
-.CustomScrollView__box--dragging{pointer-events:none}
-.CustomScrollView__barY{position:absolute;top:0;right:0;height:100%;width:10px}
+.CustomScrollView__barY:active+.CustomScrollView__box{pointer-events:none}
+.CustomScrollView__barY{position:absolute;z-index:1;top:0;right:0;height:100%;width:10px}
 .CustomScrollView__trackerY{width:10px;box-sizing:border-box;padding:4px 4px 4px 0;position:absolute;top:0;left:0;-webkit-user-select:none;user-select:none}
 .CustomScrollView__trackerY::before{content:'';opacity:.28;display:block;width:100%;height:100%;background:#000;background:#000;background:var(--music_playback_icon);border-radius:12px;transition:opacity 200ms,-webkit-transform 200ms;transition:transform 200ms,opacity 200ms;transition:transform 200ms,opacity 200ms,-webkit-transform 200ms}
-.CustomScrollView__trackerY:hover::before,.CustomScrollView__trackerY--dragging::before{opacity:.56;-webkit-transform:scaleX(1.34);transform:scaleX(1.34)}
+.CustomScrollView__trackerY:hover::before,.CustomScrollView__trackerY:active::before{opacity:.56;-webkit-transform:scaleX(1.34);transform:scaleX(1.34)}
 .CustomSelect{width:100%;position:relative;cursor:pointer;display:block}
 .CustomSelect__control{display:none}
 .CustomSelect__options{width:100%;overflow:hidden;position:absolute;background-color:#fff;background-color:#fff;background-color:var(--modal_card_background);box-sizing:border-box;border:solid 1px rgba(0,0,0,.12);border:solid 1px rgba(0,0,0,.12);border:solid 1px var(--field_border);border-top:0;box-shadow:0 2px 2px rgba(0,0,0,.06),0 0 2px rgba(0,0,0,.03);border-radius:0 0 8px 8px;max-height:160px;z-index:3}
