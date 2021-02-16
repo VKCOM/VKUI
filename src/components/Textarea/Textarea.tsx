@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes, RefCallback } from 'react';
+import { ChangeEvent, ChangeEventHandler, PureComponent, TextareaHTMLAttributes, RefCallback } from 'react';
 import { classNames } from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 import { HasRef, HasRootRef } from '../../types';

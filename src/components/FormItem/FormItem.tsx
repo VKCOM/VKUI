@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent } from 'react';
+import { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent, Fragment } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -40,11 +40,11 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
   const platform = usePlatform();
 
   const wrappedChildren = (
-    <>
+    <Fragment>
       {hasReactNode(top) && <Subhead weight="regular" className="FormItem__top">{top}</Subhead>}
       {children}
       {hasReactNode(bottom) && <Caption level="1" weight="regular" className="FormItem__bottom">{bottom}</Caption>}
-    </>
+    </Fragment>
   );
 
   return (

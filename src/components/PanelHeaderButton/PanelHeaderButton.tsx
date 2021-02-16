@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, FunctionComponent, ReactNode } from 'react';
+import { AllHTMLAttributes, FunctionComponent, ReactNode } from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';

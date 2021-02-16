@@ -3,6 +3,7 @@ import React, {
   FocusEvent,
   ReactNode,
   useEffect,
+  Fragment,
 } from 'react';
 import { Icon20Dropdown } from '@vkontakte/icons';
 import { classNames } from '../../lib/classNames';
@@ -272,7 +273,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                 <Spinner size="small" />
               </div>
             ) : (
-              <>
+              <Fragment>
                 {showCreatable && (
                   <CustomSelectOption
                     hovered={focusedOptionIndex === 0}
@@ -316,7 +317,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                     );
                   })
                 }
-              </>
+              </Fragment>
             )}
           </CustomScrollView>
         </div>

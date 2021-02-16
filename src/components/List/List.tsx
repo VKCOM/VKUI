@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, useMemo, useState } from 'react';
+import { FunctionComponent, HTMLAttributes, useMemo, useState } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';

@@ -1,5 +1,5 @@
 import { render, RenderResult, screen } from '@testing-library/react';
-import React, { ComponentType } from 'react';
+import { ComponentType } from 'react';
 
 export type ComponentTestOptions = {
   defaultProps?: any;

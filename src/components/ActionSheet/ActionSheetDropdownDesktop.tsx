@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, HTMLAttributes, MouseEventHandler, RefObject } from 'react';
+import { Component, CSSProperties, HTMLAttributes, MouseEventHandler, RefObject } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';

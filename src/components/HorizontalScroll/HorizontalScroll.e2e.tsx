@@ -1,4 +1,3 @@
-import React from 'react';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import HorizontalScroll from './HorizontalScroll';
 import { HorizontalCell } from '../HorizontalCell/HorizontalCell';

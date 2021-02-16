@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Icon24Chevron } from '@vkontakte/icons';
 
 export interface HorizontalScrollArrowProps {

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ButtonHTMLAttributes, useState } from 'react';
+import { FunctionComponent, ButtonHTMLAttributes, useState } from 'react';
 import Tappable from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';

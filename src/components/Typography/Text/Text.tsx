@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, ElementType, FunctionComponent, useEffect } from 'react';
+import { AllHTMLAttributes, ElementType, FunctionComponent, useEffect } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';

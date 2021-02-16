@@ -1,4 +1,3 @@
-import React from 'react';
 import ChipsSelect from './ChipsSelect';
 import { screenshot, mount } from '../../testing/e2e';
 import AdaptivityProvider from '../AdaptivityProvider/AdaptivityProvider';

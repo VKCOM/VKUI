@@ -1,4 +1,3 @@
-import React from 'react';
 import { useInsets } from '../hooks/useInsets';
 
 export function withInsets<T>(Component: T): T {

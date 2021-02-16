@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import { FunctionComponent, HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
 
 export interface GradientProps extends HTMLAttributes<HTMLDivElement> {

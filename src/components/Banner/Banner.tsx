@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, HTMLAttributes, MouseEventHandler } from 'react';
+import { FunctionComponent, ReactNode, HTMLAttributes, MouseEventHandler } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';

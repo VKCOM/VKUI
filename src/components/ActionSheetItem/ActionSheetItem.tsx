@@ -1,4 +1,4 @@
-import React, { AnchorHTMLAttributes, ElementType, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
+import React, { AnchorHTMLAttributes, ElementType, Fragment, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
@@ -81,7 +81,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
       <div className="ActionSheetItem__container">
         <div className="ActionSheetItem__content">
           {sizeY === SizeType.COMPACT ?
-            <>
+            <Fragment>
               <Text
                 weight={mode === 'cancel' ? 'medium' : 'regular'}
                 className="ActionSheetItem__children"
@@ -96,9 +96,9 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
                   {meta}
                 </Text>
               }
-            </>
+            </Fragment>
             :
-            <>
+            <Fragment>
               <Title
                 weight={mode === 'cancel' ? 'medium' : 'regular'}
                 level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
@@ -115,7 +115,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
                   {meta}
                 </Title>
               }
-            </>
+            </Fragment>
           }
         </div>
         {hasReactNode(subtitle) && (sizeY === SizeType.COMPACT ?

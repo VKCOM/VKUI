@@ -1,4 +1,4 @@
-import React, { FC, ImgHTMLAttributes, ReactNode } from 'react';
+import { FC, ImgHTMLAttributes, ReactNode } from 'react';
 import Card, { CardProps } from '../Card/Card';
 import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';

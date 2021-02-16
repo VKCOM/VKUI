@@ -9,5 +9,7 @@
     "src/**/*.e2e.ts", "src/**/*.e2e.tsx",
     "src/testing/"
   ],
-  "files": []
+  "files": [
+    "src/lib/jsxRuntime.d.ts"
+  ]
 }

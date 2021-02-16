@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import { FunctionComponent, HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon24Dropdown, Icon20Dropdown } from '@vkontakte/icons';
 import FormField from '../FormField/FormField';
@@ -68,4 +68,3 @@ export default withAdaptivity(SelectMimicry, {
   sizeX: true,
   sizeY: true,
 });
-

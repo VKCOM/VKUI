@@ -1,3 +1,4 @@
+const path = require('path');
 const { NODE_ENV } = process.env;
 const isProduction = NODE_ENV === 'production';
 const isDevelopment = NODE_ENV === 'development';
@@ -13,9 +14,29 @@ const testFiles = [
 module.exports = {
   presets: [
     ['@babel/preset-env', { modules: useModules ? false : 'commonjs' }],
-    '@babel/preset-react',
-    '@babel/preset-typescript'
+    ['@babel/preset-react', {
+      pragma: "createScopedElement",
+      pragmaFrag: "createScopedElement.Fragment",
+    }],
+    ['@babel/preset-typescript', {
+      jsxPragma: "createScopedElement",
+      jsxPragmaFrag: 'createScopedElement.Fragment',
+    }]
   ],
-  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-object-rest-spread', '@babel/plugin-transform-runtime'],
+  plugins: [
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-proposal-object-rest-spread',
+    '@babel/plugin-transform-runtime',
+    [require.resolve('babel-plugin-auto-import'), {
+      'declarations': [
+        { members: ['createScopedElement'], path: '#jsxRuntime' }
+      ],
+    }],
+    [require.resolve('babel-plugin-module-resolver'), {
+      alias: {
+        "#jsxRuntime": "./src/lib/jsxRuntime"
+      }
+    }],
+  ],
   ignore: ['./src/vkui.js'].concat(isProduction ? testFiles : []),
 };

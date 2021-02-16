@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ComponentType } from 'react';
+import { createContext, useContext, ComponentType } from 'react';
 import { canUseDOM } from '@vkontakte/vkjs/lib/dom';
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs/lib/dom';
 

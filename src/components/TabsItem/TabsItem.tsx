@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode, useContext } from 'react';
+import { FunctionComponent, HTMLAttributes, ReactNode, useContext } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import { classNames } from '../../lib/classNames';

@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, RefCallback } from 'react';
+import { Component, HTMLAttributes, RefCallback } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Touch from '../Touch/Touch';

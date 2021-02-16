@@ -1,4 +1,4 @@
-import React, { MouseEvent, FC, useState, useRef, useEffect, useContext } from 'react';
+import { MouseEvent, FC, useState, useRef, useEffect, useContext, Fragment } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Touch, { TouchEvent } from '../Touch/Touch';
@@ -165,7 +165,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
       disabled={draggable || removable || disabled}
       Component={selectable ? 'label' : Component}
       before={
-        <>
+        <Fragment>
           {(platform === ANDROID || platform === VKCOM) && draggable && (
             <Touch
               className="Cell__dragger"
@@ -176,16 +176,16 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
             ><Icon24Reorder /></Touch>
           )}
           {selectable && (
-            <>
+            <Fragment>
               <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
               <div className="Cell__marker"><Icon16Done /></div>
-            </>
+            </Fragment>
           )}
           {before}
-        </>
+        </Fragment>
       }
       after={
-        <>
+        <Fragment>
           {platform === IOS && draggable && (
             <Touch
               className="Cell__dragger"
@@ -196,7 +196,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
             ><Icon24ReorderIos /></Touch>
           )}
           {after}
-        </>
+        </Fragment>
       }
     />
   );

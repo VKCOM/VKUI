@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, FC } from 'react';
+import { HTMLAttributes, ReactNode, FC } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRef, HasRootRef } from '../../types';

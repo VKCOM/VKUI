@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes, useRef, useState } from 'react';
+import { FC, HTMLAttributes, useRef, useState } from 'react';
 import { useDOM } from '../../lib/dom';
 import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';

@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, FC, useContext } from 'react';
+import { HTMLAttributes, ReactNode, FC, useContext } from 'react';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';

@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
+import { Component, HTMLAttributes, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
 import { withAdaptivity, ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';

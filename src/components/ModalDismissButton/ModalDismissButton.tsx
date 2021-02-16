@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, FC } from 'react';
+import { HTMLAttributes, FC } from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';

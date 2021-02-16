@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { PanelContext } from './PanelContext';
 
 export function withPanelContext<T>(Component: T): T {

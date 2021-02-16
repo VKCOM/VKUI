@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, createContext } from 'react';
+import { FunctionComponent, HTMLAttributes, createContext } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';

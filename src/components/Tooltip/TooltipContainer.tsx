@@ -1,4 +1,4 @@
-import React, { forwardRef, HtmlHTMLAttributes } from 'react';
+import { forwardRef, HtmlHTMLAttributes } from 'react';
 
 export const tooltipContainerAttr = 'data-tooltip-container';
 export const TooltipContainer = forwardRef<

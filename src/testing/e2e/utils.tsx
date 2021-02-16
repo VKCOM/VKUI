@@ -1,4 +1,4 @@
-import React, { ComponentType, Fragment, isValidElement } from 'react';
+import { ComponentType, Fragment, isValidElement } from 'react';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { screenshot } from '@react-playwright';
 // Импорты из отдельных модулей помогают jest отслеживать зависимости

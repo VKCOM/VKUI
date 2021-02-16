@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes, ReactNode, useCallback, MouseEvent } from 'react';
+import { FC, HTMLAttributes, ReactNode, useCallback, MouseEvent } from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { getTitleFromChildren, hasReactNode, noop } from '../../lib/utils';

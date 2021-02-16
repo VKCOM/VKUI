@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, FunctionComponent, InputHTMLAttributes, useRef } from 'react';
+import { HTMLAttributes, FunctionComponent, InputHTMLAttributes, useRef } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import Button, { VKUIButtonProps } from '../Button/Button';
 import { classNames } from '../../lib/classNames';

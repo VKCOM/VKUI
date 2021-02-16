@@ -1,4 +1,4 @@
-import React, { createContext, FC } from 'react';
+import { createContext, FC } from 'react';
 import { PlatformType, platform } from './platform';
 import { BrowserInfo, computeBrowserInfo } from './browser';
 import { DOMContext, getDOM } from '../lib/dom';
