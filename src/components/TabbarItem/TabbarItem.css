@@ -9,6 +9,11 @@
   justify-content: center;
   color: var(--tabbar_inactive_icon);
   text-decoration: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
 }
 
 .Tabbar--l-vertical .TabbarItem.TabbarItem--text {
