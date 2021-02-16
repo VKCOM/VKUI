@@ -28,7 +28,7 @@ export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<H
 }
 
 const Group: FC<GroupProps> = (props) => {
-  const { header, description, className, children, separator, getRootRef, mode, sizeX, sizeY, ...restProps } = props;
+  const { header, description, className, children, separator, getRootRef, mode, sizeX, ...restProps } = props;
   const { isInsideModal } = useContext(ModalRootContext);
   const platform = usePlatform();
   const baseClassNames = getClassName('Group', platform);
@@ -43,7 +43,7 @@ const Group: FC<GroupProps> = (props) => {
     <section
       {...restProps}
       ref={getRootRef}
-      className={classNames(className, baseClassNames, `Group--sizeX-${sizeX}`, `Group--sizeY-${sizeY}`, `Group--${computedMode}`)}
+      className={classNames(className, baseClassNames, `Group--sizeX-${sizeX}`, `Group--${computedMode}`)}
     >
       <div className="Group__inner">
         {header}
@@ -71,4 +71,4 @@ Group.defaultProps = {
   separator: 'auto',
 };
 
-export default withAdaptivity(Group, { sizeX: true, sizeY: true });
+export default withAdaptivity(Group, { sizeX: true });
