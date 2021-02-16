@@ -20,6 +20,10 @@ export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPla
    */
   toggleRef: Element;
   /**
+   * Desktop only
+   */
+  popupDirection?: 'top' | 'bottom';
+  /**
    * iOS only
    */
   iosCloseItem: React.ReactNode;
@@ -46,6 +50,10 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   elRef: React.RefObject<HTMLDivElement>;
 
   private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+
+  static defaultProps: Partial<ActionSheetProps> = {
+    popupDirection: 'bottom',
+  };
 
   onClose: CloseCallback = () => {
     this.setState({ closing: true });
@@ -120,7 +128,8 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
           value={{
             onItemClick: this.onItemClick,
             isDesktop,
-          }}>
+          }}
+        >
           <DropdownComponent
             closing={this.state.closing}
             onClose={this.onClose}
