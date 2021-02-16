@@ -127,16 +127,15 @@ to{-webkit-transform:scale(8);transform:scale(8);opacity:0}}
 .Button--lvl-outline .Counter{background-color:#3f8ae0;background-color:#3f8ae0;background-color:var(--button_outline_foreground);color:#fff;color:#fff;color:var(--background_content)}
 .Button--lvl-commerce .Counter{background-color:#fff;background-color:#fff;background-color:var(--button_commerce_foreground);color:#4bb34b;color:#4bb34b;color:var(--button_commerce_background)}
 .Button--vkcom.Button--lvl-secondary .Counter,.Button--vkcom.Button--lvl-tertiary .Counter,.Button--vkcom.Button--lvl-outline .Counter,.Button--vkcom.Button--lvl-secondary .Icon,.Button--vkcom.Button--lvl-tertiary .Icon,.Button--vkcom.Button--lvl-outline .Icon{opacity:.72}
-.Removable{position:relative;box-sizing:border-box}
+.Removable{position:relative;box-sizing:border-box;min-width:0;flex-grow:1}
 .Removable__content{display:flex;flex-flow:row nowrap;align-items:center;max-width:100%}
-.Removable__children{max-width:100%;flex-grow:1;min-width:0;flex-shrink:initial}
+.Removable__content>*{flex-grow:1}
+.Removable__indicator{order:-1}
 .Removable__indicator,.Removable__remove{flex-grow:0;flex-shrink:0;border:0}
 .Removable__indicator:focus,.Removable__remove:focus{outline:0}
-.Removable--start .Removable__indicator,.Removable--start .Removable__remove{align-self:flex-start}
-.Removable--paddedTop .Removable__content{padding-top:28px}
-.Removable--paddedTop .Removable__children{margin-top:-28px}
-.Removable--paddedTop.Removable--sizeY-compact .Removable__content{padding-top:26px}
-.Removable--paddedTop.Removable--sizeY-compact .Removable__children{margin-top:-26px}
+.Removable--start .Removable__control{align-self:flex-start}
+.FormItem--withTop .Removable__control,.FormItem--withTop~.Removable__control{position:relative;top:28px}
+.FormItem--withTop .Removable--sizeY-compact .Removable__control,.Removable--sizeY-compact .FormItem--withTop~.Removable__control{top:26px}
 .Removable--ios{overflow:hidden}
 .Removable--ios .Removable__content{transition:-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:-webkit-transform .6s var(--ios-easing);transition:transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s var(--ios-easing);transition:transform .6s var(--ios-easing),-webkit-transform .6s var(--ios-easing);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s var(--ios-easing),-webkit-transform .6s var(--ios-easing)}
 .Removable--ios .Removable__remove{position:absolute;left:100%;top:0;display:flex;align-items:center;justify-content:center;height:100%;padding:0 10px;font-size:15px;line-height:45px;color:#fff;color:#fff;color:var(--white);background-color:#e64646;background-color:#e64646;background-color:var(--destructive);transition:-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:-webkit-transform .6s var(--ios-easing);transition:transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s var(--ios-easing);transition:transform .6s var(--ios-easing),-webkit-transform .6s var(--ios-easing);transition:transform .6s cubic-bezier(.36,.66,.04,1),-webkit-transform .6s cubic-bezier(.36,.66,.04,1);transition:transform .6s var(--ios-easing),-webkit-transform .6s var(--ios-easing)}
@@ -932,7 +931,6 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .Group--card>.Group__inner>.Header:not(.Header--mode-tertiary):first-child,.Group--card>.Group__inner>.Tabs--default:first-child{margin-top:-4px}
 .Group--plain>.Group__separator{padding-top:8px;padding-bottom:8px}
 .Group--sizeX-regular.Group--plain>.Group__separator{padding:8px}
-.Group--sizeY-compact.Group--plain>.Group__separator{padding-top:0;padding-bottom:0}
 .Group:last-of-type>.Group__separator{display:none}
 .Group:last-of-type>.Group__separator--force,.Group--sizeX-regular.Group--card:last-of-type>.Group__separator{display:block}
 .Group__description{color:#818c99;color:#818c99;color:var(--text_secondary)}
@@ -1104,10 +1102,10 @@ to{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}
 .InfoRow{-webkit-user-select:text;user-select:text;text-overflow:ellipsis;overflow:hidden}
 .InfoRow__header{margin-bottom:2px;color:#6d7885;color:#6d7885;color:var(--text_subhead);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .Avatar{box-sizing:border-box}
-.Avatar__in{position:relative;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
-.Avatar__img{background:rgba(0,28,61,.08);background:rgba(0,28,61,.08);background:var(--placeholder_icon_background);border:0;display:block;width:100%;height:100%;position:relative;z-index:1}
-.Avatar__shadow{position:absolute;left:0;top:0;width:100%;height:100%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);box-shadow:inset 0 0 0 1px var(--image_border);pointer-events:none;z-index:2}
-.Avatar__children{position:absolute;left:0;top:0;z-index:2;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.Avatar__in{position:relative;color:#aeb7c2;color:#aeb7c2;color:var(--placeholder_icon_foreground_secondary)}
+.Avatar__img{background:rgba(0,28,61,.08);background:rgba(0,28,61,.08);background:var(--placeholder_icon_background);border:0;display:block;width:100%;height:100%;position:relative;z-index:1;border-radius:inherit}
+.Avatar__shadow{position:absolute;left:0;top:0;width:100%;height:100%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);box-shadow:inset 0 0 0 1px var(--image_border);pointer-events:none;z-index:2;border-radius:inherit}
+.Avatar__children{position:absolute;left:0;top:0;z-index:2;width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:inherit}
 .Gallery{position:relative;overflow:hidden;height:100px}
 .Gallery__viewport{margin:0;height:100%;position:relative}
 .Gallery--center .Gallery__viewport{margin:0 auto}
@@ -1420,10 +1418,9 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .FormItem--ios .Cell,.FormItem--ios .SimpleCell,.FormItem--ios .RichCell,.FormItem--ios .CellButton,.FormItem--ios .Radio,.FormItem--ios .Checkbox,.FormItem--ios .Removable{margin-left:-12px;margin-right:-12px}
 .FormItem--android .Removable__remove,.FormItem--vkcom .Removable__remove{margin-top:-2px;margin-bottom:-2px;margin-right:-16px}
 .FormItem--android.FormItem--sizeY-compact .Removable__remove,.FormItem--vkcom.FormItem--sizeY-compact .Removable__remove{margin-left:2px;margin-right:-14px;margin-top:-4px;margin-bottom:-4px}
-.FormLayoutGroup--horizontal{padding:12px 16px}
-.FormLayoutGroup--horizontal .FormLayoutGroup__children{display:flex;flex-direction:row}
-.FormLayoutGroup--horizontal .FormLayoutGroup__children>.FormItem{max-width:100%;flex-grow:1;flex-shrink:0;flex-basis:0;padding:0;min-width:0}
-.FormLayoutGroup--horizontal .FormLayoutGroup__children>.FormItem+.FormItem{margin-left:24px}
+.FormLayoutGroup--horizontal{padding:12px 16px;display:flex;flex-direction:row}
+.FormLayoutGroup--horizontal .FormItem{max-width:100%;flex-grow:1;flex-shrink:0;flex-basis:0;padding:0;min-width:0}
+.FormLayoutGroup--horizontal .FormItem+.FormItem{margin-left:24px}
 .FormLayoutGroup--ios.FormLayoutGroup--horizontal{padding-left:12px;padding-right:12px}
 .FormLayoutGroup--ios .Removable{margin-left:-12px;margin-right:-12px;padding-left:12px;padding-right:12px}
 .FormLayoutGroup--android .Removable__remove,.FormLayoutGroup--vkcom .Removable__remove{margin-top:-2px;margin-bottom:-2px;margin-right:-16px}
