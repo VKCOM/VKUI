@@ -7,7 +7,7 @@ import { hasReactNode, noop } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
-import { ANDROID, IOS, VKCOM } from '../../lib/platform';
+import { ANDROID, VKCOM } from '../../lib/platform';
 import { Icon16Done, Icon24Done } from '@vkontakte/icons';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
@@ -62,7 +62,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
     <Tappable
       {...restProps}
       onClick={onItemClick(onClick, autoclose)}
-      activeHighlighted={platform !== IOS}
+      activeMode="ActionSheetItem--active"
       className={
         classNames(
           getClassName('ActionSheetItem', platform),

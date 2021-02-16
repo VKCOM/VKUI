@@ -158,7 +158,7 @@
   content: none;
 }
 
-.ActionSheetItem--ios.Tappable--active::before {
+.ActionSheetItem--ios.ActionSheetItem--active::before {
   background: var(--separator_common);
   opacity: 1;
   transition: none;
@@ -203,7 +203,7 @@
   border-radius: 0;
 }
 
-.ActionSheetItem--android.Tappable--active {
+.ActionSheetItem--android.ActionSheetItem--active {
   background-color: var(--action_sheet_separator);
 }
 
@@ -230,7 +230,7 @@
   border-radius: 0;
 }
 
-.ActionSheetItem--vkcom.Tappable--active {
+.ActionSheetItem--vkcom.ActionSheetItem--active {
   background-color: var(--action_sheet_separator);
 }
 

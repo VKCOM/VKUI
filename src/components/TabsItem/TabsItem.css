@@ -141,11 +141,11 @@
   color: var(--background_content);
 }
 
-.Tabs--ios.Tabs--segmented .TabsItem:not(.TabsItem--selected).Tappable--active {
+.Tabs--ios.Tabs--segmented .TabsItem:not(.TabsItem--selected).TabsItem--active {
   background: var(--separator_common);
 }
 
-.PanelHeader--ios .Tabs--segmented.TabsItem:not(.TabsItem--selected).Tappable--active .TabsItem__in {
+.PanelHeader--ios .Tabs--segmented.TabsItem:not(.TabsItem--selected).TabsItem--active .TabsItem__in {
   opacity: .7;
 }
 
@@ -157,15 +157,6 @@
 .Tabs--ios.Tabs--segmented.Tabs--header .TabsItem--selected {
   background-color: var(--header_tint);
   color: var(--header_background);
-}
-
-/*
-  Android
- */
-
-.TabsItem--android .Tappable__waves,
-.TabsItem--vkcom .Tappable__waves {
-  display: none;
 }
 
 /*

@@ -13,8 +13,8 @@ const ModalDismissButton: FC<ModalDismissButtonProps> = ({ className, ...props }
     <Tappable
       className={classNames(getClassName('ModalDismissButton', platform), className)}
       {...props}
-      activeHighlighted={false}
-      hoverBackground={false}
+      activeMode="ModalDismissButton--active"
+      hoverMode="ModalDismissButton--hover"
     >
       <Icon20Cancel />
     </Tappable>

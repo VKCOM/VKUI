@@ -108,7 +108,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
         }, className,
       )}
     >
-      <InnerComponent className="Banner__in" activeHighlighted={platform !== IOS}>
+      <InnerComponent className="Banner__in" activeMode={platform === IOS ? 'opacity' : 'background'}>
         {mode === 'image' && background &&
         <div className="Banner__bg">
           {background}

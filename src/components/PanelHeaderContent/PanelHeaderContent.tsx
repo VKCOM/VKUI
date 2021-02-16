@@ -6,6 +6,7 @@ import usePlatform from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import Caption from '../Typography/Caption/Caption';
 import Headline from '../Typography/Headline/Headline';
+import { IOS } from '../..';
 
 interface PanelHeaderContentProps extends HTMLAttributes<HTMLDivElement> {
   aside?: ReactNode;
@@ -32,7 +33,13 @@ const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
   return (
     <div {...rootProps} className={classNames(baseClassNames, className)} style={style}>
       {hasReactNode(before) && <div className="PanelHeaderContent__before">{before}</div>}
-      <InComponent {...inProps} className="PanelHeaderContent__in" onClick={onClick} activeHighlighted={false}>
+      <InComponent
+        {...inProps}
+        className="PanelHeaderContent__in"
+        onClick={onClick}
+        hasActive={platform === IOS}
+        activeMode="opacity"
+      >
         {hasReactNode(status) &&
           <Caption level="1" weight="regular" className="PanelHeaderContent__status">
             {status}

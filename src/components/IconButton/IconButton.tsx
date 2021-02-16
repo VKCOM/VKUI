@@ -4,6 +4,7 @@ import getClassName from '../../helpers/getClassName';
 import classNames from '../../lib/classNames';
 import usePlatform from '../../hooks/usePlatform';
 import withAdaptivity from '../../hoc/withAdaptivity';
+import { IOS } from '../..';
 
 export interface IconButtonProps extends TappableProps {
   /**
@@ -27,7 +28,7 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
       {...restProps}
       Component={Component}
       activeEffectDelay={200}
-      activeHighlighted={false}
+      activeMode={platform === IOS ? 'opacity' : 'IconButton--active'}
       className={classNames(
         getClassName('IconButton', platform),
         className,
