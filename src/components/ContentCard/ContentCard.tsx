@@ -50,7 +50,7 @@ export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAtt
 }
 
 const ContentCard: FC<ContentCardProps> = (props) => {
-  const { getRef, onClick, subtitle, header, text, caption, className, image, disabled, mode, alt, style, getRootRef, ...restProps } = props;
+  const { getRef, onClick, subtitle, header, text, caption, className, image, maxHeight, disabled, mode, alt, style, getRootRef, ...restProps } = props;
   const platform = usePlatform();
 
   return (
