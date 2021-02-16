@@ -106,12 +106,12 @@ function doScroll({
   })();
 }
 
-const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
+const HorizontalScroll: FC<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
   const {
     children,
     getScrollToLeft,
     getScrollToRight,
-    showArrows = false,
+    showArrows,
     scrollAnimationDuration,
     className,
     hasMouse,
@@ -184,6 +184,10 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
       </div>
     </div>
   );
+};
+
+HorizontalScroll.defaultProps = {
+  showArrows: true,
 };
 
 export default withAdaptivity(HorizontalScroll, {
