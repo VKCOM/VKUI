@@ -1,11 +1,5 @@
 import { createElement, Fragment } from 'react';
-
-const hasTransformable = /\b(?=[A-Z])/g;
-function prefixClass(scopedStyle: string, globalStyle?: string) {
-  const prefixed = scopedStyle.replace(hasTransformable, 'vkui');
-  const resolved = scopedStyle === prefixed ? prefixed : prefixed + ' ' + scopedStyle;
-  return globalStyle ? resolved + ' ' + globalStyle : resolved;
-}
+import { prefixClass } from './prefixClass';
 
 function processProps(props: any) {
   const newProps: any = {};
@@ -14,7 +8,11 @@ function processProps(props: any) {
       newProps[key] = props[key];
     }
   }
-  newProps.className = prefixClass(props.vkuiClass, props.className);
+  if (props.vkuiClass) {
+    const className: string = props.className;
+    const resolved = prefixClass(props.vkuiClass);
+    newProps.className = className ? className + ' ' + resolved : resolved;
+  }
   return newProps;
 }
 

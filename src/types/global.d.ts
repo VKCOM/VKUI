@@ -2,6 +2,6 @@ import 'react';
 
 declare module 'react' {
   interface Attributes {
-    vkuiClass?: string;
+    vkuiClass?: string | string[];
   }
 }

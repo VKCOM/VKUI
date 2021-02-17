@@ -4,28 +4,30 @@ export interface ObjectClassNames {
 
 export type ClassName = number | string | ObjectClassNames | false | null | undefined;
 
-export function classNames(...classnames: ClassName[]) {
+export function classNames(...classnames: ClassName[]): string | string[];
+export function classNames() {
   let result: string[] = [];
 
-  classnames.forEach((item: ClassName): void => {
+  for (let i = 0; i < arguments.length; i++) {
+    const item = arguments[i];
     if (!item) {
-      return;
+      continue;
     }
     switch (typeof item) {
       case 'string':
         result.push(item);
         break;
       case 'object':
-        Object.keys(item).forEach((key: string) => {
+        for (let key in item) {
           if (item[key]) {
             result.push(key);
           }
-        });
+        }
         break;
       default:
         result.push(`${item}`);
     }
-  });
+  }
 
-  return result.join(' ');
+  return result.length > 1 ? result : result[0] || '';
 }
