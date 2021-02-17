@@ -70,7 +70,7 @@ export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: Subnavi
   return (
     <Tappable
       {...restProps}
-      activeHighlighted={false}
+      hasActive={false}
       className={classNames(
         getClassName('SubnavigationButton', platform),
         `SubnavigationButton--${size}`,

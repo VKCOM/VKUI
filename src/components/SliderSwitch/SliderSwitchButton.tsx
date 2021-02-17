@@ -39,8 +39,8 @@ const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) 
     onFocus={toggleFocus}
     onBlur={toggleFocus}
     tabIndex={0}
-    activeHighlighted={false}
-    hoverBackground={false}
+    hasActive={false}
+    hoverMode="opacity"
   >
     <Text Component="span" weight="medium">{children}</Text>
   </Tappable>;

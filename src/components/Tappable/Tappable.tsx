@@ -14,12 +14,27 @@ import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;
+  /**
+   * Длительность показа active-состояния
+   */
   activeEffectDelay?: number;
   stopPropagation?: boolean;
+  /**
+   * Указывает, должен ли компонент реагировать на hover-состояние
+   */
   hasHover?: boolean;
+  /**
+   * Указывает, должен ли компонент реагировать на active-состояние
+   */
   hasActive?: boolean;
-  activeHighlighted?: boolean;
-  hoverBackground?: boolean;
+  /**
+   * Стиль подсветки active-состояния. Если передать произвольную строку, она добавится как css-класс во время active
+   */
+  activeMode?: 'opacity' | 'background' | string;
+  /**
+   * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
+   */
+  hoverMode?: 'opacity' | 'background' | string;
 }
 
 export interface TappableState {
@@ -106,10 +121,10 @@ class Tappable extends Component<TappableProps, TappableState> {
     stopPropagation: false,
     disabled: false,
     hasHover,
+    hoverMode: 'background',
     hasActive: true,
+    activeMode: 'background',
     activeEffectDelay: ACTIVE_EFFECT_DELAY,
-    activeHighlighted: true,
-    hoverBackground: true,
   };
 
   /*
@@ -272,22 +287,6 @@ class Tappable extends Component<TappableProps, TappableState> {
     setRef(container, this.props.getRootRef);
   };
 
-  containerHasTransparentBackground = (): boolean => {
-    if (!this.container) {
-      return true;
-    }
-
-    if (!this.container.style.backgroundColor) {
-      return true;
-    }
-
-    if (this.container.style.backgroundColor === 'transparent') {
-      return true;
-    }
-
-    return false;
-  };
-
   componentWillUnmount() {
     if (storage[this.id]) {
       clearTimeout(storage[this.id].timeout);
@@ -308,11 +307,10 @@ class Tappable extends Component<TappableProps, TappableState> {
   render() {
     const { clicks, active, hovered, hasHover, hasActive } = this.state;
     const { children, className, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, sizeX, hasMouse, hasHover: propsHasHover, hasActive: propsHasActive, activeHighlighted, hoverBackground, ...restProps } = this.props;
+      stopPropagation, getRootRef, platform, sizeX, hasMouse, hasHover: propsHasHover, hoverMode, hasActive: propsHasActive, activeMode, ...restProps } = this.props;
 
-    const hoverClassModificator = this.containerHasTransparentBackground()
-      ? 'shadowHovered'
-      : 'opacityHovered';
+    const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
+    const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
 
     const classes = classNames(
       getClassName('Tappable', platform),
@@ -322,9 +320,10 @@ class Tappable extends Component<TappableProps, TappableState> {
         'Tappable--active': hasActive && active,
         'Tappable--inactive': !active,
         'Tappable--mouse': hasMouse,
-        [`Tappable--${hoverClassModificator}`]: hasHover && hovered,
-        'Tappable--activeHighlighted': activeHighlighted,
-        'Tappable--hoverBackground': hoverBackground,
+        [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
+        [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
+        [hoverMode]: hasHover && hovered && !isPresetHoverMode,
+        [activeMode]: hasActive && active && !isPresetActiveMode,
       });
 
     const RootComponent = restProps.disabled
@@ -376,7 +375,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                     >
                       {children}
                     </TappableContext.Provider>
-                    {platform === ANDROID && !hasMouse &&
+                    {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' &&
                     <span className="Tappable__waves">
                       {Object.keys(clicks).map((k: string) => {
                         return (

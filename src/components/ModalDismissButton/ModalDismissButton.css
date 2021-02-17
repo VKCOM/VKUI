@@ -28,10 +28,10 @@
   transform: translateX(0);
 }
 
-.ModalDismissButton.Tappable--shadowHovered {
+.ModalDismissButton--hover {
   opacity: .6;
 }
 
-.ModalDismissButton.Tappable--shadowHovered.Tappable--active {
+.ModalDismissButton--active {
   opacity: 1;
 }

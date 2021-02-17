@@ -1,5 +1,56 @@
+.Tappable {
+  position: relative;
+}
+
 .Tappable:not([disabled]) {
   cursor: pointer;
+}
+
+/**
+ * active
+ */
+
+.Tappable--active-background:not([disabled]) {
+  background: var(--background_highlighted);
+}
+
+.Tappable--active-opacity:not([disabled]) {
+  opacity: .7;
+}
+
+/**
+ * hover
+ */
+
+.Tappable__hoverShadow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.Tappable--hover-background > .Tappable__hoverShadow {
+  background: var(--background_hover);
+}
+
+.Tappable--hover-opacity {
+  opacity: .8;
+}
+
+/**
+ * mouse
+ */
+
+.Tappable--mouse {
+  transition: opacity .15s ease-out;
+}
+
+.Tappable--mouse .Tappable__hoverShadow {
+  transition: background-color .15s ease-out;
 }
 
 /**
@@ -11,11 +62,7 @@
   transition: background-color .15s ease-out;
 }
 
-.Tappable--activeHighlighted.Tappable--active:not([disabled]) {
-  background: var(--background_highlighted);
-}
-
-.Tappable--ios.Tappable--activeHighlighted.Tappable--active:not([disabled]) {
+.Tappable--ios.Tappable--active-background.Tappable--active:not([disabled]) {
   transition: none;
 }
 
@@ -28,18 +75,6 @@
   border-radius: 8px;
 }
 
-/**
- * VKCOM tappable
- */
-.Tappable--vkcom {
-  position: relative;
-  transition: background-color .15s ease-out;
-  border-radius: 8px;
-}
-
-/**
- * Waves container
- */
 .Tappable--android .Tappable__waves {
   position: absolute;
   top: 0;
@@ -53,9 +88,6 @@
   will-change: transform;
 }
 
-/**
- * Wave
- */
 .Tappable--android .Tappable__wave {
   position: absolute;
   top: 0;
@@ -70,35 +102,20 @@
   animation: animation-wave .3s var(--android-easing);
 }
 
-.Tappable__hoverShadow {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  overflow: hidden;
-  border-radius: inherit;
+/**
+ * VKCOM tappable
+ */
+.Tappable--vkcom {
+  transition: background-color .15s ease-out;
+  border-radius: 8px;
 }
 
-.Tappable--hoverBackground.Tappable--shadowHovered > .Tappable__hoverShadow {
-  background: var(--background_hover);
-}
-
-.Tappable--opacityHovered {
-  opacity: .8;
-}
+/**
+ * overrides
+ */
 
 .Tappable--sizeX-compact {
   border-radius: 0;
-}
-
-.Tappable--mouse {
-  transition: opacity .15s ease-out;
-}
-
-.Tappable--mouse .Tappable__hoverShadow {
-  transition: background-color .15s ease-out;
 }
 
 /**
