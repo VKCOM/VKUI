@@ -1,4 +1,4 @@
-import React, { FunctionComponent, AllHTMLAttributes, ReactNode } from 'react';
+import React, { AllHTMLAttributes, FunctionComponent, ReactNode } from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -7,6 +7,7 @@ import { isPrimitiveReactNode } from '../../lib/utils';
 import { IOS, VKCOM } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
+import { SizeType } from '../AdaptivityProvider/AdaptivityContext';
 
 interface ButtonTypographyProps extends AllHTMLAttributes<HTMLElement> {
   primary?: PanelHeaderButtonProps['primary'];
@@ -52,6 +53,7 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
       {...restProps}
       Component={Component}
       activeEffectDelay={200}
+      sizeX={SizeType.REGULAR}
       className={classNames(
         getClassName('PanelHeaderButton', platform),
         className,
