@@ -7,7 +7,6 @@ import { isPrimitiveReactNode } from '../../lib/utils';
 import { IOS, VKCOM } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
-import { SizeType } from '../AdaptivityProvider/AdaptivityContext';
 
 interface ButtonTypographyProps extends AllHTMLAttributes<HTMLElement> {
   primary?: PanelHeaderButtonProps['primary'];
@@ -53,7 +52,6 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
       {...restProps}
       Component={Component}
       activeEffectDelay={200}
-      sizeX={SizeType.REGULAR}
       className={classNames(
         getClassName('PanelHeaderButton', platform),
         className,
