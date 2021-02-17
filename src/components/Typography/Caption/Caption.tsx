@@ -13,7 +13,6 @@ export interface CaptionProps extends AllHTMLAttributes<HTMLElement> {
 
 const Caption: FunctionComponent<CaptionProps> = ({
   children,
-  className,
   weight,
   level,
   caps,
@@ -33,7 +32,7 @@ const Caption: FunctionComponent<CaptionProps> = ({
   return (
     <Component
       {...restProps}
-      className={
+      vkuiClass={
         classNames(
           getClassName('Caption', platform),
           `Caption--w-${captionWeight}`,
@@ -41,7 +40,6 @@ const Caption: FunctionComponent<CaptionProps> = ({
           {
             'Caption--caps': caps,
           },
-          className,
         )
       }
     >

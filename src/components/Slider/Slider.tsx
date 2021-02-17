@@ -167,23 +167,22 @@ class Slider extends Component<SliderProps, SliderState> {
   };
 
   render() {
-    const { className, min, max, step, value, defaultValue,
+    const { min, max, step, value, defaultValue,
       onChange, getRootRef, platform, sizeY, disabled, ...restProps } = this.props;
 
     return (
       <div
         {...restProps}
-        className={classNames(
+        vkuiClass={classNames(
           getClassName('Slider', platform),
-          className,
           `Slider--sizeY-${sizeY}`,
           disabled && 'Slider--disabled',
         )}
       >
-        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} className="Slider__in">
-          <div className="Slider__dragger" style={{ width: `${this.state.percentPosition}%` }}>
+        <Touch getRootRef={this.getRef} onStart={this.onStart} onMoveX={this.onMoveX} vkuiClass="Slider__in">
+          <div vkuiClass="Slider__dragger" style={{ width: `${this.state.percentPosition}%` }}>
             <span
-              className={classNames('Slider__thumb', 'Slider__thumb--end')}
+              vkuiClass={classNames('Slider__thumb', 'Slider__thumb--end')}
             />
           </div>
         </Touch>

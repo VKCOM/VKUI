@@ -132,7 +132,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
 
   render() {
     const {
-      className, children, style, vertical, getRootRef, platform, filled, splitCol,
+      children, style, vertical, getRootRef, platform, filled, splitCol,
       panel, getPanelNode, window, document, ...restProps } = this.props;
 
     return (
@@ -140,12 +140,12 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
         {...restProps}
         fixed
         ref={this.getRef}
-        className={classNames(getClassName('FixedLayout', platform), {
+        vkuiClass={classNames(getClassName('FixedLayout', platform), {
           'FixedLayout--filled': filled,
-        }, `FixedLayout--${vertical}`, className)}
+        }, `FixedLayout--${vertical}`)}
         style={{ ...style, ...this.state }}
       >
-        <div className="FixedLayout__in">{children}</div>
+        <div vkuiClass="FixedLayout__in">{children}</div>
       </TooltipContainer>
     );
   }

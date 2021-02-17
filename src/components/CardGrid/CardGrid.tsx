@@ -8,17 +8,16 @@ export interface CardGridProps extends HTMLAttributes<HTMLDivElement>, Adaptivit
   size: 's' | 'm' | 'l';
 }
 
-const CardGrid: FunctionComponent<CardGridProps> = ({ children, className, size, sizeX, ...restProps }: CardGridProps) => {
+const CardGrid: FunctionComponent<CardGridProps> = ({ children, size, sizeX, ...restProps }: CardGridProps) => {
   const platform = usePlatform();
 
   return (
     <div
       {...restProps}
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('CardGrid', platform),
         `CardGrid--${size}`,
         `CardGrid--sizeX-${sizeX}`,
-        className,
       )}
     >
       {children}

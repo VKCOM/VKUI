@@ -28,7 +28,7 @@ export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<H
 }
 
 const Group: FC<GroupProps> = (props) => {
-  const { header, description, className, children, separator, getRootRef, mode, sizeX, ...restProps } = props;
+  const { header, description, children, separator, getRootRef, mode, sizeX, ...restProps } = props;
   const { isInsideModal } = useContext(ModalRootContext);
   const platform = usePlatform();
   const baseClassNames = getClassName('Group', platform);
@@ -43,13 +43,13 @@ const Group: FC<GroupProps> = (props) => {
     <section
       {...restProps}
       ref={getRootRef}
-      className={classNames(className, baseClassNames, `Group--sizeX-${sizeX}`, `Group--${computedMode}`)}
+      vkuiClass={classNames(baseClassNames, `Group--sizeX-${sizeX}`, `Group--${computedMode}`)}
     >
-      <div className="Group__inner">
+      <div vkuiClass="Group__inner">
         {header}
         {children}
         {hasReactNode(description) &&
-        <div className="Group__description">
+        <div vkuiClass="Group__description">
           <Caption weight="regular" level="1">{description}</Caption>
         </div>
         }
@@ -57,7 +57,7 @@ const Group: FC<GroupProps> = (props) => {
 
       {separator !== 'hide' &&
         <Separator
-          className={classNames('Group__separator', {
+          vkuiClass={classNames('Group__separator', {
             'Group__separator--force': separator === 'show',
           })}
           expanded={computedMode === 'card'}

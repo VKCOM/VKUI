@@ -13,7 +13,6 @@ export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HT
 export const TabsModeContext = createContext<TabsProps['mode']>('default');
 
 const Tabs: FunctionComponent<TabsProps> = ({
-  className,
   children,
   mode,
   getRootRef,
@@ -30,9 +29,9 @@ const Tabs: FunctionComponent<TabsProps> = ({
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNames(getClassName('Tabs', platform), `Tabs--${mode}`, `Tabs--sizeX-${sizeX}`, className)}
+      vkuiClass={classNames(getClassName('Tabs', platform), `Tabs--${mode}`, `Tabs--sizeX-${sizeX}`)}
     >
-      <div className="Tabs__in">
+      <div vkuiClass="Tabs__in">
         <TabsModeContext.Provider value={mode}>
           {children}
         </TabsModeContext.Provider>

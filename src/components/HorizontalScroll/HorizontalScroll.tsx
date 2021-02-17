@@ -1,5 +1,4 @@
 import { HTMLAttributes, useRef, useEffect, useState, useCallback, FC } from 'react';
-import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -113,7 +112,6 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props: HorizontalScrollProp
     getScrollToRight,
     showArrows,
     scrollAnimationDuration,
-    className,
     hasMouse,
     ...restProps
   } = props;
@@ -164,7 +162,7 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props: HorizontalScrollProp
   useEffect(onscroll, [scrollerRef, children]);
 
   return (
-    <div {...restProps} className={classNames(className, getClassName('HorizontalScroll', platform))}>
+    <div {...restProps} vkuiClass={getClassName('HorizontalScroll', platform)}>
       {showArrows && hasMouse && canScrollLeft &&
       <HorizontalScrollArrow
         direction="left"
@@ -177,8 +175,8 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props: HorizontalScrollProp
         onClick={() => scrollTo(getScrollToRight)}
       />
       }
-      <div className="HorizontalScroll__in" ref={scrollerRef}>
-        <div className="HorizontalScroll__in-wrapper">
+      <div vkuiClass="HorizontalScroll__in" ref={scrollerRef}>
+        <div vkuiClass="HorizontalScroll__in-wrapper">
           {children}
         </div>
       </div>

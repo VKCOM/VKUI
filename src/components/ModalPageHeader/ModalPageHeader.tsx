@@ -23,33 +23,33 @@ export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, Ha
 const ModalPageHeader: FunctionComponent<ModalPageHeaderProps> = (props: ModalPageHeaderProps) => {
   const platform = usePlatform();
   const { sizeX } = useAdaptivity();
-  const { className, left, right, children, separator, getRef, ...restProps } = props;
+  const { left, right, children, separator, getRef, ...restProps } = props;
   const isPrimitive = isPrimitiveReactNode(children);
   const hasSeparator = separator && platform === VKCOM;
 
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('ModalPageHeader', platform), className, `ModalPageHeader--sizeX-${sizeX}`)}
+      vkuiClass={classNames(getClassName('ModalPageHeader', platform), `ModalPageHeader--sizeX-${sizeX}`)}
       ref={getRef}
     >
-      <div className="ModalPageHeader__in">
-        <div className="ModalPageHeader__left">
+      <div vkuiClass="ModalPageHeader__in">
+        <div vkuiClass="ModalPageHeader__left">
           {left}
         </div>
 
-        <div className="ModalPageHeader__content">
-          <div className="ModalPageHeader__content-in">
+        <div vkuiClass="ModalPageHeader__content">
+          <div vkuiClass="ModalPageHeader__content-in">
             {isPrimitive ? <span>{children}</span> : children}
           </div>
         </div>
 
-        <div className="ModalPageHeader__right">
+        <div vkuiClass="ModalPageHeader__right">
           {right}
         </div>
       </div>
 
-      {hasSeparator && <Separator wide className="ModalPageHeader__separator" />}
+      {hasSeparator && <Separator wide vkuiClass="ModalPageHeader__separator" />}
     </div>
   );
 };

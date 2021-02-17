@@ -8,16 +8,16 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HT
   mode?: 'tint' | 'shadow' | 'outline';
 }
 
-const Card: FunctionComponent<CardProps> = ({ mode, children, className, getRootRef, ...restProps }: CardProps) => {
+const Card: FunctionComponent<CardProps> = ({ mode, children, getRootRef, ...restProps }: CardProps) => {
   const platform = usePlatform();
 
   return (
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNames(className, getClassName('Card', platform), `Card--md-${mode}`)}
+      vkuiClass={classNames(getClassName('Card', platform), `Card--md-${mode}`)}
     >
-      <div className="Card__in">
+      <div vkuiClass="Card__in">
         {children}
       </div>
     </div>

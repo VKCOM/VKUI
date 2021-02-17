@@ -98,22 +98,22 @@ class Alert extends Component<AlertProps, AlertState> {
   renderHeader(header: ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
-        return <Headline className="Alert__header" weight="medium">{header}</Headline>;
+        return <Headline vkuiClass="Alert__header" weight="medium">{header}</Headline>;
       case IOS:
-        return <Title className="Alert__header" weight="semibold" level="3">{header}</Title>;
+        return <Title vkuiClass="Alert__header" weight="semibold" level="3">{header}</Title>;
       case ANDROID:
-        return <Title className="Alert__header" weight="medium" level="2">{header}</Title>;
+        return <Title vkuiClass="Alert__header" weight="medium" level="2">{header}</Title>;
     }
   }
 
   renderText(text: ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
-        return <Caption className="Alert__text" level="1" weight="regular">{text}</Caption>;
+        return <Caption vkuiClass="Alert__text" level="1" weight="regular">{text}</Caption>;
       case IOS:
-        return <Caption className="Alert__text" level="2" weight="regular">{text}</Caption>;
+        return <Caption vkuiClass="Alert__text" level="2" weight="regular">{text}</Caption>;
       case ANDROID:
-        return <Headline className="Alert__text" weight="regular">{text}</Headline>;
+        return <Headline vkuiClass="Alert__text" weight="regular">{text}</Headline>;
     }
   }
 
@@ -123,7 +123,7 @@ class Alert extends Component<AlertProps, AlertState> {
       case ANDROID:
         return (
           <Button
-            className={classNames('Alert__button', `Alert__button--${action.mode}`)}
+            vkuiClass={classNames('Alert__button', `Alert__button--${action.mode}`)}
             mode="tertiary"
             size="m"
             onClick={this.onItemClick(action)}
@@ -135,7 +135,7 @@ class Alert extends Component<AlertProps, AlertState> {
       case VKCOM:
         return (
           <Button
-            className={classNames('Alert__button', `Alert__button--${action.mode}`)}
+            vkuiClass={classNames('Alert__button', `Alert__button--${action.mode}`)}
             size="m"
             mode={action.mode === 'cancel' ? 'secondary' : 'primary'}
             onClick={this.onItemClick(action)}
@@ -148,7 +148,7 @@ class Alert extends Component<AlertProps, AlertState> {
         return (
           <Tappable
             Component="button"
-            className={classNames('Alert__action', `Alert__action--${action.mode}`)}
+            vkuiClass={classNames('Alert__action', `Alert__action--${action.mode}`)}
             onClick={this.onItemClick(action)}
             key={`alert-action-${i}`}
           >
@@ -177,7 +177,7 @@ class Alert extends Component<AlertProps, AlertState> {
           {...restProps}
           ref={this.element}
           onClick={this.stopPropagation}
-          className={classNames(getClassName('Alert', platform), {
+          vkuiClass={classNames(getClassName('Alert', platform), {
             'Alert--v': resolvedActionsLayout === 'vertical',
             'Alert--h': resolvedActionsLayout === 'horizontal',
             'Alert--closing': closing,
@@ -185,12 +185,12 @@ class Alert extends Component<AlertProps, AlertState> {
           })}
         >
           {canShowCloseButton && <ModalDismissButton onClick={this.onClose} />}
-          <div className="Alert__content">
+          <div vkuiClass="Alert__content">
             {hasReactNode(header) && this.renderHeader(header)}
             {hasReactNode(text) && this.renderText(text)}
             {children}
           </div>
-          <footer className="Alert__actions">
+          <footer vkuiClass="Alert__actions">
             {actions.map(this.renderAction)}
           </footer>
         </div>

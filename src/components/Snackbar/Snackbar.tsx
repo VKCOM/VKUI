@@ -201,7 +201,6 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
   render() {
     const {
       children,
-      className,
       platform,
       layout,
       action,
@@ -219,36 +218,36 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       <AppRootPortal>
         <div
           {...restProps}
-          className={classNames(getClassName('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
+          vkuiClass={classNames(getClassName('Snackbar', platform), `Snackbar--l-${resolvedLayout}`, {
             'Snackbar--closing': this.state.closing,
             'Snackbar--touched': this.state.touched,
             'Snackbar--desktop': this.isDesktop,
           })}
         >
           <Touch
-            className="Snackbar__in"
+            vkuiClass="Snackbar__in"
             getRootRef={this.getInnerRef}
             onStart={this.onTouchStart}
             onMoveX={this.onTouchMoveX}
             onEnd={this.onTouchEnd}
           >
-            <div className="Snackbar__body" ref={this.bodyElRef}>
+            <div vkuiClass="Snackbar__body" ref={this.bodyElRef}>
               {before &&
-              <div className="Snackbar__before">
+              <div vkuiClass="Snackbar__before">
                 {before}
               </div>}
 
-              <div className="Snackbar__content">
-                <Text weight="regular" className="Snackbar__content-text">{children}</Text>
+              <div vkuiClass="Snackbar__content">
+                <Text weight="regular" vkuiClass="Snackbar__content-text">{children}</Text>
 
                 {action &&
-                <Button align="left" hasHover={false} mode="tertiary" size="s" className="Snackbar__action" onClick={this.onActionClick}>
+                <Button align="left" hasHover={false} mode="tertiary" size="s" vkuiClass="Snackbar__action" onClick={this.onActionClick}>
                   {action}
                 </Button>}
               </div>
 
               {after &&
-              <div className="Snackbar__after">
+              <div vkuiClass="Snackbar__after">
                 {after}
               </div>}
             </div>

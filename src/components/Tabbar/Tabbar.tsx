@@ -12,7 +12,7 @@ export interface TabbarProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Tabbar: FunctionComponent<TabbarProps> = (props: TabbarProps) => {
-  const { className, children, shadow, itemsLayout, ...restProps } = props;
+  const { children, shadow, itemsLayout, ...restProps } = props;
   const platform = usePlatform();
 
   const getItemsLayout = () => {
@@ -27,7 +27,7 @@ const Tabbar: FunctionComponent<TabbarProps> = (props: TabbarProps) => {
 
   return (
     <div
-      className={classNames(getClassName('Tabbar', platform), className, `Tabbar--l-${getItemsLayout()}`, {
+      vkuiClass={classNames(getClassName('Tabbar', platform), `Tabbar--l-${getItemsLayout()}`, {
         'Tabbar--shadow': shadow,
       })}
       {...restProps}

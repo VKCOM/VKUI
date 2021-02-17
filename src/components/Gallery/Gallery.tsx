@@ -346,7 +346,6 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
       onEnd,
       align,
       bullets,
-      className,
       platform,
       hasMouse,
       showArrows,
@@ -365,12 +364,12 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
     };
 
     return (
-      <div {...restProps} className={classNames(getClassName('Gallery', platform), className, `Gallery--${align}`, {
+      <div {...restProps} vkuiClass={classNames(getClassName('Gallery', platform), `Gallery--${align}`, {
         'Gallery--dragging': dragging,
         'Gallery--custom-width': slideWidth === 'custom',
       })} ref={this.getRootRef}>
         <Touch
-          className="Gallery__viewport"
+          vkuiClass="Gallery__viewport"
           onStartX={this.onStart}
           onMoveX={this.onMoveX}
           onEnd={this.onEnd}
@@ -378,18 +377,18 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
           style={{ width: slideWidth === 'custom' ? '100%' : slideWidth }}
           getRootRef={this.getViewportRef}
         >
-          <div className="Gallery__layer" style={layerStyle}>
+          <div vkuiClass="Gallery__layer" style={layerStyle}>
             {React.Children.map(children, (item: ReactElement, i: number) =>
-              <div className="Gallery__slide" key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>,
+              <div vkuiClass="Gallery__slide" key={`slide-${i}`} ref={this.getSlideRef(i)}>{item}</div>,
             )}
           </div>
         </Touch>
 
         {bullets &&
-        <div className={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
+        <div vkuiClass={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
           {React.Children.map(children, (_item: ReactElement, index: number) =>
             <div
-              className={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === slideIndex })}
+              vkuiClass={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === slideIndex })}
               key={index}
             />,
           )}

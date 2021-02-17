@@ -34,29 +34,30 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   return (
     <Tappable
       Component="label"
-      className={classNames(getClassName('Checkbox', platform), className, `Checkbox--sizeY-${sizeY}`)}
+      vkuiClass={classNames(getClassName('Checkbox', platform), `Checkbox--sizeY-${sizeY}`)}
+      className={className}
       style={style}
       disabled={restProps.disabled}
       activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
     >
-      <input {...restProps} type="checkbox" className="Checkbox__input" ref={getRef} />
-      <div className="Checkbox__container">
-        <div className="Checkbox__icon Checkbox__icon--on">
+      <input {...restProps} type="checkbox" vkuiClass="Checkbox__input" ref={getRef} />
+      <div vkuiClass="Checkbox__container">
+        <div vkuiClass="Checkbox__icon Checkbox__icon--on">
           {sizeY === SizeType.COMPACT || platform === VKCOM ?
             <Icon20CheckBoxOn />
             :
             <Icon24CheckBoxOn />
           }
         </div>
-        <div className="Checkbox__icon Checkbox__icon--off">
+        <div vkuiClass="Checkbox__icon Checkbox__icon--off">
           {sizeY === SizeType.COMPACT || platform === VKCOM ?
             <Icon20CheckBoxOff />
             :
             <Icon24CheckBoxOff />
           }
         </div>
-        <ContentComponent weight="regular" className="Checkbox__content">{children}</ContentComponent>
+        <ContentComponent weight="regular" vkuiClass="Checkbox__content">{children}</ContentComponent>
       </div>
     </Tappable>
   );

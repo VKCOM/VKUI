@@ -137,13 +137,13 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
             {...restProps}
           >
             {(hasReactNode(header) || hasReactNode(text)) &&
-              <header className="ActionSheet__header">
+              <header vkuiClass="ActionSheet__header">
                 {hasReactNode(header) &&
-                  <Caption level="1" weight={platform === IOS ? 'semibold' : 'medium'} className="ActionSheet__title">
+                  <Caption level="1" weight={platform === IOS ? 'semibold' : 'medium'} vkuiClass="ActionSheet__title">
                     {header}
                   </Caption>
                 }
-                {hasReactNode(text) && <Caption level="1" weight="regular" className="ActionSheet__text">{text}</Caption>}
+                {hasReactNode(text) && <Caption level="1" weight="regular" vkuiClass="ActionSheet__text">{text}</Caption>}
               </header>
             }
             {children}

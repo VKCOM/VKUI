@@ -233,9 +233,10 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
 
   return (
     <div
-      className={classNames('ChipsSelect', `ChipsSelect--sizeY-${sizeY}`, className)}
+      vkuiClass={classNames('ChipsSelect', `ChipsSelect--sizeY-${sizeY}`)}
       ref={rootRef}
       style={style}
+      className={className}
     >
       <ChipsInput
         {...restProps}
@@ -249,7 +250,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className={classNames({
+        vkuiClass={classNames({
           ['ChipsSelect__open']: opened,
           ['ChipsSelect__open--popupDirectionTop']: popupDirection === 'top',
         })}
@@ -257,19 +258,19 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
         disabled={disabled}
         onInputChange={handleInputChange}
       />
-      <div className="ChipsSelect__toggle">
+      <div vkuiClass="ChipsSelect__toggle">
         <Icon20Dropdown />
       </div>
       {opened &&
         <div
-          className={classNames('ChipsSelect__options', {
+          vkuiClass={classNames('ChipsSelect__options', {
             ['ChipsSelect__options--popupDirectionTop']: popupDirection === 'top',
           })}
           onMouseLeave={() => setFocusedOptionIndex(null)}
         >
           <CustomScrollView boxRef={scrollBoxRef}>
             {fetching ? (
-              <div className="ChipsSelect__fetching">
+              <div vkuiClass="ChipsSelect__fetching">
                 <Spinner size="small" />
               </div>
             ) : (
@@ -284,7 +285,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                   </CustomSelectOption>
                 )}
                 {!filteredOptions?.length && !showCreatable && emptyText ? (
-                  <Caption level="1" weight="regular" className="ChipsSelect__empty">{emptyText}</Caption>
+                  <Caption level="1" weight="regular" vkuiClass="ChipsSelect__empty">{emptyText}</Caption>
                 ) :
                   filteredOptions.map((option: Option, index: number) => {
                     const label = getOptionLabel(option);

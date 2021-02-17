@@ -48,17 +48,18 @@ const Avatar: FunctionComponent<AvatarProps> = ({
 
   return (
     <div
-      className={classNames(getClassName('Avatar', platform), className, `Avatar--type-${mode}`, `Avatar--sz-${size}`)}
+      vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`)}
+      className={className}
       ref={getRootRef}
     >
-      <div className="Avatar__in" style={{ width: size, height: size, borderRadius }}>
+      <div vkuiClass="Avatar__in" style={{ width: size, height: size, borderRadius }}>
         <Component
           {...restProps}
-          className="Avatar__img"
+          vkuiClass="Avatar__img"
           src={src}
         />
-        {shadow && <span className="Avatar__shadow" />}
-        {children && <div className="Avatar__children">{children}</div>}
+        {shadow && <span vkuiClass="Avatar__shadow" />}
+        {children && <div vkuiClass="Avatar__children">{children}</div>}
       </div>
     </div>
   );

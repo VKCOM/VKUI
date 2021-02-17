@@ -25,11 +25,12 @@ const Input: FunctionComponent<InputProps> = ({
   const platform = usePlatform();
   return (
     <FormField
-      className={classNames(getClassName('Input', platform), className, { [`Input--${align}`]: !!align }, `Input--sizeY-${sizeY}`)}
+      vkuiClass={classNames(getClassName('Input', platform), { [`Input--${align}`]: !!align }, `Input--sizeY-${sizeY}`)}
       style={style}
+      className={className}
       getRootRef={getRootRef}
     >
-      <input {...restProps} className="Input__el" ref={getRef} />
+      <input {...restProps} vkuiClass="Input__el" ref={getRef} />
     </FormField>
   );
 };

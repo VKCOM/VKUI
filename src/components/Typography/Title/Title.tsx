@@ -37,7 +37,6 @@ const getAndroidTitleWeight = (level: TitleProps['level'], weight: TitleProps['w
 
 const Title: FunctionComponent<TitleProps> = ({
   children,
-  className,
   weight,
   level,
   Component,
@@ -52,7 +51,6 @@ const Title: FunctionComponent<TitleProps> = ({
       Component={TitleComponent}
       {...restProps}
       weight={titleWeight as HeadlineProps['weight']}
-      className={className}
     >
       {children}
     </Headline>;
@@ -61,12 +59,11 @@ const Title: FunctionComponent<TitleProps> = ({
   return (
     <TitleComponent
       {...restProps}
-      className={
+      vkuiClass={
         classNames(
           getClassName('Title', platform),
           `Title--w-${titleWeight}`,
           `Title--l-${level}`,
-          className,
         )
       }
     >

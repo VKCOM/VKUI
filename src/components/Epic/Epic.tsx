@@ -1,6 +1,5 @@
 import React, { HTMLAttributes, ReactNode, ReactElement, FC, useEffect, useRef } from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { ScrollSaver } from './ScrollSaver';
@@ -13,7 +12,7 @@ export interface EpicProps extends HTMLAttributes<HTMLDivElement>, AdaptivityPro
 export const Epic: FC<EpicProps> = (props: EpicProps) => {
   const platform = usePlatform();
   const scroll = useRef<{ [key: string]: number }>({}).current;
-  const { className, activeStory, tabbar, children, viewWidth, ...restProps } = props;
+  const { activeStory, tabbar, children, viewWidth, ...restProps } = props;
 
   useEffect(() => {
     if (!tabbar && viewWidth < ViewWidth.SMALL_TABLET) {
@@ -23,7 +22,7 @@ export const Epic: FC<EpicProps> = (props: EpicProps) => {
   const story = (React.Children.toArray(children) as ReactElement[]).find((story) => story.props.id === activeStory) || null;
 
   return (
-    <div {...restProps} className={classNames(getClassName('Epic', platform), className)}>
+    <div {...restProps} vkuiClass={getClassName('Epic', platform)}>
       <ScrollSaver
         key={activeStory}
         initialScroll={scroll[activeStory] || 0}

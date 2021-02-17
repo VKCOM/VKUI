@@ -8,7 +8,6 @@ export interface BadgeProps extends HTMLAttributes<HTMLElement> {
 };
 
 export const Badge: FunctionComponent<BadgeProps> = ({
-  className,
   mode,
   ...restProps
 }: BadgeProps) => {
@@ -16,10 +15,9 @@ export const Badge: FunctionComponent<BadgeProps> = ({
 
   return (
     <div
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('Badge', platform),
         `Badge--${mode}`,
-        className,
       )}
       {...restProps}>
     </div>

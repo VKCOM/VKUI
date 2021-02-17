@@ -19,7 +19,6 @@ export const SplitLayout: FC<SplitLayoutProps> = ({
   modal,
   header,
   children,
-  className,
   getRootRef,
   getRef,
   ...restProps
@@ -28,13 +27,13 @@ export const SplitLayout: FC<SplitLayoutProps> = ({
 
   return (
     <PopoutRoot
-      className={getClassName('SplitLayout', platform)}
+      vkuiClass={getClassName('SplitLayout', platform)}
       popout={popout}
       modal={modal}
       getRootRef={getRootRef}
     >
       {header}
-      <div {...restProps} ref={getRef} className={classNames('SplitLayout__inner', className, {
+      <div {...restProps} ref={getRef} vkuiClass={classNames('SplitLayout__inner', {
         'SplitLayout__inner--header': !!header,
       })}>
         {children}

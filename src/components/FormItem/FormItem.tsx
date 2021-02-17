@@ -25,7 +25,6 @@ export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePla
 
 export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const {
-    className,
     children,
     top,
     bottom,
@@ -41,23 +40,22 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
 
   const wrappedChildren = (
     <Fragment>
-      {hasReactNode(top) && <Subhead weight="regular" className="FormItem__top">{top}</Subhead>}
+      {hasReactNode(top) && <Subhead weight="regular" vkuiClass="FormItem__top">{top}</Subhead>}
       {children}
-      {hasReactNode(bottom) && <Caption level="1" weight="regular" className="FormItem__bottom">{bottom}</Caption>}
+      {hasReactNode(bottom) && <Caption level="1" weight="regular" vkuiClass="FormItem__bottom">{bottom}</Caption>}
     </Fragment>
   );
 
   return (
     <Component
       {...restProps}
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('FormItem', platform),
         `FormItem--${status}`,
         `FormItem--sizeY-${sizeY}`,
         {
           'FormItem--withTop': hasReactNode(top),
         },
-        className,
       )}
     >
       {removable ? (

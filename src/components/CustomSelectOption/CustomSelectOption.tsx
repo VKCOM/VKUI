@@ -20,7 +20,6 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   selected,
   before,
   after,
-  className,
   ...restProps
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : null;
@@ -32,16 +31,16 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       role="option"
       title={title}
       aria-selected={selected}
-      className={classNames('CustomSelectOption', className, {
+      vkuiClass={classNames('CustomSelectOption', {
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
       })}
     >
-      {hasReactNode(before) && <div className="CustomSelectOption__before">{before}</div>}
-      <div className="CustomSelectOption__label">{children}</div>
-      {hasReactNode(after) && <div className="CustomSelectOption__after">{after}</div>}
+      {hasReactNode(before) && <div vkuiClass="CustomSelectOption__before">{before}</div>}
+      <div vkuiClass="CustomSelectOption__label">{children}</div>
+      {hasReactNode(after) && <div vkuiClass="CustomSelectOption__after">{after}</div>}
       {selected && (
-        <div className="CustomSelectOption__selectedIcon">
+        <div vkuiClass="CustomSelectOption__selectedIcon">
           <Icon16Done fill="var(--accent)" />
         </div>
       )}

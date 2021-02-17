@@ -8,7 +8,6 @@ import {
 } from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode, isFunction, setRef } from '../../lib/utils';
-import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { HasRef, HasRootRef } from '../../types';
 
@@ -110,34 +109,35 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
   return (
     <div
       ref={getRootRef}
-      className={classNames(getClassName('WriteBar', platform), className)}
+      vkuiClass={getClassName('WriteBar', platform)}
+      className={className}
       style={style}
     >
-      <form className="WriteBar__form" onSubmit={(e) => e.preventDefault()}>
+      <form vkuiClass="WriteBar__form" onSubmit={(e) => e.preventDefault()}>
         {hasReactNode(before) &&
-        <div className="WriteBar__before">
+        <div vkuiClass="WriteBar__before">
           {before}
         </div>
         }
 
-        <div className="WriteBar__formIn">
+        <div vkuiClass="WriteBar__formIn">
           <textarea
             {...restProps}
-            className="WriteBar__textarea"
+            vkuiClass="WriteBar__textarea"
             onChange={onTextareaChange}
             ref={getTextareaElRef}
             value={value}
           />
 
           {hasReactNode(inlineAfter) &&
-          <div className="WriteBar__inlineAfter">
+          <div vkuiClass="WriteBar__inlineAfter">
             {inlineAfter}
           </div>
           }
         </div>
 
         {hasReactNode(after) &&
-        <div className="WriteBar__after">
+        <div vkuiClass="WriteBar__after">
           {after}
         </div>
         }

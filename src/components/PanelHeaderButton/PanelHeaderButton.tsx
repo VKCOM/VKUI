@@ -36,7 +36,6 @@ export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
 }
 
 const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
-  className,
   children,
   primary,
   label,
@@ -52,9 +51,8 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
       {...restProps}
       Component={Component}
       activeEffectDelay={200}
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('PanelHeaderButton', platform),
-        className,
         {
           'PanelHeaderButton--primary': primary,
           'PanelHeaderButton--primitive': isPrimitive,

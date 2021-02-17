@@ -30,17 +30,18 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
     <Tappable
       Component="label"
       style={style}
-      className={classNames(getClassName('Radio', platform), className, `Radio--sizeY-${sizeY}`)}
+      className={className}
+      vkuiClass={classNames(getClassName('Radio', platform), `Radio--sizeY-${sizeY}`)}
       activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
       disabled={restProps.disabled}
       getRootRef={getRootRef}
     >
-      <input {...restProps} type="radio" className="Radio__input" ref={getRef} />
-      <div className="Radio__container">
-        <div className="Radio__icon" />
-        <ContentComponent weight="regular" className="Radio__content">
-          <div className="Radio__children">{children}</div>
-          {hasReactNode(description) && <Caption level={descriptionLevel} weight="regular" className="Radio__description">{description}</Caption>}
+      <input {...restProps} type="radio" vkuiClass="Radio__input" ref={getRef} />
+      <div vkuiClass="Radio__container">
+        <div vkuiClass="Radio__icon" />
+        <ContentComponent weight="regular" vkuiClass="Radio__content">
+          <div vkuiClass="Radio__children">{children}</div>
+          {hasReactNode(description) && <Caption level={descriptionLevel} weight="regular" vkuiClass="Radio__description">{description}</Caption>}
         </ContentComponent>
       </div>
     </Tappable>

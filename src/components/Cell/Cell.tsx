@@ -168,7 +168,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
         <Fragment>
           {(platform === ANDROID || platform === VKCOM) && draggable && (
             <Touch
-              className="Cell__dragger"
+              vkuiClass="Cell__dragger"
               onStart={onDragStart}
               onMoveY={onDragMove}
               onEnd={onDragEnd}
@@ -177,8 +177,8 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
           )}
           {selectable && (
             <Fragment>
-              <input type="checkbox" className="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
-              <div className="Cell__marker"><Icon16Done /></div>
+              <input type="checkbox" vkuiClass="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
+              <div vkuiClass="Cell__marker"><Icon16Done /></div>
             </Fragment>
           )}
           {before}
@@ -188,7 +188,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
         <Fragment>
           {platform === IOS && draggable && (
             <Touch
-              className="Cell__dragger"
+              vkuiClass="Cell__dragger"
               onStart={onDragStart}
               onMoveY={onDragMove}
               onEnd={onDragEnd}
@@ -203,10 +203,11 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
 
   return (
     <div
-      className={classNames(getClassName('Cell', platform), {
+      vkuiClass={classNames(getClassName('Cell', platform), {
         'Cell--dragging': dragging,
         'Cell--removable': removable,
-      }, className)}
+      })}
+      className={className}
       style={style}
       ref={rootElRef}
     >

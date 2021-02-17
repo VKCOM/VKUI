@@ -10,7 +10,7 @@ export interface CardScrollProps extends HTMLAttributes<HTMLDivElement>, Adaptiv
   size?: 's' | 'm' | 'l';
 }
 
-const CardScroll: FC<CardScrollProps> = ({ children, className, size, sizeX, ...restProps }: CardScrollProps) => {
+const CardScroll: FC<CardScrollProps> = ({ children, size, sizeX, ...restProps }: CardScrollProps) => {
   const platform = usePlatform();
 
   const refContainer = useRef<HTMLDivElement>(null);
@@ -57,18 +57,17 @@ const CardScroll: FC<CardScrollProps> = ({ children, className, size, sizeX, ...
   return (
     <div
       {...restProps}
-      className={classNames(
-        className,
+      vkuiClass={classNames(
         getClassName('CardScroll', platform),
         `CardScroll--${size}`,
         `CardScroll--sizeX-${sizeX}`,
       )}
     >
       <HorizontalScroll getScrollToLeft={getScrollToLeft} getScrollToRight={getScrollToRight} showArrows={true}>
-        <div className="CardScroll__in" ref={refContainer}>
-          <span className="CardScroll__gap" ref={gapRef} />
+        <div vkuiClass="CardScroll__in" ref={refContainer}>
+          <span vkuiClass="CardScroll__gap" ref={gapRef} />
           {children}
-          <span className="CardScroll__gap" />
+          <span vkuiClass="CardScroll__gap" />
         </div>
       </HorizontalScroll>
     </div>

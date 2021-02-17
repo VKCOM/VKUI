@@ -83,25 +83,25 @@ class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapp
   preventTouch: WindowTouchListener = (e: Event) => e.preventDefault();
 
   render() {
-    const { alignY, alignX, closing, children, hasMask, fixed, className, platform, onClick, window, document, ...restProps } = this.props;
+    const { alignY, alignX, closing, children, hasMask, fixed, platform, onClick, window, document, ...restProps } = this.props;
     const baseClassNames = getClassName('PopoutWrapper', platform);
 
     return (
       <div
         {...restProps}
-        className={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
+        vkuiClass={classNames(baseClassNames, `PopoutWrapper--v-${alignY}`, `PopoutWrapper--h-${alignX}`, {
           'PopoutWrapper--closing': closing,
           'PopoutWrapper--opened': this.state.opened,
           'PopoutWrapper--fixed': fixed,
           'PopoutWrapper--masked': hasMask,
-        }, className)}
+        })}
         ref={this.elRef}
       >
-        <div className="PopoutWrapper__container">
+        <div vkuiClass="PopoutWrapper__container">
           <div
-            className="PopoutWrapper__overlay"
+            vkuiClass="PopoutWrapper__overlay"
             onClick={onClick} />
-          <div className="PopoutWrapper__content">
+          <div vkuiClass="PopoutWrapper__content">
             {children}
           </div>
         </div>

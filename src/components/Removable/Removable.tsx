@@ -25,7 +25,6 @@ interface RemovableProps extends AllHTMLAttributes<HTMLElement>, RemovePlacehold
 
 export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovableProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const {
-    className,
     children,
     sizeY,
     onRemove,
@@ -77,24 +76,23 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
   return (
     <div
       {...restProps}
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('Removable', platform),
         `Removable--${align}`,
         `Removable--sizeY-${sizeY}`,
-        className,
       )}
     >
-      <div className="Removable__content" style={platform === IOS ? { transform: `translateX(-${removeOffset}px)` } : null}>
+      <div vkuiClass="Removable__content" style={platform === IOS ? { transform: `translateX(-${removeOffset}px)` } : null}>
         {children}
 
         {(platform === ANDROID || platform === VKCOM) &&
-          <IconButton className="Removable__control Removable__remove" onClick={onRemoveClick}>
+          <IconButton vkuiClass="Removable__control Removable__remove" onClick={onRemoveClick}>
             <Icon24Cancel />
           </IconButton>
         }
         {platform === IOS && (
-          <button className="Removable__control Removable__indicator" onClick={onRemoveActivateClick}>
-            <i className="Removable__indicator-in" />
+          <button vkuiClass="Removable__control Removable__indicator" onClick={onRemoveActivateClick}>
+            <i vkuiClass="Removable__indicator-in" />
           </button>
         )}
       </div>
@@ -102,11 +100,11 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
       {platform === IOS &&
         <button
           ref={removeButtonRef}
-          className="Removable__remove"
+          vkuiClass="Removable__remove"
           onClick={onRemoveClick}
           style={{ transform: `translateX(-${removeOffset}px)` }}
         >
-          <span className="Removable__remove-in">{removePlaceholder}</span>
+          <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
         </button>
       }
     </div>

@@ -12,7 +12,6 @@ export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HT
 
 const Text: FunctionComponent<TextProps> = ({
   children,
-  className,
   weight,
   Component,
   getRootRef,
@@ -38,7 +37,7 @@ const Text: FunctionComponent<TextProps> = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      className={classNames(getClassName('Text', platform), `Text--w-${textWeight}`, className)}
+      vkuiClass={classNames(getClassName('Text', platform), `Text--w-${textWeight}`)}
     >
       {children}
     </Component>

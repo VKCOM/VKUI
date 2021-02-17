@@ -20,7 +20,6 @@ export interface SelectMimicryProps extends
 }
 
 const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
-  className,
   tabIndex,
   placeholder,
   children,
@@ -41,19 +40,19 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
     <FormField
       {...restProps}
       tabIndex={disabled ? null : tabIndex}
-      className={classNames(getClassName('Select', platform), 'Select--mimicry', {
+      vkuiClass={classNames(getClassName('Select', platform), 'Select--mimicry', {
         'Select--not-selected': !children,
         'Select--multiline': multiline,
         'Select--disabled': disabled,
         [`Select--align-${align}`]: !!align,
         [`Select--sizeX--${sizeX}`]: !!sizeX,
         [`Select--sizeY--${sizeY}`]: !!sizeY,
-      }, className)}
+      })}
       getRootRef={getRootRef}
       onClick={disabled ? null : onClick}
     >
-      <TypographyComponent weight="regular" className="Select__container">
-        <div className="Select__title">{children || placeholder}</div>
+      <TypographyComponent weight="regular" vkuiClass="Select__container">
+        <div vkuiClass="Select__title">{children || placeholder}</div>
         {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
       </TypographyComponent>
     </FormField>

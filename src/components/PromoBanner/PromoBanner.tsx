@@ -3,7 +3,6 @@ import { Icon24Dismiss } from '@vkontakte/icons';
 import Button from '../Button/Button';
 import SimpleCell from '../SimpleCell/SimpleCell';
 import Avatar from '../Avatar/Avatar';
-import { classNames } from '../../lib/classNames';
 import Caption from '../Typography/Caption/Caption';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -48,7 +47,7 @@ export interface PromoBannerProps extends HTMLAttributes<HTMLDivElement> {
 
 const PromoBanner = (props: PromoBannerProps) => {
   const platform = usePlatform();
-  const { className, bannerData = {}, onClose, ...restProps } = props;
+  const { bannerData = {}, onClose, ...restProps } = props;
 
   const ageRestrictions =
     bannerData.ageRestrictions != null
@@ -74,13 +73,13 @@ const PromoBanner = (props: PromoBannerProps) => {
   }, [statsPixels.playbackStarted]);
 
   return (
-    <div className={classNames(getClassName('PromoBanner', platform), className)} {...restProps}>
-      <div className="PromoBanner__head">
-        <Caption weight="regular" level="1" className="PromoBanner__label">{bannerData.advertisingLabel || 'Advertisement'}</Caption>
-        {ageRestrictions != null && <Caption weight="regular" level="1" className="PromoBanner__age">{ageRestrictions}+</Caption>}
+    <div vkuiClass={getClassName('PromoBanner', platform)} {...restProps}>
+      <div vkuiClass="PromoBanner__head">
+        <Caption weight="regular" level="1" vkuiClass="PromoBanner__label">{bannerData.advertisingLabel || 'Advertisement'}</Caption>
+        {ageRestrictions != null && <Caption weight="regular" level="1" vkuiClass="PromoBanner__age">{ageRestrictions}+</Caption>}
 
         {!props.isCloseButtonHidden &&
-          <div className="PromoBanner__close" onClick={props.onClose}>
+          <div vkuiClass="PromoBanner__close" onClick={props.onClose}>
             <Icon24Dismiss />
           </div>
         }
@@ -100,7 +99,7 @@ const PromoBanner = (props: PromoBannerProps) => {
       </SimpleCell>
 
       {currentPixel.length > 0 &&
-        <div className="PromoBanner__pixels">
+        <div vkuiClass="PromoBanner__pixels">
           <img src={currentPixel} alt="" />
         </div>
       }

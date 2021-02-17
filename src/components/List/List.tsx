@@ -5,7 +5,6 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { ListContext } from './ListContext';
 
 const List: FunctionComponent<HTMLAttributes<HTMLDivElement>> = ({
-  className,
   children,
   ...restProps
 }: HTMLAttributes<HTMLDivElement>) => {
@@ -14,7 +13,7 @@ const List: FunctionComponent<HTMLAttributes<HTMLDivElement>> = ({
   const baseClassName = getClassName('List', platform);
 
   return (
-    <div {...restProps} className={classNames(baseClassName, className, {
+    <div {...restProps} vkuiClass={classNames(baseClassName, {
       'List--dragging': isDragging,
     })}>
       <ListContext.Provider value={useMemo(() => ({ toggleDrag }), [])}>
