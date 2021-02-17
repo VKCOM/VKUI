@@ -31,17 +31,18 @@ export function baselineComponent<Props extends BasicProps>(
     expect(() => api.unmount()).not.toThrow();
   });
   forward && it('forwards attributes', () => {
+    const cls = 'Custom';
     const { rerender } = render((
-      <Component data-testid="__cmp__" className="__cls__" style={{ background: 'red' }} />
+      <Component data-testid="__cmp__" className={cls} style={{ background: 'red' }} />
     ));
     // forward DOM attributes
     domAttr && expect(screen.queryByTestId('__cmp__')).toBeTruthy();
 
     if (className || style) {
-      const styledNode = document.querySelector<HTMLElement>('.__cls__');
+      const styledNode = document.getElementsByClassName(cls)[0] as HTMLElement;
       // forwards className
       className && expect(styledNode).toBeTruthy();
-      const customClassList = Array.from(styledNode.classList).filter((cls) => cls !== '__cls__');
+      const customClassList = Array.from(styledNode.classList).filter((item) => item !== cls);
       // forwards style
       style && expect(styledNode.style.background).toBe('red');
       const customStyleCount = styledNode.style.length;

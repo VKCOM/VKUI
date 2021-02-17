@@ -76,6 +76,7 @@
     "postcss-custom-properties": "10.0.0",
     "postcss-import": "13.0.0",
     "postcss-loader": "^4.1.0",
+    "postcss-prefixer": "^2.1.2",
     "pre-commit": "^1.2.2",
     "prop-types": "^15.6.1",
     "react": "^16.8.6",

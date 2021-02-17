@@ -3987,6 +3987,14 @@ css-select@^2.0.0:
     domutils "^1.7.0"
     nth-check "^1.0.2"
 
+css-selector-tokenizer@^0.7.1:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/css-selector-tokenizer/-/css-selector-tokenizer-0.7.3.tgz#735f26186e67c749aaf275783405cf0661fae8f1"
+  integrity sha512-jWQv3oCEL5kMErj4wRnK/OPoBi0D+P1FR2cDCKYPaMeD2eW3/mttav8HT4hT1CKopiJI/psEULjkClhvJo4Lvg==
+  dependencies:
+    cssesc "^3.0.0"
+    fastparse "^1.1.2"
+
 css-tree@1.0.0-alpha.37:
   version "1.0.0-alpha.37"
   resolved "https://registry.yarnpkg.com/css-tree/-/css-tree-1.0.0-alpha.37.tgz#98bebd62c4c1d9f960ec340cf9f7522e30709a22"
@@ -5139,6 +5147,11 @@ fastest-levenshtein@^1.0.9:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/fastest-levenshtein/-/fastest-levenshtein-1.0.12.tgz#9990f7d3a88cc5a9ffd1f1745745251700d497e2"
   integrity sha512-On2N+BpYJ15xIC974QNVuYGMOlEVt4s0EOI3wwMqOmK1fdDY+FN/zltPV8vosq4ad4c/gJ1KHScUn/6AWIgiow==
+
+fastparse@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.2.tgz#91728c5a5942eced8531283c79441ee4122c35a9"
+  integrity sha512-483XLLxTVIwWK3QTrMGRqUfUpoOs/0hbQrl2oz4J0pAcm3A3bu84wxTFqGqkJzewCLdME38xJLJAxBABfQT8sQ==
 
 fastq@^1.6.0:
   version "1.9.0"
@@ -9382,6 +9395,14 @@ postcss-prefix-selector@^1.6.0:
   resolved "https://registry.yarnpkg.com/postcss-prefix-selector/-/postcss-prefix-selector-1.7.2.tgz#3adeed903985734298f19d8f5e0b657f9d90d43c"
   dependencies:
     postcss "^7.0.0"
+
+postcss-prefixer@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/postcss-prefixer/-/postcss-prefixer-2.1.2.tgz#e2e72e6d478a78c55b0bfbc322691252bab70cc5"
+  integrity sha512-UQ9lvldlOvRFnW0zZfoYwr11LEaxuW+oqqTmb+NlFC0+hfkd7kPxAmI2kzci3L3gAERm+tngpyVdDx5XWTam8g==
+  dependencies:
+    css-selector-tokenizer "^0.7.1"
+    postcss "^7.0.14"
 
 postcss-reduce-initial@^4.0.3:
   version "4.0.3"
