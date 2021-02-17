@@ -1,28 +1,31 @@
-import React, { Component, HTMLAttributes } from 'react';
+import React, { Component, CSSProperties, HTMLAttributes, MouseEventHandler, RefObject } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
-import { PointerEventsProperty } from 'csstype';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { DOMProps, withDOM } from '../../lib/dom';
+import { ActionSheetProps } from './ActionSheet';
 
 interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   closing: boolean;
   onClose(): void;
+  popupDirection?: ActionSheetProps['popupDirection'];
   toggleRef: Element;
-  elementRef: React.RefObject<HTMLDivElement>;
+  elementRef: RefObject<HTMLDivElement>;
 }
 
-type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
+interface State {
+  dropdownStyles: CSSProperties;
+}
 
-class ActionSheetDropdownDesktop extends Component<Props & DOMProps> {
-  state = {
+class ActionSheetDropdownDesktop extends Component<Props & DOMProps, State> {
+  state: State = {
     dropdownStyles: {
       left: '0',
       top: '0',
       opacity: '0',
-      pointerEvents: 'none' as PointerEventsProperty,
+      pointerEvents: 'none',
     },
   };
 
@@ -31,20 +34,26 @@ class ActionSheetDropdownDesktop extends Component<Props & DOMProps> {
   }
 
   componentDidMount = () => {
-    const { toggleRef, elementRef } = this.props;
+    const { toggleRef, elementRef, popupDirection } = this.props;
 
     const toggleRect = toggleRef.getBoundingClientRect();
     const elementRect = elementRef.current.getBoundingClientRect();
 
-    const left = toggleRect.left + toggleRect.width - elementRect.width + this.window.pageXOffset;
-    const top = toggleRect.top + toggleRect.height + this.window.pageYOffset;
+    let left = toggleRect.left + toggleRect.width - elementRect.width + this.window.pageXOffset;
+    let top: number;
+
+    if (popupDirection === 'top') {
+      top = toggleRect.top - elementRect.height + this.window.pageYOffset;
+    } else {
+      top = toggleRect.top + toggleRect.height + this.window.pageYOffset;
+    }
 
     this.setState({
       dropdownStyles: {
-        left: `${left}px`,
-        top: `${top}px`,
-        opacity: '1',
-        pointerEvents: 'auto' as PointerEventsProperty,
+        left,
+        top,
+        opacity: 1,
+        pointerEvents: 'auto',
       },
     });
 
@@ -69,10 +78,21 @@ class ActionSheetDropdownDesktop extends Component<Props & DOMProps> {
     this.props.onClose();
   };
 
-  stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
+  stopPropagation: MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
 
   render() {
-    const { children, platform, elementRef, toggleRef, closing, sizeY, window, document, ...restProps } = this.props;
+    const {
+      children,
+      platform,
+      elementRef,
+      toggleRef,
+      closing,
+      sizeY,
+      window,
+      document,
+      popupDirection,
+      ...restProps
+    } = this.props;
     const baseClaseName = getClassName('ActionSheet', platform);
 
     return (
