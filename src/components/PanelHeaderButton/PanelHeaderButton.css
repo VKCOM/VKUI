@@ -80,6 +80,11 @@
   opacity: .7;
 }
 
+.PanelHeaderButton--vkcom.PanelHeaderButton--hover > :not(.Counter),
+.PanelHeaderButton--vkcom.PanelHeaderButton--active > :not(.Counter) {
+  opacity: 1;
+}
+
 .PanelHeaderButton--vkcom {
   display: flex;
   align-items: center;
