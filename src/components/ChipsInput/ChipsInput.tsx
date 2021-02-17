@@ -14,6 +14,7 @@ import Chip, { ChipProps } from '../Chip/Chip';
 import { noop } from '../../lib/utils';
 import { useChipsInput } from './useChipsInput';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { prefixClass } from '../../lib/prefixClass';
 
 export type ChipsInputValue = string | number;
 
@@ -103,7 +104,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
 
           return (
             <React.Fragment key={value}>
-              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: 'ChipsInput__chip' })}
+              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: prefixClass('ChipsInput__chip') })}
             </React.Fragment>
           );
         })}

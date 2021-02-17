@@ -16,6 +16,7 @@ import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { setRef, noop } from '../../lib/utils';
 import { useDOM } from '../../lib/dom';
 import Caption from '../Typography/Caption/Caption';
+import { prefixClass } from '../../lib/prefixClass';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
@@ -297,7 +298,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                     return (
                       <React.Fragment key={getOptionValue(option)}>
                         {renderOption({
-                          className: 'ChipsSelect__option',
+                          className: prefixClass('ChipsSelect__option'),
                           option,
                           hovered,
                           children: label,
