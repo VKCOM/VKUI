@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { hasMouse as _hasMouse } from '@vkontakte/vkjs/lib/InputUtils';
+import { hasMouse as _hasMouse } from '@vkontakte/vkjs';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
 import { canUseDOM, useDOM } from '../../lib/dom';
 
