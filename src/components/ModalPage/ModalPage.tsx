@@ -1,10 +1,11 @@
 import React, { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { ModalRootContext } from '../ModalRoot/ModalRootContext';
-import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import { Ref } from '../../types';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   /**
@@ -20,6 +21,7 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
+  getModalContentRef?: Ref<HTMLDivElement>;
 }
 
 const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
@@ -36,6 +38,7 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
     onClose,
     settlingHeight,
     dynamicContentHeight,
+    getModalContentRef,
     ...restProps
   } = props;
 
@@ -62,7 +65,7 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
           </div>
 
           <div className="ModalPage__content-wrap">
-            <div className="ModalPage__content">
+            <div className="ModalPage__content" ref={getModalContentRef}>
               <div className="ModalPage__content-in">
                 {children}
               </div>

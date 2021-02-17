@@ -1,10 +1,11 @@
 import React, { FC, HTMLAttributes, ReactNode } from 'react';
 import { Icon16Done } from '@vkontakte/icons';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
+import { HasRootRef } from 'types';
 
-export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement> {
+export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   option?: any;
   selected?: boolean;
   focused?: boolean;

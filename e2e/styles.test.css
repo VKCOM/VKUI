@@ -1,4 +1,5 @@
 @import '../src/styles/styles.css';
+@import '../src/styles/unstable.css';
 
 @font-face {
   font-family: 'Roboto';
@@ -24,6 +25,7 @@
 #mount {
   /* Force use embedded Roboto font for cross-platformity */
   --font-common: 'Roboto';
+  --font-tt: 'Roboto';
   font-family: 'Roboto';
   -webkit-font-smoothing: antialiased;
 }

@@ -1,13 +1,14 @@
-import React, { MouseEvent, FC, useState, useRef, useEffect } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import React, { MouseEvent, FC, useState, useRef, useEffect, useContext } from 'react';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Reorder, Icon24ReorderIos, Icon16Done } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
+import { ListContext } from '../../components/List/ListContext';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlaceholderProps {
   /**
@@ -65,15 +66,13 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
   const rootElRef = useRef(null);
   const platform = usePlatform();
 
-  const [dragging, setDragging] = useState<boolean>(undefined);
+  const [dragging, setDragging] = useState<boolean>(false);
 
   const [siblings, setSiblings] = useState<HTMLElement[]>(undefined);
   const [dragStartIndex, setDragStartIndex] = useState<number>(undefined);
   const [dragEndIndex, setDragEndIndex] = useState<number>(undefined);
   const [dragShift, setDragShift] = useState<number>(0);
   const [dragDirection, setDragDirection] = useState<'down' | 'up'>(undefined);
-
-  const draggingClass = 'List--dragging';
 
   const onDragStart = () => {
     const rootEl = rootElRef?.current;
@@ -151,22 +150,13 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     e.preventDefault();
   };
 
+  const { toggleDrag } = useContext(ListContext);
   useEffect(() => {
-    if (dragging !== undefined) {
-      const listEl = rootElRef?.current?.closest('.List');
-
-      if (listEl) {
-        const hasDraggingClass = listEl?.classList.contains(draggingClass);
-
-        if (dragging && !hasDraggingClass) {
-          listEl.classList.add(draggingClass);
-        }
-
-        if (!dragging && hasDraggingClass) {
-          listEl.classList.remove(draggingClass);
-        }
-      }
+    if (dragging) {
+      toggleDrag(true);
+      return () => toggleDrag(false);
     }
+    return undefined;
   }, [dragging]);
 
   const simpleCell = (

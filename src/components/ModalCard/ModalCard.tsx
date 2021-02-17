@@ -1,13 +1,13 @@
 import React, { HTMLAttributes, ReactNode, FC, useContext } from 'react';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
-import withAdaptivity, { AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';

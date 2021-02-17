@@ -1,11 +1,11 @@
 import React, { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent } from 'react';
 import { classNames } from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { hasReactNode } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
 
 export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePlaceholderProps {
@@ -54,13 +54,17 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
         getClassName('FormItem', platform),
         `FormItem--${status}`,
         `FormItem--sizeY-${sizeY}`,
+        {
+          'FormItem--withTop': hasReactNode(top),
+        },
         className,
       )}
     >
-      {removable
-        ? <Removable align="start" paddedTop={hasReactNode(top)} onRemove={onRemove} removePlaceholder={removePlaceholder}>{wrappedChildren}</Removable>
-        : wrappedChildren
-      }
+      {removable ? (
+        <Removable align="start" onRemove={onRemove} removePlaceholder={removePlaceholder}>
+          <div>{wrappedChildren}</div>
+        </Removable>
+      ) : wrappedChildren}
     </Component>
   );
 }, {

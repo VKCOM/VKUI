@@ -1,12 +1,12 @@
 import React, { ReactNode, FC, ElementType, HTMLAttributes } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { Icon24Chevron } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import withAdaptivity, { SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';

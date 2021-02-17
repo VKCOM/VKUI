@@ -1,20 +1,13 @@
 import React, { FC, HTMLAttributes, useRef, useState } from 'react';
 import { useDOM } from '../../lib/dom';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
-import withAdaptivity, { SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   embedded?: boolean;
   window?: Window;
-}
-
-function cleanupPortalRoots(window: Window) {
-  const portalRoots = window.document.querySelector('.vkui__portal-root');
-  if (portalRoots) {
-    window.document.body.removeChild(portalRoots);
-  }
 }
 
 function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
@@ -42,8 +35,9 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
     const body = window.document.body;
     const parentNode = rootRef.current.parentElement;
 
+    let portal: HTMLDivElement;
     if (embedded) {
-      const portal = document.createElement('div');
+      portal = document.createElement('div');
       portal.classList.add('vkui__portal-root');
       body.appendChild(portal);
       setPortalRoot(portal);
@@ -57,7 +51,7 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
     return () => {
       if (embedded) {
         parentNode.classList.remove('vkui__root', 'vkui__root--embedded', 'vkui--sizeX-regular');
-        cleanupPortalRoots(window);
+        portal.parentElement.removeChild(portal);
       } else {
         parentNode.classList.remove('vkui__root');
         body.classList.remove('vkui__root', 'vkui--sizeX-regular');

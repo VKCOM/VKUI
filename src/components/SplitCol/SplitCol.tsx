@@ -1,5 +1,5 @@
 import React, { Component, createRef, HTMLAttributes } from 'react';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 
 export interface SplitColContextProps {
   colRef: React.RefObject<HTMLDivElement>;
@@ -11,7 +11,7 @@ export const SplitColContext = React.createContext<SplitColContextProps>({
   animate: true,
 });
 
-interface SplitColProps extends HTMLAttributes<HTMLDivElement> {
+export interface SplitColProps extends HTMLAttributes<HTMLDivElement> {
   width?: string;
   maxWidth?: string;
   minWidth?: string;
