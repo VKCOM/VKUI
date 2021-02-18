@@ -128,6 +128,7 @@
   "scripts": {
     "prepare": "yarn build",
     "size": "yarn clear && yarn build && size-limit",
+    "size:ci": "yarn install --frozen-lockfile --ignore-scripts && yarn build:no-types",
     "styleguide": "cross-env NODE_ENV=development styleguidist server --config=styleguide/config.js",
     "styleguide:build": "cross-env NODE_ENV=production styleguidist build --config=styleguide/config.js",
     "dev": "yarn clear && yarn copy-default-scheme && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:postcss-dev\" \"yarn:postcss-unstable-dev\"",
@@ -139,7 +140,9 @@
     "babel-cjs-dev": "babel --config-file ./babel.cjs.config.js src/ --out-dir dist/cjs/ --extensions .tsx,.jsx,.ts,.js --watch",
     "tsc-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/ --watch --preserveWatchOutput",
     "tsc-cjs-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/cjs/ --watch --preserveWatchOutput",
-    "build": "yarn tsc && yarn babel && yarn tsc-cjs && yarn babel-cjs && yarn postcss && yarn postcss-unstable && yarn copy-default-scheme",
+    "build:types": "yarn tsc && yarn tsc-cjs",
+    "build:no-types": "yarn babel && yarn babel-cjs && yarn postcss && yarn postcss-unstable && yarn copy-default-scheme",
+    "build": "yarn build:types && yarn build:no-types",
     "postcss": "cross-env NODE_ENV=production postcss src/styles/styles.css --output dist/vkui.css --verbose",
     "postcss-unstable": "NODE_ENV=production postcss src/styles/unstable.css --output dist/unstable.css --verbose",
     "babel": "cross-env NODE_ENV=production babel src/ --out-dir dist/ --source-maps --extensions .tsx,.jsx,.ts,.js",
