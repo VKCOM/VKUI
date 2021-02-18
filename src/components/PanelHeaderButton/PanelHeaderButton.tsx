@@ -56,7 +56,7 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
       activeMode = 'background';
       break;
     case IOS:
-      hoverMode = 'opacity';
+      hoverMode = 'background';
       activeMode = 'opacity';
       break;
     case VKCOM:
