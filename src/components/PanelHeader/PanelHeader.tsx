@@ -10,6 +10,7 @@ import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProv
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { isPrimitiveReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
+import { TooltipContainer } from '../Tooltip/TooltipContainer';
 
 export interface PanelHeaderProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -44,7 +45,7 @@ const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
   const isPrimitive = isPrimitiveReactNode(children);
 
   return (
-    <div className="PanelHeader__in">
+    <TooltipContainer fixed className="PanelHeader__in">
       <div className="PanelHeader__left">
         {left}
       </div>
@@ -54,7 +55,7 @@ const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
       <div className="PanelHeader__right">
         {webviewType !== WebviewType.VKAPPS && right}
       </div>
-    </div>
+    </TooltipContainer>
   );
 };
 

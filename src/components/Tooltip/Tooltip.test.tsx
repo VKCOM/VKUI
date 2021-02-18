@@ -2,23 +2,14 @@ import React, { HtmlHTMLAttributes } from 'react';
 import { baselineComponent } from '../../testing/utils';
 import { render, screen } from '@testing-library/react';
 import Tooltip from './Tooltip';
-import View from '../View/View';
-import Panel from '../Panel/Panel';
 import { HasRootRef } from '../../types';
-
-const Wrapper = ({ children }: any) => (
-  <View activePanel="pan">
-    <Panel id="pan">
-      {children}
-    </Panel>
-  </View>
-);
+import { TooltipContainer } from './TooltipContainer';
 
 describe('Tooltip', () => {
   baselineComponent((props) => (
-    <Wrapper>
+    <TooltipContainer>
       <Tooltip isShown {...props}><div /></Tooltip>
-    </Wrapper>
+    </TooltipContainer>
   ), {
     forward: false,
   });
@@ -27,9 +18,9 @@ describe('Tooltip', () => {
     it('on DOM child', () => {
       const ref = jest.fn();
       render((
-        <Wrapper>
+        <TooltipContainer>
           <Tooltip><div ref={ref} data-testid="xxx" /></Tooltip>
-        </Wrapper>
+        </TooltipContainer>
       ));
       expect(ref).toHaveBeenCalledWith(screen.getByTestId('xxx'));
     });
@@ -39,9 +30,9 @@ describe('Tooltip', () => {
       );
       const ref = jest.fn();
       render((
-        <Wrapper>
+        <TooltipContainer>
           <Tooltip><RefNode getRootRef={ref} data-testid="xxx" /></Tooltip>
-        </Wrapper>
+        </TooltipContainer>
       ));
       expect(ref).toHaveBeenCalledWith(screen.getByTestId('xxx'));
     });
