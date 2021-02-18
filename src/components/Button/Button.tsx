@@ -11,6 +11,8 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { Platform, VKCOM } from '../../lib/platform';
 
+console.log('DONOTMERGE');
+
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
   size?: 's' | 'm' | 'l';
