@@ -2,6 +2,9 @@ name: 'Pull Request'
 
 on: ['pull_request']
 
+env:
+  VKUI_SKIP_PREPARE: 1
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -86,6 +89,7 @@ jobs:
       - uses: andresz1/size-limit-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # only affects current branch
           skip_step: install
           build_script: 'size:ci'
   deploy_styleguide:
