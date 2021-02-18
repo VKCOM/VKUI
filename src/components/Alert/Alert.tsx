@@ -1,19 +1,21 @@
 import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
-import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import { withPlatform } from '../../hoc/withPlatform';
+import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Button from '../Button/Button';
 import { hasReactNode } from '../../lib/utils';
 import Headline from '../Typography/Headline/Headline';
 import Title from '../Typography/Title/Title';
 import Caption from '../Typography/Caption/Caption';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+
+export type AlertActionInterface = AlertProps['actions'][0];
 
 export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   actionsLayout?: 'vertical' | 'horizontal';
@@ -34,7 +36,7 @@ export interface AlertState {
 
 type TransitionEndHandler = (e?: TransitionEvent) => void;
 
-type ItemClickHander = (item: AlertProps['actions'][0]) => () => void;
+type ItemClickHander = (item: AlertActionInterface) => () => void;
 
 class Alert extends Component<AlertProps, AlertState> {
   constructor(props: AlertProps) {
@@ -54,7 +56,7 @@ class Alert extends Component<AlertProps, AlertState> {
     actions: [],
   };
 
-  onItemClick: ItemClickHander = (item: AlertProps['actions'][0]) => () => {
+  onItemClick: ItemClickHander = (item: AlertActionInterface) => () => {
     const { action, autoclose } = item;
 
     if (autoclose) {
@@ -115,7 +117,7 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
-  renderAction = (action: AlertProps['actions'][0], i: number) => {
+  renderAction = (action: AlertActionInterface, i: number) => {
     const { platform } = this.props;
     switch (platform) {
       case ANDROID:

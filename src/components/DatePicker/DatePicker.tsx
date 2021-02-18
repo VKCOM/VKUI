@@ -4,42 +4,38 @@ import React, {
   HTMLAttributes,
 } from 'react';
 import Input from '../Input/Input';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
-import classNames from '../../lib/classNames';
-import CustomSelect, { SelectOption } from '../CustomSelect/CustomSelect';
+import { classNames } from '../../lib/classNames';
+import CustomSelect, { CustomSelectOptionInterface } from '../CustomSelect/CustomSelect';
 
 const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
 ];
 
-export type DateFormat = {
+export type DatePickerDateFormat = {
   day: number;
   month: number;
   year: number;
 };
 
-type DatePickerState = Partial<DateFormat>;
+type DatePickerState = Partial<DatePickerDateFormat>;
 
-interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>, HasPlatform, AdaptivityProps {
-  min: DateFormat;
-  max: DateFormat;
+export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>, HasPlatform, AdaptivityProps {
+  min: DatePickerDateFormat;
+  max: DatePickerDateFormat;
   name?: string;
-  defaultValue?: DateFormat;
+  defaultValue?: DatePickerDateFormat;
   popupDirection?: 'top' | 'bottom';
   monthNames?: string[];
   dayPlaceholder?: string;
   monthPlaceholder?: string;
   yearPlaceholder?: string;
-  onDateChange?: (value: {
-    day: number;
-    month: number;
-    year: number;
-  }) => void;
+  onDateChange?: (value: DatePickerDateFormat) => void;
 }
 
-type GetOptions = () => SelectOption[];
+type GetOptions = () => CustomSelectOptionInterface[];
 
 class DatePicker extends Component<DatePickerProps, DatePickerState> {
   constructor(props: DatePickerProps) {
@@ -95,7 +91,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
   getDayOptions: GetOptions = () => {
     const maxMonthDay = this.getMonthMaxDay();
-    const array: SelectOption[] = new Array(maxMonthDay);
+    const array: CustomSelectOptionInterface[] = new Array(maxMonthDay);
 
     for (let i = 0; i < maxMonthDay; i++) {
       const value = i + 1;
@@ -124,7 +120,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
   getYearOptions: GetOptions = () => {
     const { max, min } = this.props;
-    const yearOptions: SelectOption[] = [];
+    const yearOptions: CustomSelectOptionInterface[] = [];
     const maxYear = max.year;
     const minYear = min.year;
 
@@ -144,7 +140,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
     this.setState({
       [e.target.name]: Number(e.target.value),
     }, () => {
-      onDateChange && onDateChange(this.state as DateFormat);
+      onDateChange && onDateChange(this.state as DatePickerDateFormat);
     });
   };
 

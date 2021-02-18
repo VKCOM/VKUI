@@ -25,12 +25,14 @@ class Example extends React.Component {
     this.openSelectable = this.openSelectable.bind(this);
     this.openTitle = this.openTitle.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.openBaseTop = this.openBaseTop.bind(this);
 
     this.baseTargetRef = React.createRef();
     this.iconsTargetRef = React.createRef();
     this.subtitleTargetRef = React.createRef();
     this.selectableTargetRef = React.createRef();
     this.titleTargetRef = React.createRef();
+    this.baseTopTargetRef = React.createRef();
   }
 
   componentDidMount() {
@@ -188,6 +190,35 @@ class Example extends React.Component {
       </ActionSheet>
     });
   }
+
+  openBaseTop() {
+    this.setState({
+      popout: (
+        <ActionSheet
+          onClose={() => this.setState({ popout: null })}
+          iosCloseItem={<ActionSheetItem autoclose mode="cancel">Отменить</ActionSheetItem>}
+          toggleRef={this.baseTopTargetRef.current}
+          popupDirection="top"
+        >
+          <ActionSheetItem autoclose>
+            Сохранить в закладках
+          </ActionSheetItem>
+          <ActionSheetItem autoclose>
+            Закрепить запись
+          </ActionSheetItem>
+          <ActionSheetItem autoclose>
+            Выключить комментирование
+          </ActionSheetItem>
+          <ActionSheetItem autoclose>
+            Закрепить запись
+          </ActionSheetItem>
+          <ActionSheetItem autoclose mode="destructive">
+            Удалить запись
+          </ActionSheetItem>
+        </ActionSheet>
+      ),
+    });
+  }
  
   onChange(e) {
     this.setState({ filter: e.target.value });
@@ -204,6 +235,7 @@ class Example extends React.Component {
             <CellButton getRootRef={this.subtitleTargetRef} onClick={this.openSubtitle}>С подзаголовком</CellButton>
             <CellButton getRootRef={this.selectableTargetRef} onClick={this.openSelectable}>Выделяемые</CellButton>
             <CellButton getRootRef={this.titleTargetRef} onClick={this.openTitle}>C заголовком</CellButton>
+            <CellButton getRootRef={this.baseTopTargetRef} onClick={this.openBaseTop}>Базовый список, открывается наверх на десктопах</CellButton>
           </Group>
         </Panel>
       </View>

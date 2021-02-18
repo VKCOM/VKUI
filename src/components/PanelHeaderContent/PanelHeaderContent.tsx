@@ -1,13 +1,13 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
-import usePlatform from '../../hooks/usePlatform';
+import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import Caption from '../Typography/Caption/Caption';
 import Headline from '../Typography/Headline/Headline';
 
-interface PanelHeaderContentProps extends HTMLAttributes<HTMLDivElement> {
+export interface PanelHeaderContentProps extends HTMLAttributes<HTMLDivElement> {
   aside?: ReactNode;
   before?: ReactNode;
   status?: ReactNode;

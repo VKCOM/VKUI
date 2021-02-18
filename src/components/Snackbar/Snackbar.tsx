@@ -1,14 +1,14 @@
 import React, { HTMLAttributes, MouseEvent, PureComponent } from 'react';
-import withPlatform from '../../hoc/withPlatform';
+import { withPlatform } from '../../hoc/withPlatform';
 import Touch, { TouchEvent } from '../Touch/Touch';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
-import getClassname from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 import { canUseDOM } from '../../lib/dom';
 import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
-import withAdaptivity, { AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
 import Button from '../Button/Button';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -219,7 +219,7 @@ class Snackbar extends PureComponent<SnackbarProps, SnackbarState> {
       <AppRootPortal>
         <div
           {...restProps}
-          className={classNames(getClassname('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
+          className={classNames(getClassName('Snackbar', platform), className, `Snackbar--l-${resolvedLayout}`, {
             'Snackbar--closing': this.state.closing,
             'Snackbar--touched': this.state.touched,
             'Snackbar--desktop': this.isDesktop,

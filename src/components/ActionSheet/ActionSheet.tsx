@@ -1,8 +1,8 @@
 import React, { Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { transitionEvent } from '../../lib/supportEvents';
-import withPlatform from '../../hoc/withPlatform';
-import withAdaptivity, { AdaptivityProps, ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
+import { withPlatform } from '../../hoc/withPlatform';
+import { withAdaptivity, AdaptivityProps, ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
@@ -19,6 +19,10 @@ export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPla
    * Desktop only
    */
   toggleRef: Element;
+  /**
+   * Desktop only
+   */
+  popupDirection?: 'top' | 'bottom';
   /**
    * iOS only
    */
@@ -46,6 +50,10 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
   elRef: React.RefObject<HTMLDivElement>;
 
   private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+
+  static defaultProps: Partial<ActionSheetProps> = {
+    popupDirection: 'bottom',
+  };
 
   onClose: CloseCallback = () => {
     this.setState({ closing: true });
@@ -120,7 +128,8 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
           value={{
             onItemClick: this.onItemClick,
             isDesktop,
-          }}>
+          }}
+        >
           <DropdownComponent
             closing={this.state.closing}
             onClose={this.onClose}

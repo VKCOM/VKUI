@@ -1,0 +1,122 @@
+.Removable {
+  position: relative;
+  box-sizing: border-box;
+  min-width: 0;
+  flex-grow: 1;
+}
+
+.Removable__content {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  max-width: 100%;
+}
+
+.Removable__content > * {
+  flex-grow: 1;
+}
+
+.Removable__indicator {
+  order: -1;
+}
+
+.Removable__indicator,
+.Removable__remove {
+  flex-grow: 0;
+  flex-shrink: 0;
+  border: none;
+}
+
+.Removable__indicator:focus,
+.Removable__remove:focus {
+  outline: none;
+}
+
+.Removable--start .Removable__control {
+  align-self: flex-start;
+}
+
+.FormItem--withTop .Removable__control,
+.FormItem--withTop ~ .Removable__control {
+  position: relative;
+  top: 28px;
+}
+
+.FormItem--withTop .Removable--sizeY-compact .Removable__control,
+.Removable--sizeY-compact .FormItem--withTop ~ .Removable__control {
+  top: 26px;
+}
+
+/**
+ * iOS
+ */
+
+.Removable--ios {
+  overflow: hidden;
+}
+
+.Removable--ios .Removable__content {
+  transition: transform .6s var(--ios-easing);
+}
+
+.Removable--ios .Removable__remove {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 10px;
+  font-size: 15px;
+  line-height: 45px;
+  color: var(--white);
+  background-color: var(--destructive);
+  transition: transform .6s var(--ios-easing);
+}
+
+.Removable--ios .Removable__indicator {
+  display: block;
+  width: 44px;
+  height: 44px;
+  margin-left: -10px;
+  margin-right: 2px;
+  padding: 11px;
+  background: none;
+}
+
+.Removable--ios.Removable--sizeY-compact .Removable__indicator {
+  height: 36px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.Removable--ios .Removable__indicator-in {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-color: var(--destructive);
+  border-radius: 50%;
+  border: none;
+}
+
+.Removable--ios .Removable__indicator-in::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 5px;
+  display: block;
+  width: 12px;
+  height: 2px;
+  background-color: var(--white);
+}
+
+/**
+ * Android & VKCOM
+ */
+
+.Removable--android .Removable__remove,
+.Removable--vkcom .Removable__remove {
+  color: var(--icon_secondary);
+}

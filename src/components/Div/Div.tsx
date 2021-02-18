@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, FunctionComponent } from 'react';
-import classNames from '../../lib/classNames';
-import getClassName from '../../helpers/getClassName';
-import usePlatform from '../../hooks/usePlatform';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 
 export interface DivProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {}

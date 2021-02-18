@@ -1,14 +1,14 @@
 import React, { InputHTMLAttributes } from 'react';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
 import { IOS, VKCOM } from '../../lib/platform';
 
 import { Icon20CheckBoxOn, Icon20CheckBoxOff, Icon24CheckBoxOn, Icon24CheckBoxOff } from '@vkontakte/icons';
 
 import { HasRef, HasRootRef } from '../../types';
-import usePlatform from '../../hooks/usePlatform';
-import withAdaptivity, { AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { usePlatform } from '../../hooks/usePlatform';
+import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
 import Headline from '../Typography/Headline/Headline';
 

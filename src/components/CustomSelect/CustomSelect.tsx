@@ -7,17 +7,17 @@ import React, {
 } from 'react';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce, setRef } from '../../lib/utils';
-import classNames from '../../lib/classNames';
+import { classNames } from '../../lib/classNames';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
-import withAdaptivity from '../../hoc/withAdaptivity';
-import withPlatform from '../../hoc/withPlatform';
+import { withAdaptivity } from '../../hoc/withAdaptivity';
+import { withPlatform } from '../../hoc/withPlatform';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
-import getClassName from '../../helpers/getClassName';
+import { getClassName } from '../../helpers/getClassName';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
-export interface SelectOption {
+export interface CustomSelectOptionInterface {
   value: SelectValue;
   label: string;
   [index: string]: any;
@@ -76,7 +76,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   private keyboardInput: string;
   private node: HTMLLabelElement;
   private selectEl: HTMLSelectElement;
-  private readonly scrollViewRef = createRef<CustomScrollView>();
+  private readonly scrollBoxRef = createRef<HTMLDivElement>();
 
   private readonly resetKeyboardInput = () => {
     this.keyboardInput = '';
@@ -178,8 +178,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   private scrollToElement(index: number, center = false) {
-    const scrollView = this.scrollViewRef.current;
-    const dropdown = scrollView.box.current;
+    const dropdown = this.scrollBoxRef.current;
     const item = dropdown ? (dropdown.children[index] as HTMLElement) : null;
 
     if (!item) {
@@ -317,7 +316,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   }
 
-  renderOption = (option: SelectOption, index: number) => {
+  renderOption = (option: CustomSelectOptionInterface, index: number) => {
     const { focusedOptionIndex, selectedOptionIndex } = this.state;
     const { renderOption } = this.props;
     const hovered = index === focusedOptionIndex;
@@ -409,7 +408,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           })}
           onMouseLeave={this.resetFocusedOption}
         >
-          <CustomScrollView ref={this.scrollViewRef}>
+          <CustomScrollView boxRef={this.scrollBoxRef}>
             {options.map(this.renderOption)}
           </CustomScrollView>
         </div>

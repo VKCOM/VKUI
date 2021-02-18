@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ImgHTMLAttributes } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 
 export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
@@ -19,7 +19,6 @@ const Avatar: FunctionComponent<AvatarProps> = ({
   size,
   shadow,
   mode,
-  style,
   className,
   children,
   getRootRef,
@@ -52,15 +51,14 @@ const Avatar: FunctionComponent<AvatarProps> = ({
       className={classNames(getClassName('Avatar', platform), className, `Avatar--type-${mode}`, `Avatar--sz-${size}`)}
       ref={getRootRef}
     >
-      <div className="Avatar__in" style={{ width: size, height: size }}>
+      <div className="Avatar__in" style={{ width: size, height: size, borderRadius }}>
         <Component
           {...restProps}
           className="Avatar__img"
           src={src}
-          style={{ ...style, borderRadius }}
         />
-        {shadow && <span className="Avatar__shadow" style={{ borderRadius }} />}
-        {children && <div className="Avatar__children" style={{ width: size, height: size, borderRadius }}>{children}</div>}
+        {shadow && <span className="Avatar__shadow" />}
+        {children && <div className="Avatar__children">{children}</div>}
       </div>
     </div>
   );

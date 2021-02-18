@@ -4,7 +4,7 @@
 
 .Avatar__in {
   position: relative;
-  color: var(--icon_secondary);
+  color: var(--placeholder_icon_foreground_secondary);
 }
 
 .Avatar__img {
@@ -15,6 +15,7 @@
   height: 100%;
   position: relative;
   z-index: 1;
+  border-radius: inherit;
 }
 
 .Avatar__shadow {
@@ -26,6 +27,7 @@
   box-shadow: inset 0 0 0 1px var(--image_border);
   pointer-events: none;
   z-index: 2;
+  border-radius: inherit;
 }
 
 .Avatar__children {
@@ -38,4 +40,5 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: inherit;
 }

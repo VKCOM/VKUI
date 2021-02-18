@@ -1,5 +1,5 @@
 import { Children, ReactNode } from 'react';
-import { Ref } from '../types';
+import { Ref, RefWithCurrent } from '../types';
 
 // Является ли переданное значение числовым
 export function isNumeric(value: any): boolean {
@@ -74,6 +74,19 @@ export function setRef<T>(element: T, ref: Ref<T>): void {
   }
 }
 
+export function multiRef<T>(...refs: Array<Ref<T>>): RefWithCurrent<T> {
+  let current: T | null = null;
+  return {
+    get current() {
+      return current;
+    },
+    set current(element) {
+      current = element;
+      refs.forEach((ref) => setRef(element, ref));
+    },
+  };
+}
+
 // eslint-disable-next-line
 export const noop = () => {};
 
@@ -92,7 +105,7 @@ export function createCustomEvent(window: any, type: string, eventInitDict?: any
   }
 
   return new window.CustomEvent(type, eventInitDict);
-};
+}
 
 export function getTitleFromChildren(children: ReactNode): string {
   let label = '';

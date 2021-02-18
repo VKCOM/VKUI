@@ -4,9 +4,9 @@ import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Tappable from '../Tappable/Tappable';
-import classNames from '../../lib/classNames';
-import getClassname from '../../helpers/getClassName';
-import usePlatform from '../../hooks/usePlatform';
+import { classNames } from '../../lib/classNames';
+import { getClassName } from '../../helpers/getClassName';
+import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
 
@@ -50,11 +50,11 @@ export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAtt
 }
 
 const ContentCard: FC<ContentCardProps> = (props) => {
-  const { getRef, onClick, subtitle, header, text, caption, className, image, disabled, mode, alt, style, getRootRef, ...restProps } = props;
+  const { getRef, onClick, subtitle, header, text, caption, className, image, maxHeight, disabled, mode, alt, style, getRootRef, ...restProps } = props;
   const platform = usePlatform();
 
   return (
-    <Card mode={mode} getRootRef={getRootRef} className={classNames(className, getClassname('ContentCard', platform))} style={style}>
+    <Card mode={mode} getRootRef={getRootRef} className={classNames(className, getClassName('ContentCard', platform))} style={style}>
       <Tappable disabled={disabled} onClick={onClick} className="ContentCard__tappable">
         {image && <img {...restProps} ref={getRef} src={image} alt={alt} className="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
         <div className="ContentCard__body">

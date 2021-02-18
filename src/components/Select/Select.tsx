@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import NativeSelect from '../NativeSelect/NativeSelect';
 import CustomSelect, { CustomSelectProps } from '../CustomSelect/CustomSelect';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
-interface SelectProps extends CustomSelectProps, AdaptivityProps {}
+export interface SelectProps extends CustomSelectProps, AdaptivityProps {}
 
 const Select: FunctionComponent<SelectProps> = ({ hasMouse, ...props }: SelectProps) => {
   // Use custom select if device has connected a mouse

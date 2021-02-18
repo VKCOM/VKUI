@@ -1,7 +1,7 @@
 import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
-import getClassName from '../../helpers/getClassName';
-import classNames from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef } from '../../types';
 import { isPrimitiveReactNode } from '../../lib/utils';
 import { VKCOM } from '../../lib/platform';

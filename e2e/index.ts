@@ -13,15 +13,18 @@ export async function mount() {
   }, { testName });
 }
 
-export async function screenshot(jsx: ReactElement) {
-  await mount(jsx);
+export async function screenshot(jsx?: ReactElement, options: { selector?: string } = {}) {
+  if (jsx) {
+    await mount(jsx);
+  }
   // font load affects layout
   /* istanbul ignore next */
   await page.evaluate(() => (document as any).fonts.ready);
+  const { selector = '#mount > *' } = options;
   /* istanbul ignore next */
-  const { x, y, bottom, right } = await page.evaluate(() => {
+  const { x, y, bottom, right } = await page.evaluate((selector) => {
     const size = { right: 0, bottom: 0, x: Infinity, y: Infinity };
-    document.querySelectorAll('#mount > *').forEach((node) => {
+    document.querySelectorAll(selector).forEach((node) => {
       const { x, y, right, bottom } = node.getBoundingClientRect();
       size.right = Math.max(size.right, right);
       size.bottom = Math.max(size.bottom, bottom);
@@ -29,6 +32,6 @@ export async function screenshot(jsx: ReactElement) {
       size.y = Math.min(size.y, y);
     });
     return size;
-  });
+  }, selector);
   return page.screenshot({ fullPage: true, clip: { x, y, width: right - x, height: bottom - y } });
 }

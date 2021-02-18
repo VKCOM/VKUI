@@ -1,8 +1,8 @@
 import React, { HTMLAttributes, useRef, useEffect, useState, useCallback, FC } from 'react';
-import classNames from '../../lib/classNames';
-import usePlatform from '../../hooks/usePlatform';
-import getClassName from '../../helpers/getClassName';
-import withAdaptivity, { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { classNames } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from './HorizontalScrollArrow';
 import { easeInOutSine } from '../../lib/fx';
 
@@ -21,7 +21,7 @@ interface ScrollContext {
   initialScrollWidth: number;
 }
 
-interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+export interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   /**
    * Функция для расчета величины прокрутки при клике на левую стрелку.
    */
@@ -106,12 +106,12 @@ function doScroll({
   })();
 }
 
-const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
+const HorizontalScroll: FC<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
   const {
     children,
     getScrollToLeft,
     getScrollToRight,
-    showArrows = false,
+    showArrows,
     scrollAnimationDuration,
     className,
     hasMouse,
@@ -184,6 +184,10 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props) => {
       </div>
     </div>
   );
+};
+
+HorizontalScroll.defaultProps = {
+  showArrows: true,
 };
 
 export default withAdaptivity(HorizontalScroll, {
