@@ -2,7 +2,7 @@
 /*
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
-body[scheme="vkcom"] {
+body[scheme="vkcom_light"] {
   --accent: #5181b8;
   --action_sheet_action_foreground: #5181b8;
   --action_sheet_separator: rgba(0, 0, 0, 0.12);
@@ -191,6 +191,8 @@ body[scheme="vkcom"] {
   --separator_alpha: rgba(0, 0, 0, 0.12);
   --separator_alternate: #e7e8ec;
   --separator_common: #dce1e6;
+  --skeleton_foreground_from: #000;
+  --skeleton_foreground_to: #e7e8ec;
   --skeleton_shimmer_from: #ffffff;
   --skeleton_shimmer_to: rgba(255, 255, 255, 0.00);
   --snippet_background: #ffffff;

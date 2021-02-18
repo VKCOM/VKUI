@@ -109,7 +109,7 @@ body[scheme="space_gray"] {
   --im_bubble_button_background: rgba(255, 255, 255, 0.16);
   --im_bubble_button_background_highlighted: rgba(255, 255, 255, 0.24);
   --im_bubble_button_foreground: #e1e3e6;
-  --im_bubble_button_outgoing_background: #5d5f61;
+  --im_bubble_button_outgoing_background: rgba(255, 255, 255, 0.20);
   --im_bubble_gift_background: #857250;
   --im_bubble_gift_background_highlighted: #ab9871;
   --im_bubble_gift_text: #ffffff;
@@ -192,6 +192,8 @@ body[scheme="space_gray"] {
   --separator_alpha: rgba(255, 255, 255, 0.12);
   --separator_alternate: #232324;
   --separator_common: #363738;
+  --skeleton_foreground_from: #232324;
+  --skeleton_foreground_to: #2c2d2e;
   --skeleton_shimmer_from: #19191a;
   --skeleton_shimmer_to: #19191a;
   --snippet_background: #232324;

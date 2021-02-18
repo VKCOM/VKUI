@@ -2166,6 +2166,10 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
+"@vkontakte/appearance@https://github.com/VKCOM/Appearance#master":
+  version "1.0.0"
+  resolved "https://github.com/VKCOM/Appearance#40e75d14bb330a0728bc6df853be1883fddb5d19"
+
 "@vkontakte/appearance@https://github.com/VKCOM/Appearance#v9.2.0":
   version "1.0.0"
   resolved "https://github.com/VKCOM/Appearance#114f791afd871f76562b14d70fc89629ac17045b"

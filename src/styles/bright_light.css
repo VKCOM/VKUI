@@ -192,6 +192,8 @@
   --separator_alpha: rgba(0, 0, 0, 0.12);
   --separator_alternate: #e1e3e6;
   --separator_common: #d7d8d9;
+  --skeleton_foreground_from: #f5f5f5;
+  --skeleton_foreground_to: #e1e3e6;
   --skeleton_shimmer_from: #ffffff;
   --skeleton_shimmer_to: #ffffff;
   --snippet_background: #ffffff;
