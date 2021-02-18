@@ -12,10 +12,11 @@ export enum Scheme {
   DEPRECATED_CLIENT_DARK = 'client_dark',
   BRIGHT_LIGHT = 'bright_light',
   SPACE_GRAY = 'space_gray',
-  VKCOM = 'vkcom'
+  VKCOM_LIGHT = 'vkcom_light',
+  VKCOM_DARK = 'vkcom_dark'
 }
 
-export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM;
+export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM_LIGHT | Scheme.VKCOM_DARK;
 
 export enum WebviewType {
   VKAPPS = 'vkapps',

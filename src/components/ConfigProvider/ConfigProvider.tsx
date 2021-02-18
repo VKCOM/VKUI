@@ -37,7 +37,7 @@ class ConfigProvider extends React.Component<ConfigProviderProps & DOMProps> {
   }
 
   getScheme = (platform: Platform, scheme: AppearanceScheme): AppearanceScheme => {
-    return platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(scheme);
+    return platform === VKCOM ? scheme : this.mapOldScheme(scheme);
   };
 
   setScheme = (scheme: AppearanceScheme): void => {
