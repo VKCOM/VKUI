@@ -80,6 +80,9 @@ jobs:
       CI_JOB_NUMBER: 1
     steps:
       - uses: actions/checkout@v1
+      - uses: bahmutov/npm-install@v1.7.1
+        with:
+          install-command: yarn --frozen-lockfile --ignore-scripts
       - uses: andresz1/size-limit-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
