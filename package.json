@@ -126,7 +126,7 @@
     }
   ],
   "scripts": {
-    "prepare": "node -e '!process.env.VKUI_SKIP_PREPARE && require(`child_process`).spawn(`npm`, [`run`, `build`], { stdio: `inherit` })'",
+    "prepare": "node -e '!process.env.VKUI_SKIP_PREPARE && require(`child_process`).spawn(`yarn`, [`build`], { stdio: `inherit` })'",
     "size": "yarn clear && yarn build && size-limit",
     "size:ci": "yarn install --frozen-lockfile --ignore-scripts && yarn build:no-types",
     "styleguide": "cross-env NODE_ENV=development styleguidist server --config=styleguide/config.js",
