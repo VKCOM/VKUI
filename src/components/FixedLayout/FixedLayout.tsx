@@ -130,6 +130,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps, FixedLayo
 
   getRef: RefCallback<HTMLDivElement> = (element) => {
     this.el = element;
+    console.log('REMOVEME');
     setRef(element, this.props.getRootRef);
   };
 
