@@ -191,7 +191,7 @@ export default class Preview extends PreviewParent {
                           >
                             <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
                               {isPartial ? example : (
-                                <AppRoot embedded={isEmbedded} window={window}>
+                                <AppRoot embedded={isEmbedded} window={window} noLegacyClasses>
                                   {example}
                                 </AppRoot>
                               )}
