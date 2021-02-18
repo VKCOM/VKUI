@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 12
       # cached yarn install
-      - uses: bahmutov/npm-install@v1
+      - uses: bahmutov/npm-install@v1.7.1
       - name: Update screenshots
         run: yarn test:e2e -u
       - name: Push updated screenshots

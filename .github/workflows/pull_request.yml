@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 12
       # cached yarn install
-      - uses: bahmutov/npm-install@v1
+      - uses: bahmutov/npm-install@v1.7.1
         with:
           install-command: yarn --frozen-lockfile --ignore-scripts
       - name: Run tests
@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: 12
       # cached yarn install
-      - uses: bahmutov/npm-install@v1
+      - uses: bahmutov/npm-install@v1.7.1
         with:
           install-command: yarn --frozen-lockfile --ignore-scripts
       - name: Install browser for E2E
@@ -65,7 +65,7 @@ jobs:
         with:
           node-version: 12
       # cached yarn install
-      - uses: bahmutov/npm-install@v1
+      - uses: bahmutov/npm-install@v1.7.1
         with:
           install-command: yarn --frozen-lockfile --ignore-scripts
       - run: yarn styleguide:build
