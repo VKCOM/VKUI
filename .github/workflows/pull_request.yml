@@ -82,7 +82,7 @@ jobs:
     env:
       CI_JOB_NUMBER: 1
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: bahmutov/npm-install@v1.7.1
         with:
           install-command: yarn --frozen-lockfile --ignore-scripts
