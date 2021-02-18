@@ -126,9 +126,8 @@
     }
   ],
   "scripts": {
-    "prepare": "yarn build",
+    "prepare": "node -e '!process.env.VKUI_SKIP_PREPARE && require(`child_process`).spawn(`npm`, [`run`, `build`], { stdio: `inherit` })'",
     "size": "yarn clear && yarn build && size-limit",
-    "size:ci": "yarn install --frozen-lockfile --ignore-scripts && yarn build:no-types",
     "styleguide": "cross-env NODE_ENV=development styleguidist server --config=styleguide/config.js",
     "styleguide:build": "cross-env NODE_ENV=production styleguidist build --config=styleguide/config.js",
     "dev": "yarn clear && yarn copy-default-scheme && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:postcss-dev\" \"yarn:postcss-unstable-dev\"",
