@@ -121,9 +121,16 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
 
   useEffect(() => {
     if (platform === VKCOM) {
-      setContext({ hasMouse: true, width: TABLET_SIZE, scheme: Scheme.VKCOM });
-    } else if (scheme === Scheme.VKCOM) {
+      setContext({ hasMouse: true, width: TABLET_SIZE })
+      if (scheme === Scheme.BRIGHT_LIGHT) {
+        setContext({ scheme: Scheme.VKCOM_LIGHT });  
+      } else if (scheme === Scheme.SPACE_GRAY) {
+        setContext({ scheme: Scheme.VKCOM_DARK });  
+      }
+    } else if (scheme === Scheme.VKCOM_LIGHT) {
       setContext({ scheme: Scheme.BRIGHT_LIGHT });
+    } else if (scheme === Scheme.VKCOM_DARK) {
+      setContext({ scheme: Scheme.SPACE_GRAY });
     }
   }, [platform, scheme]);
 
@@ -152,7 +159,7 @@ function StyleGuideRenderer({ classes, title, homepageUrl, children, toc, hasSid
               <SchemeSelect
                 onChange={ (e) => setContext({ scheme: e.target.value })}
                 value={state.scheme}
-                disabled={platform === VKCOM}
+                isVKCOM={platform === VKCOM}
               />
             </div>
             <div style={{ marginTop: 4 }}>

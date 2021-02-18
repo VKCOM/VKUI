@@ -42,7 +42,7 @@ export function PathlineRenderer({ classes, children }) {
             <SchemeSelect
               onChange={(e) => styleGuideContext.setContext({ scheme: e.target.value })}
               value={styleGuideContext.scheme}
-              disabled={styleGuideContext.platform === VKCOM}
+              isVKCOM={styleGuideContext.platform === VKCOM}
             />
             &nbsp;|&nbsp;
             <WebviewTypeSelect
