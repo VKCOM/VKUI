@@ -9,6 +9,7 @@ import { withPanelContext } from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
+import { PanelContextProps } from '../Panel/PanelContext';
 import { DOMProps, withDOM } from '../../lib/dom';
 
 export interface FixedLayoutProps extends
@@ -24,10 +25,6 @@ export interface FixedLayoutProps extends
   /**
    * @ignore
    */
-  panel?: string;
-  /**
-   * @ignore
-   */
   splitCol?: SplitColContextProps;
 }
 
@@ -37,7 +34,7 @@ export interface FixedLayoutState {
   width: string;
 }
 
-class FixedLayout extends React.Component<FixedLayoutProps & DOMProps, FixedLayoutState> {
+class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelContextProps, FixedLayoutState> {
   state: FixedLayoutState = {
     position: 'absolute',
     top: null,
@@ -57,11 +54,10 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps, FixedLayo
   }
 
   get currentPanel(): HTMLElement {
-    const { panel: id } = this.props;
-    const elem = this.document.getElementById(id);
+    const elem = this.props.getPanelNode();
 
     if (!elem) {
-      console.warn(`Element #${id} not found`);
+      console.warn('[VKUI/FixedLayout] Panel element not found');
     }
 
     return elem;

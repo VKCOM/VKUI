@@ -7,7 +7,15 @@ export type TranslateRange = [number, number];
 
 export type ModalsState = { [index: string]: ModalsStateEntry };
 
-export interface ModalsStateEntry {
+export interface ModalElements {
+  modalElement?: HTMLElement | null;
+  innerElement?: HTMLElement | null;
+  headerElement?: HTMLElement | null;
+  contentElement?: HTMLElement | null;
+  footerElement?: HTMLElement | null;
+}
+
+export interface ModalsStateEntry extends ModalElements {
   id: string;
   onClose?: () => any;
   type?: ModalType;
@@ -15,12 +23,6 @@ export interface ModalsStateEntry {
   settlingHeight?: number;
   dynamicContentHeight?: boolean;
   expandable?: boolean;
-
-  modalElement?: HTMLElement | null;
-  innerElement?: HTMLElement | null;
-  headerElement?: HTMLElement | null;
-  contentElement?: HTMLElement | null;
-  footerElement?: HTMLElement | null;
 
   /**
    * Процент текущего сдвига модалки

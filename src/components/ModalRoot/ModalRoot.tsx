@@ -1,4 +1,4 @@
-import React, { Component, ReactElement, SyntheticEvent } from 'react';
+import React, { Component, createRef, ReactElement, SyntheticEvent } from 'react';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { getClassName } from '../../helpers/getClassName';
@@ -83,6 +83,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
+      registerModal: ({ id, ...data }) => Object.assign(this.modalsState[id], data),
       onClose: this.triggerActiveModalClose,
       isInsideModal: true,
     };
@@ -94,6 +95,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   private documentScrolling: boolean;
   private activeTransitions: number;
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
+  private readonly viewportRef = createRef<HTMLDivElement>();
   private maskAnimationFrame: number;
   private readonly modalRootContext: ModalRootContextInterface;
   private readonly frameIds: {
@@ -221,10 +223,6 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     return false;
   };
 
-  pickModal(modalId: string) {
-    return this.document.getElementById('modal-' + modalId);
-  }
-
   /**
    * Инициализирует модалку перед анимацией открытия
    */
@@ -234,23 +232,16 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       return;
     }
 
-    const modalElement = this.pickModal(activeModal);
     const modalState = this.modalsState[activeModal];
-
-    if (modalElement.querySelector('.ModalPage')) {
-      modalState.type = ModalType.PAGE;
-    } else if (modalElement.querySelector('.ModalCard')) {
-      modalState.type = ModalType.CARD;
-    }
 
     switch (modalState.type) {
       case ModalType.PAGE:
         modalState.settlingHeight = modalState.settlingHeight || MODAL_PAGE_DEFAULT_PERCENT_HEIGHT;
-        this.initPageModal(modalState, modalElement);
+        this.initPageModal(modalState);
         break;
 
       case ModalType.CARD:
-        this.initCardModal(modalState, modalElement);
+        this.initCardModal(modalState);
         break;
 
       default:
@@ -260,19 +251,13 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     this.setState({ inited: true, switching: true });
   }
 
-  initPageModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
-    const contentElement: HTMLElement = modalElement.querySelector('.ModalPage__content');
+  initPageModal(modalState: ModalsStateEntry) {
+    const { contentElement } = modalState;
     const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
 
     let prevTranslateY = modalState.translateY;
 
     modalState.expandable = contentHeight > contentElement.clientHeight;
-
-    modalState.modalElement = modalElement;
-    modalState.innerElement = modalElement.querySelector('.ModalPage__in-wrap');
-    modalState.headerElement = modalElement.querySelector('.ModalPage__header');
-    modalState.contentElement = modalElement.querySelector('.ModalPage__content');
-    modalState.footerElement = modalElement.querySelector('.ModalPage__footer');
 
     let collapsed = false;
     let expanded = false;
@@ -321,22 +306,17 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     modalState.expanded = expanded;
   }
 
-  initCardModal(modalState: ModalsStateEntry, modalElement: HTMLElement) {
-    modalState.modalElement = modalElement;
-    modalState.innerElement = modalElement.querySelector('.ModalCard__in');
-
+  initCardModal(modalState: ModalsStateEntry) {
     modalState.translateY = 0;
   }
 
   checkPageContentHeight() {
     const activeModal = this.state.activeModal;
 
-    const modalElement = this.pickModal(activeModal);
-    if (modalElement) {
-      const modalState = this.modalsState[activeModal];
-
+    const modalState = this.modalsState[activeModal];
+    if (modalState.modalElement) {
       const prevModalState = { ...modalState };
-      this.initPageModal(modalState, modalElement);
+      this.initPageModal(modalState);
       const currentModalState = { ...modalState };
 
       let needAnimate = false;
@@ -413,13 +393,13 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const target = originalEvent.target as HTMLElement;
 
     if (!event.isY) {
-      if (target.closest('.ModalPage')) {
+      if (this.viewportRef.current.contains(target)) {
         originalEvent.preventDefault();
       }
       return;
     }
 
-    if (!target.closest('.ModalPage__in')) {
+    if (!modalState.innerElement.contains(target)) {
       return originalEvent.preventDefault();
     }
 
@@ -445,7 +425,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       !modalState.expandable ||
       collapsed ||
       expanded && modalState.touchMovePositive && modalState.touchStartContentScrollTop === 0 ||
-      target.closest('.ModalPage__header')
+      modalState.headerElement.contains(target)
     ) {
       originalEvent.preventDefault();
 
@@ -469,7 +449,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   onCardTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
     const { originalEvent, shiftY, startT } = event;
     const target = originalEvent.target as HTMLElement;
-    if (target.closest('.ModalCard__container')) {
+    if (modalState.innerElement.contains(target)) {
       if (!this.state.touchDown) {
         modalState.touchStartTime = startT;
         this.setState({ touchDown: true, dragging: true });
@@ -606,8 +586,11 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     const target = e.target as HTMLElement;
 
-    if (activeModal && target.closest('.ModalPage__content')) {
-      const modalState = this.modalsState[activeModal];
+    if (!activeModal) {
+      return;
+    }
+    const modalState = this.modalsState[activeModal];
+    if (modalState.type === ModalType.PAGE && modalState.contentElement.contains(target)) {
       modalState.contentScrolled = true;
 
       clearTimeout(modalState.contentScrollStopTimeout);
@@ -788,7 +771,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
               onClick={this.triggerActiveModalClose}
               ref={this.maskElementRef}
             />
-            <div className="ModalRoot__viewport">
+            <div className="ModalRoot__viewport" ref={this.viewportRef}>
               {this.getModals().map((Modal) => {
                 const modalId = Modal.props.id;
                 if (!visibleModals.includes(Modal.props.id)) {
@@ -802,7 +785,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
                 return (
                   <div
                     key={key}
-                    id={key}
+                    ref={(e) => this.modalsState[modalId].modalElement = e}
                     className={classNames('ModalRoot__modal', {
                       'ModalRoot__modal--active': modalId === activeModal,
                       'ModalRoot__modal--prev': modalId === prevModal,

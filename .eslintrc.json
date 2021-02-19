@@ -27,6 +27,28 @@
     }],
     "no-restricted-imports": ["error", {
       "patterns": ["@vkontakte/icons/dist/*"]
+    }],
+    "no-restricted-properties": ["error", {
+      "property": "querySelector",
+      "message": "Make sure to use [data-*] selector, not class"
+    }, {
+      "property": "querySelectorAll",
+      "message": "Make sure to use [data-*] selector, not class"
+    }, {
+      "property": "matches",
+      "message": "Make sure to use [data-*] selector, not class"
+    }, {
+      "property": "closest",
+      "message": "Make sure to use [data-*] selector, not class"
+    }, {
+      "property": "getElementsByClassName",
+      "message": "Use .querySelectorAll('[data-*]')"
+    }, {
+      "property": "classList",
+      "message": "Make sure to use 'vkui' prefix"
+    }, {
+      "property": "getElementById",
+      "message": "Absolutely do not use id"
     }]
   },
   "overrides": [
@@ -34,6 +56,9 @@
       "files": ["src/**/*.{test,spec,e2e}.{ts,tsx}", "e2e/**/*", "src/testing/**/*"],
       "env": {
         "jest": true
+      },
+      "rules": {
+        "no-restricted-properties": "off"
       }
     },
     {
