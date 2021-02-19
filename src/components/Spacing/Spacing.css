@@ -34,13 +34,13 @@
   }
 }
 
-.Spacing--ios:not(.Spacing--separator-wide) {
+.Spacing--ios {
   padding-left: 12px;
   padding-right: 12px;
 }
 
-.Spacing--android:not(.Spacing--separator-wide),
-.Spacing--vkcom:not(.Spacing--separator-wide) {
+.Spacing--android,
+.Spacing--vkcom {
   padding-left: 16px;
   padding-right: 16px;
 }

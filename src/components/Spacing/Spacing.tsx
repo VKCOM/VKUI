@@ -16,13 +16,9 @@ export interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
    * <br />separator='bottom'
    */
   separator?: boolean | 'top' | 'bottom' | 'center';
-  /**
-   * Отключение боковых отступов сепаратора
-   */
-  wide?: boolean;
 }
 
-export const Spacing: FC<SpacingProps> = ({ size, separator, wide, className, style, ...restProps }: SpacingProps) => {
+export const Spacing: FC<SpacingProps> = ({ size, separator, className, style, ...restProps }: SpacingProps) => {
   const platfrom = usePlatform();
   const styles = {
     height: size,
@@ -38,7 +34,6 @@ export const Spacing: FC<SpacingProps> = ({ size, separator, wide, className, st
           separator === true || separator === 'center',
         'Spacing--separator-top': separator === 'top',
         'Spacing--separator-bottom': separator === 'bottom',
-        'Spacing--separator-wide': separator && wide,
       })}
       style={styles}
     />

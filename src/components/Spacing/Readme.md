@@ -56,16 +56,6 @@
       <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
     </Group>
 
-    <Group header={<Header mode='secondary'>Spacing with wide centered separator 16px</Header>}>
-      <Cell before={<Icon28Notifications />}>Уведомления</Cell>
-      <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
-
-      <Spacing separator wide size={16} />
-
-      <Cell before={<Icon28UserOutline />}>Учётная запись</Cell>
-      <Cell before={<Icon28SlidersOutline />}>Основные</Cell>
-    </Group>
-
     <Group header={<Header mode='secondary'>Combined Spacings with bottom separator</Header>}>
       <Cell before={<Icon28Notifications />}>Уведомления</Cell>
       <Cell before={<Icon28BlockOutline />}>Не беспокоить</Cell>
