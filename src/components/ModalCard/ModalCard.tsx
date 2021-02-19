@@ -11,7 +11,8 @@ import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../ho
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
-import ModalRootContext from '../ModalRoot/ModalRootContext';
+import ModalRootContext, { useModalRegistry } from '../ModalRoot/ModalRootContext';
+import { ModalType } from '../ModalRoot/types';
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
@@ -71,6 +72,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
   const modalContext = useContext(ModalRootContext);
+  const { refs } = useModalRegistry(props.id, ModalType.CARD);
 
   return (
     <div
@@ -79,7 +81,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
         'ModalCard--desktop': isDesktop,
       }, className)}
     >
-      <div className="ModalCard__in">
+      <div className="ModalCard__in" ref={refs.innerElement}>
         <div className="ModalCard__container">
           {hasReactNode(icon) && <div className="ModalCard__icon">{icon}</div>}
           {hasReactNode(header) && <Title level="2" weight="semibold" className="ModalCard__header">{header}</Title>}
