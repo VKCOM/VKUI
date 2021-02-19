@@ -135,6 +135,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     return React.Children.toArray(this.props.children) as ReactElement[];
   }
 
+  panelNodes: { [id: string]: HTMLDivElement } = {};
+
   componentWillUnmount() {
     if (this.props.id) {
       scrollsCache[this.props.id] = this.state.scrolls;
@@ -289,14 +291,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     }
   }
 
-  pickPanel(id: string): HTMLElement {
-    const elem = this.document.getElementById(id);
-
-    if (!elem) {
-      console.warn(`Element #${id} not found`);
-    }
-
-    return elem && elem.parentNode.parentNode as HTMLElement;
+  pickPanel(id: string) {
+    return this.panelNodes[id];
   }
 
   transitionEndHandler = (e?: AnimationEvent): void => {
@@ -328,7 +324,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   swipingBackTransitionEndHandler = (e?: TransitionEvent): void => {
     // indexOf because of vendor prefixes in old browsers
     const target = e.target as HTMLElement;
-    if (e.propertyName.includes('transform') && target.classList.contains('View__panel--swipe-back-next')) {
+    if (e.propertyName.includes('transform') && target === this.pickPanel(this.state.swipeBackNextPanel)) {
       switch (this.state.swipeBackResult) {
         case SwipeBackResults.fail:
           this.onSwipeBackCancel();
@@ -509,6 +505,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
                   'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
                   'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
                 })}
+                ref={(el) => this.panelNodes[panelId] = el}
+                data-vkui-active-panel={panelId === activePanel ? 'true' : ''}
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >

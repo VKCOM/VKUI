@@ -105,11 +105,15 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     if (!prevState.transition && this.state.transition) {
       const prevViewElement = this.document.getElementById(`view-${this.state.prevView}`);
       const nextViewElement = this.document.getElementById(`view-${this.state.nextView}`);
+      const setPanelScroll = (e: HTMLElement, scroll: number) => {
+        const pan: HTMLElement | null = e.querySelector('[data-vkui-active-panel=true]');
+        pan && (pan.scrollTop = scroll);
+      };
 
-      prevViewElement.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.prevView];
+      setPanelScroll(prevViewElement, this.state.scrolls[this.state.prevView]);
 
       if (this.state.isBack) {
-        nextViewElement.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.nextView];
+        setPanelScroll(nextViewElement, this.state.scrolls[this.state.nextView]);
       }
       this.waitAnimationFinish(this.state.isBack ? prevViewElement : nextViewElement, this.onAnimationEnd);
     }
