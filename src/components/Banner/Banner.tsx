@@ -96,6 +96,9 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
   } = props;
 
   const InnerComponent = asideMode === 'expand' ? Tappable : 'div';
+  const innerProps = asideMode === 'expand' ? {
+    activeMode: platform === IOS ? 'opacity' : 'background',
+  } : {};
 
   return (
     <div
@@ -108,7 +111,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
         }, className,
       )}
     >
-      <InnerComponent className="Banner__in" activeMode={platform === IOS ? 'opacity' : 'background'}>
+      <InnerComponent className="Banner__in" {...innerProps}>
         {mode === 'image' && background &&
         <div className="Banner__bg">
           {background}

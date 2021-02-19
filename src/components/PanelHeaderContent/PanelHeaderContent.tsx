@@ -26,8 +26,14 @@ const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
 }: PanelHeaderContentProps) => {
   const InComponent = onClick ? Tappable : 'div';
   const rootProps = onClick ? {} : restProps;
-  const inProps = onClick ? { ...restProps, activeEffectDelay: 200 } : {};
   const platform = usePlatform();
+  const inProps = onClick ? {
+    ...restProps,
+    onClick,
+    activeEffectDelay: 200,
+    hasActive: platform === IOS,
+    activeMode: 'opacity',
+  } : {};
   const baseClassNames = getClassName('PanelHeaderContent', platform);
 
   return (
@@ -36,9 +42,6 @@ const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
       <InComponent
         {...inProps}
         className="PanelHeaderContent__in"
-        onClick={onClick}
-        hasActive={platform === IOS}
-        activeMode="opacity"
       >
         {hasReactNode(status) &&
           <Caption level="1" weight="regular" className="PanelHeaderContent__status">
