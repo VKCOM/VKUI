@@ -60,6 +60,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
   };
 
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
+  private viewNodes: { [id: string]: HTMLElement } = {};
 
   get document() {
     return this.props.document;
@@ -103,9 +104,10 @@ class Root extends Component<RootProps & DOMProps, RootState> {
 
     // Начался переход
     if (!prevState.transition && this.state.transition) {
-      const prevViewElement = this.document.getElementById(`view-${this.state.prevView}`);
-      const nextViewElement = this.document.getElementById(`view-${this.state.nextView}`);
+      const prevViewElement = this.viewNodes[this.state.prevView];
+      const nextViewElement = this.viewNodes[this.state.nextView];
       const setPanelScroll = (e: HTMLElement, scroll: number) => {
+        // eslint-disable-next-line no-restricted-properties
         const pan: HTMLElement | null = e.querySelector('[data-vkui-active-panel=true]');
         pan && (pan.scrollTop = scroll);
       };
@@ -192,7 +194,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
       })}>
         {Views.map((view: ReactElement) => {
           return (
-            <div key={view.props.id} id={`view-${view.props.id}`} className={classNames('Root__view', {
+            <div key={view.props.id} ref={(e) => this.viewNodes[view.props.id] = e} className={classNames('Root__view', {
               'Root__view--hide-back': view.props.id === prevView && isBack,
               'Root__view--hide-forward': view.props.id === prevView && !isBack,
               'Root__view--show-back': view.props.id === nextView && isBack,

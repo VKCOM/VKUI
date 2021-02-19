@@ -3,9 +3,9 @@ import { PanelContext } from './PanelContext';
 
 export function withPanelContext<T>(Component: T): T {
   function WithPanelContext(props: {}) {
-    const { panel } = useContext(PanelContext);
+    const { getPanelNode, panel } = useContext(PanelContext);
     // @ts-ignore
-    return <Component {...props} panel={panel} />;
+    return <Component {...props} panel={panel} getPanelNode={getPanelNode} />;
   }
   return WithPanelContext as unknown as T;
 }

@@ -5,6 +5,9 @@ import { AppRootContext } from './AppRootContext';
 import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
+// Используйте classList, но будьте осторожны
+/* eslint-disable no-restricted-properties */
+
 export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   embedded?: boolean;
   window?: Window;

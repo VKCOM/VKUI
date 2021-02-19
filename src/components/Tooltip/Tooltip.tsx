@@ -40,8 +40,10 @@ const TooltipPortal = withDOM<TooltipPortalProps>(
       };
 
       const { target } = props;
-      this.fixedPortal = props.target.closest(`[${tooltipContainerAttr}=fixed]`) != null;
+      /* eslint-disable no-restricted-properties */
+      this.fixedPortal = target.closest(`[${tooltipContainerAttr}=fixed]`) != null;
       this.portalTarget = target.closest(`[${tooltipContainerAttr}]`);
+      /* eslint-enable no-restricted-properties */
     }
 
     get document() {
