@@ -20,6 +20,7 @@ class Panel extends Component<PanelProps> {
     super(props);
     this.childContext = {
       panel: props.id,
+      getPanelNode: () => this.container,
     };
   }
 
