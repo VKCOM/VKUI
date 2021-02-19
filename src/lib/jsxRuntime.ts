@@ -16,7 +16,7 @@ function processProps(props: any) {
   return newProps;
 }
 
-function createScopedElement(_type: any, props: any) {
+function _createScopedElement(_type: any, props: any) {
   let args = arguments;
 
   if (!props || !('vkuiClass' in props)) {
@@ -34,6 +34,6 @@ function createScopedElement(_type: any, props: any) {
 
   return createElement.apply(null, createElementArgArray);
 };
-createScopedElement.Fragment = Fragment;
+_createScopedElement.Fragment = Fragment;
 
-export { createScopedElement };
+export const createScopedElement: typeof createElement & { Fragment: typeof Fragment } = _createScopedElement;

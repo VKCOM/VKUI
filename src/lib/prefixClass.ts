@@ -1,13 +1,16 @@
 import { classScopingMode } from './classScopingMode';
 
 const hasTransformable = /\b(?=[A-Z])/g;
-const cache: any = {};
+const noConflictCache: any = {};
+const legacyCache: any = {};
 function prefixSingle(scopedStyle: string): string {
+  const { noConflict } = classScopingMode;
+  const cache = noConflict ? noConflictCache : legacyCache;
   if (cache[scopedStyle]) {
     return cache[scopedStyle];
   }
   const prefixed = scopedStyle.replace(hasTransformable, 'vkui');
-  const resolved = classScopingMode.noConflict || scopedStyle === prefixed ? prefixed : prefixed + ' ' + scopedStyle;
+  const resolved = noConflict || scopedStyle === prefixed ? prefixed : prefixed + ' ' + scopedStyle;
   cache[scopedStyle] = resolved;
   return resolved;
 }

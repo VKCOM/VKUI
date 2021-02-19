@@ -1,4 +1,5 @@
-const controller = {
+// exported for tests =(
+export const __controller = {
   _noConflict: false,
   _isSet: false,
   get noConflict() {
@@ -15,4 +16,4 @@ const controller = {
   },
 };
 
-export const classScopingMode: { noConflict: boolean } = controller;
+export const classScopingMode: { noConflict: boolean } = __controller;
