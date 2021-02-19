@@ -10,10 +10,11 @@ export interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
   size?: number;
   /**
    * Настройка положения сепаратора:
-   * <br />separator=false (default) - без сепаратора
-   * <br />separator=true | separator='center' - сепаратор располагается по середине
-   * <br />separator='top'
-   * <br />separator='bottom'
+   *
+   * - separator=false (default) - без сепаратора
+   * - separator=true | separator='center' - сепаратор располагается по середине
+   * - separator='top'
+   * - separator='bottom'
    */
   separator?: boolean | 'top' | 'bottom' | 'center';
 }
