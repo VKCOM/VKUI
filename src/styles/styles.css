@@ -89,6 +89,7 @@
 @import '../components/Counter/Counter.css';
 @import '../components/UsersStack/UsersStack.css';
 @import '../components/Separator/Separator.css';
+@import '../components/Spacing/Spacing.css';
 @import '../components/Placeholder/Placeholder.css';
 @import '../components/Banner/Banner.css';
 @import '../components/MiniInfoCell/MiniInfoCell.css';

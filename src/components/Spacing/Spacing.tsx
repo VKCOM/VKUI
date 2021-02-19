@@ -1,0 +1,48 @@
+import React, { FC, HTMLAttributes } from 'react';
+import { classNames } from '../../lib/classNames';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
+
+export interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * Высота спэйсинга
+   */
+  size?: number;
+  /**
+   * Настройка положения сепаратора:
+   * <br />separator=false (default) - без сепаратора
+   * <br />separator=true | separator='center' - сепаратор располагается по середине
+   * <br />separator='top'
+   * <br />separator='bottom'
+   */
+  separator?: boolean | 'top' | 'bottom' | 'center';
+  /**
+   * Отключение боковых отступов сепаратора
+   */
+  wide?: boolean;
+}
+
+export const Spacing: FC<SpacingProps> = ({ size, separator, wide, className, ...restProps }: SpacingProps) => {
+  const platfrom = usePlatform();
+
+  return (
+    <div
+      {...restProps}
+      className={classNames(getClassName('Spacing', platfrom), className, {
+        'Spacing--separator': !!separator,
+        'Spacing--separator-center':
+          separator === true || separator === 'center',
+        'Spacing--separator-top': separator === 'top',
+        'Spacing--separator-bottom': separator === 'bottom',
+        'Spacing--separator-wide': separator && wide,
+      })}
+      style={{ height: size }}
+    />
+  );
+};
+
+Spacing.defaultProps = {
+  size: 8,
+};
+
+export default Spacing;
