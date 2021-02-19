@@ -43,5 +43,3 @@ export const Spacing: FC<SpacingProps> = ({ size, separator, className, style, .
 Spacing.defaultProps = {
   size: 8,
 };
-
-export default Spacing;
