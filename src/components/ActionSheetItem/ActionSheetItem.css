@@ -80,7 +80,6 @@
   justify-content: center;
   background-color: var(--accent);
   color: var(--white);
-  margin-left: 4px;
 }
 
 .ActionSheetItem__radio:checked ~ .ActionSheetItem__marker {
@@ -176,6 +175,10 @@
   margin-top: 2px;
 }
 
+.ActionSheetItem--ios .ActionSheetItem__marker {
+  margin-left: 12px;
+}
+
 .ActionSheetItem--ios.ActionSheetItem--compact .ActionSheetItem__content,
 .ActionSheetItem--ios .ActionSheetItem__before + .ActionSheetItem__container .ActionSheetItem__content {
   justify-content: flex-start;
@@ -219,6 +222,10 @@
 .ActionSheetItem--android .ActionSheetItem__subtitle {
   margin-top: 1px;
   margin-bottom: -1px;
+}
+
+.ActionSheetItem--android .ActionSheetItem__marker {
+  margin-left: 16px;
 }
 
 /**
