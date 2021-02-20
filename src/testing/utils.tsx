@@ -13,6 +13,18 @@ export type ComponentTestOptions = {
 
 type BasicProps = { style?: any; className?: string };
 
+export function mountTest(Component: ComponentType<any>) {
+  it('renders', () => {
+    let api: RenderResult;
+    // mount
+    expect(() => api = render(<Component />)).not.toThrow();
+    // update
+    expect(() => api.rerender(<Component />)).not.toThrow();
+    // unmount
+    expect(() => api.unmount()).not.toThrow();
+  });
+}
+
 export function baselineComponent<Props extends BasicProps>(
   RawComponent: ComponentType<Props>,
   {
@@ -26,15 +38,7 @@ export function baselineComponent<Props extends BasicProps>(
   const Component: ComponentType<BasicProps> = adaptivity
     ? (p: Props) => <AdaptivityProvider {...adaptivity}><RawComponent {...p} /></AdaptivityProvider>
     : RawComponent;
-  it('renders', () => {
-    let api: RenderResult;
-    // mount
-    expect(() => api = render(<Component />)).not.toThrow();
-    // update
-    expect(() => api.rerender(<Component />)).not.toThrow();
-    // unmount
-    expect(() => api.unmount()).not.toThrow();
-  });
+  mountTest(Component);
   forward && it('forwards attributes', () => {
     const cls = 'Custom';
     const { rerender } = render((
