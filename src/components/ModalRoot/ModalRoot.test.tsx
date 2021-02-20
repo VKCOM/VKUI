@@ -1,6 +1,6 @@
 import { baselineComponent } from '../../testing/utils';
-import { ModalRoot } from './ModalRootAdaptive';
+import { ModalRootTouch } from './ModalRoot';
 
-describe('ModalRoot', () => {
-  baselineComponent<any>(ModalRoot, { forward: false });
+describe('ModalRootTouch', () => {
+  baselineComponent<any>(ModalRootTouch, { forward: false });
 });
