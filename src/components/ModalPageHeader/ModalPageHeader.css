@@ -92,6 +92,12 @@
   justify-content: center;
 }
 
+@media (min-width: 320px) {
+  .ModalPageHeader--ios .ModalPageHeader__content {
+    flex-grow: 3;
+  }
+}
+
 .ModalPageHeader--ios .ModalPageHeader__right {
   flex-grow: 1;
   flex-basis: 0;
