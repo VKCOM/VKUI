@@ -1,5 +1,6 @@
-import { render, RenderResult, screen } from '@testing-library/react';
 import { ComponentType } from 'react';
+import { render, RenderResult, screen } from '@testing-library/react';
+import AdaptivityProvider, { AdaptivityProviderProps } from '../components/AdaptivityProvider/AdaptivityProvider';
 
 export type ComponentTestOptions = {
   defaultProps?: any;
@@ -7,6 +8,7 @@ export type ComponentTestOptions = {
   domAttr?: boolean;
   className?: boolean;
   style?: boolean;
+  adaptivity?: AdaptivityProviderProps;
 };
 
 type BasicProps = { style?: any; className?: string };
@@ -18,9 +20,12 @@ export function baselineComponent<Props extends BasicProps>(
     style = true,
     className = true,
     domAttr = true,
+    adaptivity,
   }: ComponentTestOptions = {},
 ) {
-  const Component: ComponentType<BasicProps> = RawComponent;
+  const Component: ComponentType<BasicProps> = adaptivity
+    ? (p: Props) => <AdaptivityProvider {...adaptivity}><RawComponent {...p} /></AdaptivityProvider>
+    : RawComponent;
   it('renders', () => {
     let api: RenderResult;
     // mount
