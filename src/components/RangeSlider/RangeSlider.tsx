@@ -8,7 +8,7 @@ import { setRef } from '../../lib/utils';
 import { rescale, clamp } from '../../helpers/math';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export type Value = [number, number];
+export type Value = [number | null, number];
 
 export interface RangeSliderProps extends
   HasRootRef<HTMLDivElement>,
@@ -24,7 +24,7 @@ export interface RangeSliderProps extends
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-class RangeSliderDumb extends Component<RangeSliderProps> {
+export class RangeSliderDumb extends Component<RangeSliderProps> {
   dragging: false | 'start' | 'end' = false;
   startX = 0;
   containerWidth = 0;
@@ -74,6 +74,11 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
     }
 
     const [start, end] = this.props.value;
+
+    if (start == null) {
+      return [null, value];
+    }
+
     const { dragging } = this;
     if (dragging === 'start') {
       if (value > end) {
@@ -118,12 +123,15 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
   render() {
     const { min, max, step, value, defaultValue,
       onChange, getRootRef, platform, sizeY, disabled, ...restProps } = this.props;
-    const percentStart = (value[0] - min) / (max - min) * 100;
-    const percentEnd = (value[1] - min) / (max - min) * 100;
+    const toPercent = (v: number) => (v - min) / (max - min) * 100;
+
+    const isRange = value[0] != null;
+    const percentStart = isRange ? toPercent(value[0]) : null;
+    const percentEnd = toPercent(value[1]);
 
     return (
       <Touch
-        data-value={value.join(',')}
+        data-value={isRange ? value.join(',') : value}
         {...restProps}
         onStart={this.onStart}
         onMove={this.onMove}
@@ -138,11 +146,11 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
           <div
             vkuiClass="Slider__dragger"
             style={{
-              width: `${percentEnd - percentStart}%`,
-              left: `${percentStart}%`,
+              width: `${percentEnd - (isRange ? percentStart : 0)}%`,
+              left: isRange ? `${percentStart}%` : null,
             }}
           >
-            <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--start')} ref={this.thumbStart} />
+            {isRange && <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--start')} ref={this.thumbStart} />}
             <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--end')} ref={this.thumbEnd} />
           </div>
         </div>
