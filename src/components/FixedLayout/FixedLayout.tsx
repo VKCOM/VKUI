@@ -131,7 +131,9 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
   };
 
   render() {
-    const { className, children, style, vertical, getRootRef, platform, filled, splitCol, panel, window, document, ...restProps } = this.props;
+    const {
+      className, children, style, vertical, getRootRef, platform, filled, splitCol,
+      panel, getPanelNode, window, document, ...restProps } = this.props;
 
     return (
       <TooltipContainer
