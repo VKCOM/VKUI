@@ -1,6 +1,4 @@
 import { useCallback, useMemo, useState } from 'react';
-import { withPlatform } from '../../hoc/withPlatform';
-import { withAdaptivity } from '../../hoc/withAdaptivity';
 import { clamp } from '../../helpers/math';
 import { UniversalSlider, UniversalSliderProps, UniversalValue } from '../RangeSlider/UniversalSlider';
 
@@ -30,6 +28,4 @@ Slider.defaultProps = {
   step: 0,
 };
 
-export default withAdaptivity(withPlatform(Slider), {
-  sizeY: true,
-});
+export default Slider;

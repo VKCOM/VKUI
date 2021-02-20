@@ -5,7 +5,8 @@ import { classNames } from '../../lib/classNames';
 import { HasPlatform, HasRootRef } from '../../types';
 import { setRef } from '../../lib/utils';
 import { rescale } from '../../helpers/math';
-import { AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { withPlatform } from '../../hoc/withPlatform';
 
 export type UniversalValue = [number | null, number];
 
@@ -23,7 +24,7 @@ export interface UniversalSliderProps<Value> extends
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-export class UniversalSlider extends Component<UniversalSliderProps<UniversalValue>> {
+class UniversalSliderDumb extends Component<UniversalSliderProps<UniversalValue>> {
   dragging: false | 'start' | 'end' = false;
   startX = 0;
   containerWidth = 0;
@@ -155,3 +156,7 @@ export class UniversalSlider extends Component<UniversalSliderProps<UniversalVal
     );
   }
 }
+
+export const UniversalSlider = withAdaptivity(withPlatform(UniversalSliderDumb), {
+  sizeY: true,
+});

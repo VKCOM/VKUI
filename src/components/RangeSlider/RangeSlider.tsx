@@ -1,7 +1,5 @@
 import { FC, useCallback, useState } from 'react';
-import { withPlatform } from '../../hoc/withPlatform';
 import { clamp } from '../../helpers/math';
-import { withAdaptivity } from '../../hoc/withAdaptivity';
 import { UniversalSlider, UniversalSliderProps } from './UniversalSlider';
 
 export type Value = [number, number];
@@ -31,6 +29,4 @@ RangeSlider.defaultProps = {
   step: 0,
 };
 
-export default withAdaptivity(withPlatform(RangeSlider), {
-  sizeY: true,
-});
+export default RangeSlider;
