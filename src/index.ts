@@ -127,6 +127,8 @@ export { default as UsersStack } from './components/UsersStack/UsersStack';
 export type { UsersStackProps } from './components/UsersStack/UsersStack';
 export { default as Separator } from './components/Separator/Separator';
 export type { SeparatorProps } from './components/Separator/Separator';
+export { Spacing } from './components/Spacing/Spacing';
+export type { SpacingProps } from './components/Spacing/Spacing';
 export { default as Placeholder } from './components/Placeholder/Placeholder';
 export type { PlaceholderProps } from './components/Placeholder/Placeholder';
 export { default as Banner } from './components/Banner/Banner';
