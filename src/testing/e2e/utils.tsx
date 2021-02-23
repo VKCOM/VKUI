@@ -67,6 +67,9 @@ function prettyProps(props: any) {
     if (isValidElement(value) || Array.isArray(value) && value.every((node: any) => isValidElement(node))) {
       return `${prop}=<jsx>`;
     }
+    if (typeof value === 'function') {
+      return `${prop}=function`;
+    }
     return `${prop}=${JSON.stringify(value)}`;
   }).join(' ');
 }
