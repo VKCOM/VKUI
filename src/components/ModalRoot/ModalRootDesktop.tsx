@@ -1,4 +1,4 @@
-import React, { Component, ReactElement } from 'react';
+import React, { Children, Component, ReactElement } from 'react';
 import { classNames } from '../../lib/classNames';
 import { isFunction } from '../../lib/utils';
 import { transitionEvent } from '../../lib/supportEvents';
@@ -88,11 +88,11 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
   }
 
   get modals() {
-    return [].concat(this.props.children);
+    return Children.toArray(this.props.children) as ReactElement[];
   }
 
   initModalsState() {
-    this.modalsState = this.modals.reduce((acc, Modal) => {
+    this.modalsState = this.modals.reduce<{ [id: string]: ModalsStateEntry }>((acc, Modal) => {
       const modalProps = Modal.props;
       const state: ModalsStateEntry = {
         id: Modal.props.id,
