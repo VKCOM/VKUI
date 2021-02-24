@@ -126,6 +126,10 @@
   overflow-x: hidden;
 }
 
+.vkui--show-scrollbar > body {
+  overflow-y: scroll;
+}
+
 .vkui,
 .vkui > body,
 .vkui__root {
