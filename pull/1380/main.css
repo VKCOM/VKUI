@@ -328,7 +328,6 @@ to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
 .vkuiPanelHeader--ios~.vkuiFixedLayout--top,.vkuiPanelHeader--ios~* .vkuiFixedLayout--top:not(.vkuiPanelHeader__fixed){top:calc(52px + 20px);top:calc(52px + 20px);top:calc(var(--panelheader_height_ios) + var(--safe-area-inset-top))}
 .vkuiPanelHeader--ios::before,.vkuiPanelHeader--ios .vkuiPanelHeader__in{height:52px;height:52px;height:var(--panelheader_height_ios);padding-top:20px;padding-top:20px;padding-top:var(--safe-area-inset-top)}
 .vkuiPanelHeader--ios .vkuiPanelHeader__left{flex-basis:0;flex-shrink:0;flex-grow:1;opacity:1;transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s var(--ios-easing);padding:4px 0 4px 4px}
-.vkuiPanelHeader--ios .vkuiPanelHeader__left .vkuiPanelHeaderButton--primitive{padding-left:12px}
 .vkuiPanelHeader--ios .vkuiPanelHeader__left .vkuiPanelHeaderButton+.vkuiPanelHeaderButton--primitive{margin-left:-6px;padding-left:0}
 .vkuiPanelHeader--ios .vkuiPanelHeader__content{text-align:center;opacity:1;transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s var(--ios-easing)}
 .vkuiPanelHeader--ios .vkuiPanelHeader__content-in{font-size:21px;line-height:52px;line-height:52px;line-height:var(--panelheader_height_ios)}
@@ -338,7 +337,6 @@ to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
 .vkuiPanelHeader--ios.vkuiPanelHeader--no-right .vkuiPanelHeader__content>*{padding-right:0}
 .vkuiPanelHeader--ios.vkuiPanelHeader--no-right .vkuiPanelHeader__content{padding-right:8px}
 .vkuiPanelHeader--ios .vkuiPanelHeader__right{flex-basis:0;flex-shrink:0;flex-grow:1;opacity:1;transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s cubic-bezier(.36,.66,.04,1);transition:opacity .3s var(--ios-easing);padding:4px 4px 4px 0}
-.vkuiPanelHeader--ios .vkuiPanelHeader__right .vkuiPanelHeaderButton--primitive{padding-right:12px}
 .vkuiView--ios .vkuiView__panel--prev .vkuiPanelHeader__left,.vkuiView--ios .vkuiView__panel--prev .vkuiPanelHeader__right,.vkuiView--ios .vkuiView__panel--prev .vkuiPanelHeader__content{opacity:0}
 @supports not (padding-top:env(safe-area-inset-top)){
 .vkuiPanelHeader--android,.vkuiPanelHeader--vkcom{--safe-area-inset-top: 0px}}
@@ -367,7 +365,7 @@ to{opacity:1;-webkit-transform:translateY(0);transform:translateY(0)}}
 .vkuiPanelHeaderButton[disabled]{opacity:.6}
 .vkuiPanelHeaderButton .vkuiCounter{position:absolute;padding:0;top:8px;right:2px}
 .vkuiPanelHeaderButton--ios{position:relative;display:flex;align-items:center;font-size:17px}
-.vkuiPanelHeaderButton--ios.vkuiPanelHeaderButton--primitive{height:44px;line-height:44px}
+.vkuiPanelHeaderButton--ios.vkuiPanelHeaderButton--primitive{height:44px;line-height:44px;padding:0 12px}
 .vkuiPanelHeaderButton--ios .Icon--24{padding:10px}
 .vkuiPanelHeaderButton--ios .Icon--28{padding:8px}
 .vkuiPanelHeaderButton--ios.vkuiTappable--active{opacity:.7}
@@ -784,14 +782,12 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .vkuiModalPageHeader--ios .vkuiModalPageHeader__in{justify-content:space-between}
 .vkuiModalPageHeader--ios .vkuiModalPageHeader__left{flex-grow:1;flex-basis:0;padding-right:12px;font-size:17px}
 .vkuiModalPageHeader--ios .vkuiModalPageHeader__left .vkuiPanelHeaderButton .Icon--24{padding-left:12px;padding-right:12px}
-.vkuiModalPageHeader--ios .vkuiModalPageHeader__left .vkuiPanelHeaderButton--primitive{padding-left:16px}
 .vkuiModalPageHeader--ios .vkuiModalPageHeader__content{position:relative;z-index:1;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:"TT Commons",-apple-system,system-ui,Helvetica Neue,Roboto,sans-serif;font-family:var(--font-tt);flex:2 1;font-size:21px;justify-content:center}
 @media (min-width:320px){
 .vkuiModalPageHeader--ios .vkuiModalPageHeader__content{flex-grow:3}}
 .vkuiModalPageHeader--ios .vkuiModalPageHeader__right{flex-grow:1;flex-basis:0;padding-left:12px;font-size:17px}
 .vkuiModalPageHeader--ios .vkuiModalPageHeader__right .vkuiPanelHeaderButton:not(:first-child){padding-left:12px}
 .vkuiModalPageHeader--ios .vkuiModalPageHeader__right .vkuiPanelHeaderButton .Icon--24{padding-left:12px;padding-right:12px}
-.vkuiModalPageHeader--ios .vkuiModalPageHeader__right .vkuiPanelHeaderButton--primitive{padding-right:16px}
 .vkuiModalPageHeader--ios.vkuiModalPageHeader--sizeX-regular .vkuiModalPageHeader__in{padding:0 8px}
 .vkuiModalPageHeader--ios.vkuiModalPageHeader--sizeX-regular .vkuiModalPageHeader__left:not(:empty){padding-left:0}
 .vkuiModalPageHeader--ios.vkuiModalPageHeader--sizeX-regular .vkuiModalPageHeader__right:not(:empty){padding-right:0}
