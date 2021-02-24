@@ -113,8 +113,8 @@ const App = withPlatform(withAdaptivity(class App extends React.Component {
           settlingHeight={100}
           header={
             <ModalPageHeader
-              right={platform === 'ios' && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss/></PanelHeaderButton>}
-              left={isMobile && platform === 'android' && <PanelHeaderClose onClick={this.modalBack}/>}
+              right={platform === IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss/></PanelHeaderButton>}
+              left={isMobile && platform === ANDROID && <PanelHeaderClose onClick={this.modalBack}/>}
             >
               @{this.randomUser.screen_name}
             </ModalPageHeader>
