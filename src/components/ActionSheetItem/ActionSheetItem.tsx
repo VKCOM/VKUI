@@ -1,4 +1,4 @@
-import React, { AnchorHTMLAttributes, ElementType, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
+import React, { AnchorHTMLAttributes, ElementType, Fragment, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
@@ -28,7 +28,6 @@ export interface ActionSheetItemProps extends
 }
 
 const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
-  className,
   children,
   autoclose,
   mode,
@@ -62,7 +61,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
     <Tappable
       {...restProps}
       onClick={onItemClick(onClick, autoclose)}
-      className={
+      vkuiClass={
         classNames(
           getClassName('ActionSheetItem', platform),
           `ActionSheetItem--${mode}`,
@@ -72,37 +71,36 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
             [`ActionSheetItem--sizeY-${sizeY}`]: sizeY === SizeType.COMPACT,
             'ActionSheetItem--withSubtitle': hasReactNode(subtitle),
           },
-          className,
         )
       }
       Component={Component}
     >
-      {hasReactNode(before) && <div className="ActionSheetItem__before">{before}</div>}
-      <div className="ActionSheetItem__container">
-        <div className="ActionSheetItem__content">
+      {hasReactNode(before) && <div vkuiClass="ActionSheetItem__before">{before}</div>}
+      <div vkuiClass="ActionSheetItem__container">
+        <div vkuiClass="ActionSheetItem__content">
           {sizeY === SizeType.COMPACT ?
-            <>
+            <Fragment>
               <Text
                 weight={mode === 'cancel' ? 'medium' : 'regular'}
-                className="ActionSheetItem__children"
+                vkuiClass="ActionSheetItem__children"
               >
                 {children}
               </Text>
               {hasReactNode(meta) &&
                 <Text
                   weight="regular"
-                  className="ActionSheetItem__meta"
+                  vkuiClass="ActionSheetItem__meta"
                 >
                   {meta}
                 </Text>
               }
-            </>
+            </Fragment>
             :
-            <>
+            <Fragment>
               <Title
                 weight={mode === 'cancel' ? 'medium' : 'regular'}
                 level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
-                className="ActionSheetItem__children"
+                vkuiClass="ActionSheetItem__children"
               >
                 {children}
               </Title>
@@ -110,25 +108,25 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
                 <Title
                   weight="regular"
                   level={isCompact || hasReactNode(before) || platform === ANDROID ? '3' : '2'}
-                  className="ActionSheetItem__meta"
+                  vkuiClass="ActionSheetItem__meta"
                 >
                   {meta}
                 </Title>
               }
-            </>
+            </Fragment>
           }
         </div>
         {hasReactNode(subtitle) && (sizeY === SizeType.COMPACT ?
-          <Caption weight="regular" className="ActionSheetItem__subtitle" level="1">{subtitle}</Caption>
+          <Caption weight="regular" vkuiClass="ActionSheetItem__subtitle" level="1">{subtitle}</Caption>
           :
-          <Subhead weight="regular" className="ActionSheetItem__subtitle">{subtitle}</Subhead>
+          <Subhead weight="regular" vkuiClass="ActionSheetItem__subtitle">{subtitle}</Subhead>
         )}
       </div>
       {selectable &&
-        <div className="ActionSheetItem__after">
+        <div vkuiClass="ActionSheetItem__after">
           <input
             type="radio"
-            className="ActionSheetItem__radio"
+            vkuiClass="ActionSheetItem__radio"
             name={name}
             value={value}
             onChange={onChange}
@@ -136,7 +134,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
             checked={checked}
             disabled={restProps.disabled}
           />
-          <div className="ActionSheetItem__marker">
+          <div vkuiClass="ActionSheetItem__marker">
             {platform === VKCOM ? <Icon24Done /> : <Icon16Done />}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react';
+import { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 import {
   Icon24Send,
   Icon28AddCircleOutline,
@@ -33,7 +33,6 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
   const platform = usePlatform();
   const {
     mode,
-    className,
     children,
     count,
     ...restProps
@@ -61,14 +60,14 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
   return (
     <button
       {...restProps}
-      className={classNames(getClassName('WriteBarIcon', platform), {
+      vkuiClass={classNames(getClassName('WriteBarIcon', platform), {
         [`WriteBarIcon--${mode}`]: !!mode,
         'WriteBarIcon--disabled': restProps.disabled,
-      }, className)}
+      })}
     >
       {childrenResolved}
       {count ?
-        <div className="WriteBarIcon__count">
+        <div vkuiClass="WriteBarIcon__count">
           <Caption weight="regular" level="2">{count}</Caption>
         </div> :
         null

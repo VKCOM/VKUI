@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, HTMLAttributes, MouseEventHandler, RefObject } from 'react';
+import { Component, CSSProperties, HTMLAttributes, MouseEventHandler, RefObject } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -101,7 +101,7 @@ class ActionSheetDropdownDesktop extends Component<Props & DOMProps, State> {
         ref={elementRef}
         onClick={this.stopPropagation}
         style={this.state.dropdownStyles}
-        className={classNames(baseClaseName, 'ActionSheet--desktop', {
+        vkuiClass={classNames(baseClaseName, 'ActionSheet--desktop', {
           'ActionSheet--closing': this.props.closing,
         }, `ActionSheet--sizeY-${sizeY}`)}
       >

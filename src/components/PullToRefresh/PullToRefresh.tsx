@@ -240,7 +240,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToR
   }
 
   render() {
-    const { children, className, onRefresh, isFetching, platform, window, document, ...restProps } = this.props;
+    const { children, onRefresh, isFetching, platform, window, document, ...restProps } = this.props;
     const { watching, refreshing, spinnerY, spinnerProgress, canRefresh, touchDown, contentShift } = this.state;
 
     const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
@@ -259,12 +259,12 @@ class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToR
           onStart={this.onTouchStart}
           onMove={this.onTouchMove}
           onEnd={this.onTouchEnd}
-          className={classNames(getClassName('PullToRefresh', platform), className, {
+          vkuiClass={classNames(getClassName('PullToRefresh', platform), {
             'PullToRefresh--watching': watching,
             'PullToRefresh--refreshing': refreshing,
           })}
         >
-          <FixedLayout className="PullToRefresh__controls">
+          <FixedLayout vkuiClass="PullToRefresh__controls">
             <PullToRefreshSpinner
               style={{
                 transform: spinnerTransform,
@@ -277,7 +277,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToR
           </FixedLayout>
 
           <div
-            className="PullToRefresh__content"
+            vkuiClass="PullToRefresh__content"
             ref={this.contentRef}
             style={{
               transform: contentTransform,

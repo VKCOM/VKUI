@@ -1,4 +1,4 @@
-import React, { Component, FC, createRef, HTMLAttributes, RefCallback, useCallback, useState } from 'react';
+import { Component, FC, createRef, HTMLAttributes, RefCallback, useCallback, useState } from 'react';
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -116,7 +116,7 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
   };
 
   render() {
-    const { className, min, max, step, value, defaultValue,
+    const { min, max, step, value, defaultValue,
       onChange, getRootRef, platform, sizeY, disabled, ...restProps } = this.props;
     const percentStart = (value[0] - min) / (max - min) * 100;
     const percentEnd = (value[1] - min) / (max - min) * 100;
@@ -128,23 +128,22 @@ class RangeSliderDumb extends Component<RangeSliderProps> {
         onStart={this.onStart}
         onMove={this.onMove}
         onEnd={this.onEnd}
-        className={classNames(
+        vkuiClass={classNames(
           getClassName('Slider', platform),
-          className,
           `Slider--sizeY-${sizeY}`,
           disabled && 'Slider--disabled',
         )}
       >
-        <div ref={this.getRef} className="Slider__in">
+        <div ref={this.getRef} vkuiClass="Slider__in">
           <div
-            className="Slider__dragger"
+            vkuiClass="Slider__dragger"
             style={{
               width: `${percentEnd - percentStart}%`,
               left: `${percentStart}%`,
             }}
           >
-            <span className={classNames('Slider__thumb', 'Slider__thumb--start')} ref={this.thumbStart} />
-            <span className={classNames('Slider__thumb', 'Slider__thumb--end')} ref={this.thumbEnd} />
+            <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--start')} ref={this.thumbStart} />
+            <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--end')} ref={this.thumbEnd} />
           </div>
         </div>
       </Touch>

@@ -1,4 +1,3 @@
-import React from 'react';
 import ModalPageHeader from './ModalPageHeader';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';

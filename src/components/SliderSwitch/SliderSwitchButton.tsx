@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ButtonHTMLAttributes, useState } from 'react';
+import { FunctionComponent, ButtonHTMLAttributes, useState } from 'react';
 import Tappable from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -12,7 +12,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootR
 }
 
 const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
-  const { active, hovered, className, children, getRootRef, ...restProps } = props;
+  const { active, hovered, children, getRootRef, ...restProps } = props;
   const platform = usePlatform();
   const [focus, setFocus] = useState(false);
 
@@ -21,10 +21,9 @@ const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) 
   };
 
   return <Tappable {...restProps}
-    className={
+    vkuiClass={
       classNames(
         getClassName('SliderSwitch__button', platform),
-        className,
         {
           ['SliderSwitch__button--active']: active,
           ['SliderSwitch__button--hover']: !active && hovered,

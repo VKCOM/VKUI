@@ -115,7 +115,7 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
   }
 
   public render() {
-    const { name, options, className, activeValue: _activeValue, ...restProps } = this.props;
+    const { name, options, activeValue: _activeValue, ...restProps } = this.props;
     const { activeValue, hoveredOptionId } = this.state;
 
     const [firstOption, secondOption] = options;
@@ -125,14 +125,14 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
     return (
       <div
         {...restProps}
-        className={classNames('SliderSwitch', className)}
+        vkuiClass="SliderSwitch"
         onKeyDown={this.switchByKey}
         onMouseLeave={this.resetFocusedOption}
       >
         {!firstActive && !secondActive &&
-          <div className="SliderSwitch__border" />
+          <div vkuiClass="SliderSwitch__border" />
         }
-        <div className={classNames(
+        <div vkuiClass={classNames(
           'SliderSwitch__slider',
           {
             ['SliderSwitch--firstActive']: firstActive,

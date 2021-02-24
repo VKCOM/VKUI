@@ -121,12 +121,12 @@ class CustomScrollView extends React.Component<Props> {
   };
 
   render() {
-    return <div className="CustomScrollView">
-      <div className="CustomScrollView__barY" ref={this.barY}>
-        <div className="CustomScrollView__trackerY" ref={this.trackerY} onMouseDown={this.onDragStart} />
+    return <div vkuiClass="CustomScrollView">
+      <div vkuiClass="CustomScrollView__barY" ref={this.barY}>
+        <div vkuiClass="CustomScrollView__trackerY" ref={this.trackerY} onMouseDown={this.onDragStart} />
       </div>
 
-      <div className="CustomScrollView__box" tabIndex={-1} ref={this.box} onScroll={this.scroll}>
+      <div vkuiClass="CustomScrollView__box" tabIndex={-1} ref={this.box} onScroll={this.scroll}>
         {this.props.children}
       </div>
     </div>;

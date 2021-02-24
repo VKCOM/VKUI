@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode, useContext } from 'react';
+import { FunctionComponent, HTMLAttributes, ReactNode, useContext } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import { classNames } from '../../lib/classNames';
@@ -18,7 +18,6 @@ export interface TabsItemProps extends HTMLAttributes<HTMLElement> {
 const TabsItem: FunctionComponent<TabsItemProps> = ({
   children,
   selected,
-  className,
   after,
   ...restProps
 }: TabsItemProps) => {
@@ -34,11 +33,11 @@ const TabsItem: FunctionComponent<TabsItemProps> = ({
   return (
     <Tappable
       {...restProps}
-      className={classNames(getClassName('TabsItem', platform), { 'TabsItem--selected': selected }, className)}
+      vkuiClass={classNames(getClassName('TabsItem', platform), { 'TabsItem--selected': selected })}
       activeEffectDelay={platform === IOS ? 0 : ACTIVE_EFFECT_DELAY}
     >
-      <TypographyComponent className="TabsItem__in" weight="medium">{children}</TypographyComponent>
-      {hasReactNode(after) && <div className="TabsItem__after">{after}</div>}
+      <TypographyComponent vkuiClass="TabsItem__in" weight="medium">{children}</TypographyComponent>
+      {hasReactNode(after) && <div vkuiClass="TabsItem__after">{after}</div>}
     </Tappable>
   );
 };

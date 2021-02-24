@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import { ReactNode, FunctionComponent } from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -13,7 +13,6 @@ export interface IconButtonProps extends TappableProps {
 }
 
 const IconButton: FunctionComponent<IconButtonProps> = ({
-  className,
   icon,
   sizeY,
   children,
@@ -27,9 +26,8 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
       {...restProps}
       Component={Component}
       activeEffectDelay={200}
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('IconButton', platform),
-        className,
         `IconButton--sizeY-${sizeY}`,
       )}
     >

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode, Fragment } from 'react';
+import { FunctionComponent, HTMLAttributes, ReactNode, Fragment } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -30,42 +30,41 @@ function renderChildren({ children, platform, mode }: Pick<HeaderProps, 'childre
     case Platform.ANDROID:
       switch (mode) {
         case 'primary':
-          return <Headline className="Header__content" weight="medium">{children}</Headline>;
+          return <Headline vkuiClass="Header__content" weight="medium">{children}</Headline>;
         case 'secondary':
-          return <Caption className="Header__content" level="1" weight="medium" caps>{children}</Caption>;
+          return <Caption vkuiClass="Header__content" level="1" weight="medium" caps>{children}</Caption>;
         case 'tertiary':
-          return <Headline className="Header__content" weight="medium">{children}</Headline>;
+          return <Headline vkuiClass="Header__content" weight="medium">{children}</Headline>;
       }
       break;
     case Platform.IOS:
       switch (mode) {
         case 'primary':
         case 'tertiary':
-          return <Title className="Header__content" weight="semibold" level="3">{children}</Title>;
+          return <Title vkuiClass="Header__content" weight="semibold" level="3">{children}</Title>;
         case 'secondary':
-          return <Caption className="Header__content" level="1" weight="semibold" caps>{children}</Caption>;
+          return <Caption vkuiClass="Header__content" level="1" weight="semibold" caps>{children}</Caption>;
       }
       break;
     case Platform.VKCOM:
       switch (mode) {
         case 'primary':
-          return <Headline className="Header__content" weight="regular">{children}</Headline>;
+          return <Headline vkuiClass="Header__content" weight="regular">{children}</Headline>;
         case 'secondary':
         case 'tertiary':
-          return <Caption className="Header__content" level="1" weight="regular">{children}</Caption>;
+          return <Caption vkuiClass="Header__content" level="1" weight="regular">{children}</Caption>;
       }
   }
 }
 
 function renderAside({ aside, platform }: { aside: HeaderProps['aside']; platform: PlatformType }) {
   if (platform === Platform.VKCOM) {
-    return <Subhead weight="regular" className="Header__aside">{aside}</Subhead>;
+    return <Subhead weight="regular" vkuiClass="Header__aside">{aside}</Subhead>;
   }
-  return <Text weight="regular" className="Header__aside">{aside}</Text>;
+  return <Text weight="regular" vkuiClass="Header__aside">{aside}</Text>;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
-  className,
   mode,
   children,
   subtitle,
@@ -82,23 +81,23 @@ const Header: FunctionComponent<HeaderProps> = ({
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNames(baseClassNames, className, `Header--mode-${mode}`, {
+      vkuiClass={classNames(baseClassNames, `Header--mode-${mode}`, {
         'Header--pi': isPrimitiveReactNode(indicator),
       })}
     >
-      <div className="Header__in">
-        <div className="Header__main">
+      <div vkuiClass="Header__in">
+        <div vkuiClass="Header__main">
           {renderChildren({
             children: (
               <Fragment>
-                <div className={multiline ? 'Header__content-base--multiline' : 'Header__content-base'}>{children}</div>
-                {hasReactNode(indicator) && <Caption className="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
+                <div vkuiClass={multiline ? 'Header__content-base--multiline' : 'Header__content-base'}>{children}</div>
+                {hasReactNode(indicator) && <Caption vkuiClass="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
               </Fragment>
             ),
             platform,
             mode,
           })}
-          {hasReactNode(subtitle) && <Caption className="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
+          {hasReactNode(subtitle) && <Caption vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
         </div>
         {hasReactNode(aside) && renderAside({ aside, platform })}
       </div>

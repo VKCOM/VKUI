@@ -1,4 +1,3 @@
-import React from 'react';
 import { Checkbox, CheckboxProps } from './Checkbox';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 

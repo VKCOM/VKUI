@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormItem } from './FormItem';
 import Input from '../Input/Input';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';

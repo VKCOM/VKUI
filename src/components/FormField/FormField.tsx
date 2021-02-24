@@ -12,7 +12,6 @@ export interface FormFieldProps extends
 
 const FormField: React.FunctionComponent<FormFieldProps> = ({
   Component,
-  className,
   children,
   getRootRef,
   ...restProps
@@ -36,10 +35,10 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={classNames(getClassName('FormField', platform), className)}
+      vkuiClass={getClassName('FormField', platform)}
     >
       {children}
-      <div className={classNames('FormField__border', {
+      <div vkuiClass={classNames('FormField__border', {
         'FormField__border--hover': hover,
       })} />
     </Component>

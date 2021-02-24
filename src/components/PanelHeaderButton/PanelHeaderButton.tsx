@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, FunctionComponent, ReactNode } from 'react';
+import { AllHTMLAttributes, FunctionComponent, ReactNode } from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -36,7 +36,6 @@ export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
 }
 
 const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
-  className,
   children,
   primary,
   label,
@@ -52,9 +51,8 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
       {...restProps}
       Component={Component}
       activeEffectDelay={200}
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('PanelHeaderButton', platform),
-        className,
         {
           'PanelHeaderButton--primary': primary,
           'PanelHeaderButton--primitive': isPrimitive,

@@ -303,7 +303,7 @@ class Tappable extends Component<TappableProps, TappableState> {
 
   render() {
     const { clicks, active, hovered, hasHover, hasActive } = this.state;
-    const { children, className, Component, activeEffectDelay,
+    const { children, Component, activeEffectDelay,
       stopPropagation, getRootRef, platform, sizeX, hasMouse, hasHover: propsHasHover, hasActive: propsHasActive, ...restProps } = this.props;
 
     const hoverClassModificator = this.containerHasTransparentBackground()
@@ -312,7 +312,6 @@ class Tappable extends Component<TappableProps, TappableState> {
 
     const classes = classNames(
       getClassName('Tappable', platform),
-      className,
       `Tappable--sizeX-${sizeX}`,
       {
         'Tappable--active': hasActive && active,
@@ -359,7 +358,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                   <RootComponent
                     {...touchProps}
                     {...restProps}
-                    className={classes}
+                    vkuiClass={classes}
                     {...props}>
                     <TappableContext.Provider
                       value={{
@@ -371,15 +370,15 @@ class Tappable extends Component<TappableProps, TappableState> {
                       {children}
                     </TappableContext.Provider>
                     {platform === ANDROID && !hasMouse &&
-                    <span className="Tappable__waves">
+                    <span vkuiClass="Tappable__waves">
                       {Object.keys(clicks).map((k: string) => {
                         return (
-                          <span className="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
+                          <span vkuiClass="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
                         );
                       })}
                     </span>
                     }
-                    {hasHover && <span className="Tappable__hoverShadow" />}
+                    {hasHover && <span vkuiClass="Tappable__hoverShadow" />}
                   </RootComponent>
                 );
               }}

@@ -1,6 +1,5 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import { FunctionComponent, HTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 
@@ -9,17 +8,17 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement>, HasRootRe
 }
 
 const Progress: FunctionComponent<ProgressProps> = (props: ProgressProps) => {
-  const { value, className, getRootRef, ...restProps } = props;
+  const { value, getRootRef, ...restProps } = props;
   const platform = usePlatform();
 
   return (
     <div
       {...restProps}
       ref={getRootRef}
-      className={classNames(getClassName('Progress', platform), className)}
+      vkuiClass={getClassName('Progress', platform)}
     >
-      <div className="Progress__bg" />
-      <div className="Progress__in" style={{ width: `${value}%` }} />
+      <div vkuiClass="Progress__bg" />
+      <div vkuiClass="Progress__in" style={{ width: `${value}%` }} />
     </div>
   );
 };

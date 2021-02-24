@@ -11,7 +11,6 @@ export interface CellButtonProps extends SimpleCellProps {
 }
 
 const CellButton: React.FunctionComponent<CellButtonProps> = ({
-  className,
   centered,
   mode,
   ...restProps
@@ -21,13 +20,12 @@ const CellButton: React.FunctionComponent<CellButtonProps> = ({
   return (
     <SimpleCell
       {...restProps}
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('CellButton', platform),
         `CellButton--${mode}`,
         {
           ['CellButton--centered']: centered,
         },
-        className,
       )}
     />
   );

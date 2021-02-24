@@ -1,10 +1,9 @@
-import React, { FC, ImgHTMLAttributes, ReactNode } from 'react';
+import { FC, ImgHTMLAttributes, ReactNode } from 'react';
 import Card, { CardProps } from '../Card/Card';
 import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Tappable from '../Tappable/Tappable';
-import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
@@ -54,14 +53,14 @@ const ContentCard: FC<ContentCardProps> = (props) => {
   const platform = usePlatform();
 
   return (
-    <Card mode={mode} getRootRef={getRootRef} className={classNames(className, getClassName('ContentCard', platform))} style={style}>
-      <Tappable disabled={disabled} onClick={onClick} className="ContentCard__tappable">
-        {image && <img {...restProps} ref={getRef} src={image} alt={alt} className="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
-        <div className="ContentCard__body">
-          {hasReactNode(subtitle) && <Caption caps className="ContentCard__caption" weight="semibold" level="3">{subtitle}</Caption>}
-          {hasReactNode(header) && <Title className="ContentCard__title" weight="semibold" level="3">{header}</Title>}
-          {hasReactNode(text) && <Text className="ContentCard__text" weight="regular">{text}</Text>}
-          {hasReactNode(caption) && <Caption className="ContentCard__caption" weight="regular" level="1">{caption}</Caption>}
+    <Card mode={mode} getRootRef={getRootRef} vkuiClass={getClassName('ContentCard', platform)} style={style} className={className}>
+      <Tappable disabled={disabled} onClick={onClick} vkuiClass="ContentCard__tappable">
+        {image && <img {...restProps} ref={getRef} src={image} alt={alt} vkuiClass="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
+        <div vkuiClass="ContentCard__body">
+          {hasReactNode(subtitle) && <Caption caps vkuiClass="ContentCard__caption" weight="semibold" level="3">{subtitle}</Caption>}
+          {hasReactNode(header) && <Title vkuiClass="ContentCard__title" weight="semibold" level="3">{header}</Title>}
+          {hasReactNode(text) && <Text vkuiClass="ContentCard__text" weight="regular">{text}</Text>}
+          {hasReactNode(caption) && <Caption vkuiClass="ContentCard__caption" weight="regular" level="1">{caption}</Caption>}
         </div>
       </Tappable>
     </Card>

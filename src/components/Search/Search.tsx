@@ -1,4 +1,4 @@
-import React, {
+import {
   Component,
   ReactNode,
   FocusEvent,
@@ -139,48 +139,49 @@ class Search extends Component<SearchProps, SearchState> {
 
     return (
       <div
-        className={classNames(getClassName('Search', platform), {
+        vkuiClass={classNames(getClassName('Search', platform), {
           'Search--focused': this.state.focused,
           'Search--has-value': !!this.value,
           'Search--has-after': !!after,
           'Search--has-icon': !!icon,
-        }, className)}
+        })}
+        className={className}
         style={style}
       >
-        <div className="Search__in">
-          <div className="Search__width" />
-          <label className="Search__control">
+        <div vkuiClass="Search__in">
+          <div vkuiClass="Search__width" />
+          <label vkuiClass="Search__control">
             <input
               {...inputProps}
               ref={this.inputRef}
               type="text"
-              className="Search__input"
+              vkuiClass="Search__input"
               onFocus={this.onFocus}
               onBlur={this.onBlur}
               onChange={this.onChange}
               value={this.value}
             />
-            {platform === IOS && after && <div className="Search__after-width">{after}</div>}
-            <div className="Search__placeholder">
-              <div className="Search__placeholder-in">
+            {platform === IOS && after && <div vkuiClass="Search__after-width">{after}</div>}
+            <div vkuiClass="Search__placeholder">
+              <div vkuiClass="Search__placeholder-in">
                 {before}
                 {platform === VKCOM
-                  ? <Text className="Search__placeholder-text" weight="regular">{placeholder}</Text>
-                  : <Title className="Search__placeholder-text" level="3" weight="regular">{placeholder}</Title>
+                  ? <Text vkuiClass="Search__placeholder-text" weight="regular">{placeholder}</Text>
+                  : <Title vkuiClass="Search__placeholder-text" level="3" weight="regular">{placeholder}</Title>
                 }
               </div>
-              {this.state.focused && platform === IOS && after && <div className="Search__after-width">{after}</div>}
+              {this.state.focused && platform === IOS && after && <div vkuiClass="Search__after-width">{after}</div>}
             </div>
           </label>
-          <div className="Search__after" onClick={this.onCancel}>
-            <div className="Search__icons">
+          <div vkuiClass="Search__after" onClick={this.onCancel}>
+            <div vkuiClass="Search__icons">
               {icon &&
-                <Touch onStart={this.onIconClickStart} className="Search__icon">
+                <Touch onStart={this.onIconClickStart} vkuiClass="Search__icon">
                   {icon}
                 </Touch>
               }
               {!!this.value &&
-                <Touch onStart={this.onIconCancelClickStart} className="Search__icon">
+                <Touch onStart={this.onIconCancelClickStart} vkuiClass="Search__icon">
                   {platform === VKCOM
                     ? <Icon24Cancel />
                     : <Icon16Clear />
@@ -189,11 +190,11 @@ class Search extends Component<SearchProps, SearchState> {
               }
             </div>
             {platform === IOS && after &&
-              <div className="Search__after-in">{after}</div>
+              <div vkuiClass="Search__after-in">{after}</div>
             }
           </div>
         </div>
-        {platform === VKCOM && <Separator className="Search__separator" wide />}
+        {platform === VKCOM && <Separator vkuiClass="Search__separator" wide />}
       </div>
     );
   }

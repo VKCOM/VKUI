@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent } from 'react';
+import { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent, Fragment } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -25,7 +25,6 @@ export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePla
 
 export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const {
-    className,
     children,
     top,
     bottom,
@@ -40,24 +39,23 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
   const platform = usePlatform();
 
   const wrappedChildren = (
-    <>
-      {hasReactNode(top) && <Subhead weight="regular" className="FormItem__top">{top}</Subhead>}
+    <Fragment>
+      {hasReactNode(top) && <Subhead weight="regular" vkuiClass="FormItem__top">{top}</Subhead>}
       {children}
-      {hasReactNode(bottom) && <Caption level="1" weight="regular" className="FormItem__bottom">{bottom}</Caption>}
-    </>
+      {hasReactNode(bottom) && <Caption level="1" weight="regular" vkuiClass="FormItem__bottom">{bottom}</Caption>}
+    </Fragment>
   );
 
   return (
     <Component
       {...restProps}
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('FormItem', platform),
         `FormItem--${status}`,
         `FormItem--sizeY-${sizeY}`,
         {
           'FormItem--withTop': hasReactNode(top),
         },
-        className,
       )}
     >
       {removable ? (
