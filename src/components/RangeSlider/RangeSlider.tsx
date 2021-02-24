@@ -5,7 +5,7 @@ import { UniversalSlider, UniversalSliderProps } from './UniversalSlider';
 export type Value = [number, number];
 export type RangeSliderProps = UniversalSliderProps<Value>;
 
-const RangeSlider: FC<RangeSliderProps> = ({ onChange, defaultValue, ...props }) => {
+const RangeSlider: FC<RangeSliderProps> = ({ onChange, defaultValue, ...props }: RangeSliderProps) => {
   const isControlled = Boolean(props.value);
 
   const [localValue, setValue] = useState(defaultValue || [props.min, props.max] as Value);
