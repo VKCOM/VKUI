@@ -98,10 +98,6 @@
   padding: 4px 0 4px 4px;
 }
 
-.PanelHeader--ios .PanelHeader__left .PanelHeaderButton--primitive {
-  padding-left: 12px;
-}
-
 .PanelHeader--ios .PanelHeader__left .PanelHeaderButton + .PanelHeaderButton--primitive {
   margin-left: -6px;
   padding-left: 0;
@@ -145,10 +141,6 @@
   opacity: 1;
   transition: opacity .3s var(--ios-easing);
   padding: 4px 4px 4px 0;
-}
-
-.PanelHeader--ios .PanelHeader__right .PanelHeaderButton--primitive {
-  padding-right: 12px;
 }
 
 .View--ios .View__panel--prev .PanelHeader__left,

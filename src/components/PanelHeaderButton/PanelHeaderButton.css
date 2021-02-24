@@ -36,6 +36,7 @@
 .PanelHeaderButton--ios.PanelHeaderButton--primitive {
   height: 44px;
   line-height: 44px;
+  padding: 0 12px;
 }
 
 .PanelHeaderButton--ios .Icon--24 {

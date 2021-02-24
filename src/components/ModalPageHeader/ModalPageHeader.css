@@ -79,10 +79,6 @@
   padding-right: 12px;
 }
 
-.ModalPageHeader--ios .ModalPageHeader__left .PanelHeaderButton--primitive {
-  padding-left: 16px;
-}
-
 .ModalPageHeader--ios .ModalPageHeader__content {
   position: relative;
   z-index: 1;
@@ -112,10 +108,6 @@
 .ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton .Icon--24 {
   padding-left: 12px;
   padding-right: 12px;
-}
-
-.ModalPageHeader--ios .ModalPageHeader__right .PanelHeaderButton--primitive {
-  padding-right: 16px;
 }
 
 .ModalPageHeader--ios.ModalPageHeader--sizeX-regular .ModalPageHeader__in {
