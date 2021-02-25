@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import { FunctionComponent, HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
 
 export interface GradientProps extends HTMLAttributes<HTMLDivElement> {
@@ -6,11 +6,11 @@ export interface GradientProps extends HTMLAttributes<HTMLDivElement> {
   to?: 'top' | 'bottom';
 }
 
-const Gradient: FunctionComponent<GradientProps> = ({ mode, children, className, to, ...restProps }) => {
+const Gradient: FunctionComponent<GradientProps> = ({ mode, children, to, ...restProps }) => {
   return (
     <div
       {...restProps}
-      className={classNames('Gradient', `Gradient--md-${mode}`, `Gradient--to-${to}`, className)}
+      vkuiClass={classNames('Gradient', `Gradient--md-${mode}`, `Gradient--to-${to}`)}
     >
       {children}
     </div>

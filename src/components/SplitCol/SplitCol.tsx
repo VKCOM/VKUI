@@ -41,7 +41,7 @@ export class SplitCol extends Component<SplitColProps> {
   }
 
   render() {
-    const { children, width, maxWidth, minWidth, spaced, className, animate, fixed, style, ...restProps } = this.props;
+    const { children, width, maxWidth, minWidth, spaced, animate, fixed, style, ...restProps } = this.props;
 
     return (
       <div
@@ -53,13 +53,13 @@ export class SplitCol extends Component<SplitColProps> {
           minWidth: minWidth,
         }}
         ref={this.baseRef}
-        className={classNames(className, 'SplitCol', {
+        vkuiClass={classNames('SplitCol', {
           'SplitCol--spaced': spaced,
           'SplitCol--fixed': fixed,
         })}
       >
         <SplitColContext.Provider value={this.getContext()}>
-          {fixed ? <div className="SplitCol__fixedInner">{children}</div> : children}
+          {fixed ? <div vkuiClass="SplitCol__fixedInner">{children}</div> : children}
         </SplitColContext.Provider>
       </div>
     );

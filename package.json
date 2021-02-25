@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "main": "dist/cjs/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -48,6 +48,8 @@
     "autoprefixer": "^9.8.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.1.0",
+    "babel-plugin-auto-import": "^1.1.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "chalk": "^4.1.0",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^3.0.0",
@@ -74,6 +76,7 @@
     "postcss-custom-properties": "10.0.0",
     "postcss-import": "13.0.0",
     "postcss-loader": "^4.1.0",
+    "postcss-prefixer": "^2.1.2",
     "pre-commit": "^1.2.2",
     "prop-types": "^15.6.1",
     "react": "^16.8.6",
@@ -126,8 +129,9 @@
     }
   ],
   "scripts": {
-    "prepare": "yarn build",
+    "prepare": "node -e '!process.env.VKUI_SKIP_PREPARE && require(`child_process`).spawn(`yarn`, [`build`], { stdio: `inherit` })'",
     "size": "yarn clear && yarn build && size-limit",
+    "size:ci": "yarn install --frozen-lockfile --ignore-scripts && yarn build:no-types",
     "styleguide": "cross-env NODE_ENV=development styleguidist server --config=styleguide/config.js",
     "styleguide:build": "cross-env NODE_ENV=production styleguidist build --config=styleguide/config.js",
     "dev": "yarn clear && yarn copy-default-scheme && concurrently \"yarn:tsc-dev\" \"yarn:babel-dev\" \"yarn:postcss-dev\" \"yarn:postcss-unstable-dev\"",
@@ -139,7 +143,9 @@
     "babel-cjs-dev": "babel --config-file ./babel.cjs.config.js src/ --out-dir dist/cjs/ --extensions .tsx,.jsx,.ts,.js --watch",
     "tsc-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/ --watch --preserveWatchOutput",
     "tsc-cjs-dev": "tsc --emitDeclarationOnly --declaration --outDir dist/cjs/ --watch --preserveWatchOutput",
-    "build": "yarn tsc && yarn babel && yarn tsc-cjs && yarn babel-cjs && yarn postcss && yarn postcss-unstable && yarn copy-default-scheme",
+    "build:types": "yarn tsc && yarn tsc-cjs",
+    "build:no-types": "yarn babel && yarn babel-cjs && yarn postcss && yarn postcss-unstable && yarn copy-default-scheme",
+    "build": "yarn build:types && yarn build:no-types",
     "postcss": "cross-env NODE_ENV=production postcss src/styles/styles.css --output dist/vkui.css --verbose",
     "postcss-unstable": "NODE_ENV=production postcss src/styles/unstable.css --output dist/unstable.css --verbose",
     "babel": "cross-env NODE_ENV=production babel src/ --out-dir dist/ --source-maps --extensions .tsx,.jsx,.ts,.js",
@@ -166,6 +172,5 @@
   },
   "pre-commit": [
     "test:static"
-  ],
-  "dependencies": {}
+  ]
 }

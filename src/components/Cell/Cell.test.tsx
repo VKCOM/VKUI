@@ -1,4 +1,3 @@
-import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { Cell } from './Cell';

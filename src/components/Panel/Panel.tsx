@@ -1,7 +1,8 @@
-import React, { Component, HTMLAttributes, RefCallback } from 'react';
+import { Component, HTMLAttributes, RefCallback } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Touch from '../Touch/Touch';
+import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -19,6 +20,7 @@ class Panel extends Component<PanelProps> {
     super(props);
     this.childContext = {
       panel: props.id,
+      getPanelNode: () => this.container,
     };
   }
 
@@ -37,23 +39,23 @@ class Panel extends Component<PanelProps> {
   };
 
   render() {
-    const { className, centered, children, platform, getRootRef, sizeX, ...restProps } = this.props;
+    const { centered, children, platform, getRootRef, sizeX, ...restProps } = this.props;
 
     return (
       <PanelContext.Provider value={this.childContext}>
         <div
           {...restProps}
           ref={this.getRef}
-          className={classNames(getClassName('Panel', platform), className, `Panel--${sizeX}`, {
+          vkuiClass={classNames(getClassName('Panel', platform), `Panel--${sizeX}`, {
             'Panel--centered': centered,
             [`Panel--sizeX-${sizeX}`]: true,
           })}
         >
-          <Touch className="Panel__in">
-            {platform === IOS && <div className="Panel__fade" />}
-            <div className="Panel__in-before" />
-            {centered ? <div className="Panel__centered">{children}</div> : children}
-            <div className="Panel__in-after" />
+          <Touch Component={TooltipContainer} vkuiClass="Panel__in">
+            {platform === IOS && <div vkuiClass="Panel__fade" />}
+            <div vkuiClass="Panel__in-before" />
+            {centered ? <div vkuiClass="Panel__centered">{children}</div> : children}
+            <div vkuiClass="Panel__in-after" />
           </Touch>
         </div>
       </PanelContext.Provider>

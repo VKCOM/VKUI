@@ -1,11 +1,13 @@
-import React, { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
+import { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import { ModalRootContext } from '../ModalRoot/ModalRootContext';
+import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { Ref } from '../../types';
+import { multiRef } from '../../lib/utils';
+import { ModalType } from '../ModalRoot/types';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   /**
@@ -29,7 +31,6 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
   const { updateModalHeight } = useContext(ModalRootContext);
   const {
     children,
-    className,
     header,
     viewWidth,
     viewHeight,
@@ -50,23 +51,24 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   const modalContext = useContext(ModalRootContext);
+  const { refs } = useModalRegistry(props.id, ModalType.PAGE);
 
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('ModalPage', platform), className, `ModalPage--sizeX-${sizeX}`, {
+      vkuiClass={classNames(getClassName('ModalPage', platform), `ModalPage--sizeX-${sizeX}`, {
         'ModalPage--desktop': isDesktop,
       })}
     >
-      <div className="ModalPage__in-wrap">
-        <div className="ModalPage__in">
-          <div className="ModalPage__header">
+      <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
+        <div vkuiClass="ModalPage__in">
+          <div vkuiClass="ModalPage__header" ref={refs.headerElement}>
             {header}
           </div>
 
-          <div className="ModalPage__content-wrap">
-            <div className="ModalPage__content" ref={getModalContentRef}>
-              <div className="ModalPage__content-in">
+          <div vkuiClass="ModalPage__content-wrap">
+            <div vkuiClass="ModalPage__content" ref={multiRef<HTMLDivElement>(refs.contentElement, getModalContentRef)}>
+              <div vkuiClass="ModalPage__content-in">
                 {children}
               </div>
             </div>

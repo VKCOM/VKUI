@@ -1,6 +1,5 @@
-import React, { FunctionComponent, AnchorHTMLAttributes } from 'react';
+import { FunctionComponent, AnchorHTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 
@@ -8,7 +7,6 @@ export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, TappablePr
 
 const Link: FunctionComponent<LinkProps> = ({
   children,
-  className,
   Component,
   ...restProps
 }: LinkProps) => {
@@ -28,7 +26,7 @@ const Link: FunctionComponent<LinkProps> = ({
     <Tappable
       Component={Component}
       {...restProps}
-      className={classNames(baseClassName, className)}
+      vkuiClass={baseClassName}
       hasActive={false}
       hoverMode="opacity"
     >{children}</Tappable>

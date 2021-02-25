@@ -135,6 +135,7 @@ module.exports = {
           '../src/components/PullToRefresh/PullToRefresh.tsx',
           '../src/components/Counter/Counter.tsx',
           '../src/components/UsersStack/UsersStack.tsx',
+          '../src/components/Spacing/Spacing.tsx',
           '../src/components/Separator/Separator.tsx',
           '../src/components/Placeholder/Placeholder.tsx',
           '../src/components/Banner/Banner.tsx',

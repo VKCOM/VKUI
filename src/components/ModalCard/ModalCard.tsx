@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, FC, useContext } from 'react';
+import { HTMLAttributes, ReactNode, FC, useContext } from 'react';
 import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -11,7 +11,8 @@ import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../ho
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
-import ModalRootContext from '../ModalRoot/ModalRootContext';
+import ModalRootContext, { useModalRegistry } from '../ModalRoot/ModalRootContext';
+import { ModalType } from '../ModalRoot/types';
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
@@ -59,7 +60,6 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
     actionsLayout,
     onClose,
     platform,
-    className,
     viewWidth,
     viewHeight,
     hasMouse,
@@ -71,24 +71,25 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
   const modalContext = useContext(ModalRootContext);
+  const { refs } = useModalRegistry(props.id, ModalType.CARD);
 
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('ModalCard', platform), {
+      vkuiClass={classNames(getClassName('ModalCard', platform), {
         'ModalCard--desktop': isDesktop,
-      }, className)}
+      })}
     >
-      <div className="ModalCard__in">
-        <div className="ModalCard__container">
-          {hasReactNode(icon) && <div className="ModalCard__icon">{icon}</div>}
-          {hasReactNode(header) && <Title level="2" weight="semibold" className="ModalCard__header">{header}</Title>}
-          {hasReactNode(subheader) && <Subhead weight="regular" className="ModalCard__subheader">{subheader}</Subhead>}
+      <div vkuiClass="ModalCard__in" ref={refs.innerElement}>
+        <div vkuiClass="ModalCard__container">
+          {hasReactNode(icon) && <div vkuiClass="ModalCard__icon">{icon}</div>}
+          {hasReactNode(header) && <Title level="2" weight="semibold" vkuiClass="ModalCard__header">{header}</Title>}
+          {hasReactNode(subheader) && <Subhead weight="regular" vkuiClass="ModalCard__subheader">{subheader}</Subhead>}
 
           {children}
 
           {hasReactNode(actions) &&
-          <div className={classNames('ModalCard__actions', {
+          <div vkuiClass={classNames('ModalCard__actions', {
             'ModalCard__actions--v': actionsLayout === 'vertical',
           })}>
             {actions}
@@ -97,7 +98,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
 
           {canShowCloseBtn && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
           {canShowCloseBtnIos &&
-          <PanelHeaderButton className="ModalCard__dismiss" onClick={onClose || modalContext.onClose}>
+          <PanelHeaderButton vkuiClass="ModalCard__dismiss" onClick={onClose || modalContext.onClose}>
             <Icon24Dismiss />
           </PanelHeaderButton>
           }

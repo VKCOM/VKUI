@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react",
+    "jsxFactory": "createScopedElement",
     "target": "esnext",
     "lib": ["es6", "dom"],
     "outDir": "dist",
@@ -22,6 +23,7 @@
   "include": ["src/**/*.ts", "src/**/*.tsx", "e2e/**/*.ts", "e2e/**/*.tsx", "e2e/**/*.js"],
   "files": [
     "node_modules/jest-playwright-preset/types/global.d.ts",
-    "node_modules/expect-playwright/global.d.ts"
+    "node_modules/expect-playwright/global.d.ts",
+    "src/lib/jsxRuntime.d.ts",
   ]
 }

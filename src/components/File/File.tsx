@@ -1,7 +1,6 @@
-import React, { HTMLAttributes, FunctionComponent, InputHTMLAttributes, useRef } from 'react';
+import { HTMLAttributes, FunctionComponent, InputHTMLAttributes, useRef } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import Button, { VKUIButtonProps } from '../Button/Button';
-import { classNames } from '../../lib/classNames';
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { setRef } from '../../lib/utils';
@@ -30,7 +29,8 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
   return (
     <Button
       align={align}
-      className={classNames(getClassName('File', platform), className)}
+      vkuiClass={getClassName('File', platform)}
+      className={className}
       stretched={stretched}
       mode={mode}
       size={controlSize}
@@ -43,7 +43,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
         onClick && onClick(e);
       }}
     >
-      <input {...restProps} className="File__input" type="file" ref={getInputRef} />
+      <input {...restProps} vkuiClass="File__input" type="file" ref={getInputRef} />
       {children}
     </Button>
   );

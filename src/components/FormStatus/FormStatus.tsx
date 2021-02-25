@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
+import { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -15,7 +15,6 @@ export const FormStatus: FunctionComponent<FormStatusProps> = ({
   mode,
   header,
   children,
-  className,
   dangerouslySetInnerHTML,
   ...restProps
 }: FormStatusProps) => {
@@ -24,9 +23,9 @@ export const FormStatus: FunctionComponent<FormStatusProps> = ({
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('FormStatus', platform), `FormStatus--${mode}`, className)}
+      vkuiClass={classNames(getClassName('FormStatus', platform), `FormStatus--${mode}`)}
     >
-      {hasReactNode(header) && <Headline weight="medium" className="FormStatus__header">{header}</Headline>}
+      {hasReactNode(header) && <Headline weight="medium" vkuiClass="FormStatus__header">{header}</Headline>}
       {dangerouslySetInnerHTML &&
         <Caption level="1" weight="regular" dangerouslySetInnerHTML={dangerouslySetInnerHTML} />
       }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import ModalRootContext from './ModalRootContext';
 
 export function withModalRootContext<T>(Component: T): T {

@@ -135,6 +135,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     return React.Children.toArray(this.props.children) as ReactElement[];
   }
 
+  panelNodes: { [id: string]: HTMLDivElement } = {};
+
   componentWillUnmount() {
     if (this.props.id) {
       scrollsCache[this.props.id] = this.state.scrolls;
@@ -289,14 +291,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     }
   }
 
-  pickPanel(id: string): HTMLElement {
-    const elem = this.document.getElementById(id);
-
-    if (!elem) {
-      console.warn(`Element #${id} not found`);
-    }
-
-    return elem && elem.parentNode.parentNode as HTMLElement;
+  pickPanel(id: string) {
+    return this.panelNodes[id];
   }
 
   transitionEndHandler = (e?: AnimationEvent): void => {
@@ -328,7 +324,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   swipingBackTransitionEndHandler = (e?: TransitionEvent): void => {
     // indexOf because of vendor prefixes in old browsers
     const target = e.target as HTMLElement;
-    if (e.propertyName.includes('transform') && target.classList.contains('View__panel--swipe-back-next')) {
+    if (e.propertyName.includes('transform') && target === this.pickPanel(this.state.swipeBackNextPanel)) {
       switch (this.state.swipeBackResult) {
         case SwipeBackResults.fail:
           this.onSwipeBackCancel();
@@ -490,17 +486,17 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
       <Touch
         Component="section"
         {...restProps}
-        className={classNames(getClassName('View', platform), this.props.className, modifiers)}
+        vkuiClass={classNames(getClassName('View', platform), modifiers)}
         onMoveX={this.onMoveX}
         onEnd={this.onEnd}
       >
-        <div className="View__panels">
+        <div vkuiClass="View__panels">
           {panels.map((panel: React.ReactElement) => {
             const panelId = panel.props.id;
 
             return (
               <div
-                className={classNames('View__panel', {
+                vkuiClass={classNames('View__panel', {
                   'View__panel--active': panelId === activePanel,
                   'View__panel--prev': panelId === prevPanel,
                   'View__panel--next': panelId === nextPanel,
@@ -509,10 +505,12 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
                   'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
                   'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
                 })}
+                ref={(el) => this.panelNodes[panelId] = el}
+                data-vkui-active-panel={panelId === activePanel ? 'true' : ''}
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
-                <div className="View__panel-in">
+                <div vkuiClass="View__panel-in">
                   {panel}
                 </div>
               </div>
@@ -520,8 +518,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
           })}
         </div>
         <AppRootPortal>
-          {hasPopout && <div className="View__popout">{popout}</div>}
-          {hasModal && <div className="View__modal">{modal}</div>}
+          {hasPopout && <div vkuiClass="View__popout">{popout}</div>}
+          {hasModal && <div vkuiClass="View__modal">{modal}</div>}
         </AppRootPortal>
       </Touch>
     );

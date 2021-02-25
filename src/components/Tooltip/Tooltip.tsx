@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
+import { tooltipContainerAttr } from './TooltipContainer';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
   target?: HTMLElement;
@@ -38,18 +39,11 @@ const TooltipPortal = withDOM<TooltipPortalProps>(
         y: 0,
       };
 
-      this.fixedPortal = false;
-
       const { target } = props;
-      const closestFixed = target.closest<HTMLElement>('.FixedLayout');
-      const closestHeader = target.closest<HTMLElement>('.PanelHeader__in');
-      const closestPanel = target.closest<HTMLElement>('.Panel__in');
-
-      if (closestFixed || closestHeader) {
-        this.fixedPortal = true;
-      }
-
-      this.portalTarget = closestFixed || closestHeader || closestPanel;
+      /* eslint-disable no-restricted-properties */
+      this.fixedPortal = target.closest(`[${tooltipContainerAttr}=fixed]`) != null;
+      this.portalTarget = target.closest(`[${tooltipContainerAttr}]`);
+      /* eslint-enable no-restricted-properties */
     }
 
     get document() {
@@ -97,7 +91,7 @@ const TooltipPortal = withDOM<TooltipPortalProps>(
       const { header, text, alignX, alignY, cornerOffset, mode } = this.props;
 
       return ReactDOM.createPortal(
-        <div className={
+        <div vkuiClass={
           classNames(
             baseClassName,
             `Tooltip--x-${alignX}`,
@@ -107,11 +101,11 @@ const TooltipPortal = withDOM<TooltipPortalProps>(
               'Tooltip--fixed': this.fixedPortal,
             },
           )}>
-          <div className="Tooltip__container" style={{ top: this.state.y, left: this.state.x }} ref={this.getRef}>
-            <div className="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }} />
-            <div className="Tooltip__content">
-              {header && <Subhead weight="semibold" className="Tooltip__title">{header}</Subhead>}
-              {text && <Subhead weight="regular" className="Tooltip__text">{text}</Subhead>}
+          <div vkuiClass="Tooltip__container" style={{ top: this.state.y, left: this.state.x }} ref={this.getRef}>
+            <div vkuiClass="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }} />
+            <div vkuiClass="Tooltip__content">
+              {header && <Subhead weight="semibold" vkuiClass="Tooltip__title">{header}</Subhead>}
+              {text && <Subhead weight="regular" vkuiClass="Tooltip__text">{text}</Subhead>}
             </div>
           </div>
         </div>, this.portalTarget);

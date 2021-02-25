@@ -11,12 +11,12 @@ import { classNames } from '../../lib/classNames';
 const PanelHeaderBack: FunctionComponent<PanelHeaderButtonProps & AdaptivityProps> = ({ label, sizeX, ...props }: PanelHeaderButtonProps & AdaptivityProps) => {
   const platform = usePlatform();
   const showLabel = platform === VKCOM || platform === IOS && sizeX === SizeType.REGULAR;
-  const className = classNames(getClassName('PanelHeaderBack', platform), props.className, {
+  const className = classNames(getClassName('PanelHeaderBack', platform), {
     'PanelHeaderBack--has-label': showLabel && !!label,
   });
 
   return (
-    <PanelHeaderButton {...props} className={className} label={showLabel && label}>
+    <PanelHeaderButton {...props} vkuiClass={className} label={showLabel && label}>
       {platform === ANDROID ? <Icon28ArrowLeftOutline /> : platform === VKCOM ? <Icon28ChevronLeftOutline /> : <Icon28ChevronBack />}
     </PanelHeaderButton>
   );

@@ -60,6 +60,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
   };
 
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
+  private viewNodes: { [id: string]: HTMLElement } = {};
 
   get document() {
     return this.props.document;
@@ -103,13 +104,18 @@ class Root extends Component<RootProps & DOMProps, RootState> {
 
     // Начался переход
     if (!prevState.transition && this.state.transition) {
-      const prevViewElement = this.document.getElementById(`view-${this.state.prevView}`);
-      const nextViewElement = this.document.getElementById(`view-${this.state.nextView}`);
+      const prevViewElement = this.viewNodes[this.state.prevView];
+      const nextViewElement = this.viewNodes[this.state.nextView];
+      const setPanelScroll = (e: HTMLElement, scroll: number) => {
+        // eslint-disable-next-line no-restricted-properties
+        const pan: HTMLElement | null = e.querySelector('[data-vkui-active-panel=true]');
+        pan && (pan.scrollTop = scroll);
+      };
 
-      prevViewElement.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.prevView];
+      setPanelScroll(prevViewElement, this.state.scrolls[this.state.prevView]);
 
       if (this.state.isBack) {
-        nextViewElement.querySelector('.View__panel').scrollTop = this.state.scrolls[this.state.nextView];
+        setPanelScroll(nextViewElement, this.state.scrolls[this.state.nextView]);
       }
       this.waitAnimationFinish(this.state.isBack ? prevViewElement : nextViewElement, this.onAnimationEnd);
     }
@@ -182,13 +188,13 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     const disableAnimation = this.shouldDisableTransitionMotion();
 
     return (
-      <div {...restProps} className={classNames(baseClassName, this.props.className, {
+      <div {...restProps} vkuiClass={classNames(baseClassName, {
         'Root--transition': !disableAnimation && transition,
         'Root--no-motion': disableAnimation,
       })}>
         {Views.map((view: ReactElement) => {
           return (
-            <div key={view.props.id} id={`view-${view.props.id}`} className={classNames('Root__view', {
+            <div key={view.props.id} ref={(e) => this.viewNodes[view.props.id] = e} vkuiClass={classNames('Root__view', {
               'Root__view--hide-back': view.props.id === prevView && isBack,
               'Root__view--hide-forward': view.props.id === prevView && !isBack,
               'Root__view--show-back': view.props.id === nextView && isBack,
@@ -200,8 +206,8 @@ class Root extends Component<RootProps & DOMProps, RootState> {
           );
         })}
         <AppRootPortal>
-          {!!popout && <div className="Root__popout">{popout}</div>}
-          {!!modal && <div className="Root__modal">{modal}</div>}
+          {!!popout && <div vkuiClass="Root__popout">{popout}</div>}
+          {!!modal && <div vkuiClass="Root__modal">{modal}</div>}
         </AppRootPortal>
       </div>
     );

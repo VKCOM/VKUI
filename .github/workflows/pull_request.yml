@@ -2,18 +2,19 @@ name: 'Pull Request'
 
 on: ['pull_request']
 
+env:
+  VKUI_SKIP_PREPARE: 1
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          lfs: true
       - uses: actions/setup-node@v1
         with:
           node-version: 12
       # cached yarn install
-      - uses: bahmutov/npm-install@v1
+      - uses: bahmutov/npm-install@v1.7.1
         with:
           install-command: yarn --frozen-lockfile --ignore-scripts
       - name: Run tests
@@ -41,7 +42,7 @@ jobs:
         with:
           node-version: 12
       # cached yarn install
-      - uses: bahmutov/npm-install@v1
+      - uses: bahmutov/npm-install@v1.7.1
         with:
           install-command: yarn --frozen-lockfile --ignore-scripts
       - name: Install browser for E2E
@@ -65,7 +66,7 @@ jobs:
         with:
           node-version: 12
       # cached yarn install
-      - uses: bahmutov/npm-install@v1
+      - uses: bahmutov/npm-install@v1.7.1
         with:
           install-command: yarn --frozen-lockfile --ignore-scripts
       - run: yarn styleguide:build
@@ -79,10 +80,16 @@ jobs:
     env:
       CI_JOB_NUMBER: 1
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+      - uses: bahmutov/npm-install@v1.7.1
+        with:
+          install-command: yarn --frozen-lockfile --ignore-scripts
       - uses: andresz1/size-limit-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # only affects current branch
+          skip_step: install
+          build_script: 'size:ci'
   deploy_styleguide:
     runs-on: ubuntu-latest
     needs: styleguide
