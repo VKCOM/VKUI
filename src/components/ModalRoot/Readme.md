@@ -109,7 +109,6 @@ const App = withPlatform(withAdaptivity(class App extends React.Component {
         <ModalPage
           id={MODAL_PAGE_FULLSCREEN}
           onClose={this.modalBack}
-          fullscreen
           settlingHeight={100}
           header={
             <ModalPageHeader
