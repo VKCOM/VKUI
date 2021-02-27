@@ -115,7 +115,7 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
   }
 
   public render() {
-    const { name, options, activeValue: _activeValue, ...restProps } = this.props;
+    const { name, options, activeValue: _activeValue, onSwitch, ...restProps } = this.props;
     const { activeValue, hoveredOptionId } = this.state;
 
     const [firstOption, secondOption] = options;
