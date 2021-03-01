@@ -6,8 +6,8 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { setRef } from '../../lib/utils';
 
 export interface FileProps extends
-  Omit<VKUIButtonProps, 'size'>,
-  Omit<InputHTMLAttributes<HTMLInputElement>, 'onClick'>,
+  Omit<VKUIButtonProps, 'size' | 'type'>,
+  Omit<InputHTMLAttributes<HTMLInputElement>, 'onClick' | 'type'>,
   Pick<HTMLAttributes<HTMLElement>, 'onClick'>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLElement> {
@@ -38,6 +38,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
       style={style}
       getRootRef={getRootRef}
       disabled={restProps.disabled}
+      type="button"
       onClick={(e) => {
         inputRef.current.click();
         onClick && onClick(e);
