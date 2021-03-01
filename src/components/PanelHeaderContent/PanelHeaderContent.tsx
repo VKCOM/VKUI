@@ -37,10 +37,10 @@ const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
 
   return (
     <div {...rootProps} vkuiClass={baseClassNames} style={style} className={className}>
-      {hasReactNode(before) && <div className="PanelHeaderContent__before">{before}</div>}
+      {hasReactNode(before) && <div vkuiClass="PanelHeaderContent__before">{before}</div>}
       <InComponent
         {...inProps}
-        className="PanelHeaderContent__in"
+        vkuiClass="PanelHeaderContent__in"
       >
         {hasReactNode(status) &&
           <Caption level="1" weight="regular" vkuiClass="PanelHeaderContent__status">
