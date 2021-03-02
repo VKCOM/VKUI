@@ -812,18 +812,18 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .vkuiBadge{flex-grow:0;flex-shrink:0;width:6px;height:6px;border-radius:50%}
 .vkuiBadge--new{background-color:#5c9ce6;background-color:#5c9ce6;background-color:var(--blue_200)}
 .vkuiBadge--prominent{background-color:#ff3347;background-color:#ff3347;background-color:var(--counter_prominent_background)}
-.IconButton{-webkit-appearance:none;appearance:none;background:0 0;border:0;outline:0;box-shadow:none;display:block;color:currentColor;padding:0;margin:0;position:relative;height:48px}
-.IconButton--sizeY-compact{height:44px}
-.IconButton .Icon--16{padding:16px}
-.IconButton .Icon--16.Icon--w-8{padding:16px 14px}
-.IconButton--sizeY-compact .Icon--16,.IconButton--sizeY-compact .Icon--16.Icon--w-8{padding:14px}
-.IconButton .Icon--24{padding:12px}
-.IconButton--sizeY-compact .Icon--24{padding:10px}
-.IconButton .Icon--28{padding:10px}
-.IconButton--sizeY-compact .Icon--28{padding:8px}
-.IconButton[disabled]{opacity:.6}
-.IconButton--android,.IconButton--vkcom{border-radius:50%}
-.IconButton--android.IconButton--active .Icon,.IconButton--vkcom.IconButton--active .Icon{transition:inherit;border-radius:inherit;background-color:rgba(0,0,0,.08);background-color:rgba(0,0,0,.08);background-color:var(--background_highlighted)}
+.vkuiIconButton{-webkit-appearance:none;appearance:none;background:0 0;border:0;outline:0;box-shadow:none;display:block;color:currentColor;padding:0;margin:0;position:relative;height:48px}
+.vkuiIconButton--sizeY-compact{height:44px}
+.vkuiIconButton .Icon--16{padding:16px}
+.vkuiIconButton .Icon--16.Icon--w-8{padding:16px 14px}
+.vkuiIconButton--sizeY-compact .Icon--16,.vkuiIconButton--sizeY-compact .Icon--16.Icon--w-8{padding:14px}
+.vkuiIconButton .Icon--24{padding:12px}
+.vkuiIconButton--sizeY-compact .Icon--24{padding:10px}
+.vkuiIconButton .Icon--28{padding:10px}
+.vkuiIconButton--sizeY-compact .Icon--28{padding:8px}
+.vkuiIconButton[disabled]{opacity:.6}
+.vkuiIconButton--android,.vkuiIconButton--vkcom{border-radius:50%}
+.vkuiIconButton--android.vkuiIconButton--active .Icon,.vkuiIconButton--vkcom.vkuiIconButton--active .Icon{transition:inherit;border-radius:inherit;background-color:rgba(0,0,0,.08);background-color:rgba(0,0,0,.08);background-color:var(--background_highlighted)}
 .vkuiCard{position:relative;background:#f5f5f5;background:#f5f5f5;background:var(--content_tint_background)}
 .vkuiCard__in{position:relative;z-index:2;border-radius:inherit}
 .vkuiCard--md-shadow{box-shadow:0 2px 24px 0 rgba(0,0,0,.08),0 0 2px 0 rgba(0,0,0,.08);background:#fff;background:#fff;background:var(--modal_card_background)}
@@ -966,16 +966,16 @@ body[scheme=space_gray] .vkuiGradient--md-tint.vkuiGradient--to-bottom{backgroun
 .vkuiSimpleCell__after>.Icon{padding-left:8px}
 .vkuiSimpleCell__after>.Icon:last-child{padding-right:2px}
 .vkuiSimpleCell .vkuiSwitch{padding-left:10px}
-.vkuiSimpleCell__after .IconButton .Icon--28,.vkuiSimpleCell__after .IconButton .Icon--28~*{margin-right:-8px}
-.vkuiSimpleCell__after .IconButton .Icon--24,.vkuiSimpleCell__after .IconButton .Icon--24~*{margin-right:-10px}
-.vkuiSimpleCell__after .IconButton .Icon--16,.vkuiSimpleCell__after .IconButton .Icon--16~*{margin-right:-14px}
-.vkuiSimpleCell__after .IconButton .Icon--w-8,.vkuiSimpleCell__after .IconButton .Icon--w-8~*{margin-right:-12px}
+.vkuiSimpleCell__after .vkuiIconButton .Icon--28,.vkuiSimpleCell__after .vkuiIconButton .Icon--28~*{margin-right:-8px}
+.vkuiSimpleCell__after .vkuiIconButton .Icon--24,.vkuiSimpleCell__after .vkuiIconButton .Icon--24~*{margin-right:-10px}
+.vkuiSimpleCell__after .vkuiIconButton .Icon--16,.vkuiSimpleCell__after .vkuiIconButton .Icon--16~*{margin-right:-14px}
+.vkuiSimpleCell__after .vkuiIconButton .Icon--w-8,.vkuiSimpleCell__after .vkuiIconButton .Icon--w-8~*{margin-right:-12px}
 .vkuiSimpleCell--ios{padding-left:12px;padding-right:12px}
 .vkuiSimpleCell--ios .vkuiSimpleCell__main,.vkuiSimpleCell--ios .vkuiSimpleCell__indicator{padding-top:9px;padding-bottom:11px}
 .vkuiSimpleCell--ios>.Icon--28,.vkuiSimpleCell--ios>.vkuiAvatar--sz-32,.vkuiSimpleCell--ios>.vkuiAvatar--sz-28{padding-left:4px}
 .vkuiSimpleCell--ios .vkuiSimpleCell__after .Icon--chevron_24{color:#b8c1cc;color:#b8c1cc;color:var(--icon_tertiary);padding-right:4px;padding-left:12px}
-.vkuiSimpleCell--ios .vkuiSimpleCell__after .IconButton .Icon--16,.vkuiSimpleCell--ios .vkuiSimpleCell__after .IconButton .Icon--16~*{margin-right:-12px}
-.vkuiSimpleCell--ios.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--16,.vkuiSimpleCell--ios.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--16~*{margin-right:-14px}
+.vkuiSimpleCell--ios .vkuiSimpleCell__after .vkuiIconButton .Icon--16,.vkuiSimpleCell--ios .vkuiSimpleCell__after .vkuiIconButton .Icon--16~*{margin-right:-12px}
+.vkuiSimpleCell--ios.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--16,.vkuiSimpleCell--ios.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--16~*{margin-right:-14px}
 .vkuiSimpleCell--ios.vkuiSimpleCell--sizeY-regular>.vkuiAvatar:not(.vkuiAvatar--sz-32)~.vkuiSimpleCell__main .vkuiSimpleCell__children,.vkuiSimpleCell--ios.vkuiSimpleCell--sizeY-regular>.vkuiAvatar:not(.vkuiAvatar--sz-32)~.vkuiSimpleCell__indicator{font-size:16px;line-height:20px}
 .vkuiSimpleCell--android,.vkuiSimpleCell--vkcom{padding-left:16px;padding-right:16px}
 .vkuiSimpleCell--android .vkuiSimpleCell__main,.vkuiSimpleCell--android .vkuiSimpleCell__indicator,.vkuiSimpleCell--vkcom .vkuiSimpleCell__main,.vkuiSimpleCell--vkcom .vkuiSimpleCell__indicator{padding-top:11px;padding-bottom:10px}
@@ -985,10 +985,10 @@ body[scheme=space_gray] .vkuiGradient--md-tint.vkuiGradient--to-bottom{backgroun
 .vkuiSimpleCell--sizeY-compact>.vkuiAvatar--sz-48{padding-top:4px;padding-bottom:4px}
 .vkuiSimpleCell--sizeY-compact>.Icon,.vkuiSimpleCell--sizeY-compact>.vkuiAvatar--sz-32,.vkuiSimpleCell--sizeY-compact>.vkuiAvatar--sz-28{padding-top:8px;padding-bottom:8px}
 .vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__description,.vkuiSimpleCell--sizeY-compact>.vkuiAvatar--sz-32~.vkuiSimpleCell__main .vkuiSimpleCell__description,.vkuiSimpleCell--sizeY-compact>.vkuiAvatar--sz-28~.vkuiSimpleCell__main .vkuiSimpleCell__description{margin-top:1px}
-.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--28,.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--28~*{margin-right:-6px}
-.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--24,.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--24~*{margin-right:-8px}
-.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--16,.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--16~*{margin-right:-12px}
-.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--w-8,.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .IconButton .Icon--w-8~*{margin-right:-10px}
+.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--28,.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--28~*{margin-right:-6px}
+.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--24,.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--24~*{margin-right:-8px}
+.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--16,.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--16~*{margin-right:-12px}
+.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--w-8,.vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__after .vkuiIconButton .Icon--w-8~*{margin-right:-10px}
 .vkuiSimpleCell--sizeY-compact .vkuiSimpleCell__badge .vkuiBadge{-webkit-transform:translateY(.5px);transform:translateY(.5px)}
 .vkuiCell{position:relative;margin:0;padding:0}
 .vkuiList--dragging .vkuiCell:not(.vkuiCell--dragging){transition:-webkit-transform .3s ease;transition:transform .3s ease;transition:transform .3s ease,-webkit-transform .3s ease;transition:transform .3s ease,-webkit-transform .3s ease}
@@ -1314,8 +1314,8 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .vkuiBanner__bg>*{width:100%;height:100%}
 .vkuiBanner__expand{align-self:center;color:#b8c1cc;color:#b8c1cc;color:var(--icon_tertiary);margin-left:12px}
 .vkuiBanner__dismiss{width:28px}
-.Banner__dismissIcon{position:absolute;top:0;right:0;z-index:2;width:48px;height:48px;display:flex;align-items:center;justify-content:center;color:#b8c1cc;color:#b8c1cc;color:var(--icon_tertiary)}
-.Banner__dismissIcon:active{opacity:.4}
+.vkuiBanner__dismissIcon{position:absolute;top:0;right:0;z-index:2;width:48px;height:48px;display:flex;align-items:center;justify-content:center;color:#b8c1cc;color:#b8c1cc;color:var(--icon_tertiary)}
+.vkuiBanner__dismissIcon:active{opacity:.4}
 .vkuiBanner__actions{margin-bottom:-6px}
 .vkuiBanner__actions>.vkuiButton{margin-top:12px;margin-right:16px;margin-bottom:6px}
 .vkuiBanner__actions>.vkuiButton--lvl-tertiary{margin:4px 16px 2px -16px}
@@ -1339,8 +1339,8 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .vkuiBanner--ios .vkuiBanner__in{border-radius:10px}
 .vkuiBanner--android,.vkuiBanner--vkcom{padding:0 16px}
 .vkuiBanner--android .vkuiBanner__in,.vkuiBanner--vkcom .vkuiBanner__in{border-radius:8px}
-.vkuiBanner--android .Banner__dismissIcon,.vkuiBanner--vkcom .Banner__dismissIcon{color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
-.vkuiBanner--android.vkuiBanner--md-image .Banner__dismissIcon,.vkuiBanner--vkcom.vkuiBanner--md-image .Banner__dismissIcon{color:#fff;color:#fff;color:var(--white)}
+.vkuiBanner--android .vkuiBanner__dismissIcon,.vkuiBanner--vkcom .vkuiBanner__dismissIcon{color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
+.vkuiBanner--android.vkuiBanner--md-image .vkuiBanner__dismissIcon,.vkuiBanner--vkcom.vkuiBanner--md-image .vkuiBanner__dismissIcon{color:#fff;color:#fff;color:var(--white)}
 .vkuiMiniInfoCell{display:flex;padding-top:6px;padding-bottom:6px}
 .vkuiMiniInfoCell--lvl-primary{color:#000;color:#000;color:var(--text_primary)}
 .vkuiMiniInfoCell--lvl-secondary{color:#6d7885;color:#6d7885;color:var(--text_subhead)}
@@ -1374,17 +1374,17 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .vkuiWriteBar--android .vkuiWriteBar__before,.vkuiWriteBar--vkcom .vkuiWriteBar__before{padding-left:4px}
 .vkuiWriteBar--android .vkuiWriteBar__after,.vkuiWriteBar--vkcom .vkuiWriteBar__after{padding-right:4px}
 .vkuiWriteBar--android .vkuiWriteBar__textarea,.vkuiWriteBar--vkcom .vkuiWriteBar__textarea{height:52px;padding:16px 12px;font-size:16px;line-height:20px}
-.WriteBarIcon{background:0 0;border:0;outline:0;position:relative;color:#3f8ae0;color:#3f8ae0;color:var(--writebar_icon);height:52px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.WriteBarIcon--disabled{opacity:.4;pointer-events:none}
-.WriteBarIcon:active{opacity:.6}
-.WriteBarIcon__count{box-sizing:border-box;position:absolute;top:4px;right:4px;display:flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 2px;border:2px solid #fff;border:2px solid #fff;border:2px solid var(--background_content);text-align:center;color:#fff;color:#fff;color:var(--button_commerce_foreground);background:#4bb34b;background:#4bb34b;background:var(--button_commerce_background);border-radius:50%}
-.WriteBarIcon--send:not(.WriteBarIcon--disabled){color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
-.WriteBarIcon--ios{width:44px;color:#3f8ae0;color:#3f8ae0;color:var(--writebar_icon)}
-.WriteBarIcon--ios.WriteBarIcon--send,.WriteBarIcon--ios.WriteBarIcon--done{width:48px}
-.WriteBarIcon--ios.WriteBarIcon--send:first-child,.WriteBarIcon--ios.WriteBarIcon--done:first-child{margin-left:-4px}
-.WriteBarIcon--ios.WriteBarIcon--send:last-child,.WriteBarIcon--ios.WriteBarIcon--done:last-child{margin-right:-4px}
-.WriteBarIcon--android,.WriteBarIcon--vkcom{width:44px;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
-.WriteBarIcon--android.WriteBarIcon--send,.WriteBarIcon--vkcom.WriteBarIcon--send,.WriteBarIcon--android.WriteBarIcon--done,.WriteBarIcon--vkcom.WriteBarIcon--done{color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
+.vkuiWriteBarIcon{background:0 0;border:0;outline:0;position:relative;color:#3f8ae0;color:#3f8ae0;color:var(--writebar_icon);height:52px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.vkuiWriteBarIcon--disabled{opacity:.4;pointer-events:none}
+.vkuiWriteBarIcon:active{opacity:.6}
+.vkuiWriteBarIcon__count{box-sizing:border-box;position:absolute;top:4px;right:4px;display:flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 2px;border:2px solid #fff;border:2px solid #fff;border:2px solid var(--background_content);text-align:center;color:#fff;color:#fff;color:var(--button_commerce_foreground);background:#4bb34b;background:#4bb34b;background:var(--button_commerce_background);border-radius:50%}
+.vkuiWriteBarIcon--send:not(.vkuiWriteBarIcon--disabled){color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
+.vkuiWriteBarIcon--ios{width:44px;color:#3f8ae0;color:#3f8ae0;color:var(--writebar_icon)}
+.vkuiWriteBarIcon--ios.vkuiWriteBarIcon--send,.vkuiWriteBarIcon--ios.vkuiWriteBarIcon--done{width:48px}
+.vkuiWriteBarIcon--ios.vkuiWriteBarIcon--send:first-child,.vkuiWriteBarIcon--ios.vkuiWriteBarIcon--done:first-child{margin-left:-4px}
+.vkuiWriteBarIcon--ios.vkuiWriteBarIcon--send:last-child,.vkuiWriteBarIcon--ios.vkuiWriteBarIcon--done:last-child{margin-right:-4px}
+.vkuiWriteBarIcon--android,.vkuiWriteBarIcon--vkcom{width:44px;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
+.vkuiWriteBarIcon--android.vkuiWriteBarIcon--send,.vkuiWriteBarIcon--vkcom.vkuiWriteBarIcon--send,.vkuiWriteBarIcon--android.vkuiWriteBarIcon--done,.vkuiWriteBarIcon--vkcom.vkuiWriteBarIcon--done{color:#3f8ae0;color:#3f8ae0;color:var(--accent)}
 .vkuiSubnavigationBar__in{margin:-8px 0}
 .vkuiSubnavigationBar__scrollIn{padding:20px 0;display:flex}
 .vkuiSubnavigationBar .vkuiSubnavigationButton+.vkuiSubnavigationButton{margin-left:8px}
@@ -1397,11 +1397,11 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .vkuiSubnavigationButton__before .Icon--24{margin-left:-4px}
 .vkuiSubnavigationButton__label{flex-grow:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vkuiSubnavigationButton__after{margin-left:8px}
-.SubnavigationButton__expandableIcon{margin-left:8px;margin-top:1px;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
+.vkuiSubnavigationButton__expandableIcon{margin-left:8px;margin-top:1px;color:#99a2ad;color:#99a2ad;color:var(--icon_secondary)}
 .vkuiSubnavigationButton--selected{background-color:#4986cc;background-color:#4986cc;background-color:var(--button_primary_background);color:#fff;color:#fff;color:var(--button_primary_foreground)}
 .vkuiSubnavigationButton--selected .vkuiSubnavigationButton__before{color:inherit}
 .vkuiSubnavigationButton--selected .vkuiCounter{background-color:#fff;background-color:#fff;background-color:var(--button_primary_foreground);color:#4986cc;color:#4986cc;color:var(--button_primary_background)}
-.vkuiSubnavigationButton--selected .SubnavigationButton__expandableIcon{color:inherit}
+.vkuiSubnavigationButton--selected .vkuiSubnavigationButton__expandableIcon{color:inherit}
 .vkuiSubnavigationButton--m .vkuiSubnavigationButton__in{height:36px;padding:0 14px}
 .vkuiSubnavigationButton--l .vkuiSubnavigationButton__in{height:44px;padding:0 14px}
 .vkuiSubnavigationButton--ios{border-radius:10px}
@@ -1617,15 +1617,15 @@ to{-webkit-transform:scale(1);transform:scale(1)}}
 .vkuiCustomSelect__options{width:100%;overflow:hidden;position:absolute;background-color:#fff;background-color:#fff;background-color:var(--modal_card_background);box-sizing:border-box;border:solid 1px rgba(0,0,0,.12);border:solid 1px rgba(0,0,0,.12);border:solid 1px var(--field_border);border-top:0;box-shadow:0 2px 2px rgba(0,0,0,.06),0 0 2px rgba(0,0,0,.03);border-radius:0 0 8px 8px;max-height:160px;z-index:3}
 .vkuiCustomSelect__options--popupDirectionTop{bottom:100%;border-radius:8px 8px 0 0;border-top:unset;border-bottom:0;box-shadow:0 -2px 2px rgba(0,0,0,.06),0 0 2px rgba(0,0,0,.03)}
 .vkuiCustomSelect__options .vkuiCustomScrollView__box{max-height:160px}
-.CustomSelectOption__selectedIcon{position:absolute;top:15px;right:12px}
+.vkuiCustomSelectOption__selectedIcon{position:absolute;top:15px;right:12px}
 .vkuiCustomSelect__options--sizeY-compact .vkuiCustomSelectOption{height:36px;padding:10px 9px}
-.vkuiCustomSelect__options--sizeY-compact .CustomSelectOption__selectedIcon{top:11px}
+.vkuiCustomSelect__options--sizeY-compact .vkuiCustomSelectOption__selectedIcon{top:11px}
 .vkuiCustomSelectOption{width:100%;height:44px;display:flex;align-items:center;position:relative;box-sizing:border-box;padding:10px 36px 10px 12px;white-space:nowrap;-webkit-user-select:none;user-select:none;cursor:pointer}
 .vkuiCustomSelectOption--hover{background-color:#f2f3f5;background-color:#f2f3f5;background-color:var(--button_muted_background)}
 .vkuiCustomSelectOption__before{margin-right:7px}
 .vkuiCustomSelectOption__label{overflow:hidden;text-overflow:ellipsis}
 .vkuiCustomSelectOption__after{margin-left:7px}
-.CustomSelectOption__selectedIcon{position:absolute;top:15px;right:12px}
+.vkuiCustomSelectOption__selectedIcon{position:absolute;top:15px;right:12px}
 .vkuiDatePicker{margin:0;padding:0;border:0}
 .vkuiDatePicker__container{width:100%;display:flex;flex-direction:row}
 .vkuiDatePicker__day{min-width:72px}
