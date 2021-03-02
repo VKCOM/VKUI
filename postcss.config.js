@@ -10,7 +10,7 @@ let plugins = [
   autoprefixer(),
   selectorPrefixer({
     prefix: 'vkui',
-    ignore: [/^\.vkui/, '#mount', '.Icon']
+    ignore: [/^\.vkui/, '#mount', /^\.Icon(\b|_)/]
   })
 ];
 
