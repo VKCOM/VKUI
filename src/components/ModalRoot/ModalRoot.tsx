@@ -120,7 +120,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       const state: ModalsStateEntry = {
         id: Modal.props.id,
         onClose: Modal.props.onClose,
-        onClosed: Modal.props.onClosed,
+        onCloseTransitionEnd: Modal.props.onCloseTransitionEnd,
         dynamicContentHeight: !!modalProps.dynamicContentHeight,
       };
 
@@ -667,8 +667,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     }
 
     const prevModalState = this.modalsState[this.state.prevModal];
-    if (prevModalState && prevModalState.onClosed) {
-      prevModalState.onClosed();
+    if (prevModalState && prevModalState.onCloseTransitionEnd) {
+      prevModalState.onCloseTransitionEnd();
     }
 
     const activeModal = this.state.nextModal;

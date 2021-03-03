@@ -51,7 +51,7 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   /**
    * Будет вызван после заверешния анимации закрытия
    */
-  onClosed?: VoidFunction;
+  onCloseTransitionEnd?: VoidFunction;
 }
 
 const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
@@ -63,6 +63,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
     actions,
     actionsLayout,
     onClose,
+    onCloseTransitionEnd,
     platform,
     viewWidth,
     viewHeight,
