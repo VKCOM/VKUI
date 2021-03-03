@@ -3,7 +3,7 @@ import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';
-import { HasRootRef } from 'types';
+import { HasRootRef } from '../../../types';
 
 export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
   weight: 'regular' | 'medium' | 'semibold';
