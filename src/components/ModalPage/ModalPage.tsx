@@ -16,6 +16,10 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
   header?: ReactNode;
   onClose?: VoidFunction;
   /**
+   * Будет вызван после заверешния анимации закрытия
+   */
+  onClosed?: VoidFunction;
+  /**
    * Процент, на который изначально будет открыта модальная страница. При `settlingHeight={100}` модальная страница раскрывается на всю высоту.
    */
   settlingHeight?: number;
@@ -37,6 +41,7 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
     sizeX,
     hasMouse,
     onClose,
+    onClosed,
     settlingHeight,
     dynamicContentHeight,
     getModalContentRef,
