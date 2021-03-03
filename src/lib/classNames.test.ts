@@ -1,4 +1,4 @@
-import { classNames } from './classNames';
+import { classNames, classNamesString } from './classNames';
 
 describe(classNames, () => {
   it('joins string classes', () =>
@@ -13,4 +13,12 @@ describe(classNames, () => {
     expect(classNames({ b: true, no: false })).toEqual('b'));
   it('returns empty string', () =>
     expect(classNames(false, { no: false })).toEqual(''));
+});
+
+describe(classNamesString, () => {
+  it('returns classname as string', () => {
+    expect(classNamesString('A', 'B')).toBe('A B');
+    expect(classNamesString('A')).toBe('A');
+    expect(classNamesString()).toBe('');
+  });
 });

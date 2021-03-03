@@ -31,3 +31,8 @@ export function classNames() {
 
   return result.length > 1 ? result : result[0] || '';
 }
+
+export function classNamesString(...args: ClassName[]) {
+  const res = classNames(...args);
+  return typeof res === 'string' ? res : res.join(' ');
+}
