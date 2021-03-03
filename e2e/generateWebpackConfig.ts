@@ -35,6 +35,26 @@ export async function generateWebpackConfig() {
       rules: [
         ...(webpackConfig.module || {}).rules,
         {
+          test: /\.[jt]sx?$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              plugins: [
+                [require.resolve('babel-plugin-istanbul'), {
+                  exclude: [
+                    '**/*.d.ts',
+                    '**/*.e2e.tsx',
+                    'e2e/',
+                    'src/types',
+                    'src/testing',
+                  ],
+                }],
+              ],
+            },
+          },
+        },
+        {
           test: /\.css$/i,
           use: [
             { loader: MiniCssExtractPlugin.loader },

@@ -1,4 +1,3 @@
-const path = require('path');
 const { NODE_ENV } = process.env;
 const isProduction = NODE_ENV === 'production';
 const isDevelopment = NODE_ENV === 'development';

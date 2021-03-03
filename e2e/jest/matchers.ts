@@ -17,6 +17,7 @@ beforeAll(async () => {
 afterEach(async () => {
   /* istanbul ignore next */
   await page.evaluate(() => (window as any).testHandle.unmount());
+  await jestPlaywright.saveCoverage(page);
 });
 
 expect.extend({ toMatchImageSnapshot });
