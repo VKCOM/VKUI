@@ -25,7 +25,7 @@ jobs:
         with:
           name: test-output
           path: |
-            coverage/
+            .nyc_output/
             lint-results.json
             test-results.json
   test_e2e:
@@ -56,6 +56,7 @@ jobs:
         with:
           name: e2e-output
           path: |
+            .nyc_output/
             __diff_output__/
             e2e-results.json
   styleguide:
@@ -146,7 +147,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: e2e-output
-      - run: yarn --cwd .github/danger --frozen-lockfile --ignore-scripts
+      - name: Install reporting deps
+        run: yarn --cwd .github/danger --frozen-lockfile --ignore-scripts
+      - name: Combine e2e & unit coverage
+        run: npx nyc report --reporter=json-summary
       - name: Create test report
         run: yarn --cwd .github/danger danger ci
         env:
