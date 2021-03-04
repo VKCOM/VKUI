@@ -9,5 +9,5 @@
 Подключаются нестабильные компоненты путем подобного импорта:
 ```jsx static
 import { ChipsSelect } from '@vkontakte/vkui/dist/unstable';
-import '@vkotankte/vkui/dist/unstable.css' // CSS достаточно подключить один раз 
+import '@vkontakte/vkui/dist/unstable.css' // CSS достаточно подключить один раз 
 ``` 
