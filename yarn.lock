@@ -2179,13 +2179,13 @@
     babel-eslint "^10.0.3"
     eslint-config-google "^0.9.1"
 
-"@vkontakte/icons@1.64.0":
-  version "1.64.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-1.64.0.tgz#a0344172231705b72b64c20356a3412042062a1a"
-  integrity sha512-VskFtqmb7+FJxwiKgt6wu2MNfMcOvE3acrpZ8itp0r6u0WKahA/d8GDPtfRNkO8bno/8uG7cpKD9+UKpXBE4ZQ==
+"@vkontakte/icons@^1.81.0":
+  version "1.81.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-1.81.0.tgz#8c06f178d60be84addafe9b5bcf2461d31a84870"
+  integrity sha512-gFW8cNcqSOQz50Tlz+RzyUNDO1a/L/qFigpThJ/ExPpJaQ4f23qEHrHIVIS+trT82ZQWF8XMDvm409C0q0PEYA==
   dependencies:
     es6-object-assign "1.1.0"
-    svg-baker-runtime "1.4.6"
+    svg-baker-runtime "1.4.7"
 
 "@vkontakte/vk-bridge@^2.1.3":
   version "2.1.5"
@@ -11540,10 +11540,10 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
-svg-baker-runtime@1.4.6:
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/svg-baker-runtime/-/svg-baker-runtime-1.4.6.tgz#73499736c636610121a9e17ae6ceb2ea1023ec6b"
-  integrity sha512-n+Uq23mafI12WLHXahkjSY00qHJaNfeB9XgVKdo0C4kzrcn8JnunXNajvOlqkFaTqj7xT7MwTlFl3Hga8AevcQ==
+svg-baker-runtime@1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/svg-baker-runtime/-/svg-baker-runtime-1.4.7.tgz#f4720637f5b6202eef6378d81f1fead0815f8a4e"
+  integrity sha512-Zorfwwj5+lWjk/oxwSMsRdS2sPQQdTmmsvaSpzU+i9ZWi3zugHLt6VckWfnswphQP0LmOel3nggpF5nETbt6xw==
   dependencies:
     deepmerge "1.3.2"
     mitt "1.1.2"
