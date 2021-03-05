@@ -5,6 +5,7 @@ import { AppRootContext } from './AppRootContext';
 import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { classScopingMode } from '../../lib/classScopingMode';
+import { IconSettingsProvider } from '@vkontakte/icons';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -84,7 +85,9 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
         portalRoot: portalRoot,
         embedded,
       }}>
-        {children}
+        <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
+          {children}
+        </IconSettingsProvider>
       </AppRootContext.Provider>
     </div>
   );
