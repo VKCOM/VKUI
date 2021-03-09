@@ -170,7 +170,8 @@
     "test": "concurrently 'yarn test:unit' 'yarn test:static'",
     "test:quick": "concurrently 'yarn test:unit:quick' 'yarn test:static'",
     "test:ci": "concurrently 'yarn test:unit:ci' 'yarn test:static:ci'",
-    "copy-default-scheme": "shx cp ./src/styles/bright_light.css ./dist/default_scheme.css"
+    "copy-default-scheme": "shx cp ./src/styles/bright_light.css ./dist/default_scheme.css",
+    "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install"
   },
   "pre-commit": [
     "test:static"
