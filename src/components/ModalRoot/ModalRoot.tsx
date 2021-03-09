@@ -311,10 +311,11 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   }
 
   checkPageContentHeight() {
-    const activeModal = this.state.activeModal;
+    const { activeModal, nextModal } = this.state;
+    const modalId = activeModal || nextModal;
 
-    const modalState = this.modalsState[activeModal];
-    if (modalState.modalElement) {
+    const modalState = this.modalsState[modalId];
+    if (modalState?.modalElement) {
       const prevModalState = { ...modalState };
       this.initPageModal(modalState);
       const currentModalState = { ...modalState };
