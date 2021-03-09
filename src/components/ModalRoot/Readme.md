@@ -52,12 +52,42 @@ const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
 const MODAL_PAGE_USER_INFO = 'user-info';
 const MODAL_PAGE_FULLSCREEN = 'fullscreen';
+const MODAL_PAGE_DYNAMIC = 'dynamic';
 
 const MODAL_CARD_MONEY_SEND = 'money-send';
 const MODAL_CARD_APP_TO_MENU = 'app-to-menu';
 const MODAL_CARD_ABOUT = 'say-about';
 const MODAL_CARD_NOTIFICATIONS = 'notifications';
 const MODAL_CARD_CHAT_INVITE = 'chat-invite';
+
+const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
+  const { viewWidth } = useAdaptivity();
+  const isMobile = viewWidth <= ViewWidth.MOBILE;
+  const platform = usePlatform();
+  const [expanded, setExpanded] = React.useState(false);
+  const toggle = React.useCallback(() => setExpanded(!expanded), [expanded]);
+
+  return (
+    <ModalPage
+      {...props}
+      header={
+        <ModalPageHeader
+          right={isMobile && platform === IOS && <PanelHeaderButton onClick={onClose}><Icon24Dismiss/></PanelHeaderButton>}
+          left={isMobile && platform === ANDROID && <PanelHeaderClose onClick={onClose}/>}
+        >
+          Dynamic modal
+        </ModalPageHeader>
+      }
+    >
+      <Group>
+        <CellButton onClick={toggle}>
+          {expanded ? "collapse" : "expand"}
+        </CellButton>
+        {expanded && <Placeholder icon={<Icon56MoneyTransferOutline />} />}
+      </Group>
+    </ModalPage>
+  );
+};
 
 const App = withPlatform(withAdaptivity(class App extends React.Component {
   constructor(props) {
@@ -142,6 +172,12 @@ const App = withPlatform(withAdaptivity(class App extends React.Component {
             })}
           </Group>
         </ModalPage>
+
+        <DynamicModalPage
+          id={MODAL_PAGE_DYNAMIC}
+          onClose={this.modalBack}
+          dynamicContentHeight
+        />
       
         <ModalPage
           id={MODAL_PAGE_FILTERS}
@@ -382,6 +418,9 @@ const App = withPlatform(withAdaptivity(class App extends React.Component {
               </CellButton>
               <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN)}>
                 Открыть полноэкранную модальную страницу
+              </CellButton>
+              <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_DYNAMIC)}>
+                Открыть модальную страницу с динамической высотой
               </CellButton>
               <CellButton onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
                 Открыть модальные карточки
