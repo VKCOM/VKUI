@@ -1,8 +1,8 @@
 import { FunctionComponent, HTMLAttributes, ReactNode, useContext } from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
+import Tappable from '../Tappable/Tappable';
 import { classNames } from '../../lib/classNames';
-import { IOS, VKCOM } from '../../lib/platform';
+import { VKCOM } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { TabsModeContext } from '../Tabs/Tabs';
@@ -34,7 +34,8 @@ const TabsItem: FunctionComponent<TabsItemProps> = ({
     <Tappable
       {...restProps}
       vkuiClass={classNames(getClassName('TabsItem', platform), { 'TabsItem--selected': selected })}
-      activeEffectDelay={platform === IOS ? 0 : ACTIVE_EFFECT_DELAY}
+      hasActive={mode === 'segmented'}
+      activeMode="TabsItem--active"
     >
       <TypographyComponent vkuiClass="TabsItem__in" weight="medium">{children}</TypographyComponent>
       {hasReactNode(after) && <div vkuiClass="TabsItem__after">{after}</div>}

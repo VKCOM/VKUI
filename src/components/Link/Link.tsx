@@ -27,6 +27,8 @@ const Link: FunctionComponent<LinkProps> = ({
       Component={Component}
       {...restProps}
       vkuiClass={baseClassName}
+      hasActive={false}
+      hoverMode="opacity"
     >{children}</Tappable>
   );
 };

@@ -65,25 +65,10 @@
   width: 1000px;
 }
 
-/*
-  iOS
- */
-.PanelHeaderContent--ios .PanelHeaderContent__in.Tappable--active {
-  opacity: .7;
-}
-
 .PanelHeaderContent--ios .PanelHeaderContent__before ~ .PanelHeaderContent__in {
   align-items: flex-start;
 }
 
 .PanelHeaderContent--ios .PanelHeaderContent__in {
   align-items: center;
-}
-
-/*
-  Android
- */
-.PanelHeaderContent--android .PanelHeaderContent__in.Tappable--active,
-.PanelHeaderContent--vkcom .PanelHeaderContent__in.Tappable--active {
-  background-color: rgba(255, 255, 255, .1);
 }

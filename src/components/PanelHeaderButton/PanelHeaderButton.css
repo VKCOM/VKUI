@@ -47,10 +47,6 @@
   padding: 8px;
 }
 
-.PanelHeaderButton--ios.Tappable--active {
-  opacity: .7;
-}
-
 /*
  * Android
  */
@@ -73,10 +69,6 @@
   padding: 10px;
 }
 
-.PanelHeaderButton--android.Tappable--active {
-  background-color: var(--background_highlighted);
-}
-
 /**
 * VKCOM
 */
@@ -89,8 +81,8 @@
   opacity: .7;
 }
 
-.PanelHeaderButton--vkcom.Tappable--shadowHovered > :not(.Counter),
-.PanelHeaderButton--vkcom.Tappable--active > :not(.Counter) {
+.PanelHeaderButton--vkcom.PanelHeaderButton--hover > :not(.Counter),
+.PanelHeaderButton--vkcom.PanelHeaderButton--active > :not(.Counter) {
   opacity: 1;
 }
 

@@ -4,6 +4,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
+import { IOS } from '../../lib/platform';
 
 export interface IconButtonProps extends TappableProps {
   /**
@@ -26,6 +27,7 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
       {...restProps}
       Component={Component}
       activeEffectDelay={200}
+      activeMode={platform === IOS ? 'opacity' : 'IconButton--active'}
       vkuiClass={classNames(
         getClassName('IconButton', platform),
         `IconButton--sizeY-${sizeY}`,

@@ -9,7 +9,12 @@ export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement>;
 const ModalDismissButton: FC<ModalDismissButtonProps> = (props) => {
   const platform = usePlatform();
   return (
-    <Tappable vkuiClass={getClassName('ModalDismissButton', platform)} {...props}>
+    <Tappable
+      vkuiClass={getClassName('ModalDismissButton', platform)}
+      {...props}
+      activeMode="ModalDismissButton--active"
+      hoverMode="ModalDismissButton--hover"
+    >
       <Icon20Cancel />
     </Tappable>
   );

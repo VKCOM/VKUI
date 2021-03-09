@@ -69,6 +69,7 @@ export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: Subnavi
   return (
     <Tappable
       {...restProps}
+      hasActive={false}
       vkuiClass={classNames(
         getClassName('SubnavigationButton', platform),
         `SubnavigationButton--${size}`,

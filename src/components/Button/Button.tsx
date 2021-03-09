@@ -100,6 +100,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     }
     getRootRef={getRootRef}
     Component={restProps.href ? 'a' : Component}
+    activeMode="opacity"
   >
     <div vkuiClass="Button__in">
       {before && <div vkuiClass="Button__before">{before}</div>}

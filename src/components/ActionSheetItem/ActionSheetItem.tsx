@@ -61,6 +61,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
     <Tappable
       {...restProps}
       onClick={onItemClick(onClick, autoclose)}
+      activeMode="ActionSheetItem--active"
       vkuiClass={
         classNames(
           getClassName('ActionSheetItem', platform),

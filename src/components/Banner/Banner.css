@@ -9,10 +9,6 @@
   overflow: hidden;
 }
 
-.Banner__in.Tappable--active {
-  opacity: .6;
-}
-
 .Banner__in::before {
   position: absolute;
   left: 0;
@@ -138,8 +134,7 @@
  * Mode "tint"
  */
 
-.Banner--md-tint .Banner__in,
-.Banner--md-tint .Banner__in.Tappable--active {
+.Banner--md-tint .Banner__in {
   background-color: var(--content_tint_background);
 }
 
@@ -171,8 +166,7 @@
  * Mode "image"
  */
 
-.Banner--md-image .Banner__in,
-.Banner--md-image .Banner__in.Tappable--active {
+.Banner--md-image .Banner__in {
   background-color: var(--content_tint_background);
   padding: 12px 16px;
 }
