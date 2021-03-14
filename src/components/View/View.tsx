@@ -147,8 +147,10 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     this.props.popout && !prevProps.popout && this.blurActiveElement();
     this.props.modal && !prevProps.modal && this.blurActiveElement();
 
+    const haveTransition = this.state.prevPanel || this.state.nextPanel;
+
     // Нужен переход
-    if (prevProps.activePanel !== this.props.activePanel && !prevState.swipingBack && !prevState.browserSwipe) {
+    if (!haveTransition && prevProps.activePanel !== this.props.activePanel && !prevState.swipingBack && !prevState.browserSwipe) {
       const firstLayer = this.panels.find(
         (panel) => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel,
       );
