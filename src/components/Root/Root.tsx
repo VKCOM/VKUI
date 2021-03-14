@@ -75,8 +75,10 @@ class Root extends Component<RootProps & DOMProps, RootState> {
       this.blurActiveElement();
     }
 
+    const haveTransition = this.state.prevView || this.state.nextView;
+
     // Нужен переход
-    if (this.props.activeView !== prevProps.activeView) {
+    if (!haveTransition && this.props.activeView !== prevProps.activeView) {
       let pageYOffset = this.window.pageYOffset;
       const firstLayerId = [].concat(prevProps.children).find((view: ReactElement) => {
         return view.props.id === prevProps.activeView || view.props.id === this.props.activeView;
@@ -148,14 +150,15 @@ class Root extends Component<RootProps & DOMProps, RootState> {
       'root-ios-animation-hide-back',
       'root-ios-animation-show-forward',
     ].includes(e.animationName)) {
+      const activeView = this.props.activeView;
       const isBack = this.state.isBack;
       const prevView = this.state.prevView;
       const nextView = this.state.nextView;
       this.setState({
-        activeView: nextView,
+        activeView: activeView,
         prevView: null,
         nextView: null,
-        visibleViews: [nextView],
+        visibleViews: [activeView],
         transition: false,
         isBack: undefined,
       }, () => {
