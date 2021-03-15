@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PreviewParent from 'react-styleguidist/lib/client/rsg-components/Preview/Preview';
 import ReactExample from 'react-styleguidist/lib/client/rsg-components/ReactExample/ReactExample';
 import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/PlaygroundError';
@@ -54,7 +54,7 @@ class PrepareFrame extends React.Component {
   }
 }
 
-let Layout = ({ children, viewWidth }) => {
+let DefaultLayout = ({ children, viewWidth }) => {
   const platform = usePlatform();
   return (
     <SplitLayout header={platform !== VKCOM && <PanelHeader separator={false} />}>
@@ -65,7 +65,7 @@ let Layout = ({ children, viewWidth }) => {
   )
 }
 
-Layout = withAdaptivity(Layout, { viewWidth: true, sizeY: true })
+DefaultLayout = withAdaptivity(DefaultLayout, { viewWidth: true, sizeY: true })
 
 const initialFrameContent = `
 <!DOCTYPE html>
@@ -117,101 +117,103 @@ export default class Preview extends PreviewParent {
   frameRef = React.createRef();
 
   render() {
-    const { code } = this.props;
+    const { code, autoLayout = true } = this.props;
     const { error, isVisible } = this.state;
+    if (error) {
+      return <PlaygroundError message={error} />;
+    }
     return (
-      error ?
-        <PlaygroundError message={error} /> :
-        <StyleGuideContext.Consumer>
-          {(styleGuideContext) => {
-            const isEmbedded = styleGuideContext.integration === "embedded";
-            const isPartial = styleGuideContext.integration === "partial";
+      <StyleGuideContext.Consumer>
+        {(styleGuideContext) => {
+          const isEmbedded = styleGuideContext.integration === "embedded";
+          const isPartial = styleGuideContext.integration === "partial";
+          const Layout = autoLayout ? DefaultLayout : Fragment;
 
-            const example = (
-              <Layout>
-                <ReactExample
-                  code={code}
-                  evalInContext={this.props.evalInContext}
-                  onError={this.handleError}
-                  compilerConfig={this.context.config.compilerConfig}
-                  />
-              </Layout>
-            );
+          const example = (
+            <Layout>
+              <ReactExample
+                code={code}
+                evalInContext={this.props.evalInContext}
+                onError={this.handleError}
+                compilerConfig={this.context.config.compilerConfig}
+                />
+            </Layout>
+          );
 
-            const frameStyle = {
-              height: styleGuideContext.height,
-              width: styleGuideContext.width,
-              border: '1px solid rgba(0, 0, 0, .12)',
-              display: 'block',
-              margin: 'auto',
-            }
+          const frameStyle = {
+            height: styleGuideContext.height,
+            width: styleGuideContext.width,
+            border: '1px solid rgba(0, 0, 0, .12)',
+            display: 'block',
+            margin: 'auto',
+          }
 
-            const frame = (
-              <ReactFrame
-                mountTarget="body"
-                style={{
-                  height: styleGuideContext.height,
-                  width: styleGuideContext.width,
-                  border: 'none',
-                  display: 'block',
-                }}
-                initialContent={initialFrameContent}
-              >
-                {isEmbedded && (
-                  <button onClick={() => this.setState(s => ({
-                    ...s,
-                    hideEmbeddedApp:!s.hideEmbeddedApp
-                  }))}>
-                    {this.state.hideEmbeddedApp ? "mount embedded app" : "unmount embedded app"}
-                  </button>
-                )}
-                <div
-                  key={`vkui-${styleGuideContext.integration}`}
-                  className={isPartial ? "vkui__root" : null}
-                  style={isEmbedded ? {
-                    marginTop: 8,
-                    position: 'relative',
-                    border: '1px solid #000',
-                    maxWidth: 1024,
-                    width: "calc(100% - 10px)",
-                    height: 600
-                  } : {
-                    position: 'relative',
-                    height: '100%'
-                  }
-                }>
-                {isEmbedded && this.state.hideEmbeddedApp ? null :
-                    <PrepareFrame integration={styleGuideContext.integration}>
-                      {({ window }) => (
-                        <DOMContext.Provider value={{ window: window, document: window.document }}>
-                          <ConfigProvider
-                            platform={styleGuideContext.platform}
-                            scheme={styleGuideContext.scheme}
-                            webviewType={styleGuideContext.webviewType}
-                          >
-                            <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
-                              {isPartial ? example : (
-                                <AppRoot embedded={isEmbedded} window={window} noLegacyClasses>
-                                  {example}
-                                </AppRoot>
-                              )}
-                            </AdaptivityProvider>
+          const frame = (
+            <ReactFrame
+              mountTarget="body"
+              style={{
+                height: styleGuideContext.height,
+                width: styleGuideContext.width,
+                border: 'none',
+                display: 'block',
+              }}
+              initialContent={initialFrameContent}
+            >
+              {isEmbedded && (
+                <button onClick={() => this.setState(s => ({
+                  ...s,
+                  hideEmbeddedApp:!s.hideEmbeddedApp
+                }))}>
+                  {this.state.hideEmbeddedApp ? "mount embedded app" : "unmount embedded app"}
+                </button>
+              )}
+              <div
+                key={`vkui-${styleGuideContext.integration}`}
+                className={isPartial ? "vkui__root" : null}
+                style={isEmbedded ? {
+                  marginTop: 8,
+                  position: 'relative',
+                  border: '1px solid #000',
+                  maxWidth: 1024,
+                  width: "calc(100% - 10px)",
+                  height: 600
+                } : {
+                  position: 'relative',
+                  height: '100%'
+                }
+              }>
+              {isEmbedded && this.state.hideEmbeddedApp ? null :
+                  <PrepareFrame integration={styleGuideContext.integration}>
+                    {({ window }) => (
+                      <DOMContext.Provider value={{ window: window, document: window.document }}>
+                        <ConfigProvider
+                          platform={styleGuideContext.platform}
+                          scheme={styleGuideContext.scheme}
+                          webviewType={styleGuideContext.webviewType}
+                        >
+                          <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
+                            {isPartial ? example : (
+                              <AppRoot embedded={isEmbedded} window={window} noLegacyClasses>
+                                {example}
+                              </AppRoot>
+                            )}
+                          </AdaptivityProvider>
                         </ConfigProvider>
-                        </DOMContext.Provider>
-                      )}
-                    </PrepareFrame>
-                  }
-                </div>
-              </ReactFrame>
-            );
-
-            return (
-              <div ref={this.frameRef} style={frameStyle}>
-                {isVisible && frame}
+                      </DOMContext.Provider>
+                    )}
+                  </PrepareFrame>
+                }
               </div>
-            );
-          }}
-        </StyleGuideContext.Consumer>
+            </ReactFrame>
+          );
+
+          return (
+            <div ref={this.frameRef} style={frameStyle}>
+              {isVisible && frame}
+            </div>
+          );
+        }}
+      </StyleGuideContext.Consumer>
     );
   }
 }

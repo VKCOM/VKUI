@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Styled from 'react-styleguidist/lib/client/rsg-components/Styled';
@@ -34,11 +34,15 @@ class PlaygroundRenderer extends React.Component {
       tabBody,
       toolbar
     } = this.props;
+    const {
+      autoLayout,
+      ...wrapperProps
+    } = previewProps;
 
     return (
       <div className={classes.root}>
-        <div className={cx(classes.preview, previewProps.className)} {...previewProps} data-preview={name}>
-          { preview }
+        <div className={cx(classes.preview, wrapperProps.className)} {...wrapperProps} data-preview={name}>
+          { cloneElement(preview, { ...preview.props, autoLayout }) }
         </div>
         <div className={classes.controls}>
           <div className={classes.tabs}>{tabButtons}</div>
