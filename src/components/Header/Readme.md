@@ -18,6 +18,11 @@ const Example = withPlatform(({ platform }) => {
         <Group>
           <Header mode="tertiary">Важные</Header>
         </Group>
+        <Group>
+          <Header mode="primary" multiline>Кто может писать мне личные сообщения</Header>
+          <Header mode="tertiary" multiline>Кто может комментировать мои записи</Header>
+          <Header mode="secondary" multiline>Кто может оставлять записи на моей странице</Header>
+        </Group>
       </Panel>
     </View>  
   )   
