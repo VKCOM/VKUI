@@ -27,6 +27,7 @@ export type TransitionStartEventDetail = {
   scrolls: Scrolls;
   from: string;
   to: string;
+  isBack: boolean;
 };
 
 interface ViewsScrolls {
@@ -200,6 +201,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         detail: {
           from: this.state.prevPanel,
           to: this.state.nextPanel,
+          isBack: this.state.isBack,
           scrolls,
         },
       };
