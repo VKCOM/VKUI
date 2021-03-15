@@ -26,7 +26,8 @@
 }
 
 .Header__content-base--multiline {
-  word-break: break-all;
+  white-space: initial;
+  word-break: break-word;
 }
 
 .Header--multiline {
