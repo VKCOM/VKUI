@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode, HTMLAttributes, MouseEventHandler } from 'react';
+import { Children, FunctionComponent, ReactNode, HTMLAttributes, MouseEventHandler } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -124,7 +124,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
           {hasReactNode(header) && renderHeader({ size, header })}
           {hasReactNode(subheader) && renderSubheader({ size, subheader })}
           {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
-          {actions &&
+          {hasReactNode(actions) && Children.count(actions) > 0 &&
           <div vkuiClass="Banner__actions">{actions}</div>
           }
         </div>
