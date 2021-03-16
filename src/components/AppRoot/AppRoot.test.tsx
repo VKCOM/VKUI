@@ -8,10 +8,10 @@ describe('AppRoot', () => {
   baselineComponent(AppRoot);
   describe('Manages portal root in embedded mode', () => {
     describe('Creates & injects portal root', () => {
-      it.each(['embedded'])('in %s mode', (mode) => {
+      it.each(['embedded', 'partial'] as const)('in %s mode', (mode) => {
         let portalRoot: HTMLElement;
         const { unmount } = render((
-          <AppRoot {...{ [mode]: true }}>
+          <AppRoot mode={mode}>
             <AppRootContext.Consumer>
               {(ctx) => {
                 portalRoot = ctx.portalRoot;
@@ -32,20 +32,18 @@ describe('AppRoot', () => {
         unmount();
         expect(document.documentElement).not.toHaveClass('vkui');
       });
-      it.each(['embedded', 'full'])('container class in %s mode', (mode) => {
-        const { unmount, container } = render(<AppRoot embedded={mode === 'embedded'} />);
+      it.each(['embedded', 'full'] as const)('container class in %s mode', (mode) => {
+        const { unmount, container } = render(<AppRoot mode={mode} />);
         expect(container).toHaveClass('vkui__root', mode === 'embedded' ? 'vkui__root--embedded' : '');
         unmount();
         expect(container).not.toHaveClass();
       });
-      it.each(['embedded', 'full'])('adaptivity class in %s mode', (mode) => {
-        const { unmount, container, rerender } = render((
-          <AppRoot embedded={mode === 'embedded'} />
-        ));
+      it.each(['embedded', 'full'] as const)('adaptivity class in %s mode', (mode) => {
+        const { unmount, container, rerender } = render(<AppRoot mode={mode} />);
         const adaptiveTarget = mode === 'embedded' ? container : document.body;
         expect(adaptiveTarget).not.toHaveClass('vkui--sizeX-regular');
-        rerender(<AppRoot embedded={mode === 'embedded'} sizeX={SizeType.REGULAR} />);
         // adds class
+        rerender(<AppRoot mode={mode} sizeX={SizeType.REGULAR} />);
         expect(adaptiveTarget).toHaveClass('vkui--sizeX-regular');
         unmount();
         // removes class on unmount
@@ -55,7 +53,7 @@ describe('AppRoot', () => {
     it('Supports multi-instance mode', () => {
       let portalRoot1: HTMLElement;
       render((
-        <AppRoot embedded>
+        <AppRoot mode="embedded">
           <AppRootContext.Consumer>
             {(ctx) => {
               portalRoot1 = ctx.portalRoot;
@@ -64,7 +62,7 @@ describe('AppRoot', () => {
           </AppRootContext.Consumer>
         </AppRoot>
       ));
-      render(<AppRoot embedded />).unmount();
+      render(<AppRoot mode="embedded" />).unmount();
       expect(document.body).toContainElement(portalRoot1);
     });
   });
