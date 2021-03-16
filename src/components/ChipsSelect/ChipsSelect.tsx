@@ -60,7 +60,7 @@ const FOCUS_ACTION_PREV: focusActionType = 'prev';
 
 const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
-    style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
+    style, onFocus, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText, sizeY,
     closeAfterSelect, onChangeStart, ...restProps
