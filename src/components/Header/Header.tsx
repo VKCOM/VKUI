@@ -90,7 +90,9 @@ const Header: FunctionComponent<HeaderProps> = ({
           {renderChildren({
             children: (
               <Fragment>
-                <div vkuiClass={multiline ? 'Header__content-base--multiline' : 'Header__content-base'}>{children}</div>
+                <div vkuiClass={classNames('Header__content-base', {
+                  'Header__content-base--multiline': multiline,
+                })}>{children}</div>
                 {hasReactNode(indicator) && <Caption vkuiClass="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
               </Fragment>
             ),
