@@ -1,21 +1,36 @@
-import React, { AllHTMLAttributes, ElementType, useState } from 'react';
+import React, { AllHTMLAttributes, ElementType, ReactNode, useState } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
+import { hasReactNode } from '@vkontakte/vkjs';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
-export interface FormFieldProps extends
-  AllHTMLAttributes<HTMLElement>,
-  HasRootRef<HTMLElement> {
-  Component?: ElementType;
+export interface FormFieldProps {
+  /**
+   * Иконка 12|16|20|24|28 или `IconButton`.
+   */
+  after?: ReactNode;
 }
 
-const FormField: React.FunctionComponent<FormFieldProps> = ({
+interface FormFieldOwnProps extends
+  AllHTMLAttributes<HTMLElement>,
+  HasRootRef<HTMLElement>,
+  AdaptivityProps,
+  FormFieldProps {
+  Component?: ElementType;
+  disabled?: boolean;
+}
+
+const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
   Component,
   children,
   getRootRef,
+  after,
+  disabled,
+  sizeY,
   ...restProps
-}: FormFieldProps) => {
+}: FormFieldOwnProps) => {
   const platform = usePlatform();
   const [hover, setHover] = useState(false);
 
@@ -35,15 +50,28 @@ const FormField: React.FunctionComponent<FormFieldProps> = ({
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      vkuiClass={getClassName('FormField', platform)}
+      vkuiClass={classNames(
+        getClassName('FormField', platform),
+        `FormField--sizeY-${sizeY}`,
+        {
+          'FormField--disabled': disabled,
+        },
+      )}
     >
       {children}
+      {hasReactNode(after) && (
+        <div vkuiClass="FormField__after">
+          {after}
+        </div>
+      )}
       <div vkuiClass={classNames('FormField__border', {
-        'FormField__border--hover': hover,
+        'FormField__border--hover': !disabled && hover,
       })} />
     </Component>
   );
-};
+}, {
+  sizeY: true,
+});
 
 FormField.defaultProps = {
   Component: 'div',

@@ -1,7 +1,85 @@
 .FormField {
   position: relative;
-  box-sizing: border-box;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   padding: 1px;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.FormField[class$="__open"] .FormField__border {
+  border-radius: 8px 8px 0 0;
+}
+
+.FormField[class$="__open--popupDirectionTop"] .FormField__border {
+  border-radius: 0 0 8px 8px;
+}
+
+.FormField > * {
+  border-radius: inherit;
+}
+
+.FormField__after {
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: -1px;
+  color: var(--icon_secondary);
+  z-index: 2;
+}
+
+.FormField__after,
+.FormField__after .IconButton {
+  height: 44px;
+}
+
+.FormField__after .Icon--16,
+.FormField__after .Icon--16.Icon--w-8 {
+  padding: 14px;
+}
+
+.FormField__after .Icon--20 {
+  padding: 12px;
+}
+
+.FormField__after .Icon--20.Icon--h-16 {
+  padding: 14px 12px;
+}
+
+.FormField__after .Icon--24 {
+  padding: 10px;
+}
+
+.FormField__after .Icon--28 {
+  padding: 8px;
+}
+
+.FormField--sizeY-compact .FormField__after,
+.FormField--sizeY-compact .FormField__after .IconButton {
+  height: 36px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--16,
+.FormField--sizeY-compact .FormField__after .Icon--16.Icon--w-8 {
+  padding: 10px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--20 {
+  padding: 8px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--20.Icon--h-16 {
+  padding: 10px 8px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--24 {
+  padding: 6px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--28 {
+  padding: 4px;
 }
 
 .FormField__border {
@@ -19,29 +97,6 @@
   transform-origin: left top;
 }
 
-.Textarea .Textarea__el:not(:disabled) ~ .FormField__border--hover,
-.Select:not(.Select--disabled) .FormField__border--hover,
-.Input .Input__el:not(:disabled) ~ .FormField__border--hover,
-.ChipsInput:not(.ChipsInput--disabled) .ChipsInput__container ~ .FormField__border--hover {
-  border-color: var(--icon_tertiary_alpha);
-}
-
-.FormField--ios {
-  border-radius: 10px;
-}
-
-.FormField--android {
-  border-radius: 8px;
-}
-
-.FormField--vkcom {
-  border-radius: 6px;
-}
-
-.FormField > * {
-  border-radius: inherit;
-}
-
 .FormItem--error .FormField__border {
   background: var(--field_error_background);
   border-color: var(--field_error_border);
@@ -51,29 +106,16 @@
   border-color: var(--field_valid_border);
 }
 
-.Textarea .Textarea__el:disabled ~ .FormField__border,
-.Select .Select__el:disabled ~ .FormField__border,
-.Input .Input__el:disabled ~ .FormField__border,
-.ChipsInput.ChipsInput--disabled .ChipsInput__container ~ .FormField__border {
+.FormField--disabled .FormField__border {
   opacity: .4;
 }
 
-@media (min-resolution: 2dppx) {
-  .FormField--ios .FormField__border {
-    border-radius: 20px;
-    transform: scale(.5);
-    width: 200%;
-    height: 200%;
-  }
+.FormField__border--hover {
+  border-color: var(--icon_tertiary_alpha);
 }
 
-@media (min-resolution: 3dppx) {
-  .FormField--ios .FormField__border {
-    border-radius: 31.25px;
-    transform: scale(.32);
-    width: 312.5%;
-    height: 312.5%;
-  }
+.FormField--disabled .FormField__border--hover {
+  border-color: var(--field_border);
 }
 
 .FormField.Input .Input__el:focus ~ .FormField__border,
@@ -89,32 +131,66 @@
   border-color: var(--field_border);
 }
 
-.FormField--ios.CustomSelect__open .FormField__border,
-.FormField--ios.ChipsSelect__open .FormField__border {
+/**
+ * iOS
+ */
+.FormField--ios {
+  border-radius: 10px;
+}
+
+.FormField--ios[class$="__open"] .FormField__border {
   border-radius: 10px 10px 0 0;
 }
 
-.FormField--android.CustomSelect__open .FormField__border,
-.FormField--android.ChipsSelect__open .FormField__border {
-  border-radius: 8px 8px 0 0;
-}
-
-.FormField--vkcom.CustomSelect__open .FormField__border,
-.FormField--vkcom.ChipsSelect__open .FormField__border {
-  border-radius: 6px 6px 0 0;
-}
-
-.FormField--ios.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border,
-.FormField--ios.ChipsSelect__open.ChipsSelect__open--popupDirectionTop .FormField__border {
+.FormField--ios[class$="__open--popupDirectionTop"] .FormField__border {
   border-radius: 0 0 10px 10px;
 }
 
-.FormField--android.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border,
-.FormField--android.ChipsSelect__open.ChipsSelect__open--popupDirectionTop .FormField__border {
-  border-radius: 0 0 8px 8px;
+@media (min-resolution: 2dppx) {
+  .FormField--ios .FormField__border {
+    border-radius: 20px;
+    transform: scale(.5);
+    width: 200%;
+    height: 200%;
+  }
+
+  .FormField--ios[class$="__open"] .FormField__border {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .FormField--ios[class$="__open--popupDirectionTop"] .FormField__border {
+    border-radius: 0 0 20px 20px;
+  }
 }
 
-.FormField--vkcom.CustomSelect__open.CustomSelect__open--popupDirectionTop .FormField__border,
-.FormField--vkcom.ChipsSelect__open.ChipsSelect__open--popupDirectionTop .FormField__border {
+@media (min-resolution: 3dppx) {
+  .FormField--ios .FormField__border {
+    border-radius: 31.25px;
+    transform: scale(.32);
+    width: 312.5%;
+    height: 312.5%;
+  }
+
+  .FormField--ios[class$="__open"] .FormField__border {
+    border-radius: 31.25px 31.25px 0 0;
+  }
+
+  .FormField--ios[class$="__open--popupDirectionTop"] .FormField__border {
+    border-radius: 0 0 31.25px 31.25px;
+  }
+}
+
+/**
+ * VKCOM
+ */
+.FormField--vkcom {
+  border-radius: 6px;
+}
+
+.FormField--vkcom[class$="__open"] .FormField__border {
+  border-radius: 6px 6px 0 0;
+}
+
+.FormField--vkcom[class$="__open--popupDirectionTop"] .FormField__border {
   border-radius: 0 0 6px 6px;
 }
