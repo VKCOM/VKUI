@@ -39,7 +39,7 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
   return (
     <FormField
       {...restProps}
-      tabIndex={disabled ? null : tabIndex}
+      tabIndex={disabled ? -1 : tabIndex}
       vkuiClass={classNames(getClassName('Select', platform), 'Select--mimicry', {
         'Select--not-selected': !children,
         'Select--multiline': multiline,
@@ -50,10 +50,11 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
       })}
       getRootRef={getRootRef}
       onClick={disabled ? null : onClick}
+      disabled={disabled}
+      after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
     >
       <TypographyComponent weight="regular" vkuiClass="Select__container">
         <div vkuiClass="Select__title">{children || placeholder}</div>
-        {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
       </TypographyComponent>
     </FormField>
   );
