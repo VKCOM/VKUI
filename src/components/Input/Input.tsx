@@ -1,7 +1,7 @@
 import { FunctionComponent, InputHTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import FormField from '../FormField/FormField';
+import FormField, { FormFieldProps } from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -11,7 +11,8 @@ export interface InputProps extends
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLDivElement>,
   HasAlign,
-  AdaptivityProps {}
+  AdaptivityProps,
+  FormFieldProps {}
 
 const Input: FunctionComponent<InputProps> = ({
   align,
@@ -20,6 +21,7 @@ const Input: FunctionComponent<InputProps> = ({
   getRootRef,
   sizeY,
   style,
+  after,
   ...restProps
 }: InputProps) => {
   const platform = usePlatform();
@@ -29,6 +31,8 @@ const Input: FunctionComponent<InputProps> = ({
       style={style}
       className={className}
       getRootRef={getRootRef}
+      after={after}
+      disabled={restProps.disabled}
     >
       <input {...restProps} vkuiClass="Input__el" ref={getRef} />
     </FormField>
