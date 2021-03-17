@@ -51,7 +51,6 @@ const Example = () => {
               {...groupsChipsProps}
               showSelected={false}
               closeAfterSelect={false}
-              onClick={() => setActiveView('groups')}
               onChangeStart={(e, option) => {
                 if (option.value === 'download') {
                   e.preventDefault();

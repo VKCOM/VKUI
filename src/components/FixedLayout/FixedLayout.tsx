@@ -92,9 +92,12 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     const fromPanelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
     const toPanelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
 
+    // если переход назад - анимация только у панели с которой уходим (detail.from), и подстраиваться под скролл надо только на ней
+    const panelAnimated = !(this.props.panel === e.detail.to && e.detail.isBack);
+
     // Для панелей, с которых уходим всегда выставляется скролл
-    // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл
-    if (fromPanelHasScroll || toPanelHasScroll && this.canTargetPanelScroll) {
+    // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл и применяется ли к ней анимация перехода:
+    if (fromPanelHasScroll || toPanelHasScroll && this.canTargetPanelScroll && panelAnimated) {
       this.setState({
         position: 'absolute',
         top: this.el.offsetTop + panelScroll,

@@ -117,5 +117,26 @@ import { Tooltip, Button } from '@vkontakte/vkui';
 
   const ExampleWithPlatform = withPlatform(Example);
 
-  <ExampleWithPlatform /> 
+  <ExampleWithPlatform />
+```
+
+### TooltipContainer
+
+Чтобы использовать тултип без `Panel` / `PanelHeader` / `FixedLayout`:
+- в скроллящемся контейнере — замените какой-нибудь элемент, внутри которого нет скролла, на `<TooltipContainer>` и добавьте ему `position: relative` (или другую не-static).
+- внутри `position: fixed` — `<TooltipContainer fixed>`
+
+```jsx { "props": { "autoLayout": false } }
+<>
+  <TooltipContainer style={{ minHeight: '300vh' }}>
+    <Tooltip text="Я скроллюсь">
+      <Avatar />
+    </Tooltip>
+  </TooltipContainer>
+  <TooltipContainer fixed style={{ position: 'fixed', bottom: 0, width: '100%' }}>
+    <Tooltip alignY='top' text="Я прибит к низу">
+      <Avatar />
+    </Tooltip>
+  </TooltipContainer>
+</>
 ```
