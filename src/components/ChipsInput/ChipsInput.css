@@ -6,8 +6,18 @@
   box-sizing: border-box;
 }
 
+.ChipsInput .FormField__after {
+  margin-top: -4px;
+  margin-bottom: -4px;
+  margin-right: -14px;
+}
+
 .ChipsInput.ChipsInput--sizeY-compact {
   padding: 2px 12px;
+}
+
+.ChipsInput.ChipsInput--sizeY-compact .FormField__after {
+  margin-right: -12px;
 }
 
 .ChipsInput__container {
