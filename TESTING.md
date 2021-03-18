@@ -31,7 +31,7 @@ __Скриншотные тесты__ на jest + [playwright](https://playwrigh
 
 ## `describeScreenshotFuzz`
 
-Функция `describeScreenshotFuzz` из [`/testing/utils`]('./src/testing/utils.ts) помогает быстро заскриншотить все состояния компонента в разных темах и на разных платформах:
+Функция `describeScreenshotFuzz` из [`/testing/utils`](./src/testing/e2e/utils.tsx) помогает быстро заскриншотить все состояния компонента в разных темах и на разных платформах:
 
 ```ts
 describe('Button', () => {
