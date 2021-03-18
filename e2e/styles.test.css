@@ -28,6 +28,7 @@
   --font-tt: 'Roboto';
   font-family: 'Roboto';
   -webkit-font-smoothing: antialiased;
+  caret-color: transparent;
 }
 
 * {
