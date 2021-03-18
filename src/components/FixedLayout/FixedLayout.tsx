@@ -3,7 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import { withContext } from '../../hoc/withContext';
-import { HasPlatform, HasRootRef } from '../../types';
+import { HasPlatform, HasRef, HasRootRef } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withPanelContext } from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
@@ -15,6 +15,7 @@ import { DOMProps, withDOM } from '../../lib/dom';
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
+  HasRef<HTMLDivElement>,
   HasPlatform {
   vertical?: 'top' | 'bottom';
   /**
@@ -135,8 +136,20 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
 
   render() {
     const {
-      children, style, vertical, getRootRef, platform, filled, splitCol,
-      panel, getPanelNode, window, document, ...restProps } = this.props;
+      children,
+      style,
+      vertical,
+      getRootRef,
+      getRef,
+      platform,
+      filled,
+      splitCol,
+      panel,
+      getPanelNode,
+      window,
+      document,
+      ...restProps
+    } = this.props;
 
     return (
       <TooltipContainer
@@ -148,7 +161,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
         }, `FixedLayout--${vertical}`)}
         style={{ ...style, ...this.state }}
       >
-        <div vkuiClass="FixedLayout__in">{children}</div>
+        <div vkuiClass="FixedLayout__in" ref={getRef}>{children}</div>
       </TooltipContainer>
     );
   }
