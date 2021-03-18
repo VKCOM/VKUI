@@ -884,7 +884,7 @@ to{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}}
 .vkuiHeader__main{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .vkuiHeader__content{display:flex;align-items:baseline}
 .vkuiHeader__content-base{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
-.vkuiHeader__content-base--multiline{word-break:break-all}
+.vkuiHeader__content-base--multiline{white-space:initial;word-break:break-word}
 .vkuiHeader--multiline{white-space:normal}
 .vkuiHeader__subtitle{color:#818c99;color:#818c99;color:var(--text_secondary)}
 .vkuiHeader--mode-primary .vkuiHeader__main{color:#000;color:#000;color:var(--text_primary)}
