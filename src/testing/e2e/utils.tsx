@@ -76,7 +76,7 @@ type ScreenshotOptions = {
   platforms?: Platform[];
   mobileSchemes?: Scheme[];
   adaptivity?: AdaptivityProps;
-  wrapInApp?: boolean;
+  Wrapper?: ComponentType;
 };
 
 function getAdaptivePxWidth(viewWidth: ViewWidth) {
@@ -111,9 +111,8 @@ export function describeScreenshotFuzz<Props>(
     platforms = Object.values(Platform),
     mobileSchemes = [Scheme.BRIGHT_LIGHT, Scheme.SPACE_GRAY],
     adaptivity = {},
-    wrapInApp = true,
+    Wrapper = AppWrapper,
   } = options;
-  const Wrapper = wrapInApp ? AppWrapper : Fragment;
   platforms.forEach((platform) => {
     describe(platform, () => {
       const isVkCom = platform === 'vkcom';

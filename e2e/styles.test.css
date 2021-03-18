@@ -22,7 +22,7 @@
   src: url(/font/Roboto-Bold.ttf) format('truetype');
 }
 
-#mount {
+.vkui__root {
   /* Force use embedded Roboto font for cross-platformity */
   --font-common: 'Roboto';
   --font-tt: 'Roboto';
