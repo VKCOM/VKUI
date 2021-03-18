@@ -15,7 +15,7 @@ export enum Scheme {
   VKCOM = 'vkcom'
 }
 
-export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM;
+export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM | 'inherit';
 
 export enum WebviewType {
   VKAPPS = 'vkapps',
@@ -23,10 +23,6 @@ export enum WebviewType {
 }
 
 export interface ConfigProviderContextInterface {
-  /**
-   * Цветовая схема приложения
-   */
-  scheme?: AppearanceScheme;
   /**
    * Подсказывает приложению, обёрнутому в `ConfigProvider`, где открыто приложение: внутри webview или в мобильном браузере
    */
