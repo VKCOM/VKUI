@@ -301,8 +301,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     if (!e || [
       'animation-ios-next-forward',
       'animation-ios-prev-back',
-      'animation-android-next-forward',
-      'animation-android-prev-back',
+      'animation-view-next-forward',
+      'animation-view-prev-back',
     ].includes(e.animationName)) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
