@@ -299,10 +299,10 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
 
   transitionEndHandler = (e?: AnimationEvent): void => {
     if (!e || [
-      'animation-ios-next-forward',
-      'animation-ios-prev-back',
-      'animation-view-next-forward',
-      'animation-view-prev-back',
+      'vkui-animation-ios-next-forward',
+      'vkui-animation-ios-prev-back',
+      'vkui-animation-view-next-forward',
+      'vkui-animation-view-prev-back',
     ].includes(e.animationName)) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;

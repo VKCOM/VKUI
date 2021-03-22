@@ -89,7 +89,7 @@
  */
 
 .PopoutWrapper--ios .PopoutWrapper__overlay {
-  animation: animation-full-fade-in .3s ease;
+  animation: vkui-animation-full-fade-in .3s ease;
 }
 
 .PopoutWrapper--ios.PopoutWrapper--closing .PopoutWrapper__overlay {
@@ -102,7 +102,7 @@
 
 .PopoutWrapper--android .PopoutWrapper__overlay,
 .PopoutWrapper--vkcom .PopoutWrapper__overlay {
-  animation: animation-full-fade-in .2s ease;
+  animation: vkui-animation-full-fade-in .2s ease;
 }
 
 .PopoutWrapper--android.PopoutWrapper--closing .PopoutWrapper__overlay,
@@ -110,7 +110,7 @@
   transition: opacity .2s var(--android-easing);
 }
 
-@keyframes animation-full-fade-in {
+@keyframes vkui-animation-full-fade-in {
   from {
     opacity: 0;
   }

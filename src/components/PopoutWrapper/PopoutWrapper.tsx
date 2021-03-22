@@ -75,7 +75,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapp
   }
 
   onFadeInEnd: AnimationEndCallback = (e: AnimationEvent) => {
-    if (!e || e.animationName === 'animation-full-fade-in') {
+    if (!e || e.animationName === 'vkui-animation-full-fade-in') {
       this.setState({ opened: true });
     }
   };

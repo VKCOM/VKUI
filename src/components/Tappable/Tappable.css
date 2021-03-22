@@ -99,7 +99,7 @@
   content: '';
   border-radius: 50%;
   background: rgba(127, 127, 127, .1);
-  animation: animation-wave .3s var(--android-easing);
+  animation: vkui-animation-wave .3s var(--android-easing);
 }
 
 /**
@@ -121,7 +121,7 @@
 /**
  * Animations
  */
-@keyframes animation-wave {
+@keyframes vkui-animation-wave {
   0% {
     transform: scale(1);
     opacity: 1;

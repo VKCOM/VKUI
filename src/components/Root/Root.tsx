@@ -143,10 +143,10 @@ class Root extends Component<RootProps & DOMProps, RootState> {
 
   onAnimationEnd: AnimationEndCallback = (e?: AnimationEvent) => {
     if (!e || [
-      'root-android-animation-hide-back',
-      'root-android-animation-show-forward',
-      'root-ios-animation-hide-back',
-      'root-ios-animation-show-forward',
+      'vkui-root-android-animation-hide-back',
+      'vkui-root-android-animation-show-forward',
+      'vkui-root-ios-animation-hide-back',
+      'vkui-root-ios-animation-show-forward',
     ].includes(e.animationName)) {
       const isBack = this.state.isBack;
       const prevView = this.state.prevView;

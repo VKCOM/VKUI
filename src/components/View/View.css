@@ -89,18 +89,18 @@
  * Panel transition
  */
 .View__panel--next ~ .View__panel--prev {
-  animation: animation-view-prev-back .3s var(--android-easing);
+  animation: vkui-animation-view-prev-back .3s var(--android-easing);
 }
 
 .View__panel--prev ~ .View__panel--next {
-  animation: animation-view-next-forward .3s var(--android-easing);
+  animation: vkui-animation-view-next-forward .3s var(--android-easing);
 }
 
 .View--no-motion .View__panel {
   animation: none;
 }
 
-@keyframes animation-view-prev-back {
+@keyframes vkui-animation-view-prev-back {
   from {
     opacity: 1;
     transform: translateY(0);
@@ -112,7 +112,7 @@
   }
 }
 
-@keyframes animation-view-next-forward {
+@keyframes vkui-animation-view-next-forward {
   from {
     opacity: 0;
     transform: translateY(80px);
