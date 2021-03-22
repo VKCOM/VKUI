@@ -118,8 +118,8 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
           {placeholder && <option value="">{placeholder}</option>}
           {children}
         </select>
-        <TypographyComponent weight="regular" vkuiClass="Select__container">
-          <div vkuiClass="Select__title">{this.state.title}</div>
+        <TypographyComponent Component="div" weight="regular" vkuiClass="Select__container">
+          <span vkuiClass="Select__title">{this.state.title}</span>
         </TypographyComponent>
       </FormField>
     );
