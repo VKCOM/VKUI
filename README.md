@@ -17,35 +17,41 @@ VKUI — это библиотека адаптивных React-компонен
 **Важно:** Нужно установить вручную [`peerDependencies`](package.json#L95-L103), либо использовать npm7+ который делает это автоматически.
 
 ## Hello World
+
 ```jsx static
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppRoot, View, Panel, PanelHeader, Header, Group, Cell } from '@vkontakte/vkui';
+import { AppRoot, SplitLayout, SplitCol, View, Panel, PanelHeader, Header, Group, Cell } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import { SplitLayout } from './SplitLayout';
 
-function App () {
+function App() {
   return (
     <AppRoot>
-      <View activePanel="main">
-        <Panel id="main">
-          <PanelHeader>VKUI</PanelHeader>
-          <Group header={<Header mode="secondary">Items</Header>}>
-            <Cell>Hello</Cell>
-            <Cell>World</Cell>
-          </Group>
-        </Panel>
-      </View>
+      <SplitLayout>
+        <SplitCol>
+          <View activePanel="main">
+            <Panel id="main">
+              <PanelHeader>VKUI</PanelHeader>
+              <Group header={<Header mode="secondary">Items</Header>}>
+                <Cell>Hello</Cell>
+                <Cell>World</Cell>
+              </Group>
+            </Panel>
+          </View>
+        </SplitCol>
+      </SplitLayout>
     </AppRoot>
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
 ```
 
 ## Браузеры
-На данный момент мы поддерживаем webview следующих операционных систем:
-* android >= 4.4
-* ios >= 9
+На данный момент мы поддерживаем WebView следующих операционных систем:
+* Android >= 4.4
+* iOS >= 9
 
 Иными словами, мы поддерживаем браузеры следующих версий:
 * Safari для iOS >= 9
