@@ -23,7 +23,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppRoot, SplitLayout, SplitCol, View, Panel, PanelHeader, Header, Group, Cell } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import { SplitLayout } from './SplitLayout';
 
 function App() {
   return (
