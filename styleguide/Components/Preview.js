@@ -9,10 +9,6 @@ import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, u
 import { DOMContext } from '../../src/lib/dom';
 
 class PrepareFrame extends React.Component {
-  state = {
-    loaded: false
-  };
-
   static contextTypes = {
     document: PropTypes.any,
     window: PropTypes.any,
@@ -34,23 +30,29 @@ class PrepareFrame extends React.Component {
     this.context.document.querySelector('.frame-content').setAttribute('id', 'root');
 
     // Пихаем в iFrame vkui стили
-    const url = "./main.css",
-      head = this.context.document.getElementsByTagName('head')[0],
-      link = this.context.document.createElement('link');
+    const frameAssets = document.createDocumentFragment();
+    this.hotObservers = [];
+    Array.from(document.getElementsByClassName('vkui-style')).map(style => {
+      const frameStyle = style.cloneNode(true);
+      frameAssets.appendChild(frameStyle);
 
-    link.type = "text/css";
-    link.rel = "stylesheet";
-    link.href = url;
+      if (process.env.NODE_ENV === 'development') {
+        const hotStyleChange = new MutationObserver(() => {
+          frameStyle.firstChild.nodeValue = style.firstChild.nodeValue;
+        });
+        hotStyleChange.observe(style, { characterData: true, childList: true });
+        this.hotObservers.push(hotStyleChange);
+      }
+    });
+    this.context.document.head.appendChild(frameAssets);
+  }
 
-    link.onload = () => {
-      this.setState({ loaded: true });
-    };
-
-    head.appendChild(link);
+  componentWillUnmount() {
+    this.hotObservers.forEach(o => o.disconnect());
   }
 
   render () {
-    return this.state.loaded ? this.props.children({ window: this.context.window }) : null
+    return this.props.children({ window: this.context.window });
   }
 }
 
