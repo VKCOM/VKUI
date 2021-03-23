@@ -16,11 +16,6 @@ Cell 	 FormItem
 CellButton 	 FormItem
 Checkbox 	 FormItem
 ChipsInput 	 ChipsSelect
-Counter 	 Button
-Counter 	 PanelHeaderButton
-Counter 	 SubnavigationButton
-Counter 	 TabbarItem
-Counter 	 Tabs
 CustomScrollView 	 ChipsSelect
 CustomScrollView 	 CustomSelect
 CustomSelectOption 	 ChipsSelect

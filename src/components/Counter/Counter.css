@@ -43,3 +43,91 @@
   padding-left: 6px;
   padding-right: 6px;
 }
+
+/* Counter inside TabsItem */
+
+ .TabsItem .Counter {
+  margin-left: 8px;
+}
+
+.Tabs .TabsItem .Counter--secondary {
+  background: var(--panel_tab_inactive_text);
+  color: var(--white);
+}
+
+.Tabs .TabsItem--selected .Counter--secondary {
+  background: var(--panel_tab_active_text);
+  color: var(--panel_tab_active_background);
+}
+
+.Tabs--ios.Tabs--segmented .TabsItem .Counter--secondary {
+  background: var(--segmented_control_tint);
+  color: var(--background_content);
+}
+
+.Tabs--ios.Tabs--segmented .TabsItem--selected .Counter--secondary {
+  background: var(--background_content);
+  color: var(--segmented_control_tint);
+}
+
+.Tabs--ios.Tabs--segmented .TabsItem .Counter--s-m {
+  position: relative;
+  top: 1px;
+}
+
+/* Counter inside TabbarItem */
+
+.TabbarItem__label .Counter {
+  position: absolute;
+  top: -2px;
+  right: -9px;
+}
+
+/* Counter inside SubnavigationButton */
+
+.SubnavigationButton--selected .Counter {
+  background-color: var(--button_primary_foreground);
+  color: var(--button_primary_background);
+}
+
+/* Counter inside PanelHeaderButton */
+
+.PanelHeaderButton .Counter {
+  position: absolute;
+  padding: 0;
+  top: 8px;
+  right: 2px;
+}
+
+/* Counter inside Button */
+
+.Button--lvl-primary .Counter {
+  background-color: var(--button_primary_foreground);
+  color: var(--button_primary_background);
+}
+
+.Button--lvl-secondary .Counter {
+  background-color: var(--button_secondary_foreground);
+  color: var(--background_content);
+}
+
+.Button--lvl-tertiary .Counter {
+  background-color: var(--button_tertiary_foreground);
+  color: var(--background_content);
+}
+
+.Button--lvl-outline .Counter {
+  background-color: var(--button_outline_foreground);
+  color: var(--background_content);
+}
+
+.Button--lvl-commerce .Counter {
+  background-color: var(--button_commerce_foreground);
+  color: var(--button_commerce_background);
+}
+
+.Button--vkcom.Button--lvl-secondary .Counter,
+.Button--vkcom.Button--lvl-tertiary .Counter,
+.Button--vkcom.Button--lvl-outline .Counter {
+  opacity: .72;
+}

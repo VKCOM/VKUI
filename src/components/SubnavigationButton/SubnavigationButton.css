@@ -51,11 +51,6 @@
   color: inherit;
 }
 
-.SubnavigationButton--selected .Counter {
-  background-color: var(--button_primary_foreground);
-  color: var(--button_primary_background);
-}
-
 .SubnavigationButton--selected .SubnavigationButton__expandableIcon {
   color: inherit;
 }

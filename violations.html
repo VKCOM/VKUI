@@ -127,6 +127,7 @@ var links = [
     { "from": "none", "to": "vkui" }
 ];
 
+
 const handled = new Set([
     'Card', 'CardGrid', 'CardScroll',
     'ActionSheet', 'ActionSheetItem',
@@ -135,11 +136,33 @@ const handled = new Set([
     'Select', 'DatePicker',
     'AppRoot', 'vkui',
     'PopoutWrapper', 'Spinner', 'ScreenSpinner',
+    'Root', 'View', 'Panel',
+    'FormItem',
+    // 'SubnavigationBar', 'SubnavigationButton',
 
     'none', 'Icon'
 ]);
 links = links.filter(l => !handled.has(l.from) && !handled.has(l.to));
+console.log(tsort(links.map(l => [l.from, l.to])));
 links.forEach(l => nodes.add(l.from).add(l.to));
+
+const levels = [];
+let sorting = Array.from(nodes).slice();
+while (sorting.length) {
+    const sorted = levels.reduce((sorted, lvl) => {
+        lvl.forEach(n => sorted.add(n));
+        return sorted;
+    }, new Set());
+    const currentLevel = new Set(sorting.filter(node => {
+        const targets = links.filter(l => l.to === node).map(l => l.from);
+        return targets.every(node => sorted.has(node));
+    }));
+    console.log(currentLevel);
+    levels.push(currentLevel);
+    sorting = sorting.filter(node => !currentLevel.has(node));
+}
+levels.forEach((l, i) => console.log(i, Array.from(l).join('\n')));
+
 nodes = Array.from(nodes).map(name => ({ name }));
 links = links.map(l => ({
     source: nodes.findIndex(n => n.name === l.from),
@@ -203,6 +226,52 @@ function updateNodes() {
 function ticked() {
   updateLinks()
   updateNodes()
+}
+
+
+function tsort(edges) {
+  var nodes   = {}, // hash: stringified id of the node => { id: id, afters: lisf of ids }
+      sorted  = [], // sorted list of IDs ( returned value )
+      visited = {}; // hash: id of already visited node => true
+
+  var Node = function(id) {
+    this.id = id;
+    this.afters = [];
+  }
+
+  // 1. build data structures
+  edges.forEach(function(v) {
+    var from = v[0], to = v[1];
+    if (!nodes[from]) nodes[from] = new Node(from);
+    if (!nodes[to]) nodes[to]     = new Node(to);
+    nodes[from].afters.push(to);
+  });
+
+  // 2. topological sort
+  Object.keys(nodes).forEach(function visit(idstr, ancestors) {
+    var node = nodes[idstr],
+        id   = node.id;
+
+    // if already exists, do nothing
+    if (visited[idstr]) return;
+
+    if (!Array.isArray(ancestors)) ancestors = [];
+
+    ancestors.push(id);
+
+    visited[idstr] = true;
+
+    node.afters.forEach(function(afterID) {
+      if (ancestors.indexOf(afterID) >= 0)  // if already in ancestors, a closed chain exists.
+        throw new Error('closed chain : ' +  afterID + ' is in ' + id);
+
+      visit(afterID.toString(), ancestors.map(function(v) { return v })); // recursive call
+    });
+
+    sorted.unshift(id);
+  });
+
+  return sorted;
 }
 
   </script>
