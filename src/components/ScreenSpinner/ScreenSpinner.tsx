@@ -17,7 +17,7 @@ const ScreenSpinner: FunctionComponent<ScreenSpinnerProps> = (props: ScreenSpinn
       style={style}
     >
       <div vkuiClass="ScreenSpinner__container">
-        <Spinner {...restProps} />
+        <Spinner vkuiClass="ScreenSpinner__spinner" {...restProps} />
       </div>
     </PopoutWrapper>
   );
