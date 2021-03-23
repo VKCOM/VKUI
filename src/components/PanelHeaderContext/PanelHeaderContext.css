@@ -34,10 +34,6 @@
   animation: animation-panelheadercontext-fade-out .2s ease;
 }
 
-.PanelHeaderContext .SimpleCell {
-  border-radius: 0;
-}
-
 /*
  iOS
  */

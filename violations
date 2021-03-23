@@ -54,7 +54,6 @@ Separator 	 Tabs
 SimpleCell 	 Cell
 SimpleCell 	 CellButton
 SimpleCell 	 FormItem
-SimpleCell 	 PanelHeaderContext
 SubnavigationButton 	 SubnavigationBar
 Switch 	 SimpleCell
 Tabs 	 Group
