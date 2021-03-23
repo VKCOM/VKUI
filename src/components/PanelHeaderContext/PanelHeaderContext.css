@@ -50,8 +50,16 @@
   animation: animation-panelheadercontext-translate-out .2s ease;
 }
 
-.PanelHeaderContext--ios .List {
+.PanelHeaderContext .PanelHeaderContext__content {
   background: var(--header_background);
+}
+
+.PanelHeaderContext--android .PanelHeaderContext__content,
+.PanelHeaderContext--vkcom .PanelHeaderContext__content,
+.PanelHeaderContext--desktop.PanelHeaderContext--ios .PanelHeaderContext__content {
+  overflow: hidden;
+  border-radius: 12px;
+  padding: 8px 0;
 }
 
 /*
@@ -71,15 +79,6 @@
 .PanelHeaderContext--android.PanelHeaderContext--closing .PanelHeaderContext__in,
 .PanelHeaderContext--vkcom.PanelHeaderContext--closing .PanelHeaderContext__in {
   animation: animation-panelheadercontext-translate-out .2s ease;
-}
-
-.PanelHeaderContext--android .List,
-.PanelHeaderContext--vkcom .List,
-.PanelHeaderContext--desktop.PanelHeaderContext--ios .List {
-  overflow: hidden;
-  border-radius: 12px;
-  padding: 8px 0;
-  background: var(--header_background);
 }
 
 /*
