@@ -1,5 +1,8 @@
 {
   "extends": "stylelint-config-standard",
+  "plugins": [
+    "./tasks/stylelint-safe-rule-order"
+  ],
   "rules": {
     "indentation": null,
     "number-leading-zero": "never",
@@ -11,6 +14,7 @@
     "no-duplicate-selectors": null,
     "length-zero-no-unit": [true, {
       "ignore": ["custom-properties"]
-    }]
+    }],
+    "vkui/modular-selectors": "error"
   }
 }

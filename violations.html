@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <title>Force layout (with links)</title>
+</head>
+
+<style>
+circle {
+  fill: cadetblue;
+}
+line {
+  stroke: #ccc;
+}
+text {
+  text-anchor: middle;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  fill: #666;
+  font-size: 16px;
+}
+</style>
+
+<body>
+  <div id="content">
+    <svg width="1500" height="1500">
+      <g class="links"></g>
+      <g class="nodes"></g>
+    </svg>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
+
+  <script>
+var width = 1500, height = 1500
+
+
+var nodes = new Set();
+
+var links = [
+    { "from": "ActionSheet", "to": "ActionSheetItem" },
+    { "from": "AppRoot", "to": "vkui" },
+    { "from": "Avatar", "to": "PanelHeader" },
+    { "from": "Avatar", "to": "RichCell" },
+    { "from": "Avatar", "to": "SimpleCell" },
+    { "from": "Badge", "to": "SimpleCell" },
+    { "from": "Badge", "to": "TabbarItem" },
+    { "from": "Badge", "to": "TabsItem" },
+    { "from": "Button", "to": "Banner" },
+    { "from": "Button", "to": "ModalCard" },
+    { "from": "Button", "to": "Placeholder" },
+    { "from": "Button", "to": "RichCell" },
+    { "from": "Card", "to": "CardGrid" },
+    { "from": "Card", "to": "CardScroll" },
+    { "from": "Cell", "to": "FormItem" },
+    { "from": "CellButton", "to": "FormItem" },
+    { "from": "Checkbox", "to": "FormItem" },
+    { "from": "ChipsInput", "to": "ChipsSelect" },
+    { "from": "Counter", "to": "Button" },
+    { "from": "Counter", "to": "PanelHeaderButton" },
+    { "from": "Counter", "to": "SubnavigationButton" },
+    { "from": "Counter", "to": "TabbarItem" },
+    { "from": "Counter", "to": "Tabs" },
+    { "from": "CustomScrollView", "to": "ChipsSelect" },
+    { "from": "CustomScrollView", "to": "CustomSelect" },
+    { "from": "CustomSelectOption", "to": "ChipsSelect" },
+    { "from": "CustomSelectOption", "to": "CustomSelect" },
+    { "from": "FixedLayout", "to": "PanelHeader" },
+    { "from": "FormField", "to": "ModalCard" },
+    { "from": "FormItem", "to": "FormLayoutGroup" },
+    { "from": "Header", "to": "Group" },
+    { "from": "Headline", "to": "PanelHeaderContent" },
+    { "from": "HorizontalScroll", "to": "HorizontalScroll__arrow" },
+    { "from": "HorizontalScroll", "to": "Tabs" },
+    { "from": "Icon", "to": "Button" },
+    { "from": "Icon", "to": "Cell" },
+    { "from": "Icon", "to": "CellButton" },
+    { "from": "Icon", "to": "Header" },
+    { "from": "Icon", "to": "IconButton" },
+    { "from": "Icon", "to": "Link" },
+    { "from": "Icon", "to": "ModalDismissButton" },
+    { "from": "Icon", "to": "ModalPageHeader" },
+    { "from": "Icon", "to": "PanelHeaderButton" },
+    { "from": "Icon", "to": "RichCell" },
+    { "from": "Icon", "to": "Select" },
+    { "from": "Icon", "to": "SimpleCell" },
+    { "from": "Icon", "to": "SubnavigationButton" },
+    { "from": "Icon", "to": "TabsItem" },
+    { "from": "List", "to": "PanelHeaderContext" },
+    { "from": "Panel", "to": "View" },
+    { "from": "PanelHeader", "to": "Panel" },
+    { "from": "PanelHeaderButton", "to": "ModalPageHeader" },
+    { "from": "PanelHeaderButton", "to": "PanelHeader" },
+    { "from": "PopoutWrapper", "to": "ScreenSpinner" },
+    { "from": "Radio", "to": "FormItem" },
+    { "from": "Removable", "to": "Cell" },
+    { "from": "Removable", "to": "FormItem" },
+    { "from": "Removable", "to": "FormLayoutGroup" },
+    { "from": "RichCell", "to": "FormItem" },
+    { "from": "Search", "to": "PanelHeader" },
+    { "from": "Select", "to": "DatePicker" },
+    { "from": "Separator", "to": "ModalPage" },
+    { "from": "Separator", "to": "Tabs" },
+    { "from": "SimpleCell", "to": "Cell" },
+    { "from": "SimpleCell", "to": "CellButton" },
+    { "from": "SimpleCell", "to": "FormItem" },
+    { "from": "SimpleCell", "to": "PanelHeaderContext" },
+    { "from": "Spinner", "to": "ScreenSpinner" },
+    { "from": "SubnavigationButton", "to": "SubnavigationBar" },
+    { "from": "Switch", "to": "SimpleCell" },
+    { "from": "Tabs", "to": "Group" },
+    { "from": "UsersStack", "to": "MiniInfoCell" },
+    { "from": "UsersStack", "to": "ModalCard" },
+    { "from": "UsersStack", "to": "RichCell" },
+    { "from": "View", "to": "Root" },
+    { "from": "none", "to": "Banner" },
+    { "from": "none", "to": "FormField" },
+    { "from": "none", "to": "FormStatus" },
+    { "from": "none", "to": "Gallery" },
+    { "from": "none", "to": "ModalPageHeader" },
+    { "from": "none", "to": "Panel" },
+    { "from": "none", "to": "PanelHeader" },
+    { "from": "none", "to": "PanelHeaderButton" },
+    { "from": "none", "to": "PopoutWrapper" },
+    { "from": "none", "to": "Removable" },
+    { "from": "none", "to": "RichCell" },
+    { "from": "none", "to": "SimpleCell" },
+    { "from": "none", "to": "Spinner" },
+    { "from": "none", "to": "vkui" }
+];
+
+const handled = new Set([
+    'Card', 'CardGrid', 'CardScroll',
+    'ActionSheet', 'ActionSheetItem',
+    'Headline', 'PanelHeaderContent',
+    'ChipsInput', 'ChipsSelect', 'CustomSelect', 'CustomScrollView', 'CustomSelectOption',
+    'Select', 'DatePicker',
+    'AppRoot', 'vkui',
+    'PopoutWrapper', 'Spinner', 'ScreenSpinner',
+
+    'none', 'Icon'
+]);
+links = links.filter(l => !handled.has(l.from) && !handled.has(l.to));
+links.forEach(l => nodes.add(l.from).add(l.to));
+nodes = Array.from(nodes).map(name => ({ name }));
+links = links.map(l => ({
+    source: nodes.findIndex(n => n.name === l.from),
+    target: nodes.findIndex(n => n.name === l.to),
+}))
+
+var simulation = d3.forceSimulation(nodes)
+  .force('charge', d3.forceManyBody().strength(-200))
+  .force('center', d3.forceCenter(width / 2, height / 2))
+  .force('link', d3.forceLink().links(links))
+  .on('tick', ticked);
+
+function updateLinks() {
+  var u = d3.select('.links')
+    .selectAll('line')
+    .data(links)
+
+  u.enter()
+    .append('line')
+    .merge(u)
+    .attr('x1', function(d) {
+      return d.source.x
+    })
+    .attr('y1', function(d) {
+      return d.source.y
+    })
+    .attr('x2', function(d) {
+      return d.target.x
+    })
+    .attr('y2', function(d) {
+      return d.target.y
+    })
+
+  u.exit().remove()
+}
+
+function updateNodes() {
+  u = d3.select('.nodes')
+    .selectAll('text')
+    .data(nodes)
+
+  u.enter()
+    .append('text')
+    .text(function(d) {
+      return d.name
+    })
+    .merge(u)
+    .attr('x', function(d) {
+      return d.x
+    })
+    .attr('y', function(d) {
+      return d.y
+    })
+    .attr('dy', function(d) {
+      return 5
+    })
+
+  u.exit().remove()
+}
+
+function ticked() {
+  updateLinks()
+  updateNodes()
+}
+
+  </script>
+</body>
+</html>
