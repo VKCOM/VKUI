@@ -20,11 +20,9 @@ CustomScrollView 	 ChipsSelect
 CustomScrollView 	 CustomSelect
 CustomSelectOption 	 ChipsSelect
 CustomSelectOption 	 CustomSelect
-FixedLayout 	 PanelHeader
 FormField 	 ModalCard
 FormItem 	 FormLayoutGroup
 Header 	 Group
-Headline 	 PanelHeaderContent
 HorizontalScroll 	 HorizontalScroll__arrow
 HorizontalScroll 	 Tabs
 Icon 	 Button
