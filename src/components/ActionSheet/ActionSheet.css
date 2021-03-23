@@ -7,6 +7,11 @@
   color: var(--text_secondary);
 }
 
+.ActionSheet--ios .ActionSheet__header:empty {
+  /* WTF is this? (moved from ActionShetItem) */
+  content: none;
+}
+
 /**
  * iOS
  */
