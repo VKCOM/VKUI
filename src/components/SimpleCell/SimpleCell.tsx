@@ -52,6 +52,7 @@ export interface SimpleCellOwnProps {
    * В iOS добавляет chevron справа. Передавать `true`, если предполагается переход при клике по ячейке.
    */
   expandable?: boolean;
+  centered?: boolean;
   multiline?: boolean;
   Component?: ElementType;
 }
@@ -67,6 +68,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
   description,
   expandable,
   multiline,
+  centered,
   Component,
   onClick,
   sizeY,
@@ -92,6 +94,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
           {
             'SimpleCell--exp': expandable,
             'SimpleCell--mult': multiline,
+            'SimpleCell--centered': centered,
           },
           `SimpleCell--sizeY-${sizeY}`,
         )

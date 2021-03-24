@@ -7,6 +7,11 @@
   color: var(--text_primary);
 }
 
+.SimpleCell--centered {
+  justify-content: center;
+  text-align: center;
+}
+
 /* WTF? there is no border-radius ever */
 .PanelHeaderContext .SimpleCell {
   border-radius: 0;
@@ -36,6 +41,15 @@
   min-width: 0;
   flex-shrink: initial;
   overflow: hidden;
+}
+
+.SimpleCell--centered .SimpleCell__main {
+  flex-grow: initial;
+  max-width: initial;
+}
+
+.SimpleCell.SimpleCell--centered > .Icon {
+  padding-right: 8px;
 }
 
 .SimpleCell > .Icon,

@@ -47,7 +47,6 @@ Search 	 PanelHeader
 Separator 	 ModalPage
 Separator 	 Tabs
 SimpleCell 	 Cell
-SimpleCell 	 CellButton
 SimpleCell 	 FormItem
 SubnavigationButton 	 SubnavigationBar
 Switch 	 SimpleCell
