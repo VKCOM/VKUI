@@ -408,7 +408,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           })}
           onMouseLeave={this.resetFocusedOption}
         >
-          <CustomScrollView boxRef={this.scrollBoxRef}>
+          <CustomScrollView boxRef={this.scrollBoxRef} maxHeight="160px">
             {options.map(this.renderOption)}
           </CustomScrollView>
         </div>

@@ -15,8 +15,6 @@ Cell 	 FormItem
 CellButton 	 FormItem
 Checkbox 	 FormItem
 ChipsInput 	 ChipsSelect
-CustomScrollView 	 ChipsSelect
-CustomScrollView 	 CustomSelect
 FormField 	 ModalCard
 FormItem 	 FormLayoutGroup
 Header 	 Group

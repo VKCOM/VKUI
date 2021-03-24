@@ -269,7 +269,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
           })}
           onMouseLeave={() => setFocusedOptionIndex(null)}
         >
-          <CustomScrollView boxRef={scrollBoxRef}>
+          <CustomScrollView boxRef={scrollBoxRef} maxHeight="160px">
             {fetching ? (
               <div vkuiClass="ChipsSelect__fetching">
                 <Spinner size="small" />
