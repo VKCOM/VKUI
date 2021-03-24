@@ -10,7 +10,6 @@ import { debounce, setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
-import { withAdaptivity } from '../../hoc/withAdaptivity';
 import { withPlatform } from '../../hoc/withPlatform';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { getClassName } from '../../helpers/getClassName';
@@ -356,7 +355,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       getRootRef,
       popupDirection,
       options,
-      sizeY,
       platform,
       style,
       onChange,
@@ -405,7 +403,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         </select>
         {opened &&
         <div
-          vkuiClass={classNames('CustomSelect__options', `CustomSelect__options--sizeY-${sizeY}`, {
+          vkuiClass={classNames('CustomSelect__options', {
             'CustomSelect__options--popupDirectionTop': popupDirection === 'top',
           })}
           onMouseLeave={this.resetFocusedOption}
@@ -420,6 +418,4 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   }
 }
 
-export default withPlatform(withAdaptivity(CustomSelect, {
-  sizeY: true,
-}));
+export default withPlatform(CustomSelect);

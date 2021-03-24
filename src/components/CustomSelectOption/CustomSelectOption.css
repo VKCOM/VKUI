@@ -5,10 +5,15 @@
   align-items: center;
   position: relative;
   box-sizing: border-box;
-  padding: 10px 36px 10px 12px;
+  padding: 10px 12px;
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
+}
+
+.CustomSelectOption.CustomSelectOption--sizeY-compact {
+  height: 36px;
+  padding-left: 9px;
 }
 
 .CustomSelectOption--hover {
@@ -29,7 +34,6 @@
 }
 
 .CustomSelectOption__selectedIcon {
-  position: absolute;
-  top: 15px;
-  right: 12px;
+  padding-left: 8px;
+  margin-left: auto;
 }

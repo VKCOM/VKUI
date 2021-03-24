@@ -17,8 +17,6 @@ Checkbox 	 FormItem
 ChipsInput 	 ChipsSelect
 CustomScrollView 	 ChipsSelect
 CustomScrollView 	 CustomSelect
-CustomSelectOption 	 ChipsSelect
-CustomSelectOption 	 CustomSelect
 FormField 	 ModalCard
 FormItem 	 FormLayoutGroup
 Header 	 Group
