@@ -234,7 +234,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     const modalState = this.modalsState[activeModal];
     // Отслеживаем изменение размеров viewport (Необходимо для iOS)
-    window.addEventListener('resize', this.updateModalTranslate, false);
+    this.window.addEventListener('resize', this.updateModalTranslate, false);
 
     switch (modalState.type) {
       case ModalType.PAGE:
@@ -369,7 +369,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     // Сбрасываем состояния, которые могут помешать закрытию модального окна
     this.setState({ touchDown: false, switching: false });
 
-    window.removeEventListener('resize', this.updateModalTranslate, false);
+    this.window.removeEventListener('resize', this.updateModalTranslate, false);
 
     const { prevModal } = this.state;
     if (!prevModal) {
