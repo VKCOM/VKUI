@@ -38,7 +38,6 @@ Panel 	 View
 PanelHeader 	 Panel
 PanelHeaderButton 	 ModalPageHeader
 PanelHeaderButton 	 PanelHeader
-PopoutWrapper 	 ScreenSpinner
 Radio 	 FormItem
 Removable 	 Cell
 Removable 	 FormItem
