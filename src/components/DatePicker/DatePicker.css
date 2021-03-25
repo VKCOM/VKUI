@@ -15,8 +15,9 @@
 }
 
 .DatePicker__month {
+  min-width: 0;
   display: flex;
-  flex: 1 0 auto;
+  flex: 1 0 0;
   padding: 0 8px;
 }
 
