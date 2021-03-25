@@ -1,0 +1,33 @@
+.StyleGuide {
+  height: auto;
+  align-items: stretch;
+}
+
+.StyleGuide__sidebar,
+.StyleGuide__content {
+  height: auto;
+}
+
+.StyleGuide__sidebar {
+  display: flex;
+  justify-content: flex-end;
+  border-right: 1px solid var(--image_border);
+  background: var(--background_light);
+  position: relative;
+  z-index: 2;
+}
+
+.StyleGuide__sidebarIn {
+  width: 360px;
+  padding-right: 16px;
+  padding-left: 16px;
+  box-sizing: border-box;
+}
+
+.StyleGuide__content {
+  background: var(--background_content);
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  padding: 36px;
+}

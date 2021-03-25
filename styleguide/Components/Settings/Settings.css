@@ -1,0 +1,17 @@
+.Settings__fixed {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .03), 0 2px 2px rgba(0, 0, 0, .06);
+  background: var(--background_content);
+}
+
+.Settings__in {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Settings__in > .Setting {
+  padding: 16px;
+}

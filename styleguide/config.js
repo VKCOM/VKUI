@@ -1,9 +1,4 @@
 const path = require('path');
-const webpackConfig = require('../webpack.config');
-const merge = require('webpack-merge');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const postcssConfig = require('../postcss.config');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { argv } = require('yargs');
 const { makeFsImporter } = require('react-docgen/dist/importer');
 const { findAllExportedComponentDefinitions } = require('react-docgen/dist/resolver');
@@ -13,8 +8,14 @@ module.exports = {
   styleguideDir: path.join(__dirname, `../${argv.dist || 'docs'}`),
   styleguideComponents: {
     PlaygroundRenderer: path.join(__dirname, './Components/PlaygroundRenderer'),
-    StyleGuideRenderer: path.join(__dirname, './Components/StyleGuideRenderer'),
-    PathlineRenderer: path.join(__dirname, './Components/PathlineRenderer')
+    StyleGuide: path.join(__dirname, './Components/StyleGuide/StyleGuide'),
+    StyleGuideRenderer: path.join(__dirname, './Components/StyleGuide/StyleGuideRenderer'),
+    PathlineRenderer: path.join(__dirname, './Components/PathlineRenderer'),
+    HeadingRenderer: path.join(__dirname, './Components/Heading/HeadingRenderer'),
+    ReactComponent: path.join(__dirname, './Components/ReactComponent/ReactComponent'),
+    TableOfContents: path.join(__dirname, './Components/TableOfContents/TableOfContents'),
+    ParaRenderer: path.join(__dirname, './Components/ParaRenderer'),
+    Preview: path.join(__dirname, './Components/Preview'),
   },
   propsParser: (filePath, source) => {
     return require('react-docgen').parse(source, findAllExportedComponentDefinitions, null, {
@@ -23,39 +24,35 @@ module.exports = {
     })
   },
   assetsDir:  path.join(__dirname, `assets`),
-  sections: [
-    {
-      content: './pages/intro.md'
-    }, {
-      name: 'Начало работы',
-      content: './pages/getting_started.md',
-      sections: [
-        {
-          name: 'Установка',
-          content: './pages/installation.md'
-        },
-        {
-          name: 'Подготовка HTML',
-          content: './pages/html.md'
-        }, {
-          name: 'Hello World',
-          content: './pages/hello_world.md'
-        }, {
-          name: 'Концепция',
-          content: './pages/concept.md',
-        }, {
-          name: 'Структура экранов',
-          content: './pages/structure.md'
-        }, {
-          name: 'Режимы подключения',
-          content: './pages/modes.md'
-        },
-      ]
-    }, {
-      name: 'Components',
+  sections: [{
+    name: 'О VKUI',
+    content: './pages/intro.md',
+  }, {
+    name: 'Установка',
+    content: './pages/installation.md',
+  }, {
+    name: 'Подготовка HTML',
+    content: './pages/html.md'
+  }, {
+    name: 'Hello World',
+    content: './pages/hello_world.md'
+  }, {
+    name: 'Концепция',
+    content: './pages/concept.md',
+  }, {
+    name: 'Структура экранов',
+    content: './pages/structure.md'
+  }, {
+    name: 'Режимы подключения',
+    content: './pages/modes.md'
+  }, {
+      name: 'Компоненты',
+      sectionDepth: 2,
+      expand: true,
+      search: true,
       sections: [{
         name: 'Layout',
-        components: () => [
+        components: [
           '../src/components/Root/Root.tsx',
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.tsx',
@@ -195,7 +192,9 @@ module.exports = {
         ]
       }]
     }, {
-      name: 'Other',
+      name: 'Прочее',
+      expand: true,
+      sectionDepth: 1,
       sections: [{
         name: 'Helpers',
         content: './pages/helpers.md'
@@ -226,49 +225,5 @@ module.exports = {
     path.resolve(__dirname, './setup.js'),
     path.resolve(__dirname, './setup.css')
   ],
-  dangerouslyUpdateWebpackConfig(webpackConfig) { // запрещаем вычищать .git
-    webpackConfig.plugins = webpackConfig.plugins.reduce((acc, item) => {
-      if (item instanceof CleanWebpackPlugin) {
-        item.cleanOnceBeforeBuildPatterns = ['**/*', '!.git'];
-      }
-      acc.push(item);
-      return acc;
-    }, [])
-    return webpackConfig;
-  },
-  webpackConfig: merge(webpackConfig, {
-    module: {
-      rules: [{
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              esModule: false,
-              importLoaders: 1
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: postcssConfig.plugins,
-              },
-            }
-          }
-        ]
-      }]
-    },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: '[name].css',
-      }),
-    ],
-    resolve: {
-      alias: {
-        'rsg-components/Preview': path.join(__dirname, './Components/Preview')
-      }
-    }
-  })
+  webpackConfig: require('./webpack.config')
 };

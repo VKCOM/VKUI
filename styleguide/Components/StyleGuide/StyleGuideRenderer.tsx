@@ -1,0 +1,100 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { DESKTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
+import { defaultConfigProviderProps } from '@vkui/components/ConfigProvider/ConfigProviderContext';
+import { SMALL_HEIGHT } from '../ViewHeightSelect';
+import {
+  VKCOM,
+  AppRoot,
+  Scheme,
+  WebviewType,
+  AdaptivityProvider,
+  SplitLayout,
+  withAdaptivity,
+  SplitCol,
+  ConfigProvider
+} from '@vkui';
+import './StyleGuideRenderer.css';
+import { Settings } from '../Settings/Settings';
+
+export const StyleGuideContext = React.createContext({
+  ...defaultConfigProviderProps,
+  webviewType: WebviewType.INTERNAL,
+  width: MOBILE_SIZE,
+  height: SMALL_HEIGHT,
+  hasMouse: true,
+});
+
+
+let initialState = {
+  ...defaultConfigProviderProps,
+  integration: "full",
+  webviewType: WebviewType.INTERNAL,
+  width: MOBILE_SIZE,
+  height: SMALL_HEIGHT,
+  hasMouse: true
+}
+
+try {
+  const lsState =  localStorage.getItem('vkui:state');
+  if (lsState) {
+    initialState = {
+      ...initialState,
+      ...JSON.parse(lsState)
+    };
+  }
+} catch (e) {
+  console.log(e);
+}
+
+let StyleGuideRenderer = ({ children, toc }) => {
+  const [state, setState] = useState(initialState);
+  const { width, height, platform, scheme, hasMouse } = state;
+
+  const setContext = useCallback((data) => {
+    const newState = { ...state, ...data };
+    localStorage.setItem('vkui:state', JSON.stringify(newState));
+    setState(newState);
+  }, [state])
+
+  useEffect(() => {
+    if (platform === VKCOM) {
+      setContext({ hasMouse: true, width: TABLET_SIZE, scheme: Scheme.VKCOM });
+    } else if (scheme === Scheme.VKCOM) {
+      setContext({ scheme: Scheme.BRIGHT_LIGHT });
+    }
+  }, [platform, scheme]);
+
+  const providerValue = useMemo(() => ({ ...state, setContext }), [width, height, platform, scheme, hasMouse, setContext]);
+
+  return (
+    <StyleGuideContext.Provider value={providerValue}>
+      <ConfigProvider scheme={scheme}>
+        <SplitLayout className="StyleGuide">
+          <SplitCol minWidth="360px" width="33.3%" maxWidth="480px" className="StyleGuide__sidebar">
+            <div className="StyleGuide__sidebarIn">
+              {toc}
+            </div>
+          </SplitCol>
+          <SplitCol width="100%" className="StyleGuide__content">
+            <Settings />
+            {children}
+          </SplitCol>
+        </SplitLayout>
+      </ConfigProvider>
+    </StyleGuideContext.Provider>
+  )
+}
+
+StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, { sizeX: true });
+
+const StyleGuideWrapper = (props) => {
+  return (
+      <AdaptivityProvider>
+        <AppRoot>
+          <StyleGuideRenderer {...props} />
+        </AppRoot>
+      </AdaptivityProvider>
+  )
+}
+
+export default StyleGuideWrapper;

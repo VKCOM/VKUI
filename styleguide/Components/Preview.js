@@ -1,10 +1,10 @@
 import React from 'react';
-import PreviewParent from 'react-styleguidist/lib/client/rsg-components/Preview/Preview';
-import ReactExample from 'react-styleguidist/lib/client/rsg-components/ReactExample/ReactExample';
-import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/PlaygroundError';
+import PreviewParent from '@rsg-components/Preview/Preview';
+import ReactExample from '@rsg-components/ReactExample/ReactExample';
+import PlaygroundError from '@rsg-components/PlaygroundError';
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
-import { StyleGuideContext } from './StyleGuideRenderer';
+import { StyleGuideContext } from './StyleGuide/StyleGuideRenderer';
 import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider } from '../../src';
 import { DOMContext } from '../../src/lib/dom';
 
