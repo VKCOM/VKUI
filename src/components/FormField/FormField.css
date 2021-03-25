@@ -79,15 +79,6 @@
   border-color: var(--field_border);
 }
 
-.FormField.Input .Input__el:focus ~ .FormField__border,
-.FormField.Textarea .Textarea__el:focus ~ .FormField__border,
-.FormField.Select .Select__el:focus ~ .FormField__border,
-.FormField.Select--mimicry:focus .FormField__border,
-.FormField.ChipsInput--focused .ChipsInput__container ~ .FormField__border {
-  border-color: var(--accent);
-  background: var(--field_background);
-}
-
 /**
  * sizeY COMPACT
  */
