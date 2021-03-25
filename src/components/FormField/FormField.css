@@ -37,6 +37,10 @@
   height: 44px;
 }
 
+.FormField__after .IconButton {
+  border-radius: 8px;
+}
+
 .FormField__after .Icon--16,
 .FormField__after .Icon--16.Icon--w-8 {
   padding: 14px;
@@ -93,7 +97,6 @@
   border: 1px solid var(--field_border);
   background: var(--field_background);
   content: '';
-  border-radius: 10px;
   box-sizing: border-box;
   z-index: 1;
   transform-origin: left top;
@@ -136,7 +139,8 @@
 /**
  * iOS
  */
-.FormField--ios {
+.FormField--ios,
+.FormField--ios .FormField__after .IconButton {
   border-radius: 10px;
 }
 
@@ -191,7 +195,8 @@
 /**
  * VKCOM
  */
-.FormField--vkcom {
+.FormField--vkcom,
+.FormField--vkcom .FormField__after .IconButton {
   border-radius: 6px;
 }
 
