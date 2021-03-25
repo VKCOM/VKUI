@@ -41,3 +41,8 @@
 .Textarea__el:disabled::placeholder {
   color: var(--text_secondary);
 }
+
+.Textarea__el:focus ~ .FormField__border {
+  border-color: var(--accent);
+  background: var(--field_background);
+}
