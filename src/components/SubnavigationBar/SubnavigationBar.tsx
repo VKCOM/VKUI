@@ -23,7 +23,13 @@ export const SubnavigationBar: FC<SubnavigationBarProps> = (props: Subnavigation
       {...restProps}
       vkuiClass={classNames(getClassName('SubnavigationBar', platform), `SubnavigationBar--${mode}`)}
     >
-      <ScrollWrapper vkuiClass="SubnavigationBar__in" {...props}>
+      <ScrollWrapper
+        vkuiClass="SubnavigationBar__in"
+        getScrollToLeft={restProps.getScrollToLeft}
+        getScrollToRight={restProps.getScrollToRight}
+        showArrows={restProps.showArrows}
+        scrollAnimationDuration={restProps.scrollAnimationDuration}
+      >
         <div vkuiClass="SubnavigationBar__scrollIn">
           <div vkuiClass="SubnavigationBar__gap" />
           {children}
