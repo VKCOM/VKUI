@@ -1,9 +1,10 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import { ReactNode, FunctionComponent } from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
+import { IOS } from '../../lib/platform';
 
 export interface IconButtonProps extends TappableProps {
   /**
@@ -13,7 +14,6 @@ export interface IconButtonProps extends TappableProps {
 }
 
 const IconButton: FunctionComponent<IconButtonProps> = ({
-  className,
   icon,
   sizeY,
   children,
@@ -27,9 +27,9 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
       {...restProps}
       Component={Component}
       activeEffectDelay={200}
-      className={classNames(
+      activeMode={platform === IOS ? 'opacity' : 'IconButton--active'}
+      vkuiClass={classNames(
         getClassName('IconButton', platform),
-        className,
         `IconButton--sizeY-${sizeY}`,
       )}
     >

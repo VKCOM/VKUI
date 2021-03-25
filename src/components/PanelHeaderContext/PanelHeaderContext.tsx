@@ -85,22 +85,22 @@ export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMP
   };
 
   render() {
-    const { children, className, opened, onClose, platform, viewWidth, hasMouse, window, document, ...restProps } = this.props;
+    const { children, opened, onClose, platform, viewWidth, hasMouse, window, document, ...restProps } = this.props;
     const { closing } = this.state;
     const baseClassNames = getClassName('PanelHeaderContext', platform);
 
     return (
-      <FixedLayout {...restProps} className={classNames(baseClassNames, {
+      <FixedLayout {...restProps} vkuiClass={classNames(baseClassNames, {
         'PanelHeaderContext--opened': opened,
         'PanelHeaderContext--closing': closing,
         'PanelHeaderContext--desktop': this.isDesktop,
-      }, className)} vertical="top">
-        <div className="PanelHeaderContext__in" ref={this.elementRef}>
-          <div className="PanelHeaderContext__content">
+      })} vertical="top">
+        <div vkuiClass="PanelHeaderContext__in" ref={this.elementRef}>
+          <div vkuiClass="PanelHeaderContext__content">
             {(opened || closing) && children}
           </div>
         </div>
-        {!this.isDesktop && (opened || closing) && <div onClick={onClose} className="PanelHeaderContext__fade" />}
+        {!this.isDesktop && (opened || closing) && <div onClick={onClose} vkuiClass="PanelHeaderContext__fade" />}
       </FixedLayout>
     );
   }

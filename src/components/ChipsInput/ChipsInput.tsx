@@ -14,6 +14,7 @@ import Chip, { ChipProps } from '../Chip/Chip';
 import { noop } from '../../lib/utils';
 import { useChipsInput } from './useChipsInput';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { prefixClass } from '../../lib/prefixClass';
 
 export type ChipsInputValue = string | number;
 
@@ -88,25 +89,26 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
     <FormField
       Component="label"
       getRootRef={getRootRef}
-      className={classNames('ChipsInput', `ChipsInput--sizeY-${sizeY}`, {
+      vkuiClass={classNames('ChipsInput', `ChipsInput--sizeY-${sizeY}`, {
         'ChipsInput--focused': focused,
         'ChipsInput--disabled': disabled,
         'ChipsInput--withChips': !!selectedOptions.length,
-      }, className)}
+      })}
+      className={className}
       style={style}
     >
-      <div className="ChipsInput__container">
+      <div vkuiClass="ChipsInput__container">
         {selectedOptions.map((option: Option) => {
           const value = getOptionValue(option);
           const label = getOptionLabel(option);
 
           return (
             <React.Fragment key={value}>
-              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: 'ChipsInput__chip' })}
+              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: prefixClass('ChipsInput__chip') })}
             </React.Fragment>
           );
         })}
-        <div className="ChipsInput__input-container">
+        <div vkuiClass="ChipsInput__input-container">
           <input ref={getRef}
             value={fieldValue}
             autoCapitalize="none"
@@ -115,7 +117,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
             spellCheck={false}
             aria-autocomplete="list"
             tabIndex={disabled ? null : tabIndex}
-            className="ChipsInput__el"
+            vkuiClass="ChipsInput__el"
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}

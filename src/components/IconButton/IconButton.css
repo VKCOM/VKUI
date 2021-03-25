@@ -50,14 +50,6 @@
 }
 
 /*
- * iOS
- */
-
-.IconButton--ios.Tappable--active {
-  opacity: .7;
-}
-
-/*
  * Android
  */
 
@@ -66,8 +58,8 @@
   border-radius: 50%;
 }
 
-.IconButton--android.Tappable--active .Icon,
-.IconButton--vkcom.Tappable--active .Icon {
+.IconButton--android.IconButton--active .Icon,
+.IconButton--vkcom.IconButton--active .Icon {
   transition: inherit;
   border-radius: inherit;
   background-color: var(--background_highlighted);

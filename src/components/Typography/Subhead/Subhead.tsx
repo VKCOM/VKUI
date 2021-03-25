@@ -11,7 +11,6 @@ export interface SubheadProps extends AllHTMLAttributes<HTMLElement> {
 
 const Subhead: FunctionComponent<SubheadProps> = ({
   children,
-  className,
   weight,
   Component,
   ...restProps
@@ -28,7 +27,7 @@ const Subhead: FunctionComponent<SubheadProps> = ({
   return (
     <SubheadComponent
       {...restProps}
-      className={classNames(getClassName('Subhead', platform), `Subhead--w-${subheadWeight}`, className)}
+      vkuiClass={classNames(getClassName('Subhead', platform), `Subhead--w-${subheadWeight}`)}
     >
       {children}
     </SubheadComponent>

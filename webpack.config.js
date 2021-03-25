@@ -31,6 +31,19 @@ const config = {
           },
         },
       },
+      {
+        test: /\.css$/,
+        use: [{
+          loader: 'style-loader',
+          options: {
+            // singleton is faster, but does not support sourcemaps
+            injectType: isProduction ? 'singletonStyleTag' : 'styleTag',
+            attributes: {
+              class: 'vkui-style'
+            },
+          },
+        }, 'css-loader', 'postcss-loader']
+      },
     ],
   },
   resolve: {

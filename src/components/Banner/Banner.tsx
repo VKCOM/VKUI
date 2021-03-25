@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, HTMLAttributes, MouseEventHandler } from 'react';
+import { Children, FunctionComponent, ReactNode, HTMLAttributes, MouseEventHandler } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -72,69 +72,72 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
 function renderHeader({ size, header }: Pick<BannerProps, 'size' | 'header'>) {
   switch (size) {
     case 's':
-      return <Headline weight="medium" className="Banner__header">{header}</Headline>;
+      return <Headline weight="medium" vkuiClass="Banner__header">{header}</Headline>;
     case 'm':
-      return <Title level="2" weight="medium" className="Banner__header">{header}</Title>;
+      return <Title level="2" weight="medium" vkuiClass="Banner__header">{header}</Title>;
   }
 }
 
 function renderSubheader({ size, subheader }: Pick<BannerProps, 'size' | 'subheader'>) {
   switch (size) {
     case 's':
-      return <Caption level="1" weight="regular" className="Banner__subheader">{subheader}</Caption>;
+      return <Caption level="1" weight="regular" vkuiClass="Banner__subheader">{subheader}</Caption>;
     case 'm':
-      return <Text weight="regular" className="Banner__subheader">{subheader}</Text>;
+      return <Text weight="regular" vkuiClass="Banner__subheader">{subheader}</Text>;
   }
 }
 
 const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {
-    className, mode, imageTheme, size, before, asideMode, header, subheader, text, children, background, actions,
+    mode, imageTheme, size, before, asideMode, header, subheader, text, children, background, actions,
     onDismiss,
     ...restProps
   } = props;
 
   const InnerComponent = asideMode === 'expand' ? Tappable : 'div';
+  const innerProps = asideMode === 'expand' ? {
+    activeMode: platform === IOS ? 'opacity' : 'background',
+  } : {};
 
   return (
     <div
       {...restProps}
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('Banner', platform),
         `Banner--md-${mode}`,
         `Banner--sz-${size}`, {
           'Banner--inverted': mode === 'image' && imageTheme === 'dark',
-        }, className,
+        },
       )}
     >
-      <InnerComponent className="Banner__in">
+      <InnerComponent vkuiClass="Banner__in" {...innerProps}>
         {mode === 'image' && background &&
-        <div className="Banner__bg">
+        <div vkuiClass="Banner__bg">
           {background}
         </div>
         }
 
-        {before && <div className="Banner__before">{before}</div>}
+        {before && <div vkuiClass="Banner__before">{before}</div>}
 
-        <div className="Banner__content">
+        <div vkuiClass="Banner__content">
           {hasReactNode(header) && renderHeader({ size, header })}
           {hasReactNode(subheader) && renderSubheader({ size, subheader })}
-          {hasReactNode(text) && <Text weight="regular" className="Banner__text">{text}</Text>}
-          {actions &&
-          <div className="Banner__actions">{actions}</div>
+          {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
+          {hasReactNode(actions) && Children.count(actions) > 0 &&
+          <div vkuiClass="Banner__actions">{actions}</div>
           }
         </div>
 
         {asideMode === 'expand' &&
-        <div className="Banner__expand">
+        <div vkuiClass="Banner__expand">
           <Icon24Chevron />
         </div>
         }
 
         {asideMode === 'dismiss' &&
-        <div className="Banner__dismiss">
-          <div className="Banner__dismissIcon" onClick={onDismiss}>
+        <div vkuiClass="Banner__dismiss">
+          <div vkuiClass="Banner__dismissIcon" onClick={onDismiss}>
             {(platform === ANDROID || platform === VKCOM) && <Icon24Cancel />}
             {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
           </div>

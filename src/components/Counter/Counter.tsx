@@ -32,7 +32,7 @@ export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Counter: FC<CounterProps> = (props: CounterProps) => {
-  const { mode, size, children, className, ...restProps } = props;
+  const { mode, size, children, ...restProps } = props;
   const platform = usePlatform();
 
   if (Children.count(children) === 0) {
@@ -42,14 +42,13 @@ const Counter: FC<CounterProps> = (props: CounterProps) => {
   return (
     <div
       {...restProps}
-      className={classNames(className,
+      vkuiClass={classNames(
         getClassName('Counter', platform),
         `Counter--${mode}`,
         `Counter--s-${size}`,
-        className,
       )}
     >
-      {hasReactNode(children) && <CounterTypography size={size} className="Counter__in">{children}</CounterTypography>}
+      {hasReactNode(children) && <CounterTypography size={size} vkuiClass="Counter__in">{children}</CounterTypography>}
     </div>
   );
 };

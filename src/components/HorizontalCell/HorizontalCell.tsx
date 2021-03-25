@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes, ReactNode } from 'react';
+import { FC, HTMLAttributes, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -30,14 +30,14 @@ export const HorizontalCell: FC<HorizontalCellProps> = (props) => {
   const platform = usePlatform();
 
   return (
-    <div className={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`, className)} ref={getRootRef} style={style}>
+    <div vkuiClass={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`)} ref={getRootRef} style={style} className={className}>
       <Tappable getRootRef={getRef} {...restProps}>
-        {hasReactNode(children) && <div className="HorizontalCell__image">{children}</div>}
-        <div className="HorizontalCell__content">
+        {hasReactNode(children) && <div vkuiClass="HorizontalCell__image">{children}</div>}
+        <div vkuiClass="HorizontalCell__content">
           {hasReactNode(header) && (
-            <CellTypography size={size} className="HorizontalCell__title">{header}</CellTypography>
+            <CellTypography size={size} vkuiClass="HorizontalCell__title">{header}</CellTypography>
           )}
-          {hasReactNode(subtitle) && <Caption weight="regular" level="1" className="HorizontalCell__subtitle">{subtitle}</Caption>}
+          {hasReactNode(subtitle) && <Caption weight="regular" level="1" vkuiClass="HorizontalCell__subtitle">{subtitle}</Caption>}
         </div>
       </Tappable>
     </div>

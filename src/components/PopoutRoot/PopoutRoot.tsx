@@ -1,5 +1,4 @@
-import React, { Component, HTMLAttributes, ReactNode } from 'react';
-import { classNames } from '../../lib/classNames';
+import { Component, HTMLAttributes, ReactNode } from 'react';
 import { HasPlatform, HasRootRef } from '../../types';
 import { withAdaptivity, ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -36,19 +35,19 @@ class PopoutRoot extends Component<PopoutRootProps & DOMProps> {
   }
 
   render() {
-    const { popout, modal, viewWidth, children, className, getRootRef, window, document, ...restProps } = this.props;
+    const { popout, modal, viewWidth, children, getRootRef, window, document, ...restProps } = this.props;
     const isDesktop = viewWidth >= ViewWidth.TABLET;
 
     return (
       <div
         {...restProps}
-        className={classNames('PopoutRoot', className)}
+        vkuiClass="PopoutRoot"
         ref={getRootRef}
       >
         {children}
         <AppRootPortal>
-          {!!popout && <div className={isDesktop ? 'PopoutRoot--absolute' : 'PopoutRoot__popout'}>{popout}</div>}
-          {!!modal && <div className="PopoutRoot__modal">{modal}</div>}
+          {!!popout && <div vkuiClass={isDesktop ? 'PopoutRoot--absolute' : 'PopoutRoot__popout'}>{popout}</div>}
+          {!!modal && <div vkuiClass="PopoutRoot__modal">{modal}</div>}
         </AppRootPortal>
       </div>
     );

@@ -1,10 +1,10 @@
-import React, { FunctionComponent, AllHTMLAttributes, ReactNode } from 'react';
+import { AllHTMLAttributes, FunctionComponent, ReactNode } from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { isPrimitiveReactNode } from '../../lib/utils';
-import { IOS, VKCOM } from '../../lib/platform';
+import { IOS, VKCOM, ANDROID } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 
@@ -36,7 +36,6 @@ export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
 }
 
 const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
-  className,
   children,
   primary,
   label,
@@ -47,14 +46,32 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
 
+  let hoverMode;
+  let activeMode;
+
+  switch (platform) {
+    case ANDROID:
+      hoverMode = 'background';
+      activeMode = 'background';
+      break;
+    case IOS:
+      hoverMode = 'background';
+      activeMode = 'opacity';
+      break;
+    case VKCOM:
+      hoverMode = 'PanelHeaderButton--hover';
+      activeMode = 'PanelHeaderButton--active';
+  }
+
   return (
     <Tappable
       {...restProps}
+      hoverMode={hoverMode}
       Component={Component}
       activeEffectDelay={200}
-      className={classNames(
+      activeMode={activeMode}
+      vkuiClass={classNames(
         getClassName('PanelHeaderButton', platform),
-        className,
         {
           'PanelHeaderButton--primary': primary,
           'PanelHeaderButton--primitive': isPrimitive,

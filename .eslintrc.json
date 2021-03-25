@@ -26,7 +26,33 @@
       "ignoreRestSiblings": true
     }],
     "no-restricted-imports": ["error", {
-      "patterns": ["@vkontakte/icons/dist/*"]
+      "paths": [
+        // prevent absolute imports from src subfolders like `import { ... } from "lib"`
+        "appearance", 
+        "components", 
+        "helpers", 
+        "hoc", 
+        "hooks", 
+        "lib", 
+        "styles", 
+        "testing", 
+        "types", 
+        "unstable"
+      ],
+      "patterns": [
+        "@vkontakte/icons/dist/*",
+        // prevent absolute imports from src subfolders like `import { ... } from "lib/platform"`
+        "appearance/*", 
+        "components/*", 
+        "helpers/*", 
+        "hoc/*", 
+        "hooks/*", 
+        "lib/*", 
+        "styles/*", 
+        "testing/*", 
+        "types/*", 
+        "unstable/*"
+      ]
     }],
     "no-restricted-properties": ["error", {
       "property": "querySelector",
@@ -49,7 +75,8 @@
     }, {
       "property": "getElementById",
       "message": "Absolutely do not use id"
-    }]
+    }],
+    "react/react-in-jsx-scope": "off"
   },
   "overrides": [
     {

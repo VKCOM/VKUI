@@ -31,7 +31,7 @@ export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
 const UsersStack: FC<UsersStackProps> = (props) => {
   const { system, systemVersion } = useBrowserInfo();
   const platform = usePlatform();
-  const { className, photos, visibleCount, size, layout, children, ...restProps } = props;
+  const { photos, visibleCount, size, layout, children, ...restProps } = props;
 
   useIsomorphicLayoutEffect(() => {
     createMasks();
@@ -50,10 +50,9 @@ const UsersStack: FC<UsersStackProps> = (props) => {
   return (
     <div
       {...restProps}
-      className={
+      vkuiClass={
         classNames(
           getClassName('UsersStack', platform),
-          className,
           `UsersStack--size-${size}`,
           `UsersStack--l-${layout}`,
           {
@@ -63,23 +62,23 @@ const UsersStack: FC<UsersStackProps> = (props) => {
         )
       }
     >
-      <div className="UsersStack__photos">
+      <div vkuiClass="UsersStack__photos">
         {photosShown.map((photo, i) => (
           <div
             key={i}
-            className="UsersStack__photo"
+            vkuiClass="UsersStack__photo"
             style={{ backgroundImage: `url(${photo})` }}
           />
         ))}
 
         {canShowOthers &&
-          <Caption weight="medium" level="1" className="UsersStack__photo UsersStack__photo--others">
+          <Caption weight="medium" level="1" vkuiClass="UsersStack__photo UsersStack__photo--others">
             <span>+{othersCount}</span>
           </Caption>
         }
       </div>
       {children &&
-        <Caption weight="regular" level="1" className="UsersStack__text">
+        <Caption weight="regular" level="1" vkuiClass="UsersStack__text">
           {children}
         </Caption>
       }

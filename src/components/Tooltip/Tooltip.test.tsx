@@ -1,4 +1,4 @@
-import React, { HtmlHTMLAttributes } from 'react';
+import { HtmlHTMLAttributes } from 'react';
 import { baselineComponent } from '../../testing/utils';
 import { render, screen } from '@testing-library/react';
 import Tooltip from './Tooltip';

@@ -1,9 +1,9 @@
-import React, { AllHTMLAttributes, ElementType, FunctionComponent, useEffect } from 'react';
+import { AllHTMLAttributes, ElementType, FunctionComponent, useEffect } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';
-import { HasRootRef } from 'types';
+import { HasRootRef } from '../../../types';
 
 export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
   weight: 'regular' | 'medium' | 'semibold';
@@ -12,7 +12,6 @@ export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HT
 
 const Text: FunctionComponent<TextProps> = ({
   children,
-  className,
   weight,
   Component,
   getRootRef,
@@ -38,7 +37,7 @@ const Text: FunctionComponent<TextProps> = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      className={classNames(getClassName('Text', platform), `Text--w-${textWeight}`, className)}
+      vkuiClass={classNames(getClassName('Text', platform), `Text--w-${textWeight}`)}
     >
       {children}
     </Component>

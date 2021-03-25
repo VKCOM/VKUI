@@ -126,10 +126,6 @@
   justify-content: center;
 }
 
-.Search__icon.Tappable--active {
-  opacity: .7;
-}
-
 .Search__after {
   position: absolute;
   left: 100%;

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes, MouseEvent } from 'react';
+import { FunctionComponent, HTMLAttributes, MouseEvent } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -19,7 +19,6 @@ export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, Re
 
 const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(({
   children,
-  className,
   mode,
   removable,
   removePlaceholder,
@@ -32,11 +31,10 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
 
   return (
     <div
-      className={classNames(
+      vkuiClass={classNames(
         getClassName('FormLayoutGroup', platform),
         `FormLayoutGroup--sizeY-${sizeY}`,
         `FormLayoutGroup--${mode}`,
-        className,
       )}
       {...restProps}>
       {isRemovable

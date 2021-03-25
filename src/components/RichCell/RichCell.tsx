@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -49,7 +49,6 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   bottom,
   actions,
   multiline,
-  className,
   Component,
   onClick,
   sizeY,
@@ -69,9 +68,8 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   return (
     <RootComponent
       {...props}
-      className={
+      vkuiClass={
         classNames(
-          className,
           getClassName('RichCell', platform),
           {
             'RichCell--mult': multiline,
@@ -81,20 +79,20 @@ const RichCell: FunctionComponent<RichCellProps> = ({
       }
     >
       {before}
-      <div className="RichCell__in">
-        <div className="RichCell__top">
+      <div vkuiClass="RichCell__in">
+        <div vkuiClass="RichCell__top">
           {/* Этот after будет скрыт из верстки. Он нужен для CSS */}
           {after}
-          <Text weight="medium" className="RichCell__content">
-            <div className="RichCell__children">{children}</div>
-            {hasReactNode(after) && <div className="RichCell__after">{after}</div>}
+          <Text weight="medium" vkuiClass="RichCell__content">
+            <div vkuiClass="RichCell__children">{children}</div>
+            {hasReactNode(after) && <div vkuiClass="RichCell__after">{after}</div>}
           </Text>
-          {hasReactNode(text) && <Text weight="regular" className="RichCell__text">{text}</Text>}
-          {hasReactNode(caption) && <Caption level="1" weight="regular" className="RichCell__caption">{caption}</Caption>}
+          {hasReactNode(text) && <Text weight="regular" vkuiClass="RichCell__text">{text}</Text>}
+          {hasReactNode(caption) && <Caption level="1" weight="regular" vkuiClass="RichCell__caption">{caption}</Caption>}
           {(hasReactNode(bottom) || hasReactNode(actions)) &&
-            <div className="RichCell__bottom">
+            <div vkuiClass="RichCell__bottom">
               {bottom}
-              {hasReactNode(actions) && <div className="RichCell__actions">{actions}</div>}
+              {hasReactNode(actions) && <div vkuiClass="RichCell__actions">{actions}</div>}
             </div>
           }
         </div>

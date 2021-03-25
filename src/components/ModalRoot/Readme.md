@@ -52,6 +52,7 @@ const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
 const MODAL_PAGE_USER_INFO = 'user-info';
 const MODAL_PAGE_FULLSCREEN = 'fullscreen';
+const MODAL_PAGE_DYNAMIC = 'dynamic';
 
 const MODAL_CARD_MONEY_SEND = 'money-send';
 const MODAL_CARD_APP_TO_MENU = 'app-to-menu';
@@ -59,7 +60,36 @@ const MODAL_CARD_ABOUT = 'say-about';
 const MODAL_CARD_NOTIFICATIONS = 'notifications';
 const MODAL_CARD_CHAT_INVITE = 'chat-invite';
 
-const App = withAdaptivity(class App extends React.Component {
+const DynamicModalPage = ({ updateModalHeight, onClose, ...props }) => {
+  const { viewWidth } = useAdaptivity();
+  const isMobile = viewWidth <= ViewWidth.MOBILE;
+  const platform = usePlatform();
+  const [expanded, setExpanded] = React.useState(false);
+  const toggle = React.useCallback(() => setExpanded(!expanded), [expanded]);
+
+  return (
+    <ModalPage
+      {...props}
+      header={
+        <ModalPageHeader
+          right={isMobile && platform === IOS && <PanelHeaderButton onClick={onClose}><Icon24Dismiss/></PanelHeaderButton>}
+          left={isMobile && platform === ANDROID && <PanelHeaderClose onClick={onClose}/>}
+        >
+          Dynamic modal
+        </ModalPageHeader>
+      }
+    >
+      <Group>
+        <CellButton onClick={toggle}>
+          {expanded ? "collapse" : "expand"}
+        </CellButton>
+        {expanded && <Placeholder icon={<Icon56MoneyTransferOutline />} />}
+      </Group>
+    </ModalPage>
+  );
+};
+
+const App = withPlatform(withAdaptivity(class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -99,6 +129,8 @@ const App = withAdaptivity(class App extends React.Component {
 
   render() {
     const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
+    const platform = this.props.platform;
+    
     const modal = (
       <ModalRoot
         activeModal={this.state.activeModal}
@@ -107,12 +139,11 @@ const App = withAdaptivity(class App extends React.Component {
         <ModalPage
           id={MODAL_PAGE_FULLSCREEN}
           onClose={this.modalBack}
-          fullscreen
           settlingHeight={100}
           header={
             <ModalPageHeader
-              left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
-              right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+              right={platform === IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss/></PanelHeaderButton>}
+              left={isMobile && platform === ANDROID && <PanelHeaderClose onClick={this.modalBack}/>}
             >
               @{this.randomUser.screen_name}
             </ModalPageHeader>
@@ -141,14 +172,20 @@ const App = withAdaptivity(class App extends React.Component {
             })}
           </Group>
         </ModalPage>
+
+        <DynamicModalPage
+          id={MODAL_PAGE_DYNAMIC}
+          onClose={this.modalBack}
+          dynamicContentHeight
+        />
       
         <ModalPage
           id={MODAL_PAGE_FILTERS}
           onClose={this.modalBack}
           header={
             <ModalPageHeader
-              left={isMobile && IS_PLATFORM_ANDROID && <PanelHeaderButton onClick={this.modalBack}><Icon24Cancel /></PanelHeaderButton>}
-              right={<PanelHeaderButton onClick={this.modalBack}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</PanelHeaderButton>}
+              left={isMobile && <PanelHeaderClose onClick={this.modalBack}/>}
+              right={<PanelHeaderSubmit onClick={this.modalBack}/>}
             >
               Фильтры
             </ModalPageHeader>
@@ -209,7 +246,6 @@ const App = withAdaptivity(class App extends React.Component {
           header={
             <ModalPageHeader
               left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
-              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Выберите страну
             </ModalPageHeader>
@@ -235,7 +271,6 @@ const App = withAdaptivity(class App extends React.Component {
           header={
             <ModalPageHeader
               left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
-              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Просмотры истории
             </ModalPageHeader>
@@ -260,7 +295,6 @@ const App = withAdaptivity(class App extends React.Component {
           header={
             <ModalPageHeader
               left={<PanelHeaderBack label="Назад" onClick={this.modalBack} />}
-              right={IS_PLATFORM_IOS && <PanelHeaderButton onClick={this.modalBack}><Icon24Dismiss /></PanelHeaderButton>}
             >
               Информация о пользователе
             </ModalPageHeader>
@@ -385,6 +419,9 @@ const App = withAdaptivity(class App extends React.Component {
               <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN)}>
                 Открыть полноэкранную модальную страницу
               </CellButton>
+              <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_DYNAMIC)}>
+                Открыть модальную страницу с динамической высотой
+              </CellButton>
               <CellButton onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
                 Открыть модальные карточки
               </CellButton>
@@ -395,7 +432,7 @@ const App = withAdaptivity(class App extends React.Component {
   }
 }, {
   viewWidth: true
-});
+}));
 
 <App />
 ```

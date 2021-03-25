@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -19,7 +19,7 @@ export interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
   separator?: boolean | 'top' | 'bottom' | 'center';
 }
 
-export const Spacing: FC<SpacingProps> = ({ size, separator, className, style, ...restProps }: SpacingProps) => {
+export const Spacing: FC<SpacingProps> = ({ size, separator, style, ...restProps }: SpacingProps) => {
   const platfrom = usePlatform();
   const styles = {
     height: size,
@@ -29,7 +29,7 @@ export const Spacing: FC<SpacingProps> = ({ size, separator, className, style, .
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('Spacing', platfrom), className, {
+      vkuiClass={classNames(getClassName('Spacing', platfrom), {
         'Spacing--separator': !!separator,
         'Spacing--separator-center':
           separator === true || separator === 'center',

@@ -3,7 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
 import { withContext } from '../../hoc/withContext';
-import { HasPlatform, HasRootRef } from '../../types';
+import { HasPlatform, HasRef, HasRootRef } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withPanelContext } from '../Panel/withPanelContext';
 import { setRef } from '../../lib/utils';
@@ -15,6 +15,7 @@ import { DOMProps, withDOM } from '../../lib/dom';
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
+  HasRef<HTMLDivElement>,
   HasPlatform {
   vertical?: 'top' | 'bottom';
   /**
@@ -92,9 +93,12 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     const fromPanelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
     const toPanelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
 
+    // если переход назад - анимация только у панели с которой уходим (detail.from), и подстраиваться под скролл надо только на ней
+    const panelAnimated = !(this.props.panel === e.detail.to && e.detail.isBack);
+
     // Для панелей, с которых уходим всегда выставляется скролл
-    // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл
-    if (fromPanelHasScroll || toPanelHasScroll && this.canTargetPanelScroll) {
+    // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл и применяется ли к ней анимация перехода:
+    if (fromPanelHasScroll || toPanelHasScroll && this.canTargetPanelScroll && panelAnimated) {
       this.setState({
         position: 'absolute',
         top: this.el.offsetTop + panelScroll,
@@ -132,20 +136,32 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
 
   render() {
     const {
-      className, children, style, vertical, getRootRef, platform, filled, splitCol,
-      panel, getPanelNode, window, document, ...restProps } = this.props;
+      children,
+      style,
+      vertical,
+      getRootRef,
+      getRef,
+      platform,
+      filled,
+      splitCol,
+      panel,
+      getPanelNode,
+      window,
+      document,
+      ...restProps
+    } = this.props;
 
     return (
       <TooltipContainer
         {...restProps}
         fixed
         ref={this.getRef}
-        className={classNames(getClassName('FixedLayout', platform), {
+        vkuiClass={classNames(getClassName('FixedLayout', platform), {
           'FixedLayout--filled': filled,
-        }, `FixedLayout--${vertical}`, className)}
+        }, `FixedLayout--${vertical}`)}
         style={{ ...style, ...this.state }}
       >
-        <div className="FixedLayout__in">{children}</div>
+        <div vkuiClass="FixedLayout__in" ref={getRef}>{children}</div>
       </TooltipContainer>
     );
   }

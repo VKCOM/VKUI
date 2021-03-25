@@ -11,17 +11,17 @@ export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
   expanded?: boolean;
 }
 
-let Separator: FunctionComponent<SeparatorProps> = ({ className, wide, expanded, ...restProps }: SeparatorProps) => {
+let Separator: FunctionComponent<SeparatorProps> = ({ wide, expanded, ...restProps }: SeparatorProps) => {
   const platform = usePlatform();
 
   return (
     <div
       {...restProps}
-      className={classNames(getClassName('Separator', platform), className, {
+      vkuiClass={classNames(getClassName('Separator', platform), {
         'Separator--wide': wide,
       })}
     >
-      <div className={classNames('Separator__in', {
+      <div vkuiClass={classNames('Separator__in', {
         'Separator__in--expanded': expanded,
       })} />
     </div>

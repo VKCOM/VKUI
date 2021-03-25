@@ -3,6 +3,7 @@ import React, {
   FocusEvent,
   ReactNode,
   useEffect,
+  Fragment,
 } from 'react';
 import { Icon20Dropdown } from '@vkontakte/icons';
 import { classNames } from '../../lib/classNames';
@@ -15,6 +16,7 @@ import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { setRef, noop } from '../../lib/utils';
 import { useDOM } from '../../lib/dom';
 import Caption from '../Typography/Caption/Caption';
+import { prefixClass } from '../../lib/prefixClass';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
@@ -58,7 +60,7 @@ const FOCUS_ACTION_PREV: focusActionType = 'prev';
 
 const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Option>) => {
   const {
-    style, onBlur, onFocus, onClick, onKeyDown, className, fetching, renderOption, emptyText,
+    style, onFocus, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText, sizeY,
     closeAfterSelect, onChangeStart, ...restProps
@@ -232,9 +234,10 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
 
   return (
     <div
-      className={classNames('ChipsSelect', `ChipsSelect--sizeY-${sizeY}`, className)}
+      vkuiClass={classNames('ChipsSelect', `ChipsSelect--sizeY-${sizeY}`)}
       ref={rootRef}
       style={style}
+      className={className}
     >
       <ChipsInput
         {...restProps}
@@ -248,7 +251,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
         onFocus={handleFocus}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className={classNames({
+        vkuiClass={classNames({
           ['ChipsSelect__open']: opened,
           ['ChipsSelect__open--popupDirectionTop']: popupDirection === 'top',
         })}
@@ -256,23 +259,23 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
         disabled={disabled}
         onInputChange={handleInputChange}
       />
-      <div className="ChipsSelect__toggle">
+      <div vkuiClass="ChipsSelect__toggle">
         <Icon20Dropdown />
       </div>
       {opened &&
         <div
-          className={classNames('ChipsSelect__options', {
+          vkuiClass={classNames('ChipsSelect__options', {
             ['ChipsSelect__options--popupDirectionTop']: popupDirection === 'top',
           })}
           onMouseLeave={() => setFocusedOptionIndex(null)}
         >
           <CustomScrollView boxRef={scrollBoxRef}>
             {fetching ? (
-              <div className="ChipsSelect__fetching">
+              <div vkuiClass="ChipsSelect__fetching">
                 <Spinner size="small" />
               </div>
             ) : (
-              <>
+              <Fragment>
                 {showCreatable && (
                   <CustomSelectOption
                     hovered={focusedOptionIndex === 0}
@@ -283,7 +286,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                   </CustomSelectOption>
                 )}
                 {!filteredOptions?.length && !showCreatable && emptyText ? (
-                  <Caption level="1" weight="regular" className="ChipsSelect__empty">{emptyText}</Caption>
+                  <Caption level="1" weight="regular" vkuiClass="ChipsSelect__empty">{emptyText}</Caption>
                 ) :
                   filteredOptions.map((option: Option, index: number) => {
                     const label = getOptionLabel(option);
@@ -295,7 +298,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                     return (
                       <React.Fragment key={getOptionValue(option)}>
                         {renderOption({
-                          className: 'ChipsSelect__option',
+                          className: prefixClass('ChipsSelect__option'),
                           option,
                           hovered,
                           children: label,
@@ -316,7 +319,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                     );
                   })
                 }
-              </>
+              </Fragment>
             )}
           </CustomScrollView>
         </div>

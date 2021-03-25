@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { hasReactNode } from '../../lib/utils';
@@ -32,21 +32,21 @@ function renderLabel(children: ReactNode, textLevel: SubnavigationButtonProps['t
   switch (textLevel) {
     case 1:
       return (
-        <Subhead Component="div" weight="regular" className={className}>
+        <Subhead Component="div" weight="regular" vkuiClass={className}>
           {children}
         </Subhead>
       );
 
     case 2:
       return (
-        <Caption level="1" Component="div" weight="regular" className={className}>
+        <Caption level="1" Component="div" weight="regular" vkuiClass={className}>
           {children}
         </Caption>
       );
 
     case 3:
       return (
-        <Caption level="2" Component="div" weight="regular" className={className}>
+        <Caption level="2" Component="div" weight="regular" vkuiClass={className}>
           {children}
         </Caption>
       );
@@ -63,27 +63,26 @@ export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: Subnavi
     after,
     expandable,
     children,
-    className,
     ...restProps
   } = props;
 
   return (
     <Tappable
       {...restProps}
-      className={classNames(
+      hasActive={false}
+      vkuiClass={classNames(
         getClassName('SubnavigationButton', platform),
         `SubnavigationButton--${size}`,
         {
           'SubnavigationButton--selected': selected,
         },
-        className,
       )}
     >
-      <div className="SubnavigationButton__in">
-        {hasReactNode(before) && <div className="SubnavigationButton__before">{before}</div>}
+      <div vkuiClass="SubnavigationButton__in">
+        {hasReactNode(before) && <div vkuiClass="SubnavigationButton__before">{before}</div>}
         {renderLabel(children, textLevel)}
-        {hasReactNode(after) && <div className="SubnavigationButton__after">{after}</div>}
-        {expandable && <Icon16Dropdown className="SubnavigationButton__expandableIcon" />}
+        {hasReactNode(after) && <div vkuiClass="SubnavigationButton__after">{after}</div>}
+        {expandable && <Icon16Dropdown vkuiClass="SubnavigationButton__expandableIcon" />}
       </div>
     </Tappable>
   );

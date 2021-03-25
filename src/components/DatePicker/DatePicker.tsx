@@ -1,4 +1,4 @@
-import React, {
+import {
   Component,
   ChangeEventHandler,
   HTMLAttributes,
@@ -7,7 +7,6 @@ import Input from '../Input/Input';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
-import { classNames } from '../../lib/classNames';
 import CustomSelect, { CustomSelectOptionInterface } from '../CustomSelect/CustomSelect';
 
 const DefaultMonths: string[] = [
@@ -161,16 +160,15 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
       dayPlaceholder, monthPlaceholder, yearPlaceholder,
       popupDirection,
       defaultValue,
-      className,
       hasMouse,
       ...restProps
     } = this.props;
     const { day, month, year } = this.state;
 
     return (
-      <div className={classNames('DatePicker', className)} {...restProps}>
-        <div className="DatePicker__container">
-          <div className="DatePicker__day">
+      <div vkuiClass="DatePicker" {...restProps}>
+        <div vkuiClass="DatePicker__container">
+          <div vkuiClass="DatePicker__day">
             <CustomSelect
               name="day"
               value={day}
@@ -180,7 +178,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
               onChange={this.onSelectChange}
             />
           </div>
-          <div className="DatePicker__month">
+          <div vkuiClass="DatePicker__month">
             <CustomSelect
               name="month"
               value={month}
@@ -190,7 +188,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
               onChange={this.onSelectChange}
             />
           </div>
-          <div className="DatePicker__year">
+          <div vkuiClass="DatePicker__year">
             <CustomSelect
               name="year"
               value={year}

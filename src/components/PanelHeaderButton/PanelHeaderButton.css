@@ -36,6 +36,7 @@
 .PanelHeaderButton--ios.PanelHeaderButton--primitive {
   height: 44px;
   line-height: 44px;
+  padding: 0 12px;
 }
 
 .PanelHeaderButton--ios .Icon--24 {
@@ -44,10 +45,6 @@
 
 .PanelHeaderButton--ios .Icon--28 {
   padding: 8px;
-}
-
-.PanelHeaderButton--ios.Tappable--active {
-  opacity: .7;
 }
 
 /*
@@ -72,10 +69,6 @@
   padding: 10px;
 }
 
-.PanelHeaderButton--android.Tappable--active {
-  background-color: var(--background_highlighted);
-}
-
 /**
 * VKCOM
 */
@@ -88,8 +81,8 @@
   opacity: .7;
 }
 
-.PanelHeaderButton--vkcom.Tappable--shadowHovered > :not(.Counter),
-.PanelHeaderButton--vkcom.Tappable--active > :not(.Counter) {
+.PanelHeaderButton--vkcom.PanelHeaderButton--hover > :not(.Counter),
+.PanelHeaderButton--vkcom.PanelHeaderButton--active > :not(.Counter) {
   opacity: 1;
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "4.1.0",
+  "version": "4.3.0",
   "main": "dist/cjs/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -42,12 +42,15 @@
     "@typescript-eslint/parser": "^2.0.0",
     "@vkontakte/appearance": "https://github.com/VKCOM/Appearance#v9.2.0",
     "@vkontakte/eslint-config": "2.5.0",
-    "@vkontakte/icons": "1.64.0",
+    "@vkontakte/icons": "^1.81.0",
     "@vkontakte/vk-bridge": "^2.1.3",
     "@vkontakte/vkjs": "^0.20.0",
     "autoprefixer": "^9.8.0",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.1.0",
+    "babel-plugin-auto-import": "^1.1.0",
+    "babel-plugin-istanbul": "^6.0.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "chalk": "^4.1.0",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^3.0.0",
@@ -74,6 +77,7 @@
     "postcss-custom-properties": "10.0.0",
     "postcss-import": "13.0.0",
     "postcss-loader": "^4.1.0",
+    "postcss-prefixer": "^2.1.2",
     "pre-commit": "^1.2.2",
     "prop-types": "^15.6.1",
     "react": "^16.8.6",
@@ -84,6 +88,7 @@
     "shx": "^0.3.2",
     "size-limit": "^4.9.1",
     "source-map-loader": "^0.2.4",
+    "style-loader": "^2.0.0",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
     "typescript": "3.8",
@@ -152,10 +157,11 @@
     "clear": "shx rm -rf dist/*",
     "test:unit": "jest --config jest.unit.config.js",
     "test:unit:quick": "yarn test:unit --silent --reporters='jest-silent-reporter' --onlyChanged",
-    "test:unit:ci": "yarn test:unit --ci --silent --outputFile test-results.json --json --coverage --coverageReporters='json-summary'",
+    "test:unit:ci": "yarn test:unit --ci --silent --outputFile test-results.json --json --coverage --coverageReporters='json' --coverageDirectory='.nyc_output'",
     "test:e2e": "jest --config e2e/jest.e2e.config.js",
     "test:e2e:ci": "jest --config e2e/jest.e2e.config.js --ci --outputFile e2e-results.json --json",
     "test:code": "jest",
+    "test:combine-coverage": "npx nyc report --reporter=lcov",
     "lint:es": "eslint --ext .jsx,.js,.ts,.tsx src/ e2e/ --cache --cache-location .cache/.eslintcache",
     "lint:es:ci": "yarn lint:es -o lint-results.json -f json",
     "lint:style": "stylelint \"./src/**/*.css\" --cache --cache-location .cache/.stylelintcache",
@@ -165,10 +171,10 @@
     "test": "concurrently 'yarn test:unit' 'yarn test:static'",
     "test:quick": "concurrently 'yarn test:unit:quick' 'yarn test:static'",
     "test:ci": "concurrently 'yarn test:unit:ci' 'yarn test:static:ci'",
-    "copy-default-scheme": "shx cp ./src/styles/bright_light.css ./dist/default_scheme.css"
+    "copy-default-scheme": "shx cp ./src/styles/bright_light.css ./dist/default_scheme.css",
+    "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install"
   },
   "pre-commit": [
     "test:static"
-  ],
-  "dependencies": {}
+  ]
 }

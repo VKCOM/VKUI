@@ -21,9 +21,17 @@ __Скриншотные тесты__ на jest + [playwright](https://playwrigh
 
 Чтобы обновить скриншоты, установите докер и git-lfs и запустите `yarn test:e2e -u`.
 
+## Покрытие
+
+Чтобы сгенерировать карту покрытия в `coverage/lcov/index.html`:
+
+- Только юнитами — просто `yarn test:unit`
+- Только E2E — `yarn test:e2e && yarn test:combine-coverage`
+- Совмещенного — `&& yarn test:e2e && yarn test:unit:ci && yarn test:combine-coverage`
+
 ## `describeScreenshotFuzz`
 
-Функция `describeScreenshotFuzz` из [`/testing/utils`]('./src/testing/utils.ts) помогает быстро заскриншотить все состояния компонента в разных темах и на разных платформах:
+Функция `describeScreenshotFuzz` из [`/testing/utils`](./src/testing/e2e/utils.tsx) помогает быстро заскриншотить все состояния компонента в разных темах и на разных платформах:
 
 ```ts
 describe('Button', () => {

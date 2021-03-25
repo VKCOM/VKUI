@@ -1,9 +1,11 @@
-import React, { FC, HTMLAttributes, useRef, useState } from 'react';
+import { FC, HTMLAttributes, useRef, useState } from 'react';
 import { useDOM } from '../../lib/dom';
 import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { classScopingMode } from '../../lib/classScopingMode';
+import { IconSettingsProvider } from '@vkontakte/icons';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -11,6 +13,8 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   embedded?: boolean;
   window?: Window;
+  /** Убирает классы без префикса (.Button) */
+  noLegacyClasses?: boolean;
 }
 
 function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
@@ -21,15 +25,18 @@ function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
   }
 }
 
-const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
+const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses = false }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
   const { window } = useDOM();
 
   const initialized = useRef(false);
 
-  if (window && !initialized.current && !embedded) {
-    window.document.documentElement.classList.add('vkui');
+  if (!initialized.current) {
+    if (window && !embedded) {
+      window.document.documentElement.classList.add('vkui');
+    }
+    classScopingMode.noConflict = noLegacyClasses;
   }
 
   // one time initialization and cleanup
@@ -70,7 +77,7 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
   );
 
   return (
-    <div ref={rootRef} className={classNames('AppRoot', {
+    <div ref={rootRef} vkuiClass={classNames('AppRoot', {
       'AppRoot--no-mouse': !hasMouse,
     })}>
       <AppRootContext.Provider value={{
@@ -78,7 +85,9 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse }) => {
         portalRoot: portalRoot,
         embedded,
       }}>
-        {children}
+        <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
+          {children}
+        </IconSettingsProvider>
       </AppRootContext.Provider>
     </div>
   );
