@@ -12,14 +12,6 @@
   margin-right: -14px;
 }
 
-.ChipsInput.ChipsInput--sizeY-compact {
-  padding: 2px 12px;
-}
-
-.ChipsInput.ChipsInput--sizeY-compact .FormField__after {
-  margin-right: -12px;
-}
-
 .ChipsInput__container {
   display: flex;
   width: 100%;
@@ -80,4 +72,16 @@
 
 .ChipsInput__el:disabled::placeholder {
   color: var(--text_secondary);
+}
+
+/**
+ * sizeY COMPACT
+ */
+
+.ChipsInput--sizeY-compact {
+  padding: 2px 12px;
+}
+
+.ChipsInput--sizeY-compact .FormField__after {
+  margin-right: -12px;
 }
