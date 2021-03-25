@@ -111,6 +111,9 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
         this.element.value = '';
       });
     }
+    if (prevProps.value !== this.props.value && this.props.grow && this.isControlledOutside) {
+      this.resize();
+    }
   }
 
   render() {
