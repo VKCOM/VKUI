@@ -8,12 +8,10 @@
   border-radius: 8px;
 }
 
-.FormField.ChipsSelect__open .FormField__border,
 .FormField.CustomSelect__open .FormField__border {
   border-radius: 8px 8px 0 0;
 }
 
-.FormField.ChipsSelect__open--popupDirectionTop .FormField__border,
 .FormField.CustomSelect__open--popupDirectionTop .FormField__border {
   border-radius: 0 0 8px 8px;
 }
@@ -134,12 +132,10 @@
   border-radius: 10px;
 }
 
-.FormField--ios.ChipsSelect__open .FormField__border,
 .FormField--ios.CustomSelect__open .FormField__border {
   border-radius: 10px 10px 0 0;
 }
 
-.FormField--ios.ChipsSelect__open--popupDirectionTop .FormField__border,
 .FormField--ios.CustomSelect__open--popupDirectionTop .FormField__border {
   border-radius: 0 0 10px 10px;
 }
@@ -152,12 +148,10 @@
     height: 200%;
   }
 
-  .FormField--ios.ChipsSelect__open .FormField__border,
   .FormField--ios.CustomSelect__open .FormField__border {
     border-radius: 20px 20px 0 0;
   }
 
-  .FormField--ios.ChipsSelect__open--popupDirectionTop .FormField__border,
   .FormField--ios.CustomSelect__open--popupDirectionTop .FormField__border {
     border-radius: 0 0 20px 20px;
   }
@@ -171,12 +165,10 @@
     height: 312.5%;
   }
 
-  .FormField--ios.ChipsSelect__open .FormField__border,
   .FormField--ios.CustomSelect__open .FormField__border {
     border-radius: 31.25px 31.25px 0 0;
   }
 
-  .FormField--ios.ChipsSelect__open--popupDirectionTop .FormField__border,
   .FormField--ios.CustomSelect__open--popupDirectionTop .FormField__border {
     border-radius: 0 0 31.25px 31.25px;
   }
@@ -189,12 +181,10 @@
   border-radius: 6px;
 }
 
-.FormField--vkcom.ChipsSelect__open .FormField__border,
 .FormField--vkcom.CustomSelect__open .FormField__border {
   border-radius: 6px 6px 0 0;
 }
 
-.FormField--vkcom.ChipsSelect__open--popupDirectionTop .FormField__border,
 .FormField--vkcom.CustomSelect__open--popupDirectionTop .FormField__border {
   border-radius: 0 0 6px 6px;
 }

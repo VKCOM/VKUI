@@ -18,6 +18,7 @@ import { useDOM } from '../../lib/dom';
 import Caption from '../Typography/Caption/Caption';
 import { prefixClass } from '../../lib/prefixClass';
 import { useExternRef } from '../../hooks/useExternRef';
+import { usePlatform } from '../../hooks/usePlatform';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
@@ -227,9 +228,11 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     return renderChip({ ...renderChipProps, onRemove: onRemoveWrapper });
   };
 
+  const platform = usePlatform();
+
   return (
     <div
-      vkuiClass={classNames('ChipsSelect', `ChipsSelect--sizeY-${sizeY}`)}
+      vkuiClass={classNames('ChipsSelect', `ChipsSelect--${platform}`, `ChipsSelect--sizeY-${sizeY}`)}
       ref={rootRef}
       style={style}
       className={className}

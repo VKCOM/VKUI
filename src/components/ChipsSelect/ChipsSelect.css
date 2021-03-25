@@ -63,3 +63,53 @@
 .ChipsSelect .CustomScrollView__box:focus {
   outline: none;
 }
+
+.ChipsSelect__open .FormField__border {
+  border-radius: 8px 8px 0 0;
+}
+
+.ChipsSelect__open--popupDirectionTop .FormField__border {
+  border-radius: 0 0 8px 8px;
+}
+
+/**
+ * iOS
+ */
+.ChipsSelect--ios .ChipsSelect__open .FormField__border {
+  border-radius: 10px 10px 0 0;
+}
+
+.ChipsSelect--ios .ChipsSelect__open--popupDirectionTop .FormField__border {
+  border-radius: 0 0 10px 10px;
+}
+
+@media (min-resolution: 2dppx) {
+  .ChipsSelect--ios .ChipsSelect__open .FormField__border {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .ChipsSelect--ios .ChipsSelect__open--popupDirectionTop .FormField__border {
+    border-radius: 0 0 20px 20px;
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  .ChipsSelect--ios .ChipsSelect__open .FormField__border {
+    border-radius: 31.25px 31.25px 0 0;
+  }
+
+  .ChipsSelect--ios .ChipsSelect__open--popupDirectionTop .FormField__border {
+    border-radius: 0 0 31.25px 31.25px;
+  }
+}
+
+/**
+ * VKCOM
+ */
+.ChipsSelect--vkcom .ChipsSelect__open .FormField__border {
+  border-radius: 6px 6px 0 0;
+}
+
+.ChipsSelect--vkcom .ChipsSelect__open--popupDirectionTop .FormField__border {
+  border-radius: 0 0 6px 6px;
+}
