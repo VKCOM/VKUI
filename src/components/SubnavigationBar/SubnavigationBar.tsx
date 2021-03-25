@@ -1,10 +1,10 @@
-import { FC, HTMLAttributes } from 'react';
+import { FC } from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
+import HorizontalScroll, { HorizontalScrollProps } from '../HorizontalScroll/HorizontalScroll';
 
-export interface SubnavigationBarProps extends HTMLAttributes<HTMLDivElement> {
+export interface SubnavigationBarProps extends HorizontalScrollProps {
   mode?: 'fixed' | 'overflow';
 }
 
@@ -23,7 +23,7 @@ export const SubnavigationBar: FC<SubnavigationBarProps> = (props: Subnavigation
       {...restProps}
       vkuiClass={classNames(getClassName('SubnavigationBar', platform), `SubnavigationBar--${mode}`)}
     >
-      <ScrollWrapper vkuiClass="SubnavigationBar__in">
+      <ScrollWrapper vkuiClass="SubnavigationBar__in" {...props}>
         <div vkuiClass="SubnavigationBar__scrollIn">
           <div vkuiClass="SubnavigationBar__gap" />
           {children}
