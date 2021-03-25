@@ -6,7 +6,7 @@ import { classNames } from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';
-import { ANDROID, VKCOM } from '../../lib/platform';
+import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -139,6 +139,9 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
   componentWillUnmount() {
     this.toggleDocumentScrolling(true);
+    if (this.props.platform === IOS) {
+      this.window.removeEventListener('resize', this.updateModalTranslate, false);
+    }
   }
 
   componentDidUpdate(prevProps: ModalRootProps, prevState: ModalRootState) {
@@ -234,7 +237,9 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     const modalState = this.modalsState[activeModal];
     // Отслеживаем изменение размеров viewport (Необходимо для iOS)
-    this.window.addEventListener('resize', this.updateModalTranslate, false);
+    if (this.props.platform === IOS) {
+      this.window.addEventListener('resize', this.updateModalTranslate, false);
+    }
 
     switch (modalState.type) {
       case ModalType.PAGE:
@@ -369,7 +374,9 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     // Сбрасываем состояния, которые могут помешать закрытию модального окна
     this.setState({ touchDown: false, switching: false });
 
-    this.window.removeEventListener('resize', this.updateModalTranslate, false);
+    if (this.props.platform === IOS) {
+      this.window.removeEventListener('resize', this.updateModalTranslate, false);
+    }
 
     const { prevModal } = this.state;
     if (!prevModal) {
