@@ -12,8 +12,13 @@
   height: 48px;
 }
 
-.IconButton--sizeY-compact {
+.IconButton--sizeY-compact,
+.FormField__after .IconButton {
   height: 44px;
+}
+
+.FormField__after .IconButton--sizeY-compact {
+  height: 36px;
 }
 
 .IconButton .Icon--16 {
@@ -54,6 +59,13 @@
 }
 
 /*
+ * iOS
+ */
+ .FormField__after .IconButton--ios {
+  border-radius: 10px;
+}
+
+/*
  * Android
  */
 
@@ -67,4 +79,15 @@
   transition: inherit;
   border-radius: inherit;
   background-color: var(--background_highlighted);
+}
+
+.FormField__after .IconButton--android {
+  border-radius: 8px;
+}
+
+/*
+ * VKCOM
+ */
+ .FormField__after .IconButton--vkcom {
+  border-radius: 6px;
 }

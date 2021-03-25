@@ -27,18 +27,10 @@
   position: relative;
   display: flex;
   align-items: center;
+  height: 44px;
   margin: -1px;
   color: var(--icon_secondary);
   z-index: 2;
-}
-
-.FormField__after,
-.FormField__after .IconButton {
-  height: 44px;
-}
-
-.FormField__after .IconButton {
-  border-radius: 8px;
 }
 
 .FormField__after .Icon--16,
@@ -62,8 +54,7 @@
   padding: 8px;
 }
 
-.FormField--sizeY-compact .FormField__after,
-.FormField--sizeY-compact .FormField__after .IconButton {
+.FormField--sizeY-compact .FormField__after {
   height: 36px;
 }
 
@@ -139,8 +130,7 @@
 /**
  * iOS
  */
-.FormField--ios,
-.FormField--ios .FormField__after .IconButton {
+.FormField--ios {
   border-radius: 10px;
 }
 
@@ -195,8 +185,7 @@
 /**
  * VKCOM
  */
-.FormField--vkcom,
-.FormField--vkcom .FormField__after .IconButton {
+.FormField--vkcom {
   border-radius: 6px;
 }
 
