@@ -74,6 +74,11 @@
   color: var(--text_secondary);
 }
 
+.ChipsInput--focused .FormField__border {
+  border-color: var(--accent);
+  background: var(--field_background);
+}
+
 /**
  * sizeY COMPACT
  */
