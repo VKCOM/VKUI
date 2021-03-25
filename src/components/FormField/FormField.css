@@ -44,31 +44,6 @@
   padding: 8px;
 }
 
-.FormField--sizeY-compact .FormField__after {
-  height: 36px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--16,
-.FormField--sizeY-compact .FormField__after .Icon--16.Icon--w-8 {
-  padding: 10px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--20 {
-  padding: 8px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--20.Icon--h-16 {
-  padding: 10px 8px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--24 {
-  padding: 6px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--28 {
-  padding: 4px;
-}
-
 .FormField__border {
   position: absolute;
   left: 0;
@@ -111,6 +86,35 @@
 .FormField.ChipsInput--focused .ChipsInput__container ~ .FormField__border {
   border-color: var(--accent);
   background: var(--field_background);
+}
+
+/**
+ * sizeY COMPACT
+ */
+
+.FormField--sizeY-compact .FormField__after {
+  height: 36px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--16,
+.FormField--sizeY-compact .FormField__after .Icon--16.Icon--w-8 {
+  padding: 10px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--20 {
+  padding: 8px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--20.Icon--h-16 {
+  padding: 10px 8px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--24 {
+  padding: 6px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--28 {
+  padding: 4px;
 }
 
 /**
