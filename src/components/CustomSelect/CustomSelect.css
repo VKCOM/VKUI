@@ -55,52 +55,11 @@
 }
 
 .CustomSelect__open .FormField__border {
-  border-radius: 8px 8px 0 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .CustomSelect__open--popupDirectionTop .FormField__border {
-  border-radius: 0 0 8px 8px;
-}
-
-/**
- * iOS
- */
-
-.CustomSelect--ios .CustomSelect__open .FormField__border {
-  border-radius: 10px 10px 0 0;
-}
-
-.CustomSelect--ios .CustomSelect__open--popupDirectionTop .FormField__border {
-  border-radius: 0 0 10px 10px;
-}
-
-@media (min-resolution: 2dppx) {
-  .CustomSelect--ios .CustomSelect__open .FormField__border {
-    border-radius: 20px 20px 0 0;
-  }
-
-  .CustomSelect--ios .CustomSelect__open--popupDirectionTop .FormField__border {
-    border-radius: 0 0 20px 20px;
-  }
-}
-
-@media (min-resolution: 3dppx) {
-  .CustomSelect--ios .CustomSelect__open .FormField__border {
-    border-radius: 31.25px 31.25px 0 0;
-  }
-
-  .CustomSelect--ios .CustomSelect__open--popupDirectionTop .FormField__border {
-    border-radius: 0 0 31.25px 31.25px;
-  }
-}
-
-/**
- * VKCOM
- */
-.CustomSelect--vkcom .CustomSelect__open .FormField__border {
-  border-radius: 6px 6px 0 0;
-}
-
-.CustomSelect--vkcom .CustomSelect__open--popupDirectionTop .FormField__border {
-  border-radius: 0 0 6px 6px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
