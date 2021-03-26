@@ -26,7 +26,6 @@
   text-overflow: initial;
 }
 
-.SimpleCell > .Avatar,
 .SimpleCell > .Icon {
   flex-shrink: 0;
 }

@@ -1,5 +1,6 @@
 .Avatar {
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .Avatar__in {
