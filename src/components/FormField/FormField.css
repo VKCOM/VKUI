@@ -23,9 +23,12 @@
   z-index: 2;
 }
 
-.FormField__after .Icon--16,
-.FormField__after .Icon--16.Icon--w-8 {
+.FormField__after .Icon--16 {
   padding: 14px;
+}
+
+.FormField__after .Icon--16.Icon--w-8 {
+  padding: 14px 18px;
 }
 
 .FormField__after .Icon--20 {
@@ -93,9 +96,12 @@
   height: 36px;
 }
 
-.FormField--sizeY-compact .FormField__after .Icon--16,
-.FormField--sizeY-compact .FormField__after .Icon--16.Icon--w-8 {
+.FormField--sizeY-compact .FormField__after .Icon--16 {
   padding: 10px;
+}
+
+.FormField--sizeY-compact .FormField__after .Icon--16.Icon--w-8 {
+  padding: 10px 12px;
 }
 
 .FormField--sizeY-compact .FormField__after .Icon--20 {
