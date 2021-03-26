@@ -1,20 +1,14 @@
 .ChipsInput {
   display: flex;
   position: relative;
-  /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
-  padding: 4px 14px;
   box-sizing: border-box;
-}
-
-.ChipsInput .FormField__after {
-  margin-top: -4px;
-  margin-bottom: -4px;
-  margin-right: -14px;
 }
 
 .ChipsInput__container {
   display: flex;
   width: 100%;
+  /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
+  padding: 4px 14px;
   flex-wrap: wrap;
   position: relative;
   z-index: 2;
@@ -83,10 +77,6 @@
  * sizeY COMPACT
  */
 
-.ChipsInput--sizeY-compact {
+.ChipsInput--sizeY-compact .ChipsInput__container {
   padding: 2px 12px;
-}
-
-.ChipsInput--sizeY-compact .FormField__after {
-  margin-right: -12px;
 }
