@@ -78,9 +78,7 @@
 /* Counter inside TabbarItem */
 
 .TabbarItem__label .Counter {
-  position: absolute;
-  top: -2px;
-  right: -9px;
+  transform: translateX(9px);
 }
 
 /* Counter inside SubnavigationButton */

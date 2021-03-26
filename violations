@@ -3,8 +3,6 @@ Avatar 	 PanelHeader
 Avatar 	 RichCell
 Avatar 	 SimpleCell
 Badge 	 SimpleCell
-Badge 	 TabbarItem
-Badge 	 TabsItem
 Button 	 Banner
 Button 	 ModalCard
 Button 	 Placeholder

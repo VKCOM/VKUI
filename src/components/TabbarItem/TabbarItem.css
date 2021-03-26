@@ -43,10 +43,10 @@
   position: relative;
 }
 
-.TabbarItem__label .Badge {
+.TabbarItem__label {
   position: absolute;
   top: -2px;
-  right: -4px;
+  right: 0;
 }
 
 .TabbarItem__text {
