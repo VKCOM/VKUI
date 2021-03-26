@@ -8,7 +8,6 @@
 }
 
 .PullToRefresh__controls {
-  left: 0;
   width: 100%;
   pointer-events: none;
   /* Прямо под шапкой, см https://github.com/VKCOM/VKUI/issues/1207 */
