@@ -3,7 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
-import { hasReactNode } from '@vkontakte/vkjs';
+import { hasReactNode } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 
 export interface FormFieldProps {
