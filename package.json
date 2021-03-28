@@ -176,5 +176,8 @@
   },
   "pre-commit": [
     "test:static"
-  ]
+  ],
+  "dependencies": {
+    "@mntm/classnames": "^1.0.3"
+  }
 }

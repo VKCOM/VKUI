@@ -14,28 +14,29 @@ module.exports = {
   presets: [
     ['@babel/preset-env', { modules: useModules ? false : 'commonjs' }],
     ['@babel/preset-react', {
-      pragma: "createScopedElement",
-      pragmaFrag: "createScopedElement.Fragment",
+      // pragma: "createScopedElement",
+      // pragmaFrag: "createScopedElement.Fragment",
     }],
     ['@babel/preset-typescript', {
-      jsxPragma: "createScopedElement",
-      jsxPragmaFrag: 'createScopedElement.Fragment',
+      // jsxPragma: "createScopedElement",
+      // jsxPragmaFrag: 'createScopedElement.Fragment',
     }]
   ],
   plugins: [
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-transform-runtime',
+    require.resolve('./TEMP_PLUGIN_DO_NOT_MERGE'),
     [require.resolve('babel-plugin-auto-import'), {
-      'declarations': [
-        { members: ['createScopedElement'], path: '#jsxRuntime' }
-      ],
+      declarations: [
+        { "default": "React", "path": "react" }
+      ]
     }],
-    [require.resolve('babel-plugin-module-resolver'), {
-      alias: {
-        "#jsxRuntime": "./src/lib/jsxRuntime"
-      }
-    }],
+    // [require.resolve('babel-plugin-module-resolver'), {
+    //   alias: {
+    //     "#jsxRuntime": "./src/lib/jsxRuntime"
+    //   }
+    // }],
   ],
   ignore: ['./src/vkui.js'].concat(isProduction ? testFiles : []),
 };
