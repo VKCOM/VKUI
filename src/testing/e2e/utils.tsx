@@ -5,7 +5,7 @@ import { screenshot } from '@react-playwright';
 import ConfigProvider from '../../components/ConfigProvider/ConfigProvider';
 import Panel from '../../components/Panel/Panel';
 import { Platform } from '../../lib/platform';
-import { Scheme } from '../../components/ConfigProvider/ConfigProviderContext';
+import { Scheme, WebviewType } from '../../components/ConfigProvider/ConfigProviderContext';
 import AdaptivityProvider, {
   AdaptivityProviderProps,
   DESKTOP_SIZE,
@@ -111,7 +111,7 @@ export function describeScreenshotFuzz<Props>(
       (isVkCom ? [Scheme.VKCOM] : mobileSchemes).forEach((scheme) => {
         it(`${scheme}${adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ''}`, async () => {
           expect(await screenshot((
-            <ConfigProvider scheme={scheme} platform={platform}>
+            <ConfigProvider scheme={scheme} platform={platform} webviewType={WebviewType.INTERNAL}>
               <AdaptivityProvider {...adaptivityProps}>
                 <div style={{ width, position: 'absolute', height: 'auto' }}>
                   <AppRoot embedded>

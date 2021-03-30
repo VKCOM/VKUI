@@ -90,4 +90,20 @@ describe('HorizontalScroll', () => {
       selector: '.HorizontalScroll',
     })).toMatchImageSnapshot();
   });
+
+  it.skip('moves content on arrow hover', async () => {
+    await mount((
+      <HorizontalScroll>
+        <div key="0" style={{ display: 'flex' }}>
+          {items}
+        </div>
+      </HorizontalScroll>
+    ));
+
+    await page.hover('.HorizontalScroll__arrow-left');
+    expect(await screenshot()).toMatchImageSnapshot();
+
+    await page.hover('.HorizontalScroll__arrow-right');
+    expect(await screenshot()).toMatchImageSnapshot();
+  });
 });
