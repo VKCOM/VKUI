@@ -16,19 +16,6 @@
   color: var(--text_secondary);
 }
 
-.ChipsSelect__toggle {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-  z-index: 1;
-  color: var(--icon_secondary);
-}
-
-.ChipsSelect--sizeY-compact .ChipsSelect__toggle {
-  right: 8px;
-  top: 10px;
-}
-
 .ChipsSelect__options {
   width: 100%;
   overflow: hidden;

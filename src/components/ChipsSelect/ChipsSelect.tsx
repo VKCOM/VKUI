@@ -64,7 +64,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     style, onFocus, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText, sizeY,
-    closeAfterSelect, onChangeStart, ...restProps
+    closeAfterSelect, onChangeStart, after, ...restProps
   } = props;
 
   const { document } = useDOM();
@@ -253,10 +253,8 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}
+        after={<Icon20Dropdown />}
       />
-      <div vkuiClass="ChipsSelect__toggle">
-        <Icon20Dropdown />
-      </div>
       {opened &&
         <div
           vkuiClass={classNames('ChipsSelect__options', {
