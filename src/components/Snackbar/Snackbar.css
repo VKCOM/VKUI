@@ -84,7 +84,7 @@
 }
 
 .Snackbar--ios .Snackbar__in {
-  animation: animation-snackbar-intro-vertical 340ms var(--ios-easing);
+  animation: vkui-animation-snackbar-intro-vertical 340ms var(--ios-easing);
 }
 
 .Snackbar--ios .Snackbar__body {
@@ -101,7 +101,7 @@
 
 .Snackbar--android .Snackbar__in,
 .Snackbar--vkcom .Snackbar__in {
-  animation: animation-snackbar-intro-vertical 340ms var(--android-easing);
+  animation: vkui-animation-snackbar-intro-vertical 340ms var(--android-easing);
 }
 
 .Snackbar--android .Snackbar__body,
@@ -121,7 +121,7 @@
 
 .Snackbar--desktop .Snackbar__in {
   padding: 12px;
-  animation-name: animation-snackbar-intro-horizontal;
+  animation-name: vkui-animation-snackbar-intro-horizontal;
 }
 
 .Snackbar--desktop.Snackbar--closing .Snackbar__in {
@@ -138,7 +138,7 @@
 /**
  * Animations
  */
-@keyframes animation-snackbar-intro-vertical {
+@keyframes vkui-animation-snackbar-intro-vertical {
   from {
     transform: translate3d(0, 140%, 0);
   }
@@ -148,7 +148,7 @@
   }
 }
 
-@keyframes animation-snackbar-intro-horizontal {
+@keyframes vkui-animation-snackbar-intro-horizontal {
   from {
     transform: translate3d(-140%, 0, 0);
   }

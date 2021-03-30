@@ -13,7 +13,7 @@
   background: rgba(0, 0, 0, .4);
   user-select: none;
   transition: opacity 167ms ease-out;
-  animation: animation-fadeIn .32s ease;
+  animation: vkui-animation-fadeIn .32s ease;
 }
 
 .ModalRoot--touched .ModalRoot__mask {

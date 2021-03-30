@@ -3,9 +3,11 @@ const cssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
 const selectorPrefixer = require('postcss-prefixer');
 const csso = require('postcss-csso');
+const checkKeyframes = require('./tasks/postcss-check-keyframes');
 
 let plugins = [
   cssImport(),
+  checkKeyframes(),
   cssCustomProperties({ preserve: true }),
   autoprefixer(),
   selectorPrefixer({

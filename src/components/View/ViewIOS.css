@@ -41,19 +41,19 @@
  * Panel transition
  */
 .View--ios .View__panel--prev {
-  animation: animation-ios-prev-forward .6s var(--ios-easing);
+  animation: vkui-animation-ios-prev-forward .6s var(--ios-easing);
 }
 
 .View--ios .View__panel--next {
-  animation: animation-ios-next-back .6s var(--ios-easing);
+  animation: vkui-animation-ios-next-back .6s var(--ios-easing);
 }
 
 .View--ios .View__panel--prev ~ .View__panel--next {
-  animation: animation-ios-next-forward .6s var(--ios-easing);
+  animation: vkui-animation-ios-next-forward .6s var(--ios-easing);
 }
 
 .View--ios .View__panel--next ~ .View__panel--prev {
-  animation: animation-ios-prev-back .6s var(--ios-easing);
+  animation: vkui-animation-ios-prev-back .6s var(--ios-easing);
 }
 
 .View--ios .View__panel--prev .Panel__fade,
@@ -69,11 +69,11 @@
 }
 
 .View--ios .View__panel--prev .Panel__fade {
-  animation: animation-ios-fade-in .6s var(--ios-easing);
+  animation: vkui-animation-ios-fade-in .6s var(--ios-easing);
 }
 
 .View--ios .View__panel--next .Panel__fade {
-  animation: animation-ios-fade-out .6s var(--ios-easing);
+  animation: vkui-animation-ios-fade-out .6s var(--ios-easing);
 }
 
 .View--ios .View__panel--prev ~ .View__panel--next .Panel__fade,
@@ -93,7 +93,7 @@
   display: none;
 }
 
-@keyframes animation-ios-next-forward {
+@keyframes vkui-animation-ios-next-forward {
   from {
     transform: translate3d(100%, 0, 0);
   }
@@ -103,7 +103,7 @@
   }
 }
 
-@keyframes animation-ios-next-back {
+@keyframes vkui-animation-ios-next-back {
   from {
     transform: translate3d(-50%, 0, 0);
   }
@@ -113,7 +113,7 @@
   }
 }
 
-@keyframes animation-ios-prev-forward {
+@keyframes vkui-animation-ios-prev-forward {
   from {
     transform: translate3d(0, 0, 0);
   }
@@ -123,7 +123,7 @@
   }
 }
 
-@keyframes animation-ios-prev-back {
+@keyframes vkui-animation-ios-prev-back {
   from {
     transform: translate3d(0, 0, 0);
   }
@@ -133,7 +133,7 @@
   }
 }
 
-@keyframes animation-ios-fade-in {
+@keyframes vkui-animation-ios-fade-in {
   from {
     opacity: 0;
   }
@@ -143,7 +143,7 @@
   }
 }
 
-@keyframes animation-ios-fade-out {
+@keyframes vkui-animation-ios-fade-out {
   from {
     opacity: .3;
   }

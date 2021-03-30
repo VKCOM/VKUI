@@ -16,7 +16,7 @@
 }
 
 .Spinner__self {
-  animation: rotator var(--duration) linear infinite;
+  animation: vkui-rotator var(--duration) linear infinite;
   transform-origin: center;
 }
 
@@ -24,7 +24,7 @@
   transform: scale(1);
 }
 
-@keyframes rotator {
+@keyframes vkui-rotator {
   0% {
     transform: rotate(0deg);
   }

@@ -11,6 +11,7 @@
     "no-duplicate-selectors": null,
     "length-zero-no-unit": [true, {
       "ignore": ["custom-properties"]
-    }]
+    }],
+    "keyframes-name-pattern": "vkui-.+"
   }
 }
