@@ -1,11 +1,13 @@
-import { FC, HTMLAttributes, useRef, useState } from 'react';
+import { FC, HTMLAttributes, useMemo, useRef, useState } from 'react';
 import { useDOM } from '../../lib/dom';
 import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { classScopingMode } from '../../lib/classScopingMode';
+import { clamp } from '../../helpers/math';
 import { IconSettingsProvider } from '@vkontakte/icons';
+import { ScrollContext, ScrollContextInterface } from './ScrollContext';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -76,6 +78,16 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
     [sizeX],
   );
 
+  const scrollController = useMemo<ScrollContextInterface>(() => ({
+    getScroll: () => ({ x: window.pageXOffset, y: window.pageYOffset }),
+    scrollTo: (x = 0, y = 0) => {
+      // Some iOS versions do not normalize scroll — do it manually.
+      window.scrollTo(
+        x ? clamp(x, 0, document.body.scrollWidth - window.innerWidth) : 0,
+        y ? clamp(y, 0, document.body.scrollHeight - window.innerHeight) : 0);
+    },
+  }), []);
+
   return (
     <div ref={rootRef} vkuiClass={classNames('AppRoot', {
       'AppRoot--no-mouse': !hasMouse,
@@ -85,9 +97,11 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
         portalRoot: portalRoot,
         embedded,
       }}>
-        <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
-          {children}
-        </IconSettingsProvider>
+        <ScrollContext.Provider value={scrollController}>
+          <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
+            {children}
+          </IconSettingsProvider>
+        </ScrollContext.Provider>
       </AppRootContext.Provider>
     </div>
   );
