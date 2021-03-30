@@ -96,9 +96,7 @@ export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMP
         'PanelHeaderContext--desktop': this.isDesktop,
       })} vertical="top">
         <div vkuiClass="PanelHeaderContext__in" ref={this.elementRef}>
-          <div vkuiClass="PanelHeaderContext__content">
-            {(opened || closing) && children}
-          </div>
+          {(opened || closing) && <div vkuiClass="PanelHeaderContext__content">{children}</div>}
         </div>
         {!this.isDesktop && (opened || closing) && <div onClick={onClose} vkuiClass="PanelHeaderContext__fade" />}
       </FixedLayout>

@@ -28,29 +28,29 @@
     "no-restricted-imports": ["error", {
       "paths": [
         // prevent absolute imports from src subfolders like `import { ... } from "lib"`
-        "appearance", 
-        "components", 
-        "helpers", 
-        "hoc", 
-        "hooks", 
-        "lib", 
-        "styles", 
-        "testing", 
-        "types", 
+        "appearance",
+        "components",
+        "helpers",
+        "hoc",
+        "hooks",
+        "lib",
+        "styles",
+        "testing",
+        "types",
         "unstable"
       ],
       "patterns": [
         "@vkontakte/icons/dist/*",
         // prevent absolute imports from src subfolders like `import { ... } from "lib/platform"`
-        "appearance/*", 
-        "components/*", 
-        "helpers/*", 
-        "hoc/*", 
-        "hooks/*", 
-        "lib/*", 
-        "styles/*", 
-        "testing/*", 
-        "types/*", 
+        "appearance/*",
+        "components/*",
+        "helpers/*",
+        "hoc/*",
+        "hooks/*",
+        "lib/*",
+        "styles/*",
+        "testing/*",
+        "types/*",
         "unstable/*"
       ]
     }],
@@ -85,7 +85,8 @@
         "jest": true
       },
       "rules": {
-        "no-restricted-properties": "off"
+        "no-restricted-properties": "off",
+        "react/jsx-key": "off"
       }
     },
     {

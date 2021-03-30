@@ -12,12 +12,13 @@ const ScreenSpinner: FunctionComponent<ScreenSpinnerProps> = (props: ScreenSpinn
 
   return (
     <PopoutWrapper
+      hasMask={false}
       vkuiClass={getClassName('ScreenSpinner', platform)}
       className={className}
       style={style}
     >
       <div vkuiClass="ScreenSpinner__container">
-        <Spinner {...restProps} />
+        <Spinner vkuiClass="ScreenSpinner__spinner" {...restProps} />
       </div>
     </PopoutWrapper>
   );

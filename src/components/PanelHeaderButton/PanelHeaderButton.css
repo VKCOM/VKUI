@@ -15,13 +15,6 @@
   opacity: .6;
 }
 
-.PanelHeaderButton .Counter {
-  position: absolute;
-  padding: 0;
-  top: 8px;
-  right: 2px;
-}
-
 /*
  * iOS
  */

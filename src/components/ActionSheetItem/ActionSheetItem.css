@@ -152,8 +152,7 @@
   content: none;
 }
 
-.ActionSheet--ios .ActionSheetItem--last::after,
-.ActionSheet--ios .ActionSheet__header:empty {
+.ActionSheet--ios .ActionSheetItem--last::after {
   content: none;
 }
 

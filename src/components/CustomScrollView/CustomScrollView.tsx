@@ -5,6 +5,7 @@ import { multiRef, setRef } from '../../lib/utils';
 interface Props extends DOMProps {
   windowResize?: boolean;
   boxRef: Ref<HTMLDivElement>;
+  maxHeight?: string;
 }
 
 class CustomScrollView extends React.Component<Props> {
@@ -126,7 +127,13 @@ class CustomScrollView extends React.Component<Props> {
         <div vkuiClass="CustomScrollView__trackerY" ref={this.trackerY} onMouseDown={this.onDragStart} />
       </div>
 
-      <div vkuiClass="CustomScrollView__box" tabIndex={-1} ref={this.box} onScroll={this.scroll}>
+      <div
+        vkuiClass="CustomScrollView__box"
+        tabIndex={-1}
+        ref={this.box}
+        onScroll={this.scroll}
+        style={{ maxHeight: this.props.maxHeight }}
+      >
         {this.props.children}
       </div>
     </div>;

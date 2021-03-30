@@ -24,8 +24,7 @@
 }
 
 .PanelHeaderContent__status,
-.PanelHeaderContent__children-in,
-.PanelHeaderContent__children .Headline {
+.PanelHeaderContent__children-in {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

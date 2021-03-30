@@ -181,6 +181,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
           <div vkuiClass="DatePicker__month">
             <CustomSelect
               name="month"
+              vkuiClass="DatePicker__month__select"
               value={month}
               options={this.getMonthOptions()}
               placeholder={monthPlaceholder}

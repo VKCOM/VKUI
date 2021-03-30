@@ -2,10 +2,14 @@ import { FC, HTMLAttributes, ReactNode } from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
+import { AdaptivityProps, withAdaptivity } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
 import { HasRootRef } from '../../types';
 
-export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface CustomSelectOptionProps extends
+  HTMLAttributes<HTMLDivElement>,
+  HasRootRef<HTMLDivElement>,
+  AdaptivityProps {
   option?: any;
   selected?: boolean;
   focused?: boolean;
@@ -20,6 +24,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   selected,
   before,
   after,
+  sizeY,
   ...restProps
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : null;
@@ -31,7 +36,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       role="option"
       title={title}
       aria-selected={selected}
-      vkuiClass={classNames('CustomSelectOption', {
+      vkuiClass={classNames('CustomSelectOption', `CustomSelectOption--sizeY-${sizeY}`, {
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
       })}
@@ -48,4 +53,4 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   );
 };
 
-export default CustomSelectOption;
+export default withAdaptivity(CustomSelectOption, { sizeY: true });

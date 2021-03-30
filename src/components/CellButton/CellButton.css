@@ -16,20 +16,6 @@
   opacity: .4;
 }
 
-.CellButton--centered {
-  justify-content: center;
-  text-align: center;
-}
-
-.CellButton--centered .SimpleCell__main {
-  flex-grow: initial;
-  max-width: initial;
-}
-
-.CellButton--centered > .Icon {
-  padding-right: 8px;
-}
-
 .CellButton--primary,
 .CellButton--primary > .Icon,
 .CellButton--primary > .Avatar .Icon {

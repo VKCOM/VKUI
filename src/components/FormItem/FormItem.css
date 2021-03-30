@@ -34,12 +34,14 @@
   color: var(--field_valid_border);
 }
 
+/* stylelint-disable vkui/modular-selectors */
 .FormItem .Cell,
 .FormItem .SimpleCell,
 .FormItem .RichCell,
 .FormItem .CellButton,
 .FormItem .Radio,
 .FormItem .Checkbox {
+/* stylelint-enable */
   width: 100%;
   box-sizing: content-box;
   margin-left: -16px;
@@ -56,12 +58,14 @@
   padding-right: 12px;
 }
 
+/* stylelint-disable vkui/modular-selectors */
 .FormItem--ios .Cell,
 .FormItem--ios .SimpleCell,
 .FormItem--ios .RichCell,
 .FormItem--ios .CellButton,
 .FormItem--ios .Radio,
 .FormItem--ios .Checkbox,
+/* stylelint-enable */
 .FormItem--ios .Removable {
   margin-left: -12px;
   margin-right: -12px;

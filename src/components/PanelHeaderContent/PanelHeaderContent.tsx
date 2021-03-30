@@ -49,7 +49,7 @@ const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
         }
         <div vkuiClass="PanelHeaderContent__children">
           {hasReactNode(status) ?
-            <Headline Component="span" weight="medium">
+            <Headline vkuiClass="PanelHeaderContent__children-in" Component="span" weight="medium">
               {children}
             </Headline>
             : <span vkuiClass="PanelHeaderContent__children-in">{children}</span>

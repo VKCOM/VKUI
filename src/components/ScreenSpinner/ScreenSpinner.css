@@ -1,7 +1,3 @@
-.ScreenSpinner .PopoutWrapper__overlay {
-  background: none;
-}
-
 .ScreenSpinner {
   animation: screen-spinner-intro .3s ease;
 }
@@ -14,7 +10,7 @@
   border-radius: 10px;
 }
 
-.ScreenSpinner--ios .ScreenSpinner__container .Spinner {
+.ScreenSpinner--ios .ScreenSpinner__container .ScreenSpinner__spinner {
   color: var(--overlay_status_icon);
 }
 
@@ -27,8 +23,8 @@
   border-radius: 8px;
 }
 
-.ScreenSpinner--android .ScreenSpinner__container .Spinner,
-.ScreenSpinner--vkcom .ScreenSpinner__container .Spinner {
+.ScreenSpinner--android .ScreenSpinner__container .ScreenSpinner__spinner,
+.ScreenSpinner--vkcom .ScreenSpinner__container .ScreenSpinner__spinner {
   color: var(--icon_outline_secondary);
 }
 
