@@ -8,7 +8,7 @@
   display: flex;
   width: 100%;
   /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
-  padding: 4px 14px;
+  padding: 3px 13px;
   flex-wrap: wrap;
   position: relative;
   z-index: 2;
@@ -78,5 +78,5 @@
  */
 
 .ChipsInput--sizeY-compact .ChipsInput__container {
-  padding: 2px 12px;
+  padding: 1px 11px;
 }
