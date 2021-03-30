@@ -22,6 +22,10 @@
   font-size: 16px;
 }
 
+.Select__title {
+  display: block;
+}
+
 .Select--mimicry:focus .FormField__border {
   border-color: var(--accent);
   background: var(--field_background);
