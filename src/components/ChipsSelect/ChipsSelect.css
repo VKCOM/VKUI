@@ -51,12 +51,12 @@
   outline: none;
 }
 
-.ChipsSelect__open .FormField__border {
+.ChipsSelect__open:not(.ChipsSelect__open--popupDirectionTop) .FormField__border {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.ChipsSelect__open--popupDirectionTop .FormField__border {
+.ChipsSelect__open.ChipsSelect__open--popupDirectionTop .FormField__border {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
