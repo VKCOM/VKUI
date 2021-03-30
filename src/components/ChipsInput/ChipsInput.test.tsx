@@ -50,6 +50,23 @@ describe('ChipsInput', () => {
     expect(getChipsContainer()).toContainElement(chipRed);
   });
 
+  it('does not lose data when adding an already existing chip', () => {
+    render(
+      <ChipsInputController
+        value={[
+          { value: 'Красный', label: 'Красный' },
+          { value: 'Синий', label: 'Синий' },
+          { value: 'Белый', label: 'Белый' },
+        ]}
+      />,
+    );
+
+    userEvent.type(getChipsInput(), 'Красный{enter}');
+
+    const chipRed = getChip('Красный');
+    expect(getChipsContainer()).toContainElement(chipRed);
+  });
+
   it('removes chip on chip remove button click', () => {
     render(<ChipsInputController value={[{ value: 'red', label: 'Красный' }]} />);
 
