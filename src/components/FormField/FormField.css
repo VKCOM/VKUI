@@ -54,12 +54,8 @@
   opacity: .4;
 }
 
-.FormField__border--hover {
+.FormField:not(.FormField--disabled) .FormField__border--hover {
   border-color: var(--icon_tertiary_alpha);
-}
-
-.FormField--disabled .FormField__border--hover {
-  border-color: var(--field_border);
 }
 
 .FormField:focus-within .FormField__border,
