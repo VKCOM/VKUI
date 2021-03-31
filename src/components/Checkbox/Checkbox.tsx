@@ -1,14 +1,14 @@
-import { InputHTMLAttributes } from 'react';
+import { FunctionComponent, InputHTMLAttributes, ReactNode } from 'react';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { IOS, VKCOM } from '../../lib/platform';
-
 import { Icon20CheckBoxOn, Icon20CheckBoxOff, Icon24CheckBoxOn, Icon24CheckBoxOff } from '@vkontakte/icons';
-
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { hasReactNode } from '../../lib/utils';
+import Caption from '../../components/Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import Headline from '../Typography/Headline/Headline';
 
@@ -16,10 +16,13 @@ export interface CheckboxProps extends
   InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   HasRef<HTMLInputElement>,
-  AdaptivityProps { }
+  AdaptivityProps {
+    description?: ReactNode;
+  }
 
-export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
+export const Checkbox: FunctionComponent<CheckboxProps> = ({
   children,
+  description,
   className,
   style,
   getRootRef,
@@ -30,6 +33,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   const platform = usePlatform();
 
   const ContentComponent = platform === VKCOM || sizeY === SizeType.COMPACT ? Text : Headline;
+  const descriptionLevel = platform === VKCOM || sizeY === SizeType.COMPACT ? '2' : '1';
 
   return (
     <Tappable
@@ -57,7 +61,10 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
             <Icon24CheckBoxOff />
           }
         </div>
-        <ContentComponent weight="regular" vkuiClass="Checkbox__content">{children}</ContentComponent>
+        <ContentComponent weight="regular" vkuiClass="Checkbox__content">
+          <div vkuiClass="Checkbox__children">{children}</div>
+          {hasReactNode(description) && <Caption level={descriptionLevel} weight="regular" vkuiClass="Checkbox__description">{description}</Caption>}
+        </ContentComponent>
       </div>
     </Tappable>
   );

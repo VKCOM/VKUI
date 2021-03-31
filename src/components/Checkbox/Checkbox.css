@@ -8,7 +8,7 @@
 
 .Checkbox__container {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
 }
 
@@ -35,6 +35,10 @@
   word-break: break-word;
 }
 
+.Checkbox__description {
+  color: var(--text_secondary);
+}
+
 .Checkbox__input:checked ~ .Checkbox__container .Checkbox__icon--on {
   display: flex;
 }
@@ -51,34 +55,26 @@
   padding: 0 12px;
 }
 
-.Checkbox--ios .Checkbox__icon {
-  margin-top: 10px;
-}
-
-.Checkbox--ios.Checkbox--sizeY-compact .Checkbox__icon {
-  margin-top: 8px;
-}
-
 .Checkbox--ios .Checkbox__content {
   margin-top: 12px;
   margin-bottom: 12px;
+}
+
+.Checkbox--ios .Checkbox__description {
+  margin-top: 1px;
 }
 
 .Checkbox--android {
   padding: 0 16px;
 }
 
-.Checkbox--android .Checkbox__icon {
-  margin-top: 10px;
-}
-
-.Checkbox--android.Checkbox--sizeY-compact .Checkbox__icon {
-  margin-top: 8px;
-}
-
 .Checkbox--android .Checkbox__content {
   margin-top: 12px;
   margin-bottom: 12px;
+}
+
+.Checkbox--android .Checkbox__description {
+  margin-top: 1px;
 }
 
 .Checkbox--vkcom {
@@ -99,4 +95,8 @@
 .Checkbox--sizeY-compact .Checkbox__content {
   margin-top: 8px;
   margin-bottom: 8px;
+}
+
+.Checkbox--sizeY-compact .Checkbox__description {
+  margin-top: 1px;
 }
