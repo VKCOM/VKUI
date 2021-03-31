@@ -27,22 +27,6 @@
   z-index: 2;
 }
 
-.FormField__after .IconButton {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-}
-
-.FormField__after .IconButton .Icon--16,
-.FormField__after .IconButton .Icon--16.Icon--w-8,
-.FormField__after .IconButton .Icon--20,
-.FormField__after .IconButton .Icon--20.Icon--h-16,
-.FormField__after .IconButton .Icon--24,
-.FormField__after .IconButton .Icon--28 {
-  padding: 0;
-}
-
 .FormField__border {
   position: absolute;
   left: 0;

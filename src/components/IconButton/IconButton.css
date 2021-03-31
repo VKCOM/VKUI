@@ -13,11 +13,6 @@
   border-radius: 50%;
 }
 
-.FormField__after .IconButton {
-  height: 44px;
-  border-radius: inherit;
-}
-
 .IconButton .Icon--16 {
   padding: 16px;
 }
@@ -38,6 +33,25 @@
   opacity: .6;
 }
 
+.FormField__after .IconButton {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: inherit;
+}
+
+.FormField__after .IconButton .Icon--16,
+.FormField__after .IconButton .Icon--16.Icon--w-8,
+.FormField__after .IconButton .Icon--20,
+.FormField__after .IconButton .Icon--20.Icon--h-16,
+.FormField__after .IconButton .Icon--24,
+.FormField__after .IconButton .Icon--28 {
+  padding: 0;
+}
+
 /*
  * sizeY: COMPACT
  */
@@ -46,6 +60,7 @@
 }
 
 .FormField__after .IconButton--sizeY-compact {
+  width: 36px;
   height: 36px;
 }
 
@@ -62,8 +77,13 @@
   padding: 8px;
 }
 
-.Removable__action.IconButton {
-  color: var(--icon_secondary);
+.FormField__after .IconButton--sizeY-compact .Icon--16,
+.FormField__after .IconButton--sizeY-compact .Icon--16.Icon--w-8,
+.FormField__after .IconButton--sizeY-compact .Icon--20,
+.FormField__after .IconButton--sizeY-compact .Icon--20.Icon--h-16,
+.FormField__after .IconButton--sizeY-compact .Icon--24,
+.FormField__after .IconButton--sizeY-compact .Icon--28 {
+  padding: 0;
 }
 
 /*
