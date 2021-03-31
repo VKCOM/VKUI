@@ -1,13 +1,12 @@
-import { FC, HTMLAttributes, useMemo, useRef, useState } from 'react';
+import { FC, HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 import { useDOM } from '../../lib/dom';
 import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { classScopingMode } from '../../lib/classScopingMode';
-import { clamp } from '../../helpers/math';
 import { IconSettingsProvider } from '@vkontakte/icons';
-import { ScrollContext, ScrollContextInterface } from './ScrollContext';
+import { elementScrollController, globalScrollController, ScrollContext, ScrollContextInterface } from './ScrollContext';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -17,6 +16,7 @@ export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, Adaptivity
   window?: Window;
   /** Убирает классы без префикса (.Button) */
   noLegacyClasses?: boolean;
+  scroll?: 'global' | 'contain';
 }
 
 function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
@@ -27,7 +27,7 @@ function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
   }
 }
 
-const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses = false }) => {
+const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global' }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
   const { window } = useDOM();
@@ -40,6 +40,12 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
     }
     classScopingMode.noConflict = noLegacyClasses;
   }
+
+  useEffect(() => {
+    if (scroll !== 'global' && !embedded) {
+      console.warn('[VKUI/AppRoot] Scroll modes only supported in embedded mode');
+    }
+  }, [scroll]);
 
   // one time initialization and cleanup
   useIsomorphicLayoutEffect(() => {
@@ -78,15 +84,9 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
     [sizeX],
   );
 
-  const scrollController = useMemo<ScrollContextInterface>(() => ({
-    getScroll: () => ({ x: window.pageXOffset, y: window.pageYOffset }),
-    scrollTo: (x = 0, y = 0) => {
-      // Some iOS versions do not normalize scroll — do it manually.
-      window.scrollTo(
-        x ? clamp(x, 0, document.body.scrollWidth - window.innerWidth) : 0,
-        y ? clamp(y, 0, document.body.scrollHeight - window.innerHeight) : 0);
-    },
-  }), []);
+  const scrollController = useMemo<ScrollContextInterface>(
+    () => scroll === 'contain' ? elementScrollController(rootRef) : globalScrollController(window, document),
+    [scroll]);
 
   return (
     <div ref={rootRef} vkuiClass={classNames('AppRoot', {
