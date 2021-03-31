@@ -15,6 +15,7 @@
 
 .FormField__after .IconButton {
   height: 44px;
+  border-radius: inherit;
 }
 
 .IconButton .Icon--16 {
@@ -66,13 +67,6 @@
 }
 
 /*
- * iOS
- */
- .FormField__after .IconButton--ios {
-  border-radius: 10px;
-}
-
-/*
  * Android & VKCOM
  */
 .IconButton--android.IconButton--active .Icon,
@@ -80,12 +74,4 @@
   transition: inherit;
   border-radius: inherit;
   background-color: var(--background_highlighted);
-}
-
-.FormField__after .IconButton--android {
-  border-radius: 8px;
-}
-
-.FormField__after .IconButton--vkcom {
-  border-radius: 6px;
 }

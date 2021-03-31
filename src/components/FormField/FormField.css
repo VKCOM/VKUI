@@ -19,6 +19,7 @@
   align-items: center;
   height: 44px;
   margin: -1px;
+  border-radius: inherit;
   color: var(--icon_secondary);
   z-index: 2;
 }
