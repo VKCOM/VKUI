@@ -26,11 +26,6 @@
   display: block;
 }
 
-.Select--mimicry:focus .FormField__border {
-  border-color: var(--accent);
-  background: var(--field_background);
-}
-
 .Select__container {
   flex-grow: 1;
   flex-shrink: 1;
