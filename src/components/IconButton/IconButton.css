@@ -43,12 +43,7 @@
   border-radius: inherit;
 }
 
-.FormField__after .IconButton .Icon--16,
-.FormField__after .IconButton .Icon--16.Icon--w-8,
-.FormField__after .IconButton .Icon--20,
-.FormField__after .IconButton .Icon--20.Icon--h-16,
-.FormField__after .IconButton .Icon--24,
-.FormField__after .IconButton .Icon--28 {
+.FormField__after .IconButton .Icon.Icon.Icon {
   padding: 0;
 }
 
@@ -75,15 +70,6 @@
 
 .IconButton--sizeY-compact .Icon--28 {
   padding: 8px;
-}
-
-.FormField__after .IconButton--sizeY-compact .Icon--16,
-.FormField__after .IconButton--sizeY-compact .Icon--16.Icon--w-8,
-.FormField__after .IconButton--sizeY-compact .Icon--20,
-.FormField__after .IconButton--sizeY-compact .Icon--20.Icon--h-16,
-.FormField__after .IconButton--sizeY-compact .Icon--24,
-.FormField__after .IconButton--sizeY-compact .Icon--28 {
-  padding: 0;
 }
 
 /*
