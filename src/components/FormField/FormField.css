@@ -17,6 +17,9 @@
   position: relative;
   display: flex;
   align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: 44px;
   height: 44px;
   margin: -1px;
   border-radius: inherit;
@@ -24,28 +27,20 @@
   z-index: 2;
 }
 
-.FormField__after .Icon--16 {
-  padding: 14px;
+.FormField__after .IconButton {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
-.FormField__after .Icon--16.Icon--w-8 {
-  padding: 14px 18px;
-}
-
-.FormField__after .Icon--20 {
-  padding: 12px;
-}
-
-.FormField__after .Icon--20.Icon--h-16 {
-  padding: 14px 12px;
-}
-
-.FormField__after .Icon--24 {
-  padding: 10px;
-}
-
-.FormField__after .Icon--28 {
-  padding: 8px;
+.FormField__after .IconButton .Icon--16,
+.FormField__after .IconButton .Icon--16.Icon--w-8,
+.FormField__after .IconButton .Icon--20,
+.FormField__after .IconButton .Icon--20.Icon--h-16,
+.FormField__after .IconButton .Icon--24,
+.FormField__after .IconButton .Icon--28 {
+  padding: 0;
 }
 
 .FormField__border {
@@ -94,31 +89,8 @@
  */
 
 .FormField--sizeY-compact .FormField__after {
+  width: 36px;
   height: 36px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--16 {
-  padding: 10px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--16.Icon--w-8 {
-  padding: 10px 12px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--20 {
-  padding: 8px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--20.Icon--h-16 {
-  padding: 10px 8px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--24 {
-  padding: 6px;
-}
-
-.FormField--sizeY-compact .FormField__after .Icon--28 {
-  padding: 4px;
 }
 
 /**
