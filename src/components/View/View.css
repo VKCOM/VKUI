@@ -7,11 +7,6 @@
   word-wrap: break-word;
 }
 
-.View--animated,
-.View--swiping-back {
-  overflow: hidden;
-}
-
 .View__header {
   z-index: 2;
   position: fixed;
@@ -42,8 +37,8 @@
   height: 100%;
 }
 
-.View--animated .View__panel,
-.View--swiping-back .View__panel {
+.View--animated .View__panel--next,
+.View--swiping-back .View__panel--swipe-back-next {
   position: fixed;
   top: 0;
   left: 0;
