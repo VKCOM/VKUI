@@ -99,7 +99,6 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
           [`Select--align-${align}`]: !!align,
           [`Select--sizeX--${sizeX}`]: !!sizeX,
           [`Select--sizeY--${sizeY}`]: !!sizeY,
-          'Select--disabled': disabled,
         })}
         className={className}
         style={style}
