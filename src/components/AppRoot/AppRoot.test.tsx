@@ -5,7 +5,7 @@ import { AppRootContext } from './AppRootContext';
 import AppRoot from './AppRoot';
 
 describe('AppRoot', () => {
-  baselineComponent(AppRoot, { forward: false });
+  baselineComponent(AppRoot);
   describe('Manages portal root in embedded mode', () => {
     it('Creates & injects portal root', () => {
       let portalRoot: HTMLElement;
