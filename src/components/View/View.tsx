@@ -4,7 +4,6 @@ import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
-import { removeObjectKeys } from '../../lib/removeObjectKeys';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withContext } from '../../hoc/withContext';
@@ -184,7 +183,6 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         swipeBackShift: 0,
         activePanel: nextPanel,
         visiblePanels: [nextPanel],
-        scrolls: removeObjectKeys(prevState.scrolls, [prevState.swipeBackPrevPanel]),
       }, () => {
         this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
         this.pickPanel(this.state.activePanel).style.top = null;
@@ -304,7 +302,6 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         activePanel: activePanel,
         animated: false,
         isBack: undefined,
-        scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls,
       }, () => {
         this.pickPanel(activePanel).style.top = null;
         this.window.scrollTo(0, isBack ? this.state.scrolls[activePanel] : 0);
