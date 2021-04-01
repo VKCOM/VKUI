@@ -8,7 +8,7 @@ import { StyleGuideContext } from './StyleGuideRenderer';
 import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider } from '../../src';
 import { DOMContext } from '../../src/lib/dom';
 
-class PrepareFrame extends React.Component {
+class FrameDomProvider extends React.Component {
   static contextTypes = {
     document: PropTypes.any,
     window: PropTypes.any,
@@ -52,7 +52,11 @@ class PrepareFrame extends React.Component {
   }
 
   render () {
-    return this.props.children({ window: this.context.window });
+    return (
+      <DOMContext.Provider value={this.context}>
+        {this.props.children}
+      </DOMContext.Provider>
+    );
   }
 }
 
@@ -124,20 +128,20 @@ export default class Preview extends PreviewParent {
     return (
       <StyleGuideContext.Consumer>
         {(styleGuideContext) => {
-          const isEmbedded = styleGuideContext.integration === "embedded";
-          const isPartial = styleGuideContext.integration === "partial";
-          const Layout = autoLayout ? DefaultLayout : Fragment;
+          const integration = styleGuideContext.integration;
+          const isEmbedded = integration === "embedded";
+          const isPartial = integration === "partial";
 
-          const example = (
-            <Layout>
-              <ReactExample
-                code={code}
-                evalInContext={this.props.evalInContext}
-                onError={this.handleError}
-                compilerConfig={this.context.config.compilerConfig}
-                />
-            </Layout>
+          let example = (
+            <ReactExample
+              code={code}
+              evalInContext={this.props.evalInContext}
+              onError={this.handleError}
+              compilerConfig={this.context.config.compilerConfig}
+            />
           );
+          example = autoLayout ? <DefaultLayout>{example}</DefaultLayout> : example;
+          example = isPartial ? example : <AppRoot embedded={isEmbedded} noLegacyClasses>{example}</AppRoot>;
 
           const frameStyle = {
             height: styleGuideContext.height,
@@ -167,7 +171,7 @@ export default class Preview extends PreviewParent {
                 </button>
               )}
               <div
-                key={`vkui-${styleGuideContext.integration}`}
+                key={`vkui-${integration}`}
                 className={isPartial ? "vkui__root" : null}
                 style={isEmbedded ? {
                   marginTop: 8,
@@ -181,27 +185,19 @@ export default class Preview extends PreviewParent {
                   height: '100%'
                 }
               }>
-              {isEmbedded && this.state.hideEmbeddedApp ? null :
-                  <PrepareFrame integration={styleGuideContext.integration}>
-                    {({ window }) => (
-                      <DOMContext.Provider value={{ window: window, document: window.document }}>
-                        <ConfigProvider
-                          platform={styleGuideContext.platform}
-                          scheme={styleGuideContext.scheme}
-                          webviewType={styleGuideContext.webviewType}
-                        >
-                          <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
-                            {isPartial ? example : (
-                              <AppRoot embedded={isEmbedded} window={window} noLegacyClasses>
-                                {example}
-                              </AppRoot>
-                            )}
-                          </AdaptivityProvider>
-                        </ConfigProvider>
-                      </DOMContext.Provider>
-                    )}
-                  </PrepareFrame>
-                }
+                <FrameDomProvider>
+                  {!(isEmbedded && this.state.hideEmbeddedApp) &&
+                    <ConfigProvider
+                      platform={styleGuideContext.platform}
+                      scheme={styleGuideContext.scheme}
+                      webviewType={styleGuideContext.webviewType}
+                    >
+                      <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
+                        {example}
+                      </AdaptivityProvider>
+                    </ConfigProvider>
+                  }
+                </FrameDomProvider>
               </div>
             </ReactFrame>
           );
