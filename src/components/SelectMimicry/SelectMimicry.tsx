@@ -43,7 +43,6 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
       vkuiClass={classNames(getClassName('Select', platform), 'Select--mimicry', {
         'Select--not-selected': !children,
         'Select--multiline': multiline,
-        'Select--disabled': disabled,
         [`Select--align-${align}`]: !!align,
         [`Select--sizeX--${sizeX}`]: !!sizeX,
         [`Select--sizeY--${sizeY}`]: !!sizeY,
