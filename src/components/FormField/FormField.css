@@ -50,8 +50,10 @@
   border-color: var(--field_valid_border);
 }
 
-.FormField--disabled .FormField__border {
+.FormField--disabled {
   opacity: .4;
+  cursor: default;
+  pointer-events: none;
 }
 
 .FormField:not(.FormField--disabled) .FormField__border--hover {
