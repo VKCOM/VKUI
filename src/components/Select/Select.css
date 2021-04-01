@@ -38,15 +38,6 @@
   cursor: pointer;
 }
 
-.Select--disabled .Select__el {
-  cursor: default;
-}
-
-.Select--disabled .Select__container {
-  opacity: .4;
-  cursor: default;
-}
-
 .Select:not(.Select--multiline) .Select__title {
   overflow: hidden;
   white-space: nowrap;
@@ -55,10 +46,6 @@
 
 .Select--not-selected .Select__title {
   color: var(--field_text_placeholder);
-}
-
-.Select--disabled.Select--not-selected .Select__title {
-  color: var(--text_secondary);
 }
 
 .Select--align-right .Select__title {
