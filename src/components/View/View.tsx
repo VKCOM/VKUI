@@ -4,7 +4,6 @@ import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
-import { removeObjectKeys } from '../../lib/removeObjectKeys';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withContext } from '../../hoc/withContext';
@@ -27,7 +26,6 @@ export type TransitionStartEventDetail = {
   scrolls: Scrolls;
   from: string;
   to: string;
-  isBack: boolean;
 };
 
 interface ViewsScrolls {
@@ -185,15 +183,16 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         swipeBackShift: 0,
         activePanel: nextPanel,
         visiblePanels: [nextPanel],
-        scrolls: removeObjectKeys(prevState.scrolls, [prevState.swipeBackPrevPanel]),
       }, () => {
         this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
+        this.pickPanel(this.state.activePanel).style.top = null;
         this.window.scrollTo(0, prevState.scrolls[this.state.activePanel]);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
     }
 
     const scrolls = this.state.scrolls;
+    const fakeScroll = (panelId: string) => this.pickPanel(panelId).style.top = `-${scrolls[panelId] || 0}px`;
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
@@ -201,18 +200,15 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         detail: {
           from: this.state.prevPanel,
           to: this.state.nextPanel,
-          isBack: this.state.isBack,
           scrolls,
         },
       };
       this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, transitionStartEventData));
-      const nextPanelElement = this.pickPanel(this.state.nextPanel);
-      const prevPanelElement = this.pickPanel(this.state.prevPanel);
 
-      prevPanelElement.scrollTop = scrolls[this.state.prevPanel];
       if (this.state.isBack) {
-        nextPanelElement.scrollTop = scrolls[this.state.nextPanel];
+        fakeScroll(this.state.nextPanel);
       }
+
       this.waitAnimationFinish(this.pickPanel(this.state.isBack ? this.state.prevPanel : this.state.nextPanel), this.transitionEndHandler);
     }
 
@@ -227,21 +223,12 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
       };
       this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, transitionStartEventData));
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
-      const nextPanelElement = this.pickPanel(this.state.swipeBackNextPanel);
-      const prevPanelElement = this.pickPanel(this.state.swipeBackPrevPanel);
-
-      nextPanelElement.scrollTop = scrolls[this.state.swipeBackNextPanel];
-      prevPanelElement.scrollTop = scrolls[this.state.swipeBackPrevPanel];
+      fakeScroll(this.state.swipeBackNextPanel);
     }
 
     // Началась анимация завершения свайпа назад.
     if (!prevState.swipeBackResult && this.state.swipeBackResult) {
       this.waitTransitionFinish(this.pickPanel(this.state.swipeBackNextPanel), this.swipingBackTransitionEndHandler);
-    }
-
-    // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
-    if (prevState.swipeBackResult === SwipeBackResults.fail && !this.state.swipeBackResult) {
-      this.window.scrollTo(0, scrolls[this.state.activePanel]);
     }
 
     // Закончился Safari свайп
@@ -315,9 +302,9 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         activePanel: activePanel,
         animated: false,
         isBack: undefined,
-        scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls,
       }, () => {
-        isBack && this.window.scrollTo(0, this.state.scrolls[activePanel]);
+        this.pickPanel(activePanel).style.top = null;
+        this.window.scrollTo(0, isBack ? this.state.scrolls[activePanel] : 0);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
       });
     }

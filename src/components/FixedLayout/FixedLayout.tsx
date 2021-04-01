@@ -54,24 +54,6 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     return this.props.window;
   }
 
-  get currentPanel(): HTMLElement {
-    const elem = this.props.getPanelNode();
-
-    if (!elem) {
-      console.warn('[VKUI/FixedLayout] Panel element not found');
-    }
-
-    return elem;
-  }
-
-  get canTargetPanelScroll() {
-    const panelEl = this.currentPanel;
-    if (!panelEl) {
-      return true; // Всегда предпологаем, что может быть скролл в случае, если нет document
-    }
-    return panelEl.scrollHeight > panelEl.clientHeight;
-  }
-
   componentDidMount() {
     this.onMountResizeTimeout = setTimeout(() => this.doResize());
     this.window.addEventListener('resize', this.doResize);
@@ -89,16 +71,11 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
   }
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
-    let panelScroll = e.detail.scrolls[this.props.panel] || 0;
-    const fromPanelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
-    const toPanelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
+    const { scrolls, from, to } = e.detail;
+    const { panel } = this.props;
+    let panelScroll = scrolls[panel] || 0;
 
-    // если переход назад - анимация только у панели с которой уходим (detail.from), и подстраиваться под скролл надо только на ней
-    const panelAnimated = !(this.props.panel === e.detail.to && e.detail.isBack);
-
-    // Для панелей, с которых уходим всегда выставляется скролл
-    // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл и применяется ли к ней анимация перехода:
-    if (fromPanelHasScroll || toPanelHasScroll && this.canTargetPanelScroll && panelAnimated) {
+    if (panelScroll > 0 && (panel === from || panel === to)) {
       this.setState({
         position: 'absolute',
         top: this.el.offsetTop + panelScroll,
