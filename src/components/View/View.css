@@ -83,6 +83,11 @@
 /**
  * Panel transition
  */
+
+.View--animated .View__panel {
+  transform: translateZ(0);
+}
+
 .View__panel--next ~ .View__panel--prev {
   animation: vkui-animation-view-prev-back .3s var(--android-easing);
 }
