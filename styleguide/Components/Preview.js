@@ -123,12 +123,12 @@ export default class Preview extends PreviewParent {
   frameRef = React.createRef();
 
   render() {
-    const { code, autoLayout = true } = this.props;
+    const { code, autoLayout = 'all', config = {} } = this.props;
     const { error, isVisible } = this.state;
     return (
       <StyleGuideContext.Consumer>
         {(styleGuideContext) => {
-          const integration = styleGuideContext.integration;
+          const integration = this.props.integration || styleGuideContext.integration;
           const isEmbedded = integration === "embedded";
           const isPartial = integration === "partial";
 
@@ -140,8 +140,8 @@ export default class Preview extends PreviewParent {
               compilerConfig={this.context.config.compilerConfig}
             />
           );
-          example = autoLayout ? <DefaultLayout>{example}</DefaultLayout> : example;
-          example = isPartial ? example : <AppRoot embedded={isEmbedded} noLegacyClasses>{example}</AppRoot>;
+          example = autoLayout === 'all' ? <DefaultLayout>{example}</DefaultLayout> : example;
+          example = isPartial || autoLayout === 'none' ? example : <AppRoot embedded={isEmbedded} noLegacyClasses>{example}</AppRoot>;
 
           const frameStyle = {
             height: styleGuideContext.height,
@@ -149,7 +149,18 @@ export default class Preview extends PreviewParent {
             border: '1px solid rgba(0, 0, 0, .12)',
             display: 'block',
             margin: 'auto',
-          }
+          };
+          const containerStyle = Object.assign(isEmbedded ? {
+            marginTop: 8,
+            position: 'relative',
+            border: '1px solid #000',
+            maxWidth: 1024,
+            width: "calc(100% - 10px)",
+            height: 600
+          } : {
+            position: 'relative',
+            height: '100%'
+          }, this.props.containerStyle || {});
 
           const frame = (
             <ReactFrame
@@ -173,24 +184,15 @@ export default class Preview extends PreviewParent {
               <div
                 key={`vkui-${integration}`}
                 className={isPartial ? "vkui__root" : null}
-                style={isEmbedded ? {
-                  marginTop: 8,
-                  position: 'relative',
-                  border: '1px solid #000',
-                  maxWidth: 1024,
-                  width: "calc(100% - 10px)",
-                  height: 600
-                } : {
-                  position: 'relative',
-                  height: '100%'
-                }
-              }>
+                style={containerStyle}
+              >
                 <FrameDomProvider>
                   {!(isEmbedded && this.state.hideEmbeddedApp) &&
                     <ConfigProvider
                       platform={styleGuideContext.platform}
                       scheme={styleGuideContext.scheme}
                       webviewType={styleGuideContext.webviewType}
+                      {...config}
                     >
                       <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
                         {example}
