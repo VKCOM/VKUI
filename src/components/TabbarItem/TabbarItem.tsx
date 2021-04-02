@@ -23,7 +23,7 @@ export interface TabbarItemProps extends Omit<TappableProps, 'label'> { // TODO 
 }
 
 const TabbarItem: FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) => {
-  const { children, selected, label, indicator, text, Component, className, ...restProps } = props;
+  const { children, selected, label, indicator, text, Component, ...restProps } = props;
   const platform = usePlatform();
 
   return (
@@ -32,7 +32,7 @@ const TabbarItem: FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) 
       Component={restProps.href ? 'a' : Component}
       activeMode="opacity"
       hasHover={false}
-      vkuiClass={classNames(getClassName('TabbarItem', platform), className, {
+      vkuiClass={classNames(getClassName('TabbarItem', platform), {
         'TabbarItem--selected': selected,
         'TabbarItem--text': !!text,
       })}
