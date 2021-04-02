@@ -1,6 +1,7 @@
 import '../src/styles/styles.css';
 import '../src/styles/unstable.css';
 
+import { useState, useRef } from 'react';
 import pkg from '../package';
 import * as VKUI from '../src';
 import * as VKUIUnstable from '../src/unstable';
@@ -43,3 +44,6 @@ window.getRandomUser = getRandomUser;
 window.getRandomUsers = getRandomUsers;
 window.importantCountries = importantCountries;
 window.getAvatarUrl = getAvatarUrl;
+
+window.useState = useState;
+window.useRef = useRef;
