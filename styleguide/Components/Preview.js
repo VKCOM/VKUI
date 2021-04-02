@@ -121,9 +121,6 @@ export default class Preview extends PreviewParent {
   render() {
     const { code, autoLayout = true } = this.props;
     const { error, isVisible } = this.state;
-    if (error) {
-      return <PlaygroundError message={error} />;
-    }
     return (
       <StyleGuideContext.Consumer>
         {(styleGuideContext) => {
@@ -211,7 +208,9 @@ export default class Preview extends PreviewParent {
 
           return (
             <div ref={this.frameRef} style={frameStyle}>
-              {isVisible && frame}
+              {error
+                ? <PlaygroundError message={error} />
+                : (isVisible && frame)}
             </div>
           );
         }}
