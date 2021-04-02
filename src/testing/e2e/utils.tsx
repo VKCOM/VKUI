@@ -1,4 +1,4 @@
-import { ComponentType, Fragment, isValidElement } from 'react';
+import { ComponentType, Fragment, isValidElement, FC } from 'react';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { screenshot } from '@react-playwright';
 // Импорты из отдельных модулей помогают jest отслеживать зависимости
@@ -76,6 +76,7 @@ type ScreenshotOptions = {
   platforms?: Platform[];
   mobileSchemes?: Scheme[];
   adaptivity?: AdaptivityProps;
+  wrapInApp?: boolean;
 };
 
 function getAdaptivePxWidth(viewWidth: ViewWidth) {
@@ -88,6 +89,18 @@ function getAdaptivePxWidth(viewWidth: ViewWidth) {
   }
 }
 
+const AppWrapper: FC = (props) => (
+  <AppRoot embedded>
+    <View activePanel="panel">
+      <Panel id="panel">
+        <Group>
+          {props.children}
+        </Group>
+      </Panel>
+    </View>
+  </AppRoot>
+);
+
 export function describeScreenshotFuzz<Props>(
   Component: ComponentType<Props>,
   propSets: Array<PropDesc<Props>> = [],
@@ -98,7 +111,9 @@ export function describeScreenshotFuzz<Props>(
     platforms = Object.values(Platform),
     mobileSchemes = [Scheme.BRIGHT_LIGHT, Scheme.SPACE_GRAY],
     adaptivity = {},
+    wrapInApp = true,
   } = options;
+  const Wrapper = wrapInApp ? AppWrapper : Fragment;
   platforms.forEach((platform) => {
     describe(platform, () => {
       const isVkCom = platform === 'vkcom';
@@ -114,20 +129,14 @@ export function describeScreenshotFuzz<Props>(
             <ConfigProvider scheme={scheme} platform={platform}>
               <AdaptivityProvider {...adaptivityProps}>
                 <div style={{ width, position: 'absolute', height: 'auto' }}>
-                  <AppRoot embedded>
-                    <View activePanel="panel">
-                      <Panel id="panel">
-                        <Group>
-                          {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
-                            <Fragment key={i}>
-                              <div>{prettyProps(props)}</div>
-                              <div><Component {...props as any} /></div>
-                            </Fragment>
-                          ))}
-                        </Group>
-                      </Panel>
-                    </View>
-                  </AppRoot>
+                  <Wrapper>
+                    {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
+                      <Fragment key={i}>
+                        <div>{prettyProps(props)}</div>
+                        <div><Component {...props as any} /></div>
+                      </Fragment>
+                    ))}
+                  </Wrapper>
                 </div>
               </AdaptivityProvider>
             </ConfigProvider>
