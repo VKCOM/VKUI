@@ -1,165 +1,122 @@
-import React, { HTMLAttributes, KeyboardEvent, RefObject, createRef } from 'react';
-import SliderSwitchButton from './SliderSwitchButton';
+import { Component, Fragment, createRef, RefObject, HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
-import { HasPlatform } from '../../types';
+import Text from '../Typography/Text/Text';
 
-export interface SliderSwitchOptionInterface {
-  name: string;
-  value: string | number;
+export type SliderSwitchOptionInterface = {
+  title: string,
+  value: string,
 }
 
-export interface SliderSwitchProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
-  options: Array<{
-    name: string;
-    value: string | number;
-  }>;
-  activeValue?: SliderSwitchOptionInterface['value'];
-  name?: string;
-  onSwitch?: (value: SliderSwitchOptionInterface['value']) => void;
+export interface SliderSwitchProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  items: SliderSwitchOptionInterface[];
+  activeValue?: string;
+  disabled?: boolean;
+  onChange?: (event: SliderSwitchOptionInterface['value']) => void;
 }
 
 interface SliderSwitchState {
-  activeValue: SliderSwitchOptionInterface['value'];
-  hoveredOptionId: number;
+  activeValue: string;
+  activeIndex: number;
 }
 
-export default class SliderSwitch extends React.Component<SliderSwitchProps, SliderSwitchState> {
-  public constructor(props: SliderSwitchProps) {
+class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
+  constructor(props: any) {
     super(props);
 
     this.state = {
-      activeValue: props.activeValue ?? '',
-      hoveredOptionId: -1,
-    };
+      activeValue: undefined,
+      activeIndex: 0,
+    }
 
-    this.firstButton = createRef();
-    this.secondButton = createRef();
+    this.items = [];
+    this.containerRef = createRef();
+  }
+  items: HTMLElement[];
+  containerRef: RefObject<HTMLDivElement>;
+
+  static defaultProps: SliderSwitchProps = {
+    items: [{ title: "", value: "" }, { title: "", value: "" }],
   }
 
-  static defaultProps = {
-    options: [{ name: '', value: '' }, { name: '', value: '' }],
-  };
+  setItemRef = (item: HTMLDivElement | null) => {
+    let element = this.items.findIndex(elem => elem === item) === -1;
+    if (item && element) { this.items.push(item) }
+  }
 
-  firstButton: RefObject<HTMLDivElement>;
-  secondButton: RefObject<HTMLDivElement>;
+  nextItem = (index: number) => {
+    const { items, onChange } = this.props;
 
-  onSwitch = (value: SliderSwitchOptionInterface['value']) => {
-    const { onSwitch } = this.props;
+    onChange && onChange(items[index].value);
 
-    this.setState(() => ({
-      activeValue: value,
-    }), () => {
-      onSwitch && onSwitch(value);
-    });
-  };
-
-  handleFirstClick = () => {
-    const { options } = this.props;
-    const { value } = options[0];
-
-    this.onSwitch(value);
-  };
-
-  handleSecondClick = () => {
-    const { options } = this.props;
-    const { value } = options[1];
-
-    this.onSwitch(value);
-  };
-
-  handleFirstHover = () => {
-    this.setState(() =>({
-      hoveredOptionId: 0,
-    }));
-  };
-
-  handleSecondHover = () => {
-    this.setState(() =>({
-      hoveredOptionId: 1,
-    }));
-  };
-
-  resetFocusedOption = () => {
-    this.setState(() => ({
-      hoveredOptionId: -1,
-    }));
-  };
-
-  switchByKey = (event: KeyboardEvent) => {
-    if (event.key !== 'Enter' && event.key !== 'Spacebar' && event.key !== ' ') {
-      return;
-    }
-    event.preventDefault();
-
-    const { options } = this.props;
-    const { activeValue } = this.state;
-    const { value } = options.find((option) => option.value !== activeValue);
-
-    this.onSwitch(value);
-
-    if (options[0].value === value) {
-      this.firstButton.current.focus();
-    } else {
-      this.secondButton.current.focus();
-    }
-  };
+    this.setState({
+      activeValue: items[index]?.value,
+      activeIndex: index,
+    })
+  }
 
   static getDerivedStateFromProps(nextProps: SliderSwitchProps, prevState: SliderSwitchState) {
     if (nextProps.activeValue && nextProps.activeValue !== prevState.activeValue) {
       return {
         activeValue: nextProps.activeValue,
+        activeIndex: nextProps.items.findIndex((item) => item.value === nextProps.activeValue),
       };
     }
-
     return null;
   }
 
-  public render() {
-    const { name, options, activeValue: _activeValue, onSwitch, ...restProps } = this.props;
-    const { activeValue, hoveredOptionId } = this.state;
+  render() {
+    const {
+      items,
+      disabled,
+      onChange,
+      ...prevProps
+    } = this.props;
 
-    const [firstOption, secondOption] = options;
-    const firstActive = firstOption.value === activeValue;
-    const secondActive = secondOption.value === activeValue;
+    const {
+      activeValue,
+      activeIndex,
+    } = this.state;
+
+    let position = this.items[activeIndex]?.offsetLeft / this.containerRef.current?.clientWidth * 100;
+    let width = this.items[activeIndex]?.offsetWidth * 100 / this.containerRef.current?.clientWidth;
+
+    const styleItems = {
+      marginLeft: `${position}%`,
+      width: `${width}%`,
+      opacity: activeValue ? '1' : '0',
+    }
 
     return (
-      <div
-        {...restProps}
-        vkuiClass="SliderSwitch"
-        onKeyDown={this.switchByKey}
-        onMouseLeave={this.resetFocusedOption}
-      >
-        {!firstActive && !secondActive &&
-          <div vkuiClass="SliderSwitch__border" />
-        }
-        <div vkuiClass={classNames(
-          'SliderSwitch__slider',
-          {
-            ['SliderSwitch--firstActive']: firstActive,
-            ['SliderSwitch--secondActive']: secondActive,
-          },
-        )} />
-        <input type="hidden" name={name} value={activeValue} />
-        <SliderSwitchButton
-          active={firstActive}
-          hovered={hoveredOptionId === 0}
-          aria-pressed={firstActive}
-          onClick={this.handleFirstClick}
-          onMouseEnter={this.handleFirstHover}
-          getRootRef={this.firstButton}
-        >
-          {firstOption.name}
-        </SliderSwitchButton>
-        <SliderSwitchButton
-          active={secondActive}
-          hovered={hoveredOptionId === 1}
-          onClick={this.handleSecondClick}
-          onMouseEnter={this.handleSecondHover}
-          getRootRef={this.secondButton}
-        >
-          {secondOption.name}
-        </SliderSwitchButton>
+      <div {...prevProps} vkuiClass={classNames("SliderSwitch", { ['SliderSwitch--disabled']: disabled })}>
+        <div ref={this.containerRef} vkuiClass="SliderSwitch__inner">
+
+          {items &&
+            <div vkuiClass="SliderSwitch__indicator">
+              <div vkuiClass="SliderSwitch__indicator_item" style={styleItems}></div>
+            </div>}
+
+          {items && items.map((item, index) =>
+            <Fragment key={`box_item_${index}`}>
+
+              <div
+                ref={(child) => this.setItemRef(child)}
+                key={`item_${index}`}
+                vkuiClass={classNames("SliderSwitch__item", `SliderSwitch__item--${(activeValue && activeIndex === index) ? "active" : "null"}`)}
+                onClick={() => { this.nextItem(index) }}
+              >
+                <Text weight="medium">{item.title}</Text>
+              </div>
+
+              {items.length !== index + 1 &&
+                <div key={`separator_${index}`} vkuiClass={classNames("SliderSwitch__separator",
+                  `SliderSwitch__separator${(activeValue && (activeIndex === index || activeIndex - 1 === index)) ? "--active" : "--unactive"}`)} />}
+            </Fragment>
+          )}
+
+        </div>
       </div>
-    );
+    )
   }
 }
+
+export default SliderSwitch;
