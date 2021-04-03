@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 
-.SliderSwitch__inner {
+.SliderSwitch__in {
   display: flex;
   position: relative;
   width: calc(100% - 4px);
@@ -33,7 +33,6 @@
   align-items: center;
   justify-content: center;
   color: #6d7885;
-  color: #6d7885;
   color: var(--text_subhead);
   text-decoration: none;
   border-radius: 8px;
@@ -57,9 +56,9 @@
 .SliderSwitch__separator {
   width: 1px;
   height: 28px;
-  opacity: 0.5;
+  opacity: .5;
   margin: 8px 0;
-  transition: 0.15s;
+  transition: .15s;
 }
 
 .SliderSwitch__separator--unactive {
@@ -85,11 +84,11 @@
   border-radius: 8px;
   background-color: #fff;
   background-color: var(--background_content);
-  transition: 0.15s cubic-bezier(0.22, 0.12, 0.25, 1);
+  transition: .15s cubic-bezier(.22, .12, .25, 1);
   z-index: 0;
 }
 
 .SliderSwitch--disabled {
   pointer-events: none;
-  opacity: 0.2;
+  opacity: .2;
 }
