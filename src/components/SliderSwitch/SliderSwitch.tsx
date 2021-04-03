@@ -96,7 +96,7 @@ class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
     const {
       options,
       disabled,
-      onChange,
+      onSwitch,
       focusVisible,
       ...prevProps
     } = this.props;
