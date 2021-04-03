@@ -3,20 +3,22 @@ import { classNames } from '../../lib/classNames';
 import Text from '../Typography/Text/Text';
 
 export type SliderSwitchOptionInterface = {
-  title: string;
+  name: string;
   value: string | number;
 };
 
-export interface SliderSwitchProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
-  items: SliderSwitchOptionInterface[];
+export interface SliderSwitchProps extends HTMLAttributes<HTMLDivElement> {
+  options: SliderSwitchOptionInterface[];
   activeValue?: string;
+  focusVisible?: boolean;
   disabled?: boolean;
-  onChange?: (event: SliderSwitchOptionInterface['value']) => void;
+  onSwitch?: (event: SliderSwitchOptionInterface['value']) => void;
 }
 
 interface SliderSwitchState {
-  activeValue: SliderSwitchOptionInterface['value'];
+  activeValue?: SliderSwitchOptionInterface['value'];
   activeIndex: number;
+  activeFocus?: number;
 }
 
 class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
@@ -25,6 +27,7 @@ class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
 
     this.state = {
       activeValue: undefined,
+      activeFocus: undefined,
       activeIndex: 0,
     };
 
@@ -35,7 +38,8 @@ class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
   containerRef: RefObject<HTMLDivElement>;
 
   static defaultProps: SliderSwitchProps = {
-    items: [{ title: '', value: '' }, { title: '', value: '' }],
+    options: [{ name: '', value: '' }, { name: '', value: '' }],
+    focusVisible: true,
   };
 
   setItemRef = (item: HTMLDivElement | null) => {
@@ -44,13 +48,18 @@ class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
   };
 
   nextItem = (index: number) => {
-    const { items, onChange } = this.props;
+    const { options, onSwitch } = this.props;
+    const { activeFocus } = this.state;
 
-    onChange && onChange(items[index].value);
+    let indexItem = activeFocus === 0 ? 0 : activeFocus || index;
 
+    onSwitch && onSwitch(options[indexItem].value);
+
+    this.items[indexItem].focus();
     this.setState({
-      activeValue: items[index]?.value,
-      activeIndex: index,
+      activeValue: options[indexItem]?.value,
+      activeIndex: indexItem,
+      activeFocus: undefined,
     });
   };
 
@@ -66,7 +75,8 @@ class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
     }
   };
 
-  switchByFocus = () => {
+  switchByFocus = (focus: number) => {
+    this.setState({ activeFocus: focus });
     if (!this.state.activeValue) {
       this.nextItem(0);
     }
@@ -76,7 +86,7 @@ class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
     if (nextProps.activeValue && nextProps.activeValue !== prevState.activeValue) {
       return {
         activeValue: nextProps.activeValue,
-        activeIndex: nextProps.items.findIndex((item) => item.value === nextProps.activeValue),
+        activeIndex: nextProps.options.findIndex((item) => item.value === nextProps.activeValue),
       };
     }
     return null;
@@ -84,9 +94,10 @@ class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
 
   render() {
     const {
-      items,
+      options,
       disabled,
       onChange,
+      focusVisible,
       ...prevProps
     } = this.props;
 
@@ -108,8 +119,6 @@ class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
       <div
         {...prevProps}
         onKeyDown={this.switchByKey}
-        onFocus={this.switchByFocus}
-        tabIndex={0}
         vkuiClass={classNames('SliderSwitch', { ['SliderSwitch--disabled']: disabled })}>
         <div ref={this.containerRef} vkuiClass="SliderSwitch__in">
 
@@ -117,20 +126,25 @@ class SliderSwitch extends Component<SliderSwitchProps, SliderSwitchState> {
             <div vkuiClass="SliderSwitch__indicator_item" style={styleItems} />
           </div>
 
-          {items && items.map((item, index) =>
+          {options && options.map((item, index) =>
             <Fragment key={`box_item_${index}`}>
 
               <div
                 key={`item_${index}`}
                 ref={(child) => this.setItemRef(child)}
                 onClick={() => {this.nextItem(index);}}
+                onFocus={() => this.switchByFocus(index)}
+                tabIndex={0}
                 vkuiClass={classNames(
                   'SliderSwitch__item',
-                  { ['SliderSwitch__item--active']: activeValue && activeIndex === index })}>
-                <Text weight="medium">{item.title}</Text>
+                  {
+                    ['SliderSwitch__item--active']: activeValue && activeIndex === index,
+                    ['SliderSwitch__item--focus']: focusVisible,
+                  })}>
+                <Text weight="medium">{item.name}</Text>
               </div>
 
-              {items.length !== index + 1 &&
+              {options.length !== index + 1 &&
                 <div key={`separator_${index}`} vkuiClass={classNames('SliderSwitch__separator',
                   `SliderSwitch__separator--${activeValue && (activeIndex === index || activeIndex - 1 === index) ? 'active' : 'unactive'}`)} />}
 

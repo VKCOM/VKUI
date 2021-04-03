@@ -38,6 +38,21 @@
   border-radius: 8px;
   z-index: 1;
   cursor: pointer;
+  outline: none;
+}
+
+.SliderSwitch__item--focus:focus {
+  -webkit-box-shadow: 0 0 0 1px var(--accent);
+  -moz-box-shadow: 0 0 0 1px var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+  transition: .24s;
+}
+
+.SliderSwitch__item--focus:hover {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  transition: .24s;
 }
 
 .SliderSwitch__item:hover {
