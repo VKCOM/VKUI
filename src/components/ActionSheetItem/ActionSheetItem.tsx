@@ -22,14 +22,14 @@ export interface ActionSheetItemProps extends
   before?: React.ReactNode;
   meta?: React.ReactNode;
   subtitle?: React.ReactNode;
-  autoclose?: boolean;
+  autoClose?: boolean;
   selectable?: boolean;
   disabled?: boolean;
 }
 
 const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   children,
-  autoclose,
+  autoClose,
   mode,
   meta,
   subtitle,
@@ -60,7 +60,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   return (
     <Tappable
       {...restProps}
-      onClick={onItemClick(onClick, autoclose)}
+      onClick={onItemClick(onClick, autoClose)}
       activeMode="ActionSheetItem--active"
       vkuiClass={
         classNames(
