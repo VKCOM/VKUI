@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, useRef, useState } from 'react';
+import { FC, HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 import { useDOM } from '../../lib/dom';
 import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
@@ -6,6 +6,7 @@ import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptiv
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { classScopingMode } from '../../lib/classScopingMode';
 import { IconSettingsProvider } from '@vkontakte/icons';
+import { elementScrollController, globalScrollController, ScrollContext, ScrollContextInterface } from './ScrollContext';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -15,6 +16,7 @@ export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, Adaptivity
   window?: Window;
   /** Убирает классы без префикса (.Button) */
   noLegacyClasses?: boolean;
+  scroll?: 'global' | 'contain';
 }
 
 function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
@@ -25,7 +27,7 @@ function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
   }
 }
 
-const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses = false }) => {
+const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global', ...props }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
   const { window } = useDOM();
@@ -38,6 +40,12 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
     }
     classScopingMode.noConflict = noLegacyClasses;
   }
+
+  useEffect(() => {
+    if (scroll !== 'global' && !embedded) {
+      console.warn('[VKUI/AppRoot] Scroll modes only supported in embedded mode');
+    }
+  }, [scroll]);
 
   // one time initialization and cleanup
   useIsomorphicLayoutEffect(() => {
@@ -76,18 +84,24 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
     [sizeX],
   );
 
+  const scrollController = useMemo<ScrollContextInterface>(
+    () => scroll === 'contain' ? elementScrollController(rootRef) : globalScrollController(window, document),
+    [scroll]);
+
   return (
     <div ref={rootRef} vkuiClass={classNames('AppRoot', {
       'AppRoot--no-mouse': !hasMouse,
-    })}>
+    })} {...props}>
       <AppRootContext.Provider value={{
         appRoot: rootRef,
         portalRoot: portalRoot,
         embedded,
       }}>
-        <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
-          {children}
-        </IconSettingsProvider>
+        <ScrollContext.Provider value={scrollController}>
+          <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
+            {children}
+          </IconSettingsProvider>
+        </ScrollContext.Provider>
       </AppRootContext.Provider>
     </div>
   );

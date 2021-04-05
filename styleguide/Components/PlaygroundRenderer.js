@@ -36,13 +36,16 @@ class PlaygroundRenderer extends React.Component {
     } = this.props;
     const {
       autoLayout,
+      integration,
+      containerStyle,
+      config,
       ...wrapperProps
     } = previewProps;
 
     return (
       <div className={classes.root}>
         <div className={cx(classes.preview, wrapperProps.className)} {...wrapperProps} data-preview={name}>
-          { cloneElement(preview, { ...preview.props, autoLayout }) }
+          { cloneElement(preview, { ...preview.props, autoLayout, containerStyle, integration, config }) }
         </div>
         <div className={classes.controls}>
           <div className={classes.tabs}>{tabButtons}</div>

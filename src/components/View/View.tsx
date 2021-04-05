@@ -13,6 +13,7 @@ import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
+import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -69,6 +70,10 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasPlatform {
    * @ignore
    */
   configProvider?: ConfigProviderContextInterface;
+  /**
+   * @ignore
+   */
+  scroll?: ScrollContextInterface;
 }
 
 export interface ViewState {
@@ -166,7 +171,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         animated: true,
         scrolls: {
           ...prevState.scrolls,
-          [prevProps.activePanel]: this.window.pageYOffset,
+          [prevProps.activePanel]: this.props.scroll.getScroll().y,
         },
         isBack,
       });
@@ -188,7 +193,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         scrolls: removeObjectKeys(prevState.scrolls, [prevState.swipeBackPrevPanel]),
       }, () => {
         this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
-        this.window.scrollTo(0, prevState.scrolls[this.state.activePanel]);
+        this.props.scroll.scrollTo(0, prevState.scrolls[this.state.activePanel]);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
     }
@@ -241,7 +246,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
 
     // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
     if (prevState.swipeBackResult === SwipeBackResults.fail && !this.state.swipeBackResult) {
-      this.window.scrollTo(0, scrolls[this.state.activePanel]);
+      this.props.scroll.scrollTo(0, scrolls[this.state.activePanel]);
     }
 
     // Закончился Safari свайп
@@ -299,10 +304,10 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
 
   transitionEndHandler = (e?: AnimationEvent): void => {
     if (!e || [
-      'animation-ios-next-forward',
-      'animation-ios-prev-back',
-      'animation-android-next-forward',
-      'animation-android-prev-back',
+      'vkui-animation-ios-next-forward',
+      'vkui-animation-ios-prev-back',
+      'vkui-animation-view-next-forward',
+      'vkui-animation-view-prev-back',
     ].includes(e.animationName)) {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
@@ -317,7 +322,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
         isBack: undefined,
         scrolls: isBack ? removeObjectKeys(this.state.scrolls, [prevPanel]) : this.state.scrolls,
       }, () => {
-        isBack && this.window.scrollTo(0, this.state.scrolls[activePanel]);
+        isBack && this.props.scroll.scrollTo(0, this.state.scrolls[activePanel]);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
       });
     }
@@ -385,7 +390,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
           swipeBackNextPanel: this.props.history.slice(-2)[0],
           scrolls: {
             ...this.state.scrolls,
-            [this.state.activePanel]: this.window.pageYOffset,
+            [this.state.activePanel]: this.props.scroll.getScroll().y,
           },
         });
       }
@@ -460,7 +465,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
       popout, modal, platform,
       activePanel: _1, splitCol, configProvider, history, id,
       onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
-      window, document,
+      window, document, scroll,
       ...restProps
     } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult } = this.state;
@@ -529,7 +534,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
 }
 
 export default withContext(withContext(
-  withPlatform(withDOM<ViewProps>(View)),
-  SplitColContext,
-  'splitCol',
-), ConfigProviderContext, 'configProvider');
+  withContext(
+    withPlatform(withDOM<ViewProps>(View)),
+    SplitColContext, 'splitCol'),
+  ConfigProviderContext, 'configProvider'),
+ScrollContext, 'scroll');

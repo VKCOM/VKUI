@@ -1,5 +1,5 @@
-import { ReactElement, FC } from 'react';
-import { useDOM } from '../../lib/dom';
+import { ScrollContext } from '../AppRoot/ScrollContext';
+import { ReactElement, FC, useContext } from 'react';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface ScrollSaverProps {
@@ -9,14 +9,12 @@ export interface ScrollSaverProps {
 }
 
 export const ScrollSaver: FC<ScrollSaverProps> = ({ children, initialScroll, saveScroll }) => {
-  const { window, document } = useDOM();
+  const { getScroll, scrollTo } = useContext(ScrollContext);
   useIsomorphicLayoutEffect(() => {
     if (typeof initialScroll === 'number') {
-      // Some iOS versions do not normalize scroll — do it manually.
-      const safeScroll = Math.max(Math.min(initialScroll, document.body.scrollHeight - window.innerHeight), 0);
-      window.scrollTo(0, safeScroll);
+      scrollTo(0, initialScroll);
     }
-    return () => saveScroll(window.pageYOffset);
+    return () => saveScroll(getScroll().y);
   }, []);
   return children;
 };

@@ -91,10 +91,6 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
   get value() {return this.isControlledOutside ? this.props.value : this.state.value;}
 
   onChange: ChangeEventHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    if (this.props.grow) {
-      this.resize();
-    }
-
     if (!this.isControlledOutside) {
       this.setState({ value: e.target.value });
     }
@@ -104,12 +100,19 @@ class Textarea extends PureComponent<TextareaProps, TextareaState> {
     }
   };
 
-  componentDidUpdate(prevProps: TextareaProps) {
+  componentDidUpdate(prevProps: TextareaProps, prevState: TextareaState) {
     if (prevProps.value && this.props.value === '') {
       // Fix iOS extra indent on removing content
       window.requestAnimationFrame(() => {
         this.element.value = '';
       });
+    }
+
+    if (this.props.grow && (
+      this.isControlledOutside && prevProps.value !== this.props.value
+      || !this.isControlledOutside && prevState.value !== this.state.value
+    )) {
+      this.resize();
     }
   }
 

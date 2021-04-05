@@ -52,7 +52,7 @@
 }
 
 .PullToRefresh--ios.PullToRefresh--refreshing .PullToRefresh__spinner-self {
-  animation: PullToRefreshToRefreshing 380ms ease-out;
+  animation: vkui-PullToRefreshToRefreshing 380ms ease-out;
 }
 
 .PullToRefresh__spinner-path {
@@ -67,7 +67,7 @@
 }
 
 .PullToRefresh__spinner--on .PullToRefresh__spinner-path {
-  animation: rotator var(--duration) linear infinite;
+  animation: vkui-rotator var(--duration) linear infinite;
 }
 
 .PullToRefresh__content {
@@ -79,7 +79,7 @@
   transition: none;
 }
 
-@keyframes PullToRefreshToRefreshing {
+@keyframes vkui-PullToRefreshToRefreshing {
   0% {
     transform: scale(1);
   }

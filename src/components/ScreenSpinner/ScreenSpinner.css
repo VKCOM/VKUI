@@ -3,7 +3,7 @@
 }
 
 .ScreenSpinner {
-  animation: screen-spinner-intro .3s ease;
+  animation: vkui-screen-spinner-intro .3s ease;
 }
 
 .ScreenSpinner--ios .ScreenSpinner__container {
@@ -32,7 +32,7 @@
   color: var(--icon_outline_secondary);
 }
 
-@keyframes screen-spinner-intro {
+@keyframes vkui-screen-spinner-intro {
   from {
     opacity: 0;
   }

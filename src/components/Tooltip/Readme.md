@@ -126,7 +126,7 @@ import { Tooltip, Button } from '@vkontakte/vkui';
 - в скроллящемся контейнере — замените какой-нибудь элемент, внутри которого нет скролла, на `<TooltipContainer>` и добавьте ему `position: relative` (или другую не-static).
 - внутри `position: fixed` — `<TooltipContainer fixed>`
 
-```jsx { "props": { "autoLayout": false } }
+```jsx { "props": { "autoLayout": "root" } }
 <>
   <TooltipContainer style={{ minHeight: '300vh' }}>
     <Tooltip text="Я скроллюсь">

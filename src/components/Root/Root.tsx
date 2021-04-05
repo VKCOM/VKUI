@@ -9,7 +9,8 @@ import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { DOMProps, withDOM } from '../../lib/dom';
+import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
+import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
@@ -24,6 +25,10 @@ export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
    * @ignore
    */
   configProvider?: ConfigProviderContextInterface;
+  /**
+   * @ignore
+   */
+  scroll?: ScrollContextInterface;
 }
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
@@ -66,10 +71,6 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     return this.props.document;
   }
 
-  get window() {
-    return this.props.window;
-  }
-
   componentDidUpdate(prevProps: RootProps, prevState: RootState) {
     if (this.props.popout && !prevProps.popout) {
       this.blurActiveElement();
@@ -77,7 +78,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
 
     // Нужен переход
     if (this.props.activeView !== prevProps.activeView) {
-      let pageYOffset = this.window.pageYOffset;
+      let pageYOffset = this.props.scroll.getScroll().y;
       const firstLayerId = [].concat(prevProps.children).find((view: ReactElement) => {
         return view.props.id === prevProps.activeView || view.props.id === this.props.activeView;
       }).props.id;
@@ -143,10 +144,10 @@ class Root extends Component<RootProps & DOMProps, RootState> {
 
   onAnimationEnd: AnimationEndCallback = (e?: AnimationEvent) => {
     if (!e || [
-      'root-android-animation-hide-back',
-      'root-android-animation-show-forward',
-      'root-ios-animation-hide-back',
-      'root-ios-animation-show-forward',
+      'vkui-root-android-animation-hide-back',
+      'vkui-root-android-animation-show-forward',
+      'vkui-root-ios-animation-hide-back',
+      'vkui-root-ios-animation-show-forward',
     ].includes(e.animationName)) {
       const isBack = this.state.isBack;
       const prevView = this.state.prevView;
@@ -159,14 +160,14 @@ class Root extends Component<RootProps & DOMProps, RootState> {
         transition: false,
         isBack: undefined,
       }, () => {
-        this.window.scrollTo(0, isBack ? this.state.scrolls[this.state.activeView] : 0);
+        this.props.scroll.scrollTo(0, isBack ? this.state.scrolls[this.state.activeView] : 0);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevView, to: nextView });
       });
     }
   };
 
   blurActiveElement() {
-    if (typeof this.window !== 'undefined' && this.document.activeElement) {
+    if (canUseDOM && this.document.activeElement) {
       (this.document.activeElement as HTMLElement).blur();
     }
   }
@@ -175,7 +176,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     const {
       popout, modal, platform,
       splitCol, configProvider, activeView: _1, onTransition,
-      window, document,
+      window, document, scroll,
       ...restProps
     } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
@@ -214,8 +215,8 @@ class Root extends Component<RootProps & DOMProps, RootState> {
   }
 }
 
-export default withContext(withContext(
+export default withContext(withContext(withContext(
   withPlatform(withDOM<RootProps>(Root)),
   SplitColContext,
   'splitCol',
-), ConfigProviderContext, 'configProvider');
+), ConfigProviderContext, 'configProvider'), ScrollContext, 'scroll');

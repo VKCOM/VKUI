@@ -27,11 +27,11 @@
 }
 
 .PanelHeaderContext--opened .PanelHeaderContext__fade {
-  animation: animation-panelheadercontext-fade-in .2s ease;
+  animation: vkui-animation-panelheadercontext-fade-in .2s ease;
 }
 
 .PanelHeaderContext--closing .PanelHeaderContext__fade {
-  animation: animation-panelheadercontext-fade-out .2s ease;
+  animation: vkui-animation-panelheadercontext-fade-out .2s ease;
 }
 
 .PanelHeaderContext .SimpleCell {
@@ -43,11 +43,11 @@
  */
 
 .PanelHeaderContext--ios.PanelHeaderContext--opened .PanelHeaderContext__in {
-  animation: animation-panelheadercontext-translate-in .2s ease;
+  animation: vkui-animation-panelheadercontext-translate-in .2s ease;
 }
 
 .PanelHeaderContext--ios.PanelHeaderContext--closing .PanelHeaderContext__in {
-  animation: animation-panelheadercontext-translate-out .2s ease;
+  animation: vkui-animation-panelheadercontext-translate-out .2s ease;
 }
 
 .PanelHeaderContext--ios .List {
@@ -65,12 +65,12 @@
 
 .PanelHeaderContext--android.PanelHeaderContext--opened .PanelHeaderContext__in,
 .PanelHeaderContext--vkcom.PanelHeaderContext--opened .PanelHeaderContext__in {
-  animation: animation-panelheadercontext-translate-in .2s ease;
+  animation: vkui-animation-panelheadercontext-translate-in .2s ease;
 }
 
 .PanelHeaderContext--android.PanelHeaderContext--closing .PanelHeaderContext__in,
 .PanelHeaderContext--vkcom.PanelHeaderContext--closing .PanelHeaderContext__in {
-  animation: animation-panelheadercontext-translate-out .2s ease;
+  animation: vkui-animation-panelheadercontext-translate-out .2s ease;
 }
 
 .PanelHeaderContext--android .List,
@@ -105,22 +105,22 @@
   Animations
  */
 
-@keyframes animation-panelheadercontext-translate-in {
+@keyframes vkui-animation-panelheadercontext-translate-in {
   from { transform: translateY(-100%); }
   to { transform: translateY(0); }
 }
 
-@keyframes animation-panelheadercontext-translate-out {
+@keyframes vkui-animation-panelheadercontext-translate-out {
   from { transform: translateY(0); }
   to { transform: translateY(-100%); }
 }
 
-@keyframes animation-panelheadercontext-fade-in {
+@keyframes vkui-animation-panelheadercontext-fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-@keyframes animation-panelheadercontext-fade-out {
+@keyframes vkui-animation-panelheadercontext-fade-out {
   from { opacity: 1; }
   to { opacity: 0; }
 }

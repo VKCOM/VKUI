@@ -19,7 +19,7 @@
 }
 
 .SplitLayout--ios .SplitLayout__inner--header {
-  margin-top: calc(-1 * var(--panelheader_height_ios));
+  margin-top: calc(-1 * calc(var(--panelheader_height_ios) + var(--safe-area-inset-top)));
 }
 
 .SplitLayout--android .SplitLayout__inner--header,

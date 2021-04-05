@@ -12,7 +12,7 @@
  */
 .ActionSheet--ios {
   width: 100%;
-  animation: animation-actionsheet-intro .3s var(--ios-easing);
+  animation: vkui-animation-actionsheet-intro .3s var(--ios-easing);
   padding: 10px;
   box-sizing: border-box;
   display: flex;
@@ -65,7 +65,7 @@
 .ActionSheet--vkcom {
   width: calc(100% - 20px);
   margin: 10px;
-  animation: animation-actionsheet-intro .2s var(--android-easing);
+  animation: vkui-animation-actionsheet-intro .2s var(--android-easing);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -138,7 +138,7 @@
 /**
 * Animations
 */
-@keyframes animation-actionsheet-intro {
+@keyframes vkui-animation-actionsheet-intro {
   from {
     transform: translateY(100%);
   }
