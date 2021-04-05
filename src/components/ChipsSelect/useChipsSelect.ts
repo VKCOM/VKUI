@@ -4,7 +4,7 @@ import { useChipsInput } from '../ChipsInput/useChipsInput';
 import { ChipsSelectProps } from './ChipsSelect';
 
 export const useChipsSelect = <Option extends ChipsInputOption>(props: Partial<ChipsSelectProps<Option>>) => {
-  const { options, filterFn, getOptionLabel, getOptionValue, showSelected } = props;
+  const { options, filterFn, getOptionLabel, getOptionValue, showSelected, getItemsFromOptions } = props;
 
   const [opened, setOpened] = useState(false);
   const [focusedOptionIndex, setFocusedOptionIndex] = useState<number>(0);
@@ -42,8 +42,10 @@ export const useChipsSelect = <Option extends ChipsInputOption>(props: Partial<C
     return [...filteredSet];
   }, [showSelected, filteredOptions, selectedOptions]);
 
+  const suggestItems = useMemo(() => getItemsFromOptions(filteredOptions), [filteredOptions, getItemsFromOptions])
+
   return {
     ...chipsInputState, fieldValue, handleInputChange, opened, setOpened, filteredOptions,
-    focusedOptionIndex, setFocusedOptionIndex, focusedOption, setFocusedOption, selectedOptions,
+    focusedOptionIndex, setFocusedOptionIndex, focusedOption, setFocusedOption, selectedOptions, suggestItems,
   };
 };
