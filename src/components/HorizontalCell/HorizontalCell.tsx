@@ -25,7 +25,7 @@ export interface HorizontalCellProps extends HTMLAttributes<HTMLDivElement>, Has
   subtitle?: ReactNode;
 }
 
-export const HorizontalCell: FC<HorizontalCellProps> = (props) => {
+export const HorizontalCell: FC<HorizontalCellProps> = (props: HorizontalCellProps) => {
   const { className, header, subtitle, size, style, children, getRootRef, getRef, ...restProps } = props;
   const platform = usePlatform();
 

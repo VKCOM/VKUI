@@ -28,7 +28,7 @@ export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
   visibleCount?: number;
 }
 
-const UsersStack: FC<UsersStackProps> = (props) => {
+const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
   const { system, systemVersion } = useBrowserInfo();
   const platform = usePlatform();
   const { photos, visibleCount, size, layout, children, ...restProps } = props;
