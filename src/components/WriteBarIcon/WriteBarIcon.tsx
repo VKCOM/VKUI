@@ -29,7 +29,7 @@ export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElemen
   count?: number;
 }
 
-export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
+export const WriteBarIcon: FC<WriteBarIconProps> = (props: WriteBarIconProps) => {
   const platform = usePlatform();
   const {
     mode,

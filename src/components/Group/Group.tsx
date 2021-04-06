@@ -27,7 +27,7 @@ export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<H
   mode?: 'plain' | 'card';
 }
 
-const Group: FC<GroupProps> = (props) => {
+const Group: FC<GroupProps> = (props: GroupProps) => {
   const { header, description, children, separator, getRootRef, mode, sizeX, ...restProps } = props;
   const { isInsideModal } = useContext(ModalRootContext);
   const platform = usePlatform();
