@@ -1,6 +1,48 @@
 import { baselineComponent } from '../../testing/utils';
 import NativeSelect from './NativeSelect';
+import CustomSelect from '../CustomSelect/CustomSelect';
+import { useState } from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 describe('NativeSelect', () => {
   baselineComponent(NativeSelect);
+
+  baselineComponent(CustomSelect);
+
+  it('works correctly with value and onChange', () => {
+    const SelectController = () => {
+      const [value, setValue] = useState('0');
+      return (
+        <NativeSelect
+          data-testid="target"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        >
+          <option value="0" data-testid="val0">Mike</option>
+          <option value="1" data-testid="val1">Josh</option>
+        </NativeSelect>
+      );
+    };
+
+    render(<SelectController />);
+
+    expect((screen.getByTestId('val0') as HTMLOptionElement).selected).toBe(true);
+    userEvent.selectOptions(screen.getByTestId('target'), ['1']);
+    expect((screen.getByTestId('val1') as HTMLOptionElement).selected).toBe(true);
+  });
+
+  it('works correctly with pinned value', () => {
+    render(<NativeSelect
+      data-testid="target"
+      value="0"
+    >
+      <option value="0" data-testid="val0">Mike</option>
+      <option value="1" data-testid="val1">Josh</option>
+    </NativeSelect>);
+
+    expect((screen.getByTestId('val0') as HTMLOptionElement).selected).toBe(true);
+    userEvent.selectOptions(screen.getByTestId('target'), ['1']);
+    expect((screen.getByTestId('val0') as HTMLOptionElement).selected).toBe(true);
+  });
 });
