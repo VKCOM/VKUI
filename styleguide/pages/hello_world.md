@@ -1,20 +1,36 @@
 ```jsx static
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppRoot, SplitLayout, SplitCol, View, Panel, PanelHeader, Header, Group, Cell } from '@vkontakte/vkui';
-import '@vkontakte/vkui/dist/vkui.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import {
+  AdaptivityProvider,
+  ConfigProvider,
+  useAdaptivity,
+  AppRoot,
+  SplitLayout,
+  SplitCol,
+  ViewWidth,
+  View,
+  Panel,
+  PanelHeader,
+  Header,
+  Group,
+  SimpleCell
+} from "@vkontakte/vkui";
+import "@vkontakte/vkui/dist/vkui.css";
 
-function App() {
+const Example = () => {
+  const { viewWidth } = useAdaptivity();
+
   return (
     <AppRoot>
-      <SplitLayout>
-        <SplitCol>
+      <SplitLayout header={<PanelHeader separator={false} />}>
+        <SplitCol spaced={viewWidth > ViewWidth.MOBILE}>
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>
               <Group header={<Header mode="secondary">Items</Header>}>
-                <Cell>Hello</Cell>
-                <Cell>World</Cell>
+                <SimpleCell>Hello</SimpleCell>
+                <SimpleCell>World</SimpleCell>
               </Group>
             </Panel>
           </View>
@@ -22,9 +38,16 @@ function App() {
       </SplitLayout>
     </AppRoot>
   );
-}
+};
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <ConfigProvider>
+    <AdaptivityProvider>
+      <Example />
+    </AdaptivityProvider>
+  </ConfigProvider>,
+  document.getElementById("root")
+);
 ```
 
-_Hello World пример с самой минимальной функциональностью. Для примера реального приложения смотрите <a href="https://vkui-demos.vercel.app/vkui-full/index.html" target="_blank">демо тут</a> и его <a href="https://github.com/ewgenius/vkui-demos" target="_blank">исходный код тут</a>._
+_Hello World <a href="https://codesandbox.io/s/vkui-hello-world-mi77q?file=/index.tsx" target="_blank">пример</a> с самой минимальной функциональностью._
