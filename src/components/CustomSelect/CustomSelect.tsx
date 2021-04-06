@@ -25,7 +25,6 @@ export interface CustomSelectOptionInterface {
 }
 
 interface CustomSelectState {
-  value: SelectValue;
   opened?: boolean;
   focused?: boolean;
   focusedOptionIndex: number;
@@ -69,8 +68,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       opened: false,
       focused: false,
       focusedOptionIndex: -1,
-      selectedOptionIndex: props.options.findIndex((option) => option.value === value),
-      value,
+      selectedOptionIndex: this.findSelectedIndex(props.options, value),
       nativeSelectValue: value,
     };
 
@@ -100,6 +98,17 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     return options[selectedOptionIndex];
   };
+
+  findSelectedIndex(options: CustomSelectOptionInterface[], value: SelectValue) {
+    return options.findIndex((item) => {
+      switch (typeof item.value) {
+        case 'number':
+          return item.value === Number(value);
+        default:
+          return item.value === value;
+      }
+    });
+  }
 
   open = () => {
     this.setState(({ selectedOptionIndex }) => ({
@@ -276,9 +285,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     const value = e.currentTarget.value;
     if (!this.isControlledOutside) {
       this.setState({
-        value,
-        // eslint-disable-next-line eqeqeq
-        selectedOptionIndex: this.props.options.findIndex((option) => option.value == value),
+        selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
       });
     }
     if (this.props.onChange) {
@@ -330,9 +337,17 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   }
 
   componentDidUpdate(prevProps: CustomSelectProps) {
-    if (prevProps.options !== this.props.options || prevProps.value !== this.props.value) {
+    let value = this.state.nativeSelectValue;
+    if (prevProps.value !== this.props.value) {
+      value = this.props.value;
       this.setState({
-        selectedOptionIndex: this.props.options.findIndex((option) => option.value === this.props.value),
+        nativeSelectValue: this.props.value,
+        selectedOptionIndex: this.findSelectedIndex(this.props.options, this.props.value),
+      });
+    }
+    if (prevProps.options !== this.props.options) {
+      this.setState({
+        selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
       });
     }
   }
