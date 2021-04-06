@@ -17,24 +17,39 @@ VKUI — это библиотека адаптивных React-компонен
 **Важно:** Нужно установить вручную [`peerDependencies`](package.json#L95-L103), либо использовать npm7+ который делает это автоматически.
 
 ## Hello World
-
 ```jsx static
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppRoot, SplitLayout, SplitCol, View, Panel, PanelHeader, Header, Group, Cell } from '@vkontakte/vkui';
-import '@vkontakte/vkui/dist/vkui.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import {
+  AdaptivityProvider,
+  ConfigProvider,
+  useAdaptivity,
+  AppRoot,
+  SplitLayout,
+  SplitCol,
+  ViewWidth,
+  View,
+  Panel,
+  PanelHeader,
+  Header,
+  Group,
+  SimpleCell
+} from "@vkontakte/vkui";
+import "@vkontakte/vkui/dist/vkui.css";
 
-function App() {
+const Example = () => {
+  const { viewWidth } = useAdaptivity();
+  
   return (
     <AppRoot>
-      <SplitLayout>
-        <SplitCol>
+      <SplitLayout header={<PanelHeader separator={false} />}>
+        <SplitCol spaced={viewWidth > ViewWidth.MOBILE}>
           <View activePanel="main">
             <Panel id="main">
               <PanelHeader>VKUI</PanelHeader>
               <Group header={<Header mode="secondary">Items</Header>}>
-                <Cell>Hello</Cell>
-                <Cell>World</Cell>
+                <SimpleCell>Hello</SimpleCell>
+                <SimpleCell>World</SimpleCell>
               </Group>
             </Panel>
           </View>
@@ -42,9 +57,16 @@ function App() {
       </SplitLayout>
     </AppRoot>
   );
-}
+};
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(
+  <ConfigProvider>
+    <AdaptivityProvider>
+      <Example />
+    </AdaptivityProvider>
+  </ConfigProvider>,
+  document.getElementById("root")
+);
 ```
 
 ## Браузеры
