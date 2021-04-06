@@ -1,4 +1,5 @@
 import React, {
+  ChangeEventHandler,
   createRef,
   KeyboardEvent,
   MouseEvent,
@@ -29,6 +30,7 @@ interface CustomSelectState {
   focused?: boolean;
   focusedOptionIndex: number;
   selectedOptionIndex: number;
+  nativeSelectValue: SelectValue;
 }
 
 export interface CustomSelectProps extends NativeSelectProps {
@@ -69,11 +71,17 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       focusedOptionIndex: -1,
       selectedOptionIndex: props.options.findIndex((option) => option.value === value),
       value,
+      nativeSelectValue: value,
     };
+
+    if (typeof props.value !== 'undefined') {
+      this.isControlledOutside = true;
+    }
   }
 
   public state: CustomSelectState;
   private keyboardInput: string;
+  private readonly isControlledOutside: boolean;
   private node: HTMLLabelElement;
   private selectEl: HTMLSelectElement;
   private readonly scrollBoxRef = createRef<HTMLDivElement>();
@@ -135,8 +143,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     const item = options[index];
 
     this.setState({
-      selectedOptionIndex: index,
-      value: item.value,
+      nativeSelectValue: item.value,
     }, () => {
       const event = new Event('change', { bubbles: true });
       this.selectEl.dispatchEvent(event);
@@ -265,6 +272,20 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.keyboardInput = fullInput;
   };
 
+  onNativeSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const value = e.currentTarget.value;
+    if (!this.isControlledOutside) {
+      this.setState({
+        value,
+        // eslint-disable-next-line eqeqeq
+        selectedOptionIndex: this.props.options.findIndex((option) => option.value == value),
+      });
+    }
+    if (this.props.onChange) {
+      this.props.onChange(e);
+    }
+  };
+
   handleKeyDownSelect = (event: KeyboardEvent) => {
     const { opened } = this.state;
 
@@ -348,7 +369,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   render() {
-    const { opened, value } = this.state;
+    const { opened, nativeSelectValue } = this.state;
     const {
       name,
       className,
@@ -395,10 +416,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         <select
           ref={this.selectRef}
           name={name}
-          onChange={onChange}
+          onChange={this.onNativeSelectChange}
           onBlur={onBlur}
           onFocus={onFocus}
-          value={value}
+          value={nativeSelectValue}
           vkuiClass="CustomSelect__control"
         >
           {options.map((item) => <option key={`${item.value}`} value={item.value} />)}
