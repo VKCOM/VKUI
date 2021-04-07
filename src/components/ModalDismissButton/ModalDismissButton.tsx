@@ -6,7 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 
 export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement>;
 
-const ModalDismissButton: FC<ModalDismissButtonProps> = (props) => {
+const ModalDismissButton: FC<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => {
   const platform = usePlatform();
   return (
     <Tappable
