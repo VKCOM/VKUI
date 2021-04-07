@@ -52,6 +52,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   if (restProps.href) {
     Component = 'a';
   }
+
   const isCompact = hasReactNode(subtitle) || hasReactNode(meta) || selectable;
 
   return (
