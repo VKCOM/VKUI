@@ -6,7 +6,24 @@ import { render, screen, fireEvent } from '@testing-library/react';
 describe('CustomSelect', () => {
   baselineComponent(CustomSelect);
 
-  it('works correctly with value and onChange', () => {
+  it('works correctly as uncontrolled component', () => {
+    render(
+      <CustomSelect
+        data-testid="target"
+        options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+      />,
+    );
+
+    expect(screen.getByTestId('target').textContent).toEqual('');
+
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    expect(screen.getByTestId('target').textContent).toEqual('Josh');
+  });
+
+  it('works correctly as controlled component', () => {
     const SelectController = () => {
       const [value, setValue] = useState(0);
       const options = [{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }];
@@ -41,5 +58,54 @@ describe('CustomSelect', () => {
     fireEvent.mouseEnter(screen.getByTitle('Josh'));
     fireEvent.click(screen.getByTitle('Josh'));
     expect(screen.getByTestId('target').textContent).toEqual('Mike');
+  });
+
+  it('correctly reacts on options change', () => {
+    const { rerender } = render(<CustomSelect
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+      value={1}
+    />);
+
+    expect(screen.getByTestId('target').textContent).toEqual('Josh');
+
+    rerender(<CustomSelect
+      data-testid="target"
+      options={[{ value: 1, label: 'Josh' }, { value: 2, label: 'Anna' }]}
+      value={1}
+    />);
+
+    expect(screen.getByTestId('target').textContent).toEqual('Josh');
+
+    rerender(<CustomSelect
+      data-testid="target"
+      options={[{ value: 2, label: 'Anna' }, { value: 3, label: 'Felix' }]}
+      value={3}
+    />);
+
+    expect(screen.getByTestId('target').textContent).toEqual('Felix');
+  });
+
+  it('correctly converts from controlled to uncontrolled state', () => {
+    const { rerender } = render(<CustomSelect
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+      value={1}
+    />);
+
+    expect(screen.getByTestId('target').textContent).toEqual('Josh');
+
+    rerender(<CustomSelect
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    expect(screen.getByTestId('target').textContent).toEqual('');
+
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.mouseEnter(screen.getByTitle('Josh'));
+    fireEvent.click(screen.getByTitle('Josh'));
+
+    expect(screen.getByTestId('target').textContent).toEqual('Josh');
   });
 });
