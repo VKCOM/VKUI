@@ -101,12 +101,8 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   findSelectedIndex(options: CustomSelectOptionInterface[], value: SelectValue) {
     return options.findIndex((item) => {
-      switch (typeof item.value) {
-        case 'number':
-          return item.value === Number(value);
-        default:
-          return item.value === value;
-      }
+      value = typeof item.value === 'number' ? Number(value) : value;
+      return item.value === value;
     });
   }
 
