@@ -177,7 +177,15 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
           )}
           {selectable && (
             <Fragment>
-              <input type="checkbox" vkuiClass="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
+              <input
+                type="checkbox"
+                vkuiClass="Cell__checkbox"
+                name={name}
+                onChange={onChange}
+                defaultChecked={defaultChecked}
+                checked={checked}
+                disabled={disabled}
+              />
               <div vkuiClass="Cell__marker"><Icon16Done /></div>
             </Fragment>
           )}
@@ -206,6 +214,8 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
       vkuiClass={classNames(getClassName('Cell', platform), {
         'Cell--dragging': dragging,
         'Cell--removable': removable,
+        'Cell--selectable': selectable,
+        'Cell--disabled': disabled,
       })}
       className={className}
       style={style}
