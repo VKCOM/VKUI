@@ -45,6 +45,10 @@ const swipeBackExcludedTags = ['input', 'textarea'];
 
 export interface ViewProps extends HTMLAttributes<HTMLElement>, HasPlatform {
   activePanel: string;
+  /**
+   * Позволяет переопределить направление переходов панелей, независимо от их расположения
+   */
+  direction?: 'back' | 'forward';
   popout?: ReactNode;
   modal?: ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
@@ -138,7 +142,28 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   }
 
   get panels() {
-    return React.Children.toArray(this.props.children) as ReactElement[];
+    const panels = React.Children.toArray(this.props.children) as ReactElement[];
+    // if directionis  forced, we need to reorder panels:
+    if (this.props.direction) {
+      const activePanelIndex = panels.findIndex((p) => p.props.id === this.props.activePanel);
+      // - if we force "back" transition, we need to have next active panel to be the fist
+      if (this.props.direction === 'back') {
+        return [
+          panels[activePanelIndex],
+          ...panels.slice(0, activePanelIndex),
+          ...panels.slice(activePanelIndex + 1),
+        ];
+      }
+      // - if we force "forward" transition, we need to have next active panel to be the last
+      if (this.props.direction === 'forward') {
+        return [
+          ...panels.slice(0, activePanelIndex),
+          ...panels.slice(activePanelIndex + 1),
+          panels[activePanelIndex],
+        ];
+      }
+    }
+    return panels;
   }
 
   panelNodes: { [id: string]: HTMLDivElement } = {};
