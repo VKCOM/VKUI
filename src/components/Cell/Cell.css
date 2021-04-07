@@ -37,6 +37,10 @@
   flex-shrink: 0;
 }
 
+.Cell--selectable.Cell--disabled {
+  opacity: .6;
+}
+
 .Cell__checkbox:checked ~ .Cell__marker {
   border: none;
   color: var(--white);
