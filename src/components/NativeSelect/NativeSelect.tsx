@@ -47,7 +47,6 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
   selectEl?: HTMLSelectElement;
 
   onChange: ChangeEventHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    this.setTitle();
     if (!this.isControlledOutside) {
       this.setState({ value: e.currentTarget.value });
     }
@@ -64,8 +63,12 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
     });
   };
 
-  componentDidUpdate(prevProps: NativeSelectProps) {
-    if (prevProps.value !== this.props.value || prevProps.children !== this.props.children) {
+  componentDidUpdate(prevProps: NativeSelectProps, prevState: SelectState) {
+    if (
+      prevProps.value !== this.props.value ||
+      prevProps.children !== this.props.children ||
+      prevState.value !== this.state.value
+    ) {
       this.setTitle();
     }
   }
