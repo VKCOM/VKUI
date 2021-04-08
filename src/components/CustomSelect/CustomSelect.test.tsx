@@ -100,12 +100,12 @@ describe('CustomSelect', () => {
       options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
     />);
 
-    expect(screen.getByTestId('target').textContent).toEqual('');
+    expect(screen.getByTestId('target').textContent).toEqual('Josh');
 
     fireEvent.click(screen.getByTestId('target'));
-    fireEvent.mouseEnter(screen.getByTitle('Josh'));
-    fireEvent.click(screen.getByTitle('Josh'));
+    fireEvent.mouseEnter(screen.getByTitle('Mike'));
+    fireEvent.click(screen.getByTitle('Mike'));
 
-    expect(screen.getByTestId('target').textContent).toEqual('Josh');
+    expect(screen.getByTestId('target').textContent).toEqual('Mike');
   });
 });

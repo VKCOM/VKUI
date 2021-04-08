@@ -279,7 +279,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   onNativeSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.currentTarget.value;
-    console.log(this.isControlledOutside);
     if (!this.isControlledOutside) {
       this.setState({
         selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
@@ -334,20 +333,13 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   }
 
   componentDidUpdate(prevProps: CustomSelectProps) {
-    const newState: CustomSelectState = { nativeSelectValue: this.state.nativeSelectValue };
-
-    if (prevProps.value !== this.props.value) {
-      this.isControlledOutside = this.props.value !== undefined;
-      newState.nativeSelectValue = this.props.value;
-      newState.selectedOptionIndex = this.findSelectedIndex(this.props.options, this.props.value);
-    }
-
-    if (prevProps.options !== this.props.options) {
-      newState.selectedOptionIndex = this.findSelectedIndex(this.props.options, newState.nativeSelectValue);
-    }
-
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
-      this.setState(newState);
+      this.isControlledOutside = this.props.value !== undefined;
+      const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
+      this.setState({
+        nativeSelectValue: value,
+        selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
+      });
     }
   }
 
