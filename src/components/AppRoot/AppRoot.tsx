@@ -30,13 +30,13 @@ function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
 const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global', ...props }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
-  const { window } = useDOM();
+  const { window, document } = useDOM();
 
   const initialized = useRef(false);
 
   if (!initialized.current) {
     if (window && !embedded) {
-      window.document.documentElement.classList.add('vkui');
+      document.documentElement.classList.add('vkui');
     }
     classScopingMode.noConflict = noLegacyClasses;
   }
@@ -49,8 +49,8 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
 
   // one time initialization and cleanup
   useIsomorphicLayoutEffect(() => {
-    const doc = window.document.documentElement;
-    const body = window.document.body;
+    const doc = document.documentElement;
+    const body = document.body;
     const parentNode = rootRef.current.parentElement;
 
     let portal: HTMLDivElement;
@@ -80,7 +80,7 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
 
   // adaptivity handler
   useIsomorphicLayoutEffect(
-    () => applyAdaptivityStyles(embedded ? rootRef.current.parentElement : window.document.body, sizeX),
+    () => applyAdaptivityStyles(embedded ? rootRef.current.parentElement : document.body, sizeX),
     [sizeX],
   );
 
