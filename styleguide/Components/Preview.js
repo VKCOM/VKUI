@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Profiler } from 'react';
 import PreviewParent from 'react-styleguidist/lib/client/rsg-components/Preview/Preview';
 import ReactExample from 'react-styleguidist/lib/client/rsg-components/ReactExample/ReactExample';
 import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/PlaygroundError';
@@ -7,6 +7,8 @@ import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
 import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider } from '../../src';
 import { DOMContext } from '../../src/lib/dom';
+
+const logPerf = (id, phase, time) => console.log(id, phase, time);
 
 class FrameDomProvider extends React.Component {
   static contextTypes = {
@@ -188,16 +190,18 @@ export default class Preview extends PreviewParent {
               >
                 <FrameDomProvider>
                   {!(isEmbedded && this.state.hideEmbeddedApp) &&
-                    <ConfigProvider
-                      platform={styleGuideContext.platform}
-                      scheme={styleGuideContext.scheme}
-                      webviewType={styleGuideContext.webviewType}
-                      {...config}
-                    >
-                      <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
-                        {example}
-                      </AdaptivityProvider>
-                    </ConfigProvider>
+                    <Profiler id="App" onRender={logPerf}>
+                      <ConfigProvider
+                        platform={styleGuideContext.platform}
+                        scheme={styleGuideContext.scheme}
+                        webviewType={styleGuideContext.webviewType}
+                        {...config}
+                      >
+                        <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
+                          {example}
+                        </AdaptivityProvider>
+                      </ConfigProvider>
+                    </Profiler>
                   }
                 </FrameDomProvider>
               </div>

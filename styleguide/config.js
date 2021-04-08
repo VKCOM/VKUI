@@ -237,7 +237,9 @@ module.exports = {
   webpackConfig: merge(webpackConfig, {
     resolve: {
       alias: {
-        'rsg-components/Preview': path.join(__dirname, './Components/Preview')
+        'rsg-components/Preview': path.join(__dirname, './Components/Preview'),
+        'react-dom$': 'react-dom/profiling',
+        'scheduler/tracing': 'scheduler/tracing-profiling',
       }
     }
   })
