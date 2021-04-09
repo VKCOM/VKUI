@@ -32,7 +32,8 @@ class PlaygroundRenderer extends React.Component {
       previewProps,
       tabButtons,
       tabBody,
-      toolbar
+      toolbar,
+      exampleIndex,
     } = this.props;
     const {
       autoLayout,
@@ -41,11 +42,12 @@ class PlaygroundRenderer extends React.Component {
       config,
       ...wrapperProps
     } = previewProps;
+    const exampleId = `${name}-${exampleIndex}`;
 
     return (
       <div className={classes.root}>
         <div className={cx(classes.preview, wrapperProps.className)} {...wrapperProps} data-preview={name}>
-          { cloneElement(preview, { ...preview.props, autoLayout, containerStyle, integration, config }) }
+          { cloneElement(preview, { ...preview.props, autoLayout, containerStyle, integration, config, exampleId }) }
         </div>
         <div className={classes.controls}>
           <div className={classes.tabs}>{tabButtons}</div>

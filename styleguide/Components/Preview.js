@@ -7,8 +7,9 @@ import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
 import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider } from '../../src';
 import { DOMContext } from '../../src/lib/dom';
+import { perfLogger } from '../utils';
 
-const logPerf = (id, phase, time) => console.log(id, phase, time);
+const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
 class FrameDomProvider extends React.Component {
   static contextTypes = {
@@ -125,7 +126,7 @@ export default class Preview extends PreviewParent {
   frameRef = React.createRef();
 
   render() {
-    const { code, autoLayout = 'all', config = {} } = this.props;
+    const { code, autoLayout = 'all', config = {}, exampleId } = this.props;
     const { error, isVisible } = this.state;
     return (
       <StyleGuideContext.Consumer>
@@ -190,7 +191,7 @@ export default class Preview extends PreviewParent {
               >
                 <FrameDomProvider>
                   {!(isEmbedded && this.state.hideEmbeddedApp) &&
-                    <Profiler id="App" onRender={logPerf}>
+                    <Profiler id={exampleId} onRender={logPerf}>
                       <ConfigProvider
                         platform={styleGuideContext.platform}
                         scheme={styleGuideContext.scheme}
