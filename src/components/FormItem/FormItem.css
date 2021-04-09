@@ -1,6 +1,14 @@
 .FormItem {
-  padding: 12px 16px;
   display: block;
+  padding: 12px 16px;
+}
+
+.FormItem__removable {
+  flex-grow: 1;
+  flex-shrink: initial;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .FormItem__top {
@@ -50,8 +58,7 @@
  * iOS
  */
 
-.FormItem--ios,
-.FormItem--ios .Removable {
+.FormItem--ios {
   padding-left: 12px;
   padding-right: 12px;
 }
@@ -61,27 +68,7 @@
 .FormItem--ios .RichCell,
 .FormItem--ios .CellButton,
 .FormItem--ios .Radio,
-.FormItem--ios .Checkbox,
-.FormItem--ios .Removable {
+.FormItem--ios .Checkbox {
   margin-left: -12px;
   margin-right: -12px;
-}
-
-/**
- * ANDROID & VKCOM
- */
-
-.FormItem--android .Removable__remove,
-.FormItem--vkcom .Removable__remove {
-  margin-top: -2px;
-  margin-bottom: -2px;
-  margin-right: -16px;
-}
-
-.FormItem--android.FormItem--sizeY-compact .Removable__remove,
-.FormItem--vkcom.FormItem--sizeY-compact .Removable__remove {
-  margin-left: 2px;
-  margin-right: -14px;
-  margin-top: -4px;
-  margin-bottom: -4px;
 }
