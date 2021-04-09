@@ -1,8 +1,8 @@
 .Removable {
   position: relative;
-  box-sizing: border-box;
   min-width: 0;
-  flex-grow: 1;
+  width: 100%;
+  max-width: 100%;
 }
 
 .Removable__content {
@@ -45,6 +45,11 @@
 .FormItem--withTop .Removable--sizeY-compact .Removable__control,
 .Removable--sizeY-compact .FormItem--withTop ~ .Removable__control {
   top: 26px;
+}
+
+.Cell .Removable {
+  padding-right: 6px;
+  box-sizing: border-box;
 }
 
 /**
@@ -112,6 +117,14 @@
   background-color: var(--white);
 }
 
+.Cell .Removable--ios {
+  padding-right: 0;
+}
+
+.Cell .Removable--ios .Removable__indicator {
+  margin-left: 0;
+  margin-right: 0;
+}
 /**
  * Android & VKCOM
  */
