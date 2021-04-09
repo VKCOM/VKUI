@@ -36,7 +36,8 @@
   align-self: flex-start;
 }
 
-.FormItem .Removable {
+.FormItem .Removable,
+.FormLayoutGroup .Removable {
   padding-left: 16px;
   padding-right: 16px;
   margin-left: -16px;
@@ -131,7 +132,8 @@
   margin-right: 0;
 }
 
-.FormItem .Removable--ios {
+.FormItem .Removable--ios,
+.FormLayoutGroup .Removable--ios {
   padding-left: 12px;
   padding-right: 12px;
   margin-left: -12px;
@@ -142,14 +144,18 @@
  * ANDROID & VKCOM
  */
 .FormItem .Removable--android .Removable__remove,
-.FormItem .Removable--vkcom .Removable__remove {
+.FormItem .Removable--vkcom .Removable__remove,
+.FormLayoutGroup .Removable--android .Removable__remove,
+.FormLayoutGroup .Removable--vkcom .Removable__remove {
    margin-top: -2px;
    margin-right: -16px;
    margin-bottom: -2px;
 }
 
 .FormItem--sizeY-compact .Removable--android .Removable__remove,
-.FormItem--sizeY-compact .Removable--vkcom .Removable__remove {
+.FormItem--sizeY-compact .Removable--vkcom .Removable__remove,
+.FormLayoutGroup--sizeY-compact .Removable--android .Removable__remove,
+.FormLayoutGroup--sizeY-compact .Removable--vkcom .Removable__remove {
    margin-left: 2px;
    margin-top: -4px;
    margin-right: -14px;
