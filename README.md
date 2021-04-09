@@ -20,32 +20,61 @@ VKUI — это библиотека адаптивных React-компонен
 
 ## Hello World
 ```jsx static
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { View, Panel, PanelHeader, Header, Group, Cell } from '@vkontakte/vkui';
-import '@vkontakte/vkui/dist/vkui.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import {
+  AdaptivityProvider,
+  ConfigProvider,
+  useAdaptivity,
+  AppRoot,
+  SplitLayout,
+  SplitCol,
+  ViewWidth,
+  View,
+  Panel,
+  PanelHeader,
+  Header,
+  Group,
+  SimpleCell
+} from "@vkontakte/vkui";
+import "@vkontakte/vkui/dist/vkui.css";
 
-function App () {
+const Example = () => {
+  const { viewWidth } = useAdaptivity();
+  
   return (
-    <View activePanel="main">
-      <Panel id="main">
-        <PanelHeader>VKUI</PanelHeader>
-        <Group header={<Header mode="secondary">Items</Header>}>
-          <Cell>Hello</Cell>
-          <Cell>World</Cell>
-        </Group>
-      </Panel>
-    </View>
+    <AppRoot>
+      <SplitLayout header={<PanelHeader separator={false} />}>
+        <SplitCol spaced={viewWidth > ViewWidth.MOBILE}>
+          <View activePanel="main">
+            <Panel id="main">
+              <PanelHeader>VKUI</PanelHeader>
+              <Group header={<Header mode="secondary">Items</Header>}>
+                <SimpleCell>Hello</SimpleCell>
+                <SimpleCell>World</SimpleCell>
+              </Group>
+            </Panel>
+          </View>
+        </SplitCol>
+      </SplitLayout>
+    </AppRoot>
   );
-}
+};
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <ConfigProvider>
+    <AdaptivityProvider>
+      <Example />
+    </AdaptivityProvider>
+  </ConfigProvider>,
+  document.getElementById("root")
+);
 ```
 
 ## Браузеры
-На данный момент мы поддерживаем webview следующих операционных систем:
-* android >= 4.4
-* ios >= 9
+На данный момент мы поддерживаем WebView следующих операционных систем:
+* Android >= 4.4
+* iOS >= 9
 
 Иными словами, мы поддерживаем браузеры следующих версий:
 * Safari для iOS >= 9
