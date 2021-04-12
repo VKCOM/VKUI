@@ -1,14 +1,14 @@
 .Avatar {
   box-sizing: border-box;
+  color: var(--placeholder_icon_background);
 }
 
 .Avatar__in {
   position: relative;
-  color: var(--placeholder_icon_foreground_secondary);
 }
 
 .Avatar__img {
-  background: var(--placeholder_icon_background);
+  background: currentColor;
   border: none;
   display: block;
   width: 100%;
