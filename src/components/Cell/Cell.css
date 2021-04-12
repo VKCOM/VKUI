@@ -26,26 +26,31 @@
 .Cell__checkbox {
   display: none;
 }
-
-.Cell__marker {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid var(--icon_secondary);
-  color: transparent;
-  box-sizing: border-box;
+/* TODO избавиться от специфичного селектора после облегчения селекторов SimpleCell */
+.Cell .Cell__marker {
   flex-shrink: 0;
+  padding: 0;
+}
+/* TODO избавиться от специфичного селектора после облегчения селекторов SimpleCell */
+.Cell .Cell__marker--off {
+  display: block;
+  color: var(--icon_tertiary);
+}
+/* TODO избавиться от специфичного селектора после облегчения селекторов SimpleCell */
+.Cell .Cell__marker--on {
+  display: none;
 }
 
 .Cell--selectable.Cell--disabled {
   opacity: .6;
 }
 
-.Cell__checkbox:checked ~ .Cell__marker {
-  border: none;
-  color: var(--white);
-  background-color: var(--accent);
-  padding: 4px;
+.Cell__checkbox:checked ~ .Cell__marker--on {
+  display: block;
+}
+
+.Cell__checkbox:checked ~ .Cell__marker--off {
+  display: none;
 }
 
 /* iOS */
