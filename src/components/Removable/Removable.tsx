@@ -73,6 +73,8 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
     };
   }, [deactivateRemove]);
 
+  const removePlaceholderString: string = removePlaceholder.toString();
+
   return (
     <div
       {...restProps}
@@ -86,13 +88,22 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
         {children}
 
         {(platform === ANDROID || platform === VKCOM) &&
-          <IconButton vkuiClass="Removable__control Removable__remove" onClick={onRemoveClick}>
-            <Icon24Cancel />
+          <IconButton
+            aria-label={removePlaceholderString}
+            vkuiClass="Removable__control Removable__remove"
+            onClick={onRemoveClick}
+          >
+            <Icon24Cancel aria-hidden="true" />
           </IconButton>
         }
+
         {platform === IOS && (
-          <button vkuiClass="Removable__control Removable__indicator" onClick={onRemoveActivateClick}>
-            <i vkuiClass="Removable__indicator-in" />
+          <button
+            aria-label={removePlaceholderString}
+            vkuiClass="Removable__control Removable__indicator"
+            onClick={onRemoveActivateClick}
+          >
+            <i vkuiClass="Removable__indicator-in" aria-hidden="true" />
           </button>
         )}
       </div>
