@@ -7,6 +7,7 @@ type ChipValue = string | number;
 
 export interface ChipProps extends HTMLAttributes<HTMLDivElement> {
   value: ChipValue;
+  option?: { value?: ChipValue };
   onRemove?: (event?: MouseEvent, value?: ChipValue) => void;
   removable?: boolean;
   before?: ReactNode;
@@ -14,7 +15,7 @@ export interface ChipProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Chip: FC<ChipProps> = (props: ChipProps) => {
-  const { value, onRemove, removable, before, after, children, ...restProps } = props;
+  const { value, option, onRemove, removable, before, after, children, ...restProps } = props;
   const onRemoveWrapper = useCallback((event: MouseEvent) => {
     onRemove(event, value);
   }, [onRemove, value]);
