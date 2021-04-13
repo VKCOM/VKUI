@@ -33,6 +33,7 @@ const config = {
       },
       {
         test: /\.css$/,
+        exclude: /styleguide/,
         use: [{
           loader: 'style-loader',
           options: {
@@ -43,6 +44,20 @@ const config = {
             },
           },
         }, 'css-loader', 'postcss-loader']
+      },
+      {
+        test: /\.css$/,
+        include: /styleguide/,
+        use: [{
+          loader: 'style-loader',
+          options: {
+            // singleton is faster, but does not support sourcemaps
+            injectType: isProduction ? 'singletonStyleTag' : 'styleTag',
+            attributes: {
+              class: 'vkui-style'
+            },
+          },
+        }, 'css-loader']
       },
     ],
   },

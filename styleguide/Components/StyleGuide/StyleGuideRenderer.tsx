@@ -90,7 +90,7 @@ StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, { sizeX: true });
 const StyleGuideWrapper = (props) => {
   return (
       <AdaptivityProvider>
-        <AppRoot>
+        <AppRoot noLegacyClasses>
           <StyleGuideRenderer {...props} />
         </AppRoot>
       </AdaptivityProvider>
