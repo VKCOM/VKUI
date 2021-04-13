@@ -11,10 +11,6 @@
   align-items: center;
 }
 
-.Removable__indicator {
-  order: -1;
-}
-
 .Removable__control,
 .Removable__remove {
   position: relative;
@@ -128,7 +124,7 @@
 }
 
 .Cell .Removable--ios .Removable__indicator {
-  margin-left: 0;
+  margin-left: 2px;
   margin-right: 0;
 }
 
@@ -138,6 +134,21 @@
   padding-right: 12px;
   margin-left: -12px;
   margin-right: -12px;
+}
+
+.FormLayoutGroup .Removable--ios .Removable__content {
+  flex-wrap: wrap;
+}
+
+.FormLayoutGroup .Removable--ios .FormItem--withTop ~ .Removable__offset {
+  order: -1;
+  display: block;
+  width: 100%;
+  height: 28px;
+}
+
+.FormLayoutGroup .Removable--ios.Removable--sizeY-compact .FormItem--withTop ~ .Removable__offset {
+  height: 26px;
 }
 
 /**

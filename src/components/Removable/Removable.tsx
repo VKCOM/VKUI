@@ -85,6 +85,16 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
       )}
     >
       <div vkuiClass="Removable__content" style={platform === IOS ? { transform: `translateX(-${removeOffset}px)` } : null}>
+        {platform === IOS && (
+          <button
+            aria-label={removePlaceholderString}
+            vkuiClass="Removable__control Removable__indicator"
+            onClick={onRemoveActivateClick}
+          >
+            <i vkuiClass="Removable__indicator-in" aria-hidden="true" />
+          </button>
+        )}
+
         {children}
 
         {(platform === ANDROID || platform === VKCOM) &&
@@ -97,19 +107,12 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
           </IconButton>
         }
 
-        {platform === IOS && (
-          <button
-            aria-label={removePlaceholderString}
-            vkuiClass="Removable__control Removable__indicator"
-            onClick={onRemoveActivateClick}
-          >
-            <i vkuiClass="Removable__indicator-in" aria-hidden="true" />
-          </button>
-        )}
+        <span vkuiClass="Removable__offset" aria-hidden="true"></span>
       </div>
 
       {platform === IOS &&
         <button
+          tabIndex={isRemoveActivated ? null : -1}
           ref={removeButtonRef}
           vkuiClass="Removable__remove"
           onClick={onRemoveClick}
