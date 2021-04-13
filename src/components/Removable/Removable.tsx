@@ -1,5 +1,6 @@
 import { AllHTMLAttributes, FC, ReactNode, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { classNames } from '../../lib/classNames';
+import { getTitleFromChildren } from '../../lib/utils';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -73,7 +74,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
     };
   }, [deactivateRemove]);
 
-  const removePlaceholderString: string = removePlaceholder.toString();
+  const removePlaceholderString: string = getTitleFromChildren(removePlaceholder);
 
   return (
     <div
