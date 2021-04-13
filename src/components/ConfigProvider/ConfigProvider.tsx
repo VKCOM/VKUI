@@ -10,6 +10,10 @@ import {
 import { Platform, VKCOM } from '../../lib/platform';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
+  /**
+   * Цветовая схема приложения
+   */
+  scheme?: AppearanceScheme;
   children?: ReactNode;
 }
 
@@ -41,7 +45,9 @@ class ConfigProvider extends React.Component<ConfigProviderProps & DOMProps> {
   };
 
   setScheme = (scheme: AppearanceScheme): void => {
-    (this.props.document || document).body.setAttribute('scheme', scheme);
+    if (scheme !== 'inherit') {
+      (this.props.document || document).body.setAttribute('scheme', scheme);
+    }
   };
 
   componentDidUpdate(prevProps: ConfigProviderProps) {

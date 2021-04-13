@@ -1,10 +1,8 @@
-body[scheme='bright_light'] .Gradient--md-tint.Gradient--to-top,
-body[scheme='vkcom'] .Gradient--md-tint.Gradient--to-top {
+.Gradient--md-tint.Gradient--to-top {
   background: linear-gradient(to top, #f5f5f5, rgba(245, 245, 245, .98), rgba(245, 245, 245, .94), rgba(245, 245, 245, .88), rgba(245, 245, 245, .8), rgba(245, 245, 245, .71), rgba(245, 245, 245, .61), rgba(245, 245, 245, .5), rgba(245, 245, 245, .39), rgba(245, 245, 245, .29), rgba(245, 245, 245, .2), rgba(245, 245, 245, .12), rgba(245, 245, 245, .06), rgba(245, 245, 245, .02), rgba(245, 245, 245, 0));
 }
 
-body[scheme='bright_light'] .Gradient--md-tint.Gradient--to-bottom,
-body[scheme='vkcom'] .Gradient--md-tint.Gradient--to-bottom {
+.Gradient--md-tint.Gradient--to-bottom {
   background: linear-gradient(to bottom, #f5f5f5, rgba(245, 245, 245, .98), rgba(245, 245, 245, .94), rgba(245, 245, 245, .88), rgba(245, 245, 245, .8), rgba(245, 245, 245, .71), rgba(245, 245, 245, .61), rgba(245, 245, 245, .5), rgba(245, 245, 245, .39), rgba(245, 245, 245, .29), rgba(245, 245, 245, .2), rgba(245, 245, 245, .12), rgba(245, 245, 245, .06), rgba(245, 245, 245, .02), rgba(245, 245, 245, 0));
 }
 

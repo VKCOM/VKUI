@@ -59,7 +59,7 @@ const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
   );
 };
 
-const PanelHeader: FC<PanelHeaderProps> = (props) => {
+const PanelHeader: FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
   const {
     left,
     children,

@@ -47,7 +47,7 @@ export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
   textLevel?: 'primary' | 'secondary';
 }
 
-export const MiniInfoCell: FC<MiniInfoCellProps> = (props) => {
+export const MiniInfoCell: FC<MiniInfoCellProps> = (props: MiniInfoCellProps) => {
   const platform = usePlatform();
   const {
     before,

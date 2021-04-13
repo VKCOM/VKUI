@@ -1,4 +1,4 @@
-@import '../src/styles/styles.css';
+@import '../src/styles/vkui.css';
 @import '../src/styles/unstable.css';
 
 @font-face {
@@ -22,7 +22,7 @@
   src: url(/font/Roboto-Bold.ttf) format('truetype');
 }
 
-#mount {
+.vkui__root {
   /* Force use embedded Roboto font for cross-platformity */
   --font-common: 'Roboto';
   --font-tt: 'Roboto';

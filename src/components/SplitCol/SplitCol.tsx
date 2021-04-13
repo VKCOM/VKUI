@@ -1,4 +1,4 @@
-import React, { Component, createRef, HTMLAttributes } from 'react';
+import React, { FC, HTMLAttributes, useMemo, useRef } from 'react';
 import { classNames } from '../../lib/classNames';
 
 export interface SplitColContextProps {
@@ -26,42 +26,39 @@ export interface SplitColProps extends HTMLAttributes<HTMLDivElement> {
   fixed?: boolean;
 }
 
-export class SplitCol extends Component<SplitColProps> {
-  static defaultProps = {
-    animate: false,
-  };
+export const SplitCol: FC<SplitColProps> = (props: SplitColProps) => {
+  const { children, width, maxWidth, minWidth, spaced, animate, fixed, style, ...restProps } = props;
+  const baseRef = useRef<HTMLDivElement>();
 
-  baseRef: React.RefObject<HTMLDivElement> = createRef();
-
-  getContext() {
+  const contextValue = useMemo(() => {
     return {
-      colRef: this.baseRef,
-      animate: this.props.animate,
+      colRef: baseRef,
+      animate,
     };
-  }
+  }, [baseRef, animate]);
 
-  render() {
-    const { children, width, maxWidth, minWidth, spaced, animate, fixed, style, ...restProps } = this.props;
+  return (
+    <div
+      {...restProps}
+      style={{
+        ...style,
+        width: width,
+        maxWidth: maxWidth,
+        minWidth: minWidth,
+      }}
+      ref={baseRef}
+      vkuiClass={classNames('SplitCol', {
+        'SplitCol--spaced': spaced,
+        'SplitCol--fixed': fixed,
+      })}
+    >
+      <SplitColContext.Provider value={contextValue}>
+        {fixed ? <div vkuiClass="SplitCol__fixedInner">{children}</div> : children}
+      </SplitColContext.Provider>
+    </div>
+  );
+};
 
-    return (
-      <div
-        {...restProps}
-        style={{
-          ...style,
-          width: width,
-          maxWidth: maxWidth,
-          minWidth: minWidth,
-        }}
-        ref={this.baseRef}
-        vkuiClass={classNames('SplitCol', {
-          'SplitCol--spaced': spaced,
-          'SplitCol--fixed': fixed,
-        })}
-      >
-        <SplitColContext.Provider value={this.getContext()}>
-          {fixed ? <div vkuiClass="SplitCol__fixedInner">{children}</div> : children}
-        </SplitColContext.Provider>
-      </div>
-    );
-  }
-}
+SplitCol.defaultProps = {
+  animate: false,
+};

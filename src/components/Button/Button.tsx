@@ -8,7 +8,7 @@ import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
 import { HasAlign } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
-import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { Platform, VKCOM } from '../../lib/platform';
 
 export interface VKUIButtonProps extends HasAlign {
@@ -21,7 +21,7 @@ export interface VKUIButtonProps extends HasAlign {
 
 export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
 
-const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], hasIcons: boolean, sizeY: AdaptivityProps['sizeY'], platform: Platform) => {
+const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], sizeY: AdaptivityProps['sizeY'], platform: Platform) => {
   switch (size) {
     case 'l':
       return (
@@ -45,37 +45,15 @@ const getContent = (size: ButtonProps['size'], children: ButtonProps['children']
       );
     case 's':
     default:
-      if (hasIcons) {
-        return (
-          <Caption
-            caps={platform !== Platform.VKCOM}
-            level={platform === Platform.VKCOM ? '1' : sizeY === SizeType.COMPACT ? '3' : '2'}
-            weight={platform === Platform.VKCOM ? 'regular' : 'medium'}
-            vkuiClass={classNames('Button__content', { 'Button__content--caps': platform !== Platform.VKCOM })}
-          >
-            {children}
-          </Caption>
-        );
+      if (platform === Platform.IOS) {
+        return <Subhead weight="medium" vkuiClass="Button__content">{children}</Subhead>;
+      } else if (platform === Platform.VKCOM) {
+        return <Caption level="1" weight="regular" vkuiClass="Button__content">{children}</Caption>;
+      } else {
+        return sizeY === SizeType.COMPACT ?
+          <Caption level="1" weight="medium" vkuiClass="Button__content">{children}</Caption> :
+          <Subhead weight="medium" vkuiClass="Button__content">{children}</Subhead>;
       }
-
-      return (
-        sizeY === SizeType.COMPACT ?
-          <Caption
-            weight={platform === VKCOM ? 'regular' : 'medium'}
-            level="1"
-            vkuiClass="Button__content"
-          >
-            {children}
-          </Caption>
-          :
-          <Subhead
-            weight="medium"
-            Component="div"
-            vkuiClass="Button__content"
-          >
-            {children}
-          </Subhead>
-      );
   }
 };
 
@@ -104,7 +82,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   >
     <div vkuiClass="Button__in">
       {before && <div vkuiClass="Button__before">{before}</div>}
-      {children && getContent(size, children, hasIcons, sizeY, platform)}
+      {children && getContent(size, children, sizeY, platform)}
       {after && <div vkuiClass="Button__after">{after}</div>}
     </div>
   </Tappable>;
