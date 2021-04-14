@@ -62,7 +62,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     const { value, defaultValue } = props;
 
-    const initialValue = value || defaultValue;
+    const initialValue = typeof value !== 'undefined' ? value : defaultValue;
 
     this.keyboardInput = '';
 
