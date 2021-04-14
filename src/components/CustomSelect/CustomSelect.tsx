@@ -60,7 +60,9 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   public constructor(props: CustomSelectProps) {
     super(props);
 
-    const { value } = props;
+    const { value, defaultValue } = props;
+
+    const initialValue = value || defaultValue;
 
     this.keyboardInput = '';
 
@@ -68,8 +70,8 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       opened: false,
       focused: false,
       focusedOptionIndex: -1,
-      selectedOptionIndex: this.findSelectedIndex(props.options, value),
-      nativeSelectValue: value,
+      selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
+      nativeSelectValue: initialValue,
     };
 
     if (typeof props.value !== 'undefined') {

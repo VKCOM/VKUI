@@ -42,4 +42,16 @@ describe('NativeSelect', () => {
     userEvent.selectOptions(screen.getByTestId('target'), ['1']);
     expect((screen.getByTestId('val0') as HTMLOptionElement).selected).toBe(true);
   });
+
+  it('accept defaultValue', () => {
+    render(<NativeSelect
+      data-testid="target"
+      defaultValue={1}
+    >
+      <option value="0" data-testid="val0">Mike</option>
+      <option value="1" data-testid="val1">Josh</option>
+    </NativeSelect>);
+
+    expect((screen.getByTestId('val1') as HTMLOptionElement).selected).toBe(true);
+  });
 });

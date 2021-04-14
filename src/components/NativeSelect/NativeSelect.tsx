@@ -18,12 +18,11 @@ export interface NativeSelectProps extends
   HasAlign,
   AdaptivityProps,
   HasPlatform {
-  defaultValue?: string;
   placeholder?: string;
 }
 
 export interface SelectState {
-  value?: string;
+  value?: SelectHTMLAttributes<HTMLSelectElement>['value'];
   title?: string;
   notSelected?: boolean;
 }

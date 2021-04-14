@@ -108,4 +108,14 @@ describe('CustomSelect', () => {
 
     expect(screen.getByTestId('target').textContent).toEqual('Mike');
   });
+
+  it('accept defaultValue', () => {
+    render(<CustomSelect
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+      defaultValue={1}
+    />);
+
+    expect(screen.getByTestId('target').textContent).toEqual('Josh');
+  });
 });
