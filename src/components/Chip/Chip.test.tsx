@@ -3,13 +3,11 @@ import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
 import Chip from './Chip';
 
-const getChip = () => screen.queryByText('Белый');
-
 describe('Chip', () => {
   baselineComponent(Chip);
 
   it('removes chip on onRemove click', () => {
-    const onRemove = jest.fn(() => getChip().parentElement.remove());
+    const onRemove = jest.fn();
 
     render(
       <Chip value="white" onRemove={onRemove}>Белый</Chip>,
