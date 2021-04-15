@@ -8,7 +8,6 @@ const ChipsInputTest = (props: ChipsInputProps<ChipsInputOption>) => (
 );
 
 const getChipsInput = () => screen.getByTestId('chips-input');
-const getChip = () => screen.queryByText('Красный');
 
 describe('ChipsInput', () => {
   baselineComponent(ChipsInput);
@@ -22,16 +21,15 @@ describe('ChipsInput', () => {
       />,
     );
 
-    expect(getChip()).not.toBeNull();
+    expect(screen.queryByText('Красный')).not.toBeNull();
   });
 
   it('adds chips', () => {
-    let value;
+    let value: ChipsInputOption[];
 
     render(
       <ChipsInputTest
         value={[]}
-        renderChip={undefined}
         onChange={(changedValue) => value = changedValue}
       />,
     );
@@ -42,7 +40,7 @@ describe('ChipsInput', () => {
   });
 
   it('does not lose data when adding an already existing chip', () => {
-    let value;
+    let value: ChipsInputOption[];
 
     render(
       <ChipsInputTest
@@ -63,18 +61,33 @@ describe('ChipsInput', () => {
   });
 
   it('removes chip on hitting backspace', () => {
-    render(<ChipsInputTest value={[{ value: 'red', label: 'Красный' }]} />);
+    let value: ChipsInputOption[];
+
+    render(
+      <ChipsInputTest
+        value={[{ value: 'red', label: 'Красный' }]}
+        onChange={(changedValue) => value = changedValue}
+      />,
+    );
 
     userEvent.type(getChipsInput(), '{backspace}');
 
-    expect(getChip()).toBeNull();
+    expect(value).toEqual([]);
   });
 
   it('does not delete chips on hitting backspace in readonly mode', () => {
-    render(<ChipsInputTest readOnly value={[{ value: 'red', label: 'Красный' }]} />);
+    let value: ChipsInputOption[] = [{ value: 'red', label: 'Красный' }];
+
+    render(
+      <ChipsInputTest
+        readOnly
+        value={value}
+        onChange={(changedValue) => value = changedValue}
+      />,
+    );
 
     userEvent.type(getChipsInput(), '{backspace}');
 
-    expect(getChip()).not.toBeNull();
+    expect(value).toEqual([{ value: 'red', label: 'Красный' }]);
   });
 });
