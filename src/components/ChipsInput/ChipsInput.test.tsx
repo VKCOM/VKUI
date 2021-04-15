@@ -3,15 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
 import ChipsInput, { ChipsInputOption, ChipsInputProps } from './ChipsInput';
 
-const ChipsInputTest = (props: ChipsInputProps<ChipsInputOption>) => {
-  return (
-    <ChipsInput
-      data-testid="chips-input"
-      renderChip={undefined}
-      {...props}
-    />
-  );
-};
+const ChipsInputTest = (props: ChipsInputProps<ChipsInputOption>) => (
+  <ChipsInput data-testid="chips-input" {...props} />
+);
 
 const getChipsInput = () => screen.getByTestId('chips-input');
 const getChip = () => screen.queryByText('Красный');
@@ -32,27 +26,40 @@ describe('ChipsInput', () => {
   });
 
   it('adds chips', () => {
-    render(<ChipsInputTest value={[]} renderChip={undefined} />);
+    let value;
 
-    userEvent.type(getChipsInput(), 'Красный{enter}');
-
-    expect(getChip()).not.toBeNull();
-  });
-
-  it('does not lose data when adding an already existing chip', () => {
     render(
       <ChipsInputTest
-        value={[
-          { value: 'Красный', label: 'Красный' },
-          { value: 'Синий', label: 'Синий' },
-          { value: 'Белый', label: 'Белый' },
-        ]}
+        value={[]}
+        renderChip={undefined}
+        onChange={(changedValue) => value = changedValue}
       />,
     );
 
     userEvent.type(getChipsInput(), 'Красный{enter}');
 
-    expect(getChip()).not.toBeNull();
+    expect(value).toEqual([{ value: 'Красный', label: 'Красный' }]);
+  });
+
+  it('does not lose data when adding an already existing chip', () => {
+    let value;
+
+    render(
+      <ChipsInputTest
+        value={[
+          { value: 'Красный', label: 'Красный' },
+          { value: 'Синий', label: 'Синий' },
+        ]}
+        onChange={(changedValue) => value = changedValue}
+      />,
+    );
+
+    userEvent.type(getChipsInput(), 'Красный{enter}');
+
+    expect(value).toEqual([
+      { value: 'Синий', label: 'Синий' },
+      { value: 'Красный', label: 'Красный' },
+    ]);
   });
 
   it('removes chip on hitting backspace', () => {
