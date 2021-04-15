@@ -34,7 +34,7 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
       title: '',
       notSelected: false,
     };
-    if (typeof props.value !== 'undefined') {
+    if (props.value !== undefined) {
       this.isControlledOutside = true;
     } else {
       state.value = props.defaultValue || '';

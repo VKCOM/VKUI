@@ -62,7 +62,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     const { value, defaultValue } = props;
 
-    const initialValue = typeof value !== 'undefined' ? value : defaultValue;
+    const initialValue = value !== undefined ? value : defaultValue;
 
     this.keyboardInput = '';
 
@@ -74,7 +74,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       nativeSelectValue: initialValue,
     };
 
-    if (typeof props.value !== 'undefined') {
+    if (props.value !== undefined) {
       this.isControlledOutside = true;
     }
   }
