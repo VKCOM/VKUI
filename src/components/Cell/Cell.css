@@ -41,6 +41,10 @@
   display: none;
 }
 
+.Cell--selectable .Cell__marker {
+  margin-right: 16px;
+}
+
 .Cell--selectable.Cell--disabled {
   opacity: .6;
 }
@@ -53,42 +57,35 @@
   display: none;
 }
 
-/* iOS */
+.Cell--removable .SimpleCell {
+  max-width: 100%;
+  flex-grow: 1;
+  min-width: 0;
+  padding-right: 2px;
+  flex-shrink: initial;
+  overflow: hidden;
+}
 
+/**
+ * iOS
+ */
 .Cell--ios .Cell__in {
   transition: transform .6s var(--ios-easing);
 }
 
-.Cell--ios .Cell__marker {
+.Cell--ios.Cell--selectable .Cell__marker {
   margin-right: 12px;
-}
-
-.Cell--ios .Removable {
-  padding-left: 12px;
 }
 
 .Cell--ios.Cell--removable .SimpleCell {
   padding-left: 0;
+  padding-right: 12px;
 }
 
-/* Android */
-
+/**
+ * ANDROID & VKCOM
+ */
 .Cell--android .Cell__dragger,
 .Cell--vkcom .Cell__dragger {
   padding-right: 16px;
-}
-
-.Cell--android .Cell__marker,
-.Cell--vkcom .Cell__marker {
-  margin-right: 16px;
-}
-
-.Cell--android .Removable,
-.Cell--vkcom .Removable {
-  padding-right: 6px;
-}
-
-.Cell--android.Cell--removable .SimpleCell,
-.Cell--vkcom.Cell--removable .SimpleCell {
-  padding-right: 0;
 }
