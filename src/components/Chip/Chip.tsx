@@ -28,8 +28,12 @@ const Chip: FC<ChipProps> = (props: ChipProps) => {
         <Caption level="1" weight="regular" vkuiClass="Chip__content" title={title}>{children}</Caption>
         {hasReactNode(after) && <div vkuiClass="Chip__after">{after}</div>}
         {removable &&
-          <div vkuiClass="Chip__remove" onClick={onRemoveWrapper}>
-            <Icon16Cancel fill="var(--icon_secondary)" />
+          <div
+            aria-label="Удалить чип"
+            vkuiClass="Chip__remove"
+            onClick={onRemoveWrapper}
+          >
+            <Icon16Cancel fill="var(--icon_secondary)" aria-hidden="true" />
           </div>
         }
       </div>
