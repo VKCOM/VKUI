@@ -34,6 +34,12 @@ export function withDOM<Props>(Component: ComponentType<Props & DOMProps>): Comp
   function WithDOM(props: Props) {
     const dom = useDOM();
     return <Component {...props} {...dom} />;
-  };
+  }
   return WithDOM;
+}
+
+export function blurActiveElement(document: Document | undefined) {
+  if (document && document.activeElement) {
+    (document.activeElement as HTMLElement).blur();
+  }
 }
