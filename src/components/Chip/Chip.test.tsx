@@ -8,14 +8,6 @@ const getChip = () => screen.queryByText('Белый');
 describe('Chip', () => {
   baselineComponent(Chip);
 
-  it('renders value, before, after, and children', () => {
-    render(
-      <Chip before="before" value="white" after="after">Белый</Chip>,
-    );
-
-    expect(getChip()).not.toBeNull();
-  });
-
   it('removes chip on onRemove click', () => {
     const onRemove = jest.fn(() => getChip().parentElement.remove());
 
@@ -25,6 +17,6 @@ describe('Chip', () => {
 
     userEvent.click(screen.queryByLabelText('Удалить чип'));
 
-    expect(getChip()).toBeNull();
+    expect(onRemove).toHaveBeenCalled();
   });
 });
