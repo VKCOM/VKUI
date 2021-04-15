@@ -3,7 +3,7 @@ import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { screenshot } from '@react-playwright';
 // Импорты из отдельных модулей помогают jest отслеживать зависимости
 import ConfigProvider from '../../components/ConfigProvider/ConfigProvider';
-import Panel from '../../components/Panel/Panel';
+import { Panel } from '../../components/Panel/Panel';
 import { Platform } from '../../lib/platform';
 import { Scheme } from '../../components/ConfigProvider/ConfigProviderContext';
 import AdaptivityProvider, {
