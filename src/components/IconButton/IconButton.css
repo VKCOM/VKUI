@@ -49,6 +49,10 @@
   opacity: .6;
 }
 
+.Removable .IconButton {
+  color: var(--icon_secondary);
+}
+
 /*
  * Android
  */

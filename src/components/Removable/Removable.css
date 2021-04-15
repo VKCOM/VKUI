@@ -18,10 +18,6 @@
   border: none;
 }
 
-.Removable__action.Removable__action {
-  color: var(--icon_secondary);
-}
-
 .Removable__action:focus {
   outline: none;
 }
