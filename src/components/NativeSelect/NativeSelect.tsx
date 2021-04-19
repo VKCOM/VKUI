@@ -18,12 +18,11 @@ export interface NativeSelectProps extends
   HasAlign,
   AdaptivityProps,
   HasPlatform {
-  defaultValue?: string;
   placeholder?: string;
 }
 
 export interface SelectState {
-  value?: string;
+  value?: SelectHTMLAttributes<HTMLSelectElement>['value'];
   title?: string;
   notSelected?: boolean;
 }
@@ -35,7 +34,7 @@ class NativeSelect extends React.Component<NativeSelectProps, SelectState> {
       title: '',
       notSelected: false,
     };
-    if (typeof props.value !== 'undefined') {
+    if (props.value !== undefined) {
       this.isControlledOutside = true;
     } else {
       state.value = props.defaultValue || '';

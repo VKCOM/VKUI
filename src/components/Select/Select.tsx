@@ -10,13 +10,8 @@ const Select: FunctionComponent<SelectProps> = ({ hasMouse, ...props }: SelectPr
   if (hasMouse) {
     const { children, ...restProps } = props;
 
-    const value = restProps.hasOwnProperty('value')
-      ? restProps.value
-      : restProps.defaultValue;
-
     return (
       <CustomSelect
-        value={value}
         {...restProps}
       />
     );
