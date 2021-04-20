@@ -14,7 +14,9 @@ module.exports = {
     HeadingRenderer: path.join(__dirname, './Components/Heading/HeadingRenderer'),
     ReactComponent: path.join(__dirname, './Components/ReactComponent/ReactComponent'),
     TableOfContents: path.join(__dirname, './Components/TableOfContents/TableOfContents'),
-    ParaRenderer: path.join(__dirname, './Components/ParaRenderer'),
+    ParaRenderer: path.join(__dirname, './Components/Para/ParaRenderer'),
+    CodeRenderer: path.join(__dirname, './Components/Code/CodeRenderer'),
+    TextRenderer: path.join(__dirname, './Components/Text/TextRenderer'),
     Preview: path.join(__dirname, './Components/Preview'),
   },
   propsParser: (filePath, source) => {

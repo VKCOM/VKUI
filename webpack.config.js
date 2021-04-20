@@ -21,7 +21,7 @@ const config = {
         loader: 'babel-loader',
       },
       {
-        test: /\.(jpeg|jpg|png|woff|svg|otf)$/,
+        test: /\.(jpeg|jpg|png|woff|woff2|svg|otf)$/,
         use: {
           loader: 'file-loader',
           options: {
