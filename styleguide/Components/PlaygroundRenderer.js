@@ -2,6 +2,8 @@ import React, { cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Styled from '@rsg-components/Styled';
+import { Settings } from './Settings/Settings';
+import { Title } from '../../src';
 
 export const styles = ({ space, color, borderRadius }) => ({
   root: {
@@ -44,6 +46,8 @@ class PlaygroundRenderer extends React.Component {
 
     return (
       <div className={classes.root}>
+        <Title weight="medium" level="2">Пример реализации</Title>
+        <Settings />
         <div className={cx(classes.preview, wrapperProps.className)} {...wrapperProps} data-preview={name}>
           { cloneElement(preview, { ...preview.props, autoLayout, containerStyle, integration, config }) }
         </div>

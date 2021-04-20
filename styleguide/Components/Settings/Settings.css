@@ -1,10 +1,6 @@
-.Settings__fixed {
-  position: fixed;
-  width: 100%;
-  left: 0;
-  top: 0;
-  box-shadow: 0 0 2px rgba(0, 0, 0, .03), 0 2px 2px rgba(0, 0, 0, .06);
-  background: var(--background_content);
+.Settings {
+  margin-left: -16px;
+  margin-right: -16px;
 }
 
 .Settings__in {
@@ -13,5 +9,5 @@
 }
 
 .Settings__in > .Setting {
-  padding: 16px;
+  padding: 14px 16px;
 }

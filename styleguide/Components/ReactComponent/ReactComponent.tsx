@@ -4,6 +4,7 @@ import Pathline from '@rsg-components/Pathline';
 import Slot from '@rsg-components/Slot';
 import Markdown from '@rsg-components/Markdown';
 import Examples from '@rsg-components/Examples';
+import './ReactComponent.css';
 
 const ReactComponent = ({ component }) => {
   const { name, visibleName, slug = '-', filepath, pathLine, href } = component;

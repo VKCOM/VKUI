@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { DESKTOP_SIZE, MOBILE_SIZE, TABLET_SIZE } from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
+import { MOBILE_SIZE, TABLET_SIZE } from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
 import { defaultConfigProviderProps } from '@vkui/components/ConfigProvider/ConfigProviderContext';
 import { SMALL_HEIGHT } from '../ViewHeightSelect';
 import {
@@ -14,7 +14,6 @@ import {
   ConfigProvider
 } from '@vkui';
 import './StyleGuideRenderer.css';
-import { Settings } from '../Settings/Settings';
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
@@ -76,7 +75,6 @@ let StyleGuideRenderer = ({ children, toc }) => {
             </div>
           </SplitCol>
           <SplitCol width="100%" className="StyleGuide__content">
-            <Settings />
             {children}
           </SplitCol>
         </SplitLayout>
