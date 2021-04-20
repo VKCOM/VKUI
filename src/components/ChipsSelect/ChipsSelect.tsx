@@ -13,10 +13,11 @@ import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderC
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { useChipsSelect } from './useChipsSelect';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { setRef, noop } from '../../lib/utils';
+import { noop } from '../../lib/utils';
 import { useDOM } from '../../lib/dom';
 import Caption from '../Typography/Caption/Caption';
 import { prefixClass } from '../../lib/prefixClass';
+import { useExternRef } from '../../hooks/useExternRef';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
@@ -69,7 +70,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
   const { document } = useDOM();
 
   const scrollBoxRef = useRef<HTMLDivElement>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useExternRef(getRef);
   const {
     fieldValue, selectedOptions, opened, setOpened, addOptionFromInput,
     filteredOptions, addOption, handleInputChange, clearInput,
@@ -215,12 +216,6 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
-
-  useEffect(() => {
-    const { current: element } = rootRef;
-
-    setRef(element, getRef);
-  }, [getRef]);
 
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;

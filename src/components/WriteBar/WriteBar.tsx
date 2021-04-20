@@ -7,7 +7,8 @@ import {
   TextareaHTMLAttributes,
 } from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
-import { hasReactNode, isFunction, setRef } from '../../lib/utils';
+import { useExternRef } from '../../hooks/useExternRef';
+import { hasReactNode, isFunction } from '../../lib/utils';
 import { getClassName } from '../../helpers/getClassName';
 import { HasRef, HasRootRef } from '../../types';
 
@@ -53,7 +54,7 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
 
   const isControlledOutside = value != null;
 
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const textareaRef = useExternRef(getRef);
   const textareaMinHeightRef = useRef<number | null>(null);
 
   const resize = () => {
@@ -97,11 +98,6 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
     }
   };
 
-  const getTextareaElRef = (element: HTMLTextAreaElement) => {
-    textareaRef.current = element;
-    setRef(element, getRef);
-  };
-
   useEffect(() => {
     resize();
   }, [value]);
@@ -125,7 +121,7 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
             {...restProps}
             vkuiClass="WriteBar__textarea"
             onChange={onTextareaChange}
-            ref={getTextareaElRef}
+            ref={textareaRef}
             value={value}
           />
 
