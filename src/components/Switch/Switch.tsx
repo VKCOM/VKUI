@@ -12,7 +12,7 @@ export interface SwitchProps extends
   HasRef<HTMLInputElement>,
   AdaptivityProps { }
 
-const Switch: FunctionComponent<SwitchProps> = ({
+export const Switch: FunctionComponent<SwitchProps> = withAdaptivity(({
   style,
   className,
   getRef,
@@ -29,6 +29,4 @@ const Switch: FunctionComponent<SwitchProps> = ({
       <span vkuiClass="Switch__pseudo" />
     </label>
   );
-};
-
-export default withAdaptivity(Switch, { sizeY: true });
+}, { sizeY: true });
