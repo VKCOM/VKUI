@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Title } from '@vkui';
+import Heading from '../Heading';
 import Pathline from '@rsg-components/Pathline';
 import Slot from '@rsg-components/Slot';
 import Markdown from '@rsg-components/Markdown';
@@ -12,11 +12,11 @@ const ReactComponent = ({ component }) => {
 
   return (
     <div className="ReactComponent">
-      <Title className="ReactComponent__title" weight="medium" level="1">{visibleName}</Title>
-      {pathLine && <Pathline>{pathLine}</Pathline>}
+      <Heading level={1}>{visibleName}</Heading>
+      {/*{pathLine && <Pathline>{pathLine}</Pathline>}*/}
       {description && <Markdown text={description} />}
       {examples.length && <Examples examples={examples} name={name} />}
-      <Title className="ReactComponent__sectionHeader" weight="medium" level="2">Свойства</Title>
+      <Heading level={2}>Свойства</Heading>
       <Slot name="docsTabs" props={component} />
     </div>
   )

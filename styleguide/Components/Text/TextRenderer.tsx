@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Text, TextProps } from '@vkui';
-import './Text.css';
 
 export const TextRenderer: FC<{ semantic: string }> = ({ children, semantic }) => {
   let weight: TextProps['weight'];
@@ -14,7 +13,7 @@ export const TextRenderer: FC<{ semantic: string }> = ({ children, semantic }) =
   }
 
   return (
-    <Text className="Text" weight={weight}>{children}</Text>
+    <Text weight={weight}>{children}</Text>
   )
 }
 

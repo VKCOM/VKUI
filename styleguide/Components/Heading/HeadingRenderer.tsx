@@ -1,15 +1,15 @@
 import React from 'react';
 import { Headline, Title } from '@vkui';
+import './Heading.css';
 
 const HeadingRenderer = ({ level, children }) => {
-  console.log(level);
   switch (level) {
     case 1:
-      return <Title weight="bold" level="1">{children}</Title>
+      return <Title className="Heading Heading--1" weight="semibold" level="1">{children}</Title>
     case 2:
-      return <Title weight="semibold" level="1">{children}</Title>
+      return <Title className="Heading Heading--2" weight="medium" level="2">{children}</Title>
     default:
-      return <Headline weight="bold" level="1">{children}</Headline>
+      return <Headline className="Heading Heading--3" weight="bold" level="1">{children}</Headline>
   }
 }
 

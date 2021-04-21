@@ -17,6 +17,10 @@ module.exports = {
     ParaRenderer: path.join(__dirname, './Components/Para/ParaRenderer'),
     CodeRenderer: path.join(__dirname, './Components/Code/CodeRenderer'),
     TextRenderer: path.join(__dirname, './Components/Text/TextRenderer'),
+    'Markdown/List': path.join(__dirname, './Components/List'),
+    'Markdown/MarkdownHeading': path.join(__dirname, './Components/MarkdownHeading'),
+    TableRenderer: path.join(__dirname, './Components/Table/TableRenderer'),
+    LinkRenderer: path.join(__dirname, './Components/Link/LinkRenderer'),
     Preview: path.join(__dirname, './Components/Preview'),
   },
   propsParser: (filePath, source) => {

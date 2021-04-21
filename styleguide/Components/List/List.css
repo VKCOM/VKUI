@@ -1,0 +1,15 @@
+.List {
+  list-style-position: inside;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+.List li::before {
+  display: inline-block;
+  width: 8px;
+  content: '';
+}
+
+.List li:not(:last-child) {
+  margin-bottom: 8px;
+}

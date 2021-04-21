@@ -29,5 +29,5 @@
   min-height: 100vh;
   position: relative;
   z-index: 1;
-  padding: 36px;
+  padding: 0 36px 36px;
 }

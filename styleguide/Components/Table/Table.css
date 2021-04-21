@@ -1,0 +1,30 @@
+.Table {
+  border: 1px solid var(--separator_alternate);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.Table__main {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.Table__td,
+.Table__th {
+  border-bottom: 1px solid var(--separator_alternate);
+}
+
+.Table__th {
+  background: var(--background_light);
+  text-align: left;
+  padding: 16px;
+  white-space: nowrap;
+}
+
+.Table__tr:last-child .Table__td {
+  border-bottom: none;
+}
+
+.Table__td {
+  padding: 20px 16px;
+}
