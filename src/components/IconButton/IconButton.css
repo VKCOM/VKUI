@@ -47,6 +47,10 @@
   padding: 0;
 }
 
+.Removable__action.IconButton {
+  color: var(--icon_secondary);
+}
+
 /*
  * sizeY: COMPACT
  */
