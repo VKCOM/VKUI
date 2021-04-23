@@ -19,8 +19,12 @@ module.exports = {
     TextRenderer: path.join(__dirname, './Components/Text/TextRenderer'),
     'Markdown/List': path.join(__dirname, './Components/List'),
     'Markdown/MarkdownHeading': path.join(__dirname, './Components/MarkdownHeading'),
+    // 'Markdown/Pre': path.join(__dirname, './Components/Pre'),
     TableRenderer: path.join(__dirname, './Components/Table/TableRenderer'),
     LinkRenderer: path.join(__dirname, './Components/Link/LinkRenderer'),
+    NameRenderer: path.join(__dirname, './Components/Name/NameRenderer'),
+    TypeRenderer: path.join(__dirname, './Components/Type/TypeRenderer'),
+    'ComplexType/ComplexTypeRenderder': path.join(__dirname, './Components/ComplexType/ComplexTypeRenderder'),
     Preview: path.join(__dirname, './Components/Preview'),
   },
   propsParser: (filePath, source) => {

@@ -19,6 +19,7 @@
   text-align: left;
   padding: 16px;
   white-space: nowrap;
+  color: var(--text_subhead);
 }
 
 .Table__tr:last-child .Table__td {
