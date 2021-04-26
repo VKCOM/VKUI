@@ -23,7 +23,7 @@ const clear = () => textInput.current.value = '';
         <Input type="text" defaultValue="Смирнов" after={<Icon20User aria-hidden="true" />} />
       </FormItem>
       <FormItem top="С IconButton">
-        <Input getRef={textInput} type="text" defaultValue="Кузнецов" after={<IconButton aria-label="Очистить поле" onClick={clear}><Icon16Clear/></IconButton>} />
+        <Input getRef={textInput} type="text" defaultValue="Кузнецов" after={<IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={clear}><Icon16Clear/></IconButton>} />
       </FormItem>
     </Group>
   </Panel>
