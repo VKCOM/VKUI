@@ -11,6 +11,7 @@ import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { PanelContextProps } from '../Panel/PanelContext';
 import { DOMProps, withDOM } from '../../lib/dom';
+import { IOS } from '../../lib/platform';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -93,8 +94,9 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     const fromPanelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
     const toPanelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
 
-    // если переход назад - анимация только у панели с которой уходим (detail.from), и подстраиваться под скролл надо только на ней
-    const panelAnimated = !(this.props.panel === e.detail.to && e.detail.isBack);
+    // если переход назад на Android - анимация только у панели с которой уходим (detail.from), и подстраиваться под скролл надо только на ней
+    // на iOS переход между панелями горизонтальный, поэтому там нужно подстраивать хедеры на обеих панелях
+    const panelAnimated = this.props.platform === IOS || !(this.props.panel === e.detail.to && e.detail.isBack);
 
     // Для панелей, с которых уходим всегда выставляется скролл
     // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл и применяется ли к ней анимация перехода:
