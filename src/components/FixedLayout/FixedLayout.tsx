@@ -33,6 +33,7 @@ export interface FixedLayoutProps extends
 export interface FixedLayoutState {
   position: 'absolute' | null;
   top: number;
+  bottom: number;
   width: string;
 }
 
@@ -40,6 +41,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
   state: FixedLayoutState = {
     position: 'absolute',
     top: null,
+    bottom: null,
     width: '',
   };
 
@@ -103,7 +105,8 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     if (fromPanelHasScroll || toPanelHasScroll && this.canTargetPanelScroll && panelAnimated) {
       this.setState({
         position: 'absolute',
-        top: this.el.offsetTop + panelScroll,
+        top: this.props.vertical === 'top' || fromPanelHasScroll ? this.el.offsetTop + panelScroll : null,
+        bottom: this.props.vertical === 'bottom' && !fromPanelHasScroll ? -panelScroll : null,
         width: '',
       });
     }
@@ -113,6 +116,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     this.setState({
       position: null,
       top: null,
+      bottom: null,
     });
 
     this.doResize();
