@@ -25,8 +25,11 @@ class Example extends React.Component {
           </PanelHeader>
           <Group>
             <FormItem top="Цвет">
-              <ChipsInput getRef={this.textInput} value={this.state.colors}
-              after={<IconButton aria-label="Очистить поле" onClick={() => this.clear()}><Icon16Clear/></IconButton>} />
+              <ChipsInput
+                getRef={this.textInput}
+                value={this.state.colors}
+                after={<IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={() => this.clear()}><Icon16Clear/></IconButton>}
+              />
             </FormItem>
             <FormItem top="Список">
               <ChipsInput placeholder={"Введите название и нажмите Enter"}/>
