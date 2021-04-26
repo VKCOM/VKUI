@@ -4,6 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useExternRef } from '../../hooks/useExternRef';
 
 export interface SwitchProps extends
   InputHTMLAttributes<HTMLInputElement>,
@@ -11,7 +12,7 @@ export interface SwitchProps extends
   HasRef<HTMLInputElement>,
   AdaptivityProps { }
 
-const Switch: FunctionComponent<SwitchProps> = ({
+export const Switch: FunctionComponent<SwitchProps> = withAdaptivity(({
   style,
   className,
   getRef,
@@ -20,15 +21,12 @@ const Switch: FunctionComponent<SwitchProps> = ({
   ...restProps
 }: SwitchProps) => {
   const platform = usePlatform();
+  const inputRef = useExternRef(getRef);
 
   return (
-    <label vkuiClass={classNames(
-      getClassName('Switch', platform),
-      `Switch--sizeY-${sizeY}`)} className={className} style={style} ref={getRootRef}>
-      <input {...restProps} type="checkbox" vkuiClass="Switch__self" ref={getRef} />
+    <label vkuiClass={classNames(getClassName('Switch', platform), `Switch--sizeY-${sizeY}`)} className={className} style={style} ref={getRootRef}>
+      <input {...restProps} type="checkbox" vkuiClass="Switch__self" ref={inputRef} />
       <span vkuiClass="Switch__pseudo" />
     </label>
   );
-};
-
-export default withAdaptivity(Switch, { sizeY: true });
+}, { sizeY: true });
