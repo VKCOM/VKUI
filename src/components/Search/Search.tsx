@@ -1,11 +1,10 @@
 import {
-  Component,
   ReactNode,
   FocusEvent,
-  FocusEventHandler,
   InputHTMLAttributes,
-  ChangeEvent,
-  ChangeEventHandler,
+  FC,
+  useState,
+  useCallback,
 } from 'react';
 import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -13,14 +12,13 @@ import { getClassName } from '../../helpers/getClassName';
 import { Icon16SearchOutline, Icon16Clear, Icon24Cancel } from '@vkontakte/icons';
 import { IOS, VKCOM } from '../../lib/platform';
 import { HasPlatform, HasRef } from '../../types';
-import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
+import Touch, { TouchEvent } from '../Touch/Touch';
 import { VKUITouchEvent } from '../../lib/touch';
-import { setRef } from '../../lib/utils';
+import { noop } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 import { Separator } from '../../index';
-
-let searchId = 0;
+import { useExternRef } from '../../hooks/useExternRef';
 
 export type InputRef = (element: HTMLInputElement) => void;
 
@@ -35,169 +33,131 @@ export interface SearchProps extends InputHTMLAttributes<HTMLInputElement>, HasR
   defaultValue?: string;
 }
 
-export interface SearchState {
-  value?: string;
-  focused?: boolean;
+function useEnsuredControl<V, E>(
+  props: { value?: V; onChange?: (e: E) => any },
+  options: { defaultValue: V },
+): [V, (e: E) => any] {
+  const isControlled = props.hasOwnProperty('value');
+  const [localValue, setLocalValue] = useState(options.defaultValue);
+  const onChange = useCallback((e) => {
+    !isControlled && setLocalValue(e.target.value);
+    props.onChange && props.onChange(e);
+  }, [props.onChange]);
+  return [isControlled ? props.value : localValue, onChange];
 }
 
-class Search extends Component<SearchProps, SearchState> {
-  static defaultProps: SearchProps = {
-    autoComplete: 'off',
-    placeholder: 'Поиск',
-    after: 'Отмена',
-    before: <Icon16SearchOutline />,
+const Search: FC<SearchProps> = ({
+  before,
+  className,
+  defaultValue,
+  placeholder,
+  after,
+  getRef,
+  platform,
+  icon,
+  onIconClick = noop,
+  style,
+  ...inputProps
+}) => {
+  const inputRef = useExternRef(getRef);
+  const [isFocused, setFocused] = useState(false);
+  const [value, onChange] = useEnsuredControl(inputProps, { defaultValue });
+
+  const onFocus = (e: FocusEvent<HTMLInputElement>) => {
+    setFocused(true);
+    inputProps.onFocus && inputProps.onFocus(e);
   };
 
-  isControlledOutside: boolean;
-
-  inputEl: HTMLInputElement;
-
-  searchId: string;
-
-  constructor(props: SearchProps) {
-    super(props);
-
-    const state: SearchState = {
-      focused: false,
-    };
-
-    if (props.hasOwnProperty('value')) {
-      this.isControlledOutside = true;
-    } else {
-      state.value = props.defaultValue || '';
-    }
-    this.searchId = `search-${searchId++}`;
-    this.state = state;
-  }
-
-  get value() {
-    return this.isControlledOutside ? this.props.value : this.state.value;
-  }
-
-  onFocus: FocusEventHandler = (e: FocusEvent<HTMLInputElement>) => {
-    this.setState({ focused: true });
-    this.props.onFocus && this.props.onFocus(e);
+  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
+    setFocused(false);
+    inputProps.onBlur && inputProps.onBlur(e);
   };
 
-  onBlur: FocusEventHandler = (e: FocusEvent<HTMLInputElement>) => {
-    this.setState({ focused: false });
-    this.props.onBlur && this.props.onBlur(e);
-  };
-
-  onChange: ChangeEventHandler = (e?: ChangeEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    if (!this.isControlledOutside) {
-      this.setState({ value: target.value });
-    }
-    if (this.props.onChange) {
-      this.props.onChange(e);
-    }
-  };
-
-  onCancel: VoidFunction = () => {
+  const onCancel = () => {
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-    nativeInputValueSetter.call(this.inputEl, '');
+    nativeInputValueSetter.call(inputRef.current, '');
 
     const ev2 = new Event('input', { bubbles: true });
-    this.inputEl.dispatchEvent(ev2);
+    inputRef.current.dispatchEvent(ev2);
   };
 
-  onIconClickStart: TouchEventHandler = (e: TouchEvent) => {
-    this.props.onIconClick && this.props.onIconClick(e.originalEvent);
-  };
+  const onIconClickStart = useCallback((e: TouchEvent) => onIconClick(e.originalEvent), [onIconClick]);
 
-  onIconCancelClickStart: TouchEventHandler = (e: TouchEvent) => {
+  const onIconCancelClickStart = useCallback((e: TouchEvent) => {
     e.originalEvent.preventDefault();
-    this.inputEl.focus();
-    this.onCancel();
-  };
+    inputRef.current.focus();
+    onCancel();
+  }, [onCancel]);
 
-  inputRef: InputRef = (element: HTMLInputElement) => {
-    this.inputEl = element;
-    setRef(element, this.props.getRef);
-  };
-
-  render() {
-    const {
-      before,
-      className,
-      onFocus,
-      onBlur,
-      onChange,
-      defaultValue,
-      value,
-      placeholder,
-      after,
-      getRef,
-      platform,
-      icon,
-      onIconClick,
-      style,
-      ...inputProps
-    } = this.props;
-
-    return (
-      <div
-        vkuiClass={classNames(getClassName('Search', platform), {
-          'Search--focused': this.state.focused,
-          'Search--has-value': !!this.value,
-          'Search--has-after': !!after,
-          'Search--has-icon': !!icon,
-        })}
-        className={className}
-        style={style}
-      >
-        <div vkuiClass="Search__in">
-          <div vkuiClass="Search__width" />
-          <label vkuiClass="Search__control">
-            <input
-              {...inputProps}
-              ref={this.inputRef}
-              type="text"
-              vkuiClass="Search__input"
-              onFocus={this.onFocus}
-              onBlur={this.onBlur}
-              onChange={this.onChange}
-              value={this.value}
-            />
-            {platform === IOS && after && <div vkuiClass="Search__after-width">{after}</div>}
-            <div vkuiClass="Search__placeholder">
-              <div vkuiClass="Search__placeholder-in">
-                {before}
+  return (
+    <div
+      vkuiClass={classNames(getClassName('Search', platform), {
+        'Search--focused': isFocused,
+        'Search--has-value': !!value,
+        'Search--has-after': !!after,
+        'Search--has-icon': !!icon,
+      })}
+      className={className}
+      style={style}
+    >
+      <div vkuiClass="Search__in">
+        <div vkuiClass="Search__width" />
+        <label vkuiClass="Search__control">
+          <input
+            {...inputProps}
+            ref={inputRef}
+            type="text"
+            vkuiClass="Search__input"
+            onFocus={onFocus}
+            onBlur={onBlur}
+            onChange={onChange}
+            value={value}
+          />
+          {platform === IOS && after && <div vkuiClass="Search__after-width">{after}</div>}
+          <div vkuiClass="Search__placeholder">
+            <div vkuiClass="Search__placeholder-in">
+              {before}
+              {platform === VKCOM
+                ? <Text vkuiClass="Search__placeholder-text" weight="regular">{placeholder}</Text>
+                : <Title vkuiClass="Search__placeholder-text" level="3" weight="regular">{placeholder}</Title>
+              }
+            </div>
+            {isFocused && platform === IOS && after && <div vkuiClass="Search__after-width">{after}</div>}
+          </div>
+        </label>
+        <div vkuiClass="Search__after" onClick={onCancel}>
+          <div vkuiClass="Search__icons">
+            {icon &&
+              <Touch onStart={onIconClickStart} vkuiClass="Search__icon">
+                {icon}
+              </Touch>
+            }
+            {!!value &&
+              <Touch onStart={onIconCancelClickStart} vkuiClass="Search__icon">
                 {platform === VKCOM
-                  ? <Text vkuiClass="Search__placeholder-text" weight="regular">{placeholder}</Text>
-                  : <Title vkuiClass="Search__placeholder-text" level="3" weight="regular">{placeholder}</Title>
+                  ? <Icon24Cancel />
+                  : <Icon16Clear />
                 }
-              </div>
-              {this.state.focused && platform === IOS && after && <div vkuiClass="Search__after-width">{after}</div>}
-            </div>
-          </label>
-          <div vkuiClass="Search__after" onClick={this.onCancel}>
-            <div vkuiClass="Search__icons">
-              {icon &&
-                <Touch onStart={this.onIconClickStart} vkuiClass="Search__icon">
-                  {icon}
-                </Touch>
-              }
-              {!!this.value &&
-                <Touch onStart={this.onIconCancelClickStart} vkuiClass="Search__icon">
-                  {platform === VKCOM
-                    ? <Icon24Cancel />
-                    : <Icon16Clear />
-                  }
-                </Touch>
-              }
-            </div>
-            {platform === IOS && after &&
-              <div vkuiClass="Search__after-in">{after}</div>
+              </Touch>
             }
           </div>
+          {platform === IOS && after &&
+            <div vkuiClass="Search__after-in">{after}</div>
+          }
         </div>
-        {platform === VKCOM && <Separator vkuiClass="Search__separator" wide />}
       </div>
-    );
-  }
-}
+      {platform === VKCOM && <Separator vkuiClass="Search__separator" wide />}
+    </div>
+  );
+};
+
+Search.defaultProps = {
+  autoComplete: 'off',
+  defaultValue: '',
+  placeholder: 'Поиск',
+  after: 'Отмена',
+  before: <Icon16SearchOutline />,
+};
 
 export default withPlatform(Search);
