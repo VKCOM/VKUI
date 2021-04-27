@@ -19,6 +19,7 @@ import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 import { Separator } from '../../index';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 
 export type InputRef = (element: HTMLInputElement) => void;
 
@@ -31,19 +32,6 @@ export interface SearchProps extends InputHTMLAttributes<HTMLInputElement>, HasR
   icon?: ReactNode;
   onIconClick?: (e: VKUITouchEvent) => void;
   defaultValue?: string;
-}
-
-function useEnsuredControl<V, E>(
-  props: { value?: V; onChange?: (e: E) => any },
-  options: { defaultValue: V },
-): [V, (e: E) => any] {
-  const isControlled = props.hasOwnProperty('value');
-  const [localValue, setLocalValue] = useState(options.defaultValue);
-  const onChange = useCallback((e) => {
-    !isControlled && setLocalValue(e.target.value);
-    props.onChange && props.onChange(e);
-  }, [props.onChange]);
-  return [isControlled ? props.value : localValue, onChange];
 }
 
 const Search: FC<SearchProps> = ({
