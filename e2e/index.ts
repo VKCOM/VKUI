@@ -20,7 +20,7 @@ export async function screenshot(jsx?: ReactElement, options: { selector?: strin
   // font load affects layout
   /* istanbul ignore next */
   await page.evaluate(() => (document as any).fonts.ready);
-  const { selector = '#mount > *' } = options;
+  const { selector = '#mount > *:not(.AppRoot), .AppRoot > *' } = options;
   /* istanbul ignore next */
   const { x, y, bottom, right } = await page.evaluate((selector) => {
     const size = { right: 0, bottom: 0, x: Infinity, y: Infinity };
