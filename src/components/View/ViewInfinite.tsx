@@ -513,7 +513,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
       popout, modal, platform,
       activePanel: _1, splitCol, configProvider, history, id,
       onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
-      window, document, scroll,
+      window, document, scroll, isBackCheck,
       ...restProps
     } = this.props;
     const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult, swipingBack } = this.state;
