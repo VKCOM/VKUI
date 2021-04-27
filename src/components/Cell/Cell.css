@@ -26,64 +26,66 @@
 .Cell__checkbox {
   display: none;
 }
-
-.Cell__marker {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid var(--icon_secondary);
-  color: transparent;
-  box-sizing: border-box;
+/* TODO избавиться от специфичного селектора после облегчения селекторов SimpleCell */
+.Cell .Cell__marker {
   flex-shrink: 0;
+  padding: 0;
+}
+/* TODO избавиться от специфичного селектора после облегчения селекторов SimpleCell */
+.Cell .Cell__marker--off {
+  display: block;
+  color: var(--icon_tertiary);
+}
+/* TODO избавиться от специфичного селектора после облегчения селекторов SimpleCell */
+.Cell .Cell__marker--on {
+  display: none;
+}
+
+.Cell--selectable .Cell__marker {
+  margin-right: 16px;
 }
 
 .Cell--selectable.Cell--disabled {
   opacity: .6;
 }
 
-.Cell__checkbox:checked ~ .Cell__marker {
-  border: none;
-  color: var(--white);
-  background-color: var(--accent);
-  padding: 4px;
+.Cell__checkbox:checked ~ .Cell__marker--on {
+  display: block;
 }
 
-/* iOS */
+.Cell__checkbox:checked ~ .Cell__marker--off {
+  display: none;
+}
 
+.Cell--removable .SimpleCell {
+  max-width: 100%;
+  flex-grow: 1;
+  min-width: 0;
+  padding-right: 2px;
+  flex-shrink: initial;
+  overflow: hidden;
+}
+
+/**
+ * iOS
+ */
 .Cell--ios .Cell__in {
   transition: transform .6s var(--ios-easing);
 }
 
-.Cell--ios .Cell__marker {
+.Cell--ios.Cell--selectable .Cell__marker {
   margin-right: 12px;
-}
-
-.Cell--ios .Removable {
-  padding-left: 12px;
 }
 
 .Cell--ios.Cell--removable .SimpleCell {
   padding-left: 0;
+  padding-right: 12px;
 }
 
-/* Android */
-
+/**
+ * ANDROID & VKCOM
+ */
 .Cell--android .Cell__dragger,
 .Cell--vkcom .Cell__dragger {
   padding-right: 16px;
-}
-
-.Cell--android .Cell__marker,
-.Cell--vkcom .Cell__marker {
-  margin-right: 16px;
-}
-
-.Cell--android .Removable,
-.Cell--vkcom .Removable {
-  padding-right: 6px;
-}
-
-.Cell--android.Cell--removable .SimpleCell,
-.Cell--vkcom.Cell--removable .SimpleCell {
-  padding-right: 0;
 }

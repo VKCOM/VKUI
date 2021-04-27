@@ -45,7 +45,7 @@ export { default as ActionSheetItem } from './components/ActionSheetItem/ActionS
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
-export { default as Snackbar } from './components/Snackbar/Snackbar';
+export { Snackbar } from './components/Snackbar/Snackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 
 /**
@@ -156,7 +156,7 @@ export { default as FormLayoutGroup } from './components/FormLayoutGroup/FormLay
 export type { FormLayoutGroupProps } from './components/FormLayoutGroup/FormLayoutGroup';
 export { FormStatus } from './components/FormStatus/FormStatus';
 export type { FormStatusProps } from './components/FormStatus/FormStatus';
-export { default as Switch } from './components/Switch/Switch';
+export { Switch } from './components/Switch/Switch';
 export type { SwitchProps } from './components/Switch/Switch';
 export { default as File } from './components/File/File';
 export type { FileProps } from './components/File/File';

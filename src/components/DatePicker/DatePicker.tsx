@@ -161,6 +161,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
       popupDirection,
       defaultValue,
       hasMouse,
+      monthNames,
       ...restProps
     } = this.props;
     const { day, month, year } = this.state;

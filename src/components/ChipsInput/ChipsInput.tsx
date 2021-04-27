@@ -54,6 +54,11 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (disabled || restProps.readOnly) {
+      e.preventDefault();
+      return;
+    }
+
     onKeyDown(e);
 
     if (e.key === 'Backspace' && !e.defaultPrevented && !fieldValue && selectedOptions.length) {

@@ -1,6 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom/extend-expect';
 import { setRef } from '../../lib/utils';
 import RangeSliderBase, { RangeSliderProps } from './RangeSlider';
 import { mockRect, baselineComponent } from '../../testing/utils';

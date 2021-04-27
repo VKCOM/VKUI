@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import { baselineComponent } from '../../testing/utils';
 import { AppRootContext } from './AppRootContext';
 import AppRoot from './AppRoot';

@@ -23,7 +23,6 @@ const config = {
   preset: 'jest-playwright-preset',
   collectCoverage: false,
   setupFilesAfterEnv: [
-    ...base.setupFilesAfterEnv || [],
     path.join(__dirname, 'jest/matchers.ts'),
   ],
   globalSetup: path.join(__dirname, 'jest/globalSetup.ts'),

@@ -30,6 +30,10 @@
   padding-right: 8px;
 }
 
+.CellButton > .Avatar {
+  color: var(--button_muted_background);
+}
+
 .CellButton--primary,
 .CellButton--primary > .Icon,
 .CellButton--primary > .Avatar .Icon {
