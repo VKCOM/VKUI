@@ -6,7 +6,7 @@ import Markdown from '@rsg-components/Markdown';
 import Examples from '@rsg-components/Examples';
 import './ReactComponent.css';
 
-const ReactComponent = ({ component }) => {
+const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, slug = '-', filepath, pathLine, href } = component;
   const { description = '', examples = [] } = component.props || {};
 
@@ -15,7 +15,7 @@ const ReactComponent = ({ component }) => {
       <Heading level={1}>{visibleName}</Heading>
       {/*{pathLine && <Pathline>{pathLine}</Pathline>}*/}
       {description && <Markdown text={description} />}
-      {examples.length && <Examples examples={examples} name={name} />}
+      {examples.length && <Examples examples={examples} name={name} exampleMode={exampleMode} />}
       <Heading level={2}>Свойства</Heading>
       <Slot name="docsTabs" props={component} />
     </div>

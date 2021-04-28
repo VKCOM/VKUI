@@ -7,7 +7,7 @@ module.exports = {
   title: 'VKUI styleguide',
   styleguideDir: path.join(__dirname, `../${argv.dist || 'docs'}`),
   styleguideComponents: {
-    PlaygroundRenderer: path.join(__dirname, './Components/PlaygroundRenderer'),
+    PlaygroundRenderer: path.join(__dirname, './Components/Playground/PlaygroundRenderer'),
     StyleGuide: path.join(__dirname, './Components/StyleGuide/StyleGuide'),
     StyleGuideRenderer: path.join(__dirname, './Components/StyleGuide/StyleGuideRenderer'),
     PathlineRenderer: path.join(__dirname, './Components/PathlineRenderer'),
@@ -26,6 +26,7 @@ module.exports = {
     TypeRenderer: path.join(__dirname, './Components/Type/TypeRenderer'),
     'ComplexType/ComplexTypeRenderder': path.join(__dirname, './Components/ComplexType/ComplexTypeRenderder'),
     Preview: path.join(__dirname, './Components/Preview'),
+    Editor: path.join(__dirname, './Components/Editor'),
   },
   propsParser: (filePath, source) => {
     return require('react-docgen').parse(source, findAllExportedComponentDefinitions, null, {
@@ -33,6 +34,7 @@ module.exports = {
       importer: makeFsImporter()
     })
   },
+  exampleMode: 'expand',
   assetsDir:  path.join(__dirname, `assets`),
   sections: [{
     name: 'О VKUI',

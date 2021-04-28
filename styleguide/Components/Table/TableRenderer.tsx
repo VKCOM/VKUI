@@ -1,6 +1,6 @@
 import React from 'react';
 import './Table.css';
-import { Text } from '../../../src';
+import { Text } from '@vkui';
 
 interface TableProps {
   columns: {
