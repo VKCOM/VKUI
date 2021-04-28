@@ -40,7 +40,7 @@ const Textarea: FC<TextareaProps> = memo(({
     const el = elementRef.current;
     if (grow) {
       el.style.height = null;
-      el.style.height = `${el.parentElement.scrollHeight}px`;
+      el.style.height = `${el.scrollHeight}px`;
       // TODO: call only when height changed?
       onResize && onResize(el);
     }
