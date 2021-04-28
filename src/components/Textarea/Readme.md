@@ -8,7 +8,7 @@
       </PanelHeader>
       <Group>
         <FormItem top="Любимая музыка">
-          <Textarea placeholder="Группы, исполнители, продюссеры" />
+          <Textarea placeholder="Группы, исполнители, продюсеры" />
         </FormItem>
       </Group>
     </Panel>

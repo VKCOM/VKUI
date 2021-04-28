@@ -10,10 +10,7 @@
   margin: 0;
   position: relative;
   height: 48px;
-}
-
-.IconButton--sizeY-compact {
-  height: 44px;
+  border-radius: 50%;
 }
 
 .IconButton .Icon--16 {
@@ -24,29 +21,30 @@
   padding: 16px 14px;
 }
 
-.IconButton--sizeY-compact .Icon--16,
-.IconButton--sizeY-compact .Icon--16.Icon--w-8 {
-  padding: 14px;
-}
-
 .IconButton .Icon--24 {
   padding: 12px;
-}
-
-.IconButton--sizeY-compact .Icon--24 {
-  padding: 10px;
 }
 
 .IconButton .Icon--28 {
   padding: 10px;
 }
 
-.IconButton--sizeY-compact .Icon--28 {
-  padding: 8px;
-}
-
 .IconButton[disabled] {
   opacity: .6;
+}
+
+.FormField__after .IconButton {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: inherit;
+}
+
+.FormField__after .IconButton .Icon.Icon.Icon {
+  padding: 0;
 }
 
 .Removable__action.IconButton {
@@ -54,14 +52,33 @@
 }
 
 /*
- * Android
+ * sizeY: COMPACT
  */
-
-.IconButton--android,
-.IconButton--vkcom {
-  border-radius: 50%;
+.IconButton--sizeY-compact {
+  height: 44px;
 }
 
+.FormField__after .IconButton--sizeY-compact {
+  width: 36px;
+  height: 36px;
+}
+
+.IconButton--sizeY-compact .Icon--16,
+.IconButton--sizeY-compact .Icon--16.Icon--w-8 {
+  padding: 14px;
+}
+
+.IconButton--sizeY-compact .Icon--24 {
+  padding: 10px;
+}
+
+.IconButton--sizeY-compact .Icon--28 {
+  padding: 8px;
+}
+
+/*
+ * Android & VKCOM
+ */
 .IconButton--android.IconButton--active .Icon,
 .IconButton--vkcom.IconButton--active .Icon {
   transition: inherit;
