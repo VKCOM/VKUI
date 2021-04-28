@@ -1,9 +1,9 @@
-import { HTMLAttributes, FunctionComponent, InputHTMLAttributes, useRef } from 'react';
+import { HTMLAttributes, FunctionComponent, InputHTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import Button, { VKUIButtonProps } from '../Button/Button';
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
-import { setRef } from '../../lib/utils';
+import { useExternRef } from '../../hooks/useExternRef';
 
 export interface FileProps extends
   Omit<VKUIButtonProps, 'size' | 'type'>,
@@ -19,12 +19,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
     style, getRef, getRootRef, onClick, ...restProps } = props;
 
   const platform = usePlatform();
-  const inputRef = useRef<HTMLInputElement>();
-
-  const getInputRef = (element: HTMLInputElement) => {
-    inputRef.current = element;
-    setRef(element, getRef);
-  };
+  const inputRef = useExternRef(getRef);
 
   return (
     <Button
@@ -44,7 +39,7 @@ const File: FunctionComponent<FileProps> = (props: FileProps) => {
         onClick && onClick(e);
       }}
     >
-      <input {...restProps} vkuiClass="File__input" type="file" ref={getInputRef} />
+      <input {...restProps} vkuiClass="File__input" type="file" ref={inputRef} />
       {children}
     </Button>
   );
