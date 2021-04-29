@@ -93,6 +93,15 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
     let panelScroll = e.detail.scrolls[this.props.panel] || 0;
+
+    // support for unstable ViewInfinite
+    if (Array.isArray(panelScroll)) {
+      const scrolls = panelScroll as number[];
+      // ViewInfinite может открвыать одну и ту же панель несколько раз,
+      // поэтому учитываем скролл панели только если это это панель с которой уходим, либо переход назад
+      panelScroll = e.detail.isBack || this.props.panel === e.detail.from ? scrolls[scrolls.length - 1] || 0 : 0;
+    }
+
     const fromPanelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
     const toPanelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
 

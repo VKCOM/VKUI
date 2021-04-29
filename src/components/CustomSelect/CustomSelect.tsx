@@ -15,6 +15,8 @@ import { withAdaptivity } from '../../hoc/withAdaptivity';
 import { withPlatform } from '../../hoc/withPlatform';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { getClassName } from '../../helpers/getClassName';
+import { FormFieldProps } from '../FormField/FormField';
+import { HasPlatform } from '../../types';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -32,7 +34,7 @@ interface CustomSelectState {
   nativeSelectValue?: SelectValue;
 }
 
-export interface CustomSelectProps extends NativeSelectProps {
+export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormFieldProps {
   options: Array<{
     value: SelectValue;
     label: string;

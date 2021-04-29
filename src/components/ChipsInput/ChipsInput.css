@@ -1,18 +1,14 @@
 .ChipsInput {
   display: flex;
   position: relative;
-  /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
-  padding: 4px 14px;
   box-sizing: border-box;
-}
-
-.ChipsInput.ChipsInput--sizeY-compact {
-  padding: 2px 12px;
 }
 
 .ChipsInput__container {
   display: flex;
   width: 100%;
+  /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
+  padding: 3px 13px;
   flex-wrap: wrap;
   position: relative;
   z-index: 2;
@@ -70,4 +66,12 @@
 
 .ChipsInput__el:disabled::placeholder {
   color: var(--text_secondary);
+}
+
+/**
+ * sizeY COMPACT
+ */
+
+.ChipsInput--sizeY-compact .ChipsInput__container {
+  padding: 1px 11px;
 }
