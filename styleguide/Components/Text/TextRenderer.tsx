@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { Text, TextProps } from '@vkui';
+import { classNames } from '@vkui';
+import './Text.css';
 
-export const TextRenderer: FC<{ semantic: string }> = ({ children, semantic }) => {
-  let weight: TextProps['weight'];
+export const TextRenderer: FC<{ semantic: string }> = ({ children, semantic, className, Component = 'span', ...restProps }) => {
+  let weight: string;
 
   switch (semantic) {
     case 'strong':
@@ -13,7 +14,7 @@ export const TextRenderer: FC<{ semantic: string }> = ({ children, semantic }) =
   }
 
   return (
-    <Text weight={weight}>{children}</Text>
+    <Component className={classNames('Text', `Text--${weight}`, className)}>{children}</Component>
   )
 }
 

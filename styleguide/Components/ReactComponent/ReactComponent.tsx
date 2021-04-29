@@ -5,6 +5,7 @@ import Slot from '@rsg-components/Slot';
 import Markdown from '@rsg-components/Markdown';
 import Examples from '@rsg-components/Examples';
 import './ReactComponent.css';
+import { SectionHeading } from '../SectionHeading/SectionHeading';
 
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, slug = '-', filepath, pathLine, href } = component;
@@ -12,11 +13,11 @@ const ReactComponent = ({ component, exampleMode }) => {
 
   return (
     <div className="ReactComponent">
-      <Heading level={1}>{visibleName}</Heading>
+      <Heading level={1} className="ReactComponent__name">{visibleName}</Heading>
       {/*{pathLine && <Pathline>{pathLine}</Pathline>}*/}
       {description && <Markdown text={description} />}
       {examples.length && <Examples examples={examples} name={name} exampleMode={exampleMode} />}
-      <Heading level={2}>Свойства</Heading>
+      <SectionHeading>Свойства и методы</SectionHeading>
       <Slot name="docsTabs" props={component} />
     </div>
   )

@@ -17,6 +17,7 @@ module.exports = {
     ParaRenderer: path.join(__dirname, './Components/Para/ParaRenderer'),
     CodeRenderer: path.join(__dirname, './Components/Code/CodeRenderer'),
     TextRenderer: path.join(__dirname, './Components/Text/TextRenderer'),
+    'Markdown/Blockquote': path.join(__dirname, './Components/Blockquote'),
     'Markdown/List': path.join(__dirname, './Components/List'),
     'Markdown/MarkdownHeading': path.join(__dirname, './Components/MarkdownHeading'),
     // 'Markdown/Pre': path.join(__dirname, './Components/Pre'),

@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Text } from '@vkui';
+import Text from '../Text';
 import './Para.css';
 
 export const ParaRenderer: FC = ({ children }) => {
   return (
-    <Text className="Para" weight="regular">{children}</Text>
+    <Text Component="p" className="Para" weight="regular">{children}</Text>
   )
 }
 
