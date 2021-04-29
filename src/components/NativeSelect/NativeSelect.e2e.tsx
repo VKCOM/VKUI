@@ -13,5 +13,8 @@ describe('NativeSelect', () => {
     align: [undefined, 'center', 'right'],
   }, {
     $adaptivity: 'y',
+  }, {
+    placeholder: [undefined, 'placeholder'],
+    value: ['', 'm'],
   }]);
 });
