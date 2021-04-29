@@ -42,9 +42,17 @@ describe('ConfigProvider', () => {
       render(<ConfigProvider scheme="space_gray" />).rerender(<ConfigProvider scheme="bright_light" />);
       expect(document.body).toHaveAttribute('scheme', 'bright_light');
     });
-    it('does not set body[scheme] to inherit', () => {
-      render(<ConfigProvider scheme="inherit" />);
-      expect(document.body).not.toHaveAttribute('scheme');
+    describe('scheme=inherit', () => {
+      it('does not set body[scheme] to inherit', () => {
+        render(<ConfigProvider scheme="inherit" />);
+        expect(document.body).not.toHaveAttribute('scheme');
+      });
+      it('does not remove body[scheme] on unmount when scheme="inherit"', () => {
+        document.body.setAttribute('scheme', 'extern');
+        render(<ConfigProvider scheme="inherit" />).unmount();
+        expect(document.body).toHaveAttribute('scheme', 'extern');
+        document.body.removeAttribute('scheme');
+      });
     });
   });
   describe('maps schemes', () => {

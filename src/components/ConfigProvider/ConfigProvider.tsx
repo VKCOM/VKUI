@@ -10,6 +10,7 @@ import {
 import { VKCOM } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { noop } from '../../lib/utils';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
@@ -34,18 +35,20 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
 
   const { document } = useDOM();
   const setScheme = () => {
-    if (scheme !== 'inherit' && canUseDOM) {
+    if (scheme !== 'inherit') {
       document.body.setAttribute('scheme', scheme);
     }
   };
 
   const isMounted = useRef(false);
-  if (!isMounted.current) {
+  if (!isMounted.current && canUseDOM) {
     setScheme();
     isMounted.current = true;
   }
-  useIsomorphicLayoutEffect(() => setScheme(), [scheme]);
-  useIsomorphicLayoutEffect(() => () => document.body.removeAttribute('scheme'), []);
+  useIsomorphicLayoutEffect(() => {
+    setScheme();
+    return scheme === 'inherit' ? noop : () => document.body.removeAttribute('scheme');
+  }, [scheme]);
 
   const configContext = useObjectMemo(config);
 
