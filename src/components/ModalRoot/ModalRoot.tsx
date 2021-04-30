@@ -20,6 +20,7 @@ import {
 import { ModalsState, ModalsStateEntry, ModalType, TranslateRange } from './types';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
 import { DOMProps, withDOM } from '../../lib/dom';
+import { getNavId } from '../../lib/getNavId';
 
 function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];
@@ -118,7 +119,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     this.modalsState = this.getModals().reduce<ModalsState>((acc, Modal) => {
       const modalProps = Modal.props;
       const state: ModalsStateEntry = {
-        id: Modal.props.id,
+        id: getNavId(modalProps),
         onClose: Modal.props.onClose,
         dynamicContentHeight: !!modalProps.dynamicContentHeight,
       };
@@ -795,8 +796,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
             />
             <div vkuiClass="ModalRoot__viewport" ref={this.viewportRef}>
               {this.getModals().map((Modal) => {
-                const modalId = Modal.props.id;
-                if (!visibleModals.includes(Modal.props.id)) {
+                const modalId = getNavId(Modal.props);
+                if (!visibleModals.includes(modalId)) {
                   return null;
                 }
                 const modalState = { ...this.modalsState[modalId] };

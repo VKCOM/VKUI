@@ -3,6 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { ScrollSaver } from './ScrollSaver';
+import { getNavId } from '../../lib/getNavId';
 
 export interface EpicProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   tabbar?: ReactNode;
@@ -19,7 +20,7 @@ export const Epic: FC<EpicProps> = (props: EpicProps) => {
       console.warn('[Epic] Using Epic without tabbar is not recommended on mobile');
     }
   }, [viewWidth]);
-  const story = (React.Children.toArray(children) as ReactElement[]).find((story) => story.props.id === activeStory) || null;
+  const story = (React.Children.toArray(children) as ReactElement[]).find((story) => getNavId(story.props) === activeStory) || null;
 
   return (
     <div {...restProps} vkuiClass={getClassName('Epic', platform)}>
