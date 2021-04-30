@@ -1,6 +1,5 @@
 .Settings {
-  margin-left: -16px;
-  margin-right: -16px;
+  margin-bottom: -28px;
 }
 
 .Settings__in {
@@ -9,5 +8,6 @@
 }
 
 .Settings__in > .Setting {
-  padding: 14px 16px;
+  margin-right: 16px;
+  margin-bottom: 28px;
 }
