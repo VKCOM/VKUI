@@ -16,7 +16,7 @@ const normalizer = (sections) => {
     return {
       name,
       content,
-      href: content && `/#/${name}`,
+      href: content && `#/${name}`,
       expand,
       search,
       sections: children

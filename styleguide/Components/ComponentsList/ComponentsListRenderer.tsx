@@ -1,5 +1,5 @@
 import React from 'react';
-import { SimpleCell } from '../../../src';
+import { SimpleCell } from '@vkui';
 
 export default ({ items }) => {
   return <div>
