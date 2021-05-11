@@ -72,7 +72,7 @@
     "playwright": "^1.8.0",
     "playwright-chromium": "^1.8.0",
     "playwright-core": "^1.8.0",
-    "postcss": "8.1.4",
+    "postcss": "8.2.10",
     "postcss-cli": "8.1.0",
     "postcss-csso": "5.0.0",
     "postcss-custom-properties": "10.0.0",
