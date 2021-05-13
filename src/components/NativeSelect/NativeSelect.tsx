@@ -60,7 +60,6 @@ const NativeSelect: FC<NativeSelectProps> = ({
       style={style}
       getRootRef={getRootRef}
       disabled={disabled}
-      after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
     >
       <select
         {...restProps}
@@ -75,6 +74,7 @@ const NativeSelect: FC<NativeSelectProps> = ({
       </select>
       <TypographyComponent Component="div" weight="regular" vkuiClass="Select__container">
         <span vkuiClass="Select__title">{title}</span>
+        {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
       </TypographyComponent>
     </FormField>
   );

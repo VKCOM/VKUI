@@ -49,11 +49,10 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
       })}
       getRootRef={getRootRef}
       onClick={disabled ? null : onClick}
-      disabled={disabled}
-      after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
     >
       <TypographyComponent Component="div" weight="regular" vkuiClass="Select__container">
         <span vkuiClass="Select__title">{children || placeholder}</span>
+        {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
       </TypographyComponent>
     </FormField>
   );
