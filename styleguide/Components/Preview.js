@@ -16,8 +16,9 @@ class FrameDomProvider extends React.Component {
     document: PropTypes.any,
     window: PropTypes.any,
   };
+  state = { ready: false };
 
-  componentDidMount () {
+  componentDidMount() {
     // Пихаем в iFrame с примером спрайты для иконок
     const sprite = document.getElementById('__SVG_SPRITE_NODE__');
     const masks = document.getElementById('__SVG_MASKS_NODE__');
@@ -48,6 +49,7 @@ class FrameDomProvider extends React.Component {
       }
     });
     this.context.document.head.appendChild(frameAssets);
+    this.setState({ ready: true });
   }
 
   componentWillUnmount() {
@@ -55,11 +57,11 @@ class FrameDomProvider extends React.Component {
   }
 
   render () {
-    return (
+    return this.state.ready ? (
       <DOMContext.Provider value={this.context}>
         {this.props.children}
       </DOMContext.Provider>
-    );
+    ) : null;
   }
 }
 
