@@ -227,6 +227,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
           from: this.state.prevPanel,
           to: this.state.nextPanel,
           isBack: this.state.isBack,
+          isSwipeBack: false,
           scrolls,
         },
       };
@@ -247,6 +248,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
         detail: {
           from: this.state.swipeBackPrevPanel,
           to: this.state.swipeBackNextPanel,
+          isSwipeBack: true,
           scrolls,
         },
       };

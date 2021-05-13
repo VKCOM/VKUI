@@ -92,30 +92,35 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
   }
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
-    let panelScroll = e.detail.scrolls[this.props.panel] || 0;
+    const { panel, platform } = this.props;
+    let panelScroll = e.detail.scrolls[panel] || 0;
 
     // support for unstable ViewInfinite
     if (Array.isArray(panelScroll)) {
       const scrolls = panelScroll as number[];
       // ViewInfinite может открвыать одну и ту же панель несколько раз,
       // поэтому учитываем скролл панели только если это это панель с которой уходим, либо переход назад
-      panelScroll = e.detail.isBack || this.props.panel === e.detail.from ? scrolls[scrolls.length - 1] || 0 : 0;
+      panelScroll = scrolls[scrolls.length - 1] || 0;
     }
 
-    const fromPanelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
-    const toPanelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
+    const hasScroll = panelScroll > 0;
+    const fromPanel = panel === e.detail.from;
+    const toPanel = panel === e.detail.to;
+    const isSwipedBackPanel = toPanel && e.detail.isSwipeBack;
+    const isBackPanel = toPanel && e.detail.isBack;
+    const isIOS = platform === IOS;
 
     // если переход назад на Android - анимация только у панели с которой уходим (detail.from), и подстраиваться под скролл надо только на ней
     // на iOS переход между панелями горизонтальный, поэтому там нужно подстраивать хедеры на обеих панелях
-    const panelAnimated = this.props.platform === IOS || !(this.props.panel === e.detail.to && e.detail.isBack);
+    const panelAnimated = isIOS && (isBackPanel || isSwipedBackPanel) || !isIOS && !isBackPanel;
 
     // Для панелей, с которых уходим всегда выставляется скролл
     // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл и применяется ли к ней анимация перехода:
-    if (fromPanelHasScroll || toPanelHasScroll && this.canTargetPanelScroll && panelAnimated) {
+    if (hasScroll && fromPanel || toPanel && this.canTargetPanelScroll && panelAnimated) {
       this.setState({
         position: 'absolute',
-        top: this.props.vertical === 'top' || fromPanelHasScroll ? this.el.offsetTop + panelScroll : null,
-        bottom: this.props.vertical === 'bottom' && !fromPanelHasScroll ? -panelScroll : null,
+        top: this.props.vertical === 'top' || fromPanel ? this.el.offsetTop + panelScroll : null,
+        bottom: this.props.vertical === 'bottom' && !fromPanel ? -panelScroll : null,
         width: '',
       });
     }
