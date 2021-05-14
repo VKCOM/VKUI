@@ -8,8 +8,9 @@ import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { Ref } from '../../types';
 import { multiRef } from '../../lib/utils';
 import { ModalType } from '../ModalRoot/types';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
 
-export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps, NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
@@ -40,6 +41,7 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
     settlingHeight,
     dynamicContentHeight,
     getModalContentRef,
+    nav,
     ...restProps
   } = props;
 
@@ -51,7 +53,7 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   const modalContext = useContext(ModalRootContext);
-  const { refs } = useModalRegistry(props.id, ModalType.PAGE);
+  const { refs } = useModalRegistry(getNavId(props), ModalType.PAGE);
 
   return (
     <div

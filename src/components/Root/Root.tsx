@@ -11,6 +11,7 @@ import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import { getNavId } from '../../lib/getNavId';
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
@@ -79,9 +80,9 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     // Нужен переход
     if (this.props.activeView !== prevProps.activeView) {
       let pageYOffset = this.props.scroll.getScroll().y;
-      const firstLayerId = [].concat(prevProps.children).find((view: ReactElement) => {
-        return view.props.id === prevProps.activeView || view.props.id === this.props.activeView;
-      }).props.id;
+      const firstLayerId = [].concat(prevProps.children)
+        .map((view) => getNavId(view.props))
+        .find((id) => id === prevProps.activeView || id === this.props.activeView);
       const isBack = firstLayerId === this.props.activeView;
 
       this.blurActiveElement();
@@ -182,7 +183,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
     const Views = React.Children.toArray(this.props.children).filter((view: ReactElement) => {
-      return this.state.visibleViews.includes(view.props.id);
+      return this.state.visibleViews.includes(getNavId(view.props));
     });
 
     const baseClassName = getClassName('Root', platform);
@@ -194,13 +195,14 @@ class Root extends Component<RootProps & DOMProps, RootState> {
         'Root--no-motion': disableAnimation,
       })}>
         {Views.map((view: ReactElement) => {
+          const viewId = getNavId(view.props);
           return (
-            <div key={view.props.id} ref={(e) => this.viewNodes[view.props.id] = e} vkuiClass={classNames('Root__view', {
-              'Root__view--hide-back': view.props.id === prevView && isBack,
-              'Root__view--hide-forward': view.props.id === prevView && !isBack,
-              'Root__view--show-back': view.props.id === nextView && isBack,
-              'Root__view--show-forward': view.props.id === nextView && !isBack,
-              'Root__view--active': view.props.id === activeView,
+            <div key={viewId} ref={(e) => this.viewNodes[viewId] = e} vkuiClass={classNames('Root__view', {
+              'Root__view--hide-back': viewId === prevView && isBack,
+              'Root__view--hide-forward': viewId === prevView && !isBack,
+              'Root__view--show-back': viewId === nextView && isBack,
+              'Root__view--show-forward': viewId === nextView && !isBack,
+              'Root__view--active': viewId === activeView,
             })}>
               {view}
             </div>
