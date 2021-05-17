@@ -1,5 +1,5 @@
 import { baselineComponent, mountTest } from '../../testing/utils';
-import Panel from '../Panel/Panel';
+import { Panel } from '../Panel/Panel';
 import View from './View';
 
 describe('View', () => {

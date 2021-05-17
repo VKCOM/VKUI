@@ -7,7 +7,7 @@ export { default as Root } from './components/Root/Root';
 export type { RootProps } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export type { ViewProps } from './components/View/View';
-export { default as Panel } from './components/Panel/Panel';
+export { Panel } from './components/Panel/Panel';
 export type { PanelProps } from './components/Panel/Panel';
 export { default as PanelHeaderButton } from './components/PanelHeaderButton/PanelHeaderButton';
 export type { PanelHeaderButtonProps } from './components/PanelHeaderButton/PanelHeaderButton';
