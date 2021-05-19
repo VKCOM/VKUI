@@ -8,6 +8,7 @@ import { canUseDOM, withDOM, useDOM, DOMProps } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
+import { clamp } from '../../helpers/math';
 
 export interface BaseGalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
@@ -271,11 +272,19 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
   onResize: VoidFunction = () => this.initializeSlides({ animation: false });
 
   get canSlideLeft() {
-    return !this.isFullyVisible && this.props.slideIndex > 0;
+    // shiftX is negative number <= 0, we can swipe back only if it is < 0
+    return !this.isFullyVisible && this.state.shiftX < 0;
   }
 
   get canSlideRight() {
-    return !this.isFullyVisible && this.props.slideIndex < this.state.slides.length - 1;
+    const { containerWidth, layerWidth, shiftX, slides } = this.state;
+    const { align, slideIndex } = this.props;
+    return !this.isFullyVisible && (
+      // we can't move right when gallery layer fully scrolled right, if gallery aligned by left side
+      align === 'left' && containerWidth - shiftX < layerWidth ||
+      // otherwise we need to check current slide index (align = right or align = center)
+      align !== 'left' && slideIndex < slides.length - 1
+    );
   }
 
   slideLeft = () => {
@@ -364,10 +373,14 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
     };
 
     return (
-      <div {...restProps} vkuiClass={classNames(getClassName('Gallery', platform), `Gallery--${align}`, {
-        'Gallery--dragging': dragging,
-        'Gallery--custom-width': slideWidth === 'custom',
-      })} ref={this.getRootRef}>
+      <div
+        {...restProps}
+        vkuiClass={classNames(getClassName('Gallery', platform), `Gallery--${align}`, {
+          'Gallery--dragging': dragging,
+          'Gallery--custom-width': slideWidth === 'custom',
+        })}
+        ref={this.getRootRef}
+      >
         <Touch
           vkuiClass="Gallery__viewport"
           onStartX={this.onStart}
@@ -437,14 +450,22 @@ const Gallery: FC<GalleryProps> = ({
     const id = window.setTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
     return () => window.clearTimeout(id);
   }, [timeout, slideIndex, childCount]);
-  // prevent overflow
-  useEffect(() => handleChange(Math.min(slideIndex, childCount - 1)), [childCount]);
+
+  // prevent invalid slideIndex
+  // any slide index is invalid with no slides, just keep it as is
+  const safeSlideIndex = childCount > 0 ? clamp(slideIndex, 0, childCount - 1) : slideIndex;
+  // notify parent in controlled mode
+  useEffect(() => {
+    if (onChange && safeSlideIndex !== slideIndex) {
+      onChange(safeSlideIndex);
+    }
+  }, [safeSlideIndex]);
 
   return (
     <BaseGalleryAdaptive
-      slideIndex={slideIndex}
       isDraggable={isDraggable}
       {...props}
+      slideIndex={safeSlideIndex}
       onChange={handleChange}
     >{slides}</BaseGalleryAdaptive>
   );

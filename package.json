@@ -1,6 +1,6 @@
 {
   "name": "@vkontakte/vkui",
-  "version": "4.5.0",
+  "version": "4.7.0",
   "main": "dist/cjs/index.js",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -72,7 +72,7 @@
     "playwright": "^1.8.0",
     "playwright-chromium": "^1.8.0",
     "playwright-core": "^1.8.0",
-    "postcss": "8.1.4",
+    "postcss": "8.2.10",
     "postcss-cli": "8.1.0",
     "postcss-csso": "5.0.0",
     "postcss-custom-properties": "10.0.0",

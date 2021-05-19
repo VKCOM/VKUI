@@ -1,68 +1,64 @@
-import { Component, HTMLAttributes, RefCallback } from 'react';
+import { FC, HTMLAttributes, useMemo } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Touch from '../Touch/Touch';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
-import { withPlatform } from '../../hoc/withPlatform';
-import { HasPlatform, HasRootRef } from '../../types';
+import { HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { PanelContext, PanelContextProps } from './PanelContext';
 import { IOS } from '../../lib/platform';
-import { setRef } from '../../lib/utils';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { useExternRef } from '../../hooks/useExternRef';
 
-export interface PanelProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, HasRootRef<HTMLDivElement>, AdaptivityProps {
-  id: string;
+export interface PanelProps extends HTMLAttributes<HTMLDivElement>,
+  HasRootRef<HTMLDivElement>, AdaptivityProps, NavIdProps {
   centered?: boolean;
 }
 
-class Panel extends Component<PanelProps> {
-  constructor(props: PanelProps) {
-    super(props);
-    this.childContext = {
-      panel: props.id,
-      getPanelNode: () => this.container,
+const PanelComponent: FC<PanelProps> = (props: PanelProps) => {
+  const { centered, children, getRootRef, sizeX, nav, ...restProps } = props;
+
+  const platform = usePlatform();
+  const containerRef = useExternRef(getRootRef);
+
+  const navId = getNavId(props);
+
+  const childContext = useMemo<PanelContextProps>(() => {
+    return {
+      panel: navId,
+      getPanelNode: () => containerRef.current,
     };
-  }
+  }, [navId]);
 
-  private readonly childContext: PanelContextProps;
+  return (
+    <PanelContext.Provider value={childContext}>
+      <div
+        {...restProps}
+        ref={containerRef}
+        vkuiClass={classNames(getClassName('Panel', platform), `Panel--${sizeX}`, {
+          'Panel--centered': centered,
+          [`Panel--sizeX-${sizeX}`]: true,
+        })}
+      >
+        <Touch Component={TooltipContainer} vkuiClass="Panel__in">
+          {platform === IOS && <div vkuiClass="Panel__fade" />}
+          <div vkuiClass="Panel__in-before" />
+          {centered ? <div vkuiClass="Panel__centered">{children}</div> : children}
+          <div vkuiClass="Panel__in-after" />
+        </Touch>
+      </div>
+    </PanelContext.Provider>
+  );
+};
 
-  static defaultProps: Partial<PanelProps> = {
-    children: '',
-    centered: false,
-  };
+PanelComponent.displayName = 'Panel';
 
-  container: HTMLDivElement;
+PanelComponent.defaultProps = {
+  children: '',
+  centered: false,
+};
 
-  getRef: RefCallback<HTMLDivElement> = (container) => {
-    this.container = container;
-    setRef(container, this.props.getRootRef);
-  };
-
-  render() {
-    const { centered, children, platform, getRootRef, sizeX, ...restProps } = this.props;
-
-    return (
-      <PanelContext.Provider value={this.childContext}>
-        <div
-          {...restProps}
-          ref={this.getRef}
-          vkuiClass={classNames(getClassName('Panel', platform), `Panel--${sizeX}`, {
-            'Panel--centered': centered,
-            [`Panel--sizeX-${sizeX}`]: true,
-          })}
-        >
-          <Touch Component={TooltipContainer} vkuiClass="Panel__in">
-            {platform === IOS && <div vkuiClass="Panel__fade" />}
-            <div vkuiClass="Panel__in-before" />
-            {centered ? <div vkuiClass="Panel__centered">{children}</div> : children}
-            <div vkuiClass="Panel__in-after" />
-          </Touch>
-        </div>
-      </PanelContext.Provider>
-    );
-  }
-}
-
-export default withAdaptivity(withPlatform(Panel), {
+export const Panel = withAdaptivity(PanelComponent, {
   sizeX: true,
 });

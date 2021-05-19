@@ -10,6 +10,7 @@ class PlaygroundRenderer extends React.Component {
       preview,
       previewProps,
       tabBody,
+      exampleIndex,
     } = this.props;
     const {
       autoLayout,
@@ -18,13 +19,14 @@ class PlaygroundRenderer extends React.Component {
       config,
       ...wrapperProps
     } = previewProps;
+    const exampleId = `${name}-${exampleIndex}`;
 
     return (
       <div className="Playground">
         <SectionHeading>Пример реализации</SectionHeading>
         <Settings />
         <div className="Playground__preview" {...wrapperProps} data-preview={name}>
-          { cloneElement(preview, { ...preview.props, autoLayout, containerStyle, integration, config }) }
+          { cloneElement(preview, { ...preview.props, autoLayout, containerStyle, integration, config, exampleId }) }
         </div>
         <SectionHeading level={2}>Редактируемый код</SectionHeading>
         <div className="Playground__code">

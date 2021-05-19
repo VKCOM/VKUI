@@ -13,6 +13,7 @@ import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -44,7 +45,7 @@ const swipeBackExcludedTags = ['input', 'textarea'];
 
 export type TransitionParams = { from: string; to: string };
 
-export interface ViewInfiniteProps extends HTMLAttributes<HTMLElement>, HasPlatform {
+export interface ViewInfiniteProps extends HTMLAttributes<HTMLElement>, HasPlatform, NavIdProps {
   activePanel: string;
   popout?: ReactNode;
   modal?: ReactNode;
@@ -63,7 +64,6 @@ export interface ViewInfiniteProps extends HTMLAttributes<HTMLElement>, HasPlatf
   onSwipeBackCancel?(): void;
   history?: string[];
   isBackCheck?(params: TransitionParams): boolean;
-  id?: string;
   /**
    * @ignore
    */
@@ -104,7 +104,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
     super(props);
 
     this.state = {
-      scrolls: scrollsCache[props.id] || {},
+      scrolls: scrollsCache[getNavId(props)] || {},
       animated: false,
 
       visiblePanels: [props.activePanel],
@@ -146,8 +146,9 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
   panelNodes: { [id: string]: HTMLDivElement } = {};
 
   componentWillUnmount() {
-    if (this.props.id) {
-      scrollsCache[this.props.id] = this.state.scrolls;
+    const id = getNavId(this.props, false);
+    if (id) {
+      scrollsCache[id] = this.state.scrolls;
     }
   }
 
@@ -162,10 +163,10 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
       if (this.props.isBackCheck) {
         isBack = this.props.isBackCheck({ from: prevProps.activePanel, to: this.props.activePanel });
       } else {
-        const firstLayer = this.panels.find(
-          (panel) => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel,
-        );
-        isBack = firstLayer && firstLayer.props.id === this.props.activePanel;
+        const firstLayerId = this.panels
+          .map((panel) => getNavId(panel.props))
+          .find((id) => id === prevProps.activePanel || id === this.props.activePanel);
+        isBack = firstLayerId === this.props.activePanel;
       }
 
       this.blurActiveElement();
@@ -511,7 +512,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
   render() {
     const {
       popout, modal, platform,
-      activePanel: _1, splitCol, configProvider, history, id,
+      activePanel: _1, splitCol, configProvider, history, id, nav,
       onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
       window, document, scroll, isBackCheck,
       ...restProps
@@ -523,14 +524,14 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
 
     const panels = this.panels
       .filter((panel) => {
-        const panelId = panel.props.id;
+        const panelId = getNavId(panel.props);
 
         return this.state.visiblePanels.includes(panelId) ||
           panelId === swipeBackPrevPanel ||
           panelId === swipeBackNextPanel;
       })
       .sort((panel) => {
-        const panelId = panel.props.id;
+        const panelId = getNavId(panel.props);
         const isPrevPanel = panelId === prevPanel || panelId === swipeBackPrevPanel;
         const isNextPanel = panelId === nextPanel || panelId === swipeBackNextPanel;
 
@@ -563,7 +564,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
       >
         <div vkuiClass="View__panels">
           {panels.map((panel: React.ReactElement) => {
-            const panelId = panel.props.id;
+            const panelId = getNavId(panel.props);
 
             return (
               <div

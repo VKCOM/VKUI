@@ -15,6 +15,7 @@ import { ModalsStateEntry, ModalType } from './types';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { getClassName } from '../../helpers/getClassName';
 import { DOMProps, withDOM } from '../../lib/dom';
+import { getNavId } from '../../lib/getNavId';
 
 export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
@@ -95,7 +96,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     this.modalsState = this.modals.reduce<{ [id: string]: ModalsStateEntry }>((acc, Modal) => {
       const modalProps = Modal.props;
       const state: ModalsStateEntry = {
-        id: Modal.props.id,
+        id: getNavId(Modal.props),
         onClose: Modal.props.onClose,
         dynamicContentHeight: !!modalProps.dynamicContentHeight,
       };
@@ -354,8 +355,8 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
           />
           <div vkuiClass="ModalRoot__viewport">
             {this.modals.map((Modal: ReactElement) => {
-              const modalId = Modal.props.id;
-              if (!visibleModals.includes(Modal.props.id)) {
+              const modalId = getNavId(Modal.props);
+              if (!visibleModals.includes(modalId)) {
                 return null;
               }
 

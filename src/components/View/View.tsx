@@ -14,6 +14,7 @@ import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
 
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
@@ -43,7 +44,7 @@ let scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
-export interface ViewProps extends HTMLAttributes<HTMLElement>, HasPlatform {
+export interface ViewProps extends HTMLAttributes<HTMLElement>, HasPlatform, NavIdProps {
   activePanel: string;
   popout?: ReactNode;
   modal?: ReactNode;
@@ -61,7 +62,6 @@ export interface ViewProps extends HTMLAttributes<HTMLElement>, HasPlatform {
    */
   onSwipeBackCancel?(): void;
   history?: string[];
-  id?: string;
   /**
    * @ignore
    */
@@ -102,7 +102,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     super(props);
 
     this.state = {
-      scrolls: scrollsCache[props.id] || {},
+      scrolls: scrollsCache[getNavId(props, false)] || {},
       animated: false,
 
       visiblePanels: [props.activePanel],
@@ -144,8 +144,9 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   panelNodes: { [id: string]: HTMLDivElement } = {};
 
   componentWillUnmount() {
-    if (this.props.id) {
-      scrollsCache[this.props.id] = this.state.scrolls;
+    const id = getNavId(this.props, false);
+    if (id) {
+      scrollsCache[id] = this.state.scrolls;
     }
   }
 
@@ -155,11 +156,11 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
 
     // Нужен переход
     if (prevProps.activePanel !== this.props.activePanel && !prevState.swipingBack && !prevState.browserSwipe) {
-      const firstLayer = this.panels.find(
-        (panel) => panel.props.id === prevProps.activePanel || panel.props.id === this.props.activePanel,
-      );
+      const firstLayerId = this.panels
+        .map((panel) => getNavId(panel.props))
+        .find((id) => id === prevProps.activePanel || id === this.props.activePanel);
 
-      const isBack = firstLayer && firstLayer.props.id === this.props.activePanel;
+      const isBack = firstLayerId === this.props.activePanel;
 
       this.blurActiveElement();
 
@@ -463,7 +464,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   render() {
     const {
       popout, modal, platform,
-      activePanel: _1, splitCol, configProvider, history, id,
+      activePanel: _1, splitCol, configProvider, history, id, nav,
       onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
       window, document, scroll,
       ...restProps
@@ -474,7 +475,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     const hasModal = !!modal;
 
     const panels = this.panels.filter((panel: React.ReactElement) => {
-      const panelId = panel.props.id;
+      const panelId = getNavId(panel.props);
 
       return this.state.visiblePanels.includes(panelId) ||
         panelId === swipeBackPrevPanel ||
@@ -499,7 +500,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
       >
         <div vkuiClass="View__panels">
           {panels.map((panel: React.ReactElement) => {
-            const panelId = panel.props.id;
+            const panelId = getNavId(panel.props);
 
             return (
               <div

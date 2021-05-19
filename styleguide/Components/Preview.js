@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Profiler } from 'react';
 import PreviewParent from '@rsg-components/Preview/Preview';
 import ReactExample from '@rsg-components/ReactExample/ReactExample';
 import PlaygroundError from '@rsg-components/PlaygroundError';
@@ -7,14 +7,18 @@ import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuide/StyleGuideRenderer';
 import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider } from '../../src';
 import { DOMContext } from '../../src/lib/dom';
+import { perfLogger } from '../utils';
+
+const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
 
 class FrameDomProvider extends React.Component {
   static contextTypes = {
     document: PropTypes.any,
     window: PropTypes.any,
   };
+  state = { ready: false };
 
-  componentDidMount () {
+  componentDidMount() {
     // Пихаем в iFrame с примером спрайты для иконок
     const sprite = document.getElementById('__SVG_SPRITE_NODE__');
     const masks = document.getElementById('__SVG_MASKS_NODE__');
@@ -45,6 +49,7 @@ class FrameDomProvider extends React.Component {
       }
     });
     this.context.document.head.appendChild(frameAssets);
+    this.setState({ ready: true });
   }
 
   componentWillUnmount() {
@@ -52,11 +57,11 @@ class FrameDomProvider extends React.Component {
   }
 
   render () {
-    return (
+    return this.state.ready ? (
       <DOMContext.Provider value={this.context}>
         {this.props.children}
       </DOMContext.Provider>
-    );
+    ) : null;
   }
 }
 
@@ -123,7 +128,7 @@ export default class Preview extends PreviewParent {
   frameRef = React.createRef();
 
   render() {
-    const { code, autoLayout = 'all', config = {} } = this.props;
+    const { code, autoLayout = 'all', config = {}, exampleId } = this.props;
     const { error, isVisible } = this.state;
     return (
       <StyleGuideContext.Consumer>
@@ -188,16 +193,18 @@ export default class Preview extends PreviewParent {
               >
                 <FrameDomProvider>
                   {!(isEmbedded && this.state.hideEmbeddedApp) &&
-                    <ConfigProvider
-                      platform={styleGuideContext.platform}
-                      scheme={styleGuideContext.scheme}
-                      webviewType={styleGuideContext.webviewType}
-                      {...config}
-                    >
-                      <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
-                        {example}
-                      </AdaptivityProvider>
-                    </ConfigProvider>
+                    <Profiler id={exampleId} onRender={logPerf}>
+                      <ConfigProvider
+                        platform={styleGuideContext.platform}
+                        scheme={styleGuideContext.scheme}
+                        webviewType={styleGuideContext.webviewType}
+                        {...config}
+                      >
+                        <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
+                          {example}
+                        </AdaptivityProvider>
+                      </ConfigProvider>
+                    </Profiler>
                   }
                 </FrameDomProvider>
               </div>
