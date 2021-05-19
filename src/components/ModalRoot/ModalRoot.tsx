@@ -333,7 +333,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const modalId = activeModal || nextModal;
 
     const modalState = this.modalsState[modalId];
-    if (modalState?.modalElement) {
+    if (modalState?.type === ModalType.PAGE && modalState?.modalElement) {
       const prevModalState = { ...modalState };
       this.initPageModal(modalState);
       const currentModalState = { ...modalState };
