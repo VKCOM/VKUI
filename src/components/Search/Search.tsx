@@ -31,6 +31,10 @@ export interface SearchProps extends InputHTMLAttributes<HTMLInputElement>, HasR
   before?: ReactNode;
   icon?: ReactNode;
   onIconClick?: (e: VKUITouchEvent) => void;
+  /**
+   * При задании переопределяет дефолтное поведение сброса и поведение становится полностью контролируемым.
+   */
+  onCancelClick?: () => void;
   defaultValue?: string;
 }
 
@@ -44,6 +48,7 @@ const Search: FC<SearchProps> = ({
   platform,
   icon,
   onIconClick = noop,
+  onCancelClick,
   style,
   ...inputProps
 }) => {
@@ -61,14 +66,18 @@ const Search: FC<SearchProps> = ({
     inputProps.onBlur && inputProps.onBlur(e);
   };
 
-  const onCancel = () => {
+  const onCancel = useCallback(() => {
+    if (onCancelClick) {
+      return onCancelClick();
+    }
+
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
     nativeInputValueSetter.call(inputRef.current, '');
 
     const ev2 = new Event('input', { bubbles: true });
     inputRef.current.dispatchEvent(ev2);
-  };
+  }, [onCancelClick]);
 
   const onIconClickStart = useCallback((e: TouchEvent) => onIconClick(e.originalEvent), [onIconClick]);
 
