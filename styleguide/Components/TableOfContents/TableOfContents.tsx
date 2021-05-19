@@ -143,12 +143,6 @@ class TableOfContents extends React.PureComponent {
 
   render() {
     return <div className="TableOfContents">
-      <SimpleCell disabled className="TableOfContents__title">
-        <Headline weight="medium" Component="h1">
-          VKUI
-        </Headline>
-      </SimpleCell>
-      <Separator className="TableOfContents__separator" />
       {this.renderSections(this.sections)}
     </div>;
   }

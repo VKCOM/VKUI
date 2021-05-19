@@ -14,6 +14,7 @@ import {
   ConfigProvider
 } from '@vkui';
 import './StyleGuideRenderer.css';
+import { StyleGuideHeader } from './StyleGuideHeader';
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
@@ -68,6 +69,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
   return (
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider scheme={scheme}>
+        <StyleGuideHeader />
         <SplitLayout className="StyleGuide">
           <SplitCol minWidth="360px" width="33.3%" maxWidth="480px" className="StyleGuide__sidebar">
             <div className="StyleGuide__sidebarIn">

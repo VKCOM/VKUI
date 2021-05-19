@@ -1,6 +1,11 @@
+:root {
+  --styleguide_header_height: 56px;
+}
+
 .StyleGuide {
   height: auto;
   align-items: stretch;
+  padding-top: var(--styleguide_header_height);
 }
 
 .StyleGuide__sidebar,
@@ -22,14 +27,14 @@
   padding-right: 16px;
   padding-left: 16px;
   box-sizing: border-box;
-  height: 100vh;
+  height: calc(100vh - var(--styleguide_header_height));
   position: fixed;
   overflow: auto;
 }
 
 .StyleGuide__content {
   background: var(--background_content);
-  min-height: 100vh;
+  min-height: calc(100vh - var(--styleguide_header_height));
   position: relative;
   z-index: 1;
   overflow: hidden;

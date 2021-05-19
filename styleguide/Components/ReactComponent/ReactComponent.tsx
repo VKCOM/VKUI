@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Heading from '../Heading';
-import Pathline from '@rsg-components/Pathline';
 import Slot from '@rsg-components/Slot';
 import Markdown from '@rsg-components/Markdown';
 import Examples from '@rsg-components/Examples';
-import './ReactComponent.css';
 import { SectionHeading } from '../SectionHeading/SectionHeading';
+import { Caption, Link } from '@vkui';
+import pkg from '../../../package.json'
+import './ReactComponent.css';
 
 const ReactComponent = ({ component, exampleMode }) => {
   const { name, visibleName, slug = '-', filepath, pathLine, href } = component;
@@ -13,6 +14,9 @@ const ReactComponent = ({ component, exampleMode }) => {
 
   return (
     <div className="ReactComponent">
+      <Link target="_blank" className="ReactComponent__src" href={`${pkg.repository}/tree/v${pkg.version}/${pathLine.replace('../', '')}`}>
+        <Caption Component="span" level="1" weight="regular">Github</Caption>
+      </Link>
       <Heading level={1} className="ReactComponent__name">{visibleName}</Heading>
       {/*{pathLine && <Pathline>{pathLine}</Pathline>}*/}
       {description && <Markdown text={description} />}
