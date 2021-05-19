@@ -7,16 +7,20 @@ import {
   AppearanceScheme,
   defaultConfigProviderProps,
 } from './ConfigProviderContext';
+import { classScopingMode } from '../../lib/classScopingMode';
 import { VKCOM } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { noop } from '../../lib/utils';
+import { IconSettingsProvider } from '@vkontakte/icons';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
+  /** Убирает классы без префикса (.Button) */
+  noLegacyClasses?: boolean;
 }
 
 function mapOldScheme(scheme: AppearanceScheme): AppearanceScheme {
@@ -30,19 +34,20 @@ function mapOldScheme(scheme: AppearanceScheme): AppearanceScheme {
   }
 }
 
-const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
+const ConfigProvider: FC<ConfigProviderProps> = ({ children, noLegacyClasses, ...config }) => {
   const scheme = config.platform === VKCOM ? Scheme.VKCOM : mapOldScheme(config.scheme);
 
   const { document } = useDOM();
   const setScheme = () => {
-    if (scheme !== 'inherit') {
+    if (canUseDOM && scheme !== 'inherit') {
       document.body.setAttribute('scheme', scheme);
     }
   };
 
   const isMounted = useRef(false);
-  if (!isMounted.current && canUseDOM) {
+  if (!isMounted.current) {
     setScheme();
+    classScopingMode.noConflict = noLegacyClasses;
     isMounted.current = true;
   }
   useIsomorphicLayoutEffect(() => {
@@ -54,7 +59,9 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      {children}
+      <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
+        {children}
+      </IconSettingsProvider>
     </ConfigProviderContext.Provider>
   );
 };

@@ -27,7 +27,7 @@ function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
   }
 }
 
-const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global', ...props }) => {
+const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses, scroll = 'global', ...props }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
   const { window, document } = useDOM();
@@ -98,7 +98,8 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLega
         embedded,
       }}>
         <ScrollContext.Provider value={scrollController}>
-          <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
+          {/* Наследуем noLegacyClasses от ConfigProvider через classScopingMode */}
+          <IconSettingsProvider classPrefix="vkui" globalClasses={!classScopingMode.noConflict}>
             {children}
           </IconSettingsProvider>
         </ScrollContext.Provider>

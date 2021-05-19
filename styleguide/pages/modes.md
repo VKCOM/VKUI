@@ -38,7 +38,7 @@
 
 **Важно:** В режиме `embedded`, `AppRoot` компоненту нужно указать свойство `embedded`: `<AppRoot embedded>`.
 
-**new** Чтобы отключить css-классы без префиксов (как `.Button`), которые могут конфликтовать с классами основного приложения, используйте `<AppRoot noLegacyClasses>`. В таком режиме на элементах vkui классы вида `class="vkuiButton vkuiButton--primary"`.
+**new** Чтобы отключить css-классы без префиксов (как `.Button`), которые могут конфликтовать с классами основного приложения, используйте `<ConfigProvider noLegacyClasses>` (или `<AppRoot noLegacyClasses />`). В таком режиме на элементах vkui классы вида `class="vkuiButton vkuiButton--primary"`.
 
 ### Режимы скролла
 

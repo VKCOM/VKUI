@@ -146,7 +146,7 @@ export default class Preview extends PreviewParent {
             />
           );
           example = autoLayout === 'all' ? <DefaultLayout>{example}</DefaultLayout> : example;
-          example = isPartial || autoLayout === 'none' ? example : <AppRoot embedded={isEmbedded} noLegacyClasses>{example}</AppRoot>;
+          example = isPartial || autoLayout === 'none' ? example : <AppRoot embedded={isEmbedded}>{example}</AppRoot>;
 
           const frameStyle = {
             height: styleGuideContext.height,
@@ -198,6 +198,7 @@ export default class Preview extends PreviewParent {
                         platform={styleGuideContext.platform}
                         scheme={styleGuideContext.scheme}
                         webviewType={styleGuideContext.webviewType}
+                        noLegacyClasses
                         {...config}
                       >
                         <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
