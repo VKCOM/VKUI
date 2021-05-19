@@ -75,7 +75,9 @@ let StyleGuideRenderer = ({ children, toc }) => {
             </div>
           </SplitCol>
           <SplitCol width="100%" className="StyleGuide__content">
-            {children}
+            <div className="StyleGuide__contentIn">
+              {children}
+            </div>
           </SplitCol>
         </SplitLayout>
       </ConfigProvider>

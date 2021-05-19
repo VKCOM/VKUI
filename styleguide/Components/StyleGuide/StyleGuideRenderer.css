@@ -32,5 +32,11 @@
   min-height: 100vh;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+}
+
+.StyleGuide__contentIn {
   padding: 0 36px 36px;
+  max-width: 1440px;
+  box-sizing: border-box;
 }

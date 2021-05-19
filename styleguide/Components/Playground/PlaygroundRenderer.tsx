@@ -1,7 +1,5 @@
 import React, { cloneElement } from 'react';
 import { Settings } from '../Settings/Settings';
-import Heading from '../Heading';
-import './Playground.css';
 import { SectionHeading } from '../SectionHeading/SectionHeading';
 
 class PlaygroundRenderer extends React.Component {
