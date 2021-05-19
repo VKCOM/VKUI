@@ -271,11 +271,19 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
   onResize: VoidFunction = () => this.initializeSlides({ animation: false });
 
   get canSlideLeft() {
-    return !this.isFullyVisible && this.props.slideIndex > 0;
+    // shiftX is negative number <= 0, we can swipe back only if it is < 0
+    return !this.isFullyVisible && this.state.shiftX < 0;
   }
 
   get canSlideRight() {
-    return !this.isFullyVisible && this.props.slideIndex < this.state.slides.length - 1;
+    const { containerWidth, layerWidth, shiftX, slides } = this.state;
+    const { align, slideIndex } = this.props;
+    return !this.isFullyVisible && (
+      // we can't move right when gallery layer fully scrolled right, if gallery aligned by left side
+      align === 'left' && containerWidth - shiftX < layerWidth ||
+      // otherwise we need to check current slide index (align = right or align = center)
+      align !== 'left' && slideIndex < slides.length - 1
+    );
   }
 
   slideLeft = () => {
