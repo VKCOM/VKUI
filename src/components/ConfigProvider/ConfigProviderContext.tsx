@@ -48,6 +48,10 @@ export interface ConfigProviderContextInterface {
    * Платформа
    */
   platform?: PlatformType;
+  /**
+   * Убирает классы без префикса (.Button)
+  */
+  noLegacyClasses?: boolean;
 }
 
 export const defaultConfigProviderProps = {
@@ -57,6 +61,7 @@ export const defaultConfigProviderProps = {
   appearance: Appearance.LIGHT,
   transitionMotionEnabled: true,
   platform: platform(),
+  noLegacyClasses: false,
 };
 
 export const ConfigProviderContext = createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);

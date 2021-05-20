@@ -11,6 +11,8 @@ import { VKCOM } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { noop } from '../../lib/utils';
+import { classScopingMode } from '../../lib/classScopingMode';
+import { IconSettingsProvider } from '@vkontakte/icons';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
@@ -41,9 +43,13 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
   };
 
   const isMounted = useRef(false);
-  if (!isMounted.current && canUseDOM) {
-    setScheme();
-    isMounted.current = true;
+  if (!isMounted.current) {
+    if (canUseDOM) {
+      setScheme();
+      isMounted.current = true;
+    }
+
+    classScopingMode.noConflict = config.noLegacyClasses;
   }
   useIsomorphicLayoutEffect(() => {
     setScheme();
@@ -54,7 +60,9 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
-      {children}
+      <IconSettingsProvider classPrefix="vkui" globalClasses={!config.noLegacyClasses}>
+        {children}
+      </IconSettingsProvider>
     </ConfigProviderContext.Provider>
   );
 };

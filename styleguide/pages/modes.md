@@ -38,8 +38,6 @@
 
 **Важно:** В режиме `embedded`, `AppRoot` компоненту нужно указать свойство `embedded`: `<AppRoot embedded>`.
 
-**new** Чтобы отключить css-классы без префиксов (как `.Button`), которые могут конфликтовать с классами основного приложения, используйте `<AppRoot noLegacyClasses>`. В таком режиме на элементах vkui классы вида `class="vkuiButton vkuiButton--primary"`.
-
 ### Режимы скролла
 
 Навигационные компоненты VKUI — `Root, View, Panel, Epic` — запоминают скролл экрана и восстанавливают его при возвращении. embedded-приложения поддерживают два режима скролла:
@@ -149,3 +147,5 @@ console.log(hasModal);
 ### Наследование темы
 
 __Advanced__ Если ваше приложение само определяет цвета через css-переменные аналогично [https://github.com/VKCOM/VKUI/blob/master/package.json](bright_light.css), используйте `<ConfigProvider theme="inherit">`, а стили подключайте через `import '@vkontakte/vkui/components.css'`.
+
+**new** В 5 версии библиотеки во всех селекторах компонентов появится префикс `vkui` (`.Button` → `.vkuiButton`), чтобы не конфликтовать с другими стилями при встраивании в существующее приложение. Чтобы уже отключить старые CSS-классы, передайте проп `noLegacyClasses` в `ConfigProvider`.
