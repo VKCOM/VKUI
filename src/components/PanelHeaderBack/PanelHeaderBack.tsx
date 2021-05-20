@@ -11,15 +11,18 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps & AdaptivityProps & {
   'aria-label'?: string;
 };
 
-const PanelHeaderBack: FunctionComponent<PanelHeaderBackProps> = ({ label, sizeX, ...props }: PanelHeaderButtonProps & AdaptivityProps) => {
+const PanelHeaderBack: FunctionComponent<PanelHeaderBackProps> = ({ label, sizeX, ...restProps }: PanelHeaderButtonProps & AdaptivityProps) => {
   const platform = usePlatform();
   const showLabel = platform === VKCOM || platform === IOS && sizeX === SizeType.REGULAR;
-  const className = classNames(getClassName('PanelHeaderBack', platform), {
-    'PanelHeaderBack--has-label': showLabel && !!label,
-  });
 
   return (
-    <PanelHeaderButton {...props} vkuiClass={className} label={showLabel && label}>
+    <PanelHeaderButton
+      {...restProps}
+      vkuiClass={classNames(getClassName('PanelHeaderBack', platform), {
+        'PanelHeaderBack--has-label': showLabel && !!label,
+      })}
+      label={showLabel && label}
+    >
       {platform === ANDROID && <Icon28ArrowLeftOutline />}
       {platform === VKCOM && <Icon28ChevronLeftOutline />}
       {platform === IOS && <Icon28ChevronBack />}
