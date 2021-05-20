@@ -46,7 +46,17 @@ const swipeBackExcludedTags = ['input', 'textarea'];
 
 export interface ViewProps extends HTMLAttributes<HTMLElement>, HasPlatform, NavIdProps {
   activePanel: string;
+  /**
+   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
+   *
+   * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
+   */
   popout?: ReactNode;
+  /**
+   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
+   *
+   * Свойство для отрисовки `ModalRoot`.
+   */
   modal?: ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**

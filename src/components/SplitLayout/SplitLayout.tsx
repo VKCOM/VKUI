@@ -9,7 +9,13 @@ export interface SplitLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
   HasRef<HTMLDivElement> {
+  /**
+   * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
+   */
   popout?: ReactNode;
+  /**
+   * Свойство для отрисовки `ModalRoot`.
+   */
   modal?: ReactNode;
   header?: ReactNode;
 }
