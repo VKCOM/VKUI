@@ -4,6 +4,8 @@ import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
 import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { classScopingMode } from '../../lib/classScopingMode';
+import { IconSettingsProvider } from '@vkontakte/icons';
 import { elementScrollController, globalScrollController, ScrollContext, ScrollContextInterface } from './ScrollContext';
 
 // Используйте classList, но будьте осторожны
@@ -12,6 +14,10 @@ import { elementScrollController, globalScrollController, ScrollContext, ScrollC
 export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   embedded?: boolean;
   window?: Window;
+  /**
+   * @deprecated @see ConfigProvider
+  */
+  noLegacyClasses?: boolean;
   scroll?: 'global' | 'contain';
 }
 
@@ -23,7 +29,7 @@ function applyAdaptivityStyles(container: HTMLElement, sizeX: SizeType) {
   }
 }
 
-const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, scroll = 'global', ...props }) => {
+const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global', ...props }) => {
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
   const { window, document } = useDOM();
@@ -33,6 +39,10 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, scroll
   if (!initialized.current) {
     if (window && !embedded) {
       document.documentElement.classList.add('vkui');
+    }
+
+    if (noLegacyClasses) {
+      classScopingMode.noConflict = true;
     }
   }
 
@@ -93,7 +103,9 @@ const AppRoot: FC<AppRootProps> = ({ children, embedded, sizeX, hasMouse, scroll
         embedded,
       }}>
         <ScrollContext.Provider value={scrollController}>
-          {children}
+          <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
+            {children}
+          </IconSettingsProvider>
         </ScrollContext.Provider>
       </AppRootContext.Provider>
     </div>
