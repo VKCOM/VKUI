@@ -26,12 +26,15 @@ const PanelHeaderEdit: FunctionComponent<PanelHeaderEditProps> = ({
   ...restProps
 }: PanelHeaderEditProps) => {
   const iOSText = isActive ? doneLabel : editLabel;
-  const AndroidIcon = isActive ? <Icon28DoneOutline /> : <Icon28EditOutline />;
+  const AndroidIcon = isActive ? Icon28DoneOutline : Icon28EditOutline;
   const platform = usePlatform();
 
   return (
-    <PanelHeaderButton {...restProps}>
-      {platform === ANDROID || platform === VKCOM ? AndroidIcon : iOSText}
+    <PanelHeaderButton aria-label={iOSText} {...restProps}>
+      {platform === ANDROID || platform === VKCOM
+        ? <AndroidIcon />
+        : iOSText
+      }
     </PanelHeaderButton>
   );
 };
