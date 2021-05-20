@@ -10,6 +10,7 @@ import Title from '../Typography/Title/Title';
 
 interface ButtonTypographyProps extends AllHTMLAttributes<HTMLElement> {
   primary?: PanelHeaderButtonProps['primary'];
+  'aria-label'?: string;
 }
 
 const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, children }: ButtonTypographyProps) => {
@@ -93,4 +94,5 @@ export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
 
 PanelHeaderButton.defaultProps = {
   primary: false,
+  ['aria-label']: 'Закрыть',
 };
