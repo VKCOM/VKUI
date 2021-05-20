@@ -38,8 +38,8 @@ const Radio: FunctionComponent<RadioProps> = (props: RadioProps) => {
     >
       <input {...restProps} type="radio" vkuiClass="Radio__input" ref={getRef} />
       <div vkuiClass="Radio__container">
-        <div vkuiClass="Radio__icon" />
-        <ContentComponent weight="regular" vkuiClass="Radio__content">
+        <i vkuiClass="Radio__icon" role="presentation" />
+        <ContentComponent weight="regular" vkuiClass="Radio__content" Component="div">
           <div vkuiClass="Radio__children">{children}</div>
           {hasReactNode(description) && <Caption level={descriptionLevel} weight="regular" vkuiClass="Radio__description">{description}</Caption>}
         </ContentComponent>
