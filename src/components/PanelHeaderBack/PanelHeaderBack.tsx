@@ -7,7 +7,11 @@ import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptiv
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 
-const PanelHeaderBack: FunctionComponent<PanelHeaderButtonProps & AdaptivityProps> = ({ label, sizeX, ...props }: PanelHeaderButtonProps & AdaptivityProps) => {
+export type PanelHeaderBackProps = PanelHeaderButtonProps & AdaptivityProps & {
+  'aria-label'?: string;
+};
+
+const PanelHeaderBack: FunctionComponent<PanelHeaderBackProps> = ({ label, sizeX, ...props }: PanelHeaderButtonProps & AdaptivityProps) => {
   const platform = usePlatform();
   const showLabel = platform === VKCOM || platform === IOS && sizeX === SizeType.REGULAR;
   const className = classNames(getClassName('PanelHeaderBack', platform), {
@@ -16,9 +20,15 @@ const PanelHeaderBack: FunctionComponent<PanelHeaderButtonProps & AdaptivityProp
 
   return (
     <PanelHeaderButton {...props} vkuiClass={className} label={showLabel && label}>
-      {platform === ANDROID ? <Icon28ArrowLeftOutline /> : platform === VKCOM ? <Icon28ChevronLeftOutline /> : <Icon28ChevronBack />}
+      {platform === ANDROID && <Icon28ArrowLeftOutline />}
+      {platform === VKCOM && <Icon28ChevronLeftOutline />}
+      {platform === IOS && <Icon28ChevronBack />}
     </PanelHeaderButton>
   );
+};
+
+PanelHeaderBack.defaultProps = {
+  'aria-label': 'Назад',
 };
 
 export default React.memo(withAdaptivity(PanelHeaderBack, {
