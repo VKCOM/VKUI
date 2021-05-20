@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Icon28ChevronBack, Icon28ChevronLeftOutline, Icon28ArrowLeftOutline } from '@vkontakte/icons';
-import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';

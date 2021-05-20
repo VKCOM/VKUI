@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Icon28CancelOutline } from '@vkontakte/icons';
-import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { getTitleFromChildren } from '../../lib/utils';
 import { usePlatform } from '../../hooks/usePlatform';

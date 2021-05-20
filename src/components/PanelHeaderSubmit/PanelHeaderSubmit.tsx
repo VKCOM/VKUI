@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import PanelHeaderButton, { PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
+import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { Icon28DoneOutline } from '@vkontakte/icons';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';

@@ -35,7 +35,7 @@ export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   label?: ReactNode;
 }
 
-const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
+export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   children,
   primary,
   label,
@@ -94,5 +94,3 @@ const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
 PanelHeaderButton.defaultProps = {
   primary: false,
 };
-
-export default PanelHeaderButton;

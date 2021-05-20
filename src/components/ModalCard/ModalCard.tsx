@@ -1,5 +1,5 @@
 import { HTMLAttributes, ReactNode, FC, useContext } from 'react';
-import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { Icon24Dismiss } from '@vkontakte/icons';
