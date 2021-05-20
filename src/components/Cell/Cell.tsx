@@ -164,6 +164,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
       {...restProps}
       disabled={draggable || removable || disabled}
       Component={selectable ? 'label' : Component}
+      htmlFor={selectable ? name : undefined}
       before={
         <Fragment>
           {(platform === ANDROID || platform === VKCOM) && draggable && (
