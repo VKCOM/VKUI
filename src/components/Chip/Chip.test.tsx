@@ -13,7 +13,7 @@ describe('Chip', () => {
       <Chip value="white" onRemove={onRemove}>Белый</Chip>,
     );
 
-    userEvent.click(screen.queryByLabelText('Удалить чип'));
+    userEvent.click(screen.getByRole('button'));
 
     expect(onRemove).toHaveBeenCalled();
   });
