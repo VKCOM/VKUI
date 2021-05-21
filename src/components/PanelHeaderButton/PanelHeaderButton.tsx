@@ -93,6 +93,6 @@ export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
 };
 
 PanelHeaderButton.defaultProps = {
-  primary: false,
-  ['aria-label']: 'Закрыть',
+  'primary': false,
+  'aria-label': 'Закрыть',
 };

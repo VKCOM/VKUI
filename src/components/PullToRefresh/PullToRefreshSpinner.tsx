@@ -71,11 +71,11 @@ const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
 };
 
 PullToRefreshSpinner.defaultProps = {
-  size: 24,
-  strokeWidth: 2.5,
-  on: true,
-  progress: null,
-  ['aria-label']: 'Пожалуйста, подождите...',
+  'size': 24,
+  'strokeWidth': 2.5,
+  'on': true,
+  'progress': null,
+  'aria-label': 'Пожалуйста, подождите...',
 };
 
 export default React.memo(PullToRefreshSpinner);
