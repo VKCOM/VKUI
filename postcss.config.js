@@ -11,7 +11,13 @@ const { defaultSchemeId } = require('./package.json');
 let plugins = [
   cssImport(),
   checkKeyframes(),
-  cssCustomProperties({ preserve: true }),
+  cssCustomProperties({
+    importFrom: [
+      path.join(__dirname, 'src/styles/bright_light.css'),
+      path.join(__dirname, 'src/styles/constants.css'),
+    ],
+    preserve: true
+  }),
   // postcss-custom-properties only works with :root
   scopeRoot({
     customPropRoot: '.vkui__root, .vkui__portal-root',
