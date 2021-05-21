@@ -1,8 +1,10 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { useContext, FC } from 'react';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import ConfigProvider from './ConfigProvider';
+import { classScopingMode } from '../../lib/classScopingMode';
+import { Icon24Add } from '@vkontakte/icons';
 import { ConfigProviderContext, ConfigProviderContextInterface, WebviewType } from './ConfigProviderContext';
 
 describe('ConfigProvider', () => {
@@ -65,6 +67,30 @@ describe('ConfigProvider', () => {
     it('enforces vkcom scheme on vkcom platform', () => {
       render(<ConfigProvider scheme="bright_light" platform={VKCOM} />);
       expect(document.body).toHaveAttribute('scheme', 'vkcom');
+    });
+  });
+  describe('configures class prefix', () => {
+    const Hello = () => <div vkuiClass="Hello" data-testid="hello" />;
+    const resetScoping = () => Object.assign(classScopingMode, { _isSet: false, _noConflict: false });
+    afterEach(resetScoping);
+    beforeEach(resetScoping);
+    it('enables global classes by default', () => {
+      render(<ConfigProvider><Hello /></ConfigProvider>);
+      expect(screen.getByTestId('hello')).toHaveClass('Hello');
+    });
+    it('can disable global classes', () => {
+      render(<ConfigProvider noLegacyClasses><Hello /></ConfigProvider>);
+      expect(screen.getByTestId('hello')).not.toHaveClass('Hello');
+    });
+    describe('icons', () => {
+      it('sets icon prefix', () => {
+        render(<ConfigProvider><Icon24Add data-testid="icon" /></ConfigProvider>);
+        expect(screen.getByTestId('icon')).toHaveClass('vkuiIcon Icon');
+      });
+      it('can disable global icon classes', () => {
+        render(<ConfigProvider noLegacyClasses><Icon24Add data-testid="icon" /></ConfigProvider>);
+        expect(screen.getByTestId('icon')).not.toHaveClass('Icon');
+      });
     });
   });
 });
