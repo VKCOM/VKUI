@@ -22,7 +22,7 @@ export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPla
   /**
    * Desktop only
    */
-  popupDirection?: 'top' | 'bottom';
+  popupDirection?: 'top' | 'bottom' | ((elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom');
   /**
    * iOS only
    */

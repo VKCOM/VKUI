@@ -42,7 +42,7 @@ class ActionSheetDropdownDesktop extends Component<Props & DOMProps, State> {
     let left = toggleRect.left + toggleRect.width - elementRect.width + this.window.pageXOffset;
     let top: number;
 
-    if (popupDirection === 'top') {
+    if (popupDirection === 'top' || typeof popupDirection === 'function' && popupDirection(elementRef) === 'top') {
       top = toggleRect.top - elementRect.height + this.window.pageYOffset;
     } else {
       top = toggleRect.top + toggleRect.height + this.window.pageYOffset;
