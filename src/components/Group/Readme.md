@@ -39,14 +39,14 @@ class App extends React.Component {
         header={<Header>Последняя активность</Header>}
       >
         <SimpleCell 
-          after={<IconButton><Icon16MoreVertical /></IconButton>} 
+          after={<IconButton aria-label="Подробнее"><Icon16MoreVertical /></IconButton>} 
           description="Санкт-Петербург, Россия" 
           before={<Avatar size={32} mode="app" />}
         >
           VK · Приложение для iPhone
         </SimpleCell>
         <SimpleCell 
-          after={<IconButton><Icon16MoreVertical /></IconButton>} 
+          after={<IconButton aria-label="Подробнее"><Icon16MoreVertical /></IconButton>} 
           description="Санкт-Петербург, Россия" 
           before={<Avatar size={32} mode="app" />}
         >

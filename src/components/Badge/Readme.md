@@ -6,17 +6,15 @@
     <PanelHeader>Бейдж</PanelHeader>
 
     <Group header={<Header mode="secondary">В пунктах меню</Header>}>
-      <Cell expandable before={<Icon28Notifications />} badge={<Badge />}>
+      <Cell expandable before={<Icon28Notifications />} badge={<Badge aria-label="Есть новые" />}>
         Уведомления
       </Cell>
     </Group>
 
     <Group header={<Header mode="secondary">В переключателях</Header>}>
       <Tabs>
-        <TabsItem after={<Badge mode="prominent" />}>Диалоги</TabsItem>
-        <TabsItem selected after={<Badge mode="prominent" />}>
-          Сообщения
-        </TabsItem>
+        <TabsItem after={<Badge mode="prominent" aria-label="Есть новые" />}>Диалоги</TabsItem>
+        <TabsItem selected after={<Badge mode="prominent" aria-label="Есть новые" />}>Сообщения</TabsItem>
       </Tabs>
     </Group>
 
@@ -27,7 +25,7 @@
       <TabbarItem indicator={<Counter size="s" mode="prominent">12</Counter>} text="Сообщения">
         <Icon28MessageOutline />
       </TabbarItem>
-      <TabbarItem indicator={<Badge mode="prominent" />} text="Клипы">
+      <TabbarItem indicator={<Badge mode="prominent" aria-label="Новый раздел" />} text="Клипы">
         <Icon28ClipOutline />
       </TabbarItem>
     </Tabbar>
