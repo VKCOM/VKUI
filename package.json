@@ -92,6 +92,7 @@
     "style-loader": "^2.0.0",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
+    "stylelint-value-no-unknown-custom-properties": "^3.0.0",
     "typescript": "3.8",
     "wait-port": "^0.2.9",
     "webpack": "^4.44.2",

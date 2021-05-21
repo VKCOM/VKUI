@@ -6278,6 +6278,11 @@ ip-regex@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-2.1.0.tgz#fa78bf5d2e6913c911ce9f819ee5146bb6d844e9"
 
+ip-regex@^4.1.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-4.3.0.tgz#687275ab0f57fa76978ff8f4dddc8a23d5990db5"
+  integrity sha512-B9ZWJxHHOHUhUjCPrMpLD4xEq35bUTClHM1S6CBU5ixQnkZmwipwgc96vAd7AAGM9TGHvJR+Uss+/Ak6UphK+Q==
+
 ip@^1.1.0, ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -6639,6 +6644,13 @@ is-typedarray@^1.0.0, is-typedarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
   integrity sha1-5HnICFjfDBsR3dppQPlgEfzaSpo=
+
+is-url-superb@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/is-url-superb/-/is-url-superb-3.0.0.tgz#b9a1da878a1ac73659047d1e6f4ef22c209d3e25"
+  integrity sha512-3faQP+wHCGDQT1qReM5zCPx2mxoal6DzbzquFlCYJLWyy4WPTved33ea2xFbX37z4NoriEwZGIYhFtx8RUB5wQ==
+  dependencies:
+    url-regex "^5.0.0"
 
 is-url-superb@^4.0.0:
   version "4.0.0"
@@ -9540,6 +9552,16 @@ postcss-value-parser@^4.0.2, postcss-value-parser@^4.1.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.1.0.tgz#443f6a20ced6481a2bda4fa8532a6e55d789a2cb"
   integrity sha512-97DXOFbQJhk71ne5/Mt6cOu6yxsSfM0QGQyl0L25Gca4yGWEGJaig7l7gbCX623VqTBNGLRLaVUCnNkcedlRSQ==
 
+postcss-values-parser@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/postcss-values-parser/-/postcss-values-parser-3.2.1.tgz#55114607de6631338ba8728d3e9c15785adcc027"
+  integrity sha512-SQ7/88VE9LhJh9gc27/hqnSU/aZaREVJcRVccXBmajgP2RkjdJzNyH/a9GCVMI5nsRhT0jC5HpUMwfkz81DVVg==
+  dependencies:
+    color-name "^1.1.4"
+    is-url-superb "^3.0.0"
+    postcss "^7.0.5"
+    url-regex "^5.0.0"
+
 postcss-values-parser@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/postcss-values-parser/-/postcss-values-parser-4.0.0.tgz#3b4625e649279613f52842f1c81f2064321beec7"
@@ -11446,6 +11468,13 @@ stylelint-config-standard@^18.3.0:
   dependencies:
     stylelint-config-recommended "^2.2.0"
 
+stylelint-value-no-unknown-custom-properties@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-value-no-unknown-custom-properties/-/stylelint-value-no-unknown-custom-properties-3.0.0.tgz#0408d909ea0bfa920248c46733eb841add76e9f8"
+  integrity sha512-8WoOnZ4ELTxA1cDbhwolIVOutxHwbjpXmd0lL0Li3Iye078jSnEb1KO6pJ/ig5oDVGRApFeA25Fyy4qqmqwGgg==
+  dependencies:
+    postcss-values-parser "^3.2.1"
+
 stylelint@^10.1.0:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-10.1.0.tgz#1bc4c4ce878107e7c396b19226d91ba28268911a"
@@ -11748,6 +11777,11 @@ tippy.js@^6.2.0:
   integrity sha512-k+kWF9AJz5xLQHBi3K/XlmJiyu+p9gsCyc5qZhxxGaJWIW8SMjw1R+C7saUnP33IM8gUhDA2xX//ejRSwqR0tA==
   dependencies:
     "@popperjs/core" "^2.4.4"
+
+tlds@^1.203.0:
+  version "1.221.1"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.221.1.tgz#6cf6bff5eaf30c5618c5801c3f425a6dc61ca0ad"
+  integrity sha512-N1Afn/SLeOQRpxMwHBuNFJ3GvGrdtY4XPXKPFcx8he0U9Jg9ZkvTKE1k3jQDtCmlFn44UxjVtouF6PT4rEGd3Q==
 
 tmp@^0.0.33:
   version "0.0.33"
@@ -12141,6 +12175,14 @@ url-parse@^1.4.3, url-parse@^1.4.7:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+url-regex@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/url-regex/-/url-regex-5.0.0.tgz#8f5456ab83d898d18b2f91753a702649b873273a"
+  integrity sha512-O08GjTiAFNsSlrUWfqF1jH0H1W3m35ZyadHrGv5krdnmPPoxP27oDTqux/579PtaroiSGm5yma6KT1mHFH6Y/g==
+  dependencies:
+    ip-regex "^4.1.0"
+    tlds "^1.203.0"
 
 url@^0.11.0:
   version "0.11.0"
