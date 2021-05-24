@@ -8,10 +8,19 @@ const csso = require('postcss-csso');
 const checkKeyframes = require('./tasks/postcss-check-keyframes');
 const { defaultSchemeId } = require('./package.json');
 
+const cssPropSources = [
+  path.join(__dirname, 'src/styles/bright_light.css'),
+  path.join(__dirname, 'src/styles/constants.css'),
+  path.join(__dirname, 'src/styles/animations.css'),
+];
+
 let plugins = [
   cssImport(),
   checkKeyframes(),
-  cssCustomProperties({ preserve: true }),
+  cssCustomProperties({
+    importFrom: cssPropSources,
+    preserve: true
+  }),
   // postcss-custom-properties only works with :root
   scopeRoot({
     customPropRoot: '.vkui__root, .vkui__portal-root',
@@ -28,4 +37,4 @@ if (process.env.NODE_ENV === 'production') {
   plugins.push(csso({ restructure: false }));
 }
 
-module.exports = { plugins };
+module.exports = { plugins, cssPropSources };

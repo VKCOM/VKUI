@@ -16,7 +16,17 @@ import { getNavId } from '../../lib/getNavId';
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
+  /**
+   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
+   *
+   * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
+   */
   popout?: ReactNode;
+  /**
+   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
+   *
+   * Свойство для отрисовки `ModalRoot`.
+   */
   modal?: ReactNode;
   /**
    * @ignore

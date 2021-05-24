@@ -1,5 +1,10 @@
-{
+const { cssPropSources } = require('./postcss.config');
+
+module.exports = {
   "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-value-no-unknown-custom-properties"
+  ],
   "rules": {
     "indentation": null,
     "number-leading-zero": "never",
@@ -12,6 +17,9 @@
     "length-zero-no-unit": [true, {
       "ignore": ["custom-properties"]
     }],
-    "keyframes-name-pattern": "vkui-.+"
+    "keyframes-name-pattern": "vkui-.+",
+    "csstools/value-no-unknown-custom-properties": [true, {
+      "importFrom": cssPropSources
+    }]
   }
-}
+};
