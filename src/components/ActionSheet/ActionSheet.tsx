@@ -11,7 +11,7 @@ import { hasReactNode } from '../../lib/utils';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
 
-export type popupDirectionFunction = (elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom';
+export type PopupDirectionFunction = (elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom';
 
 export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   header?: React.ReactNode;
@@ -24,7 +24,7 @@ export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPla
   /**
    * Desktop only
    */
-  popupDirection?: 'top' | 'bottom' | popupDirectionFunction;
+  popupDirection?: 'top' | 'bottom' | PopupDirectionFunction;
   /**
    * iOS only
    */
