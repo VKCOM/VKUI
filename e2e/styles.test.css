@@ -1,4 +1,6 @@
-@import '../src/styles/vkui.css';
+/* import all global styles that are not imported by the components */
+@import '../src/styles/themes.css';
+@import '../src/styles/components.css';
 @import '../src/styles/unstable.css';
 
 @font-face {

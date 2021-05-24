@@ -2839,6 +2839,11 @@ babel-plugin-module-resolver@^4.1.0:
     reselect "^4.0.0"
     resolve "^1.13.1"
 
+babel-plugin-transform-remove-imports@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-remove-imports/-/babel-plugin-transform-remove-imports-1.5.4.tgz#bad8ac363e2711c60b5094bcc0b0b1802e3566e9"
+  integrity sha512-APata3t5Z2E1QMp/Afku+hzAODCUVATp4EgrUlkeXU9MWr4TxR/yp3/xvkerLRF8isvIzukcBJfa8x9XAp8bBg==
+
 babel-preset-current-node-syntax@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/babel-preset-current-node-syntax/-/babel-preset-current-node-syntax-1.0.0.tgz#cf5feef29551253471cfa82fc8e0f5063df07a77"
