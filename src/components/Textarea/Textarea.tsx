@@ -3,7 +3,7 @@ import { classNames } from '../../lib/classNames';
 import FormField from '../FormField/FormField';
 import { HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { getClassName, HasPlatform } from '../..';
+import { getClassName } from '../../helpers/getClassName';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -13,8 +13,7 @@ export interface TextareaProps extends
   TextareaHTMLAttributes<HTMLTextAreaElement>,
   HasRef<HTMLTextAreaElement>,
   HasRootRef<HTMLElement>,
-  AdaptivityProps,
-  HasPlatform {
+  AdaptivityProps {
   grow?: boolean;
   onResize?(el: HTMLTextAreaElement): void;
   defaultValue?: string;
