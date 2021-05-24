@@ -81,6 +81,10 @@
       {
         "selector": "ImportDeclaration[source.value=/^\\W+(index(\\.ts)?)?$/i]",
         "message": "Do not import index"
+      },
+      {
+        "selector": "ImportDeclaration[source.value=/\\.css$/i] ~ ImportDeclaration[source.value!=/\\.css$/i]",
+        "message": "CSS import must be last"
       }
     ]
   },
