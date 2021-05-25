@@ -28,13 +28,14 @@ const Chip: FC<ChipProps> = (props: ChipProps) => {
         <Caption level="1" weight="regular" vkuiClass="Chip__content" title={title}>{children}</Caption>
         {hasReactNode(after) && <div vkuiClass="Chip__after">{after}</div>}
         {removable &&
-          <button
-            type="button"
+          <div
+            role="button"
+            tabIndex={0}
             vkuiClass="Chip__remove"
             onClick={onRemoveWrapper}
           >
             <Icon16Cancel fill="var(--icon_secondary)" />
-          </button>
+          </div>
         }
       </div>
     </div>
