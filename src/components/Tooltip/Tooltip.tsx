@@ -1,11 +1,11 @@
-import React, { ReactElement, ReactNode, Component, Fragment, RefCallback, isValidElement } from 'react';
+import React, { FC, ReactElement, ReactNode, Component, Fragment, RefCallback, isValidElement, useState, cloneElement } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import ReactDOM from 'react-dom';
-import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
-import { setRef } from '../../lib/utils';
+import { DOMProps, withDOM } from '../../lib/dom';
 import Subhead from '../Typography/Subhead/Subhead';
 import { tooltipContainerAttr } from './TooltipContainer';
+import { useExternRef } from '../../hooks/useExternRef';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
   target?: HTMLElement;
@@ -159,58 +159,31 @@ export interface TooltipProps {
   onClose?: () => void;
 }
 
-export interface TooltipState {
-  ready: boolean;
-}
+const Tooltip: FC<TooltipProps> = ({ children = null, isShown, ...portalProps }) => {
+  const [target, setTarget] = useState<HTMLElement>();
 
-export default class Tooltip extends Component<TooltipProps, TooltipState> {
-  static defaultProps: Partial<TooltipProps> = {
-    offsetX: 0,
-    offsetY: 15,
-    alignX: 'left',
-    alignY: 'bottom',
-    cornerOffset: 0,
-    isShown: true,
-    mode: 'accent',
-  };
+  const childRef = isValidElement(children) && (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
+  const patchedRef = useExternRef(setTarget, childRef);
+  const child = isValidElement(children) ? cloneElement(children, {
+    [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
+  }) : children;
 
-  state: TooltipState = {
-    ready: false,
-  };
+  return (
+    <Fragment>
+      {child}
+      {isShown && target != null && <TooltipPortal {...portalProps} target={target} />}
+    </Fragment>
+  );
+};
 
-  targetEl: HTMLElement;
+Tooltip.defaultProps = {
+  offsetX: 0,
+  offsetY: 15,
+  alignX: 'left',
+  alignY: 'bottom',
+  cornerOffset: 0,
+  isShown: true,
+  mode: 'accent',
+};
 
-  componentDidMount() {
-    if (canUseDOM) {
-      this.targetEl && this.setState({ ready: true });
-    }
-  }
-
-  getRef: RefCallback<HTMLDivElement> = (el) => {
-    this.targetEl = el;
-
-    const { children } = this.props;
-    if (isValidElement(children)) {
-      setRef(el, isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
-    }
-  };
-
-  render() {
-    const { children = null, isShown, ...portalProps } = this.props;
-
-    const child = isValidElement(children) ? React.cloneElement(children, {
-      [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: this.getRef,
-    }) : children;
-
-    if (!isShown || !this.state.ready) {
-      return child;
-    }
-
-    return (
-      <Fragment>
-        {child}
-        <TooltipPortal {...portalProps} target={this.targetEl} />
-      </Fragment>
-    );
-  }
-}
+export default Tooltip;

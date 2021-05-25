@@ -1,7 +1,7 @@
 import { MutableRefObject, Ref, useMemo, useRef } from 'react';
 import { setRef } from '../lib/utils';
 
-export function useExternRef<T>(externRef?: Ref<T>): MutableRefObject<T> {
+export function useExternRef<T>(...externRefs: Array<Ref<T>>): MutableRefObject<T> {
   const stableRef = useRef<T>();
   return useMemo(() => ({
     get current() {
@@ -9,7 +9,7 @@ export function useExternRef<T>(externRef?: Ref<T>): MutableRefObject<T> {
     },
     set current(el) {
       stableRef.current = el;
-      setRef(el, externRef);
+      externRefs.forEach((ref) => setRef(el, ref));
     },
-  }), [externRef]);
+  }), externRefs);
 }
