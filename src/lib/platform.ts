@@ -1,9 +1,23 @@
 import { BrowserInfo, computeBrowserInfo } from './browser';
+import { querystring } from '@vkontakte/vkjs';
 
 export enum Platform {
   ANDROID = 'android',
   IOS = 'ios',
   VKCOM = 'vkcom'
+}
+
+function mapVKPlatform(vkPlatform: string): Platform {
+  switch (vkPlatform) {
+    case 'desktop_web':
+      return Platform.VKCOM;
+    case 'mobile_ipad':
+    case 'mobile_iphone':
+    case 'mobile_iphone_messenger':
+      return Platform.IOS;
+    default:
+      return Platform.ANDROID;
+  }
 }
 
 export const ANDROID = Platform.ANDROID;
@@ -13,6 +27,13 @@ export const VKCOM = Platform.VKCOM;
 export type PlatformType = Platform.ANDROID | Platform.IOS | Platform.VKCOM;
 
 export function platform(browserInfo?: BrowserInfo): PlatformType {
+  /* Значение, которое передаётся в качестве query-параметра при открытии VK Mini Apps */
+  const vkPlatform = querystring.parse(window.location.search).vk_platform as string | undefined;
+
+  if (vkPlatform) {
+    return mapVKPlatform(vkPlatform);
+  }
+
   if (!browserInfo) {
     browserInfo = computeBrowserInfo();
   }
