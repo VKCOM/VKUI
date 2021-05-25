@@ -60,7 +60,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   return (
     <Tappable
       {...restProps}
-      onClick={onItemClick(onClick, autoclose)}
+      onClick={selectable ? onClick : onItemClick(onClick, autoclose)}
       activeMode="ActionSheetItem--active"
       vkuiClass={
         classNames(
@@ -131,6 +131,7 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
             name={name}
             value={value}
             onChange={onChange}
+            onClick={onItemClick(noop, autoclose)}
             defaultChecked={defaultChecked}
             checked={checked}
             disabled={restProps.disabled}
