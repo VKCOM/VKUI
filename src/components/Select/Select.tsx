@@ -11,9 +11,7 @@ const Select: FunctionComponent<SelectProps> = ({ hasMouse, ...props }: SelectPr
     const { children, ...restProps } = props;
 
     return (
-      <CustomSelect
-        {...restProps}
-      />
+      <CustomSelect {...restProps} />
     );
   }
 
