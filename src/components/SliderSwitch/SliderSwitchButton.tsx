@@ -33,6 +33,7 @@ const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) 
       )
     }
     Component="button"
+    type="button"
     getRootRef={getRootRef}
     aria-pressed={active}
     onFocus={toggleFocus}
