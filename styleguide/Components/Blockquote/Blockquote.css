@@ -6,5 +6,9 @@
 }
 
 .Blockquote:not(:last-child) {
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.Blockquote:not(:first-child) {
+  margin-top: 16px;
 }
