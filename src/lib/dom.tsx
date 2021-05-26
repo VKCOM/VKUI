@@ -30,11 +30,11 @@ export const useDOM = () => {
   };
 };
 
-export function withDOM<Props>(Component: ComponentType<Props & DOMProps>): ComponentType<Props> {
-  function WithDOM(props: Props) {
+export function withDOM<Props>(Component: ComponentType<Props & DOMProps>) {
+  const WithDOM: ComponentType<Props> = (props: Props) => {
     const dom = useDOM();
     return <Component {...props} {...dom} />;
-  }
+  };
   return WithDOM;
 }
 
