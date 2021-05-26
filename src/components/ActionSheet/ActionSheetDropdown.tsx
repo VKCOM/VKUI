@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import { withPlatform } from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types';
+import { usePlatform } from '../../hooks/usePlatform';
 import { ActionSheetProps } from './ActionSheet';
 
-interface Props extends HasPlatform {
+interface Props {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;
@@ -14,33 +13,31 @@ interface Props extends HasPlatform {
   popupDirection?: ActionSheetProps['popupDirection'];
 }
 
-type ClickHandler = (event: React.MouseEvent<HTMLDivElement>) => void;
+const stopPropagation: MouseEventHandler = (e) => e.stopPropagation();
 
-class ActionSheetDropdown extends Component<Props> {
-  onClose = () => {
-    this.props.onClose();
-  };
+const ActionSheetDropdown: FC<Props> = ({
+  children,
+  elementRef,
+  toggleRef,
+  closing,
+  popupDirection,
+  ...restProps
+}) => {
+  const platform = usePlatform();
+  const baseClaseName = getClassName('ActionSheet', platform);
 
-  stopPropagation: ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation();
+  return (
+    <div
+      {...restProps}
+      ref={elementRef}
+      onClick={stopPropagation}
+      vkuiClass={classNames(baseClaseName, {
+        'ActionSheet--closing': closing,
+      })}
+    >
+      {children}
+    </div>
+  );
+};
 
-  render() {
-    const { children, platform, elementRef, toggleRef, closing, popupDirection, ...restProps } = this.props;
-
-    const baseClaseName = getClassName('ActionSheet', platform);
-
-    return (
-      <div
-        {...restProps}
-        ref={elementRef}
-        onClick={this.stopPropagation}
-        vkuiClass={classNames(baseClaseName, {
-          'ActionSheet--closing': this.props.closing,
-        })}
-      >
-        {children}
-      </div>
-    );
-  }
-}
-
-export default withPlatform(ActionSheetDropdown);
+export default ActionSheetDropdown;
