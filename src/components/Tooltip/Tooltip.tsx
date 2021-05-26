@@ -119,12 +119,12 @@ export interface TooltipProps {
    * свойство `getRootRef`, которое должно возвращаться ссылку на корневой DOM-элемент компонента,
    * иначе тултип показан не будет. Если передан React-element, то такой проблемы нет.
    */
-  children: ReactNode;
-  mode: 'accent' | 'light';
+  children: ReactElement;
+  mode?: 'accent' | 'light';
   /**
    * Если передан `false`, то рисуется просто `children`.
    */
-  isShown: boolean;
+  isShown?: boolean;
   /**
    * Текст тултипа.
    */
@@ -156,7 +156,7 @@ export interface TooltipProps {
   /**
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
-  onClose(): void;
+  onClose?: () => void;
 }
 
 export interface TooltipState {
