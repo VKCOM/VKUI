@@ -31,6 +31,8 @@
 }
 
 .StyleGuideHeader__logo span {
+  position: relative;
+  top: 1px;
   margin-left: 4px;
 }
 

@@ -23,13 +23,17 @@ export const PreRenderer: React.FunctionComponent<PrePropsWithClasses> = ({
   className,
   children,
 }) => {
-  const classNames = cx(className, classes.pre, 'Pre');
+  const classNames = cx(className, classes.pre);
 
   const isHighlighted = className && className.indexOf('lang-') !== -1;
   if (isHighlighted && children) {
-    return <pre className={classNames} dangerouslySetInnerHTML={{ __html: children.toString() }} />;
+    return <div className={classNames}>
+      <pre className="Pre" dangerouslySetInnerHTML={{ __html: children.toString() }} />
+    </div>;
   }
-  return <pre className={classNames}>{children}</pre>;
+  return <div className={classNames}>
+    <pre className="Pre">{children}</pre>
+  </div>;
 };
 
 PreRenderer.propTypes = {
