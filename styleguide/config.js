@@ -20,7 +20,7 @@ module.exports = {
     'Markdown/Blockquote': path.join(__dirname, './Components/Blockquote'),
     'Markdown/List': path.join(__dirname, './Components/List'),
     'Markdown/MarkdownHeading': path.join(__dirname, './Components/MarkdownHeading'),
-    // 'Markdown/Pre': path.join(__dirname, './Components/Pre'),
+    'Markdown/Pre': path.join(__dirname, './Components/Pre'),
     TableRenderer: path.join(__dirname, './Components/Table/TableRenderer'),
     LinkRenderer: path.join(__dirname, './Components/Link/LinkRenderer'),
     NameRenderer: path.join(__dirname, './Components/Name/NameRenderer'),
