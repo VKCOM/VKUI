@@ -1,4 +1,4 @@
-import { createContext, useContext, ComponentType } from 'react';
+import { createContext, useContext, ComponentType, FC } from 'react';
 import { canUseDOM } from '@vkontakte/vkjs/lib/dom';
 export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs/lib/dom';
 
@@ -31,7 +31,7 @@ export const useDOM = () => {
 };
 
 export function withDOM<Props>(Component: ComponentType<Props & DOMProps>) {
-  const WithDOM: ComponentType<Props> = (props: Props) => {
+  const WithDOM: FC<Props> = (props: Props) => {
     const dom = useDOM();
     return <Component {...props} {...dom} />;
   };
