@@ -360,6 +360,8 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
       showArrows,
       window,
       document,
+      getRef,
+      getRootRef,
       ...restProps
     } = this.props;
 
