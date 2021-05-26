@@ -55,7 +55,6 @@
 const [activePanel, setPanel] = useState('main');
 const [activeModalPanel, setModalPanel] = useState('gallery');
 const [hasModal, showModal] = useState(false);
-console.log(hasModal);
 
 <>
 <div>
