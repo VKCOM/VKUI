@@ -1,0 +1,28 @@
+.Preview {
+  display: flex;
+  align-items: flex-start;
+}
+
+.Preview--vkcom .Preview__in {
+  border: none;
+  border-radius: 8px;
+}
+
+.Preview__in {
+  max-width: 100%;
+  overflow: auto;
+  border: 1px solid var(--image_border);
+  border-radius: 14px;
+}
+
+.Preview__frame {
+  border: none;
+  display: block;
+}
+
+/*
+ FixedLayout from Preview takes width of documentation content SplitCol, there is no other way to override it.
+ */
+.Preview__header .vkuiFixedLayout {
+  width: 100% !important;
+}
