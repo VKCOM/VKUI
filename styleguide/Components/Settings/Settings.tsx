@@ -5,7 +5,7 @@ import { WebviewTypeSelect } from '../WebviewTypeSelect';
 import { HasMouseCheckbox } from '../HasMouseCheckbox';
 import { ViewHeightSelect } from '../ViewHeightSelect';
 import { ViewWidthSelect } from '../ViewWidthSelect';
-import { IntegrationSelect } from '../IntegrationSelect';
+// import { IntegrationSelect } from '../IntegrationSelect';
 import './Settings.css';
 import { Platform } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
@@ -17,10 +17,10 @@ export const Settings: FC = () => {
         return (
           <div className="Settings">
             <div className="Settings__in">
-              <IntegrationSelect
-                onChange={(e) => context.setContext({ integration: e.target.value })}
-                value={context.integration}
-              />
+              {/*<IntegrationSelect*/}
+              {/*  onChange={(e) => context.setContext({ integration: e.target.value })}*/}
+              {/*  value={context.integration}*/}
+              {/*/>*/}
               <PlatformSelect
                 onChange={(e) => context.setContext({ platform: e.target.value })}
                 value={context.platform}
