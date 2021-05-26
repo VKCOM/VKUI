@@ -1,4 +1,23 @@
 .SectionHeading {
   margin-top: 36px;
   margin-bottom: 18px;
+  position: relative;
+}
+
+.SectionHeading__link {
+  position: absolute;
+  right: 100%;
+  padding-right: 6px;
+  top: 3px;
+  color: var(--icon_secondary);
+  opacity: 0;
+}
+
+.SectionHeading:hover .SectionHeading__link {
+  opacity: 1;
+}
+
+.SectionHeading__anchor {
+  position: relative;
+  top: -66px;
 }

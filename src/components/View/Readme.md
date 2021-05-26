@@ -49,7 +49,7 @@ class Example extends React.Component {
 <Example />
 ```
 
-### <a id="iosswipeback"></a>[iOS Swipe Back](#iosswipeback)
+### <a id="/View?id=iosswipeback"></a>[iOS Swipe Back](#/View?id=iosswipeback)
 
 В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
 повторить такое поведение в VKUI нужно:

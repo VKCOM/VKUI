@@ -9,7 +9,7 @@ export const StyleGuideHeader = () => {
   return (
     <div className="StyleGuideHeader">
       <SplitLayout>
-        <SplitCol minWidth="360px" width="33.3%" maxWidth="480px" className="StyleGuideHeader__left">
+        <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuideHeader__left">
           <div className="StyleGuideHeader__leftIn">
             <a className="StyleGuideHeader__logo">
               <Icon24LogoVk />

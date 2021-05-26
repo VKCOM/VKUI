@@ -20,10 +20,11 @@
   background: var(--background_light);
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
 }
 
 .StyleGuide__sidebarIn {
-  width: 360px;
+  width: 340px;
   padding-right: 16px;
   padding-left: 16px;
   box-sizing: border-box;

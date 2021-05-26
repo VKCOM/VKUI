@@ -71,7 +71,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
       <ConfigProvider scheme={scheme}>
         <StyleGuideHeader />
         <SplitLayout className="StyleGuide">
-          <SplitCol minWidth="360px" width="33.3%" maxWidth="480px" className="StyleGuide__sidebar">
+          <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuide__sidebar">
             <div className="StyleGuide__sidebarIn">
               {toc}
             </div>

@@ -89,7 +89,7 @@ class TableOfContents extends React.PureComponent {
       if (section.sections.length > 0) {
         const childSearch = this.search(section.sections, query);
         result = { ...result, ...childSearch };
-        if (Object.values(childSearch).filter(value => value).length > 0) {
+        if (Object.values(childSearch).filter(Boolean).length > 0) {
           found = true;
         }
       }

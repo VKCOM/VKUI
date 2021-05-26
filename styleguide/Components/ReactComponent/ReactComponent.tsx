@@ -21,7 +21,7 @@ const ReactComponent = ({ component, exampleMode }) => {
       {/*{pathLine && <Pathline>{pathLine}</Pathline>}*/}
       {description && <Markdown text={description} />}
       {examples.length && <Examples examples={examples} name={name} exampleMode={exampleMode} />}
-      <SectionHeading>Свойства и методы</SectionHeading>
+      <SectionHeading href={`#/${name}?id=props`}>Свойства и методы</SectionHeading>
       <Slot name="docsTabs" props={component} />
     </div>
   )

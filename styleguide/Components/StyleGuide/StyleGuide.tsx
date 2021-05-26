@@ -5,6 +5,7 @@ import Sections from '@rsg-components/Sections';
 import Error from '@rsg-components/Error';
 import NotFound from '@rsg-components/NotFound';
 import Context from '@rsg-components/Context';
+import { querystring } from '@vkontakte/vkjs';
 
 // export interface StyleGuideProps {
 //   codeRevision: number;
