@@ -85,6 +85,10 @@
       {
         "selector": "ImportDeclaration[source.value=/\\.css$/i] ~ ImportDeclaration[source.value!=/\\.css$/i]",
         "message": "CSS import must be last"
+      },
+      {
+        "selector": "ImportDeclaration[source.value=/(?<!(\\.m|components|unstable))\\.css$/i]",
+        "message": "Importing non-modular CSS (not .m.css) from TSX is unsafe"
       }
     ]
   },

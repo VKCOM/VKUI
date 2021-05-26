@@ -1,9 +1,11 @@
+const glob = require('glob');
 const { cssPropSources } = require('./postcss.config');
 
 module.exports = {
   "extends": "stylelint-config-standard",
   "plugins": [
-    "stylelint-value-no-unknown-custom-properties"
+    "stylelint-value-no-unknown-custom-properties",
+    "./tasks/stylelint-modular",
   ],
   "rules": {
     "indentation": null,
@@ -20,6 +22,9 @@ module.exports = {
     "keyframes-name-pattern": "vkui-.+",
     "csstools/value-no-unknown-custom-properties": [true, {
       "importFrom": cssPropSources
+    }],
+    "vkui/modular": [true, {
+      modularFiles: glob.sync('./src/**/*.m.css')
     }]
   }
 };
