@@ -6,6 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
+import './PanelHeaderBack.m.css';
 
 const PanelHeaderBack: FunctionComponent<PanelHeaderButtonProps & AdaptivityProps> = ({ label, sizeX, ...props }: PanelHeaderButtonProps & AdaptivityProps) => {
   const platform = usePlatform();

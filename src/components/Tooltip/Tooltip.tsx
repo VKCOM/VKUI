@@ -11,6 +11,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import Subhead from '../Typography/Subhead/Subhead';
 import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
+import './Tooltip.m.css';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
   target?: HTMLElement;
