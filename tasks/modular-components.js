@@ -22,9 +22,8 @@ const isModular = {
   'PanelHeaderEdit/PanelHeaderEdit': false,
   'PanelHeaderSubmit/PanelHeaderSubmit': false,
   'PanelSpinner/PanelSpinner': false,
-  'RangeSlider/RangeSlider': false,
-  'RangeSlider/UniversalSlider': false,
   'SelectMimicry/SelectMimicry': false,
+  'Slider/Slider': true,
   'Tooltip/TooltipContainer': false,
   'Touch/Touch': false,
 };
