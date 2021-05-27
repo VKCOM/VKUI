@@ -159,12 +159,11 @@ class Alert extends Component<AlertProps, AlertState> {
   };
 
   render() {
-    const { actions, actionsLayout, children, className, style, platform, viewWidth, text, header, ...restProps } = this.props;
+    const { actions, actionsLayout, children, className, style, platform, isDesktop, viewWidth, text, header, ...restProps } = this.props;
     const { closing } = this.state;
 
     const resolvedActionsLayout: AlertProps['actionsLayout'] = platform === VKCOM ? 'horizontal' : actionsLayout;
     const canShowCloseButton = platform === VKCOM || platform === ANDROID && viewWidth >= ViewWidth.SMALL_TABLET;
-    const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
 
     return (
       <PopoutWrapper
@@ -200,5 +199,6 @@ class Alert extends Component<AlertProps, AlertState> {
 }
 
 export default withPlatform(withAdaptivity(Alert, {
+  isDesktop: true,
   viewWidth: true,
 }));
