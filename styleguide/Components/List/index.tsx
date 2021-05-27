@@ -1,5 +1,5 @@
 import React, { FC, Children } from 'react';
-import { Text } from '@vkui';
+import Text from '../Text';
 import './List.css';
 
 export const List: FC<{ ordered?: boolean }> = ({ children, ordered }) => {

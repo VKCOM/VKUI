@@ -46,3 +46,16 @@
 .StyleGuideHeader__link {
   margin-right: 24px;
 }
+
+.StyleGuideHeader__main {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1440px;
+  padding-right: 36px;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.StyleGuideHeader__scheme {
+  color: var(--icon_secondary);
+}

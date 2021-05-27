@@ -1,17 +1,17 @@
 const prismTheme = ({ color }) => ({
   '&': {
-    color: color.codeBase,
+    color: 'var(--text_primary)',
   },
   [`& .token.comment,
 & .token.prolog,
 & .token.doctype,
 & .token.cdata`]: {
     isolate: false,
-    color: color.codeComment,
+    color: 'var(--text_secondary)',
   },
   [`& .token.punctuation`]: {
     isolate: false,
-    color: color.codePunctuation,
+    color: 'var(--text_secondary)',
   },
   [`& .namespace`]: {
     isolate: false,
@@ -24,7 +24,7 @@ const prismTheme = ({ color }) => ({
 & .token.constant,
 & .token.symbol`]: {
     isolate: false,
-    color: color.codeProperty,
+    color: 'var(--dynamic_purple)',
   },
   [`& .token.deleted`]: {
     isolate: false,
@@ -36,7 +36,7 @@ const prismTheme = ({ color }) => ({
 & .token.char,
 & .token.builtin`]: {
     isolate: false,
-    color: color.codeString,
+    color: 'var(--dynamic_green)',
   },
   [`& .token.inserted`]: {
     isolate: false,
@@ -54,12 +54,12 @@ const prismTheme = ({ color }) => ({
 & .token.attr-value,
 & .token.keyword`]: {
     isolate: false,
-    color: color.codeKeyword,
+    color: 'var(--dynamic_blue)',
   },
   [`& .token.function,
 & .token.class-name`]: {
     isolate: false,
-    color: color.codeFunction,
+    color: 'var(--dynamic_red)',
   },
   [`& .token.regex,
 & .token.important,
