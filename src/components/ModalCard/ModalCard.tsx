@@ -7,7 +7,7 @@ import { IOS } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
-import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Subhead from '../Typography/Subhead/Subhead';
 import Title from '../Typography/Title/Title';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
@@ -61,14 +61,12 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
     actionsLayout,
     onClose,
     platform,
+    isDesktop,
     viewWidth,
-    viewHeight,
-    hasMouse,
     nav,
     ...restProps
   } = props;
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
@@ -115,7 +113,6 @@ ModalCard.defaultProps = {
 };
 
 export default withAdaptivity(withPlatform(ModalCard), {
+  isDesktop: true,
   viewWidth: true,
-  viewHeight: true,
-  hasMouse: true,
 });
