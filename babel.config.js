@@ -1,7 +1,8 @@
-const { NODE_ENV } = process.env;
+const { NODE_ENV, BABEL_KEEP_CSS } = process.env;
 const isProduction = NODE_ENV === 'production';
 const isDevelopment = NODE_ENV === 'development';
 const useModules = isProduction || isDevelopment;
+const keepCss = Boolean(BABEL_KEEP_CSS);
 
 const testFiles = [
   './src/**/*.test.ts', './src/**/*.test.tsx',
@@ -36,6 +37,8 @@ module.exports = {
         "#jsxRuntime": "./src/lib/jsxRuntime"
       }
     }],
-  ],
+  ].concat(keepCss ? [] : [
+    ['babel-plugin-transform-remove-imports', { test: '\\.css$' }],
+  ]),
   ignore: ['./src/vkui.js'].concat(isProduction ? testFiles : []),
 };
