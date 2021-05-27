@@ -47,7 +47,11 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
-    new MiniCssExtractPlugin({ filename: '[name].css' }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      // We only import order-independent CSS from JS
+      ignoreOrder: true,
+    }),
   ],
   stats: {
     all: false,
