@@ -41,23 +41,18 @@ module.exports = {
     name: 'О VKUI',
     content: './pages/intro.md',
   }, {
-    name: 'Установка',
-    content: './pages/installation.md',
+    name: 'Быстрый старт',
+    content: './pages/quick_start.md',
   }, {
-    name: 'Подготовка HTML',
-    content: './pages/html.md'
-  }, {
-    name: 'Hello World',
-    content: './pages/hello_world.md'
-  }, {
-    name: 'Концепция',
-    content: './pages/concept.md',
-  }, {
-    name: 'Структура экранов',
-    content: './pages/structure.md'
-  }, {
-    name: 'Режимы подключения',
-    content: './pages/modes.md'
+    name: 'Основа',
+    expand: true,
+    sections: [{
+      name: 'Структура экранов',
+      content: './pages/structure.md'
+    }, {
+      name: 'Режимы подключения',
+      content: './pages/modes.md'
+    }]
   }, {
       name: 'Компоненты',
       sectionDepth: 2,
@@ -66,6 +61,7 @@ module.exports = {
       sections: [{
         name: 'Layout',
         components: [
+          '../src/components/AppRoot/AppRoot.tsx',
           '../src/components/Root/Root.tsx',
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.tsx',
@@ -217,9 +213,6 @@ module.exports = {
       {
         name: 'Icons',
         content: './pages/icons.md'
-      }, {
-        name: 'Colors',
-        content: './pages/colors.md'
       }, {
         name: 'Themes',
         content: './pages/themes.md'
