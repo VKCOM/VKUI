@@ -4,10 +4,10 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import Separator from '../Separator/Separator';
-import { VKCOM } from '../../lib/platform';
+import { Platform, VKCOM } from '../../lib/platform';
 import { HasRef, HasRootRef } from '../../types';
 import { ConfigProviderContext, WebviewType } from '../ConfigProvider/ConfigProviderContext';
-import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { isPrimitiveReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
@@ -27,7 +27,7 @@ export interface PanelHeaderProps extends
    */
   visor?: boolean;
   /**
-   * Если `false`, то шапка будет в потоке
+   * Если `false`, то шапка будет в потоке. По-умолчанию true, но если платформа VKCOM, то по-умолчанию false.
    */
   fixed?: boolean;
 }
@@ -78,7 +78,8 @@ const PanelHeader: FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
   const platform = usePlatform();
   const { webviewType } = useContext(ConfigProviderContext);
   const needShadow = shadow && sizeX === SizeType.REGULAR;
-  const isFixed = platform === VKCOM ? false : fixed;
+
+  let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
   return (
     <div
@@ -119,7 +120,6 @@ PanelHeader.defaultProps = {
   separator: true,
   transparent: false,
   visor: true,
-  fixed: true,
 };
 
 export default withAdaptivity(PanelHeader, {
