@@ -11,4 +11,7 @@ module.exports = {
     'src/types',
     'src/testing',
   ],
+  moduleNameMapper: {
+    '\\.css$': require.resolve('./src/testing/emptyMock.ts'),
+  },
 };

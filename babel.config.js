@@ -1,8 +1,9 @@
 const { NODE_ENV, BABEL_KEEP_CSS } = process.env;
 const isProduction = NODE_ENV === 'production';
 const isDevelopment = NODE_ENV === 'development';
+const isTest = NODE_ENV === 'test';
 const useModules = isProduction || isDevelopment;
-const keepCss = Boolean(BABEL_KEEP_CSS);
+const keepCss = Boolean(BABEL_KEEP_CSS) || isTest;
 
 const testFiles = [
   './src/**/*.test.ts', './src/**/*.test.tsx',
