@@ -2,16 +2,15 @@ const path = require('path');
 const stylelint = require('stylelint');
 
 const ruleName = 'vkui/modular';
-const getComponentName = (cssPath) => path.basename(cssPath).split('.')[0];
+const getComponentName = (tsxPath) => path.dirname(tsxPath).split(path.sep).reverse()[0];
 
 module.exports = stylelint.createPlugin(
   ruleName,
-  (_, { modularFiles = [] }) => {
-    const modularComponents = modularFiles.map(getComponentName);
-    const noModularRefs = `^(?!(${modularComponents.join('|')})($|__|--))`;
+  (_, { modularComponents = [] }) => {
+    const noModularRefs = `^(?!(${modularComponents.map(getComponentName).join('|')})($|__|--))`;
     return function (root, result) {
       const { file } = root.source.input;
-      const component = getComponentName(file);
+      const component = path.basename(file).split('.')[0];
       const isModular = file.endsWith('.m.css');
 
       stylelint.utils.checkAgainstRule({
