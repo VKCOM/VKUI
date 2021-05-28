@@ -27,7 +27,7 @@ export interface PanelHeaderProps extends
    */
   visor?: boolean;
   /**
-   * Если `false`, то шапка будет в потоке. По-умолчанию true, но если платформа VKCOM, то по-умолчанию false.
+   * Если `false`, то шапка будет в потоке. По умолчанию `true`, но если платформа vkcom, то по умолчанию `false`.
    */
   fixed?: boolean;
 }
@@ -78,7 +78,6 @@ const PanelHeader: FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
   const platform = usePlatform();
   const { webviewType } = useContext(ConfigProviderContext);
   const needShadow = shadow && sizeX === SizeType.REGULAR;
-
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 
   return (
