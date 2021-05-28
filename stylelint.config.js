@@ -1,4 +1,4 @@
-const glob = require('glob');
+const componentTypes = require('./tasks/modular-components');
 const { cssPropSources } = require('./postcss.config');
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
       "importFrom": cssPropSources
     }],
     "vkui/modular": [true, {
-      modularFiles: glob.sync('./src/**/*.m.css')
+      modularComponents: componentTypes.modular
     }]
   }
 };

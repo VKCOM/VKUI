@@ -1,4 +1,7 @@
-{
+const componentModes = require('./tasks/modular-components');
+const moduleImports = `\\b(${componentModes.modular.map(dir => dir.replace('/', '\\W')).join('|')})\\b`;
+
+module.exports = {
   "extends": ["@vkontakte/eslint-config/typescript/react"],
   "parserOptions": {
     "project": "./tsconfig.json",
@@ -105,6 +108,17 @@
     {
       "files": ["src/**/*.e2e.{ts,tsx}", "e2e/**/*", "src/testing/**/*"],
       "extends": ["plugin:jest-playwright/recommended"]
-    }
+    },
+    ...(componentModes.modular.length ? [{
+      "files": componentModes.globals.map(d => `src/components/${d}.tsx`),
+      "rules": {
+        "no-restricted-syntax": ["error",
+          {
+            "selector": `ImportDeclaration[source.value=/${moduleImports}/]:has(Identifier[name!=/(Props|Interface)$/])`,
+            "message": "Globally styled components can not import modular components"
+          },
+        ]
+      }
+    }]: [])
   ]
 }
