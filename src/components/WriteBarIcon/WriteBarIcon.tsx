@@ -66,7 +66,7 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props: WriteBarIconProps) =>
         'WriteBarIcon--disabled': restProps.disabled,
       })}
     >
-      {icon ? icon : children}
+      {icon || children}
       {count && <Caption Component="span" vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>
       }
     </button>
