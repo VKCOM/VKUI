@@ -11,12 +11,11 @@ export interface InfoRowProps extends HTMLAttributes<HTMLDivElement> {
 
 const InfoRow: FunctionComponent<InfoRowProps> = ({ header, children, ...restProps }: InfoRowProps) => {
   const platform = usePlatform();
-  const baseClassName = getClassName('InfoRow', platform);
 
   return (
-    <Headline {...restProps} weight="regular" vkuiClass={baseClassName}>
+    <Headline {...restProps} vkuiClass={getClassName('InfoRow', platform)} weight="regular">
       {hasReactNode(header) &&
-        <Subhead Component="div" vkuiClass="InfoRow__header" weight="regular">{header}</Subhead>
+        <Subhead Component="span" vkuiClass="InfoRow__header" weight="regular">{header}</Subhead>
       }
       {children}
     </Headline>

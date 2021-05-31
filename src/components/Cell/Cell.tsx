@@ -164,6 +164,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
       {...restProps}
       disabled={draggable || removable || disabled}
       Component={selectable ? 'label' : Component}
+      htmlFor={selectable ? name : undefined}
       before={
         <Fragment>
           {(platform === ANDROID || platform === VKCOM) && draggable && (
@@ -186,8 +187,10 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
                 checked={checked}
                 disabled={disabled}
               />
-              <Icon24CheckCircleOff vkuiClass="Cell__marker Cell__marker--off" />
-              <Icon24CheckCircleOn vkuiClass="Cell__marker Cell__marker--on" />
+              <span vkuiClass="Cell__marker">
+                <Icon24CheckCircleOff vkuiClass="Cell__marker-in" />
+                <Icon24CheckCircleOn vkuiClass="Cell__marker-in Cell__marker-in--checked" />
+              </span>
             </Fragment>
           )}
           {before}

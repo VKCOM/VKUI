@@ -44,17 +44,15 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
       <input {...restProps} type="checkbox" vkuiClass="Checkbox__input" ref={getRef} />
       <div vkuiClass="Checkbox__container">
         <div vkuiClass="Checkbox__icon Checkbox__icon--on">
-          {sizeY === SizeType.COMPACT || platform === VKCOM ?
-            <Icon20CheckBoxOn />
-            :
-            <Icon24CheckBoxOn />
+          {sizeY === SizeType.COMPACT || platform === VKCOM
+            ? <Icon20CheckBoxOn />
+            : <Icon24CheckBoxOn />
           }
         </div>
         <div vkuiClass="Checkbox__icon Checkbox__icon--off">
-          {sizeY === SizeType.COMPACT || platform === VKCOM ?
-            <Icon20CheckBoxOff />
-            :
-            <Icon24CheckBoxOff />
+          {sizeY === SizeType.COMPACT || platform === VKCOM
+            ? <Icon20CheckBoxOff />
+            : <Icon24CheckBoxOff />
           }
         </div>
         <ContentComponent weight="regular" vkuiClass="Checkbox__content">{children}</ContentComponent>

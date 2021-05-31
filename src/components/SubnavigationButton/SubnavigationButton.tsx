@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import { hasReactNode } from '../../lib/utils';
+import { getTitleFromChildren, hasReactNode } from '../../lib/utils';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { Icon16Dropdown } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -77,6 +77,7 @@ export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: Subnavi
           'SubnavigationButton--selected': selected,
         },
       )}
+      aria-label={getTitleFromChildren(children)}
     >
       <div vkuiClass="SubnavigationButton__in">
         {hasReactNode(before) && <div vkuiClass="SubnavigationButton__before">{before}</div>}

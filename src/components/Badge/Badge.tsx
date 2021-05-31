@@ -14,13 +14,13 @@ export const Badge: FunctionComponent<BadgeProps> = ({
   const platform = usePlatform();
 
   return (
-    <div
+    <span
       vkuiClass={classNames(
         getClassName('Badge', platform),
         `Badge--${mode}`,
       )}
       {...restProps}>
-    </div>
+    </span>
   );
 };
 

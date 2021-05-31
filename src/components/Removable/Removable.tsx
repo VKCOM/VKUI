@@ -94,7 +94,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
             vkuiClass="Removable__action Removable__action--remove"
             onClick={onRemoveClick}
           >
-            <Icon24Cancel aria-hidden="true" />
+            <Icon24Cancel />
           </IconButton>
         </div>
       )}
@@ -103,11 +103,12 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
         <React.Fragment>
           <div vkuiClass="Removable__content" style={{ transform: `translateX(-${removeOffset}px)` }}>
             <button
+              type="button"
               aria-label={removePlaceholderString}
               vkuiClass="Removable__action Removable__action--indicator"
               onClick={onRemoveActivateClick}
             >
-              <i vkuiClass="Removable__action-in" aria-hidden="true" />
+              <i vkuiClass="Removable__action-in" role="presentation" />
             </button>
 
             {children}
@@ -116,6 +117,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
           </div>
 
           <button
+            type="button"
             tabIndex={isRemoveActivated ? null : -1}
             ref={removeButtonRef}
             vkuiClass="Removable__action Removable__action--remove"

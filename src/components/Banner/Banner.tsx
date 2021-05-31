@@ -27,7 +27,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Срабатывает при клике на иконку крестика при `asideMode="dismiss"`.
    */
-  onDismiss?: MouseEventHandler<HTMLDivElement>;
+  onDismiss?: MouseEventHandler<HTMLButtonElement>;
   /**
    * Содержимое, отображаемое в левой части баннера.
    */
@@ -137,10 +137,14 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
 
         {asideMode === 'dismiss' &&
         <div vkuiClass="Banner__dismiss">
-          <div vkuiClass="Banner__dismissIcon" onClick={onDismiss}>
+          <button
+            type="button"
+            vkuiClass="Banner__dismissIcon"
+            onClick={onDismiss}
+          >
             {(platform === ANDROID || platform === VKCOM) && <Icon24Cancel />}
             {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
-          </div>
+          </button>
         </div>
         }
       </InnerComponent>

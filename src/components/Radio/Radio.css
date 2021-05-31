@@ -17,6 +17,7 @@
 }
 
 .Radio__icon {
+  display: block;
   flex-shrink: 0;
   box-sizing: border-box;
   border-radius: 50%;
@@ -32,20 +33,20 @@
 }
 
 .Radio__content {
+  display: block;
   flex-grow: 1;
   max-width: 100%;
   color: var(--text_primary);
 }
 
 .Radio__description {
+  display: block;
   color: var(--text_secondary);
 }
 
 .Radio--ios {
   padding: 0 12px;
 }
-
-.Radio--ios .Radio__container {}
 
 .Radio--ios .Radio__icon {
   width: 22px;
@@ -103,8 +104,6 @@
   padding: 0 16px;
 }
 
-.Radio--android .Radio__container {}
-
 .Radio--android .Radio__icon {
   width: 22px;
   height: 22px;
@@ -160,8 +159,6 @@
 .Radio--vkcom {
   padding: 0 16px;
 }
-
-.Radio--vkcom .Radio__container {}
 
 .Radio--vkcom .Radio__icon {
   width: 16px;

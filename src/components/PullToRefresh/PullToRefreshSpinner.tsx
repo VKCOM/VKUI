@@ -11,6 +11,7 @@ export interface PullToRefreshSpinnerProps extends HTMLAttributes<HTMLDivElement
   strokeWidth?: number;
   on?: boolean;
   progress?: number;
+  'aria-label'?: string;
 }
 
 const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
@@ -19,6 +20,7 @@ const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
   size,
   strokeWidth,
   style,
+  ...restProps
 }: PullToRefreshSpinnerProps) => {
   const radius = 0.5 * size - 0.5 * strokeWidth;
   const dasharray = 2 * Math.PI * radius;
@@ -32,8 +34,10 @@ const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
         'PullToRefresh__spinner--on': on,
       })}
       style={style}
+      aria-label={on ? restProps['aria-label'] : undefined}
     >
       <svg
+        role="presentation"
         vkuiClass="PullToRefresh__spinner-self"
         style={{
           width: size,
@@ -67,10 +71,11 @@ const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
 };
 
 PullToRefreshSpinner.defaultProps = {
-  size: 24,
-  strokeWidth: 2.5,
-  on: true,
-  progress: null,
+  'size': 24,
+  'strokeWidth': 2.5,
+  'on': true,
+  'progress': null,
+  'aria-label': 'Пожалуйста, подождите...',
 };
 
 export default React.memo(PullToRefreshSpinner);

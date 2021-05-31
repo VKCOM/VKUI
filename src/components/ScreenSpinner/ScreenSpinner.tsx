@@ -4,7 +4,9 @@ import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 
-export interface ScreenSpinnerProps extends HTMLAttributes<HTMLDivElement>, SpinnerProps {}
+export interface ScreenSpinnerProps extends HTMLAttributes<HTMLDivElement>, SpinnerProps {
+  'aria-label'?: string;
+}
 
 const ScreenSpinner: FunctionComponent<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
   const { style, className, ...restProps } = props;
@@ -24,7 +26,8 @@ const ScreenSpinner: FunctionComponent<ScreenSpinnerProps> = (props: ScreenSpinn
 };
 
 ScreenSpinner.defaultProps = {
-  size: 'large',
+  'size': 'large',
+  'aria-label': 'Пожалуйста, подождите...',
 };
 
 export default ScreenSpinner;

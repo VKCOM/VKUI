@@ -25,6 +25,9 @@
 .Chip__remove {
   margin-left: 4px;
   margin-right: -2px;
+  padding: 0;
+  border: none;
+  background: transparent;
   cursor: pointer;
 }
 
