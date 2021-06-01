@@ -20,6 +20,7 @@ export enum ViewHeight {
 }
 
 export interface AdaptivityContextInterface {
+  isDesktop?: boolean;
   sizeX?: SizeType;
   sizeY?: SizeType;
   viewWidth?: ViewWidth;

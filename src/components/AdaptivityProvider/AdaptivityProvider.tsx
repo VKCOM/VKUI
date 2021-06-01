@@ -71,6 +71,7 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
   let sizeY = SizeType.REGULAR;
   let sizeX = SizeType.REGULAR;
   let hasMouse = typeof props.hasMouse === 'boolean' ? props.hasMouse : _hasMouse;
+  let isDesktop = false;
 
   if (windowWidth >= DESKTOP_SIZE) {
     viewWidth = ViewWidth.DESKTOP;
@@ -103,8 +104,13 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
     sizeY = SizeType.COMPACT;
   }
 
+  if (viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM)) {
+    isDesktop = true;
+  }
+
   props.sizeX && (sizeX = props.sizeX);
   props.sizeY && (sizeY = props.sizeY);
+  typeof props.isDesktop === 'boolean' && (isDesktop = props.isDesktop);
 
-  return { viewWidth, viewHeight, sizeX, sizeY, hasMouse };
+  return { isDesktop, viewWidth, viewHeight, sizeX, sizeY, hasMouse };
 }

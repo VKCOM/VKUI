@@ -2,7 +2,7 @@ import React, { Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { transitionEvent } from '../../lib/supportEvents';
 import { withPlatform } from '../../hoc/withPlatform';
-import { withAdaptivity, AdaptivityProps, ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
@@ -76,13 +76,8 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
     }
   };
 
-  get isDesktop() {
-    const { viewWidth, viewHeight, hasMouse } = this.props;
-    return viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
-  }
-
   waitTransitionFinish(eventHandler: AnimationEndCallback) {
-    if (this.isDesktop) {
+    if (this.props.isDesktop) {
       return eventHandler();
     }
 
@@ -103,14 +98,10 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       text,
       style,
       platform,
-      viewWidth,
-      viewHeight,
-      hasMouse,
+      isDesktop,
       iosCloseItem,
       ...restProps
     } = this.props;
-
-    const isDesktop = this.isDesktop;
 
     const DropdownComponent = isDesktop
       ? ActionSheetDropdownDesktop
@@ -158,7 +149,5 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 }
 
 export default withAdaptivity(withPlatform(ActionSheet), {
-  viewWidth: true,
-  viewHeight: true,
-  hasMouse: true,
+  isDesktop: true,
 });

@@ -3,7 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { usePlatform } from '../../hooks/usePlatform';
-import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
+import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { Ref } from '../../types';
 import { multiRef } from '../../lib/utils';
@@ -33,10 +33,9 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
   const {
     children,
     header,
+    isDesktop,
     viewWidth,
-    viewHeight,
     sizeX,
-    hasMouse,
     onClose,
     settlingHeight,
     dynamicContentHeight,
@@ -49,7 +48,6 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
     updateModalHeight();
   }, [children]);
 
-  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   const modalContext = useContext(ModalRootContext);
@@ -87,8 +85,7 @@ ModalPage.defaultProps = {
 };
 
 export default withAdaptivity(ModalPage, {
+  isDesktop: true,
   viewWidth: true,
-  viewHeight: true,
   sizeX: true,
-  hasMouse: true,
 });
