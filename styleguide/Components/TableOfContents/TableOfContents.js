@@ -4,16 +4,18 @@ import { Icon28ChevronDownOutline, Icon28ChevronUpOutline } from '@vkontakte/ico
 import './TableOfContents.css';
 
 const normalizer = (sections) => {
-  return sections.map(({ name, content, sections = [], components = [], expand = false, search }) => {
+  return sections.map(({ name, title, content, sections = [], components = [], expand = false, search }) => {
     const children = normalizer([...sections, ...components.map((component) => {
       return {
         name: component.name,
+        title: component.title,
         href: component.href,
         content: component.filepath,
       }
     })]);
 
     return {
+      title,
       name,
       content,
       href: content && `#/${name}`,
@@ -114,7 +116,7 @@ class TableOfContents extends React.PureComponent {
           {section.sections.length > 0 && !section.content && section.expand ?
             <Fragment>
               <Separator className="TableOfContents__separator" />
-              <Header mode="secondary">{section.name}</Header>
+              <Header mode="secondary">{section.title || section.name}</Header>
             </Fragment> :
             <SimpleCell
               href={section.href}
@@ -126,7 +128,7 @@ class TableOfContents extends React.PureComponent {
               onClick={this.onExpandCellClick}
               data-section-name={section.name}
             >
-              {section.name}
+              {section.title || section.name}
             </SimpleCell>
           }
           {section.search && <Search onChange={this.onSearchChange} data-section-name={section.name} className="TableOfContents__search" />}

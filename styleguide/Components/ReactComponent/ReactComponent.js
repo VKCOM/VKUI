@@ -3,7 +3,7 @@ import Heading from '../Heading/index';
 import Slot from '@rsg-components/Slot';
 import Markdown from '@rsg-components/Markdown';
 import Examples from '@rsg-components/Examples';
-import { SectionHeading } from '../SectionHeading/SectionHeading';
+import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
 import { Caption, Link } from '@vkui';
 import pkg from '../../../package.json'
 import './ReactComponent.css';
@@ -21,7 +21,7 @@ const ReactComponent = ({ component, exampleMode }) => {
       {/*{pathLine && <Pathline>{pathLine}</Pathline>}*/}
       {description && <Markdown text={description} />}
       {examples.length && <Examples examples={examples} name={name} exampleMode={exampleMode} />}
-      <SectionHeading href={`#/${name}?id=props`}>Свойства и методы</SectionHeading>
+      <SectionSubheading href={`#/${name}?id=props`}>Свойства и методы</SectionSubheading>
       <Slot name="docsTabs" props={component} />
     </div>
   )

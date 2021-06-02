@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react';
 import { Settings } from '../Settings/Settings';
-import { SectionHeading } from '../SectionHeading/SectionHeading';
+import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
 
 class PlaygroundRenderer extends React.Component {
 
@@ -23,12 +23,12 @@ class PlaygroundRenderer extends React.Component {
 
     return (
       <div className="Playground">
-        <SectionHeading href={`#/${name}?id=example`}>Пример реализации</SectionHeading>
+        <SectionSubheading href={`#/${name}?id=example`}>Пример реализации</SectionSubheading>
         <Settings />
         <div className="Playground__preview" {...wrapperProps} data-preview={name}>
           { cloneElement(preview, { ...preview.props, autoLayout, containerStyle, integration, config, exampleId }) }
         </div>
-        <SectionHeading href={`#/${name}?id=code`}>Редактируемый код</SectionHeading>
+        <SectionSubheading href={`#/${name}?id=code`}>Редактируемый код</SectionSubheading>
         <div className="Playground__code">
           {tabBody}
         </div>

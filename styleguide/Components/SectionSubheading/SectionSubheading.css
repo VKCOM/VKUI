@@ -1,10 +1,10 @@
-.SectionHeading {
+.SectionSubheading {
   margin-top: 36px;
   margin-bottom: 18px;
   position: relative;
 }
 
-.SectionHeading__link {
+.SectionSubheading__link {
   position: absolute;
   right: 100%;
   padding-right: 6px;
@@ -13,11 +13,11 @@
   opacity: 0;
 }
 
-.SectionHeading:hover .SectionHeading__link {
+.SectionSubheading:hover .SectionSubheading__link {
   opacity: 1;
 }
 
-.SectionHeading__anchor {
+.SectionSubheading__anchor {
   position: relative;
   top: -66px;
 }

@@ -17,6 +17,8 @@ module.exports = {
     ParaRenderer: path.join(__dirname, './Components/Para/ParaRenderer'),
     CodeRenderer: path.join(__dirname, './Components/Code/CodeRenderer'),
     TextRenderer: path.join(__dirname, './Components/Text/TextRenderer'),
+    Section: path.join(__dirname, './Components/Section'),
+    SectionHeadingRenderer: path.join(__dirname, './Components/SectionHeading/SectionHeadingRenderer'),
     'Markdown/Blockquote': path.join(__dirname, './Components/Blockquote'),
     'Markdown/List': path.join(__dirname, './Components/List'),
     'Markdown/MarkdownHeading': path.join(__dirname, './Components/MarkdownHeading'),
@@ -38,19 +40,24 @@ module.exports = {
   exampleMode: 'expand',
   assetsDir:  path.join(__dirname, `assets`),
   sections: [{
-    name: 'О VKUI',
+    title: 'О VKUI',
+    name: 'About',
     content: './pages/intro.md',
   }, {
-    name: 'Быстрый старт',
+    title: 'Быстрый старт',
+    name: 'QuickStart',
     content: './pages/quick_start.md',
   }, {
-    name: 'Основа',
+    title: 'Основа',
+    name: 'Basics',
     expand: true,
     sections: [{
-      name: 'Структура экранов',
+      title: 'Структура экранов',
+      name: 'Structure',
       content: './pages/structure.md'
     }, {
-      name: 'Режимы подключения',
+      title: 'Режимы подключения',
+      name: 'Modes',
       content: './pages/modes.md'
     }]
   }, {
@@ -207,19 +214,24 @@ module.exports = {
         content: './pages/helpers.md'
       },
       {
-        name: 'Server Side Rendering',
+        title: 'Серверный рендеринг',
+        name: 'SSR',
         content: './pages/ssr.md'
       },
       {
+        title: 'Иконки',
         name: 'Icons',
         content: './pages/icons.md'
       }, {
+        title: 'Темы',
         name: 'Themes',
         content: './pages/themes.md'
       }, {
+        title: 'Утилиты',
         name: 'Utils',
         content: './pages/utils.md'
       }, {
+        title: 'Дизайн',
         name: 'Design',
         content: './pages/design.md'
       }]
