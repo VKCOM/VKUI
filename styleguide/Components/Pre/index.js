@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'clsx';
-import Styled, { JssInjectedProps } from '@rsg-components/Styled';
+import Styled  from '@rsg-components/Styled';
 import prismTheme from '../prismTheme';
 import './Pre.css';
 
@@ -11,14 +11,7 @@ const styles = ({ color }) => ({
   },
 });
 
-export interface PreProps {
-  className?: string;
-  children: React.ReactNode;
-}
-
-type PrePropsWithClasses = JssInjectedProps & PreProps;
-
-export const PreRenderer: React.FunctionComponent<PrePropsWithClasses> = ({
+export const PreRenderer = ({
   classes,
   className,
   children,
@@ -42,4 +35,4 @@ PreRenderer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default Styled<PrePropsWithClasses>(styles)(PreRenderer);
+export default Styled(styles)(PreRenderer);

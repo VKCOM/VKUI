@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { PlatformSelect } from '../PlatformSelect';
 import { SchemeSelect } from '../SchemeSelect';
 import { WebviewTypeSelect } from '../WebviewTypeSelect';
@@ -10,7 +10,7 @@ import './Settings.css';
 import { Platform } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 
-export const Settings: FC = () => {
+export const Settings = () => {
   return (
     <StyleGuideContext.Consumer>
       {(context) => {

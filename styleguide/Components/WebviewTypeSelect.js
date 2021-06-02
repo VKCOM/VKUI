@@ -1,5 +1,5 @@
 import React  from 'react';
-import { WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
+import { WebviewType } from '@vkui';
 import { Setting } from './Setting/Setting';
 
 export const WebviewTypeSelect = ({ onChange, value }) => (

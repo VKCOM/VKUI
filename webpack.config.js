@@ -64,6 +64,10 @@ const config = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      '@rsg-components': path.resolve(__dirname, 'node_modules/react-styleguidist/lib/client/rsg-components'),
+      '@vkui': path.resolve(__dirname, 'src'),
+    }
   },
   devtool: 'source-map',
   stats: {

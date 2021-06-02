@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import * as React from 'react';
 import './Blockquote.css';
 
-export const Blockquote: FC = ({ children }) => {
+export const Blockquote = ({ children }) => {
   return (
     <blockquote className="Blockquote">{children}</blockquote>
   )

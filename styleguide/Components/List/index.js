@@ -1,8 +1,8 @@
-import React, { FC, Children } from 'react';
+import React from 'react';
 import Text from '../Text';
 import './List.css';
 
-export const List: FC<{ ordered?: boolean }> = ({ children, ordered }) => {
+export const List = ({ children, ordered }) => {
 
   return (
     <Text Component={ordered ? 'ol' : 'ul'} className="List">

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Header, IconButton, SimpleCell, Group, Search, classNames, Separator, Headline, Footer } from '@vkui';
+import { Header, IconButton, SimpleCell, Group, Search, classNames, Separator, Footer } from '@vkui';
 import { Icon28ChevronDownOutline, Icon28ChevronUpOutline } from '@vkontakte/icons';
 import './TableOfContents.css';
 
@@ -83,7 +83,7 @@ class TableOfContents extends React.PureComponent {
   }
 
   search(sections, query) {
-    let result: Record<string, boolean> = {};
+    let result = {};
     sections.forEach((section) => {
       let found = section.name.toLowerCase().includes(query.toLowerCase());
       if (section.sections.length > 0) {

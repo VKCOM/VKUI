@@ -1,5 +1,5 @@
 import React from 'react';
-import Heading from '../Heading';
+import Heading from '../Heading/index';
 import Slot from '@rsg-components/Slot';
 import Markdown from '@rsg-components/Markdown';
 import Examples from '@rsg-components/Examples';

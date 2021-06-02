@@ -5,34 +5,15 @@ import Sections from '@rsg-components/Sections';
 import Error from '@rsg-components/Error';
 import NotFound from '@rsg-components/NotFound';
 import Context from '@rsg-components/Context';
-import { querystring } from '@vkontakte/vkjs';
-
-// export interface StyleGuideProps {
-//   codeRevision: number;
-//   cssRevision: string;
-//   config: Rsg.ProcessedStyleguidistConfig;
-//   slots: any;
-//   sections: Rsg.Section[];
-//   welcomeScreen?: boolean;
-//   patterns?: string[];
-//   displayMode?: string;
-//   allSections?: Rsg.Section[];
-//   pagePerSection?: boolean;
-// }
-
-// interface StyleGuideState {
-//   error: Error | boolean;
-//   info: React.ErrorInfo | null;
-// }
 
 export default class StyleGuide extends Component {
 
-  public state = {
+  state = {
     error: false,
     info: null,
   };
 
-  public componentDidCatch(error: Error, info: React.ErrorInfo) {
+  componentDidCatch(error, info) {
     this.setState({
       error,
       info,
@@ -43,7 +24,7 @@ export default class StyleGuide extends Component {
     return window.location.hash === '';
   }
 
-  public render() {
+  render() {
     const { error, info } = this.state;
     const {
       config,
@@ -78,7 +59,7 @@ export default class StyleGuide extends Component {
           }
         >
           {this.isRootUrl() && <Sections sections={[allSections[0]]} depth={1} />}
-          {!this.isRootUrl() && sections.length && <Sections sections={sections} depth={1} />}
+          {!this.isRootUrl() && sections.length > 0 && <Sections sections={sections} depth={1} />}
           {!this.isRootUrl() && !sections.length && <NotFound />}
         </StyleGuideRenderer>
       </Context.Provider>

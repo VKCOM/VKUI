@@ -2,16 +2,7 @@ import React from 'react';
 import './Table.css';
 import { Text } from '@vkui';
 
-interface TableProps {
-  columns: {
-    caption: string;
-    render(row: any): React.ReactNode;
-  }[];
-  rows: any[];
-  getRowKey(row: any): string;
-}
-
-export const TableRenderer: React.FunctionComponent<TableProps> = ({
+export const TableRenderer = ({
   columns,
   rows,
   getRowKey,

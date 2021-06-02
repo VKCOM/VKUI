@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Link } from '@vkui';
 
-export const LinkRenderer: FC = (props) => {
+export const LinkRenderer = (props) => {
 
   return (
     <Link {...props} />

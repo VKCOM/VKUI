@@ -1,9 +1,0 @@
-{
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "paths": {
-      "@vkui": ["../src"],
-      "@rsg-components": ["../node_modules/react-styleguidist/lib/client/rsg-components"]
-    }
-  }
-}

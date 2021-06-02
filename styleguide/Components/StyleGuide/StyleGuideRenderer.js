@@ -49,7 +49,7 @@ try {
 let StyleGuideRenderer = ({ children, toc }) => {
   const [state, setState] = useState(initialState);
   const { width, height, platform, scheme, hasMouse } = state;
-  const [styleGuideScheme, setStyleGuideScheme] = useState<Scheme>(Scheme.BRIGHT_LIGHT);
+  const [styleGuideScheme, setStyleGuideScheme] = useState(Scheme.BRIGHT_LIGHT);
 
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };

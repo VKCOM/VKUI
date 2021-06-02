@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import SimpleEditor from 'react-simple-code-editor';
-// @ts-ignore
 import { highlight as prismHighlight, languages } from 'prismjs';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-jsx';
-import Styled, { JssInjectedProps } from '@rsg-components/Styled';
+import Styled from '@rsg-components/Styled';
 import prismTheme from '../prismTheme';
 import './Editor.css';
 import { Tappable } from '@vkui';
 import { Icon28CopyOutline } from '@vkontakte/icons';
 
-const highlight = (code: string) => prismHighlight(code, languages.jsx, 'jsx');
+const highlight = (code) => prismHighlight(code, languages.jsx, 'jsx');
 
 const styles = ({ color }) => ({
   root: {
@@ -20,20 +19,10 @@ const styles = ({ color }) => ({
   },
 });
 
-export interface EditorProps extends JssInjectedProps {
-  code: string;
-  onChange: (code: string) => void;
-}
+export class Editor extends Component {
+  state = { code: this.props.code, prevCode: this.props.code };
 
-interface EditorState {
-  code: string;
-  prevCode: string;
-}
-
-export class Editor extends Component<EditorProps> {
-  public state = { code: this.props.code, prevCode: this.props.code };
-
-  public static getDerivedStateFromProps(nextProps: EditorProps, prevState: EditorState) {
+  static getDerivedStateFromProps(nextProps, prevState) {
     const { code } = nextProps;
     if (prevState.prevCode !== code) {
       return {
@@ -44,20 +33,20 @@ export class Editor extends Component<EditorProps> {
     return null;
   }
 
-  public shouldComponentUpdate(nextProps: EditorProps, nextState: EditorState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return nextState.code !== this.state.code;
   }
 
-  private handleChange = (code: string) => {
+  handleChange = (code) => {
     this.setState({ code });
     this.props.onChange(code);
   };
 
-  private onCopyClick = () => {
+  onCopyClick = () => {
     navigator.clipboard.writeText(this.state.code);
   }
 
-  public render() {
+  render() {
     return (
       <div className="Editor">
         {navigator.clipboard &&
@@ -76,4 +65,4 @@ export class Editor extends Component<EditorProps> {
   }
 }
 
-export default Styled<EditorProps>(styles)(Editor);
+export default Styled(styles)(Editor);

@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Text } from '@vkui';
 import './Type.css';
 
-export const TypeRenderer: FC = ({ children }) => {
+export const TypeRenderer = ({ children }) => {
   return (
     <Text className="Type" weight="regular">
       {children}

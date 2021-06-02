@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import './Code.css';
 
-export const CodeRenderer: FC = ({ children }) => {
+export const CodeRenderer = ({ children }) => {
   return (
     <span className="Code">{children}</span>
   )

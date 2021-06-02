@@ -1,7 +1,7 @@
 import React from 'react';
-import './Setting.css';
 import { Headline, Link, classNames } from '@vkui';
 import { Icon16Dropdown } from '@vkontakte/icons';
+import './Setting.css';
 
 export const Setting = ({ label, onChange, value, options, children, disabled }) => {
   return (

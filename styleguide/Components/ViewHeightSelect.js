@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import {
   MOBILE_LANDSCAPE_HEIGHT,
   MEDIUM_HEIGHT,
-} from '../../src/components/AdaptivityProvider/AdaptivityProvider';
+} from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
 import { Setting } from './Setting/Setting';
 
 export const SMALL_HEIGHT = 667;
