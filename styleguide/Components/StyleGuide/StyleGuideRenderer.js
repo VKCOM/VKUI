@@ -49,7 +49,6 @@ try {
 let StyleGuideRenderer = ({ children, toc }) => {
   const [state, setState] = useState(initialState);
   const { width, height, platform, scheme, hasMouse } = state;
-  const [styleGuideScheme, setStyleGuideScheme] = useState(Scheme.BRIGHT_LIGHT);
 
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };
@@ -69,8 +68,10 @@ let StyleGuideRenderer = ({ children, toc }) => {
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
-      <ConfigProvider scheme={styleGuideScheme}>
-        <StyleGuideHeader scheme={styleGuideScheme} setScheme={setStyleGuideScheme} />
+      <ConfigProvider scheme={scheme}>
+        <StyleGuideHeader scheme={scheme} setScheme={(value) => {
+          setContext({ scheme: value });
+        }} />
         <SplitLayout className="StyleGuide">
           <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuide__sidebar">
             <div className="StyleGuide__sidebarIn">

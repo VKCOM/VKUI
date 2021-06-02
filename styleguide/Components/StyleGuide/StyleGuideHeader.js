@@ -32,7 +32,6 @@ export const StyleGuideHeader = ({ scheme, setScheme }) => {
           </div>
           <div className="StyleGuideHeader__aside">
             <IconButton className="StyleGuideHeader__scheme" onClick={() => {
-              console.log(scheme);
               if (scheme === Scheme.SPACE_GRAY) {
                 setScheme(Scheme.BRIGHT_LIGHT)
               } else if (scheme === Scheme.BRIGHT_LIGHT) {
