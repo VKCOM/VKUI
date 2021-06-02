@@ -1,4 +1,4 @@
-import '../src/styles/vkui.css';
+import '../src/styles/themes.css';
 import '../src/styles/unstable.css';
 
 import { useState, useRef } from 'react';

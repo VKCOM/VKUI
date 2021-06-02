@@ -44,8 +44,8 @@ class Example extends React.Component {
           </Panel>
           <Panel id="panel2">
             <PanelHeader
-              left={<PanelHeaderBack  onClick={() => this.setState({ mainPanel: 'panel1' })} label={platform === VKCOM ? 'Назад' : undefined} />}
-              right={<PanelHeaderButton label={<Counter size="s" mode="prominent">21</Counter>}><Icon28PictureOutline/></PanelHeaderButton>}
+              left={<PanelHeaderBack onClick={() => this.setState({ mainPanel: 'panel1' })} label={platform === VKCOM ? 'Назад' : undefined} />}
+              right={<PanelHeaderButton aria-label="Изображения" label={<Counter size="s" mode="prominent" aria-label="Обновлений: ">21</Counter>}><Icon28PictureOutline/></PanelHeaderButton>}
             >
               Вторая панель
             </PanelHeader>
@@ -60,8 +60,8 @@ class Example extends React.Component {
               left={<PanelHeaderBack onClick={() => this.setState({ mainPanel: 'panel2' })}/>}
               right={
                 <React.Fragment>
-                  <PanelHeaderButton label={<Counter size="s" mode="prominent">3</Counter>}><Icon28SettingsOutline/></PanelHeaderButton>
-                  <PanelHeaderButton label={<Counter size="s" mode="prominent">2</Counter>}><Icon28Notifications/></PanelHeaderButton>
+                  <PanelHeaderButton aria-label="Настройки" label={<Counter size="s" mode="prominent" aria-label="Новые настройки: ">3</Counter>}><Icon28SettingsOutline /></PanelHeaderButton>
+                  <PanelHeaderButton aria-label="Уведомления" label={<Counter size="s" mode="prominent" aria-label="Уведомлений: ">2</Counter>}><Icon28Notifications /></PanelHeaderButton>
                 </React.Fragment>
               }
             >

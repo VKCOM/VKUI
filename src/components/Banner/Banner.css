@@ -71,10 +71,12 @@
   z-index: 2;
   width: 48px;
   height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0;
+  padding: 12px;
   color: var(--icon_tertiary);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .Banner__dismissIcon:active {

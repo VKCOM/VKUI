@@ -5,6 +5,7 @@
   position: relative;
   color: var(--writebar_icon);
   height: 52px;
+  width: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,7 +46,6 @@
 /* iOS */
 
 .WriteBarIcon--ios {
-  width: 44px;
   color: var(--writebar_icon);
 }
 
@@ -70,7 +70,6 @@
 
 .WriteBarIcon--android,
 .WriteBarIcon--vkcom {
-  width: 44px;
   color: var(--icon_secondary);
 }
 

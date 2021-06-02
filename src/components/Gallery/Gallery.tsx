@@ -360,6 +360,8 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
       showArrows,
       window,
       document,
+      getRef,
+      getRootRef,
       ...restProps
     } = this.props;
 
@@ -398,7 +400,7 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
         </Touch>
 
         {bullets &&
-        <div vkuiClass={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
+        <div aria-hidden="true" vkuiClass={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
           {React.Children.map(children, (_item: ReactElement, index: number) =>
             <div
               vkuiClass={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === slideIndex })}

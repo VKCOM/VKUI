@@ -73,6 +73,7 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props: MiniInfoCellProps) =>
         {before}
       </div>
       <Text
+        Component="span"
         vkuiClass="MiniInfoCell__content"
         weight={mode === 'more' ? 'medium' : 'regular'}
       >

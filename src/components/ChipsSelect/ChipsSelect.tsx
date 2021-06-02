@@ -321,7 +321,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
   );
 };
 
-ChipsSelect.defaultProps = {
+const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   ...chipsInputDefaultProps,
   emptyText: 'Ничего не найдено',
   creatableText: 'Создать значение',
@@ -342,5 +342,7 @@ ChipsSelect.defaultProps = {
     );
   },
 };
+
+ChipsSelect.defaultProps = chipsSelectDefaultProps;
 
 export default withAdaptivity(ChipsSelect, { sizeY: true });

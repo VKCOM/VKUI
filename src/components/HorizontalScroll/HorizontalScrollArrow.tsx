@@ -9,11 +9,15 @@ export interface HorizontalScrollArrowProps {
 const HorizontalScrollArrow: FC<HorizontalScrollArrowProps> = (props: HorizontalScrollArrowProps) => {
   const { onClick, direction } = props;
   return (
-    <div vkuiClass={`HorizontalScroll__arrow HorizontalScroll__arrow-${direction}`} onClick={onClick}>
-      <div vkuiClass="HorizontalScroll__arrow-icon">
+    <button
+      type="button"
+      vkuiClass={`HorizontalScroll__arrow HorizontalScroll__arrow-${direction}`}
+      onClick={onClick}
+    >
+      <span vkuiClass="HorizontalScroll__arrow-icon">
         <Icon24Chevron />
-      </div>
-    </div>
+      </span>
+    </button>
   );
 };
 

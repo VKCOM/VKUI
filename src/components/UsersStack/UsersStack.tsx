@@ -62,7 +62,7 @@ const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
         )
       }
     >
-      <div vkuiClass="UsersStack__photos">
+      <div vkuiClass="UsersStack__photos" role="presentation">
         {photosShown.map((photo, i) => (
           <div
             key={i}
@@ -72,7 +72,7 @@ const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
         ))}
 
         {canShowOthers &&
-          <Caption weight="medium" level="1" vkuiClass="UsersStack__photo UsersStack__photo--others">
+          <Caption weight="medium" level="1" vkuiClass="UsersStack__photo UsersStack__photo--others" aria-hidden="true">
             <span>+{othersCount}</span>
           </Caption>
         }

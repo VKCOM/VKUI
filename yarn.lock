@@ -2203,10 +2203,10 @@
     babel-eslint "^10.0.3"
     eslint-config-google "^0.9.1"
 
-"@vkontakte/icons@^1.91.0":
-  version "1.91.0"
-  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-1.91.0.tgz#f5c0660ef7f9ac2cecb73e41d857f00c3f5fdd6d"
-  integrity sha512-RP+T7n0wu3bj3DdsqrjfaWrfrbHmxp2RxaTcKrQCk7B3whcabL9d7uwim/SOGNiZNXBaF/ypJLcsNdojsFE/2A==
+"@vkontakte/icons@^1.100.0":
+  version "1.100.0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/icons/-/icons-1.100.0.tgz#a915424229d64bff947a52220356d74061dcbb4c"
+  integrity sha512-LqP8CJ3az3nSxIWhG71K9hRYDZmJ2VWCGzTxdC1kUvQSfUKV7fv5TfUK7rnbr/mPldE7NmAHBcxZIBTkfI2frA==
   dependencies:
     es6-object-assign "1.1.0"
     svg-baker-runtime "1.4.7"
@@ -2838,6 +2838,11 @@ babel-plugin-module-resolver@^4.1.0:
     pkg-up "^3.1.0"
     reselect "^4.0.0"
     resolve "^1.13.1"
+
+babel-plugin-transform-remove-imports@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-remove-imports/-/babel-plugin-transform-remove-imports-1.5.4.tgz#bad8ac363e2711c60b5094bcc0b0b1802e3566e9"
+  integrity sha512-APata3t5Z2E1QMp/Afku+hzAODCUVATp4EgrUlkeXU9MWr4TxR/yp3/xvkerLRF8isvIzukcBJfa8x9XAp8bBg==
 
 babel-preset-current-node-syntax@^1.0.0:
   version "1.0.0"

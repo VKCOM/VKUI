@@ -26,35 +26,31 @@
 .Cell__checkbox {
   display: none;
 }
-/* TODO избавиться от специфичного селектора после облегчения селекторов SimpleCell */
-.Cell .Cell__marker {
-  flex-shrink: 0;
-  padding: 0;
-}
-/* TODO избавиться от специфичного селектора после облегчения селекторов SimpleCell */
-.Cell .Cell__marker--off {
-  display: block;
-  color: var(--icon_tertiary);
-}
-/* TODO избавиться от специфичного селектора после облегчения селекторов SimpleCell */
-.Cell .Cell__marker--on {
-  display: none;
-}
 
 .Cell--selectable .Cell__marker {
+  position: relative;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
   margin-right: 16px;
+  padding: 0;
+  color: var(--icon_tertiary);
+}
+
+.Cell--selectable .Cell__marker-in--checked {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  color: var(--accent);
 }
 
 .Cell--selectable.Cell--disabled {
   opacity: .6;
 }
 
-.Cell__checkbox:checked ~ .Cell__marker--on {
-  display: block;
-}
-
-.Cell__checkbox:checked ~ .Cell__marker--off {
-  display: none;
+.Cell--selectable .Cell__checkbox:checked ~ .Cell__marker .Cell__marker-in--checked {
+  visibility: initial;
 }
 
 .Cell--removable .SimpleCell {
