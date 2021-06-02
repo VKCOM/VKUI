@@ -28,6 +28,7 @@
   font-family: var(--font-tt);
   font-weight: 500;
   color: var(--accent);
+  text-decoration: none;
 }
 
 .StyleGuideHeader__logo span {

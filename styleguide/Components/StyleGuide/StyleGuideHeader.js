@@ -1,4 +1,4 @@
-import { SplitCol, SplitLayout, Link, IconButton, Scheme } from '@vkui';
+import { SplitCol, SplitLayout, Link, IconButton, Scheme, Tappable } from '@vkui';
 import { Icon28LogoVk, Icon28MoonOutline } from '@vkontakte/icons';
 import React from 'react';
 import pkg from '../../../package.json';
@@ -11,10 +11,10 @@ export const StyleGuideHeader = ({ scheme, setScheme }) => {
       <SplitLayout>
         <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuideHeader__left">
           <div className="StyleGuideHeader__leftIn">
-            <a className="StyleGuideHeader__logo">
+            <Tappable activeMode="opacity" hoverMode="opacity" Component="a" href="#/About" className="StyleGuideHeader__logo">
               <Icon28LogoVk />
               <span>ui</span>
-            </a>
+            </Tappable>
           </div>
         </SplitCol>
         <SplitCol width="100%" className="StyleGuideHeader__main">
