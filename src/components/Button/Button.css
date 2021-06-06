@@ -163,6 +163,12 @@
   border-radius: 4px;
 }
 
+.Button--vkcom.Button--lvl-secondary .Icon,
+.Button--vkcom.Button--lvl-tertiary .Icon,
+.Button--vkcom.Button--lvl-outline .Icon {
+  opacity: .72;
+}
+
 /*
   sizeY = Compact
 */
@@ -198,41 +204,4 @@
 .Button--sizeY-compact.Button--sz-l .Button__content {
   padding-top: 6px;
   padding-bottom: 8px;
-}
-
-/**
- * Counter
- */
-.Button--lvl-primary .Counter {
-  background-color: var(--button_primary_foreground);
-  color: var(--button_primary_background);
-}
-
-.Button--lvl-secondary .Counter {
-  background-color: var(--button_secondary_foreground);
-  color: var(--background_content);
-}
-
-.Button--lvl-tertiary .Counter {
-  background-color: var(--button_tertiary_foreground);
-  color: var(--background_content);
-}
-
-.Button--lvl-outline .Counter {
-  background-color: var(--button_outline_foreground);
-  color: var(--background_content);
-}
-
-.Button--lvl-commerce .Counter {
-  background-color: var(--button_commerce_foreground);
-  color: var(--button_commerce_background);
-}
-
-.Button--vkcom.Button--lvl-secondary .Counter,
-.Button--vkcom.Button--lvl-tertiary .Counter,
-.Button--vkcom.Button--lvl-outline .Counter,
-.Button--vkcom.Button--lvl-secondary .Icon,
-.Button--vkcom.Button--lvl-tertiary .Icon,
-.Button--vkcom.Button--lvl-outline .Icon {
-  opacity: .72;
 }
