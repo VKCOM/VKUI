@@ -3,9 +3,9 @@
   box-sizing: border-box;
   outline: none;
   text-decoration: none;
-  border: 1px solid transparent;
+  border: none;
   margin: 0;
-  padding: 0;
+  padding: 1px 16px;
   user-select: none;
 }
 
@@ -70,7 +70,7 @@
 
 .Button--lvl-outline {
   background-color: transparent;
-  border: 1px solid var(--button_outline_border);
+  box-shadow: inset 0 0 0 1px var(--button_outline_border);
   color: var(--button_outline_foreground);
 }
 
@@ -91,13 +91,12 @@
 
 .Button--lvl-overlay_outline {
   background-color: transparent;
-  border: 1px solid #fff;
+  box-shadow: inset 0 0 0 1px #fff;
   color: #fff;
 }
 
 .Button--sz-s {
   min-height: 30px;
-  padding: 0 15px;
 }
 
 .Button--sz-s .Button__before:not(:last-child) {
@@ -117,7 +116,6 @@
 }
 
 .Button--sz-m {
-  padding: 0 15px;
   min-height: 36px;
 }
 
@@ -134,8 +132,9 @@
 }
 
 .Button--sz-l {
-  padding: 0 19px;
   min-height: 44px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .Button--sz-l .Button__before:not(:last-child) {
