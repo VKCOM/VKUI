@@ -16,7 +16,7 @@ import {
 } from '../../lib/touch';
 import { HasRootRef } from '../../types';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
-import { setRef } from '../../lib/utils';
+import { setRef, noop } from '../../lib/utils';
 
 export interface TouchProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   onEnter?(outputEvent: MouseEvent): void;
@@ -78,8 +78,6 @@ class Touch extends Component<TouchProps & DOMProps> {
     return this.props.document;
   }
 
-  private subscribed = false;
-
   componentDidMount() {
     if (canUseDOM) {
       this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
@@ -92,8 +90,7 @@ class Touch extends Component<TouchProps & DOMProps> {
 
   componentWillUnmount() {
     this.container.removeEventListener(events[0], this.onStart);
-    // unsubscribe if touchEnabled OR !touchEnabled & gesture in progress
-    this.subscribed && this.unsubscribe(this.container);
+    this.unsubscribe();
 
     this.container.removeEventListener('mouseenter', this.onEnter);
     this.container.removeEventListener('mouseleave', this.onLeave);
@@ -265,27 +262,26 @@ class Touch extends Component<TouchProps & DOMProps> {
       this.onLeave(e);
     }
 
-    !touchEnabled && this.unsubscribe(this.document);
+    !touchEnabled && this.unsubscribe();
   };
 
   subscribe(element: HTMLElement | Document) {
-    this.subscribed = true;
+    this.unsubscribe();
     const listenerParams = { capture: this.props.useCapture, passive: false };
     element.addEventListener(events[1], this.onMove, listenerParams);
     element.addEventListener(events[2], this.onEnd, listenerParams);
     element.addEventListener(events[3], this.onEnd, listenerParams);
+    this.unsubscribe = () => {
+      // Здесь нужен последний аргумент с такими же параметрами, потому что
+      // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
+      // https://github.com/VKCOM/VKUI/issues/444
+      element.removeEventListener(events[1], this.onMove, listenerParams);
+      element.removeEventListener(events[2], this.onEnd, listenerParams);
+      element.removeEventListener(events[3], this.onEnd, listenerParams);
+      this.unsubscribe = noop;
+    };
   }
-
-  unsubscribe(element: HTMLElement | Document) {
-    // Здесь нужен последний аргумент с такими же параметрами, потому что
-    // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
-    // https://github.com/VKCOM/VKUI/issues/444
-    const listenerParams = { capture: this.props.useCapture, passive: false };
-    element.removeEventListener(events[1], this.onMove, listenerParams);
-    element.removeEventListener(events[2], this.onEnd, listenerParams);
-    element.removeEventListener(events[3], this.onEnd, listenerParams);
-    this.subscribed = false;
-  }
+  unsubscribe = noop;
 
   /**
    * Обработчик событий dragstart
