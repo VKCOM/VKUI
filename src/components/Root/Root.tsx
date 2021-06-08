@@ -11,9 +11,9 @@ import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
-import { getNavId } from '../../lib/getNavId';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
 
-export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, NavIdProps {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**
