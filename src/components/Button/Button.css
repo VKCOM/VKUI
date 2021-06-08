@@ -4,9 +4,11 @@
   outline: none;
   text-decoration: none;
   border: none;
+  min-height: 30px;
   margin: 0;
   padding: 1px 16px;
   user-select: none;
+  border-radius: 8px;
 }
 
 .Button__in {
@@ -16,6 +18,21 @@
 
 .Button__before:not(:last-child) {
   margin-left: -4px;
+  margin-right: 6px;
+}
+
+.Button__after:not(:first-child) {
+  margin-left: 6px;
+}
+
+.Button__content {
+  padding-top: 4px;
+  padding-bottom: 6px;
+}
+
+.Button__content--caps {
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .Button[disabled] {
@@ -95,38 +112,8 @@
   color: #fff;
 }
 
-.Button--sz-s {
-  min-height: 30px;
-}
-
-.Button--sz-s .Button__before:not(:last-child) {
-  margin-right: 6px;
-}
-
-.Button--sz-s .Button__after:not(:first-child) {
-  margin-left: 6px;
-}
-
-.Button--sz-s .Button__content {
-  padding-top: 4px;
-  padding-bottom: 6px;
-}
-
-.Button--sz-s .Button__content--caps {
-  padding-top: 7px;
-  padding-bottom: 7px;
-}
-
 .Button--sz-m {
   min-height: 36px;
-}
-
-.Button--sz-m .Button__before:not(:last-child) {
-  margin-right: 6px;
-}
-
-.Button--sz-m .Button__after:not(:first-child) {
-  margin-left: 6px;
 }
 
 .Button--sz-m .Button__content {
@@ -148,6 +135,11 @@
   margin-left: 8px;
 }
 
+.Button--sz-l .Button__content {
+  padding-top: 10px;
+  padding-bottom: 12px;
+}
+
 .Button--sz-l .Button__in {
   justify-content: center;
 }
@@ -165,18 +157,6 @@
 }
 
 /*
-  Android
- */
-.Button--android {
-  border-radius: 8px;
-}
-
-.Button--android.Button--sz-l .Button__content {
-  padding-top: 10px;
-  padding-bottom: 12px;
-}
-
-/*
   VKCOM
 */
 .Button--vkcom {
@@ -186,17 +166,16 @@
 /*
   sizeY = Compact
 */
-/* small size */
-.Button--sizeY-compact.Button--sz-s {
+.Button--sizeY-compact {
   min-height: 26px;
 }
 
-.Button--sizeY-compact.Button--sz-s .Button__content {
+.Button--sizeY-compact .Button__content {
   padding-top: 3px;
   padding-bottom: 5px;
 }
 
-.Button--sizeY-compact.Button--sz-s .Button__content--caps {
+.Button--sizeY-compact .Button__content--caps {
   padding-top: 5px;
   padding-bottom: 5px;
 }
