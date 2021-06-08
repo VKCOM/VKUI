@@ -108,11 +108,13 @@
 }
 
 .Button--sz-s .Button__content {
-  padding: 4px 0 6px;
+  padding-top: 4px;
+  padding-bottom: 6px;
 }
 
 .Button--sz-s .Button__content--caps {
-  padding: 7px 0;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .Button--sz-m {
@@ -128,7 +130,8 @@
 }
 
 .Button--sz-m .Button__content {
-  padding: 6px 0 8px;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 .Button--sz-l {
@@ -157,7 +160,8 @@
 }
 
 .Button--ios.Button--sz-l .Button__content {
-  padding: 9px 0 11px;
+  padding-top: 9px;
+  padding-bottom: 11px;
 }
 
 /*
@@ -168,7 +172,8 @@
 }
 
 .Button--android.Button--sz-l .Button__content {
-  padding: 10px 0 12px;
+  padding-top: 10px;
+  padding-bottom: 12px;
 }
 
 /*
@@ -192,7 +197,8 @@
 }
 
 .Button--sizeY-compact.Button--sz-s .Button__content--caps {
-  padding: 5px 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 /* medium size */
