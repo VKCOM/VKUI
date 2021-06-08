@@ -47,6 +47,13 @@
   color: var(--text_primary);
 }
 
+.Search__input::-webkit-search-decoration,
+.Search__input::-webkit-search-cancel-button,
+.Search__input::-webkit-search-results-button,
+.Search__input::-webkit-search-results-decoration {
+  display: none;
+}
+
 .Search--has-after .Search__input {
   border-radius: 10px 0 0 10px;
 }

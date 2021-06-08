@@ -93,9 +93,9 @@ const Search: FC<SearchProps> = ({
         <div vkuiClass="Search__width" />
         <label vkuiClass="Search__control">
           <input
+            type="search"
             {...inputProps}
             ref={inputRef}
-            type="text"
             vkuiClass="Search__input"
             onFocus={onFocus}
             onBlur={onBlur}
