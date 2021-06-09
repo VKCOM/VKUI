@@ -4,11 +4,12 @@ import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
-import { canUseDOM, withDOM, useDOM, DOMProps } from '../../lib/dom';
+import { withDOM, DOMProps } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
 import { clamp } from '../../helpers/math';
+import { useTimeout } from '../../hooks/useTimeout';
 
 export interface BaseGalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
@@ -435,8 +436,6 @@ const Gallery: FC<GalleryProps> = ({
   const slides = React.Children.toArray(children).filter((item) => Boolean(item));
   const childCount = slides.length;
 
-  const { window } = useDOM();
-
   const handleChange: GalleryProps['onChange'] = useCallback((current) => {
     if (current === slideIndex) {
       return;
@@ -444,14 +443,9 @@ const Gallery: FC<GalleryProps> = ({
     !isControlled && setSlideIndex(current);
     onChange && onChange(current);
   }, [onChange, slideIndex]);
-  // autoplay
-  useEffect(() => {
-    if (!timeout || !canUseDOM) {
-      return undefined;
-    }
-    const id = window.setTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
-    return () => window.clearTimeout(id);
-  }, [timeout, slideIndex, childCount]);
+
+  const autoplay = useTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
+  useEffect(() => timeout ? autoplay.set() : autoplay.clear(), [timeout, slideIndex]);
 
   // prevent invalid slideIndex
   // any slide index is invalid with no slides, just keep it as is
