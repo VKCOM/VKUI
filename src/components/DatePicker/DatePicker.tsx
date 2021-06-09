@@ -3,6 +3,7 @@ import {
   ChangeEventHandler,
   HTMLAttributes,
   FC,
+  useCallback,
 } from 'react';
 import Input from '../Input/Input';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -139,6 +140,34 @@ const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   );
 };
 
+const DatePickerNative: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
+  min, max,
+  dayPlaceholder, monthPlaceholder, yearPlaceholder,
+  popupDirection,
+  defaultValue,
+  hasMouse,
+  day, month, year,
+  onDateChange,
+  ...restProps
+}) => {
+  const defProps = day && month && year
+    ? { defaultValue: convertToInputFormat({ day, month, year }) }
+    : {};
+  const onStringChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
+    onDateChange(parseInputDate(e.currentTarget.value));
+  }, [onDateChange]);
+  return (
+    <Input
+      {...restProps}
+      type="date"
+      onChange={onStringChange}
+      min={convertToInputFormat(min)}
+      max={convertToInputFormat(max)}
+      {...defProps}
+    />
+  );
+};
+
 class DatePicker extends Component<DatePickerProps, DatePickerState> {
   constructor(props: DatePickerProps) {
     super(props);
@@ -160,51 +189,9 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
     this.props.onDateChange && this.props.onDateChange({ ...update });
   };
 
-  onStringChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    this.onDateChange(parseInputDate(e.currentTarget.value));
-  };
-
-  nativeView() {
-    const {
-      name, min, max,
-      dayPlaceholder, monthPlaceholder, yearPlaceholder,
-      popupDirection,
-      defaultValue,
-      hasMouse,
-      ...restProps
-    } = this.props;
-    const { day, month, year } = this.state;
-
-    if (day && month && year) {
-      return (
-        <Input
-          {...restProps}
-          name={name}
-          type="date"
-          defaultValue={convertToInputFormat(this.state as DatePickerState)}
-          onChange={this.onStringChange}
-          min={convertToInputFormat(min)}
-          max={convertToInputFormat(max)}
-        />
-      );
-    }
-
-    return (
-      <Input
-        {...restProps}
-        name={name}
-        type="date"
-        onChange={this.onStringChange}
-        min={convertToInputFormat(min)}
-        max={convertToInputFormat(max)}
-      />
-    );
-  }
-
   render() {
-    return this.props.hasMouse
-      ? <DatePickerCustom {...this.props} {...this.state} onDateChange={this.onDateChange} />
-      : this.nativeView();
+    const Cmp = this.props.hasMouse ? DatePickerCustom : DatePickerNative;
+    return <Cmp {...this.props} {...this.state} onDateChange={this.onDateChange} />;
   }
 }
 
