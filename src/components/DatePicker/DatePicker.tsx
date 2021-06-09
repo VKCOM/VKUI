@@ -37,6 +37,35 @@ export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'd
 
 type GetOptions = () => CustomSelectOptionInterface[];
 
+// Переводим state к формату гг-мм-дд
+function convertToInputFormat({ day, month, year }: Partial<DatePickerDateFormat>) {
+  return `${year}-${leadingZero(month)}-${leadingZero(day)}`;
+}
+
+// Переводим дату формата гг-мм-дд к объекту
+function parseInputDate(date: string): DatePickerDateFormat {
+  const splited = date.split('-');
+
+  return {
+    day: Number(splited[2]),
+    month: Number(splited[1]),
+    year: Number(splited[0]),
+  };
+}
+
+function getMonthMaxDay({ month, year }: Partial<DatePickerDateFormat>) {
+  return month ? new Date(year || 2016, month, 0).getDate() : 31;
+}
+
+const range = (start: number, end: number) => {
+  const swap = start > end;
+  const arr = [];
+  for (let i = Math.min(start, end); i <= Math.max(start, end); i++) {
+    arr.push(i);
+  }
+  return swap ? arr.reverse() : arr;
+};
+
 class DatePicker extends Component<DatePickerProps, DatePickerState> {
   constructor(props: DatePickerProps) {
     super(props);
@@ -53,56 +82,11 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
     max: { day: 31, month: 12, year: 2100 },
   };
 
-  // Переводим state к формату гг-мм-дд
-  private convertToInputFormat(date: DatePickerState) {
-    const { day, month, year } = date;
-
-    return `${year}-${leadingZero(month)}-${leadingZero(day)}`;
-  };
-
-  // Переводим дату формата гг-мм-дд к объекту
-  parseInputDate = (date: string) => {
-    const splited = date.split('-');
-
-    return {
-      day: Number(splited[2]),
-      month: Number(splited[1]),
-      year: Number(splited[0]),
-    };
-  };
-
-  getDaysInMonth = (year: number, month: number) => {
-    return new Date(year, month, 0).getDate();
-  };
-
-  getMonthMaxDay = () => {
-    const { month, year } = this.state;
-
-    if (!month) {
-      return 31;
-    }
-
-    if (!year) {
-      return this.getDaysInMonth(2016, month);
-    }
-
-    return this.getDaysInMonth(year, month);
-  };
-
   getDayOptions: GetOptions = () => {
-    const maxMonthDay = this.getMonthMaxDay();
-    const array: CustomSelectOptionInterface[] = new Array(maxMonthDay);
-
-    for (let i = 0; i < maxMonthDay; i++) {
-      const value = i + 1;
-
-      array[i] = {
-        label: String(value),
-        value: value,
-      };
-    }
-
-    return array;
+    return range(1, getMonthMaxDay(this.state)).map((value) => ({
+      label: String(value),
+      value,
+    }));
   };
 
   getMonthOptions: GetOptions = () => {
@@ -120,18 +104,10 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
   getYearOptions: GetOptions = () => {
     const { max, min } = this.props;
-    const yearOptions: CustomSelectOptionInterface[] = [];
-    const maxYear = max.year;
-    const minYear = min.year;
-
-    for (let value = maxYear; value >= minYear; value--) {
-      yearOptions.push({
-        label: String(value),
-        value: value,
-      });
-    }
-
-    return yearOptions;
+    return range(max.year, min.year).map((value) => ({
+      label: String(value),
+      value: value,
+    }));
   };
 
   onSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -146,7 +122,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
 
   onStringChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { onDateChange } = this.props;
-    const date = this.parseInputDate(e.currentTarget.value);
+    const date = parseInputDate(e.currentTarget.value);
 
     this.setState(() => ({
       ...date,
@@ -205,7 +181,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
             />
           </div>
         </div>
-        <input type="hidden" name={name} value={this.convertToInputFormat(this.state as DatePickerState)} />
+        <input type="hidden" name={name} value={convertToInputFormat(this.state)} />
       </div>
     );
   }
@@ -227,10 +203,10 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
           {...restProps}
           name={name}
           type="date"
-          defaultValue={this.convertToInputFormat(this.state as DatePickerState)}
+          defaultValue={convertToInputFormat(this.state as DatePickerState)}
           onChange={this.onStringChange}
-          min={this.convertToInputFormat(min)}
-          max={this.convertToInputFormat(max)}
+          min={convertToInputFormat(min)}
+          max={convertToInputFormat(max)}
         />
       );
     }
@@ -241,8 +217,8 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
         name={name}
         type="date"
         onChange={this.onStringChange}
-        min={this.convertToInputFormat(min)}
-        max={this.convertToInputFormat(max)}
+        min={convertToInputFormat(min)}
+        max={convertToInputFormat(max)}
       />
     );
   }
