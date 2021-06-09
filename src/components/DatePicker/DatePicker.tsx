@@ -1,9 +1,9 @@
 import {
-  Component,
   ChangeEventHandler,
   HTMLAttributes,
   FC,
   useCallback,
+  useState,
 } from 'react';
 import Input from '../Input/Input';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -21,11 +21,9 @@ export type DatePickerDateFormat = {
   year: number;
 };
 
-type DatePickerState = Partial<DatePickerDateFormat>;
-
 export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>, HasPlatform, AdaptivityProps {
-  min: DatePickerDateFormat;
-  max: DatePickerDateFormat;
+  min?: DatePickerDateFormat;
+  max?: DatePickerDateFormat;
   name?: string;
   defaultValue?: DatePickerDateFormat;
   popupDirection?: 'top' | 'bottom';
@@ -168,32 +166,26 @@ const DatePickerNative: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   );
 };
 
-class DatePicker extends Component<DatePickerProps, DatePickerState> {
-  constructor(props: DatePickerProps) {
-    super(props);
+const DatePicker: FC<DatePickerProps> = ({ hasMouse, defaultValue, ...props }) => {
+  const [value, setValue] = useState<Partial<DatePickerDateFormat>>(defaultValue || {
+    day: 0,
+    month: 0,
+    year: 0,
+  });
 
-    this.state = props.defaultValue ? props.defaultValue : {
-      day: 0,
-      month: 0,
-      year: 0,
-    };
-  }
+  const onDateChange = useCallback((update: DatePickerDateFormat) => {
+    setValue(update);
+    props.onDateChange && props.onDateChange({ ...update });
+  }, [props.onDateChange]);
 
-  static defaultProps = {
-    min: { day: 0, month: 0, year: 0 },
-    max: { day: 31, month: 12, year: 2100 },
-  };
+  const Cmp = hasMouse ? DatePickerCustom : DatePickerNative;
+  return <Cmp {...props} {...value} onDateChange={onDateChange} />;
+};
 
-  onDateChange = (update: DatePickerDateFormat) => {
-    this.setState(update);
-    this.props.onDateChange && this.props.onDateChange({ ...update });
-  };
-
-  render() {
-    const Cmp = this.props.hasMouse ? DatePickerCustom : DatePickerNative;
-    return <Cmp {...this.props} {...this.state} onDateChange={this.onDateChange} />;
-  }
-}
+DatePicker.defaultProps = {
+  min: { day: 0, month: 0, year: 0 },
+  max: { day: 31, month: 12, year: 2100 },
+};
 
 export default withAdaptivity(DatePicker, {
   hasMouse: true,
