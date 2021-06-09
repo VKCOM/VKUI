@@ -2,12 +2,13 @@ import {
   Component,
   ChangeEventHandler,
   HTMLAttributes,
+  FC,
 } from 'react';
 import Input from '../Input/Input';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
-import CustomSelect, { CustomSelectOptionInterface } from '../CustomSelect/CustomSelect';
+import CustomSelect from '../CustomSelect/CustomSelect';
 
 const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
@@ -35,8 +36,6 @@ export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'd
   disabled?: boolean;
 }
 
-type GetOptions = () => CustomSelectOptionInterface[];
-
 // Переводим state к формату гг-мм-дд
 function convertToInputFormat({ day, month, year }: Partial<DatePickerDateFormat>) {
   return `${year}-${leadingZero(month)}-${leadingZero(day)}`;
@@ -53,7 +52,7 @@ function parseInputDate(date: string): DatePickerDateFormat {
   };
 }
 
-function getMonthMaxDay({ month, year }: Partial<DatePickerDateFormat>) {
+function getMonthMaxDay(month?: number, year?: number) {
   return month ? new Date(year || 2016, month, 0).getDate() : 31;
 }
 
@@ -64,6 +63,80 @@ const range = (start: number, end: number) => {
     arr.push(i);
   }
   return swap ? arr.reverse() : arr;
+};
+
+const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
+  name, min, max,
+  dayPlaceholder, monthPlaceholder, yearPlaceholder,
+  popupDirection,
+  defaultValue,
+  hasMouse,
+  monthNames,
+  day, month, year,
+  onDateChange,
+  disabled,
+  ...restProps
+}) => {
+  const onSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    onDateChange({
+      day,
+      month,
+      year,
+      [e.target.name]: Number(e.target.value),
+    });
+  };
+  const dayOptions = range(1, getMonthMaxDay(month, year)).map((value) => ({
+    label: String(value),
+    value,
+  }));
+  const monthOptions = (monthNames || DefaultMonths).map((name, index) => ({
+    label: name,
+    value: index + 1,
+  }));
+  const yearOptions = range(max.year, min.year).map((value) => ({
+    label: String(value),
+    value: value,
+  }));
+  return (
+    <div vkuiClass="DatePicker" {...restProps}>
+      <div vkuiClass="DatePicker__container">
+        <div vkuiClass="DatePicker__day">
+          <CustomSelect
+            name="day"
+            value={day}
+            options={dayOptions}
+            placeholder={dayPlaceholder}
+            popupDirection={popupDirection}
+            onChange={onSelectChange}
+            disabled={disabled}
+          />
+        </div>
+        <div vkuiClass="DatePicker__month">
+          <CustomSelect
+            name="month"
+            value={month}
+            options={monthOptions}
+            placeholder={monthPlaceholder}
+            popupDirection={popupDirection}
+            onChange={onSelectChange}
+            disabled={disabled}
+          />
+        </div>
+        <div vkuiClass="DatePicker__year">
+          <CustomSelect
+            name="year"
+            value={year}
+            options={yearOptions}
+            placeholder={yearPlaceholder}
+            popupDirection={popupDirection}
+            onChange={onSelectChange}
+            disabled={disabled}
+          />
+        </div>
+      </div>
+      <input type="hidden" name={name} value={convertToInputFormat({ day, month, year })} />
+    </div>
+  );
 };
 
 class DatePicker extends Component<DatePickerProps, DatePickerState> {
@@ -82,109 +155,14 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
     max: { day: 31, month: 12, year: 2100 },
   };
 
-  getDayOptions: GetOptions = () => {
-    return range(1, getMonthMaxDay(this.state)).map((value) => ({
-      label: String(value),
-      value,
-    }));
-  };
-
-  getMonthOptions: GetOptions = () => {
-    const { monthNames } = this.props;
-
-    return (monthNames || DefaultMonths).map((name, index) => {
-      const value = index + 1;
-
-      return {
-        label: name,
-        value: value,
-      };
-    });
-  };
-
-  getYearOptions: GetOptions = () => {
-    const { max, min } = this.props;
-    return range(max.year, min.year).map((value) => ({
-      label: String(value),
-      value: value,
-    }));
-  };
-
-  onSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const { onDateChange } = this.props;
-
-    this.setState({
-      [e.target.name]: Number(e.target.value),
-    }, () => {
-      onDateChange && onDateChange(this.state as DatePickerDateFormat);
-    });
+  onDateChange = (update: DatePickerDateFormat) => {
+    this.setState(update);
+    this.props.onDateChange && this.props.onDateChange({ ...update });
   };
 
   onStringChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { onDateChange } = this.props;
-    const date = parseInputDate(e.currentTarget.value);
-
-    this.setState(() => ({
-      ...date,
-    }));
-
-    onDateChange && onDateChange(date);
+    this.onDateChange(parseInputDate(e.currentTarget.value));
   };
-
-  customView() {
-    const {
-      name, min, max,
-      dayPlaceholder, monthPlaceholder, yearPlaceholder,
-      popupDirection,
-      defaultValue,
-      hasMouse,
-      monthNames,
-      disabled,
-      ...restProps
-    } = this.props;
-    const { day, month, year } = this.state;
-
-    return (
-      <div vkuiClass="DatePicker" {...restProps}>
-        <div vkuiClass="DatePicker__container">
-          <div vkuiClass="DatePicker__day">
-            <CustomSelect
-              name="day"
-              value={day}
-              options={this.getDayOptions()}
-              placeholder={dayPlaceholder}
-              popupDirection={popupDirection}
-              onChange={this.onSelectChange}
-              disabled={disabled}
-            />
-          </div>
-          <div vkuiClass="DatePicker__month">
-            <CustomSelect
-              name="month"
-              value={month}
-              options={this.getMonthOptions()}
-              placeholder={monthPlaceholder}
-              popupDirection={popupDirection}
-              onChange={this.onSelectChange}
-              disabled={disabled}
-            />
-          </div>
-          <div vkuiClass="DatePicker__year">
-            <CustomSelect
-              name="year"
-              value={year}
-              options={this.getYearOptions()}
-              placeholder={yearPlaceholder}
-              popupDirection={popupDirection}
-              onChange={this.onSelectChange}
-              disabled={disabled}
-            />
-          </div>
-        </div>
-        <input type="hidden" name={name} value={convertToInputFormat(this.state)} />
-      </div>
-    );
-  }
 
   nativeView() {
     const {
@@ -224,7 +202,9 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
   }
 
   render() {
-    return this.props.hasMouse ? this.customView() : this.nativeView();
+    return this.props.hasMouse
+      ? <DatePickerCustom {...this.props} {...this.state} onDateChange={this.onDateChange} />
+      : this.nativeView();
   }
 }
 
