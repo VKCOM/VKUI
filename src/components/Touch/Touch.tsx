@@ -299,15 +299,19 @@ class Touch extends Component<TouchProps & DOMProps> {
    * @return {void}
    */
   postGestureClick: ClickHandler = (e) => {
-    if (this.didSlide) {
-      if ((e.target as HTMLElement).tagName === 'A') {
-        e.preventDefault();
-      }
-      if (this.props.noSlideClick) {
-        e.stopPropagation();
-      }
-      this.didSlide = false;
+    const { onClickCapture, noSlideClick } = this.props;
+    if (!this.didSlide) {
+      return onClickCapture && onClickCapture(e);
     }
+    if ((e.target as HTMLElement).tagName === 'A') {
+      e.preventDefault();
+    }
+    if (noSlideClick) {
+      e.stopPropagation();
+    } else {
+      onClickCapture && onClickCapture(e);
+    }
+    this.didSlide = false;
   };
 
   getRef: RefCallback<HTMLElement> = (container) => {

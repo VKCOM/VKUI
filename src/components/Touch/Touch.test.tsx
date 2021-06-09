@@ -43,22 +43,34 @@ describe('Touch', () => {
       slideRight(screen.getByRole('link'));
       expect(event.defaultPrevented).toBe(true);
     });
+    it('handles onClickCapture', () => {
+      const cb = jest.fn(() => null);
+      render(<Touch onClickCapture={cb} data-testid="touch" />);
+      userEvent.click(screen.getByTestId('touch'));
+      expect(cb).toBeCalled();
+    });
     it('does not fire click after slide if noSlideClick=true', () => {
-      let clicked = {
-        container: false,
-        touch: false,
-        content: false,
-      };
+      const clicked = new Set();
       render(
-        <div onClick={() => clicked.container = true}>
-          <Touch onMove={noop} onClick={() => clicked.touch = true} noSlideClick>
-            <div onClick={() => clicked.content = true} data-testid="inner" />
+        <div onClick={() => clicked.add('container')}>
+          <Touch
+            onMove={noop}
+            onClickCapture={() => clicked.add('touchCapture')}
+            onClick={() => clicked.add('touch')}
+            noSlideClick
+          >
+            <div onClick={() => clicked.add('content')} data-testid="inner" />
           </Touch>
         </div>);
       slideRight(screen.getByTestId('inner'));
-      expect(clicked.container).toBe(false);
-      expect(clicked.touch).toBe(false);
-      expect(clicked.content).toBe(false);
+      expect(clicked).toEqual(new Set());
+    });
+    it('handles click after slide', () => {
+      const cb = jest.fn(() => null);
+      render(<Touch onClickCapture={cb} data-testid="touch" />);
+      slideRight(screen.getByTestId('touch'));
+      userEvent.click(screen.getByTestId('touch'));
+      expect(cb).toBeCalled();
     });
   });
 });
