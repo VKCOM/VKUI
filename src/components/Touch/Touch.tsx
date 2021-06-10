@@ -62,8 +62,7 @@ export type DragHandler = (e: DragEvent<HTMLElement>) => void;
 const events = getSupportedEvents();
 
 class Touch extends Component<TouchProps & DOMProps> {
-  preventClickDefault = false;
-  stopClickPropagation = false;
+  didSlide = false;
   gesture: Partial<Gesture> = {};
   container: HTMLElement;
 
@@ -247,14 +246,9 @@ class Touch extends Component<TouchProps & DOMProps> {
       if (isSlideX && this.props.onEndX) {
         this.props.onEndX(outputEvent);
       }
-
-      this.stopClickPropagation = this.props.noSlideClick && isSlide;
     }
 
-    const target = e.target as HTMLElement;
-
-    // Если закончили жест на ссылке, выставляем флаг для отмены перехода
-    this.preventClickDefault = target.tagName === 'A' && isSlide;
+    this.didSlide = isSlide;
     this.gesture = {};
 
     // Если это был тач-евент, симулируем отмену hover
@@ -304,17 +298,20 @@ class Touch extends Component<TouchProps & DOMProps> {
    * @param {Object} e Браузерное событие
    * @return {void}
    */
-  onClick: ClickHandler = (e: ReactMouseEvent<HTMLElement>) => {
-    if (this.preventClickDefault) {
-      this.preventClickDefault = false;
+  postGestureClick: ClickHandler = (e) => {
+    const { onClickCapture, noSlideClick } = this.props;
+    if (!this.didSlide) {
+      return onClickCapture && onClickCapture(e);
+    }
+    if ((e.target as HTMLElement).tagName === 'A') {
       e.preventDefault();
     }
-    if (this.stopClickPropagation) {
-      this.stopClickPropagation = false;
+    if (noSlideClick) {
       e.stopPropagation();
-      return;
+    } else {
+      onClickCapture && onClickCapture(e);
     }
-    this.props.onClick && this.props.onClick(e);
+    this.didSlide = false;
   };
 
   getRef: RefCallback<HTMLElement> = (container) => {
@@ -345,7 +342,12 @@ class Touch extends Component<TouchProps & DOMProps> {
     } = this.props;
 
     return (
-      <Component {...restProps} onDragStart={this.onDragStart} onClick={this.onClick} ref={this.getRef}>
+      <Component
+        {...restProps}
+        onDragStart={this.onDragStart}
+        onClickCapture={this.postGestureClick}
+        ref={this.getRef}
+      >
         {this.props.children}
       </Component>
     );
