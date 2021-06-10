@@ -4,6 +4,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from './HorizontalScrollArrow';
 import { easeInOutSine } from '../../lib/fx';
+import { useEventListener } from '../../hooks/useEventListener';
 
 interface ScrollContext {
   scrollElement: HTMLElement | null;
@@ -154,11 +155,8 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props: HorizontalScrollProp
     }
   }, [hasMouse]);
 
-  useEffect(() => {
-    scrollerRef.current && scrollerRef.current.addEventListener('scroll', onscroll);
-    return () => scrollerRef.current && scrollerRef.current.removeEventListener('scroll', onscroll);
-  }, []);
-
+  const scrollEvent = useEventListener('scroll', onscroll);
+  useEffect(() => scrollEvent.add(scrollerRef.current), []);
   useEffect(onscroll, [scrollerRef, children]);
 
   return (

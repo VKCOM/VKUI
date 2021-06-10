@@ -18,6 +18,7 @@ import { useDOM } from '../../lib/dom';
 import Caption from '../Typography/Caption/Caption';
 import { prefixClass } from '../../lib/prefixClass';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useEventListener } from '../../hooks/useEventListener';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
@@ -209,13 +210,8 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     }
   }, [filteredOptions, focusedOption, showCreatable, closeAfterSelect]);
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
+  const clickEvent = useEventListener('click', handleClickOutside);
+  useEffect(() => clickEvent.add(document), []);
 
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;
