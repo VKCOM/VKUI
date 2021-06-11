@@ -2,7 +2,6 @@ import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
-import { ANDROID, VKCOM } from '../../lib/platform';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withContext } from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
@@ -75,7 +74,6 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     popout: null,
   };
 
-  private animationFinishTimeout: ReturnType<typeof setTimeout>;
   private viewNodes: { [id: string]: HTMLElement } = {};
 
   get document() {
@@ -144,13 +142,8 @@ class Root extends Component<RootProps & DOMProps, RootState> {
       return;
     }
 
-    if (animationEvent.supported) {
-      elem.removeEventListener(animationEvent.name, eventHandler);
-      elem.addEventListener(animationEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.animationFinishTimeout);
-      this.animationFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
-    }
+    elem.removeEventListener(animationEvent.name, eventHandler);
+    elem.addEventListener(animationEvent.name, eventHandler);
   }
 
   onAnimationEnd: AnimationEndCallback = (e?: AnimationEvent) => {

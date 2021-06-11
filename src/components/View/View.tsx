@@ -2,7 +2,7 @@ import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElemen
 import { classNames } from '../../lib/classNames';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getClassName } from '../../helpers/getClassName';
-import { IOS, ANDROID, VKCOM } from '../../lib/platform';
+import { IOS } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { removeObjectKeys } from '../../lib/removeObjectKeys';
 import { HasPlatform } from '../../types';
@@ -135,8 +135,6 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   static defaultProps: Partial<ViewProps> = {
     history: [],
   };
-
-  private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   get document() {
     return this.props.document;
@@ -288,13 +286,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
       return;
     }
 
-    if (animationEvent.supported) {
-      elem.removeEventListener(animationEvent.name, eventHandler);
-      elem.addEventListener(animationEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.animationFinishTimeout);
-      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
-    }
+    elem.removeEventListener(animationEvent.name, eventHandler);
+    elem.addEventListener(animationEvent.name, eventHandler);
   }
 
   blurActiveElement(): void {

@@ -28,8 +28,6 @@ export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMP
 
   elementRef: RefObject<HTMLDivElement> = React.createRef();
 
-  private animationFinishTimeout: ReturnType<typeof setTimeout>;
-
   get isDesktop(): boolean {
     return this.props.viewWidth >= ViewWidth.SMALL_TABLET;
   }
@@ -70,13 +68,8 @@ export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMP
 
   waitAnimationFinish(eventHandler: VoidFunction) {
     if (this.elementRef.current) {
-      if (animationEvent.supported) {
-        this.elementRef.current.removeEventListener(animationEvent.name, eventHandler);
-        this.elementRef.current.addEventListener(animationEvent.name, eventHandler);
-      } else {
-        clearTimeout(this.animationFinishTimeout);
-        this.animationFinishTimeout = setTimeout(eventHandler, 200);
-      }
+      this.elementRef.current.removeEventListener(animationEvent.name, eventHandler);
+      this.elementRef.current.addEventListener(animationEvent.name, eventHandler);
     }
   }
 
