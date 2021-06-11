@@ -1,7 +1,6 @@
 import React, { Children, Component, ReactElement } from 'react';
 import { classNames } from '../../lib/classNames';
 import { isFunction } from '../../lib/utils';
-import { transitionEvent } from '../../lib/supportEvents';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withContext } from '../../hoc/withContext';
@@ -211,11 +210,11 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
   waitTransitionFinish(modalState: ModalsStateEntry, eventHandler: () => void) {
     const onceHandler = () => {
-      modalState.innerElement.removeEventListener(transitionEvent.name, onceHandler);
+      modalState.innerElement.removeEventListener('transitionend', onceHandler);
       eventHandler();
     };
 
-    modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
+    modalState.innerElement.addEventListener('transitionend', onceHandler);
   }
 
   switchPrevNext() {

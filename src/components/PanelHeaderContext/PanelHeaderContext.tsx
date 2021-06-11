@@ -2,7 +2,6 @@ import React, { Component, HTMLAttributes, RefObject } from 'react';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import { animationEvent } from '../../lib/supportEvents';
 import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -49,7 +48,6 @@ export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMP
     if (this.props.opened !== prevProps.opened || this.props.viewWidth !== prevProps.viewWidth) {
       if (this.props.opened === false && !this.state.closing) {
         this.setState({ closing: true });
-        this.waitAnimationFinish(this.onAnimationFinish);
       }
 
       if (this.isDesktop && this.props.opened) {
@@ -66,16 +64,7 @@ export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMP
     }
   }
 
-  waitAnimationFinish(eventHandler: VoidFunction) {
-    if (this.elementRef.current) {
-      this.elementRef.current.removeEventListener(animationEvent.name, eventHandler);
-      this.elementRef.current.addEventListener(animationEvent.name, eventHandler);
-    }
-  }
-
-  onAnimationFinish: VoidFunction = () => {
-    this.setState({ closing: false });
-  };
+  onAnimationFinish = () => this.setState({ closing: false });
 
   render() {
     const { children, opened, onClose, platform, viewWidth, hasMouse, window, document, ...restProps } = this.props;
@@ -88,7 +77,7 @@ export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMP
         'PanelHeaderContext--closing': closing,
         'PanelHeaderContext--desktop': this.isDesktop,
       })} vertical="top">
-        <div vkuiClass="PanelHeaderContext__in" ref={this.elementRef}>
+        <div vkuiClass="PanelHeaderContext__in" ref={this.elementRef} onAnimationEnd={closing ? this.onAnimationFinish : null}>
           <div vkuiClass="PanelHeaderContext__content">
             {(opened || closing) && children}
           </div>

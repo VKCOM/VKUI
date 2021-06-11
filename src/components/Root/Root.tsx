@@ -1,7 +1,6 @@
 import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import { animationEvent } from '../../lib/supportEvents';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withContext } from '../../hoc/withContext';
 import { HasPlatform } from '../../types';
@@ -138,12 +137,11 @@ class Root extends Component<RootProps & DOMProps, RootState> {
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEndCallback) {
     if (this.shouldDisableTransitionMotion()) {
-      eventHandler();
-      return;
+      return eventHandler();
     }
 
-    elem.removeEventListener(animationEvent.name, eventHandler);
-    elem.addEventListener(animationEvent.name, eventHandler);
+    elem.removeEventListener('animationend', eventHandler);
+    elem.addEventListener('animationend', eventHandler);
   }
 
   onAnimationEnd: AnimationEndCallback = (e?: AnimationEvent) => {

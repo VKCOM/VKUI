@@ -3,13 +3,12 @@ import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import { transitionEvent } from '../../lib/supportEvents';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
 import Button from '../Button/Button';
-import { hasReactNode } from '../../lib/utils';
+import { hasReactNode, noop } from '../../lib/utils';
 import Headline from '../Typography/Headline/Headline';
 import Title from '../Typography/Title/Title';
 import Caption from '../Typography/Caption/Caption';
@@ -34,20 +33,17 @@ export interface AlertState {
   closing: boolean;
 }
 
-type TransitionEndHandler = (e?: TransitionEvent) => void;
-
 type ItemClickHander = (item: AlertActionInterface) => () => void;
 
 class Alert extends Component<AlertProps, AlertState> {
   constructor(props: AlertProps) {
     super(props);
-    this.element = React.createRef();
     this.state = {
       closing: false,
     };
   }
 
-  element: React.RefObject<HTMLDivElement>;
+  afterClose = noop;
 
   static defaultProps: AlertProps = {
     actionsLayout: 'horizontal',
@@ -59,12 +55,11 @@ class Alert extends Component<AlertProps, AlertState> {
 
     if (autoclose) {
       this.setState({ closing: true });
-      this.waitTransitionFinish((e?: TransitionEvent) => {
-        if (!e || e.propertyName === 'opacity') {
-          autoclose && this.props.onClose();
-          action && action();
-        }
-      });
+      this.afterClose = () => {
+        autoclose && this.props.onClose();
+        action && action();
+        this.afterClose = noop;
+      };
     } else {
       action && action();
     }
@@ -72,21 +67,18 @@ class Alert extends Component<AlertProps, AlertState> {
 
   onClose: VoidFunction = () => {
     this.setState({ closing: true });
-    this.waitTransitionFinish((e?: TransitionEvent) => {
-      if (!e || e.propertyName === 'opacity') {
-        this.props.onClose();
-      }
-    });
+    this.afterClose = () => this.props.onClose && this.props.onClose();
+  };
+
+  onTransitionEnd = (e?: React.TransitionEvent) => {
+    if (!e || e.propertyName === 'opacity') {
+      this.afterClose();
+    }
   };
 
   stopPropagation: MouseEventHandler = (e: SyntheticEvent) => {
     e.stopPropagation();
   };
-
-  waitTransitionFinish(eventHandler: TransitionEndHandler) {
-    this.element.current.removeEventListener(transitionEvent.name, eventHandler);
-    this.element.current.addEventListener(transitionEvent.name, eventHandler);
-  }
 
   renderHeader(header: ReactNode) {
     switch (this.props.platform) {
@@ -168,7 +160,7 @@ class Alert extends Component<AlertProps, AlertState> {
       >
         <div
           {...restProps}
-          ref={this.element}
+          onTransitionEnd={closing ? this.onTransitionEnd : null}
           onClick={this.stopPropagation}
           vkuiClass={classNames(getClassName('Alert', platform), {
             'Alert--v': resolvedActionsLayout === 'vertical',

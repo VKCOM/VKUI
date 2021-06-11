@@ -1,6 +1,5 @@
 import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
 import { classNames } from '../../lib/classNames';
-import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
@@ -299,8 +298,8 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
   }
 
   waitTransitionFinish(elem: HTMLElement, eventHandler: TransitionEventHandler): void {
-    elem.removeEventListener(transitionEvent.name, eventHandler);
-    elem.addEventListener(transitionEvent.name, eventHandler);
+    elem.removeEventListener('transitionend', eventHandler);
+    elem.addEventListener('transitionend', eventHandler);
   }
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEventHandler): void {
@@ -309,8 +308,8 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
       return;
     }
 
-    elem.removeEventListener(animationEvent.name, eventHandler);
-    elem.addEventListener(animationEvent.name, eventHandler);
+    elem.removeEventListener('animationend', eventHandler);
+    elem.addEventListener('animationend', eventHandler);
   }
 
   blurActiveElement(): void {

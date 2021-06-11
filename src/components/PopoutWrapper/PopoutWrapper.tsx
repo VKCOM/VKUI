@@ -1,7 +1,6 @@
 import React, { Component, HTMLAttributes, MouseEvent } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import { animationEvent } from '../../lib/supportEvents';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
@@ -20,8 +19,6 @@ export interface PopoutWrapperState {
 
 export type WindowTouchListener = (e: Event) => void;
 
-export type AnimationEndCallback = (e?: AnimationEvent) => void;
-
 export type ClickHandler = (e: MouseEvent<HTMLDivElement>) => void;
 
 class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapperState> {
@@ -30,7 +27,6 @@ class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapp
     this.state = {
       opened: !props.hasMask,
     };
-    this.elRef = React.createRef();
   }
 
   static defaultProps: PopoutWrapperProps = {
@@ -41,12 +37,9 @@ class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapp
     closing: false,
   };
 
-  elRef: React.RefObject<HTMLDivElement>;
-
   componentDidMount() {
     if (canUseDOM) {
       this.props.window.addEventListener('touchmove', this.preventTouch, { passive: false });
-      this.waitAnimationFinish(this.elRef.current, this.onFadeInEnd);
     }
   }
 
@@ -60,12 +53,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapp
     }
   }
 
-  waitAnimationFinish(elem: HTMLDivElement, eventHandler: AnimationEndCallback) {
-    elem.removeEventListener(animationEvent.name, eventHandler);
-    elem.addEventListener(animationEvent.name, eventHandler);
-  }
-
-  onFadeInEnd: AnimationEndCallback = (e: AnimationEvent) => {
+  onFadeInEnd = (e?: React.AnimationEvent) => {
     if (!e || e.animationName === 'vkui-animation-full-fade-in') {
       this.setState({ opened: true });
     }
@@ -86,7 +74,7 @@ class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapp
           'PopoutWrapper--fixed': fixed,
           'PopoutWrapper--masked': hasMask,
         })}
-        ref={this.elRef}
+        onAnimationEnd={this.state.opened ? null : this.onFadeInEnd}
       >
         <div vkuiClass="PopoutWrapper__container">
           <div
