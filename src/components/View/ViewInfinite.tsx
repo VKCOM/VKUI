@@ -128,7 +128,6 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
     history: [],
   };
 
-  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   get document() {
@@ -302,13 +301,8 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
   }
 
   waitTransitionFinish(elem: HTMLElement, eventHandler: TransitionEventHandler): void {
-    if (transitionEvent.supported) {
-      elem.removeEventListener(transitionEvent.name, eventHandler);
-      elem.addEventListener(transitionEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
-    }
+    elem.removeEventListener(transitionEvent.name, eventHandler);
+    elem.addEventListener(transitionEvent.name, eventHandler);
   }
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEventHandler): void {

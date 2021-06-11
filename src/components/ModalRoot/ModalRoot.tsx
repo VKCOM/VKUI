@@ -627,16 +627,12 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   };
 
   waitTransitionFinish(modalState: ModalsStateEntry, eventHandler: () => void) {
-    if (transitionEvent.supported) {
-      const onceHandler = () => {
-        modalState.innerElement.removeEventListener(transitionEvent.name, onceHandler);
-        eventHandler();
-      };
+    const onceHandler = () => {
+      modalState.innerElement.removeEventListener(transitionEvent.name, onceHandler);
+      eventHandler();
+    };
 
-      modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
-    } else {
-      setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400);
-    }
+    modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
   }
 
   switchPrevNext() {

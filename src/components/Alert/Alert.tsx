@@ -49,8 +49,6 @@ class Alert extends Component<AlertProps, AlertState> {
 
   element: React.RefObject<HTMLDivElement>;
 
-  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
-
   static defaultProps: AlertProps = {
     actionsLayout: 'horizontal',
     actions: [],
@@ -86,13 +84,8 @@ class Alert extends Component<AlertProps, AlertState> {
   };
 
   waitTransitionFinish(eventHandler: TransitionEndHandler) {
-    if (transitionEvent.supported) {
-      this.element.current.removeEventListener(transitionEvent.name, eventHandler);
-      this.element.current.addEventListener(transitionEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300);
-    }
+    this.element.current.removeEventListener(transitionEvent.name, eventHandler);
+    this.element.current.addEventListener(transitionEvent.name, eventHandler);
   }
 
   renderHeader(header: ReactNode) {

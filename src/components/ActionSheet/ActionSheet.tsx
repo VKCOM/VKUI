@@ -4,7 +4,7 @@ import { transitionEvent } from '../../lib/supportEvents';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withAdaptivity, AdaptivityProps, ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
-import { ANDROID, IOS, VKCOM } from '../../lib/platform';
+import { IOS } from '../../lib/platform';
 import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
 import ActionSheetDropdown from './ActionSheetDropdown';
 import { hasReactNode } from '../../lib/utils';
@@ -51,8 +51,6 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
   elRef: React.RefObject<HTMLDivElement>;
 
-  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
-
   static defaultProps: Partial<ActionSheetProps> = {
     popupDirection: 'bottom',
   };
@@ -86,13 +84,8 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
       return eventHandler();
     }
 
-    if (transitionEvent.supported) {
-      this.elRef.current.removeEventListener(transitionEvent.name, eventHandler);
-      this.elRef.current.addEventListener(transitionEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300);
-    }
+    this.elRef.current.removeEventListener(transitionEvent.name, eventHandler);
+    this.elRef.current.addEventListener(transitionEvent.name, eventHandler);
   }
 
   render() {
