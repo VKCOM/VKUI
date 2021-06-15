@@ -80,11 +80,11 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     Component={restProps.href ? 'a' : Component}
     activeMode="opacity"
   >
-    <div vkuiClass="Button__in">
-      {before && <div vkuiClass="Button__before">{before}</div>}
+    <span vkuiClass="Button__in">
+      {before && <span vkuiClass="Button__before">{before}</span>}
       {children && getContent(size, children, sizeY, platform)}
-      {after && <div vkuiClass="Button__after">{after}</div>}
-    </div>
+      {after && <span vkuiClass="Button__after">{after}</span>}
+    </span>
   </Tappable>;
 };
 
