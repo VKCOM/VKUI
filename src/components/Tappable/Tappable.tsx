@@ -1,4 +1,11 @@
-import React, { AllHTMLAttributes, Component, ElementType, RefCallback } from 'react';
+import React, {
+  AllHTMLAttributes,
+  Component,
+  ElementType,
+  KeyboardEventHandler,
+  KeyboardEvent,
+  RefCallback,
+} from 'react';
 import Touch, { TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { classNames } from '../../lib/classNames';
@@ -11,6 +18,7 @@ import { withPlatform } from '../../hoc/withPlatform';
 import { hasHover } from '@vkontakte/vkjs/lib/InputUtils';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
 
 export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;
@@ -139,10 +147,33 @@ class Tappable extends Component<TappableProps, TappableState> {
   };
 
   /*
+   * [a11y]
+   * Обрабатывает событие onkeydown
+   * для кастомных доступных элементов:
+   * - role="link" (активация по Enter)
+   * - role="button" (активация по Space и Enter)
+   */
+  onKeyDown: KeyboardEventHandler = (e: KeyboardEvent<HTMLElement>) => {
+    const { onKeyDown } = this.props;
+
+    if (shouldTriggerClickOnEnterOrSpace(e)) {
+      e.preventDefault();
+      this.container.click();
+    }
+
+    {
+      if (typeof onKeyDown === 'function') {
+        return onKeyDown(e);
+      }
+    }
+  };
+
+  /*
    * Обрабатывает событие touchstart
    */
   onStart: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
+
     if (this.state.hasActive) {
       if (originalEvent.touches && originalEvent.touches.length > 1) {
         deactivateOtherInstances();
@@ -366,6 +397,19 @@ class Tappable extends Component<TappableProps, TappableState> {
       props.onEnd = this.onEnd;
       /* eslint-enable */
       props.getRootRef = this.getRef;
+
+      /*
+       * [a11y]
+       * Проставляет tabindex и подменяет onKeyDown для нужных кастомных доступных элементов
+       */
+      const nativeComponents: ElementType[] = ['a', 'button', 'input', 'textarea', 'label'];
+      if (!nativeComponents.includes(Component) && !restProps.contentEditable) {
+        props.tabIndex = restProps.tabIndex !== undefined ? restProps.tabIndex : 0;
+
+        if (restProps.role === 'button' || restProps.role === 'link') {
+          props.onKeyDown = this.onKeyDown;
+        }
+      }
     } else {
       props.ref = this.getRef;
     }
