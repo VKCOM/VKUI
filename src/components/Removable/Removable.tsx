@@ -8,7 +8,7 @@ import { useDOM } from '../../lib/dom';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';
 import IconButton from '../IconButton/IconButton';
-import { useEventListener } from '../../hooks/useEventListener';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 
 export interface RemovePlaceholderProps {
   /**
@@ -42,18 +42,15 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
   const [isRemoveActivated, setRemoveActivated] = useState(false);
   const [removeOffset, updateRemoveOffset] = useState(0);
 
-  const deactivateRemoveEvent = useEventListener('click', () => {
+  useGlobalEventListener(document, 'click', isRemoveActivated && (() => {
     setRemoveActivated(false);
     updateRemoveOffset(0);
-    deactivateRemoveEvent.remove();
-  });
+  }));
 
   const onRemoveActivateClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
     setRemoveActivated(true);
-
-    deactivateRemoveEvent.add(document);
   };
 
   const onRemoveClick = (e: MouseEvent) => {

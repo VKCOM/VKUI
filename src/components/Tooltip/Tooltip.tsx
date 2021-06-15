@@ -11,7 +11,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import Subhead from '../Typography/Subhead/Subhead';
 import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useEventListener } from '../../hooks/useEventListener';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
   target?: HTMLElement;
@@ -44,8 +44,7 @@ const TooltipPortal: FC<TooltipPortalProps> = ({
   const portalTarget = useMemo(() => target.closest(`[${tooltipContainerAttr}]`), [target]);
   /* eslint-enable no-restricted-properties */
 
-  const clickEvent = useEventListener('click', onClose);
-  useIsomorphicLayoutEffect(() => clickEvent.add(document), []);
+  useGlobalEventListener(document, 'click', onClose);
 
   useIsomorphicLayoutEffect(() => {
     const container = containerRef.current;
