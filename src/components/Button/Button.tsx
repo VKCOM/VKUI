@@ -69,7 +69,16 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
   const { size, mode, stretched, align, children, before, after, getRootRef, Component, sizeY, ...restProps } = props;
   const hasIcons = Boolean(before || after);
 
-  return <Tappable {...restProps}
+  const RenderedComponent = restProps.href ? 'a' : Component;
+
+  let accessibleRole: string = null;
+  if (RenderedComponent !== 'a' && RenderedComponent !== 'button' && RenderedComponent !== 'input') {
+    accessibleRole = 'button';
+  }
+
+  return <Tappable
+    role={accessibleRole}
+    {...restProps}
     vkuiClass={
       classNames(
         getClassName('Button', platform),
@@ -84,7 +93,7 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
       )
     }
     getRootRef={getRootRef}
-    Component={restProps.href ? 'a' : Component}
+    Component={RenderedComponent}
     activeMode="opacity"
   >
     <span vkuiClass="Button__in">
@@ -112,6 +121,7 @@ Button.defaultProps = {
   size: 's',
   stretched: false,
   stopPropagation: true,
+  hasFocusVisible: true,
 };
 
 export default withAdaptivity(Button, {
