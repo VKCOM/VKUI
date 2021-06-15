@@ -35,6 +35,15 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
    * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
    */
   hoverMode?: 'opacity' | 'background' | string;
+  /**
+   * @ignore Временное свойство для работы над доступностью. Указывает, должен ли компонент показывать focus ring при навигации с клавиатуры.
+   * Исчезнет после того, как мы адаптируем отображение всех компонентов на базе Tappable.
+   */
+  hasFocusVisible?: boolean;
+  /**
+   * @ignore Стиль подсветки focus-visible состояния. Если передать произвольную строку, она добавится как css-класс
+   */
+  focusVisibleMode?: 'outline' | string;
 }
 
 export interface TappableState {
@@ -120,6 +129,8 @@ class Tappable extends Component<TappableProps, TappableState> {
     role: 'button',
     stopPropagation: false,
     disabled: false,
+    hasFocusVisible: false,
+    focusVisibleMode: 'outline',
     hasHover,
     hoverMode: 'background',
     hasActive: true,
@@ -306,21 +317,38 @@ class Tappable extends Component<TappableProps, TappableState> {
 
   render() {
     const { clicks, active, hovered, hasHover, hasActive } = this.state;
-    const { children, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, sizeX, hasMouse, hasHover: propsHasHover, hoverMode, hasActive: propsHasActive, activeMode, ...restProps } = this.props;
+    const {
+      children,
+      Component,
+      activeEffectDelay,
+      stopPropagation,
+      getRootRef,
+      platform,
+      sizeX,
+      hasMouse,
+      hasHover: propsHasHover,
+      hoverMode,
+      hasActive: propsHasActive,
+      activeMode,
+      hasFocusVisible,
+      focusVisibleMode,
+      ...restProps
+    } = this.props;
 
     const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
     const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
+    const isPresetFocusVisibleMode = focusVisibleMode === 'outline';
 
     const classes = classNames(
       getClassName('Tappable', platform),
       `Tappable--sizeX-${sizeX}`,
       {
+        'Tappable--mouse': hasMouse,
         'Tappable--active': hasActive && active,
         'Tappable--inactive': !active,
-        'Tappable--mouse': hasMouse,
         [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
         [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
+        [`Tappable--focus-visible-${focusVisibleMode}`]: hasFocusVisible && isPresetFocusVisibleMode,
         [hoverMode]: hasHover && hovered && !isPresetHoverMode,
         [activeMode]: hasActive && active && !isPresetActiveMode,
       });
@@ -364,6 +392,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                     {...touchProps}
                     {...restProps}
                     vkuiClass={classes}
+                    data-vkui-focus-visible={hasFocusVisible && !isPresetFocusVisibleMode ? focusVisibleMode : null}
                     {...props}>
                     <TappableContext.Provider
                       value={{
