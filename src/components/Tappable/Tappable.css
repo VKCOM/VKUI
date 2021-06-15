@@ -7,6 +7,57 @@
 }
 
 /**
+ * [a11y]
+ * add focus-visible outline w/ rounded corners via pseudo element
+ * without animation by default
+ */
+.AppRoot--focus-visible .Tappable--focus-visible-outline:focus::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px var(--accent);
+  user-select: none;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/**
+ * [a11y]
+ * add animation for browsers that support prefers-reduced-motion
+ * so that users with vestibular motion disorders have no problem
+ * navigating accessible vkui apps via keyboard
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .AppRoot--focus-visible .Tappable--focus-visible-outline:focus::before {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    animation: vkui-animation-focus-visible .15s ease-in-out forwards;
+    animation-delay: .01ms;
+  }
+
+  @keyframes vkui-animation-focus-visible {
+    0% {
+      will-change: top, left, bottom, right;
+    }
+
+    100% {
+      top: -2px;
+      left: -2px;
+      bottom: -2px;
+      right: -2px;
+      will-change: auto;
+    }
+  }
+}
+
+/**
  * active
  */
 
