@@ -60,7 +60,6 @@
 /**
  * active
  */
-
 .Tappable--active-background:not([disabled]) {
   background: var(--background_highlighted);
 }
@@ -72,7 +71,6 @@
 /**
  * hover
  */
-
 .Tappable__hoverShadow {
   position: absolute;
   top: 0;
@@ -95,7 +93,6 @@
 /**
  * mouse
  */
-
 .Tappable--mouse {
   transition: opacity .15s ease-out;
 }
@@ -164,7 +161,6 @@
 /**
  * overrides
  */
-
 .Tappable--sizeX-compact {
   border-radius: 0;
 }

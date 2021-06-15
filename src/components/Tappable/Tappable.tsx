@@ -368,9 +368,9 @@ class Tappable extends Component<TappableProps, TappableState> {
       getClassName('Tappable', platform),
       `Tappable--sizeX-${sizeX}`,
       {
-        'Tappable--mouse': hasMouse,
         'Tappable--active': hasActive && active,
         'Tappable--inactive': !active,
+        'Tappable--mouse': hasMouse,
         [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
         [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
         'Tappable--focus-visible': hasFocusVisible,

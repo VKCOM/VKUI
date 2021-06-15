@@ -1,4 +1,4 @@
-import { ElementType, FunctionComponent, ReactNode } from 'react';
+import { ElementType, FC, ReactNode } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
@@ -64,7 +64,7 @@ const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProp
   }
 };
 
-const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
+const Button: FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   const { size, mode, stretched, align, children, before, after, getRootRef, Component, sizeY, ...restProps } = props;
   const hasIcons = Boolean(before || after);
@@ -76,42 +76,44 @@ const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     accessibleRole = 'button';
   }
 
-  return <Tappable
-    role={accessibleRole}
-    {...restProps}
-    vkuiClass={
-      classNames(
-        getClassName('Button', platform),
-        `Button--sz-${size}`,
-        `Button--lvl-${mode}`,
-        `Button--aln-${align}`,
-        `Button--sizeY-${sizeY}`,
-        {
-          ['Button--str']: stretched,
-          ['Button--with-icon']: hasIcons,
-        },
-      )
-    }
-    getRootRef={getRootRef}
-    Component={RenderedComponent}
-    activeMode="opacity"
-  >
-    <span vkuiClass="Button__in">
-      {before && <span vkuiClass="Button__before">{before}</span>}
-      {children && (
-        <ButtonTypography
-          size={size}
-          sizeY={sizeY}
-          platform={platform}
-          vkuiClass="Button__content"
-          Component="span"
-        >
-          {children}
-        </ButtonTypography>
-      )}
-      {after && <span vkuiClass="Button__after">{after}</span>}
-    </span>
-  </Tappable>;
+  return (
+    <Tappable
+      role={accessibleRole}
+      {...restProps}
+      vkuiClass={
+        classNames(
+          getClassName('Button', platform),
+          `Button--sz-${size}`,
+          `Button--lvl-${mode}`,
+          `Button--aln-${align}`,
+          `Button--sizeY-${sizeY}`,
+          {
+            ['Button--str']: stretched,
+            ['Button--with-icon']: hasIcons,
+          },
+        )
+      }
+      getRootRef={getRootRef}
+      Component={RenderedComponent}
+      activeMode="opacity"
+    >
+      <span vkuiClass="Button__in">
+        {before && <span vkuiClass="Button__before">{before}</span>}
+        {children && (
+          <ButtonTypography
+            size={size}
+            sizeY={sizeY}
+            platform={platform}
+            vkuiClass="Button__content"
+            Component="span"
+          >
+            {children}
+          </ButtonTypography>
+        )}
+        {after && <span vkuiClass="Button__after">{after}</span>}
+      </span>
+    </Tappable>
+  );
 };
 
 Button.defaultProps = {
