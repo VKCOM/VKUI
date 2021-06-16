@@ -1,4 +1,4 @@
-import { FC, SelectHTMLAttributes, useLayoutEffect, useState } from 'react';
+import { FC, SelectHTMLAttributes, useState } from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import FormField from '../FormField/FormField';
@@ -8,6 +8,7 @@ import { getClassName } from '../../helpers/getClassName';
 import Headline from '../Typography/Headline/Headline';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -37,7 +38,7 @@ const NativeSelect: FC<NativeSelectProps> = ({
   const [notSelected, setNotSelected] = useState(false);
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const selectRef = useExternRef(getRef);
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const selectedOption = selectRef.current.options[selectRef.current.selectedIndex];
     if (selectedOption) {
       setTitle(selectedOption.text);

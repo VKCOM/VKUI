@@ -1,8 +1,9 @@
 import { render } from '@testing-library/react';
 import { noop } from '../lib/utils';
-import { createRef, useLayoutEffect, useRef, FC, RefObject } from 'react';
+import { createRef, useRef, FC, RefObject } from 'react';
 import { HasRef } from '../types';
 import { useExternRef } from './useExternRef';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 const RefForwarder = (props: HasRef<HTMLDivElement>) => <div ref={useExternRef(props.getRef)} />;
 describe(useExternRef, () => {
@@ -49,7 +50,7 @@ describe(useExternRef, () => {
     it('before useLayoutEffect', () => {
       const RefUser = () => {
         const ref = useRef();
-        useLayoutEffect(() => {
+        useIsomorphicLayoutEffect(() => {
           expect(ref.current).toBeInTheDocument();
         }, []);
         return <RefForwarder getRef={ref} />;
