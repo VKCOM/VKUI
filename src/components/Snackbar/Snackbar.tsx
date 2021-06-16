@@ -10,7 +10,6 @@ import Touch, { TouchEvent } from '../Touch/Touch';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
 import { getClassName } from '../../helpers/getClassName';
-import { canUseDOM } from '../../lib/dom';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { rubber } from '../../lib/touch';
 import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
@@ -19,6 +18,7 @@ import Button from '../Button/Button';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useTimeout } from '../../hooks/useTimeout';
 
 export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**
@@ -81,7 +81,6 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
   const bodyElRef = useRef<HTMLDivElement | null>(null);
   const innerElRef = useRef<HTMLDivElement | null>(null);
 
-  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const animationFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
 
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
@@ -102,17 +101,7 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
     }
   };
 
-  const setCloseTimeout = () => {
-    if (canUseDOM) {
-      closeTimeoutRef.current = setTimeout(() => {
-        close();
-      }, duration);
-    }
-  };
-
-  const clearCloseTimeout = () => {
-    clearTimeout(closeTimeoutRef.current);
-  };
+  const closeTimeout = useTimeout(close, duration);
 
   const setBodyTransform = (percent: number) => {
     cancelAnimationFrame(animationFrameRef.current);
@@ -123,9 +112,7 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
     });
   };
 
-  const onTouchStart = () => {
-    clearCloseTimeout();
-  };
+  const onTouchStart = closeTimeout.clear;
 
   const onTouchMoveX = (event: TouchEvent) => {
     const { shiftX, startT, originalEvent } = event;
@@ -151,38 +138,32 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
       shiftXCurrent = shiftXCurrent + expectTranslateY;
 
       if (isDesktop && shiftXCurrent <= -50) {
-        clearCloseTimeout();
+        closeTimeout.clear();
         waitTransitionFinish(bodyElRef.current, () => {
           onClose();
         }, transitionFinishDurationFallback);
         setBodyTransform(-120);
       } else if (!isDesktop && shiftXCurrent >= 50) {
-        clearCloseTimeout();
+        closeTimeout.clear();
         waitTransitionFinish(bodyElRef.current, () => {
           onClose();
         }, transitionFinishDurationFallback);
         setBodyTransform(120);
       } else {
         callback = () => {
-          setCloseTimeout();
+          closeTimeout.set();
           setBodyTransform(0);
         };
       }
     } else {
-      setCloseTimeout();
+      closeTimeout.set();
     }
 
     setTouched(false);
     callback && requestAnimationFrame(callback);
   };
 
-  useEffect(() => {
-    setCloseTimeout();
-
-    return () => {
-      clearCloseTimeout();
-    };
-  }, []);
+  useEffect(closeTimeout.set, []);
 
   const resolvedLayout = after || isDesktop ? 'vertical' : layout;
 
