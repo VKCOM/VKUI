@@ -1,13 +1,12 @@
 import React, { Component, HTMLAttributes } from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
-import { transitionEvent } from '../../lib/supportEvents';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withAdaptivity, AdaptivityProps, ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
-import { ANDROID, IOS, VKCOM } from '../../lib/platform';
+import { IOS } from '../../lib/platform';
 import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
 import ActionSheetDropdown from './ActionSheetDropdown';
-import { hasReactNode } from '../../lib/utils';
+import { hasReactNode, noop } from '../../lib/utils';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
 
@@ -51,48 +50,42 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
 
   elRef: React.RefObject<HTMLDivElement>;
 
-  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
-
   static defaultProps: Partial<ActionSheetProps> = {
     popupDirection: 'bottom',
   };
 
-  onClose: CloseCallback = () => {
-    this.setState({ closing: true });
-    this.waitTransitionFinish(this.props.onClose);
-  };
+  componentDidUpdate(_: any, { closing }: ActionSheetState) {
+    if (this.state.closing && !closing && this.isDesktop) {
+      this.onTransitionEnd();
+    }
+  }
+
+  private afterClose = noop;
+
+  onClose: CloseCallback = () => this.setState({ closing: true });
 
   onItemClick: ItemClickHandler = (action, autoclose) => (event) => {
     event.persist();
 
     if (autoclose) {
       this.setState({ closing: true });
-      this.waitTransitionFinish(() => {
-        this.props.onClose();
+      this.afterClose = () => {
         action && action(event);
-      });
+        this.afterClose = noop;
+      };
     } else {
       action && action(event);
     }
   };
 
+  onTransitionEnd = () => {
+    this.props.onClose();
+    this.afterClose && this.afterClose();
+  };
+
   get isDesktop() {
     const { viewWidth, viewHeight, hasMouse } = this.props;
     return viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
-  }
-
-  waitTransitionFinish(eventHandler: AnimationEndCallback) {
-    if (this.isDesktop) {
-      return eventHandler();
-    }
-
-    if (transitionEvent.supported) {
-      this.elRef.current.removeEventListener(transitionEvent.name, eventHandler);
-      this.elRef.current.addEventListener(transitionEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300);
-    }
   }
 
   render() {
@@ -136,6 +129,7 @@ class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
             closing={this.state.closing}
             onClose={this.onClose}
             elementRef={this.elRef}
+            onTransitionEnd={this.state.closing ? this.onTransitionEnd : null}
             {...restProps}
           >
             {(hasReactNode(header) || hasReactNode(text)) &&

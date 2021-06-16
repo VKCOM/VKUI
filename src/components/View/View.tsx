@@ -1,8 +1,7 @@
 import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
 import { classNames } from '../../lib/classNames';
-import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getClassName } from '../../helpers/getClassName';
-import { IOS, ANDROID, VKCOM } from '../../lib/platform';
+import { IOS } from '../../lib/platform';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { removeObjectKeys } from '../../lib/removeObjectKeys';
 import { HasPlatform } from '../../types';
@@ -135,9 +134,6 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   static defaultProps: Partial<ViewProps> = {
     history: [],
   };
-
-  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
-  private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
   get document() {
     return this.props.document;
@@ -279,13 +275,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   }
 
   waitTransitionFinish(elem: HTMLElement, eventHandler: TransitionEventHandler): void {
-    if (transitionEvent.supported) {
-      elem.removeEventListener(transitionEvent.name, eventHandler);
-      elem.addEventListener(transitionEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
-    }
+    elem.removeEventListener('transitionend', eventHandler);
+    elem.addEventListener('transitionend', eventHandler);
   }
 
   waitAnimationFinish(elem: HTMLElement, eventHandler: AnimationEventHandler): void {
@@ -294,13 +285,8 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
       return;
     }
 
-    if (animationEvent.supported) {
-      elem.removeEventListener(animationEvent.name, eventHandler);
-      elem.addEventListener(animationEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.animationFinishTimeout);
-      this.animationFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
-    }
+    elem.removeEventListener('animationend', eventHandler);
+    elem.addEventListener('animationend', eventHandler);
   }
 
   blurActiveElement(): void {

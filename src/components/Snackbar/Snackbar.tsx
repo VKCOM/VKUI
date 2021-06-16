@@ -85,13 +85,10 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
   const animationFrameRef = useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
 
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
-  const transitionFinishDurationFallback = platform === ANDROID || platform === VKCOM ? 400 : 320;
 
   const close = () => {
     setClosing(true);
-    waitTransitionFinish(innerElRef.current, () => {
-      onClose();
-    }, transitionFinishDurationFallback);
+    waitTransitionFinish(innerElRef.current, onClose);
   };
 
   const handleActionClick: MouseEventHandler<HTMLElement> = (e) => {
@@ -152,15 +149,11 @@ const SnackbarComponent: FC<SnackbarProps> = (props: SnackbarProps) => {
 
       if (isDesktop && shiftXCurrent <= -50) {
         clearCloseTimeout();
-        waitTransitionFinish(bodyElRef.current, () => {
-          onClose();
-        }, transitionFinishDurationFallback);
+        waitTransitionFinish(bodyElRef.current, onClose);
         setBodyTransform(-120);
       } else if (!isDesktop && shiftXCurrent >= 50) {
         clearCloseTimeout();
-        waitTransitionFinish(bodyElRef.current, () => {
-          onClose();
-        }, transitionFinishDurationFallback);
+        waitTransitionFinish(bodyElRef.current, onClose);
         setBodyTransform(120);
       } else {
         callback = () => {

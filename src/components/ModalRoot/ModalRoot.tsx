@@ -7,7 +7,6 @@ import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
 import { isFunction } from '../../lib/utils';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import { transitionEvent } from '../../lib/supportEvents';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withContext } from '../../hoc/withContext';
@@ -627,16 +626,12 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   };
 
   waitTransitionFinish(modalState: ModalsStateEntry, eventHandler: () => void) {
-    if (transitionEvent.supported) {
-      const onceHandler = () => {
-        modalState.innerElement.removeEventListener(transitionEvent.name, onceHandler);
-        eventHandler();
-      };
+    const onceHandler = () => {
+      modalState.innerElement.removeEventListener('transitionend', onceHandler);
+      eventHandler();
+    };
 
-      modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
-    } else {
-      setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400);
-    }
+    modalState.innerElement.addEventListener('transitionend', onceHandler);
   }
 
   switchPrevNext() {
