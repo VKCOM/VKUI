@@ -32,6 +32,7 @@ export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'd
   monthPlaceholder?: string;
   yearPlaceholder?: string;
   onDateChange?: (value: DatePickerDateFormat) => void;
+  disabled?: boolean;
 }
 
 type GetOptions = () => CustomSelectOptionInterface[];
@@ -162,6 +163,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
       defaultValue,
       hasMouse,
       monthNames,
+      disabled,
       ...restProps
     } = this.props;
     const { day, month, year } = this.state;
@@ -177,6 +179,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
               placeholder={dayPlaceholder}
               popupDirection={popupDirection}
               onChange={this.onSelectChange}
+              disabled={disabled}
             />
           </div>
           <div vkuiClass="DatePicker__month">
@@ -187,6 +190,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
               placeholder={monthPlaceholder}
               popupDirection={popupDirection}
               onChange={this.onSelectChange}
+              disabled={disabled}
             />
           </div>
           <div vkuiClass="DatePicker__year">
@@ -197,6 +201,7 @@ class DatePicker extends Component<DatePickerProps, DatePickerState> {
               placeholder={yearPlaceholder}
               popupDirection={popupDirection}
               onChange={this.onSelectChange}
+              disabled={disabled}
             />
           </div>
         </div>
