@@ -3,15 +3,10 @@
   box-sizing: border-box;
 }
 
-.Select--mimicry:focus {
-  outline: none;
-}
-
 .Select__el {
   display: block;
   position: absolute;
   appearance: none;
-  outline: none;
   border: none;
   left: 0;
   top: 0;

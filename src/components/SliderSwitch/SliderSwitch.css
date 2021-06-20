@@ -7,7 +7,6 @@
   box-sizing: border-box;
   background-color: var(--field_background);
   transition: all 100ms ease-out;
-  outline: none;
 }
 
 .SliderSwitch__button {
@@ -24,7 +23,6 @@
   background: transparent;
   color: var(--text_subhead);
   transition: color 100ms ease-out;
-  outline: none;
   user-select: none;
   z-index: 1;
   -webkit-appearance: none;

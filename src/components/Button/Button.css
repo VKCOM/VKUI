@@ -1,7 +1,6 @@
 .Button {
   display: inline-block;
   box-sizing: border-box;
-  outline: none;
   text-decoration: none;
   border: none;
   min-height: 30px;

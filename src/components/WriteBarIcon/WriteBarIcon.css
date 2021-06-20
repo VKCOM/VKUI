@@ -1,7 +1,6 @@
 .WriteBarIcon {
   background: none;
   border: 0;
-  outline: none;
   position: relative;
   color: var(--writebar_icon);
   height: 52px;
