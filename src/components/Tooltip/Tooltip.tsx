@@ -183,7 +183,7 @@ const Tooltip: FC<TooltipProps> = ({
     availablePlacements = [...availablePlacements, ...autoPlacementsY];
   }
 
-  const { styles, attributes, forceUpdate, state } = usePopper(target, tooltipRef, {
+  const { styles, attributes, state } = usePopper(target, tooltipRef, {
     strategy: strategy,
     modifiers: [
       {
@@ -222,10 +222,6 @@ const Tooltip: FC<TooltipProps> = ({
   const child = isValidElement(children) ? cloneElement(children, {
     [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
   }) : children;
-
-  useEffect(() => {
-    forceUpdate?.();
-  }, [child]);
 
   const arrowTransform = getTranslateFromPlacement(state?.placement);
 
