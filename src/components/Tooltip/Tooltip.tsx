@@ -160,7 +160,7 @@ const Tooltip: FC<TooltipProps> = ({
 }) => {
   const [tooltipRef, setTooltipRef] = useState<HTMLElement | null>(null);
   const [tooltipArrowRef, setTooltipArrowRef] = useState<HTMLElement | null>(null);
-  const [target, settarget] = useState<HTMLElement | null>(null);
+  const [target, setTarget] = useState<HTMLElement | null>(null);
 
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
@@ -218,7 +218,7 @@ const Tooltip: FC<TooltipProps> = ({
 
   const childRef = isValidElement(children) &&
     (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
-  const patchedRef = useExternRef(settarget, childRef);
+  const patchedRef = useExternRef(setTarget, childRef);
   const child = isValidElement(children) ? cloneElement(children, {
     [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
   }) : children;
