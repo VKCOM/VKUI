@@ -1,13 +1,14 @@
-import React, { useState, useCallback, ReactElement, ReactNode, RefCallback, isValidElement, FC, forwardRef, Ref, useEffect, CSSProperties, HTMLAttributes, useMemo } from 'react';
+import React, { Fragment, useState, ReactElement, ReactNode, isValidElement, FC, forwardRef, Ref, useEffect, CSSProperties, HTMLAttributes, cloneElement, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import { canUseDOM, DOMProps, useDOM } from '../../lib/dom';
-import { setRef } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import { usePopper } from 'react-popper';
 import { Placement } from '@popperjs/core';
 import { tooltipContainerAttr } from './TooltipContainer';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useDOM } from '../../lib/dom';
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
   arrowRef?: Ref<HTMLDivElement>;
@@ -59,7 +60,7 @@ export interface TooltipProps {
    * свойство `getRootRef`, которое должно возвращаться ссылку на корневой DOM-элемент компонента,
    * иначе тултип показан не будет. Если передан React-element, то такой проблемы нет.
    */
-  children: ReactNode;
+  children: ReactElement;
   mode?: 'accent' | 'light';
   /**
    * Если передан `false`, то рисуется просто `children`.
@@ -75,10 +76,12 @@ export interface TooltipProps {
   header?: ReactNode;
   /**
    * Положение по горизонтали (прижатие к левому или правому краю `children`).
+   * Если не задано, позиция по горизонтали определятся автоматически
    */
   alignX?: 'center' | 'left' | 'right';
   /**
    * Положение по вертикали (расположение над или под `children`).
+   * Если не задано, позиция по вертикали определятся автоматически
    */
   alignY?: 'top' | 'bottom';
   /**
@@ -96,12 +99,8 @@ export interface TooltipProps {
   /**
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
-  onClose?(): void;
+  onClose?: () => void;
 }
-
-// export interface TooltipState {
-//   ready: boolean;
-// }
 
 function getTranslateFromPlacement(placement: Placement) {
   const basePlacement = placement?.split('-')[0];
@@ -154,19 +153,25 @@ function getPlacement(alignX?: TooltipProps['alignX'], alignY?: TooltipProps['al
 const autoPlacementsX: Placement[] = ['right', 'left'];
 const autoPlacementsY: Placement[] = ['bottom', 'top'];
 
-const Tooltip: FC<TooltipProps & DOMProps> = ({
+const Tooltip: FC<TooltipProps> = ({
   children, isShown = true, offsetX = 0, offsetY = 15,
-  alignX, alignY, onClose,
+  alignX, alignY, onClose, cornerOffset,
   ...restProps
 }) => {
-  const [ready, setReadyState] = useState(false);
   const [tooltipRef, setTooltipRef] = useState<HTMLElement | null>(null);
   const [tooltipArrowRef, setTooltipArrowRef] = useState<HTMLElement | null>(null);
-  const [targetRef, setTargetRef] = useState<HTMLElement | null>(null);
-  const [strategy, setStrategy] = useState<'fixed' | 'absolute'>('absolute');
-  const [tooltipContainerRef, setTooltipContainerRef] = useState<HTMLDivElement | null>(null);
+  const [target, settarget] = useState<HTMLElement | null>(null);
+
+  /* eslint-disable no-restricted-properties */
+  /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
+  const fixedPortal = useMemo(() => target.closest(`[${tooltipContainerAttr}=fixed]`) != null, [target]);
+  const portalTarget = useMemo(() => target.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
+  const strategy = useMemo(() => target.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
+  /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
+  /* eslint-enable no-restricted-properties */
 
   const { document } = useDOM();
+  useGlobalEventListener(document, 'click', onClose);
 
   const placement = getPlacement(alignX, alignY);
 
@@ -178,38 +183,7 @@ const Tooltip: FC<TooltipProps & DOMProps> = ({
     availablePlacements = [...availablePlacements, ...autoPlacementsY];
   }
 
-  useEffect(() => {
-    if (!ready || !isShown) {
-      return void 0;
-    }
-
-    document.body.addEventListener('click', onClose, true);
-
-    return () => {
-      document.body.removeEventListener('click', onClose, true);
-    };
-  }, [onClose, ready, isShown]);
-
-  useEffect(() => {
-    setReadyState(targetRef && canUseDOM);
-
-    /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-    const _container = targetRef?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement;
-    /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion */
-
-    setStrategy(targetRef?.style.position === 'fixed' ? 'fixed' : 'absolute');
-    setTooltipContainerRef(_container);
-  }, [targetRef]);
-
-  const getRef: RefCallback<HTMLDivElement> = useCallback((el) => {
-    setTargetRef(el);
-
-    if (isValidElement(children)) {
-      setRef(el, isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
-    };
-  }, [children]);
-
-  const { styles, attributes, forceUpdate, state } = usePopper(targetRef, tooltipRef, {
+  const { styles, attributes, forceUpdate, state } = usePopper(target, tooltipRef, {
     strategy: strategy,
     modifiers: [
       {
@@ -228,7 +202,7 @@ const Tooltip: FC<TooltipProps & DOMProps> = ({
       },
       {
         name: 'preventOverflow', options: {
-          boundary: tooltipContainerRef,
+          boundary: portalTarget,
         },
       },
       {
@@ -236,46 +210,44 @@ const Tooltip: FC<TooltipProps & DOMProps> = ({
         options: {
           fallbackPlacements: availablePlacements,
           allowedAutoPlacements: availablePlacements,
-          // boundary: tooltipContainerRef,
         },
       },
     ],
     placement: 'auto',
   });
 
-  const child = useMemo(() => isValidElement(children) ? React.cloneElement(children, {
-    [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: getRef,
-  }) : children, [children]);
+  const childRef = isValidElement(children) &&
+    (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
+  const patchedRef = useExternRef(settarget, childRef);
+  const child = isValidElement(children) ? cloneElement(children, {
+    [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
+  }) : children;
 
   useEffect(() => {
     forceUpdate?.();
   }, [child]);
-
-  if (!isShown || !ready) {
-    return child as React.ReactElement;
-  }
 
   const arrowTransform = getTranslateFromPlacement(state?.placement);
 
   const arrowStyle: CSSProperties = {
     ...styles.arrow,
     transform:
-      `${styles.arrow?.transform || ''} rotate(${arrowTransform?.deg}deg) translate(${arrowTransform?.translate[0]}px, ${arrowTransform?.translate[1]}px)`,
+      `${styles.arrow?.transform || ''} rotate(${arrowTransform?.deg}deg) translate(${arrowTransform?.translate[0] + cornerOffset}px, ${arrowTransform?.translate[1]}px)`,
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       {child}
-      {ReactDOM.createPortal(
+      {isShown && target != null && ReactDOM.createPortal(
         <SimpleTooltip
           {...restProps}
           ref={(el) => setTooltipRef(el)}
-          fixed={strategy === 'fixed'}
+          fixed={fixedPortal}
           arrowRef={(el) => setTooltipArrowRef(el)}
           style={{ arrow: arrowStyle, container: styles.popper }}
           attributes={{ arrow: attributes.arrow, container: attributes.popper }}
-        />, tooltipContainerRef)}
-    </React.Fragment>
+        />, portalTarget)}
+    </Fragment>
   );
 };
 

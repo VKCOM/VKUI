@@ -85,6 +85,7 @@
     "react-docgen": "^5.4.0-alpha.0",
     "react-dom": "^16.8.6",
     "react-frame-component": "^3.0.0",
+    "react-popper": "^2.2.5",
     "react-styleguidist": "^11.1.5",
     "shx": "^0.3.2",
     "size-limit": "^4.9.1",
@@ -174,7 +175,5 @@
   "pre-commit": [
     "test:static"
   ],
-  "dependencies": {
-    "react-popper": "^2.2.5"
-  }
+  "dependencies": {}
 }
