@@ -9,6 +9,7 @@ import { Ref } from '../../types';
 import { multiRef } from '../../lib/utils';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps, NavIdProps {
   /**
@@ -27,6 +28,7 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
   getModalContentRef?: Ref<HTMLDivElement>;
 }
 
+const warn = warnOnce();
 const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
   const platform = usePlatform();
   const { updateModalHeight } = useContext(ModalRootContext);
@@ -53,7 +55,7 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
   const modalContext = useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId(props), ModalType.PAGE);
+  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);
 
   return (
     <div
