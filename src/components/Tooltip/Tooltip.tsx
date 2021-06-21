@@ -116,9 +116,12 @@ function getTranslateFromPlacement(placement: Placement) {
       deg = 90;
       translate[1] = -14;
       break;
-    case 'top':
     case 'bottom':
       deg = 0;
+      translate[1] = -8;
+      break;
+    case 'top':
+      deg = 180;
       translate[1] = -8;
       break;
   }
