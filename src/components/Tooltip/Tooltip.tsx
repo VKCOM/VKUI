@@ -1,20 +1,25 @@
-import React, {
-  FC, ReactElement, ReactNode,
-  Fragment, cloneElement, isValidElement,
-  useState, useRef, useMemo,
-} from 'react';
+import React, { useState, useCallback, ReactElement, ReactNode, RefCallback, isValidElement, FC, forwardRef, Ref, useEffect, CSSProperties, HTMLAttributes, useMemo } from 'react';
+import ReactDOM from 'react-dom';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import ReactDOM from 'react-dom';
-import { useDOM } from '../../lib/dom';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { canUseDOM, DOMProps, useDOM } from '../../lib/dom';
+import { setRef } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
+import { usePopper } from 'react-popper';
+import { Placement } from '@popperjs/core';
 import { tooltipContainerAttr } from './TooltipContainer';
-import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-
-interface TooltipPortalProps extends Partial<TooltipProps> {
-  target?: HTMLElement;
+interface SimpleTooltipProps extends Partial<TooltipProps> {
+  target?: HTMLDivElement;
+  arrowRef?: Ref<HTMLDivElement>;
+  fixed: boolean;
+  style?: {
+    arrow: CSSProperties;
+    container: CSSProperties;
+  };
+  attributes?: {
+    arrow: HTMLAttributes<HTMLDivElement>;
+    container: HTMLAttributes<HTMLDivElement>;
+  };
 }
 
 const isDOMTypeElement = (element: ReactElement): element is React.DOMElement<any, any> => {
@@ -23,67 +28,30 @@ const isDOMTypeElement = (element: ReactElement): element is React.DOMElement<an
 
 const baseClassName = getClassName('Tooltip');
 
-const TooltipPortal: FC<TooltipPortalProps> = ({
-  header,
-  text,
-  offsetX,
-  offsetY,
-  alignX,
-  alignY,
-  cornerOffset,
-  mode,
-  target,
-  onClose,
-}) => {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const containerRef = useRef<HTMLDivElement>();
-  const { document } = useDOM();
-
-  /* eslint-disable no-restricted-properties */
-  const fixedPortal = useMemo(() => target.closest(`[${tooltipContainerAttr}=fixed]`) != null, [target]);
-  const portalTarget = useMemo(() => target.closest(`[${tooltipContainerAttr}]`), [target]);
-  /* eslint-enable no-restricted-properties */
-
-  useGlobalEventListener(document, 'click', onClose);
-
-  useIsomorphicLayoutEffect(() => {
-    const container = containerRef.current;
-    const targetBounds = target.getBoundingClientRect();
-    const portalBounds = portalTarget.getBoundingClientRect();
-
-    const coords = {
-      width: targetBounds.width,
-      height: targetBounds.height,
-      x: targetBounds.left - portalBounds.left,
-      y: targetBounds.top - portalBounds.top,
-    };
-
-    setPos({
-      x: coords.x + offsetX + (alignX === 'right' ? coords.width - container.offsetWidth : 0),
-      y: coords.y + (alignY === 'top' ? -container.offsetHeight - offsetY : coords.height + offsetY),
-    });
-  }, [target, portalTarget]);
-
-  return ReactDOM.createPortal(
-    <div vkuiClass={
-      classNames(
-        baseClassName,
-        `Tooltip--x-${alignX}`,
-        `Tooltip--y-${alignY}`,
-        `Tooltip--${mode}`,
-        {
-          'Tooltip--fixed': fixedPortal,
-        },
-      )}>
-      <div vkuiClass="Tooltip__container" style={{ top: pos.y, left: pos.x }} ref={containerRef}>
-        <div vkuiClass="Tooltip__corner" style={{ [alignX]: 20 + cornerOffset }} />
-        <div vkuiClass="Tooltip__content">
-          {header && <Subhead weight="semibold" vkuiClass="Tooltip__title">{header}</Subhead>}
-          {text && <Subhead weight="regular" vkuiClass="Tooltip__text">{text}</Subhead>}
+const SimpleTooltip = forwardRef<HTMLDivElement, SimpleTooltipProps>(
+  function SimpleTooltip(
+    { mode = 'accent', header, text, arrowRef, style = {}, attributes, fixed },
+    ref,
+  ) {
+    return (
+      <div vkuiClass={
+        classNames(
+          baseClassName,
+          `Tooltip--${mode}`,
+          {
+            'Tooltip--fixed': fixed,
+          },
+        )}>
+        <div vkuiClass="Tooltip__container" ref={ref} style={style.container} {...attributes.container}>
+          <div vkuiClass="Tooltip__corner" style={style.arrow} {...attributes.arrow} ref={arrowRef} />
+          <div vkuiClass="Tooltip__content">
+            {header && <Subhead weight="semibold" vkuiClass="Tooltip__title">{header}</Subhead>}
+            {text && <Subhead weight="regular" vkuiClass="Tooltip__text">{text}</Subhead>}
+          </div>
         </div>
       </div>
-    </div>, portalTarget);
-};
+    );
+  });
 
 export interface TooltipProps {
   /**
@@ -91,7 +59,7 @@ export interface TooltipProps {
    * свойство `getRootRef`, которое должно возвращаться ссылку на корневой DOM-элемент компонента,
    * иначе тултип показан не будет. Если передан React-element, то такой проблемы нет.
    */
-  children: ReactElement;
+  children: ReactNode;
   mode?: 'accent' | 'light';
   /**
    * Если передан `false`, то рисуется просто `children`.
@@ -108,7 +76,7 @@ export interface TooltipProps {
   /**
    * Положение по горизонтали (прижатие к левому или правому краю `children`).
    */
-  alignX?: 'left' | 'right';
+  alignX?: 'center' | 'left' | 'right';
   /**
    * Положение по вертикали (расположение над или под `children`).
    */
@@ -128,35 +96,187 @@ export interface TooltipProps {
   /**
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
-  onClose?: () => void;
+  onClose?(): void;
 }
 
-const Tooltip: FC<TooltipProps> = ({ children = null, isShown, ...portalProps }) => {
-  const [target, setTarget] = useState<HTMLElement>();
+// export interface TooltipState {
+//   ready: boolean;
+// }
 
-  const childRef = isValidElement(children) &&
-    (isDOMTypeElement(children) ? children.ref : (children.props as any).getRootRef);
-  const patchedRef = useExternRef(setTarget, childRef);
-  const child = isValidElement(children) ? cloneElement(children, {
-    [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
-  }) : children;
+function getTranslateFromPlacement(placement: Placement) {
+  const basePlacement = placement?.split('-')[0];
+
+  let deg = 0;
+  let translate: [number, number] = [0, 0];
+  switch (basePlacement) {
+    case 'right':
+      deg = 270;
+      translate[1] = -14;
+      break;
+    case 'left':
+      deg = 90;
+      translate[1] = -14;
+      break;
+    case 'top':
+    case 'bottom':
+      deg = 0;
+      translate[1] = -8;
+      break;
+  }
+
+  return {
+    deg,
+    translate,
+  };
+}
+
+function getPlacement(alignX?: TooltipProps['alignX'], alignY?: TooltipProps['alignY']): Placement {
+  let placementX = '';
+  let placementY = '';
+
+  if (alignY === 'top') {
+    placementY = 'top';
+  } else if (alignY === 'bottom' || !alignY) {
+    placementY = 'bottom';
+  }
+
+  if (alignX === 'center') {
+    placementX = '';
+  } else if (alignX === 'left' || !alignX) {
+    placementX = '-start';
+  } else if (alignX === 'right') {
+    placementX = '-end';
+  };
+
+  return `${placementY}${placementX}` as Placement;
+}
+
+const autoPlacementsX: Placement[] = ['right', 'left'];
+const autoPlacementsY: Placement[] = ['bottom', 'top'];
+
+const Tooltip: FC<TooltipProps & DOMProps> = ({
+  children, isShown = true, offsetX = 0, offsetY = 15,
+  alignX, alignY, onClose,
+  ...restProps
+}) => {
+  const [ready, setReadyState] = useState(false);
+  const [tooltipRef, setTooltipRef] = useState<HTMLElement | null>(null);
+  const [tooltipArrowRef, setTooltipArrowRef] = useState<HTMLElement | null>(null);
+  const [targetRef, setTargetRef] = useState<HTMLElement | null>(null);
+  const [strategy, setStrategy] = useState<'fixed' | 'absolute'>('absolute');
+  const [tooltipContainerRef, setTooltipContainerRef] = useState<HTMLDivElement | null>(null);
+
+  const { document } = useDOM();
+
+  const placement = getPlacement(alignX, alignY);
+
+  let availablePlacements: Placement[] = [placement];
+  if (!alignX) {
+    availablePlacements = [...availablePlacements, ...autoPlacementsX];
+  }
+  if (!alignY) {
+    availablePlacements = [...availablePlacements, ...autoPlacementsY];
+  }
+
+  useEffect(() => {
+    if (!ready || !isShown) {
+      return void 0;
+    }
+
+    document.body.addEventListener('click', onClose, true);
+
+    return () => {
+      document.body.removeEventListener('click', onClose, true);
+    };
+  }, [onClose, ready, isShown]);
+
+  useEffect(() => {
+    setReadyState(targetRef && canUseDOM);
+
+    /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+    const _container = targetRef?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement;
+    /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion */
+
+    setStrategy(targetRef?.style.position === 'fixed' ? 'fixed' : 'absolute');
+    setTooltipContainerRef(_container);
+  }, [targetRef]);
+
+  const getRef: RefCallback<HTMLDivElement> = useCallback((el) => {
+    setTargetRef(el);
+
+    if (isValidElement(children)) {
+      setRef(el, isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
+    };
+  }, [children]);
+
+  const { styles, attributes, forceUpdate, state } = usePopper(targetRef, tooltipRef, {
+    strategy: strategy,
+    modifiers: [
+      {
+        name: 'offset', options: {
+          offset: [
+            offsetX,
+            offsetY,
+          ],
+        },
+      },
+      {
+        name: 'arrow', options: {
+          element: tooltipArrowRef,
+          padding: 14,
+        },
+      },
+      {
+        name: 'preventOverflow', options: {
+          boundary: tooltipContainerRef,
+        },
+      },
+      {
+        name: 'flip',
+        options: {
+          fallbackPlacements: availablePlacements,
+          allowedAutoPlacements: availablePlacements,
+          // boundary: tooltipContainerRef,
+        },
+      },
+    ],
+    placement: 'auto',
+  });
+
+  const child = useMemo(() => isValidElement(children) ? React.cloneElement(children, {
+    [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: getRef,
+  }) : children, [children]);
+
+  useEffect(() => {
+    forceUpdate?.();
+  }, [child]);
+
+  if (!isShown || !ready) {
+    return child as React.ReactElement;
+  }
+
+  const arrowTransform = getTranslateFromPlacement(state?.placement);
+
+  const arrowStyle: CSSProperties = {
+    ...styles.arrow,
+    transform:
+      `${styles.arrow?.transform || ''} rotate(${arrowTransform?.deg}deg) translate(${arrowTransform?.translate[0]}px, ${arrowTransform?.translate[1]}px)`,
+  };
 
   return (
-    <Fragment>
+    <React.Fragment>
       {child}
-      {isShown && target != null && <TooltipPortal {...portalProps} target={target} />}
-    </Fragment>
+      {ReactDOM.createPortal(
+        <SimpleTooltip
+          {...restProps}
+          ref={(el) => setTooltipRef(el)}
+          fixed={strategy === 'fixed'}
+          arrowRef={(el) => setTooltipArrowRef(el)}
+          style={{ arrow: arrowStyle, container: styles.popper }}
+          attributes={{ arrow: attributes.arrow, container: attributes.popper }}
+        />, tooltipContainerRef)}
+    </React.Fragment>
   );
-};
-
-Tooltip.defaultProps = {
-  offsetX: 0,
-  offsetY: 15,
-  alignX: 'left',
-  alignY: 'bottom',
-  cornerOffset: 0,
-  isShown: true,
-  mode: 'accent',
 };
 
 export default Tooltip;

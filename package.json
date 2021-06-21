@@ -173,5 +173,8 @@
   },
   "pre-commit": [
     "test:static"
-  ]
+  ],
+  "dependencies": {
+    "react-popper": "^2.2.5"
+  }
 }
