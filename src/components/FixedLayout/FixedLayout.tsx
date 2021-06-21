@@ -12,6 +12,7 @@ import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { PanelContextProps } from '../Panel/PanelContext';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { IOS } from '../../lib/platform';
+import { warnOnce } from '../../lib/warnOnce';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -37,6 +38,8 @@ export interface FixedLayoutState {
   width: string;
 }
 
+const warn = warnOnce();
+
 class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelContextProps, FixedLayoutState> {
   state: FixedLayoutState = {
     position: 'absolute',
@@ -61,7 +64,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     const elem = this.props.getPanelNode();
 
     if (!elem) {
-      console.warn('[VKUI/FixedLayout] Panel element not found');
+      warn('[VKUI/FixedLayout] Panel element not found');
     }
 
     return elem;

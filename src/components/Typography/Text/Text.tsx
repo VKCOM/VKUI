@@ -1,15 +1,17 @@
-import { AllHTMLAttributes, ElementType, FunctionComponent, useEffect } from 'react';
+import { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';
 import { HasRootRef } from '../../../types';
+import { warnOnce } from '../../../lib/warnOnce';
 
 export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
   weight: 'regular' | 'medium' | 'semibold';
   Component?: ElementType;
 }
 
+const warn = warnOnce();
 const Text: FunctionComponent<TextProps> = ({
   children,
   weight,
@@ -27,11 +29,9 @@ const Text: FunctionComponent<TextProps> = ({
     }
   }
 
-  useEffect(() => {
-    if (typeof Component !== 'string' && getRootRef) {
-      console.warn('[VKUI/Text]: getRootRef can only be used with DOM components');
-    }
-  }, []);
+  if (typeof Component !== 'string' && getRootRef) {
+    warn('[VKUI/Text]: getRootRef can only be used with DOM components');
+  }
 
   return (
     <Component

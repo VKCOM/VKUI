@@ -154,7 +154,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       const prevModal = prevProps.activeModal;
 
       if (nextModal !== null && !this.modalsState[nextModal]) {
-        return console.warn(`[ModalRoot.componentDidUpdate] nextModal ${nextModal} not found`);
+        return warn(`[ModalRoot.componentDidUpdate] nextModal ${nextModal} not found`);
       }
 
       let history = [...this.state.history];
@@ -256,7 +256,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
         break;
 
       default:
-        console.warn('[ModalRoot.initActiveModal] modalState.type is unknown');
+        warn('[ModalRoot.initActiveModal] modalState.type is unknown');
     }
 
     this.setState({ inited: true, switching: true });
@@ -384,7 +384,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     const { prevModal } = this.state;
     if (!prevModal) {
-      return console.warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
+      return warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
     }
 
     const prevModalState = this.modalsState[prevModal];
@@ -649,7 +649,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const nextModalState = this.modalsState[nextModal];
 
     if (!prevModalState && !nextModalState) {
-      return console.warn(`[ModalRoot.switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
+      return warn(`[ModalRoot.switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
     }
 
     const prevIsPage = !!prevModalState && prevModalState.type === ModalType.PAGE;
@@ -768,7 +768,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     } else if (isFunction(this.props.onClose)) {
       this.props.onClose(modalState.id);
     } else {
-      console.error('[ModalRoot] onClose is undefined');
+      warn('[ModalRoot] onClose is undefined');
     }
   };
 
