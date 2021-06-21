@@ -275,7 +275,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     let prevTranslateY = modalState.translateY;
 
-    modalState.expandable = contentHeight > contentElement.clientHeight;
+    modalState.expandable = contentHeight > contentElement.clientHeight || modalState.settlingHeight === 100;
 
     let collapsed = false;
     let expanded = false;
