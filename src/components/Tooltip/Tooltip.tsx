@@ -187,11 +187,11 @@ const Tooltip: FC<TooltipProps> = ({
   const placement = getPlacement(alignX, alignY);
 
   let availablePlacements: Placement[] = [placement];
-  if (!alignX) {
-    availablePlacements = [...availablePlacements, ...autoPlacementsX];
-  }
   if (!alignY) {
     availablePlacements = [...availablePlacements, ...autoPlacementsY];
+  }
+  if (!alignX) {
+    availablePlacements = [...availablePlacements, ...autoPlacementsX];
   }
 
   const { styles, attributes, state } = usePopper(target, tooltipRef, {
@@ -235,6 +235,10 @@ const Tooltip: FC<TooltipProps> = ({
   }) : children;
 
   const arrowTransform = getTranslateFromPlacement(state?.placement);
+
+  if (!alignX || !alignY) {
+    cornerOffset = 0;
+  }
 
   const arrowStyle: CSSProperties = {
     ...styles.arrow,
