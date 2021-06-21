@@ -37,7 +37,6 @@ import { Tooltip, Button } from '@vkontakte/vkui';
     }
 
     render () {
-
       return (
         <View activePanel={this.state.activePanel}>
 

@@ -7,8 +7,8 @@ import { usePopper } from 'react-popper';
 import { Placement } from '@popperjs/core';
 import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
-import { useDOM } from '../../lib/dom';
+import { useDOM, canUseDOM } from '../../lib/dom';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
   arrowRef?: Ref<HTMLDivElement>;
@@ -154,7 +154,7 @@ const autoPlacementsX: Placement[] = ['right', 'left'];
 const autoPlacementsY: Placement[] = ['bottom', 'top'];
 
 const Tooltip: FC<TooltipProps> = ({
-  children, isShown = true, offsetX = 0, offsetY = 15,
+  children, isShown, offsetX = 0, offsetY = 15,
   alignX, alignY, onClose, cornerOffset,
   ...restProps
 }) => {
@@ -171,7 +171,18 @@ const Tooltip: FC<TooltipProps> = ({
   /* eslint-enable no-restricted-properties */
 
   const { document } = useDOM();
-  useGlobalEventListener(document, 'click', onClose);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!isShown || !canUseDOM) {
+      return void 0;
+    }
+
+    document.body.addEventListener('click', onClose, { passive: true });
+
+    return () => {
+      document.body.removeEventListener('click', onClose);
+    };
+  }, [isShown]);
 
   const placement = getPlacement(alignX, alignY);
 
