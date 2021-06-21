@@ -15,7 +15,9 @@ import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
 
+const warn = warnOnce();
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
 
@@ -112,7 +114,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     super(props);
 
     this.state = {
-      scrolls: scrollsCache[getNavId(props, false)] || {},
+      scrolls: scrollsCache[getNavId(props)] || {},
       animated: false,
 
       visiblePanels: [props.activePanel],
@@ -154,7 +156,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   panelNodes: { [id: string]: HTMLDivElement } = {};
 
   componentWillUnmount() {
-    const id = getNavId(this.props, false);
+    const id = getNavId(this.props);
     if (id) {
       scrollsCache[id] = this.state.scrolls;
     }
@@ -167,7 +169,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     // Нужен переход
     if (prevProps.activePanel !== this.props.activePanel && !prevState.swipingBack && !prevState.browserSwipe) {
       const firstLayerId = this.panels
-        .map((panel) => getNavId(panel.props))
+        .map((panel) => getNavId(panel.props, warn))
         .find((id) => id === prevProps.activePanel || id === this.props.activePanel);
 
       const isBack = firstLayerId === this.props.activePanel;
@@ -485,7 +487,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     const hasModal = !!modal;
 
     const panels = this.panels.filter((panel: React.ReactElement) => {
-      const panelId = getNavId(panel.props);
+      const panelId = getNavId(panel.props, warn);
 
       return this.state.visiblePanels.includes(panelId) ||
         panelId === swipeBackPrevPanel ||
@@ -510,7 +512,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
       >
         <div vkuiClass="View__panels">
           {panels.map((panel: React.ReactElement) => {
-            const panelId = getNavId(panel.props);
+            const panelId = getNavId(panel.props, warn);
 
             return (
               <div
