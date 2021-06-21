@@ -251,4 +251,11 @@ const Tooltip: FC<TooltipProps> = ({
   );
 };
 
+Tooltip.defaultProps = {
+  offsetX: 0,
+  offsetY: 15,
+  cornerOffset: 0,
+  isShown: true,
+  mode: 'accent',
+};
 export default Tooltip;
