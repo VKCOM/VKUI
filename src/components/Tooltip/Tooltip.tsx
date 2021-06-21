@@ -164,9 +164,9 @@ const Tooltip: FC<TooltipProps> = ({
 
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
-  const fixedPortal = useMemo(() => target.closest(`[${tooltipContainerAttr}=fixed]`) != null, [target]);
-  const portalTarget = useMemo(() => target.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
-  const strategy = useMemo(() => target.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
+  const fixedPortal = useMemo(() => target?.closest(`[${tooltipContainerAttr}=fixed]`) != null, [target]);
+  const portalTarget = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
+  const strategy = useMemo(() => target?.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
 
