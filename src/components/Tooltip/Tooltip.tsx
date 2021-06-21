@@ -158,9 +158,9 @@ const Tooltip: FC<TooltipProps> = ({
   alignX, alignY, onClose, cornerOffset,
   ...restProps
 }) => {
-  const [tooltipRef, setTooltipRef] = useState<HTMLElement | null>(null);
-  const [tooltipArrowRef, setTooltipArrowRef] = useState<HTMLElement | null>(null);
-  const [target, setTarget] = useState<HTMLElement | null>(null);
+  const [tooltipRef, setTooltipRef] = useState<HTMLElement>();
+  const [tooltipArrowRef, setTooltipArrowRef] = useState<HTMLElement>();
+  const [target, setTarget] = useState<HTMLElement>();
 
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
