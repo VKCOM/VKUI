@@ -14,7 +14,7 @@ import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext'
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 
-const warn = warnOnce();
+const warn = warnOnce('Root');
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, NavIdProps {
   activeView: string;

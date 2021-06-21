@@ -18,7 +18,7 @@ import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 
-const warn = warnOnce();
+const warn = warnOnce('ModalRoot');
 const IS_DEV = process.env.NODE_ENV === 'development';
 
 export interface ModalRootProps extends HasPlatform {
@@ -196,7 +196,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
       default:
         if (IS_DEV) {
-          warn('[ModalRoot.initActiveModal] modalState.type is unknown');
+          warn('[initActiveModal] modalState.type is unknown');
         }
     }
 
@@ -206,7 +206,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
   closeActiveModal() {
     const { prevModal } = this.state;
     if (IS_DEV && !prevModal) {
-      return warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
+      return warn(`[closeActiveModal] prevModal is ${prevModal}`);
     }
 
     const prevModalState = this.modalsState[prevModal];
@@ -236,7 +236,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     const nextModalState = this.modalsState[nextModal];
 
     if (IS_DEV && !prevModalState && !nextModalState) {
-      return warn(`[ModalRoot.switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
+      return warn(`[switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
     }
 
     const prevIsCard = !!prevModalState && prevModalState.type === ModalType.CARD;
@@ -336,7 +336,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     } else if (isFunction(this.props.onClose)) {
       this.props.onClose(modalState.id);
     } else if (IS_DEV) {
-      warn('[ModalRoot] onClose is undefined');
+      warn('onClose is undefined');
     }
   };
 

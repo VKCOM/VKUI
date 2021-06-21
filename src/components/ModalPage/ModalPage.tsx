@@ -28,7 +28,7 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
   getModalContentRef?: Ref<HTMLDivElement>;
 }
 
-const warn = warnOnce();
+const warn = warnOnce('ModalPage');
 const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
   const platform = usePlatform();
   const { updateModalHeight } = useContext(ModalRootContext);

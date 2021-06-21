@@ -52,7 +52,7 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   onClose?: VoidFunction;
 }
 
-const warn = warnOnce();
+const warn = warnOnce('ModalCard');
 
 const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   const {

@@ -38,7 +38,7 @@ export interface FixedLayoutState {
   width: string;
 }
 
-const warn = warnOnce();
+const warn = warnOnce('FixedLayout');
 
 class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelContextProps, FixedLayoutState> {
   state: FixedLayoutState = {
@@ -64,7 +64,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     const elem = this.props.getPanelNode();
 
     if (process.env.NODE_ENV === 'development' && !elem) {
-      warn('[VKUI/FixedLayout] Panel element not found');
+      warn('Panel element not found');
     }
 
     return elem;

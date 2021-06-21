@@ -11,7 +11,7 @@ export interface EpicProps extends HTMLAttributes<HTMLDivElement>, AdaptivityPro
   activeStory: string;
 }
 
-const warn = warnOnce();
+const warn = warnOnce('Epic');
 
 export const Epic: FC<EpicProps> = (props: EpicProps) => {
   const platform = usePlatform();
@@ -19,7 +19,7 @@ export const Epic: FC<EpicProps> = (props: EpicProps) => {
   const { activeStory, tabbar, children, viewWidth, ...restProps } = props;
 
   if (process.env.NODE_ENV === 'development' && !tabbar && viewWidth < ViewWidth.SMALL_TABLET) {
-    warn('[Epic] Using Epic without tabbar is not recommended on mobile');
+    warn('Using Epic without tabbar is not recommended on mobile');
   }
   const story = (React.Children.toArray(children) as ReactElement[])
     .find((story) => getNavId(story.props, warn) === activeStory) || null;

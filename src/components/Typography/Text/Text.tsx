@@ -11,7 +11,7 @@ export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HT
   Component?: ElementType;
 }
 
-const warn = warnOnce();
+const warn = warnOnce('Text');
 const Text: FunctionComponent<TextProps> = ({
   children,
   weight,
@@ -30,7 +30,7 @@ const Text: FunctionComponent<TextProps> = ({
   }
 
   if (process.env.NODE_ENV === 'development' && typeof Component !== 'string' && getRootRef) {
-    warn('[VKUI/Text]: getRootRef can only be used with DOM components');
+    warn('getRootRef can only be used with DOM components');
   }
 
   return (

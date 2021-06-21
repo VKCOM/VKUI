@@ -24,7 +24,7 @@ export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, Adaptivity
   scroll?: 'global' | 'contain';
 }
 
-const warn = warnOnce();
+const warn = warnOnce('AppRoot');
 const AppRoot: FC<AppRootProps> = ({
   children, mode: _mode, embedded: _embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global',
   ...props
@@ -47,10 +47,10 @@ const AppRoot: FC<AppRootProps> = ({
 
   if (process.env.NODE_ENV === 'development') {
     if (scroll !== 'global' && mode !== 'embedded') {
-      warn('[VKUI/AppRoot] Scroll modes only supported in embedded mode');
+      warn('Scroll modes only supported in embedded mode');
     }
     if (_mode && _embedded) {
-      warn(`[VKUI/AppRoot] mode="${mode}" overrides embedded`);
+      warn(`mode="${mode}" overrides embedded`);
     }
   }
 

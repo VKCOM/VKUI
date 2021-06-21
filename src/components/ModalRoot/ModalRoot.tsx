@@ -23,7 +23,7 @@ import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 
-const warn = warnOnce();
+const warn = warnOnce('ModalRoot');
 const IS_DEV = process.env.NODE_ENV === 'development';
 
 function numberInRange(number: number, range: TranslateRange) {
@@ -155,7 +155,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       const prevModal = prevProps.activeModal;
 
       if (IS_DEV && nextModal !== null && !this.modalsState[nextModal]) {
-        return warn(`[ModalRoot.componentDidUpdate] nextModal ${nextModal} not found`);
+        return warn(`[componentDidUpdate] nextModal ${nextModal} not found`);
       }
 
       let history = [...this.state.history];
@@ -258,7 +258,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
       default:
         if (IS_DEV) {
-          warn('[ModalRoot.initActiveModal] modalState.type is unknown');
+          warn('[initActiveModal] modalState.type is unknown');
         }
     }
 
@@ -387,7 +387,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     const { prevModal } = this.state;
     if (!prevModal) {
-      return warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
+      return warn(`[closeActiveModal] prevModal is ${prevModal}`);
     }
 
     const prevModalState = this.modalsState[prevModal];
@@ -652,7 +652,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const nextModalState = this.modalsState[nextModal];
 
     if (IS_DEV && !prevModalState && !nextModalState) {
-      return warn(`[ModalRoot.switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
+      return warn(`[switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
     }
 
     const prevIsPage = !!prevModalState && prevModalState.type === ModalType.PAGE;
@@ -771,7 +771,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     } else if (isFunction(this.props.onClose)) {
       this.props.onClose(modalState.id);
     } else if (IS_DEV) {
-      warn('[ModalRoot] onClose is undefined');
+      warn('onClose is undefined');
     }
   };
 

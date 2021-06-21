@@ -16,7 +16,7 @@ import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext'
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 
-const warn = warnOnce();
+const warn = warnOnce('ViewInfinite');
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
 

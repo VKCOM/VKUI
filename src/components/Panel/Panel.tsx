@@ -17,7 +17,7 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement>,
   centered?: boolean;
 }
 
-const warn = warnOnce();
+const warn = warnOnce('Panel');
 const PanelComponent: FC<PanelProps> = (props: PanelProps) => {
   const { centered, children, getRootRef, sizeX, nav, ...restProps } = props;
 
