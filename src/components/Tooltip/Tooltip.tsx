@@ -1,4 +1,4 @@
-import React, { Fragment, useState, ReactElement, ReactNode, isValidElement, FC, forwardRef, Ref, useEffect, CSSProperties, HTMLAttributes, cloneElement, useMemo } from 'react';
+import React, { Fragment, useState, ReactElement, ReactNode, isValidElement, FC, forwardRef, Ref, CSSProperties, HTMLAttributes, cloneElement, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
