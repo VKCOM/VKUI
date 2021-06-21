@@ -47,6 +47,7 @@ class UniversalSliderDumb extends Component<UniversalSliderProps<UniversalValue>
     this.startX = absolutePosition;
 
     this.props.onChange(this.updateRange(value), e);
+    e.originalEvent.stopPropagation();
   };
 
   onMove: TouchEventHandler = (e: TouchEvent) => {
@@ -57,15 +58,17 @@ class UniversalSliderDumb extends Component<UniversalSliderProps<UniversalValue>
     const value = this.offsetToValue(this.startX + (e.shiftX || 0));
     this.props.onChange(this.updateRange(value), e);
 
+    e.originalEvent.stopPropagation();
     e.originalEvent.preventDefault();
   };
 
-  onEnd: TouchEventHandler = () => {
+  onEnd: TouchEventHandler = (e) => {
     if (this.props.disabled) {
       return;
     }
 
     this.dragging = false;
+    e.originalEvent.stopPropagation();
   };
 
   updateRange(value: number): UniversalValue {
