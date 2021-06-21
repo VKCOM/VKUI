@@ -45,11 +45,13 @@ const AppRoot: FC<AppRootProps> = ({
     initialized.current = true;
   }
 
-  if (scroll !== 'global' && mode !== 'embedded') {
-    warn('[VKUI/AppRoot] Scroll modes only supported in embedded mode');
-  }
-  if (_mode && _embedded) {
-    warn(`[VKUI/AppRoot] mode="${mode}" overrides embedded`);
+  if (process.env.NODE_ENV === 'development') {
+    if (scroll !== 'global' && mode !== 'embedded') {
+      warn('[VKUI/AppRoot] Scroll modes only supported in embedded mode');
+    }
+    if (_mode && _embedded) {
+      warn(`[VKUI/AppRoot] mode="${mode}" overrides embedded`);
+    }
   }
 
   // setup portal

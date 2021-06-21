@@ -6,7 +6,7 @@ export interface NavIdProps {
 
 export function getNavId(props: NavIdProps, warn?: (text: string) => any) {
   const id = props.nav || props.id;
-  if (!id && warn) {
+  if (process.env.NODE_ENV === 'development' && !id && warn) {
     warn('[VKUI] Navigation item should have "nav" or "id" prop');
   }
   return id;

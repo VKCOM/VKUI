@@ -18,7 +18,7 @@ export const Epic: FC<EpicProps> = (props: EpicProps) => {
   const scroll = useRef<{ [key: string]: number }>({}).current;
   const { activeStory, tabbar, children, viewWidth, ...restProps } = props;
 
-  if (!tabbar && viewWidth < ViewWidth.SMALL_TABLET) {
+  if (process.env.NODE_ENV === 'development' && !tabbar && viewWidth < ViewWidth.SMALL_TABLET) {
     warn('[Epic] Using Epic without tabbar is not recommended on mobile');
   }
   const story = (React.Children.toArray(children) as ReactElement[])

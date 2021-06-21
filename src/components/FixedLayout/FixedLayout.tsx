@@ -63,7 +63,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
   get currentPanel(): HTMLElement {
     const elem = this.props.getPanelNode();
 
-    if (!elem) {
+    if (process.env.NODE_ENV === 'development' && !elem) {
       warn('[VKUI/FixedLayout] Panel element not found');
     }
 

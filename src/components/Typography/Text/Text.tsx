@@ -29,7 +29,7 @@ const Text: FunctionComponent<TextProps> = ({
     }
   }
 
-  if (typeof Component !== 'string' && getRootRef) {
+  if (process.env.NODE_ENV === 'development' && typeof Component !== 'string' && getRootRef) {
     warn('[VKUI/Text]: getRootRef can only be used with DOM components');
   }
 

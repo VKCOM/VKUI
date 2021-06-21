@@ -19,6 +19,7 @@ import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 
 const warn = warnOnce();
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
@@ -134,7 +135,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
       const nextModal = this.props.activeModal;
       const prevModal = prevProps.activeModal;
 
-      if (nextModal !== null && !this.modalsState[nextModal]) {
+      if (IS_DEV && nextModal !== null && !this.modalsState[nextModal]) {
         return warn(`[ModalRoot.componentDidUpdate] nextModal ${nextModal} not found`);
       }
 
@@ -194,7 +195,9 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
         break;
 
       default:
-        warn('[ModalRoot.initActiveModal] modalState.type is unknown');
+        if (IS_DEV) {
+          warn('[ModalRoot.initActiveModal] modalState.type is unknown');
+        }
     }
 
     this.setState({ inited: true, switching: true });
@@ -202,7 +205,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
   closeActiveModal() {
     const { prevModal } = this.state;
-    if (!prevModal) {
+    if (IS_DEV && !prevModal) {
       return warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
     }
 
@@ -232,7 +235,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     const prevModalState = this.modalsState[prevModal];
     const nextModalState = this.modalsState[nextModal];
 
-    if (!prevModalState && !nextModalState) {
+    if (IS_DEV && !prevModalState && !nextModalState) {
       return warn(`[ModalRoot.switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
     }
 
@@ -332,7 +335,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
       modalState.onClose();
     } else if (isFunction(this.props.onClose)) {
       this.props.onClose(modalState.id);
-    } else {
+    } else if (IS_DEV) {
       warn('[ModalRoot] onClose is undefined');
     }
   };
