@@ -43,10 +43,9 @@ export const HorizontalCell: FC<HorizontalCellProps> = ({
   ...restProps
 }: HorizontalCellProps) => {
   const platform = usePlatform();
-  const RootComponent = restProps.href ? 'a' : Component;
 
   return (
-    <RootComponent
+    <div
       vkuiClass={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`)}
       ref={getRootRef}
       style={style}
@@ -56,7 +55,7 @@ export const HorizontalCell: FC<HorizontalCellProps> = ({
         vkuiClass="HorizontalCell__body"
         disabled={restProps.disabled}
         getRootRef={getRef}
-        Component={RootComponent}
+        Component={restProps.href ? 'a' : Component}
         {...restProps}
       >
         {hasReactNode(children) && <div vkuiClass="HorizontalCell__image">{children}</div>}
@@ -67,6 +66,6 @@ export const HorizontalCell: FC<HorizontalCellProps> = ({
           {hasReactNode(subtitle) && <Caption weight="regular" level="1" vkuiClass="HorizontalCell__subtitle">{subtitle}</Caption>}
         </div>
       </Tappable>
-    </RootComponent>
+    </div>
   );
 };
