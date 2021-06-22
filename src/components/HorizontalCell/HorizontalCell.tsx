@@ -20,7 +20,6 @@ const CellTypography: FC<CellTypographyProps> = ({ size, children, ...restProps 
 };
 
 export interface HorizontalCellProps extends
-  HTMLAttributes<HTMLElement>,
   AnchorHTMLAttributes<HTMLElement>,
   HasRootRef<HTMLDivElement>,
   HasRef<HTMLDivElement> {
@@ -31,24 +30,28 @@ export interface HorizontalCellProps extends
   disabled?: boolean;
 }
 
-export const HorizontalCell: FC<HorizontalCellProps> = (props: HorizontalCellProps) => {
-  const {
-    header,
-    subtitle,
-    size = 's',
-    children = <Avatar size={56} />,
-    getRootRef,
-    getRef,
-    Component = 'div',
-    ...restProps
-  } = props;
+export const HorizontalCell: FC<HorizontalCellProps> = ({
+  header,
+  href,
+  rel,
+  subtitle,
+  size = 's',
+  target,
+  children = <Avatar size={56} />,
+  getRootRef,
+  getRef,
+  Component = 'div',
+  ...restProps
+}: HorizontalCellProps) => {
   const platform = usePlatform();
-
-  const RootComponent = restProps.href ? 'a' : Component;
+  const anchorProps = { href, rel, target };
+  const RootComponent = href ? 'a' : Component;
 
   return (
-    <RootComponent vkuiClass={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`)} ref={getRootRef} {...restProps}>
-      <Tappable disabled={restProps.disabled} getRootRef={getRef}>
+    <RootComponent
+      vkuiClass={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`)} ref={getRootRef} {...anchorProps}
+    >
+      <Tappable disabled={restProps.disabled} getRootRef={getRef} {...restProps}>
         {hasReactNode(children) && <div vkuiClass="HorizontalCell__image">{children}</div>}
         <div vkuiClass="HorizontalCell__content">
           {hasReactNode(header) && (
