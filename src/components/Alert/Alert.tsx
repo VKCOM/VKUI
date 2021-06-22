@@ -17,14 +17,16 @@ import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export type AlertActionInterface = AlertProps['actions'][0];
 
+export interface AlertAction {
+  title: string;
+  action?: VoidFunction;
+  autoclose?: boolean;
+  mode: 'cancel' | 'destructive' | 'default';
+}
+
 export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   actionsLayout?: 'vertical' | 'horizontal';
-  actions?: Array<{
-    title: string;
-    action?: VoidFunction;
-    autoclose?: boolean;
-    mode: 'cancel' | 'destructive' | 'default';
-  }>;
+  actions?: AlertAction[];
   header?: ReactNode;
   text?: ReactNode;
   onClose?: VoidFunction;
