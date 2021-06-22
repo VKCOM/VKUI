@@ -51,7 +51,7 @@ export const HorizontalCell: FC<HorizontalCellProps> = ({
     <RootComponent
       vkuiClass={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`)} ref={getRootRef} {...anchorProps}
     >
-      <Tappable disabled={restProps.disabled} getRootRef={getRef} {...restProps}>
+      <Tappable disabled={restProps.disabled} getRootRef={getRef} Component={RootComponent} {...restProps}>
         {hasReactNode(children) && <div vkuiClass="HorizontalCell__image">{children}</div>}
         <div vkuiClass="HorizontalCell__content">
           {hasReactNode(header) && (
