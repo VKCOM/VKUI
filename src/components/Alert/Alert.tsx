@@ -8,7 +8,7 @@ import { ANDROID, VKCOM, IOS } from '../../lib/platform';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdaptivity';
-import Button from '../Button/Button';
+import Button, { ButtonProps } from '../Button/Button';
 import { hasReactNode } from '../../lib/utils';
 import Headline from '../Typography/Headline/Headline';
 import Title from '../Typography/Title/Title';
@@ -17,7 +17,7 @@ import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 
 export type AlertActionInterface = AlertProps['actions'][0];
 
-export interface AlertAction {
+export interface AlertAction extends Pick<ButtonProps, 'Component' | 'href'> {
   title: string;
   action?: VoidFunction;
   autoclose?: boolean;
@@ -121,43 +121,36 @@ class Alert extends Component<AlertProps, AlertState> {
 
   renderAction = (action: AlertActionInterface, i: number) => {
     const { platform } = this.props;
-    switch (platform) {
-      case ANDROID:
-        return (
-          <Button
-            vkuiClass={classNames('Alert__button', `Alert__button--${action.mode}`)}
-            mode="tertiary"
-            size="m"
-            onClick={this.onItemClick(action)}
-            key={`alert-action-${i}`}
-          >
-            {action.title}
-          </Button>
-        );
-      case VKCOM:
-        return (
-          <Button
-            vkuiClass={classNames('Alert__button', `Alert__button--${action.mode}`)}
-            size="m"
-            mode={action.mode === 'cancel' ? 'secondary' : 'primary'}
-            onClick={this.onItemClick(action)}
-            key={`alert-action-${i}`}
-          >
-            {action.title}
-          </Button>
-        );
-      default:
-        return (
-          <Tappable
-            Component="button"
-            vkuiClass={classNames('Alert__action', `Alert__action--${action.mode}`)}
-            onClick={this.onItemClick(action)}
-            key={`alert-action-${i}`}
-          >
-            {action.title}
-          </Tappable>
-        );
+    if (platform === IOS) {
+      const { Component = 'button' } = action;
+      return (
+        <Tappable
+          Component={action.href ? 'a' : Component}
+          vkuiClass={classNames('Alert__action', `Alert__action--${action.mode}`)}
+          onClick={this.onItemClick(action)}
+          href={action.href}
+          key={`alert-action-${i}`}
+        >
+          {action.title}
+        </Tappable>
+      );
     }
+    const mode: ButtonProps['mode'] = platform === ANDROID
+      ? 'tertiary'
+      : action.mode === 'cancel' ? 'secondary' : 'primary';
+    return (
+      <Button
+        vkuiClass={classNames('Alert__button', `Alert__button--${action.mode}`)}
+        mode={mode}
+        size="m"
+        onClick={this.onItemClick(action)}
+        Component={action.Component}
+        href={action.href}
+        key={`alert-action-${i}`}
+      >
+        {action.title}
+      </Button>
+    );
   };
 
   render() {
