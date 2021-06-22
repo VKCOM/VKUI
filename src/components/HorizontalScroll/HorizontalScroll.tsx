@@ -5,6 +5,8 @@ import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from './HorizontalScrollArrow';
 import { easeInOutSine } from '../../lib/fx';
 import { useEventListener } from '../../hooks/useEventListener';
+import { useExternRef } from '../../hooks/useExternRef';
+import { HasRef } from '../../types';
 
 interface ScrollContext {
   scrollElement: HTMLElement | null;
@@ -21,7 +23,10 @@ interface ScrollContext {
   initialScrollWidth: number;
 }
 
-export interface HorizontalScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+export interface HorizontalScrollProps extends
+  HTMLAttributes<HTMLDivElement>,
+  AdaptivityProps,
+  HasRef<HTMLDivElement> {
   /**
    * Функция для расчета величины прокрутки при клике на левую стрелку.
    */
@@ -114,6 +119,7 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props: HorizontalScrollProp
     showArrows,
     scrollAnimationDuration,
     hasMouse,
+    getRef,
     ...restProps
   } = props;
 
@@ -122,7 +128,7 @@ const HorizontalScroll: FC<HorizontalScrollProps> = (props: HorizontalScrollProp
 
   const isCustomScrollingRef = useRef(false);
 
-  const scrollerRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = useExternRef(getRef);
 
   const animationQueue = useRef<VoidFunction[]>([]);
 
