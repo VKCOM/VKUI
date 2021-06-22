@@ -1,7 +1,7 @@
 import React, {
   FC, ReactElement, ReactNode,
   Fragment, cloneElement, isValidElement,
-  useState, useRef, useMemo,
+  useState, useRef, useMemo, Children,
 } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
@@ -12,6 +12,8 @@ import Subhead from '../Typography/Subhead/Subhead';
 import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { warnOnce } from '../../lib/warnOnce';
+import { hasReactNode } from '../../lib/utils';
 
 interface TooltipPortalProps extends Partial<TooltipProps> {
   target?: HTMLElement;
@@ -22,6 +24,8 @@ const isDOMTypeElement = (element: ReactElement): element is React.DOMElement<an
 };
 
 const baseClassName = getClassName('Tooltip');
+const warn = warnOnce('Tooltip');
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 const TooltipPortal: FC<TooltipPortalProps> = ({
   header,
@@ -43,6 +47,9 @@ const TooltipPortal: FC<TooltipPortalProps> = ({
   const fixedPortal = useMemo(() => target.closest(`[${tooltipContainerAttr}=fixed]`) != null, [target]);
   const portalTarget = useMemo(() => target.closest(`[${tooltipContainerAttr}]`), [target]);
   /* eslint-enable no-restricted-properties */
+  if (IS_DEV && !portalTarget) {
+    throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
+  }
 
   useGlobalEventListener(document, 'click', onClose);
 
@@ -133,6 +140,17 @@ export interface TooltipProps {
 
 const Tooltip: FC<TooltipProps> = ({ children = null, isShown, ...portalProps }) => {
   const [target, setTarget] = useState<HTMLElement>();
+
+  if (IS_DEV) {
+    const multiChildren = Children.count(children) > 1;
+    // Empty children is a noop
+    const primitiveChild = hasReactNode(children) && typeof children !== 'object';
+    (multiChildren || primitiveChild) && warn([
+      'children must be a single React element, got',
+      multiChildren && 'multiple',
+      primitiveChild && JSON.stringify(children),
+    ].filter(Boolean).join(' '));
+  }
 
   const childRef = isValidElement(children) &&
     (isDOMTypeElement(children) ? children.ref : (children.props as any).getRootRef);
