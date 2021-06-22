@@ -1,11 +1,14 @@
 .HorizontalCell {
   display: flex;
-  text-decoration: none;
 }
 
 .HorizontalCell__image {
   display: flex;
   justify-content: center;
+}
+
+.HorizontalCell__body {
+  text-decoration: none;
 }
 
 .HorizontalCell__content {

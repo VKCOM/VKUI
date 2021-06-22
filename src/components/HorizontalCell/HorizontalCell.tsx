@@ -31,12 +31,11 @@ export interface HorizontalCellProps extends
 }
 
 export const HorizontalCell: FC<HorizontalCellProps> = ({
+  className,
   header,
-  href,
-  rel,
+  style,
   subtitle,
   size = 's',
-  target,
   children = <Avatar size={56} />,
   getRootRef,
   getRef,
@@ -44,14 +43,22 @@ export const HorizontalCell: FC<HorizontalCellProps> = ({
   ...restProps
 }: HorizontalCellProps) => {
   const platform = usePlatform();
-  const anchorProps = { href, rel, target };
-  const RootComponent = href ? 'a' : Component;
+  const RootComponent = restProps.href ? 'a' : Component;
 
   return (
     <RootComponent
-      vkuiClass={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`)} ref={getRootRef} {...anchorProps}
+      vkuiClass={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`)}
+      ref={getRootRef}
+      style={style}
+      className={className}
     >
-      <Tappable disabled={restProps.disabled} getRootRef={getRef} Component={RootComponent} {...restProps}>
+      <Tappable
+        vkuiClass="HorizontalCell__body"
+        disabled={restProps.disabled}
+        getRootRef={getRef}
+        Component={RootComponent}
+        {...restProps}
+      >
         {hasReactNode(children) && <div vkuiClass="HorizontalCell__image">{children}</div>}
         <div vkuiClass="HorizontalCell__content">
           {hasReactNode(header) && (
