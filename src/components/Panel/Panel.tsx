@@ -10,19 +10,21 @@ import { IOS } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { useExternRef } from '../../hooks/useExternRef';
+import { warnOnce } from '../../lib/warnOnce';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>, AdaptivityProps, NavIdProps {
   centered?: boolean;
 }
 
+const warn = warnOnce('Panel');
 const PanelComponent: FC<PanelProps> = (props: PanelProps) => {
   const { centered, children, getRootRef, sizeX, nav, ...restProps } = props;
 
   const platform = usePlatform();
   const containerRef = useExternRef(getRootRef);
 
-  const navId = getNavId(props);
+  const navId = getNavId(props, warn);
 
   const childContext = useMemo<PanelContextProps>(() => {
     return {
