@@ -171,6 +171,6 @@
   font-family: inherit;
 }
 
-.vkui__root a:focus {
+.vkui__root *:focus {
   outline: none;
 }

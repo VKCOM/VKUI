@@ -18,10 +18,6 @@
   border: none;
 }
 
-.Removable__action:focus {
-  outline: none;
-}
-
 .Removable--start .Removable__action {
   align-self: flex-start;
 }
