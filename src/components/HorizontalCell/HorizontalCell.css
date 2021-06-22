@@ -1,5 +1,6 @@
 .HorizontalCell {
   display: flex;
+  text-decoration: none;
 }
 
 .HorizontalCell__image {
@@ -8,6 +9,7 @@
 }
 
 .HorizontalCell__content {
+  color: var(--text_primary);
   word-break: break-all;
   text-overflow: ellipsis;
 }
