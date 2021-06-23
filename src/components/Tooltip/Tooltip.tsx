@@ -173,20 +173,6 @@ const Tooltip: FC<TooltipProps> = ({
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
 
-  const { document } = useDOM();
-
-  useIsomorphicLayoutEffect(() => {
-    if (!isShown || !canUseDOM) {
-      return void 0;
-    }
-
-    document.body.addEventListener('click', onClose, { passive: true });
-
-    return () => {
-      document.body.removeEventListener('click', onClose);
-    };
-  }, [isShown]);
-
   const placement = getPlacement(alignX, alignY);
 
   let availablePlacements: Placement[] = [placement];
@@ -197,7 +183,7 @@ const Tooltip: FC<TooltipProps> = ({
     availablePlacements = [...availablePlacements, ...autoPlacementsX];
   }
 
-  const { styles, attributes, state } = usePopper(target, tooltipRef, {
+  const { styles, attributes, state, forceUpdate } = usePopper(target, tooltipRef, {
     strategy: strategy,
     modifiers: [
       {
@@ -229,6 +215,21 @@ const Tooltip: FC<TooltipProps> = ({
     ],
     placement: 'auto',
   });
+
+  const { document } = useDOM();
+
+  useIsomorphicLayoutEffect(() => {
+    if (!isShown || !canUseDOM) {
+      return void 0;
+    }
+
+    document.body.addEventListener('click', onClose, { passive: true });
+    forceUpdate?.();
+
+    return () => {
+      document.body.removeEventListener('click', onClose);
+    };
+  }, [isShown]);
 
   const childRef = isValidElement(children) &&
     (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
