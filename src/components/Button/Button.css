@@ -9,6 +9,7 @@
   padding: 1px 16px;
   user-select: none;
   border-radius: 8px;
+  max-width: 100%;
 }
 
 .Button[disabled] {
@@ -27,6 +28,9 @@
 .Button__content {
   padding-top: 4px;
   padding-bottom: 6px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Button__content--caps {
