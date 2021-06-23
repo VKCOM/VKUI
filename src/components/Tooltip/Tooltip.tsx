@@ -110,19 +110,19 @@ function getTranslateFromPlacement(placement: Placement) {
   switch (basePlacement) {
     case 'right':
       deg = 270;
-      translate[1] = -14;
+      translate[1] = -12;
       break;
     case 'left':
       deg = 90;
-      translate[1] = -14;
+      translate[1] = -12;
       break;
     case 'bottom':
       deg = 0;
-      translate[1] = -8;
+      translate[1] = -6;
       break;
     case 'top':
       deg = 180;
-      translate[1] = -8;
+      translate[1] = -6;
       break;
   }
 
