@@ -43,8 +43,8 @@
 }
 
 .RichCell__top > :first-child:not(.RichCell__content) {
-  display: none;
-  pointer-events: none;
+  display: none !important;
+  pointer-events: none !important;
 }
 
 .RichCell__top > .Icon--28:first-child ~ * {
