@@ -174,5 +174,8 @@
   },
   "pre-commit": [
     "test:static"
-  ]
+  ],
+  "dependencies": {
+    "@popperjs/core": "^2.9.2"
+  }
 }

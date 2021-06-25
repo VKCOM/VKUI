@@ -12,7 +12,6 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
   arrowRef?: Ref<HTMLDivElement>;
-  fixed: boolean;
   style?: {
     arrow: CSSProperties;
     container: CSSProperties;
@@ -31,7 +30,7 @@ const baseClassName = getClassName('Tooltip');
 
 const SimpleTooltip = forwardRef<HTMLDivElement, SimpleTooltipProps>(
   function SimpleTooltip(
-    { mode = 'accent', header, text, arrowRef, style = {}, attributes, fixed },
+    { mode = 'accent', header, text, arrowRef, style = {}, attributes },
     ref,
   ) {
     return (
@@ -39,9 +38,6 @@ const SimpleTooltip = forwardRef<HTMLDivElement, SimpleTooltipProps>(
         classNames(
           baseClassName,
           `Tooltip--${mode}`,
-          {
-            'Tooltip--fixed': fixed,
-          },
         )}>
         <div vkuiClass="Tooltip__container" ref={ref} style={style.container} {...attributes.container}>
           <div vkuiClass="Tooltip__corner" style={style.arrow} {...attributes.arrow} ref={arrowRef} />
@@ -167,7 +163,6 @@ const Tooltip: FC<TooltipProps> = ({
 
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
-  const fixedPortal = useMemo(() => target?.closest(`[${tooltipContainerAttr}=fixed]`) != null, [target]);
   const portalTarget = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
   const strategy = useMemo(() => target?.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
@@ -220,7 +215,7 @@ const Tooltip: FC<TooltipProps> = ({
 
   useIsomorphicLayoutEffect(() => {
     if (!isShown || !canUseDOM) {
-      return void 0;
+      return undefined;
     }
 
     document.body.addEventListener('click', onClose, { passive: true });
@@ -257,7 +252,6 @@ const Tooltip: FC<TooltipProps> = ({
         <SimpleTooltip
           {...restProps}
           ref={(el) => setTooltipRef(el)}
-          fixed={fixedPortal}
           arrowRef={(el) => setTooltipArrowRef(el)}
           style={{ arrow: arrowStyle, container: styles.popper }}
           attributes={{ arrow: attributes.arrow, container: attributes.popper }}
