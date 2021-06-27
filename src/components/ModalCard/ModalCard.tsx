@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactNode, FC, useContext } from 'react';
+import { HTMLAttributes, ReactNode, FC, useContext, useState } from 'react';
 import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -75,6 +75,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
+  const [isKeyboardOpened, setKeyboardOpened] = useState(false);
   const modalContext = useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);
 
@@ -83,7 +84,10 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
       {...restProps}
       vkuiClass={classNames(getClassName('ModalCard', platform), {
         'ModalCard--desktop': isDesktop,
+        'ModalCard--keyboard_active': isKeyboardOpened,
       })}
+      onFocus={() => setKeyboardOpened(true)}
+      onBlur={() => setKeyboardOpened(false)}
     >
       <div vkuiClass="ModalCard__in" ref={refs.innerElement}>
         <div vkuiClass="ModalCard__container">
