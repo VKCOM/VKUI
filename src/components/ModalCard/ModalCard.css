@@ -121,7 +121,7 @@
 }
 
 .ModalCard--ios.ModalCard--keyboard_active .ModalCard__container {
-  margin-bottom: calc(var(--safe-area-inset-bottom) - 32px)
+  margin-bottom: calc(var(--safe-area-inset-bottom) - 32px);
 }
 
 .ModalCard--ios .ModalCard__header:first-child {

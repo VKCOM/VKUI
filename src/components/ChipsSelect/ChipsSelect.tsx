@@ -189,7 +189,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
       }
     }
 
-    if (['Escape', 'Tab'].includes(e.key) && !e.defaultPrevented && opened) {
+    if (e.key === 'Escape' && !e.defaultPrevented && opened) {
       setOpened(false);
     }
   };
