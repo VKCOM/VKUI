@@ -1,13 +1,15 @@
 import {
-  Component,
   ChangeEventHandler,
   HTMLAttributes,
+  FC,
+  useCallback,
+  useState,
 } from 'react';
 import Input from '../Input/Input';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
 import { leadingZero } from '../../lib/utils';
-import CustomSelect, { CustomSelectOptionInterface } from '../CustomSelect/CustomSelect';
+import CustomSelect from '../CustomSelect/CustomSelect';
 
 const DefaultMonths: string[] = [
   'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря',
@@ -19,11 +21,9 @@ export type DatePickerDateFormat = {
   year: number;
 };
 
-type DatePickerState = Partial<DatePickerDateFormat>;
-
 export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>, HasPlatform, AdaptivityProps {
-  min: DatePickerDateFormat;
-  max: DatePickerDateFormat;
+  min?: DatePickerDateFormat;
+  max?: DatePickerDateFormat;
   name?: string;
   defaultValue?: DatePickerDateFormat;
   popupDirection?: 'top' | 'bottom';
@@ -35,222 +35,157 @@ export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'd
   disabled?: boolean;
 }
 
-type GetOptions = () => CustomSelectOptionInterface[];
-
-class DatePicker extends Component<DatePickerProps, DatePickerState> {
-  constructor(props: DatePickerProps) {
-    super(props);
-
-    this.state = props.defaultValue ? props.defaultValue : {
-      day: 0,
-      month: 0,
-      year: 0,
-    };
-  }
-
-  static defaultProps = {
-    min: { day: 0, month: 0, year: 0 },
-    max: { day: 31, month: 12, year: 2100 },
-  };
-
-  // Переводим state к формату гг-мм-дд
-  private convertToInputFormat(date: DatePickerState) {
-    const { day, month, year } = date;
-
-    return `${year}-${leadingZero(month)}-${leadingZero(day)}`;
-  };
-
-  // Переводим дату формата гг-мм-дд к объекту
-  parseInputDate = (date: string) => {
-    const splited = date.split('-');
-
-    return {
-      day: Number(splited[2]),
-      month: Number(splited[1]),
-      year: Number(splited[0]),
-    };
-  };
-
-  getDaysInMonth = (year: number, month: number) => {
-    return new Date(year, month, 0).getDate();
-  };
-
-  getMonthMaxDay = () => {
-    const { month, year } = this.state;
-
-    if (!month) {
-      return 31;
-    }
-
-    if (!year) {
-      return this.getDaysInMonth(2016, month);
-    }
-
-    return this.getDaysInMonth(year, month);
-  };
-
-  getDayOptions: GetOptions = () => {
-    const maxMonthDay = this.getMonthMaxDay();
-    const array: CustomSelectOptionInterface[] = new Array(maxMonthDay);
-
-    for (let i = 0; i < maxMonthDay; i++) {
-      const value = i + 1;
-
-      array[i] = {
-        label: String(value),
-        value: value,
-      };
-    }
-
-    return array;
-  };
-
-  getMonthOptions: GetOptions = () => {
-    const { monthNames } = this.props;
-
-    return (monthNames || DefaultMonths).map((name, index) => {
-      const value = index + 1;
-
-      return {
-        label: name,
-        value: value,
-      };
-    });
-  };
-
-  getYearOptions: GetOptions = () => {
-    const { max, min } = this.props;
-    const yearOptions: CustomSelectOptionInterface[] = [];
-    const maxYear = max.year;
-    const minYear = min.year;
-
-    for (let value = maxYear; value >= minYear; value--) {
-      yearOptions.push({
-        label: String(value),
-        value: value,
-      });
-    }
-
-    return yearOptions;
-  };
-
-  onSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const { onDateChange } = this.props;
-
-    this.setState({
-      [e.target.name]: Number(e.target.value),
-    }, () => {
-      onDateChange && onDateChange(this.state as DatePickerDateFormat);
-    });
-  };
-
-  onStringChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { onDateChange } = this.props;
-    const date = this.parseInputDate(e.currentTarget.value);
-
-    this.setState(() => ({
-      ...date,
-    }));
-
-    onDateChange && onDateChange(date);
-  };
-
-  customView() {
-    const {
-      name, min, max,
-      dayPlaceholder, monthPlaceholder, yearPlaceholder,
-      popupDirection,
-      defaultValue,
-      hasMouse,
-      monthNames,
-      disabled,
-      ...restProps
-    } = this.props;
-    const { day, month, year } = this.state;
-
-    return (
-      <div vkuiClass="DatePicker" {...restProps}>
-        <div vkuiClass="DatePicker__container">
-          <div vkuiClass="DatePicker__day">
-            <CustomSelect
-              name="day"
-              value={day}
-              options={this.getDayOptions()}
-              placeholder={dayPlaceholder}
-              popupDirection={popupDirection}
-              onChange={this.onSelectChange}
-              disabled={disabled}
-            />
-          </div>
-          <div vkuiClass="DatePicker__month">
-            <CustomSelect
-              name="month"
-              value={month}
-              options={this.getMonthOptions()}
-              placeholder={monthPlaceholder}
-              popupDirection={popupDirection}
-              onChange={this.onSelectChange}
-              disabled={disabled}
-            />
-          </div>
-          <div vkuiClass="DatePicker__year">
-            <CustomSelect
-              name="year"
-              value={year}
-              options={this.getYearOptions()}
-              placeholder={yearPlaceholder}
-              popupDirection={popupDirection}
-              onChange={this.onSelectChange}
-              disabled={disabled}
-            />
-          </div>
-        </div>
-        <input type="hidden" name={name} value={this.convertToInputFormat(this.state as DatePickerState)} />
-      </div>
-    );
-  }
-
-  nativeView() {
-    const {
-      name, min, max,
-      dayPlaceholder, monthPlaceholder, yearPlaceholder,
-      popupDirection,
-      defaultValue,
-      hasMouse,
-      ...restProps
-    } = this.props;
-    const { day, month, year } = this.state;
-
-    if (day && month && year) {
-      return (
-        <Input
-          {...restProps}
-          name={name}
-          type="date"
-          defaultValue={this.convertToInputFormat(this.state as DatePickerState)}
-          onChange={this.onStringChange}
-          min={this.convertToInputFormat(min)}
-          max={this.convertToInputFormat(max)}
-        />
-      );
-    }
-
-    return (
-      <Input
-        {...restProps}
-        name={name}
-        type="date"
-        onChange={this.onStringChange}
-        min={this.convertToInputFormat(min)}
-        max={this.convertToInputFormat(max)}
-      />
-    );
-  }
-
-  render() {
-    return this.props.hasMouse ? this.customView() : this.nativeView();
-  }
+// Переводим state к формату гг-мм-дд
+function convertToInputFormat({ day, month, year }: Partial<DatePickerDateFormat>) {
+  return `${year}-${leadingZero(month)}-${leadingZero(day)}`;
 }
+
+// Переводим дату формата гг-мм-дд к объекту
+function parseInputDate(date: string): DatePickerDateFormat {
+  const splited = date.split('-');
+
+  return {
+    day: Number(splited[2]),
+    month: Number(splited[1]),
+    year: Number(splited[0]),
+  };
+}
+
+function getMonthMaxDay(month?: number, year?: number) {
+  return month ? new Date(year || 2016, month, 0).getDate() : 31;
+}
+
+const range = (start: number, end: number) => {
+  const swap = start > end;
+  const arr = [];
+  for (let i = Math.min(start, end); i <= Math.max(start, end); i++) {
+    arr.push(i);
+  }
+  return swap ? arr.reverse() : arr;
+};
+
+const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
+  name, min, max,
+  dayPlaceholder, monthPlaceholder, yearPlaceholder,
+  popupDirection,
+  defaultValue,
+  hasMouse,
+  monthNames,
+  day, month, year,
+  onDateChange,
+  disabled,
+  ...restProps
+}) => {
+  const onSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    onDateChange({
+      day,
+      month,
+      year,
+      [e.target.name]: Number(e.target.value),
+    });
+  };
+  const dayOptions = range(1, getMonthMaxDay(month, year)).map((value) => ({
+    label: String(value),
+    value,
+  }));
+  const monthOptions = (monthNames || DefaultMonths).map((name, index) => ({
+    label: name,
+    value: index + 1,
+  }));
+  const yearOptions = range(max.year, min.year).map((value) => ({
+    label: String(value),
+    value: value,
+  }));
+  return (
+    <div vkuiClass="DatePicker" {...restProps}>
+      <div vkuiClass="DatePicker__container">
+        <div vkuiClass="DatePicker__day">
+          <CustomSelect
+            name="day"
+            value={day}
+            options={dayOptions}
+            placeholder={dayPlaceholder}
+            popupDirection={popupDirection}
+            onChange={onSelectChange}
+            disabled={disabled}
+          />
+        </div>
+        <div vkuiClass="DatePicker__month">
+          <CustomSelect
+            name="month"
+            value={month}
+            options={monthOptions}
+            placeholder={monthPlaceholder}
+            popupDirection={popupDirection}
+            onChange={onSelectChange}
+            disabled={disabled}
+          />
+        </div>
+        <div vkuiClass="DatePicker__year">
+          <CustomSelect
+            name="year"
+            value={year}
+            options={yearOptions}
+            placeholder={yearPlaceholder}
+            popupDirection={popupDirection}
+            onChange={onSelectChange}
+            disabled={disabled}
+          />
+        </div>
+      </div>
+      <input type="hidden" name={name} value={convertToInputFormat({ day, month, year })} />
+    </div>
+  );
+};
+
+const DatePickerNative: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
+  min, max,
+  dayPlaceholder, monthPlaceholder, yearPlaceholder,
+  popupDirection,
+  defaultValue,
+  hasMouse,
+  day, month, year,
+  onDateChange,
+  ...restProps
+}) => {
+  const defProps = day && month && year
+    ? { defaultValue: convertToInputFormat({ day, month, year }) }
+    : {};
+  const onStringChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
+    onDateChange(parseInputDate(e.currentTarget.value));
+  }, [onDateChange]);
+  return (
+    <Input
+      {...restProps}
+      type="date"
+      onChange={onStringChange}
+      min={convertToInputFormat(min)}
+      max={convertToInputFormat(max)}
+      {...defProps}
+    />
+  );
+};
+
+const DatePicker: FC<DatePickerProps> = ({ hasMouse, defaultValue, ...props }) => {
+  const [value, setValue] = useState<Partial<DatePickerDateFormat>>(defaultValue || {
+    day: 0,
+    month: 0,
+    year: 0,
+  });
+
+  const onDateChange = useCallback((update: DatePickerDateFormat) => {
+    setValue(update);
+    props.onDateChange && props.onDateChange({ ...update });
+  }, [props.onDateChange]);
+
+  const Cmp = hasMouse ? DatePickerCustom : DatePickerNative;
+  return <Cmp {...props} {...value} onDateChange={onDateChange} />;
+};
+
+DatePicker.defaultProps = {
+  min: { day: 0, month: 0, year: 0 },
+  max: { day: 31, month: 12, year: 2100 },
+};
 
 export default withAdaptivity(DatePicker, {
   hasMouse: true,
