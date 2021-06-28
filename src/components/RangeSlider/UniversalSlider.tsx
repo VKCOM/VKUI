@@ -1,18 +1,17 @@
-import { Component, createRef, HTMLAttributes, RefCallback } from 'react';
+import { useRef, FC, HTMLAttributes } from 'react';
 import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import { HasPlatform, HasRootRef } from '../../types';
-import { setRef } from '../../lib/utils';
+import { HasRootRef } from '../../types';
 import { rescale } from '../../helpers/math';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { withPlatform } from '../../hoc/withPlatform';
+import { useExternRef } from '../../hooks/useExternRef';
+import { usePlatform } from '../../hooks/usePlatform';
 
 export type UniversalValue = [number | null, number];
 
 export interface UniversalSliderProps<Value> extends
   HasRootRef<HTMLDivElement>,
-  HasPlatform,
   Omit<HTMLAttributes<HTMLDivElement>, 'value' | 'defaultValue' | 'onChange'>,
   AdaptivityProps {
   min?: number;
@@ -24,142 +23,120 @@ export interface UniversalSliderProps<Value> extends
   onChange?(value: Value, e: TouchEvent): void;
 }
 
-class UniversalSliderDumb extends Component<UniversalSliderProps<UniversalValue>> {
-  dragging: false | 'start' | 'end' = false;
-  startX = 0;
-  containerWidth = 0;
+const UniversalSliderDumb: FC<UniversalSliderProps<UniversalValue>> = ({
+  min, max, step,
+  value, defaultValue, onChange,
+  getRootRef,
+  sizeY,
+  disabled,
+  ...restProps
+}) => {
+  const platform = usePlatform();
+  const [start, end] = value;
+  const isRange = start != null;
+  const gesture = useRef({
+    dragging: false as false | 'start' | 'end',
+    startX: 0,
+    containerWidth: 0,
+  }).current;
+  const container = useExternRef(getRootRef);
+  const thumbStart = useRef<HTMLDivElement>();
+  const thumbEnd = useRef<HTMLDivElement>();
 
-  container: HTMLDivElement;
-  thumbStart = createRef<HTMLDivElement>();
-  thumbEnd = createRef<HTMLDivElement>();
+  const offsetToValue = (absolute: number) => {
+    return rescale(absolute, [0, gesture.containerWidth], [min, max], { step });
+  };
 
-  onStart: TouchEventHandler = (e: TouchEvent) => {
-    if (this.props.disabled) {
-      return;
+  const updateRange = (nextValue: number): UniversalValue => {
+    if (start == null) {
+      return [null, nextValue];
     }
 
-    const boundingRect = this.container.getBoundingClientRect();
-    this.containerWidth = boundingRect.width;
+    const { dragging } = gesture;
+    if (dragging === 'start') {
+      if (nextValue > end) {
+        // "перехватиться", если перетянули за конец
+        gesture.dragging = 'end';
+        return [end, nextValue];
+      }
+      return [nextValue, end];
+    }
+    if (dragging === 'end') {
+      if (nextValue < start) {
+        // "перехватиться", если перетянули за начало
+        gesture.dragging = 'start';
+        return [nextValue, start];
+      }
+      return [start, nextValue];
+    }
+
+    return value;
+  };
+
+  const snapDirection = (pos: number, target: EventTarget) => {
+    if (target === thumbStart.current) {
+      return 'start';
+    }
+    if (target === thumbEnd.current) {
+      return 'end';
+    }
+    return Math.abs(start - pos) <= Math.abs(end - pos) ? 'start' : 'end';
+  };
+
+  const onStart: TouchEventHandler = (e: TouchEvent) => {
+    const boundingRect = container.current.getBoundingClientRect();
+    gesture.containerWidth = boundingRect.width;
 
     const absolutePosition = e.startX - boundingRect.left;
-    const value = this.offsetToValue(absolutePosition);
-    this.dragging = this.snapDirection(value, e.originalEvent.target);
-    this.startX = absolutePosition;
+    const pos = offsetToValue(absolutePosition);
+    gesture.dragging = snapDirection(pos, e.originalEvent.target);
+    gesture.startX = absolutePosition;
 
-    this.props.onChange(this.updateRange(value), e);
+    onChange(updateRange(pos), e);
     e.originalEvent.stopPropagation();
   };
 
-  onMove: TouchEventHandler = (e: TouchEvent) => {
-    if (this.props.disabled) {
-      return;
-    }
-
-    const value = this.offsetToValue(this.startX + (e.shiftX || 0));
-    this.props.onChange(this.updateRange(value), e);
+  const onMove: TouchEventHandler = (e: TouchEvent) => {
+    onChange(updateRange(offsetToValue(gesture.startX + (e.shiftX || 0))), e);
 
     e.originalEvent.stopPropagation();
     e.originalEvent.preventDefault();
   };
 
-  onEnd: TouchEventHandler = (e) => {
-    if (this.props.disabled) {
-      return;
-    }
-
-    this.dragging = false;
+  const onEnd: TouchEventHandler = (e) => {
+    gesture.dragging = false;
     e.originalEvent.stopPropagation();
   };
 
-  updateRange(value: number): UniversalValue {
-    if (this.props.disabled) {
-      return this.props.value;
-    }
-
-    const [start, end] = this.props.value;
-
-    if (start == null) {
-      return [null, value];
-    }
-
-    const { dragging } = this;
-    if (dragging === 'start') {
-      if (value > end) {
-        // "перехватиться", если перетянули за конец
-        this.dragging = 'end';
-        return [end, value];
-      }
-      return [value, end];
-    }
-    if (dragging === 'end') {
-      if (value < start) {
-        // "перехватиться", если перетянули за начало
-        this.dragging = 'start';
-        return [value, start];
-      }
-      return [start, value];
-    }
-    return this.props.value;
+  const toPercent = (v: number) => (v - min) / (max - min) * 100;
+  const draggerStyle = isRange ? {
+    width: `${toPercent(end) - toPercent(start)}%`,
+    left: `${toPercent(start)}%`,
+  } : {
+    width: `${toPercent(end)}%`,
   };
 
-  offsetToValue(absolute: number) {
-    const { min, max, step } = this.props;
-    return rescale(absolute, [0, this.containerWidth], [min, max], { step });
-  }
-
-  snapDirection(value: number, target: EventTarget) {
-    if (target === this.thumbStart.current) {
-      return 'start';
-    }
-    if (target === this.thumbEnd.current) {
-      return 'end';
-    }
-    const [start, end] = this.props.value;
-    return Math.abs(start - value) <= Math.abs(end - value) ? 'start' : 'end';
-  }
-
-  getRef: RefCallback<HTMLDivElement> = (container) => {
-    this.container = container;
-    setRef(container, this.props.getRootRef);
-  };
-
-  render() {
-    const { min, max, step, value, defaultValue,
-      onChange, getRootRef, platform, sizeY, disabled, ...restProps } = this.props;
-    const toPercent = (v: number) => (v - min) / (max - min) * 100;
-
-    const isRange = value[0] != null;
-    const draggerStyle = isRange ? {
-      width: `${toPercent(value[1]) - toPercent(value[0])}%`,
-      left: isRange ? `${toPercent(value[0])}%` : null,
-    } : {
-      width: `${toPercent(value[1])}%`,
-    };
-
-    return (
-      <Touch
-        data-value={isRange ? value.join(',') : value}
-        {...restProps}
-        onStart={this.onStart}
-        onMove={this.onMove}
-        onEnd={this.onEnd}
-        vkuiClass={classNames(
-          getClassName('Slider', platform),
-          `Slider--sizeY-${sizeY}`,
-          disabled && 'Slider--disabled',
-        )}
-      >
-        <div ref={this.getRef} vkuiClass="Slider__in">
-          <div vkuiClass="Slider__dragger" style={draggerStyle}>
-            {isRange && <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--start')} ref={this.thumbStart} />}
-            <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--end')} ref={this.thumbEnd} />
-          </div>
+  return (
+    <Touch
+      data-value={isRange ? value.join(',') : value}
+      {...restProps}
+      {...(disabled ? {} : { onStart, onMove, onEnd })}
+      vkuiClass={classNames(
+        getClassName('Slider', platform),
+        `Slider--sizeY-${sizeY}`,
+        disabled && 'Slider--disabled',
+      )}
+    >
+      <div ref={container} vkuiClass="Slider__in">
+        <div vkuiClass="Slider__dragger" style={draggerStyle}>
+          {isRange && <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--start')} ref={thumbStart} />}
+          <span vkuiClass={classNames('Slider__thumb', 'Slider__thumb--end')} ref={thumbEnd} />
         </div>
-      </Touch>
-    );
-  }
-}
+      </div>
+    </Touch>
+  );
+};
 
-export const UniversalSlider = withAdaptivity(withPlatform(UniversalSliderDumb), {
+export const UniversalSlider = withAdaptivity(UniversalSliderDumb, {
   sizeY: true,
 });
