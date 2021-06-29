@@ -117,7 +117,7 @@ const AppRoot: FC<AppRootProps> = ({
   return mode === 'partial' ? content : (
     <div ref={rootRef} vkuiClass={classNames('AppRoot', {
       'AppRoot--no-mouse': !hasMouse,
-      'AppRoot--focus-visible': isKeyboardInputActive,
+      'AppRoot--keyboard-input': isKeyboardInputActive,
     })} {...props}>
       {content}
     </div>
