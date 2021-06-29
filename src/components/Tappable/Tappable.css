@@ -11,7 +11,7 @@
  * add focus-visible outline w/ rounded corners via pseudo element
  * without animation by default
  */
-.AppRoot--keyboard-input .Tappable--focus-visible-outline:focus::before {
+.AppRoot--keyboard-input .Tappable--focus-visible:focus::before {
   content: '';
   position: absolute;
   top: -2px;
@@ -33,7 +33,7 @@
  * navigating accessible vkui apps via keyboard
  */
 @media (prefers-reduced-motion: no-preference) {
-  .AppRoot--keyboard-input .Tappable--focus-visible-outline:focus::before {
+  .AppRoot--keyboard-input .Tappable--focus-visible:focus::before {
     top: 0;
     left: 0;
     bottom: 0;

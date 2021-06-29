@@ -48,10 +48,6 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
    * Исчезнет после того, как мы адаптируем отображение всех компонентов на базе Tappable.
    */
   hasFocusVisible?: boolean;
-  /**
-   * @ignore Стиль подсветки focus-visible состояния. Если передать произвольную строку, она добавится как css-класс
-   */
-  focusVisibleMode?: 'outline' | string;
 }
 
 export interface TappableState {
@@ -138,7 +134,6 @@ class Tappable extends Component<TappableProps, TappableState> {
     stopPropagation: false,
     disabled: false,
     hasFocusVisible: false,
-    focusVisibleMode: 'outline',
     hasHover,
     hoverMode: 'background',
     hasActive: true,
@@ -362,13 +357,11 @@ class Tappable extends Component<TappableProps, TappableState> {
       hasActive: propsHasActive,
       activeMode,
       hasFocusVisible,
-      focusVisibleMode,
       ...restProps
     } = this.props;
 
     const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
     const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
-    const isPresetFocusVisibleMode = focusVisibleMode === 'outline';
 
     const classes = classNames(
       getClassName('Tappable', platform),
@@ -379,7 +372,7 @@ class Tappable extends Component<TappableProps, TappableState> {
         'Tappable--inactive': !active,
         [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
         [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
-        [`Tappable--focus-visible-${focusVisibleMode}`]: hasFocusVisible && isPresetFocusVisibleMode,
+        'Tappable--focus-visible': hasFocusVisible,
         [hoverMode]: hasHover && hovered && !isPresetHoverMode,
         [activeMode]: hasActive && active && !isPresetActiveMode,
       });
@@ -436,7 +429,6 @@ class Tappable extends Component<TappableProps, TappableState> {
                     {...touchProps}
                     {...restProps}
                     vkuiClass={classes}
-                    data-vkui-focus-visible={hasFocusVisible && !isPresetFocusVisibleMode ? focusVisibleMode : null}
                     {...props}>
                     <TappableContext.Provider
                       value={{
