@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, FC, ReactNode, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import React, { AllHTMLAttributes, FC, ReactNode, MouseEvent, useEffect, useRef, useState } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getTitleFromChildren } from '../../lib/utils';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -8,6 +8,7 @@ import { useDOM } from '../../lib/dom';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';
 import IconButton from '../IconButton/IconButton';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 
 export interface RemovePlaceholderProps {
   /**
@@ -41,19 +42,15 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
   const [isRemoveActivated, setRemoveActivated] = useState(false);
   const [removeOffset, updateRemoveOffset] = useState(0);
 
-  const deactivateRemove = useCallback(() => {
+  useGlobalEventListener(document, 'click', isRemoveActivated && (() => {
     setRemoveActivated(false);
     updateRemoveOffset(0);
-
-    document.removeEventListener('click', deactivateRemove);
-  }, [setRemoveActivated, updateRemoveOffset]);
+  }));
 
   const onRemoveActivateClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
     setRemoveActivated(true);
-
-    document.addEventListener('click', deactivateRemove);
   };
 
   const onRemoveClick = (e: MouseEvent) => {
@@ -67,12 +64,6 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
       updateRemoveOffset(removeButtonRef.current.offsetWidth);
     }
   }, [isRemoveActivated]);
-
-  useEffect(() => {
-    return () => {
-      document.removeEventListener('click', deactivateRemove);
-    };
-  }, [deactivateRemove]);
 
   const removePlaceholderString: string = getTitleFromChildren(removePlaceholder);
 

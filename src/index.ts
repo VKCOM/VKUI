@@ -272,5 +272,6 @@ export { ViewWidth, ViewHeight, SizeType } from './components/AdaptivityProvider
  * Types
  */
 export type { AlignType, HasPlatform, HasInsets } from './types';
+export type { NavIdProps } from './lib/getNavId';
 export type { PlatformType } from './lib/platform';
 export type { AdaptivityProps } from './hoc/withAdaptivity';

@@ -37,7 +37,12 @@
         "styles",
         "testing",
         "types",
-        "unstable"
+        "unstable",
+        {
+          "name": "react",
+          "importNames": ["useLayoutEffect"],
+          "message": "Prefer lib/useIsomorphicLayoutEffect"
+        }
       ],
       "patterns": [
         "@vkontakte/icons/dist/*",

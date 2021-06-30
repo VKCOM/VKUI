@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, HTMLAttributes, useMemo, useRef, useState } from 'react';
 import { useDOM } from '../../lib/dom';
 import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
@@ -8,6 +8,7 @@ import { classScopingMode } from '../../lib/classScopingMode';
 import { IconSettingsProvider } from '@vkontakte/icons';
 import { elementScrollController, globalScrollController, ScrollContext, ScrollContextInterface } from './ScrollContext';
 import { noop } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -23,6 +24,7 @@ export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, Adaptivity
   scroll?: 'global' | 'contain';
 }
 
+const warn = warnOnce('AppRoot');
 export const AppRoot: FC<AppRootProps> = withAdaptivity(({
   children, mode: _mode, embedded: _embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global',
   ...props
@@ -43,15 +45,14 @@ export const AppRoot: FC<AppRootProps> = withAdaptivity(({
     initialized.current = true;
   }
 
-  // dev warnings
-  useEffect(() => {
+  if (process.env.NODE_ENV === 'development') {
     if (scroll !== 'global' && mode !== 'embedded') {
-      console.warn('[VKUI/AppRoot] Scroll modes only supported in embedded mode');
+      warn('Scroll modes only supported in embedded mode');
     }
     if (_mode && _embedded) {
-      console.error(`[VKUI/AppRoot] mode="${mode}" overrides embedded`);
+      warn(`mode="${mode}" overrides embedded`);
     }
-  }, [scroll, _mode, _embedded]);
+  }
 
   // setup portal
   useIsomorphicLayoutEffect(() => {

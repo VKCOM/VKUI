@@ -14,7 +14,9 @@ import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
 
+const warn = warnOnce('ViewInfinite');
 export const transitionStartEventName = 'VKUI:View:transition-start';
 export const transitionEndEventName = 'VKUI:View:transition-end';
 
@@ -104,7 +106,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
     super(props);
 
     this.state = {
-      scrolls: scrollsCache[getNavId(props)] || {},
+      scrolls: scrollsCache[getNavId(props, warn)] || {},
       animated: false,
 
       visiblePanels: [props.activePanel],
@@ -146,7 +148,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
   panelNodes: { [id: string]: HTMLDivElement } = {};
 
   componentWillUnmount() {
-    const id = getNavId(this.props, false);
+    const id = getNavId(this.props);
     if (id) {
       scrollsCache[id] = this.state.scrolls;
     }
@@ -164,7 +166,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
         isBack = this.props.isBackCheck({ from: prevProps.activePanel, to: this.props.activePanel });
       } else {
         const firstLayerId = this.panels
-          .map((panel) => getNavId(panel.props))
+          .map((panel) => getNavId(panel.props, warn))
           .find((id) => id === prevProps.activePanel || id === this.props.activePanel);
         isBack = firstLayerId === this.props.activePanel;
       }
@@ -524,14 +526,14 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
 
     const panels = this.panels
       .filter((panel) => {
-        const panelId = getNavId(panel.props);
+        const panelId = getNavId(panel.props, warn);
 
         return this.state.visiblePanels.includes(panelId) ||
           panelId === swipeBackPrevPanel ||
           panelId === swipeBackNextPanel;
       })
       .sort((panel) => {
-        const panelId = getNavId(panel.props);
+        const panelId = getNavId(panel.props, warn);
         const isPrevPanel = panelId === prevPanel || panelId === swipeBackPrevPanel;
         const isNextPanel = panelId === nextPanel || panelId === swipeBackNextPanel;
 
@@ -564,7 +566,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
       >
         <div vkuiClass="View__panels">
           {panels.map((panel: React.ReactElement) => {
-            const panelId = getNavId(panel.props);
+            const panelId = getNavId(panel.props, warn);
 
             return (
               <div

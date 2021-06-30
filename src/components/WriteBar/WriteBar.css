@@ -28,7 +28,6 @@
   margin: 0;
   background: transparent;
   border: none;
-  outline: none;
   resize: none;
   line-height: 20px;
   color: var(--text_primary);

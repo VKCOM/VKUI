@@ -37,7 +37,6 @@
   padding: 0 22px 0 36px;
   box-sizing: border-box;
   font-size: 17px;
-  outline: none;
   border-radius: 10px;
   max-width: 100%;
   flex-grow: 1;
@@ -45,6 +44,13 @@
   background-color: transparent;
   z-index: 2;
   color: var(--text_primary);
+}
+
+.Search__input::-webkit-search-decoration,
+.Search__input::-webkit-search-cancel-button,
+.Search__input::-webkit-search-results-button,
+.Search__input::-webkit-search-results-decoration {
+  display: none;
 }
 
 .Search--has-after .Search__input {

@@ -14,6 +14,7 @@ import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import ModalRootContext, { useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
 
 export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps, NavIdProps {
   /**
@@ -51,6 +52,8 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   onClose?: VoidFunction;
 }
 
+const warn = warnOnce('ModalCard');
+
 const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   const {
     icon,
@@ -73,7 +76,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
   const modalContext = useContext(ModalRootContext);
-  const { refs } = useModalRegistry(getNavId(props), ModalType.CARD);
+  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);
 
   return (
     <div

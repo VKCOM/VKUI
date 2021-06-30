@@ -47,10 +47,6 @@
   padding: 10px 9px;
 }
 
-.ChipsSelect .CustomScrollView__box:focus {
-  outline: none;
-}
-
 .ChipsSelect__open:not(.ChipsSelect__open--popupDirectionTop) .FormField__border {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;

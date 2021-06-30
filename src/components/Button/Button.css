@@ -1,25 +1,41 @@
 .Button {
   display: inline-block;
   box-sizing: border-box;
-  outline: none;
   text-decoration: none;
-  border: 1px solid transparent;
+  border: none;
+  min-height: 30px;
   margin: 0;
-  padding: 0;
+  padding: 1px 16px;
   user-select: none;
+  border-radius: 8px;
+}
+
+.Button[disabled] {
+  opacity: .4;
+}
+
+.Button__before:not(:last-child) {
+  margin-left: -4px;
+  margin-right: 6px;
+}
+
+.Button__after:not(:first-child) {
+  margin-left: 6px;
+}
+
+.Button__content {
+  padding-top: 4px;
+  padding-bottom: 6px;
+}
+
+.Button__content--caps {
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
 .Button__in {
   display: flex;
   align-items: center;
-}
-
-.Button__before:not(:last-child) {
-  margin-left: -4px;
-}
-
-.Button[disabled] {
-  opacity: .4;
 }
 
 .Button--aln-left .Button__in {
@@ -70,13 +86,13 @@
 
 .Button--lvl-outline {
   background-color: transparent;
-  border: 1px solid var(--button_outline_border);
+  box-shadow: inset 0 0 0 1px var(--button_outline_border);
   color: var(--button_outline_foreground);
 }
 
 .Button--lvl-destructive {
   background-color: var(--destructive);
-  color: #fff;
+  color: var(--white);
 }
 
 .Button--lvl-overlay_primary {
@@ -86,56 +102,28 @@
 
 .Button--lvl-overlay_secondary {
   background-color: rgba(255, 255, 255, .2);
-  color: #fff;
+  color: var(--white);
 }
 
 .Button--lvl-overlay_outline {
   background-color: transparent;
-  border: 1px solid #fff;
-  color: #fff;
-}
-
-.Button--sz-s {
-  min-height: 30px;
-  padding: 0 15px;
-}
-
-.Button--sz-s .Button__before:not(:last-child) {
-  margin-right: 6px;
-}
-
-.Button--sz-s .Button__after:not(:first-child) {
-  margin-left: 6px;
-}
-
-.Button--sz-s .Button__content {
-  padding: 4px 0 6px;
-}
-
-.Button--sz-s .Button__content--caps {
-  padding: 7px 0;
+  box-shadow: inset 0 0 0 1px var(--white);
+  color: var(--white);
 }
 
 .Button--sz-m {
-  padding: 0 15px;
   min-height: 36px;
 }
 
-.Button--sz-m .Button__before:not(:last-child) {
-  margin-right: 6px;
-}
-
-.Button--sz-m .Button__after:not(:first-child) {
-  margin-left: 6px;
-}
-
 .Button--sz-m .Button__content {
-  padding: 6px 0 8px;
+  padding-top: 5px;
+  padding-bottom: 7px;
 }
 
 .Button--sz-l {
-  padding: 0 19px;
   min-height: 44px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .Button--sz-l .Button__before:not(:last-child) {
@@ -146,57 +134,57 @@
   margin-left: 8px;
 }
 
+.Button--sz-l .Button__content {
+  padding-top: 10px;
+  padding-bottom: 12px;
+}
+
 .Button--sz-l .Button__in {
   justify-content: center;
 }
 
-/*
-  iOS
+/**
+ * iOS
  */
 .Button--ios {
   border-radius: 10px;
 }
 
 .Button--ios.Button--sz-l .Button__content {
-  padding: 9px 0 11px;
+  padding-top: 9px;
+  padding-bottom: 11px;
 }
 
-/*
-  Android
+/**
+ * VKCOM
  */
-.Button--android {
-  border-radius: 8px;
-}
-
-.Button--android.Button--sz-l .Button__content {
-  padding: 10px 0 12px;
-}
-
-/*
-  VKCOM
-*/
 .Button--vkcom {
   border-radius: 4px;
 }
 
-/*
-  sizeY = Compact
-*/
-/* small size */
-.Button--sizeY-compact.Button--sz-s {
+.Button--vkcom.Button--lvl-secondary .Icon,
+.Button--vkcom.Button--lvl-tertiary .Icon,
+.Button--vkcom.Button--lvl-outline .Icon {
+  opacity: .72;
+}
+
+/**
+ * sizeY COMPACT
+ */
+.Button--sizeY-compact {
   min-height: 26px;
 }
 
-.Button--sizeY-compact.Button--sz-s .Button__content {
+.Button--sizeY-compact .Button__content {
   padding-top: 3px;
   padding-bottom: 5px;
 }
 
-.Button--sizeY-compact.Button--sz-s .Button__content--caps {
-  padding: 5px 0;
+.Button--sizeY-compact .Button__content--caps {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-/* medium size */
 .Button--sizeY-compact.Button--sz-m {
   min-height: 32px;
 }
@@ -206,7 +194,6 @@
   padding-bottom: 6px;
 }
 
-/* large size */
 .Button--sizeY-compact.Button--sz-l {
   min-height: 36px;
 }
@@ -214,41 +201,4 @@
 .Button--sizeY-compact.Button--sz-l .Button__content {
   padding-top: 6px;
   padding-bottom: 8px;
-}
-
-/**
- * Counter
- */
-.Button--lvl-primary .Counter {
-  background-color: var(--button_primary_foreground);
-  color: var(--button_primary_background);
-}
-
-.Button--lvl-secondary .Counter {
-  background-color: var(--button_secondary_foreground);
-  color: var(--background_content);
-}
-
-.Button--lvl-tertiary .Counter {
-  background-color: var(--button_tertiary_foreground);
-  color: var(--background_content);
-}
-
-.Button--lvl-outline .Counter {
-  background-color: var(--button_outline_foreground);
-  color: var(--background_content);
-}
-
-.Button--lvl-commerce .Counter {
-  background-color: var(--button_commerce_foreground);
-  color: var(--button_commerce_background);
-}
-
-.Button--vkcom.Button--lvl-secondary .Counter,
-.Button--vkcom.Button--lvl-tertiary .Counter,
-.Button--vkcom.Button--lvl-outline .Counter,
-.Button--vkcom.Button--lvl-secondary .Icon,
-.Button--vkcom.Button--lvl-tertiary .Icon,
-.Button--vkcom.Button--lvl-outline .Icon {
-  opacity: .72;
 }
