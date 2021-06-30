@@ -22,6 +22,7 @@ export const StyleGuideContext = React.createContext({
   width: MOBILE_SIZE,
   height: SMALL_HEIGHT,
   hasMouse: true,
+  styleguideScheme: Scheme.BRIGHT_LIGHT,
 });
 
 
@@ -31,7 +32,8 @@ let initialState = {
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
   height: SMALL_HEIGHT,
-  hasMouse: true
+  hasMouse: true,
+  styleguideScheme: Scheme.BRIGHT_LIGHT,
 }
 
 try {
@@ -48,7 +50,7 @@ try {
 
 let StyleGuideRenderer = ({ children, toc }) => {
   const [state, setState] = useState(initialState);
-  const { width, height, platform, scheme, hasMouse } = state;
+  const { width, height, platform, scheme, hasMouse, styleguideScheme } = state;
 
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };
@@ -68,9 +70,13 @@ let StyleGuideRenderer = ({ children, toc }) => {
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
-      <ConfigProvider scheme={scheme}>
-        <StyleGuideHeader scheme={scheme} setScheme={(value) => {
-          setContext({ scheme: value });
+      <ConfigProvider scheme={styleguideScheme}>
+        <StyleGuideHeader scheme={styleguideScheme} setScheme={(value) => {
+          if (platform !== VKCOM) {
+            setContext({ styleguideScheme: value, scheme: value });
+          } else {
+            setContext({ styleguideScheme: value });
+          }
         }} />
         <SplitLayout className="StyleGuide">
           <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuide__sidebar">
