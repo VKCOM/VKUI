@@ -62,9 +62,12 @@ class TableOfContents extends React.PureComponent {
     for (let i = 0; i < sections.length; i++) {
       const section = sections[i];
       if (section.name === sectionName) {
-        return section
+        return section;
       } else if (section.sections.length > 0) {
-        return this.pickSection(sectionName, section.sections);
+        const childSearch = this.pickSection(sectionName, section.sections)
+        if (childSearch) {
+          return childSearch;
+        }
       }
     }
   }
