@@ -1,4 +1,5 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
 import { AppRootContext } from './AppRootContext';
 import AppRoot from './AppRoot';
@@ -65,5 +66,17 @@ describe('AppRoot', () => {
       render(<AppRoot mode="embedded" />).unmount();
       expect(document.body).toContainElement(portalRoot1);
     });
+  });
+  it('has class .AppRoot--keyboard-input on keyboard navigation and no class on mouse click', () => {
+    render(<AppRoot data-testid="root" mode="embedded" />);
+    const root = screen.getByTestId('root');
+
+    // test keyboard nav and outline
+    userEvent.tab();
+    expect(root).toHaveClass('AppRoot--keyboard-input');
+
+    // test click and no outline
+    userEvent.click(root);
+    expect(root).not.toHaveClass('AppRoot--keyboard-input');
   });
 });

@@ -39,7 +39,6 @@ import { Tooltip, Button } from '@vkontakte/vkui';
     }
 
     render () {
-
       return (
         <View activePanel={this.state.activePanel}>
 
@@ -80,7 +79,6 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                   <Tooltip
                     isShown={this.state.tooltip2}
                     onClose={() => this.setState({ tooltip2: false, tooltip3: true })}
-                    alignX="right"
                     cornerOffset={-10}
                     offsetX={7}
                     text="Обновлённый раздел поможет найти друзей"
@@ -108,6 +106,10 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                 >Команда ВКонтакте</Cell>
                 <Cell before={<Avatar />} description="Музыкант">Robbie Williams</Cell>
                 <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
+                <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
+                <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
+                <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
+                <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
               </List>
             </Group>
           </Panel>
@@ -132,12 +134,16 @@ import { Tooltip, Button } from '@vkontakte/vkui';
 <>
   <TooltipContainer style={{ minHeight: '300vh' }}>
     <Tooltip text="Я скроллюсь">
-      <Avatar />
+      <div style={{ display: 'inline-block' }}>
+        <Avatar />
+      </div>
     </Tooltip>
   </TooltipContainer>
   <TooltipContainer fixed style={{ position: 'fixed', bottom: 0, width: '100%' }}>
-    <Tooltip alignY='top' text="Я прибит к низу">
-      <Avatar />
+    <Tooltip text="Я прибит к низу">
+      <div style={{ display: 'inline-block' }}>
+        <Avatar />
+      </div>
     </Tooltip>
   </TooltipContainer>
 </>

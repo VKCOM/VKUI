@@ -9,6 +9,7 @@ import { IconSettingsProvider } from '@vkontakte/icons';
 import { elementScrollController, globalScrollController, ScrollContext, ScrollContextInterface } from './ScrollContext';
 import { noop } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
+import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -31,7 +32,7 @@ export const AppRoot: FC<AppRootProps> = withAdaptivity(({
 }: AppRootProps) => {
   // normalize mode
   const mode = _mode || (_embedded ? 'embedded' : 'full');
-
+  const isKeyboardInputActive = useKeyboardInputTracker();
   const rootRef = useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
   const { window, document } = useDOM();
@@ -116,6 +117,7 @@ export const AppRoot: FC<AppRootProps> = withAdaptivity(({
   return mode === 'partial' ? content : (
     <div ref={rootRef} vkuiClass={classNames('AppRoot', {
       'AppRoot--no-mouse': !hasMouse,
+      'AppRoot--keyboard-input': isKeyboardInputActive,
     })} {...props}>
       {content}
     </div>
