@@ -357,6 +357,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       hasActive: propsHasActive,
       activeMode,
       hasFocusVisible,
+      tabIndex,
       ...restProps
     } = this.props;
 
@@ -397,7 +398,7 @@ class Tappable extends Component<TappableProps, TappableState> {
        */
       const nativeComponents: ElementType[] = ['a', 'button', 'input', 'textarea', 'label'];
       if (!nativeComponents.includes(Component) && !restProps.contentEditable) {
-        props.tabIndex = restProps.tabIndex !== undefined ? restProps.tabIndex : 0;
+        props.tabIndex = tabIndex !== undefined ? tabIndex : 0;
 
         if (restProps.role === 'button' || restProps.role === 'link') {
           props.onKeyDown = this.onKeyDown;
