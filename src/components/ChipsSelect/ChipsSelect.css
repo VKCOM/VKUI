@@ -2,10 +2,6 @@
   position: relative;
 }
 
-.ChipsSelect .ChipsInput__container {
-  padding-right: 25px;
-}
-
 .ChipsSelect__fetching,
 .ChipsSelect__empty {
   padding: 12px 0;
