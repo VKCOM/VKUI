@@ -6,6 +6,9 @@
 const Example = () => {
   const [colors, setColors] = React.useState([
     {
+      value: 'navarin',
+      label: 'Наваринского пламени с дымом',
+    }, {
       value: 'red',
       label: 'Красный',
     }, {
