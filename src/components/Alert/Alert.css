@@ -83,7 +83,8 @@
   margin: 0;
   height: 44px;
   display: block;
-  outline: none;
+  text-align: center;
+  text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
   border-radius: 0;

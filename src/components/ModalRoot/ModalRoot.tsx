@@ -21,6 +21,10 @@ import { ModalsState, ModalsStateEntry, ModalType, TranslateRange } from './type
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
+
+const warn = warnOnce('ModalRoot');
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];
@@ -119,7 +123,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     this.modalsState = this.getModals().reduce<ModalsState>((acc, Modal) => {
       const modalProps = Modal.props;
       const state: ModalsStateEntry = {
-        id: getNavId(modalProps),
+        id: getNavId(modalProps, warn),
         onClose: Modal.props.onClose,
         dynamicContentHeight: !!modalProps.dynamicContentHeight,
       };
@@ -150,8 +154,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       const nextModal = this.props.activeModal;
       const prevModal = prevProps.activeModal;
 
-      if (nextModal !== null && !this.modalsState[nextModal]) {
-        return console.warn(`[ModalRoot.componentDidUpdate] nextModal ${nextModal} not found`);
+      if (IS_DEV && nextModal !== null && !this.modalsState[nextModal]) {
+        return warn(`[componentDidUpdate] nextModal ${nextModal} not found`);
       }
 
       let history = [...this.state.history];
@@ -253,7 +257,9 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
         break;
 
       default:
-        console.warn('[ModalRoot.initActiveModal] modalState.type is unknown');
+        if (IS_DEV) {
+          warn('[initActiveModal] modalState.type is unknown');
+        }
     }
 
     this.setState({ inited: true, switching: true });
@@ -275,7 +281,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     let prevTranslateY = modalState.translateY;
 
-    modalState.expandable = contentHeight > contentElement.clientHeight;
+    modalState.expandable = contentHeight > contentElement.clientHeight || modalState.settlingHeight === 100;
 
     let collapsed = false;
     let expanded = false;
@@ -381,7 +387,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
     const { prevModal } = this.state;
     if (!prevModal) {
-      return console.warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
+      return warn(`[closeActiveModal] prevModal is ${prevModal}`);
     }
 
     const prevModalState = this.modalsState[prevModal];
@@ -645,8 +651,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     const prevModalState = this.modalsState[prevModal];
     const nextModalState = this.modalsState[nextModal];
 
-    if (!prevModalState && !nextModalState) {
-      return console.warn(`[ModalRoot.switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
+    if (IS_DEV && !prevModalState && !nextModalState) {
+      return warn(`[switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
     }
 
     const prevIsPage = !!prevModalState && prevModalState.type === ModalType.PAGE;
@@ -764,8 +770,8 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
       modalState.onClose();
     } else if (isFunction(this.props.onClose)) {
       this.props.onClose(modalState.id);
-    } else {
-      console.error('[ModalRoot] onClose is undefined');
+    } else if (IS_DEV) {
+      warn('onClose is undefined');
     }
   };
 
@@ -796,7 +802,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
             />
             <div vkuiClass="ModalRoot__viewport" ref={this.viewportRef}>
               {this.getModals().map((Modal) => {
-                const modalId = getNavId(Modal.props);
+                const modalId = getNavId(Modal.props, warn);
                 if (!visibleModals.includes(modalId)) {
                   return null;
                 }

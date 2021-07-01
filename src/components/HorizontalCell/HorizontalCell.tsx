@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode } from 'react';
+import { AnchorHTMLAttributes, ElementType, FC, HTMLAttributes, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -19,19 +19,45 @@ const CellTypography: FC<CellTypographyProps> = ({ size, children, ...restProps 
     : <Subhead weight="regular" {...restProps}>{children}</Subhead>;
 };
 
-export interface HorizontalCellProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLDivElement> {
+export interface HorizontalCellProps extends
+  AnchorHTMLAttributes<HTMLElement>,
+  HasRootRef<HTMLDivElement>,
+  HasRef<HTMLDivElement> {
+  Component?: ElementType;
   size?: 's' | 'm' | 'l';
   header?: ReactNode;
   subtitle?: ReactNode;
+  disabled?: boolean;
 }
 
-export const HorizontalCell: FC<HorizontalCellProps> = (props: HorizontalCellProps) => {
-  const { className, header, subtitle, size, style, children, getRootRef, getRef, ...restProps } = props;
+export const HorizontalCell: FC<HorizontalCellProps> = ({
+  className,
+  header,
+  style,
+  subtitle,
+  size = 's',
+  children = <Avatar size={56} />,
+  getRootRef,
+  getRef,
+  Component = 'div',
+  ...restProps
+}: HorizontalCellProps) => {
   const platform = usePlatform();
 
   return (
-    <div vkuiClass={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`)} ref={getRootRef} style={style} className={className}>
-      <Tappable getRootRef={getRef} {...restProps}>
+    <div
+      vkuiClass={classNames(getClassName('HorizontalCell', platform), `HorizontalCell--${size}`)}
+      ref={getRootRef}
+      style={style}
+      className={className}
+    >
+      <Tappable
+        vkuiClass="HorizontalCell__body"
+        disabled={restProps.disabled}
+        getRootRef={getRef}
+        Component={restProps.href ? 'a' : Component}
+        {...restProps}
+      >
         {hasReactNode(children) && <div vkuiClass="HorizontalCell__image">{children}</div>}
         <div vkuiClass="HorizontalCell__content">
           {hasReactNode(header) && (
@@ -42,9 +68,4 @@ export const HorizontalCell: FC<HorizontalCellProps> = (props: HorizontalCellPro
       </Tappable>
     </div>
   );
-};
-
-HorizontalCell.defaultProps = {
-  size: 's',
-  children: <Avatar size={56} />,
 };

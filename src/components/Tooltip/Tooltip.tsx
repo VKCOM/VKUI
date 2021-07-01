@@ -1,4 +1,4 @@
-import React, { Fragment, useState, ReactElement, ReactNode, isValidElement, FC, forwardRef, Ref, CSSProperties, HTMLAttributes, cloneElement, useMemo } from 'react';
+import React, { Fragment, useState, ReactElement, ReactNode, isValidElement, FC, forwardRef, Ref, CSSProperties, HTMLAttributes, cloneElement, useMemo, Children } from 'react';
 import ReactDOM from 'react-dom';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
@@ -9,6 +9,9 @@ import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useDOM, canUseDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { warnOnce } from '../../lib/warnOnce';
+import { hasReactNode } from '../../lib/utils';
+
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
   arrowRef?: Ref<HTMLDivElement>;
@@ -27,6 +30,8 @@ const isDOMTypeElement = (element: ReactElement): element is React.DOMElement<an
 };
 
 const baseClassName = getClassName('Tooltip');
+const warn = warnOnce('Tooltip');
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 const SimpleTooltip = forwardRef<HTMLDivElement, SimpleTooltipProps>(
   function SimpleTooltip(
@@ -161,12 +166,27 @@ const Tooltip: FC<TooltipProps> = ({
   const [tooltipArrowRef, setTooltipArrowRef] = useState<HTMLElement>();
   const [target, setTarget] = useState<HTMLElement>();
 
+  if (IS_DEV) {
+    const multiChildren = Children.count(children) > 1;
+    // Empty children is a noop
+    const primitiveChild = hasReactNode(children) && typeof children !== 'object';
+    (multiChildren || primitiveChild) && warn([
+      'children must be a single React element, got',
+      multiChildren && 'multiple',
+      primitiveChild && JSON.stringify(children),
+    ].filter(Boolean).join(' '));
+  }
+
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
   const portalTarget = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
   const strategy = useMemo(() => target?.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
+
+  if (IS_DEV && !portalTarget) {
+    throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
+  }
 
   const placement = getPlacement(alignX, alignY);
 

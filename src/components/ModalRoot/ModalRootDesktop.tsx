@@ -16,6 +16,10 @@ import { ANDROID, VKCOM } from '../../lib/platform';
 import { getClassName } from '../../helpers/getClassName';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
+
+const warn = warnOnce('ModalRoot');
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
@@ -96,7 +100,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     this.modalsState = this.modals.reduce<{ [id: string]: ModalsStateEntry }>((acc, Modal) => {
       const modalProps = Modal.props;
       const state: ModalsStateEntry = {
-        id: getNavId(Modal.props),
+        id: getNavId(Modal.props, warn),
         onClose: Modal.props.onClose,
         dynamicContentHeight: !!modalProps.dynamicContentHeight,
       };
@@ -131,8 +135,8 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
       const nextModal = this.props.activeModal;
       const prevModal = prevProps.activeModal;
 
-      if (nextModal !== null && !this.modalsState[nextModal]) {
-        return console.warn(`[ModalRoot.componentDidUpdate] nextModal ${nextModal} not found`);
+      if (IS_DEV && nextModal !== null && !this.modalsState[nextModal]) {
+        return warn(`[ModalRoot.componentDidUpdate] nextModal ${nextModal} not found`);
       }
 
       let history = [...this.state.history];
@@ -191,7 +195,9 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
         break;
 
       default:
-        console.warn('[ModalRoot.initActiveModal] modalState.type is unknown');
+        if (IS_DEV) {
+          warn('[initActiveModal] modalState.type is unknown');
+        }
     }
 
     this.setState({ inited: true, switching: true });
@@ -199,8 +205,8 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
   closeActiveModal() {
     const { prevModal } = this.state;
-    if (!prevModal) {
-      return console.warn(`[ModalRoot.closeActiveModal] prevModal is ${prevModal}`);
+    if (IS_DEV && !prevModal) {
+      return warn(`[closeActiveModal] prevModal is ${prevModal}`);
     }
 
     const prevModalState = this.modalsState[prevModal];
@@ -229,8 +235,8 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     const prevModalState = this.modalsState[prevModal];
     const nextModalState = this.modalsState[nextModal];
 
-    if (!prevModalState && !nextModalState) {
-      return console.warn(`[ModalRoot.switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
+    if (IS_DEV && !prevModalState && !nextModalState) {
+      return warn(`[switchPrevNext] prevModal is ${prevModal}, nextModal is ${nextModal}`);
     }
 
     const prevIsCard = !!prevModalState && prevModalState.type === ModalType.CARD;
@@ -329,8 +335,8 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
       modalState.onClose();
     } else if (isFunction(this.props.onClose)) {
       this.props.onClose(modalState.id);
-    } else {
-      console.error('[ModalRoot] onClose is undefined');
+    } else if (IS_DEV) {
+      warn('onClose is undefined');
     }
   };
 
@@ -355,7 +361,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
           />
           <div vkuiClass="ModalRoot__viewport">
             {this.modals.map((Modal: ReactElement) => {
-              const modalId = getNavId(Modal.props);
+              const modalId = getNavId(Modal.props, warn);
               if (!visibleModals.includes(modalId)) {
                 return null;
               }

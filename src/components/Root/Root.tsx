@@ -12,6 +12,9 @@ import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
+
+const warn = warnOnce('Root');
 
 export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, NavIdProps {
   activeView: string;
@@ -91,7 +94,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     if (this.props.activeView !== prevProps.activeView) {
       let pageYOffset = this.props.scroll.getScroll().y;
       const firstLayerId = [].concat(prevProps.children)
-        .map((view) => getNavId(view.props))
+        .map((view) => getNavId(view.props, warn))
         .find((id) => id === prevProps.activeView || id === this.props.activeView);
       const isBack = firstLayerId === this.props.activeView;
 
@@ -193,7 +196,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
     const Views = React.Children.toArray(this.props.children).filter((view: ReactElement) => {
-      return this.state.visibleViews.includes(getNavId(view.props));
+      return this.state.visibleViews.includes(getNavId(view.props, warn));
     });
 
     const baseClassName = getClassName('Root', platform);
@@ -205,7 +208,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
         'Root--no-motion': disableAnimation,
       })}>
         {Views.map((view: ReactElement) => {
-          const viewId = getNavId(view.props);
+          const viewId = getNavId(view.props, warn);
           return (
             <div key={viewId} ref={(e) => this.viewNodes[viewId] = e} vkuiClass={classNames('Root__view', {
               'Root__view--hide-back': viewId === prevView && isBack,
