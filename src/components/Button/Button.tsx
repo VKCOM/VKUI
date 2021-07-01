@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { ElementType, FC, ReactNode } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
@@ -9,7 +9,7 @@ import Caption from '../Typography/Caption/Caption';
 import { HasAlign } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
-import { Platform, VKCOM } from '../../lib/platform';
+import { Platform, IOS, VKCOM } from '../../lib/platform';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
@@ -21,71 +21,99 @@ export interface VKUIButtonProps extends HasAlign {
 
 export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
 
-const getContent = (size: ButtonProps['size'], children: ButtonProps['children'], sizeY: AdaptivityProps['sizeY'], platform: Platform) => {
+interface ButtonTypographyProps {
+  size: ButtonProps['size'];
+  platform: Platform;
+  sizeY: AdaptivityProps['sizeY'];
+  children?: ButtonProps['children'];
+  Component?: ElementType;
+}
+
+const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProps) => {
+  const { size, sizeY, platform, ...restProps } = props;
+  const isCompact = sizeY === SizeType.COMPACT;
+
   switch (size) {
     case 'l':
-      return (
-        sizeY === SizeType.COMPACT ?
-          <Text weight="medium" vkuiClass="Button__content">{children}</Text>
-          :
-          <Title level="3" weight="medium" Component="div" vkuiClass="Button__content">
-            {children}
-          </Title>
-      );
+      if (isCompact) {
+        return <Text weight="medium" {...restProps} />;
+      }
+
+      return <Title level="3" weight="medium" {...restProps} />;
     case 'm':
-      return (
-        sizeY === SizeType.COMPACT ?
-          <Subhead weight={platform === VKCOM ? 'regular' : 'medium'} vkuiClass="Button__content" Component="div">
-            {children}
-          </Subhead>
-          :
-          <Text weight="medium" vkuiClass="Button__content">
-            {children}
-          </Text>
-      );
+      if (isCompact) {
+        return <Subhead weight={platform === VKCOM ? 'regular' : 'medium'} {...restProps} />;
+      }
+
+      return <Text weight="medium" {...restProps} />;
     case 's':
     default:
-      if (platform === Platform.IOS) {
-        return <Subhead weight="medium" vkuiClass="Button__content">{children}</Subhead>;
-      } else if (platform === Platform.VKCOM) {
-        return <Caption level="1" weight="regular" vkuiClass="Button__content">{children}</Caption>;
-      } else {
-        return sizeY === SizeType.COMPACT ?
-          <Caption level="1" weight="medium" vkuiClass="Button__content">{children}</Caption> :
-          <Subhead weight="medium" vkuiClass="Button__content">{children}</Subhead>;
+      if (platform === IOS) {
+        return <Subhead weight="medium" {...restProps} />;
       }
+
+      if (platform === VKCOM) {
+        return <Caption level="1" weight="regular" {...restProps} />;
+      }
+
+      if (isCompact) {
+        return <Caption level="1" weight="medium" {...restProps} />;
+      }
+
+      return <Subhead weight="medium" {...restProps} />;
   }
 };
 
-const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
+const Button: FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   const { size, mode, stretched, align, children, before, after, getRootRef, Component, sizeY, ...restProps } = props;
   const hasIcons = Boolean(before || after);
 
-  return <Tappable {...restProps}
-    vkuiClass={
-      classNames(
-        getClassName('Button', platform),
-        `Button--sz-${size}`,
-        `Button--lvl-${mode}`,
-        `Button--aln-${align}`,
-        `Button--sizeY-${sizeY}`,
-        {
-          ['Button--str']: stretched,
-          ['Button--with-icon']: hasIcons,
-        },
-      )
-    }
-    getRootRef={getRootRef}
-    Component={restProps.href ? 'a' : Component}
-    activeMode="opacity"
-  >
-    <div vkuiClass="Button__in">
-      {before && <div vkuiClass="Button__before">{before}</div>}
-      {children && getContent(size, children, sizeY, platform)}
-      {after && <div vkuiClass="Button__after">{after}</div>}
-    </div>
-  </Tappable>;
+  const RenderedComponent = restProps.href ? 'a' : Component;
+
+  let accessibleRole: string = null;
+  if (RenderedComponent !== 'a' && RenderedComponent !== 'button' && RenderedComponent !== 'input') {
+    accessibleRole = 'button';
+  }
+
+  return (
+    <Tappable
+      role={accessibleRole}
+      {...restProps}
+      vkuiClass={
+        classNames(
+          getClassName('Button', platform),
+          `Button--sz-${size}`,
+          `Button--lvl-${mode}`,
+          `Button--aln-${align}`,
+          `Button--sizeY-${sizeY}`,
+          {
+            ['Button--str']: stretched,
+            ['Button--with-icon']: hasIcons,
+          },
+        )
+      }
+      getRootRef={getRootRef}
+      Component={RenderedComponent}
+      activeMode="opacity"
+    >
+      <span vkuiClass="Button__in">
+        {before && <span vkuiClass="Button__before">{before}</span>}
+        {children && (
+          <ButtonTypography
+            size={size}
+            sizeY={sizeY}
+            platform={platform}
+            vkuiClass="Button__content"
+            Component="span"
+          >
+            {children}
+          </ButtonTypography>
+        )}
+        {after && <span vkuiClass="Button__after">{after}</span>}
+      </span>
+    </Tappable>
+  );
 };
 
 Button.defaultProps = {
@@ -95,6 +123,7 @@ Button.defaultProps = {
   size: 's',
   stretched: false,
   stopPropagation: true,
+  hasFocusVisible: true,
 };
 
 export default withAdaptivity(Button, {
