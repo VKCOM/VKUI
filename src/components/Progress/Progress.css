@@ -2,7 +2,7 @@
   border-radius: 1px;
   background: var(--loader_track_fill);
   height: 2px;
-  }
+}
 
 .Progress__in {
   height: 100%;
