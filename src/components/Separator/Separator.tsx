@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes, memo } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -11,12 +11,13 @@ export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
   expanded?: boolean;
 }
 
-let Separator: FunctionComponent<SeparatorProps> = ({ wide, expanded, ...restProps }: SeparatorProps) => {
+const Separator: FC<SeparatorProps> = ({ wide, expanded, ...restProps }) => {
   const platform = usePlatform();
 
   return (
     <div
       {...restProps}
+      aria-hidden="true"
       vkuiClass={classNames(getClassName('Separator', platform), {
         'Separator--wide': wide,
       })}
@@ -28,4 +29,4 @@ let Separator: FunctionComponent<SeparatorProps> = ({ wide, expanded, ...restPro
   );
 };
 
-export default React.memo(Separator);
+export default memo(Separator);
