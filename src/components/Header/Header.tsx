@@ -1,4 +1,4 @@
-import { FunctionComponent, HTMLAttributes, ReactNode, Fragment } from 'react';
+import { FC, HTMLAttributes, ReactNode, Fragment } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -64,7 +64,7 @@ function renderAside({ aside, platform }: { aside: HeaderProps['aside']; platfor
   return <Text weight="regular" vkuiClass="Header__aside">{aside}</Text>;
 }
 
-const Header: FunctionComponent<HeaderProps> = ({
+const Header: FC<HeaderProps> = ({
   mode,
   children,
   subtitle,
@@ -75,15 +75,17 @@ const Header: FunctionComponent<HeaderProps> = ({
   ...restProps
 }: HeaderProps) => {
   const platform = usePlatform();
-  const baseClassNames = getClassName('Header', platform);
 
   return (
-    <div
+    <header
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(baseClassNames, `Header--mode-${mode}`, {
-        'Header--pi': isPrimitiveReactNode(indicator),
-      })}
+      vkuiClass={classNames(
+        getClassName('Header', platform),
+        `Header--mode-${mode}`, {
+          'Header--pi': isPrimitiveReactNode(indicator),
+        },
+      )}
     >
       <div vkuiClass="Header__in">
         <div vkuiClass="Header__main">
@@ -103,7 +105,7 @@ const Header: FunctionComponent<HeaderProps> = ({
         </div>
         {hasReactNode(aside) && renderAside({ aside, platform })}
       </div>
-    </div>
+    </header>
   );
 };
 
