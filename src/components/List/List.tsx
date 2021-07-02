@@ -10,12 +10,15 @@ const List: FunctionComponent<HTMLAttributes<HTMLDivElement>> = ({
 }: HTMLAttributes<HTMLDivElement>) => {
   const platform = usePlatform();
   const [isDragging, toggleDrag] = useState(false);
-  const baseClassName = getClassName('List', platform);
 
   return (
-    <div {...restProps} vkuiClass={classNames(baseClassName, {
-      'List--dragging': isDragging,
-    })}>
+    <div
+      role="list"
+      {...restProps}
+      vkuiClass={classNames(getClassName('List', platform), {
+        'List--dragging': isDragging,
+      })}
+    >
       <ListContext.Provider value={useMemo(() => ({ toggleDrag }), [])}>
         {children}
       </ListContext.Provider>
