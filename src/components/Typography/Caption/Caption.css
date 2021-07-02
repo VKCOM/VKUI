@@ -1,3 +1,7 @@
+.Caption {
+  margin: 0;
+}
+
 .Caption--caps {
   text-transform: uppercase;
 }
