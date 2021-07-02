@@ -32,7 +32,7 @@ function renderChildren({ children, platform, mode }: Pick<HeaderProps, 'childre
         case 'primary':
           return <Headline vkuiClass="Header__content" weight="medium">{children}</Headline>;
         case 'secondary':
-          return <Caption vkuiClass="Header__content" level="1" weight="medium" caps>{children}</Caption>;
+          return <Caption Component="h3" vkuiClass="Header__content" level="1" weight="medium" caps>{children}</Caption>;
         case 'tertiary':
           return <Headline vkuiClass="Header__content" weight="medium">{children}</Headline>;
       }
@@ -43,7 +43,7 @@ function renderChildren({ children, platform, mode }: Pick<HeaderProps, 'childre
         case 'tertiary':
           return <Title vkuiClass="Header__content" weight="semibold" level="3">{children}</Title>;
         case 'secondary':
-          return <Caption vkuiClass="Header__content" level="1" weight="semibold" caps>{children}</Caption>;
+          return <Caption Component="h4" vkuiClass="Header__content" level="1" weight="semibold" caps>{children}</Caption>;
       }
       break;
     case Platform.VKCOM:
@@ -52,7 +52,7 @@ function renderChildren({ children, platform, mode }: Pick<HeaderProps, 'childre
           return <Headline vkuiClass="Header__content" weight="regular">{children}</Headline>;
         case 'secondary':
         case 'tertiary':
-          return <Caption vkuiClass="Header__content" level="1" weight="regular">{children}</Caption>;
+          return <Caption Component="h4" vkuiClass="Header__content" level="1" weight="regular">{children}</Caption>;
       }
   }
 }
@@ -101,7 +101,7 @@ const Header: FC<HeaderProps> = ({
             platform,
             mode,
           })}
-          {hasReactNode(subtitle) && <Caption vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
+          {hasReactNode(subtitle) && <Caption Component="span" vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
         </div>
         {hasReactNode(aside) && renderAside({ aside, platform })}
       </div>
