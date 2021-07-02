@@ -4,7 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasPlatform, HasRootRef } from '../../types';
 import { hasReactNode, isPrimitiveReactNode } from '../../lib/utils';
-import { Platform, PlatformType } from '../../lib/platform';
+import { Platform } from '../../lib/platform';
 import Headline from '../Typography/Headline/Headline';
 import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
@@ -57,12 +57,11 @@ function renderChildren({ children, platform, mode }: Pick<HeaderProps, 'childre
   }
 }
 
-function renderAside({ aside, platform }: { aside: HeaderProps['aside']; platform: PlatformType }) {
-  if (platform === Platform.VKCOM) {
-    return <Subhead weight="regular" vkuiClass="Header__aside">{aside}</Subhead>;
-  }
-  return <Text weight="regular" vkuiClass="Header__aside">{aside}</Text>;
-}
+type HeaderAsideProps = Pick<HeaderProps, 'aside'> & HasPlatform & { Component: ElementType };
+
+const HeaderAside: FC<HeaderAsideProps> = ({ platform, ...restProps }: HeaderAsideProps) => {
+  return platform === Platform.VKCOM ? <Subhead weight="regular" {...restProps} /> : <Text weight="regular" {...restProps} />;
+};
 
 const Header: FC<HeaderProps> = ({
   mode,
@@ -103,7 +102,7 @@ const Header: FC<HeaderProps> = ({
           })}
           {hasReactNode(subtitle) && <Caption Component="span" vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
         </div>
-        {hasReactNode(aside) && renderAside({ aside, platform })}
+        {hasReactNode(aside) && <HeaderAside vkuiClass="Header__aside" platform={platform} Component="div">{aside}</HeaderAside>}
       </div>
     </header>
   );
