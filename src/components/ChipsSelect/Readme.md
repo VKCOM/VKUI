@@ -5,12 +5,12 @@
 Поле ввода принимает все валидные для `<input>` значения.
 
 ```jsx
-const colors = [{value: '1', label: 'Красный'}, {value: '2', label: 'Синий'}];
+const colors = [{value: 'red', label: 'Красный'}, {value: 'blue', label: 'Синий'}, {value: 'navarin', label: 'Наваринского пламени с дымом',}];
 const groups = [{ value: 'download', label: 'Скачать все и вся!', icon: <Icon12Download /> }, { value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}]
 
 const Example = () => {
   const [selectedGroups, setSelectedGroups] = React.useState([]);
-  const [selectedColors, setSelectedColors] = React.useState([{value: '1', label: 'Красный'}]);
+  const [selectedColors, setSelectedColors] = React.useState(colors.slice(0, 2));
   const [selectedColorsCopy, setSelectedColorsCopy] = React.useState([]);
   
   const groupsChipsProps = {

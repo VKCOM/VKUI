@@ -22,9 +22,13 @@
   min-width: 44px;
   height: 44px;
   margin: -1px;
-  border-radius: inherit;
   color: var(--icon_secondary);
   z-index: 2;
+}
+
+.ChipsInput .FormField__after {
+  margin-right: -14px;
+  z-index: 3;
 }
 
 .FormField__border {
@@ -74,6 +78,10 @@
 .FormField--sizeY-compact .FormField__after {
   min-width: 36px;
   height: 36px;
+}
+
+.FormField--sizeY-compact.ChipsInput .FormField__after {
+  margin-right: -12px;
 }
 
 /**
