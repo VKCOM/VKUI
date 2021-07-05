@@ -159,7 +159,7 @@ const autoPlacementsY: Placement[] = ['bottom', 'top'];
 
 const Tooltip: FC<TooltipProps> = ({
   children, isShown, offsetX = 0, offsetY = 15,
-  alignX, alignY, onClose, cornerOffset,
+  alignX, alignY, onClose, cornerOffset = 10,
   ...restProps
 }) => {
   const [tooltipRef, setTooltipRef] = useState<HTMLElement>();
@@ -224,7 +224,6 @@ const Tooltip: FC<TooltipProps> = ({
         name: 'flip',
         options: {
           fallbackPlacements: availablePlacements,
-          allowedAutoPlacements: availablePlacements,
         },
       },
     ],
