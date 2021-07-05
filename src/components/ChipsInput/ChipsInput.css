@@ -28,7 +28,12 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin: 2px 4px;
+  margin: 2px;
+  margin-left: 6px;
+}
+
+.ChipsInput__input-container:first-of-type {
+  margin-left: 10px;
 }
 
 .ChipsInput__el {
@@ -71,8 +76,8 @@
  * sizeY COMPACT
  */
 .ChipsInput--sizeY-compact {
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 .ChipsInput--sizeY-compact .ChipsInput__container {
