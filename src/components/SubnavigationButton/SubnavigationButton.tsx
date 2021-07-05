@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, ElementType } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { getTitleFromChildren, hasReactNode } from '../../lib/utils';
@@ -26,32 +26,23 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   expandable?: boolean;
 }
 
-function renderLabel(children: ReactNode, textLevel: SubnavigationButtonProps['textLevel']): ReactNode {
-  const className = 'SubnavigationButton__label';
-
-  switch (textLevel) {
-    case 1:
-      return (
-        <Subhead Component="div" weight="regular" vkuiClass={className}>
-          {children}
-        </Subhead>
-      );
-
-    case 2:
-      return (
-        <Caption level="1" Component="div" weight="regular" vkuiClass={className}>
-          {children}
-        </Caption>
-      );
-
-    case 3:
-      return (
-        <Caption level="2" Component="div" weight="regular" vkuiClass={className}>
-          {children}
-        </Caption>
-      );
-  }
+interface SubnavButtonTypographyProps extends Pick<SubnavigationButtonProps, 'textLevel'> {
+  Component?: ElementType;
 }
+
+const SubnavigationButtonTypography: FC<SubnavButtonTypographyProps> = ({ textLevel, ...restProps }: SubnavButtonTypographyProps) => {
+  if (textLevel === 1) {
+    return <Subhead weight="regular" {...restProps} />;
+  }
+
+  return (
+    <Caption
+      level={textLevel === 2 ? '1' : '2'}
+      weight="regular"
+      {...restProps}
+    />
+  );
+};
 
 export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: SubnavigationButtonProps) => {
   const platform = usePlatform();
@@ -81,7 +72,13 @@ export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: Subnavi
     >
       <span vkuiClass="SubnavigationButton__in">
         {hasReactNode(before) && <span vkuiClass="SubnavigationButton__before">{before}</span>}
-        {renderLabel(children, textLevel)}
+        <SubnavigationButtonTypography
+          textLevel={textLevel}
+          vkuiClass="SubnavigationButton__label"
+          Component="span"
+        >
+          {children}
+        </SubnavigationButtonTypography>
         {hasReactNode(after) && <span vkuiClass="SubnavigationButton__after">{after}</span>}
         {expandable && <Icon16Dropdown vkuiClass="SubnavigationButton__expandableIcon" />}
       </span>
