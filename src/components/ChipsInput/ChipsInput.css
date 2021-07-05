@@ -1,46 +1,50 @@
 .ChipsInput {
-  display: flex;
   position: relative;
-  box-sizing: border-box;
+  display: flex;
+  max-width: 100%;
+  padding: 1px 14px;
 }
 
 .ChipsInput__container {
-  display: flex;
-  width: 100%;
-  /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
-  padding: 3px 13px;
-  flex-wrap: wrap;
+  flex-grow: 1;
+  flex-shrink: 1;
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
+  padding: 3px 12px;
+  margin: 0 -16px 0 -12px;
   z-index: 2;
+  overflow: hidden;
 }
 
 .ChipsInput__chip {
+  max-width: 100%;
   margin: 2px 12px 2px -8px;
-  max-width: calc(100% - 8px);
 }
 
 .ChipsInput__input-container {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin: 2px 0;
+  margin: 2px 8px 2px 0;
 }
 
 .ChipsInput__el {
-  /* Визуальная компенсация - центрируем строчные буквы */
-  line-height: 26px;
-  margin-bottom: 2px;
-  font-size: 15px;
-  color: var(--text_primary);
-  border: none;
+  position: relative;
   width: 100%;
-  box-sizing: border-box;
+  margin-bottom: 2px;
+  padding: 0;
+  /* Визуальная компенсация - центрируем строчные буквы */
+  font-size: 15px;
+  line-height: 26px;
+  color: var(--text_primary);
+  background: transparent;
+  border: none;
   box-shadow: none;
   appearance: none;
-  position: relative;
   z-index: 2;
-  background: transparent;
-  padding: 0;
 }
 
 .ChipsInput__el:focus {
@@ -66,7 +70,12 @@
 /**
  * sizeY COMPACT
  */
+.ChipsInput--sizeY-compact {
+  padding-left: 12px;
+  padding-right: 12px;
+}
 
 .ChipsInput--sizeY-compact .ChipsInput__container {
-  padding: 1px 11px;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
