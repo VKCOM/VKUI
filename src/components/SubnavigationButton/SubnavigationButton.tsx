@@ -79,12 +79,12 @@ export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: Subnavi
       )}
       aria-label={getTitleFromChildren(children)}
     >
-      <div vkuiClass="SubnavigationButton__in">
-        {hasReactNode(before) && <div vkuiClass="SubnavigationButton__before">{before}</div>}
+      <span vkuiClass="SubnavigationButton__in">
+        {hasReactNode(before) && <span vkuiClass="SubnavigationButton__before">{before}</span>}
         {renderLabel(children, textLevel)}
-        {hasReactNode(after) && <div vkuiClass="SubnavigationButton__after">{after}</div>}
+        {hasReactNode(after) && <span vkuiClass="SubnavigationButton__after">{after}</span>}
         {expandable && <Icon16Dropdown vkuiClass="SubnavigationButton__expandableIcon" />}
-      </div>
+      </span>
     </Tappable>
   );
 };
