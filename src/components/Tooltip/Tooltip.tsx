@@ -184,7 +184,7 @@ const Tooltip: FC<TooltipProps> = ({
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
 
-  if (IS_DEV && !portalTarget) {
+  if (IS_DEV && target && !portalTarget) {
     throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
   }
 
