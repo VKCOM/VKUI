@@ -50,6 +50,7 @@ try {
 
 let StyleGuideRenderer = ({ children, toc }) => {
   const [state, setState] = useState(initialState);
+  const [popout, setPopout] = useState(null);
   const { width, height, platform, scheme, hasMouse, styleguideScheme } = state;
 
   const setContext = useCallback((data) => {
@@ -66,7 +67,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
     }
   }, [platform, scheme]);
 
-  const providerValue = useMemo(() => ({ ...state, setContext }), [width, height, platform, scheme, hasMouse, setContext]);
+  const providerValue = useMemo(() => ({ ...state, setContext, setPopout }), [width, height, platform, scheme, hasMouse, setContext, setPopout]);
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
@@ -78,7 +79,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
             setContext({ styleguideScheme: value });
           }
         }} />
-        <SplitLayout className="StyleGuide">
+        <SplitLayout className="StyleGuide" popout={popout}>
           <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuide__sidebar">
             <div className="StyleGuide__sidebarIn">
               {toc}

@@ -22,29 +22,29 @@ export const Settings = () => {
               {/*  value={context.integration}*/}
               {/*/>*/}
               <PlatformSelect
-                onChange={(e) => context.setContext({ platform: e.target.value })}
+                onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
               />
               <SchemeSelect
-                onChange={(e) => context.setContext({ scheme: e.target.value })}
+                onChange={(scheme) => context.setContext({ scheme })}
                 value={context.scheme}
                 disabled={context.platform === Platform.VKCOM}
               />
               <WebviewTypeSelect
-                onChange={(e) => context.setContext({ webviewType: e.target.value })}
+                onChange={(webviewType) => context.setContext({ webviewType })}
                 value={context.webviewType}
               />
               <HasMouseCheckbox
-                onChange={(e) => context.setContext({ hasMouse: e.target.checked })}
+                onChange={(hasMouse) => context.setContext({ hasMouse })}
                 value={context.hasMouse}
                 disabled={context.platform === Platform.VKCOM}
               />
               <ViewHeightSelect
-                onChange={(e) => context.setContext({ height: Number(e.target.value) })}
+                onChange={(height) => context.setContext({ height })}
                 value={context.height}
               />
               <ViewWidthSelect
-                onChange={(e) => context.setContext({ width: Number(e.target.value) })}
+                onChange={(width) => context.setContext({ width })}
                 value={context.width}
                 disabled={context.platform === Platform.VKCOM}
               />
