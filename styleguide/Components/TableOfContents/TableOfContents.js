@@ -32,15 +32,21 @@ class TableOfContents extends React.PureComponent {
     super(props);
     this.state = {
       search: '',
+      expand: {},
     }
     this.sections = normalizer(this.props.sections);
     this.searchResults = {};
     const { targetName } = getInfoFromHash(window.location.hash);
+    let currentSection;
+
     if (targetName) {
-      const currentSection = this.pickSection(targetName);
-      this.state.expand = currentSection ? this.search(this.sections, currentSection.name, { exactMatch: true }) : {};
-      this.state.currentSectionName = currentSection && currentSection.name;
+      currentSection = this.pickSection(targetName);
+    } else {
+      currentSection = this.sections[0];
     }
+
+    this.state.expand = currentSection ? this.search(this.sections, currentSection.name, { exactMatch: true }) : {};
+    this.state.currentSectionName = currentSection && currentSection.name;
   }
 
   onExpandCellClick = (e) => {
