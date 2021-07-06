@@ -147,4 +147,4 @@ console.log(hasModal);
 
 ### Наследование темы
 
-__Advanced__ Если ваше приложение само определяет цвета через css-переменные аналогично [https://github.com/VKCOM/VKUI/blob/master/package.json](bright_light.css), используйте `<ConfigProvider theme="inherit">`, а стили подключайте через `import '@vkontakte/vkui/components.css'`.
+> __Advanced__ Если ваше приложение само определяет цвета через css-переменные аналогично [https://github.com/VKCOM/VKUI/blob/master/package.json](bright_light.css), используйте `<ConfigProvider scheme="inherit">`, а стили подключайте через `import '@vkontakte/vkui/components.css'`.
