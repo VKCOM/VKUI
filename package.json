@@ -80,7 +80,7 @@
     "postcss-loader": "^4.1.0",
     "postcss-prefixer": "^2.1.2",
     "pre-commit": "^1.2.2",
-    "prop-types": "^15.6.1",
+    "prop-types": "^15.6.2",
     "react": "^16.8.6",
     "react-docgen": "^5.4.0-alpha.0",
     "react-dom": "^16.8.6",
@@ -108,7 +108,6 @@
     "@vkontakte/icons": "^1.109.0",
     "@vkontakte/vk-bridge": "^2.0.2",
     "@vkontakte/vkjs": "^0.20.0",
-    "prop-types": "^15.6.1",
     "react": "^16.8.6 || ^17.0.0",
     "react-dom": "^16.8.6 || ^17.0.0"
   },
