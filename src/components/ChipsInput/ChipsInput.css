@@ -1,8 +1,5 @@
 .ChipsInput {
-  position: relative;
-  display: flex;
   max-width: 100%;
-  padding: 1px 14px;
 }
 
 .ChipsInput__container {
@@ -12,23 +9,22 @@
   display: flex;
   flex-wrap: wrap;
   max-width: 100%;
-  /* 2px горизонтального отступа ушли в chip и input-container для 2+2=4px отступа между строками при многострочном инпуте */
-  padding: 3px 12px;
-  margin: 0 -16px 0 -12px;
+  padding: 3px;
   z-index: 2;
   overflow: hidden;
 }
 
 .ChipsInput__chip {
   max-width: 100%;
-  margin: 2px 12px 2px -8px;
+  margin: 2px;
 }
 
 .ChipsInput__input-container {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin: 2px 8px 2px 0;
+  margin: 2px;
+  margin-left: 10px;
 }
 
 .ChipsInput__el {
@@ -70,12 +66,7 @@
 /**
  * sizeY COMPACT
  */
-.ChipsInput--sizeY-compact {
-  padding-left: 12px;
-  padding-right: 12px;
-}
 
 .ChipsInput--sizeY-compact .ChipsInput__container {
-  padding-top: 1px;
-  padding-bottom: 1px;
+  padding: 1px;
 }
