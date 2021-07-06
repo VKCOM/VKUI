@@ -179,12 +179,13 @@ const Tooltip: FC<TooltipProps> = ({
 
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
-  const portalTarget = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
+  const tooltipContainer = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
+  const fixedTooltipContainer = useMemo(() => target?.closest(`[${tooltipContainerAttr}=fixed]`) as HTMLDivElement, [target]);
   const strategy = useMemo(() => target?.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
 
-  if (IS_DEV && target && !portalTarget) {
+  if (IS_DEV && target && !tooltipContainer) {
     throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
   }
 
@@ -216,23 +217,21 @@ const Tooltip: FC<TooltipProps> = ({
           padding: 14,
         },
       },
-      {
+      !fixedTooltipContainer && {
         name: 'preventOverflow', options: {
-          boundary: portalTarget,
+          boundary: tooltipContainer,
           rootBoundary: 'document',
         },
       },
       {
         name: 'flip',
         options: {
-          boundary: portalTarget,
-          altBoundary: true,
-          flipVariations: false,
+          boundary: !fixedTooltipContainer ? tooltipContainer : null,
           fallbackPlacements: availablePlacements,
           allowedAutoPlacements: [placement, ...availablePlacements],
         },
       },
-    ],
+    ].filter((v) => !!v),
   });
 
   const { document } = useDOM();
@@ -280,7 +279,7 @@ const Tooltip: FC<TooltipProps> = ({
           style={{ arrow: arrowStyle, container: styles.popper }}
           attributes={{ arrow: attributes.arrow, container: attributes.popper }}
         />,
-        portalTarget,
+        tooltipContainer,
       )}
     </Fragment>
   );
