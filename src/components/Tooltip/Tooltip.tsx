@@ -155,11 +155,11 @@ function getPlacement(alignX?: TooltipProps['alignX'], alignY?: TooltipProps['al
 }
 
 const autoPlacementsX: Placement[] = ['right', 'left'];
-const autoPlacementsY: Placement[] = ['bottom', 'top'];
+const autoPlacementsY: Placement[] = ['bottom-start', 'bottom', 'bottom-end', 'top-start', 'top', 'top-end'];
 
 const Tooltip: FC<TooltipProps> = ({
   children, isShown, offsetX = 0, offsetY = 15,
-  alignX, alignY, onClose, cornerOffset = 10,
+  alignX, alignY, onClose, cornerOffset,
   ...restProps
 }) => {
   const [tooltipRef, setTooltipRef] = useState<HTMLElement>();
@@ -190,7 +190,7 @@ const Tooltip: FC<TooltipProps> = ({
 
   const placement = getPlacement(alignX, alignY);
 
-  let availablePlacements: Placement[] = [placement];
+  let availablePlacements: Placement[] = [];
   if (!alignY) {
     availablePlacements = [...availablePlacements, ...autoPlacementsY];
   }
@@ -200,6 +200,7 @@ const Tooltip: FC<TooltipProps> = ({
 
   const { styles, attributes, state, forceUpdate } = usePopper(target, tooltipRef, {
     strategy: strategy,
+    placement: placement,
     modifiers: [
       {
         name: 'offset', options: {
@@ -218,16 +219,20 @@ const Tooltip: FC<TooltipProps> = ({
       {
         name: 'preventOverflow', options: {
           boundary: portalTarget,
+          rootBoundary: 'document',
         },
       },
       {
         name: 'flip',
         options: {
+          boundary: portalTarget,
+          altBoundary: true,
+          flipVariations: false,
           fallbackPlacements: availablePlacements,
+          allowedAutoPlacements: [placement, ...availablePlacements],
         },
       },
     ],
-    placement: 'auto',
   });
 
   const { document } = useDOM();
@@ -274,7 +279,9 @@ const Tooltip: FC<TooltipProps> = ({
           arrowRef={(el) => setTooltipArrowRef(el)}
           style={{ arrow: arrowStyle, container: styles.popper }}
           attributes={{ arrow: attributes.arrow, container: attributes.popper }}
-        />, portalTarget)}
+        />,
+        portalTarget,
+      )}
     </Fragment>
   );
 };
