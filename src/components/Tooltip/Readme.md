@@ -137,10 +137,27 @@ import { Tooltip, Button } from '@vkontakte/vkui';
       </div>
     </Tooltip>
   </TooltipContainer>
+  <TooltipContainer
+    fixed
+    style={{ 
+      minHeight: '30px', 
+      border: '1px solid', 
+      margin: '100px 100px 0', 
+      position: 'relative', 
+      background: 'var(--background_content)',
+      zIndex: 1,
+    }}
+  >
+    <Tooltip text="Я вылезаю (fixed)">
+      <div style={{ display: 'inline-block' }}>
+        <Avatar />
+      </div>
+    </Tooltip>
+  </TooltipContainer>
   <TooltipContainer style={{ 
     minHeight: '100vh', 
     border: '1px solid', 
-    margin: '100px', 
+    margin: '64px 100px 100px', 
     position: 'relative', 
     background: 'var(--background_content)',
     zIndex: 1,
