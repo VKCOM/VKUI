@@ -5,7 +5,21 @@ import PlaygroundError from '@rsg-components/PlaygroundError';
 import PropTypes from 'prop-types';
 import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuide/StyleGuideRenderer';
-import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider, classNames } from '../../src';
+import {
+  VKCOM,
+  SplitCol,
+  SplitLayout,
+  withAdaptivity,
+  ViewWidth,
+  PanelHeader,
+  usePlatform,
+  AppRoot,
+  ConfigProvider,
+  AdaptivityProvider,
+  classNames,
+  Scheme,
+  Appearance,
+} from '../../src';
 import { DOMContext } from '../../src/lib/dom';
 import { perfLogger } from '../utils';
 import './Preview.css';
@@ -17,7 +31,16 @@ class FrameDomProvider extends React.Component {
     document: PropTypes.any,
     window: PropTypes.any,
   };
+
+  static propTypes = {
+    appearance: Appearance
+  };
+
   state = { ready: false };
+
+  setAppearance = (appearance) => {
+    this.context.document.documentElement.style.setProperty('color-scheme', appearance);
+  }
 
   componentDidMount() {
     // Пихаем в iFrame с примером спрайты для иконок
@@ -51,10 +74,17 @@ class FrameDomProvider extends React.Component {
     });
     this.context.document.head.appendChild(frameAssets);
     this.setState({ ready: true });
+    this.setAppearance(this.props.appearance);
   }
 
   componentWillUnmount() {
     this.hotObservers.forEach(o => o.disconnect());
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.appearance !== this.props.appearance) {
+      this.setAppearance(this.props.appearance);
+    }
   }
 
   render () {
@@ -134,7 +164,6 @@ export default class Preview extends PreviewParent {
     return (
       <StyleGuideContext.Consumer>
         {(styleGuideContext) => {
-
           let example = (
             <ReactExample
               code={code}
@@ -156,7 +185,9 @@ export default class Preview extends PreviewParent {
               }}
               initialContent={initialFrameContent}
             >
-              <FrameDomProvider>
+              <FrameDomProvider
+                appearance={styleGuideContext.scheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT}
+              >
                 <Profiler id={exampleId} onRender={logPerf}>
                   <ConfigProvider
                     platform={styleGuideContext.platform}

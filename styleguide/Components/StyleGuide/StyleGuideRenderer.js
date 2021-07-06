@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { MOBILE_SIZE, TABLET_SIZE } from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
-import { defaultConfigProviderProps } from '@vkui/components/ConfigProvider/ConfigProviderContext';
+import { Appearance, defaultConfigProviderProps } from '@vkui/components/ConfigProvider/ConfigProviderContext';
 import { SMALL_HEIGHT } from '../ViewHeightSelect';
 import {
   VKCOM,
@@ -66,6 +66,11 @@ let StyleGuideRenderer = ({ children, toc }) => {
       setContext({ scheme: Scheme.BRIGHT_LIGHT });
     }
   }, [platform, scheme]);
+
+  useEffect(() => {
+    const styleGuideAppearance = styleguideScheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT;
+    document.documentElement.style.setProperty('color-scheme', styleGuideAppearance);
+  }, [styleguideScheme])
 
   const providerValue = useMemo(() => ({ ...state, setContext, setPopout }), [width, height, platform, scheme, hasMouse, setContext, setPopout]);
 

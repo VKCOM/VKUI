@@ -9,6 +9,10 @@
   border-radius: 8px;
 }
 
+.Preview--dark {
+  color-scheme: dark;
+}
+
 .Preview__shadow {
   position: absolute;
   left: 0;
