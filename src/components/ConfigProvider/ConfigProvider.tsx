@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import { FC, useRef, useState, useEffect } from 'react';
 import { canUseDOM, useDOM } from '../../lib/dom';
 import {
   ConfigProviderContext,
@@ -17,6 +17,24 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
+}
+
+function useInheritResolver(scheme: ConfigProviderProps['scheme']): string {
+  const inherit = scheme === 'inherit';
+  const getScheme = () => inherit ? document.body.getAttribute('scheme') : scheme;
+  const [realScheme, setScheme] = useState(getScheme());
+  useEffect(() => {
+    if (!inherit) {
+      return noop;
+    }
+    setScheme(getScheme);
+    const observer = new MutationObserver(() => {
+      setScheme(getScheme());
+    });
+    observer.observe(document.body);
+    return () => observer.disconnect();
+  }, [inherit]);
+  return realScheme;
 }
 
 function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): AppearanceScheme {
@@ -56,7 +74,8 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
     return scheme === 'inherit' ? noop : () => document.body.removeAttribute('scheme');
   }, [scheme]);
 
-  const configContext = useObjectMemo(config);
+  const resolvedScheme = useInheritResolver(scheme);
+  const configContext = useObjectMemo({ ...config, scheme: resolvedScheme });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
