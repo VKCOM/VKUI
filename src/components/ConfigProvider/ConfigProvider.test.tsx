@@ -25,14 +25,9 @@ describe('ConfigProvider', () => {
     ));
   });
   describe('manages body[scheme]', () => {
-    it('sets body[scheme] before first render', () => {
-      const SchemeUser: FC = () => {
-        expect(document.body).toHaveAttribute('scheme', 'space_gray');
-        return null;
-      };
-      render((
-        <ConfigProvider scheme="space_gray"><SchemeUser /></ConfigProvider>
-      ));
+    it('sets body[scheme] on first render', () => {
+      render(<ConfigProvider scheme="space_gray" />);
+      expect(document.body).toHaveAttribute('scheme', 'space_gray');
     });
     it('removes body[scheme] on unmount', () => {
       render(<ConfigProvider scheme="space_gray" />).unmount();

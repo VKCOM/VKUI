@@ -1,5 +1,5 @@
-import { FC, useRef, useState, useEffect } from 'react';
-import { canUseDOM, useDOM } from '../../lib/dom';
+import { FC, useState, useEffect } from 'react';
+import { useDOM } from '../../lib/dom';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
@@ -64,11 +64,6 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
     }
   };
 
-  const isMounted = useRef(false);
-  if (!isMounted.current && canUseDOM) {
-    setScheme();
-    isMounted.current = true;
-  }
   useIsomorphicLayoutEffect(() => {
     setScheme();
     return scheme === 'inherit' ? noop : () => document.body.removeAttribute('scheme');
