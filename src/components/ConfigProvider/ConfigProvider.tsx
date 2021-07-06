@@ -7,7 +7,7 @@ import {
   AppearanceScheme,
   defaultConfigProviderProps,
 } from './ConfigProviderContext';
-import { VKCOM } from '../../lib/platform';
+import { PlatformType, VKCOM } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { noop } from '../../lib/utils';
@@ -19,7 +19,13 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
   scheme?: AppearanceScheme;
 }
 
-function mapOldScheme(scheme: AppearanceScheme): AppearanceScheme {
+function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): AppearanceScheme {
+  if (scheme === 'inherit') {
+    return scheme;
+  }
+  if (platform === VKCOM) {
+    return Scheme.VKCOM;
+  }
   switch (scheme) {
     case Scheme.DEPRECATED_CLIENT_LIGHT:
       return Scheme.BRIGHT_LIGHT;
@@ -31,7 +37,7 @@ function mapOldScheme(scheme: AppearanceScheme): AppearanceScheme {
 }
 
 const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
-  const scheme = config.platform === VKCOM ? Scheme.VKCOM : mapOldScheme(config.scheme);
+  const scheme = normalizeScheme(config.scheme, config.platform);
 
   const { document } = useDOM();
   const setScheme = () => {
