@@ -9,7 +9,7 @@
   border-radius: 8px;
 }
 
-.Preview::before {
+.Preview__shadow {
   position: absolute;
   left: 0;
   top: 0;

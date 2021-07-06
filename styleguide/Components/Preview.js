@@ -175,6 +175,7 @@ export default class Preview extends PreviewParent {
 
           return (
             <div className={classNames('Preview', `Preview--${styleGuideContext.platform}`)}>
+              <div className="Preview__shadow" style={{ height: styleGuideContext.height, maxWidth: styleGuideContext.width }} />
               <div ref={this.frameRef} className="Preview__in" style={{ height: styleGuideContext.height }}>
                 {error
                   ? <PlaygroundError message={error} />
