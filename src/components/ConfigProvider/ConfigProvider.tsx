@@ -11,6 +11,7 @@ import { PlatformType, VKCOM } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { noop } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
@@ -54,19 +55,21 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Appe
   }
 }
 
+const warn = warnOnce('ConfigProvider');
+
 const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
 
   const { document } = useDOM();
-  const setScheme = () => {
-    if (scheme !== 'inherit') {
-      document.body.setAttribute('scheme', scheme);
-    }
-  };
-
   useIsomorphicLayoutEffect(() => {
-    setScheme();
-    return scheme === 'inherit' ? noop : () => document.body.removeAttribute('scheme');
+    if (scheme === 'inherit') {
+      return noop;
+    }
+    if (process.env.NODE_ENV === 'development' && document.body.hasAttribute('scheme')) {
+      warn('<body scheme> was set before VKUI mount - did you forget scheme="inherit"?');
+    }
+    document.body.setAttribute('scheme', scheme);
+    return () => document.body.removeAttribute('scheme');
   }, [scheme]);
 
   const resolvedScheme = useInheritResolver(scheme);
