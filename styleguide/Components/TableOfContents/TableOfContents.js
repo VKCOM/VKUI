@@ -30,33 +30,38 @@ const normalizer = (sections) => {
 class TableOfContents extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.sections = normalizer(this.props.sections);
     this.state = {
       search: '',
-      expand: {},
+      expand: this.search(this.sections, this.currentSection.name, { exactMatch: true }),
+      currentSectionName: this.currentSection.name
     }
-    this.sections = normalizer(this.props.sections);
     this.searchResults = {};
+  }
+
+  componentDidMount() {
+    window.addEventListener('hashchange', this.hashChangeListener)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.hashChangeListener)
+  }
+
+  hashChangeListener = () => {
+    this.setState({
+      currentSectionName: this.currentSection.name
+    })
+  }
+
+  get currentSection() {
     const { targetName } = getInfoFromHash(window.location.hash);
-    let currentSection;
-
-    if (targetName) {
-      currentSection = this.pickSection(targetName);
-    } else {
-      currentSection = this.sections[0];
-    }
-
-    this.state.expand = currentSection ? this.search(this.sections, currentSection.name, { exactMatch: true }) : {};
-    this.state.currentSectionName = currentSection && currentSection.name;
+    return targetName ? this.pickSection(targetName) : this.sections[0]
   }
 
   onExpandCellClick = (e) => {
     const sectionName = e.currentTarget.dataset.sectionName;
     if (!e.currentTarget.href) {
       this.expand(sectionName)
-    } else {
-      this.setState({
-        currentSectionName: sectionName
-      })
     }
   }
 
