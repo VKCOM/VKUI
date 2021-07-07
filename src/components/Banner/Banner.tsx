@@ -94,10 +94,17 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
     ...restProps
   } = props;
 
-  const InnerComponent: ElementType = asideMode === 'expand' ? Tappable : 'div';
-  const innerProps = asideMode === 'expand' ? {
-    activeMode: platform === IOS ? 'opacity' : 'background',
-  } : {};
+  let InnerComponent: ElementType = 'div';
+  let innerProps = {};
+
+  if (asideMode === 'expand') {
+    InnerComponent = Tappable;
+    innerProps = {
+      Component: 'div',
+      role: 'button',
+      activeMode: platform === IOS ? 'opacity' : 'background',
+    };
+  }
 
   return (
     <section
