@@ -116,7 +116,8 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
       vkuiClass={classNames(
         getClassName('Banner', platform),
         `Banner--md-${mode}`,
-        `Banner--sz-${size}`, {
+        `Banner--sz-${size}`,
+        {
           'Banner--inverted': mode === 'image' && imageTheme === 'dark',
         },
       )}
@@ -138,9 +139,9 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
             <BannerSubheader size={size} Component="span" vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
           )}
           {hasReactNode(text) && <Text Component="span" weight="regular" vkuiClass="Banner__text">{text}</Text>}
-          {hasReactNode(actions) && Children.count(actions) > 0 &&
-          <div vkuiClass="Banner__actions">{actions}</div>
-          }
+          {hasReactNode(actions) && Children.count(actions) > 0 && (
+            <div vkuiClass="Banner__actions">{actions}</div>
+          )}
         </div>
 
         {!!asideMode && (
