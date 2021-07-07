@@ -1,4 +1,4 @@
-import { Children, FunctionComponent, ReactNode, HTMLAttributes, MouseEventHandler } from 'react';
+import { Children, FC, ReactNode, HTMLAttributes, MouseEventHandler, ElementType } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -88,7 +88,7 @@ function renderSubheader({ size, subheader }: Pick<BannerProps, 'size' | 'subhea
   }
 }
 
-const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
+const Banner: FC<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {
     mode, imageTheme, size, before, asideMode, header, subheader, text, children, background, actions,
@@ -96,7 +96,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
     ...restProps
   } = props;
 
-  const InnerComponent = asideMode === 'expand' ? Tappable : 'div';
+  const InnerComponent: ElementType = asideMode === 'expand' ? Tappable : 'div';
   const innerProps = asideMode === 'expand' ? {
     activeMode: platform === IOS ? 'opacity' : 'background',
   } : {};
