@@ -143,26 +143,24 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
           }
         </div>
 
-        {asideMode === 'expand' &&
-        <div vkuiClass="Banner__expand">
-          <Icon24Chevron />
-        </div>
-        }
+        {!!asideMode && (
+          <div vkuiClass={`Banner__aside Banner__aside--${asideMode}`}>
+            {asideMode === 'expand' && <Icon24Chevron />}
 
-        {asideMode === 'dismiss' &&
-        <div vkuiClass="Banner__dismiss">
-          <IconButton
-            aria-label={dismissLabel}
-            vkuiClass="Banner__dismissIcon"
-            onClick={onDismiss}
-            hoverMode="opacity"
-            hasActive={false}
-          >
-            {(platform === ANDROID || platform === VKCOM) && <Icon24Cancel />}
-            {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
-          </IconButton>
-        </div>
-        }
+            {asideMode === 'dismiss' &&
+              <IconButton
+                aria-label={dismissLabel}
+                vkuiClass="Banner__dismiss"
+                onClick={onDismiss}
+                hoverMode="opacity"
+                hasActive={false}
+              >
+                {(platform === ANDROID || platform === VKCOM) && <Icon24Cancel />}
+                {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
+              </IconButton>
+            }
+          </div>
+        )}
       </InnerComponent>
     </section>
   );

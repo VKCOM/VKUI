@@ -54,14 +54,7 @@
   height: 100%;
 }
 
-.Banner__expand {
-  align-self: center;
-  color: var(--icon_tertiary);
-  margin-left: 12px;
-}
-
-.Banner__dismiss {
-  position: relative;
+.Banner__aside {
   display: flex;
   flex-flow: row nowrap;
   align-content: center;
@@ -69,16 +62,25 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  z-index: 2;
 }
 
-.Banner__dismissIcon {
+.Banner__aside--expand {
+  align-self: center;
+  justify-content: flex-end;
+  color: var(--icon_tertiary);
+}
+
+.Banner__dismiss {
+  position: absolute;
+  top: 2px;
+  right: 2px;
   display: flex;
   flex-flow: row nowrap;
   align-content: center;
   align-items: center;
   justify-content: center;
-  color: var(--icon_tertiary);
+  color: var(--icon_secondary);
+  z-index: 2;
 }
 
 .Banner__actions {
@@ -150,6 +152,10 @@
   z-index: 2;
 }
 
+.Banner--md-image .Banner__dismiss {
+  color: var(--white);
+}
+
 .Banner--inverted {
   color: var(--white);
 }
@@ -179,6 +185,11 @@
   border-radius: 10px;
 }
 
+.Banner--ios .Banner__dismiss,
+.Banner--ios.Banner--md-image .Banner__dismiss {
+  color: var(--icon_tertiary);
+}
+
 /**
  * Android & VKCOM
  */
@@ -191,14 +202,4 @@
 .Banner--android .Banner__in,
 .Banner--vkcom .Banner__in {
   border-radius: 8px;
-}
-
-.Banner--android .Banner__dismissIcon,
-.Banner--vkcom .Banner__dismissIcon {
-  color: var(--icon_secondary);
-}
-
-.Banner--android.Banner--md-image .Banner__dismissIcon,
-.Banner--vkcom.Banner--md-image .Banner__dismissIcon {
-  color: var(--white);
 }
