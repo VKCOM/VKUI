@@ -139,28 +139,16 @@ export default class Preview extends PreviewParent {
   }
 
   componentDidMount() {
-    if (!window.IntersectionObserver) {
-      return this.setState({ isVisible: true });
-    }
-    this.onScreenObserver = new IntersectionObserver(([{ isIntersecting }]) => {
-      if (Boolean(this.state.isVisible) !== isIntersecting) {
-        this.setState({ isVisible: isIntersecting });
-      }
-    }, {
-      rootMargin: '100% 0px',
-    });
-    this.onScreenObserver.observe(this.frameRef.current);
+    return true;
   }
 
   componentWillUnmount() {
-    this.onScreenObserver.disconnect();
+    return true;
   }
-
-  frameRef = React.createRef();
 
   render() {
     const { code, autoLayout = 'all', config = {}, exampleId } = this.props;
-    const { error, isVisible } = this.state;
+    const { error } = this.state;
     return (
       <StyleGuideContext.Consumer>
         {(styleGuideContext) => {
@@ -172,8 +160,10 @@ export default class Preview extends PreviewParent {
               compilerConfig={this.context.config.compilerConfig}
             />
           );
-          example = autoLayout === 'all' ? <DefaultLayout>{example}</DefaultLayout> : example;
-          example = autoLayout === 'none' ? example : <AppRoot noLegacyClasses>{example}</AppRoot>;
+
+          if (autoLayout === 'all') {
+            example = <DefaultLayout>{example}</DefaultLayout>;
+          }
 
           const frame = (
             <ReactFrame
@@ -196,7 +186,9 @@ export default class Preview extends PreviewParent {
                     {...config}
                   >
                     <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
-                      {example}
+                      <AppRoot noLegacyClasses>
+                        {example}
+                      </AppRoot>
                     </AdaptivityProvider>
                   </ConfigProvider>
                 </Profiler>
@@ -207,10 +199,10 @@ export default class Preview extends PreviewParent {
           return (
             <div className={classNames('Preview', `Preview--${styleGuideContext.platform}`)}>
               <div className="Preview__shadow" style={{ height: styleGuideContext.height, maxWidth: styleGuideContext.width }} />
-              <div ref={this.frameRef} className="Preview__in" style={{ height: styleGuideContext.height }}>
+              <div className="Preview__in" style={{ height: styleGuideContext.height }}>
                 {error
                   ? <PlaygroundError message={error} />
-                  : (isVisible && frame)}
+                  : frame}
               </div>
             </div>
           );
