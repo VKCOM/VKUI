@@ -70,23 +70,21 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   actions?: ReactNode;
 }
 
-function renderHeader({ size, header }: Pick<BannerProps, 'size' | 'header'>) {
-  switch (size) {
-    case 's':
-      return <Headline weight="medium" vkuiClass="Banner__header">{header}</Headline>;
-    case 'm':
-      return <Title level="2" weight="medium" vkuiClass="Banner__header">{header}</Title>;
-  }
+interface BannerTypographyProps extends Pick<BannerProps, 'size'> {
+  Component?: ElementType;
 }
 
-function renderSubheader({ size, subheader }: Pick<BannerProps, 'size' | 'subheader'>) {
-  switch (size) {
-    case 's':
-      return <Caption level="1" weight="regular" vkuiClass="Banner__subheader">{subheader}</Caption>;
-    case 'm':
-      return <Text weight="regular" vkuiClass="Banner__subheader">{subheader}</Text>;
-  }
-}
+const BannerHeader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
+  return size === 'm'
+    ? <Title level="2" weight="medium" {...restProps} />
+    : <Headline weight="medium" {...restProps} />;
+};
+
+const BannerSubheader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
+  return size === 'm'
+    ? <Text weight="regular" {...restProps} />
+    : <Caption level="1" weight="regular" {...restProps} />;
+};
 
 const Banner: FC<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
@@ -122,8 +120,12 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
         {before && <div vkuiClass="Banner__before">{before}</div>}
 
         <div vkuiClass="Banner__content">
-          {hasReactNode(header) && renderHeader({ size, header })}
-          {hasReactNode(subheader) && renderSubheader({ size, subheader })}
+          {hasReactNode(header) && (
+            <BannerHeader size={size} Component="h2" vkuiClass="Banner__header">{header}</BannerHeader>
+          )}
+          {hasReactNode(subheader) && (
+            <BannerSubheader size={size} Component="span" vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
+          )}
           {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
           {hasReactNode(actions) && Children.count(actions) > 0 &&
           <div vkuiClass="Banner__actions">{actions}</div>
