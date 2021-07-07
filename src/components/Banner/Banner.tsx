@@ -30,6 +30,10 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   onDismiss?: MouseEventHandler<HTMLButtonElement>;
   /**
+   * `aria-label` для кнопки при `asideMode="dismiss". Необходим, чтобы кнопка была доступной.
+   */
+  dismissLabel?: string;
+  /**
    * Содержимое, отображаемое в левой части баннера.
    */
   before?: ReactNode;
@@ -90,7 +94,7 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {
     mode, imageTheme, size, before, asideMode, header, subheader, text, children, background, actions,
-    onDismiss,
+    onDismiss, dismissLabel,
     ...restProps
   } = props;
 
@@ -148,6 +152,7 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
         {asideMode === 'dismiss' &&
         <div vkuiClass="Banner__dismiss">
           <IconButton
+            aria-label={dismissLabel}
             vkuiClass="Banner__dismissIcon"
             onClick={onDismiss}
             hoverMode="opacity"
@@ -164,6 +169,7 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
 };
 
 Banner.defaultProps = {
+  dismissLabel: 'Скрыть',
   mode: 'tint',
   size: 's',
   imageTheme: 'dark',
