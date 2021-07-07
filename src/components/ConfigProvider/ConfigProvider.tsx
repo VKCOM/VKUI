@@ -1,11 +1,13 @@
 import { FC, useState, useEffect } from 'react';
-import { useDOM } from '../../lib/dom';
+import { AppearanceType } from '@vkontakte/vk-bridge';
+import { canUseDOM, useDOM } from '../../lib/dom';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   Scheme,
   AppearanceScheme,
   defaultConfigProviderProps,
+  ExternalScheme,
 } from './ConfigProviderContext';
 import { PlatformType, VKCOM } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -20,25 +22,33 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
   scheme?: AppearanceScheme;
 }
 
-function useInheritResolver(scheme: ConfigProviderProps['scheme']): string {
-  const inherit = scheme === 'inherit';
-  const getScheme = () => inherit ? document.body.getAttribute('scheme') : scheme;
-  const [realScheme, setScheme] = useState(getScheme());
+function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
+  const inherit = _scheme === 'inherit';
+  const getScheme = () => {
+    if (!inherit || !canUseDOM) {
+      return undefined;
+    }
+    return node.getAttribute('scheme') as Scheme | ExternalScheme;
+  };
+  const [resolvedScheme, setScheme] = useState(getScheme());
+
   useEffect(() => {
     if (!inherit) {
       return noop;
     }
-    setScheme(getScheme);
-    const observer = new MutationObserver(() => {
-      setScheme(getScheme());
-    });
-    observer.observe(document.body);
+    setScheme(getScheme());
+    const observer = new MutationObserver(() => setScheme(getScheme()));
+    observer.observe(node, { attributes: true, attributeFilter: ['scheme'] });
     return () => observer.disconnect();
   }, [inherit]);
-  return realScheme;
+
+  return _scheme === 'inherit' ? resolvedScheme : _scheme;
 }
 
-function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): AppearanceScheme {
+const deriveAppearance = (scheme: Scheme | ExternalScheme): AppearanceType =>
+  scheme === Scheme.SPACE_GRAY || scheme === ExternalScheme.VKCOM_DARK ? 'dark' : 'light';
+
+function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Scheme | 'inherit' {
   if (scheme === 'inherit') {
     return scheme;
   }
@@ -51,7 +61,7 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Appe
     case Scheme.DEPRECATED_CLIENT_DARK:
       return Scheme.SPACE_GRAY;
     default:
-      return scheme;
+      return scheme as Scheme;
   }
 }
 
@@ -72,8 +82,8 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
     return () => document.body.removeAttribute('scheme');
   }, [scheme]);
 
-  const resolvedScheme = useInheritResolver(scheme);
-  const configContext = useObjectMemo({ ...config, scheme: resolvedScheme });
+  const realScheme = useSchemeDetector(document.body, scheme);
+  const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
