@@ -5,6 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Chevron, Icon24DismissSubstract, Icon24DismissDark, Icon24Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
+import IconButton from '../IconButton/IconButton';
 import Headline from '../Typography/Headline/Headline';
 import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
@@ -137,14 +138,15 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
 
         {asideMode === 'dismiss' &&
         <div vkuiClass="Banner__dismiss">
-          <button
-            type="button"
+          <IconButton
             vkuiClass="Banner__dismissIcon"
             onClick={onDismiss}
+            hoverMode="opacity"
+            hasActive={false}
           >
             {(platform === ANDROID || platform === VKCOM) && <Icon24Cancel />}
             {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
-          </button>
+          </IconButton>
         </div>
         }
       </InnerComponent>

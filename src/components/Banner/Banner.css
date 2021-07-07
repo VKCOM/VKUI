@@ -61,26 +61,24 @@
 }
 
 .Banner__dismiss {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
   width: 28px;
+  height: 28px;
+  z-index: 2;
 }
 
 .Banner__dismissIcon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 2;
-  width: 48px;
-  height: 48px;
-  margin: 0;
-  padding: 12px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
   color: var(--icon_tertiary);
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-}
-
-.Banner__dismissIcon:active {
-  opacity: .4;
 }
 
 .Banner__actions {
