@@ -101,7 +101,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
   } : {};
 
   return (
-    <div
+    <section
       {...restProps}
       vkuiClass={classNames(
         getClassName('Banner', platform),
@@ -148,7 +148,7 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
         </div>
         }
       </InnerComponent>
-    </div>
+    </section>
   );
 };
 
