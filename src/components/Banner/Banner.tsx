@@ -114,9 +114,9 @@ const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
     >
       <InnerComponent vkuiClass="Banner__in" {...innerProps}>
         {mode === 'image' && background &&
-        <div vkuiClass="Banner__bg">
-          {background}
-        </div>
+          <div aria-hidden="true" vkuiClass="Banner__bg">
+            {background}
+          </div>
         }
 
         {before && <div vkuiClass="Banner__before">{before}</div>}
