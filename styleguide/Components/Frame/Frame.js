@@ -108,5 +108,5 @@ export const Frame = ({ children, width, height, scheme }) => {
 Frame.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  scheme: PropTypes.oneOf(Object.keys(Scheme)).isRequired,
+  scheme: PropTypes.oneOf(Object.values(Scheme)).isRequired,
 }

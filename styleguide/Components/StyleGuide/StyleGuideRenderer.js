@@ -11,7 +11,7 @@ import {
   SplitLayout,
   withAdaptivity,
   SplitCol,
-  ConfigProvider
+  ConfigProvider, SizeType,
 } from '@vkui';
 import './StyleGuideRenderer.css';
 import { StyleGuideHeader } from './StyleGuideHeader';
@@ -105,7 +105,7 @@ StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, { sizeX: true });
 
 const StyleGuideWrapper = (props) => {
   return (
-      <AdaptivityProvider>
+      <AdaptivityProvider sizeX={SizeType.REGULAR} sizeY={SizeType.COMPACT}>
         <AppRoot noLegacyClasses>
           <StyleGuideRenderer {...props} />
         </AppRoot>
