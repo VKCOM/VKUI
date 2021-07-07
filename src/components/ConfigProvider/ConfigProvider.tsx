@@ -17,6 +17,11 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
+  /**
+   * @ignore
+   * Свойство для документации, чтобы менять scheme у ноды с примером, а не у body
+   */
+  schemeTarget?: HTMLElement;
 }
 
 function mapOldScheme(scheme: AppearanceScheme): AppearanceScheme {
@@ -30,13 +35,13 @@ function mapOldScheme(scheme: AppearanceScheme): AppearanceScheme {
   }
 }
 
-const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
+const ConfigProvider: FC<ConfigProviderProps> = ({ children, schemeTarget, ...config }) => {
   const scheme = config.platform === VKCOM ? Scheme.VKCOM : mapOldScheme(config.scheme);
 
   const { document } = useDOM();
   const setScheme = () => {
     if (scheme !== 'inherit') {
-      document.body.setAttribute('scheme', scheme);
+      (schemeTarget || document.body).setAttribute('scheme', scheme);
     }
   };
 
@@ -47,7 +52,7 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
   }
   useIsomorphicLayoutEffect(() => {
     setScheme();
-    return scheme === 'inherit' ? noop : () => document.body.removeAttribute('scheme');
+    return scheme === 'inherit' ? noop : () => (schemeTarget || document.body).removeAttribute('scheme');
   }, [scheme]);
 
   const configContext = useObjectMemo(config);

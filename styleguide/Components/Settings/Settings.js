@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { PlatformSelect } from '../PlatformSelect';
 import { SchemeSelect } from '../SchemeSelect';
 import { WebviewTypeSelect } from '../WebviewTypeSelect';
@@ -10,7 +10,7 @@ import './Settings.css';
 import { Platform } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 
-export const Settings = () => {
+export const Settings = ({ layout }) => {
   return (
     <StyleGuideContext.Consumer>
       {(context) => {
@@ -30,24 +30,28 @@ export const Settings = () => {
                 value={context.scheme}
                 disabled={context.platform === Platform.VKCOM}
               />
-              <WebviewTypeSelect
-                onChange={(webviewType) => context.setContext({ webviewType })}
-                value={context.webviewType}
-              />
-              <HasMouseCheckbox
-                onChange={(hasMouse) => context.setContext({ hasMouse })}
-                value={context.hasMouse}
-                disabled={context.platform === Platform.VKCOM}
-              />
-              <ViewHeightSelect
-                onChange={(height) => context.setContext({ height })}
-                value={context.height}
-              />
-              <ViewWidthSelect
-                onChange={(width) => context.setContext({ width })}
-                value={context.width}
-                disabled={context.platform === Platform.VKCOM}
-              />
+              {layout &&
+                <Fragment>
+                  <WebviewTypeSelect
+                    onChange={(webviewType) => context.setContext({ webviewType })}
+                    value={context.webviewType}
+                  />
+                  <ViewHeightSelect
+                    onChange={(height) => context.setContext({ height })}
+                    value={context.height}
+                  />
+                  <ViewWidthSelect
+                    onChange={(width) => context.setContext({ width })}
+                    value={context.width}
+                    disabled={context.platform === Platform.VKCOM}
+                  />
+                  <HasMouseCheckbox
+                    onChange={(hasMouse) => context.setContext({ hasMouse })}
+                    value={context.hasMouse}
+                    disabled={context.platform === Platform.VKCOM}
+                  />
+                </Fragment>
+              }
             </div>
           </div>
         );

@@ -1,16 +1,16 @@
 .Preview {
-  display: flex;
-  align-items: flex-start;
   position: relative;
   border-radius: 14px;
+  background: var(--background_content);
+}
+
+.Preview--layout {
+  display: flex;
+  align-items: flex-start;
 }
 
 .Preview--vkcom {
   border-radius: 8px;
-}
-
-.Preview--dark {
-  color-scheme: dark;
 }
 
 .Preview__shadow {
@@ -32,14 +32,9 @@
   border-radius: inherit;
 }
 
-.Preview__frame {
-  border: none;
-  display: block;
-}
-
 /*
  FixedLayout from Preview takes width of documentation content SplitCol, there is no other way to override it.
  */
-.Preview__header .vkuiFixedLayout {
+.Layout__header .vkuiFixedLayout {
   width: 100% !important;
 }

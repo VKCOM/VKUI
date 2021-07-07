@@ -13,7 +13,8 @@ class PlaygroundRenderer extends React.Component {
       exampleIndex,
     } = this.props;
     const {
-      autoLayout,
+      layout = true, // Нужны ли примеру обвесы в виде SplitLayout, SplitCol, etc
+      iframe = true, // Нужно ли рендерить пример в айфреме
       integration,
       containerStyle,
       config,
@@ -24,9 +25,9 @@ class PlaygroundRenderer extends React.Component {
     return (
       <div className="Playground">
         <SectionSubheading href={`#/${name}?id=example`}>Пример реализации</SectionSubheading>
-        <Settings />
+        <Settings layout={layout} />
         <div className="Playground__preview" {...wrapperProps} data-preview={name}>
-          { cloneElement(preview, { ...preview.props, autoLayout, containerStyle, integration, config, exampleId }) }
+          { cloneElement(preview, { ...preview.props, layout, iframe, containerStyle, integration, config, exampleId }) }
         </div>
         <SectionSubheading href={`#/${name}?id=code`}>Редактируемый код</SectionSubheading>
         <div className="Playground__code">
