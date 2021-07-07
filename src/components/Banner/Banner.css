@@ -1,11 +1,15 @@
 .Banner {
   color: var(--text_primary);
   margin: 12px 0;
+  padding: 0 16px;
 }
 
 .Banner__in {
   display: flex;
   position: relative;
+  padding: 12px;
+  background-color: var(--content_tint_background);
+  border-radius: 8px;
   overflow: hidden;
 }
 
@@ -25,7 +29,7 @@
 }
 
 .Banner__before {
-  margin-right: 12px;
+  margin-right: 8px;
 }
 
 .Banner__content {
@@ -44,11 +48,10 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
   z-index: 1;
 }
 
+.Banner__bg,
 .Banner__bg > * {
   width: 100%;
   height: 100%;
@@ -80,61 +83,24 @@
   align-items: center;
   justify-content: center;
   color: var(--icon_secondary);
-  z-index: 2;
+  z-index: 3;
 }
 
 .Banner__actions {
   margin-bottom: -6px;
 }
 
-/**
- * Size "s"
- */
-
-.Banner--sz-s .Banner__subheader:not(:first-child),
-.Banner--sz-s .Banner__text:not(:first-child) {
+.Banner__subheader:not(:first-child),
+.Banner__text:not(:first-child) {
   margin-top: 2px;
-}
-
-/**
- * Size "m"
- */
-
-.Banner--sz-m .Banner__subheader:not(:first-child),
-.Banner--sz-m .Banner__text:not(:first-child) {
-  margin-top: 4px;
 }
 
 /**
  * Mode "tint"
  */
 
-.Banner--md-tint .Banner__in {
-  background-color: var(--content_tint_background);
-}
-
-.Banner--md-tint .Banner__in {
-  padding: 12px;
-}
-
-/**
- * Mode "tint" and size "s"
- */
-
-.Banner--md-tint.Banner--sz-s .Banner__before {
-  margin-right: 8px;
-}
-
-.Banner--md-tint.Banner--sz-s .Banner__content {
+.Banner--md-tint .Banner__content {
   padding-left: 4px;
-}
-
-/**
- * Mode "tint" and size "m"
- */
-
-.Banner--md-tint.Banner--sz-m .Banner__in {
-  padding: 16px;
 }
 
 /**
@@ -152,10 +118,11 @@
   z-index: 2;
 }
 
-.Banner--md-image .Banner__dismiss {
-  color: var(--white);
+.Banner--md-image .Banner__before {
+  margin-right: 12px;
 }
 
+.Banner--md-image .Banner__dismiss,
 .Banner--inverted {
   color: var(--white);
 }
@@ -166,11 +133,15 @@
 }
 
 /**
- * Mode "tint" and size "m"
+ * Size "m"
  */
-
-.Banner--md-image.Banner--sz-m .Banner__in {
+.Banner--sz-m .Banner__in {
   padding: 16px;
+}
+
+.Banner--sz-m .Banner__subheader:not(:first-child),
+.Banner--sz-m .Banner__text:not(:first-child) {
+  margin-top: 4px;
 }
 
 /**
@@ -188,18 +159,4 @@
 .Banner--ios .Banner__dismiss,
 .Banner--ios.Banner--md-image .Banner__dismiss {
   color: var(--icon_tertiary);
-}
-
-/**
- * Android & VKCOM
- */
-
-.Banner--android,
-.Banner--vkcom {
-  padding: 0 16px;
-}
-
-.Banner--android .Banner__in,
-.Banner--vkcom .Banner__in {
-  border-radius: 8px;
 }
