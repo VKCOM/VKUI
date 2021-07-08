@@ -93,7 +93,6 @@
 /**
  * iOS
  */
-
 .Header--ios .Header__in {
   padding: 0 12px;
 }
@@ -121,7 +120,6 @@
 /**
  * Android
  */
-
 .Header--android .Header__in {
   padding: 0 16px;
 }
@@ -149,7 +147,6 @@
 /**
  * VKCOM
  */
-
 .Header--vkcom .Header__in {
   padding: 0 16px;
   align-items: center;
@@ -174,4 +171,15 @@
 
 .Header--vkcom .Header__main {
   color: var(--text_primary);
+}
+
+/**
+ * .Group
+ */
+.Group--plain:not(:first-of-type) .Group__inner > .Header:first-child {
+  margin-top: -16px;
+}
+
+.Group--card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child {
+  margin-top: -4px;
 }
