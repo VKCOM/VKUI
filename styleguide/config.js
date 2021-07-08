@@ -52,14 +52,22 @@ module.exports = {
     name: 'Basics',
     expand: true,
     sections: [{
-      title: 'Структура экранов',
-      name: 'Structure',
-      content: './pages/structure.md'
-    }, {
       title: 'Режимы подключения',
       name: 'Modes',
       content: './pages/modes.md'
-    }]
+    }, {
+      title: 'Адаптивность',
+      name: 'Adaptivity',
+      content: './pages/adaptivity.md'
+    }, {
+      title: 'Платфомы и темы',
+      name: 'PlatformsAndThemes',
+      content: './pages/platforms_and_themes.md'
+    }, {
+      title: 'Структура экранов',
+      name: 'Structure',
+      content: './pages/structure.md'
+    }, ]
   }, {
       name: 'Компоненты',
       sectionDepth: 2,
@@ -68,7 +76,8 @@ module.exports = {
       sections: [{
         name: 'Layout',
         components: [
-          '../src/components/AppRoot/AppRoot.tsx',
+          '../src/components/SplitLayout/SplitLayout.tsx',
+          '../src/components/SplitCol/SplitCol.tsx',
           '../src/components/Root/Root.tsx',
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.tsx',
@@ -104,13 +113,6 @@ module.exports = {
           '../src/components/ModalPageHeader/ModalPageHeader.tsx',
           '../src/components/ModalCard/ModalCard.tsx',
           '../src/components/ModalDismissButton/ModalDismissButton.tsx'
-        ]
-      }, {
-        name: 'Adaptivity',
-        components: () => [
-          '../src/components/AdaptivityProvider/AdaptivityProvider.tsx',
-          '../src/components/SplitLayout/SplitLayout.tsx',
-          '../src/components/SplitCol/SplitCol.tsx',
         ]
       }, {
         name: 'Blocks',
@@ -198,6 +200,8 @@ module.exports = {
       }, {
         name: 'Service',
         components: () => [
+          '../src/components/AppRoot/AppRoot.tsx',
+          '../src/components/AdaptivityProvider/AdaptivityProvider.tsx',
           '../src/components/ConfigProvider/ConfigProvider.tsx',
           '../src/components/Touch/Touch.tsx',
         ]
@@ -222,10 +226,6 @@ module.exports = {
         title: 'Иконки',
         name: 'Icons',
         content: './pages/icons.md'
-      }, {
-        title: 'Темы',
-        name: 'Themes',
-        content: './pages/themes.md'
       }, {
         title: 'Утилиты',
         name: 'Utils',

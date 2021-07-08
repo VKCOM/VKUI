@@ -13,3 +13,7 @@ ol.List li::before {
 .List li:not(:last-child) {
   margin-bottom: 8px;
 }
+
+.List li > p {
+  display: inline;
+}
