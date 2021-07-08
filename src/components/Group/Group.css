@@ -49,14 +49,12 @@
 }
 
 .Group__description {
+  display: block;
+  padding: 4px 16px 16px;
   color: var(--text_secondary);
 }
 
-.Group .Group > .Group__inner {
-  padding-left: 0;
-  padding-right: 0;
-}
-
+.Group .Group > .Group__inner,
 .Group .Group > .Group__separator {
   padding-left: 0;
   padding-right: 0;
@@ -70,21 +68,16 @@
   padding-bottom: 0;
 }
 
-/* iOS */
-
+/**
+ * iOS
+ */
 .Group--ios .Group__description {
   padding: 4px 12px 16px;
 }
 
-/* Android & vkcom */
-
-.Group--android .Group__description,
-.Group--vkcom .Group__description {
-  padding: 4px 16px 16px;
-}
-
-/* vkcom */
-
+/**
+ * VKCOM
+ */
 .PanelHeader--vkcom ~ .Group--card:first-of-type,
 .PanelHeader--vkcom + * .Group--card:first-of-type {
   position: relative;
