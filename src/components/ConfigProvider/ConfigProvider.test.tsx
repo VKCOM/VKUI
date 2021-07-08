@@ -47,6 +47,10 @@ describe('ConfigProvider', () => {
         render(<ConfigProvider scheme="inherit" />);
         expect(document.body).not.toHaveAttribute('scheme');
       });
+      it('does not set body[scheme] to inherit when platform=VKCOM', () => {
+        render(<ConfigProvider scheme="inherit" platform={VKCOM} />);
+        expect(document.body).not.toHaveAttribute('scheme');
+      });
       it('does not remove body[scheme] on unmount when scheme="inherit"', () => {
         document.body.setAttribute('scheme', 'extern');
         render(<ConfigProvider scheme="inherit" />).unmount();

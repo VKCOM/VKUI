@@ -151,7 +151,7 @@ async function checkFailedScreenTests({ testResultsJsonPath }) {
   // ignore failed screnshots
   if (numFailedTests > snapshot.unmatched) {
     testResults
-      .filter(suite => suite.status !== 'failed')
+      .filter(suite => suite.status === 'failed')
       .forEach(failed => fail(failed.message));
   }
 }

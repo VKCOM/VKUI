@@ -27,7 +27,6 @@
 }
 
 .ChipsInput .FormField__after {
-  margin-right: -14px;
   z-index: 3;
 }
 
@@ -74,14 +73,9 @@
 /**
  * sizeY COMPACT
  */
-
 .FormField--sizeY-compact .FormField__after {
   min-width: 36px;
   height: 36px;
-}
-
-.FormField--sizeY-compact.ChipsInput .FormField__after {
-  margin-right: -12px;
 }
 
 /**
