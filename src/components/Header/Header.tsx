@@ -93,7 +93,7 @@ const Header: FC<HeaderProps> = ({
             <span vkuiClass={classNames('Header__content-base', {
               'Header__content-base--multiline': multiline,
             })}>{children}</span>
-            {hasReactNode(indicator) && <Caption vkuiClass="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
+            {hasReactNode(indicator) && <Caption Component="span" vkuiClass="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
           </HeaderContent>
           {hasReactNode(subtitle) && <Caption Component="span" vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
         </div>
