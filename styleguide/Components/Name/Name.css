@@ -1,0 +1,7 @@
+.Name {
+  color: #4bb34b;
+}
+
+.Name--deprecated {
+  text-decoration: line-through;
+}

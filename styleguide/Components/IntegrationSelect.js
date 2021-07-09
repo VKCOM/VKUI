@@ -1,14 +1,11 @@
-import React, { Fragment } from 'react';
-
-const schemeOptions = ["full", "embedded"].map((schemeId) => (
-  <option value={schemeId} key={schemeId}>{schemeId}</option>
-))
+import React from 'react';
+import { Setting } from './Setting/Setting';
 
 export const IntegrationSelect = ({ onChange, value }) => (
-  <Fragment>
-    integration:&nbsp;
-    <select onChange={onChange} value={value}>
-      {schemeOptions}
-    </select>
-  </Fragment>
+  <Setting
+    onChange={onChange}
+    value={value}
+    label="Тип интеграции"
+    options={['full', 'embedded']}
+  />
 )

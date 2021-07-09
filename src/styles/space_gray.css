@@ -2,7 +2,7 @@
 /*
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
-body[scheme="space_gray"] {
+body[scheme="space_gray"], [scheme="space_gray"] {
   --accent: #71aaeb;
   --action_sheet_action_foreground: #ffffff;
   --action_sheet_separator: rgba(255, 255, 255, 0.12);

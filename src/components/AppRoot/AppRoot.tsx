@@ -26,10 +26,10 @@ export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, Adaptivity
 }
 
 const warn = warnOnce('AppRoot');
-const AppRoot: FC<AppRootProps> = ({
+export const AppRoot: FC<AppRootProps> = withAdaptivity(({
   children, mode: _mode, embedded: _embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global',
   ...props
-}) => {
+}: AppRootProps) => {
   // normalize mode
   const mode = _mode || (_embedded ? 'embedded' : 'full');
   const isKeyboardInputActive = useKeyboardInputTracker();
@@ -122,9 +122,9 @@ const AppRoot: FC<AppRootProps> = ({
       {content}
     </div>
   );
-};
-
-export default withAdaptivity(AppRoot, {
+}, {
   sizeX: true,
   hasMouse: true,
 });
+
+export default AppRoot;

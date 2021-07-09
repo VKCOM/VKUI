@@ -4,6 +4,10 @@
 
 Поле ввода принимает все валидные для `<input>` значения.
 
+>**Важно**
+>
+>Это нестабильный компонент. Его API может меняться в рамках одной мажорной версии. [Подробнее про нестабильный компоненты](#/Unstable).
+
 ```jsx
 const colors = [{value: 'red', label: 'Красный'}, {value: 'blue', label: 'Синий'}, {value: 'navarin', label: 'Наваринского пламени с дымом',}];
 const groups = [{ value: 'download', label: 'Скачать все и вся!', icon: <Icon12Download /> }, { value: '1', label: 'Arctic Monkeys', src: getAvatarUrl('audio_arctic_monkeys')}, {value: '2', label: 'Звери', src: getAvatarUrl('audio_leto_zveri')}, {value: '4', label: 'FACE', src: getAvatarUrl('audio_face')}, {value: '3', label: 'Depeche Mode', src: getAvatarUrl('audio_depeche_mode')}, {value: '5', label: 'Linkin Park', src: getAvatarUrl('audio_linkin_park')}]

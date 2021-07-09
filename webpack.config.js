@@ -22,7 +22,7 @@ const config = {
         loader: 'babel-loader',
       },
       {
-        test: /\.(jpeg|jpg|png|woff|svg|otf)$/,
+        test: /\.(jpeg|jpg|png|woff|woff2|svg|otf)$/,
         use: {
           loader: 'file-loader',
           options: {
@@ -34,6 +34,7 @@ const config = {
       },
       {
         test: /\.css$/,
+        exclude: /styleguide/,
         use: [{
           loader: 'style-loader',
           options: {
@@ -45,10 +46,28 @@ const config = {
           },
         }, 'css-loader', 'postcss-loader']
       },
+      {
+        test: /\.css$/,
+        include: /styleguide/,
+        use: [{
+          loader: 'style-loader',
+          options: {
+            // singleton is faster, but does not support sourcemaps
+            injectType: isProduction ? 'singletonStyleTag' : 'styleTag',
+            attributes: {
+              class: 'vkui-style'
+            },
+          },
+        }, 'css-loader']
+      },
     ],
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      '@rsg-components': path.resolve(__dirname, 'node_modules/react-styleguidist/lib/client/rsg-components'),
+      '@vkui': path.resolve(__dirname, 'src'),
+    }
   },
   devtool: 'source-map',
   stats: {

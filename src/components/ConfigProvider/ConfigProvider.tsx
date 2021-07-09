@@ -17,6 +17,11 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
+  /**
+   * @ignore
+   * Свойство для документации, чтобы менять scheme у ноды с примером, а не у body
+   */
+  schemeTarget?: HTMLElement;
 }
 
 function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): AppearanceScheme {
@@ -36,13 +41,13 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Appe
   }
 }
 
-const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
+const ConfigProvider: FC<ConfigProviderProps> = ({ children, schemeTarget, ...config }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
 
   const { document } = useDOM();
   const setScheme = () => {
     if (scheme !== 'inherit') {
-      document.body.setAttribute('scheme', scheme);
+      (schemeTarget || document.body).setAttribute('scheme', scheme);
     }
   };
 
@@ -53,7 +58,7 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
   }
   useIsomorphicLayoutEffect(() => {
     setScheme();
-    return scheme === 'inherit' ? noop : () => document.body.removeAttribute('scheme');
+    return scheme === 'inherit' ? noop : () => (schemeTarget || document.body).removeAttribute('scheme');
   }, [scheme]);
 
   const configContext = useObjectMemo(config);

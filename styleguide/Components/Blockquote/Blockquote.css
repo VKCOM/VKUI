@@ -1,0 +1,14 @@
+.Blockquote {
+  padding: 12px 16px;
+  background: var(--content_warning_background);
+  border-radius: 8px;
+  margin: 0;
+}
+
+.Blockquote:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.Blockquote:not(:first-child) {
+  margin-top: 16px;
+}

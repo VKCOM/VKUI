@@ -1,0 +1,23 @@
+.SectionSubheading {
+  margin-top: 36px;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.SectionSubheading__link {
+  position: absolute;
+  right: 100%;
+  padding-right: 6px;
+  top: 3px;
+  color: var(--icon_secondary);
+  opacity: 0;
+}
+
+.SectionSubheading:hover .SectionSubheading__link {
+  opacity: 1;
+}
+
+.SectionSubheading__anchor {
+  position: relative;
+  top: -66px;
+}

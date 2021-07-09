@@ -1,16 +1,17 @@
-import React, { Fragment } from 'react';
-import { Scheme } from '../../src/components/ConfigProvider/ConfigProviderContext';
-
-const schemeOptions = [Scheme.BRIGHT_LIGHT, Scheme.SPACE_GRAY].map((schemeId) => (
-  <option value={schemeId} key={schemeId}>{schemeId}</option>
-))
+import React from 'react';
+import { Scheme } from '@vkui';
+import { Setting } from './Setting/Setting';
 
 export const SchemeSelect = ({ onChange, value, ...restProps  }) => (
-  <Fragment>
-    scheme:&nbsp;
-    <select onChange={onChange} value={value} {...restProps}>
-      <option value={Scheme.BRIGHT_LIGHT} key={Scheme.BRIGHT_LIGHT}>{Scheme.BRIGHT_LIGHT}</option>
-      <option value={Scheme.SPACE_GRAY} key={Scheme.SPACE_GRAY}>{Scheme.SPACE_GRAY}</option>
-    </select>
-  </Fragment>
+  <Setting
+    {...restProps}
+    label="Тема"
+    options={[
+      { value: Scheme.BRIGHT_LIGHT, title: Scheme.BRIGHT_LIGHT },
+      { value: Scheme.SPACE_GRAY, title: Scheme.SPACE_GRAY }
+    ]}
+    onChange={onChange}
+    value={value}
+  >
+  </Setting>
 )

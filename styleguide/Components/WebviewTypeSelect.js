@@ -1,12 +1,18 @@
-import React, { Fragment } from 'react';
-import { WebviewType } from '../../src/components/ConfigProvider/ConfigProviderContext';
+import React  from 'react';
+import { WebviewType } from '@vkui';
+import { Setting } from './Setting/Setting';
 
 export const WebviewTypeSelect = ({ onChange, value }) => (
-  <Fragment>
-    webviewType:&nbsp;
-    <select onChange={onChange} value={value}>
-      <option value={WebviewType.VKAPPS}>{WebviewType.VKAPPS}</option>
-      <option value={WebviewType.INTERNAL}>{WebviewType.INTERNAL}</option>
-    </select>
-  </Fragment>
+  <Setting
+    label="Тип webview"
+    value={value}
+    onChange={onChange}
+    options={[{
+      title: WebviewType.VKAPPS,
+      value: WebviewType.VKAPPS
+    }, {
+      title: WebviewType.INTERNAL,
+      value: WebviewType.INTERNAL,
+    }]}
+  />
 )

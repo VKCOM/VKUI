@@ -213,7 +213,7 @@ export type { PanelHeaderEditProps } from './components/PanelHeaderEdit/PanelHea
 /**
  * Wrappers
  */
-export { default as AppRoot } from './components/AppRoot/AppRoot';
+export { AppRoot } from './components/AppRoot/AppRoot';
 export { default as AdaptivityProvider } from './components/AdaptivityProvider/AdaptivityProvider';
 export { default as ConfigProvider } from './components/ConfigProvider/ConfigProvider';
 export {

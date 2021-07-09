@@ -1,7 +1,4 @@
 const path = require('path');
-const webpackConfig = require('../webpack.config');
-const merge = require('webpack-merge');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { argv } = require('yargs');
 const { makeFsImporter } = require('react-docgen/dist/importer');
 const { findAllExportedComponentDefinitions } = require('react-docgen/dist/resolver');
@@ -10,9 +7,29 @@ module.exports = {
   title: 'VKUI styleguide',
   styleguideDir: path.join(__dirname, `../${argv.dist || 'docs'}`),
   styleguideComponents: {
-    PlaygroundRenderer: path.join(__dirname, './Components/PlaygroundRenderer'),
-    StyleGuideRenderer: path.join(__dirname, './Components/StyleGuideRenderer'),
-    PathlineRenderer: path.join(__dirname, './Components/PathlineRenderer')
+    PlaygroundRenderer: path.join(__dirname, './Components/Playground/PlaygroundRenderer'),
+    StyleGuide: path.join(__dirname, './Components/StyleGuide/StyleGuide'),
+    StyleGuideRenderer: path.join(__dirname, './Components/StyleGuide/StyleGuideRenderer'),
+    PathlineRenderer: path.join(__dirname, './Components/PathlineRenderer'),
+    HeadingRenderer: path.join(__dirname, './Components/Heading/HeadingRenderer'),
+    ReactComponent: path.join(__dirname, './Components/ReactComponent/ReactComponent'),
+    TableOfContents: path.join(__dirname, './Components/TableOfContents/TableOfContents'),
+    ParaRenderer: path.join(__dirname, './Components/Para/ParaRenderer'),
+    CodeRenderer: path.join(__dirname, './Components/Code/CodeRenderer'),
+    TextRenderer: path.join(__dirname, './Components/Text/TextRenderer'),
+    Section: path.join(__dirname, './Components/Section'),
+    SectionHeadingRenderer: path.join(__dirname, './Components/SectionHeading/SectionHeadingRenderer'),
+    'Markdown/Blockquote': path.join(__dirname, './Components/Blockquote'),
+    'Markdown/List': path.join(__dirname, './Components/List'),
+    'Markdown/MarkdownHeading': path.join(__dirname, './Components/MarkdownHeading'),
+    'Markdown/Pre': path.join(__dirname, './Components/Pre'),
+    TableRenderer: path.join(__dirname, './Components/Table/TableRenderer'),
+    LinkRenderer: path.join(__dirname, './Components/Link/LinkRenderer'),
+    NameRenderer: path.join(__dirname, './Components/Name/NameRenderer'),
+    TypeRenderer: path.join(__dirname, './Components/Type/TypeRenderer'),
+    'ComplexType/ComplexTypeRenderder': path.join(__dirname, './Components/ComplexType/ComplexTypeRenderder'),
+    Preview: path.join(__dirname, './Components/Preview'),
+    Editor: path.join(__dirname, './Components/Editor'),
   },
   propsParser: (filePath, source) => {
     return require('react-docgen').parse(source, findAllExportedComponentDefinitions, null, {
@@ -20,40 +37,47 @@ module.exports = {
       importer: makeFsImporter()
     })
   },
+  exampleMode: 'expand',
   assetsDir:  path.join(__dirname, `assets`),
-  sections: [
-    {
-      content: './pages/intro.md'
+  sections: [{
+    title: 'О VKUI',
+    name: 'About',
+    content: './pages/intro.md',
+  }, {
+    title: 'Быстрый старт',
+    name: 'QuickStart',
+    content: './pages/quick_start.md',
+  }, {
+    title: 'Основа',
+    name: 'Basics',
+    expand: true,
+    sections: [{
+      title: 'Режимы подключения',
+      name: 'Modes',
+      content: './pages/modes.md'
     }, {
-      name: 'Начало работы',
-      content: './pages/getting_started.md',
-      sections: [
-        {
-          name: 'Установка',
-          content: './pages/installation.md'
-        },
-        {
-          name: 'Подготовка HTML',
-          content: './pages/html.md'
-        }, {
-          name: 'Hello World',
-          content: './pages/hello_world.md'
-        }, {
-          name: 'Концепция',
-          content: './pages/concept.md',
-        }, {
-          name: 'Структура экранов',
-          content: './pages/structure.md'
-        }, {
-          name: 'Режимы подключения',
-          content: './pages/modes.md'
-        },
-      ]
+      title: 'Адаптивность',
+      name: 'Adaptivity',
+      content: './pages/adaptivity.md'
     }, {
-      name: 'Components',
+      title: 'Платфомы и темы',
+      name: 'PlatformsAndThemes',
+      content: './pages/platforms_and_themes.md'
+    }, {
+      title: 'Структура экранов',
+      name: 'Structure',
+      content: './pages/structure.md'
+    }, ]
+  }, {
+      name: 'Компоненты',
+      sectionDepth: 2,
+      expand: true,
+      search: true,
       sections: [{
         name: 'Layout',
-        components: () => [
+        components: [
+          '../src/components/SplitLayout/SplitLayout.tsx',
+          '../src/components/SplitCol/SplitCol.tsx',
           '../src/components/Root/Root.tsx',
           '../src/components/View/View.tsx',
           '../src/components/Panel/Panel.tsx',
@@ -89,13 +113,6 @@ module.exports = {
           '../src/components/ModalPageHeader/ModalPageHeader.tsx',
           '../src/components/ModalCard/ModalCard.tsx',
           '../src/components/ModalDismissButton/ModalDismissButton.tsx'
-        ]
-      }, {
-        name: 'Adaptivity',
-        components: () => [
-          '../src/components/AdaptivityProvider/AdaptivityProvider.tsx',
-          '../src/components/SplitLayout/SplitLayout.tsx',
-          '../src/components/SplitCol/SplitCol.tsx',
         ]
       }, {
         name: 'Blocks',
@@ -161,6 +178,7 @@ module.exports = {
           '../src/components/SelectMimicry/SelectMimicry.tsx',
           '../src/components/CustomSelect/CustomSelect.tsx',
           '../src/components/CustomSelectOption/CustomSelectOption.tsx',
+          '../src/components/ChipsSelect/ChipsSelect.tsx',
           '../src/components/Chip/Chip.tsx',
           '../src/components/Textarea/Textarea.tsx',
           '../src/components/File/File.tsx',
@@ -182,39 +200,38 @@ module.exports = {
       }, {
         name: 'Service',
         components: () => [
+          '../src/components/AppRoot/AppRoot.tsx',
+          '../src/components/AdaptivityProvider/AdaptivityProvider.tsx',
           '../src/components/ConfigProvider/ConfigProvider.tsx',
           '../src/components/Touch/Touch.tsx',
         ]
-      }, {
-        name: 'Unstable',
-        content: './pages/unstable.md',
-        components: () => [
-          '../src/components/ChipsSelect/ChipsSelect.tsx',
-        ]
       }]
     }, {
-      name: 'Other',
+      name: 'Прочее',
+      expand: true,
+      sectionDepth: 1,
       sections: [{
+        name: 'Unstable',
+        content: './pages/unstable.md'
+      }, {
         name: 'Helpers',
         content: './pages/helpers.md'
       },
       {
-        name: 'Server Side Rendering',
+        title: 'Серверный рендеринг',
+        name: 'SSR',
         content: './pages/ssr.md'
       },
       {
+        title: 'Иконки',
         name: 'Icons',
         content: './pages/icons.md'
       }, {
-        name: 'Colors',
-        content: './pages/colors.md'
-      }, {
-        name: 'Themes',
-        content: './pages/themes.md'
-      }, {
+        title: 'Утилиты',
         name: 'Utils',
         content: './pages/utils.md'
       }, {
+        title: 'Дизайн',
         name: 'Design',
         content: './pages/design.md'
       }]
@@ -224,23 +241,5 @@ module.exports = {
     path.resolve(__dirname, './setup.js'),
     path.resolve(__dirname, './setup.css')
   ],
-  dangerouslyUpdateWebpackConfig(webpackConfig) { // запрещаем вычищать .git
-    webpackConfig.plugins = webpackConfig.plugins.reduce((acc, item) => {
-      if (item instanceof CleanWebpackPlugin) {
-        item.cleanOnceBeforeBuildPatterns = ['**/*', '!.git'];
-      }
-      acc.push(item);
-      return acc;
-    }, [])
-    return webpackConfig;
-  },
-  webpackConfig: merge(webpackConfig, {
-    resolve: {
-      alias: {
-        'rsg-components/Preview': path.join(__dirname, './Components/Preview'),
-        'react-dom$': 'react-dom/profiling',
-        'scheduler/tracing': 'scheduler/tracing-profiling',
-      }
-    }
-  })
+  webpackConfig: require('./webpack.config')
 };

@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
+import { Setting } from './Setting/Setting';
+import { Switch } from '@vkui';
 
 export const HasMouseCheckbox = ({ onChange, value, ...restProps }) => (
-  <Fragment>
-    <label>
-      Has Mouse:&nbsp;
-      <input type="checkbox" checked={value} onChange={onChange} {...restProps} />
-    </label>
-  </Fragment>
+  <Setting {...restProps} label="hasMouse">
+    <Switch checked={value} onChange={(e) => onChange(e.target.checked)} disabled={restProps.disabled} />
+  </Setting>
 )
