@@ -103,55 +103,15 @@ export interface TooltipProps {
   onClose?: () => void;
 }
 
-function getTranslateFromPlacement(placement: Placement) {
-  const basePlacement = placement?.split('-')[0];
-
-  let deg = 0;
-  let translate: [number, number] = [0, 0];
-  switch (basePlacement) {
-    case 'right':
-      deg = 270;
-      translate[1] = -14;
-      break;
-    case 'left':
-      deg = 90;
-      translate[1] = -14;
-      break;
-    case 'bottom':
-      deg = 0;
-      translate[1] = -6;
-      break;
-    case 'top':
-      deg = 180;
-      translate[1] = -6;
-      break;
-  }
-
-  return {
-    deg,
-    translate,
-  };
-}
-
-function getPlacement(alignX?: TooltipProps['alignX'], alignY?: TooltipProps['alignY']): Placement {
+function getPlacement(alignX: TooltipProps['alignX'], alignY: TooltipProps['alignY']): Placement {
   let placementX = '';
-  let placementY = '';
-
-  if (alignY === 'top') {
-    placementY = 'top';
-  } else if (alignY === 'bottom' || !alignY) {
-    placementY = 'bottom';
+  if (alignX === 'left') {
+    placementX = 'start';
+  } else if (alignX === 'right') {
+    placementX = 'end';
   }
 
-  if (alignX === 'center') {
-    placementX = '';
-  } else if (alignX === 'left' || !alignX) {
-    placementX = '-start';
-  } else if (alignX === 'right') {
-    placementX = '-end';
-  };
-
-  return `${placementY}${placementX}` as Placement;
+  return [alignY || 'bottom', placementX].filter((p) => !!p).join('-') as Placement;
 }
 
 const autoPlacementsX: Placement[] = ['right', 'left'];
@@ -198,7 +158,7 @@ const Tooltip: FC<TooltipProps> = ({
     availablePlacements = [...availablePlacements, ...autoPlacementsX];
   }
 
-  const { styles, attributes, state } = usePopper(target, tooltipRef, {
+  const { styles, attributes } = usePopper(target, tooltipRef, {
     strategy,
     placement,
     modifiers: [
@@ -226,7 +186,7 @@ const Tooltip: FC<TooltipProps> = ({
           allowedAutoPlacements: [placement, ...availablePlacements],
         },
       },
-    ].filter((v) => !!v),
+    ],
   });
 
   const { document } = useDOM();
@@ -240,17 +200,9 @@ const Tooltip: FC<TooltipProps> = ({
     [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
   }) : children;
 
-  const arrowTransform = getTranslateFromPlacement(state?.placement);
-
   if (!alignX || !alignY) {
     cornerOffset = 0;
   }
-
-  const arrowStyle: CSSProperties = {
-    ...styles.arrow,
-    transform:
-      `${styles.arrow?.transform || ''} rotate(${arrowTransform?.deg}deg) translate(${arrowTransform?.translate[0] + cornerOffset}px, ${arrowTransform?.translate[1]}px)`,
-  };
 
   return (
     <Fragment>
@@ -260,7 +212,7 @@ const Tooltip: FC<TooltipProps> = ({
           {...restProps}
           ref={(el) => setTooltipRef(el)}
           arrowRef={(el) => setTooltipArrowRef(el)}
-          style={{ arrow: arrowStyle, container: styles.popper }}
+          style={{ arrow: styles.arrow, container: styles.popper }}
           attributes={{ arrow: attributes.arrow, container: attributes.popper }}
         />,
         tooltipContainer,
