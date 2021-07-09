@@ -1,4 +1,4 @@
-import { FunctionComponent, ImgHTMLAttributes } from 'react';
+import { FC, ImgHTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -9,12 +9,11 @@ export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<
    * Рекомендуемый сет значений: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24
    */
   size?: number;
-  src?: string;
   mode?: 'default' | 'image' | 'app';
   shadow?: boolean;
 }
 
-const Avatar: FunctionComponent<AvatarProps> = ({
+const Avatar: FC<AvatarProps> = ({
   src,
   size,
   shadow,
