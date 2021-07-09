@@ -29,6 +29,11 @@ export const StyleGuideHeader = ({ scheme, setScheme }) => {
                 Github
               </Text>
             </Link>
+            <Link target="_blank" className="StyleGuideHeader__link" href="https://github.com/VKCOM/VKUI/releases">
+              <Text>
+                Changelog
+              </Text>
+            </Link>
           </div>
           <div className="StyleGuideHeader__aside">
             <IconButton className="StyleGuideHeader__scheme" onClick={() => {
