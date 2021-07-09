@@ -48,7 +48,9 @@ const Avatar: FunctionComponent<AvatarProps> = ({
 
   return (
     <div
-      vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`)}
+      vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`, {
+        'Avatar--shadow': shadow,
+      })}
       className={className}
       ref={getRootRef}
     >
@@ -59,7 +61,6 @@ const Avatar: FunctionComponent<AvatarProps> = ({
           src={src}
         />
         {children && <div vkuiClass="Avatar__children">{children}</div>}
-        {shadow && <span vkuiClass="Avatar__shadow" />}
       </div>
     </div>
   );
