@@ -111,11 +111,11 @@ function getTranslateFromPlacement(placement: Placement) {
   switch (basePlacement) {
     case 'right':
       deg = 270;
-      translate[1] = -12;
+      translate[1] = -14;
       break;
     case 'left':
       deg = 90;
-      translate[1] = -12;
+      translate[1] = -14;
       break;
     case 'bottom':
       deg = 0;
@@ -155,7 +155,7 @@ function getPlacement(alignX?: TooltipProps['alignX'], alignY?: TooltipProps['al
 }
 
 const autoPlacementsX: Placement[] = ['right', 'left'];
-const autoPlacementsY: Placement[] = ['bottom', 'top'];
+const autoPlacementsY: Placement[] = ['bottom-start', 'bottom', 'bottom-end', 'top-start', 'top', 'top-end'];
 
 const Tooltip: FC<TooltipProps> = ({
   children, isShown, offsetX = 0, offsetY = 15,
@@ -179,18 +179,19 @@ const Tooltip: FC<TooltipProps> = ({
 
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
-  const portalTarget = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
+  const tooltipContainer = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
+  const fixedTooltipContainer = useMemo(() => target?.closest(`[${tooltipContainerAttr}=fixed]`) as HTMLDivElement, [target]);
   const strategy = useMemo(() => target?.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
 
-  if (IS_DEV && !portalTarget) {
+  if (IS_DEV && target && !tooltipContainer) {
     throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
   }
 
   const placement = getPlacement(alignX, alignY);
 
-  let availablePlacements: Placement[] = [placement];
+  let availablePlacements: Placement[] = [];
   if (!alignY) {
     availablePlacements = [...availablePlacements, ...autoPlacementsY];
   }
@@ -200,6 +201,7 @@ const Tooltip: FC<TooltipProps> = ({
 
   const { styles, attributes, state, forceUpdate } = usePopper(target, tooltipRef, {
     strategy: strategy,
+    placement: placement,
     modifiers: [
       {
         name: 'offset', options: {
@@ -215,20 +217,21 @@ const Tooltip: FC<TooltipProps> = ({
           padding: 14,
         },
       },
-      {
+      !fixedTooltipContainer && {
         name: 'preventOverflow', options: {
-          boundary: portalTarget,
+          boundary: tooltipContainer,
+          rootBoundary: 'document',
         },
       },
       {
         name: 'flip',
         options: {
+          boundary: !fixedTooltipContainer ? tooltipContainer : null,
           fallbackPlacements: availablePlacements,
-          allowedAutoPlacements: availablePlacements,
+          allowedAutoPlacements: [placement, ...availablePlacements],
         },
       },
-    ],
-    placement: 'auto',
+    ].filter((v) => !!v),
   });
 
   const { document } = useDOM();
@@ -275,7 +278,9 @@ const Tooltip: FC<TooltipProps> = ({
           arrowRef={(el) => setTooltipArrowRef(el)}
           style={{ arrow: arrowStyle, container: styles.popper }}
           attributes={{ arrow: attributes.arrow, container: attributes.popper }}
-        />, portalTarget)}
+        />,
+        tooltipContainer,
+      )}
     </Fragment>
   );
 };
