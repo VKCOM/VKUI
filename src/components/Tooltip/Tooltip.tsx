@@ -7,10 +7,10 @@ import { usePopper } from 'react-popper';
 import { Placement } from '@popperjs/core';
 import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useDOM, canUseDOM } from '../../lib/dom';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import { hasReactNode } from '../../lib/utils';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
@@ -199,7 +199,7 @@ const Tooltip: FC<TooltipProps> = ({
     availablePlacements = [...availablePlacements, ...autoPlacementsX];
   }
 
-  const { styles, attributes, state, forceUpdate } = usePopper(target, tooltipRef, {
+  const { styles, attributes, state } = usePopper(target, tooltipRef, {
     strategy: strategy,
     placement: placement,
     modifiers: [
@@ -235,19 +235,8 @@ const Tooltip: FC<TooltipProps> = ({
   });
 
   const { document } = useDOM();
-
-  useIsomorphicLayoutEffect(() => {
-    if (!isShown || !canUseDOM) {
-      return undefined;
-    }
-
-    document.body.addEventListener('click', onClose, { passive: true });
-    forceUpdate?.();
-
-    return () => {
-      document.body.removeEventListener('click', onClose);
-    };
-  }, [isShown]);
+  useGlobalEventListener(document, 'click', isShown && onClose, { passive: true });
+  // NOTE: setting isShown to true used to trigger usePopper().forceUpdate()
 
   const childRef = isValidElement(children) &&
     (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
