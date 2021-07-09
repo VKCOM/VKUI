@@ -180,7 +180,6 @@ const Tooltip: FC<TooltipProps> = ({
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
   const tooltipContainer = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
-  const fixedTooltipContainer = useMemo(() => target?.closest(`[${tooltipContainerAttr}=fixed]`) as HTMLDivElement, [target]);
   const strategy = useMemo(() => target?.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
@@ -200,8 +199,8 @@ const Tooltip: FC<TooltipProps> = ({
   }
 
   const { styles, attributes, state } = usePopper(target, tooltipRef, {
-    strategy: strategy,
-    placement: placement,
+    strategy,
+    placement,
     modifiers: [
       {
         name: 'offset', options: {
@@ -217,16 +216,12 @@ const Tooltip: FC<TooltipProps> = ({
           padding: 14,
         },
       },
-      !fixedTooltipContainer && {
-        name: 'preventOverflow', options: {
-          boundary: tooltipContainer,
-          rootBoundary: 'document',
-        },
+      {
+        name: 'preventOverflow',
       },
       {
         name: 'flip',
         options: {
-          boundary: !fixedTooltipContainer ? tooltipContainer : null,
           fallbackPlacements: availablePlacements,
           allowedAutoPlacements: [placement, ...availablePlacements],
         },
