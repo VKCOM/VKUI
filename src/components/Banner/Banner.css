@@ -8,6 +8,7 @@
   position: relative;
   display: flex;
   padding: 12px;
+  padding-left: 16px;
   background-color: var(--content_tint_background);
   border-radius: 8px;
   overflow: hidden;
@@ -29,15 +30,19 @@
 }
 
 .Banner__before {
-  margin-right: 8px;
+  position: relative;
+  margin-right: 12px;
+  z-index: 2;
 }
 
 .Banner__content {
+  position: relative;
   flex: 1;
   display: flex;
   justify-content: center;
   flex-direction: column;
   min-width: 0;
+  z-index: 2;
 }
 
 .Banner__subheader {
@@ -96,28 +101,10 @@
 }
 
 /**
- * Mode "tint"
- */
-.Banner--md-tint .Banner__content {
-  padding-left: 4px;
-}
-
-/**
  * Mode "image"
  */
 .Banner--md-image .Banner__in {
-  padding: 12px 16px;
   background-color: var(--content_tint_background);
-}
-
-.Banner--md-image .Banner__before,
-.Banner--md-image .Banner__content {
-  position: relative;
-  z-index: 2;
-}
-
-.Banner--md-image .Banner__before {
-  margin-right: 12px;
 }
 
 .Banner--md-image .Banner__dismiss,
@@ -128,6 +115,13 @@
 .Banner--inverted .Banner__subheader {
   color: var(--white);
   opacity: .72;
+}
+
+/**
+ * Size "s"
+ */
+.Banner--sz-s .Banner__before {
+  margin-left: -4px;
 }
 
 /**
