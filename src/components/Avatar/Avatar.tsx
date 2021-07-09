@@ -26,12 +26,10 @@ const Avatar: FunctionComponent<AvatarProps> = ({
 }: AvatarProps) => {
   const Component = src ? 'img' : 'div';
   const platform = usePlatform();
-  let borderRadius;
+
+  let borderRadius: string | number = '50%';
 
   switch (mode) {
-    case 'default':
-      borderRadius = '50%';
-      break;
     case 'image':
       size < 64 && (borderRadius = 4);
       size >= 64 && size < 96 && (borderRadius = 6);
@@ -43,6 +41,8 @@ const Avatar: FunctionComponent<AvatarProps> = ({
       size >= 56 && size < 64 && (borderRadius = 12);
       size >= 64 && size < 84 && (borderRadius = 16);
       size >= 84 && (borderRadius = 18);
+      break;
+    default:
       break;
   }
 
