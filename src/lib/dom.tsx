@@ -1,6 +1,6 @@
 import { createContext, useContext, ComponentType, FC } from 'react';
-import { canUseDOM } from '@vkontakte/vkjs/lib/dom';
-export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs/lib/dom';
+import { canUseDOM } from '@vkontakte/vkjs';
+export { canUseDOM, canUseEventListeners, onDOMLoaded } from '@vkontakte/vkjs';
 
 export interface DOMContextInterface {
   /**
