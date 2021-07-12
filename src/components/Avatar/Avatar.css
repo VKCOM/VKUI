@@ -83,3 +83,48 @@
   padding-top: 6px;
   padding-bottom: 6px;
 }
+
+/**
+ * .SimpleCell
+ */
+.SimpleCell > .Avatar {
+  padding-right: 12px;
+}
+
+.SimpleCell > .Avatar--sz-28,
+.SimpleCell > .Avatar--sz-32 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.SimpleCell > .Avatar--sz-40 {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.SimpleCell > .Avatar--sz-48,
+.SimpleCell > .Avatar--sz-72 {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.SimpleCell--ios > .Avatar--sz-28,
+.SimpleCell--ios > .Avatar--sz-32 {
+  padding-left: 4px;
+}
+
+.SimpleCell--sizeY-compact > .Avatar--sz-28,
+.SimpleCell--sizeY-compact > .Avatar--sz-32 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.SimpleCell--sizeY-compact > .Avatar--sz-40 {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.SimpleCell--sizeY-compact > .Avatar--sz-48 {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
