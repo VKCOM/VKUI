@@ -7,10 +7,6 @@
   color: var(--icon_outline_secondary);
 }
 
-.PanelHeader .Spinner {
-  color: currentColor;
-}
-
 .Spinner__self {
   animation: vkui-rotator var(--duration) linear infinite;
   transform-origin: center;
@@ -18,4 +14,8 @@
 
 .Spinner__self svg {
   transform: scale(1);
+}
+
+.PanelHeader .Spinner {
+  color: currentColor;
 }
