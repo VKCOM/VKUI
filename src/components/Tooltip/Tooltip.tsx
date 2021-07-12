@@ -103,19 +103,16 @@ export interface TooltipProps {
   onClose?: () => void;
 }
 
-function getPlacement(alignX: TooltipProps['alignX'], alignY: TooltipProps['alignY']): Placement {
-  let placementX = '';
-  if (alignX === 'left') {
-    placementX = 'start';
-  } else if (alignX === 'right') {
-    placementX = 'end';
+function mapAlignX(x: TooltipProps['alignX']) {
+  switch (x) {
+    case 'left': return 'start';
+    case 'right': return 'end';
+    default: return '';
   }
-
-  return [alignY || 'bottom', placementX].filter((p) => !!p).join('-') as Placement;
+};
+function getPlacement(alignX: TooltipProps['alignX'], alignY: TooltipProps['alignY']): Placement {
+  return [alignY || 'bottom', mapAlignX(alignX || 'left')].filter((p) => !!p).join('-') as Placement;
 }
-
-const autoPlacementsX: Placement[] = ['right', 'left'];
-const autoPlacementsY: Placement[] = ['bottom-start', 'bottom', 'bottom-end', 'top-start', 'top', 'top-end'];
 
 const Tooltip: FC<TooltipProps> = ({
   children, isShown, offsetX = 0, offsetY = 15,
@@ -149,15 +146,6 @@ const Tooltip: FC<TooltipProps> = ({
   }
 
   const placement = getPlacement(alignX, alignY);
-
-  let availablePlacements: Placement[] = [];
-  if (!alignY) {
-    availablePlacements = [...availablePlacements, ...autoPlacementsY];
-  }
-  if (!alignX) {
-    availablePlacements = [...availablePlacements, ...autoPlacementsX];
-  }
-
   const { styles, attributes } = usePopper(target, tooltipRef, {
     strategy,
     placement,
@@ -181,10 +169,6 @@ const Tooltip: FC<TooltipProps> = ({
       },
       {
         name: 'flip',
-        options: {
-          fallbackPlacements: availablePlacements,
-          allowedAutoPlacements: [placement, ...availablePlacements],
-        },
       },
     ],
   });
