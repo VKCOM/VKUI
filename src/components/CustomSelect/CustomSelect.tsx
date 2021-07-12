@@ -2,6 +2,7 @@ import React, {
   ChangeEventHandler,
   createRef,
   KeyboardEvent,
+  KeyboardEventHandler,
   MouseEvent,
   ReactNode,
   SelectHTMLAttributes,
@@ -11,12 +12,15 @@ import { debounce, setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
-import { withAdaptivity } from '../../hoc/withAdaptivity';
+import { SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { withPlatform } from '../../hoc/withPlatform';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { getClassName } from '../../helpers/getClassName';
 import { FormFieldProps } from '../FormField/FormField';
 import { HasPlatform } from '../../types';
+import Input from '../Input/Input';
+import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
+import Footer from '../Footer/Footer';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -32,9 +36,13 @@ interface CustomSelectState {
   focusedOptionIndex?: number;
   selectedOptionIndex?: number;
   nativeSelectValue?: SelectValue;
+  options?: CustomSelectOptionInterface[];
 }
 
 export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormFieldProps {
+  searchable?: boolean;
+  emptyText?: string;
+  onSearchChange?: ChangeEventHandler<HTMLInputElement>;
   options: Array<{
     value: SelectValue;
     label: string;
@@ -51,12 +59,14 @@ type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
 
 class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
   static defaultProps: CustomSelectProps = {
+    searchable: false,
     renderOption(props: CustomSelectOptionProps): ReactNode {
       return (
         <CustomSelectOption {...props} />
       );
     },
     options: [],
+    emptyText: 'Ничего не найдено',
   };
 
   public constructor(props: CustomSelectProps) {
@@ -74,6 +84,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       focusedOptionIndex: -1,
       selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
       nativeSelectValue: initialValue,
+      options: props.options,
     };
 
     if (props.value !== undefined) {
@@ -93,8 +104,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   private readonly getSelectedItem = () => {
-    const { selectedOptionIndex } = this.state;
-    const { options } = this.props;
+    const { selectedOptionIndex, options } = this.state;
 
     if (!options.length) {
       return null;
@@ -129,11 +139,12 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.setState(() => ({
       opened: false,
       focusedOptionIndex: -1,
+      options: this.props.options,
     }));
   };
 
   private isValidIndex(index: number) {
-    return index >= 0 && index < this.props.options.length;
+    return index >= 0 && index < this.state.options.length;
   }
 
   selectFocused = () => {
@@ -143,13 +154,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   select = (index: number) => {
-    const { options } = this.props;
-
     if (!this.isValidIndex(index)) {
       return;
     }
 
-    const item = options[index];
+    const item = this.state.options[index];
 
     this.setState({
       nativeSelectValue: item.value,
@@ -179,6 +188,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.setState(() => ({
       opened: false,
       focused: false,
+      options: this.props.options,
     }));
 
     const event = new Event('blur');
@@ -217,12 +227,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   focusOptionByIndex = (index: number) => {
     const { focusedOptionIndex } = this.state;
-    const { options } = this.props;
     const oldIndex = focusedOptionIndex;
 
     if (index < 0) {
-      index = options.length - 1;
-    } else if (index >= options.length) {
+      index = this.state.options.length - 1;
+    } else if (index >= this.state.options.length) {
       index = 0;
     }
 
@@ -267,10 +276,9 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onKeyboardInput = (key: string) => {
-    const { options } = this.props;
     const fullInput = this.keyboardInput + key;
 
-    const optionIndex = options.findIndex((option) => {
+    const optionIndex = this.state.options.findIndex((option) => {
       return option.label.toLowerCase().includes(fullInput);
     });
 
@@ -285,11 +293,42 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     const value = e.currentTarget.value;
     if (!this.isControlledOutside) {
       this.setState({
-        selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
+        selectedOptionIndex: this.findSelectedIndex(this.state.options, value),
       });
     }
     if (this.props.onChange) {
       this.props.onChange(e);
+    }
+  };
+
+  onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (this.props.onSearchChange) {
+      this.props.onSearchChange(e);
+    } else {
+      this.setState({
+        options: this.props.options.filter((option) => option.label.toLowerCase().includes(e.target.value.toLowerCase())),
+      });
+    }
+  };
+
+  onInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    switch (event.key) {
+      case 'ArrowUp':
+        event.preventDefault();
+        this.focusOption('prev');
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.focusOption('next');
+        break;
+      case 'Escape':
+        event.preventDefault();
+        this.close();
+        break;
+      case 'Enter':
+        event.preventDefault();
+        this.selectFocused();
+        break;
     }
   };
 
@@ -343,6 +382,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       this.setState({
         nativeSelectValue: value,
         selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
+        options: this.props.options,
       });
     }
   }
@@ -381,6 +421,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   render() {
     const { opened, nativeSelectValue } = this.state;
     const {
+      searchable,
       name,
       className,
       getRef,
@@ -395,6 +436,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       onFocus,
       renderOption,
       children,
+      emptyText,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -407,22 +449,36 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         style={style}
         ref={this.rootRef}
       >
-        <SelectMimicry
-          {...restProps}
-          aria-hidden={true}
-          onClick={this.onClick}
-          onKeyDown={this.handleKeyDownSelect}
-          onKeyUp={this.handleKeyUp}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          vkuiClass={classNames({
-            'CustomSelect__open': opened,
-            'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
-          })}
-          className={className}
-        >
-          {label}
-        </SelectMimicry>
+        {opened && searchable ?
+          <Input
+            autoFocus
+            onBlur={this.onBlur}
+            vkuiClass={classNames({
+              'CustomSelect__open': opened,
+              'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
+            })}
+            onKeyDown={this.onInputKeyDown}
+            onChange={this.onInputChange}
+            after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+            placeholder={restProps.placeholder}
+          /> :
+          <SelectMimicry
+            {...restProps}
+            aria-hidden={true}
+            onClick={this.onClick}
+            onKeyDown={this.handleKeyDownSelect}
+            onKeyUp={this.handleKeyUp}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            vkuiClass={classNames({
+              'CustomSelect__open': opened,
+              'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
+            })}
+            className={className}
+          >
+            {label}
+          </SelectMimicry>
+        }
         <select
           ref={this.selectRef}
           name={name}
@@ -442,7 +498,8 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           onMouseLeave={this.resetFocusedOption}
         >
           <CustomScrollView boxRef={this.scrollBoxRef}>
-            {options.map(this.renderOption)}
+            {this.state.options.map(this.renderOption)}
+            {this.state.options.length === 0 && <Footer>{emptyText}</Footer>}
           </CustomScrollView>
         </div>
         }
