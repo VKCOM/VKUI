@@ -57,3 +57,14 @@
 .CellButton--danger > .Avatar .Icon {
   color: var(--destructive);
 }
+
+/**
+ * .PanelHeader
+ */
+.PanelHeader__left .Avatar {
+  margin-left: 8px;
+}
+
+.PanelHeader__right .Avatar {
+  margin-right: 8px;
+}
