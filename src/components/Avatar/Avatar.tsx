@@ -21,9 +21,11 @@ const Avatar: FC<AvatarProps> = ({
   className,
   children,
   getRootRef,
+  style,
+  alt,
+  'aria-label': ariaLabel,
   ...restProps
 }: AvatarProps) => {
-  const Component = src ? 'img' : 'div';
   const platform = usePlatform();
 
   let borderRadius: string | number = '50%';
@@ -52,13 +54,11 @@ const Avatar: FC<AvatarProps> = ({
       })}
       className={className}
       ref={getRootRef}
+      role={src ? 'img' : 'presentation'}
+      aria-label={ariaLabel}
     >
-      <div vkuiClass="Avatar__in" style={{ width: size, height: size, borderRadius }}>
-        <Component
-          {...restProps}
-          vkuiClass="Avatar__img"
-          src={src}
-        />
+      <div {...restProps} aria-hidden="true" vkuiClass="Avatar__in" style={{ ...style, width: size, height: size, borderRadius }}>
+        {src && <img vkuiClass="Avatar__img" src={src} alt="" />}
         {children && <div vkuiClass="Avatar__children">{children}</div>}
       </div>
     </div>
