@@ -1,14 +1,12 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import Spinner, { SpinnerProps } from '../Spinner/Spinner';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 
-export interface ScreenSpinnerProps extends HTMLAttributes<HTMLDivElement>, SpinnerProps {
-  'aria-label'?: string;
-}
+export type ScreenSpinnerProps = HTMLAttributes<HTMLDivElement> & SpinnerProps;
 
-const ScreenSpinner: FunctionComponent<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
+const ScreenSpinner: FC<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
   const { style, className, ...restProps } = props;
   const platform = usePlatform();
 
