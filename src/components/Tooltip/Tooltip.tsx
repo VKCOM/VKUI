@@ -7,10 +7,10 @@ import { usePopper } from 'react-popper';
 import { Placement } from '@popperjs/core';
 import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
-import { useDOM, canUseDOM } from '../../lib/dom';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import { hasReactNode } from '../../lib/utils';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
@@ -103,59 +103,16 @@ export interface TooltipProps {
   onClose?: () => void;
 }
 
-function getTranslateFromPlacement(placement: Placement) {
-  const basePlacement = placement?.split('-')[0];
-
-  let deg = 0;
-  let translate: [number, number] = [0, 0];
-  switch (basePlacement) {
-    case 'right':
-      deg = 270;
-      translate[1] = -14;
-      break;
-    case 'left':
-      deg = 90;
-      translate[1] = -14;
-      break;
-    case 'bottom':
-      deg = 0;
-      translate[1] = -6;
-      break;
-    case 'top':
-      deg = 180;
-      translate[1] = -6;
-      break;
+function mapAlignX(x: TooltipProps['alignX']) {
+  switch (x) {
+    case 'left': return 'start';
+    case 'right': return 'end';
+    default: return '';
   }
-
-  return {
-    deg,
-    translate,
-  };
+};
+function getPlacement(alignX: TooltipProps['alignX'], alignY: TooltipProps['alignY']): Placement {
+  return [alignY || 'bottom', mapAlignX(alignX || 'left')].filter((p) => !!p).join('-') as Placement;
 }
-
-function getPlacement(alignX?: TooltipProps['alignX'], alignY?: TooltipProps['alignY']): Placement {
-  let placementX = '';
-  let placementY = '';
-
-  if (alignY === 'top') {
-    placementY = 'top';
-  } else if (alignY === 'bottom' || !alignY) {
-    placementY = 'bottom';
-  }
-
-  if (alignX === 'center') {
-    placementX = '';
-  } else if (alignX === 'left' || !alignX) {
-    placementX = '-start';
-  } else if (alignX === 'right') {
-    placementX = '-end';
-  };
-
-  return `${placementY}${placementX}` as Placement;
-}
-
-const autoPlacementsX: Placement[] = ['right', 'left'];
-const autoPlacementsY: Placement[] = ['bottom-start', 'bottom', 'bottom-end', 'top-start', 'top', 'top-end'];
 
 const Tooltip: FC<TooltipProps> = ({
   children, isShown, offsetX = 0, offsetY = 15,
@@ -180,7 +137,6 @@ const Tooltip: FC<TooltipProps> = ({
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
   const tooltipContainer = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
-  const fixedTooltipContainer = useMemo(() => target?.closest(`[${tooltipContainerAttr}=fixed]`) as HTMLDivElement, [target]);
   const strategy = useMemo(() => target?.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
@@ -190,18 +146,9 @@ const Tooltip: FC<TooltipProps> = ({
   }
 
   const placement = getPlacement(alignX, alignY);
-
-  let availablePlacements: Placement[] = [];
-  if (!alignY) {
-    availablePlacements = [...availablePlacements, ...autoPlacementsY];
-  }
-  if (!alignX) {
-    availablePlacements = [...availablePlacements, ...autoPlacementsX];
-  }
-
-  const { styles, attributes, state, forceUpdate } = usePopper(target, tooltipRef, {
-    strategy: strategy,
-    placement: placement,
+  const { styles, attributes } = usePopper(target, tooltipRef, {
+    strategy,
+    placement,
     modifiers: [
       {
         name: 'offset', options: {
@@ -217,37 +164,18 @@ const Tooltip: FC<TooltipProps> = ({
           padding: 14,
         },
       },
-      !fixedTooltipContainer && {
-        name: 'preventOverflow', options: {
-          boundary: tooltipContainer,
-          rootBoundary: 'document',
-        },
+      {
+        name: 'preventOverflow',
       },
       {
         name: 'flip',
-        options: {
-          boundary: !fixedTooltipContainer ? tooltipContainer : null,
-          fallbackPlacements: availablePlacements,
-          allowedAutoPlacements: [placement, ...availablePlacements],
-        },
       },
-    ].filter((v) => !!v),
+    ],
   });
 
   const { document } = useDOM();
-
-  useIsomorphicLayoutEffect(() => {
-    if (!isShown || !canUseDOM) {
-      return undefined;
-    }
-
-    document.body.addEventListener('click', onClose, { passive: true });
-    forceUpdate?.();
-
-    return () => {
-      document.body.removeEventListener('click', onClose);
-    };
-  }, [isShown]);
+  useGlobalEventListener(document, 'click', isShown && onClose, { passive: true });
+  // NOTE: setting isShown to true used to trigger usePopper().forceUpdate()
 
   const childRef = isValidElement(children) &&
     (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
@@ -256,17 +184,9 @@ const Tooltip: FC<TooltipProps> = ({
     [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
   }) : children;
 
-  const arrowTransform = getTranslateFromPlacement(state?.placement);
-
   if (!alignX || !alignY) {
     cornerOffset = 0;
   }
-
-  const arrowStyle: CSSProperties = {
-    ...styles.arrow,
-    transform:
-      `${styles.arrow?.transform || ''} rotate(${arrowTransform?.deg}deg) translate(${arrowTransform?.translate[0] + cornerOffset}px, ${arrowTransform?.translate[1]}px)`,
-  };
 
   return (
     <Fragment>
@@ -276,7 +196,7 @@ const Tooltip: FC<TooltipProps> = ({
           {...restProps}
           ref={(el) => setTooltipRef(el)}
           arrowRef={(el) => setTooltipArrowRef(el)}
-          style={{ arrow: arrowStyle, container: styles.popper }}
+          style={{ arrow: styles.arrow, container: styles.popper }}
           attributes={{ arrow: attributes.arrow, container: attributes.popper }}
         />,
         tooltipContainer,
