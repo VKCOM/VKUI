@@ -49,12 +49,12 @@ export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAtt
 }
 
 const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
-  const { getRef, onClick, subtitle, header, text, caption, className, image, maxHeight, disabled, mode, alt, style, getRootRef, ...restProps } = props;
+  const { getRef, onClick, onTouchEnd, onMouseLeave, onMouseUp, onTouchStart, onMouseDown, subtitle, header, text, caption, className, image, maxHeight, disabled, mode, alt, style, getRootRef, ...restProps } = props;
   const platform = usePlatform();
 
   return (
     <Card mode={mode} getRootRef={getRootRef} vkuiClass={getClassName('ContentCard', platform)} style={style} className={className}>
-      <Tappable disabled={disabled} onClick={onClick} vkuiClass="ContentCard__tappable">
+      <Tappable disabled={disabled} onClick={onClick} onMouseDown={onMouseDown} onTouchStart={onTouchStart} onMouseUp={onMouseUp} onMouseLeave={onMouseLeave} onTouchEnd={onTouchEnd} vkuiClass="ContentCard__tappable">
         {image && <img {...restProps} ref={getRef} src={image} alt={alt} vkuiClass="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
         <div vkuiClass="ContentCard__body">
           {hasReactNode(subtitle) && <Caption caps vkuiClass="ContentCard__caption" weight="semibold" level="3">{subtitle}</Caption>}
