@@ -18,9 +18,8 @@ const ReactComponent = ({ component, exampleMode }) => {
         <Caption Component="span" level="1" weight="regular">Github</Caption>
       </Link>
       <Heading level={1} className="ReactComponent__name">{visibleName}</Heading>
-      {/*{pathLine && <Pathline>{pathLine}</Pathline>}*/}
       {description && <Markdown text={description} />}
-      {examples.length && <Examples examples={examples} name={name} exampleMode={exampleMode} />}
+      {examples.length > 0 && <Examples examples={examples} name={name} exampleMode={exampleMode} />}
       <SectionSubheading href={`#/${name}?id=props`}>Свойства и методы</SectionSubheading>
       <Slot name="docsTabs" props={component} />
     </div>
