@@ -42,3 +42,18 @@
   color: var(--icon_secondary);
   z-index: 2;
 }
+
+/**
+ * .CellButton
+ */
+.CellButton > .Avatar {
+  color: var(--button_muted_background);
+}
+
+.CellButton > .Avatar .Icon {
+  color: var(--accent);
+}
+
+.CellButton--danger > .Avatar .Icon {
+  color: var(--destructive);
+}
