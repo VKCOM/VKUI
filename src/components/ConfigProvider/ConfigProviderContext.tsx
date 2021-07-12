@@ -15,6 +15,12 @@ export enum Scheme {
   VKCOM = 'vkcom'
 }
 
+// Схемы, которых нет в VKUI, но мы знаем их appearance
+export enum ExternalScheme {
+  VKCOM_LIGHT = 'vkcom_light',
+  VKCOM_DARK = 'vkcom_dark'
+}
+
 export type AppearanceScheme = AppearanceSchemeType | Scheme.VKCOM | 'inherit';
 
 export enum WebviewType {
@@ -54,9 +60,10 @@ export const defaultConfigProviderProps = {
   webviewType: WebviewType.VKAPPS,
   isWebView: vkBridge.isWebView(),
   scheme: Scheme.BRIGHT_LIGHT,
-  appearance: Appearance.LIGHT,
   transitionMotionEnabled: true,
   platform: platform(),
+  // appearance is auto-detected by default
+  // appearance: Appearance.LIGHT,
 };
 
 export const ConfigProviderContext = createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);
