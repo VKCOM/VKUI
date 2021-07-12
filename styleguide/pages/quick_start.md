@@ -1,6 +1,3 @@
-VKUI — библиотека адаптивных React-компонентов. С ее помощью вы сможете создать веб-приложение и VK Mini Apps в 
-экосистеме ВКонтакте. Если вы никогда не работали с VKUI и хотите попробовать, эта статья для вас. 
-
 Собрать простое приложение можно за четыре шага:
 
 ## Шаг 1 
@@ -16,19 +13,18 @@ VKUI — библиотека адаптивных React-компонентов.
 
 ```shell static
 # npm
-npm i --save @vkontakte/vkui @vkontakte/vkjs @vkontakte/icons @vkontakte/vk-bridge
+npm i --save @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
 # or yarn
-yarn add @vkontakte/vkui @vkontakte/vkjs @vkontakte/icons @vkontakte/vk-bridge
+yarn add @vkontakte/vkui @vkontakte/icons @vkontakte/vk-bridge
 ```
 
-​​Важно установить все три библиотеки. VKJS содержит набор общих скриптов и утилит, 
-I​cons — наши иконки, которые напрямую используются в некоторых компонентах VKUI, 
-а vk-bridge необходима для интеграции в клиенты VK (она обеспечит корректные отступы на мобильных
+- `@vkontakte/icons` — это наши иконки, которые напрямую используются в некоторых компонентах VKUI.
+- `@vkontakte/vk-bridge` необходима для интеграции в клиенты VK (она обеспечит корректные отступы на мобильных
  устройствах, свайпы, определение темы и тд).
  
 ## Шаг 3 
 
-Добавьте тег viewport для корректной работы на мобильных устройствах (подробнее см. в статье ["The Notch" and CSS](https://css-tricks.com/the-notch-and-css/)).
+Добавьте тег viewport для корректного отображения интерфейса на безрамочных смартфонах  (подробнее см. в статье ["The Notch" and CSS](https://css-tricks.com/the-notch-and-css/)).
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
