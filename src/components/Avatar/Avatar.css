@@ -1,4 +1,5 @@
 .Avatar {
+  flex-shrink: 0;
   box-sizing: border-box;
   color: var(--placeholder_icon_background);
 }
@@ -67,4 +68,18 @@
 
 .PanelHeader__right .Avatar {
   margin-right: 8px;
+}
+
+/**
+ * .RichCell
+ */
+.RichCell > .Avatar {
+  padding-right: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.RichCell > .Avatar--sz-48 {
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
