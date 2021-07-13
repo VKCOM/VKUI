@@ -21,13 +21,13 @@
   align-items: baseline;
 }
 
-.Header__content-base {
+.Header__content-in {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.Header__content-base--multiline {
+.Header__content-in--multiline {
   white-space: initial;
   word-break: break-word;
 }
