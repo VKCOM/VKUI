@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, FC, Children } from 'react';
+import { Children, FC, HTMLAttributes, memo } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -6,6 +6,14 @@ import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
+
+export interface CounterProps extends HTMLAttributes<HTMLSpanElement> {
+  /**
+   * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
+   */
+  mode?: 'secondary' | 'primary' | 'prominent';
+  size?: 's' | 'm';
+}
 
 interface CounterTypographyProps extends HTMLAttributes<HTMLDivElement> {
   size: CounterProps['size'];
@@ -22,14 +30,6 @@ const CounterTypography: FC<CounterTypographyProps> = ({ size, children, ...rest
 
   return <Text weight="medium" {...restProps}>{children}</Text>;
 };
-
-export interface CounterProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
-   */
-  mode?: 'secondary' | 'primary' | 'prominent';
-  size?: 's' | 'm';
-}
 
 const Counter: FC<CounterProps> = (props: CounterProps) => {
   const { mode, size, children, ...restProps } = props;
@@ -58,4 +58,4 @@ Counter.defaultProps = {
   size: 'm',
 };
 
-export default React.memo(Counter);
+export default memo(Counter);
