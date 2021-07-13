@@ -11,6 +11,12 @@ const Example = withPlatform(({ platform }) => {
           <Header mode="primary" aside={<Link>Показать все{platform === VKCOM && <Icon12ChevronOutline />}</Link>} indicator={<Counter size="s" mode="prominent">3</Counter>}>Заявки в друзья</Header>
         </Group>
         <Group>
+          <Header mode="primary" aside={<Icon16Cancel />}>Длинный заголовок, который вылезает справа</Header>
+          <Header mode="primary" aside={<Icon24Cancel />}>Длинный заголовок, который вылезает справа</Header>
+          <Header mode="primary" aside={<><Icon24Cancel /><Icon24Done /></>}>Длинный заголовок, который вылезает справа</Header>
+          <Header mode="primary" aside={<Icon28Delete />}>Длинный заголовок, который вылезает справа</Header>
+        </Group>
+        <Group>
           <Header mode="secondary" aside={<Link>Показать все{platform === VKCOM && <Icon12ChevronOutline />}</Link>}>Приглашения</Header>
           <Header mode="secondary" aside={<Link>Показать все{platform === VKCOM && <Icon12ChevronOutline />}</Link>} indicator="667">Фотографии</Header>
           <Header mode="secondary" aside={<Link>Показать все{platform === VKCOM && <Icon12ChevronOutline />}</Link>} indicator={<Counter size="s" mode="prominent">3</Counter>}>Приглашения</Header>
@@ -24,8 +30,8 @@ const Example = withPlatform(({ platform }) => {
           <Header mode="secondary" multiline>Кто может оставлять записи на моей странице</Header>
         </Group>
       </Panel>
-    </View>  
-  )   
+    </View>
+  )
 });
 
 <Example />
