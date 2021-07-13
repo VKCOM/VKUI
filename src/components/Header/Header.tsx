@@ -11,7 +11,7 @@ import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Subhead from '../Typography/Subhead/Subhead';
 
-export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface HeaderProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   mode?: 'primary' | 'secondary' | 'tertiary';
   subtitle?: ReactNode;
   /**
@@ -27,7 +27,7 @@ export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<
 
 type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode'> & HasPlatform & { Component: ElementType };
 
-const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps }: HeaderContentProps) => {
+const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps }) => {
   if (platform === Platform.IOS) {
     switch (mode) {
       case 'primary':
@@ -60,7 +60,7 @@ const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps }:
 
 type HeaderAsideProps = Pick<HeaderProps, 'aside'> & HasPlatform & { Component: ElementType };
 
-const HeaderAside: FC<HeaderAsideProps> = ({ platform, ...restProps }: HeaderAsideProps) => {
+const HeaderAside: FC<HeaderAsideProps> = ({ platform, ...restProps }) => {
   return platform === Platform.VKCOM ? <Subhead weight="regular" {...restProps} /> : <Text weight="regular" {...restProps} />;
 };
 
