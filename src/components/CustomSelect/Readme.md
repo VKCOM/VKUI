@@ -4,7 +4,28 @@
 class Example extends React.Component {
   constructor(props) {
     super(props);
-    this.data = getRandomUsers(10);
+    this.users = getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }));
+    this.cities = [{
+      label: 'Санкт-Петербург',
+      description: 'Россия',
+      value: 0
+    }, {
+      label: 'Москва',
+      description: 'Россия',
+      value: 1
+    }, {
+      label: 'Новосибирск',
+      description: 'Россия',
+      value: 2
+    }, {
+      label: 'Нью-Йорк',
+      description: 'США',
+      value: 3
+    }, {
+      label: 'Чикаго',
+      description: 'США',
+      value: 4
+    }]  
 
     this.state = {
       query: '',
@@ -13,8 +34,7 @@ class Example extends React.Component {
   }
   
   get customSearchOptions() {
-    const options = [...this.state.newUsers, ...this.data]
-                        .map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))
+    const options = [...this.state.newUsers, ...this.users]
                         .filter(({ label }) => label.toLowerCase().includes(this.state.query.toLowerCase()));
     if (this.state.query.length > 0) {
       options.unshift({ label: `Добавить пользователя ${this.state.query}`, value: 0 });
@@ -33,13 +53,13 @@ class Example extends React.Component {
           <FormItem top="Администратор" bottom="Базовый пример использования">
             <CustomSelect
               placeholder="Не выбран"
-              options={this.data.map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
+              options={this.users}
             />
           </FormItem>
           <FormItem top="Администратор" bottom="Кастомный дизайн элементов списка">
             <CustomSelect
               placeholder="Не выбран"
-              options={this.data.map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
+              options={this.users}
               renderOption={({ option, ...restProps }) => (
                 <CustomSelectOption {...restProps} before={<Avatar size={24} src={option.avatar} />} />
               )}
@@ -49,11 +69,25 @@ class Example extends React.Component {
             <CustomSelect
               placeholder="Введите имя пользователя"
               searchable
-              options={this.data.map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
+              options={this.users}
             />
           </FormItem>
-          <FormItem top="Администратор" bottom="Кастомный алгоритм поиска">
+          <FormItem top="Город" bottom="Кастомный алгоритм поиска">
             <CustomSelect
+              placeholder="Введите название города или страны"
+              searchable
+              onSearchChange={(e) => { 
+                return this.cities.filter((option) => {
+                  return option.label.toLowerCase().includes(e.target.value.toLowerCase()) ||
+                         option.description.toLowerCase().includes(e.target.value.toLowerCase())                
+                })           
+              }}
+              options={this.cities}
+            />
+          </FormItem>
+          <FormItem top="Администратор" bottom="Кастомное поведение при поиске">
+            <CustomSelect
+              popupDirection="top"
               placeholder="Введите имя пользователя"
               searchable
               onSearchChange={(e) => { this.setState({ query: e.target.value }) }}
@@ -67,7 +101,7 @@ class Example extends React.Component {
                 if (e.target.value === '0') {
                   const query = this.state.query;
                   this.setState({
-                    newUsers: [...this.state.newUsers, { name: query, id: query }],
+                    newUsers: [...this.state.newUsers, { label: query, value: query }],
                     query: ''
                   }, () => {
                     this.setState({ value: query })

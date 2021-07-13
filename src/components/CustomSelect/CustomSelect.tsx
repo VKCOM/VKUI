@@ -1,4 +1,5 @@
 import React, {
+  ChangeEvent,
   ChangeEventHandler,
   createRef,
   KeyboardEvent,
@@ -41,7 +42,7 @@ interface CustomSelectState {
 
 export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormFieldProps {
   /**
-   * Если true, то при клике на селект в нём появится текстовое поле для поиска по options. По умолчанию поиск
+   * Если `true`, то при клике на селект в нём появится текстовое поле для поиска по `options`. По умолчанию поиск
    * производится по `option.label`.
    */
   searchable?: boolean;
@@ -50,10 +51,18 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    */
   emptyText?: string;
   /**
-   * Если передан, то дефолтный алгоритм поиска отключается. Используйте этот метод, если вам требуется написать
-   * собственный алгоритм фильтрации `options` при поиске.
+   * Коллбэк для кастомизации алгоритма поиска. Учитывается только если `searchable: true`
+   *
+   * Если коллбэк не передан, то фильтрация производится автоматически по `option.label`
+   *
+   * Если передан и возвращает значение, то оно используется в качестве результата
+   * фильтрации.
+   *
+   * Если переданная функция ничего не возвращает, то подразумевается, что разработчик выполнил фильтрацию
+   * на верхнем уровне и обновил свойство `options`.
+   *
    */
-  onSearchChange?: ChangeEventHandler<HTMLInputElement>;
+  onSearchChange?: (e: ChangeEvent) => void | CustomSelectOptionInterface[];
   options: Array<{
     value: SelectValue;
     label: string;
@@ -314,7 +323,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (this.props.onSearchChange) {
-      this.props.onSearchChange(e);
+      const options = this.props.onSearchChange(e);
+      if (options) {
+        this.setState({ options });
+      }
     } else {
       this.setState({
         options: this.props.options.filter((option) => option.label.toLowerCase().includes(e.target.value.toLowerCase())),
