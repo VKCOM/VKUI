@@ -55,7 +55,7 @@ const Avatar: FC<AvatarProps> = ({
       className={className}
       ref={getRootRef}
       role={src ? 'img' : 'presentation'}
-      aria-label={ariaLabel}
+      aria-label={alt || ariaLabel}
     >
       <div {...restProps} aria-hidden="true" vkuiClass="Avatar__in" style={{ ...style, width: size, height: size, borderRadius }}>
         {src && <img vkuiClass="Avatar__img" src={src} alt="" />}
