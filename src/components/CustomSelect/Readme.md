@@ -30,13 +30,13 @@ class Example extends React.Component {
           CustomSelect
         </PanelHeader>
         <Group>
-          <FormItem top="Базовое использование">
+          <FormItem top="Администратор" bottom="Базовый пример использования">
             <CustomSelect
               placeholder="Не выбран"
               options={this.data.map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
             />
           </FormItem>
-          <FormItem top="Кастомные элементы списка">
+          <FormItem top="Администратор" bottom="Кастомный дизайн элементов списка">
             <CustomSelect
               placeholder="Не выбран"
               options={this.data.map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
@@ -45,16 +45,16 @@ class Example extends React.Component {
               )}
             />
           </FormItem>
-          <FormItem top="Поиск">
+          <FormItem top="Администратор" bottom="Поиск по списку">
             <CustomSelect
-              placeholder="Не выбран"
+              placeholder="Введите имя пользователя"
               searchable
               options={this.data.map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))}
             />
           </FormItem>
-          <FormItem top="Кастомный поиск">
+          <FormItem top="Администратор" bottom="Кастомный алгоритм поиска">
             <CustomSelect
-              placeholder="Не выбран"
+              placeholder="Введите имя пользователя"
               searchable
               onSearchChange={(e) => { this.setState({ query: e.target.value }) }}
               options={this.customSearchOptions}

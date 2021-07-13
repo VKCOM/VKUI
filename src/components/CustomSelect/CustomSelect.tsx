@@ -40,8 +40,19 @@ interface CustomSelectState {
 }
 
 export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormFieldProps {
+  /**
+   * Если true, то при клике на селект в нём появится текстовое поле для поиска по options. По умолчанию поиск
+   * производится по `option.label`.
+   */
   searchable?: boolean;
+  /**
+   * Текст, который будет отображен, если приходит пустой `options`
+   */
   emptyText?: string;
+  /**
+   * Если передан, то дефолтный алгоритм поиска отключается. Используйте этот метод, если вам требуется написать
+   * собственный алгоритм фильтрации `options` при поиске.
+   */
   onSearchChange?: ChangeEventHandler<HTMLInputElement>;
   options: Array<{
     value: SelectValue;
@@ -437,6 +448,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       renderOption,
       children,
       emptyText,
+      onSearchChange,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
