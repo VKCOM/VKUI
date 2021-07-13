@@ -76,7 +76,7 @@ class Example extends React.Component {
             <CustomSelect
               placeholder="Введите название города или страны"
               searchable
-              onSearchChange={(e, options) => { 
+              onInputChange={(e, options) => { 
                 return options.filter((option) => {
                   return option.label.toLowerCase().includes(e.target.value.toLowerCase()) ||
                          option.description.toLowerCase().includes(e.target.value.toLowerCase())                
@@ -90,7 +90,7 @@ class Example extends React.Component {
               popupDirection="top"
               placeholder="Введите имя пользователя"
               searchable
-              onSearchChange={(e) => { this.setState({ query: e.target.value }) }}
+              onInputChange={(e) => { this.setState({ query: e.target.value }) }}
               options={this.customSearchOptions}
               renderOption={({ option, ...restProps }) => (
                 <CustomSelectOption {...restProps}>

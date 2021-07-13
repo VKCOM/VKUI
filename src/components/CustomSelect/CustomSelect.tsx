@@ -62,7 +62,7 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * на верхнем уровне и обновил свойство `options`.
    *
    */
-  onSearchChange?: (e: ChangeEvent, options: CustomSelectOptionInterface[]) => void | CustomSelectOptionInterface[];
+  onInputChange?: (e: ChangeEvent, options: CustomSelectOptionInterface[]) => void | CustomSelectOptionInterface[];
   options: Array<{
     value: SelectValue;
     label: string;
@@ -322,8 +322,8 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (this.props.onSearchChange) {
-      const options = this.props.onSearchChange(e, this.props.options);
+    if (this.props.onInputChange) {
+      const options = this.props.onInputChange(e, this.props.options);
       if (options) {
         this.setState({ options });
       }
@@ -460,7 +460,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       renderOption,
       children,
       emptyText,
-      onSearchChange,
+      onInputChange,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
