@@ -1,12 +1,9 @@
 .Header {
-  user-select: text;
-}
-
-.Header__in {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   padding: 0 16px;
+  user-select: text;
 }
 
 .Header__main {
@@ -100,7 +97,7 @@
 /**
  * iOS
  */
-.Header--ios .Header__in {
+.Header--ios {
   padding: 0 12px;
 }
 
@@ -121,11 +118,7 @@
  */
 .Header--vkcom {
   height: 64px;
-}
-
-.Header--vkcom .Header__in {
   align-items: center;
-  min-height: 100%;
 }
 
 .Header--vkcom .Header__main {
