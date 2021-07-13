@@ -50,11 +50,10 @@ const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps })
 
   switch (mode) {
     case 'primary':
+    case 'tertiary':
       return <Headline weight="medium" {...restProps} />;
     case 'secondary':
       return <Caption level="1" weight="medium" caps {...restProps} />;
-    case 'tertiary':
-      return <Headline weight="medium" {...restProps} />;
   }
 };
 
