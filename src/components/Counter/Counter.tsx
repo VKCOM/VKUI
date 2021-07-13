@@ -33,7 +33,7 @@ const Counter: FC<CounterProps> = (props: CounterProps) => {
   }
 
   return (
-    <div
+    <span
       {...restProps}
       vkuiClass={classNames(
         getClassName('Counter', platform),
@@ -42,7 +42,7 @@ const Counter: FC<CounterProps> = (props: CounterProps) => {
       )}
     >
       {hasReactNode(children) && <CounterTypography platform={platform} size={size} vkuiClass="Counter__in">{children}</CounterTypography>}
-    </div>
+    </span>
   );
 };
 
