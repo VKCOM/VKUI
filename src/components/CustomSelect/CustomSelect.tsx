@@ -21,7 +21,7 @@ import { FormFieldProps } from '../FormField/FormField';
 import { HasPlatform } from '../../types';
 import Input from '../Input/Input';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
-import Footer from '../Footer/Footer';
+import Caption from '../Typography/Caption/Caption';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -523,7 +523,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         >
           <CustomScrollView boxRef={this.scrollBoxRef}>
             {this.state.options.map(this.renderOption)}
-            {this.state.options.length === 0 && <Footer>{emptyText}</Footer>}
+            {this.state.options.length === 0 &&
+              <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+                {emptyText}
+              </Caption>
+            }
           </CustomScrollView>
         </div>
         }
