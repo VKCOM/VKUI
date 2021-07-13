@@ -76,8 +76,8 @@ class Example extends React.Component {
             <CustomSelect
               placeholder="Введите название города или страны"
               searchable
-              onSearchChange={(e) => { 
-                return this.cities.filter((option) => {
+              onSearchChange={(e, options) => { 
+                return options.filter((option) => {
                   return option.label.toLowerCase().includes(e.target.value.toLowerCase()) ||
                          option.description.toLowerCase().includes(e.target.value.toLowerCase())                
                 })           
