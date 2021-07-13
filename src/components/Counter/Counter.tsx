@@ -1,4 +1,4 @@
-import { Children, FC, HTMLAttributes, memo } from 'react';
+import { Children, ElementType, FC, HTMLAttributes, memo } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -6,6 +6,7 @@ import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
+import { HasPlatform } from '../../types';
 
 export interface CounterProps extends HTMLAttributes<HTMLSpanElement> {
   /**
@@ -15,20 +16,12 @@ export interface CounterProps extends HTMLAttributes<HTMLSpanElement> {
   size?: 's' | 'm';
 }
 
-interface CounterTypographyProps extends HTMLAttributes<HTMLDivElement> {
-  size: CounterProps['size'];
-}
+type CounterTypographyProps = Pick<CounterProps, 'size'> & HasPlatform & { Component?: ElementType };
 
-const CounterTypography: FC<CounterTypographyProps> = ({ size, children, ...restProps }: CounterTypographyProps) => {
-  const platform = usePlatform();
-
-  if (size === 's') {
-    const weight = platform === VKCOM ? 'medium' : 'regular';
-
-    return <Caption level="2" weight={weight} {...restProps}>{children}</Caption>;
-  }
-
-  return <Text weight="medium" {...restProps}>{children}</Text>;
+const CounterTypography: FC<CounterTypographyProps> = ({ size, platform, ...restProps }) => {
+  return size === 's'
+    ? <Caption level="2" weight={platform === VKCOM ? 'medium' : 'regular'} {...restProps} />
+    : <Text weight="medium" {...restProps} />;
 };
 
 const Counter: FC<CounterProps> = (props: CounterProps) => {
@@ -48,7 +41,7 @@ const Counter: FC<CounterProps> = (props: CounterProps) => {
         `Counter--s-${size}`,
       )}
     >
-      {hasReactNode(children) && <CounterTypography size={size} vkuiClass="Counter__in">{children}</CounterTypography>}
+      {hasReactNode(children) && <CounterTypography platform={platform} size={size} vkuiClass="Counter__in">{children}</CounterTypography>}
     </div>
   );
 };
