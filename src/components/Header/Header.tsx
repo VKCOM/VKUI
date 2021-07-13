@@ -57,10 +57,10 @@ const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps })
   }
 };
 
-type HeaderAsideProps = Pick<HeaderProps, 'aside'> & HasPlatform & { Component: ElementType };
-
-const HeaderAside: FC<HeaderAsideProps> = ({ platform, ...restProps }) => {
-  return platform === Platform.VKCOM ? <Subhead weight="regular" {...restProps} /> : <Text weight="regular" {...restProps} />;
+const HeaderAside: FC<Pick<HeaderProps, 'aside'> & HasPlatform> = ({ platform, ...restProps }) => {
+  return platform === Platform.VKCOM
+    ? <Subhead weight="regular" {...restProps} />
+    : <Text weight="regular" {...restProps} />;
 };
 
 const Header: FC<HeaderProps> = ({
@@ -95,7 +95,8 @@ const Header: FC<HeaderProps> = ({
         </HeaderContent>
         {hasReactNode(subtitle) && <Caption Component="span" vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
       </div>
-      {hasReactNode(aside) && <HeaderAside vkuiClass="Header__aside" platform={platform} Component="div">{aside}</HeaderAside>}
+
+      {hasReactNode(aside) && <HeaderAside vkuiClass="Header__aside" platform={platform}>{aside}</HeaderAside>}
     </header>
   );
 };
