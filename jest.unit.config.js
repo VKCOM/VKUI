@@ -10,5 +10,6 @@ module.exports = {
     '\\.e2e\\.tsx?$',
     'src/types',
     'src/testing',
+    'src/components/View/ViewInfinite.tsx'
   ],
 };
