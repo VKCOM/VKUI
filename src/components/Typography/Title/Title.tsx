@@ -32,13 +32,15 @@ const Title: FC<TitleProps> = ({
   if (platform === ANDROID && level === '3') {
     const headlineWeight: HeadlineProps['weight'] = weight === 'regular' ? weight : 'medium';
 
-    return <Headline
-      Component={TitleComponent}
-      {...restProps}
-      weight={headlineWeight}
-    >
-      {children}
-    </Headline>;
+    return (
+      <Headline
+        Component={TitleComponent}
+        {...restProps}
+        weight={headlineWeight}
+      >
+        {children}
+      </Headline>
+    );
   }
 
   return (
