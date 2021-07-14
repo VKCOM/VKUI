@@ -17,19 +17,17 @@ const Subhead: FC<SubheadProps> = ({
 }: SubheadProps) => {
   const platform = usePlatform();
 
-  let SubheadComponent: ElementType = Component;
-
   if (!Component) {
-    SubheadComponent = platform === ANDROID ? 'h4' : 'h5';
+    Component = platform === ANDROID ? 'h4' : 'h5';
   }
 
   return (
-    <SubheadComponent
+    <Component
       {...restProps}
-      vkuiClass={classNames(getClassName('Subhead', platform), `Subhead--w-${subheadWeight}`)}
+      vkuiClass={classNames(getClassName('Subhead', platform), `Subhead--w-${weight}`)}
     >
       {children}
-    </SubheadComponent>
+    </Component>
   );
 };
 
