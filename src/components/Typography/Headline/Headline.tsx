@@ -2,7 +2,6 @@ import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
-import { ANDROID } from '../../../lib/platform';
 
 export interface HeadlineProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold';
@@ -17,10 +16,6 @@ const Headline: FC<HeadlineProps> = ({
 }: HeadlineProps) => {
   const platform = usePlatform();
 
-  if (!Component) {
-    Component = platform === ANDROID ? 'h3' : 'h4';
-  }
-
   return (
     <Component
       {...restProps}
@@ -29,6 +24,10 @@ const Headline: FC<HeadlineProps> = ({
       {children}
     </Component>
   );
+};
+
+Headline.defaultProps = {
+  Component: 'h3',
 };
 
 export default Headline;
