@@ -16,3 +16,10 @@
 .Text--w-semibold {
   font-weight: 600;
 }
+
+/**
+ * ANDROID
+ */
+.Text--android.Text--w-semibold {
+  font-weight: 500;
+}
