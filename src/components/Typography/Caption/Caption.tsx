@@ -2,7 +2,6 @@ import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
-import { ANDROID } from '../../../lib/platform';
 
 export interface CaptionProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold' | 'bold';
@@ -21,21 +20,13 @@ const Caption: FC<CaptionProps> = ({
 }: CaptionProps) => {
   const platform = usePlatform();
 
-  let captionWeight: CaptionProps['weight'] = weight;
-
-  if (platform === ANDROID) {
-    if (weight === 'semibold') {
-      captionWeight = 'medium';
-    }
-  }
-
   return (
     <Component
       {...restProps}
       vkuiClass={
         classNames(
           getClassName('Caption', platform),
-          `Caption--w-${captionWeight}`,
+          `Caption--w-${weight}`,
           `Caption--l-${level}`,
           {
             'Caption--caps': caps,
