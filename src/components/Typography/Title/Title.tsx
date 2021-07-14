@@ -15,14 +15,10 @@ const Title: FC<TitleProps> = ({
   children,
   weight,
   level,
-  Component,
+  Component = ('h' + level) as ElementType,
   ...restProps
 }: TitleProps) => {
   const platform = usePlatform();
-
-  if (!Component) {
-    Component = ('h' + level) as ElementType;
-  }
 
   if (platform === ANDROID && level === '3') {
     const headlineWeight: HeadlineProps['weight'] = weight === 'regular' ? weight : 'medium';

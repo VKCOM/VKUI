@@ -15,7 +15,7 @@ const Caption: FC<CaptionProps> = ({
   weight,
   level,
   caps,
-  Component,
+  Component = 'span',
   ...restProps
 }: CaptionProps) => {
   const platform = usePlatform();
@@ -37,10 +37,6 @@ const Caption: FC<CaptionProps> = ({
       {children}
     </Component>
   );
-};
-
-Caption.defaultProps = {
-  Component: 'span',
 };
 
 export default Caption;
