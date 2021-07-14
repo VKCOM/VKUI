@@ -46,3 +46,10 @@
 .Caption--w-heavy {
   font-weight: 800;
 }
+
+/**
+ * ANDROID
+ */
+.Caption--android.Caption--w-semibold {
+  font-weight: 500;
+}
