@@ -105,7 +105,6 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
             sizeY={sizeY}
             platform={platform}
             vkuiClass="Button__content"
-            Component="span"
           >
             {children}
           </ButtonTypography>

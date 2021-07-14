@@ -68,7 +68,7 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props: WriteBarIconProps) =>
       })}
     >
       {icon || children}
-      {count && <Caption Component="span" vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>}
+      {count && <Caption vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>}
     </button>
   );
 };
