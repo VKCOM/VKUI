@@ -49,7 +49,7 @@ const Caption: FC<CaptionProps> = ({
 };
 
 Caption.defaultProps = {
-  Component: 'div',
+  Component: 'span',
 };
 
 export default Caption;
