@@ -2,7 +2,6 @@ import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
-import { ANDROID } from '../../../lib/platform';
 
 export interface SubheadProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold' | 'bold';
@@ -17,10 +16,6 @@ const Subhead: FC<SubheadProps> = ({
 }: SubheadProps) => {
   const platform = usePlatform();
 
-  if (!Component) {
-    Component = platform === ANDROID ? 'h4' : 'h5';
-  }
-
   return (
     <Component
       {...restProps}
@@ -29,6 +24,10 @@ const Subhead: FC<SubheadProps> = ({
       {children}
     </Component>
   );
+};
+
+Subhead.defaultProps = {
+  Component: 'h4',
 };
 
 export default Subhead;
