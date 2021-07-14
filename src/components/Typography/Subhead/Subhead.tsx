@@ -11,7 +11,7 @@ export interface SubheadProps extends AllHTMLAttributes<HTMLElement> {
 const Subhead: FC<SubheadProps> = ({
   children,
   weight,
-  Component,
+  Component = 'h4',
   ...restProps
 }: SubheadProps) => {
   const platform = usePlatform();
@@ -24,10 +24,6 @@ const Subhead: FC<SubheadProps> = ({
       {children}
     </Component>
   );
-};
-
-Subhead.defaultProps = {
-  Component: 'h4',
 };
 
 export default Subhead;

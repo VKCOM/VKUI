@@ -11,7 +11,7 @@ export interface HeadlineProps extends AllHTMLAttributes<HTMLElement> {
 const Headline: FC<HeadlineProps> = ({
   children,
   weight,
-  Component,
+  Component = 'h3',
   ...restProps
 }: HeadlineProps) => {
   const platform = usePlatform();
@@ -24,10 +24,6 @@ const Headline: FC<HeadlineProps> = ({
       {children}
     </Component>
   );
-};
-
-Headline.defaultProps = {
-  Component: 'h3',
 };
 
 export default Headline;

@@ -14,7 +14,7 @@ const warn = warnOnce('Text');
 const Text: FC<TextProps> = ({
   children,
   weight,
-  Component,
+  Component = 'span',
   getRootRef,
   ...restProps
 }: TextProps) => {
@@ -33,10 +33,6 @@ const Text: FC<TextProps> = ({
       {children}
     </Component>
   );
-};
-
-Text.defaultProps = {
-  Component: 'span',
 };
 
 export default Text;
