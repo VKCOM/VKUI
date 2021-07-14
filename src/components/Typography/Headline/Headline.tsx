@@ -16,25 +16,18 @@ const Headline: FC<HeadlineProps> = ({
   ...restProps
 }: HeadlineProps) => {
   const platform = usePlatform();
-  let HeadlineComponent = Component;
 
   if (!Component) {
-    HeadlineComponent = platform === ANDROID ? 'h3' : 'h4';
-  }
-
-  let headlineWeight: HeadlineProps['weight'] = weight;
-
-  if (platform === ANDROID && weight === 'semibold') {
-    headlineWeight = 'medium';
+    Component = platform === ANDROID ? 'h3' : 'h4';
   }
 
   return (
-    <HeadlineComponent
+    <Component
       {...restProps}
-      vkuiClass={classNames(getClassName('Headline', platform), `Headline--w-${headlineWeight}`)}
+      vkuiClass={classNames(getClassName('Headline', platform), `Headline--w-${weight}`)}
     >
       {children}
-    </HeadlineComponent>
+    </Component>
   );
 };
 

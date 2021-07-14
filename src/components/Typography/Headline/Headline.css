@@ -16,3 +16,10 @@
 .Headline--w-semibold {
   font-weight: 600;
 }
+
+/**
+ * ANDROID
+ */
+.Headline--android.Headline--w-semibold {
+  font-weight: 500;
+}
