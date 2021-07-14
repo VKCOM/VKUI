@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
+import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
@@ -9,7 +9,7 @@ export interface HeadlineProps extends AllHTMLAttributes<HTMLElement> {
   Component?: ElementType;
 }
 
-const Headline: FunctionComponent<HeadlineProps> = ({
+const Headline: FC<HeadlineProps> = ({
   children,
   weight,
   Component,

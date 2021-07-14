@@ -1,4 +1,4 @@
-import { ElementType, FunctionComponent, AllHTMLAttributes } from 'react';
+import { ElementType, FC, AllHTMLAttributes } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
@@ -35,7 +35,7 @@ const getAndroidTitleWeight = (level: TitleProps['level'], weight: TitleProps['w
   return weight;
 };
 
-const Title: FunctionComponent<TitleProps> = ({
+const Title: FC<TitleProps> = ({
   children,
   weight,
   level,

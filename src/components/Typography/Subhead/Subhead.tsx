@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
+import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
@@ -9,7 +9,7 @@ export interface SubheadProps extends AllHTMLAttributes<HTMLElement> {
   Component?: ElementType;
 }
 
-const Subhead: FunctionComponent<SubheadProps> = ({
+const Subhead: FC<SubheadProps> = ({
   children,
   weight,
   Component,
@@ -17,8 +17,7 @@ const Subhead: FunctionComponent<SubheadProps> = ({
 }: SubheadProps) => {
   const platform = usePlatform();
 
-  let SubheadComponent: React.ElementType = Component;
-  let subheadWeight: SubheadProps['weight'] = platform === ANDROID && weight === 'semibold' ? 'medium' : weight;
+  let SubheadComponent: ElementType = Component;
 
   if (!Component) {
     SubheadComponent = platform === ANDROID ? 'h4' : 'h5';
