@@ -136,9 +136,9 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
             <BannerHeader size={size} Component="h2" vkuiClass="Banner__header">{header}</BannerHeader>
           )}
           {hasReactNode(subheader) && (
-            <BannerSubheader size={size} Component="span" vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
+            <BannerSubheader size={size} vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
           )}
-          {hasReactNode(text) && <Text Component="span" weight="regular" vkuiClass="Banner__text">{text}</Text>}
+          {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
           {hasReactNode(actions) && Children.count(actions) > 0 && (
             <div vkuiClass="Banner__actions">{actions}</div>
           )}

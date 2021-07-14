@@ -36,7 +36,7 @@ const PanelHeaderInTypography: FC<PanelHeaderProps> = ({ children }: PanelHeader
   const platform = usePlatform();
 
   return platform === VKCOM
-    ? <Text Component="span" weight="medium">{children}</Text>
+    ? <Text weight="medium">{children}</Text>
     : <span vkuiClass="PanelHeader__content-in">{children}</span>;
 };
 
