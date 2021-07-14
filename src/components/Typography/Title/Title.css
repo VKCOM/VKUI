@@ -1,4 +1,5 @@
 .Title {
+  display: block;
   margin: 0;
 }
 
@@ -35,4 +36,15 @@
 
 .Title--w-heavy {
   font-weight: 800;
+}
+
+/**
+ * ANDROID
+ */
+.Title--android.Title--w-semibold {
+  font-weight: 500;
+}
+
+.Title--android.Title--w-heavy {
+  font-weight: 700;
 }
