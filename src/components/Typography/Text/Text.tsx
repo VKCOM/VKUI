@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
+import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
@@ -12,7 +12,7 @@ export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HT
 }
 
 const warn = warnOnce('Text');
-const Text: FunctionComponent<TextProps> = ({
+const Text: FC<TextProps> = ({
   children,
   weight,
   Component,

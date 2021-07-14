@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
+import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
@@ -11,7 +11,7 @@ export interface CaptionProps extends AllHTMLAttributes<HTMLElement> {
   Component?: ElementType;
 }
 
-const Caption: FunctionComponent<CaptionProps> = ({
+const Caption: FC<CaptionProps> = ({
   children,
   weight,
   level,
