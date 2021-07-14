@@ -19,22 +19,6 @@ const getComponent = (level: TitleProps['level']): ElementType => {
   return ('h' + level) as ElementType;
 };
 
-const getAndroidTitleWeight = (level: TitleProps['level'], weight: TitleProps['weight']): TitleProps['weight'] => {
-  if (level === '3') {
-    return weight === 'regular' ? weight : 'medium';
-  }
-
-  if (level === '2' && weight === 'semibold') {
-    return 'medium';
-  }
-
-  if (weight === 'heavy') {
-    return 'bold';
-  }
-
-  return weight;
-};
-
 const Title: FC<TitleProps> = ({
   children,
   weight,
@@ -44,13 +28,14 @@ const Title: FC<TitleProps> = ({
 }: TitleProps) => {
   const platform = usePlatform();
   const TitleComponent = Component || getComponent(level);
-  let titleWeight = platform === ANDROID ? getAndroidTitleWeight(level, weight) : weight;
 
   if (platform === ANDROID && level === '3') {
+    const headlineWeight: HeadlineProps['weight'] = weight === 'regular' ? weight : 'medium';
+
     return <Headline
       Component={TitleComponent}
       {...restProps}
-      weight={titleWeight as HeadlineProps['weight']}
+      weight={headlineWeight}
     >
       {children}
     </Headline>;
@@ -62,7 +47,7 @@ const Title: FC<TitleProps> = ({
       vkuiClass={
         classNames(
           getClassName('Title', platform),
-          `Title--w-${titleWeight}`,
+          `Title--w-${weight}`,
           `Title--l-${level}`,
         )
       }
