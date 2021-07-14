@@ -45,7 +45,7 @@ const Text: FC<TextProps> = ({
 };
 
 Text.defaultProps = {
-  Component: 'div',
+  Component: 'span',
 };
 
 export default Text;
