@@ -11,14 +11,6 @@ export interface TitleProps extends AllHTMLAttributes<HTMLElement> {
   Component?: ElementType;
 }
 
-const getComponent = (level: TitleProps['level']): ElementType => {
-  if (!level) {
-    return 'div';
-  }
-
-  return ('h' + level) as ElementType;
-};
-
 const Title: FC<TitleProps> = ({
   children,
   weight,
@@ -27,14 +19,17 @@ const Title: FC<TitleProps> = ({
   ...restProps
 }: TitleProps) => {
   const platform = usePlatform();
-  const TitleComponent = Component || getComponent(level);
+
+  if (!Component) {
+    Component = ('h' + level) as ElementType;
+  }
 
   if (platform === ANDROID && level === '3') {
     const headlineWeight: HeadlineProps['weight'] = weight === 'regular' ? weight : 'medium';
 
     return (
       <Headline
-        Component={TitleComponent}
+        Component={Component}
         {...restProps}
         weight={headlineWeight}
       >
@@ -44,7 +39,7 @@ const Title: FC<TitleProps> = ({
   }
 
   return (
-    <TitleComponent
+    <Component
       {...restProps}
       vkuiClass={
         classNames(
@@ -55,7 +50,7 @@ const Title: FC<TitleProps> = ({
       }
     >
       {children}
-    </TitleComponent>
+    </Component>
   );
 };
 
