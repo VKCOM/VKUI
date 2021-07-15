@@ -69,10 +69,10 @@ const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
       <Component {...tappableProps} vkuiClass="ContentCard__tappable">
         {image && <img {...restProps} ref={getRef} src={image} alt={alt} vkuiClass="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
         <div vkuiClass="ContentCard__body">
-          {hasReactNode(subtitle) && <Caption caps vkuiClass="ContentCard__caption" weight="semibold" level="3">{subtitle}</Caption>}
-          {hasReactNode(header) && <Title vkuiClass="ContentCard__title" weight="semibold" level="3">{header}</Title>}
+          {hasReactNode(subtitle) && <Caption caps vkuiClass="ContentCard__text" weight="semibold" level="3">{subtitle}</Caption>}
+          {hasReactNode(header) && <Title vkuiClass="ContentCard__text" weight="semibold" level="3">{header}</Title>}
           {hasReactNode(text) && <Text vkuiClass="ContentCard__text" weight="regular">{text}</Text>}
-          {hasReactNode(caption) && <Caption vkuiClass="ContentCard__caption" weight="regular" level="1">{caption}</Caption>}
+          {hasReactNode(caption) && <Caption vkuiClass="ContentCard__text" weight="regular" level="1">{caption}</Caption>}
         </div>
       </Component>
     </Card>
