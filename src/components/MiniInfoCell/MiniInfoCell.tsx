@@ -69,21 +69,11 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props: MiniInfoCellProps) =>
         [`MiniInfoCell--wr-${textWrap}`]: textWrap !== 'nowrap',
       }, `MiniInfoCell--lvl-${textLevel}`)}
     >
-      <div vkuiClass="MiniInfoCell__icon">
-        {before}
-      </div>
-      <Text
-        Component="span"
-        vkuiClass="MiniInfoCell__content"
-        weight={mode === 'more' ? 'medium' : 'regular'}
-      >
+      <span vkuiClass="MiniInfoCell__icon">{before}</span>
+      <Text vkuiClass="MiniInfoCell__content" weight={mode === 'more' ? 'medium' : 'regular'}>
         {children}
       </Text>
-      {hasReactNode(after) &&
-      <div vkuiClass="MiniInfoCell__after">
-        {after}
-      </div>
-      }
+      {hasReactNode(after) && <span vkuiClass="MiniInfoCell__after">{after}</span>}
     </Component>
   );
 };
