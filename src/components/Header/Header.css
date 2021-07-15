@@ -34,7 +34,6 @@
 }
 
 .Header__subtitle {
-  margin-top: 1px;
   color: var(--text_secondary);
 }
 
@@ -123,10 +122,6 @@
 
 .Header--vkcom .Header__main {
   color: var(--text_primary);
-}
-
-.Header--vkcom .Header__subtitle {
-  margin-top: 2px;
 }
 
 .Header--vkcom.Header--mode-primary .Header__content:not(:last-child) {
