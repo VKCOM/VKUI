@@ -5,6 +5,7 @@
 }
 
 .InfoRow__header {
+  display: block;
   margin-bottom: 2px;
   color: var(--text_subhead);
   overflow: hidden;

@@ -1,4 +1,11 @@
-import React, { AllHTMLAttributes, Component, ElementType, RefCallback } from 'react';
+import React, {
+  AllHTMLAttributes,
+  Component,
+  ElementType,
+  KeyboardEventHandler,
+  KeyboardEvent,
+  RefCallback,
+} from 'react';
 import Touch, { TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { classNames } from '../../lib/classNames';
@@ -8,9 +15,10 @@ import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
 import { HasPlatform, HasRootRef, Ref } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
-import { hasHover } from '@vkontakte/vkjs/lib/InputUtils';
+import { hasHover } from '@vkontakte/vkjs';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
 
 export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;
@@ -35,6 +43,11 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
    * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
    */
   hoverMode?: 'opacity' | 'background' | string;
+  /**
+   * @ignore Временное свойство для работы над доступностью. Указывает, должен ли компонент показывать focus ring при навигации с клавиатуры.
+   * Исчезнет после того, как мы адаптируем отображение всех компонентов на базе Tappable.
+   */
+  hasFocusVisible?: boolean;
 }
 
 export interface TappableState {
@@ -120,6 +133,7 @@ class Tappable extends Component<TappableProps, TappableState> {
     role: 'button',
     stopPropagation: false,
     disabled: false,
+    hasFocusVisible: false,
     hasHover,
     hoverMode: 'background',
     hasActive: true,
@@ -128,10 +142,33 @@ class Tappable extends Component<TappableProps, TappableState> {
   };
 
   /*
+   * [a11y]
+   * Обрабатывает событие onkeydown
+   * для кастомных доступных элементов:
+   * - role="link" (активация по Enter)
+   * - role="button" (активация по Space и Enter)
+   */
+  onKeyDown: KeyboardEventHandler = (e: KeyboardEvent<HTMLElement>) => {
+    const { onKeyDown } = this.props;
+
+    if (shouldTriggerClickOnEnterOrSpace(e)) {
+      e.preventDefault();
+      this.container.click();
+    }
+
+    {
+      if (typeof onKeyDown === 'function') {
+        return onKeyDown(e);
+      }
+    }
+  };
+
+  /*
    * Обрабатывает событие touchstart
    */
   onStart: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
+
     if (this.state.hasActive) {
       if (originalEvent.touches && originalEvent.touches.length > 1) {
         deactivateOtherInstances();
@@ -306,8 +343,23 @@ class Tappable extends Component<TappableProps, TappableState> {
 
   render() {
     const { clicks, active, hovered, hasHover, hasActive } = this.state;
-    const { children, Component, activeEffectDelay,
-      stopPropagation, getRootRef, platform, sizeX, hasMouse, hasHover: propsHasHover, hoverMode, hasActive: propsHasActive, activeMode, ...restProps } = this.props;
+    const {
+      children,
+      Component,
+      activeEffectDelay,
+      stopPropagation,
+      getRootRef,
+      platform,
+      sizeX,
+      hasMouse,
+      hasHover: propsHasHover,
+      hoverMode,
+      hasActive: propsHasActive,
+      activeMode,
+      hasFocusVisible,
+      tabIndex,
+      ...restProps
+    } = this.props;
 
     const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
     const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
@@ -321,6 +373,7 @@ class Tappable extends Component<TappableProps, TappableState> {
         'Tappable--mouse': hasMouse,
         [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
         [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
+        'Tappable--focus-visible': hasFocusVisible,
         [hoverMode]: hasHover && hovered && !isPresetHoverMode,
         [activeMode]: hasActive && active && !isPresetActiveMode,
       });
@@ -338,6 +391,19 @@ class Tappable extends Component<TappableProps, TappableState> {
       props.onEnd = this.onEnd;
       /* eslint-enable */
       props.getRootRef = this.getRef;
+
+      /*
+       * [a11y]
+       * Проставляет tabindex и подменяет onKeyDown для нужных кастомных доступных элементов
+       */
+      const nativeComponents: ElementType[] = ['a', 'button', 'input', 'textarea', 'label'];
+      if (!nativeComponents.includes(Component) && !restProps.contentEditable) {
+        props.tabIndex = tabIndex !== undefined ? tabIndex : 0;
+
+        if (restProps.role === 'button' || restProps.role === 'link') {
+          props.onKeyDown = this.onKeyDown;
+        }
+      }
     } else {
       props.ref = this.getRef;
     }

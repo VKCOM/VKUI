@@ -9,12 +9,27 @@ import { HasPlatform } from '../../types';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { DOMProps, withDOM } from '../../lib/dom';
+import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
+import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
 
-export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+const warn = warnOnce('Root');
+
+export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, NavIdProps {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
+  /**
+   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
+   *
+   * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
+   */
   popout?: ReactNode;
+  /**
+   * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
+   *
+   * Свойство для отрисовки `ModalRoot`.
+   */
   modal?: ReactNode;
   /**
    * @ignore
@@ -24,6 +39,10 @@ export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
    * @ignore
    */
   configProvider?: ConfigProviderContextInterface;
+  /**
+   * @ignore
+   */
+  scroll?: ScrollContextInterface;
 }
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
@@ -66,10 +85,6 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     return this.props.document;
   }
 
-  get window() {
-    return this.props.window;
-  }
-
   componentDidUpdate(prevProps: RootProps, prevState: RootState) {
     if (this.props.popout && !prevProps.popout) {
       this.blurActiveElement();
@@ -77,10 +92,10 @@ class Root extends Component<RootProps & DOMProps, RootState> {
 
     // Нужен переход
     if (this.props.activeView !== prevProps.activeView) {
-      let pageYOffset = this.window.pageYOffset;
-      const firstLayerId = [].concat(prevProps.children).find((view: ReactElement) => {
-        return view.props.id === prevProps.activeView || view.props.id === this.props.activeView;
-      }).props.id;
+      let pageYOffset = this.props.scroll.getScroll().y;
+      const firstLayerId = [].concat(prevProps.children)
+        .map((view) => getNavId(view.props, warn))
+        .find((id) => id === prevProps.activeView || id === this.props.activeView);
       const isBack = firstLayerId === this.props.activeView;
 
       this.blurActiveElement();
@@ -159,14 +174,14 @@ class Root extends Component<RootProps & DOMProps, RootState> {
         transition: false,
         isBack: undefined,
       }, () => {
-        this.window.scrollTo(0, isBack ? this.state.scrolls[this.state.activeView] : 0);
+        this.props.scroll.scrollTo(0, isBack ? this.state.scrolls[this.state.activeView] : 0);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevView, to: nextView });
       });
     }
   };
 
   blurActiveElement() {
-    if (typeof this.window !== 'undefined' && this.document.activeElement) {
+    if (canUseDOM && this.document.activeElement) {
       (this.document.activeElement as HTMLElement).blur();
     }
   }
@@ -175,13 +190,13 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     const {
       popout, modal, platform,
       splitCol, configProvider, activeView: _1, onTransition,
-      window, document,
+      window, document, scroll,
       ...restProps
     } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
     const Views = React.Children.toArray(this.props.children).filter((view: ReactElement) => {
-      return this.state.visibleViews.includes(view.props.id);
+      return this.state.visibleViews.includes(getNavId(view.props, warn));
     });
 
     const baseClassName = getClassName('Root', platform);
@@ -193,13 +208,14 @@ class Root extends Component<RootProps & DOMProps, RootState> {
         'Root--no-motion': disableAnimation,
       })}>
         {Views.map((view: ReactElement) => {
+          const viewId = getNavId(view.props, warn);
           return (
-            <div key={view.props.id} ref={(e) => this.viewNodes[view.props.id] = e} vkuiClass={classNames('Root__view', {
-              'Root__view--hide-back': view.props.id === prevView && isBack,
-              'Root__view--hide-forward': view.props.id === prevView && !isBack,
-              'Root__view--show-back': view.props.id === nextView && isBack,
-              'Root__view--show-forward': view.props.id === nextView && !isBack,
-              'Root__view--active': view.props.id === activeView,
+            <div key={viewId} ref={(e) => this.viewNodes[viewId] = e} vkuiClass={classNames('Root__view', {
+              'Root__view--hide-back': viewId === prevView && isBack,
+              'Root__view--hide-forward': viewId === prevView && !isBack,
+              'Root__view--show-back': viewId === nextView && isBack,
+              'Root__view--show-forward': viewId === nextView && !isBack,
+              'Root__view--active': viewId === activeView,
             })}>
               {view}
             </div>
@@ -214,8 +230,8 @@ class Root extends Component<RootProps & DOMProps, RootState> {
   }
 }
 
-export default withContext(withContext(
+export default withContext(withContext(withContext(
   withPlatform(withDOM<RootProps>(Root)),
   SplitColContext,
   'splitCol',
-), ConfigProviderContext, 'configProvider');
+), ConfigProviderContext, 'configProvider'), ScrollContext, 'scroll');

@@ -1,5 +1,6 @@
-import { AllHTMLAttributes, FC, ReactNode, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import React, { AllHTMLAttributes, FC, ReactNode, MouseEvent, useEffect, useRef, useState } from 'react';
 import { classNames } from '../../lib/classNames';
+import { getTitleFromChildren } from '../../lib/utils';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
@@ -7,6 +8,7 @@ import { useDOM } from '../../lib/dom';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';
 import IconButton from '../IconButton/IconButton';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 
 export interface RemovePlaceholderProps {
   /**
@@ -40,19 +42,15 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
   const [isRemoveActivated, setRemoveActivated] = useState(false);
   const [removeOffset, updateRemoveOffset] = useState(0);
 
-  const deactivateRemove = useCallback(() => {
+  useGlobalEventListener(document, 'click', isRemoveActivated && (() => {
     setRemoveActivated(false);
     updateRemoveOffset(0);
-
-    document.removeEventListener('click', deactivateRemove);
-  }, [setRemoveActivated, updateRemoveOffset]);
+  }));
 
   const onRemoveActivateClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
     setRemoveActivated(true);
-
-    document.addEventListener('click', deactivateRemove);
   };
 
   const onRemoveClick = (e: MouseEvent) => {
@@ -67,11 +65,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
     }
   }, [isRemoveActivated]);
 
-  useEffect(() => {
-    return () => {
-      document.removeEventListener('click', deactivateRemove);
-    };
-  }, [deactivateRemove]);
+  const removePlaceholderString: string = getTitleFromChildren(removePlaceholder);
 
   return (
     <div
@@ -82,31 +76,49 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
         `Removable--sizeY-${sizeY}`,
       )}
     >
-      <div vkuiClass="Removable__content" style={platform === IOS ? { transform: `translateX(-${removeOffset}px)` } : null}>
-        {children}
+      {(platform === ANDROID || platform === VKCOM) && (
+        <div vkuiClass="Removable__content">
+          {children}
 
-        {(platform === ANDROID || platform === VKCOM) &&
-          <IconButton vkuiClass="Removable__control Removable__remove" onClick={onRemoveClick}>
+          <IconButton
+            aria-label={removePlaceholderString}
+            vkuiClass="Removable__action Removable__action--remove"
+            onClick={onRemoveClick}
+          >
             <Icon24Cancel />
           </IconButton>
-        }
-        {platform === IOS && (
-          <button vkuiClass="Removable__control Removable__indicator" onClick={onRemoveActivateClick}>
-            <i vkuiClass="Removable__indicator-in" />
-          </button>
-        )}
-      </div>
+        </div>
+      )}
 
-      {platform === IOS &&
-        <button
-          ref={removeButtonRef}
-          vkuiClass="Removable__remove"
-          onClick={onRemoveClick}
-          style={{ transform: `translateX(-${removeOffset}px)` }}
-        >
-          <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
-        </button>
-      }
+      {platform === IOS && (
+        <React.Fragment>
+          <div vkuiClass="Removable__content" style={{ transform: `translateX(-${removeOffset}px)` }}>
+            <button
+              type="button"
+              aria-label={removePlaceholderString}
+              vkuiClass="Removable__action Removable__action--indicator"
+              onClick={onRemoveActivateClick}
+            >
+              <i vkuiClass="Removable__action-in" role="presentation" />
+            </button>
+
+            {children}
+
+            <span vkuiClass="Removable__offset" aria-hidden="true"></span>
+          </div>
+
+          <button
+            type="button"
+            tabIndex={isRemoveActivated ? null : -1}
+            ref={removeButtonRef}
+            vkuiClass="Removable__action Removable__action--remove"
+            onClick={onRemoveClick}
+            style={{ transform: `translateX(-${removeOffset}px)` }}
+          >
+            <span vkuiClass="Removable__action-in">{removePlaceholder}</span>
+          </button>
+        </React.Fragment>
+      )}
     </div>
   );
 }, {

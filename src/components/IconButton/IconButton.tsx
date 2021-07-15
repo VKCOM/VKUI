@@ -11,21 +11,25 @@ export interface IconButtonProps extends TappableProps {
    * @deprecated будет удалено в 5.0.0. Используйте `children`
    */
   icon?: ReactNode;
+  /**
+   * Задайте вашей кнопке текстовое содержание для повышения ее доступности.
+   */
+  'aria-label'?: string;
 }
 
 const IconButton: FunctionComponent<IconButtonProps> = ({
   icon,
   sizeY,
   children,
+  Component,
   ...restProps
 }: IconButtonProps) => {
-  const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
 
   return (
     <Tappable
       {...restProps}
-      Component={Component}
+      Component={restProps.href ? 'a' : Component}
       activeEffectDelay={200}
       activeMode={platform === IOS ? 'opacity' : 'IconButton--active'}
       vkuiClass={classNames(
@@ -36,6 +40,10 @@ const IconButton: FunctionComponent<IconButtonProps> = ({
       {icon || children}
     </Tappable>
   );
+};
+
+IconButton.defaultProps = {
+  Component: 'button',
 };
 
 export default withAdaptivity(IconButton, {

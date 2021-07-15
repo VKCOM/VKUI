@@ -28,29 +28,34 @@
     "no-restricted-imports": ["error", {
       "paths": [
         // prevent absolute imports from src subfolders like `import { ... } from "lib"`
-        "appearance", 
-        "components", 
-        "helpers", 
-        "hoc", 
-        "hooks", 
-        "lib", 
-        "styles", 
-        "testing", 
-        "types", 
-        "unstable"
+        "appearance",
+        "components",
+        "helpers",
+        "hoc",
+        "hooks",
+        "lib",
+        "styles",
+        "testing",
+        "types",
+        "unstable",
+        {
+          "name": "react",
+          "importNames": ["useLayoutEffect"],
+          "message": "Prefer lib/useIsomorphicLayoutEffect"
+        }
       ],
       "patterns": [
         "@vkontakte/icons/dist/*",
         // prevent absolute imports from src subfolders like `import { ... } from "lib/platform"`
-        "appearance/*", 
-        "components/*", 
-        "helpers/*", 
-        "hoc/*", 
-        "hooks/*", 
-        "lib/*", 
-        "styles/*", 
-        "testing/*", 
-        "types/*", 
+        "appearance/*",
+        "components/*",
+        "helpers/*",
+        "hoc/*",
+        "hooks/*",
+        "lib/*",
+        "styles/*",
+        "testing/*",
+        "types/*",
         "unstable/*"
       ]
     }],
@@ -76,7 +81,17 @@
       "property": "getElementById",
       "message": "Absolutely do not use id"
     }],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-restricted-syntax": ["error",
+      {
+        "selector": "ImportDeclaration[source.value=/^\\W+(index(\\.ts)?)?$/i]",
+        "message": "Do not import index"
+      },
+      {
+        "selector": "ImportDeclaration[source.value=/\\.css$/i] ~ ImportDeclaration[source.value!=/\\.css$/i]",
+        "message": "CSS import must be last"
+      }
+    ]
   },
   "overrides": [
     {

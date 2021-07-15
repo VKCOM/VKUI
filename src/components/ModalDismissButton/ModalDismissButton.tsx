@@ -4,9 +4,11 @@ import Tappable from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 
-export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement>;
+export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement> & {
+  'aria-label'?: string;
+};
 
-const ModalDismissButton: FC<ModalDismissButtonProps> = (props) => {
+const ModalDismissButton: FC<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => {
   const platform = usePlatform();
   return (
     <Tappable
@@ -18,6 +20,10 @@ const ModalDismissButton: FC<ModalDismissButtonProps> = (props) => {
       <Icon20Cancel />
     </Tappable>
   );
+};
+
+ModalDismissButton.defaultProps = {
+  'aria-label': 'Закрыть',
 };
 
 export default ModalDismissButton;

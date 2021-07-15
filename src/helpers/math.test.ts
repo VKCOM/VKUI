@@ -34,4 +34,13 @@ describe(rescale, () => {
   it('rounds precision', () => {
     expect(rescale(3.1415926, [3, 4], [3, 4], { step: 0.01 })).toBe(3.14);
   });
+  describe('non-divisor step', () => {
+    it('rounds to min + k * step when min != n * step', () => {
+      expect(rescale(0.1, [0.1, 3.1], [0.1, 3.1], { step: 2 })).toBe(0.1);
+      expect(rescale(3, [1, 5], [1, 5], { step: 2 })).toBe(3);
+    });
+    it('clamps to min + min(max, min + k * step) when max != min + n * step', () => {
+      expect(rescale(3, [0, 3], [0, 3], { step: 2 })).toBe(2);
+    });
+  });
 });

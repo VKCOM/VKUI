@@ -1,6 +1,5 @@
 .CellButton {
   box-sizing: border-box;
-  outline: none;
   text-decoration: none;
   margin: 0;
   border: none;
@@ -28,6 +27,10 @@
 
 .CellButton--centered > .Icon {
   padding-right: 8px;
+}
+
+.CellButton > .Avatar {
+  color: var(--button_muted_background);
 }
 
 .CellButton--primary,

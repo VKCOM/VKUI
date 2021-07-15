@@ -11,6 +11,8 @@ import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { PanelContextProps } from '../Panel/PanelContext';
 import { DOMProps, withDOM } from '../../lib/dom';
+import { IOS } from '../../lib/platform';
+import { warnOnce } from '../../lib/warnOnce';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,
@@ -32,13 +34,17 @@ export interface FixedLayoutProps extends
 export interface FixedLayoutState {
   position: 'absolute' | null;
   top: number;
+  bottom: number;
   width: string;
 }
+
+const warn = warnOnce('FixedLayout');
 
 class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelContextProps, FixedLayoutState> {
   state: FixedLayoutState = {
     position: 'absolute',
     top: null,
+    bottom: null,
     width: '',
   };
 
@@ -57,8 +63,8 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
   get currentPanel(): HTMLElement {
     const elem = this.props.getPanelNode();
 
-    if (!elem) {
-      console.warn('[VKUI/FixedLayout] Panel element not found');
+    if (process.env.NODE_ENV === 'development' && !elem) {
+      warn('Panel element not found');
     }
 
     return elem;
@@ -90,18 +96,27 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
 
   onViewTransitionStart: EventListener = (e: CustomEvent<TransitionStartEventDetail>) => {
     let panelScroll = e.detail.scrolls[this.props.panel] || 0;
+
+    // support for unstable ViewInfinite
+    if (Array.isArray(panelScroll)) {
+      const scrolls = panelScroll as number[];
+      panelScroll = scrolls[scrolls.length - 1];
+    }
+
     const fromPanelHasScroll = this.props.panel === e.detail.from && panelScroll > 0;
     const toPanelHasScroll = this.props.panel === e.detail.to && panelScroll > 0;
 
-    // если переход назад - анимация только у панели с которой уходим (detail.from), и подстраиваться под скролл надо только на ней
-    const panelAnimated = !(this.props.panel === e.detail.to && e.detail.isBack);
+    // если переход назад на Android - анимация только у панели с которой уходим (detail.from), и подстраиваться под скролл надо только на ней
+    // на iOS переход между панелями горизонтальный, поэтому там нужно подстраивать хедеры на обеих панелях
+    const panelAnimated = this.props.platform === IOS || !(this.props.panel === e.detail.to && e.detail.isBack);
 
     // Для панелей, с которых уходим всегда выставляется скролл
     // Для панелей на которые приходим надо смотреть, есть ли браузерный скролл и применяется ли к ней анимация перехода:
     if (fromPanelHasScroll || toPanelHasScroll && this.canTargetPanelScroll && panelAnimated) {
       this.setState({
         position: 'absolute',
-        top: this.el.offsetTop + panelScroll,
+        top: this.props.vertical === 'top' || fromPanelHasScroll ? this.el.offsetTop + panelScroll : null,
+        bottom: this.props.vertical === 'bottom' && !fromPanelHasScroll ? -panelScroll : null,
         width: '',
       });
     }
@@ -111,6 +126,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     this.setState({
       position: null,
       top: null,
+      bottom: null,
     });
 
     this.doResize();

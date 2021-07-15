@@ -3,6 +3,7 @@ const merge = require('webpack-merge');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+process.env.BABEL_KEEP_CSS = '1';
 const config = {
   entry: {
     vkui: './src/vkui.js',

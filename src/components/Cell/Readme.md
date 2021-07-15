@@ -21,7 +21,7 @@
             <Group header={<Header mode="secondary">Выделение</Header>}>
               <Cell selectable before={<Avatar />}>Артур Стамбульцян</Cell>
               <Cell selectable before={<Avatar />}>Игорь Федоров</Cell>
-              <Cell selectable before={<Avatar />}>Михаил Лихачев</Cell>
+              <Cell selectable disabled before={<Avatar />}>Михаил Лихачев</Cell>
             </Group>
             {this.state.removeList.length > 0 &&
               <Group header={<Header mode="secondary">Удаление</Header>}>

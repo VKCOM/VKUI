@@ -1,4 +1,6 @@
-@import '../src/styles/styles.css';
+/* import all global styles that are not imported by the components */
+@import '../src/styles/themes.css';
+@import '../src/styles/components.css';
 @import '../src/styles/unstable.css';
 
 @font-face {
@@ -22,7 +24,7 @@
   src: url(/font/Roboto-Bold.ttf) format('truetype');
 }
 
-#mount {
+.vkui__root {
   /* Force use embedded Roboto font for cross-platformity */
   --font-common: 'Roboto';
   --font-tt: 'Roboto';

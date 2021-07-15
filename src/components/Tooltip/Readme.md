@@ -37,7 +37,6 @@ import { Tooltip, Button } from '@vkontakte/vkui';
     }
 
     render () {
-
       return (
         <View activePanel={this.state.activePanel}>
 
@@ -78,7 +77,6 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                   <Tooltip
                     isShown={this.state.tooltip2}
                     onClose={() => this.setState({ tooltip2: false, tooltip3: true })}
-                    alignX="right"
                     cornerOffset={-10}
                     offsetX={7}
                     text="Обновлённый раздел поможет найти друзей"
@@ -106,6 +104,10 @@ import { Tooltip, Button } from '@vkontakte/vkui';
                 >Команда ВКонтакте</Cell>
                 <Cell before={<Avatar />} description="Музыкант">Robbie Williams</Cell>
                 <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
+                <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
+                <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
+                <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
+                <Cell before={<Avatar />} description="Издательский дом">ПостНаука</Cell>
               </List>
             </Group>
           </Panel>
@@ -126,16 +128,72 @@ import { Tooltip, Button } from '@vkontakte/vkui';
 - в скроллящемся контейнере — замените какой-нибудь элемент, внутри которого нет скролла, на `<TooltipContainer>` и добавьте ему `position: relative` (или другую не-static).
 - внутри `position: fixed` — `<TooltipContainer fixed>`
 
-```jsx { "props": { "autoLayout": false } }
+```jsx { "props": { "autoLayout": "root" } }
 <>
-  <TooltipContainer style={{ minHeight: '300vh' }}>
+  <TooltipContainer style={{ minHeight: '120vh' }}>
     <Tooltip text="Я скроллюсь">
-      <Avatar />
+      <div style={{ display: 'inline-block' }}>
+        <Avatar />
+      </div>
     </Tooltip>
   </TooltipContainer>
+  <TooltipContainer
+    fixed
+    style={{ 
+      minHeight: '30px', 
+      border: '1px solid', 
+      margin: '100px 100px 0', 
+      position: 'relative', 
+      background: 'var(--background_content)',
+      zIndex: 1,
+    }}
+  >
+    <Tooltip text="Я вылезаю (fixed)">
+      <div style={{ display: 'inline-block' }}>
+        <Avatar />
+      </div>
+    </Tooltip>
+  </TooltipContainer>
+  <TooltipContainer style={{ 
+    minHeight: '100vh', 
+    border: '1px solid', 
+    margin: '64px 100px 100px', 
+    position: 'relative', 
+    background: 'var(--background_content)',
+    zIndex: 1,
+  }}>
+    <Tooltip text="Я прилип слева">
+      <div style={{ display: 'inline-block', position: 'absolute', right: 0 }}>
+        <Avatar />
+      </div>
+    </Tooltip>
+    <Tooltip text="Я прилип справа">
+      <div style={{ display: 'inline-block' }}>
+        <Avatar />
+      </div>
+    </Tooltip>
+    <Tooltip text="Я прилип слева">
+      <div style={{ display: 'inline-block', position: 'absolute', left: 0, bottom: 0 }}>
+        <Avatar />
+      </div>
+    </Tooltip>
+    <Tooltip text="Я прилип справа">
+      <div style={{ display: 'inline-block', position: 'absolute', right: 0, bottom: 0 }}>
+        <Avatar />
+      </div>
+    </Tooltip>
+    <Tooltip text="Я по центру 😎">
+      <div style={{ display: 'inline-block', position: 'absolute', left: '50%', top: '50%', transform: 'translate(50%, 50%)' }}>
+        <Avatar />
+      </div>
+    </Tooltip>
+  </TooltipContainer>
+  <div style={{ height: '100vh' }}></div>
   <TooltipContainer fixed style={{ position: 'fixed', bottom: 0, width: '100%' }}>
-    <Tooltip alignY='top' text="Я прибит к низу">
-      <Avatar />
+    <Tooltip text="Я прибит к низу">
+      <div style={{ display: 'inline-block' }}>
+        <Avatar />
+      </div>
     </Tooltip>
   </TooltipContainer>
 </>

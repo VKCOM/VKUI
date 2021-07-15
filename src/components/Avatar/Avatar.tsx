@@ -58,8 +58,8 @@ const Avatar: FunctionComponent<AvatarProps> = ({
           vkuiClass="Avatar__img"
           src={src}
         />
-        {shadow && <span vkuiClass="Avatar__shadow" />}
         {children && <div vkuiClass="Avatar__children">{children}</div>}
+        {shadow && <span vkuiClass="Avatar__shadow" />}
       </div>
     </div>
   );

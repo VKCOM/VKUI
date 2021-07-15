@@ -1,5 +1,5 @@
 import { HTMLAttributes, ReactNode, FC, useContext } from 'react';
-import PanelHeaderButton from '../PanelHeaderButton/PanelHeaderButton';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { Icon24Dismiss } from '@vkontakte/icons';
@@ -13,8 +13,10 @@ import Title from '../Typography/Title/Title';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import ModalRootContext, { useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { ModalType } from '../ModalRoot/types';
+import { getNavId, NavIdProps } from '../../lib/getNavId';
+import { warnOnce } from '../../lib/warnOnce';
 
-export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
+export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps, NavIdProps {
   /**
    * Иконка.
    *
@@ -50,6 +52,8 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
   onClose?: VoidFunction;
 }
 
+const warn = warnOnce('ModalCard');
+
 const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   const {
     icon,
@@ -63,6 +67,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
     viewWidth,
     viewHeight,
     hasMouse,
+    nav,
     ...restProps
   } = props;
 
@@ -71,7 +76,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
   const modalContext = useContext(ModalRootContext);
-  const { refs } = useModalRegistry(props.id, ModalType.CARD);
+  const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);
 
   return (
     <div

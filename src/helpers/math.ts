@@ -5,14 +5,28 @@ export function precisionRound(number: number, precision = 1) {
   return Math.round(number * factor) / factor;
 }
 
-export function rescale(value: number, from: [number, number], to: [number, number], options: { step?: number } = {}) {
-  const res = clamp((value - from[0]) / (from[1] - from[0]) * (to[1] - to[0]) + to[0], ...to);
+function precision(number: number) {
+  return (`${number}`.split('.')[1] || '').length;
+}
 
-  const { step = 0 } = options;
-  if (step > 0) {
-    const stepFloatPart = `${step}`.split('.')[1] || '';
-    return precisionRound(Math.round(res / step) * step, stepFloatPart.length);
+function decimatedClamp(val: number, min: number, max: number, step?: number) {
+  if (step == null || step <= 0) {
+    return clamp(val, min, max);
   }
+  const prec = precision(step);
+  // Round value to nearest min + k1 * step
+  const decimatedOffset = precisionRound(Math.round((val - min) / step) * step, prec);
+  // Round range length _down_ to nearest min + k2 * step
+  const decimatedRange = precisionRound(Math.floor((max - min) / step) * step, prec);
+  return min + clamp(decimatedOffset, 0, decimatedRange);
+}
 
-  return res;
+export function rescale(
+  value: number,
+  from: [number, number],
+  to: [number, number],
+  options: { step?: number } = {},
+) {
+  const scaled = (value - from[0]) / (from[1] - from[0]) * (to[1] - to[0]) + to[0];
+  return decimatedClamp(scaled, to[0], to[1], options.step);
 }

@@ -1,12 +1,13 @@
-import '../src/styles/styles.css';
+import '../src/styles/themes.css';
 import '../src/styles/unstable.css';
 
+import { useState, useRef } from 'react';
 import pkg from '../package';
 import * as VKUI from '../src';
 import * as VKUIUnstable from '../src/unstable';
 import { createMasks } from '../src/components/UsersStack/masks';
 import * as Icons from '@vkontakte/icons';
-import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl } from './utils';
+import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl, perfLogger } from './utils';
 
 const ui = { ...VKUI, ...VKUIUnstable };
 
@@ -43,3 +44,7 @@ window.getRandomUser = getRandomUser;
 window.getRandomUsers = getRandomUsers;
 window.importantCountries = importantCountries;
 window.getAvatarUrl = getAvatarUrl;
+window.perfLogger = perfLogger;
+
+window.useState = useState;
+window.useRef = useRef;

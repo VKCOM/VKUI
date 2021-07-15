@@ -1,4 +1,5 @@
 import React, {
+  ChangeEventHandler,
   createRef,
   KeyboardEvent,
   MouseEvent,
@@ -14,6 +15,8 @@ import { withAdaptivity } from '../../hoc/withAdaptivity';
 import { withPlatform } from '../../hoc/withPlatform';
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { getClassName } from '../../helpers/getClassName';
+import { FormFieldProps } from '../FormField/FormField';
+import { HasPlatform } from '../../types';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -24,14 +27,14 @@ export interface CustomSelectOptionInterface {
 }
 
 interface CustomSelectState {
-  value: SelectValue;
   opened?: boolean;
   focused?: boolean;
-  focusedOptionIndex: number;
-  selectedOptionIndex: number;
+  focusedOptionIndex?: number;
+  selectedOptionIndex?: number;
+  nativeSelectValue?: SelectValue;
 }
 
-export interface CustomSelectProps extends NativeSelectProps {
+export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormFieldProps {
   options: Array<{
     value: SelectValue;
     label: string;
@@ -59,7 +62,9 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   public constructor(props: CustomSelectProps) {
     super(props);
 
-    const { value } = props;
+    const { value, defaultValue } = props;
+
+    const initialValue = value !== undefined ? value : defaultValue;
 
     this.keyboardInput = '';
 
@@ -67,13 +72,18 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       opened: false,
       focused: false,
       focusedOptionIndex: -1,
-      selectedOptionIndex: props.options.findIndex((option) => option.value === value),
-      value,
+      selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
+      nativeSelectValue: initialValue,
     };
+
+    if (props.value !== undefined) {
+      this.isControlledOutside = true;
+    }
   }
 
   public state: CustomSelectState;
   private keyboardInput: string;
+  private isControlledOutside: boolean;
   private node: HTMLLabelElement;
   private selectEl: HTMLSelectElement;
   private readonly scrollBoxRef = createRef<HTMLDivElement>();
@@ -92,6 +102,13 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     return options[selectedOptionIndex];
   };
+
+  findSelectedIndex(options: CustomSelectOptionInterface[], value: SelectValue) {
+    return options.findIndex((item) => {
+      value = typeof item.value === 'number' ? Number(value) : value;
+      return item.value === value;
+    });
+  }
 
   open = () => {
     this.setState(({ selectedOptionIndex }) => ({
@@ -135,8 +152,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     const item = options[index];
 
     this.setState({
-      selectedOptionIndex: index,
-      value: item.value,
+      nativeSelectValue: item.value,
     }, () => {
       const event = new Event('change', { bubbles: true });
       this.selectEl.dispatchEvent(event);
@@ -265,6 +281,18 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.keyboardInput = fullInput;
   };
 
+  onNativeSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const value = e.currentTarget.value;
+    if (!this.isControlledOutside) {
+      this.setState({
+        selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
+      });
+    }
+    if (this.props.onChange) {
+      this.props.onChange(e);
+    }
+  };
+
   handleKeyDownSelect = (event: KeyboardEvent) => {
     const { opened } = this.state;
 
@@ -309,9 +337,12 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   }
 
   componentDidUpdate(prevProps: CustomSelectProps) {
-    if (prevProps.options !== this.props.options || prevProps.value !== this.props.value) {
+    if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
+      this.isControlledOutside = this.props.value !== undefined;
+      const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
       this.setState({
-        selectedOptionIndex: this.props.options.findIndex((option) => option.value === this.props.value),
+        nativeSelectValue: value,
+        selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
       });
     }
   }
@@ -348,7 +379,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   render() {
-    const { opened, value } = this.state;
+    const { opened, nativeSelectValue } = this.state;
     const {
       name,
       className,
@@ -395,10 +426,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         <select
           ref={this.selectRef}
           name={name}
-          onChange={onChange}
+          onChange={this.onNativeSelectChange}
           onBlur={onBlur}
           onFocus={onFocus}
-          value={value}
+          value={nativeSelectValue}
           vkuiClass="CustomSelect__control"
         >
           {options.map((item) => <option key={`${item.value}`} value={item.value} />)}

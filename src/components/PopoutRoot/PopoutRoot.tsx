@@ -1,59 +1,43 @@
-import { Component, HTMLAttributes, ReactNode } from 'react';
-import { HasPlatform, HasRootRef } from '../../types';
-import { withAdaptivity, ViewWidth, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { FC, HTMLAttributes, ReactNode, useEffect } from 'react';
+import { HasRootRef } from '../../types';
+import { withAdaptivity, ViewWidth, ViewHeight, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { DOMProps, withDOM } from '../../lib/dom';
+import { blurActiveElement, useDOM } from '../../lib/dom';
 
-export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps, HasRootRef<HTMLDivElement> {
+export interface PopoutRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps, HasRootRef<HTMLDivElement> {
   popout?: ReactNode;
   modal?: ReactNode;
 }
 
-class PopoutRoot extends Component<PopoutRootProps & DOMProps> {
-  static defaultProps: Partial<PopoutRootProps> = {
-    popout: null,
-  };
+export const PopoutRootComponent: FC<PopoutRootProps> = (props: PopoutRootProps) => {
+  const { popout, modal, viewWidth, viewHeight, hasMouse, children, getRootRef, ...restProps } = props;
+  const { document } = useDOM();
 
-  get document() {
-    return this.props.document;
-  }
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
-  get window() {
-    return this.props.window;
-  }
+  useEffect(() => {
+    popout && blurActiveElement(document);
+  }, [!!popout]);
 
-  componentDidUpdate(prevProps: PopoutRootProps) {
-    if (this.props.popout && !prevProps.popout) {
-      this.blurActiveElement();
-    }
-  }
+  return (
+    <div
+      {...restProps}
+      vkuiClass="PopoutRoot"
+      ref={getRootRef}
+    >
+      {children}
+      <AppRootPortal>
+        {!!popout && <div vkuiClass={isDesktop ? 'PopoutRoot--absolute' : 'PopoutRoot__popout'}>{popout}</div>}
+        {!!modal && <div vkuiClass="PopoutRoot__modal">{modal}</div>}
+      </AppRootPortal>
+    </div>
+  );
+};
 
-  blurActiveElement() {
-    if (typeof this.window !== 'undefined' && this.document.activeElement) {
-      (this.document.activeElement as HTMLElement).blur();
-    }
-  }
+PopoutRootComponent.displayName = 'PopoutRoot';
 
-  render() {
-    const { popout, modal, viewWidth, children, getRootRef, window, document, ...restProps } = this.props;
-    const isDesktop = viewWidth >= ViewWidth.TABLET;
-
-    return (
-      <div
-        {...restProps}
-        vkuiClass="PopoutRoot"
-        ref={getRootRef}
-      >
-        {children}
-        <AppRootPortal>
-          {!!popout && <div vkuiClass={isDesktop ? 'PopoutRoot--absolute' : 'PopoutRoot__popout'}>{popout}</div>}
-          {!!modal && <div vkuiClass="PopoutRoot__modal">{modal}</div>}
-        </AppRootPortal>
-      </div>
-    );
-  }
-}
-
-export default withAdaptivity(withDOM<PopoutRootProps>(PopoutRoot), {
+export const PopoutRoot = withAdaptivity(PopoutRootComponent, {
   viewWidth: true,
+  viewHeight: true,
+  hasMouse: true,
 });

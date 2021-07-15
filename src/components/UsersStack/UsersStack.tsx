@@ -28,7 +28,7 @@ export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
   visibleCount?: number;
 }
 
-const UsersStack: FC<UsersStackProps> = (props) => {
+const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
   const { system, systemVersion } = useBrowserInfo();
   const platform = usePlatform();
   const { photos, visibleCount, size, layout, children, ...restProps } = props;
@@ -62,7 +62,7 @@ const UsersStack: FC<UsersStackProps> = (props) => {
         )
       }
     >
-      <div vkuiClass="UsersStack__photos">
+      <div vkuiClass="UsersStack__photos" role="presentation">
         {photosShown.map((photo, i) => (
           <div
             key={i}
@@ -72,7 +72,7 @@ const UsersStack: FC<UsersStackProps> = (props) => {
         ))}
 
         {canShowOthers &&
-          <Caption weight="medium" level="1" vkuiClass="UsersStack__photo UsersStack__photo--others">
+          <Caption weight="medium" level="1" vkuiClass="UsersStack__photo UsersStack__photo--others" aria-hidden="true">
             <span>+{othersCount}</span>
           </Caption>
         }

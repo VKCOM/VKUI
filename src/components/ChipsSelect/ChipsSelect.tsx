@@ -13,10 +13,12 @@ import ChipsInput, { ChipsInputOption, ChipsInputProps, ChipsInputValue, RenderC
 import CustomSelectOption, { CustomSelectOptionProps } from '../CustomSelectOption/CustomSelectOption';
 import { useChipsSelect } from './useChipsSelect';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { setRef, noop } from '../../lib/utils';
+import { noop } from '../../lib/utils';
 import { useDOM } from '../../lib/dom';
 import Caption from '../Typography/Caption/Caption';
 import { prefixClass } from '../../lib/prefixClass';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
@@ -63,13 +65,13 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     style, onFocus, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText, sizeY,
-    closeAfterSelect, onChangeStart, ...restProps
+    closeAfterSelect, onChangeStart, after, ...restProps
   } = props;
 
   const { document } = useDOM();
 
   const scrollBoxRef = useRef<HTMLDivElement>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useExternRef(getRef);
   const {
     fieldValue, selectedOptions, opened, setOpened, addOptionFromInput,
     filteredOptions, addOption, handleInputChange, clearInput,
@@ -187,7 +189,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
       }
     }
 
-    if (e.key === 'Escape' && !e.defaultPrevented && opened) {
+    if (['Escape', 'Tab'].includes(e.key) && !e.defaultPrevented && opened) {
       setOpened(false);
     }
   };
@@ -208,19 +210,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     }
   }, [filteredOptions, focusedOption, showCreatable, closeAfterSelect]);
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    const { current: element } = rootRef;
-
-    setRef(element, getRef);
-  }, [getRef]);
+  useGlobalEventListener(document, 'click', handleClickOutside);
 
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;
@@ -258,10 +248,8 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
         getRef={getRef}
         disabled={disabled}
         onInputChange={handleInputChange}
+        after={<Icon20Dropdown />}
       />
-      <div vkuiClass="ChipsSelect__toggle">
-        <Icon20Dropdown />
-      </div>
       {opened &&
         <div
           vkuiClass={classNames('ChipsSelect__options', {
@@ -328,7 +316,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
   );
 };
 
-ChipsSelect.defaultProps = {
+const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   ...chipsInputDefaultProps,
   emptyText: 'Ничего не найдено',
   creatableText: 'Создать значение',
@@ -349,5 +337,7 @@ ChipsSelect.defaultProps = {
     );
   },
 };
+
+ChipsSelect.defaultProps = chipsSelectDefaultProps;
 
 export default withAdaptivity(ChipsSelect, { sizeY: true });

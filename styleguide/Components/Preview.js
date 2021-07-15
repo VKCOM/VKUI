@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Profiler } from 'react';
 import PreviewParent from 'react-styleguidist/lib/client/rsg-components/Preview/Preview';
 import ReactExample from 'react-styleguidist/lib/client/rsg-components/ReactExample/ReactExample';
 import PlaygroundError from 'react-styleguidist/lib/client/rsg-components/PlaygroundError';
@@ -7,14 +7,18 @@ import ReactFrame  from 'react-frame-component';
 import { StyleGuideContext } from './StyleGuideRenderer';
 import { VKCOM, SplitCol, SplitLayout, withAdaptivity, ViewWidth, PanelHeader, usePlatform, AppRoot, ConfigProvider, AdaptivityProvider } from '../../src';
 import { DOMContext } from '../../src/lib/dom';
+import { perfLogger } from '../utils';
 
-class PrepareFrame extends React.Component {
+const logPerf = (id, phase, time) => perfLogger.log(`${id}.${phase}`, time);
+
+class FrameDomProvider extends React.Component {
   static contextTypes = {
     document: PropTypes.any,
     window: PropTypes.any,
   };
+  state = { ready: false };
 
-  componentDidMount () {
+  componentDidMount() {
     // Пихаем в iFrame с примером спрайты для иконок
     const sprite = document.getElementById('__SVG_SPRITE_NODE__');
     const masks = document.getElementById('__SVG_MASKS_NODE__');
@@ -45,6 +49,7 @@ class PrepareFrame extends React.Component {
       }
     });
     this.context.document.head.appendChild(frameAssets);
+    this.setState({ ready: true });
   }
 
   componentWillUnmount() {
@@ -52,7 +57,11 @@ class PrepareFrame extends React.Component {
   }
 
   render () {
-    return this.props.children({ window: this.context.window });
+    return this.state.ready ? (
+      <DOMContext.Provider value={this.context}>
+        {this.props.children}
+      </DOMContext.Provider>
+    ) : null;
   }
 }
 
@@ -119,28 +128,25 @@ export default class Preview extends PreviewParent {
   frameRef = React.createRef();
 
   render() {
-    const { code, autoLayout = true } = this.props;
+    const { code, autoLayout = 'all', config = {}, exampleId } = this.props;
     const { error, isVisible } = this.state;
-    if (error) {
-      return <PlaygroundError message={error} />;
-    }
     return (
       <StyleGuideContext.Consumer>
         {(styleGuideContext) => {
-          const isEmbedded = styleGuideContext.integration === "embedded";
-          const isPartial = styleGuideContext.integration === "partial";
-          const Layout = autoLayout ? DefaultLayout : Fragment;
+          const integration = this.props.integration || styleGuideContext.integration;
+          const isEmbedded = integration === "embedded";
+          const isPartial = integration === "partial";
 
-          const example = (
-            <Layout>
-              <ReactExample
-                code={code}
-                evalInContext={this.props.evalInContext}
-                onError={this.handleError}
-                compilerConfig={this.context.config.compilerConfig}
-                />
-            </Layout>
+          let example = (
+            <ReactExample
+              code={code}
+              evalInContext={this.props.evalInContext}
+              onError={this.handleError}
+              compilerConfig={this.context.config.compilerConfig}
+            />
           );
+          example = autoLayout === 'all' ? <DefaultLayout>{example}</DefaultLayout> : example;
+          example = isPartial || autoLayout === 'none' ? example : <AppRoot embedded={isEmbedded} noLegacyClasses>{example}</AppRoot>;
 
           const frameStyle = {
             height: styleGuideContext.height,
@@ -148,7 +154,18 @@ export default class Preview extends PreviewParent {
             border: '1px solid rgba(0, 0, 0, .12)',
             display: 'block',
             margin: 'auto',
-          }
+          };
+          const containerStyle = Object.assign(isEmbedded ? {
+            marginTop: 8,
+            position: 'relative',
+            border: '1px solid #000',
+            maxWidth: 1024,
+            width: "calc(100% - 10px)",
+            height: 600
+          } : {
+            position: 'relative',
+            height: '100%'
+          }, this.props.containerStyle || {});
 
           const frame = (
             <ReactFrame
@@ -170,48 +187,35 @@ export default class Preview extends PreviewParent {
                 </button>
               )}
               <div
-                key={`vkui-${styleGuideContext.integration}`}
+                key={`vkui-${integration}`}
                 className={isPartial ? "vkui__root" : null}
-                style={isEmbedded ? {
-                  marginTop: 8,
-                  position: 'relative',
-                  border: '1px solid #000',
-                  maxWidth: 1024,
-                  width: "calc(100% - 10px)",
-                  height: 600
-                } : {
-                  position: 'relative',
-                  height: '100%'
-                }
-              }>
-              {isEmbedded && this.state.hideEmbeddedApp ? null :
-                  <PrepareFrame integration={styleGuideContext.integration}>
-                    {({ window }) => (
-                      <DOMContext.Provider value={{ window: window, document: window.document }}>
-                        <ConfigProvider
-                          platform={styleGuideContext.platform}
-                          scheme={styleGuideContext.scheme}
-                          webviewType={styleGuideContext.webviewType}
-                        >
-                          <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
-                            {isPartial ? example : (
-                              <AppRoot embedded={isEmbedded} window={window} noLegacyClasses>
-                                {example}
-                              </AppRoot>
-                            )}
-                          </AdaptivityProvider>
-                        </ConfigProvider>
-                      </DOMContext.Provider>
-                    )}
-                  </PrepareFrame>
-                }
+                style={containerStyle}
+              >
+                <FrameDomProvider>
+                  {!(isEmbedded && this.state.hideEmbeddedApp) &&
+                    <Profiler id={exampleId} onRender={logPerf}>
+                      <ConfigProvider
+                        platform={styleGuideContext.platform}
+                        scheme={styleGuideContext.scheme}
+                        webviewType={styleGuideContext.webviewType}
+                        {...config}
+                      >
+                        <AdaptivityProvider hasMouse={styleGuideContext.hasMouse}>
+                          {example}
+                        </AdaptivityProvider>
+                      </ConfigProvider>
+                    </Profiler>
+                  }
+                </FrameDomProvider>
               </div>
             </ReactFrame>
           );
 
           return (
             <div ref={this.frameRef} style={frameStyle}>
-              {isVisible && frame}
+              {error
+                ? <PlaygroundError message={error} />
+                : (isVisible && frame)}
             </div>
           );
         }}

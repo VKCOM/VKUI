@@ -47,7 +47,7 @@ export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
   textLevel?: 'primary' | 'secondary';
 }
 
-export const MiniInfoCell: FC<MiniInfoCellProps> = (props) => {
+export const MiniInfoCell: FC<MiniInfoCellProps> = (props: MiniInfoCellProps) => {
   const platform = usePlatform();
   const {
     before,
@@ -73,6 +73,7 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props) => {
         {before}
       </div>
       <Text
+        Component="span"
         vkuiClass="MiniInfoCell__content"
         weight={mode === 'more' ? 'medium' : 'regular'}
       >

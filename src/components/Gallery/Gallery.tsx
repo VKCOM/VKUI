@@ -4,10 +4,12 @@ import Touch, { TouchEventHandler, TouchEvent } from '../Touch/Touch';
 import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasAlign, HasPlatform, HasRef, HasRootRef } from '../../types';
-import { canUseDOM, withDOM, useDOM, DOMProps } from '../../lib/dom';
+import { withDOM, DOMProps } from '../../lib/dom';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
+import { clamp } from '../../helpers/math';
+import { useTimeout } from '../../hooks/useTimeout';
 
 export interface BaseGalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,
@@ -271,11 +273,19 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
   onResize: VoidFunction = () => this.initializeSlides({ animation: false });
 
   get canSlideLeft() {
-    return !this.isFullyVisible && this.props.slideIndex > 0;
+    // shiftX is negative number <= 0, we can swipe back only if it is < 0
+    return !this.isFullyVisible && this.state.shiftX < 0;
   }
 
   get canSlideRight() {
-    return !this.isFullyVisible && this.props.slideIndex < this.state.slides.length - 1;
+    const { containerWidth, layerWidth, shiftX, slides } = this.state;
+    const { align, slideIndex } = this.props;
+    return !this.isFullyVisible && (
+      // we can't move right when gallery layer fully scrolled right, if gallery aligned by left side
+      align === 'left' && containerWidth - shiftX < layerWidth ||
+      // otherwise we need to check current slide index (align = right or align = center)
+      align !== 'left' && slideIndex < slides.length - 1
+    );
   }
 
   slideLeft = () => {
@@ -351,6 +361,8 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
       showArrows,
       window,
       document,
+      getRef,
+      getRootRef,
       ...restProps
     } = this.props;
 
@@ -364,10 +376,14 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
     };
 
     return (
-      <div {...restProps} vkuiClass={classNames(getClassName('Gallery', platform), `Gallery--${align}`, {
-        'Gallery--dragging': dragging,
-        'Gallery--custom-width': slideWidth === 'custom',
-      })} ref={this.getRootRef}>
+      <div
+        {...restProps}
+        vkuiClass={classNames(getClassName('Gallery', platform), `Gallery--${align}`, {
+          'Gallery--dragging': dragging,
+          'Gallery--custom-width': slideWidth === 'custom',
+        })}
+        ref={this.getRootRef}
+      >
         <Touch
           vkuiClass="Gallery__viewport"
           onStartX={this.onStart}
@@ -385,7 +401,7 @@ class BaseGallery extends Component<BaseGalleryProps & DOMProps & AdaptivityProp
         </Touch>
 
         {bullets &&
-        <div vkuiClass={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
+        <div aria-hidden="true" vkuiClass={classNames('Gallery__bullets', `Gallery__bullets--${bullets}`)}>
           {React.Children.map(children, (_item: ReactElement, index: number) =>
             <div
               vkuiClass={classNames('Gallery__bullet', { 'Gallery__bullet--active': index === slideIndex })}
@@ -420,8 +436,6 @@ const Gallery: FC<GalleryProps> = ({
   const slides = React.Children.toArray(children).filter((item) => Boolean(item));
   const childCount = slides.length;
 
-  const { window } = useDOM();
-
   const handleChange: GalleryProps['onChange'] = useCallback((current) => {
     if (current === slideIndex) {
       return;
@@ -429,22 +443,25 @@ const Gallery: FC<GalleryProps> = ({
     !isControlled && setSlideIndex(current);
     onChange && onChange(current);
   }, [onChange, slideIndex]);
-  // autoplay
+
+  const autoplay = useTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
+  useEffect(() => timeout ? autoplay.set() : autoplay.clear(), [timeout, slideIndex]);
+
+  // prevent invalid slideIndex
+  // any slide index is invalid with no slides, just keep it as is
+  const safeSlideIndex = childCount > 0 ? clamp(slideIndex, 0, childCount - 1) : slideIndex;
+  // notify parent in controlled mode
   useEffect(() => {
-    if (!timeout || !canUseDOM) {
-      return undefined;
+    if (onChange && safeSlideIndex !== slideIndex) {
+      onChange(safeSlideIndex);
     }
-    const id = window.setTimeout(() => handleChange((slideIndex + 1) % childCount), timeout);
-    return () => window.clearTimeout(id);
-  }, [timeout, slideIndex, childCount]);
-  // prevent overflow
-  useEffect(() => handleChange(Math.min(slideIndex, childCount - 1)), [childCount]);
+  }, [safeSlideIndex]);
 
   return (
     <BaseGalleryAdaptive
-      slideIndex={slideIndex}
       isDraggable={isDraggable}
       {...props}
+      slideIndex={safeSlideIndex}
       onChange={handleChange}
     >{slides}</BaseGalleryAdaptive>
   );

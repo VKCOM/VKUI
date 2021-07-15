@@ -27,9 +27,10 @@ export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElemen
    * Значение счётчика для кнопки. Например, для количества прикреплённых файлов.
    */
   count?: number;
+  'aria-label'?: string;
 }
 
-export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
+export const WriteBarIcon: FC<WriteBarIconProps> = (props: WriteBarIconProps) => {
   const platform = usePlatform();
   const {
     mode,
@@ -38,23 +39,23 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
     ...restProps
   } = props;
 
-  let childrenResolved: ReactNode;
+  let icon: ReactNode;
 
   switch (mode) {
     case 'attach':
-      childrenResolved = platform === IOS ? <Icon28AddCircleOutline /> : <Icon28AttachOutline />;
+      icon = platform === IOS ? <Icon28AddCircleOutline /> : <Icon28AttachOutline />;
       break;
 
     case 'send':
-      childrenResolved = platform === IOS ? <Icon48WritebarSend /> : <Icon24Send />;
+      icon = platform === IOS ? <Icon48WritebarSend /> : <Icon24Send />;
       break;
 
     case 'done':
-      childrenResolved = platform === IOS ? <Icon48WritebarDone /> : <Icon28CheckCircleOutline />;
+      icon = platform === IOS ? <Icon48WritebarDone /> : <Icon28CheckCircleOutline />;
       break;
 
     default:
-      childrenResolved = children;
+      break;
   }
 
   return (
@@ -65,12 +66,8 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props) => {
         'WriteBarIcon--disabled': restProps.disabled,
       })}
     >
-      {childrenResolved}
-      {count ?
-        <div vkuiClass="WriteBarIcon__count">
-          <Caption weight="regular" level="2">{count}</Caption>
-        </div> :
-        null
+      {icon || children}
+      {count && <Caption Component="span" vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>
       }
     </button>
   );

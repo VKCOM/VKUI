@@ -1,5 +1,7 @@
 import './lib/polyfills';
 
+import './styles/components.css';
+
 /**
  * Layout
  */
@@ -7,9 +9,9 @@ export { default as Root } from './components/Root/Root';
 export type { RootProps } from './components/Root/Root';
 export { default as View } from './components/View/View';
 export type { ViewProps } from './components/View/View';
-export { default as Panel } from './components/Panel/Panel';
+export { Panel } from './components/Panel/Panel';
 export type { PanelProps } from './components/Panel/Panel';
-export { default as PanelHeaderButton } from './components/PanelHeaderButton/PanelHeaderButton';
+export { PanelHeaderButton } from './components/PanelHeaderButton/PanelHeaderButton';
 export type { PanelHeaderButtonProps } from './components/PanelHeaderButton/PanelHeaderButton';
 export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
 export type { PanelHeaderProps } from './components/PanelHeader/PanelHeader';
@@ -45,7 +47,7 @@ export { default as ActionSheetItem } from './components/ActionSheetItem/ActionS
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';
 export { default as ScreenSpinner } from './components/ScreenSpinner/ScreenSpinner';
 export type { ScreenSpinnerProps } from './components/ScreenSpinner/ScreenSpinner';
-export { default as Snackbar } from './components/Snackbar/Snackbar';
+export { Snackbar } from './components/Snackbar/Snackbar';
 export type { SnackbarProps } from './components/Snackbar/Snackbar';
 
 /**
@@ -156,7 +158,7 @@ export { default as FormLayoutGroup } from './components/FormLayoutGroup/FormLay
 export type { FormLayoutGroupProps } from './components/FormLayoutGroup/FormLayoutGroup';
 export { FormStatus } from './components/FormStatus/FormStatus';
 export type { FormStatusProps } from './components/FormStatus/FormStatus';
-export { default as Switch } from './components/Switch/Switch';
+export { Switch } from './components/Switch/Switch';
 export type { SwitchProps } from './components/Switch/Switch';
 export { default as File } from './components/File/File';
 export type { FileProps } from './components/File/File';
@@ -254,6 +256,7 @@ export { withAdaptivity } from './hoc/withAdaptivity';
 export { useInsets } from './hooks/useInsets';
 export { usePlatform } from './hooks/usePlatform';
 export { useAdaptivity } from './hooks/useAdaptivity';
+export { useAppearance } from './hooks/useAppearance';
 
 /**
  * Utils
@@ -270,5 +273,6 @@ export { ViewWidth, ViewHeight, SizeType } from './components/AdaptivityProvider
  * Types
  */
 export type { AlignType, HasPlatform, HasInsets } from './types';
+export type { NavIdProps } from './lib/getNavId';
 export type { PlatformType } from './lib/platform';
 export type { AdaptivityProps } from './hoc/withAdaptivity';

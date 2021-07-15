@@ -1,11 +1,15 @@
-import { useContext } from 'react';
-import ModalRootContext from './ModalRootContext';
+import { useContext, ComponentType } from 'react';
+import ModalRootContext, { ModalRootContextInterface } from './ModalRootContext';
 
-export function withModalRootContext<T>(Component: T): T {
-  function WithModalRootContext(props: {}) {
+type PickedProps = Pick<ModalRootContextInterface, 'updateModalHeight'>;
+
+export function withModalRootContext<P extends PickedProps>(
+  Component: ComponentType<P>,
+): ComponentType<Omit<P, keyof PickedProps>> {
+  function WithModalRootContext(props: P) {
     const { updateModalHeight } = useContext(ModalRootContext);
-    // @ts-ignore
+
     return <Component {...props} updateModalHeight={updateModalHeight} />;
   }
-  return WithModalRootContext as unknown as T;
+  return WithModalRootContext;
 }

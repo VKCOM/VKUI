@@ -5,7 +5,7 @@ import FormField from '../FormField/FormField';
 import { HasAlign, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
-import { getClassName } from '../..';
+import { getClassName } from '../../helpers/getClassName';
 import Headline from '../Typography/Headline/Headline';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
@@ -43,17 +43,17 @@ const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
       vkuiClass={classNames(getClassName('Select', platform), 'Select--mimicry', {
         'Select--not-selected': !children,
         'Select--multiline': multiline,
-        'Select--disabled': disabled,
         [`Select--align-${align}`]: !!align,
         [`Select--sizeX--${sizeX}`]: !!sizeX,
         [`Select--sizeY--${sizeY}`]: !!sizeY,
       })}
       getRootRef={getRootRef}
       onClick={disabled ? null : onClick}
+      disabled={disabled}
+      after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
     >
-      <TypographyComponent weight="regular" vkuiClass="Select__container">
-        <div vkuiClass="Select__title">{children || placeholder}</div>
-        {sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
+      <TypographyComponent Component="div" weight="regular" vkuiClass="Select__container">
+        <span vkuiClass="Select__title">{children || placeholder}</span>
       </TypographyComponent>
     </FormField>
   );

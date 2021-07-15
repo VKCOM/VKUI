@@ -3,7 +3,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import { Icon24Reorder, Icon24ReorderIos, Icon16Done } from '@vkontakte/icons';
+import { Icon24Reorder, Icon24ReorderIos, Icon24CheckCircleOn, Icon24CheckCircleOff } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
@@ -164,6 +164,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
       {...restProps}
       disabled={draggable || removable || disabled}
       Component={selectable ? 'label' : Component}
+      htmlFor={selectable ? name : undefined}
       before={
         <Fragment>
           {(platform === ANDROID || platform === VKCOM) && draggable && (
@@ -177,8 +178,19 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
           )}
           {selectable && (
             <Fragment>
-              <input type="checkbox" vkuiClass="Cell__checkbox" name={name} onChange={onChange} defaultChecked={defaultChecked} checked={checked} />
-              <div vkuiClass="Cell__marker"><Icon16Done /></div>
+              <input
+                type="checkbox"
+                vkuiClass="Cell__checkbox"
+                name={name}
+                onChange={onChange}
+                defaultChecked={defaultChecked}
+                checked={checked}
+                disabled={disabled}
+              />
+              <span vkuiClass="Cell__marker">
+                <Icon24CheckCircleOff vkuiClass="Cell__marker-in" />
+                <Icon24CheckCircleOn vkuiClass="Cell__marker-in Cell__marker-in--checked" />
+              </span>
             </Fragment>
           )}
           {before}
@@ -206,6 +218,8 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
       vkuiClass={classNames(getClassName('Cell', platform), {
         'Cell--dragging': dragging,
         'Cell--removable': removable,
+        'Cell--selectable': selectable,
+        'Cell--disabled': disabled,
       })}
       className={className}
       style={style}

@@ -10,6 +10,8 @@ import { withPlatform } from '../../hoc/withPlatform';
 import { AnyFunction, HasPlatform } from '../../types';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { runTapticImpactOccurred } from '../../lib/taptic';
+import { withContext } from '../../hoc/withContext';
+import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 
 export interface PullToRefreshProps extends TouchProps, HasPlatform {
   /**
@@ -20,6 +22,8 @@ export interface PullToRefreshProps extends TouchProps, HasPlatform {
    * Определяет, выполняется ли обновление. Для скрытия спиннера после получения контента необходимо передать `false`
    */
   isFetching?: boolean;
+  /** @ignore */
+  scroll?: ScrollContextInterface;
 }
 
 export interface PullToRefreshState {
@@ -100,10 +104,6 @@ class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToR
     return this.props.document;
   }
 
-  get window() {
-    return this.props.window;
-  }
-
   componentDidMount() {
     if (canUseDOM) {
       this.document.addEventListener('touchmove', this.onWindowTouchMove, {
@@ -150,7 +150,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToR
   onTouchMove: TouchEventHandler = (e: TouchEvent) => {
     const { isY, shiftY } = e;
     const { start, max } = this.params;
-    const pageYOffset = this.window.pageYOffset;
+    const pageYOffset = this.props.scroll.getScroll().y;
 
     const { refreshing, watching, touchDown } = this.state;
 
@@ -240,7 +240,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToR
   }
 
   render() {
-    const { children, onRefresh, isFetching, platform, window, document, ...restProps } = this.props;
+    const { children, onRefresh, isFetching, platform, window, document, scroll, ...restProps } = this.props;
     const { watching, refreshing, spinnerY, spinnerProgress, canRefresh, touchDown, contentShift } = this.state;
 
     const spinnerTransform = `translate3d(0, ${spinnerY}px, 0)`;
@@ -292,4 +292,6 @@ class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToR
   }
 }
 
-export default withPlatform(withDOM<PullToRefreshProps>(PullToRefresh));
+export default withContext(
+  withPlatform(withDOM<PullToRefreshProps>(PullToRefresh)),
+  ScrollContext, 'scroll');

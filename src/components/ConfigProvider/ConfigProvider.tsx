@@ -1,74 +1,99 @@
-import React, { ReactNode } from 'react';
-import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
+import { FC, useState, useEffect } from 'react';
+import { AppearanceType } from '@vkontakte/vk-bridge';
+import { canUseDOM, useDOM } from '../../lib/dom';
 import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   Scheme,
   AppearanceScheme,
   defaultConfigProviderProps,
+  ExternalScheme,
 } from './ConfigProviderContext';
-import { Platform, VKCOM } from '../../lib/platform';
+import { PlatformType, VKCOM } from '../../lib/platform';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { noop } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
-  children?: ReactNode;
+  /**
+   * Цветовая схема приложения
+   */
+  scheme?: AppearanceScheme;
 }
 
-class ConfigProvider extends React.Component<ConfigProviderProps & DOMProps> {
-  constructor(props: ConfigProviderProps) {
-    super(props);
-    if (canUseDOM) {
-      this.setScheme(this.getScheme(props.platform, props.scheme));
+function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
+  const inherit = _scheme === 'inherit';
+  const getScheme = () => {
+    if (!inherit || !canUseDOM) {
+      return undefined;
     }
-  }
-
-  // Деструктуризация нужна из бага в react-docgen-typescript
-  // https://github.com/styleguidist/react-docgen-typescript/issues/195
-  public static defaultProps = { ...defaultConfigProviderProps };
-
-  mapOldScheme(scheme: AppearanceScheme): AppearanceScheme {
-    switch (scheme) {
-      case Scheme.DEPRECATED_CLIENT_LIGHT:
-        return Scheme.BRIGHT_LIGHT;
-      case Scheme.DEPRECATED_CLIENT_DARK:
-        return Scheme.SPACE_GRAY;
-      default:
-        return scheme;
-    }
-  }
-
-  getScheme = (platform: Platform, scheme: AppearanceScheme): AppearanceScheme => {
-    return platform === VKCOM ? Scheme.VKCOM : this.mapOldScheme(scheme);
+    return node.getAttribute('scheme') as Scheme | ExternalScheme;
   };
+  const [resolvedScheme, setScheme] = useState(getScheme());
 
-  setScheme = (scheme: AppearanceScheme): void => {
-    (this.props.document || document).body.setAttribute('scheme', scheme);
-  };
-
-  componentDidUpdate(prevProps: ConfigProviderProps) {
-    if (prevProps.scheme !== this.props.scheme) {
-      this.setScheme(this.getScheme(this.props.platform, this.props.scheme));
+  useEffect(() => {
+    if (!inherit) {
+      return noop;
     }
-  }
+    setScheme(getScheme());
+    const observer = new MutationObserver(() => setScheme(getScheme()));
+    observer.observe(node, { attributes: true, attributeFilter: ['scheme'] });
+    return () => observer.disconnect();
+  }, [inherit]);
 
-  getContext(): ConfigProviderProps {
-    return {
-      isWebView: this.props.isWebView,
-      webviewType: this.props.webviewType,
-      scheme: this.getScheme(this.props.platform, this.props.scheme),
-      appearance: this.props.appearance,
-      app: this.props.app,
-      transitionMotionEnabled: this.props.transitionMotionEnabled,
-      platform: this.props.platform,
-    };
-  }
+  return _scheme === 'inherit' ? resolvedScheme : _scheme;
+}
 
-  render() {
-    return (
-      <ConfigProviderContext.Provider value={this.getContext()}>
-        {this.props.children}
-      </ConfigProviderContext.Provider>
-    );
+const deriveAppearance = (scheme: Scheme | ExternalScheme): AppearanceType =>
+  scheme === Scheme.SPACE_GRAY || scheme === ExternalScheme.VKCOM_DARK ? 'dark' : 'light';
+
+function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Scheme | 'inherit' {
+  if (scheme === 'inherit') {
+    return scheme;
+  }
+  if (platform === VKCOM) {
+    return Scheme.VKCOM;
+  }
+  switch (scheme) {
+    case Scheme.DEPRECATED_CLIENT_LIGHT:
+      return Scheme.BRIGHT_LIGHT;
+    case Scheme.DEPRECATED_CLIENT_DARK:
+      return Scheme.SPACE_GRAY;
+    default:
+      return scheme as Scheme;
   }
 }
 
-export default withDOM<ConfigProviderProps>(ConfigProvider);
+const warn = warnOnce('ConfigProvider');
+
+const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
+  const scheme = normalizeScheme(config.scheme, config.platform);
+
+  const { document } = useDOM();
+  useIsomorphicLayoutEffect(() => {
+    if (scheme === 'inherit') {
+      return noop;
+    }
+    if (process.env.NODE_ENV === 'development' && document.body.hasAttribute('scheme')) {
+      warn('<body scheme> was set before VKUI mount - did you forget scheme="inherit"?');
+    }
+    document.body.setAttribute('scheme', scheme);
+    return () => document.body.removeAttribute('scheme');
+  }, [scheme]);
+
+  const realScheme = useSchemeDetector(document.body, scheme);
+  const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
+
+  return (
+    <ConfigProviderContext.Provider value={configContext}>
+      {children}
+    </ConfigProviderContext.Provider>
+  );
+};
+
+// Деструктуризация нужна из бага в react-docgen-typescript
+// https://github.com/styleguidist/react-docgen-typescript/issues/195
+ConfigProvider.defaultProps = { ...defaultConfigProviderProps };
+
+export default ConfigProvider;

@@ -7,7 +7,12 @@
   justify-content: center;
 }
 
+.HorizontalCell__body {
+  text-decoration: none;
+}
+
 .HorizontalCell__content {
+  color: var(--text_primary);
   word-break: break-all;
   text-overflow: ellipsis;
 }
