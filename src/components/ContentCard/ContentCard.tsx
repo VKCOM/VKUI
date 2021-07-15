@@ -1,4 +1,4 @@
-import { FC, ImgHTMLAttributes, ReactNode } from 'react';
+import { ElementType, FC, ImgHTMLAttributes, ReactNode } from 'react';
 import Card, { CardProps } from '../Card/Card';
 import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
@@ -9,7 +9,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
 
-export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAttributes<HTMLImageElement>, HasRef<HTMLImageElement>{
+export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAttributes<HTMLImageElement>, HasRef<HTMLImageElement> {
   /**
    Текст над заголовком
    */
@@ -52,9 +52,21 @@ const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
   const { getRef, onClick, subtitle, header, text, caption, className, image, maxHeight, disabled, mode, alt, style, getRootRef, ...restProps } = props;
   const platform = usePlatform();
 
+  let Component: ElementType = 'div';
+  let tappableProps = {};
+
+  if (!disabled) {
+    Component = Tappable;
+    tappableProps = {
+      Component: 'div',
+      role: 'button',
+      onClick: onClick,
+    };
+  }
+
   return (
     <Card mode={mode} getRootRef={getRootRef} vkuiClass={getClassName('ContentCard', platform)} style={style} className={className}>
-      <Tappable disabled={disabled} onClick={onClick} vkuiClass="ContentCard__tappable">
+      <Component {...tappableProps} vkuiClass="ContentCard__tappable">
         {image && <img {...restProps} ref={getRef} src={image} alt={alt} vkuiClass="ContentCard__img" style={{ maxHeight: props.maxHeight }} width="100%" />}
         <div vkuiClass="ContentCard__body">
           {hasReactNode(subtitle) && <Caption caps vkuiClass="ContentCard__caption" weight="semibold" level="3">{subtitle}</Caption>}
@@ -62,7 +74,7 @@ const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
           {hasReactNode(text) && <Text vkuiClass="ContentCard__text" weight="regular">{text}</Text>}
           {hasReactNode(caption) && <Caption vkuiClass="ContentCard__caption" weight="regular" level="1">{caption}</Caption>}
         </div>
-      </Tappable>
+      </Component>
     </Card>
   );
 };
