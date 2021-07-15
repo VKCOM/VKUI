@@ -9,7 +9,7 @@ import Caption from '../Typography/Caption/Caption';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import ModalRootContext from '../ModalRoot/ModalRootContext';
 
-export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+export interface GroupProps extends HasRootRef<HTMLElement>, HTMLAttributes<HTMLElement>, AdaptivityProps {
   header?: ReactNode;
   description?: ReactNode;
   /**
@@ -21,7 +21,7 @@ export interface GroupProps extends HasRootRef<HTMLDivElement>, HTMLAttributes<H
   /**
    * Режим отображения. Если установлен 'card', выглядит как карточка c
    * обводкой и внешними отступами. Если 'plain' — без отступов и обводки.
-   * По-умолчанию режим отображения зависит от `sizeX`. В модальных окнах
+   * По умолчанию режим отображения зависит от `sizeX`. В модальных окнах
    * по умолчанию 'plain'.
    */
   mode?: 'plain' | 'card';
@@ -31,7 +31,6 @@ const Group: FC<GroupProps> = (props: GroupProps) => {
   const { header, description, children, separator, getRootRef, mode, sizeX, ...restProps } = props;
   const { isInsideModal } = useContext(ModalRootContext);
   const platform = usePlatform();
-  const baseClassNames = getClassName('Group', platform);
 
   let computedMode: GroupProps['mode'] = mode;
 
@@ -43,26 +42,26 @@ const Group: FC<GroupProps> = (props: GroupProps) => {
     <section
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(baseClassNames, `Group--sizeX-${sizeX}`, `Group--${computedMode}`)}
+      vkuiClass={classNames(
+        getClassName('Group', platform),
+        `Group--sizeX-${sizeX}`,
+        `Group--${computedMode}`,
+      )}
     >
       <div vkuiClass="Group__inner">
         {header}
         {children}
-        {hasReactNode(description) &&
-        <div vkuiClass="Group__description">
-          <Caption weight="regular" level="1">{description}</Caption>
-        </div>
-        }
+        {hasReactNode(description) && <Caption vkuiClass="Group__description" weight="regular" level="1">{description}</Caption>}
       </div>
 
-      {separator !== 'hide' &&
+      {separator !== 'hide' && (
         <Separator
           vkuiClass={classNames('Group__separator', {
             'Group__separator--force': separator === 'show',
           })}
           expanded={computedMode === 'card'}
         />
-      }
+      )}
     </section>
   );
 };
