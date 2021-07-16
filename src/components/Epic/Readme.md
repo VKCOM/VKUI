@@ -108,27 +108,27 @@ const Example = withAdaptivity(({ viewWidth }) => {
               onClick={onStoryChange}
               selected={activeStory === 'feed'}
               data-story="feed"
+              text="Новости"
             ><Icon28NewsfeedOutline /></TabbarItem>
             <TabbarItem
               onClick={onStoryChange}
               selected={activeStory === 'services'}
               data-story="services"
+              text="Сервисы"
             ><Icon28ServicesOutline/></TabbarItem>
             <TabbarItem
               onClick={onStoryChange}
               selected={activeStory === 'messages'}
               data-story="messages"
               label="12"
+              text="Сообщения"
             ><Icon28MessageOutline /></TabbarItem>
-            <TabbarItem
-              onClick={onStoryChange}
-              selected={activeStory === 'clips'}
-              data-story="clips"
-            ><Icon28ClipOutline /></TabbarItem>
             <TabbarItem
               onClick={onStoryChange}
               selected={activeStory === 'profile'}
               data-story="profile"
+              indicator={<Badge mode="prominent" />}
+              text="Профиль"
             ><Icon28UserCircleOutline /></TabbarItem>
           </Tabbar>
         }>
