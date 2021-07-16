@@ -1,37 +1,39 @@
-import React, { FunctionComponent } from 'react';
+import { FC, HTMLAttributes, memo } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { Icon24Spinner, Icon32Spinner, Icon44Spinner, Icon16Spinner } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 
-export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
   size?: 'small' | 'regular' | 'large' | 'medium';
 }
 
-const svgSpinner = (size: SpinnerProps['size']): React.ReactElement => {
-  switch (size) {
-    case 'large':
-      return <Icon44Spinner vkuiClass="Spinner__self" />;
-    case 'medium':
-      return <Icon32Spinner vkuiClass="Spinner__self" />;
-    case 'small':
-      return <Icon16Spinner vkuiClass="Spinner__self" />;
-    default:
-      return <Icon24Spinner vkuiClass="Spinner__self" />;
-  }
-};
-
-const Spinner: FunctionComponent<SpinnerProps> = ({ size, ...restProps }: SpinnerProps) => {
+const Spinner: FC<SpinnerProps> = ({ size, ...restProps }: SpinnerProps) => {
   const platform = usePlatform();
 
+  let SpinnerIcon = Icon24Spinner;
+
+  if (size === 'large') {
+    SpinnerIcon = Icon44Spinner;
+  }
+
+  if (size === 'medium') {
+    SpinnerIcon = Icon32Spinner;
+  }
+
+  if (size === 'small') {
+    SpinnerIcon = Icon16Spinner;
+  }
+
   return (
-    <div {...restProps} vkuiClass={getClassName('Spinner', platform)}>
-      {svgSpinner(size)}
-    </div>
+    <span role="status" {...restProps} vkuiClass={getClassName('Spinner', platform)}>
+      <SpinnerIcon aria-hidden="true" vkuiClass="Spinner__self" />
+    </span>
   );
 };
 
 Spinner.defaultProps = {
-  size: 'regular',
+  'size': 'regular',
+  'aria-label': 'Загружается...',
 };
 
-export default React.memo(Spinner);
+export default memo(Spinner);

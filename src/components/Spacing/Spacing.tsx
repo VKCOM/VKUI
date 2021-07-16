@@ -29,10 +29,10 @@ export const Spacing: FC<SpacingProps> = ({ size, separator, style, ...restProps
   return (
     <div
       {...restProps}
+      aria-hidden="true"
       vkuiClass={classNames(getClassName('Spacing', platfrom), {
         'Spacing--separator': !!separator,
-        'Spacing--separator-center':
-          separator === true || separator === 'center',
+        'Spacing--separator-center': separator === true || separator === 'center',
         'Spacing--separator-top': separator === 'top',
         'Spacing--separator-bottom': separator === 'bottom',
       })}
