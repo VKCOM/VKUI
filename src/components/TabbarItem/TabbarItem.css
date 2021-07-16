@@ -16,11 +16,6 @@
   background: transparent;
 }
 
-.Tabbar--l-vertical .TabbarItem.TabbarItem--text {
-  position: relative;
-  top: 2px;
-}
-
 .TabbarItem--selected {
   color: var(--tabbar_active_icon);
 }
@@ -112,6 +107,10 @@
   height: 100%;
 }
 
+.Tabbar--android.Tabbar--l-vertical .TabbarItem--text .TabbarItem__in {
+  top: 2px;
+}
+
 /**
  * iOS
  */
@@ -122,4 +121,9 @@
 
 .TabbarItem--ios.TabbarItem--active {
   transform: scale(.96);
+}
+
+.Tabbar--ios.Tabbar--l-vertical .TabbarItem--text .TabbarItem__in {
+  position: relative;
+  top: 2px;
 }
