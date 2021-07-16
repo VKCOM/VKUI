@@ -5,6 +5,7 @@ import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
+import { Platform } from '../../lib/platform';
 
 export interface TabbarItemProps extends Omit<TappableProps, 'label'> { // TODO убрать Omit после удаления свойства label
   selected?: boolean;
@@ -30,7 +31,8 @@ const TabbarItem: FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) 
     <Tappable
       {...restProps}
       Component={restProps.href ? 'a' : Component}
-      activeMode="opacity"
+      activeMode={platform === Platform.IOS ? 'TabbarItem--active' : 'background'}
+      activeEffectDelay={0}
       hasHover={false}
       vkuiClass={classNames(getClassName('TabbarItem', platform), {
         'TabbarItem--selected': selected,

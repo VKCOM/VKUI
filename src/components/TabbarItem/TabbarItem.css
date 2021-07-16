@@ -79,3 +79,48 @@
   font-weight: 500;
   margin-left: 8px;
 }
+
+/**
+ * Android
+ */
+
+.TabbarItem--android::after {
+  content: '';
+  padding-bottom: 100%;
+  width: 100%;
+}
+
+.TabbarItem--android {
+  transform: translateY(calc(-1 * (100% - var(--tabbar_height)) / 2));
+  border-radius: 50%;
+}
+
+.TabbarItem--android:first-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.TabbarItem--android:last-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.TabbarItem--android .TabbarItem__in {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/**
+ * iOS
+ */
+
+.TabbarItem--ios {
+  transition: transform .07s var(--ios-easing);
+}
+
+.TabbarItem--ios.TabbarItem--active {
+  transform: scale(.96);
+}

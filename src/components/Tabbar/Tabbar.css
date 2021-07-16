@@ -5,13 +5,22 @@
   left: 0;
   width: 100%;
   height: var(--tabbar_height);
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
+  padding-bottom: var(--safe-area-inset-bottom);
   box-sizing: content-box;
   background: var(--header_alternate_background);
-  padding-bottom: var(--safe-area-inset-bottom);
 }
+
+.Tabbar__in {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+
+/**
+ * iOS
+ */
 
 .Tabbar--ios.Tabbar--shadow::before {
   position: absolute;
@@ -22,6 +31,10 @@
   background: var(--separator_common);
   transform-origin: center bottom;
   content: '';
+}
+
+.Tabbar--ios .Tabbar__in {
+  height: var(--tabbar_height);
 }
 
 @media (min-resolution: 2dppx) {
@@ -35,6 +48,10 @@
     transform: scaleY(.33);
   }
 }
+
+/**
+ * Android & VKCOM
+ */
 
 .Tabbar--android.Tabbar--shadow,
 .Tabbar--vkcom.Tabbar--shadow {
