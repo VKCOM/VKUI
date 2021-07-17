@@ -1,4 +1,5 @@
 .Headline {
+  display: block;
   margin: 0;
   font-size: 16px;
   line-height: 20px;
@@ -14,4 +15,11 @@
 
 .Headline--w-semibold {
   font-weight: 600;
+}
+
+/**
+ * ANDROID
+ */
+.Headline--android.Headline--w-semibold {
+  font-weight: 500;
 }

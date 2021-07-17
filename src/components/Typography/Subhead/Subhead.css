@@ -12,10 +12,14 @@
   font-weight: 500;
 }
 
-.Subhead--w-semibold {
+.Subhead--w-semibold,
+.Subhead--w-bold {
   font-weight: 600;
 }
 
-.Subhead--w-bold {
-  font-weight: 600;
+/**
+ * ANDROID
+ */
+.Subhead--android.Subhead--w-semibold {
+  font-weight: 500;
 }

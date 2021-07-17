@@ -25,7 +25,7 @@ const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, c
   }
 
   return (
-    <Text Component="span" weight={platform === VKCOM ? 'regular' : 'medium'}>
+    <Text weight={platform === VKCOM ? 'regular' : 'medium'}>
       {children}
     </Text>
   );
