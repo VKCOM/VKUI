@@ -35,6 +35,7 @@ export class PanelHeaderContext extends Component<PanelHeaderContextProps & DOMP
   }
 
   startClosing = (event: Event) => {
+    event.preventDefault();
     if (this.elementRef && this.elementRef.current && !this.elementRef.current.contains(event.target as Node)) {
       this.props.onClose();
       this.props.document.removeEventListener('click', this.startClosing);
