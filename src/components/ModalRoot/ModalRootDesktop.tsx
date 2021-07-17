@@ -102,6 +102,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
       const state: ModalsStateEntry = {
         id: getNavId(Modal.props, warn),
         onClose: Modal.props.onClose,
+        onCloseTransitionEnd: Modal.props.onCloseTransitionEnd,
         dynamicContentHeight: !!modalProps.dynamicContentHeight,
       };
 
@@ -278,6 +279,11 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
     this.activeTransitions = Math.max(0, this.activeTransitions - 1);
     if (this.activeTransitions > 0) {
       return;
+    }
+
+    const prevModalState = this.modalsState[this.state.prevModal];
+    if (prevModalState && prevModalState.onCloseTransitionEnd) {
+      prevModalState.onCloseTransitionEnd();
     }
 
     const activeModal = this.state.nextModal;

@@ -50,6 +50,10 @@ export interface ModalCardProps extends HTMLAttributes<HTMLElement>, HasPlatform
    * Будет вызван при закрытии карточки жестом
    */
   onClose?: VoidFunction;
+  /**
+   * Будет вызван после заверешния анимации закрытия
+   */
+  onCloseTransitionEnd?: VoidFunction;
 }
 
 const warn = warnOnce('ModalCard');
@@ -63,6 +67,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
     actions,
     actionsLayout,
     onClose,
+    onCloseTransitionEnd,
     platform,
     viewWidth,
     viewHeight,
