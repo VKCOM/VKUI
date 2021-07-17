@@ -29,18 +29,12 @@
   padding-right: 8px;
 }
 
-.CellButton > .Avatar {
-  color: var(--button_muted_background);
-}
-
-.CellButton--primary,
-.CellButton--primary > .Icon,
-.CellButton--primary > .Avatar .Icon {
+.CellButton,
+.CellButton > .Icon {
   color: var(--accent);
 }
 
 .CellButton--danger,
-.CellButton--danger > .Icon,
-.CellButton--danger > .Avatar .Icon {
+.CellButton--danger > .Icon {
   color: var(--destructive);
 }

@@ -16,15 +16,6 @@
   text-overflow: initial;
 }
 
-.SimpleCell > .Avatar,
-.SimpleCell > .Icon {
-  flex-shrink: 0;
-}
-
-.SimpleCell > .Icon {
-  color: var(--accent);
-}
-
 .SimpleCell__main {
   max-width: 100%;
   flex-grow: 1;
@@ -33,31 +24,16 @@
   overflow: hidden;
 }
 
-.SimpleCell > .Icon,
-.SimpleCell > .Avatar {
+.SimpleCell > .Icon {
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-right: 12px;
+  flex-shrink: 0;
+  color: var(--accent);
 }
 
 .SimpleCell > .Icon--28 {
   padding-right: 16px;
-}
-
-.SimpleCell > .Icon,
-.SimpleCell > .Avatar--sz-32,
-.SimpleCell > .Avatar--sz-28 {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.SimpleCell > .Avatar--sz-40 {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.SimpleCell > .Avatar--sz-48,
-.SimpleCell > .Avatar--sz-72 {
-  padding-top: 6px;
-  padding-bottom: 6px;
 }
 
 .SimpleCell__description {
@@ -175,9 +151,7 @@
   padding-bottom: 11px;
 }
 
-.SimpleCell--ios > .Icon--28,
-.SimpleCell--ios > .Avatar--sz-32,
-.SimpleCell--ios > .Avatar--sz-28 {
+.SimpleCell--ios > .Icon--28 {
   padding-left: 4px;
 }
 
@@ -233,23 +207,6 @@
 .SimpleCell--sizeY-compact .SimpleCell__indicator {
   padding-top: 10px;
   padding-bottom: 10px;
-}
-
-.SimpleCell--sizeY-compact > .Avatar--sz-40 {
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
-.SimpleCell--sizeY-compact > .Avatar--sz-48 {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.SimpleCell--sizeY-compact > .Icon,
-.SimpleCell--sizeY-compact > .Avatar--sz-32,
-.SimpleCell--sizeY-compact > .Avatar--sz-28 {
-  padding-top: 8px;
-  padding-bottom: 8px;
 }
 
 .SimpleCell--sizeY-compact .SimpleCell__description,

@@ -9,6 +9,7 @@ export interface GradientProps extends HTMLAttributes<HTMLDivElement> {
 const Gradient: FunctionComponent<GradientProps> = ({ mode, children, to, ...restProps }) => {
   return (
     <div
+      role="presentation"
       {...restProps}
       vkuiClass={classNames('Gradient', `Gradient--md-${mode}`, `Gradient--to-${to}`)}
     >
