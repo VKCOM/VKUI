@@ -126,7 +126,7 @@ const SubnavigationBarExample = () => {
       <Panel id="example">
         <PanelHeader>SubnavigationBar</PanelHeader>
         <Group>
-          <SubnavigationBar>
+          <SubnavigationBar showArrows getScrollToLeft={i => i - 300} getScrollToRight={i => i + 300}>
             <SubnavigationButton
               before={<Icon24Filter/>}
               selected={filtersCount > 0}
