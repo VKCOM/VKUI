@@ -59,10 +59,7 @@ class TableOfContents extends React.PureComponent {
   }
 
   onExpandCellClick = (e) => {
-    const sectionName = e.currentTarget.dataset.sectionName;
-    if (!e.currentTarget.href) {
-      this.expand(sectionName)
-    }
+    this.expand(e.currentTarget.dataset.sectionName);
   }
 
   onExpandIconClick = (e) => {
@@ -150,7 +147,7 @@ class TableOfContents extends React.PureComponent {
                   {expanded ? <Icon28ChevronUpOutline fill="var(--text_tertiary)" /> : <Icon28ChevronDownOutline fill="var(--text_tertiary)" />}
                 </IconButton>
               }
-              onClick={this.onExpandCellClick}
+              onClick={!section.href && this.onExpandCellClick}
               data-section-name={section.name}
               className={classNames({
                 'TableOfContents__section--selected': section.name === this.state.currentSectionName,

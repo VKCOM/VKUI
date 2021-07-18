@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import { FC, ReactNode, useRef } from 'react';
 import { canUseDOM, useDOM } from '../../lib/dom';
 import {
   ConfigProviderContext,
@@ -17,11 +17,6 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
-  /**
-   * @ignore
-   * Свойство для документации, чтобы менять scheme у ноды с примером, а не у body
-   */
-  schemeTarget?: HTMLElement;
 }
 
 function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): AppearanceScheme {
@@ -41,7 +36,11 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Appe
   }
 }
 
-const ConfigProvider: FC<ConfigProviderProps> = ({ children, schemeTarget, ...config }) => {
+const ConfigProvider: FC<ConfigProviderProps> = ({
+  children,
+  schemeTarget,
+  ...config
+}: ConfigProviderProps & { schemeTarget?: HTMLElement; children?: ReactNode }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
 
   const { document } = useDOM();
