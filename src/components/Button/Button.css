@@ -8,6 +8,7 @@
   padding: 1px 16px;
   user-select: none;
   border-radius: 8px;
+  max-width: 100%;
 }
 
 .Button[disabled] {
@@ -26,6 +27,9 @@
 .Button__content {
   padding-top: 4px;
   padding-bottom: 6px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Button__content--caps {
@@ -201,4 +205,34 @@
 .Button--sizeY-compact.Button--sz-l .Button__content {
   padding-top: 6px;
   padding-bottom: 8px;
+}
+
+/**
+ * .Banner__actions
+ */
+.Banner__actions > .Button {
+  margin-top: 12px;
+  margin-right: 16px;
+  margin-bottom: 6px;
+}
+
+.Banner__actions > .Button--lvl-tertiary {
+  margin: 4px 16px 2px -16px;
+}
+
+.Banner__actions > .Button--lvl-tertiary:first-child {
+  margin-top: 4px;
+}
+
+.Banner__actions > .Button:not(.Button--lvl-tertiary) + .Button:not(.Button--lvl-tertiary) {
+  margin-top: 0;
+}
+
+.Banner__actions > .Button:not(.Button--lvl-tertiary) + .Button--lvl-tertiary {
+  margin-top: 2px;
+  margin-left: -16px;
+}
+
+.Banner__actions > .Button--lvl-tertiary + .Button--lvl-tertiary {
+  margin-top: 2px;
 }

@@ -1,10 +1,11 @@
-import { Children, FunctionComponent, ReactNode, HTMLAttributes, MouseEventHandler } from 'react';
+import { Children, FC, ReactNode, HTMLAttributes, MouseEventHandler, ElementType } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Chevron, Icon24DismissSubstract, Icon24DismissDark, Icon24Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
+import IconButton from '../IconButton/IconButton';
 import Headline from '../Typography/Headline/Headline';
 import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
@@ -28,6 +29,10 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    * Срабатывает при клике на иконку крестика при `asideMode="dismiss"`.
    */
   onDismiss?: MouseEventHandler<HTMLButtonElement>;
+  /**
+   * `aria-label` для кнопки при `asideMode="dismiss". Необходим, чтобы кнопка была доступной.
+   */
+  dismissLabel?: string;
   /**
    * Содержимое, отображаемое в левой части баннера.
    */
@@ -69,90 +74,101 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   actions?: ReactNode;
 }
 
-function renderHeader({ size, header }: Pick<BannerProps, 'size' | 'header'>) {
-  switch (size) {
-    case 's':
-      return <Headline weight="medium" vkuiClass="Banner__header">{header}</Headline>;
-    case 'm':
-      return <Title level="2" weight="medium" vkuiClass="Banner__header">{header}</Title>;
-  }
+interface BannerTypographyProps extends Pick<BannerProps, 'size'> {
+  Component?: ElementType;
 }
 
-function renderSubheader({ size, subheader }: Pick<BannerProps, 'size' | 'subheader'>) {
-  switch (size) {
-    case 's':
-      return <Caption level="1" weight="regular" vkuiClass="Banner__subheader">{subheader}</Caption>;
-    case 'm':
-      return <Text weight="regular" vkuiClass="Banner__subheader">{subheader}</Text>;
-  }
-}
+const BannerHeader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
+  return size === 'm'
+    ? <Title level="2" weight="medium" {...restProps} />
+    : <Headline weight="medium" {...restProps} />;
+};
 
-const Banner: FunctionComponent<BannerProps> = (props: BannerProps) => {
+const BannerSubheader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
+  return size === 'm'
+    ? <Text weight="regular" {...restProps} />
+    : <Caption level="1" weight="regular" {...restProps} />;
+};
+
+const Banner: FC<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {
     mode, imageTheme, size, before, asideMode, header, subheader, text, children, background, actions,
-    onDismiss,
+    onDismiss, dismissLabel,
     ...restProps
   } = props;
 
-  const InnerComponent = asideMode === 'expand' ? Tappable : 'div';
-  const innerProps = asideMode === 'expand' ? {
-    activeMode: platform === IOS ? 'opacity' : 'background',
-  } : {};
+  let InnerComponent: ElementType = 'div';
+  let innerProps = {};
+
+  if (asideMode === 'expand') {
+    InnerComponent = Tappable;
+    innerProps = {
+      Component: 'div',
+      role: 'button',
+      activeMode: platform === IOS ? 'opacity' : 'background',
+    };
+  }
 
   return (
-    <div
+    <section
       {...restProps}
       vkuiClass={classNames(
         getClassName('Banner', platform),
         `Banner--md-${mode}`,
-        `Banner--sz-${size}`, {
+        `Banner--sz-${size}`,
+        {
           'Banner--inverted': mode === 'image' && imageTheme === 'dark',
         },
       )}
     >
       <InnerComponent vkuiClass="Banner__in" {...innerProps}>
         {mode === 'image' && background &&
-        <div vkuiClass="Banner__bg">
-          {background}
-        </div>
+          <div aria-hidden="true" vkuiClass="Banner__bg">
+            {background}
+          </div>
         }
 
         {before && <div vkuiClass="Banner__before">{before}</div>}
 
         <div vkuiClass="Banner__content">
-          {hasReactNode(header) && renderHeader({ size, header })}
-          {hasReactNode(subheader) && renderSubheader({ size, subheader })}
-          {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
-          {hasReactNode(actions) && Children.count(actions) > 0 &&
-          <div vkuiClass="Banner__actions">{actions}</div>
-          }
+          {hasReactNode(header) && (
+            <BannerHeader size={size} Component="h2" vkuiClass="Banner__header">{header}</BannerHeader>
+          )}
+          {hasReactNode(subheader) && (
+            <BannerSubheader size={size} Component="span" vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
+          )}
+          {hasReactNode(text) && <Text Component="span" weight="regular" vkuiClass="Banner__text">{text}</Text>}
+          {hasReactNode(actions) && Children.count(actions) > 0 && (
+            <div vkuiClass="Banner__actions">{actions}</div>
+          )}
         </div>
 
-        {asideMode === 'expand' &&
-        <div vkuiClass="Banner__expand">
-          <Icon24Chevron />
-        </div>
-        }
+        {!!asideMode && (
+          <div vkuiClass={`Banner__aside Banner__aside--${asideMode}`}>
+            {asideMode === 'expand' && <Icon24Chevron />}
 
-        {asideMode === 'dismiss' &&
-        <div vkuiClass="Banner__dismiss">
-          <button
-            type="button"
-            vkuiClass="Banner__dismissIcon"
-            onClick={onDismiss}
-          >
-            {(platform === ANDROID || platform === VKCOM) && <Icon24Cancel />}
-            {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
-          </button>
-        </div>
-        }
+            {asideMode === 'dismiss' &&
+              <IconButton
+                aria-label={dismissLabel}
+                vkuiClass="Banner__dismiss"
+                onClick={onDismiss}
+                hoverMode="opacity"
+                hasActive={false}
+              >
+                {(platform === ANDROID || platform === VKCOM) && <Icon24Cancel />}
+                {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
+              </IconButton>
+            }
+          </div>
+        )}
       </InnerComponent>
-    </div>
+    </section>
   );
 };
 
 Banner.defaultProps = {
+  dismissLabel: 'Скрыть',
   mode: 'tint',
   size: 's',
   imageTheme: 'dark',

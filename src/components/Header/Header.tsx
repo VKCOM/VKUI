@@ -11,7 +11,7 @@ import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Subhead from '../Typography/Subhead/Subhead';
 
-export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface HeaderProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   mode?: 'primary' | 'secondary' | 'tertiary';
   subtitle?: ReactNode;
   /**
@@ -27,7 +27,7 @@ export interface HeaderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<
 
 type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode'> & HasPlatform & { Component: ElementType };
 
-const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps }: HeaderContentProps) => {
+const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps }) => {
   if (platform === Platform.IOS) {
     switch (mode) {
       case 'primary':
@@ -50,18 +50,17 @@ const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps }:
 
   switch (mode) {
     case 'primary':
+    case 'tertiary':
       return <Headline weight="medium" {...restProps} />;
     case 'secondary':
       return <Caption level="1" weight="medium" caps {...restProps} />;
-    case 'tertiary':
-      return <Headline weight="medium" {...restProps} />;
   }
 };
 
-type HeaderAsideProps = Pick<HeaderProps, 'aside'> & HasPlatform & { Component: ElementType };
-
-const HeaderAside: FC<HeaderAsideProps> = ({ platform, ...restProps }: HeaderAsideProps) => {
-  return platform === Platform.VKCOM ? <Subhead weight="regular" {...restProps} /> : <Text weight="regular" {...restProps} />;
+const HeaderAside: FC<Pick<HeaderProps, 'aside'> & HasPlatform> = ({ platform, ...restProps }) => {
+  return platform === Platform.VKCOM
+    ? <Subhead weight="regular" {...restProps} />
+    : <Text weight="regular" {...restProps} />;
 };
 
 const Header: FC<HeaderProps> = ({
@@ -80,25 +79,18 @@ const Header: FC<HeaderProps> = ({
     <header
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(
-        getClassName('Header', platform),
-        `Header--mode-${mode}`, {
-          'Header--pi': isPrimitiveReactNode(indicator),
-        },
-      )}
+      vkuiClass={classNames(getClassName('Header', platform), `Header--mode-${mode}`, { 'Header--pi': isPrimitiveReactNode(indicator) })}
     >
-      <div vkuiClass="Header__in">
-        <div vkuiClass="Header__main">
-          <HeaderContent vkuiClass="Header__content" Component="h3" mode={mode} platform={platform}>
-            <span vkuiClass={classNames('Header__content-base', {
-              'Header__content-base--multiline': multiline,
-            })}>{children}</span>
-            {hasReactNode(indicator) && <Caption vkuiClass="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
-          </HeaderContent>
-          {hasReactNode(subtitle) && <Caption Component="span" vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
-        </div>
-        {hasReactNode(aside) && <HeaderAside vkuiClass="Header__aside" platform={platform} Component="div">{aside}</HeaderAside>}
+      <div vkuiClass="Header__main">
+        <HeaderContent vkuiClass="Header__content" Component="h3" mode={mode} platform={platform}>
+          <span vkuiClass={classNames('Header__content-in', { 'Header__content-in--multiline': multiline })}>{children}</span>
+          {hasReactNode(indicator) && <Caption vkuiClass="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
+        </HeaderContent>
+
+        {hasReactNode(subtitle) && <Caption vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
       </div>
+
+      {hasReactNode(aside) && <HeaderAside vkuiClass="Header__aside" platform={platform}>{aside}</HeaderAside>}
     </header>
   );
 };

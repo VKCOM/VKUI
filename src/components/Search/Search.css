@@ -76,6 +76,8 @@
   padding-left: 12px;
   padding-right: 4px;
   flex-shrink: 0;
+  pointer-events: none;
+  cursor: text;
 }
 
 .Search__placeholder {

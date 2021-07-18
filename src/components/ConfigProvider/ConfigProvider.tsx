@@ -1,4 +1,5 @@
-import { FC, ReactNode, useRef } from 'react';
+import { FC, useState, useEffect, ReactNode } from 'react';
+import { AppearanceType } from '@vkontakte/vk-bridge';
 import { canUseDOM, useDOM } from '../../lib/dom';
 import {
   ConfigProviderContext,
@@ -6,11 +7,13 @@ import {
   Scheme,
   AppearanceScheme,
   defaultConfigProviderProps,
+  ExternalScheme,
 } from './ConfigProviderContext';
 import { PlatformType, VKCOM } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { noop } from '../../lib/utils';
+import { warnOnce } from '../../lib/warnOnce';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
@@ -19,7 +22,33 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
   scheme?: AppearanceScheme;
 }
 
-function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): AppearanceScheme {
+function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
+  const inherit = _scheme === 'inherit';
+  const getScheme = () => {
+    if (!inherit || !canUseDOM) {
+      return undefined;
+    }
+    return node.getAttribute('scheme') as Scheme | ExternalScheme;
+  };
+  const [resolvedScheme, setScheme] = useState(getScheme());
+
+  useEffect(() => {
+    if (!inherit) {
+      return noop;
+    }
+    setScheme(getScheme());
+    const observer = new MutationObserver(() => setScheme(getScheme()));
+    observer.observe(node, { attributes: true, attributeFilter: ['scheme'] });
+    return () => observer.disconnect();
+  }, [inherit]);
+
+  return _scheme === 'inherit' ? resolvedScheme : _scheme;
+}
+
+const deriveAppearance = (scheme: Scheme | ExternalScheme): AppearanceType =>
+  scheme === Scheme.SPACE_GRAY || scheme === ExternalScheme.VKCOM_DARK ? 'dark' : 'light';
+
+function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Scheme | 'inherit' {
   if (scheme === 'inherit') {
     return scheme;
   }
@@ -32,35 +61,34 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Appe
     case Scheme.DEPRECATED_CLIENT_DARK:
       return Scheme.SPACE_GRAY;
     default:
-      return scheme;
+      return scheme as Scheme;
   }
 }
+
+const warn = warnOnce('ConfigProvider');
 
 const ConfigProvider: FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
   ...config
-}: ConfigProviderProps & { schemeTarget?: HTMLElement; children?: ReactNode }) => {
+}: ConfigProviderProps & { children?: ReactNode; schemeTarget?: HTMLElement }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
-
   const { document } = useDOM();
-  const setScheme = () => {
-    if (scheme !== 'inherit') {
-      (schemeTarget || document.body).setAttribute('scheme', scheme);
-    }
-  };
+  const target = schemeTarget || document.body;
 
-  const isMounted = useRef(false);
-  if (!isMounted.current && canUseDOM) {
-    setScheme();
-    isMounted.current = true;
-  }
   useIsomorphicLayoutEffect(() => {
-    setScheme();
-    return scheme === 'inherit' ? noop : () => (schemeTarget || document.body).removeAttribute('scheme');
+    if (scheme === 'inherit') {
+      return noop;
+    }
+    if (process.env.NODE_ENV === 'development' && document.body.hasAttribute('scheme')) {
+      warn('<body scheme> was set before VKUI mount - did you forget scheme="inherit"?');
+    }
+    target.setAttribute('scheme', scheme);
+    return () => target.removeAttribute('scheme');
   }, [scheme]);
 
-  const configContext = useObjectMemo(config);
+  const realScheme = useSchemeDetector(target, scheme);
+  const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>

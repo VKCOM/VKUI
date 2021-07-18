@@ -17,15 +17,10 @@
   box-shadow: inset 0 0 0 var(--thin-border) var(--input_border);
 }
 
-.Group--plain:not(:first-of-type) .Group__inner > .Header:first-child {
-  margin-top: -16px;
-}
-
 .Group--plain .Group__inner > .Tabs--default:first-child {
   margin-top: -8px;
 }
 
-.Group--card > .Group__inner > .Header:not(.Header--mode-tertiary):first-child,
 .Group--card > .Group__inner > .Tabs--default:first-child {
   margin-top: -4px;
 }
