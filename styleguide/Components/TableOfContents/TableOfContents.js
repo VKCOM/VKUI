@@ -147,7 +147,7 @@ class TableOfContents extends React.PureComponent {
                   {expanded ? <Icon28ChevronUpOutline fill="var(--text_tertiary)" /> : <Icon28ChevronDownOutline fill="var(--text_tertiary)" />}
                 </IconButton>
               }
-              onClick={!section.href && this.onExpandCellClick}
+              onClick={!section.href ? this.onExpandCellClick : undefined}
               data-section-name={section.name}
               className={classNames({
                 'TableOfContents__section--selected': section.name === this.state.currentSectionName,
