@@ -17,10 +17,10 @@ export const Settings = ({ layout }) => {
         return (
           <div className="Settings">
             <div className="Settings__in">
-              {/*<IntegrationSelect*/}
+              {/* <IntegrationSelect*/}
               {/*  onChange={(e) => context.setContext({ integration: e.target.value })}*/}
               {/*  value={context.integration}*/}
-              {/*/>*/}
+              {/* />*/}
               <PlatformSelect
                 onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
@@ -57,5 +57,5 @@ export const Settings = ({ layout }) => {
         );
       }}
     </StyleGuideContext.Consumer>
-  )
-}
+  );
+};

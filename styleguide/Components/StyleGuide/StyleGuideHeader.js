@@ -4,7 +4,6 @@ import React from 'react';
 import pkg from '../../../package.json';
 import './StyleGuideHeader.css';
 
-
 export const StyleGuideHeader = ({ scheme, setScheme }) => {
   return (
     <div className="StyleGuideHeader">
@@ -38,7 +37,7 @@ export const StyleGuideHeader = ({ scheme, setScheme }) => {
           <div className="StyleGuideHeader__aside">
             <IconButton className="StyleGuideHeader__scheme" onClick={() => {
               if (scheme === Scheme.SPACE_GRAY) {
-                setScheme(Scheme.BRIGHT_LIGHT)
+                setScheme(Scheme.BRIGHT_LIGHT);
               } else if (scheme === Scheme.BRIGHT_LIGHT) {
                 setScheme(Scheme.SPACE_GRAY);
               }
@@ -49,5 +48,5 @@ export const StyleGuideHeader = ({ scheme, setScheme }) => {
         </SplitCol>
       </SplitLayout>
     </div>
-  )
-}
+  );
+};

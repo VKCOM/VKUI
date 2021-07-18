@@ -25,23 +25,22 @@ export const StyleGuideContext = React.createContext({
   styleguideScheme: Scheme.BRIGHT_LIGHT,
 });
 
-
 let initialState = {
   ...defaultConfigProviderProps,
-  integration: "full",
+  integration: 'full',
   webviewType: WebviewType.INTERNAL,
   width: MOBILE_SIZE,
   height: SMALL_HEIGHT,
   hasMouse: true,
   styleguideScheme: Scheme.BRIGHT_LIGHT,
-}
+};
 
 try {
-  const lsState =  localStorage.getItem('vkui:state');
+  const lsState = localStorage.getItem('vkui:state');
   if (lsState) {
     initialState = {
       ...initialState,
-      ...JSON.parse(lsState)
+      ...JSON.parse(lsState),
     };
   }
 } catch (e) {
@@ -57,7 +56,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
     const newState = { ...state, ...data };
     localStorage.setItem('vkui:state', JSON.stringify(newState));
     setState(newState);
-  }, [state])
+  }, [state]);
 
   useEffect(() => {
     if (platform === VKCOM) {
@@ -70,7 +69,7 @@ let StyleGuideRenderer = ({ children, toc }) => {
   useEffect(() => {
     const styleGuideAppearance = styleguideScheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT;
     document.documentElement.style.setProperty('color-scheme', styleGuideAppearance);
-  }, [styleguideScheme])
+  }, [styleguideScheme]);
 
   const providerValue = useMemo(() => ({ ...state, setContext, setPopout }), [width, height, platform, scheme, hasMouse, setContext, setPopout]);
 
@@ -98,19 +97,19 @@ let StyleGuideRenderer = ({ children, toc }) => {
         </SplitLayout>
       </ConfigProvider>
     </StyleGuideContext.Provider>
-  )
-}
+  );
+};
 
 StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, { sizeX: true });
 
 const StyleGuideWrapper = (props) => {
   return (
-      <AdaptivityProvider sizeX={SizeType.REGULAR} sizeY={SizeType.COMPACT}>
-        <AppRoot noLegacyClasses>
-          <StyleGuideRenderer {...props} />
-        </AppRoot>
-      </AdaptivityProvider>
-  )
-}
+    <AdaptivityProvider sizeX={SizeType.REGULAR} sizeY={SizeType.COMPACT}>
+      <AppRoot noLegacyClasses>
+        <StyleGuideRenderer {...props} />
+      </AppRoot>
+    </AdaptivityProvider>
+  );
+};
 
 export default StyleGuideWrapper;

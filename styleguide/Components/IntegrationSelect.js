@@ -8,4 +8,4 @@ export const IntegrationSelect = ({ onChange, value }) => (
     label="Тип интеграции"
     options={['full', 'embedded']}
   />
-)
+);

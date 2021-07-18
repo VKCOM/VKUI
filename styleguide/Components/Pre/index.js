@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'clsx';
-import Styled  from '@rsg-components/Styled';
+import Styled from '@rsg-components/Styled';
 import prismTheme from '../prismTheme';
 import './Pre.css';
 
@@ -35,4 +35,5 @@ PreRenderer.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
+// eslint-disable-next-line new-cap
 export default Styled(styles)(PreRenderer);

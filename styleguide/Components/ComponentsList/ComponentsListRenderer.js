@@ -9,7 +9,7 @@ export default ({ items }) => {
           <SimpleCell href={item.href}>{item.visibleName}</SimpleCell>
           {item.content}
         </React.Fragment>
-      )
+      );
     })}
-  </div>
-}
+  </div>;
+};

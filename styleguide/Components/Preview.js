@@ -30,8 +30,8 @@ let Layout = ({ children, viewWidth }) => {
         {children}
       </SplitCol>
     </SplitLayout>
-  )
-}
+  );
+};
 
 Layout = withAdaptivity(Layout, { viewWidth: true, sizeY: true });
 
@@ -52,11 +52,10 @@ const Config = ({ platform, scheme, webviewType, hasMouse, exampleId, children, 
         </AdaptivityProvider>
       </ConfigProvider>
     </Profiler>
-  )
-}
+  );
+};
 
 export default class Preview extends PreviewParent {
-
   shouldComponentUpdate() {
     return true;
   }
@@ -67,7 +66,7 @@ export default class Preview extends PreviewParent {
     if (this.props.code !== prevProps.code && this.state.error) {
       this.setState({
         error: null,
-        ready: false
+        ready: false,
       });
     }
   }

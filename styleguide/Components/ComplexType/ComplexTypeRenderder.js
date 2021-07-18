@@ -12,7 +12,7 @@ export const ComplexTypeRenderder = ({ name, raw }) => {
         <Icon16ErrorCircleOutline className="ComplexType__icon" />
       </Text>
     </Tooltip>
-  )
-}
+  );
+};
 
 export default ComplexTypeRenderder;

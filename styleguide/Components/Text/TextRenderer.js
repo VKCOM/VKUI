@@ -7,7 +7,7 @@ export const TextRenderer = ({ children, semantic, className, Component = 'span'
 
   return (
     <Component {...restProps} className={classNames('Text', `Text--${weight}`, className)}>{children}</Component>
-  )
-}
+  );
+};
 
 export default TextRenderer;

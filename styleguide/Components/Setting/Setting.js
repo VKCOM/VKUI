@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Headline, Link, classNames, ActionSheet, ActionSheetItem } from '@vkui';
 import { Icon16Dropdown } from '@vkontakte/icons';
 import './Setting.css';
@@ -18,17 +18,17 @@ export const Setting = ({ label, onChange, value, options, children, disabled })
           setPopout(
             <ActionSheet toggleRef={ref.current} onClose={() => setPopout(null)}>
               {options.map((item) => {
-                const isPrimitive = typeof item === 'string' || typeof item === 'number'
+                const isPrimitive = typeof item === 'string' || typeof item === 'number';
                 const value = isPrimitive ? item : item.value;
                 const title = isPrimitive ? item : item.title;
                 return (
                   <ActionSheetItem autoclose key={value} value={value} onClick={() => onChange(value)}>
                     {title}
                   </ActionSheetItem>
-                )
+                );
               })}
-            </ActionSheet>
-          )
+            </ActionSheet>,
+          );
         }}>
           {value}
           <Icon16Dropdown />
@@ -36,5 +36,5 @@ export const Setting = ({ label, onChange, value, options, children, disabled })
       }
       {children}
     </Headline>
-  )
-}
+  );
+};

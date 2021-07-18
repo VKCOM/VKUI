@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { Header, IconButton, SimpleCell, Group, Search, classNames, Separator, Footer } from '@vkui';
+import React, { Fragment } from 'react';
+import { Header, IconButton, SimpleCell, Search, classNames, Separator, Footer } from '@vkui';
 import { Icon28ChevronDownOutline, Icon28ChevronUpOutline } from '@vkontakte/icons';
 import './TableOfContents.css';
 import getInfoFromHash from 'react-styleguidist/lib/client/utils/getInfoFromHash';
@@ -12,7 +12,7 @@ const normalizer = (sections) => {
         title: component.title,
         href: component.href,
         content: component.filepath,
-      }
+      };
     })]);
 
     return {
@@ -22,10 +22,10 @@ const normalizer = (sections) => {
       href: content && `#/${name}`,
       expand,
       search,
-      sections: children
-    }
+      sections: children,
+    };
   });
-}
+};
 
 class TableOfContents extends React.PureComponent {
   constructor(props) {
@@ -34,28 +34,28 @@ class TableOfContents extends React.PureComponent {
     this.state = {
       search: '',
       expand: this.search(this.sections, this.currentSection.name, { exactMatch: true }),
-      currentSectionName: this.currentSection.name
-    }
+      currentSectionName: this.currentSection.name,
+    };
     this.searchResults = {};
   }
 
   componentDidMount() {
-    window.addEventListener('hashchange', this.hashChangeListener)
+    window.addEventListener('hashchange', this.hashChangeListener);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('hashchange', this.hashChangeListener)
+    window.removeEventListener('hashchange', this.hashChangeListener);
   }
 
   hashChangeListener = () => {
     this.setState({
-      currentSectionName: this.currentSection.name
-    })
+      currentSectionName: this.currentSection.name,
+    });
   }
 
   get currentSection() {
     const { targetName } = getInfoFromHash(window.location.hash);
-    return targetName ? this.pickSection(targetName) : this.sections[0]
+    return targetName ? this.pickSection(targetName) : this.sections[0];
   }
 
   onExpandCellClick = (e) => {
@@ -65,16 +65,16 @@ class TableOfContents extends React.PureComponent {
   onExpandIconClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    this.expand(e.currentTarget.dataset.sectionName)
+    this.expand(e.currentTarget.dataset.sectionName);
   }
 
   expand(sectionName) {
     this.setState({
       expand: {
         ...this.state.expand,
-        [sectionName]: !this.state.expand[sectionName]
-      }
-    })
+        [sectionName]: !this.state.expand[sectionName],
+      },
+    });
   }
 
   pickSection = (sectionName, sections = this.sections) => {
@@ -83,7 +83,7 @@ class TableOfContents extends React.PureComponent {
       if (section.name === sectionName) {
         return section;
       } else if (section.sections.length > 0) {
-        const childSearch = this.pickSection(sectionName, section.sections)
+        const childSearch = this.pickSection(sectionName, section.sections);
         if (childSearch) {
           return childSearch;
         }
@@ -95,15 +95,15 @@ class TableOfContents extends React.PureComponent {
     const value = e.currentTarget.value;
 
     if (value.length === 0) {
-      this.searchResults = {}
+      this.searchResults = {};
     } else {
       const section = this.pickSection(e.currentTarget.dataset.sectionName);
       this.searchResults = {
         ...this.searcResults,
-        ...this.search(section.sections, e.currentTarget.value)
+        ...this.search(section.sections, e.currentTarget.value),
       };
     }
-    this.setState({ search: e.currentTarget.value })
+    this.setState({ search: e.currentTarget.value });
   }
 
   search(sections, query, { exactMatch = false } = {}) {
@@ -118,7 +118,7 @@ class TableOfContents extends React.PureComponent {
         }
       }
       result[section.name] = found;
-    })
+    });
     return result;
   }
 
@@ -164,8 +164,8 @@ class TableOfContents extends React.PureComponent {
             </div>
           }
         </Fragment>
-      )
-    })
+      );
+    });
   }
 
   render() {
@@ -175,4 +175,4 @@ class TableOfContents extends React.PureComponent {
   }
 }
 
-export default TableOfContents
+export default TableOfContents;

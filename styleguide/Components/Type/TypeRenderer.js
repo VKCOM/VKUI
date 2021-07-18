@@ -7,7 +7,7 @@ export const TypeRenderer = ({ children }) => {
     <Text className="Type" weight="regular">
       {children}
     </Text>
-  )
-}
+  );
+};
 
 export default TypeRenderer;

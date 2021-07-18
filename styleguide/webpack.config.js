@@ -8,7 +8,7 @@ module.exports = merge(webpackConfig, {
       '@rsg-components': path.resolve(__dirname, '../node_modules/react-styleguidist/lib/client/rsg-components/'),
       '@vkui': path.resolve(__dirname, '../src'),
       'react-dom$': 'react-dom/profiling',
-      'scheduler/tracing': 'scheduler/tracing-profiling'
-    }
-  }
-})
+      'scheduler/tracing': 'scheduler/tracing-profiling',
+    },
+  },
+});

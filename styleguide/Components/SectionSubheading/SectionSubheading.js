@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import Heading from '../Heading/index';
 import { classNames } from '@vkui';
 import { Icon16Linked } from '@vkontakte/icons';
@@ -12,4 +12,4 @@ export const SectionSubheading = ({ children, className, level = 2, href, ...res
       <span className="SectionSubheading__text">{children}</span>
     </Heading>
   );
-}
+};

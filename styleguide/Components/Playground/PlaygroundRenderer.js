@@ -3,8 +3,7 @@ import { Settings } from '../Settings/Settings';
 import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
 
 class PlaygroundRenderer extends React.Component {
-
-  render () {
+  render() {
     const {
       name,
       preview,
@@ -27,7 +26,7 @@ class PlaygroundRenderer extends React.Component {
         <SectionSubheading href={`#/${name}?id=example`}>Пример реализации</SectionSubheading>
         <Settings layout={layout} />
         <div className="Playground__preview" {...wrapperProps} data-preview={name}>
-          { cloneElement(preview, { ...preview.props, layout, iframe, containerStyle, integration, config, exampleId }) }
+          {cloneElement(preview, { ...preview.props, layout, iframe, containerStyle, integration, config, exampleId })}
         </div>
         <SectionSubheading href={`#/${name}?id=code`}>Редактируемый код</SectionSubheading>
         <div className="Playground__code">

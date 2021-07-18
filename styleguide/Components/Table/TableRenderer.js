@@ -20,14 +20,14 @@ export const TableRenderer = ({
           </tr>
         </thead>
         <tbody className="Table__body">
-        {rows.map(row => (
-          <tr key={getRowKey(row)} className="Table__tr">
-            {columns.map(({ render }, index) => (
-              <td key={index} className="Table__td">
-                {render(row)}
-              </td>
+          {rows.map((row) => (
+            <tr key={getRowKey(row)} className="Table__tr">
+              {columns.map(({ render }, index) => (
+                <td key={index} className="Table__td">
+                  {render(row)}
+                </td>
             ))}
-          </tr>
+            </tr>
         ))}
         </tbody>
       </table>

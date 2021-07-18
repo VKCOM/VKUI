@@ -65,4 +65,5 @@ export class Editor extends Component {
   }
 }
 
+// eslint-disable-next-line new-cap
 export default Styled(styles)(Editor);

@@ -12,7 +12,7 @@ class FrameDomProvider extends React.Component {
   };
 
   static propTypes = {
-    appearance: Appearance
+    appearance: Appearance,
   };
 
   state = { ready: false };
@@ -39,7 +39,7 @@ class FrameDomProvider extends React.Component {
     // Пихаем в iFrame vkui стили
     const frameAssets = document.createDocumentFragment();
     this.hotObservers = [];
-    Array.from(document.getElementsByClassName('vkui-style')).map(style => {
+    Array.from(document.getElementsByClassName('vkui-style')).map((style) => {
       const frameStyle = style.cloneNode(true);
       frameAssets.appendChild(frameStyle);
 
@@ -57,7 +57,7 @@ class FrameDomProvider extends React.Component {
   }
 
   componentWillUnmount() {
-    this.hotObservers.forEach(o => o.disconnect());
+    this.hotObservers.forEach((o) => o.disconnect());
   }
 
   componentDidUpdate(prevProps) {
@@ -66,7 +66,7 @@ class FrameDomProvider extends React.Component {
     }
   }
 
-  render () {
+  render() {
     return this.state.ready ? (
       <DOMContext.Provider value={this.context}>
         {this.props.children}
@@ -102,11 +102,11 @@ export const Frame = ({ children, width, height, scheme }) => {
         {children}
       </FrameDomProvider>
     </ReactFrame>
-  )
-}
+  );
+};
 
 Frame.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   scheme: PropTypes.oneOf(Object.values(Scheme)).isRequired,
-}
+};

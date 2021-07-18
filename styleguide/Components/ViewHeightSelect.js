@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import {
   MOBILE_LANDSCAPE_HEIGHT,
   MEDIUM_HEIGHT,
@@ -14,4 +14,4 @@ export const ViewHeightSelect = ({ onChange, value }) => (
     value={value}
     options={[MOBILE_LANDSCAPE_HEIGHT, SMALL_HEIGHT, MEDIUM_HEIGHT]}
   />
-)
+);

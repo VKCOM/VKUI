@@ -7,7 +7,6 @@ import NotFound from '@rsg-components/NotFound';
 import Context from '@rsg-components/Context';
 
 export default class StyleGuide extends Component {
-
   state = {
     error: false,
     info: null,
@@ -54,7 +53,7 @@ export default class StyleGuide extends Component {
           version={config.version}
           toc={
             allSections ? (
-              <TableOfContents sections={allSections}/>
+              <TableOfContents sections={allSections} />
             ) : null
           }
         >
