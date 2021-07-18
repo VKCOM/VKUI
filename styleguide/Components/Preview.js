@@ -66,7 +66,7 @@ export default class Preview extends PreviewParent {
     if (this.props.code !== prevProps.code && this.state.error) {
       this.setState({
         error: null,
-        ready: false,
+        ready: true,
       });
     }
   }
