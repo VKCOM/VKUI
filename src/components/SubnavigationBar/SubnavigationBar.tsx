@@ -25,9 +25,7 @@ export const SubnavigationBar: FC<SubnavigationBarProps> = (props: Subnavigation
     >
       <ScrollWrapper vkuiClass="SubnavigationBar__in">
         <div vkuiClass="SubnavigationBar__scrollIn">
-          <div vkuiClass="SubnavigationBar__gap" />
           {children}
-          <div vkuiClass="SubnavigationBar__gap" />
         </div>
       </ScrollWrapper>
     </div>

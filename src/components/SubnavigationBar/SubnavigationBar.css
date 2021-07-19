@@ -8,6 +8,12 @@
   display: flex;
 }
 
+.SubnavigationBar__scrollIn::before,
+.SubnavigationBar__scrollIn::after {
+  content: '';
+  min-width: 16px;
+}
+
 .SubnavigationBar .SubnavigationButton + .SubnavigationButton {
   margin-left: 8px;
 }
@@ -20,16 +26,7 @@
 /**
  * iOS
  */
-
-.SubnavigationBar--ios .SubnavigationBar__gap {
+.SubnavigationBar--ios .SubnavigationBar__scrollIn::before,
+.SubnavigationBar--ios .SubnavigationBar__scrollIn::after {
   min-width: 12px;
-}
-
-/**
- * Android + vkcom
- */
-
-.SubnavigationBar--android .SubnavigationBar__gap,
-.SubnavigationBar--vkcom .SubnavigationBar__gap {
-  min-width: 16px;
 }

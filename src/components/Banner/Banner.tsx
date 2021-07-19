@@ -98,18 +98,6 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
     ...restProps
   } = props;
 
-  let InnerComponent: ElementType = 'div';
-  let innerProps = {};
-
-  if (asideMode === 'expand') {
-    InnerComponent = Tappable;
-    innerProps = {
-      Component: 'div',
-      role: 'button',
-      activeMode: platform === IOS ? 'opacity' : 'background',
-    };
-  }
-
   return (
     <section
       {...restProps}
@@ -122,7 +110,13 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
         },
       )}
     >
-      <InnerComponent vkuiClass="Banner__in" {...innerProps}>
+      <Tappable
+        Component="div"
+        vkuiClass="Banner__in"
+        activeMode={platform === IOS ? 'opacity' : 'background'}
+        disabled={asideMode !== 'expand'}
+        role={asideMode === 'expand' ? 'button' : null}
+      >
         {mode === 'image' && background &&
           <div aria-hidden="true" vkuiClass="Banner__bg">
             {background}
@@ -136,9 +130,9 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
             <BannerHeader size={size} Component="h2" vkuiClass="Banner__header">{header}</BannerHeader>
           )}
           {hasReactNode(subheader) && (
-            <BannerSubheader size={size} Component="span" vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
+            <BannerSubheader size={size} vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
           )}
-          {hasReactNode(text) && <Text Component="span" weight="regular" vkuiClass="Banner__text">{text}</Text>}
+          {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
           {hasReactNode(actions) && Children.count(actions) > 0 && (
             <div vkuiClass="Banner__actions">{actions}</div>
           )}
@@ -162,7 +156,7 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
             }
           </div>
         )}
-      </InnerComponent>
+      </Tappable>
     </section>
   );
 };

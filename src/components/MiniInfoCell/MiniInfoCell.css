@@ -1,7 +1,6 @@
 .MiniInfoCell {
   display: flex;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding: 6px 12px;
 }
 
 .MiniInfoCell--lvl-primary {
@@ -44,10 +43,6 @@
   margin-bottom: -2px;
 }
 
-.MiniInfoCell__after .UsersStack {
-  padding: 0;
-}
-
 .MiniInfoCell--md-add,
 .MiniInfoCell--md-add .MiniInfoCell__icon {
   color: var(--accent);
@@ -63,25 +58,10 @@
   padding-bottom: 10px;
 }
 
-/* iOS */
-
-.MiniInfoCell--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-/* Android */
-
+/**
+ * ANDROID
+ */
 .MiniInfoCell--android {
   padding-left: 16px;
   padding-right: 16px;
-}
-
-/**
- * VKCOM
- */
-
-.MiniInfoCell--vkcom {
-  padding-left: 12px;
-  padding-right: 12px;
 }

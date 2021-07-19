@@ -1,10 +1,9 @@
-import { FunctionComponent } from 'react';
-import { DivProps } from '../Div/Div';
-import Caption from '../Typography/Caption/Caption';
+import { FC } from 'react';
+import Caption, { CaptionProps } from '../Typography/Caption/Caption';
 
-const Footer: FunctionComponent<DivProps> = ({ children, ...restProps }: DivProps) => {
+const Footer: FC<CaptionProps> = ({ children, ...restProps }: CaptionProps) => {
   return (
-    <Caption {...restProps} level="1" weight="regular" vkuiClass="Footer">
+    <Caption Component="footer" {...restProps} level="1" weight="regular" vkuiClass="Footer">
       {children}
     </Caption>
   );

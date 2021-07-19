@@ -60,6 +60,7 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props: WriteBarIconProps) =>
 
   return (
     <button
+      type="button"
       {...restProps}
       vkuiClass={classNames(getClassName('WriteBarIcon', platform), {
         [`WriteBarIcon--${mode}`]: !!mode,
@@ -67,8 +68,7 @@ export const WriteBarIcon: FC<WriteBarIconProps> = (props: WriteBarIconProps) =>
       })}
     >
       {icon || children}
-      {count && <Caption Component="span" vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>
-      }
+      {count && <Caption Component="span" vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>}
     </button>
   );
 };
