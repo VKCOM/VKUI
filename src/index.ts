@@ -168,6 +168,8 @@ export { default as Chip } from './components/Chip/Chip';
 export type { ChipProps } from './components/Chip/Chip';
 export { default as ChipsInput } from './components/ChipsInput/ChipsInput';
 export type { ChipsInputProps } from './components/ChipsInput/ChipsInput';
+export { default as ChipsSelect } from './components/ChipsSelect/ChipsSelect';
+export type { ChipsSelectProps } from './components/ChipsSelect/ChipsSelect';
 export { default as Slider } from './components/Slider/Slider';
 export type { SliderProps } from './components/Slider/Slider';
 export { default as RangeSlider } from './components/RangeSlider/RangeSlider';
