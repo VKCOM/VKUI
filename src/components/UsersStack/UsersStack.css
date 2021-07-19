@@ -13,6 +13,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 50%;
+  background-color: var(--placeholder_icon_background);
 }
 
 .UsersStack__photo--others {
