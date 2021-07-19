@@ -1,4 +1,4 @@
-import { ElementType, FC, HTMLAttributes, ReactNode } from 'react';
+import { FC, HTMLAttributes, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -59,10 +59,13 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props: MiniInfoCellProps) =>
     ...restProps
   } = props;
 
-  const Component: ElementType = restProps.onClick ? Tappable : 'div';
+  const isClickable = !!restProps.onClick;
 
   return (
-    <Component
+    <Tappable
+      Component="div"
+      disabled={!isClickable}
+      role={isClickable ? 'button' : null}
       {...restProps}
       vkuiClass={classNames(getClassName('MiniInfoCell', platform), {
         [`MiniInfoCell--md-${mode}`]: mode !== 'base',
@@ -74,7 +77,7 @@ export const MiniInfoCell: FC<MiniInfoCellProps> = (props: MiniInfoCellProps) =>
         {children}
       </Text>
       {hasReactNode(after) && <span vkuiClass="MiniInfoCell__after">{after}</span>}
-    </Component>
+    </Tappable>
   );
 };
 
