@@ -1,4 +1,4 @@
-import { FunctionComponent, ImgHTMLAttributes } from 'react';
+import { FC, ImgHTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -9,12 +9,11 @@ export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<
    * Рекомендуемый сет значений: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24
    */
   size?: number;
-  src?: string;
   mode?: 'default' | 'image' | 'app';
   shadow?: boolean;
 }
 
-const Avatar: FunctionComponent<AvatarProps> = ({
+const Avatar: FC<AvatarProps> = ({
   src,
   size,
   shadow,
@@ -22,16 +21,16 @@ const Avatar: FunctionComponent<AvatarProps> = ({
   className,
   children,
   getRootRef,
+  style,
+  alt,
+  'aria-label': ariaLabel,
   ...restProps
 }: AvatarProps) => {
-  const Component = src ? 'img' : 'div';
   const platform = usePlatform();
-  let borderRadius;
+
+  let borderRadius: string | number = '50%';
 
   switch (mode) {
-    case 'default':
-      borderRadius = '50%';
-      break;
     case 'image':
       size < 64 && (borderRadius = 4);
       size >= 64 && size < 96 && (borderRadius = 6);
@@ -44,22 +43,23 @@ const Avatar: FunctionComponent<AvatarProps> = ({
       size >= 64 && size < 84 && (borderRadius = 16);
       size >= 84 && (borderRadius = 18);
       break;
+    default:
+      break;
   }
 
   return (
     <div
-      vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`)}
+      vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`, {
+        'Avatar--shadow': shadow,
+      })}
       className={className}
       ref={getRootRef}
+      role={src ? 'img' : 'presentation'}
+      aria-label={alt || ariaLabel}
     >
-      <div vkuiClass="Avatar__in" style={{ width: size, height: size, borderRadius }}>
-        <Component
-          {...restProps}
-          vkuiClass="Avatar__img"
-          src={src}
-        />
+      <div {...restProps} aria-hidden="true" vkuiClass="Avatar__in" style={{ ...style, width: size, height: size, borderRadius }}>
+        {src && <img vkuiClass="Avatar__img" src={src} alt="" />}
         {children && <div vkuiClass="Avatar__children">{children}</div>}
-        {shadow && <span vkuiClass="Avatar__shadow" />}
       </div>
     </div>
   );
