@@ -309,6 +309,16 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.keyboardInput = fullInput;
   };
 
+  /**
+   * Нужен для правильного поведения обработчика onClick на select. Фильтрует клики, которые были сделаны по
+   * выпадающему списку.
+   */
+  onLabelClick = (e: MouseEvent<HTMLLabelElement>) => {
+    if (this.scrollBoxRef.current?.contains(e.target as Node)) {
+      e.preventDefault();
+    }
+  };
+
   onNativeSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.currentTarget.value;
     if (!this.isControlledOutside) {
@@ -457,6 +467,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       onChange,
       onBlur,
       onFocus,
+      onClick,
       renderOption,
       children,
       emptyText,
@@ -472,6 +483,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         className={className}
         style={style}
         ref={this.rootRef}
+        onClick={this.onLabelClick}
       >
         {opened && searchable ?
           <Input
@@ -509,6 +521,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           onChange={this.onNativeSelectChange}
           onBlur={onBlur}
           onFocus={onFocus}
+          onClick={onClick}
           value={nativeSelectValue}
           vkuiClass="CustomSelect__control"
         >
