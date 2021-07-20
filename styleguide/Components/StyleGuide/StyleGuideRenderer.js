@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { MOBILE_SIZE, TABLET_SIZE } from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
 import { Appearance, defaultConfigProviderProps } from '@vkui/components/ConfigProvider/ConfigProviderContext';
-import { SMALL_HEIGHT } from '../ViewHeightSelect';
+import { SMALL_HEIGHT } from '../Settings/ViewHeightSelect';
 import {
   VKCOM,
   AppRoot,

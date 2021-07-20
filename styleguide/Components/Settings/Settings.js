@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import { PlatformSelect } from '../PlatformSelect';
-import { SchemeSelect } from '../SchemeSelect';
-import { WebviewTypeSelect } from '../WebviewTypeSelect';
-import { HasMouseCheckbox } from '../HasMouseCheckbox';
-import { ViewHeightSelect } from '../ViewHeightSelect';
-import { ViewWidthSelect } from '../ViewWidthSelect';
+import { PlatformSelect } from './PlatformSelect';
+import { SchemeSelect } from './SchemeSelect';
+import { WebviewTypeSelect } from './WebviewTypeSelect';
+import { HasMouseCheckbox } from './HasMouseCheckbox';
+import { ViewHeightSelect } from './ViewHeightSelect';
+import { ViewWidthSelect } from './ViewWidthSelect';
 // import { IntegrationSelect } from '../IntegrationSelect';
 import './Settings.css';
 import { Platform } from '@vkui';

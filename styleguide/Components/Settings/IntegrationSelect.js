@@ -1,5 +1,5 @@
 import React from 'react';
-import { Setting } from './Setting/Setting';
+import { Setting } from '../Setting/Setting';
 
 export const IntegrationSelect = ({ onChange, value }) => (
   <Setting

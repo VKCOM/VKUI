@@ -3,7 +3,7 @@ import {
   MOBILE_LANDSCAPE_HEIGHT,
   MEDIUM_HEIGHT,
 } from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
-import { Setting } from './Setting/Setting';
+import { Setting } from '../Setting/Setting';
 
 export const SMALL_HEIGHT = 667;
 

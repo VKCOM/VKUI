@@ -1,6 +1,6 @@
 import React from 'react';
 import { Scheme } from '@vkui';
-import { Setting } from './Setting/Setting';
+import { Setting } from '../Setting/Setting';
 
 export const SchemeSelect = ({ onChange, value, ...restProps }) => (
   <Setting

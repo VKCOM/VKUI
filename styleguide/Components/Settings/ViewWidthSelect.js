@@ -5,7 +5,7 @@ import {
   SMALL_TABLET_SIZE,
   TABLET_SIZE,
 } from '@vkui/components/AdaptivityProvider/AdaptivityProvider';
-import { Setting } from './Setting/Setting';
+import { Setting } from '../Setting/Setting';
 
 export const ViewWidthSelect = ({ onChange, value, ...restProps }) => (
   <Setting
