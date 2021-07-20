@@ -16,15 +16,14 @@ describe('ModalCard', () => {
       }
     />
   ), [{
-    icon: [undefined, <Icon56MoneyTransferOutline key="icon" />],
-    header: [undefined, 'Отправляйте деньги друзьям, используя банковскую карту'],
-    subheader: [undefined, 'Номер карты получателя не нужен — он сам решит, куда зачислить средства.'],
-    actions: [undefined,
+    icon: [<Icon56MoneyTransferOutline key="icon" />],
+    header: ['Отправляйте деньги друзьям, используя банковскую карту'],
+    subheader: ['Номер карты получателя не нужен — он сам решит, куда зачислить средства.'],
+    actions: [
       <Button size="l" mode="primary" key="button">
         Попробовать
       </Button>,
     ],
-    $adaptivity: 'x',
   }], {
     Wrapper: AppRoot,
   });
