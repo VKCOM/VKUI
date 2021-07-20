@@ -42,7 +42,7 @@ const SliderSwitchButton: FunctionComponent<ButtonProps> = (props: ButtonProps) 
     hasActive={false}
     hoverMode="opacity"
   >
-    <Text Component="span" weight="medium">{children}</Text>
+    <Text weight="medium">{children}</Text>
   </Tappable>;
 };
 

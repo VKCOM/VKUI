@@ -1,8 +1,7 @@
-import { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
+import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
-import { ANDROID } from '../../../lib/platform';
 
 export interface CaptionProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold' | 'bold';
@@ -11,23 +10,15 @@ export interface CaptionProps extends AllHTMLAttributes<HTMLElement> {
   Component?: ElementType;
 }
 
-const Caption: FunctionComponent<CaptionProps> = ({
+const Caption: FC<CaptionProps> = ({
   children,
   weight,
   level,
   caps,
-  Component,
+  Component = 'span',
   ...restProps
 }: CaptionProps) => {
   const platform = usePlatform();
-
-  let captionWeight: CaptionProps['weight'] = weight;
-
-  if (platform === ANDROID) {
-    if (weight === 'semibold') {
-      captionWeight = 'medium';
-    }
-  }
 
   return (
     <Component
@@ -35,7 +26,7 @@ const Caption: FunctionComponent<CaptionProps> = ({
       vkuiClass={
         classNames(
           getClassName('Caption', platform),
-          `Caption--w-${captionWeight}`,
+          `Caption--w-${weight}`,
           `Caption--l-${level}`,
           {
             'Caption--caps': caps,
@@ -46,10 +37,6 @@ const Caption: FunctionComponent<CaptionProps> = ({
       {children}
     </Component>
   );
-};
-
-Caption.defaultProps = {
-  Component: 'div',
 };
 
 export default Caption;

@@ -1,4 +1,6 @@
 .Text {
+  display: block;
+  margin: 0;
   font-size: 15px;
   line-height: 20px;
 }
@@ -13,4 +15,11 @@
 
 .Text--w-semibold {
   font-weight: 600;
+}
+
+/**
+ * ANDROID
+ */
+.Text--android.Text--w-semibold {
+  font-weight: 500;
 }

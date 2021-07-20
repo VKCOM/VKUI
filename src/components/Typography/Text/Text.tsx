@@ -1,8 +1,7 @@
-import { AllHTMLAttributes, ElementType, FunctionComponent } from 'react';
+import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
-import { ANDROID } from '../../../lib/platform';
 import { HasRootRef } from '../../../types';
 import { warnOnce } from '../../../lib/warnOnce';
 
@@ -12,22 +11,14 @@ export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HT
 }
 
 const warn = warnOnce('Text');
-const Text: FunctionComponent<TextProps> = ({
+const Text: FC<TextProps> = ({
   children,
   weight,
-  Component,
+  Component = 'span',
   getRootRef,
   ...restProps
 }: TextProps) => {
   const platform = usePlatform();
-
-  let textWeight: TextProps['weight'] = weight;
-
-  if (platform === ANDROID) {
-    if (weight === 'semibold') {
-      textWeight = 'medium';
-    }
-  }
 
   if (process.env.NODE_ENV === 'development' && typeof Component !== 'string' && getRootRef) {
     warn('getRootRef can only be used with DOM components');
@@ -37,15 +28,11 @@ const Text: FunctionComponent<TextProps> = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(getClassName('Text', platform), `Text--w-${textWeight}`)}
+      vkuiClass={classNames(getClassName('Text', platform), `Text--w-${weight}`)}
     >
       {children}
     </Component>
   );
-};
-
-Text.defaultProps = {
-  Component: 'div',
 };
 
 export default Text;
