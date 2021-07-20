@@ -32,12 +32,12 @@ export interface PanelHeaderProps extends
   fixed?: boolean;
 }
 
-const PanelHeaderInTypography: FC<PanelHeaderProps> = ({ children }: PanelHeaderProps) => {
+const PanelHeaderInTypography: FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
   const platform = usePlatform();
 
   return platform === VKCOM
-    ? <Text weight="medium">{children}</Text>
-    : <span vkuiClass="PanelHeader__content-in">{children}</span>;
+    ? <Text weight="medium" {...props} />
+    : <span vkuiClass="PanelHeader__content-in" {...props} />;
 };
 
 const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
