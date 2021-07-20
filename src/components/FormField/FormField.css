@@ -109,3 +109,12 @@
 .FormField--vkcom {
   border-radius: 6px;
 }
+
+/**
+ * PlainCard
+ */
+
+.PlainCard__header + .FormField,
+.PlainCard__subheader + .FormField {
+  margin-top: 16px;
+}

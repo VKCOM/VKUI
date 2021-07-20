@@ -85,3 +85,11 @@
   margin: 8px 0 0;
   text-align: center;
 }
+
+/**
+ * PlainCard
+ */
+
+.PlainCard .UsersStack {
+  margin-top: 20px;
+}

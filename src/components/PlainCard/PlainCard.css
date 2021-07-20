@@ -34,15 +34,6 @@
   margin-top: 8px;
 }
 
-.PlainCard__header + .FormField,
-.PlainCard__subheader + .FormField {
-  margin-top: 16px;
-}
-
-.PlainCard .UsersStack {
-  margin-top: 20px;
-}
-
 .PlainCard__icon {
   margin: 8px auto 16px;
   color: var(--accent);
@@ -64,25 +55,10 @@
   margin-top: 32px;
 }
 
-.PlainCard__actions .Button {
-  flex: 1;
-  margin-left: 6px;
-  margin-right: 6px;
-}
-
 .PlainCard__actions--v {
   flex-direction: column;
   margin-left: 0;
   margin-right: 0;
-}
-
-.PlainCard__actions--v .Button {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.PlainCard__actions--v .Button + .Button {
-  margin-top: 12px;
 }
 
 /**

@@ -236,3 +236,22 @@
 .Banner__actions > .Button--lvl-tertiary + .Button--lvl-tertiary {
   margin-top: 2px;
 }
+
+/**
+ * PlainCard
+ */
+
+.PlainCard__actions--v .Button {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.PlainCard__actions--v .Button + .Button {
+  margin-top: 12px;
+}
+
+.PlainCard__actions .Button {
+  flex: 1;
+  margin-left: 6px;
+  margin-right: 6px;
+}
