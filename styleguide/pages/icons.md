@@ -7,9 +7,3 @@
 > **Важно**
 >
 > Иконки находятся в `peerDependencies` библиотеки. Это значит, что в вашем проекте пакет нужно явно указать в `package.json`.
-
-```jsx { "props": { "layout": false, "frame": false } }
-<AppRoot mode="partial" noLegacyClasses>
-  <Icon24Add />
-</AppRoot>
-```
