@@ -1,4 +1,4 @@
-import React, { createRef, Profiler } from 'react';
+import React, { Profiler } from 'react';
 import PreviewParent from '@rsg-components/Preview/Preview';
 import ReactExample from '@rsg-components/ReactExample/ReactExample';
 import PlaygroundError from '@rsg-components/PlaygroundError';
@@ -35,7 +35,7 @@ let Layout = ({ children, viewWidth }) => {
 
 Layout = withAdaptivity(Layout, { viewWidth: true, sizeY: true });
 
-const Config = ({ platform, scheme, webviewType, hasMouse, exampleId, children, schemeTarget, ...config }) => {
+const Config = ({ platform, scheme, webviewType, hasMouse, exampleId, children, schemeTarget, mode, ...config }) => {
   return (
     <Profiler id={exampleId} onRender={logPerf}>
       <ConfigProvider
@@ -46,7 +46,7 @@ const Config = ({ platform, scheme, webviewType, hasMouse, exampleId, children, 
         {...config}
       >
         <AdaptivityProvider hasMouse={hasMouse}>
-          <AppRoot noLegacyClasses>
+          <AppRoot mode={mode} noLegacyClasses>
             {children}
           </AppRoot>
         </AdaptivityProvider>
@@ -60,19 +60,15 @@ export default class Preview extends PreviewParent {
     return true;
   }
 
-  schemeTarget = createRef();
-
   componentDidUpdate(prevProps) {
     if (this.props.code !== prevProps.code && this.state.error) {
       this.setState({
         error: null,
-        ready: true,
       });
     }
   }
 
   componentDidMount() {
-    this.setState({ ready: true }); // Если отрендерить сразу, то schemeTarget будет null, попадет в таком виде в ConfigProvider и тот переключит scheme на body, а не на Preview
     return true;
   }
 
@@ -80,9 +76,14 @@ export default class Preview extends PreviewParent {
     return true;
   }
 
+  getSchemeTargetRef = (el) => {
+    this.setState({ schemeTarget: el });
+  }
+
   render() {
     const { code, layout = true, iframe = true, config = {}, exampleId } = this.props;
-    const { error, ready } = this.state;
+    const { error, schemeTarget } = this.state;
+    const ready = !!schemeTarget;
 
     return (
       <StyleGuideContext.Consumer>
@@ -101,7 +102,7 @@ export default class Preview extends PreviewParent {
               {...styleGuideContext}
               {...config}
               exampleId={exampleId}
-              schemeTarget={!iframe && this.schemeTarget.current}
+              schemeTarget={!iframe && schemeTarget}
               mode={iframe ? 'full' : 'embedded'}
             >
               {layout ? <Layout>{example}</Layout> : example}
@@ -109,7 +110,7 @@ export default class Preview extends PreviewParent {
           );
 
           return (
-            <div ref={this.schemeTarget} className={classNames('Preview', `Preview--${styleGuideContext.platform}`, { 'Preview--layout': layout } )}>
+            <div ref={this.getSchemeTargetRef} className={classNames('Preview', `Preview--${styleGuideContext.platform}`, { 'Preview--layout': layout } )}>
               {ready &&
                 <React.Fragment>
                   <div className="Preview__shadow" style={layout ? { maxWidth: styleGuideContext.width } : null} />
