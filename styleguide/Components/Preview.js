@@ -56,10 +56,6 @@ const Config = ({ platform, scheme, webviewType, hasMouse, exampleId, children, 
 };
 
 export default class Preview extends PreviewParent {
-  shouldComponentUpdate() {
-    return true;
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.code !== prevProps.code && this.state.error) {
       this.setState({
@@ -68,13 +64,13 @@ export default class Preview extends PreviewParent {
     }
   }
 
-  componentDidMount() {
+  shouldComponentUpdate() { // Оверрайдим методы PreviewParent
     return true;
   }
 
-  componentWillUnmount() {
-    return true;
-  }
+  componentDidMount() {} // Оверрайдим методы PreviewParent
+
+  componentWillUnmount() {} // Оверрайдим методы PreviewParent
 
   getSchemeTargetRef = (el) => {
     this.setState({ schemeTarget: el });
