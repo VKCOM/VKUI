@@ -2,8 +2,18 @@ const path = require('path');
 const merge = require('webpack-merge');
 
 const isProduction = process.env.NODE_ENV === 'production';
-
 process.env.BABEL_KEEP_CSS = '1';
+const styleLoader = {
+  loader: 'style-loader',
+  options: {
+    // singleton is faster, but does not support sourcemaps
+    injectType: isProduction ? 'singletonStyleTag' : 'styleTag',
+    attributes: {
+      class: 'vkui-style'
+    },
+  },
+};
+
 const config = {
   entry: {
     vkui: './src/vkui.js',
@@ -35,30 +45,12 @@ const config = {
       {
         test: /\.css$/,
         exclude: /styleguide/,
-        use: [{
-          loader: 'style-loader',
-          options: {
-            // singleton is faster, but does not support sourcemaps
-            injectType: isProduction ? 'singletonStyleTag' : 'styleTag',
-            attributes: {
-              class: 'vkui-style'
-            },
-          },
-        }, 'css-loader', 'postcss-loader']
+        use: [styleLoader, 'css-loader', 'postcss-loader']
       },
       {
         test: /\.css$/,
         include: /styleguide/,
-        use: [{
-          loader: 'style-loader',
-          options: {
-            // singleton is faster, but does not support sourcemaps
-            injectType: isProduction ? 'singletonStyleTag' : 'styleTag',
-            attributes: {
-              class: 'vkui-style'
-            },
-          },
-        }, 'css-loader']
+        use: [styleLoader, 'css-loader']
       },
     ],
   },
