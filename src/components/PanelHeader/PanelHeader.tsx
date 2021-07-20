@@ -30,6 +30,7 @@ export interface PanelHeaderProps extends
    * Если `false`, то шапка будет в потоке. По умолчанию `true`, но если платформа vkcom, то по умолчанию `false`.
    */
   fixed?: boolean;
+  offsetRight?: string | number;
 }
 
 const PanelHeaderInTypography: FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
@@ -40,12 +41,16 @@ const PanelHeaderInTypography: FC<PanelHeaderProps> = (props: PanelHeaderProps) 
     : <span vkuiClass="PanelHeader__content-in" {...props} />;
 };
 
-const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
+const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right, offsetRight }) => {
   const { webviewType } = useContext(ConfigProviderContext);
   const isPrimitive = isPrimitiveReactNode(children);
 
   return (
-    <TooltipContainer fixed vkuiClass="PanelHeader__in">
+    <TooltipContainer
+      fixed
+      vkuiClass="PanelHeader__in"
+      style={{ marginRight: offsetRight }}
+    >
       <div vkuiClass="PanelHeader__left">
         {left}
       </div>
@@ -73,6 +78,7 @@ const PanelHeader: FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
     sizeX,
     sizeY,
     fixed,
+    offsetRight,
     ...restProps
   } = props;
   const platform = usePlatform();
