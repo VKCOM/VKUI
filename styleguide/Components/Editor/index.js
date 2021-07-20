@@ -54,12 +54,14 @@ export class Editor extends Component {
             <Icon28CopyOutline />
           </Tappable>
         }
-        <SimpleEditor
-          className={this.props.classes.root}
-          value={this.state.code}
-          onValueChange={this.handleChange}
-          highlight={highlight}
-        />
+        <div className="Editor__inner">
+          <SimpleEditor
+            className={this.props.classes.root}
+            value={this.state.code}
+            onValueChange={this.handleChange}
+            highlight={highlight}
+          />
+        </div>
       </div>
     );
   }
