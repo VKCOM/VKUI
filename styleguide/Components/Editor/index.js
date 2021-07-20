@@ -1,47 +1,29 @@
 import React, { Component } from 'react';
-import SimpleEditor from 'react-simple-code-editor';
-import { highlight as prismHighlight, languages } from 'prismjs';
+import 'prismjs';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-jsx';
 import Styled from '@rsg-components/Styled';
+import Editor from '@rsg-components/Editor/Editor';
 import prismTheme from '../prismTheme';
 import './Editor.css';
 import { Tappable } from '@vkui';
 import { Icon28CopyOutline } from '@vkontakte/icons';
 
-const highlight = (code) => prismHighlight(code, languages.jsx, 'jsx');
-
 const styles = ({ color }) => ({
   root: {
     ...prismTheme({ color }),
+    '& textarea': {
+      padding: '12px 16px !important', // Editor перезатирает padding без !important, так что иначе никак
+    },
+    '& pre': {
+      padding: '12px 16px !important', // Editor перезатирает padding без !important, так что иначе никак
+    },
   },
 });
 
-export class Editor extends Component {
-  state = { code: this.props.code, prevCode: this.props.code };
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { code } = nextProps;
-    if (prevState.prevCode !== code) {
-      return {
-        prevCode: code,
-        code,
-      };
-    }
-    return null;
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.code !== this.state.code;
-  }
-
-  handleChange = (code) => {
-    this.setState({ code });
-    this.props.onChange(code);
-  };
-
+export class EditorWrapper extends Component {
   onCopyClick = () => {
     navigator.clipboard.writeText(this.state.code);
   }
@@ -55,12 +37,7 @@ export class Editor extends Component {
           </Tappable>
         }
         <div className="Editor__inner">
-          <SimpleEditor
-            className={this.props.classes.root}
-            value={this.state.code}
-            onValueChange={this.handleChange}
-            highlight={highlight}
-          />
+          <Editor {...this.props} />
         </div>
       </div>
     );
@@ -68,4 +45,4 @@ export class Editor extends Component {
 }
 
 // eslint-disable-next-line new-cap
-export default Styled(styles)(Editor);
+export default Styled(styles)(EditorWrapper);
