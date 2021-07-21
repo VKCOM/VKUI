@@ -1,0 +1,13 @@
+.Settings {
+  margin-bottom: -10px;
+}
+
+.Settings__in {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Settings__in > .Setting {
+  margin-right: 16px;
+  margin-bottom: 28px;
+}

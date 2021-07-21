@@ -12,7 +12,9 @@ import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAva
 const ui = { ...VKUI, ...VKUIUnstable };
 
 for (let i in ui) {
-  window[i] = ui[i];
+  if (ui.hasOwnProperty(i)) {
+    window[i] = ui[i];
+  }
 }
 
 createMasks();

@@ -2,7 +2,7 @@
 /*
 * Этот файл сгенерирован автоматически. Не надо править его руками.
 */
-body[scheme="vkcom"] {
+body[scheme="vkcom"], [scheme="vkcom"] {
   --accent: #5181b8;
   --action_sheet_action_foreground: #5181b8;
   --action_sheet_separator: rgba(0, 0, 0, 0.12);

@@ -1,4 +1,3 @@
-import React from 'react';
 import { users } from './demo_dataset';
 
 export function getRandomInt(min, max) {
@@ -39,7 +38,7 @@ const photos = {
     photo_100: 'https://pp.userapi.com/c837628/v837628453/39175/4JRjMaFvCrw.jpg',
   },
   'audio_linkin_park': {
-    photo_100: 'https://pp.userapi.com/c846120/v846120617/1ff005/WmCcgV5CozY.jpg'
+    photo_100: 'https://pp.userapi.com/c846120/v846120617/1ff005/WmCcgV5CozY.jpg',
   },
   'audio_face': {
     photo_100: 'https://pp.userapi.com/c845218/v845218888/182681/Al6XrhpJYn0.jpg',
@@ -171,5 +170,5 @@ export const perfLogger = {
     if (this.isEnabled) {
       console.log(event, Number(duration.toFixed(2)));
     }
-  }
+  },
 };
