@@ -1,14 +1,15 @@
 import ModalCard, { ModalCardProps } from './ModalCard';
 import Button from '../Button/Button';
 import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
-import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import AppRoot from '../AppRoot/AppRoot';
 import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
 
 describe('ModalCard', () => {
   describeScreenshotFuzz<ModalCardProps>((props) => (
-    <SplitLayout
+    <PopoutRoot
+      style={{ width: 320, height: 800 }}
       modal={
         <ModalRoot activeModal="test">
           <ModalCard nav="test" {...props} />
