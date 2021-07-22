@@ -7,6 +7,10 @@ import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptivityProps, ViewHeight, ViewWidth, withAdaptivity } from '../../hoc/withAdaptivity';
 import { HasRootRef } from '../../types';
+import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
+import { IOS } from '../../lib/platform';
+import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import { Icon24Dismiss } from '@vkontakte/icons';
 import './PlainCard.css';
 
 export interface PlainCardProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
@@ -38,6 +42,7 @@ export interface PlainCardProps extends HTMLAttributes<HTMLDivElement>, HasRootR
    * Тип отображения кнопок: вертикальный или горизонтальный
    */
   actionsLayout?: 'vertical' | 'horizontal';
+  onClose?: VoidFunction;
 }
 
 const PlainCardComponent: FC<PlainCardProps> = ({
@@ -51,10 +56,14 @@ const PlainCardComponent: FC<PlainCardProps> = ({
   viewWidth,
   hasMouse,
   viewHeight,
+  onClose,
   ...restProps
 }: PlainCardProps & AdaptivityProps) => {
   const platform = usePlatform();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+
+  const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
+  const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
 
   return (
     <div
@@ -72,11 +81,18 @@ const PlainCardComponent: FC<PlainCardProps> = ({
         {children}
 
         {hasReactNode(actions) &&
-        <div vkuiClass={classNames('PlainCard__actions', {
-          'PlainCard__actions--v': actionsLayout === 'vertical',
-        })}>
-          {actions}
-        </div>
+          <div vkuiClass={classNames('PlainCard__actions', {
+            'PlainCard__actions--v': actionsLayout === 'vertical',
+          })}>
+            {actions}
+          </div>
+        }
+
+        {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
+        {canShowCloseBtnIos &&
+          <PanelHeaderButton vkuiClass="ModalCard__dismiss" onClick={onClose}>
+            <Icon24Dismiss />
+          </PanelHeaderButton>
         }
       </div>
     </div>
