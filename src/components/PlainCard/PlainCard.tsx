@@ -45,7 +45,7 @@ export interface PlainCardProps extends HTMLAttributes<HTMLDivElement>, HasRootR
   onClose?: VoidFunction;
 }
 
-const PlainCardComponent: FC<PlainCardProps> = ({
+export const PlainCard: FC<PlainCardProps> = withAdaptivity(({
   getRootRef,
   icon,
   header,
@@ -97,10 +97,9 @@ const PlainCardComponent: FC<PlainCardProps> = ({
       </div>
     </div>
   );
-};
-
-export const PlainCard = withAdaptivity(PlainCardComponent, {
+}, {
   viewWidth: true,
   viewHeight: true,
   hasMouse: true,
 });
+
