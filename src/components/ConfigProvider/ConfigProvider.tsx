@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, ReactNode } from 'react';
 import { AppearanceType } from '@vkontakte/vk-bridge';
 import { canUseDOM, useDOM } from '../../lib/dom';
 import {
@@ -67,10 +67,15 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Sche
 
 const warn = warnOnce('ConfigProvider');
 
-const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
+const ConfigProvider: FC<ConfigProviderProps> = ({
+  children,
+  schemeTarget,
+  ...config
+}: ConfigProviderProps & { children?: ReactNode; schemeTarget?: HTMLElement }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
-
   const { document } = useDOM();
+  const target = schemeTarget || document.body;
+
   useIsomorphicLayoutEffect(() => {
     if (scheme === 'inherit') {
       return noop;
@@ -78,11 +83,11 @@ const ConfigProvider: FC<ConfigProviderProps> = ({ children, ...config }) => {
     if (process.env.NODE_ENV === 'development' && document.body.hasAttribute('scheme')) {
       warn('<body scheme> was set before VKUI mount - did you forget scheme="inherit"?');
     }
-    document.body.setAttribute('scheme', scheme);
-    return () => document.body.removeAttribute('scheme');
+    target.setAttribute('scheme', scheme);
+    return () => target.removeAttribute('scheme');
   }, [scheme]);
 
-  const realScheme = useSchemeDetector(document.body, scheme);
+  const realScheme = useSchemeDetector(target, scheme);
   const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
 
   return (

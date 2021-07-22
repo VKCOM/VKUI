@@ -1,0 +1,31 @@
+.Setting {
+  position: relative;
+  display: flex;
+}
+
+.Setting--disabled {
+  opacity: .5;
+}
+
+.Setting--disabled .Setting__value,
+.Setting--disabled .Setting__select {
+  cursor: default;
+}
+
+.Setting__select {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.Setting__value {
+  display: flex;
+  align-items: center;
+  color: var(--accent);
+  cursor: pointer;
+}
