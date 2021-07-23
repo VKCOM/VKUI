@@ -4,6 +4,7 @@ import Button from '../Button/Button';
 import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
 import Avatar from '../Avatar/Avatar';
 import UsersStack from '../UsersStack/UsersStack';
+import Textarea from '../Textarea/Textarea';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import AppRoot from '../AppRoot/AppRoot';
 import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
@@ -38,7 +39,7 @@ const propSets = [{
     <Fragment key="buttons">
       <Button size="l" mode="primary">
         Присоединиться
-      </Button>,
+      </Button>
       <Button size="l" mode="secondary">
         Скопировать приглашение
       </Button>
@@ -52,6 +53,17 @@ const propSets = [{
       key="usersstack"
       layout="vertical"
     >Алексей, Илья, Михаил<br />и ещё 3 человека</UsersStack>,
+  ],
+}, {
+  nav: ['3'],
+  header: ['Расскажите о себе'],
+  actions: [
+    <Button size="l" mode="primary" key="button">
+      Сохранить
+    </Button>,
+  ],
+  children: [
+    <Textarea key="textarea" defaultValue="В Грузии" />,
   ],
 }];
 
