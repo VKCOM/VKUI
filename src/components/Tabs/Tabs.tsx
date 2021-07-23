@@ -7,11 +7,13 @@ import { IOS } from '../../lib/platform';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import './Tabs.css';
 
+export type TabsMode = 'default' | 'buttons' | 'segmented';
+
 export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
-  mode?: 'default' | 'buttons' | 'segmented';
+  mode?: TabsMode;
 }
 
-export const TabsModeContext = createContext<TabsProps['mode']>('default');
+export const TabsModeContext = createContext<TabsMode>('default');
 
 const Tabs: FunctionComponent<TabsProps> = ({
   children,

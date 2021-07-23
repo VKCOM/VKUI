@@ -1,11 +1,11 @@
-import { FunctionComponent, HTMLAttributes, ReactNode, useContext } from 'react';
+import { FC, HTMLAttributes, ReactNode, useContext } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import { classNames } from '../../lib/classNames';
 import { VKCOM } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import { TabsModeContext } from '../Tabs/Tabs';
+import { TabsMode, TabsModeContext } from '../Tabs/Tabs';
 import Headline from '../Typography/Headline/Headline';
 import Subhead from '../Typography/Subhead/Subhead';
 import Text from '../Typography/Text/Text';
@@ -16,14 +16,14 @@ export interface TabsItemProps extends HTMLAttributes<HTMLElement> {
   selected?: boolean;
 }
 
-const TabsItem: FunctionComponent<TabsItemProps> = ({
+const TabsItem: FC<TabsItemProps> = ({
   children,
   selected,
   after,
   ...restProps
 }: TabsItemProps) => {
   const platform = usePlatform();
-  const mode = useContext(TabsModeContext);
+  const mode: TabsMode = useContext(TabsModeContext);
 
   const TypographyComponent = platform === VKCOM
     ? Text
