@@ -159,6 +159,7 @@ module.exports = {
           '../src/components/WriteBarIcon/WriteBarIcon.tsx',
           '../src/components/SubnavigationBar/SubnavigationBar.tsx',
           '../src/components/SubnavigationButton/SubnavigationButton.tsx',
+          '../src/components/ModalCardBase/ModalCardBase.tsx',
         ],
       }, {
         name: 'Forms',

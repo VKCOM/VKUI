@@ -109,3 +109,12 @@
 .FormField--vkcom {
   border-radius: 6px;
 }
+
+/**
+ * ModalCardBase
+ */
+
+.ModalCardBase__header + .FormField,
+.ModalCardBase__subheader + .FormField {
+  margin-top: 16px;
+}
