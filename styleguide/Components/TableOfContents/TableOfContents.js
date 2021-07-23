@@ -4,6 +4,35 @@ import { Icon28ChevronDownOutline, Icon28ChevronUpOutline } from '@vkontakte/ico
 import './TableOfContents.css';
 import getInfoFromHash from 'react-styleguidist/lib/client/utils/getInfoFromHash';
 
+function capitalize(string = '') {
+  return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
+}
+
+const redirects = {
+  'section-начало-работы': 'About',
+  'Начало работы': 'About',
+  'section-установка': 'QuickStart',
+  'Установка': 'QuickStart',
+  'section-подготовка-html': 'QuickStart',
+  'Подготовка html': 'QuickStart',
+  'section-hello-world': 'QuickStart',
+  'Hello World': 'QuickStart',
+  'section-концепция': 'Concept',
+  'Концепция': 'Concept',
+  'section-структура-экранов': 'Structure',
+  'Структура экранов': 'Structure',
+  'section-режимы-подключения': 'Modes',
+  'Режимы подключения': 'Modes',
+  'section-helpers': 'Helpers',
+  'section-server-side-rendering': 'SSR',
+  'Server Side Rendering': 'SSR',
+  'section-icons': 'Icons',
+  'section-colors': 'PlatformsAndThemes',
+  'section-themes': 'PlatformsAndThemes',
+  'section-utils': 'Utils',
+  'section-design': 'Design',
+};
+
 const normalizer = (sections) => {
   return sections.map(({ name, title, content, sections = [], components = [], expand = false, search }) => {
     const children = normalizer([...sections, ...components.map((component) => {
@@ -31,10 +60,19 @@ class TableOfContents extends React.PureComponent {
   constructor(props) {
     super(props);
     this.sections = normalizer(this.props.sections);
+
+    if (!this.currentSection) {
+      const redirectSection = this.resolveRedirectSection();
+
+      if (redirectSection) {
+        window.location.hash = redirectSection.href;
+      }
+    }
+
     this.state = {
       search: '',
-      expand: this.search(this.sections, this.currentSection.name, { exactMatch: true }),
-      currentSectionName: this.currentSection.name,
+      expand: this.search(this.sections, this.currentSection?.name, { exactMatch: true }),
+      currentSectionName: this.currentSection?.name,
     };
     this.searchResults = {};
   }
@@ -49,13 +87,29 @@ class TableOfContents extends React.PureComponent {
 
   hashChangeListener = () => {
     this.setState({
-      currentSectionName: this.currentSection.name,
+      currentSectionName: this.currentSection?.name,
     });
   }
 
   get currentSection() {
     const { targetName } = getInfoFromHash(window.location.hash);
-    return targetName ? this.pickSection(targetName) : this.sections[0];
+    return this.pickSection(targetName);
+  }
+
+  resolveRedirectSection = () => {
+    let { targetName } = getInfoFromHash(window.location.hash);
+
+    if (!targetName) {
+      targetName = window.location.hash.replace('#', '');
+    }
+
+    targetName = decodeURIComponent(targetName);
+
+    if (this.pickSection(targetName)) {
+      return;
+    }
+
+    return redirects[targetName] ? this.pickSection(redirects[targetName]) : this.pickSection(capitalize(targetName));
   }
 
   onExpandCellClick = (e) => {
@@ -77,7 +131,7 @@ class TableOfContents extends React.PureComponent {
     });
   }
 
-  pickSection = (sectionName, sections = this.sections) => {
+  pickSection = (sectionName = '', sections = this.sections) => {
     for (let i = 0; i < sections.length; i++) {
       const section = sections[i];
       if (section.name === sectionName) {
@@ -106,7 +160,7 @@ class TableOfContents extends React.PureComponent {
     this.setState({ search: e.currentTarget.value });
   }
 
-  search(sections, query, { exactMatch = false } = {}) {
+  search(sections, query = '', { exactMatch = false } = {}) {
     let result = {};
     sections.forEach((section) => {
       let found = exactMatch ? section.name.toLowerCase() === query.toLowerCase() : section.name.toLowerCase().includes(query.toLowerCase());
