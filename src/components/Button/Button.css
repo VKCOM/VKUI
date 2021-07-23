@@ -241,6 +241,12 @@
  * ModalCardBase
  */
 
+.ModalCardBase__actions .Button {
+  flex: 1;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
 .ModalCardBase__actions--v .Button {
   margin-left: 0;
   margin-right: 0;
@@ -248,10 +254,4 @@
 
 .ModalCardBase__actions--v .Button + .Button {
   margin-top: 12px;
-}
-
-.ModalCardBase__actions .Button {
-  flex: 1;
-  margin-left: 6px;
-  margin-right: 6px;
 }
