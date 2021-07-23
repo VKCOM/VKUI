@@ -34,6 +34,7 @@
 
 .ModalCard--ios .ModalCard__in {
   transition: transform 340ms var(--ios-easing);
+  max-width: 414px;
 }
 
 /**
