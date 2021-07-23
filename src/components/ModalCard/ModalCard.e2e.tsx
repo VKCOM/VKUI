@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import ModalCard, { ModalCardProps } from './ModalCard';
 import Button from '../Button/Button';
 import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
@@ -9,13 +10,13 @@ import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { Platform } from '../../lib/platform';
 import { ViewWidth } from '../../components/AdaptivityProvider/AdaptivityContext';
 
-// const Component = (props: ModalCardProps) => (
-//   <div style={{ height: 800 }}>
-//     <ModalRoot activeModal="test">
-//       <ModalCard nav="test" {...props} />
-//     </ModalRoot>
-//   </div>
-// );
+const Component = (props: ModalCardProps) => (
+  <div style={{ height: 500, transform: 'translateZ(0)' }}>
+    <ModalRoot activeModal={props.nav}>
+      <ModalCard {...props} />
+    </ModalRoot>
+  </div>
+);
 
 const propSets = [{
   nav: ['1'],
@@ -32,13 +33,16 @@ const propSets = [{
   icon: [<Avatar key="avatar" mode="app" size={72} />],
   header: ['Добавить игру «Загадки детства» в меню?'],
   subheader: ['Игра появится под списком разделов на экране меню и будет всегда под рукой.'],
+  actionsLayout: ['vertical' as ModalCardProps['actionsLayout']],
   actions: [
-    <Button key="join" size="l" mode="primary">
-      Присоединиться
-    </Button>,
-    <Button key="copy" size="l" mode="secondary">
-      Скопировать приглашение
-    </Button>,
+    <Fragment key="buttons">
+      <Button size="l" mode="primary">
+        Присоединиться
+      </Button>,
+      <Button size="l" mode="secondary">
+        Скопировать приглашение
+      </Button>
+    </Fragment>,
   ],
   children: [
     <UsersStack
@@ -52,15 +56,7 @@ const propSets = [{
 }];
 
 describe('ModalCard mobile', () => {
-  describeScreenshotFuzz<ModalCardProps>((props) => {
-    return (
-      <div style={{ height: 500, transform: 'translateZ(0)' }}>
-        <ModalRoot activeModal={props.nav}>
-          <ModalCard {...props} />
-        </ModalRoot>
-      </div>
-    );
-  }, propSets, {
+  describeScreenshotFuzz<ModalCardProps>(Component, propSets, {
     Wrapper: AppRoot,
     adaptivity: {
       viewWidth: ViewWidth.MOBILE,
@@ -69,19 +65,19 @@ describe('ModalCard mobile', () => {
   });
 });
 
-// describe('ModalCard tablet', () => {
-//   describeScreenshotFuzz<ModalCardProps>(Component, propSets, {
-//     Wrapper: AppRoot,
-//     adaptivity: {
-//       viewWidth: ViewWidth.SMALL_TABLET,
-//     },
-//     platforms: [Platform.IOS, Platform.ANDROID],
-//   });
-// });
-//
-// describe('ModalCard', () => {
-//   describeScreenshotFuzz<ModalCardProps>(Component, propSets, {
-//     Wrapper: AppRoot,
-//     platforms: [Platform.VKCOM],
-//   });
-// });
+describe('ModalCard tablet', () => {
+  describeScreenshotFuzz<ModalCardProps>(Component, propSets, {
+    Wrapper: AppRoot,
+    adaptivity: {
+      viewWidth: ViewWidth.SMALL_TABLET,
+    },
+    platforms: [Platform.IOS, Platform.ANDROID],
+  });
+});
+
+describe('ModalCard', () => {
+  describeScreenshotFuzz<ModalCardProps>(Component, propSets, {
+    Wrapper: AppRoot,
+    platforms: [Platform.VKCOM],
+  });
+});
