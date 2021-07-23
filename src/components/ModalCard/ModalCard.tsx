@@ -8,9 +8,9 @@ import ModalRootContext, { useModalRegistry } from '../ModalRoot/ModalRootContex
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
-import { PlainCard, PlainCardProps } from '../PlainCard/PlainCard';
+import { ModalCardBase, ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
 
-export interface ModalCardProps extends HasPlatform, AdaptivityProps, NavIdProps, PlainCardProps {}
+export interface ModalCardProps extends HasPlatform, AdaptivityProps, NavIdProps, ModalCardBaseProps {}
 
 const warn = warnOnce('ModalCard');
 
@@ -43,7 +43,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
         'ModalCard--desktop': isDesktop,
       })}
     >
-      <PlainCard
+      <ModalCardBase
         vkuiClass="ModalCard__in"
         getRootRef={refs.innerElement}
         icon={icon}
@@ -54,7 +54,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
         onClose={onClose || modalContext.onClose}
       >
         {children}
-      </PlainCard>
+      </ModalCardBase>
     </div>
   );
 };

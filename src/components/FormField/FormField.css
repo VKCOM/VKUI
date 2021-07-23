@@ -111,10 +111,10 @@
 }
 
 /**
- * PlainCard
+ * ModalCardBase
  */
 
-.PlainCard__header + .FormField,
-.PlainCard__subheader + .FormField {
+.ModalCardBase__header + .FormField,
+.ModalCardBase__subheader + .FormField {
   margin-top: 16px;
 }

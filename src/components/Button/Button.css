@@ -238,19 +238,19 @@
 }
 
 /**
- * PlainCard
+ * ModalCardBase
  */
 
-.PlainCard__actions--v .Button {
+.ModalCardBase__actions--v .Button {
   margin-left: 0;
   margin-right: 0;
 }
 
-.PlainCard__actions--v .Button + .Button {
+.ModalCardBase__actions--v .Button + .Button {
   margin-top: 12px;
 }
 
-.PlainCard__actions .Button {
+.ModalCardBase__actions .Button {
   flex: 1;
   margin-left: 6px;
   margin-right: 6px;

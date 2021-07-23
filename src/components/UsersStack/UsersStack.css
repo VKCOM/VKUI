@@ -87,9 +87,9 @@
 }
 
 /**
- * PlainCard
+ * ModalCardBase
  */
 
-.PlainCard .UsersStack {
+.ModalCardBase .UsersStack {
   margin-top: 20px;
 }

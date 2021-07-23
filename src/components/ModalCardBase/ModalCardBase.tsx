@@ -11,9 +11,9 @@ import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { IOS } from '../../lib/platform';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { Icon24Dismiss } from '@vkontakte/icons';
-import './PlainCard.css';
+import './ModalCardBase.css';
 
-export interface PlainCardProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface ModalCardBaseProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   /**
    * Иконка.
    *
@@ -45,7 +45,7 @@ export interface PlainCardProps extends HTMLAttributes<HTMLDivElement>, HasRootR
   onClose?: VoidFunction;
 }
 
-export const PlainCard: FC<PlainCardProps> = withAdaptivity(({
+export const ModalCardBase: FC<ModalCardBaseProps> = withAdaptivity(({
   getRootRef,
   icon,
   header,
@@ -58,7 +58,7 @@ export const PlainCard: FC<PlainCardProps> = withAdaptivity(({
   viewHeight,
   onClose,
   ...restProps
-}: PlainCardProps & AdaptivityProps) => {
+}: ModalCardBaseProps & AdaptivityProps) => {
   const platform = usePlatform();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
@@ -68,21 +68,21 @@ export const PlainCard: FC<PlainCardProps> = withAdaptivity(({
   return (
     <div
       {...restProps}
-      vkuiClass={classNames(getClassName('PlainCard', platform), {
-        'PlainCard--desktop': isDesktop,
+      vkuiClass={classNames(getClassName('ModalCardBase', platform), {
+        'ModalCardBase--desktop': isDesktop,
       })}
       ref={getRootRef}
     >
-      <div vkuiClass="PlainCard__container">
-        {hasReactNode(icon) && <div vkuiClass="PlainCard__icon">{icon}</div>}
-        {hasReactNode(header) && <Title level="2" weight="semibold" vkuiClass="PlainCard__header">{header}</Title>}
-        {hasReactNode(subheader) && <Subhead weight="regular" vkuiClass="PlainCard__subheader">{subheader}</Subhead>}
+      <div vkuiClass="ModalCardBase__container">
+        {hasReactNode(icon) && <div vkuiClass="ModalCardBase__icon">{icon}</div>}
+        {hasReactNode(header) && <Title level="2" weight="semibold" vkuiClass="ModalCardBase__header">{header}</Title>}
+        {hasReactNode(subheader) && <Subhead weight="regular" vkuiClass="ModalCardBase__subheader">{subheader}</Subhead>}
 
         {children}
 
         {hasReactNode(actions) &&
-          <div vkuiClass={classNames('PlainCard__actions', {
-            'PlainCard__actions--v': actionsLayout === 'vertical',
+          <div vkuiClass={classNames('ModalCardBase__actions', {
+            'ModalCardBase__actions--v': actionsLayout === 'vertical',
           })}>
             {actions}
           </div>

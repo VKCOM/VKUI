@@ -209,8 +209,8 @@ export { default as PanelHeaderBack } from './components/PanelHeaderBack/PanelHe
 export { default as PanelHeaderSubmit } from './components/PanelHeaderSubmit/PanelHeaderSubmit';
 export { default as PanelHeaderEdit } from './components/PanelHeaderEdit/PanelHeaderEdit';
 export type { PanelHeaderEditProps } from './components/PanelHeaderEdit/PanelHeaderEdit';
-export { PlainCard } from './components/PlainCard/PlainCard';
-export type { PlainCardProps } from './components/PlainCard/PlainCard';
+export { ModalCardBase } from './components/ModalCardBase/ModalCardBase';
+export type { ModalCardBaseProps } from './components/ModalCardBase/ModalCardBase';
 
 /**
  * Wrappers

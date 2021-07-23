@@ -6,7 +6,7 @@
 ```jsx { "props": { "layout": false, "iframe": false } }
 <div style={{ margin: 20 }}>
   <Text style={{ marginBottom: 10 }}>Десктопная и планшетная версии</Text>
-  <PlainCard
+  <ModalCardBase
     style={{ width: 450, marginBottom: 20 }}
     header="Отправляйте деньги друзьям, используя банковскую карту"
     subheader="Номер карты получателя не нужен — он сам решит, куда зачислить средства."
@@ -19,7 +19,7 @@
   />
   <Text style={{ marginBottom: 10 }}>Мобильная версия</Text>
   <AdaptivityProvider viewWidth={ViewWidth.MOBILE}>
-    <PlainCard
+    <ModalCardBase
       style={{ width: 320 }}
       icon={<Avatar mode="app" src={getAvatarUrl('app_zagadki', 200)} size={72} />}
       header="Добавить игру «Загадки детства» в меню?"
