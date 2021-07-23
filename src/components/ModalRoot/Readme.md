@@ -402,7 +402,7 @@ const App = withPlatform(withAdaptivity(class App extends React.Component {
               getAvatarUrl('user_xyz'),
             ]}
             size="m"
-            count={3}
+            visibleCount={3}
             layout="vertical"
           >Алексей, Илья, Михаил<br />и ещё 3 человека</UsersStack>
         </ModalCard>
