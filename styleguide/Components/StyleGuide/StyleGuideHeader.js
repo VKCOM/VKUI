@@ -30,7 +30,7 @@ export const StyleGuideHeader = ({ scheme, setScheme }) => {
             </Link>
             <Link target="_blank" className="StyleGuideHeader__link" href="https://github.com/VKCOM/VKUI/releases">
               <Text>
-                Changelog
+                Релизы
               </Text>
             </Link>
           </div>
