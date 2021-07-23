@@ -47,6 +47,7 @@
 @import '../components/Snackbar/Snackbar.css';
 
 /* Modals */
+@import '../components/ModalCardBase/ModalCardBase.css';
 @import '../components/ModalRoot/ModalRoot.css';
 @import '../components/ModalCard/ModalCard.css';
 @import '../components/ModalPage/ModalPage.css';
