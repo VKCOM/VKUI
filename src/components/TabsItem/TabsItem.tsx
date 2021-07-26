@@ -5,7 +5,7 @@ import { classNames } from '../../lib/classNames';
 import { VKCOM } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import { TabsMode, TabsModeContext } from '../Tabs/Tabs';
+import { TabsProps, TabsModeContext } from '../Tabs/Tabs';
 import Headline from '../Typography/Headline/Headline';
 import Subhead from '../Typography/Subhead/Subhead';
 import Text from '../Typography/Text/Text';
@@ -23,13 +23,15 @@ const TabsItem: FC<TabsItemProps> = ({
   ...restProps
 }: TabsItemProps) => {
   const platform = usePlatform();
-  const mode: TabsMode = useContext(TabsModeContext);
+  const mode: TabsProps['mode'] = useContext(TabsModeContext);
 
-  const TypographyComponent = platform === VKCOM
-    ? Text
-    : mode === 'buttons' || mode === 'segmented'
-      ? Subhead
-      : Headline;
+  let TypographyComponent = mode === 'buttons' || mode === 'segmented'
+    ? Subhead
+    : Headline;
+
+  if (platform === VKCOM) {
+    TypographyComponent = Text;
+  }
 
   return (
     <Tappable
@@ -37,8 +39,9 @@ const TabsItem: FC<TabsItemProps> = ({
       vkuiClass={classNames(getClassName('TabsItem', platform), { 'TabsItem--selected': selected })}
       hasActive={mode === 'segmented'}
       activeMode="TabsItem--active"
+      focusVisibleMode={mode === 'segmented' ? 'outside' : 'inside'}
     >
-      <TypographyComponent vkuiClass="TabsItem__in" weight="medium">{children}</TypographyComponent>
+      <TypographyComponent Component="span" vkuiClass="TabsItem__in" weight="medium">{children}</TypographyComponent>
       {hasReactNode(after) && <div vkuiClass="TabsItem__after">{after}</div>}
     </Tappable>
   );
