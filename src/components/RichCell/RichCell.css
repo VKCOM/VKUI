@@ -1,6 +1,8 @@
 .RichCell {
   display: flex;
   min-height: 64px;
+  padding-right: 16px;
+  padding-left: 16px;
   box-sizing: border-box;
   white-space: nowrap;
   text-decoration: none;
@@ -104,26 +106,14 @@
 /**
  * iOS
  */
-
 .RichCell--ios {
   padding-right: 12px;
   padding-left: 12px;
 }
 
 /**
- * Android
- */
-
-.RichCell--android,
-.RichCell--vkcom {
-  padding-right: 16px;
-  padding-left: 16px;
-}
-
-/**
  * sizeY === 'compact'
  */
-
 .RichCell--sizeY-compact {
   min-height: 60px;
 }
