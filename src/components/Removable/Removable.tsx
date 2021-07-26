@@ -94,15 +94,15 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
       {platform === IOS && (
         <React.Fragment>
           <div vkuiClass="Removable__content" style={{ transform: `translateX(-${removeOffset}px)` }}>
-            <button
-              type="button"
+            <IconButton
+              hasActive={false}
+              hasHover={false}
               aria-label={removePlaceholderString}
               vkuiClass="Removable__action Removable__action--indicator"
               onClick={onRemoveActivateClick}
             >
               <i vkuiClass="Removable__action-in" role="presentation" />
-            </button>
-
+            </IconButton>
             {children}
 
             <span vkuiClass="Removable__offset" aria-hidden="true"></span>
