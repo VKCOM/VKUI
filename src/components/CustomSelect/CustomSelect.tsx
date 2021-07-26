@@ -115,7 +115,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   public state: CustomSelectState;
   private keyboardInput: string;
   private isControlledOutside: boolean;
-  private node: HTMLLabelElement;
   private selectEl: HTMLSelectElement;
   private readonly scrollBoxRef = createRef<HTMLDivElement>();
 
@@ -213,14 +212,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     const event = new Event('blur');
     this.selectEl.dispatchEvent(event);
-  };
-
-  handleDocumentClick = (event: Event) => {
-    const thisNode = this.node;
-
-    if (this.state.opened && thisNode && !thisNode.contains(event.target as Node)) {
-      this.onBlur();
-    }
   };
 
   private scrollToElement(index: number, center = false) {
@@ -398,16 +389,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   handleKeyUp = debounce(this.resetKeyboardInput, 1000);
 
-  componentDidMount() {
-    document.addEventListener('click', this.handleDocumentClick, false);
-    document.addEventListener('touchend', this.handleDocumentClick, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleDocumentClick, false);
-    document.removeEventListener('touchend', this.handleDocumentClick, false);
-  }
-
   componentDidUpdate(prevProps: CustomSelectProps) {
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
       this.isControlledOutside = this.props.value !== undefined;
@@ -439,11 +420,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         })}
       </React.Fragment>
     );
-  };
-
-  rootRef = (element: HTMLLabelElement) => {
-    this.node = element;
-    setRef(element, this.props.getRootRef);
   };
 
   selectRef = (element: HTMLSelectElement) => {
@@ -482,7 +458,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         vkuiClass={getClassName('CustomSelect', platform)}
         className={className}
         style={style}
-        ref={this.rootRef}
+        ref={getRootRef}
         onClick={this.onLabelClick}
       >
         {opened && searchable ?
