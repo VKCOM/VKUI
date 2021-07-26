@@ -21,7 +21,7 @@ const HorizontalScrollArrow: FC<HorizontalScrollArrowProps> = ({ onClick, direct
       )}
       onClick={onClick}
     >
-      <span vkuiClass="HorizontalScrollArrow-icon">
+      <span vkuiClass="HorizontalScrollArrow__icon">
         <Icon24Chevron />
       </span>
     </button>

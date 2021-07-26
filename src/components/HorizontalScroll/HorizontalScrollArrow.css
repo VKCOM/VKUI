@@ -23,7 +23,7 @@
   opacity: 1;
 }
 
-.HorizontalScrollArrow-icon {
+.HorizontalScrollArrow__icon {
   background-color: var(--modal_card_background);
   color: var(--icon_secondary);
   width: 40px;
@@ -40,7 +40,7 @@
   left: 0;
 }
 
-.HorizontalScrollArrow--left .HorizontalScrollArrow-icon {
+.HorizontalScrollArrow--left .HorizontalScrollArrow__icon {
   transform: rotate(180deg);
 }
 
