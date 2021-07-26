@@ -10,17 +10,6 @@
   border: none;
   background-color: transparent;
   transition: opacity .15s;
-}
-
-.HorizontalScroll--ios .HorizontalScroll__arrow,
-.Gallery--ios .HorizontalScroll__arrow {
-  transition-timing-function: var(--ios-easing);
-}
-
-.HorizontalScroll--android .HorizontalScroll__arrow,
-.HorizontalScroll--vkcom .HorizontalScroll__arrow,
-.Gallery--android .HorizontalScroll__arrow,
-.Gallery--vkcom .HorizontalScroll__arrow {
   transition-timing-function: var(--android-easing);
 }
 
@@ -66,4 +55,11 @@
 
 .HorizontalScroll__arrow-right:hover ~ .HorizontalScroll__in .HorizontalScroll__in-wrapper {
   transform: translateX(-8px);
+}
+
+/*
+ * iOS
+ */
+.HorizontalScroll__arrow--ios .HorizontalScroll__arrow {
+  transition-timing-function: var(--ios-easing);
 }
