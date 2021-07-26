@@ -16,12 +16,12 @@ const HorizontalScrollArrow: FC<HorizontalScrollArrowProps> = ({ onClick, direct
     <button
       type="button"
       vkuiClass={classNames(
-        getClassName('HorizontalScroll__arrow', platform),
-        `HorizontalScroll__arrow--${direction}`,
+        getClassName('HorizontalScrollArrow', platform),
+        `HorizontalScrollArrow--${direction}`,
       )}
       onClick={onClick}
     >
-      <span vkuiClass="HorizontalScroll__arrow-icon">
+      <span vkuiClass="HorizontalScrollArrow-icon">
         <Icon24Chevron />
       </span>
     </button>
