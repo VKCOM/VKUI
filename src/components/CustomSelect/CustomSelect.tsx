@@ -326,11 +326,16 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     if (this.props.onInputChange) {
       const options = this.props.onInputChange(e, this.props.options);
       if (options) {
-        this.setState({ options });
+        this.setState({
+          options,
+          selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
+        });
       }
     } else {
+      const options = this.props.options.filter((option) => option.label.toLowerCase().includes(e.target.value.toLowerCase()));
       this.setState({
-        options: this.props.options.filter((option) => option.label.toLowerCase().includes(e.target.value.toLowerCase())),
+        options,
+        selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
       });
     }
   };
