@@ -17,7 +17,7 @@ const HorizontalScrollArrow: FC<HorizontalScrollArrowProps> = ({ onClick, direct
       type="button"
       vkuiClass={classNames(
         getClassName('HorizontalScroll__arrow', platform),
-        `HorizontalScroll__arrow-${direction}`,
+        `HorizontalScroll__arrow--${direction}`,
       )}
       onClick={onClick}
     >
