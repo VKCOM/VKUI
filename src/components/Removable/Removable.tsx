@@ -9,6 +9,7 @@ import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';
 import IconButton from '../IconButton/IconButton';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import Tappable from '../Tappable/Tappable';
 import './Removable.css';
 
 export interface RemovePlaceholderProps {
@@ -61,8 +62,11 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
   };
 
   useEffect(() => {
-    if (isRemoveActivated && removeButtonRef?.current) {
-      updateRemoveOffset(removeButtonRef.current.offsetWidth);
+    const removeButton = removeButtonRef?.current;
+
+    if (isRemoveActivated && removeButton) {
+      updateRemoveOffset(removeButton.offsetWidth);
+      setTimeout(() => removeButton.focus(), 150);
     }
   }, [isRemoveActivated]);
 
@@ -108,16 +112,19 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
             <span vkuiClass="Removable__offset" aria-hidden="true"></span>
           </div>
 
-          <button
-            type="button"
+          <Tappable
+            Component="button"
+            hasActive={false}
+            hasHover={false}
+            disabled={!isRemoveActivated}
             tabIndex={isRemoveActivated ? null : -1}
-            ref={removeButtonRef}
+            getRootRef={removeButtonRef}
             vkuiClass="Removable__action Removable__action--remove"
             onClick={onRemoveClick}
             style={{ transform: `translateX(-${removeOffset}px)` }}
           >
             <span vkuiClass="Removable__action-in">{removePlaceholder}</span>
-          </button>
+          </Tappable>
         </React.Fragment>
       )}
     </div>
