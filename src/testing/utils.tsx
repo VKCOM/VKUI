@@ -26,7 +26,8 @@ export function mountTest(Component: ComponentType<any>) {
 }
 
 export function baselineComponent<Props extends BasicProps>(
-  RawComponent: ComponentType<Props>,
+  // FAIL when component has required props
+  _RawComponent: {} extends Props ? ComponentType<Props> : never,
   {
     forward = true,
     style = true,
@@ -35,6 +36,7 @@ export function baselineComponent<Props extends BasicProps>(
     adaptivity,
   }: ComponentTestOptions = {},
 ) {
+  const RawComponent: ComponentType<Props> = _RawComponent;
   const Component: ComponentType<BasicProps> = adaptivity
     ? (p: Props) => <AdaptivityProvider {...adaptivity}><RawComponent {...p} /></AdaptivityProvider>
     : RawComponent;
