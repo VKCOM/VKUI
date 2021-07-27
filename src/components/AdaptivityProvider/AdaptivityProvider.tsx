@@ -1,7 +1,9 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
-import { canUseDOM, useDOM } from '../../lib/dom';
+import { useDOM } from '../../lib/dom';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface {
   children?: ReactNode;
@@ -15,62 +17,32 @@ export const MOBILE_SIZE = 320;
 export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
-export default function AdaptivityProvider(props: AdaptivityProviderProps) {
-  const adaptivityRef = useRef<AdaptivityContextInterface>(null);
-  const [, updateAdaptivity] = useState({});
-
+export default function AdaptivityProvider({ children, ...overrideProps }: AdaptivityProviderProps) {
   const { window } = useDOM();
+  const overrides = useObjectMemo(overrideProps);
 
-  if (!adaptivityRef.current) {
-    adaptivityRef.current = calculateAdaptivity(
-      window ? window.innerWidth : 0,
-      window ? window.innerHeight : 0,
-      props,
-    );
-  }
+  const [adaptivityState, setAdaptivity] = useState(calculateAdaptivity(window, overrides));
+  const onResize = () => setAdaptivity(calculateAdaptivity(window, overrides));
+  const adaptivity = useObjectMemo(adaptivityState);
 
-  useEffect(() => {
-    function onResize() {
-      const calculated = calculateAdaptivity(window.innerWidth, window.innerHeight, props);
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse } = adaptivityRef.current;
-
-      if (
-        viewWidth !== calculated.viewWidth ||
-        viewHeight !== calculated.viewHeight ||
-        sizeX !== calculated.sizeX ||
-        sizeY !== calculated.sizeY ||
-        hasMouse !== calculated.hasMouse
-      ) {
-        adaptivityRef.current = calculated;
-        updateAdaptivity({});
-      }
-    }
-
-    onResize();
-    window.addEventListener('resize', onResize, false);
-
-    return () => {
-      window.removeEventListener('resize', onResize, false);
-    };
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse]);
+  useEffect(onResize, [overrides]);
+  useGlobalEventListener(window, 'resize', () => onResize());
 
   return (
-    <AdaptivityContext.Provider value={adaptivityRef.current}>
-      {props.children}
+    <AdaptivityContext.Provider value={adaptivity}>
+      {children}
     </AdaptivityContext.Provider>
   );
 }
 
-AdaptivityProvider.defaultProps = {
-  window: canUseDOM && window,
-};
+function calculateAdaptivity(window: Window | null, overrides: AdaptivityProviderProps = {}) {
+  const windowWidth = window ? window.innerWidth : 0;
+  const windowHeight = window ? window.innerHeight : 0;
 
-function calculateAdaptivity(windowWidth: number, windowHeight: number, props: AdaptivityProviderProps) {
   let viewWidth = ViewWidth.SMALL_MOBILE;
   let viewHeight = ViewHeight.SMALL;
   let sizeY = SizeType.REGULAR;
   let sizeX = SizeType.REGULAR;
-  let hasMouse = typeof props.hasMouse === 'boolean' ? props.hasMouse : _hasMouse;
 
   if (windowWidth >= DESKTOP_SIZE) {
     viewWidth = ViewWidth.DESKTOP;
@@ -92,19 +64,20 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
     viewHeight = ViewHeight.EXTRA_SMALL;
   }
 
-  props.viewWidth && (viewWidth = props.viewWidth);
-  props.viewHeight && (viewHeight = props.viewHeight);
+  overrides.viewWidth && (viewWidth = overrides.viewWidth);
+  overrides.viewHeight && (viewHeight = overrides.viewHeight);
 
   if (viewWidth <= ViewWidth.MOBILE) {
     sizeX = SizeType.COMPACT;
   }
 
+  let hasMouse = typeof overrides.hasMouse === 'boolean' ? overrides.hasMouse : _hasMouse;
   if (viewWidth >= ViewWidth.SMALL_TABLET && hasMouse || viewHeight <= ViewHeight.EXTRA_SMALL) {
     sizeY = SizeType.COMPACT;
   }
 
-  props.sizeX && (sizeX = props.sizeX);
-  props.sizeY && (sizeY = props.sizeY);
+  overrides.sizeX && (sizeX = overrides.sizeX);
+  overrides.sizeY && (sizeY = overrides.sizeY);
 
   return { viewWidth, viewHeight, sizeX, sizeY, hasMouse };
 }
