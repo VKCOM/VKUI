@@ -19,7 +19,7 @@ export enum ViewHeight {
   MEDIUM
 }
 
-export interface AdaptivityContextInterface {
+export interface AdaptivityData {
   sizeX?: SizeType;
   sizeY?: SizeType;
   viewWidth?: ViewWidth;
@@ -27,7 +27,12 @@ export interface AdaptivityContextInterface {
   hasMouse?: boolean;
 }
 
+export interface AdaptivityContextInterface extends AdaptivityData {
+  isFallback?: true;
+}
+
 export const AdaptivityContext = createContext<AdaptivityContextInterface>({
   sizeX: SizeType.COMPACT,
   sizeY: SizeType.REGULAR,
+  isFallback: true,
 });

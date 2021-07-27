@@ -1,11 +1,11 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs';
-import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
+import { AdaptivityContext, AdaptivityData, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
 import { useDOM } from '../../lib/dom';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 
-export interface AdaptivityProviderProps extends AdaptivityContextInterface {
+export interface AdaptivityProviderProps extends AdaptivityData {
   children?: ReactNode;
 }
 
@@ -81,3 +81,27 @@ function calculateAdaptivity(window: Window | null, overrides: AdaptivityProvide
 
   return { viewWidth, viewHeight, sizeX, sizeY, hasMouse };
 }
+
+const _defAdaptivity = {
+  state: {},
+  observers: [] as Array<(s: AdaptivityData) => any>,
+  onResize() {
+    this.state = calculateAdaptivity(window);
+    this.observers.forEach((cb) => cb(this.state));
+  },
+  observe(cb: (s: AdaptivityData) => any) {
+    const index = this.observers.push(cb);
+    const onResize = () => this.onResize();
+    if (index === 1) {
+      window.addEventListener('resize', onResize);
+    }
+    return () => {
+      this.observers.splice(index, 1);
+      if (!this.observers.length) {
+        window.removeEventListener('resize', onResize);
+      }
+    };
+  },
+};
+
+export const defAdaptivity: Pick<typeof _defAdaptivity, 'state' | 'observe'> = _defAdaptivity;

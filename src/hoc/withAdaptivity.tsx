@@ -1,8 +1,8 @@
 import { useAdaptivity } from '../hooks/useAdaptivity';
-import { AdaptivityContext, SizeType, ViewHeight, ViewWidth } from '../components/AdaptivityProvider/AdaptivityContext';
+import { AdaptivityContext, AdaptivityData, SizeType, ViewHeight, ViewWidth } from '../components/AdaptivityProvider/AdaptivityContext';
 import { useObjectMemo } from '../hooks/useObjectMemo';
 
-type Config = { [K in keyof AdaptivityProps]?: boolean };
+type Config = { [K in keyof AdaptivityData]?: boolean };
 
 export { SizeType, ViewWidth, ViewHeight };
 
