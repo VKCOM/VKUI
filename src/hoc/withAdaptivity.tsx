@@ -1,49 +1,27 @@
-import { useContext } from 'react';
+import { useAdaptivity } from '../hooks/useAdaptivity';
 import { AdaptivityContext, SizeType, ViewHeight, ViewWidth } from '../components/AdaptivityProvider/AdaptivityContext';
+import { useObjectMemo } from '../hooks/useObjectMemo';
 
-interface Config {
-  sizeX?: boolean;
-  sizeY?: boolean;
-  viewWidth?: boolean;
-  viewHeight?: boolean;
-  hasMouse?: boolean;
-}
+type Config = { [K in keyof AdaptivityProps]?: boolean };
 
 export { SizeType, ViewWidth, ViewHeight };
 
 export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
   function AdaptivityConsumer(props: AdaptivityProps) {
-    const context = useContext(AdaptivityContext);
-    let update = false;
+    const context = useAdaptivity();
+    const { sizeX = context.sizeX, sizeY = context.sizeY } = props;
+    const adaptivityProps = useObjectMemo({ ...context, sizeX, sizeY });
 
-    if (props.sizeX || props.sizeY) {
-      update = true;
-    }
-
-    const sizeX = props.sizeX || context.sizeX;
-    const sizeY = props.sizeY || context.sizeY;
-    const viewWidth = context.viewWidth;
-    const viewHeight = context.viewHeight;
-    const hasMouse = context.hasMouse;
-
-    const adaptivityProps: {
-      sizeX?: SizeType;
-      sizeY?: SizeType;
-      viewWidth?: ViewWidth;
-      viewHeight?: ViewHeight;
-      hasMouse?: boolean;
-    } = {};
-    config.sizeX ? adaptivityProps.sizeX = sizeX : undefined;
-    config.sizeY ? adaptivityProps.sizeY = sizeY : undefined;
-    config.viewWidth ? adaptivityProps.viewWidth = viewWidth : undefined;
-    config.viewHeight ? adaptivityProps.viewHeight = viewHeight : undefined;
-    config.hasMouse ? adaptivityProps.hasMouse = hasMouse : undefined;
+    const inject: AdaptivityProps = {};
+    Object.keys(config).forEach((k: keyof AdaptivityProps) => {
+      config[k] && ((inject as any)[k] = adaptivityProps[k]);
+    });
 
     // @ts-ignore
-    const target = <TargetComponent {...props} {...adaptivityProps} />;
+    const target = <TargetComponent {...inject} {...props} />;
 
-    if (update) {
-      return <AdaptivityContext.Provider value={{ sizeX, sizeY, viewWidth, viewHeight, hasMouse }}>
+    if (props.sizeX || props.sizeY) {
+      return <AdaptivityContext.Provider value={adaptivityProps}>
         {target}
       </AdaptivityContext.Provider>;
     }
