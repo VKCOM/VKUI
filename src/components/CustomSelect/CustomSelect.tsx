@@ -33,7 +33,6 @@ export interface CustomSelectOptionInterface {
 
 interface CustomSelectState {
   opened?: boolean;
-  focused?: boolean;
   focusedOptionIndex?: number;
   selectedOptionIndex?: number;
   nativeSelectValue?: SelectValue;
@@ -100,7 +99,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     this.state = {
       opened: false,
-      focused: false,
       focusedOptionIndex: -1,
       selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
       nativeSelectValue: initialValue,
@@ -193,10 +191,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onFocus = () => {
-    this.setState(() => ({
-      focused: true,
-    }));
-
     const event = new Event('focus');
     this.selectEl.dispatchEvent(event);
   };
@@ -206,7 +200,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     this.setState(() => ({
       opened: false,
-      focused: false,
       options: this.props.options,
     }));
 
