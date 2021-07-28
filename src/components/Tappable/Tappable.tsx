@@ -440,16 +440,14 @@ class Tappable extends Component<TappableProps, TappableState> {
                     >
                       {children}
                     </TappableContext.Provider>
-                    {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' &&
-                    <span vkuiClass="Tappable__waves">
-                      {Object.keys(clicks).map((k: string) => {
-                        return (
+                    {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' && (
+                      <span aria-hidden="true" vkuiClass="Tappable__waves">
+                        {Object.keys(clicks).map((k: string) => (
                           <span vkuiClass="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
-                        );
-                      })}
-                    </span>
-                    }
-                    {hasHover && <span vkuiClass="Tappable__hoverShadow" />}
+                        ))}
+                      </span>
+                    )}
+                    {hasHover && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
                   </RootComponent>
                 );
               }}
