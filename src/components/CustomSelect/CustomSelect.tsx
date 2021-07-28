@@ -22,6 +22,7 @@ import { HasPlatform } from '../../types';
 import Input from '../Input/Input';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import Caption from '../Typography/Caption/Caption';
+import { warnOnce } from '../../lib/warnOnce';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -32,6 +33,7 @@ export interface CustomSelectOptionInterface {
 }
 
 interface CustomSelectState {
+  inputValue?: string;
   opened?: boolean;
   focusedOptionIndex?: number;
   selectedOptionIndex?: number;
@@ -49,24 +51,16 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * Текст, который будет отображен, если приходит пустой `options`
    */
   emptyText?: string;
-  /**
-   * Коллбэк для кастомизации алгоритма поиска. Учитывается только если `searchable: true`
-   *
-   * Если коллбэк не передан, то фильтрация производится автоматически по `option.label`
-   *
-   * Если передан и возвращает значение, то оно используется в качестве результата
-   * фильтрации.
-   *
-   * Если переданная функция ничего не возвращает, то подразумевается, что разработчик выполнил фильтрацию
-   * на верхнем уровне и обновил свойство `options`.
-   *
-   */
   onInputChange?: (e: ChangeEvent, options: CustomSelectOptionInterface[]) => void | CustomSelectOptionInterface[];
   options: Array<{
     value: SelectValue;
     label: string;
     [index: string]: any;
   }>;
+  /**
+   * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
+   */
+  filterFn?: (value: string, option: CustomSelectOptionInterface) => boolean;
   popupDirection?: 'top' | 'bottom';
   /**
    * В качестве аргумента принимает валидные для [CustomSelectOption](#/CustomSelectOption) свойства
@@ -75,6 +69,8 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
 }
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
+
+const warn = warnOnce('CustomSelect');
 
 class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
   static defaultProps: CustomSelectProps = {
@@ -86,6 +82,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     },
     options: [],
     emptyText: 'Ничего не найдено',
+    filterFn: (value, option) => option.label.toLowerCase().includes(value.toLowerCase()),
   };
 
   public constructor(props: CustomSelectProps) {
@@ -154,6 +151,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.resetKeyboardInput();
 
     this.setState(() => ({
+      inputValue: '',
       opened: false,
       focusedOptionIndex: -1,
       options: this.props.options,
@@ -319,16 +317,22 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     if (this.props.onInputChange) {
       const options = this.props.onInputChange(e, this.props.options);
       if (options) {
+        warn('This filtration method is deprecated. Return value of onInputChange will' +
+          ' be ignored in v5.0.0. For custom filtration please update props.options by yourself or use filterFn property');
         this.setState({
           options,
           selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
+          inputValue: e.target.value,
         });
+      } else {
+        this.setState({ inputValue: e.target.value });
       }
     } else {
-      const options = this.props.options.filter((option) => option.label.toLowerCase().includes(e.target.value.toLowerCase()));
+      const options = this.props.options.filter((option) => this.props.filterFn(e.target.value, option));
       this.setState({
         options,
         selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
+        inputValue: e.target.value,
       });
     }
   };
@@ -394,7 +398,9 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       this.setState({
         nativeSelectValue: value,
         selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
-        options: this.props.options,
+        options: this.props.searchable ?
+          this.props.options.filter((option) => this.props.filterFn(this.state.inputValue, option)) :
+          this.props.options,
       });
     }
   }
@@ -446,6 +452,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       children,
       emptyText,
       onInputChange,
+      filterFn,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -461,14 +468,20 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       >
         {opened && searchable ?
           <Input
+            {...restProps}
             autoFocus
             onBlur={this.onBlur}
             vkuiClass={classNames({
               'CustomSelect__open': opened,
               'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
             })}
+            value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
             onChange={this.onInputChange}
+            // TODO Ожидается, что клик поймает нативный select, но его перехвает Input. К сожалению, это приводит конфликтам типизации.
+            // TODO Нужно перестать пытать превратить CustomSelect в select. Тогда эта проблема уйдёт.
+            // @ts-ignore
+            onClick={onClick}
             after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
             placeholder={restProps.placeholder}
           /> :

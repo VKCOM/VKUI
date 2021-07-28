@@ -35,7 +35,6 @@ class Example extends React.Component {
   
   get customSearchOptions() {
     const options = [...this.state.newUsers, ...this.users]
-                        .filter(({ label }) => label.toLowerCase().includes(this.state.query.toLowerCase()));
     if (this.state.query.length > 0) {
       options.unshift({ label: `Добавить пользователя ${this.state.query}`, value: 0 });
     }
@@ -76,12 +75,7 @@ class Example extends React.Component {
             <CustomSelect
               placeholder="Введите название города или страны"
               searchable
-              onInputChange={(e, options) => { 
-                return options.filter((option) => {
-                  return option.label.toLowerCase().includes(e.target.value.toLowerCase()) ||
-                         option.description.toLowerCase().includes(e.target.value.toLowerCase())                
-                })           
-              }}
+              filterFn={(value, option) => option.label.toLowerCase().includes(value.toLowerCase()) || option.description.toLowerCase().includes(value.toLowerCase())}
               options={this.cities}
             />
           </FormItem>
