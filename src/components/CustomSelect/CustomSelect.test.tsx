@@ -118,4 +118,58 @@ describe('CustomSelect', () => {
 
     expect(screen.getByTestId('target').textContent).toEqual('Josh');
   });
+
+  it('is searchable', () => {
+    render(<CustomSelect
+      searchable
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    fireEvent.click(screen.getByTestId('target')); // here target is SelectMimicry
+
+    expect(screen.getByTestId('target')).toHaveFocus(); // now target is Input
+
+    fireEvent.change(screen.getByTestId('target'), { target: { value: 'Mi' } });
+    expect((screen.getByTestId('target') as HTMLInputElement).value).toBe('Mi');
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // ArrowUp
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Enter
+    expect(screen.getByTestId('target').textContent).toBe('Mike');
+  });
+
+  it('is custom searchable', () => {
+    render(<CustomSelect
+      searchable
+      data-testid="target"
+      options={[{ value: 0, label: 'SPb', country: 'Russia' }, { value: 1, label: 'Moscow', country: 'Russia' }, { value: 2, label: 'New York', country: 'USA' }]}
+      filterFn={(value, option) => option.label.toLowerCase().includes(value.toLowerCase()) || option.country.toLowerCase().includes(value.toLowerCase())}
+    />);
+
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.change(screen.getByTestId('target'), { target: { value: 'usa' } });
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // ArrowDown
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Enter
+    expect(screen.getByTestId('target').textContent).toBe('New York');
+  });
+
+  it('is searchable and correctly resolves changing of props.options during the search', () => {
+    const { rerender } = render(<CustomSelect
+      searchable
+      data-testid="target"
+      options={[]}
+    />);
+
+    fireEvent.click(screen.getByTestId('target'));
+    fireEvent.change(screen.getByTestId('target'), { target: { value: 'Mi' } });
+
+    rerender(<CustomSelect
+      searchable
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Mika' }, { value: 2, label: 'Josh' }]}
+    />);
+
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 38 }); // ArrowUp
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Enter
+    expect(screen.getByTestId('target').textContent).toBe('Mika');
+  });
 });
