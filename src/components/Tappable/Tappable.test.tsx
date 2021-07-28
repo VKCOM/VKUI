@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { baselineComponent } from '../../testing/utils';
 import Tappable, { TappableProps } from './Tappable';
 
-const TappableTest = (props: TappableProps) => <Tappable data-testid="tappable" hasFocusVisible={true} {...props} />;
+const TappableTest = (props: TappableProps) => <Tappable data-testid="tappable" {...props} />;
 const tappable = () => screen.getByTestId('tappable');
 
 describe('Tappable', () => {
@@ -67,12 +67,14 @@ describe('Tappable', () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  // [a11y] remove this test once a11y work on components based on Tappable is finished
-  it('a11y: hasFocusVisible manages focus visible class', () => {
-    const { rerender } = render(<TappableTest>hasFocusVisible TRUE</TappableTest>);
-    expect(tappable()).toHaveClass('Tappable--focus-visible');
-
-    rerender(<TappableTest hasFocusVisible={false}>hasFocusVisible FALSE</TappableTest>);
+  // [a11y] remove hasFocusVisible tests once a11y work on components based on Tappable is finished
+  it('a11y: no .Tappable--focus-visible class gets added by default', () => {
+    render(<TappableTest>hasFocusVisible FALSE</TappableTest>);
     expect(tappable()).not.toHaveClass('Tappable--focus-visible');
+  });
+
+  it('a11y: hasFocusVisible adds .Tappable--focus-visible class', () => {
+    render(<TappableTest hasFocusVisible>hasFocusVisible TRUE</TappableTest>);
+    expect(tappable()).toHaveClass('Tappable--focus-visible');
   });
 });
