@@ -1,23 +1,33 @@
 import { FC } from 'react';
 import { Icon24Chevron } from '@vkontakte/icons';
+import { usePlatform } from '../../hooks/usePlatform';
+import { getClassName } from '../../helpers/getClassName';
+import { classNames } from '../../lib/classNames';
+import Tappable from '../Tappable/Tappable';
 
 export interface HorizontalScrollArrowProps {
   onClick: () => void;
   direction: 'left' | 'right';
 }
 
-const HorizontalScrollArrow: FC<HorizontalScrollArrowProps> = (props: HorizontalScrollArrowProps) => {
-  const { onClick, direction } = props;
+const HorizontalScrollArrow: FC<HorizontalScrollArrowProps> = ({ onClick, direction }: HorizontalScrollArrowProps) => {
+  const platform = usePlatform();
+
   return (
-    <button
-      type="button"
-      vkuiClass={`HorizontalScroll__arrow HorizontalScroll__arrow-${direction}`}
+    <Tappable
+      Component="button"
+      hasHover={false}
+      hasActive={false}
+      vkuiClass={classNames(
+        getClassName('HorizontalScrollArrow', platform),
+        `HorizontalScrollArrow--${direction}`,
+      )}
       onClick={onClick}
     >
-      <span vkuiClass="HorizontalScroll__arrow-icon">
+      <span vkuiClass="HorizontalScrollArrow__icon">
         <Icon24Chevron />
       </span>
-    </button>
+    </Tappable>
   );
 };
 
