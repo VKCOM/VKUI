@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -40,7 +40,7 @@ export interface RichCellProps extends TappableProps {
   multiline?: boolean;
 }
 
-const RichCell: FunctionComponent<RichCellProps> = ({
+const RichCell: FC<RichCellProps> = ({
   children,
   text,
   caption,

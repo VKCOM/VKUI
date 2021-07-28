@@ -8,9 +8,13 @@ import { IOS, VKCOM, ANDROID } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 
+export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
+  primary?: boolean;
+  label?: ReactNode;
+}
+
 interface ButtonTypographyProps extends AllHTMLAttributes<HTMLElement> {
   primary?: PanelHeaderButtonProps['primary'];
-  'aria-label'?: string;
 }
 
 const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, children }: ButtonTypographyProps) => {
@@ -30,11 +34,6 @@ const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, c
     </Text>
   );
 };
-
-export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
-  primary?: boolean;
-  label?: ReactNode;
-}
 
 export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   children,
