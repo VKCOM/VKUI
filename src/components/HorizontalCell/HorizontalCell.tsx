@@ -39,7 +39,6 @@ export const HorizontalCell: FC<HorizontalCellProps> = ({
   children = <Avatar size={56} />,
   getRootRef,
   getRef,
-  Component = 'div',
   ...restProps
 }: HorizontalCellProps) => {
   const platform = usePlatform();
@@ -53,9 +52,7 @@ export const HorizontalCell: FC<HorizontalCellProps> = ({
     >
       <Tappable
         vkuiClass="HorizontalCell__body"
-        disabled={restProps.disabled}
         getRootRef={getRef}
-        Component={restProps.href ? 'a' : Component}
         {...restProps}
       >
         {hasReactNode(children) && <div vkuiClass="HorizontalCell__image">{children}</div>}
