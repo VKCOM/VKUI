@@ -66,10 +66,10 @@ const ActionSheetItem: FC<ActionSheetItemProps> = ({
         classNames(
           getClassName('ActionSheetItem', platform),
           `ActionSheetItem--${mode}`,
+          `ActionSheetItem--sizeY-${sizeY}`,
           {
             'ActionSheetItem--compact': isCompact,
             'ActionSheetItem--desktop': isDesktop,
-            [`ActionSheetItem--sizeY-${sizeY}`]: sizeY === SizeType.COMPACT,
             'ActionSheetItem--withSubtitle': hasReactNode(subtitle),
           },
         )
