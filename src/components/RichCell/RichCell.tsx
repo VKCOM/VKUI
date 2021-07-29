@@ -49,25 +49,14 @@ const RichCell: FC<RichCellProps> = ({
   bottom,
   actions,
   multiline,
-  Component,
-  onClick,
   sizeY,
   ...restProps
 }) => {
   const platform = usePlatform();
-  const RootComponent = restProps.disabled ? Component : Tappable;
-  Component = restProps.disabled ? undefined : Component;
-
-  const props: RichCellProps = restProps;
-
-  if (!restProps.disabled) {
-    props.Component = restProps.href ? 'a' : Component;
-    props.onClick = onClick;
-  }
 
   return (
-    <RootComponent
-      {...props}
+    <Tappable
+      {...restProps}
       vkuiClass={
         classNames(
           getClassName('RichCell', platform),
@@ -97,12 +86,8 @@ const RichCell: FC<RichCellProps> = ({
           }
         </div>
       </div>
-    </RootComponent>
+    </Tappable>
   );
-};
-
-RichCell.defaultProps = {
-  Component: 'div',
 };
 
 export default withAdaptivity(RichCell, { sizeY: true });
