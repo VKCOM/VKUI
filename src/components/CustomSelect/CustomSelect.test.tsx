@@ -152,24 +152,59 @@ describe('CustomSelect', () => {
     expect(screen.getByTestId('target').textContent).toBe('New York');
   });
 
-  it('is searchable and correctly resolves changing of props.options during the search', () => {
+  it('is searchable and keeps search results up to date during props.options updates', () => {
     const { rerender } = render(<CustomSelect
       searchable
       data-testid="target"
-      options={[]}
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
     />);
 
     fireEvent.click(screen.getByTestId('target'));
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'Mi' } });
 
+    expect(screen.getAllByRole('option').length).toEqual(1);
+
     rerender(<CustomSelect
       searchable
       data-testid="target"
-      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Mika' }, { value: 2, label: 'Josh' }]}
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }, { value: 2, label: 'Mika' }]}
     />);
 
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 38 }); // ArrowUp
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Enter
-    expect(screen.getByTestId('target').textContent).toBe('Mika');
+    expect(screen.getAllByRole('option').length).toEqual(2);
+  });
+
+  it('is searchable and keeps selected option up to date during props.options and props.value updates', () => {
+    const { rerender } = render(<CustomSelect
+      searchable
+      data-testid="target"
+      value={1}
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    fireEvent.click(screen.getByTestId('target'));
+
+    expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
+
+    fireEvent.change(screen.getByTestId('target'), { target: { value: 'Jo' } });
+
+    expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
+
+    rerender(<CustomSelect
+      searchable
+      data-testid="target"
+      value={1}
+      options={[{ value: 0, label: 'Mike' }, { value: 2, label: 'Mika' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    expect(screen.getByTitle('Josh').getAttribute('aria-selected')).toEqual('true');
+
+    rerender(<CustomSelect
+      searchable
+      data-testid="target"
+      value={3}
+      options={[{ value: 3, label: 'Joe' }, { value: 0, label: 'Mike' }, { value: 2, label: 'Mika' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    expect(screen.getByTitle('Joe').getAttribute('aria-selected')).toEqual('true');
   });
 });

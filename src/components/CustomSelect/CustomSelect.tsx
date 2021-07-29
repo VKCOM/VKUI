@@ -100,6 +100,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
       nativeSelectValue: initialValue,
       options: props.options,
+      inputValue: '',
     };
 
     if (props.value !== undefined) {
@@ -395,12 +396,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
       this.isControlledOutside = this.props.value !== undefined;
       const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
+      const options = this.props.searchable ? this.props.options.filter((option) => this.props.filterFn(this.state.inputValue, option)) : this.props.options;
       this.setState({
         nativeSelectValue: value,
-        selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
-        options: this.props.searchable ?
-          this.props.options.filter((option) => this.props.filterFn(this.state.inputValue, option)) :
-          this.props.options,
+        selectedOptionIndex: this.findSelectedIndex(options, value),
+        options,
       });
     }
   }
@@ -510,6 +510,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           onFocus={onFocus}
           onClick={onClick}
           value={nativeSelectValue}
+          aria-hidden={true}
           vkuiClass="CustomSelect__control"
         >
           {options.map((item) => <option key={`${item.value}`} value={item.value} />)}
