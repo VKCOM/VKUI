@@ -318,8 +318,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     if (this.props.onInputChange) {
       const options = this.props.onInputChange(e, this.props.options);
       if (options) {
-        warn('This filtration method is deprecated. Return value of onInputChange will' +
-          ' be ignored in v5.0.0. For custom filtration please update props.options by yourself or use filterFn property');
+        if (process.env.NODE_ENV === 'development') {
+          warn('This filtration method is deprecated. Return value of onInputChange will' +
+            ' be ignored in v5.0.0. For custom filtration please update props.options by yourself or use filterFn property');
+        }
         this.setState({
           options,
           selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
