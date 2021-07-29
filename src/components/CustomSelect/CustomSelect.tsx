@@ -22,6 +22,7 @@ import { HasPlatform } from '../../types';
 import Input from '../Input/Input';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import Caption from '../Typography/Caption/Caption';
+import { warnOnce } from '../../lib/warnOnce';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -32,8 +33,8 @@ export interface CustomSelectOptionInterface {
 }
 
 interface CustomSelectState {
+  inputValue?: string;
   opened?: boolean;
-  focused?: boolean;
   focusedOptionIndex?: number;
   selectedOptionIndex?: number;
   nativeSelectValue?: SelectValue;
@@ -50,24 +51,16 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * Текст, который будет отображен, если приходит пустой `options`
    */
   emptyText?: string;
-  /**
-   * Коллбэк для кастомизации алгоритма поиска. Учитывается только если `searchable: true`
-   *
-   * Если коллбэк не передан, то фильтрация производится автоматически по `option.label`
-   *
-   * Если передан и возвращает значение, то оно используется в качестве результата
-   * фильтрации.
-   *
-   * Если переданная функция ничего не возвращает, то подразумевается, что разработчик выполнил фильтрацию
-   * на верхнем уровне и обновил свойство `options`.
-   *
-   */
   onInputChange?: (e: ChangeEvent, options: CustomSelectOptionInterface[]) => void | CustomSelectOptionInterface[];
   options: Array<{
     value: SelectValue;
     label: string;
     [index: string]: any;
   }>;
+  /**
+   * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
+   */
+  filterFn?: (value: string, option: CustomSelectOptionInterface) => boolean;
   popupDirection?: 'top' | 'bottom';
   /**
    * В качестве аргумента принимает валидные для [CustomSelectOption](#/CustomSelectOption) свойства
@@ -76,6 +69,8 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
 }
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
+
+const warn = warnOnce('CustomSelect');
 
 class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
   static defaultProps: CustomSelectProps = {
@@ -87,6 +82,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     },
     options: [],
     emptyText: 'Ничего не найдено',
+    filterFn: (value, option) => option.label.toLowerCase().includes(value.toLowerCase()),
   };
 
   public constructor(props: CustomSelectProps) {
@@ -100,11 +96,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     this.state = {
       opened: false,
-      focused: false,
       focusedOptionIndex: -1,
       selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
       nativeSelectValue: initialValue,
       options: props.options,
+      inputValue: '',
     };
 
     if (props.value !== undefined) {
@@ -115,7 +111,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   public state: CustomSelectState;
   private keyboardInput: string;
   private isControlledOutside: boolean;
-  private node: HTMLLabelElement;
   private selectEl: HTMLSelectElement;
   private readonly scrollBoxRef = createRef<HTMLDivElement>();
 
@@ -157,6 +152,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.resetKeyboardInput();
 
     this.setState(() => ({
+      inputValue: '',
       opened: false,
       focusedOptionIndex: -1,
       options: this.props.options,
@@ -194,10 +190,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onFocus = () => {
-    this.setState(() => ({
-      focused: true,
-    }));
-
     const event = new Event('focus');
     this.selectEl.dispatchEvent(event);
   };
@@ -207,20 +199,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     this.setState(() => ({
       opened: false,
-      focused: false,
       options: this.props.options,
     }));
 
     const event = new Event('blur');
     this.selectEl.dispatchEvent(event);
-  };
-
-  handleDocumentClick = (event: Event) => {
-    const thisNode = this.node;
-
-    if (this.state.opened && thisNode && !thisNode.contains(event.target as Node)) {
-      this.onBlur();
-    }
   };
 
   private scrollToElement(index: number, center = false) {
@@ -335,11 +318,24 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     if (this.props.onInputChange) {
       const options = this.props.onInputChange(e, this.props.options);
       if (options) {
-        this.setState({ options });
+        if (process.env.NODE_ENV === 'development') {
+          warn('This filtration method is deprecated. Return value of onInputChange will' +
+            ' be ignored in v5.0.0. For custom filtration please update props.options by yourself or use filterFn property');
+        }
+        this.setState({
+          options,
+          selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
+          inputValue: e.target.value,
+        });
+      } else {
+        this.setState({ inputValue: e.target.value });
       }
     } else {
+      const options = this.props.options.filter((option) => this.props.filterFn(e.target.value, option));
       this.setState({
-        options: this.props.options.filter((option) => option.label.toLowerCase().includes(e.target.value.toLowerCase())),
+        options,
+        selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
+        inputValue: e.target.value,
       });
     }
   };
@@ -398,24 +394,15 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   handleKeyUp = debounce(this.resetKeyboardInput, 1000);
 
-  componentDidMount() {
-    document.addEventListener('click', this.handleDocumentClick, false);
-    document.addEventListener('touchend', this.handleDocumentClick, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleDocumentClick, false);
-    document.removeEventListener('touchend', this.handleDocumentClick, false);
-  }
-
   componentDidUpdate(prevProps: CustomSelectProps) {
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
       this.isControlledOutside = this.props.value !== undefined;
       const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
+      const options = this.props.searchable ? this.props.options.filter((option) => this.props.filterFn(this.state.inputValue, option)) : this.props.options;
       this.setState({
         nativeSelectValue: value,
-        selectedOptionIndex: this.findSelectedIndex(this.props.options, value),
-        options: this.props.options,
+        selectedOptionIndex: this.findSelectedIndex(options, value),
+        options,
       });
     }
   }
@@ -439,11 +426,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         })}
       </React.Fragment>
     );
-  };
-
-  rootRef = (element: HTMLLabelElement) => {
-    this.node = element;
-    setRef(element, this.props.getRootRef);
   };
 
   selectRef = (element: HTMLSelectElement) => {
@@ -472,6 +454,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       children,
       emptyText,
       onInputChange,
+      filterFn,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -482,19 +465,25 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         vkuiClass={getClassName('CustomSelect', platform)}
         className={className}
         style={style}
-        ref={this.rootRef}
+        ref={getRootRef}
         onClick={this.onLabelClick}
       >
         {opened && searchable ?
           <Input
+            {...restProps}
             autoFocus
             onBlur={this.onBlur}
             vkuiClass={classNames({
               'CustomSelect__open': opened,
               'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
             })}
+            value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
             onChange={this.onInputChange}
+            // TODO Ожидается, что клик поймает нативный select, но его перехвает Input. К сожалению, это приводит конфликтам типизации.
+            // TODO Нужно перестать пытаться превратить CustomSelect в select. Тогда эта проблема уйдёт.
+            // @ts-ignore
+            onClick={onClick}
             after={sizeY === SizeType.COMPACT ? <Icon20Dropdown /> : <Icon24Dropdown />}
             placeholder={restProps.placeholder}
           /> :
@@ -523,6 +512,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           onFocus={onFocus}
           onClick={onClick}
           value={nativeSelectValue}
+          aria-hidden={true}
           vkuiClass="CustomSelect__control"
         >
           {options.map((item) => <option key={`${item.value}`} value={item.value} />)}
