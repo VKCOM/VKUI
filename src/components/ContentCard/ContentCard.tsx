@@ -30,6 +30,10 @@ export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAtt
   /**
     URL или путь к изображению
    */
+  src?: string;
+  /**
+    @deprecated будет удалено в 5.0.0. Используйте src
+   */
   image?: string;
   /**
     Максимальная высота изображения
@@ -78,13 +82,13 @@ const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
   return (
     <Card mode={mode} getRootRef={getRootRef} vkuiClass={getClassName('ContentCard', platform)} style={style} className={className}>
       <Tappable {...restProps} disabled={disabled} vkuiClass="ContentCard__tappable">
-        {image && (
+        {(image || src) && (
           <img
             ref={getRef}
-            src={image}
+            vkuiClass="ContentCard__img"
+            src={image || src}
             srcSet={srcSet}
             alt={alt}
-            vkuiClass="ContentCard__img"
             height={height}
             style={{ maxHeight }}
             width="100%"
