@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getDOM } from '../lib/dom';
+import { useDOM } from '../lib/dom';
 import { useGlobalEventListener } from './useGlobalEventListener';
 
 interface SoftwareKeyboardState {
@@ -9,10 +9,9 @@ interface SoftwareKeyboardState {
 
 /**
   Проверяет, закрыла ли клавиатура часть экрана, 24% подошло к большиству устройств
-  Работает на iOS и Android, где софт-клавиатура закрывает часть viewport
+  Работает на iOS и Android, где софт-клавиатура ресайзит viewport в браузерах
 */
-export function getPreciseKeyboardState(): boolean {
-  const { window } = getDOM();
+export function getPreciseKeyboardState(window: any): boolean {
   const { availHeight } = window.screen;
   const { innerHeight } = window;
 
@@ -21,6 +20,8 @@ export function getPreciseKeyboardState(): boolean {
 }
 
 export function useKeyboard(): SoftwareKeyboardState {
+  const { window, document } = useDOM();
+
   const [keyboardState, setKeyboardState] = useState<SoftwareKeyboardState>({
     isOpened: false,
     isPrecise: false,
@@ -33,13 +34,16 @@ export function useKeyboard(): SoftwareKeyboardState {
 
   function onFocus(event: FocusEvent) {
     let returnObject = {
-      isOpened: event.type === 'focusin',
+      isOpened: event.type === 'focusin' && (
+        document.activeElement.tagName === 'INPUT' ||
+        document.activeElement.tagName === 'TEXTAREA'
+      ),
       isPrecise: false,
     };
 
     // Ожидаем прохождение анимации раскрытия клавиатуры
     setTimeout(() => {
-      returnObject.isPrecise = getPreciseKeyboardState();
+      returnObject.isPrecise = getPreciseKeyboardState(window);
       setKeyboardState(returnObject);
     }, 300);
   }
