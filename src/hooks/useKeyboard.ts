@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDOM } from '../lib/dom';
 import { useGlobalEventListener } from './useGlobalEventListener';
 
@@ -8,9 +8,9 @@ interface SoftwareKeyboardState {
 }
 
 /**
-  Проверяет, закрыла ли клавиатура часть экрана, 24% подошло к большиству устройств
-  Работает на iOS и Android, где софт-клавиатура ресайзит viewport в браузерах
-*/
+ Проверяет, закрыла ли клавиатура часть экрана, 24% подошло к большиству устройств
+ Работает на iOS и Android, где софт-клавиатура ресайзит viewport в браузерах
+ */
 export function getPreciseKeyboardState(window: any): boolean {
   const { availHeight } = window.screen;
   const { innerHeight } = window;
@@ -32,11 +32,19 @@ export function useKeyboard(): SoftwareKeyboardState {
     capture: false,
   };
 
-  function onFocus(event: FocusEvent) {
+  /**
+   У полей с autoFocus не отлавливаются события focus, для этого вызываем вручную,
+   чтобы иметь хоть какое-то понимание происходящего.
+   */
+  useEffect(() => {
+    onFocus(true);
+  }, [onFocus]);
+
+  function onFocus(event: FocusEvent | true) {
     let returnObject = {
-      isOpened: event.type === 'focusin' && (
-        document.activeElement.tagName === 'INPUT' ||
-        document.activeElement.tagName === 'TEXTAREA'
+      isOpened: (event === true || event.type === 'focusin') && (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA'
       ),
       isPrecise: false,
     };
