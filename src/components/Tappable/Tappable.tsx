@@ -129,7 +129,6 @@ class Tappable extends Component<TappableProps, TappableState> {
   wavesTimeout: number;
 
   static defaultProps = {
-    Component: 'div',
     role: 'button',
     stopPropagation: false,
     disabled: false,
@@ -343,9 +342,12 @@ class Tappable extends Component<TappableProps, TappableState> {
 
   render() {
     const { clicks, active, hovered, hasHover, hasActive } = this.state;
+
+    const defaultComponent: ElementType = this.props.href ? 'a' : 'div';
+
     const {
       children,
-      Component,
+      Component = defaultComponent,
       activeEffectDelay,
       stopPropagation,
       getRootRef,
