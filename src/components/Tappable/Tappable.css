@@ -9,11 +9,11 @@
 /**
  * active
  */
-.Tappable--active-background:not([disabled]) {
+.Tappable--active-background:not([disabled]):not([aria-disabled="true"]) {
   background: var(--background_highlighted);
 }
 
-.Tappable--active-opacity:not([disabled]) {
+.Tappable--active-opacity:not([disabled]):not([aria-disabled="true"]) {
   opacity: .7;
 }
 
