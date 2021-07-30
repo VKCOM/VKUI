@@ -114,7 +114,6 @@ Button.defaultProps = {
   size: 's',
   stretched: false,
   stopPropagation: true,
-  hasFocusVisible: true,
 };
 
 export default withAdaptivity(Button, {

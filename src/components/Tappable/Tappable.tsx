@@ -44,11 +44,6 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
    * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
    */
   hoverMode?: 'opacity' | 'background' | string;
-  /**
-   * @ignore Временное свойство для работы над доступностью. Указывает, должен ли компонент показывать focus ring при навигации с клавиатуры.
-   * Исчезнет после того, как мы адаптируем отображение всех компонентов на базе Tappable.
-   */
-  hasFocusVisible?: boolean;
 }
 
 export interface TappableState {
@@ -132,7 +127,6 @@ class Tappable extends Component<TappableProps, TappableState> {
   static defaultProps = {
     stopPropagation: false,
     disabled: false,
-    hasFocusVisible: false,
     hasHover,
     hoverMode: 'background',
     hasActive: true,
@@ -363,7 +357,6 @@ class Tappable extends Component<TappableProps, TappableState> {
       hoverMode,
       hasActive: propsHasActive,
       activeMode,
-      hasFocusVisible,
       ...restProps
     } = this.props;
 
@@ -381,7 +374,6 @@ class Tappable extends Component<TappableProps, TappableState> {
         'Tappable--mouse': hasMouse,
         [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
         [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
-        'Tappable--focus-visible': hasFocusVisible,
         [hoverMode]: hasHover && hovered && !isPresetHoverMode,
         [activeMode]: hasActive && active && !isPresetActiveMode,
       });
