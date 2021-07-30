@@ -48,7 +48,7 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
   /**
    * Стиль аутлайна focus visible.
    */
-  focusVisibleOutline?: FocusVisibleOutline;
+  focusVisibleMode?: FocusVisibleOutline;
 }
 
 export interface TappableState {
@@ -132,7 +132,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   static defaultProps = {
     stopPropagation: false,
     disabled: false,
-    focusVisibleOutline: 'inside',
+    focusVisibleMode: 'inside',
     hasHover,
     hoverMode: 'background',
     hasActive: true,
@@ -363,7 +363,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       hoverMode,
       hasActive: propsHasActive,
       activeMode,
-      focusVisibleOutline,
+      focusVisibleMode,
       ...restProps
     } = this.props;
 
@@ -453,7 +453,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                       </span>
                     )}
                     {hasHover && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
-                    {!restProps.disabled && <FocusVisible mode={focusVisibleOutline} />}
+                    {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
                   </RootComponent>
                 );
               }}

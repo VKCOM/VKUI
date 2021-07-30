@@ -39,7 +39,7 @@ const TabsItem: FC<TabsItemProps> = ({
       vkuiClass={classNames(getClassName('TabsItem', platform), { 'TabsItem--selected': selected })}
       hasActive={mode === 'segmented'}
       activeMode="TabsItem--active"
-      focusVisibleOutline={mode === 'segmented' ? 'outside' : 'inside'}
+      focusVisibleMode={mode === 'segmented' ? 'outside' : 'inside'}
     >
       <TypographyComponent Component="span" vkuiClass="TabsItem__in" weight="medium">{children}</TypographyComponent>
       {hasReactNode(after) && <div vkuiClass="TabsItem__after">{after}</div>}
