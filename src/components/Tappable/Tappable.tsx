@@ -453,7 +453,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                       </span>
                     )}
                     {hasHover && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
-                    {!restProps.disabled && <FocusVisible outline={focusVisibleOutline} />}
+                    {!restProps.disabled && <FocusVisible mode={focusVisibleOutline} />}
                   </RootComponent>
                 );
               }}

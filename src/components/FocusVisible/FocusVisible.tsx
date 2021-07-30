@@ -5,9 +5,9 @@ import './FocusVisible.css';
 export type FocusVisibleOutline = 'inside' | 'outside';
 
 interface FocusVisibleProps {
-  outline: FocusVisibleOutline;
+  mode: FocusVisibleOutline;
 }
 
-export const FocusVisible: FC<FocusVisibleProps> = ({ outline }: FocusVisibleProps) => (
-  <span aria-hidden="true" vkuiClass={classNames('FocusVisible', `FocusVisible--${outline}`)} />
+export const FocusVisible: FC<FocusVisibleProps> = ({ mode }: FocusVisibleProps) => (
+  <span aria-hidden="true" vkuiClass={classNames('FocusVisible', `FocusVisible--${mode}`)} />
 );
