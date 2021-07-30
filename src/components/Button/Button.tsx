@@ -66,20 +66,13 @@ const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProp
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
-  const { size, mode, stretched, align, children, before, after, getRootRef, Component, sizeY, ...restProps } = props;
+  const { size, mode, stretched, align, children, before, after, getRootRef, sizeY, Component = 'button', ...restProps } = props;
   const hasIcons = Boolean(before || after);
-
-  const RenderedComponent = restProps.href ? 'a' : Component;
-
-  let accessibleRole: string = null;
-  if (RenderedComponent !== 'a' && RenderedComponent !== 'button' && RenderedComponent !== 'input') {
-    accessibleRole = 'button';
-  }
 
   return (
     <Tappable
-      role={accessibleRole}
       {...restProps}
+      Component={restProps.href ? 'a' : Component}
       vkuiClass={
         classNames(
           getClassName('Button', platform),
@@ -94,7 +87,6 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
         )
       }
       getRootRef={getRootRef}
-      Component={RenderedComponent}
       activeMode="opacity"
     >
       <span vkuiClass="Button__in">
@@ -117,7 +109,6 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
 
 Button.defaultProps = {
   mode: 'primary',
-  Component: 'button',
   align: 'center',
   size: 's',
   stretched: false,
