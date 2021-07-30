@@ -74,6 +74,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
     <Tappable
       {...restProps}
       Component={restProps.href ? 'a' : Component}
+      focusVisibleOutline="outside"
       vkuiClass={
         classNames(
           getClassName('Button', platform),

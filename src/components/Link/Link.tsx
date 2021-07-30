@@ -19,6 +19,7 @@ const Link: FC<LinkProps> = ({
       vkuiClass={getClassName('Link', platform)}
       hasActive={false}
       hoverMode="opacity"
+      focusVisibleOutline="outside"
     >
       {children}
     </Tappable>
