@@ -19,6 +19,7 @@ import { hasHover } from '@vkontakte/vkjs';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
+import { FocusVisible, FocusVisibleOutline } from '../FocusVisible/FocusVisible';
 import './Tappable.css';
 
 export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
@@ -44,6 +45,10 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
    * Стиль подсветки hover-состояния. Если передать произвольную строку, она добавится как css-класс во время hover
    */
   hoverMode?: 'opacity' | 'background' | string;
+  /**
+   * Стиль аутлайна focus visible.
+   */
+  focusVisibleOutline?: FocusVisibleOutline;
 }
 
 export interface TappableState {
@@ -127,6 +132,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   static defaultProps = {
     stopPropagation: false,
     disabled: false,
+    focusVisibleOutline: 'inside',
     hasHover,
     hoverMode: 'background',
     hasActive: true,
@@ -357,6 +363,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       hoverMode,
       hasActive: propsHasActive,
       activeMode,
+      focusVisibleOutline,
       ...restProps
     } = this.props;
 
@@ -446,6 +453,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                       </span>
                     )}
                     {hasHover && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
+                    {!restProps.disabled && <FocusVisible outline={focusVisibleOutline} />}
                   </RootComponent>
                 );
               }}
