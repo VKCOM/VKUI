@@ -7,14 +7,14 @@ const ContentCardTest = (props: ContentCardProps) => (
     subtitle="VKUI"
     header="ContentCard example"
     caption="VKUI Styleguide > Blocks > ContentCard"
-    image="/image.png"
+    src="/image.png"
     {...props}
     data-testid="card"
   />
 );
 
 describe('ContentCard', () => {
-  baselineComponent((props) => <ContentCard image="/image.png" {...props} />);
+  baselineComponent((props) => <ContentCard src="/image.png" {...props} />);
 
   it('onClick: ContentCard without onClick is treated as disabled', () => {
     render(<ContentCardTest />);
