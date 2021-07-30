@@ -347,6 +347,8 @@ class Tappable extends Component<TappableProps, TappableState> {
     const {
       children,
       Component = defaultComponent,
+      onClick,
+      onKeyDown,
       activeEffectDelay,
       stopPropagation,
       getRootRef,
@@ -391,6 +393,8 @@ class Tappable extends Component<TappableProps, TappableState> {
       props.onStart = this.onStart;
       props.onMove = this.onMove;
       props.onEnd = this.onEnd;
+      props.onClick = onClick;
+      props.onKeyDown = isCustomElement ? this.onKeyDown : onKeyDown;
       /* eslint-enable */
       props.getRootRef = this.getRef;
     } else {
