@@ -428,7 +428,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                   <RootComponent
                     {...touchProps}
                     type={Component === 'button' ? 'button' : undefined}
-                    tabIndex={isCustomElement ? 0 : undefined}
+                    tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
                     role={isCustomElement ? role : undefined}
                     {...restProps}
                     vkuiClass={classes}
