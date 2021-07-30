@@ -1,9 +1,5 @@
-/**
- * [a11y]
- * add focus-visible outline w/ rounded corners
- * without animation by default
- */
-.AppRoot--keyboard-input *:focus > .FocusVisible {
+.AppRoot--keyboard-input .Tappable:focus > .FocusVisible,
+.Tappable:focus-visible > .FocusVisible {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -17,7 +13,8 @@
   z-index: 0;
 }
 
-.AppRoot--keyboard-input *:focus > .FocusVisible--outside {
+.AppRoot--keyboard-input .Tappable:focus > .FocusVisible--outside,
+.Tappable:focus-visible > .FocusVisible--outside {
   top: -2px;
   left: -2px;
   right: -2px;
@@ -31,7 +28,8 @@
  * navigating accessible vkui apps via keyboard
  */
 @media (prefers-reduced-motion: no-preference) {
-  .AppRoot--keyboard-input *:focus > .FocusVisible {
+  .AppRoot--keyboard-input .Tappable:focus > .FocusVisible,
+  .Tappable:focus-visible > .FocusVisible {
     top: 4px;
     left: 4px;
     right: 4px;
@@ -41,7 +39,8 @@
     will-change: top, left, bottom, right;
   }
 
-  .AppRoot--keyboard-input *:focus > .FocusVisible--outside {
+  .AppRoot--keyboard-input .Tappable:focus > .FocusVisible--outside,
+  .Tappable:focus-visible > .FocusVisible--outside {
     top: 0;
     left: 0;
     bottom: 0;
