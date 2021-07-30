@@ -47,11 +47,9 @@ const ActionSheetItem: FC<ActionSheetItemProps> = ({
   const platform = usePlatform();
   const { onItemClick = () => noop, isDesktop } = useContext(ActionSheetContext);
 
-  let Component: ElementType = 'div';
+  let Component: ElementType = restProps.href ? 'a' : 'div';
 
-  if (restProps.href) {
-    Component = 'a';
-  } else if (selectable) {
+  if (selectable) {
     Component = 'label';
   }
 
