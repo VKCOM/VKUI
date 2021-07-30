@@ -43,7 +43,6 @@ export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
 }: PanelHeaderButtonProps) => {
   const isPrimitive = isPrimitiveReactNode(children);
   const isPrimitiveLabel = isPrimitiveReactNode(label);
-  const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
 
   let hoverMode;
@@ -67,7 +66,7 @@ export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
     <Tappable
       {...restProps}
       hoverMode={hoverMode}
-      Component={Component}
+      Component={restProps.href ? 'a' : 'button'}
       activeEffectDelay={200}
       activeMode={activeMode}
       vkuiClass={classNames(
