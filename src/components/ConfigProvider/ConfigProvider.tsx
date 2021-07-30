@@ -74,13 +74,13 @@ const ConfigProvider: FC<ConfigProviderProps> = ({
 }: ConfigProviderProps & { children?: ReactNode; schemeTarget?: HTMLElement }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
   const { document } = useDOM();
-  const target = schemeTarget || document.body;
+  const target = schemeTarget || document?.body;
 
   useIsomorphicLayoutEffect(() => {
     if (scheme === 'inherit') {
       return noop;
     }
-    if (process.env.NODE_ENV === 'development' && document.body.hasAttribute('scheme')) {
+    if (process.env.NODE_ENV === 'development' && target.hasAttribute('scheme')) {
       warn('<body scheme> was set before VKUI mount - did you forget scheme="inherit"?');
     }
     target.setAttribute('scheme', scheme);
