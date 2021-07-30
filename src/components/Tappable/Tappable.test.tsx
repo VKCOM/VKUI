@@ -49,6 +49,11 @@ describe('Tappable', () => {
     expect(tappable()).toHaveAttribute('tabIndex', '0');
   });
 
+  it('a11y(tabindex): custom disabled button has no tabindex', () => {
+    render(<TappableTest disabled>Custom Disabled Button</TappableTest>);
+    expect(tappable()).not.toHaveAttribute('tabIndex');
+  });
+
   it('a11y(tabindex): custom link has tabindex={0}', () => {
     render(<TappableTest role="link">Custom Link</TappableTest>);
     expect(tappable()).toHaveAttribute('tabIndex', '0');
