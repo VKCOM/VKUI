@@ -7,7 +7,7 @@
   display: none;
 }
 
-.TableOfContents__list .TableOfContents__list {
+.TableOfContents--desktop .TableOfContents__list .TableOfContents__list {
   padding-left: 20px;
 }
 

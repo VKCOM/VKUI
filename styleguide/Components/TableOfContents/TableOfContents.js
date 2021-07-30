@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Header, IconButton, SimpleCell, Search, classNames, Separator, Footer } from '@vkui';
+import { Header, IconButton, SimpleCell, Search, classNames, Separator, Footer, withAdaptivity, ViewWidth } from '@vkui';
 import { Icon28ChevronDownOutline, Icon28ChevronUpOutline } from '@vkontakte/icons';
 import './TableOfContents.css';
 import getInfoFromHash from 'react-styleguidist/lib/client/utils/getInfoFromHash';
@@ -223,10 +223,10 @@ class TableOfContents extends React.PureComponent {
   }
 
   render() {
-    return <div className="TableOfContents">
+    return <div className={classNames('TableOfContents', { 'TableOfContents--desktop': this.props.viewWidth > ViewWidth.MOBILE })}>
       {this.renderSections(this.sections)}
     </div>;
   }
 }
 
-export default TableOfContents;
+export default withAdaptivity(TableOfContents, { viewWidth: true });

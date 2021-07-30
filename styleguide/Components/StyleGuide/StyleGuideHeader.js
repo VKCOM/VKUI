@@ -1,10 +1,10 @@
-import { SplitCol, SplitLayout, Link, IconButton, Scheme, Tappable } from '@vkui';
+import { SplitCol, SplitLayout, Link, IconButton, Tappable } from '@vkui';
 import { Icon28LogoVk, Icon28MoonOutline } from '@vkontakte/icons';
 import React from 'react';
 import pkg from '../../../package.json';
 import './StyleGuideHeader.css';
 
-export const StyleGuideHeader = ({ scheme, setScheme }) => {
+export const StyleGuideHeader = ({ switchStyleGuideScheme }) => {
   return (
     <div className="StyleGuideHeader">
       <SplitLayout>
@@ -35,13 +35,7 @@ export const StyleGuideHeader = ({ scheme, setScheme }) => {
             </Link>
           </div>
           <div className="StyleGuideHeader__aside">
-            <IconButton className="StyleGuideHeader__scheme" onClick={() => {
-              if (scheme === Scheme.SPACE_GRAY) {
-                setScheme(Scheme.BRIGHT_LIGHT);
-              } else if (scheme === Scheme.BRIGHT_LIGHT) {
-                setScheme(Scheme.SPACE_GRAY);
-              }
-            }}>
+            <IconButton className="StyleGuideHeader__scheme" onClick={switchStyleGuideScheme}>
               <Icon28MoonOutline />
             </IconButton>
           </div>
