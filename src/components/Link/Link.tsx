@@ -7,26 +7,15 @@ export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, TappablePr
 
 const Link: FC<LinkProps> = ({
   children,
-  Component,
   ...restProps
 }: LinkProps) => {
   const platform = usePlatform();
-  const baseClassName = getClassName('Link', platform);
-
-  if (!Component) {
-    if (restProps.href) {
-      Component = 'a';
-    } else {
-      Component = 'button';
-      restProps = { type: 'button', ...restProps };
-    }
-  }
 
   return (
     <Tappable
-      Component={Component}
+      Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      vkuiClass={baseClassName}
+      vkuiClass={getClassName('Link', platform)}
       hasActive={false}
       hoverMode="opacity"
     >
