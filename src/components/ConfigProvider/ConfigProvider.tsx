@@ -22,23 +22,27 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
   scheme?: AppearanceScheme;
 }
 
-function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
+function useSchemeDetector(schemeTarget: HTMLElement, _scheme: Scheme | 'inherit') {
+  const { document } = useDOM();
+
   const inherit = _scheme === 'inherit';
   const getScheme = () => {
     if (!inherit || !canUseDOM) {
       return undefined;
     }
-    return node.getAttribute('scheme') as Scheme | ExternalScheme;
+    const target = schemeTarget || document.body;
+    return target.getAttribute('scheme') as Scheme | ExternalScheme;
   };
   const [resolvedScheme, setScheme] = useState(getScheme());
 
   useEffect(() => {
-    if (!inherit) {
+    if (!inherit || !canUseDOM) {
       return noop;
     }
+    const target = schemeTarget || document.body;
     setScheme(getScheme());
     const observer = new MutationObserver(() => setScheme(getScheme()));
-    observer.observe(node, { attributes: true, attributeFilter: ['scheme'] });
+    observer.observe(target, { attributes: true, attributeFilter: ['scheme'] });
     return () => observer.disconnect();
   }, [inherit]);
 
@@ -74,20 +78,20 @@ const ConfigProvider: FC<ConfigProviderProps> = ({
 }: ConfigProviderProps & { children?: ReactNode; schemeTarget?: HTMLElement }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
   const { document } = useDOM();
-  const target = schemeTarget || document.body;
 
   useIsomorphicLayoutEffect(() => {
+    const target = schemeTarget || document.body;
     if (scheme === 'inherit') {
       return noop;
     }
-    if (process.env.NODE_ENV === 'development' && document.body.hasAttribute('scheme')) {
+    if (process.env.NODE_ENV === 'development' && target.hasAttribute('scheme')) {
       warn('<body scheme> was set before VKUI mount - did you forget scheme="inherit"?');
     }
     target.setAttribute('scheme', scheme);
     return () => target.removeAttribute('scheme');
   }, [scheme]);
 
-  const realScheme = useSchemeDetector(target, scheme);
+  const realScheme = useSchemeDetector(schemeTarget, scheme);
   const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
 
   return (
