@@ -8,9 +8,13 @@ import { IOS, VKCOM, ANDROID } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 
+export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
+  primary?: boolean;
+  label?: ReactNode;
+}
+
 interface ButtonTypographyProps extends AllHTMLAttributes<HTMLElement> {
   primary?: PanelHeaderButtonProps['primary'];
-  'aria-label'?: string;
 }
 
 const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, children }: ButtonTypographyProps) => {
@@ -31,11 +35,6 @@ const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, c
   );
 };
 
-export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
-  primary?: boolean;
-  label?: ReactNode;
-}
-
 export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
   children,
   primary,
@@ -44,7 +43,6 @@ export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
 }: PanelHeaderButtonProps) => {
   const isPrimitive = isPrimitiveReactNode(children);
   const isPrimitiveLabel = isPrimitiveReactNode(label);
-  const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
 
   let hoverMode;
@@ -68,7 +66,7 @@ export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
     <Tappable
       {...restProps}
       hoverMode={hoverMode}
-      Component={Component}
+      Component={restProps.href ? 'a' : 'button'}
       activeEffectDelay={200}
       activeMode={activeMode}
       vkuiClass={classNames(

@@ -1,4 +1,4 @@
-import { ReactNode, FunctionComponent } from 'react';
+import { ReactNode, FC } from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -11,13 +11,9 @@ export interface IconButtonProps extends TappableProps {
    * @deprecated будет удалено в 5.0.0. Используйте `children`
    */
   icon?: ReactNode;
-  /**
-   * Задайте вашей кнопке текстовое содержание для повышения ее доступности.
-   */
-  'aria-label'?: string;
 }
 
-const IconButton: FunctionComponent<IconButtonProps> = ({
+const IconButton: FC<IconButtonProps> = ({
   icon,
   sizeY,
   children,

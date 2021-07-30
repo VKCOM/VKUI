@@ -1,4 +1,4 @@
-import React, { AnchorHTMLAttributes, ElementType, Fragment, HTMLAttributes, InputHTMLAttributes, useContext } from 'react';
+import { AnchorHTMLAttributes, ElementType, FC, Fragment, HTMLAttributes, InputHTMLAttributes, ReactNode, useContext } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
@@ -19,15 +19,15 @@ export interface ActionSheetItemProps extends
   Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'checked' | 'value'>,
   AdaptivityProps {
   mode?: 'default' | 'destructive' | 'cancel';
-  before?: React.ReactNode;
-  meta?: React.ReactNode;
-  subtitle?: React.ReactNode;
+  before?: ReactNode;
+  meta?: ReactNode;
+  subtitle?: ReactNode;
   autoclose?: boolean;
   selectable?: boolean;
   disabled?: boolean;
 }
 
-const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
+const ActionSheetItem: FC<ActionSheetItemProps> = ({
   children,
   autoclose,
   mode,
@@ -47,11 +47,9 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
   const platform = usePlatform();
   const { onItemClick = () => noop, isDesktop } = useContext(ActionSheetContext);
 
-  let Component: ElementType = 'div';
+  let Component: ElementType = restProps.href ? 'a' : 'div';
 
-  if (restProps.href) {
-    Component = 'a';
-  } else if (selectable) {
+  if (selectable) {
     Component = 'label';
   }
 
@@ -66,10 +64,10 @@ const ActionSheetItem: React.FunctionComponent<ActionSheetItemProps> = ({
         classNames(
           getClassName('ActionSheetItem', platform),
           `ActionSheetItem--${mode}`,
+          `ActionSheetItem--sizeY-${sizeY}`,
           {
             'ActionSheetItem--compact': isCompact,
             'ActionSheetItem--desktop': isDesktop,
-            [`ActionSheetItem--sizeY-${sizeY}`]: sizeY === SizeType.COMPACT,
             'ActionSheetItem--withSubtitle': hasReactNode(subtitle),
           },
         )

@@ -1,35 +1,26 @@
-import { FunctionComponent, AnchorHTMLAttributes } from 'react';
+import { FC, AnchorHTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 
 export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, TappableProps {}
 
-const Link: FunctionComponent<LinkProps> = ({
+const Link: FC<LinkProps> = ({
   children,
-  Component,
   ...restProps
 }: LinkProps) => {
   const platform = usePlatform();
-  const baseClassName = getClassName('Link', platform);
-
-  if (!Component) {
-    if (restProps.href) {
-      Component = 'a';
-    } else {
-      Component = 'button';
-      restProps = { type: 'button', ...restProps };
-    }
-  }
 
   return (
     <Tappable
-      Component={Component}
+      Component={restProps.href ? 'a' : 'button'}
       {...restProps}
-      vkuiClass={baseClassName}
+      vkuiClass={getClassName('Link', platform)}
       hasActive={false}
       hoverMode="opacity"
-    >{children}</Tappable>
+    >
+      {children}
+    </Tappable>
   );
 };
 

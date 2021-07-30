@@ -4,12 +4,11 @@ import Tappable from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 
-export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement> & {
-  'aria-label'?: string;
-};
+export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement>;
 
 const ModalDismissButton: FC<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => {
   const platform = usePlatform();
+
   return (
     <Tappable
       vkuiClass={getClassName('ModalDismissButton', platform)}
