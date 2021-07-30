@@ -19,7 +19,7 @@ import { hasHover } from '@vkontakte/vkjs';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
-import { FocusVisible, FocusVisibleOutline } from '../FocusVisible/FocusVisible';
+import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
 import './Tappable.css';
 
 export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
@@ -48,7 +48,7 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
   /**
    * Стиль аутлайна focus visible.
    */
-  focusVisibleMode?: FocusVisibleOutline;
+  focusVisibleMode?: FocusVisibleMode;
 }
 
 export interface TappableState {

@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { classNames } from '../../lib/classNames';
 import './FocusVisible.css';
 
-export type FocusVisibleOutline = 'inside' | 'outside';
+export type FocusVisibleMode = 'inside' | 'outside';
 
 interface FocusVisibleProps {
-  mode: FocusVisibleOutline;
+  mode: FocusVisibleMode;
 }
 
 export const FocusVisible: FC<FocusVisibleProps> = ({ mode }: FocusVisibleProps) => (
