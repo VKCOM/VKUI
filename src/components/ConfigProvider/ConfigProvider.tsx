@@ -22,27 +22,23 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
   scheme?: AppearanceScheme;
 }
 
-function useSchemeDetector(schemeTarget: HTMLElement, _scheme: Scheme | 'inherit') {
-  const { document } = useDOM();
-
+function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
   const inherit = _scheme === 'inherit';
   const getScheme = () => {
     if (!inherit || !canUseDOM) {
       return undefined;
     }
-    const target = schemeTarget || document.body;
-    return target.getAttribute('scheme') as Scheme | ExternalScheme;
+    return node.getAttribute('scheme') as Scheme | ExternalScheme;
   };
   const [resolvedScheme, setScheme] = useState(getScheme());
 
   useEffect(() => {
-    if (!inherit || !canUseDOM) {
+    if (!inherit) {
       return noop;
     }
-    const target = schemeTarget || document.body;
     setScheme(getScheme());
     const observer = new MutationObserver(() => setScheme(getScheme()));
-    observer.observe(target, { attributes: true, attributeFilter: ['scheme'] });
+    observer.observe(node, { attributes: true, attributeFilter: ['scheme'] });
     return () => observer.disconnect();
   }, [inherit]);
 
@@ -78,9 +74,9 @@ const ConfigProvider: FC<ConfigProviderProps> = ({
 }: ConfigProviderProps & { children?: ReactNode; schemeTarget?: HTMLElement }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
   const { document } = useDOM();
+  const target = schemeTarget || document?.body;
 
   useIsomorphicLayoutEffect(() => {
-    const target = schemeTarget || document.body;
     if (scheme === 'inherit') {
       return noop;
     }
@@ -91,7 +87,7 @@ const ConfigProvider: FC<ConfigProviderProps> = ({
     return () => target.removeAttribute('scheme');
   }, [scheme]);
 
-  const realScheme = useSchemeDetector(schemeTarget, scheme);
+  const realScheme = useSchemeDetector(target, scheme);
   const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
 
   return (
