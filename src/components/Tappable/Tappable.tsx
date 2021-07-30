@@ -129,7 +129,6 @@ class Tappable extends Component<TappableProps, TappableState> {
   wavesTimeout: number;
 
   static defaultProps = {
-    role: 'button',
     stopPropagation: false,
     disabled: false,
     hasFocusVisible: false,
@@ -359,9 +358,10 @@ class Tappable extends Component<TappableProps, TappableState> {
       hasActive: propsHasActive,
       activeMode,
       hasFocusVisible,
-      tabIndex,
       ...restProps
     } = this.props;
+
+    const isCustomElement: boolean = Component !== 'a' && Component !== 'button' && !restProps.contentEditable;
 
     const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
     const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
@@ -393,22 +393,15 @@ class Tappable extends Component<TappableProps, TappableState> {
       props.onEnd = this.onEnd;
       /* eslint-enable */
       props.getRootRef = this.getRef;
-
-      /*
-       * [a11y]
-       * Проставляет tabindex и подменяет onKeyDown для нужных кастомных доступных элементов
-       */
-      const nativeComponents: ElementType[] = ['a', 'button', 'input', 'textarea', 'label'];
-      if (!nativeComponents.includes(Component) && !restProps.contentEditable) {
-        props.tabIndex = tabIndex !== undefined ? tabIndex : 0;
-
-        if (restProps.role === 'button' || restProps.role === 'link') {
-          props.onKeyDown = this.onKeyDown;
-        }
-      }
     } else {
       props.ref = this.getRef;
     }
+
+    if (isCustomElement) {
+      props['aria-disabled'] = restProps.disabled;
+    }
+
+    const role: string = restProps.href ? 'link' : 'button';
 
     return (
       <TappableContext.Consumer>
@@ -430,6 +423,9 @@ class Tappable extends Component<TappableProps, TappableState> {
                 return (
                   <RootComponent
                     {...touchProps}
+                    type={Component === 'button' ? 'button' : undefined}
+                    tabIndex={isCustomElement ? 0 : undefined}
+                    role={isCustomElement ? role : undefined}
                     {...restProps}
                     vkuiClass={classes}
                     {...props}>
