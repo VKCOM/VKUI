@@ -6,6 +6,10 @@
   cursor: pointer;
 }
 
+.AppRoot--keyboard-input .Tappable:focus-visible {
+  outline: none;
+}
+
 /**
  * active
  */
