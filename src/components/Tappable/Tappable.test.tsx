@@ -157,4 +157,12 @@ describe('Tappable', () => {
     render(<TappableTest hasFocusVisible>hasFocusVisible TRUE</TappableTest>);
     expect(tappable()).toHaveClass('Tappable--focus-visible');
   });
+
+  it('checks that hover state is removed if component becomes disabled', () => {
+    const { rerender } = render(<TappableTest>Test</TappableTest>);
+    fireEvent.mouseEnter(tappable());
+    expect(tappable()).toHaveClass('Tappable--hover-background');
+    rerender(<TappableTest disabled>Test</TappableTest>);
+    expect(tappable()).not.toHaveClass('Tappable--hover-background');
+  });
 });
