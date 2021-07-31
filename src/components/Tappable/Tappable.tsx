@@ -337,6 +337,9 @@ class Tappable extends Component<TappableProps, TappableState> {
     if (prevProps.hasHover !== this.props.hasHover || prevProps.hasActive !== this.props.hasActive) {
       this.setState({ hasHover: this.props.hasHover, hasActive: this.props.hasActive });
     }
+    if (!prevProps.disabled && this.props.disabled) {
+      this.setState({ hovered: false });
+    }
   }
 
   render() {
