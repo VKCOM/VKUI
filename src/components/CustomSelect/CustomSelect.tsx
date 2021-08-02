@@ -61,7 +61,7 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
   /**
    * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
    */
-  filterFn?: (value: string, option: CustomSelectOptionInterface) => boolean;
+  filterFn?: false | ((value: string, option: CustomSelectOptionInterface) => boolean);
   popupDirection?: 'top' | 'bottom';
   /**
    * В качестве аргумента принимает валидные для [CustomSelectOption](#/CustomSelectOption) свойства
@@ -340,7 +340,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         this.setState({ inputValue: e.target.value });
       }
     } else {
-      const options = this.props.options.filter((option) => this.props.filterFn(e.target.value, option));
+      const options = this.filter(this.props.options, e.target.value, this.props.filterFn);
       this.setState({
         options,
         selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
@@ -368,6 +368,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         !this.props.fetching && this.selectFocused();
         break;
     }
+  };
+
+  filter = (options: CustomSelectProps['options'], inputValue: string, filterFn: CustomSelectProps['filterFn']) => {
+    return typeof filterFn === 'function' ? options.filter((option) => filterFn(inputValue, option)) : options;
   };
 
   handleKeyDownSelect = (event: KeyboardEvent) => {
@@ -419,9 +423,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
       this.isControlledOutside = this.props.value !== undefined;
       const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
-      const options = this.props.searchable && typeof this.props.filterFn === 'function' ?
-        this.props.options.filter((option) => this.props.filterFn(this.state.inputValue, option)) :
-        this.props.options;
+      const options = this.props.searchable ? this.filter(this.props.options, this.state.inputValue, this.props.filterFn) : this.props.options;
       this.setState({
         nativeSelectValue: value,
         selectedOptionIndex: this.findSelectedIndex(options, value),
