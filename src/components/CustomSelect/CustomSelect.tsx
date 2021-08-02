@@ -23,6 +23,7 @@ import Input from '../Input/Input';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import Caption from '../Typography/Caption/Caption';
 import { warnOnce } from '../../lib/warnOnce';
+import Spinner from '../Spinner/Spinner';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -66,6 +67,12 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * В качестве аргумента принимает валидные для [CustomSelectOption](#/CustomSelectOption) свойства
    */
   renderOption?: (props: CustomSelectOptionProps) => ReactNode;
+  /**
+   * Если true, то вместо списка опций будет показан спиннер
+   */
+  fetching?: boolean;
+  onClose?: VoidFunction;
+  onOpen?: VoidFunction;
 }
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
@@ -146,6 +153,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         this.scrollToElement(selectedOptionIndex, true);
       }
     });
+    typeof this.props.onOpen === 'function' && this.props.onOpen();
   };
 
   close = () => {
@@ -157,6 +165,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       focusedOptionIndex: -1,
       options: this.props.options,
     }));
+    typeof this.props.onClose === 'function' && this.props.onClose();
   };
 
   private isValidIndex(index: number) {
@@ -344,11 +353,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     switch (event.key) {
       case 'ArrowUp':
         event.preventDefault();
-        this.focusOption('prev');
+        !this.props.fetching && this.focusOption('prev');
         break;
       case 'ArrowDown':
         event.preventDefault();
-        this.focusOption('next');
+        !this.props.fetching && this.focusOption('next');
         break;
       case 'Escape':
         event.preventDefault();
@@ -356,7 +365,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         break;
       case 'Enter':
         event.preventDefault();
-        this.selectFocused();
+        !this.props.fetching && this.selectFocused();
         break;
     }
   };
@@ -373,11 +382,19 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     switch (event.key) {
       case 'ArrowUp':
         event.preventDefault();
-        opened ? this.focusOption('prev') : this.open();
+        if (opened) {
+          !this.props.fetching && this.focusOption('prev');
+        } else {
+          this.open();
+        }
         break;
       case 'ArrowDown':
         event.preventDefault();
-        opened ? this.focusOption('next') : this.open();
+        if (opened) {
+          !this.props.fetching && this.focusOption('next');
+        } else {
+          this.open();
+        }
         break;
       case 'Escape':
         event.preventDefault();
@@ -387,7 +404,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       case 'Spacebar':
       case ' ':
         event.preventDefault();
-        opened ? this.selectFocused() : this.open();
+        if (opened) {
+          !this.props.fetching && this.selectFocused();
+        } else {
+          this.open();
+        }
         break;
     }
   };
@@ -398,7 +419,9 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
       this.isControlledOutside = this.props.value !== undefined;
       const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
-      const options = this.props.searchable ? this.props.options.filter((option) => this.props.filterFn(this.state.inputValue, option)) : this.props.options;
+      const options = this.props.searchable && typeof this.props.filterFn === 'function' ?
+        this.props.options.filter((option) => this.props.filterFn(this.state.inputValue, option)) :
+        this.props.options;
       this.setState({
         nativeSelectValue: value,
         selectedOptionIndex: this.findSelectedIndex(options, value),
@@ -455,6 +478,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       emptyText,
       onInputChange,
       filterFn,
+      fetching,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -524,14 +548,20 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           })}
           onMouseLeave={this.resetFocusedOption}
         >
-          <CustomScrollView boxRef={this.scrollBoxRef}>
-            {this.state.options.map(this.renderOption)}
-            {this.state.options.length === 0 &&
+          {fetching ?
+            <div vkuiClass="CustomSelect__fetching">
+              <Spinner size="small" />
+            </div>
+            :
+            <CustomScrollView boxRef={this.scrollBoxRef}>
+              {this.state.options.map(this.renderOption)}
+              {this.state.options.length === 0 &&
               <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
                 {emptyText}
               </Caption>
-            }
-          </CustomScrollView>
+              }
+            </CustomScrollView>
+          }
         </div>
         }
       </label>

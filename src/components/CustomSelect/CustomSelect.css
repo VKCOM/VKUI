@@ -1,7 +1,6 @@
 .CustomSelect {
   width: 100%;
   position: relative;
-  cursor: pointer;
   display: block;
 }
 
@@ -23,10 +22,20 @@
   z-index: 4;
 }
 
+.CustomSelect__empty,
+.CustomSelect__fetching {
+  padding: 12px 0;
+}
+
+.CustomSelect__fetching {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .CustomSelect__empty {
   text-align: center;
   color: var(--text_secondary);
-  padding: 12px 0;
 }
 
 .CustomSelect__options--popupDirectionTop {

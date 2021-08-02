@@ -1,6 +1,6 @@
 Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком. Используется внутри [Select](#!/Select).
 
-```jsx
+```jsx { "props": { "layout": false, "iframe": false } }
 class Example extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +30,10 @@ class Example extends React.Component {
     this.state = {
       query: '',
       newUsers: [],
+      fetching: false,
+      fetchingSearch: false,
+      remoteUsers: [],
+      remoteUsersSearch: []
     } 
   }
   
@@ -43,12 +47,7 @@ class Example extends React.Component {
 
   render() {
     return (
-    <View activePanel="select">
-      <Panel id="select">
-        <PanelHeader>
-          CustomSelect
-        </PanelHeader>
-        <Group>
+        <div style={{ background: 'var(--background_content)' }}>
           <FormItem top="Администратор" bottom="Базовый пример использования">
             <CustomSelect
               placeholder="Не выбран"
@@ -64,6 +63,7 @@ class Example extends React.Component {
               )}
             />
           </FormItem>
+          <Header>Поиск</Header>
           <FormItem top="Администратор" bottom="Поиск по списку">
             <CustomSelect
               placeholder="Введите имя пользователя"
@@ -110,9 +110,55 @@ class Example extends React.Component {
               value={this.state.value}
             />
           </FormItem>
-        </Group>
-      </Panel>
-    </View>
+          <Header>Асинхронная загрузка списка</Header>
+          <FormItem top="Администратор">
+            <CustomSelect
+              popupDirection="top"
+              fetching={this.state.fetching}
+              placeholder="Не выбран"
+              onOpen={() => {
+                if (this.state.remoteUsers.length === 0) {
+                  this.setState({ fetching: true });
+                  setTimeout(() => {
+                    this.setState({ 
+                      fetching: false,
+                      remoteUsers: getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))
+                    });                
+                  }, 1500)
+                }
+              }}
+              options={this.state.remoteUsers}
+            />
+          </FormItem>
+          <FormItem top="Администратор" bottom="Асинхронный поиск">
+            <CustomSelect
+              popupDirection="top"
+              fetching={this.state.fetchingSearch}
+              placeholder="Введите имя пользователя"
+              searchable
+              onInputChange={(e) => {
+                clearTimeout(this.timeout);
+                if (e.target.value === '') {
+                  this.setState({ fetchingSearch: false, remoteUsersSearch: [] })
+                } else {
+                  this.setState({ fetchingSearch: true });
+                  this.timeout = setTimeout(() => {
+                    this.setState({ 
+                      fetchingSearch: false,
+                      remoteUsersSearch: getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))
+                    });
+                  }, 1500);
+                }
+              }}
+              onClose={() => {
+                clearTimeout(this.timeout)
+                this.setState({ fetchingSearch: false });              
+              }}
+              filterFn={false}
+              options={this.state.remoteUsersSearch}
+            />
+          </FormItem>
+        </div>
     );
   }
 }
