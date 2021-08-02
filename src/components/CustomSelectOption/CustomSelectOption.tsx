@@ -3,6 +3,7 @@ import { Icon16Done } from '@vkontakte/icons';
 import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
+import Caption from '../Typography/Caption/Caption';
 import { HasRootRef } from '../../types';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
@@ -12,6 +13,7 @@ export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>,
   hovered?: boolean;
   before?: ReactNode;
   after?: ReactNode;
+  description?: ReactNode;
 }
 
 const CustomSelectOption: FC<CustomSelectOptionProps> = ({
@@ -21,6 +23,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   before,
   after,
   option,
+  description,
   ...restProps
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : null;
@@ -38,7 +41,12 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       })}
     >
       {hasReactNode(before) && <div vkuiClass="CustomSelectOption__before">{before}</div>}
-      <div vkuiClass="CustomSelectOption__label">{children}</div>
+      <div vkuiClass="CustomSelectOption__content">
+        {children}
+        {hasReactNode(description) &&
+          <Caption level="1" weight="regular" vkuiClass="CustomSelectOption__description">{description}</Caption>
+        }
+      </div>
       {hasReactNode(after) && <div vkuiClass="CustomSelectOption__after">{after}</div>}
       {selected && (
         <div vkuiClass="CustomSelectOption__selectedIcon">

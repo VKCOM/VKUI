@@ -1,11 +1,10 @@
 .CustomSelectOption {
   width: 100%;
-  height: 44px;
   display: flex;
   align-items: center;
   position: relative;
   box-sizing: border-box;
-  padding: 10px 36px 10px 12px;
+  padding: 8px 36px 8px 12px;
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
@@ -22,6 +21,11 @@
 .CustomSelectOption__label {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.CustomSelectOption__description {
+  color: var(--text_secondary);
+  margin-top: 1px;
 }
 
 .CustomSelectOption__after {

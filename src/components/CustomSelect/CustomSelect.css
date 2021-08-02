@@ -41,21 +41,6 @@
   max-height: 160px;
 }
 
-.CustomSelectOption__selectedIcon {
-  position: absolute;
-  top: 15px;
-  right: 12px;
-}
-
-.CustomSelect__options--sizeY-compact .CustomSelectOption {
-  height: 36px;
-  padding: 10px 9px;
-}
-
-.CustomSelect__options--sizeY-compact .CustomSelectOption__selectedIcon {
-  top: 11px;
-}
-
 .CustomSelect__open.Select--mimicry:focus .FormField__border {
   border-color: var(--field_border);
 }
