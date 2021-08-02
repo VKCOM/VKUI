@@ -1,7 +1,7 @@
 .Table {
   border: 1px solid var(--separator_alternate);
   border-radius: 8px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .Table__main {

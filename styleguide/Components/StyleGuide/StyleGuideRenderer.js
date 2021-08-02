@@ -8,15 +8,13 @@ import {
   Scheme,
   WebviewType,
   AdaptivityProvider,
-  SplitLayout,
   withAdaptivity,
-  SplitCol,
   ConfigProvider,
   ViewWidth,
 } from '@vkui';
 import './StyleGuideRenderer.css';
-import { StyleGuideHeader } from './StyleGuideHeader';
-import { StyleGuideRendererMobile } from './StyleGuideRendererMobile';
+import { StyleGuideMobile } from './StyleGuideMobile';
+import { StyleGuideDesktop } from './StyleGuideDesktop';
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
@@ -88,25 +86,13 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider scheme={styleguideScheme} transitionMotionEnabled={false} webviewType="internal">
         {viewWidth > ViewWidth.MOBILE ?
-          <React.Fragment>
-            <StyleGuideHeader scheme={styleguideScheme} switchStyleGuideScheme={switchStyleGuideScheme} />
-            <SplitLayout className="StyleGuide" popout={popout}>
-              <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuide__sidebar">
-                <div className="StyleGuide__sidebarIn">
-                  {toc}
-                </div>
-              </SplitCol>
-              <SplitCol width="100%" className="StyleGuide__content">
-                <div className="StyleGuide__contentIn">
-                  {children}
-                </div>
-              </SplitCol>
-            </SplitLayout>
-          </React.Fragment>
-          :
-          <StyleGuideRendererMobile toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>
+          <StyleGuideDesktop toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>
             {children}
-          </StyleGuideRendererMobile>
+          </StyleGuideDesktop>
+          :
+          <StyleGuideMobile toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>
+            {children}
+          </StyleGuideMobile>
         }
       </ConfigProvider>
     </StyleGuideContext.Provider>
