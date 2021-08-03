@@ -486,6 +486,8 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       filterFn,
       fetching,
       customContent,
+      onOpen,
+      onClose,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
