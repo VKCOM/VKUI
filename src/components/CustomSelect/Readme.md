@@ -115,7 +115,6 @@ class Example extends React.Component {
           <FormItem top="Администратор">
             <CustomSelect
               popupDirection="top"
-              fetching={this.state.fetching}
               placeholder="Не выбран"
               onOpen={() => {
                 if (this.state.remoteUsers.length === 0) {
@@ -128,18 +127,21 @@ class Example extends React.Component {
                   }, 1500)
                 }
               }}
+              renderDropdown={({ defaultDropdownContent, fetchingDropdownContent }) => {
+                if (this.state.fetching) {
+                  return fetchingDropdownContent
+                } else {
+                  return defaultDropdownContent
+                }
+              }}
               options={this.state.remoteUsers}
             />
           </FormItem>
           <FormItem top="Администратор" bottom="Асинхронный поиск">
             <CustomSelect
               popupDirection="top"
-              fetching={this.state.fetchingSearch}
               placeholder="Введите имя пользователя"
               searchable
-              customContent={this.state.remoteQuery.length < 3 &&
-                <Text style={{ padding: 12, color: 'var(--text_secondary)' }} weight="regular">Нужно хотя бы три символа</Text>
-              }
               onInputChange={(e) => {
                 const remoteQuery = e.target.value;
                 clearTimeout(this.timeout);
@@ -161,6 +163,15 @@ class Example extends React.Component {
               }}
               filterFn={false}
               options={this.state.remoteUsersSearch}
+              renderDropdown={({ defaultDropdownContent, fetchingDropdownContent }) => {
+                if (this.state.remoteQuery.length < 3) {
+                  return <Text style={{ padding: 12, color: 'var(--text_secondary)' }} weight="regular">Нужно ввести хотя бы три символа</Text>;
+                } else if (this.state.fetchingSearch) {
+                  return fetchingDropdownContent
+                } else {
+                  return defaultDropdownContent
+                }
+              }}
             />
           </FormItem>
         </div>

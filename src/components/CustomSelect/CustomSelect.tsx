@@ -9,7 +9,7 @@ import React, {
   SelectHTMLAttributes,
 } from 'react';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
-import { debounce, hasReactNode, setRef } from '../../lib/utils';
+import { debounce, setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
@@ -64,17 +64,21 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
   filterFn?: false | ((value: string, option: CustomSelectOptionInterface) => boolean);
   popupDirection?: 'top' | 'bottom';
   /**
-   * В качестве аргумента принимает валидные для [CustomSelectOption](#/CustomSelectOption) свойства
+   * Рендер-проп для кастомного рендера опции.
+   * В объекте аргумента приходят [свойства опции](#/CustomSelectOption?id=props)
    */
   renderOption?: (props: CustomSelectOptionProps) => ReactNode;
   /**
-   * Если true, то вместо списка опций будет показан спиннер
+   * Рендер-проп для кастомного рендера содержимого дропдауна.
+   * В объекте аргумента содержатся список опций в виде скроллящегося блока и компонент для отрисовки состояния загрузки.
    */
-  fetching?: boolean;
-  /**
-   * Если передан, то рисуется вместо списка options. Приоритетнее, чем `fetching`
-   */
-  customContent?: ReactNode;
+  renderDropdown?: ({
+    defaultDropdownContent,
+    fetchingDropdownContent,
+  }: {
+    defaultDropdownContent: ReactNode;
+    fetchingDropdownContent: ReactNode;
+  }) => ReactNode;
   onClose?: VoidFunction;
   onOpen?: VoidFunction;
 }
@@ -91,6 +95,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         <CustomSelectOption {...props} />
       );
     },
+    renderDropdown: ({ defaultDropdownContent }) => defaultDropdownContent,
     options: [],
     emptyText: 'Ничего не найдено',
     filterFn: (value, option) => option.label.toLowerCase().includes(value.toLowerCase()),
@@ -140,7 +145,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   get areOptionsShown() {
-    return !this.props.fetching && !hasReactNode(this.props.customContent);
+    return this.scrollBoxRef.current !== null;
   }
 
   filter = (options: CustomSelectProps['options'], inputValue: string, filterFn: CustomSelectProps['filterFn']) => {
@@ -488,8 +493,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       emptyText,
       onInputChange,
       filterFn,
-      fetching,
-      customContent,
+      renderDropdown,
       onOpen,
       onClose,
       ...restProps
@@ -555,29 +559,30 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           {options.map((item) => <option key={`${item.value}`} value={item.value} />)}
         </select>
         {opened &&
-        <div
-          vkuiClass={classNames('CustomSelect__options', `CustomSelect__options--sizeY-${sizeY}`, {
-            'CustomSelect__options--popupDirectionTop': popupDirection === 'top',
-          })}
-          onMouseLeave={this.resetFocusedOption}
-        >
-          {hasReactNode(customContent) ?
-            customContent :
-            fetching ?
-              <div vkuiClass="CustomSelect__fetching">
-                <Spinner size="small" />
-              </div>
-              :
-              <CustomScrollView boxRef={this.scrollBoxRef}>
-                {this.state.options.map(this.renderOption)}
-                {this.state.options.length === 0 &&
-                <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
-                  {emptyText}
-                </Caption>
-                }
-              </CustomScrollView>
-          }
-        </div>
+          <div
+            vkuiClass={classNames('CustomSelect__options', `CustomSelect__options--sizeY-${sizeY}`, {
+              'CustomSelect__options--popupDirectionTop': popupDirection === 'top',
+            })}
+            onMouseLeave={this.resetFocusedOption}
+          >
+            {renderDropdown({
+              defaultDropdownContent: (
+                <CustomScrollView boxRef={this.scrollBoxRef}>
+                  {this.state.options.map(this.renderOption)}
+                  {this.state.options.length === 0 &&
+                  <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+                    {emptyText}
+                  </Caption>
+                  }
+                </CustomScrollView>
+              ),
+              fetchingDropdownContent: (
+                <div vkuiClass="CustomSelect__fetching">
+                  <Spinner size="small" />
+                </div>
+              ),
+            })}
+          </div>
         }
       </label>
     );

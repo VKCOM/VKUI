@@ -18,7 +18,6 @@
   border-top: 0;
   box-shadow: 0 2px 2px rgba(0, 0, 0, .06), 0 0 2px rgba(0, 0, 0, .03);
   border-radius: 0 0 8px 8px;
-  max-height: 160px;
   z-index: 4;
 }
 
@@ -46,7 +45,7 @@
   box-shadow: 0 -2px 2px rgba(0, 0, 0, .06), 0 0 2px rgba(0, 0, 0, .03);
 }
 
-.CustomSelect__options .CustomScrollView__box {
+.CustomSelect__options .CustomScrollView {
   max-height: 160px;
 }
 
