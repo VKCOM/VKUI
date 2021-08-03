@@ -139,6 +139,14 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     return options[selectedOptionIndex];
   };
 
+  get areOptionsShown() {
+    return !this.props.fetching && !hasReactNode(this.props.customContent);
+  }
+
+  filter = (options: CustomSelectProps['options'], inputValue: string, filterFn: CustomSelectProps['filterFn']) => {
+    return typeof filterFn === 'function' ? options.filter((option) => filterFn(inputValue, option)) : options;
+  };
+
   findSelectedIndex(options: CustomSelectOptionInterface[], value: SelectValue) {
     return options.findIndex((item) => {
       value = typeof item.value === 'number' ? Number(value) : value;
@@ -357,11 +365,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     switch (event.key) {
       case 'ArrowUp':
         event.preventDefault();
-        !this.props.fetching && this.focusOption('prev');
+        this.areOptionsShown && this.focusOption('prev');
         break;
       case 'ArrowDown':
         event.preventDefault();
-        !this.props.fetching && this.focusOption('next');
+        this.areOptionsShown && this.focusOption('next');
         break;
       case 'Escape':
         event.preventDefault();
@@ -369,13 +377,9 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         break;
       case 'Enter':
         event.preventDefault();
-        !this.props.fetching && this.selectFocused();
+        this.areOptionsShown && this.selectFocused();
         break;
     }
-  };
-
-  filter = (options: CustomSelectProps['options'], inputValue: string, filterFn: CustomSelectProps['filterFn']) => {
-    return typeof filterFn === 'function' ? options.filter((option) => filterFn(inputValue, option)) : options;
   };
 
   handleKeyDownSelect = (event: KeyboardEvent) => {
@@ -391,7 +395,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       case 'ArrowUp':
         event.preventDefault();
         if (opened) {
-          !this.props.fetching && this.focusOption('prev');
+          this.areOptionsShown && this.focusOption('prev');
         } else {
           this.open();
         }
@@ -399,7 +403,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       case 'ArrowDown':
         event.preventDefault();
         if (opened) {
-          !this.props.fetching && this.focusOption('next');
+          this.areOptionsShown && this.focusOption('next');
         } else {
           this.open();
         }
@@ -413,7 +417,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       case ' ':
         event.preventDefault();
         if (opened) {
-          !this.props.fetching && this.selectFocused();
+          this.areOptionsShown && this.selectFocused();
         } else {
           this.open();
         }
