@@ -29,6 +29,7 @@ class Example extends React.Component {
 
     this.state = {
       query: '',
+      remoteQuery: '',
       newUsers: [],
       fetching: false,
       fetchingSearch: false,
@@ -136,12 +137,16 @@ class Example extends React.Component {
               fetching={this.state.fetchingSearch}
               placeholder="Введите имя пользователя"
               searchable
+              customContent={this.state.remoteQuery.length < 3 &&
+                <Text style={{ padding: 12, color: 'var(--text_secondary)' }} weight="regular">Нужно хотя бы три символа</Text>
+              }
               onInputChange={(e) => {
+                const remoteQuery = e.target.value;
                 clearTimeout(this.timeout);
-                if (e.target.value === '') {
-                  this.setState({ fetchingSearch: false, remoteUsersSearch: [] })
+                if (remoteQuery.length < 3) {
+                  this.setState({ remoteQuery, fetchingSearch: false, remoteUsersSearch: [] })
                 } else {
-                  this.setState({ fetchingSearch: true });
+                  this.setState({ remoteQuery, fetchingSearch: true });
                   this.timeout = setTimeout(() => {
                     this.setState({ 
                       fetchingSearch: false,

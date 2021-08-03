@@ -9,7 +9,7 @@ import React, {
   SelectHTMLAttributes,
 } from 'react';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
-import { debounce, setRef } from '../../lib/utils';
+import { debounce, hasReactNode, setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { NativeSelectProps } from '../NativeSelect/NativeSelect';
 import CustomScrollView from '../CustomScrollView/CustomScrollView';
@@ -71,6 +71,10 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * Если true, то вместо списка опций будет показан спиннер
    */
   fetching?: boolean;
+  /**
+   * Если передан, то рисуется вместо списка options. Приоритетнее, чем `fetching`
+   */
+  customContent?: ReactNode;
   onClose?: VoidFunction;
   onOpen?: VoidFunction;
 }
@@ -481,6 +485,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       onInputChange,
       filterFn,
       fetching,
+      customContent,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -550,19 +555,21 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           })}
           onMouseLeave={this.resetFocusedOption}
         >
-          {fetching ?
-            <div vkuiClass="CustomSelect__fetching">
-              <Spinner size="small" />
-            </div>
-            :
-            <CustomScrollView boxRef={this.scrollBoxRef}>
-              {this.state.options.map(this.renderOption)}
-              {this.state.options.length === 0 &&
-              <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
-                {emptyText}
-              </Caption>
-              }
-            </CustomScrollView>
+          {hasReactNode(customContent) ?
+            customContent :
+            fetching ?
+              <div vkuiClass="CustomSelect__fetching">
+                <Spinner size="small" />
+              </div>
+              :
+              <CustomScrollView boxRef={this.scrollBoxRef}>
+                {this.state.options.map(this.renderOption)}
+                {this.state.options.length === 0 &&
+                <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+                  {emptyText}
+                </Caption>
+                }
+              </CustomScrollView>
           }
         </div>
         }
