@@ -29,7 +29,6 @@
 
 .CustomSelectOption__description {
   color: var(--text_secondary);
-  margin-top: 1px;
 }
 
 .CustomSelectOption__after {
