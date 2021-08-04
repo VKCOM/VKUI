@@ -48,7 +48,7 @@ class Example extends React.Component {
 
   render() {
     return (
-        <div style={{ background: 'var(--background_content)' }}>
+        <React.Fragment>
           <FormItem top="Администратор" bottom="Базовый пример использования">
             <CustomSelect
               placeholder="Не выбран"
@@ -167,7 +167,7 @@ class Example extends React.Component {
               })} 
             />
           </FormItem>
-        </div>
+        </React.Fragment>
     );
   }
 }
