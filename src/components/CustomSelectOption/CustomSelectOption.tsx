@@ -5,6 +5,7 @@ import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
 import { HasRootRef } from '../../types';
+import { AdaptivityProps, withAdaptivity } from '../../hoc/withAdaptivity';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   option?: any;
@@ -24,8 +25,9 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   after,
   option,
   description,
+  sizeY,
   ...restProps
-}: CustomSelectOptionProps) => {
+}: CustomSelectOptionProps & AdaptivityProps) => {
   const title = typeof children === 'string' ? children : null;
 
   return (
@@ -35,7 +37,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       role="option"
       title={title}
       aria-selected={selected}
-      vkuiClass={classNames('CustomSelectOption', {
+      vkuiClass={classNames('CustomSelectOption', `CustomSelectOption--sizeY-${sizeY}`, {
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
       })}
@@ -57,4 +59,4 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   );
 };
 
-export default CustomSelectOption;
+export default withAdaptivity(CustomSelectOption, { sizeY: true });

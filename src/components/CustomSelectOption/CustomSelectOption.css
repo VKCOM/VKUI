@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+.CustomSelectOption--sizeY-regular {
+  min-height: 44px;
+}
+
 .CustomSelectOption--hover {
   background-color: var(--button_muted_background);
 }
