@@ -219,13 +219,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onBlur = () => {
-    this.resetKeyboardInput();
-
-    this.setState(() => ({
-      opened: false,
-      options: this.props.options,
-    }));
-
+    this.close();
     const event = new Event('blur');
     this.selectEl.dispatchEvent(event);
   };

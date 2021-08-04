@@ -153,7 +153,7 @@ class Example extends React.Component {
               }}
               onClose={() => {
                 clearTimeout(this.timeout)
-                this.setState({ fetchingSearch: false });              
+                this.setState({ fetchingSearch: false, remoteQuery: '' });              
               }}
               filterFn={false}
               options={this.state.remoteUsersSearch}
