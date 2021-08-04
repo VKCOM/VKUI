@@ -72,13 +72,12 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * Рендер-проп для кастомного рендера содержимого дропдауна.
    * В объекте аргумента содержатся список опций в виде скроллящегося блока и компонент для отрисовки состояния загрузки.
    */
-  renderDropdown?: ({
-    defaultDropdownContent,
-    fetchingDropdownContent,
-  }: {
-    defaultDropdownContent: ReactNode;
-    fetchingDropdownContent: ReactNode;
-  }) => ReactNode;
+  renderDropdown?: ({ defaultDropdownContent }: { defaultDropdownContent: ReactNode }) => ReactNode;
+  /**
+   * Если true, то в дропдауне вместо списка опций рисуется спиннер. При переданных renderDropdown и fetching: true,
+   * "победит" renderDropdown
+   */
+  fetching?: boolean;
   onClose?: VoidFunction;
   onOpen?: VoidFunction;
 }
@@ -95,7 +94,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         <CustomSelectOption {...props} />
       );
     },
-    renderDropdown: ({ defaultDropdownContent }) => defaultDropdownContent,
     options: [],
     emptyText: 'Ничего не найдено',
     filterFn: (value, option) => option.label.toLowerCase().includes(value.toLowerCase()),
@@ -471,6 +469,19 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     setRef(element, this.props.getRef);
   };
 
+  get defaultDropdownContent() {
+    return (
+      <CustomScrollView boxRef={this.scrollBoxRef}>
+        {this.state.options.map(this.renderOption)}
+        {this.state.options.length === 0 &&
+        <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+          {this.props.emptyText}
+        </Caption>
+        }
+      </CustomScrollView>
+    );
+  }
+
   render() {
     const { opened, nativeSelectValue } = this.state;
     const {
@@ -496,6 +507,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       renderDropdown,
       onOpen,
       onClose,
+      fetching,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
@@ -565,23 +577,14 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
             })}
             onMouseLeave={this.resetFocusedOption}
           >
-            {renderDropdown({
-              defaultDropdownContent: (
-                <CustomScrollView boxRef={this.scrollBoxRef}>
-                  {this.state.options.map(this.renderOption)}
-                  {this.state.options.length === 0 &&
-                  <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
-                    {emptyText}
-                  </Caption>
-                  }
-                </CustomScrollView>
-              ),
-              fetchingDropdownContent: (
+            {typeof renderDropdown === 'function' ?
+              renderDropdown({ defaultDropdownContent: this.defaultDropdownContent }) :
+              fetching ?
                 <div vkuiClass="CustomSelect__fetching">
                   <Spinner size="small" />
-                </div>
-              ),
-            })}
+                </div> :
+                this.defaultDropdownContent
+            }
           </div>
         }
       </label>

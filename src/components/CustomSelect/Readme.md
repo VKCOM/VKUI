@@ -127,13 +127,7 @@ class Example extends React.Component {
                   }, 1500)
                 }
               }}
-              renderDropdown={({ defaultDropdownContent, fetchingDropdownContent }) => {
-                if (this.state.fetching) {
-                  return fetchingDropdownContent
-                } else {
-                  return defaultDropdownContent
-                }
-              }}
+              fetching={this.state.fetching}
               options={this.state.remoteUsers}
             />
           </FormItem>
@@ -163,15 +157,14 @@ class Example extends React.Component {
               }}
               filterFn={false}
               options={this.state.remoteUsersSearch}
-              renderDropdown={({ defaultDropdownContent, fetchingDropdownContent }) => {
+              fetching={this.state.fetchingSearch}
+              renderDropdown={!this.state.fetchingSearch && (({ defaultDropdownContent }) => {
                 if (this.state.remoteQuery.length < 3) {
                   return <Text style={{ padding: 12, color: 'var(--text_secondary)' }} weight="regular">Нужно ввести хотя бы три символа</Text>;
-                } else if (this.state.fetchingSearch) {
-                  return fetchingDropdownContent
                 } else {
                   return defaultDropdownContent
                 }
-              }}
+              })} 
             />
           </FormItem>
         </div>
