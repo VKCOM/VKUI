@@ -70,7 +70,7 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
   renderOption?: (props: CustomSelectOptionProps) => ReactNode;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
-   * В объекте аргумента содержатся список опций в виде скроллящегося блока и компонент для отрисовки состояния загрузки.
+   * В defaultDropdownContent содержится список опций в виде скроллящегося блока.
    */
   renderDropdown?: ({ defaultDropdownContent }: { defaultDropdownContent: ReactNode }) => ReactNode;
   /**
