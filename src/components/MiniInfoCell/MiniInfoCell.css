@@ -1,6 +1,6 @@
 .MiniInfoCell {
   display: flex;
-  padding: 6px 12px;
+  padding: 6px var(--spacing-x);
 }
 
 .MiniInfoCell--lvl-primary {
@@ -56,12 +56,4 @@
 .MiniInfoCell--md-more {
   padding-top: 10px;
   padding-bottom: 10px;
-}
-
-/**
- * ANDROID
- */
-.MiniInfoCell--android {
-  padding-left: 16px;
-  padding-right: 16px;
 }

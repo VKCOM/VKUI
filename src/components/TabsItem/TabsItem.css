@@ -105,7 +105,7 @@
  */
 .Tabs--ios.Tabs--segmented .TabsItem {
   border: 1px solid;
-  padding: 0 12px;
+  padding: 0 var(--spacing-x);
   max-width: 100%;
   flex-basis: 0;
   flex-shrink: 0;

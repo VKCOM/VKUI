@@ -5,6 +5,8 @@
   white-space: nowrap;
   text-decoration: none;
   color: var(--text_primary);
+  padding-right: var(--spacing-x);
+  padding-left: var(--spacing-x);
 }
 
 .RichCell--mult {
@@ -99,25 +101,6 @@
 
 .RichCell__actions .Button:not(:last-child) {
   margin-right: 8px;
-}
-
-/**
- * iOS
- */
-
-.RichCell--ios {
-  padding-right: 12px;
-  padding-left: 12px;
-}
-
-/**
- * Android
- */
-
-.RichCell--android,
-.RichCell--vkcom {
-  padding-right: 16px;
-  padding-left: 16px;
 }
 
 /**

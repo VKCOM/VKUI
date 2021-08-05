@@ -1,5 +1,6 @@
 .Checkbox {
   display: block;
+  padding: 0 var(--spacing-x);
 }
 
 .Checkbox__input {
@@ -47,10 +48,6 @@
   opacity: .6;
 }
 
-.Checkbox--ios {
-  padding: 0 12px;
-}
-
 .Checkbox--ios .Checkbox__icon {
   margin-top: 10px;
 }
@@ -64,10 +61,6 @@
   margin-bottom: 12px;
 }
 
-.Checkbox--android {
-  padding: 0 16px;
-}
-
 .Checkbox--android .Checkbox__icon {
   margin-top: 10px;
 }
@@ -79,10 +72,6 @@
 .Checkbox--android .Checkbox__content {
   margin-top: 12px;
   margin-bottom: 12px;
-}
-
-.Checkbox--vkcom {
-  padding: 0 16px;
 }
 
 .Checkbox--vkcom .Checkbox__icon {

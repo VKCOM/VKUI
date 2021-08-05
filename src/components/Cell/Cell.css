@@ -32,7 +32,7 @@
   flex-shrink: 0;
   width: 24px;
   height: 24px;
-  margin-right: 16px;
+  margin-right: var(--spacing-x);
   padding: 0;
   color: var(--icon_tertiary);
 }
@@ -69,13 +69,9 @@
   transition: transform .6s var(--ios-easing);
 }
 
-.Cell--ios.Cell--selectable .Cell__marker {
-  margin-right: 12px;
-}
-
 .Cell--ios.Cell--removable .SimpleCell {
   padding-left: 0;
-  padding-right: 12px;
+  padding-right: var(--spacing-x);
 }
 
 /**
@@ -83,5 +79,5 @@
  */
 .Cell--android .Cell__dragger,
 .Cell--vkcom .Cell__dragger {
-  padding-right: 16px;
+  padding-right: var(--spacing-x);
 }

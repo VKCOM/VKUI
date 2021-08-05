@@ -1,4 +1,5 @@
 @import './constants.css';
+@import './platform.css';
 @import './animations.css';
 
 /* Файлы с CSS компонентов подключаются здесь неслучайно. Пока не удалось делать импорты через JS так,

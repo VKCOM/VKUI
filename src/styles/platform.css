@@ -1,0 +1,6 @@
+/* Platform-dependent variables */
+/* stylelint-disable selector-class-pattern */
+
+.vkui--ios {
+  --spacing-x: 12px;
+}

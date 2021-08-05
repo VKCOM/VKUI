@@ -75,6 +75,7 @@
   display: none;
   width: 24px;
   height: 24px;
+  margin-left: var(--spacing-x);
   border-radius: 50%;
   align-items: center;
   justify-content: center;
@@ -175,10 +176,6 @@
   margin-top: 2px;
 }
 
-.ActionSheetItem--ios .ActionSheetItem__marker {
-  margin-left: 12px;
-}
-
 .ActionSheetItem--ios.ActionSheetItem--compact .ActionSheetItem__content,
 .ActionSheetItem--ios .ActionSheetItem__before + .ActionSheetItem__container .ActionSheetItem__content {
   justify-content: flex-start;
@@ -222,10 +219,6 @@
 .ActionSheetItem--android .ActionSheetItem__subtitle {
   margin-top: 1px;
   margin-bottom: -1px;
-}
-
-.ActionSheetItem--android .ActionSheetItem__marker {
-  margin-left: 16px;
 }
 
 /**

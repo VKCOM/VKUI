@@ -17,6 +17,9 @@
   --search_default_height: 36px;
   --thin-border: 1px;
 
+  /* default platform-dependent sizes - here for postcss fallback generation */
+  --spacing-x: 16px;
+
   /* colors */
   --white: #fff;
   --blue_200: #5c9ce6;

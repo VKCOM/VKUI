@@ -1,6 +1,6 @@
 .Banner {
   margin: 12px 0;
-  padding: 0 16px;
+  padding: 0 var(--spacing-x);
   color: var(--text_primary);
 }
 
@@ -139,10 +139,6 @@
 /**
  * iOS
  */
-.Banner--ios {
-  padding: 0 12px;
-}
-
 .Banner--ios .Banner__in {
   border-radius: 10px;
 }

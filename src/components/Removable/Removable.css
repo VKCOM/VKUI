@@ -24,10 +24,10 @@
 
 .FormItem .Removable,
 .FormLayoutGroup .Removable {
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-left: -16px;
-  margin-right: -16px;
+  padding-left: var(--spacing-x);
+  padding-right: var(--spacing-x);
+  margin-left: calc(-1 * var(--spacing-x));
+  margin-right: calc(-1 * var(--spacing-x));
 }
 
 .FormItem--withTop .Removable__action,
@@ -118,14 +118,6 @@
   margin-right: 0;
 }
 
-.FormItem .Removable--ios,
-.FormLayoutGroup .Removable--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-left: -12px;
-  margin-right: -12px;
-}
-
 .FormLayoutGroup .Removable--ios .Removable__content {
   flex-wrap: wrap;
 }
@@ -149,7 +141,7 @@
 .FormLayoutGroup .Removable--android .Removable__action,
 .FormLayoutGroup .Removable--vkcom .Removable__action {
    margin-top: -2px;
-   margin-right: -16px;
+   margin-right: calc(-1 * var(--spacing-x));
    margin-bottom: -2px;
 }
 

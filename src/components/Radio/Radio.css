@@ -1,5 +1,6 @@
 .Radio {
   display: block;
+  padding: 0 var(--spacing-x);
 }
 
 .Radio__input {
@@ -42,10 +43,6 @@
 .Radio__description {
   display: block;
   color: var(--text_secondary);
-}
-
-.Radio--ios {
-  padding: 0 12px;
 }
 
 .Radio--ios .Radio__icon {
@@ -100,10 +97,6 @@
   margin-top: 1px;
 }
 
-.Radio--android {
-  padding: 0 16px;
-}
-
 .Radio--android .Radio__icon {
   width: 22px;
   height: 22px;
@@ -154,10 +147,6 @@
 .Radio--android .Radio__description {
   margin-top: 1px;
   margin-bottom: 11px;
-}
-
-.Radio--vkcom {
-  padding: 0 16px;
 }
 
 .Radio--vkcom .Radio__icon {

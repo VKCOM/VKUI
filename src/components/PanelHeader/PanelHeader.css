@@ -192,7 +192,7 @@
 }
 
 .PanelHeader--android.PanelHeader--no-left .PanelHeader__content {
-  padding-left: 16px;
+  padding-left: var(--spacing-x);
 }
 
 .SplitCol--spaced .PanelHeader--android.PanelHeader--no-left .PanelHeader__content {
@@ -205,7 +205,7 @@
 }
 
 .PanelHeader--android.PanelHeader--no-right .PanelHeader__content {
-  padding-right: 16px;
+  padding-right: var(--spacing-x);
 }
 
 .SplitCol--spaced .PanelHeader--android.PanelHeader--no-right .PanelHeader__content {

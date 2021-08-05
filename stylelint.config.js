@@ -17,6 +17,8 @@ module.exports = {
     "length-zero-no-unit": [true, {
       "ignore": ["custom-properties"]
     }],
+    // ban vkui--(ios|android|vkcom) selectors
+    "selector-class-pattern": /$(?!vkui--).*/,
     "keyframes-name-pattern": "vkui-.+",
     "csstools/value-no-unknown-custom-properties": [true, {
       "importFrom": cssPropSources

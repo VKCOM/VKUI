@@ -4,6 +4,8 @@
   box-sizing: border-box;
   display: flex;
   flex-flow: column;
+  padding-left: var(--spacing-x);
+  padding-right: var(--spacing-x);
 }
 
 .Spacing--separator-center {
@@ -32,15 +34,4 @@
   .Spacing--separator::after {
     transform: scaleY(.32);
   }
-}
-
-.Spacing--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-.Spacing--android,
-.Spacing--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
 }

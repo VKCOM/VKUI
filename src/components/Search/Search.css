@@ -4,6 +4,8 @@
   font-family: var(--font-common);
   transform: translate3d(0, 0, 0);
   line-height: normal;
+  /* TODO remove vkcom spacing */
+  padding: 8px var(--spacing-x);
 }
 
 .Search__in {
@@ -265,26 +267,13 @@
 }
 
 /**
-  iOS
- */
-.Search--ios {
-  padding: 8px 12px;
-}
-
-/**
-  Android
- */
-.Search--android {
-  padding: 8px 16px;
-}
-
-/**
   VKCOM
 */
 
 .Search--vkcom,
 .PanelHeader--vkcom .Search {
   background: transparent;
+  padding: 0;
 }
 
 .Search--vkcom .Search__in {
@@ -299,7 +288,7 @@
 }
 
 .Search--vkcom .Search__placeholder {
-  padding-left: 16px;
+  padding-left: var(--spacing-x);
 }
 
 .Search--vkcom .Search__icons {

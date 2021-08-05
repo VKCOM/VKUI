@@ -5,6 +5,8 @@
   white-space: nowrap;
   text-decoration: none;
   color: var(--text_primary);
+  padding-left: var(--spacing-x);
+  padding-right: var(--spacing-x);
 }
 
 .SimpleCell--mult {
@@ -140,11 +142,6 @@
  * iOS
  */
 
-.SimpleCell--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
 .SimpleCell--ios .SimpleCell__main,
 .SimpleCell--ios .SimpleCell__indicator {
   padding-top: 9px;
@@ -180,12 +177,6 @@
 /**
  * Android & VKCOM
  */
-
-.SimpleCell--android,
-.SimpleCell--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
-}
 
 .SimpleCell--android .SimpleCell__main,
 .SimpleCell--android .SimpleCell__indicator,

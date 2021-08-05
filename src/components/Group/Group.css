@@ -45,7 +45,7 @@
 
 .Group__description {
   display: block;
-  padding: 4px 16px 16px;
+  padding: 4px var(--spacing-x) 16px;
   color: var(--text_secondary);
 }
 
@@ -61,13 +61,6 @@
 
 .Group .Group:last-of-type > .Group__inner {
   padding-bottom: 0;
-}
-
-/**
- * iOS
- */
-.Group--ios .Group__description {
-  padding: 4px 12px 16px;
 }
 
 /**
