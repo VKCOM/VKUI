@@ -104,6 +104,7 @@ module.exports = {
           '../src/components/Alert/Alert.tsx',
           '../src/components/ScreenSpinner/ScreenSpinner.tsx',
           '../src/components/Snackbar/Snackbar.tsx',
+          '../src/components/Dropdown/Dropdown.tsx',
         ],
       }, {
         name: 'Modals',

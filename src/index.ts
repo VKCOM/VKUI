@@ -65,6 +65,8 @@ export { default as ModalCard } from './components/ModalCard/ModalCard';
 export type { ModalCardProps } from './components/ModalCard/ModalCard';
 export { default as ModalDismissButton } from './components/ModalDismissButton/ModalDismissButton';
 export type { ModalDismissButtonProps } from './components/ModalDismissButton/ModalDismissButton';
+export { Dropdown } from './components/Dropdown/Dropdown';
+export { ClickDropdown } from './components/ClickDropdown/ClickDropdown';
 
 /**
  * Blocks
