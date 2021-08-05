@@ -5,7 +5,7 @@ import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
 import { HasRootRef } from '../../types';
-import { AdaptivityProps, withAdaptivity } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   option?: any;
@@ -25,10 +25,10 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   after,
   option,
   description,
-  sizeY,
   ...restProps
-}: CustomSelectOptionProps & AdaptivityProps) => {
+}: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : null;
+  const { sizeY } = useAdaptivity();
 
   return (
     <Text
@@ -59,4 +59,4 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   );
 };
 
-export default withAdaptivity(CustomSelectOption, { sizeY: true });
+export default CustomSelectOption;
