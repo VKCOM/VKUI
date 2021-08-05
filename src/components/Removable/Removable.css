@@ -1,5 +1,4 @@
 .Removable {
-  position: relative;
   min-width: 0;
   width: 100%;
   max-width: 100%;
@@ -22,14 +21,6 @@
   align-self: flex-start;
 }
 
-.FormItem .Removable,
-.FormLayoutGroup .Removable {
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-left: -16px;
-  margin-right: -16px;
-}
-
 .FormItem--withTop .Removable__action,
 .FormItem--withTop ~ .Removable__action {
   top: 28px;
@@ -49,7 +40,7 @@
  * iOS
  */
 .Removable--ios {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .Removable--ios .Removable__content {
@@ -116,14 +107,6 @@
 .Cell .Removable--ios .Removable__action--indicator {
   margin-left: 2px;
   margin-right: 0;
-}
-
-.FormItem .Removable--ios,
-.FormLayoutGroup .Removable--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-left: -12px;
-  margin-right: -12px;
 }
 
 .FormLayoutGroup .Removable--ios .Removable__content {

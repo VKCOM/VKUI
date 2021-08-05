@@ -35,6 +35,9 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
         getClassName('FormLayoutGroup', platform),
         `FormLayoutGroup--sizeY-${sizeY}`,
         `FormLayoutGroup--${mode}`,
+        {
+          'FormLayoutGroup--removable': removable,
+        },
       )}
       {...restProps}>
       {isRemovable

@@ -8,7 +8,6 @@
   flex-shrink: initial;
   min-width: 0;
   max-width: 100%;
-  overflow: hidden;
 }
 
 .FormItem__top {
@@ -61,6 +60,12 @@
 .FormItem--ios {
   padding-left: 12px;
   padding-right: 12px;
+}
+
+.FormItem--ios.FormItem--removable {
+  position: relative;
+  /* overflow: hidden cuts off select */
+  overflow: hidden;
 }
 
 .FormItem--ios .Cell,

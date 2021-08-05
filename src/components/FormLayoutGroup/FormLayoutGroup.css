@@ -25,3 +25,9 @@
   padding-left: 12px;
   padding-right: 12px;
 }
+
+.FormLayoutGroup--ios.FormLayoutGroup--removable {
+  position: relative;
+  /* BUG: overflow: hidden cuts off select */
+  overflow: hidden;
+}
