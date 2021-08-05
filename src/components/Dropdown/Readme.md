@@ -5,7 +5,9 @@ const Example = () => {
   return (
     <div>
       <Button getRootRef={setClickTarget} style={{ margin: 100 }}>Click</Button>
-      <ClickDropdown targetNode={clickTarget}>Dropdown</ClickDropdown>  
+      <ClickDropdown targetNode={clickTarget}>
+        Dropdown
+      </ClickDropdown>
     </div>
   )
 }

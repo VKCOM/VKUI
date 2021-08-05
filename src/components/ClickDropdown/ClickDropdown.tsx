@@ -1,36 +1,48 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDOM } from '../../lib/dom';
 import { Dropdown, DropdownProps } from '../Dropdown/Dropdown';
+import { setRef } from '../../lib/utils';
 
 export const ClickDropdown = (props: DropdownProps) => {
   const [shown, setShown] = useState(false);
-  const { targetNode } = props;
+  const [dropdownNode, setDropdownNode] = useState(null);
+  const { targetNode, getRef } = props;
+
+  const setExternalRef = useCallback((el) => {
+    setRef(el, getRef);
+    setDropdownNode(el);
+  }, [getRef]);
 
   const { document } = useDOM();
 
   const onDocumentClick = useCallback((e) => {
-    if (e.target !== targetNode && !targetNode.contains(e.target)) {
+    if (
+      e.target !== targetNode &&
+      !targetNode.contains(e.target) &&
+      e.target !== dropdownNode &&
+      !dropdownNode.contains(e.target)
+    ) {
       setShown(false);
     }
-  }, [targetNode]);
-
-  const onTargetClick = useCallback(() => {
-    setShown(true);
-  }, []);
+  }, [targetNode, dropdownNode]);
 
   useEffect(() => {
-    document.addEventListener('pointerup', onDocumentClick);
+    dropdownNode && document.addEventListener('pointerup', onDocumentClick);
     return () => {
-      document.removeEventListener('pointerup', onDocumentClick);
+      dropdownNode && document.removeEventListener('pointerup', onDocumentClick);
     };
-  }, [targetNode]);
+  }, [targetNode, dropdownNode]);
+
+  const onTargetClick = useCallback(() => {
+    setShown(!shown);
+  }, [targetNode, shown]);
 
   useEffect(() => {
     targetNode && targetNode.addEventListener('pointerup', onTargetClick);
     return () => {
       targetNode && targetNode.removeEventListener('pointerup', onTargetClick);
     };
-  }, [targetNode]);
+  }, [targetNode, shown]);
 
-  return shown ? <Dropdown {...props} /> : null;
+  return shown ? <Dropdown {...props} getRef={setExternalRef} /> : null;
 };
