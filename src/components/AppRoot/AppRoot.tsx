@@ -14,7 +14,7 @@ import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
 
-export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, Pick<AdaptivityProps, 'sizeX' | 'hasMouse'> {
   /** @deprecated Use mode="embedded" */
   embedded?: boolean;
   /** Режим встраивания */
