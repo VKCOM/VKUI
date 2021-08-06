@@ -4,7 +4,7 @@
   align-items: center;
   position: relative;
   box-sizing: border-box;
-  padding: 8px 36px 8px 12px;
+  padding: 8px 12px;
   white-space: nowrap;
   user-select: none;
   cursor: pointer;
@@ -19,24 +19,39 @@
 }
 
 .CustomSelectOption__before {
+  flex-shrink: 0;
   margin-right: 7px;
 }
 
-.CustomSelectOption__label {
+.CustomSelectOption__main {
+  flex-grow: 1;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.CustomSelectOption__content {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+.CustomSelectOption__children {
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.CustomSelectOption__description {
-  color: var(--text_secondary);
-}
-
 .CustomSelectOption__after {
   margin-left: 7px;
+  flex-shrink: 0;
+}
+
+.CustomSelectOption__description {
+  color: var(--text_secondary);
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .CustomSelectOption__selectedIcon {
-  position: absolute;
-  top: 15px;
-  right: 12px;
+  margin-left: 8px;
 }
