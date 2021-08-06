@@ -6,7 +6,7 @@ describe('CustomSelectOption', () => {
   describeScreenshotFuzz(CustomSelectOption, [{
     selected: [true, false],
     before: [undefined, <Avatar key="avatar" />],
-    children: ['Мария Саломея Склодовская-Кюри'],
+    children: ['Мария Саломея Склодовская-Кюри Мария Саломея Склодовская-Кюри', 'Мария Саломея'],
     $adaptivity: 'y',
     hovered: [true, false],
     after: [undefined, 'Hello'],
