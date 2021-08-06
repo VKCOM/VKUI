@@ -13,7 +13,6 @@
   height: 100%;
   border: none;
   border-radius: inherit;
-  z-index: 1;
 }
 
 .Avatar__children,
@@ -29,7 +28,6 @@
 .Avatar--shadow::after {
   content: '';
   box-shadow: inset 0 0 0 var(--thin-border) var(--image_border);
-  z-index: 3;
 }
 
 .Avatar__children {
@@ -37,7 +35,6 @@
   align-items: center;
   justify-content: center;
   color: var(--icon_secondary);
-  z-index: 2;
 }
 
 /**
