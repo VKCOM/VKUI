@@ -12,6 +12,7 @@ import { Icon16Done, Icon24Done } from '@vkontakte/icons';
 import { ActionSheetContext } from '../ActionSheet/ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
+import './ActionSheetItem.css';
 
 export interface ActionSheetItemProps extends
   HTMLAttributes<HTMLElement>,

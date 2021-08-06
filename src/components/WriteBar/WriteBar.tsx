@@ -11,6 +11,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { hasReactNode, isFunction } from '../../lib/utils';
 import { getClassName } from '../../helpers/getClassName';
 import { HasRef, HasRootRef } from '../../types';
+import './WriteBar.css';
 
 export interface WriteBarProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLTextAreaElement> {
   /**

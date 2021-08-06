@@ -1,6 +1,7 @@
 import './lib/polyfills';
 
-import './styles/components.css';
+import './styles/constants.css';
+import './styles/animations.css';
 
 /**
  * Layout

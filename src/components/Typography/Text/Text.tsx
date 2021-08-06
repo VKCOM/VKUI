@@ -4,6 +4,7 @@ import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import { HasRootRef } from '../../../types';
 import { warnOnce } from '../../../lib/warnOnce';
+import './Text.css';
 
 export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
   weight: 'regular' | 'medium' | 'semibold';

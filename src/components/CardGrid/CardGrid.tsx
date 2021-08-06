@@ -3,6 +3,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import './CardGrid.css';
 
 export interface CardGridProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   size: 's' | 'm' | 'l';

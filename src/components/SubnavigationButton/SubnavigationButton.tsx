@@ -7,6 +7,7 @@ import { Icon16Dropdown } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import Caption from '../Typography/Caption/Caption';
 import Subhead from '../Typography/Subhead/Subhead';
+import './SubnavigationButton.css';
 
 export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   size?: 'm' | 'l';

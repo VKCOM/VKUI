@@ -16,6 +16,7 @@ import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import './View.css';
 
 const warn = warnOnce('View');
 export const transitionStartEventName = 'VKUI:View:transition-start';

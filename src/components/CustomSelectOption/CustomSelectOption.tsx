@@ -4,6 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import { HasRootRef } from '../../types';
+import './CustomSelectOption.css';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   option?: any;

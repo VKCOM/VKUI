@@ -1,5 +1,6 @@
 import { AllHTMLAttributes, FC } from 'react';
 import Caption from '../Typography/Caption/Caption';
+import './Footer.css';
 
 type FooterProps = AllHTMLAttributes<HTMLElement>;
 

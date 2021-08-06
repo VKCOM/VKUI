@@ -3,6 +3,7 @@ import Spinner, { SpinnerProps } from '../Spinner/Spinner';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
+import './ScreenSpinner.css';
 
 export type ScreenSpinnerProps = HTMLAttributes<HTMLDivElement> & SpinnerProps;
 

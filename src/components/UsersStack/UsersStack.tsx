@@ -7,6 +7,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { System } from '../../lib/browser';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import Caption from '../Typography/Caption/Caption';
+import './UsersStack.css';
 
 export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
   /**

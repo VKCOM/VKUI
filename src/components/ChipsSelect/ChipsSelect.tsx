@@ -19,6 +19,7 @@ import Caption from '../Typography/Caption/Caption';
 import { prefixClass } from '../../lib/prefixClass';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import './ChipsSelect.css';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';

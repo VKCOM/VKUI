@@ -7,6 +7,7 @@ import { easeInOutSine } from '../../lib/fx';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useExternRef } from '../../hooks/useExternRef';
 import { HasRef } from '../../types';
+import './HorizontalScroll.css';
 
 interface ScrollContext {
   scrollElement: HTMLElement | null;
