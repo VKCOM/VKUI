@@ -6,6 +6,10 @@
   position: relative;
 }
 
+.Avatar--failed .Avatar__img {
+  visibility: hidden;
+}
+
 .Avatar__img {
   position: relative;
   display: block;

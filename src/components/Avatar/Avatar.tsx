@@ -1,4 +1,4 @@
-import { FC, ImgHTMLAttributes } from 'react';
+import { FC, ImgHTMLAttributes, useCallback, useState } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -37,6 +37,15 @@ const Avatar: FC<AvatarProps> = ({
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
+  const [failedImage, setFailedImage] = useState(false);
+
+  const onImageError = useCallback(() => {
+    setFailedImage(true);
+  }, []);
+
+  const onImageLoad = useCallback(() => {
+    failedImage && setFailedImage(false);
+  }, [failedImage]);
 
   let borderRadius: string | number = '50%';
 
@@ -64,6 +73,7 @@ const Avatar: FC<AvatarProps> = ({
       {...restProps}
       vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`, {
         'Avatar--shadow': shadow,
+        'Avatar--failed': failedImage,
       })}
       className={className}
       ref={getRootRef}
@@ -84,6 +94,8 @@ const Avatar: FC<AvatarProps> = ({
           useMap={useMap}
           width={width}
           ref={getRef}
+          onError={onImageError}
+          onLoad={onImageLoad}
           vkuiClass="Avatar__img"
           alt=""
         />
