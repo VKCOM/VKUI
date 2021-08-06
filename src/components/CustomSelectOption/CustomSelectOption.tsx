@@ -6,7 +6,6 @@ import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
 import { HasRootRef } from '../../types';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { warnOnce } from '../../lib/warnOnce';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   /**
@@ -18,15 +17,9 @@ export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>,
   focused?: boolean;
   hovered?: boolean;
   before?: ReactNode;
-  /**
-   * @deprecated
-   * Свойство было добавлено по ошибке будет и удалено в 5.0.0
-   */
   after?: ReactNode;
   description?: ReactNode;
 }
-
-const warn = warnOnce('CustomSelectOption');
 
 const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   children,
@@ -40,10 +33,6 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : null;
   const { sizeY } = useAdaptivity();
-
-  if (process.env.NODE_ENV === 'development' && after) {
-    warn('Свойство after было добавлено по ошибке будет и удалено в 5.0.0');
-  }
 
   return (
     <Text
@@ -59,19 +48,15 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
     >
       {hasReactNode(before) && <div vkuiClass="CustomSelectOption__before">{before}</div>}
       <div vkuiClass="CustomSelectOption__main">
-        <div vkuiClass="CustomSelectOption__content">
-          <div vkuiClass="CustomSelectOption__children">{children}</div>
-          {hasReactNode(after) && <div vkuiClass="CustomSelectOption__after">{after}</div>}
-        </div>
+        <div vkuiClass="CustomSelectOption__children">{children}</div>
         {hasReactNode(description) &&
           <Caption level="1" weight="regular" vkuiClass="CustomSelectOption__description">{description}</Caption>
         }
       </div>
-      {selected && (
-        <div vkuiClass="CustomSelectOption__selectedIcon">
-          <Icon16Done fill="var(--accent)" />
-        </div>
-      )}
+      <div vkuiClass="CustomSelectOption__after">
+        {hasReactNode(after) && <div className="CustomSelectOption__afterIn">{after}</div>}
+        {selected && <Icon16Done fill="var(--accent)" vkuiClass="CustomSelectOption__selectedIcon" />}
+      </div>
     </Text>
   );
 };

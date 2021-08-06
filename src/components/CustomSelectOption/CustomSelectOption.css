@@ -29,12 +29,6 @@
   min-width: 0;
 }
 
-.CustomSelectOption__content {
-  display: flex;
-  align-items: baseline;
-  justify-content: flex-start;
-}
-
 .CustomSelectOption__children {
   min-width: 0;
   overflow: hidden;
@@ -42,8 +36,10 @@
 }
 
 .CustomSelectOption__after {
-  margin-left: 7px;
+  margin-left: 8px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .CustomSelectOption__description {
@@ -52,6 +48,6 @@
   overflow: hidden;
 }
 
-.CustomSelectOption__selectedIcon {
+.CustomSelectOption__selectedIcon:not(:first-child) {
   margin-left: 8px;
 }
