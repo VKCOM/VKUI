@@ -4,11 +4,12 @@ import Avatar from '../Avatar/Avatar';
 
 describe('CustomSelectOption', () => {
   describeScreenshotFuzz(CustomSelectOption, [{
-    selected: [true, false],
-    before: [undefined, <Avatar size={20} key="avatar" />],
+    selected: [true],
+    before: [<Avatar size={20} key="avatar" />],
     children: ['Мария Саломея Склодовская-Кюри Мария Саломея Склодовская-Кюри', 'Мария Саломея'],
-    $adaptivity: 'y',
-    hovered: [true, false],
     after: [undefined, 'Hello'],
+  }, {
+    children: ['Мария Саломея'],
+    hovered: [true],
   }]);
 });
