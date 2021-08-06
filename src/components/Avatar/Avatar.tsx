@@ -47,6 +47,8 @@ const Avatar: FC<AvatarProps> = ({
       break;
   }
 
+  const hasSrc = restProps.src || restProps.srcSet;
+
   return (
     <div
       vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`, {
@@ -54,11 +56,11 @@ const Avatar: FC<AvatarProps> = ({
       })}
       className={className}
       ref={getRootRef}
-      role={restProps.src ? 'img' : 'presentation'}
+      role={hasSrc ? 'img' : 'presentation'}
       aria-label={alt || ariaLabel}
       style={{ ...style, width: size, height: size, borderRadius }}
     >
-      {(restProps.src || restProps.srcSet) &&
+      {hasSrc &&
         <img
           {...restProps}
           ref={getRef}
