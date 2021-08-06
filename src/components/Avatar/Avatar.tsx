@@ -1,4 +1,4 @@
-import { FC, ImgHTMLAttributes, useCallback, useState } from 'react';
+import { FC, ImgHTMLAttributes, useState } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -39,13 +39,13 @@ const Avatar: FC<AvatarProps> = ({
   const platform = usePlatform();
   const [failedImage, setFailedImage] = useState(false);
 
-  const onImageError = useCallback(() => {
+  const onImageError = () => {
     setFailedImage(true);
-  }, []);
+  };
 
-  const onImageLoad = useCallback(() => {
-    failedImage && setFailedImage(false);
-  }, [failedImage]);
+  const onImageLoad = () => {
+    setFailedImage(false);
+  };
 
   let borderRadius: string | number = '50%';
 
