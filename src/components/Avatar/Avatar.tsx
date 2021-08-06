@@ -14,6 +14,17 @@ export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<
 }
 
 const Avatar: FC<AvatarProps> = ({
+  alt,
+  crossOrigin,
+  decoding,
+  height,
+  loading,
+  referrerPolicy,
+  sizes,
+  src,
+  srcSet,
+  useMap,
+  width,
   getRef,
   size,
   shadow,
@@ -22,7 +33,6 @@ const Avatar: FC<AvatarProps> = ({
   children,
   getRootRef,
   style,
-  alt,
   'aria-label': ariaLabel,
   ...restProps
 }: AvatarProps) => {
@@ -47,10 +57,11 @@ const Avatar: FC<AvatarProps> = ({
       break;
   }
 
-  const hasSrc = restProps.src || restProps.srcSet;
+  const hasSrc = src || srcSet;
 
   return (
     <div
+      {...restProps}
       vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`, {
         'Avatar--shadow': shadow,
       })}
@@ -62,7 +73,16 @@ const Avatar: FC<AvatarProps> = ({
     >
       {hasSrc &&
         <img
-          {...restProps}
+          crossOrigin={crossOrigin}
+          decoding={decoding}
+          height={height}
+          loading={loading}
+          referrerPolicy={referrerPolicy}
+          sizes={sizes}
+          src={src}
+          srcSet={srcSet}
+          useMap={useMap}
+          width={width}
           ref={getRef}
           vkuiClass="Avatar__img"
           alt=""
