@@ -2,9 +2,9 @@ import { FC, ImgHTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
+import { HasRef, HasRootRef } from '../../types';
 
-export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
+export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLImageElement> {
   /**
    * Рекомендуемый сет значений: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24
    */
@@ -15,6 +15,10 @@ export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<
 
 const Avatar: FC<AvatarProps> = ({
   src,
+  srcSet,
+  getRef,
+  width,
+  height,
   size,
   shadow,
   mode,
@@ -56,11 +60,19 @@ const Avatar: FC<AvatarProps> = ({
       ref={getRootRef}
       role={src ? 'img' : 'presentation'}
       aria-label={alt || ariaLabel}
+      style={{ ...style, width: size, height: size, borderRadius }}
+      {...restProps}
     >
-      <div {...restProps} aria-hidden="true" vkuiClass="Avatar__in" style={{ ...style, width: size, height: size, borderRadius }}>
-        {src && <img vkuiClass="Avatar__img" src={src} alt="" />}
-        {children && <div vkuiClass="Avatar__children">{children}</div>}
-      </div>
+      {(src || srcSet) &&
+        <img
+          src={src}
+          srcSet={srcSet}
+          ref={getRef}
+          vkuiClass="Avatar__img"
+          alt=""
+        />
+      }
+      {children && <div vkuiClass="Avatar__children">{children}</div>}
     </div>
   );
 };
