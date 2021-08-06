@@ -539,7 +539,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
               'CustomSelect__open': opened,
               'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
             })}
-            className={className}
           >
             {label}
           </SelectMimicry>
