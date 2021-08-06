@@ -23,6 +23,7 @@ import Input from '../Input/Input';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import Caption from '../Typography/Caption/Caption';
 import { warnOnce } from '../../lib/warnOnce';
+import { Dropdown } from '../Dropdown/Dropdown';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
@@ -39,6 +40,7 @@ interface CustomSelectState {
   selectedOptionIndex?: number;
   nativeSelectValue?: SelectValue;
   options?: CustomSelectOptionInterface[];
+  popupDirection?: string;
 }
 
 export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormFieldProps {
@@ -112,6 +114,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   private keyboardInput: string;
   private isControlledOutside: boolean;
   private selectEl: HTMLSelectElement;
+  private rootEl: HTMLLabelElement;
   private readonly scrollBoxRef = createRef<HTMLDivElement>();
 
   private readonly resetKeyboardInput = () => {
@@ -433,6 +436,11 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     setRef(element, this.props.getRef);
   };
 
+  rootRef = (element: HTMLLabelElement) => {
+    this.rootEl = element;
+    setRef(element, this.props.getRootRef);
+  };
+
   render() {
     const { opened, nativeSelectValue } = this.state;
     const {
@@ -465,7 +473,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         vkuiClass={getClassName('CustomSelect', platform)}
         className={className}
         style={style}
-        ref={getRootRef}
+        ref={this.rootRef}
         onClick={this.onLabelClick}
       >
         {opened && searchable ?
@@ -475,7 +483,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
             onBlur={this.onBlur}
             vkuiClass={classNames({
               'CustomSelect__open': opened,
-              'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
+              'CustomSelect__open--popupDirectionTop': this.state.popupDirection === 'top',
             })}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
@@ -497,7 +505,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
             onBlur={this.onBlur}
             vkuiClass={classNames({
               'CustomSelect__open': opened,
-              'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
+              'CustomSelect__open--popupDirectionTop': this.state.popupDirection === 'top',
             })}
             className={className}
           >
@@ -518,21 +526,26 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           {options.map((item) => <option key={`${item.value}`} value={item.value} />)}
         </select>
         {opened &&
-        <div
-          vkuiClass={classNames('CustomSelect__options', `CustomSelect__options--sizeY-${sizeY}`, {
-            'CustomSelect__options--popupDirectionTop': popupDirection === 'top',
-          })}
-          onMouseLeave={this.resetFocusedOption}
-        >
-          <CustomScrollView boxRef={this.scrollBoxRef}>
-            {this.state.options.map(this.renderOption)}
-            {this.state.options.length === 0 &&
-              <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
-                {emptyText}
-              </Caption>
-            }
-          </CustomScrollView>
-        </div>
+          <Dropdown
+            portal={false}
+            targetNode={this.rootEl}
+            onMouseLeave={this.resetFocusedOption}
+            onPlacementChange={({ placement }) => {
+              this.setState({ popupDirection: placement.split('-')[0] });
+            }}
+            vkuiClass={classNames('CustomSelect__options', `CustomSelect__options--sizeY-${sizeY}`, {
+              'CustomSelect__options--popupDirectionTop': this.state.popupDirection === 'top',
+            })}
+          >
+            <CustomScrollView boxRef={this.scrollBoxRef}>
+              {this.state.options.map(this.renderOption)}
+              {this.state.options.length === 0 &&
+                <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+                  {emptyText}
+                </Caption>
+              }
+            </CustomScrollView>
+          </Dropdown>
         }
       </label>
     );
