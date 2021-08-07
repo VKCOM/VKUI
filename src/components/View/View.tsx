@@ -476,7 +476,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   render() {
     const {
       popout, modal, platform,
-      activePanel: _1, splitCol, configProvider, history, id, nav,
+      activePanel: _1, splitCol, configProvider, history, nav,
       onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
       window, document, scroll,
       ...restProps
