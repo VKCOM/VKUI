@@ -79,14 +79,16 @@ const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
 
   const disabled = restProps.disabled || typeof restProps.onClick !== 'function';
 
+  const source = image || src;
+
   return (
     <Card mode={mode} getRootRef={getRootRef} vkuiClass={getClassName('ContentCard', platform)} style={style} className={className}>
       <Tappable {...restProps} disabled={disabled} vkuiClass="ContentCard__tappable">
-        {(image || src) && (
+        {(source || srcSet) && (
           <img
             ref={getRef}
             vkuiClass="ContentCard__img"
-            src={image || src}
+            src={source}
             srcSet={srcSet}
             alt={alt}
             height={height}
