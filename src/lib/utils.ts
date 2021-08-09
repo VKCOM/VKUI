@@ -1,5 +1,9 @@
-import { Children, ReactNode } from 'react';
+import { Children, HTMLAttributes, ImgHTMLAttributes, ReactNode } from 'react';
 import { Ref, RefWithCurrent } from '../types';
+
+export type ImgOnlyAttributes = {
+  [index in Exclude<keyof ImgHTMLAttributes<HTMLImageElement>, keyof HTMLAttributes<HTMLImageElement>>]: ImgHTMLAttributes<HTMLImageElement>[index];
+};
 
 // Является ли переданное значение числовым
 export function isNumeric(value: any): boolean {

@@ -2,9 +2,14 @@
   flex-shrink: 0;
   box-sizing: border-box;
   color: var(--placeholder_icon_background);
+  background: currentColor;
+  position: relative;
 }
 
-.Avatar__in,
+.Avatar--failed .Avatar__img {
+  visibility: hidden;
+}
+
 .Avatar__img {
   position: relative;
   display: block;
@@ -12,16 +17,10 @@
   height: 100%;
   border: none;
   border-radius: inherit;
-  z-index: 1;
-}
-
-.Avatar__in {
-  background: currentColor;
-  pointer-events: none;
 }
 
 .Avatar__children,
-.Avatar--shadow .Avatar__in::after {
+.Avatar--shadow::after {
   position: absolute;
   left: 0;
   top: 0;
@@ -30,10 +29,9 @@
   border-radius: inherit;
 }
 
-.Avatar--shadow .Avatar__in::after {
+.Avatar--shadow::after {
   content: '';
   box-shadow: inset 0 0 0 var(--thin-border) var(--image_border);
-  z-index: 3;
 }
 
 .Avatar__children {
@@ -41,7 +39,6 @@
   align-items: center;
   justify-content: center;
   color: var(--icon_secondary);
-  z-index: 2;
 }
 
 /**
@@ -74,57 +71,57 @@
  * .RichCell
  */
 .RichCell > .Avatar {
-  padding-right: 12px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  margin-right: 12px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .RichCell > .Avatar--sz-48 {
-  padding-top: 6px;
-  padding-bottom: 6px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 /**
  * .SimpleCell
  */
 .SimpleCell > .Avatar {
-  padding-right: 12px;
+  margin-right: 12px;
 }
 
 .SimpleCell > .Avatar--sz-28,
 .SimpleCell > .Avatar--sz-32 {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .SimpleCell > .Avatar--sz-40 {
-  padding-top: 4px;
-  padding-bottom: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .SimpleCell > .Avatar--sz-48,
 .SimpleCell > .Avatar--sz-72 {
-  padding-top: 6px;
-  padding-bottom: 6px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 .SimpleCell--ios > .Avatar--sz-28,
 .SimpleCell--ios > .Avatar--sz-32 {
-  padding-left: 4px;
+  margin-left: 4px;
 }
 
 .SimpleCell--sizeY-compact > .Avatar--sz-28,
 .SimpleCell--sizeY-compact > .Avatar--sz-32 {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .SimpleCell--sizeY-compact > .Avatar--sz-40 {
-  padding-top: 2px;
-  padding-bottom: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 .SimpleCell--sizeY-compact > .Avatar--sz-48 {
-  padding-top: 4px;
-  padding-bottom: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
