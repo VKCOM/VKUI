@@ -1,34 +1,39 @@
 import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
 import { render, screen } from '@testing-library/react';
-import Avatar from './Avatar';
+import Avatar, { AvatarProps } from './Avatar';
+
+const AvatarTest = (props: AvatarProps) => (<Avatar {...props} data-testid="avatar" />);
+
+const avatar = () => screen.getByTestId('avatar');
+const img = () => avatar().querySelector('img');
 
 describe('Avatar', () => {
   baselineComponent(Avatar);
 
-  it('renders img only if src passed', () => {
-    const { rerender } = render(<Avatar data-testid="avatar" src="#" />);
-    const img = document.querySelector('img');
-    expect(screen.getByTestId('avatar').contains(img)).toBeTruthy();
-    rerender(<Avatar data-testid="avatar" />);
-    expect(screen.getByTestId('avatar').contains(img)).toBeFalsy();
+  it('[img] renders img if src is passed', () => {
+    render(<AvatarTest src="#" />);
+
+    expect(img()).toBeInTheDocument();
   });
 
-  it('passes ref to the img', () => {
+  it('[img] does not render img if there is no src', () => {
+    render(<AvatarTest />);
+
+    expect(img()).not.toBeInTheDocument();
+  });
+
+  it('[img] passes ref to img', () => {
     const refCallback = jest.fn();
-    render(<Avatar data-testid="avatar" src="#" getRef={refCallback} />);
+    render(<AvatarTest src="#" getRef={refCallback} />);
+
     expect(refCallback).toBeCalled();
   });
 
-  it('passes all img props to the img', () => {
-    render(
-      <Avatar
-        data-testid="avatar"
-        {...imgOnlyAttributes}
-      />,
-    );
+  it('[img] passes all img attributes to img', () => {
+    render(<AvatarTest src="#" {...imgOnlyAttributes} />);
 
-    const attributes = Object.values(document.querySelector('img').attributes).map((item) => item.name);
-
-    expect(Object.keys(imgOnlyAttributes).every((attr) => attributes.includes(attr.toLowerCase()))).toBeTruthy();
+    Object.keys(imgOnlyAttributes).forEach((attr) => {
+      expect(img()).toHaveAttribute(attr);
+    });
   });
 });
