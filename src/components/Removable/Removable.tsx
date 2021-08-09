@@ -48,6 +48,12 @@ export const Removable: FC<RemovableProps> = ({
     updateRemoveOffset(0);
   }));
 
+  const onRemoveTransitionEnd = () => {
+    if (isRemoveActivated) {
+      removeButtonRef?.current?.focus();
+    }
+  };
+
   const onRemoveActivateClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
@@ -65,7 +71,6 @@ export const Removable: FC<RemovableProps> = ({
 
     if (isRemoveActivated && removeButton) {
       updateRemoveOffset(removeButton.offsetWidth);
-      setTimeout(() => removeButton.focus(), 150);
     }
   }, [isRemoveActivated]);
 
@@ -119,6 +124,7 @@ export const Removable: FC<RemovableProps> = ({
             getRootRef={removeButtonRef}
             vkuiClass="Removable__action Removable__action--remove"
             onClick={onRemoveClick}
+            onTransitionEnd={onRemoveTransitionEnd}
             style={{ transform: `translateX(-${removeOffset}px)` }}
           >
             <span vkuiClass="Removable__action-in">{removePlaceholder}</span>
