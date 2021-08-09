@@ -8,7 +8,7 @@ module.exports = {
   // CSS is optimized via postcss, we dont care about JS
   mode: 'none',
   entry: {
-    stable: ['./src/styles/themes.css', './src/index.ts'],
+    stable: ['./src/index.ts'],
     unstable: './src/unstable/index.ts',
     components: './src/index.ts',
     default_scheme: `./src/styles/${defaultSchemeId}.css`,

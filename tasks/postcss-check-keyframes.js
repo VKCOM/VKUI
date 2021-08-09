@@ -17,6 +17,16 @@ module.exports = () => ({
         }
       });
     });
+    root.walkRules(/--ios/, rule => {
+      if (rule.selector.split(',').every(f => f.includes('--ios'))) {
+        rule.remove();
+      }
+    });
+    root.walkAtRules(/keyframes/, kf => {
+      if (kf.params.includes('-ios')) {
+        kf.remove();
+      }
+    });
   }
 });
 module.exports.postcss = true;
