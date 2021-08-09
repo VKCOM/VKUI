@@ -2,6 +2,7 @@ import { FC, HTMLAttributes, memo } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
+import './Separator.css';
 
 export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
   /**

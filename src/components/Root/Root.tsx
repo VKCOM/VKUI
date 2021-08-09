@@ -13,6 +13,7 @@ import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import './Root.css';
 
 const warn = warnOnce('Root');
 

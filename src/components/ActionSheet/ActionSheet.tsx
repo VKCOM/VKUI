@@ -10,6 +10,7 @@ import ActionSheetDropdown from './ActionSheetDropdown';
 import { hasReactNode } from '../../lib/utils';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
+import './ActionSheet.css';
 
 export type PopupDirectionFunction = (elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom';
 

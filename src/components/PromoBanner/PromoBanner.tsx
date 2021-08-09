@@ -6,6 +6,7 @@ import Avatar from '../Avatar/Avatar';
 import Caption from '../Typography/Caption/Caption';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
+import './PromoBanner.css';
 
 type StatsType =
   | 'playbackStarted' // Начало показа

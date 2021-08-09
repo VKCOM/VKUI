@@ -9,6 +9,7 @@ import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';
 import IconButton from '../IconButton/IconButton';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import './Removable.css';
 
 export interface RemovePlaceholderProps {
   /**
