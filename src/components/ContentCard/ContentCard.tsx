@@ -73,6 +73,12 @@ const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
     alt,
     width,
     height,
+    crossOrigin,
+    decoding,
+    loading,
+    referrerPolicy,
+    sizes,
+    useMap,
     ...restProps
   } = props;
   const platform = usePlatform();
@@ -91,6 +97,12 @@ const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
             src={source}
             srcSet={srcSet}
             alt={alt}
+            crossOrigin={crossOrigin}
+            decoding={decoding}
+            loading={loading}
+            referrerPolicy={referrerPolicy}
+            sizes={sizes}
+            useMap={useMap}
             height={height}
             style={{ maxHeight }}
             width="100%"
