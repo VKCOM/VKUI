@@ -15,6 +15,12 @@
   * `width`,
   * `height`,
   * `maxHeight`,
+  * `crossOrigin`,
+  * `decoding`,
+  * `loading`,
+  * `referrerPolicy`,
+  * `sizes`,
+  * `useMap`,
 - внутренний `Tappable` получает все остальные свойства (кроме `subtitle`, `header`, `text` и `caption`).
 
 ```jsx
