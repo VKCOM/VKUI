@@ -1,23 +1,9 @@
 import { Children, HTMLAttributes, ImgHTMLAttributes, ReactNode } from 'react';
 import { Ref, RefWithCurrent } from '../types';
 
-type ImgAttributes = Exclude<keyof ImgHTMLAttributes<any>, keyof HTMLAttributes<any>>;
-
-const validImgRecord: Record<ImgAttributes, boolean> = {
-  alt: true,
-  crossOrigin: true,
-  decoding: true,
-  height: true,
-  loading: true,
-  referrerPolicy: true,
-  sizes: true,
-  src: true,
-  srcSet: true,
-  useMap: true,
-  width: true,
+export type ImgOnlyAttributes = {
+  [index in Exclude<keyof ImgHTMLAttributes<HTMLImageElement>, keyof HTMLAttributes<HTMLImageElement>>]: ImgHTMLAttributes<HTMLImageElement>[index];
 };
-
-export const validImgProps = Object.keys(validImgRecord);
 
 // Является ли переданное значение числовым
 export function isNumeric(value: any): boolean {

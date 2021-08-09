@@ -1,7 +1,6 @@
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, imgOnlyAttributes } from '../../testing/utils';
 import { render, screen } from '@testing-library/react';
 import Avatar from './Avatar';
-import { validImgProps } from '../../lib/utils';
 
 describe('Avatar', () => {
   baselineComponent(Avatar);
@@ -21,20 +20,15 @@ describe('Avatar', () => {
   });
 
   it('passes all img props to the img', () => {
-    const props = validImgProps.reduce((acc: Record<string, string>, item) => {
-      acc[item] = 'test';
-      return acc;
-    }, {});
-
     render(
       <Avatar
         data-testid="avatar"
-        {...props}
+        {...imgOnlyAttributes}
       />,
     );
 
     const attributes = Object.values(document.querySelector('img').attributes).map((item) => item.name);
 
-    expect(validImgProps.every((attr) => attributes.includes(attr.toLowerCase()))).toBeTruthy();
+    expect(Object.keys(imgOnlyAttributes).every((attr) => attributes.includes(attr.toLowerCase()))).toBeTruthy();
   });
 });
