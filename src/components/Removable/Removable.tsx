@@ -117,7 +117,6 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
             hasActive={false}
             hasHover={false}
             disabled={!isRemoveActivated}
-            tabIndex={isRemoveActivated ? null : -1}
             getRootRef={removeButtonRef}
             vkuiClass="Removable__action Removable__action--remove"
             onClick={onRemoveClick}
