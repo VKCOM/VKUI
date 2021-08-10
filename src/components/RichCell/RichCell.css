@@ -99,10 +99,6 @@
   margin-top: 8px;
 }
 
-.RichCell__actions .Button:not(:last-child) {
-  margin-right: 8px;
-}
-
 /**
  * iOS
  */
