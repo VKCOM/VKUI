@@ -90,10 +90,6 @@
   text-overflow: ellipsis;
 }
 
-.RichCell__bottom .UsersStack {
-  padding: 5px 0 0;
-}
-
 .RichCell__actions {
   display: flex;
   margin-top: 8px;
