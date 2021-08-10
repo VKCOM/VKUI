@@ -17,10 +17,14 @@ module.exports = () => ({
         }
       });
     });
-    root.walkRules(/--ios/, rule => {
-      if (rule.selector.split(',').every(f => f.includes('--ios'))) {
+    const rmPlatforms = /--(ios|vkcom)/;
+    const keepPlatform = /--android/g;
+    root.walkRules(rule => {
+      const parts = rule.selector.split(/,\s*/);
+      if (parts.every(f => rmPlatforms.test(f))) {
         rule.remove();
       }
+      rule.selector = Array.from(new Set(parts.map(p => p.replace(keepPlatform, '').replace(rmPlatforms, '')))).join(',');
     });
     root.walkAtRules(/keyframes/, kf => {
       if (kf.params.includes('-ios')) {
