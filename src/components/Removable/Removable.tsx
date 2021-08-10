@@ -1,9 +1,9 @@
-import React, { AllHTMLAttributes, FC, ReactNode, MouseEvent, useEffect, useRef, useState } from 'react';
+import { AllHTMLAttributes, FC, ReactNode, MouseEvent, useEffect, useRef, useState, Fragment } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getTitleFromChildren } from '../../lib/utils';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDOM } from '../../lib/dom';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';
@@ -27,16 +27,15 @@ interface RemovableProps extends AllHTMLAttributes<HTMLElement>, RemovePlacehold
   onRemove?: (e: MouseEvent) => void;
 }
 
-export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovableProps & Pick<AdaptivityProps, 'sizeY'>) => {
-  const {
-    children,
-    sizeY,
-    onRemove,
-    removePlaceholder,
-    align,
-    ...restProps
-  } = props;
+export const Removable: FC<RemovableProps> = ({
+  children,
+  onRemove,
+  removePlaceholder,
+  align,
+  ...restProps
+}: RemovableProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
   const { document } = useDOM();
 
   const removeButtonRef = useRef(null);
@@ -96,7 +95,7 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
       )}
 
       {platform === IOS && (
-        <React.Fragment>
+        <Fragment>
           <div vkuiClass="Removable__content" style={{ transform: `translateX(-${removeOffset}px)` }}>
             <IconButton
               hasActive={false}
@@ -124,13 +123,11 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
           >
             <span vkuiClass="Removable__action-in">{removePlaceholder}</span>
           </Tappable>
-        </React.Fragment>
+        </Fragment>
       )}
     </div>
   );
-}, {
-  sizeY: true,
-});
+};
 
 Removable.defaultProps = {
   align: 'center',
