@@ -6,6 +6,7 @@ import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
 import { HasRootRef } from '../../types';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import './CustomSelectOption.css';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   /**

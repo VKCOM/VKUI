@@ -20,6 +20,7 @@ import Title from '../Typography/Title/Title';
 import Separator from '../Separator/Separator';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
+import './Search.css';
 
 export type InputRef = (element: HTMLInputElement) => void;
 

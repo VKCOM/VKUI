@@ -7,10 +7,13 @@ process.env.BABEL_KEEP_CSS = '1';
 module.exports = {
   // CSS is optimized via postcss, we dont care about JS
   mode: 'none',
+  // TODO: Once CSS is modular, replace
+  // './src/styles/components.css' -> './src/index.ts'
+  // './src/styles/unstable.css' -> './src/unstable/index.ts'
   entry: {
-    stable: ['./src/styles/themes.css', './src/index.ts'],
-    unstable: './src/unstable/index.ts',
-    components: './src/index.ts',
+    stable: ['./src/styles/themes.css', './src/styles/components.css'],
+    unstable: './src/styles/unstable.css',
+    components: './src/styles/components.css',
     default_scheme: `./src/styles/${defaultSchemeId}.css`,
   },
   output: {

@@ -11,6 +11,7 @@ import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { IOS } from '../../lib/platform';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { Icon24Dismiss } from '@vkontakte/icons';
+import './ModalCardBase.css';
 
 export interface ModalCardBaseProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   /**

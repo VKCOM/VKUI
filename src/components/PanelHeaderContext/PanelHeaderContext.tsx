@@ -7,6 +7,7 @@ import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdapti
 import { DOMProps, withDOM } from '../../lib/dom';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
+import './PanelHeaderContext.css';
 
 export interface PanelHeaderContextProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   opened: boolean;

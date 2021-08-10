@@ -6,6 +6,7 @@ import { animationEvent } from '../../lib/supportEvents';
 import { withPlatform } from '../../hoc/withPlatform';
 import { HasPlatform } from '../../types';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
+import './PopoutWrapper.css';
 
 export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
   hasMask?: boolean;

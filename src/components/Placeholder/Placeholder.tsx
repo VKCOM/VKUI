@@ -4,6 +4,7 @@ import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
 import Headline from '../Typography/Headline/Headline';
 import { HasRootRef } from '../../types';
+import './Placeholder.css';
 
 export interface PlaceholderProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   /**

@@ -7,6 +7,7 @@ import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
+import './RichCell.css';
 
 export interface RichCellProps extends TappableProps {
   /**
