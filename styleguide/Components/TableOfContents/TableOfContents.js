@@ -203,7 +203,7 @@ class TableOfContents extends React.PureComponent {
               }
               onClick={!section.href ? this.onExpandCellClick : undefined}
               data-section-name={section.name}
-              className={classNames({
+              className={classNames('TableOfContents__section', {
                 'TableOfContents__section--selected': section.name === this.state.currentSectionName,
               })}
             >
@@ -223,7 +223,11 @@ class TableOfContents extends React.PureComponent {
   }
 
   render() {
-    return <div className={classNames('TableOfContents', { 'TableOfContents--desktop': this.props.viewWidth > ViewWidth.MOBILE })}>
+    const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
+    return <div className={classNames('TableOfContents', {
+      'TableOfContents--desktop': !isMobile,
+      'TableOfContents--mobile': isMobile,
+    })}>
       {this.renderSections(this.sections)}
     </div>;
   }
