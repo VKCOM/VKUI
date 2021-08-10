@@ -4,7 +4,7 @@ const scopeRoot = require('./tasks/postcss-scope-root.js');
 const cssImport = require('postcss-import');
 const autoprefixer = require('autoprefixer');
 const selectorPrefixer = require('postcss-prefixer');
-const csso = require('postcss-csso');
+const cssnano = require('cssnano');
 const checkKeyframes = require('./tasks/postcss-check-keyframes');
 const { defaultSchemeId } = require('./package.json');
 
@@ -34,7 +34,7 @@ let plugins = [
 ];
 
 if (process.env.NODE_ENV === 'production') {
-  plugins.push(csso({ restructure: false }));
+  plugins.push(cssnano({ preset: 'default' }));
 }
 
 module.exports = { plugins, cssPropSources };
