@@ -1,7 +1,7 @@
 import CustomSelectOption from './CustomSelectOption';
 import { describeScreenshotFuzz } from '../../testing/e2e/utils';
 import Avatar from '../Avatar/Avatar';
-import { SizeType } from '../../hoc/withAdaptivity';
+import { SizeType, ViewWidth } from '../../hoc/withAdaptivity';
 
 describe('CustomSelectOption', () => {
   const propsSets = [{
@@ -14,6 +14,6 @@ describe('CustomSelectOption', () => {
     hovered: [true],
   }];
 
-  describeScreenshotFuzz(CustomSelectOption, propsSets, { adaptivity: { sizeY: SizeType.COMPACT } });
-  describeScreenshotFuzz(CustomSelectOption, propsSets, { adaptivity: { sizeY: SizeType.REGULAR } });
+  describeScreenshotFuzz(CustomSelectOption, propsSets, { adaptivity: { sizeY: SizeType.REGULAR, viewWidth: ViewWidth.MOBILE } });
+  describeScreenshotFuzz(CustomSelectOption, propsSets, { adaptivity: { sizeY: SizeType.COMPACT, viewWidth: ViewWidth.DESKTOP } });
 });
