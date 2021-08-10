@@ -112,6 +112,17 @@
         <Button mode="secondary" before={<Icon24Shuffle/>} size="l">Shuffle</Button>
       </Div>
     </Group>
+    <Group header={<Header mode="secondary">Состояние загрузки</Header>}>
+      <Div>
+        <Button size="s" isLoading>Button</Button>
+      </Div>
+      <Div>
+        <Button size="m" isLoading>Button</Button>
+      </Div>
+      <Div>
+        <Button size="l" isLoading>Button</Button>
+      </Div>
+    </Group>
     <Group header={<Header mode="secondary">Ссылки в виде кнопок</Header>}>
       <Div>
         <Button href="#">I am link</Button>

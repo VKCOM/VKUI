@@ -10,6 +10,7 @@ import { HasAlign } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { Platform, IOS, VKCOM } from '../../lib/platform';
+import Spinner from '../Spinner/Spinner';
 import './Button.css';
 
 export interface VKUIButtonProps extends HasAlign {
@@ -18,6 +19,7 @@ export interface VKUIButtonProps extends HasAlign {
   stretched?: boolean;
   before?: ReactNode;
   after?: ReactNode;
+  isLoading?: boolean;
 }
 
 export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
@@ -67,7 +69,7 @@ const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProp
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
-  const { size, mode, stretched, align, children, before, after, getRootRef, sizeY, Component = 'button', ...restProps } = props;
+  const { size, mode, stretched, align, children, before, after, getRootRef, sizeY, Component = 'button', isLoading, ...restProps } = props;
   const hasIcons = Boolean(before || after);
 
   return (
@@ -85,6 +87,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
           {
             ['Button--str']: stretched,
             ['Button--with-icon']: hasIcons,
+            ['Button--loading']: isLoading,
           },
         )
       }
@@ -105,6 +108,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
           </ButtonTypography>
         )}
         {after && <span vkuiClass="Button__after">{after}</span>}
+        {isLoading && <Spinner size="small" vkuiClass="Button__spinner" />}
       </span>
     </Tappable>
   );

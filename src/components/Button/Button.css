@@ -68,6 +68,19 @@
   justify-content: center;
 }
 
+.Button--loading .Button__before,
+.Button--loading .Button__content,
+.Button--loading .Button__after {
+  visibility: hidden;
+}
+
+.Button__spinner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: inherit;
+}
+
 .Button--lvl-primary {
   background-color: var(--button_primary_background);
   color: var(--button_primary_foreground);
