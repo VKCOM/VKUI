@@ -2,6 +2,7 @@ import { FC, AnchorHTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
+import './Link.css';
 
 export interface LinkProps extends AnchorHTMLAttributes<HTMLElement>, TappableProps {}
 
@@ -18,6 +19,7 @@ const Link: FC<LinkProps> = ({
       vkuiClass={getClassName('Link', platform)}
       hasActive={false}
       hoverMode="opacity"
+      focusVisibleMode="outside"
     >
       {children}
     </Tappable>

@@ -238,9 +238,9 @@
 }
 
 /**
+ * CMP:
  * ModalCardBase
  */
-
 .ModalCardBase__actions .Button {
   flex: 1;
   margin-left: 6px;
@@ -254,4 +254,12 @@
 
 .ModalCardBase__actions--v .Button + .Button {
   margin-top: 12px;
+}
+
+/**
+ * CMP:
+ * RichCell
+ */
+.RichCell__actions .Button + .Button {
+  margin-left: 8px;
 }

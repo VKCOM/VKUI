@@ -4,6 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import './FormLayoutGroup.css';
 
 export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, RemovePlaceholderProps {
   mode?: 'vertical' | 'horizontal';

@@ -147,17 +147,6 @@ describe('Tappable', () => {
     expect(handleClick).toHaveBeenCalledTimes(0);
   });
 
-  // [a11y] remove hasFocusVisible tests once a11y work on components based on Tappable is finished
-  it('a11y: no .Tappable--focus-visible class gets added by default', () => {
-    render(<TappableTest>hasFocusVisible FALSE</TappableTest>);
-    expect(tappable()).not.toHaveClass('Tappable--focus-visible');
-  });
-
-  it('a11y: hasFocusVisible adds .Tappable--focus-visible class', () => {
-    render(<TappableTest hasFocusVisible>hasFocusVisible TRUE</TappableTest>);
-    expect(tappable()).toHaveClass('Tappable--focus-visible');
-  });
-
   it('checks that hover state is removed if component becomes disabled', () => {
     const { rerender } = render(<TappableTest>Test</TappableTest>);
     fireEvent.mouseEnter(tappable());

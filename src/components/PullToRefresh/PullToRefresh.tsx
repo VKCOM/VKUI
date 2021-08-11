@@ -12,6 +12,7 @@ import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { runTapticImpactOccurred } from '../../lib/taptic';
 import { withContext } from '../../hoc/withContext';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import './PullToRefresh.css';
 
 export interface PullToRefreshProps extends TouchProps, HasPlatform {
   /**

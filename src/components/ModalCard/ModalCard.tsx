@@ -9,6 +9,7 @@ import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import { ModalCardBase, ModalCardBaseProps } from '../ModalCardBase/ModalCardBase';
+import './ModalCard.css';
 
 export interface ModalCardProps extends HasPlatform, AdaptivityProps, NavIdProps, ModalCardBaseProps {}
 

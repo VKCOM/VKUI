@@ -4,7 +4,7 @@
 class Example extends React.Component {
   constructor(props) {
     super(props);
-    this.users = getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }));
+    this.users = getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100, description: user.screen_name }));
     this.cities = [{
       label: 'Санкт-Петербург',
       description: 'Россия',
@@ -60,7 +60,11 @@ class Example extends React.Component {
               placeholder="Не выбран"
               options={this.users}
               renderOption={({ option, ...restProps }) => (
-                <CustomSelectOption {...restProps} before={<Avatar size={24} src={option.avatar} />} />
+                <CustomSelectOption
+                   {...restProps}
+                   before={<Avatar size={24} src={option.avatar}/>}
+                   description={option.description} 
+                />              
               )}
             />
           </FormItem>
@@ -76,6 +80,7 @@ class Example extends React.Component {
               placeholder="Введите название города или страны"
               searchable
               filterFn={(value, option) => option.label.toLowerCase().includes(value.toLowerCase()) || option.description.toLowerCase().includes(value.toLowerCase())}
+              renderOption={({ option, ...restProps }) => (<CustomSelectOption {...restProps} description={option.description} />)}
               options={this.cities}
             />
           </FormItem>

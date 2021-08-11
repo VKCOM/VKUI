@@ -5,6 +5,7 @@ import { getClassName } from '../../helpers/getClassName';
 import Text from '../Typography/Text/Text';
 import Tappable from '../../components/Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
+import './MiniInfoCell.css';
 
 export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
   /**

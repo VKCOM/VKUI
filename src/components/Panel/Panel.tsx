@@ -11,6 +11,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { useExternRef } from '../../hooks/useExternRef';
 import { warnOnce } from '../../lib/warnOnce';
+import './Panel.css';
 
 export interface PanelProps extends HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>, AdaptivityProps, NavIdProps {

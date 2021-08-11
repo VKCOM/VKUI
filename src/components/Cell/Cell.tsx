@@ -9,6 +9,7 @@ import { HasPlatform } from '../../types';
 import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ListContext } from '../../components/List/ListContext';
+import './Cell.css';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlaceholderProps {
   /**

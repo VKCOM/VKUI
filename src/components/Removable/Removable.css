@@ -52,10 +52,6 @@
   overflow: hidden;
 }
 
-.Removable--ios .Removable__content {
-  transition: transform .6s var(--ios-easing);
-}
-
 .Removable--ios .Removable__action--remove {
   position: absolute;
   left: 100%;
@@ -69,7 +65,13 @@
   line-height: 45px;
   color: var(--white);
   background-color: var(--destructive);
-  transition: transform .6s var(--ios-easing);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Removable--ios .Removable__content,
+  .Removable--ios .Removable__action--remove {
+    transition: transform .6s var(--ios-easing);
+  }
 }
 
 .Removable--ios .Removable__action--indicator {

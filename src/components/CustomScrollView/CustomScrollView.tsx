@@ -1,6 +1,7 @@
 import React, { createRef, Ref } from 'react';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { multiRef, setRef } from '../../lib/utils';
+import './CustomScrollView.css';
 
 interface Props extends DOMProps {
   windowResize?: boolean;

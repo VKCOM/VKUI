@@ -1,6 +1,6 @@
-import { KeyboardEvent as SyntheticKeyboardEvent } from 'react';
+import { KeyboardEvent } from 'react';
 
-export function shouldTriggerClickOnEnterOrSpace(e: SyntheticKeyboardEvent<HTMLElement>) {
+export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent<HTMLElement>) {
   const { target, key } = e;
   const el = target as HTMLElement;
   const { tagName } = el;
