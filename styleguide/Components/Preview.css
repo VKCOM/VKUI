@@ -1,7 +1,6 @@
 .Preview {
   position: relative;
   border-radius: 14px;
-  background: var(--background_content);
 }
 
 .Preview--layout {
@@ -30,6 +29,7 @@
   max-width: 100%;
   overflow: auto;
   border-radius: inherit;
+  background: var(--background_content);
 }
 
 /*
