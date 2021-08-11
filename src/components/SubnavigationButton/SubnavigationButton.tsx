@@ -62,6 +62,7 @@ export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: Subnavi
     <Tappable
       {...restProps}
       hasActive={false}
+      focusVisibleMode="outside"
       vkuiClass={classNames(
         getClassName('SubnavigationButton', platform),
         `SubnavigationButton--${size}`,

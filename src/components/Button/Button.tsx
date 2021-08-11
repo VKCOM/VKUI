@@ -74,6 +74,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
     <Tappable
       {...restProps}
       Component={restProps.href ? 'a' : Component}
+      focusVisibleMode="outside"
       vkuiClass={
         classNames(
           getClassName('Button', platform),
@@ -114,7 +115,6 @@ Button.defaultProps = {
   size: 's',
   stretched: false,
   stopPropagation: true,
-  hasFocusVisible: true,
 };
 
 export default withAdaptivity(Button, {

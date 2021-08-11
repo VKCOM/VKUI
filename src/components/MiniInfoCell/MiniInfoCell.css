@@ -12,13 +12,13 @@
 }
 
 .MiniInfoCell__icon {
+  margin-right: 12px;
   color: var(--icon_outline_secondary);
 }
 
 .MiniInfoCell__content {
   flex: 1;
   min-width: 0;
-  margin-left: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

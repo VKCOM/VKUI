@@ -19,6 +19,7 @@ import { hasHover } from '@vkontakte/vkjs';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
+import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
 import './Tappable.css';
 
 export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
@@ -45,10 +46,9 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
    */
   hoverMode?: 'opacity' | 'background' | string;
   /**
-   * @ignore Временное свойство для работы над доступностью. Указывает, должен ли компонент показывать focus ring при навигации с клавиатуры.
-   * Исчезнет после того, как мы адаптируем отображение всех компонентов на базе Tappable.
+   * Стиль аутлайна focus visible.
    */
-  hasFocusVisible?: boolean;
+  focusVisibleMode?: FocusVisibleMode;
 }
 
 export interface TappableState {
@@ -132,7 +132,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   static defaultProps = {
     stopPropagation: false,
     disabled: false,
-    hasFocusVisible: false,
+    focusVisibleMode: 'inside',
     hasHover,
     hoverMode: 'background',
     hasActive: true,
@@ -363,7 +363,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       hoverMode,
       hasActive: propsHasActive,
       activeMode,
-      hasFocusVisible,
+      focusVisibleMode,
       ...restProps
     } = this.props;
 
@@ -381,7 +381,6 @@ class Tappable extends Component<TappableProps, TappableState> {
         'Tappable--mouse': hasMouse,
         [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
         [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
-        'Tappable--focus-visible': hasFocusVisible,
         [hoverMode]: hasHover && hovered && !isPresetHoverMode,
         [activeMode]: hasActive && active && !isPresetActiveMode,
       });
@@ -454,6 +453,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                       </span>
                     )}
                     {hasHover && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
+                    {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
                   </RootComponent>
                 );
               }}
