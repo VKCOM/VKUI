@@ -14,3 +14,9 @@ dist/**/*.tmp
 .env
 .gitignore
 package-lock.json
+.github
+
+__image_snapshots__
+*.e2e.*
+*.test.*
+e2e

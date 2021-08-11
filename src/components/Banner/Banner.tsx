@@ -11,6 +11,7 @@ import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
 import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
+import './Banner.css';
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -111,7 +112,6 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
       )}
     >
       <Tappable
-        Component="div"
         vkuiClass="Banner__in"
         activeMode={platform === IOS ? 'opacity' : 'background'}
         disabled={asideMode !== 'expand'}
@@ -139,10 +139,10 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
         </div>
 
         {!!asideMode && (
-          <div vkuiClass={`Banner__aside Banner__aside--${asideMode}`}>
+          <div vkuiClass="Banner__aside">
             {asideMode === 'expand' && <Icon24Chevron />}
 
-            {asideMode === 'dismiss' &&
+            {asideMode === 'dismiss' && (
               <IconButton
                 aria-label={dismissLabel}
                 vkuiClass="Banner__dismiss"
@@ -153,7 +153,7 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
                 {(platform === ANDROID || platform === VKCOM) && <Icon24Cancel />}
                 {platform === IOS && (mode === 'image' ? <Icon24DismissDark /> : <Icon24DismissSubstract />)}
               </IconButton>
-            }
+            )}
           </div>
         )}
       </Tappable>

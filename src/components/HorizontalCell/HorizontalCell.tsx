@@ -8,6 +8,7 @@ import Tappable from '../Tappable/Tappable';
 import Subhead from '../Typography/Subhead/Subhead';
 import Avatar from '../Avatar/Avatar';
 import { HasRef, HasRootRef } from '../../types';
+import './HorizontalCell.css';
 
 interface CellTypographyProps extends HTMLAttributes<HTMLDivElement> {
   size: HorizontalCellProps['size'];

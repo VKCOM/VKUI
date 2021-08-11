@@ -3,15 +3,23 @@ import { Icon16Done } from '@vkontakte/icons';
 import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
+import Caption from '../Typography/Caption/Caption';
 import { HasRootRef } from '../../types';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import './CustomSelectOption.css';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+  /**
+   * @deprecated
+   * Свойство было добавлено по ошибке будет и удалено в 5.0.0
+   */
   option?: any;
   selected?: boolean;
   focused?: boolean;
   hovered?: boolean;
   before?: ReactNode;
   after?: ReactNode;
+  description?: ReactNode;
 }
 
 const CustomSelectOption: FC<CustomSelectOptionProps> = ({
@@ -21,30 +29,36 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   before,
   after,
   option,
+  description,
   ...restProps
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : null;
+  const { sizeY } = useAdaptivity();
 
   return (
     <Text
       {...restProps}
+      Component="div"
       weight="regular"
       role="option"
       title={title}
       aria-selected={selected}
-      vkuiClass={classNames('CustomSelectOption', {
+      vkuiClass={classNames('CustomSelectOption', `CustomSelectOption--sizeY-${sizeY}`, {
         ['CustomSelectOption--hover']: hovered,
         ['CustomSelectOption--selected']: !!selected,
       })}
     >
       {hasReactNode(before) && <div vkuiClass="CustomSelectOption__before">{before}</div>}
-      <div vkuiClass="CustomSelectOption__label">{children}</div>
-      {hasReactNode(after) && <div vkuiClass="CustomSelectOption__after">{after}</div>}
-      {selected && (
-        <div vkuiClass="CustomSelectOption__selectedIcon">
-          <Icon16Done fill="var(--accent)" />
-        </div>
-      )}
+      <div vkuiClass="CustomSelectOption__main">
+        <div vkuiClass="CustomSelectOption__children">{children}</div>
+        {hasReactNode(description) &&
+          <Caption level="1" weight="regular" vkuiClass="CustomSelectOption__description">{description}</Caption>
+        }
+      </div>
+      <div vkuiClass="CustomSelectOption__after">
+        {hasReactNode(after) && <div className="CustomSelectOption__afterIn">{after}</div>}
+        {selected && <Icon16Done vkuiClass="CustomSelectOption__selectedIcon" />}
+      </div>
     </Text>
   );
 };

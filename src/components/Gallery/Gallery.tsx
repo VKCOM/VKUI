@@ -10,6 +10,7 @@ import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import HorizontalScrollArrow from '../HorizontalScroll/HorizontalScrollArrow';
 import { clamp } from '../../helpers/math';
 import { useTimeout } from '../../hooks/useTimeout';
+import './Gallery.css';
 
 export interface BaseGalleryProps extends
   Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragStart' | 'onDragEnd'>,

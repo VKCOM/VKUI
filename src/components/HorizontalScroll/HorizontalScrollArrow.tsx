@@ -4,6 +4,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Tappable from '../Tappable/Tappable';
+import './HorizontalScrollArrow.css';
 
 export interface HorizontalScrollArrowProps {
   onClick: () => void;

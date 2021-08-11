@@ -2,6 +2,7 @@ import { AllHTMLAttributes, ElementType, FC } from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
+import './Caption.css';
 
 export interface CaptionProps extends AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold' | 'bold';

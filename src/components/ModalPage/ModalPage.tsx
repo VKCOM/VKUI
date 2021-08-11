@@ -10,6 +10,7 @@ import { multiRef } from '../../lib/utils';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import './ModalPage.css';
 
 export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps, NavIdProps {
   /**

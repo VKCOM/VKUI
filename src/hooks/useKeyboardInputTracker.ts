@@ -7,8 +7,8 @@ export function useKeyboardInputTracker(): boolean {
 
   const [isKeyboardInputActive, toggleKeyboardInput] = useState<boolean>(true);
 
-  const enableKeyboardInput = useCallback(({ key }: KeyboardEvent) => {
-    if (key.toUpperCase() === 'TAB') {
+  const enableKeyboardInput = useCallback(({ key, keyCode }: KeyboardEvent) => {
+    if (key?.toUpperCase() === 'TAB' || keyCode === 9) {
       toggleKeyboardInput(true);
     }
   }, []);

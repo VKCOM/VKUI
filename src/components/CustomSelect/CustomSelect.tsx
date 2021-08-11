@@ -24,6 +24,7 @@ import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import Caption from '../Typography/Caption/Caption';
 import { warnOnce } from '../../lib/warnOnce';
 import Spinner from '../Spinner/Spinner';
+import './CustomSelect.css';
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 

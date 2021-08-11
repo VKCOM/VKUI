@@ -13,6 +13,7 @@ import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import './Root.css';
 
 const warn = warnOnce('Root');
 
@@ -190,7 +191,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     const {
       popout, modal, platform,
       splitCol, configProvider, activeView: _1, onTransition,
-      window, document, scroll,
+      window, document, scroll, nav,
       ...restProps
     } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;

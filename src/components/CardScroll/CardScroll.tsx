@@ -5,6 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useDOM } from '../../lib/dom';
+import './CardScroll.css';
 
 export interface CardScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   size?: 's' | 'm' | 'l';

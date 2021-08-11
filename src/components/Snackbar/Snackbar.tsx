@@ -19,6 +19,7 @@ import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
+import './Snackbar.css';
 
 export interface SnackbarProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   /**

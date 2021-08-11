@@ -10,6 +10,7 @@ import { HasAlign } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { Platform, IOS, VKCOM } from '../../lib/platform';
+import './Button.css';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
@@ -73,6 +74,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
     <Tappable
       {...restProps}
       Component={restProps.href ? 'a' : Component}
+      focusVisibleMode="outside"
       vkuiClass={
         classNames(
           getClassName('Button', platform),
@@ -113,7 +115,6 @@ Button.defaultProps = {
   size: 's',
   stretched: false,
   stopPropagation: true,
-  hasFocusVisible: true,
 };
 
 export default withAdaptivity(Button, {

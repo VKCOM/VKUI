@@ -11,6 +11,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import Text from '../Typography/Text/Text';
 import Headline from '../Typography/Headline/Headline';
+import './Checkbox.css';
 
 export interface CheckboxProps extends
   InputHTMLAttributes<HTMLInputElement>,

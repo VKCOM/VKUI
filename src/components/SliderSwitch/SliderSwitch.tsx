@@ -2,6 +2,7 @@ import React, { HTMLAttributes, KeyboardEvent, RefObject, createRef } from 'reac
 import SliderSwitchButton from './SliderSwitchButton';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
+import './SliderSwitch.css';
 
 export interface SliderSwitchOptionInterface {
   name: string;
