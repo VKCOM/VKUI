@@ -38,6 +38,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   return (
     <Text
       {...restProps}
+      Component="div"
       weight="regular"
       role="option"
       title={title}
@@ -56,7 +57,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       </div>
       <div vkuiClass="CustomSelectOption__after">
         {hasReactNode(after) && <div className="CustomSelectOption__afterIn">{after}</div>}
-        {selected && <Icon16Done fill="var(--accent)" vkuiClass="CustomSelectOption__selectedIcon" />}
+        {selected && <Icon16Done vkuiClass="CustomSelectOption__selectedIcon" />}
       </div>
     </Text>
   );

@@ -48,6 +48,10 @@
   overflow: hidden;
 }
 
+.CustomSelectOption__selectedIcon {
+  color: var(--accent);
+}
+
 .CustomSelectOption__selectedIcon:not(:first-child) {
   margin-left: 8px;
 }
