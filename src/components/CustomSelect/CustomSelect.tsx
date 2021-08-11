@@ -196,6 +196,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onBlur = () => {
+    // TODO может я чего-то не понимаю, но тут не до конца дублируется логика close(). Возможно его стоит просто тут вызывать.
     this.resetKeyboardInput();
 
     this.setState(() => ({
