@@ -501,6 +501,20 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       </CustomScrollView>
     );
 
+    let resolvedContent;
+
+    if (typeof renderDropdown === 'function') {
+      resolvedContent = renderDropdown({ defaultDropdownContent });
+    } else if (fetching) {
+      resolvedContent = (
+        <div vkuiClass="CustomSelect__fetching">
+          <Spinner size="small" />
+        </div>
+      );
+    } else {
+      resolvedContent = defaultDropdownContent;
+    }
+
     return (
       <label
         vkuiClass={getClassName('CustomSelect', platform)}
@@ -564,14 +578,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
             })}
             onMouseLeave={this.resetFocusedOption}
           >
-            {typeof renderDropdown === 'function' ?
-              renderDropdown({ defaultDropdownContent }) :
-              fetching ?
-                <div vkuiClass="CustomSelect__fetching">
-                  <Spinner size="small" />
-                </div> :
-                defaultDropdownContent
-            }
+            {resolvedContent}
           </div>
         }
       </label>
