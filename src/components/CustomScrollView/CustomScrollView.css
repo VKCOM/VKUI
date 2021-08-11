@@ -60,3 +60,11 @@
   opacity: .56;
   transform: scaleX(1.34);
 }
+
+/**
+ * CustomSelect
+ */
+
+.CustomSelect .CustomScrollView {
+  max-height: 160px;
+}

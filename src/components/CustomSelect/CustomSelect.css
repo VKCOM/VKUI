@@ -45,10 +45,6 @@
   box-shadow: 0 -2px 2px rgba(0, 0, 0, .06), 0 0 2px rgba(0, 0, 0, .03);
 }
 
-.CustomSelect__options .CustomScrollView {
-  max-height: 160px;
-}
-
 .CustomSelect__open.Select--mimicry:focus .FormField__border {
   border-color: var(--field_border);
 }
