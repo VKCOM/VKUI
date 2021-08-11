@@ -207,4 +207,61 @@ describe('CustomSelect', () => {
 
     expect(screen.getByTitle('Joe').getAttribute('aria-selected')).toEqual('true');
   });
+
+  it('prefers fetching to options', () => {
+    render(<CustomSelect
+      fetching
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    fireEvent.click(screen.getByTestId('target'));
+
+    expect(screen.queryByTitle('Josh')).toBeNull();
+    expect(document.querySelector('.CustomSelect__fetching')).not.toBeNull();
+  });
+
+  it('prefers renderDropdown to fetching and options', () => {
+    render(<CustomSelect
+      fetching
+      renderDropdown={() => <div data-testid="custom-dropdown">Hello everyone</div>}
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    fireEvent.click(screen.getByTestId('target'));
+
+    expect(screen.queryByTitle('Josh')).toBeNull();
+    expect(document.querySelector('.CustomSelect__fetching')).toBeNull();
+    expect(screen.getByTestId('custom-dropdown')).not.toBeNull();
+  });
+
+  it('fires onOpen and onClose correctly', () => {
+    const openCb = jest.fn(() => null);
+    const closeCb = jest.fn(() => null);
+    render(<CustomSelect
+      onOpen={openCb}
+      onClose={closeCb}
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    fireEvent.click(screen.getByTestId('target')); // Открываем по клику
+
+    expect(openCb).toBeCalledTimes(1);
+
+    fireEvent.blur(screen.getByTestId('target')); // Закрываем по блюру
+
+    expect(closeCb).toBeCalledTimes(1);
+
+    fireEvent.focus(screen.getByTestId('target'));
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // Открываем по Enter
+
+    expect(openCb).toBeCalledTimes(2);
+
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // ArrowDown
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Закрываем выбором опции
+
+    expect(closeCb).toBeCalledTimes(2);
+  });
 });
