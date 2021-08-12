@@ -16,6 +16,7 @@ class Example extends React.Component {
     }, {
       label: 'Новосибирск',
       description: 'Россия',
+      disabled: true,
       value: 2
     }, {
       label: 'Нью-Йорк',

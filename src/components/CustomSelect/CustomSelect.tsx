@@ -26,11 +26,35 @@ import { warnOnce } from '../../lib/warnOnce';
 import Spinner from '../Spinner/Spinner';
 import './CustomSelect.css';
 
+const findIndexAfter = (options: CustomSelectOptionInterface[], startIndex = -1) => {
+  if (startIndex >= options.length - 1) {
+    return -1;
+  }
+  return options.findIndex((option, i) => i > startIndex && !option.disabled);
+};
+
+const findIndexBefore = (options: CustomSelectOptionInterface[], endIndex: number = options.length) => {
+  let result = -1;
+  if (endIndex <= 0) {
+    return result;
+  }
+  for (let i = endIndex - 1; i >= 0; i--) {
+    let option = options[i];
+
+    if (!option.disabled) {
+      result = i;
+      break;
+    }
+  }
+  return result;
+};
+
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
 export interface CustomSelectOptionInterface {
   value: SelectValue;
   label: string;
+  disabled?: boolean;
   [index: string]: any;
 }
 
@@ -248,16 +272,13 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   }
 
   focusOptionByIndex = (index: number) => {
-    const { focusedOptionIndex } = this.state;
-    const oldIndex = focusedOptionIndex;
-
-    if (index < 0) {
-      index = this.state.options.length - 1;
-    } else if (index >= this.state.options.length) {
-      index = 0;
+    if (index < 0 || index > this.state.options.length - 1) {
+      return;
     }
 
-    if (index === oldIndex) {
+    const option = this.state.options[index];
+
+    if (option.disabled) {
       return;
     }
 
@@ -273,18 +294,18 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     let index = focusedOptionIndex;
 
     if (type === 'next') {
-      index = focusedOptionIndex + 1;
+      const nextIndex = findIndexAfter(this.state.options, index);
+      index = nextIndex === -1 ? findIndexAfter(this.state.options) : nextIndex; // Следующий за index или первый валидный до index
     } else if (type === 'prev') {
-      index = focusedOptionIndex - 1;
+      const beforeIndex = findIndexBefore(this.state.options, index);
+      index = beforeIndex === -1 ? findIndexBefore(this.state.options) : beforeIndex; // Предшествующий index или последний валидный после index
     }
 
     this.focusOptionByIndex(index);
   };
 
   handleOptionHover: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
-    this.setState({
-      focusedOptionIndex: Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget),
-    });
+    this.focusOptionByIndex(Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget));
   };
 
   handleOptionDown: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
@@ -446,6 +467,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           hovered,
           children: option.label,
           selected,
+          disabled: option.disabled,
           onClick: this.selectFocused,
           onMouseDown: this.handleOptionDown,
           onMouseEnter: this.handleOptionHover,
