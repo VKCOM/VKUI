@@ -14,6 +14,9 @@ describe('CustomSelectOption', () => {
     hovered: [true],
   }, {
     children: ['Мария Саломея'],
+    description: ['город Санкт-Петербург, Ленинградская область, Россия'],
+  }, {
+    children: ['Мария Саломея'],
     disabled: [true],
     hovered: [true, false],
   }], {
