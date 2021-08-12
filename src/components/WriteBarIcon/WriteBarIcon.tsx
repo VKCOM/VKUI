@@ -40,18 +40,22 @@ export const WriteBarIcon: FC<WriteBarIconProps> = ({
   const platform = usePlatform();
 
   let icon: ReactNode;
+  let ariaLabel: string;
 
   switch (mode) {
     case 'attach':
       icon = platform === IOS ? <Icon28AddCircleOutline /> : <Icon28AttachOutline />;
+      ariaLabel = 'Прикрепить файл';
       break;
 
     case 'send':
       icon = platform === IOS ? <Icon48WritebarSend /> : <Icon24Send />;
+      ariaLabel = 'Отправить';
       break;
 
     case 'done':
       icon = platform === IOS ? <Icon48WritebarDone /> : <Icon28CheckCircleOutline />;
+      ariaLabel = 'Готово';
       break;
 
     default:
@@ -60,10 +64,12 @@ export const WriteBarIcon: FC<WriteBarIconProps> = ({
 
   return (
     <Tappable
+      aria-label={ariaLabel}
       {...restProps}
       Component="button"
       hasHover={false}
       activeMode="WriteBarIcon__active"
+      aria-label={restProps['aria-label'] ? restProps['aria-label'] : ariaLabel}
       vkuiClass={classNames(getClassName('WriteBarIcon', platform), {
         [`WriteBarIcon--${mode}`]: !!mode,
       })}
