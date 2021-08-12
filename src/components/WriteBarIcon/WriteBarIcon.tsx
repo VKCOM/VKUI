@@ -31,14 +31,13 @@ export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElemen
   'aria-label'?: string;
 }
 
-export const WriteBarIcon: FC<WriteBarIconProps> = (props: WriteBarIconProps) => {
+export const WriteBarIcon: FC<WriteBarIconProps> = ({
+  mode,
+  children,
+  count,
+  ...restProps
+}: WriteBarIconProps) => {
   const platform = usePlatform();
-  const {
-    mode,
-    children,
-    count,
-    ...restProps
-  } = props;
 
   let icon: ReactNode;
 
