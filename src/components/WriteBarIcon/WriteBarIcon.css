@@ -2,7 +2,7 @@
   background: none;
   border: 0;
   position: relative;
-  color: var(--writebar_icon);
+  color: var(--icon_secondary);
   height: 52px;
   width: 44px;
   cursor: pointer;
@@ -43,7 +43,8 @@
   border-radius: 50%;
 }
 
-.WriteBarIcon--send:not(.WriteBarIcon--disabled) {
+.WriteBarIcon--send,
+.WriteBarIcon--done {
   color: var(--accent);
 }
 
@@ -52,6 +53,10 @@
  */
 .WriteBarIcon--ios {
   color: var(--writebar_icon);
+}
+
+.WriteBarIcon--ios.WriteBarIcon--send:not(:disabled) {
+  color: var(--accent);
 }
 
 .WriteBarIcon--ios.WriteBarIcon--send,
@@ -67,20 +72,4 @@
 .WriteBarIcon--ios.WriteBarIcon--send:last-child,
 .WriteBarIcon--ios.WriteBarIcon--done:last-child {
   margin-right: -4px;
-}
-
-/**
- * Android + vkcom
- */
-
-.WriteBarIcon--android,
-.WriteBarIcon--vkcom {
-  color: var(--icon_secondary);
-}
-
-.WriteBarIcon--android.WriteBarIcon--send,
-.WriteBarIcon--vkcom.WriteBarIcon--send,
-.WriteBarIcon--android.WriteBarIcon--done,
-.WriteBarIcon--vkcom.WriteBarIcon--done {
-  color: var(--accent);
 }
