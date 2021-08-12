@@ -114,7 +114,7 @@ const warn = warnOnce('CustomSelect');
 class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
   static defaultProps: CustomSelectProps = {
     searchable: false,
-    renderOption(props: CustomSelectOptionProps): ReactNode {
+    renderOption({ option, ...props }): ReactNode {
       return (
         <CustomSelectOption {...props} />
       );

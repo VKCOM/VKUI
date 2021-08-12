@@ -6,13 +6,10 @@ import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
 import { HasRootRef } from '../../types';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { warnOnce } from '../../lib/warnOnce';
 import './CustomSelectOption.css';
 
 export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
-  /**
-   * @deprecated
-   * Свойство было добавлено по ошибке будет и удалено в 5.0.0
-   */
   option?: any;
   selected?: boolean;
   focused?: boolean;
@@ -22,6 +19,8 @@ export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>,
   description?: ReactNode;
   disabled?: boolean;
 }
+
+const warn = warnOnce('CustomSelectOption');
 
 const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   children,
@@ -36,6 +35,10 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : null;
   const { sizeY } = useAdaptivity();
+
+  if (!!option && process.env.NODE_ENV === 'development') {
+    warn('Свойство option было добавлено по ошибке будет и удалено в 5.0.0');
+  }
 
   return (
     <Text
