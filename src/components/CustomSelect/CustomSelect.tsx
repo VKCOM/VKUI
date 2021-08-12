@@ -26,20 +26,27 @@ import { warnOnce } from '../../lib/warnOnce';
 import Spinner from '../Spinner/Spinner';
 import './CustomSelect.css';
 
-const findIndexAfter = (array: CustomSelectOptionInterface[], startIndex = -1) => {
-  if (startIndex >= array.length - 1) {
+const findIndexAfter = (options: CustomSelectOptionInterface[], startIndex = -1) => {
+  if (startIndex >= options.length - 1) {
     return -1;
   }
-  const result = array.slice(startIndex + 1).findIndex((item) => !item.disabled);
-  return result === -1 ? result : startIndex + result + 1;
+  return options.findIndex((option, i) => i > startIndex && !option.disabled);
 };
 
-const findIndexBefore = (array: CustomSelectOptionInterface[], endIndex: number = array.length) => {
+const findIndexBefore = (options: CustomSelectOptionInterface[], endIndex: number = options.length) => {
+  let result = -1;
   if (endIndex <= 0) {
-    return -1;
+    return result;
   }
-  const result = array.slice(0, endIndex).reverse().findIndex((item) => !item.disabled);
-  return result === -1 ? result : endIndex - result - 1;
+  for (let i = endIndex - 1; i >= 0; i--) {
+    let option = options[i];
+
+    if (!option.disabled) {
+      result = i;
+      break;
+    }
+  }
+  return result;
 };
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
