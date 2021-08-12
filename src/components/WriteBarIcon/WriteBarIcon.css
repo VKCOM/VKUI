@@ -6,6 +6,7 @@
   height: 52px;
   width: 44px;
   cursor: pointer;
+  border-radius: 8px;
 }
 
 .WriteBarIcon__in {
@@ -53,6 +54,7 @@
  */
 .WriteBarIcon--ios {
   color: var(--writebar_icon);
+  border-radius: 10px;
 }
 
 .WriteBarIcon--ios.WriteBarIcon--send:not(:disabled) {
@@ -72,4 +74,12 @@
 .WriteBarIcon--ios.WriteBarIcon--send:last-child,
 .WriteBarIcon--ios.WriteBarIcon--done:last-child {
   margin-right: -4px;
+}
+
+/**
+ * VKCOM
+ */
+.WriteBarIcon--vkcom {
+  color: var(--writebar_icon);
+  border-radius: 4px;
 }
