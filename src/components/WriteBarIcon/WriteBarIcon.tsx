@@ -11,7 +11,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS } from '../../lib/platform';
-import Caption from '../Typography/Caption/Caption';
+import Counter from '../Counter/Counter';
 import Tappable from '../Tappable/Tappable';
 import { warnOnce } from '../../lib/warnOnce';
 import './WriteBarIcon.css';
@@ -83,7 +83,7 @@ export const WriteBarIcon: FC<WriteBarIconProps> = ({
     >
       <span vkuiClass="WriteBarIcon__in">
         {icon || children}
-        {count && <Caption vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>}
+        {count && <Counter vkuiClass="WriteBarIcon__counter" size="s">{count}</Counter>}
       </span>
     </Tappable>
   );

@@ -26,22 +26,11 @@
   opacity: .6;
 }
 
-.WriteBarIcon__count {
-  box-sizing: border-box;
+.WriteBarIcon__counter {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 20px;
-  height: 20px;
-  padding: 0 2px;
-  border: 2px solid var(--background_content);
-  text-align: center;
-  color: var(--button_commerce_foreground);
-  background: var(--button_commerce_background);
-  border-radius: 50%;
+  top: 6px;
+  right: 2px;
+  box-shadow: 0 0 0 2px var(--background_content);
 }
 
 .WriteBarIcon--send,
