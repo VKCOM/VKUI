@@ -29,7 +29,6 @@ export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElemen
    * Значение счётчика для кнопки. Например, для количества прикреплённых файлов.
    */
   count?: number;
-  'aria-label'?: string;
 }
 
 export const WriteBarIcon: FC<WriteBarIconProps> = ({
