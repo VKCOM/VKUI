@@ -47,7 +47,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       aria-disabled={disabled}
       aria-selected={selected}
       vkuiClass={classNames('CustomSelectOption', `CustomSelectOption--sizeY-${sizeY}`, {
-        'CustomSelectOption--hover': hovered,
+        'CustomSelectOption--hover': hovered && !disabled,
         'CustomSelectOption--selected': selected,
         'CustomSelectOption--disabled': disabled,
       })}

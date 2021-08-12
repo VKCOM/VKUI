@@ -12,6 +12,10 @@ describe('CustomSelectOption', () => {
   }, {
     children: ['Мария Саломея'],
     hovered: [true],
+  }, {
+    children: ['Мария Саломея'],
+    disabled: [true],
+    hovered: [true, false],
   }], {
     adaptivity: { sizeY: SizeType.REGULAR },
   });

@@ -132,7 +132,7 @@ describe('CustomSelect', () => {
 
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'Mi' } });
     expect((screen.getByTestId('target') as HTMLInputElement).value).toBe('Mi');
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // ArrowUp
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 38 }); // ArrowUp
     fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Enter
     expect(screen.getByTestId('target').textContent).toBe('Mike');
   });
@@ -255,7 +255,7 @@ describe('CustomSelect', () => {
     expect(closeCb).toBeCalledTimes(1);
 
     fireEvent.focus(screen.getByTestId('target'));
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // Открываем по Enter
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Открываем по Enter
 
     expect(openCb).toBeCalledTimes(2);
 
@@ -263,5 +263,34 @@ describe('CustomSelect', () => {
     fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Закрываем выбором опции
 
     expect(closeCb).toBeCalledTimes(2);
+  });
+
+  it('is controlled by the keyboard', () => {
+    const { rerender } = render(<CustomSelect
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }, { value: 3, label: 'Bob' }]}
+    />);
+
+    fireEvent.focus(screen.getByTestId('target'));
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 });
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 });
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 });
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 });
+
+    expect(document.querySelector('.CustomSelectOption--hover').textContent).toEqual('Bob');
+
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 38 });
+
+    expect(document.querySelector('.CustomSelectOption--hover').textContent).toEqual('Josh');
+
+    rerender(
+      <CustomSelect
+        data-testid="target"
+        options={[{ disabled: true, value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }, { value: 3, label: 'Bob' }]}
+      />);
+
+    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 38 });
+
+    expect(document.querySelector('.CustomSelectOption--hover').textContent).toEqual('Bob');
   });
 });
