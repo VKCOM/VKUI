@@ -14,6 +14,11 @@
   min-height: 44px;
 }
 
+.CustomSelectOption--disabled {
+  cursor: default;
+  opacity: .5;
+}
+
 .CustomSelectOption--hover {
   background-color: var(--button_muted_background);
 }

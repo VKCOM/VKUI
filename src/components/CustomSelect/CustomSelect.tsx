@@ -26,11 +26,28 @@ import { warnOnce } from '../../lib/warnOnce';
 import Spinner from '../Spinner/Spinner';
 import './CustomSelect.css';
 
+const findIndexAfter = (array: CustomSelectOptionInterface[], startIndex = -1) => {
+  if (startIndex >= array.length - 1) {
+    return -1;
+  }
+  const result = array.slice(startIndex + 1).findIndex((item) => !item.disabled);
+  return result === -1 ? result : startIndex + result + 1;
+};
+
+const findIndexBefore = (array: CustomSelectOptionInterface[], endIndex: number = array.length) => {
+  if (endIndex <= 0) {
+    return -1;
+  }
+  const result = array.slice(0, endIndex).reverse().findIndex((item) => !item.disabled);
+  return result === -1 ? result : endIndex - result - 1;
+};
+
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
 export interface CustomSelectOptionInterface {
   value: SelectValue;
   label: string;
+  disabled?: boolean;
   [index: string]: any;
 }
 
@@ -111,7 +128,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     this.state = {
       opened: false,
-      focusedOptionIndex: -1,
+      focusedOptionIndex: 0,
       selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
       nativeSelectValue: initialValue,
       options: props.options,
@@ -178,7 +195,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.setState(() => ({
       inputValue: '',
       opened: false,
-      focusedOptionIndex: -1,
+      focusedOptionIndex: 0,
       options: this.props.options,
     }));
     typeof this.props.onClose === 'function' && this.props.onClose();
@@ -248,16 +265,13 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   }
 
   focusOptionByIndex = (index: number) => {
-    const { focusedOptionIndex } = this.state;
-    const oldIndex = focusedOptionIndex;
-
-    if (index < 0) {
-      index = this.state.options.length - 1;
-    } else if (index >= this.state.options.length) {
-      index = 0;
+    if (index < 0 || index > this.state.options.length - 1) {
+      return;
     }
 
-    if (index === oldIndex) {
+    const option = this.state.options[index];
+
+    if (option.disabled) {
       return;
     }
 
@@ -273,18 +287,18 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     let index = focusedOptionIndex;
 
     if (type === 'next') {
-      index = focusedOptionIndex + 1;
+      const nextIndex = findIndexAfter(this.state.options, index);
+      index = nextIndex === -1 ? findIndexAfter(this.state.options) : nextIndex; // Следующий за index или первый валидный до index
     } else if (type === 'prev') {
-      index = focusedOptionIndex - 1;
+      const beforeIndex = findIndexBefore(this.state.options, index);
+      index = beforeIndex === -1 ? findIndexBefore(this.state.options) : beforeIndex; // Предшествующий index или последний валидный после index
     }
 
     this.focusOptionByIndex(index);
   };
 
   handleOptionHover: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
-    this.setState({
-      focusedOptionIndex: Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget),
-    });
+    this.focusOptionByIndex(Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget));
   };
 
   handleOptionDown: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
@@ -293,7 +307,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   resetFocusedOption = () => {
     this.setState(() => ({
-      focusedOptionIndex: -1,
+      focusedOptionIndex: 0,
     }));
   };
 
@@ -446,6 +460,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           hovered,
           children: option.label,
           selected,
+          disabled: option.disabled,
           onClick: this.selectFocused,
           onMouseDown: this.handleOptionDown,
           onMouseEnter: this.handleOptionHover,

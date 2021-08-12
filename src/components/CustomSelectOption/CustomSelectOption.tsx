@@ -20,6 +20,7 @@ export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>,
   before?: ReactNode;
   after?: ReactNode;
   description?: ReactNode;
+  disabled?: boolean;
 }
 
 const CustomSelectOption: FC<CustomSelectOptionProps> = ({
@@ -30,6 +31,7 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
   after,
   option,
   description,
+  disabled,
   ...restProps
 }: CustomSelectOptionProps) => {
   const title = typeof children === 'string' ? children : null;
@@ -42,10 +44,12 @@ const CustomSelectOption: FC<CustomSelectOptionProps> = ({
       weight="regular"
       role="option"
       title={title}
+      aria-disabled={disabled}
       aria-selected={selected}
       vkuiClass={classNames('CustomSelectOption', `CustomSelectOption--sizeY-${sizeY}`, {
-        ['CustomSelectOption--hover']: hovered,
-        ['CustomSelectOption--selected']: !!selected,
+        'CustomSelectOption--hover': hovered,
+        'CustomSelectOption--selected': selected,
+        'CustomSelectOption--disabled': disabled,
       })}
     >
       {hasReactNode(before) && <div vkuiClass="CustomSelectOption__before">{before}</div>}
