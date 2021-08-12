@@ -132,8 +132,8 @@ describe('CustomSelect', () => {
 
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'Mi' } });
     expect((screen.getByTestId('target') as HTMLInputElement).value).toBe('Mi');
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 38 }); // ArrowUp
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Enter
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowUp', code: 'ArrowUp' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
     expect(screen.getByTestId('target').textContent).toBe('Mike');
   });
 
@@ -147,8 +147,8 @@ describe('CustomSelect', () => {
 
     fireEvent.click(screen.getByTestId('target'));
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'usa' } });
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // ArrowDown
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Enter
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowUp', code: 'ArrowUp' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
     expect(screen.getByTestId('target').textContent).toBe('New York');
   });
 
@@ -246,21 +246,21 @@ describe('CustomSelect', () => {
       options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
     />);
 
-    fireEvent.click(screen.getByTestId('target')); // Открываем по клику
+    fireEvent.click(screen.getByTestId('target'));
 
     expect(openCb).toBeCalledTimes(1);
 
-    fireEvent.blur(screen.getByTestId('target')); // Закрываем по блюру
+    fireEvent.blur(screen.getByTestId('target'));
 
     expect(closeCb).toBeCalledTimes(1);
 
     fireEvent.focus(screen.getByTestId('target'));
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Открываем по Enter
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
 
     expect(openCb).toBeCalledTimes(2);
 
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // ArrowDown
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Закрываем выбором опции
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowDown', code: 'ArrowDown' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
 
     expect(closeCb).toBeCalledTimes(2);
   });
@@ -272,14 +272,14 @@ describe('CustomSelect', () => {
     />);
 
     fireEvent.focus(screen.getByTestId('target'));
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 });
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 });
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 });
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowDown', code: 'ArrowDown' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowDown', code: 'ArrowDown' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowDown', code: 'ArrowDown' });
 
     expect(document.querySelector('.CustomSelectOption--hover').textContent).toEqual('Bob');
 
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 38 });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowUp', code: 'ArrowUp' });
 
     expect(document.querySelector('.CustomSelectOption--hover').textContent).toEqual('Josh');
 
@@ -289,7 +289,7 @@ describe('CustomSelect', () => {
         options={[{ disabled: true, value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }, { value: 3, label: 'Bob' }]}
       />);
 
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 38 });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowUp', code: 'ArrowUp' });
 
     expect(document.querySelector('.CustomSelectOption--hover').textContent).toEqual('Bob');
   });
