@@ -12,6 +12,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS } from '../../lib/platform';
 import Caption from '../Typography/Caption/Caption';
+import Tappable from '../Tappable/Tappable';
 import './WriteBarIcon.css';
 
 export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -59,16 +60,19 @@ export const WriteBarIcon: FC<WriteBarIconProps> = ({
   }
 
   return (
-    <button
-      type="button"
+    <Tappable
       {...restProps}
+      Component="button"
+      hasHover={false}
+      activeMode="WriteBarIcon__active"
       vkuiClass={classNames(getClassName('WriteBarIcon', platform), {
         [`WriteBarIcon--${mode}`]: !!mode,
-        'WriteBarIcon--disabled': restProps.disabled,
       })}
     >
-      {icon || children}
-      {count && <Caption vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>}
-    </button>
+      <span vkuiClass="WriteBarIcon__in">
+        {icon || children}
+        {count && <Caption vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>}
+      </span>
+    </Tappable>
   );
 };
