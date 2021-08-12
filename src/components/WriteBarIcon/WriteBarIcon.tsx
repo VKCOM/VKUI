@@ -13,6 +13,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { IOS } from '../../lib/platform';
 import Caption from '../Typography/Caption/Caption';
 import Tappable from '../Tappable/Tappable';
+import { warnOnce } from '../../lib/warnOnce';
 import './WriteBarIcon.css';
 
 export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -30,6 +31,9 @@ export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElemen
    */
   count?: number;
 }
+
+const warn = warnOnce('WriteBarIcon');
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 export const WriteBarIcon: FC<WriteBarIconProps> = ({
   mode,
@@ -62,6 +66,10 @@ export const WriteBarIcon: FC<WriteBarIconProps> = ({
       break;
   }
 
+  if (IS_DEV && !restProps['aria-label'] && !ariaLabel) {
+    warn('[WriteBarIcon/a11y] У WriteBarIcon нет aria-label. Кнопка будет недоступной для части пользователей.');
+  }
+
   return (
     <Tappable
       aria-label={ariaLabel}
@@ -69,7 +77,6 @@ export const WriteBarIcon: FC<WriteBarIconProps> = ({
       Component="button"
       hasHover={false}
       activeMode="WriteBarIcon__active"
-      aria-label={restProps['aria-label'] ? restProps['aria-label'] : ariaLabel}
       vkuiClass={classNames(getClassName('WriteBarIcon', platform), {
         [`WriteBarIcon--${mode}`]: !!mode,
       })}
