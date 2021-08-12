@@ -128,7 +128,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     this.state = {
       opened: false,
-      focusedOptionIndex: 0,
+      focusedOptionIndex: -1,
       selectedOptionIndex: this.findSelectedIndex(props.options, initialValue),
       nativeSelectValue: initialValue,
       options: props.options,
@@ -195,7 +195,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.setState(() => ({
       inputValue: '',
       opened: false,
-      focusedOptionIndex: 0,
+      focusedOptionIndex: -1,
       options: this.props.options,
     }));
     typeof this.props.onClose === 'function' && this.props.onClose();
@@ -307,7 +307,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   resetFocusedOption = () => {
     this.setState(() => ({
-      focusedOptionIndex: 0,
+      focusedOptionIndex: -1,
     }));
   };
 
