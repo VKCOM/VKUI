@@ -132,8 +132,8 @@ describe('CustomSelect', () => {
 
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'Mi' } });
     expect((screen.getByTestId('target') as HTMLInputElement).value).toBe('Mi');
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // ArrowUp
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Enter
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowUp', code: 'ArrowUp' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
     expect(screen.getByTestId('target').textContent).toBe('Mike');
   });
 
@@ -147,8 +147,8 @@ describe('CustomSelect', () => {
 
     fireEvent.click(screen.getByTestId('target'));
     fireEvent.change(screen.getByTestId('target'), { target: { value: 'usa' } });
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 40 }); // ArrowDown
-    fireEvent.keyDown(screen.getByTestId('target'), { keyCode: 13 }); // Enter
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowUp', code: 'ArrowUp' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
     expect(screen.getByTestId('target').textContent).toBe('New York');
   });
 
@@ -206,5 +206,91 @@ describe('CustomSelect', () => {
     />);
 
     expect(screen.getByTitle('Joe').getAttribute('aria-selected')).toEqual('true');
+  });
+
+  it('prefers fetching to options', () => {
+    render(<CustomSelect
+      fetching
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    fireEvent.click(screen.getByTestId('target'));
+
+    expect(screen.queryByTitle('Josh')).toBeNull();
+    expect(document.querySelector('.CustomSelect__fetching')).not.toBeNull();
+  });
+
+  it('prefers renderDropdown to fetching and options', () => {
+    render(<CustomSelect
+      fetching
+      renderDropdown={() => <div data-testid="custom-dropdown">Hello everyone</div>}
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    fireEvent.click(screen.getByTestId('target'));
+
+    expect(screen.queryByTitle('Josh')).toBeNull();
+    expect(document.querySelector('.CustomSelect__fetching')).toBeNull();
+    expect(screen.getByTestId('custom-dropdown')).not.toBeNull();
+  });
+
+  it('fires onOpen and onClose correctly', () => {
+    const openCb = jest.fn(() => null);
+    const closeCb = jest.fn(() => null);
+    render(<CustomSelect
+      onOpen={openCb}
+      onClose={closeCb}
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }]}
+    />);
+
+    fireEvent.click(screen.getByTestId('target'));
+
+    expect(openCb).toBeCalledTimes(1);
+
+    fireEvent.blur(screen.getByTestId('target'));
+
+    expect(closeCb).toBeCalledTimes(1);
+
+    fireEvent.focus(screen.getByTestId('target'));
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
+
+    expect(openCb).toBeCalledTimes(2);
+
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowDown', code: 'ArrowDown' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
+
+    expect(closeCb).toBeCalledTimes(2);
+  });
+
+  it('is controlled by the keyboard', () => {
+    const { rerender } = render(<CustomSelect
+      data-testid="target"
+      options={[{ value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }, { value: 3, label: 'Bob' }]}
+    />);
+
+    fireEvent.focus(screen.getByTestId('target'));
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'Enter', code: 'Enter' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowDown', code: 'ArrowDown' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowDown', code: 'ArrowDown' });
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowDown', code: 'ArrowDown' });
+
+    expect(document.querySelector('.CustomSelectOption--hover').textContent).toEqual('Bob');
+
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowUp', code: 'ArrowUp' });
+
+    expect(document.querySelector('.CustomSelectOption--hover').textContent).toEqual('Josh');
+
+    rerender(
+      <CustomSelect
+        data-testid="target"
+        options={[{ disabled: true, value: 0, label: 'Mike' }, { value: 1, label: 'Josh' }, { value: 3, label: 'Bob' }]}
+      />);
+
+    fireEvent.keyDown(screen.getByTestId('target'), { key: 'ArrowUp', code: 'ArrowUp' });
+
+    expect(document.querySelector('.CustomSelectOption--hover').textContent).toEqual('Bob');
   });
 });

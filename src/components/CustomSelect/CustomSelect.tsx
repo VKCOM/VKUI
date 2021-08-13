@@ -24,13 +24,38 @@ import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import Caption from '../Typography/Caption/Caption';
 import { warnOnce } from '../../lib/warnOnce';
 import { Dropdown } from '../Dropdown/Dropdown';
+import Spinner from '../Spinner/Spinner';
 import './CustomSelect.css';
+
+const findIndexAfter = (options: CustomSelectOptionInterface[], startIndex = -1) => {
+  if (startIndex >= options.length - 1) {
+    return -1;
+  }
+  return options.findIndex((option, i) => i > startIndex && !option.disabled);
+};
+
+const findIndexBefore = (options: CustomSelectOptionInterface[], endIndex: number = options.length) => {
+  let result = -1;
+  if (endIndex <= 0) {
+    return result;
+  }
+  for (let i = endIndex - 1; i >= 0; i--) {
+    let option = options[i];
+
+    if (!option.disabled) {
+      result = i;
+      break;
+    }
+  }
+  return result;
+};
 
 type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
 
 export interface CustomSelectOptionInterface {
   value: SelectValue;
   label: string;
+  disabled?: boolean;
   [index: string]: any;
 }
 
@@ -63,12 +88,25 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
   /**
    * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
    */
-  filterFn?: (value: string, option: CustomSelectOptionInterface) => boolean;
+  filterFn?: false | ((value: string, option: CustomSelectOptionInterface) => boolean);
   popupDirection?: 'top' | 'bottom';
   /**
-   * В качестве аргумента принимает валидные для [CustomSelectOption](#/CustomSelectOption) свойства
+   * Рендер-проп для кастомного рендера опции.
+   * В объекте аргумента приходят [свойства опции](#/CustomSelectOption?id=props)
    */
   renderOption?: (props: CustomSelectOptionProps) => ReactNode;
+  /**
+   * Рендер-проп для кастомного рендера содержимого дропдауна.
+   * В defaultDropdownContent содержится список опций в виде скроллящегося блока.
+   */
+  renderDropdown?: ({ defaultDropdownContent }: { defaultDropdownContent: ReactNode }) => ReactNode;
+  /**
+   * Если true, то в дропдауне вместо списка опций рисуется спиннер. При переданных renderDropdown и fetching: true,
+   * "победит" renderDropdown
+   */
+  fetching?: boolean;
+  onClose?: VoidFunction;
+  onOpen?: VoidFunction;
 }
 
 type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
@@ -132,6 +170,14 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     return options[selectedOptionIndex];
   };
 
+  get areOptionsShown() {
+    return this.scrollBoxRef.current !== null;
+  }
+
+  filter = (options: CustomSelectProps['options'], inputValue: string, filterFn: CustomSelectProps['filterFn']) => {
+    return typeof filterFn === 'function' ? options.filter((option) => filterFn(inputValue, option)) : options;
+  };
+
   findSelectedIndex(options: CustomSelectOptionInterface[], value: SelectValue) {
     return options.findIndex((item) => {
       value = typeof item.value === 'number' ? Number(value) : value;
@@ -150,6 +196,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         this.scrollToElement(selectedOptionIndex, true);
       }
     });
+    typeof this.props.onOpen === 'function' && this.props.onOpen();
   };
 
   close = () => {
@@ -161,6 +208,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       focusedOptionIndex: -1,
       options: this.props.options,
     }));
+    typeof this.props.onClose === 'function' && this.props.onClose();
   };
 
   private isValidIndex(index: number) {
@@ -199,13 +247,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onBlur = () => {
-    this.resetKeyboardInput();
-
-    this.setState(() => ({
-      opened: false,
-      options: this.props.options,
-    }));
-
+    this.close();
     const event = new Event('blur');
     this.selectEl.dispatchEvent(event);
   };
@@ -233,16 +275,13 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   }
 
   focusOptionByIndex = (index: number) => {
-    const { focusedOptionIndex } = this.state;
-    const oldIndex = focusedOptionIndex;
-
-    if (index < 0) {
-      index = this.state.options.length - 1;
-    } else if (index >= this.state.options.length) {
-      index = 0;
+    if (index < 0 || index > this.state.options.length - 1) {
+      return;
     }
 
-    if (index === oldIndex) {
+    const option = this.state.options[index];
+
+    if (option.disabled) {
       return;
     }
 
@@ -258,18 +297,18 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     let index = focusedOptionIndex;
 
     if (type === 'next') {
-      index = focusedOptionIndex + 1;
+      const nextIndex = findIndexAfter(this.state.options, index);
+      index = nextIndex === -1 ? findIndexAfter(this.state.options) : nextIndex; // Следующий за index или первый валидный до index
     } else if (type === 'prev') {
-      index = focusedOptionIndex - 1;
+      const beforeIndex = findIndexBefore(this.state.options, index);
+      index = beforeIndex === -1 ? findIndexBefore(this.state.options) : beforeIndex; // Предшествующий index или последний валидный после index
     }
 
     this.focusOptionByIndex(index);
   };
 
   handleOptionHover: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
-    this.setState({
-      focusedOptionIndex: Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget),
-    });
+    this.focusOptionByIndex(Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget));
   };
 
   handleOptionDown: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
@@ -335,7 +374,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         this.setState({ inputValue: e.target.value });
       }
     } else {
-      const options = this.props.options.filter((option) => this.props.filterFn(e.target.value, option));
+      const options = this.filter(this.props.options, e.target.value, this.props.filterFn);
       this.setState({
         options,
         selectedOptionIndex: this.findSelectedIndex(options, this.state.nativeSelectValue),
@@ -345,22 +384,20 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   onInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    ['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) && this.areOptionsShown && event.preventDefault();
+
     switch (event.key) {
       case 'ArrowUp':
-        event.preventDefault();
-        this.focusOption('prev');
+        this.areOptionsShown && this.focusOption('prev');
         break;
       case 'ArrowDown':
-        event.preventDefault();
-        this.focusOption('next');
+        this.areOptionsShown && this.focusOption('next');
         break;
       case 'Escape':
-        event.preventDefault();
         this.close();
         break;
       case 'Enter':
-        event.preventDefault();
-        this.selectFocused();
+        this.areOptionsShown && this.selectFocused();
         break;
     }
   };
@@ -370,28 +407,37 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     if (event.key.length === 1 && event.key !== ' ') {
       this.onKeyboardInput(event.key);
-
       return;
     }
 
+    ['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) && this.areOptionsShown && event.preventDefault();
+
     switch (event.key) {
       case 'ArrowUp':
-        event.preventDefault();
-        opened ? this.focusOption('prev') : this.open();
+        if (opened) {
+          this.areOptionsShown && this.focusOption('prev');
+        } else {
+          this.open();
+        }
         break;
       case 'ArrowDown':
-        event.preventDefault();
-        opened ? this.focusOption('next') : this.open();
+        if (opened) {
+          this.areOptionsShown && this.focusOption('next');
+        } else {
+          this.open();
+        }
         break;
       case 'Escape':
-        event.preventDefault();
         this.close();
         break;
       case 'Enter':
       case 'Spacebar':
       case ' ':
-        event.preventDefault();
-        opened ? this.selectFocused() : this.open();
+        if (opened) {
+          this.areOptionsShown && this.selectFocused();
+        } else {
+          this.open();
+        }
         break;
     }
   };
@@ -402,7 +448,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
       this.isControlledOutside = this.props.value !== undefined;
       const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
-      const options = this.props.searchable ? this.props.options.filter((option) => this.props.filterFn(this.state.inputValue, option)) : this.props.options;
+      const options = this.props.searchable ? this.filter(this.props.options, this.state.inputValue, this.props.filterFn) : this.props.options;
       this.setState({
         nativeSelectValue: value,
         selectedOptionIndex: this.findSelectedIndex(options, value),
@@ -424,6 +470,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           hovered,
           children: option.label,
           selected,
+          disabled: option.disabled,
           onClick: this.selectFocused,
           onMouseDown: this.handleOptionDown,
           onMouseEnter: this.handleOptionHover,
@@ -464,10 +511,39 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       emptyText,
       onInputChange,
       filterFn,
+      renderDropdown,
+      onOpen,
+      onClose,
+      fetching,
       ...restProps
     } = this.props;
     const selected = this.getSelectedItem();
     const label = selected ? selected.label : undefined;
+
+    const defaultDropdownContent = (
+      <CustomScrollView boxRef={this.scrollBoxRef}>
+        {this.state.options.map(this.renderOption)}
+        {this.state.options.length === 0 &&
+        <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
+          {this.props.emptyText}
+        </Caption>
+        }
+      </CustomScrollView>
+    );
+
+    let resolvedContent;
+
+    if (typeof renderDropdown === 'function') {
+      resolvedContent = renderDropdown({ defaultDropdownContent });
+    } else if (fetching) {
+      resolvedContent = (
+        <div vkuiClass="CustomSelect__fetching">
+          <Spinner size="small" />
+        </div>
+      );
+    } else {
+      resolvedContent = defaultDropdownContent;
+    }
 
     return (
       <label
@@ -508,7 +584,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
               'CustomSelect__open': opened,
               'CustomSelect__open--popupDirectionTop': this.state.popupDirection === 'top',
             })}
-            className={className}
           >
             {label}
           </SelectMimicry>
@@ -538,14 +613,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
               'CustomSelect__options--popupDirectionTop': this.state.popupDirection === 'top',
             })}
           >
-            <CustomScrollView boxRef={this.scrollBoxRef}>
-              {this.state.options.map(this.renderOption)}
-              {this.state.options.length === 0 &&
-                <Caption level="1" weight="regular" vkuiClass="CustomSelect__empty">
-                  {emptyText}
-                </Caption>
-              }
-            </CustomScrollView>
+            {resolvedContent}
           </Dropdown>
         }
       </label>
