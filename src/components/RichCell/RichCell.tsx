@@ -5,7 +5,7 @@ import { getClassName } from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
-import Caption from '../Typography/Caption/Caption';
+import Subhead from '../Typography/Subhead/Subhead';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
 import './RichCell.css';
 
@@ -78,7 +78,7 @@ const RichCell: FC<RichCellProps> = ({
             {hasReactNode(after) && <div vkuiClass="RichCell__after">{after}</div>}
           </Text>
           {hasReactNode(text) && <Text weight="regular" vkuiClass="RichCell__text">{text}</Text>}
-          {hasReactNode(caption) && <Caption level="1" weight="regular" vkuiClass="RichCell__caption">{caption}</Caption>}
+          {hasReactNode(caption) && <Subhead Component="span" weight="regular" vkuiClass="RichCell__caption">{caption}</Subhead>}
           {(hasReactNode(bottom) || hasReactNode(actions)) &&
             <div vkuiClass="RichCell__bottom">
               {bottom}
