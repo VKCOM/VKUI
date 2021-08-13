@@ -14,6 +14,7 @@ import { IOS } from '../../lib/platform';
 import Counter from '../Counter/Counter';
 import Tappable from '../Tappable/Tappable';
 import { warnOnce } from '../../lib/warnOnce';
+import { hasReactNode } from '../../lib/utils';
 import './WriteBarIcon.css';
 
 export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -83,7 +84,7 @@ export const WriteBarIcon: FC<WriteBarIconProps> = ({
     >
       <span vkuiClass="WriteBarIcon__in">
         {icon || children}
-        {count && <Counter vkuiClass="WriteBarIcon__counter" size="s">{count}</Counter>}
+        {hasReactNode(count) && <Counter vkuiClass="WriteBarIcon__counter" size="s">{count}</Counter>}
       </span>
     </Tappable>
   );
