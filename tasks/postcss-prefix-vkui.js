@@ -1,46 +1,60 @@
-const path = require('path');
+const { resolve, relative } = require('path');
 const { readFileSync } = require('fs');
-const postcss = require('postcss');
 const { cwd } = require('process');
+const postcss = require('postcss');
+const babel = require('@babel/parser');
+const traverse = require('@babel/traverse').default;
+const glob = require('glob');
 
-const vkuiCssPath = path.resolve(__dirname, '../dist/vkui.css');
+const vkuiCssPath = resolve(__dirname, '../dist/vkui.css');
 const vkuiSelectors = new Set();
 postcss.parse(readFileSync(vkuiCssPath), { from: vkuiCssPath }).walkRules(rule => {
   const sel = rule.selector.match(/\.[a-z-_]+/ig) || [];
   sel.forEach(cls => vkuiSelectors.add(cls.replace(/\.(vkui(?=[A-Z]))?/g, '')));
 });
+
+const vkuiJsSources = glob.sync(resolve(__dirname, '../dist/**/*.js'));
+vkuiJsSources.forEach(src => {
+  const ast = babel.parse('' + readFileSync(src), {
+    sourceFileName: src,
+    sourceType: 'module',
+  });
+  traverse(ast, {
+    CallExpression(path) {
+      if (path.node.callee.name === 'getClassName') {
+        const block = path.node.arguments[0].value;
+        ['ios', 'android', 'vkcom'].forEach((platform) => {
+          vkuiSelectors.add(`${block}--${platform}`);
+        });
+      }
+    },
+  });
+});
+
 const vkuiBlocks = new Set();
 vkuiSelectors.forEach(sel => {
   if (sel.match(/^[A-Z]/)) {
-    vkuiBlocks.add(sel.replace(/(--|__).*/, ''));
+    const block = sel.replace(/(--|__).*/, '');
+    vkuiBlocks.add(block);
+    vkuiSelectors.add(block);
   }
 });
-vkuiBlocks.forEach(b => {
-  // ensure block selector validates
-  vkuiSelectors.add(b);
+const candidateRE = new RegExp(`\\.(${Array.from(vkuiBlocks).join('|')})(\b|[-_][-_a-zA-Z0-9]+)`, 'g');
 
-  const platformClasses = ['ios', 'android', 'vkcom'].map(p => `${b}--${p}`);
-  if (platformClasses.some(c => vkuiSelectors.has(c))) {
-    // ensure all platform modifiers
-    platformClasses.forEach(c => vkuiSelectors.add(c));
-  }
-});
-const candidateRE = new RegExp(`\\.(${Array.from(vkuiBlocks).join('|')})(?=\b|-|_)`, 'g');
-
-module.exports = () => {
-  return {
-    postcssPlugin: 'postcss-prefix-vkui',
-    Once: (root) => {
-      root.walkRules(candidateRE, rule => {
-        // TODO validate EM
-        const res = rule.selector.replace(candidateRE, m => `.vkui${m.substring(1)}`);
-        const results = (res.match(/\.vkui[a-z_-]+/i) || []).map(s => s.replace('.vkui', ''));
-        results.filter(res => !vkuiSelectors.has(res)).forEach(res => {
-          console.log(`${res} in ${path.relative(cwd(), rule.source.input.file)} is missing from VKUI`);
-        });
-        // rule.selector = res;
+module.exports = () => ({
+  postcssPlugin: 'postcss-prefix-vkui',
+  Once: (root) => {
+    root.walkRules(candidateRE, rule => {
+      const res = rule.selector.replace(candidateRE, sel => {
+        const cls = sel.substring(1);
+        if (vkuiSelectors.has(cls)) {
+          return `.vkui${cls}`;
+        }
+        console.log(`${cls} in ${relative(cwd(), rule.source.input.file)} looks like VKUI selector, but does not exist in VKUI`);
+        return sel;
       });
-    }
-  };
-};
+      rule.selector = res;
+    });
+  }
+});
 module.exports.postcss = true;
