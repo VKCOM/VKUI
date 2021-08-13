@@ -7,6 +7,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { System } from '../../lib/browser';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import Caption from '../Typography/Caption/Caption';
+import Subhead from '../Typography/Subhead/Subhead';
 import './UsersStack.css';
 
 export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
@@ -78,11 +79,7 @@ const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
           </Caption>
         }
       </div>
-      {children &&
-        <Caption weight="regular" level="1" vkuiClass="UsersStack__text">
-          {children}
-        </Caption>
-      }
+      {children && <Subhead Component="span" weight="regular" vkuiClass="UsersStack__text">{children}</Subhead>}
     </div>
   );
 };
