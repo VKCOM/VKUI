@@ -305,18 +305,20 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   handleOptionHover: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
-    const index = Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget);
-    const option = this.state.options[index];
-
-    if (!option || option.disabled) {
-      this.resetFocusedOption();
-    } else {
-      this.focusOptionByIndex(index);
-    }
+    this.focusOptionByIndex(Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget));
   };
 
   handleOptionDown: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
+  };
+
+  handleOptionClick: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
+    const index = Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget);
+    const option = this.state.options[index];
+
+    if (option && !option.disabled) {
+      this.selectFocused();
+    }
   };
 
   resetFocusedOption = () => {
@@ -473,7 +475,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           children: option.label,
           selected,
           disabled: option.disabled,
-          onClick: this.selectFocused,
+          onClick: this.handleOptionClick,
           onMouseDown: this.handleOptionDown,
           onMouseEnter: this.handleOptionHover,
         })}
