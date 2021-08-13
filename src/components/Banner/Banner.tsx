@@ -3,13 +3,13 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
+import { hasReactNode } from '../../lib/utils';
 import { Icon24Chevron, Icon24DismissSubstract, Icon24DismissDark, Icon24Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
 import IconButton from '../IconButton/IconButton';
 import Headline from '../Typography/Headline/Headline';
 import Caption from '../Typography/Caption/Caption';
 import Text from '../Typography/Text/Text';
-import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
 import './Banner.css';
 
