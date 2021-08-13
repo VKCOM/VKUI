@@ -33,8 +33,8 @@
   box-shadow: 0 0 0 2px var(--background_content);
 }
 
-.WriteBarIcon--send,
-.WriteBarIcon--done {
+.WriteBarIcon.WriteBarIcon--send,
+.WriteBarIcon.WriteBarIcon--done {
   color: var(--accent);
 }
 
@@ -46,13 +46,14 @@
   border-radius: 10px;
 }
 
-.WriteBarIcon--ios.WriteBarIcon--send:not(:disabled) {
-  color: var(--accent);
-}
-
 .WriteBarIcon--ios.WriteBarIcon--send,
 .WriteBarIcon--ios.WriteBarIcon--done {
   width: 48px;
+  color: var(--writebar_icon);
+}
+
+.WriteBarIcon--ios.WriteBarIcon--send:not(:disabled) {
+  color: var(--accent);
 }
 
 .WriteBarIcon--ios.WriteBarIcon--send:first-child,
@@ -69,6 +70,6 @@
  * VKCOM
  */
 .WriteBarIcon--vkcom {
-  color: var(--writebar_icon);
-  border-radius: 4px;
+  color: var(--icon_secondary);
+  border-radius: 10px;
 }
