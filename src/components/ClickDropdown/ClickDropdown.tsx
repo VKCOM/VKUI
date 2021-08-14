@@ -1,6 +1,6 @@
 import React, {
   cloneElement,
-  FC, HTMLAttributes,
+  FC,
   isValidElement,
   ReactElement,
   ReactNode,
@@ -9,24 +9,33 @@ import React, {
   useState,
 } from 'react';
 import { useDOM } from '../../lib/dom';
-import { Dropdown, DropdownProps } from '../Dropdown/Dropdown';
+import { Dropdown, DropdownCommonProps } from '../Dropdown/Dropdown';
 import { useExternRef } from '../../hooks/useExternRef';
 
 const isDOMTypeElement = (element: ReactElement): element is React.DOMElement<any, any> => {
   return React.isValidElement(element) && typeof element.type === 'string';
 };
 
-export interface ClickDropdownProps extends HTMLAttributes<HTMLElement> {
+export interface ClickDropdownProps extends DropdownCommonProps {
+  /**
+   * Содержимое `ClickDropdown`
+   */
   content?: ReactNode;
-  placement?: DropdownProps['placement'];
-  getRef?: DropdownProps['getRef'];
+  shown?: boolean;
+  onShownChange?: (shown: boolean) => void;
 }
 
-export const ClickDropdown: FC<ClickDropdownProps> = (props: ClickDropdownProps) => {
-  const [shown, setShown] = useState(false);
+export const ClickDropdown: FC<ClickDropdownProps> = ({
+  getRef,
+  content,
+  children,
+  onShownChange,
+  shown,
+  ...restProps
+}: ClickDropdownProps) => {
+  const [computedShown, setComputedShown] = useState(shown);
   const [dropdownNode, setDropdownNode] = useState(null);
   const [targetNode, setTargetNode] = useState(null);
-  const { getRef, children } = props;
 
   const { document } = useDOM();
 
@@ -39,15 +48,19 @@ export const ClickDropdown: FC<ClickDropdownProps> = (props: ClickDropdownProps)
   }) : children;
 
   const onDocumentClick = useCallback((e) => {
-    if (
-      e.target !== targetNode &&
-      !targetNode.contains(e.target) &&
-      e.target !== dropdownNode &&
-      !dropdownNode.contains(e.target)
-    ) {
-      setShown(false);
+    if (e.target !== targetNode && !targetNode.contains(e.target) && e.target !== dropdownNode && !dropdownNode.contains(e.target)) {
+      if (typeof shown !== 'boolean') {
+        setComputedShown(false);
+      }
+      typeof onShownChange === 'function' && onShownChange(false);
     }
-  }, [targetNode, dropdownNode]);
+  }, [targetNode, dropdownNode, onShownChange, shown]);
+
+  useEffect(() => {
+    if (typeof shown === 'boolean') {
+      setComputedShown(shown);
+    }
+  }, [shown]);
 
   useEffect(() => {
     dropdownNode && document.addEventListener('pointerup', onDocumentClick);
@@ -57,20 +70,31 @@ export const ClickDropdown: FC<ClickDropdownProps> = (props: ClickDropdownProps)
   }, [targetNode, dropdownNode]);
 
   const onTargetClick = useCallback(() => {
-    setShown(!shown);
-  }, [targetNode, shown]);
+    if (typeof shown !== 'boolean') {
+      setComputedShown(!computedShown);
+    }
+    typeof onShownChange === 'function' && onShownChange(!computedShown);
+  }, [targetNode, shown, computedShown]);
 
   useEffect(() => {
     targetNode && targetNode.addEventListener('pointerup', onTargetClick);
     return () => {
       targetNode && targetNode.removeEventListener('pointerup', onTargetClick);
     };
-  }, [targetNode, shown]);
+  }, [targetNode, computedShown]);
 
   return (
     <React.Fragment>
       {child}
-      {shown && <Dropdown targetNode={targetNode} getRef={patchedDropdownRef}>{props.content}</Dropdown>}
+      {computedShown &&
+        <Dropdown
+          {...restProps}
+          targetNode={targetNode}
+          getRef={patchedDropdownRef}
+        >
+          {content}
+        </Dropdown>
+      }
     </React.Fragment>
   );
 };

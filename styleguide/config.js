@@ -105,6 +105,7 @@ module.exports = {
           '../src/components/ScreenSpinner/ScreenSpinner.tsx',
           '../src/components/Snackbar/Snackbar.tsx',
           '../src/components/Dropdown/Dropdown.tsx',
+          '../src/components/ClickDropdown/ClickDropdown.tsx',
         ],
       }, {
         name: 'Modals',
