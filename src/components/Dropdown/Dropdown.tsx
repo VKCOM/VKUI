@@ -30,7 +30,11 @@ export interface DropdownCommonProps extends HTMLAttributes<HTMLElement>, HasRef
    * а в портале в конце `body`.
    */
   portal?: boolean;
-  mode?: 'card';
+  /**
+   * Стиль дропдауна. Если хочется стилизовать дропдаун по-своему, то следуюет использовать `plain`, так как он
+   * не содержит никаких собственных css-правил.
+   */
+  mode?: 'card' | 'plain';
   onPlacementChange?: (data: { placement?: Placement }) => void;
 }
 
