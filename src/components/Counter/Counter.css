@@ -46,6 +46,7 @@
 }
 
 /**
+ * CMP:
  * Button
  */
 .Button--lvl-primary .Counter {
@@ -77,4 +78,13 @@
 .Button--lvl-tertiary .Counter--vkcom,
 .Button--lvl-outline .Counter--vkcom {
   opacity: .72;
+}
+
+/**
+ * CMP:
+ * WriteBarIcon
+ */
+.WriteBarIcon .Counter {
+  color: var(--button_commerce_foreground);
+  background: var(--button_commerce_background);
 }
