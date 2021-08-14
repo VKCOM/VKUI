@@ -14,7 +14,6 @@ type Placement = 'auto' | 'auto-start' | 'auto-end' | 'top-start' | 'top-end' | 
 export interface DropdownCommonProps extends HTMLAttributes<HTMLElement>, HasRef<HTMLElement> {
   /**
    * По умолчанию `Dropdown` выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства.
-   * Pyfxt
    */
   placement?: Placement;
   /**
@@ -31,7 +30,7 @@ export interface DropdownCommonProps extends HTMLAttributes<HTMLElement>, HasRef
    */
   portal?: boolean;
   /**
-   * Стиль дропдауна. Если хочется стилизовать дропдаун по-своему, то следуюет использовать `plain`, так как он
+   * Стиль дропдауна. Если хочется стилизовать дропдаун по-своему, то следует использовать `plain`, так как он
    * не содержит никаких собственных css-правил.
    */
   mode?: 'card' | 'plain';
@@ -69,6 +68,9 @@ export const Dropdown: FC<DropdownProps> = ({
   const { styles, state, forceUpdate } = usePopper(targetNode, dropdownNode, {
     placement,
     modifiers: [
+      {
+        name: 'preventOverflow',
+      },
       {
         name: 'offset',
         options: {
