@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes, useCallback, useEffect } from 'react';
+import React, { FC, HTMLAttributes, useCallback, useContext, useEffect } from 'react';
 import { usePopper } from 'react-popper';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { HasRef } from '../../types';
@@ -6,6 +6,7 @@ import { setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 import './Dropdown.css';
 
 type Placement = 'auto' | 'auto-start' | 'auto-end' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' |
@@ -49,7 +50,6 @@ export const Dropdown: FC<DropdownProps> = ({
   children,
   getRef,
   placement = 'bottom-start',
-  portal = false,
   onPlacementChange,
   mode = 'card',
   offsetDistance = 8,
@@ -59,6 +59,7 @@ export const Dropdown: FC<DropdownProps> = ({
 }: DropdownProps) => {
   const [dropdownNode, setDropdownNode] = React.useState(null);
   const platform = usePlatform();
+  const { portalRoot } = useContext(AppRootContext);
 
   const setExternalRef = useCallback((el) => {
     setRef(el, getRef);
@@ -106,6 +107,6 @@ export const Dropdown: FC<DropdownProps> = ({
   );
 
   return (
-    portal ? <AppRootPortal vkuiClass="DropdownPortal">{dropdown}</AppRootPortal> : dropdown
+    portalRoot ? <AppRootPortal vkuiClass="DropdownPortal">{dropdown}</AppRootPortal> : dropdown
   );
 };
