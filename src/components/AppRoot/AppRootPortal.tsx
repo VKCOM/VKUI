@@ -3,8 +3,8 @@ import { createPortal } from 'react-dom';
 import { AppRootContext } from './AppRootContext';
 
 export const AppRootPortal: FC<PropsWithChildren<{ className?: string }>> = ({ children, className }) => {
-  const { portalRoot, embedded } = useContext(AppRootContext);
-  return embedded && portalRoot
+  const { portalRoot } = useContext(AppRootContext);
+  return portalRoot
     ? createPortal((<div className={className}>{children}</div>), portalRoot)
     : <Fragment>{children}</Fragment>;
 };
