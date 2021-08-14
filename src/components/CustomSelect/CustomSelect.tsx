@@ -481,10 +481,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     setRef(element, this.props.getRef);
   };
 
-  rootRef = (element: HTMLLabelElement) => {
-    setRef(element, this.props.getRootRef);
-  };
-
   render() {
     const { opened, nativeSelectValue } = this.state;
     const {
@@ -546,7 +542,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         vkuiClass={getClassName('CustomSelect', platform)}
         className={className}
         style={style}
-        ref={this.rootRef}
+        ref={getRootRef}
         onClick={this.onLabelClick}
       >
         {opened && searchable ?
@@ -599,10 +595,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
         </select>
         {opened &&
           <div
-            onMouseLeave={this.resetFocusedOption}
             vkuiClass={classNames('CustomSelect__options', `CustomSelect__options--sizeY-${sizeY}`, {
               'CustomSelect__options--popupDirectionTop': popupDirection === 'top',
             })}
+            onMouseLeave={this.resetFocusedOption}
           >
             {resolvedContent}
           </div>
