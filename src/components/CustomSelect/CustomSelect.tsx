@@ -23,7 +23,6 @@ import Input from '../Input/Input';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import Caption from '../Typography/Caption/Caption';
 import { warnOnce } from '../../lib/warnOnce';
-import { Dropdown } from '../Dropdown/Dropdown';
 import Spinner from '../Spinner/Spinner';
 import './CustomSelect.css';
 
@@ -66,7 +65,6 @@ interface CustomSelectState {
   selectedOptionIndex?: number;
   nativeSelectValue?: SelectValue;
   options?: CustomSelectOptionInterface[];
-  popupDirection?: string;
 }
 
 export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormFieldProps {
@@ -153,7 +151,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   private keyboardInput: string;
   private isControlledOutside: boolean;
   private selectEl: HTMLSelectElement;
-  private rootEl: HTMLLabelElement;
   private readonly scrollBoxRef = createRef<HTMLDivElement>();
 
   private readonly resetKeyboardInput = () => {
@@ -485,7 +482,6 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   rootRef = (element: HTMLLabelElement) => {
-    this.rootEl = element;
     setRef(element, this.props.getRootRef);
   };
 
@@ -560,7 +556,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
             onBlur={this.onBlur}
             vkuiClass={classNames({
               'CustomSelect__open': opened,
-              'CustomSelect__open--popupDirectionTop': this.state.popupDirection === 'top',
+              'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
             })}
             value={this.state.inputValue}
             onKeyDown={this.onInputKeyDown}
@@ -582,7 +578,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
             onBlur={this.onBlur}
             vkuiClass={classNames({
               'CustomSelect__open': opened,
-              'CustomSelect__open--popupDirectionTop': this.state.popupDirection === 'top',
+              'CustomSelect__open--popupDirectionTop': popupDirection === 'top',
             })}
           >
             {label}
@@ -602,19 +598,14 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
           {options.map((item) => <option key={`${item.value}`} value={item.value} />)}
         </select>
         {opened &&
-          <Dropdown
-            portal={false}
-            targetNode={this.rootEl}
+          <div
             onMouseLeave={this.resetFocusedOption}
-            onPlacementChange={({ placement }) => {
-              this.setState({ popupDirection: placement.split('-')[0] });
-            }}
             vkuiClass={classNames('CustomSelect__options', `CustomSelect__options--sizeY-${sizeY}`, {
-              'CustomSelect__options--popupDirectionTop': this.state.popupDirection === 'top',
+              'CustomSelect__options--popupDirectionTop': popupDirection === 'top',
             })}
           >
             {resolvedContent}
-          </Dropdown>
+          </div>
         }
       </label>
     );
