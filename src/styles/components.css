@@ -106,6 +106,7 @@
 @import '../components/FormField/FormField.css';
 @import '../components/Radio/Radio.css';
 @import '../components/Checkbox/Checkbox.css';
+@import '../components/SimpleCheckbox/SimpleCheckbox.css';
 @import '../components/Input/Input.css';
 @import '../components/ChipsInput/ChipsInput.css';
 @import '../components/Chip/Chip.css';
