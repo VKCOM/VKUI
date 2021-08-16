@@ -23,9 +23,9 @@ describe('Button', () => {
     expect(button().tagName.toLowerCase()).toMatch('a');
   });
 
-  it('Component: Button with isLoading is not clickable', () => {
+  it('Component: Button with loading is not clickable', () => {
     const handleClick = jest.fn();
-    render(<ButtonTest onClick={handleClick} isLoading>Button</ButtonTest>);
+    render(<ButtonTest onClick={handleClick} loading>Button</ButtonTest>);
 
     fireEvent.click(button());
     expect(handleClick).toHaveBeenCalledTimes(0);
