@@ -85,7 +85,7 @@ export const HoverDropdown: FC<HoverDropdownProps> = ({
   }, [targetNode, shown, computedShown, hideDelay]);
 
   useEffect(() => {
-    targetNode && targetNode.addEventListener('mouseover', onTargetEnter);
+    targetNode && targetNode.addEventListener('mouseenter', onTargetEnter);
     targetNode && targetNode.addEventListener('mouseleave', onTargetOut);
     return () => {
       targetNode && targetNode.removeEventListener('mouseenter', onTargetEnter);
