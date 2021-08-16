@@ -19,7 +19,7 @@ export interface VKUIButtonProps extends HasAlign {
   stretched?: boolean;
   before?: ReactNode;
   after?: ReactNode;
-  isLoading?: boolean;
+  loading?: boolean;
 }
 
 export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
@@ -80,7 +80,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
     getRootRef,
     sizeY,
     Component = 'button',
-    isLoading,
+    loading,
     onClick,
     ...restProps
   } = props;
@@ -91,7 +91,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
     <Tappable
       {...restProps}
       Component={restProps.href ? 'a' : Component}
-      onClick={isLoading ? null : onClick}
+      onClick={loading ? null : onClick}
       focusVisibleMode="outside"
       vkuiClass={
         classNames(
@@ -109,7 +109,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
       getRootRef={getRootRef}
       activeMode="opacity"
     >
-      {isLoading && <Spinner size="small" vkuiClass="Button__spinner" />}
+      {loading && <Spinner size="small" vkuiClass="Button__spinner" />}
       <span vkuiClass="Button__in">
         {before && <span vkuiClass="Button__before">{before}</span>}
         {children && (

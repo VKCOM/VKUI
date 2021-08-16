@@ -41,6 +41,6 @@ describe('Button', () => {
     before: [<Icon24Camera key="icon-24" />],
     after: [<Counter key="counter">16</Counter>],
     size: ['s', 'm', 'l'],
-    isLoading: [true],
+    loading: [true],
   }]);
 });

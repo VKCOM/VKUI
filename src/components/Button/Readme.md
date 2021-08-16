@@ -114,13 +114,13 @@
     </Group>
     <Group header={<Header mode="secondary">Состояние загрузки</Header>}>
       <Div>
-        <Button size="s" isLoading>Button</Button>
+        <Button size="s" loading>Button</Button>
       </Div>
       <Div>
-        <Button size="m" isLoading>Button</Button>
+        <Button size="m" loading>Button</Button>
       </Div>
       <Div>
-        <Button size="l" isLoading>Button</Button>
+        <Button size="l" loading>Button</Button>
       </Div>
     </Group>
     <Group header={<Header mode="secondary">Ссылки в виде кнопок</Header>}>
