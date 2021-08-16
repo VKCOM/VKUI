@@ -69,13 +69,29 @@ const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProp
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
-  const { size, mode, stretched, align, children, before, after, getRootRef, sizeY, Component = 'button', isLoading, ...restProps } = props;
+  const {
+    size,
+    mode,
+    stretched,
+    align,
+    children,
+    before,
+    after,
+    getRootRef,
+    sizeY,
+    Component = 'button',
+    isLoading,
+    onClick,
+    ...restProps
+  } = props;
+
   const hasIcons = Boolean(before || after);
 
   return (
     <Tappable
       {...restProps}
       Component={restProps.href ? 'a' : Component}
+      onClick={isLoading ? null : onClick}
       focusVisibleMode="outside"
       vkuiClass={
         classNames(
@@ -87,7 +103,6 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
           {
             ['Button--str']: stretched,
             ['Button--with-icon']: hasIcons,
-            ['Button--loading']: isLoading,
           },
         )
       }
