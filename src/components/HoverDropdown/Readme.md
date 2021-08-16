@@ -24,6 +24,7 @@ const Example = () => {
       </HoverDropdown>
 
       <HoverDropdown
+        mode="card"
         shown={shown}
         onShownChange={setShown}
         content={
