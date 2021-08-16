@@ -6,23 +6,12 @@ import { Icon24Chevron } from '@vkontakte/icons';
 import { IOS } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { withAdaptivity, SizeType } from '../../hoc/withAdaptivity';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
 import './SimpleCell.css';
-
-interface SimpleCellTypographyProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {}
-
-const SimpleCellTypography: FC<SimpleCellTypographyProps> = withAdaptivity((props: SimpleCellTypographyProps) => {
-  const { sizeY, children, ...restProps } = props;
-
-  if (sizeY === SizeType.COMPACT) {
-    return <Text weight="regular" {...restProps}>{children}</Text>;
-  }
-
-  return <Title level="3" weight="regular" {...restProps}>{children}</Title>;
-}, { sizeY: true });
 
 export interface SimpleCellOwnProps {
   /**
@@ -58,6 +47,18 @@ export interface SimpleCellOwnProps {
 }
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
+
+interface SimpleCellTypographyProps extends HTMLAttributes<HTMLDivElement> {
+  Component?: ElementType;
+}
+
+const SimpleCellTypography: FC<SimpleCellTypographyProps> = (props: SimpleCellTypographyProps) => {
+  const { sizeY } = useAdaptivity();
+
+  return sizeY === SizeType.COMPACT
+    ? <Text weight="regular" {...props} />
+    : <Title level="3" weight="regular" {...props} />;
+};
 
 const SimpleCell: FC<SimpleCellProps> = ({
   badge,
@@ -101,7 +102,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
         {description && <Caption weight="regular" level="1" vkuiClass="SimpleCell__description">{description}</Caption>}
       </div>
       {hasReactNode(indicator) &&
-        <SimpleCellTypography vkuiClass="SimpleCell__indicator">{indicator}</SimpleCellTypography>
+        <SimpleCellTypography Component="span" vkuiClass="SimpleCell__indicator">{indicator}</SimpleCellTypography>
       }
       {hasAfter &&
         <div vkuiClass="SimpleCell__after">
