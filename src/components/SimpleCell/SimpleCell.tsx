@@ -10,7 +10,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { withAdaptivity, SizeType } from '../../hoc/withAdaptivity';
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
-import Caption from '../Typography/Caption/Caption';
+import Subhead from '../Typography/Subhead/Subhead';
 import './SimpleCell.css';
 
 export interface SimpleCellOwnProps {
@@ -99,7 +99,7 @@ const SimpleCell: FC<SimpleCellProps> = ({
             </span>
           }
         </div>
-        {description && <Caption weight="regular" level="1" vkuiClass="SimpleCell__description">{description}</Caption>}
+        {description && <Subhead Component="span" weight="regular" vkuiClass="SimpleCell__description">{description}</Subhead>}
       </div>
       {hasReactNode(indicator) &&
         <SimpleCellTypography Component="span" vkuiClass="SimpleCell__indicator">{indicator}</SimpleCellTypography>
