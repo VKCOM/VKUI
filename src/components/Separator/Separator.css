@@ -37,3 +37,12 @@
   margin-left: 12px;
   margin-right: 12px;
 }
+
+/*
+ * CMP:
+ * ModalPage
+ */
+.ModalPage--sizeX-regular .Separator:not(.Separator--wide) {
+  padding-left: 8px;
+  padding-right: 8px;
+}
