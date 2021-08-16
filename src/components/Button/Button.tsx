@@ -94,6 +94,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
       getRootRef={getRootRef}
       activeMode="opacity"
     >
+      {isLoading && <Spinner size="small" vkuiClass="Button__spinner" />}
       <span vkuiClass="Button__in">
         {before && <span vkuiClass="Button__before">{before}</span>}
         {children && (
@@ -108,7 +109,6 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
           </ButtonTypography>
         )}
         {after && <span vkuiClass="Button__after">{after}</span>}
-        {isLoading && <Spinner size="small" vkuiClass="Button__spinner" />}
       </span>
     </Tappable>
   );

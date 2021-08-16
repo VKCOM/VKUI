@@ -68,16 +68,16 @@
   justify-content: center;
 }
 
-.Button--loading .Button__before,
-.Button--loading .Button__content,
-.Button--loading .Button__after {
-  visibility: hidden;
-}
-
 .Button__spinner {
   position: absolute;
   left: 0;
   top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.Button__spinner + .Button__in {
+  visibility: hidden;
 }
 
 .Button--lvl-primary {
