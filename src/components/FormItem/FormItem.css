@@ -17,7 +17,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: var(--text_secondary);
+  color: var(--text_subhead);
 }
 
 .FormItem--sizeY-compact .FormItem__top {
