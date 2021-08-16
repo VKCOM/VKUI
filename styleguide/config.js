@@ -106,6 +106,7 @@ module.exports = {
           '../src/components/Snackbar/Snackbar.tsx',
           '../src/components/Dropdown/Dropdown.tsx',
           '../src/components/ClickDropdown/ClickDropdown.tsx',
+          '../src/components/HoverDropdown/HoverDropdown.tsx',
         ],
       }, {
         name: 'Modals',

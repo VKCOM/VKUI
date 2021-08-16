@@ -31,6 +31,8 @@ export const ClickDropdown: FC<ClickDropdownProps> = ({
   children,
   onShownChange,
   shown,
+  mode = 'card',
+  offsetDistance = 8,
   ...restProps
 }: ClickDropdownProps) => {
   const [computedShown, setComputedShown] = useState(shown);
@@ -89,6 +91,8 @@ export const ClickDropdown: FC<ClickDropdownProps> = ({
       {computedShown &&
         <Dropdown
           {...restProps}
+          mode={mode}
+          offsetDistance={offsetDistance}
           targetNode={targetNode}
           getRef={patchedDropdownRef}
         >

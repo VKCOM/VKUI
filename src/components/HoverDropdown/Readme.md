@@ -2,11 +2,11 @@
 >
 >Это нестабильный компонент. Его API может меняться в рамках одной мажорной версии. [Подробнее про нестабильные компоненты](#/Unstable).
 
-Надстройка над [Dropdown](#/Dropdown) для открытия по клику.
+Надстройка над [Dropdown](#/Dropdown) для открытия по ховеру.
 
 ## Поведение компонента по умолчанию
-При клике по `children`, дропдаун будет менять своё состояние на противоположное: если он был открыт, то клик по children 
-его закроет и наоборот. Если клик был по любому месту в документе, кроме контента дропдауна, то он будет закрыт.
+Дропдаун будет открыт при наведении на `children`. Скрытие происходит при уводе курсора с `children`. Если пользователь
+успеет перевести мышь на содержимое дропдауна до его скрытия, то он останется видимым.
 
 ## Controlled
 Если нужна более сложная логика, то можно передать в компонент свойства `shown` и `onShownChange`. Принцип их действия
@@ -15,15 +15,15 @@
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const Example = () => {
-  const [shown, setShown] = React.useState(true);
+  const [shown, setShown] = React.useState(false);
 
   return (
     <div>
-      <ClickDropdown style={{ padding: 10 }} content={<Text>Привет</Text>}>
+      <HoverDropdown style={{ padding: 10 }} content={<Text>Привет</Text>}>
         <Button style={{ margin: 150 }}>Default</Button>
-      </ClickDropdown>
+      </HoverDropdown>
 
-      <ClickDropdown
+      <HoverDropdown
         shown={shown}
         onShownChange={setShown}
         content={
@@ -47,7 +47,7 @@ const Example = () => {
         <Button style={{ margin: 150 }}>
           Controlled
         </Button>
-      </ClickDropdown>
+      </HoverDropdown>
     </div>
   )
 }

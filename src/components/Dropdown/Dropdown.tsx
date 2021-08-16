@@ -33,7 +33,7 @@ export interface DropdownCommonProps extends HTMLAttributes<HTMLElement>, HasRef
    * Стиль дропдауна. Если хочется стилизовать дропдаун по-своему, то следует использовать `plain`, так как он
    * не содержит никаких собственных css-правил.
    */
-  mode?: 'card' | 'plain';
+  mode?: 'card' | 'tooltip' | 'plain';
   onPlacementChange?: (data: { placement?: Placement }) => void;
 }
 
@@ -50,9 +50,9 @@ export const Dropdown: FC<DropdownProps> = ({
   getRef,
   placement = 'bottom-start',
   onPlacementChange,
-  mode = 'card',
-  offsetDistance = 8,
-  offsetSkidding = 0,
+  mode,
+  offsetDistance,
+  offsetSkidding,
   style: compStyles,
   ...restProps
 }: DropdownProps) => {
