@@ -32,5 +32,15 @@ describe('Button', () => {
     before: [undefined, <Icon24Camera key="icon-24" />],
     after: [<Counter key="counter">16</Counter>],
     size: ['l'],
+  }, {
+    mode: [
+      'primary',
+      'secondary',
+      'overlay_primary',
+    ],
+    before: [<Icon24Camera key="icon-24" />],
+    after: [<Counter key="counter">16</Counter>],
+    size: ['s', 'm', 'l'],
+    loading: [true],
   }]);
 });
