@@ -5,7 +5,7 @@
 ```jsx static
 <WriteBarIcon mode="attach" />
 
-<WriteBarIcon>
+<WriteBarIcon aria-label="Записать голосовое сообщение">
   <Icon28VoiceOutline />
 </WriteBarIcon>
 ```
