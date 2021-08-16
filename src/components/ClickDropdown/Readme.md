@@ -20,7 +20,7 @@ const Example = () => {
   return (
     <div>
       <ClickDropdown style={{ padding: 10 }} content={<Text>Привет</Text>}>
-        <Button style={{ margin: 150 }}>Default</Button>
+        <Button style={{ margin: 150 }}>Кликни</Button>
       </ClickDropdown>
 
       <ClickDropdown
@@ -45,7 +45,7 @@ const Example = () => {
         }
       >
         <Button style={{ margin: 150 }}>
-          Controlled
+          Кликни
         </Button>
       </ClickDropdown>
     </div>

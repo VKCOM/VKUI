@@ -64,7 +64,7 @@ export const Dropdown: FC<DropdownProps> = ({
     setDropdownNode(el);
   }, []);
 
-  const { styles, state, forceUpdate } = usePopper(targetNode, dropdownNode, {
+  const { styles, state } = usePopper(targetNode, dropdownNode, {
     placement,
     modifiers: [
       {
@@ -80,12 +80,6 @@ export const Dropdown: FC<DropdownProps> = ({
   });
 
   const resolvedPlacement = state?.placement;
-
-  useEffect(() => {
-    if (dropdownNode && forceUpdate) {
-      forceUpdate();
-    }
-  }, [dropdownNode, forceUpdate]);
 
   useEffect(() => {
     if (resolvedPlacement) {

@@ -19,8 +19,8 @@ const Example = () => {
 
   return (
     <div>
-      <HoverDropdown style={{ padding: 10 }} content={<Text>Привет</Text>}>
-        <Button style={{ margin: 150 }}>Default</Button>
+      <HoverDropdown content={<Text>Привет</Text>}>
+        <Button style={{ margin: 150 }}>Наведи</Button>
       </HoverDropdown>
 
       <HoverDropdown
@@ -45,7 +45,7 @@ const Example = () => {
         }
       >
         <Button style={{ margin: 150 }}>
-          Controlled
+          Наведи
         </Button>
       </HoverDropdown>
     </div>
