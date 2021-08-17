@@ -56,6 +56,7 @@ export function classNames() {
   return result;
 }
 
-export {
-  classNames as classNamesString,
-};
+/**
+ * @deprecated use `classNames` instead
+ */
+export const classNamesString = classNames;
