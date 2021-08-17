@@ -82,18 +82,12 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
 
   const providerValue = useMemo(() => ({ ...state, setContext, setPopout }), [width, height, platform, scheme, hasMouse, setContext, setPopout]);
 
+  const Component = viewWidth > ViewWidth.MOBILE ? StyleGuideDesktop : StyleGuideMobile;
+
   return (
     <StyleGuideContext.Provider value={providerValue}>
       <ConfigProvider scheme={styleguideScheme} transitionMotionEnabled={false} webviewType="internal">
-        {viewWidth > ViewWidth.MOBILE ?
-          <StyleGuideDesktop toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>
-            {children}
-          </StyleGuideDesktop>
-          :
-          <StyleGuideMobile toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>
-            {children}
-          </StyleGuideMobile>
-        }
+        <Component toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>{children}</Component>
       </ConfigProvider>
     </StyleGuideContext.Provider>
   );
