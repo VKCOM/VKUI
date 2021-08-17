@@ -122,6 +122,7 @@ class Alert extends Component<AlertProps, AlertState> {
 
   renderAction = (action: AlertActionInterface, i: number) => {
     const { platform } = this.props;
+
     if (platform === IOS) {
       const { Component = 'button' } = action;
       return (
@@ -136,9 +137,17 @@ class Alert extends Component<AlertProps, AlertState> {
         </Tappable>
       );
     }
-    const mode: ButtonProps['mode'] = platform === ANDROID
-      ? 'tertiary'
-      : action.mode === 'cancel' ? 'secondary' : 'primary';
+
+    let mode: ButtonProps['mode'] = action.mode === 'cancel' ? 'secondary' : 'primary';
+
+    if (platform === ANDROID) {
+      mode = 'tertiary';
+
+      if (this.props.viewWidth === ViewWidth.DESKTOP && action.mode === 'destructive') {
+        mode = 'destructive';
+      }
+    }
+
     return (
       <Button
         vkuiClass={classNames('Alert__button', `Alert__button--${action.mode}`)}
