@@ -3,7 +3,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import { Icon24Reorder, Icon24ReorderIos, Icon24CheckCircleOn, Icon24CheckCircleOff } from '@vkontakte/icons';
+import { Icon24Reorder, Icon24ReorderIos, Icon24CheckCircleOn, Icon24CheckCircleOff, Icon24CheckBoxOff, Icon24CheckBoxOn } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
@@ -160,6 +160,9 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     return undefined;
   }, [dragging]);
 
+  const IconOff = platform === ANDROID ? Icon24CheckBoxOff : Icon24CheckCircleOff;
+  const IconOn = platform === ANDROID ? Icon24CheckBoxOn : Icon24CheckCircleOn;
+
   const simpleCell = (
     <SimpleCell
       {...restProps}
@@ -189,8 +192,8 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
                 disabled={disabled}
               />
               <span vkuiClass="Cell__marker">
-                <Icon24CheckCircleOff vkuiClass="Cell__marker-in" />
-                <Icon24CheckCircleOn vkuiClass="Cell__marker-in Cell__marker-in--checked" />
+                <IconOff vkuiClass="Cell__marker-in" />
+                <IconOn vkuiClass="Cell__marker-in Cell__marker-in--checked" />
               </span>
             </Fragment>
           )}
