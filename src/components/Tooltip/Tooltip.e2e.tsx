@@ -26,12 +26,12 @@ describe('Tooltip', () => {
     alignX: ['left', 'right'],
     alignY: ['top', 'bottom'],
   }, {
-    alignX: ['left', 'right'],
-    alignY: ['top', 'bottom'],
-    cornerOffset: [10, -10],
+    alignX: ['left'],
+    alignY: ['top'],
+    cornerOffset: [5, -5],
   }, {
-    alignX: ['left', 'right'],
-    alignY: ['top', 'bottom'],
+    alignX: ['left'],
+    alignY: ['top'],
     cornerAbsoluteOffset: [10, -10],
   }]);
 });
