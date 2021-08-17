@@ -66,6 +66,14 @@ const HeaderAside: FC<HeaderAsideProps> = ({ platform, ...restProps }) => {
     : <Text weight="regular" {...restProps} />;
 };
 
+type HeaderSubtitleProps = Pick<HeaderProps, 'subtitle' | 'mode'> & { Component: ElementType };
+
+const HeaderSubtitle: FC<HeaderSubtitleProps> = ({ mode, ...restProps }) => {
+  return mode === 'secondary'
+    ? <Subhead weight="regular" {...restProps} />
+    : <Caption weight="regular" level="1" {...restProps} />;
+};
+
 const Header: FC<HeaderProps> = ({
   mode,
   children,
@@ -98,7 +106,7 @@ const Header: FC<HeaderProps> = ({
           )}
         </HeaderContent>
 
-        {hasReactNode(subtitle) && <Caption vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
+        {hasReactNode(subtitle) && <HeaderSubtitle vkuiClass="Header__subtitle" Component="span">{subtitle}</HeaderSubtitle>}
       </div>
 
       {hasReactNode(aside) && <HeaderAside vkuiClass="Header__aside" Component="span" platform={platform}>{aside}</HeaderAside>}
