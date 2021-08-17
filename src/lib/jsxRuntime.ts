@@ -7,7 +7,7 @@ function createScopedElementUnbound() {
   const patched = clone.call(arguments);
   const props = patched[1];
 
-  if (props != null && 'vkuiClass' in props) {
+  if (props != null && props.vkuiClass != null && props.vkuiClass !== '') {
     const className = props.className;
     const resolved = prefixSingle(props.vkuiClass);
     props.className = className ? `${className} ${resolved}` : resolved;
