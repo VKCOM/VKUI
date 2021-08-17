@@ -1,9 +1,9 @@
-import React, { Fragment, useState, ReactElement, ReactNode, isValidElement, FC, forwardRef, Ref, CSSProperties, HTMLAttributes, cloneElement, useMemo, Children } from 'react';
+import React, { Fragment, useState, ReactElement, ReactNode, isValidElement, FC, forwardRef, Ref, CSSProperties, HTMLAttributes, cloneElement, useMemo, Children, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Subhead from '../Typography/Subhead/Subhead';
-import { usePopper } from 'react-popper';
+import { Modifier, usePopper } from 'react-popper';
 import { Placement } from '@popperjs/core';
 import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -95,14 +95,23 @@ export interface TooltipProps {
    */
   offsetY?: number;
   /**
-   * Сдвиг треугольника (относительно ширины тултипа).
+   * Сдвиг стрелочки относительно центра дочернего элемента.
    */
   cornerOffset?: number;
+  /**
+   * Сдвиг стрелочки относительно ширины тултипа
+   */
+  cornerAbsoluteOffset?: number;
   /**
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
   onClose?: () => void;
 }
+
+declare type ArrowOffsetModifierOptions = {
+  offset: number;
+};
+declare type ArrowOffsetModifier = Modifier<'arrowOffset', ArrowOffsetModifierOptions>;
 
 function mapAlignX(x: TooltipProps['alignX']) {
   switch (x) {
@@ -114,10 +123,13 @@ function mapAlignX(x: TooltipProps['alignX']) {
 function getPlacement(alignX: TooltipProps['alignX'], alignY: TooltipProps['alignY']): Placement {
   return [alignY || 'bottom', mapAlignX(alignX || 'left')].filter((p) => !!p).join('-') as Placement;
 }
+function isVerticalPlacement(placement: Placement) {
+  return placement.startsWith('top') || placement.startsWith('bottom');
+}
 
 const Tooltip: FC<TooltipProps> = ({
   children, isShown, offsetX = 0, offsetY = 15,
-  alignX, alignY, onClose, cornerOffset,
+  alignX, alignY, onClose, cornerOffset, cornerAbsoluteOffset,
   ...restProps
 }) => {
   const [tooltipRef, setTooltipRef] = useState<HTMLElement>();
@@ -146,6 +158,29 @@ const Tooltip: FC<TooltipProps> = ({
     throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
   }
 
+  const arrowOffsetModiifer = useMemo<ArrowOffsetModifier>(() => {
+    return {
+      name: 'arrowOffset',
+      enabled: true,
+      phase: 'main',
+      fn({ state }) {
+        if (isVerticalPlacement(state.placement)) {
+          if (cornerAbsoluteOffset !== undefined) {
+            state.modifiersData.arrow.x = cornerAbsoluteOffset;
+          } else {
+            state.modifiersData.arrow.x += cornerOffset;
+          }
+        } else {
+          if (cornerAbsoluteOffset !== undefined) {
+            state.modifiersData.arrow.y = cornerAbsoluteOffset;
+          } else {
+            state.modifiersData.arrow.y += cornerOffset;
+          }
+        }
+      },
+    };
+  }, [cornerOffset, cornerAbsoluteOffset]);
+
   const placement = getPlacement(alignX, alignY);
   const { styles, attributes } = usePopper(target, tooltipRef, {
     strategy,
@@ -171,6 +206,7 @@ const Tooltip: FC<TooltipProps> = ({
       {
         name: 'flip',
       },
+      arrowOffsetModiifer,
     ],
   });
 
@@ -184,10 +220,6 @@ const Tooltip: FC<TooltipProps> = ({
   const child = isValidElement(children) ? cloneElement(children, {
     [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
   }) : children;
-
-  if (!alignX || !alignY) {
-    cornerOffset = 0;
-  }
 
   return (
     <Fragment>

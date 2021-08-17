@@ -25,5 +25,13 @@ describe('Tooltip', () => {
   }, {
     alignX: ['left', 'right'],
     alignY: ['top', 'bottom'],
+  }, {
+    alignX: ['left', 'right'],
+    alignY: ['top', 'bottom'],
+    cornerOffset: [10, -10],
+  }, {
+    alignX: ['left', 'right'],
+    alignY: ['top', 'bottom'],
+    cornerAbsoluteOffset: [10, -10],
   }]);
 });
