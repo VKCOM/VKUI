@@ -13,6 +13,7 @@ import { PanelContextProps } from '../Panel/PanelContext';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { IOS } from '../../lib/platform';
 import { warnOnce } from '../../lib/warnOnce';
+import './FixedLayout.css';
 
 export interface FixedLayoutProps extends
   HTMLAttributes<HTMLDivElement>,

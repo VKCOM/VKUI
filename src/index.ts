@@ -1,6 +1,7 @@
 import './lib/polyfills';
 
-import './styles/components.css';
+import './styles/constants.css';
+import './styles/animations.css';
 
 /**
  * Layout
@@ -218,6 +219,7 @@ export type { ModalCardBaseProps } from './components/ModalCardBase/ModalCardBas
 export { AppRoot } from './components/AppRoot/AppRoot';
 export { default as AdaptivityProvider } from './components/AdaptivityProvider/AdaptivityProvider';
 export { default as ConfigProvider } from './components/ConfigProvider/ConfigProvider';
+export type { ConfigProviderProps } from './components/ConfigProvider/ConfigProvider';
 export {
   ConfigProviderContext,
   Appearance,

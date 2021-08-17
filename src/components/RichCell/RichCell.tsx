@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -7,6 +7,7 @@ import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
+import './RichCell.css';
 
 export interface RichCellProps extends TappableProps {
   /**
@@ -40,7 +41,7 @@ export interface RichCellProps extends TappableProps {
   multiline?: boolean;
 }
 
-const RichCell: FunctionComponent<RichCellProps> = ({
+const RichCell: FC<RichCellProps> = ({
   children,
   text,
   caption,
@@ -49,25 +50,14 @@ const RichCell: FunctionComponent<RichCellProps> = ({
   bottom,
   actions,
   multiline,
-  Component,
-  onClick,
   sizeY,
   ...restProps
 }) => {
   const platform = usePlatform();
-  const RootComponent = restProps.disabled ? Component : Tappable;
-  Component = restProps.disabled ? undefined : Component;
-
-  const props: RichCellProps = restProps;
-
-  if (!restProps.disabled) {
-    props.Component = restProps.href ? 'a' : Component;
-    props.onClick = onClick;
-  }
 
   return (
-    <RootComponent
-      {...props}
+    <Tappable
+      {...restProps}
       vkuiClass={
         classNames(
           getClassName('RichCell', platform),
@@ -97,12 +87,8 @@ const RichCell: FunctionComponent<RichCellProps> = ({
           }
         </div>
       </div>
-    </RootComponent>
+    </Tappable>
   );
-};
-
-RichCell.defaultProps = {
-  Component: 'div',
 };
 
 export default withAdaptivity(RichCell, { sizeY: true });

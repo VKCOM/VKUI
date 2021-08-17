@@ -1,14 +1,16 @@
-import React, { AllHTMLAttributes, FC, ReactNode, MouseEvent, useEffect, useRef, useState } from 'react';
+import { AllHTMLAttributes, FC, ReactNode, MouseEvent, useEffect, useRef, useState, Fragment } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getTitleFromChildren } from '../../lib/utils';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useDOM } from '../../lib/dom';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Cancel } from '@vkontakte/icons';
 import IconButton from '../IconButton/IconButton';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import Tappable from '../Tappable/Tappable';
+import './Removable.css';
 
 export interface RemovePlaceholderProps {
   /**
@@ -25,16 +27,15 @@ interface RemovableProps extends AllHTMLAttributes<HTMLElement>, RemovePlacehold
   onRemove?: (e: MouseEvent) => void;
 }
 
-export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovableProps & Pick<AdaptivityProps, 'sizeY'>) => {
-  const {
-    children,
-    sizeY,
-    onRemove,
-    removePlaceholder,
-    align,
-    ...restProps
-  } = props;
+export const Removable: FC<RemovableProps> = ({
+  children,
+  onRemove,
+  removePlaceholder,
+  align,
+  ...restProps
+}: RemovableProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
   const { document } = useDOM();
 
   const removeButtonRef = useRef(null);
@@ -46,6 +47,12 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
     setRemoveActivated(false);
     updateRemoveOffset(0);
   }));
+
+  const onRemoveTransitionEnd = () => {
+    if (isRemoveActivated) {
+      removeButtonRef?.current?.focus();
+    }
+  };
 
   const onRemoveActivateClick = (e: MouseEvent) => {
     e.nativeEvent.stopPropagation();
@@ -60,8 +67,10 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
   };
 
   useEffect(() => {
-    if (isRemoveActivated && removeButtonRef?.current) {
-      updateRemoveOffset(removeButtonRef.current.offsetWidth);
+    const removeButton = removeButtonRef?.current;
+
+    if (isRemoveActivated && removeButton) {
+      updateRemoveOffset(removeButton.offsetWidth);
     }
   }, [isRemoveActivated]);
 
@@ -91,39 +100,40 @@ export const Removable: FC<RemovableProps> = withAdaptivity((props: RemovablePro
       )}
 
       {platform === IOS && (
-        <React.Fragment>
+        <Fragment>
           <div vkuiClass="Removable__content" style={{ transform: `translateX(-${removeOffset}px)` }}>
-            <button
-              type="button"
+            <IconButton
+              hasActive={false}
+              hasHover={false}
               aria-label={removePlaceholderString}
               vkuiClass="Removable__action Removable__action--indicator"
               onClick={onRemoveActivateClick}
             >
               <i vkuiClass="Removable__action-in" role="presentation" />
-            </button>
-
+            </IconButton>
             {children}
 
             <span vkuiClass="Removable__offset" aria-hidden="true"></span>
           </div>
 
-          <button
-            type="button"
-            tabIndex={isRemoveActivated ? null : -1}
-            ref={removeButtonRef}
+          <Tappable
+            Component="button"
+            hasActive={false}
+            hasHover={false}
+            disabled={!isRemoveActivated}
+            getRootRef={removeButtonRef}
             vkuiClass="Removable__action Removable__action--remove"
             onClick={onRemoveClick}
+            onTransitionEnd={onRemoveTransitionEnd}
             style={{ transform: `translateX(-${removeOffset}px)` }}
           >
             <span vkuiClass="Removable__action-in">{removePlaceholder}</span>
-          </button>
-        </React.Fragment>
+          </Tappable>
+        </Fragment>
       )}
     </div>
   );
-}, {
-  sizeY: true,
-});
+};
 
 Removable.defaultProps = {
   align: 'center',

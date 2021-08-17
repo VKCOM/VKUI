@@ -3,6 +3,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
+import './Card.css';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   mode?: 'tint' | 'shadow' | 'outline';

@@ -1,10 +1,11 @@
-import { FC, ImgHTMLAttributes } from 'react';
+import { FC, ImgHTMLAttributes, useState } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
+import { HasRef, HasRootRef } from '../../types';
+import './Avatar.css';
 
-export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
+export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLImageElement> {
   /**
    * Рекомендуемый сет значений: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24
    */
@@ -14,7 +15,18 @@ export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<
 }
 
 const Avatar: FC<AvatarProps> = ({
+  alt,
+  crossOrigin,
+  decoding,
+  height,
+  loading,
+  referrerPolicy,
+  sizes,
   src,
+  srcSet,
+  useMap,
+  width,
+  getRef,
   size,
   shadow,
   mode,
@@ -22,11 +34,19 @@ const Avatar: FC<AvatarProps> = ({
   children,
   getRootRef,
   style,
-  alt,
   'aria-label': ariaLabel,
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
+  const [failedImage, setFailedImage] = useState(false);
+
+  const onImageError = () => {
+    setFailedImage(true);
+  };
+
+  const onImageLoad = () => {
+    setFailedImage(false);
+  };
 
   let borderRadius: string | number = '50%';
 
@@ -47,20 +67,41 @@ const Avatar: FC<AvatarProps> = ({
       break;
   }
 
+  const hasSrc = src || srcSet;
+
   return (
     <div
+      {...restProps}
       vkuiClass={classNames(getClassName('Avatar', platform), `Avatar--type-${mode}`, `Avatar--sz-${size}`, {
         'Avatar--shadow': shadow,
+        'Avatar--failed': failedImage,
       })}
       className={className}
       ref={getRootRef}
-      role={src ? 'img' : 'presentation'}
+      role={hasSrc ? 'img' : 'presentation'}
       aria-label={alt || ariaLabel}
+      style={{ ...style, width: size, height: size, borderRadius }}
     >
-      <div {...restProps} aria-hidden="true" vkuiClass="Avatar__in" style={{ ...style, width: size, height: size, borderRadius }}>
-        {src && <img vkuiClass="Avatar__img" src={src} alt="" />}
-        {children && <div vkuiClass="Avatar__children">{children}</div>}
-      </div>
+      {hasSrc &&
+        <img
+          crossOrigin={crossOrigin}
+          decoding={decoding}
+          height={height}
+          loading={loading}
+          referrerPolicy={referrerPolicy}
+          sizes={sizes}
+          src={src}
+          srcSet={srcSet}
+          useMap={useMap}
+          width={width}
+          ref={getRef}
+          onError={onImageError}
+          onLoad={onImageLoad}
+          vkuiClass="Avatar__img"
+          alt=""
+        />
+      }
+      {children && <div vkuiClass="Avatar__children">{children}</div>}
     </div>
   );
 };

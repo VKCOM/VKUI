@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, FunctionComponent, ReactNode } from 'react';
+import { AllHTMLAttributes, FC, ReactNode } from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -7,13 +7,18 @@ import { isPrimitiveReactNode } from '../../lib/utils';
 import { IOS, VKCOM, ANDROID } from '../../lib/platform';
 import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
+import './PanelHeaderButton.css';
+
+export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
+  primary?: boolean;
+  label?: ReactNode;
+}
 
 interface ButtonTypographyProps extends AllHTMLAttributes<HTMLElement> {
   primary?: PanelHeaderButtonProps['primary'];
-  'aria-label'?: string;
 }
 
-const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, children }: ButtonTypographyProps) => {
+const ButtonTypography: FC<ButtonTypographyProps> = ({ primary, children }: ButtonTypographyProps) => {
   const platform = usePlatform();
 
   if (platform === IOS) {
@@ -31,12 +36,7 @@ const ButtonTypography: FunctionComponent<ButtonTypographyProps> = ({ primary, c
   );
 };
 
-export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
-  primary?: boolean;
-  label?: ReactNode;
-}
-
-export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
+export const PanelHeaderButton: FC<PanelHeaderButtonProps> = ({
   children,
   primary,
   label,
@@ -44,7 +44,6 @@ export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
 }: PanelHeaderButtonProps) => {
   const isPrimitive = isPrimitiveReactNode(children);
   const isPrimitiveLabel = isPrimitiveReactNode(label);
-  const Component = restProps.href ? 'a' : 'button';
   const platform = usePlatform();
 
   let hoverMode;
@@ -68,7 +67,7 @@ export const PanelHeaderButton: FunctionComponent<PanelHeaderButtonProps> = ({
     <Tappable
       {...restProps}
       hoverMode={hoverMode}
-      Component={Component}
+      Component={restProps.href ? 'a' : 'button'}
       activeEffectDelay={200}
       activeMode={activeMode}
       vkuiClass={classNames(

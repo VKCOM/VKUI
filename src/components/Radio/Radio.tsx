@@ -10,6 +10,7 @@ import { hasReactNode } from '../../lib/utils';
 import Caption from '../../components/Typography/Caption/Caption';
 import Headline from '../Typography/Headline/Headline';
 import Text from '../Typography/Text/Text';
+import './Radio.css';
 
 export interface RadioProps extends
   InputHTMLAttributes<HTMLInputElement>,

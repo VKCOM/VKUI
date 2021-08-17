@@ -16,6 +16,7 @@
 }
 
 .Placeholder__in {
+  max-width: 100%;
   text-align: center;
   box-sizing: border-box;
   padding: 48px 32px;

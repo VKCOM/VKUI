@@ -5,6 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import Headline from '../Typography/Headline/Headline';
 import Caption from '../Typography/Caption/Caption';
 import { hasReactNode } from '../../lib/utils';
+import './FormStatus.css';
 
 export interface FormStatusProps extends HTMLAttributes<HTMLDivElement> {
   mode?: 'default' | 'error';

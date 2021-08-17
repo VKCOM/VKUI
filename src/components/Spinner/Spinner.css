@@ -16,6 +16,18 @@
   transform: scale(1);
 }
 
+/**
+ * PanelHeader
+ */
+
 .PanelHeader .Spinner {
+  color: currentColor;
+}
+
+/**
+ * Button
+ */
+
+.Button .Spinner {
   color: currentColor;
 }

@@ -5,6 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
+import './Switch.css';
 
 export interface SwitchProps extends
   InputHTMLAttributes<HTMLInputElement>,

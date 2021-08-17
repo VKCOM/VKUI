@@ -2,6 +2,7 @@ import { FC, HTMLAttributes, ReactNode, useCallback, MouseEvent } from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { getTitleFromChildren, hasReactNode, noop } from '../../lib/utils';
 import Caption from '../Typography/Caption/Caption';
+import './Chip.css';
 
 type ChipValue = string | number;
 

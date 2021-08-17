@@ -14,3 +14,8 @@
 .Badge--prominent {
   background-color: var(--counter_prominent_background);
 }
+
+.TabsItem__after .Badge {
+  transform: translateY(-2px);
+  margin-left: 6px;
+}

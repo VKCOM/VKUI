@@ -11,6 +11,7 @@ import { useDOM } from '../../lib/dom';
 import { warnOnce } from '../../lib/warnOnce';
 import { hasReactNode } from '../../lib/utils';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import './Tooltip.css';
 
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;

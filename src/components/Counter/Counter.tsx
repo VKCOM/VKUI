@@ -7,6 +7,7 @@ import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
 import { HasPlatform } from '../../types';
+import './Counter.css';
 
 export interface CounterProps extends HTMLAttributes<HTMLSpanElement> {
   /**

@@ -19,6 +19,8 @@ import { hasHover } from '@vkontakte/vkjs';
 import { setRef } from '../../lib/utils';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
+import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
+import './Tappable.css';
 
 export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
   Component?: ElementType;
@@ -44,10 +46,9 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
    */
   hoverMode?: 'opacity' | 'background' | string;
   /**
-   * @ignore Временное свойство для работы над доступностью. Указывает, должен ли компонент показывать focus ring при навигации с клавиатуры.
-   * Исчезнет после того, как мы адаптируем отображение всех компонентов на базе Tappable.
+   * Стиль аутлайна focus visible.
    */
-  hasFocusVisible?: boolean;
+  focusVisibleMode?: FocusVisibleMode;
 }
 
 export interface TappableState {
@@ -129,11 +130,9 @@ class Tappable extends Component<TappableProps, TappableState> {
   wavesTimeout: number;
 
   static defaultProps = {
-    Component: 'div',
-    role: 'button',
     stopPropagation: false,
     disabled: false,
-    hasFocusVisible: false,
+    focusVisibleMode: 'inside',
     hasHover,
     hoverMode: 'background',
     hasActive: true,
@@ -339,13 +338,21 @@ class Tappable extends Component<TappableProps, TappableState> {
     if (prevProps.hasHover !== this.props.hasHover || prevProps.hasActive !== this.props.hasActive) {
       this.setState({ hasHover: this.props.hasHover, hasActive: this.props.hasActive });
     }
+    if (!prevProps.disabled && this.props.disabled) {
+      this.setState({ hovered: false });
+    }
   }
 
   render() {
     const { clicks, active, hovered, hasHover, hasActive } = this.state;
+
+    const defaultComponent: ElementType = this.props.href ? 'a' : 'div';
+
     const {
       children,
-      Component,
+      Component = defaultComponent,
+      onClick,
+      onKeyDown,
       activeEffectDelay,
       stopPropagation,
       getRootRef,
@@ -356,10 +363,11 @@ class Tappable extends Component<TappableProps, TappableState> {
       hoverMode,
       hasActive: propsHasActive,
       activeMode,
-      hasFocusVisible,
-      tabIndex,
+      focusVisibleMode,
       ...restProps
     } = this.props;
+
+    const isCustomElement: boolean = Component !== 'a' && Component !== 'button' && !restProps.contentEditable;
 
     const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
     const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
@@ -373,7 +381,6 @@ class Tappable extends Component<TappableProps, TappableState> {
         'Tappable--mouse': hasMouse,
         [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
         [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
-        'Tappable--focus-visible': hasFocusVisible,
         [hoverMode]: hasHover && hovered && !isPresetHoverMode,
         [activeMode]: hasActive && active && !isPresetActiveMode,
       });
@@ -389,24 +396,19 @@ class Tappable extends Component<TappableProps, TappableState> {
       props.onStart = this.onStart;
       props.onMove = this.onMove;
       props.onEnd = this.onEnd;
+      props.onClick = onClick;
+      props.onKeyDown = isCustomElement ? this.onKeyDown : onKeyDown;
       /* eslint-enable */
       props.getRootRef = this.getRef;
-
-      /*
-       * [a11y]
-       * Проставляет tabindex и подменяет onKeyDown для нужных кастомных доступных элементов
-       */
-      const nativeComponents: ElementType[] = ['a', 'button', 'input', 'textarea', 'label'];
-      if (!nativeComponents.includes(Component) && !restProps.contentEditable) {
-        props.tabIndex = tabIndex !== undefined ? tabIndex : 0;
-
-        if (restProps.role === 'button' || restProps.role === 'link') {
-          props.onKeyDown = this.onKeyDown;
-        }
-      }
     } else {
       props.ref = this.getRef;
     }
+
+    if (isCustomElement) {
+      props['aria-disabled'] = restProps.disabled;
+    }
+
+    const role: string = restProps.href ? 'link' : 'button';
 
     return (
       <TappableContext.Consumer>
@@ -428,6 +430,9 @@ class Tappable extends Component<TappableProps, TappableState> {
                 return (
                   <RootComponent
                     {...touchProps}
+                    type={Component === 'button' ? 'button' : undefined}
+                    tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
+                    role={isCustomElement ? role : undefined}
                     {...restProps}
                     vkuiClass={classes}
                     {...props}>
@@ -440,16 +445,15 @@ class Tappable extends Component<TappableProps, TappableState> {
                     >
                       {children}
                     </TappableContext.Provider>
-                    {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' &&
-                    <span vkuiClass="Tappable__waves">
-                      {Object.keys(clicks).map((k: string) => {
-                        return (
+                    {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' && (
+                      <span aria-hidden="true" vkuiClass="Tappable__waves">
+                        {Object.keys(clicks).map((k: string) => (
                           <span vkuiClass="Tappable__wave" style={{ top: clicks[k].y, left: clicks[k].x }} key={k} />
-                        );
-                      })}
-                    </span>
-                    }
-                    {hasHover && <span vkuiClass="Tappable__hoverShadow" />}
+                        ))}
+                      </span>
+                    )}
+                    {hasHover && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
+                    {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
                   </RootComponent>
                 );
               }}

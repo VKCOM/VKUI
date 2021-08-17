@@ -1,10 +1,10 @@
 Делает из [SelectMimicry](#!/SelectMimicry) селект с выпадающим списком. Используется внутри [Select](#!/Select).
 
-```jsx
+```jsx { "props": { "layout": false, "iframe": false } }
 class Example extends React.Component {
   constructor(props) {
     super(props);
-    this.users = getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }));
+    this.users = getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100, description: user.screen_name }));
     this.cities = [{
       label: 'Санкт-Петербург',
       description: 'Россия',
@@ -16,6 +16,7 @@ class Example extends React.Component {
     }, {
       label: 'Новосибирск',
       description: 'Россия',
+      disabled: true,
       value: 2
     }, {
       label: 'Нью-Йорк',
@@ -29,7 +30,12 @@ class Example extends React.Component {
 
     this.state = {
       query: '',
+      remoteQuery: '',
       newUsers: [],
+      fetching: false,
+      fetchingSearch: false,
+      remoteUsers: [],
+      remoteUsersSearch: []
     } 
   }
   
@@ -43,12 +49,7 @@ class Example extends React.Component {
 
   render() {
     return (
-    <View activePanel="select">
-      <Panel id="select">
-        <PanelHeader>
-          CustomSelect
-        </PanelHeader>
-        <Group>
+        <React.Fragment>
           <FormItem top="Администратор" bottom="Базовый пример использования">
             <CustomSelect
               placeholder="Не выбран"
@@ -60,10 +61,15 @@ class Example extends React.Component {
               placeholder="Не выбран"
               options={this.users}
               renderOption={({ option, ...restProps }) => (
-                <CustomSelectOption {...restProps} before={<Avatar size={24} src={option.avatar} />} />
+                <CustomSelectOption
+                   {...restProps}
+                   before={<Avatar size={24} src={option.avatar}/>}
+                   description={option.description} 
+                />              
               )}
             />
           </FormItem>
+          <Header>Поиск</Header>
           <FormItem top="Администратор" bottom="Поиск по списку">
             <CustomSelect
               placeholder="Введите имя пользователя"
@@ -76,6 +82,7 @@ class Example extends React.Component {
               placeholder="Введите название города или страны"
               searchable
               filterFn={(value, option) => option.label.toLowerCase().includes(value.toLowerCase()) || option.description.toLowerCase().includes(value.toLowerCase())}
+              renderOption={({ option, ...restProps }) => (<CustomSelectOption {...restProps} description={option.description} />)}
               options={this.cities}
             />
           </FormItem>
@@ -110,9 +117,63 @@ class Example extends React.Component {
               value={this.state.value}
             />
           </FormItem>
-        </Group>
-      </Panel>
-    </View>
+          <Header>Асинхронная загрузка списка</Header>
+          <FormItem top="Администратор">
+            <CustomSelect
+              popupDirection="top"
+              placeholder="Не выбран"
+              onOpen={() => {
+                if (this.state.remoteUsers.length === 0) {
+                  this.setState({ fetching: true });
+                  setTimeout(() => {
+                    this.setState({ 
+                      fetching: false,
+                      remoteUsers: getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))
+                    });                
+                  }, 1500)
+                }
+              }}
+              fetching={this.state.fetching}
+              options={this.state.remoteUsers}
+            />
+          </FormItem>
+          <FormItem top="Администратор" bottom="Асинхронный поиск">
+            <CustomSelect
+              popupDirection="top"
+              placeholder="Введите имя пользователя"
+              searchable
+              onInputChange={(e) => {
+                const remoteQuery = e.target.value;
+                clearTimeout(this.timeout);
+                if (remoteQuery.length < 3) {
+                  this.setState({ remoteQuery, fetchingSearch: false, remoteUsersSearch: [] })
+                } else {
+                  this.setState({ remoteQuery, fetchingSearch: true });
+                  this.timeout = setTimeout(() => {
+                    this.setState({ 
+                      fetchingSearch: false,
+                      remoteUsersSearch: getRandomUsers(10).map(user => ({ label: user.name, value: user.id, avatar: user.photo_100 }))
+                    });
+                  }, 1500);
+                }
+              }}
+              onClose={() => {
+                clearTimeout(this.timeout)
+                this.setState({ fetchingSearch: false, remoteQuery: '' });              
+              }}
+              filterFn={false}
+              options={this.state.remoteUsersSearch}
+              fetching={this.state.fetchingSearch}
+              renderDropdown={!this.state.fetchingSearch && (({ defaultDropdownContent }) => {
+                if (this.state.remoteQuery.length < 3) {
+                  return <Text style={{ padding: 12, color: 'var(--text_secondary)' }} weight="regular">Нужно ввести хотя бы три символа</Text>;
+                } else {
+                  return defaultDropdownContent
+                }
+              })} 
+            />
+          </FormItem>
+        </React.Fragment>
     );
   }
 }

@@ -1,6 +1,21 @@
 import { ComponentType } from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
 import AdaptivityProvider, { AdaptivityProviderProps } from '../components/AdaptivityProvider/AdaptivityProvider';
+import { ImgOnlyAttributes } from '../lib/utils';
+
+export const imgOnlyAttributes: ImgOnlyAttributes = {
+  alt: 'test',
+  crossOrigin: 'anonymous',
+  decoding: 'async',
+  height: 100,
+  width: 100,
+  loading: 'eager',
+  referrerPolicy: 'no-referrer',
+  sizes: 'test',
+  src: 'test',
+  srcSet: 'test',
+  useMap: 'test',
+};
 
 export type ComponentTestOptions = {
   defaultProps?: any;

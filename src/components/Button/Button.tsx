@@ -10,6 +10,8 @@ import { HasAlign } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { Platform, IOS, VKCOM } from '../../lib/platform';
+import Spinner from '../Spinner/Spinner';
+import './Button.css';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
@@ -17,6 +19,7 @@ export interface VKUIButtonProps extends HasAlign {
   stretched?: boolean;
   before?: ReactNode;
   after?: ReactNode;
+  loading?: boolean;
 }
 
 export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
@@ -66,20 +69,30 @@ const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProp
 
 const Button: FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
-  const { size, mode, stretched, align, children, before, after, getRootRef, Component, sizeY, ...restProps } = props;
+  const {
+    size,
+    mode,
+    stretched,
+    align,
+    children,
+    before,
+    after,
+    getRootRef,
+    sizeY,
+    Component = 'button',
+    loading,
+    onClick,
+    ...restProps
+  } = props;
+
   const hasIcons = Boolean(before || after);
-
-  const RenderedComponent = restProps.href ? 'a' : Component;
-
-  let accessibleRole: string = null;
-  if (RenderedComponent !== 'a' && RenderedComponent !== 'button' && RenderedComponent !== 'input') {
-    accessibleRole = 'button';
-  }
 
   return (
     <Tappable
-      role={accessibleRole}
       {...restProps}
+      Component={restProps.href ? 'a' : Component}
+      onClick={loading ? null : onClick}
+      focusVisibleMode="outside"
       vkuiClass={
         classNames(
           getClassName('Button', platform),
@@ -94,9 +107,9 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
         )
       }
       getRootRef={getRootRef}
-      Component={RenderedComponent}
       activeMode="opacity"
     >
+      {loading && <Spinner size="small" vkuiClass="Button__spinner" />}
       <span vkuiClass="Button__in">
         {before && <span vkuiClass="Button__before">{before}</span>}
         {children && (
@@ -105,6 +118,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
             sizeY={sizeY}
             platform={platform}
             vkuiClass="Button__content"
+            Component="span"
           >
             {children}
           </ButtonTypography>
@@ -117,12 +131,10 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
 
 Button.defaultProps = {
   mode: 'primary',
-  Component: 'button',
   align: 'center',
   size: 's',
   stretched: false,
   stopPropagation: true,
-  hasFocusVisible: true,
 };
 
 export default withAdaptivity(Button, {

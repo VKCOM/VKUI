@@ -7,6 +7,7 @@ import { isPrimitiveReactNode } from '../../lib/utils';
 import { VKCOM } from '../../lib/platform';
 import Separator from '../Separator/Separator';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import './ModalPageHeader.css';
 
 export interface ModalPageHeaderProps extends HTMLAttributes<HTMLDivElement>, HasRef<HTMLDivElement> {
   /**

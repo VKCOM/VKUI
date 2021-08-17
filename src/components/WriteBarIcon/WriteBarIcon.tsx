@@ -11,7 +11,11 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS } from '../../lib/platform';
-import Caption from '../Typography/Caption/Caption';
+import Counter from '../Counter/Counter';
+import Tappable from '../Tappable/Tappable';
+import { warnOnce } from '../../lib/warnOnce';
+import { hasReactNode } from '../../lib/utils';
+import './WriteBarIcon.css';
 
 export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -27,48 +31,61 @@ export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElemen
    * Значение счётчика для кнопки. Например, для количества прикреплённых файлов.
    */
   count?: number;
-  'aria-label'?: string;
 }
 
-export const WriteBarIcon: FC<WriteBarIconProps> = (props: WriteBarIconProps) => {
+const warn = warnOnce('WriteBarIcon');
+const IS_DEV = process.env.NODE_ENV === 'development';
+
+export const WriteBarIcon: FC<WriteBarIconProps> = ({
+  mode,
+  children,
+  count,
+  ...restProps
+}: WriteBarIconProps) => {
   const platform = usePlatform();
-  const {
-    mode,
-    children,
-    count,
-    ...restProps
-  } = props;
 
   let icon: ReactNode;
+  let ariaLabel: string;
 
   switch (mode) {
     case 'attach':
       icon = platform === IOS ? <Icon28AddCircleOutline /> : <Icon28AttachOutline />;
+      ariaLabel = 'Прикрепить файл';
       break;
 
     case 'send':
       icon = platform === IOS ? <Icon48WritebarSend /> : <Icon24Send />;
+      ariaLabel = 'Отправить';
       break;
 
     case 'done':
       icon = platform === IOS ? <Icon48WritebarDone /> : <Icon28CheckCircleOutline />;
+      ariaLabel = 'Готово';
       break;
 
     default:
       break;
   }
 
+  if (IS_DEV && !restProps['aria-label'] && !ariaLabel) {
+    warn('[WriteBarIcon/a11y] У WriteBarIcon нет aria-label. Кнопка будет недоступной для части пользователей.');
+  }
+
   return (
-    <button
-      type="button"
+    <Tappable
+      aria-label={ariaLabel}
       {...restProps}
+      Component="button"
+      hasHover={false}
+      activeMode="WriteBarIcon__active"
       vkuiClass={classNames(getClassName('WriteBarIcon', platform), {
         [`WriteBarIcon--${mode}`]: !!mode,
-        'WriteBarIcon--disabled': restProps.disabled,
       })}
     >
-      {icon || children}
-      {count && <Caption vkuiClass="WriteBarIcon__count" weight="regular" level="2">{count}</Caption>}
-    </button>
+      <span vkuiClass="WriteBarIcon__in">
+        {icon || children}
+        {hasReactNode(count) && <Counter vkuiClass="WriteBarIcon__counter" size="s">{count}</Counter>}
+      </span>
+    </Tappable>
   );
 };

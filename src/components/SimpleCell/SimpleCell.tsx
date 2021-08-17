@@ -10,6 +10,7 @@ import { withAdaptivity, SizeType, AdaptivityProps } from '../../hoc/withAdaptiv
 import Title from '../Typography/Title/Title';
 import Text from '../Typography/Text/Text';
 import Caption from '../Typography/Caption/Caption';
+import './SimpleCell.css';
 
 interface SimpleCellTypographyProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {}
 
@@ -67,25 +68,15 @@ const SimpleCell: FC<SimpleCellProps> = ({
   description,
   expandable,
   multiline,
-  Component,
-  onClick,
   sizeY,
   ...restProps
 }) => {
   const platform = usePlatform();
   const hasAfter = hasReactNode(after) || expandable && platform === IOS;
-  const RootComponent = restProps.disabled ? Component : Tappable;
-
-  const props: SimpleCellProps = restProps;
-
-  if (!restProps.disabled) {
-    props.Component = restProps.href ? 'a' : Component;
-    props.onClick = onClick;
-  }
 
   return (
-    <RootComponent
-      {...props}
+    <Tappable
+      {...restProps}
       vkuiClass={
         classNames(
           getClassName('SimpleCell', platform),
@@ -118,12 +109,8 @@ const SimpleCell: FC<SimpleCellProps> = ({
           {expandable && platform === IOS && <Icon24Chevron />}
         </div>
       }
-    </RootComponent>
+    </Tappable>
   );
-};
-
-SimpleCell.defaultProps = {
-  Component: 'div',
 };
 
 export default withAdaptivity(SimpleCell, { sizeY: true });

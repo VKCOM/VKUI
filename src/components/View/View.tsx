@@ -16,6 +16,7 @@ import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import './View.css';
 
 const warn = warnOnce('View');
 export const transitionStartEventName = 'VKUI:View:transition-start';
@@ -476,7 +477,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   render() {
     const {
       popout, modal, platform,
-      activePanel: _1, splitCol, configProvider, history, id, nav,
+      activePanel: _1, splitCol, configProvider, history, nav,
       onTransition, onSwipeBack, onSwipeBackStart, onSwipeBackCancel,
       window, document, scroll,
       ...restProps

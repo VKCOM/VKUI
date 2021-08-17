@@ -1,6 +1,8 @@
 .RichCell {
   display: flex;
   min-height: 64px;
+  padding-right: 16px;
+  padding-left: 16px;
   box-sizing: border-box;
   white-space: nowrap;
   text-decoration: none;
@@ -88,42 +90,22 @@
   text-overflow: ellipsis;
 }
 
-.RichCell__bottom .UsersStack {
-  padding: 5px 0 0;
-}
-
 .RichCell__actions {
   display: flex;
   margin-top: 8px;
 }
 
-.RichCell__actions .Button:not(:last-child) {
-  margin-right: 8px;
-}
-
 /**
  * iOS
  */
-
 .RichCell--ios {
   padding-right: 12px;
   padding-left: 12px;
 }
 
 /**
- * Android
- */
-
-.RichCell--android,
-.RichCell--vkcom {
-  padding-right: 16px;
-  padding-left: 16px;
-}
-
-/**
  * sizeY === 'compact'
  */
-
 .RichCell--sizeY-compact {
   min-height: 60px;
 }
