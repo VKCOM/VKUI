@@ -147,7 +147,6 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   onBlur: noop,
   onFocus: noop,
   value: [],
-  tabIndex: 0,
   inputValue: '',
   getOptionValue: (option: ChipsInputOption): ChipsInputValue => option.value,
   getOptionLabel: (option: ChipsInputOption): string => option.label,
