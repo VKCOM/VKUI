@@ -50,7 +50,7 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
 
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
   const { style, value, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className, inputValue,
-    getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, getNewOptionData, renderChip,
+    getRef, getRootRef, placeholder, getOptionValue, getOptionLabel, getNewOptionData, renderChip,
     after, ...restProps } = props;
   const { sizeY } = useAdaptivity();
   const [focused, setFocused] = useState(false);
@@ -103,7 +103,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
       })}
       className={className}
       style={style}
-      disabled={disabled}
+      disabled={restProps.disabled}
       after={after}
     >
       <div vkuiClass="ChipsInput__container">
@@ -113,7 +113,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
 
           return (
             <React.Fragment key={value}>
-              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled, className: prefixClass('ChipsInput__chip') })}
+              {renderChip({ option, value, label, onRemove: handleChipRemove, disabled: restProps.disabled, className: prefixClass('ChipsInput__chip') })}
             </React.Fragment>
           );
         })}
@@ -131,7 +131,6 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            disabled={disabled}
             placeholder={selectedOptions.length ? null : placeholder}
             {...restProps}
           />
