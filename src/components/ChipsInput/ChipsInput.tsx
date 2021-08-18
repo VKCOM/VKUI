@@ -15,6 +15,7 @@ import { noop } from '../../lib/utils';
 import { useChipsInput } from './useChipsInput';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { prefixClass } from '../../lib/prefixClass';
+import { useExternRef } from '../../hooks/useExternRef';
 import './ChipsInput.css';
 
 export type ChipsInputValue = string | number;
@@ -54,6 +55,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   const { sizeY } = useAdaptivity();
   const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
+  const inputRef = useExternRef(getRef);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (disabled || restProps.readOnly) {
@@ -116,7 +118,8 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
           );
         })}
         <label vkuiClass="ChipsInput__input-container">
-          <input ref={getRef}
+          <input
+            ref={inputRef}
             value={fieldValue}
             autoCapitalize="none"
             autoComplete="off"
