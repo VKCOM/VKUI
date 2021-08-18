@@ -57,8 +57,10 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
   const inputRef = useExternRef(getRef);
 
+  const isDisabled = restProps.disabled || restProps.readOnly;
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (disabled || restProps.readOnly) {
+    if (isDisabled) {
       e.preventDefault();
       return;
     }
@@ -94,6 +96,17 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
     removeOption(value);
   };
 
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (isDisabled) {
+      e.preventDefault();
+      return;
+    }
+
+    if (inputRef?.current !== null && !focused) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <FormField
       getRootRef={getRootRef}
@@ -105,6 +118,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
       style={style}
       disabled={restProps.disabled}
       after={after}
+      onClick={handleClick}
     >
       <div vkuiClass="ChipsInput__container">
         {selectedOptions.map((option: Option) => {
