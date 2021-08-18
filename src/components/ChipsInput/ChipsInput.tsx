@@ -94,7 +94,6 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
 
   return (
     <FormField
-      Component="label"
       getRootRef={getRootRef}
       vkuiClass={classNames('ChipsInput', `ChipsInput--sizeY-${sizeY}`, {
         'ChipsInput--focused': focused,
@@ -116,7 +115,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
             </React.Fragment>
           );
         })}
-        <div vkuiClass="ChipsInput__input-container">
+        <label vkuiClass="ChipsInput__input-container">
           <input ref={getRef}
             value={fieldValue}
             autoCapitalize="none"
@@ -124,7 +123,6 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
             autoCorrect="off"
             spellCheck={false}
             aria-autocomplete="list"
-            tabIndex={disabled ? null : tabIndex}
             vkuiClass="ChipsInput__el"
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
@@ -132,8 +130,9 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
             onBlur={handleBlur}
             disabled={disabled}
             placeholder={selectedOptions.length ? null : placeholder}
-            {...restProps} />
-        </div>
+            {...restProps}
+          />
+        </label>
       </div>
     </FormField>
   );
