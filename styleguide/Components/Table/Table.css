@@ -17,6 +17,7 @@
   background: linear-gradient(to right, var(--background_content), transparent);
   content: '';
   opacity: 0;
+  pointer-events: none;
 }
 
 .Table--hasLeft::before {
@@ -32,6 +33,7 @@
   background: linear-gradient(to left, var(--background_content), transparent);
   content: '';
   opacity: 0;
+  pointer-events: none;
 }
 
 .Table--hasRight::after {
