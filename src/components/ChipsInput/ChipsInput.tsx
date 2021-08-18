@@ -13,7 +13,7 @@ import { classNames } from '../../lib/classNames';
 import Chip, { ChipProps } from '../Chip/Chip';
 import { noop } from '../../lib/utils';
 import { useChipsInput } from './useChipsInput';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { prefixClass } from '../../lib/prefixClass';
 import './ChipsInput.css';
 
@@ -36,8 +36,7 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLDivElement>,
   HasAlign,
-  FormFieldProps,
-  AdaptivityProps {
+  FormFieldProps {
   value: Option[];
   inputValue?: string;
   onChange?: (o: Option[]) => void;
@@ -51,7 +50,8 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
   const { style, value, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className, inputValue,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, getNewOptionData, renderChip,
-    sizeY, after, ...restProps } = props;
+    after, ...restProps } = props;
+  const { sizeY } = useAdaptivity();
   const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
 
@@ -160,4 +160,4 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
 };
 ChipsInput.defaultProps = chipsInputDefaultProps;
 
-export default withAdaptivity(ChipsInput, { sizeY: true });
+export default ChipsInput;
