@@ -1,6 +1,7 @@
-import React, {
+import {
   useState,
   KeyboardEvent,
+  Fragment,
   FocusEvent,
   InputHTMLAttributes,
   ReactNode,
@@ -126,9 +127,9 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
           const label = getOptionLabel(option);
 
           return (
-            <React.Fragment key={value}>
+            <Fragment key={value}>
               {renderChip({ option, value, label, onRemove: handleChipRemove, disabled: restProps.disabled, className: prefixClass('ChipsInput__chip') })}
-            </React.Fragment>
+            </Fragment>
           );
         })}
         <label vkuiClass="ChipsInput__input-container">
@@ -167,10 +168,11 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   getOptionLabel: (option: ChipsInputOption): string => option.label,
   getNewOptionData: (_: ChipsInputValue, label: string): ChipsInputOption => ({ value: label, label }),
   renderChip({ disabled, value, label, ...rest }: RenderChip<ChipsInputOption>) {
-    return <Chip value={value}
-      removable={!disabled}
-      {...rest}
-    >{label}</Chip>;
+    return (
+      <Chip value={value} removable={!disabled} {...rest}>
+        {label}
+      </Chip>
+    );
   },
 };
 ChipsInput.defaultProps = chipsInputDefaultProps;
