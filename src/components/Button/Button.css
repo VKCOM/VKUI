@@ -22,8 +22,10 @@
 .Button__in {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 100%;
+  text-align: center;
 }
 
 .Button--aln-left .Button__in {
@@ -31,18 +33,9 @@
   text-align: left;
 }
 
-.Button--aln-center .Button__in {
-  justify-content: center;
-  text-align: center;
-}
-
 .Button--aln-right .Button__in {
   justify-content: flex-end;
   text-align: right;
-}
-
-.Button--str .Button__in {
-  justify-content: center;
 }
 
 .Button[disabled] {
