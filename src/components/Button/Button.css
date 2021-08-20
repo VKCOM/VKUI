@@ -12,11 +12,37 @@
   max-width: 100%;
 }
 
+.Button--str {
+  display: block;
+  width: 100%;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
 .Button__in {
   display: flex;
   align-items: center;
   width: 100%;
   min-height: 100%;
+}
+
+.Button--aln-left .Button__in {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.Button--aln-center .Button__in {
+  justify-content: center;
+  text-align: center;
+}
+
+.Button--aln-right .Button__in {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.Button--str .Button__in {
+  justify-content: center;
 }
 
 .Button[disabled] {
@@ -43,32 +69,6 @@
 .Button__content--caps {
   padding-top: 7px;
   padding-bottom: 7px;
-}
-
-.Button--aln-left .Button__in {
-  justify-content: flex-start;
-  text-align: left;
-}
-
-.Button--aln-center .Button__in {
-  justify-content: center;
-  text-align: center;
-}
-
-.Button--aln-right .Button__in {
-  justify-content: flex-end;
-  text-align: right;
-}
-
-.Button--str {
-  display: block;
-  width: 100%;
-  flex-grow: 1;
-  flex-basis: 0;
-}
-
-.Button--str .Button__in {
-  justify-content: center;
 }
 
 .Button__spinner {
@@ -223,7 +223,8 @@
 }
 
 /**
- * .Banner__actions
+ * CMP:
+ * Banner
  */
 .Banner__actions > .Button {
   margin-top: 12px;
