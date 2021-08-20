@@ -12,7 +12,7 @@
   max-width: 100%;
 }
 
-.Button--str {
+.Button--stretched {
   display: block;
   width: 100%;
   flex-grow: 1;
