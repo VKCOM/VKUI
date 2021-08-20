@@ -17,8 +17,16 @@ export interface ChipProps extends HTMLAttributes<HTMLDivElement> {
   after?: ReactNode;
 }
 
-const Chip: FC<ChipProps> = (props: ChipProps) => {
-  const { value, option, onRemove, removable, before, after, children, ...restProps } = props;
+const Chip: FC<ChipProps> = ({
+  value = '',
+  option,
+  removable = true,
+  onRemove = noop,
+  before = null,
+  after,
+  children,
+  ...restProps
+}: ChipProps) => {
   const onRemoveWrapper = useCallback((event: MouseEvent) => {
     onRemove(event, value);
   }, [onRemove, value]);
@@ -45,13 +53,6 @@ const Chip: FC<ChipProps> = (props: ChipProps) => {
       </div>
     </div>
   );
-};
-
-Chip.defaultProps = {
-  removable: true,
-  before: null,
-  value: '',
-  onRemove: noop,
 };
 
 export default Chip;
