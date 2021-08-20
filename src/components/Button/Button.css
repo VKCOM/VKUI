@@ -12,6 +12,13 @@
   max-width: 100%;
 }
 
+.Button__in {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 100%;
+}
+
 .Button[disabled] {
   opacity: .4;
 }
@@ -36,11 +43,6 @@
 .Button__content--caps {
   padding-top: 7px;
   padding-bottom: 7px;
-}
-
-.Button__in {
-  display: flex;
-  align-items: center;
 }
 
 .Button--aln-left .Button__in {
