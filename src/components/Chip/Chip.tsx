@@ -13,6 +13,7 @@ export interface ChipProps extends HTMLAttributes<HTMLDivElement> {
   option?: { value?: ChipValue };
   onRemove?: (event?: MouseEvent, value?: ChipValue) => void;
   removable?: boolean;
+  removeAriaLabel?: string;
   before?: ReactNode;
   after?: ReactNode;
 }
@@ -22,6 +23,7 @@ const Chip: FC<ChipProps> = ({
   option,
   removable = true,
   onRemove = noop,
+  removeAriaLabel = 'Удалить',
   before = null,
   after,
   children,
@@ -46,6 +48,7 @@ const Chip: FC<ChipProps> = ({
             onClick={onRemoveWrapper}
             hasHover={false}
             hasActive={false}
+            aria-label={`${removeAriaLabel} ${title}`}
           >
             <Icon16Cancel />
           </Tappable>
