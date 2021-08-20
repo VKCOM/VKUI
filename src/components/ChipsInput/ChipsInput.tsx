@@ -121,8 +121,11 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
       disabled={restProps.disabled}
       after={after}
       onClick={handleClick}
+      role="application"
+      aria-disabled={restProps.disabled}
+      aria-readonly={restProps.readOnly}
     >
-      <div vkuiClass="ChipsInput__container">
+      <div vkuiClass="ChipsInput__container" role="presentation">
         {selectedOptions.map((option: Option) => {
           const value = getOptionValue(option);
           const label = getOptionLabel(option);
@@ -165,7 +168,7 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   onFocus: noop,
   value: [],
   inputValue: '',
-  inputAriaLabel: 'Ввести значение',
+  inputAriaLabel: 'Введите ваше значение...',
   getOptionValue: (option: ChipsInputOption): ChipsInputValue => option.value,
   getOptionLabel: (option: ChipsInputOption): string => option.label,
   getNewOptionData: (_: ChipsInputValue, label: string): ChipsInputOption => ({ value: label, label }),
