@@ -47,12 +47,13 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   getOptionLabel?: (o?: Option) => string;
   getNewOptionData?: (v?: ChipsInputValue, l?: string) => Option;
   renderChip?: (props?: RenderChip<Option>) => ReactNode;
+  inputAriaLabel?: string;
 }
 
 const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Option>) => {
   const { style, value, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className, inputValue,
     getRef, getRootRef, placeholder, getOptionValue, getOptionLabel, getNewOptionData, renderChip,
-    after, ...restProps } = props;
+    after, inputAriaLabel, ...restProps } = props;
   const { sizeY } = useAdaptivity();
   const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
@@ -132,7 +133,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
             </Fragment>
           );
         })}
-        <label vkuiClass="ChipsInput__input-container">
+        <label vkuiClass="ChipsInput__input-container" aria-label={inputAriaLabel}>
           <input
             ref={inputRef}
             value={fieldValue}
@@ -164,6 +165,7 @@ export const chipsInputDefaultProps: ChipsInputProps<any> = {
   onFocus: noop,
   value: [],
   inputValue: '',
+  inputAriaLabel: 'Ввести значение',
   getOptionValue: (option: ChipsInputOption): ChipsInputValue => option.value,
   getOptionLabel: (option: ChipsInputOption): string => option.label,
   getNewOptionData: (_: ChipsInputValue, label: string): ChipsInputOption => ({ value: label, label }),
