@@ -13,6 +13,8 @@ describe('Button', () => {
     disabled: [undefined, true],
   }, {
     size: ['s', 'm', 'l'],
+    stretched: [undefined, true],
+    href: [undefined, '#'],
     $adaptivity: 'y',
   }, {
     mode: ['primary'],
@@ -33,11 +35,7 @@ describe('Button', () => {
     after: [<Counter key="counter">16</Counter>],
     size: ['l'],
   }, {
-    mode: [
-      'primary',
-      'secondary',
-      'overlay_primary',
-    ],
+    mode: ['primary', 'secondary', 'overlay_primary'],
     before: [<Icon24Camera key="icon-24" />],
     after: [<Counter key="counter">16</Counter>],
     size: ['s', 'm', 'l'],
