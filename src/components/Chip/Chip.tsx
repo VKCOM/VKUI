@@ -35,10 +35,15 @@ const Chip: FC<ChipProps> = ({
   const title = getTitleFromChildren(children);
 
   return (
-    <div vkuiClass={classNames('Chip', { 'Chip--removable': removable })} {...restProps}>
-      <div vkuiClass="Chip__in">
+    <div
+      vkuiClass={classNames('Chip', { 'Chip--removable': removable })}
+      role="option"
+      aria-label={title}
+      {...restProps}
+    >
+      <div vkuiClass="Chip__in" role="presentation">
         {hasReactNode(before) && <div vkuiClass="Chip__before">{before}</div>}
-        <Caption level="1" weight="regular" vkuiClass="Chip__content" title={title}>{children}</Caption>
+        <Caption level="1" weight="regular" vkuiClass="Chip__content" title={title} aria-hidden="true">{children}</Caption>
         {hasReactNode(after) && <div vkuiClass="Chip__after">{after}</div>}
 
         {removable &&
@@ -50,7 +55,7 @@ const Chip: FC<ChipProps> = ({
             hasActive={false}
             aria-label={`${removeAriaLabel} ${title}`}
           >
-            <Icon16Cancel />
+            <Icon16Cancel aria-hidden={true} />
           </Tappable>
         }
       </div>
