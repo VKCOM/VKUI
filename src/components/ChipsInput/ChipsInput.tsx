@@ -54,7 +54,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
   const { style, value, onChange, onInputChange, onKeyDown, onBlur, onFocus, children, className, inputValue,
     getRef, getRootRef, placeholder, getOptionValue, getOptionLabel, getNewOptionData, renderChip,
     after, inputAriaLabel, ...restProps } = props;
-  const { sizeY } = useAdaptivity();
+  const { sizeY } = useAdaptivity(restProps);
   const [focused, setFocused] = useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
   const inputRef = useExternRef(getRef);
