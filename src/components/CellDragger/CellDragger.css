@@ -1,0 +1,14 @@
+.CellDragger {
+  position: relative;
+  cursor: ns-resize;
+  color: var(--icon_secondary);
+  z-index: 2;
+}
+
+/**
+ * ANDROID & VKCOM
+ */
+.CellDragger--android,
+.CellDragger--vkcom {
+  padding-right: 16px;
+}

@@ -1,14 +1,15 @@
-import { MouseEvent, FC, useState, useRef, useEffect, useContext, Fragment } from 'react';
+import { FC, useEffect, useContext, Fragment } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import { Icon24Reorder, Icon24ReorderIos, Icon24CheckCircleOn, Icon24CheckCircleOff, Icon24CheckBoxOff, Icon24CheckBoxOn } from '@vkontakte/icons';
+import { Icon24CheckCircleOn, Icon24CheckCircleOff, Icon24CheckBoxOff, Icon24CheckBoxOn } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useDraggable } from './useDraggable';
 import { ListContext } from '../../components/List/ListContext';
+import { CellDragger } from '../CellDragger/CellDragger';
 import './Cell.css';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
@@ -79,94 +80,9 @@ export const Cell: FC<CellProps> = ({
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
 
-  const rootElRef = useRef(null);
   const platform = usePlatform();
 
-  const [dragging, setDragging] = useState<boolean>(false);
-
-  const [siblings, setSiblings] = useState<HTMLElement[]>(undefined);
-  const [dragStartIndex, setDragStartIndex] = useState<number>(undefined);
-  const [dragEndIndex, setDragEndIndex] = useState<number>(undefined);
-  const [dragShift, setDragShift] = useState<number>(0);
-  const [dragDirection, setDragDirection] = useState<'down' | 'up'>(undefined);
-
-  const onDragStart = () => {
-    const rootEl = rootElRef?.current;
-
-    setDragging(true);
-
-    const _siblings: HTMLElement[] = Array.from(rootEl.parentElement.childNodes);
-    const rootElIdx = _siblings.indexOf(rootEl);
-
-    setDragStartIndex(rootElIdx);
-    setDragEndIndex(rootElIdx);
-    setSiblings(_siblings);
-    setDragShift(0);
-  };
-
-  const onDragMove = (e: TouchEvent) => {
-    e.originalEvent.preventDefault();
-
-    const rootEl = rootElRef?.current;
-
-    rootEl.style.transform = `translateY(${e.shiftY}px)`;
-    setDragDirection(dragShift - e.shiftY < 0 ? 'down' : 'up');
-    setDragShift(e.shiftY);
-    setDragEndIndex(dragStartIndex);
-
-    siblings.forEach((sibling: HTMLElement, siblingIndex: number) => {
-      const rootGesture = rootEl.getBoundingClientRect();
-
-      const siblingGesture = sibling.getBoundingClientRect();
-
-      if (dragStartIndex < siblingIndex) {
-        if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2) {
-          if (dragDirection === 'down') {
-            sibling.style.transform = 'translateY(-100%)';
-          }
-
-          setDragEndIndex((dragEndIndex) => dragEndIndex + 1);
-        }
-        if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2 && dragDirection === 'up') {
-          sibling.style.transform = 'translateY(0)';
-        }
-      } else if (dragStartIndex > siblingIndex) {
-        if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2) {
-          if (dragDirection === 'up') {
-            sibling.style.transform = 'translateY(100%)';
-          }
-
-          setDragEndIndex((dragEndIndex) => dragEndIndex - 1);
-        }
-        if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2 && dragDirection === 'down') {
-          sibling.style.transform = 'translateY(0)';
-        }
-      }
-    });
-  };
-
-  const onDragEnd = () => {
-    const [from, to] = [dragStartIndex, dragEndIndex];
-
-    siblings.forEach((sibling: HTMLElement) => {
-      sibling.style.transform = null;
-    });
-
-    setSiblings(undefined);
-    setDragEndIndex(undefined);
-    setDragStartIndex(undefined);
-    setDragDirection(undefined);
-    setDragShift(undefined);
-
-    setDragging(false);
-
-    onDragFinish && onDragFinish({ from, to });
-  };
-
-  const onDragClick = (e: MouseEvent) => {
-    e.nativeEvent.stopPropagation();
-    e.preventDefault();
-  };
+  const { dragging, rootElRef, ...draggableProps } = useDraggable({ onDragFinish });
 
   const { toggleDrag } = useContext(ListContext);
   useEffect(() => {
@@ -188,15 +104,7 @@ export const Cell: FC<CellProps> = ({
       htmlFor={selectable ? name : undefined}
       before={
         <Fragment>
-          {(platform === ANDROID || platform === VKCOM) && draggable && (
-            <Touch
-              vkuiClass="Cell__dragger"
-              onStart={onDragStart}
-              onMoveY={onDragMove}
-              onEnd={onDragEnd}
-              onClick={onDragClick}
-            ><Icon24Reorder /></Touch>
-          )}
+          {draggable && (platform === ANDROID || platform === VKCOM) && <CellDragger {...draggableProps} />}
           {selectable && (
             <Fragment>
               <input
@@ -219,15 +127,7 @@ export const Cell: FC<CellProps> = ({
       }
       after={
         <Fragment>
-          {platform === IOS && draggable && (
-            <Touch
-              vkuiClass="Cell__dragger"
-              onStart={onDragStart}
-              onMoveY={onDragMove}
-              onEnd={onDragEnd}
-              onClick={onDragClick}
-            ><Icon24ReorderIos /></Touch>
-          )}
+          {draggable && platform === IOS && <CellDragger {...draggableProps} />}
           {after}
         </Fragment>
       }
