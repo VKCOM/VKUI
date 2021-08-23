@@ -32,6 +32,6 @@ describe('Tooltip', () => {
   }, {
     alignX: ['left'],
     alignY: ['top'],
-    cornerAbsoluteOffset: [10, -10],
+    cornerAbsoluteOffset: [10, -1],
   }]);
 });
