@@ -12,15 +12,22 @@ import { ListContext } from '../../components/List/ListContext';
 import './Cell.css';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
+  mode?: 'removable' | 'selectable';
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
   draggable?: boolean;
+  /**
+   * @deprecated Будет удалено в 5.0.0. Используйте mode="removable"
+   */
   removable?: boolean;
   /**
    * Имя для input в режиме selectable
    */
   name?: string;
+  /**
+   * @deprecated Будет удалено в 5.0.0. Используйте mode="selectable"
+   */
   selectable?: boolean;
   /**
    * В режиме selectable реагирует на входящие значения пропса cheсked, как зависящий напрямую от входящего значения
@@ -40,6 +47,7 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps 
 }
 
 export const Cell: FC<CellProps> = ({
+  mode: propsMode, // TODO: убрать переименование в propsMode перед 5.0.0
   onRemove,
   removePlaceholder = 'Удалить',
   onDragFinish,
@@ -48,9 +56,9 @@ export const Cell: FC<CellProps> = ({
   before,
   after,
   disabled,
-  removable,
+  removable: deprecatedRemovable, // TODO: удалить перед 5.0.0
   draggable,
-  selectable,
+  selectable: deprecatedSelectable, // TODO: удалить перед 5.0.0
   Component,
   onChange,
   name,
@@ -59,6 +67,18 @@ export const Cell: FC<CellProps> = ({
   getRootRef,
   ...restProps
 }: CellProps) => {
+  // TODO: удалить эту и следующие 7 строк перед 5.0.0
+  let mode: CellProps['mode'] = propsMode;
+
+  if (!propsMode && (deprecatedSelectable || deprecatedRemovable)) {
+    mode = deprecatedSelectable
+      ? 'selectable'
+      : 'removable';
+  }
+
+  const selectable = mode === 'selectable';
+  const removable = mode === 'removable';
+
   const rootElRef = useRef(null);
   const platform = usePlatform();
 
