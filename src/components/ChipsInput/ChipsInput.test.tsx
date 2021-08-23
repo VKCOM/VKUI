@@ -7,21 +7,18 @@ const ChipsInputTest = (props: ChipsInputProps<ChipsInputOption>) => (
   <ChipsInput data-testid="chips-input" {...props} />
 );
 
+const chipsInputValue: ChipsInputOption[] = [{ value: 'red', label: 'Красный' }];
+const redChip = () => screen.queryByText('Красный');
 const getChipsInput = () => screen.getByTestId('chips-input');
 
 describe('ChipsInput', () => {
   baselineComponent(ChipsInput);
 
   it('renders values passed to it', () => {
-    render(
-      <ChipsInputTest
-        value={[
-          { value: 'red', label: 'Красный' },
-        ]}
-      />,
+    render(<ChipsInputTest value={chipsInputValue} />,
     );
 
-    expect(screen.queryByText('Красный')).not.toBeNull();
+    expect(redChip()).not.toBeNull();
   });
 
   it('adds chips', () => {
@@ -65,7 +62,7 @@ describe('ChipsInput', () => {
 
     render(
       <ChipsInputTest
-        value={[{ value: 'red', label: 'Красный' }]}
+        value={chipsInputValue}
         onChange={(changedValue) => value = changedValue}
       />,
     );
@@ -76,7 +73,7 @@ describe('ChipsInput', () => {
   });
 
   it('does not delete chips on hitting backspace in readonly mode', () => {
-    let value: ChipsInputOption[] = [{ value: 'red', label: 'Красный' }];
+    let value: ChipsInputOption[] = [...chipsInputValue];
 
     render(
       <ChipsInputTest
@@ -88,6 +85,17 @@ describe('ChipsInput', () => {
 
     userEvent.type(getChipsInput(), '{backspace}');
 
-    expect(value).toEqual([{ value: 'red', label: 'Красный' }]);
+    expect(value).toEqual(chipsInputValue);
   });
+
+  // it('focuses ChipsInput on input click', () => {
+  //   render(
+  //     <ChipsInputTest value={value} />,
+  //   );
+
+  //   const input = getChipsInput().querySelector('input');
+  //   userEvent.click(getChipsInput());
+
+  //   expect(input).toHaveAttribute('focused');
+  // });
 });
