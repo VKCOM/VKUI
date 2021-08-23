@@ -88,14 +88,17 @@ describe('ChipsInput', () => {
     expect(value).toEqual(chipsInputValue);
   });
 
-  // it('focuses ChipsInput on input click', () => {
-  //   render(
-  //     <ChipsInputTest value={value} />,
-  //   );
+  it('focuses ChipsInput on surrounding container click', () => {
+    render(<ChipsInputTest value={chipsInputValue} />);
 
-  //   const input = getChipsInput().querySelector('input');
-  //   userEvent.click(getChipsInput());
+    userEvent.click(screen.getByRole('application'));
+    expect(getChipsInput()).toHaveFocus();
+  });
 
-  //   expect(input).toHaveAttribute('focused');
-  // });
+  it('focuses ChipsInput on chip click', () => {
+    render(<ChipsInputTest value={chipsInputValue} />);
+
+    userEvent.click(redChip());
+    expect(getChipsInput()).toHaveFocus();
+  });
 });
