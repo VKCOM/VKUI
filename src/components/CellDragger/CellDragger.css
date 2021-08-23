@@ -1,0 +1,15 @@
+.CellDragger {
+  position: relative;
+  margin-right: 16px;
+  cursor: ns-resize;
+  color: var(--icon_secondary);
+  z-index: 2;
+}
+
+/**
+ * iOS
+ */
+.CellDragger--ios {
+  margin-right: 0;
+  margin-left: 12px;
+}

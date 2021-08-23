@@ -21,14 +21,6 @@
   z-index: 3;
 }
 
-.Cell__dragger {
-  position: relative;
-}
-
-.Cell .Cell__dragger .Icon {
-  color: var(--icon_secondary);
-}
-
 .Cell__checkbox {
   display: none;
 }
@@ -70,10 +62,7 @@
   margin-right: 12px;
 }
 
-/**
- * ANDROID & VKCOM
- */
-.Cell--android .Cell__dragger,
-.Cell--vkcom .Cell__dragger {
-  padding-right: 16px;
+.Cell--ios.Cell--removable .SimpleCell {
+  padding-left: 0;
+  padding-right: 0;
 }

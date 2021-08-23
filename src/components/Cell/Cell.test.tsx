@@ -50,7 +50,7 @@ describe('Cell', () => {
         </List>,
       );
 
-      userEvent.click(screen.getByTestId('list-xyz').querySelector('.Cell__dragger'));
+      userEvent.click(screen.getByTestId('list-xyz').querySelector('.CellDragger'));
 
       expect(updatedList).toEqual(initialList);
     });
