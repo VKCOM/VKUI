@@ -8,7 +8,7 @@ import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { usePlatform } from '../../hooks/usePlatform';
-import { ListContext } from '../../components/List/ListContext';
+import { ListContext } from '../List/ListContext';
 import './Cell.css';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
@@ -39,27 +39,26 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps 
   onDragFinish?: ({ from, to }: { from: number; to: number }) => void;
 }
 
-export const Cell: React.FC<CellProps> = (props: CellProps) => {
-  const {
-    onRemove,
-    removePlaceholder,
-    onDragFinish,
-    className,
-    style,
-    before,
-    after,
-    disabled,
-    removable,
-    draggable,
-    selectable,
-    Component,
-    onChange,
-    name,
-    checked,
-    defaultChecked,
-    getRootRef,
-    ...restProps
-  } = props;
+export const Cell: React.FC<CellProps> = ({
+  onRemove,
+  removePlaceholder = 'Удалить',
+  onDragFinish,
+  className,
+  style,
+  before,
+  after,
+  disabled,
+  removable,
+  draggable,
+  selectable,
+  Component,
+  onChange,
+  name,
+  checked,
+  defaultChecked,
+  getRootRef,
+  ...restProps
+}: CellProps) => {
   const rootElRef = React.useRef(null);
   const platform = usePlatform();
 
@@ -141,7 +140,7 @@ export const Cell: React.FC<CellProps> = (props: CellProps) => {
 
     setDragging(false);
 
-    props.onDragFinish && props.onDragFinish({ from, to });
+    onDragFinish && onDragFinish({ from, to });
   };
 
   const onDragClick = (e: React.MouseEvent) => {
@@ -233,8 +232,4 @@ export const Cell: React.FC<CellProps> = (props: CellProps) => {
       }
     </div>
   );
-};
-
-Cell.defaultProps = {
-  removePlaceholder: 'Удалить',
 };
