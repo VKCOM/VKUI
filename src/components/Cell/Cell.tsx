@@ -1,15 +1,15 @@
 import { FC, useEffect, useContext, Fragment } from 'react';
-import { classNames } from '../../lib/classNames';
+import { HasPlatform } from '../../types';
 import { getClassName } from '../../helpers/getClassName';
+import { usePlatform } from '../../hooks/usePlatform';
+import { classNames } from '../../lib/classNames';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
-import { HasPlatform } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
-import { usePlatform } from '../../hooks/usePlatform';
-import { useDraggable } from './useDraggable';
-import { ListContext } from '../../components/List/ListContext';
+import { ListContext } from '..//List/ListContext';
 import { CellDragger } from '../CellDragger/CellDragger';
 import { CellCheckbox } from '../CellCheckbox/CellCheckbox';
+import { useDraggable } from './useDraggable';
 import './Cell.css';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
