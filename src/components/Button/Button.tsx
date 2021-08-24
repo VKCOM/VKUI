@@ -101,7 +101,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
           `Button--aln-${align}`,
           `Button--sizeY-${sizeY}`,
           {
-            ['Button--str']: stretched,
+            ['Button--stretched']: stretched,
             ['Button--with-icon']: hasIcons,
           },
         )
