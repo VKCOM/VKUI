@@ -2,7 +2,6 @@ import { FC, useEffect, useContext, Fragment } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import { Icon24CheckCircleOn, Icon24CheckCircleOff, Icon24CheckBoxOff, Icon24CheckBoxOn } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
@@ -10,6 +9,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useDraggable } from './useDraggable';
 import { ListContext } from '../../components/List/ListContext';
 import { CellDragger } from '../CellDragger/CellDragger';
+import { CellCheckbox } from '../CellCheckbox/CellCheckbox';
 import './Cell.css';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
@@ -83,6 +83,7 @@ export const Cell: FC<CellProps> = ({
   const platform = usePlatform();
 
   const { dragging, rootElRef, ...draggableProps } = useDraggable({ onDragFinish });
+  const selectableProps = { name, onChange, defaultChecked, checked, disabled };
 
   const { toggleDrag } = useContext(ListContext);
   useEffect(() => {
@@ -93,9 +94,6 @@ export const Cell: FC<CellProps> = ({
     return undefined;
   }, [dragging]);
 
-  const IconOff = platform === ANDROID ? Icon24CheckBoxOff : Icon24CheckCircleOff;
-  const IconOn = platform === ANDROID ? Icon24CheckBoxOn : Icon24CheckCircleOn;
-
   const simpleCell = (
     <SimpleCell
       {...restProps}
@@ -105,23 +103,7 @@ export const Cell: FC<CellProps> = ({
       before={
         <Fragment>
           {draggable && (platform === ANDROID || platform === VKCOM) && <CellDragger {...draggableProps} />}
-          {selectable && (
-            <Fragment>
-              <input
-                type="checkbox"
-                vkuiClass="Cell__checkbox"
-                name={name}
-                onChange={onChange}
-                defaultChecked={defaultChecked}
-                checked={checked}
-                disabled={disabled}
-              />
-              <span vkuiClass="Cell__marker">
-                <IconOff vkuiClass="Cell__marker-in" />
-                <IconOn vkuiClass="Cell__marker-in Cell__marker-in--checked" />
-              </span>
-            </Fragment>
-          )}
+          {selectable && <CellCheckbox {...selectableProps} />}
           {before}
         </Fragment>
       }
@@ -139,7 +121,6 @@ export const Cell: FC<CellProps> = ({
       vkuiClass={classNames(getClassName('Cell', platform), {
         'Cell--dragging': dragging,
         'Cell--removable': removable,
-        'Cell--selectable': selectable,
         'Cell--disabled': disabled,
       })}
       className={className}
