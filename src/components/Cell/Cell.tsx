@@ -121,10 +121,15 @@ export const Cell: FC<CellProps> = ({
     checkbox = <CellCheckbox {...checkboxProps} />;
   }
 
+  const simpleCellDisabled = draggable && !selectable || removable || disabled;
+  const hasActive = !simpleCellDisabled && !dragging;
+
   const simpleCell = (
     <SimpleCell
+      hasActive={hasActive}
+      hasHover={hasActive}
       {...restProps}
-      disabled={draggable || removable || disabled}
+      disabled={simpleCellDisabled}
       Component={selectable ? 'label' : Component}
       htmlFor={selectable ? name : undefined}
       before={
