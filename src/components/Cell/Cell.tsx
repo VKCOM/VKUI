@@ -109,10 +109,15 @@ export const Cell: React.FC<CellProps> = ({
     checkbox = <CellCheckbox {...checkboxProps} />;
   }
 
+  const simpleCellDisabled = draggable && !selectable || removable || disabled;
+  const hasActive = !simpleCellDisabled && !dragging;
+
   const simpleCell = (
     <SimpleCell
+      hasActive={hasActive}
+      hasHover={hasActive}
       {...restProps}
-      disabled={draggable || removable || disabled}
+      disabled={simpleCellDisabled}
       Component={selectable ? 'label' : Component}
       before={
         <React.Fragment>
@@ -135,6 +140,7 @@ export const Cell: React.FC<CellProps> = ({
       vkuiClass={classNames(getClassName('Cell', platform), {
         'Cell--dragging': dragging,
         'Cell--removable': removable,
+        'Cell--selectable': selectable,
         'Cell--disabled': disabled,
       })}
       className={className}
