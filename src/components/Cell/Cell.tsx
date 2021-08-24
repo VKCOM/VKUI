@@ -45,6 +45,10 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps 
    * есть рабочий пример с обработкой этих чисел и перерисовкой списка.
    */
   onDragFinish?: ({ from, to }: { from: number; to: number }) => void;
+  /**
+   * aria-label для кнопки перетаскивания ячейки
+   */
+  draggerLabel?: string;
 }
 
 export const Cell: FC<CellProps> = ({
@@ -66,6 +70,7 @@ export const Cell: FC<CellProps> = ({
   checked,
   defaultChecked,
   getRootRef,
+  draggerLabel = 'Перенести ячейку',
   ...restProps
 }: CellProps) => {
   // TODO: удалить эту и следующие 7 строк перед 5.0.0
@@ -94,6 +99,8 @@ export const Cell: FC<CellProps> = ({
     return undefined;
   }, [dragging]);
 
+  const dragger = <CellDragger aria-label={draggerLabel} {...draggableProps} />;
+
   const simpleCell = (
     <SimpleCell
       {...restProps}
@@ -102,14 +109,14 @@ export const Cell: FC<CellProps> = ({
       htmlFor={selectable ? name : undefined}
       before={
         <Fragment>
-          {draggable && (platform === ANDROID || platform === VKCOM) && <CellDragger {...draggableProps} />}
+          {draggable && (platform === ANDROID || platform === VKCOM) && dragger}
           {selectable && <CellCheckbox {...selectableProps} />}
           {before}
         </Fragment>
       }
       after={
         <Fragment>
-          {draggable && platform === IOS && <CellDragger {...draggableProps} />}
+          {draggable && platform === IOS && dragger}
           {after}
         </Fragment>
       }
