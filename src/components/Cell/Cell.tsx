@@ -111,7 +111,10 @@ export const Cell: FC<CellProps> = ({
     return undefined;
   }, [dragging]);
 
-  const dragger = <CellDragger aria-label={draggerLabel} {...draggableProps} />;
+  let dragger;
+  if (draggable) {
+    dragger = <CellDragger aria-label={draggerLabel} {...draggableProps} />;
+  }
 
   const simpleCell = (
     <SimpleCell
