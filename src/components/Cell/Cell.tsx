@@ -8,7 +8,7 @@ import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { ListContext } from '..//List/ListContext';
 import { CellDragger } from '../CellDragger/CellDragger';
-import { CellCheckbox } from '../CellCheckbox/CellCheckbox';
+import { CellCheckbox, CellCheckboxProps } from '../CellCheckbox/CellCheckbox';
 import { useDraggable } from './useDraggable';
 import './Cell.css';
 
@@ -100,7 +100,6 @@ export const Cell: FC<CellProps> = ({
   const platform = usePlatform();
 
   const { dragging, rootElRef, ...draggableProps } = useDraggable({ onDragFinish });
-  const selectableProps = { name, onChange, defaultChecked, checked, disabled };
 
   const { toggleDrag } = useContext(ListContext);
   useEffect(() => {
@@ -116,6 +115,12 @@ export const Cell: FC<CellProps> = ({
     dragger = <CellDragger aria-label={draggerLabel} {...draggableProps} />;
   }
 
+  let checkbox;
+  if (selectable) {
+    const checkboxProps: CellCheckboxProps = { name, onChange, defaultChecked, checked, disabled };
+    checkbox = <CellCheckbox {...checkboxProps} />;
+  }
+
   const simpleCell = (
     <SimpleCell
       {...restProps}
@@ -125,7 +130,7 @@ export const Cell: FC<CellProps> = ({
       before={
         <Fragment>
           {draggable && (platform === ANDROID || platform === VKCOM) && dragger}
-          {selectable && <CellCheckbox {...selectableProps} />}
+          {selectable && checkbox}
           {before}
         </Fragment>
       }

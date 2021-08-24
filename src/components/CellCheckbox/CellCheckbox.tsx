@@ -7,7 +7,7 @@ import { ANDROID } from '../../lib/platform';
 import { CellProps } from '../Cell/Cell';
 import './CellCheckbox.css';
 
-type CellCheckboxProps = Pick<CellProps, 'defaultChecked' | 'checked'> & InputHTMLAttributes<HTMLInputElement>;
+export type CellCheckboxProps = Pick<CellProps, 'defaultChecked' | 'checked'> & InputHTMLAttributes<HTMLInputElement>;
 
 export const CellCheckbox = (props: CellCheckboxProps) => {
   const platform = usePlatform();
