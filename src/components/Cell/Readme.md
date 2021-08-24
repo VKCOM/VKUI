@@ -18,16 +18,18 @@
             <PanelHeader>
               Cell
             </PanelHeader>
-            <Group header={<Header mode="secondary">Выделение</Header>}>
-              <Cell selectable before={<Avatar />}>Артур Стамбульцян</Cell>
-              <Cell selectable before={<Avatar />}>Игорь Федоров</Cell>
-              <Cell selectable disabled before={<Avatar />}>Михаил Лихачев</Cell>
+
+            <Group header={<Header subtitle={<code>mode="selectable"</code>}>Выделение</Header>}>
+              <Cell mode="selectable" before={<Avatar />}>Артур Стамбульцян</Cell>
+              <Cell mode="selectable" before={<Avatar />}>Игорь Федоров</Cell>
+              <Cell mode="selectable" disabled before={<Avatar />}>Михаил Лихачев</Cell>
             </Group>
-            {this.state.removeList.length > 0 &&
-              <Group header={<Header mode="secondary">Удаление</Header>}>
+
+            {this.state.removeList.length &&
+              <Group header={<Header subtitle={<code>mode="removable"</code>}>Удаление</Header>}>
                 <List>
                   {this.state.removeList.map((item, index) => (
-                    <Cell key={item} removable onRemove={() => {
+                    <Cell key={item} mode="removable" onRemove={() => {
                       this.setState({
                         removeList: [...this.state.removeList.slice(0, index), ...this.state.removeList.slice(index + 1)]
                       })
@@ -36,7 +38,9 @@
                 </List>
               </Group>
             }
-            <Group header={<Header mode="secondary">Перетаскивание</Header>}>
+
+            <Group header={
+              <Header subtitle={<code>draggable</code>}>Перетаскивание</Header>}>
               <List>
                 {this.state.draggingList.map((item) => (
                   <Cell before={<Avatar />} key={item} draggable onDragFinish={({ from, to }) => {
