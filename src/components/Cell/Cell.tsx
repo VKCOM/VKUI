@@ -152,6 +152,7 @@ export const Cell: FC<CellProps> = ({
       vkuiClass={classNames(getClassName('Cell', platform), {
         'Cell--dragging': dragging,
         'Cell--removable': removable,
+        'Cell--selectable': selectable,
         'Cell--disabled': disabled,
       })}
       className={className}
