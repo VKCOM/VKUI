@@ -58,10 +58,20 @@ const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps })
   }
 };
 
-const HeaderAside: FC<Pick<HeaderProps, 'aside'> & HasPlatform> = ({ platform, ...restProps }) => {
+type HeaderAsideProps = Pick<HeaderProps, 'aside'> & HasPlatform & { Component: ElementType };
+
+const HeaderAside: FC<HeaderAsideProps> = ({ platform, ...restProps }) => {
   return platform === Platform.VKCOM
     ? <Subhead weight="regular" {...restProps} />
     : <Text weight="regular" {...restProps} />;
+};
+
+type HeaderSubtitleProps = Pick<HeaderProps, 'subtitle' | 'mode'> & { Component: ElementType };
+
+const HeaderSubtitle: FC<HeaderSubtitleProps> = ({ mode, ...restProps }) => {
+  return mode === 'secondary'
+    ? <Subhead weight="regular" {...restProps} />
+    : <Caption weight="regular" level="1" {...restProps} />;
 };
 
 const Header: FC<HeaderProps> = ({
@@ -85,13 +95,21 @@ const Header: FC<HeaderProps> = ({
       <div vkuiClass="Header__main">
         <HeaderContent vkuiClass="Header__content" Component="h3" mode={mode} platform={platform}>
           <span vkuiClass={classNames('Header__content-in', { 'Header__content-in--multiline': multiline })}>{children}</span>
-          {hasReactNode(indicator) && <Caption vkuiClass="Header__indicator" weight="regular" level="1">{indicator}</Caption>}
+          {hasReactNode(indicator) && (
+            <Caption
+              vkuiClass="Header__indicator"
+              weight={mode === 'primary' || mode === 'secondary' ? 'medium' : 'regular'}
+              level="1"
+            >
+              {indicator}
+            </Caption>
+          )}
         </HeaderContent>
 
-        {hasReactNode(subtitle) && <Caption vkuiClass="Header__subtitle" weight="regular" level="1">{subtitle}</Caption>}
+        {hasReactNode(subtitle) && <HeaderSubtitle vkuiClass="Header__subtitle" Component="span">{subtitle}</HeaderSubtitle>}
       </div>
 
-      {hasReactNode(aside) && <HeaderAside vkuiClass="Header__aside" platform={platform}>{aside}</HeaderAside>}
+      {hasReactNode(aside) && <HeaderAside vkuiClass="Header__aside" Component="span" platform={platform}>{aside}</HeaderAside>}
     </header>
   );
 };

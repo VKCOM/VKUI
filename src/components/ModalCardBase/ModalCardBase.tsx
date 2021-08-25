@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes, ReactNode } from 'react';
 import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
-import Subhead from '../Typography/Subhead/Subhead';
+import Headline from '../Typography/Headline/Headline';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -76,7 +76,7 @@ export const ModalCardBase: FC<ModalCardBaseProps> = withAdaptivity(({
       <div vkuiClass="ModalCardBase__container">
         {hasReactNode(icon) && <div vkuiClass="ModalCardBase__icon">{icon}</div>}
         {hasReactNode(header) && <Title level="2" weight="semibold" vkuiClass="ModalCardBase__header">{header}</Title>}
-        {hasReactNode(subheader) && <Subhead weight="regular" vkuiClass="ModalCardBase__subheader">{subheader}</Subhead>}
+        {hasReactNode(subheader) && <Headline weight="regular" vkuiClass="ModalCardBase__subheader">{subheader}</Headline>}
 
         {children}
 

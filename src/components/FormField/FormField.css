@@ -54,7 +54,7 @@
 }
 
 .FormField--disabled {
-  opacity: .4;
+  opacity: .64;
   cursor: default;
   pointer-events: none;
 }

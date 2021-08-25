@@ -42,6 +42,13 @@
   opacity: .4;
 }
 
+.Button--lvl-primary[disabled],
+.Button--lvl-secondary[disabled],
+.Button--lvl-tertiary[disabled],
+.Button--lvl-outline[disabled] {
+  opacity: .64;
+}
+
 .Button__before:not(:last-child) {
   margin-left: -4px;
   margin-right: 6px;

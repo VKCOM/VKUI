@@ -3,13 +3,13 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
+import { hasReactNode } from '../../lib/utils';
 import { Icon24Chevron, Icon24DismissSubstract, Icon24DismissDark, Icon24Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
 import IconButton from '../IconButton/IconButton';
 import Headline from '../Typography/Headline/Headline';
-import Caption from '../Typography/Caption/Caption';
+import Subhead from '../Typography/Subhead/Subhead';
 import Text from '../Typography/Text/Text';
-import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
 import './Banner.css';
 
@@ -88,7 +88,7 @@ const BannerHeader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerT
 const BannerSubheader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
   return size === 'm'
     ? <Text weight="regular" {...restProps} />
-    : <Caption level="1" weight="regular" {...restProps} />;
+    : <Subhead weight="regular" {...restProps} />;
 };
 
 const Banner: FC<BannerProps> = (props: BannerProps) => {
@@ -130,7 +130,7 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
             <BannerHeader size={size} Component="h2" vkuiClass="Banner__header">{header}</BannerHeader>
           )}
           {hasReactNode(subheader) && (
-            <BannerSubheader size={size} vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
+            <BannerSubheader Component="span" size={size} vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
           )}
           {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
           {hasReactNode(actions) && Children.count(actions) > 0 && (
