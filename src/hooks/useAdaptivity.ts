@@ -1,24 +1,19 @@
 import { useContext } from 'react';
-import { AdaptivityContext } from '../components/AdaptivityProvider/AdaptivityContext';
-import { AdaptivityProps } from '../hoc/withAdaptivity';
+import {
+  AdaptivityContext,
+  AdaptivityContextInterface,
+  AdaptivityProps,
+  SizeProps,
+  SizeType,
+} from '../components/AdaptivityProvider/AdaptivityContext';
 
-export const useAdaptivity = (props?: { [key: string]: any }): AdaptivityProps => {
-  const contextAdaptivityProps = useContext(AdaptivityContext);
+type UseAdaptivityProps = { [K in keyof SizeProps]: SizeType };
 
-  if (props?.sizeX || props?.sizeY) {
-    const {
-      sizeX = contextAdaptivityProps.sizeX,
-      sizeY = contextAdaptivityProps.sizeY,
-    } = props;
+export type { AdaptivityProps };
 
-    return Object.assign(
-      {},
-      contextAdaptivityProps,
-      {
-        sizeX,
-        sizeY,
-      });
-  }
-
-  return contextAdaptivityProps;
+export const useAdaptivity = (props?: UseAdaptivityProps): AdaptivityContextInterface => {
+  return {
+    ...useContext(AdaptivityContext),
+    ...props,
+  };
 };
