@@ -1,4 +1,4 @@
-import { Children, FC, ReactNode, HTMLAttributes, MouseEventHandler, ElementType } from 'react';
+import { Children, FC, ReactNode, HTMLAttributes, MouseEventHandler } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -7,13 +7,11 @@ import { hasReactNode } from '../../lib/utils';
 import { Icon24Chevron, Icon24DismissSubstract, Icon24DismissDark, Icon24Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
 import IconButton from '../IconButton/IconButton';
-import Headline from '../Typography/Headline/Headline';
-import Subhead from '../Typography/Subhead/Subhead';
+import { HeadlineModeProps, TitleModeProps, Typography } from '../Typography/Typography';
 import Text from '../Typography/Text/Text';
-import Title from '../Typography/Title/Title';
 import './Banner.css';
 
-export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
+export interface BannerProps extends HTMLAttributes<HTMLElement> {
   /**
    * Тип баннера.
    */
@@ -75,22 +73,6 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   actions?: ReactNode;
 }
 
-interface BannerTypographyProps extends Pick<BannerProps, 'size'> {
-  Component?: ElementType;
-}
-
-const BannerHeader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
-  return size === 'm'
-    ? <Title level="2" weight="medium" {...restProps} />
-    : <Headline weight="medium" {...restProps} />;
-};
-
-const BannerSubheader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
-  return size === 'm'
-    ? <Text weight="regular" {...restProps} />
-    : <Subhead weight="regular" {...restProps} />;
-};
-
 const Banner: FC<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {
@@ -98,6 +80,16 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
     onDismiss, dismissLabel,
     ...restProps
   } = props;
+
+  const headerTypography: TitleModeProps | HeadlineModeProps = size === 'm'
+    ? {
+      mode: 'title',
+      level: '2',
+      weight: 'medium',
+    } : {
+      mode: 'headline',
+      weight: 'medium',
+    };
 
   return (
     <section
@@ -127,10 +119,21 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
 
         <div vkuiClass="Banner__content">
           {hasReactNode(header) && (
-            <BannerHeader size={size} Component="h2" vkuiClass="Banner__header">{header}</BannerHeader>
+            <Typography
+              {...headerTypography}
+              Component="h2"
+              vkuiClass="Banner__header"
+            >{header}</Typography>
+          // <BannerHeader size={size} Component="h2" vkuiClass="Banner__header">{header}</BannerHeader>
           )}
           {hasReactNode(subheader) && (
-            <BannerSubheader Component="span" size={size} vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
+            <Typography
+              mode={size === 'm' ? 'text' : 'subhead'}
+              weight="medium"
+              Component="span"
+              vkuiClass="Banner__subheader"
+            >{subheader}</Typography>
+            // <BannerSubheader Component="span" size={size} vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
           )}
           {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
           {hasReactNode(actions) && Children.count(actions) > 0 && (
