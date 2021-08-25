@@ -20,7 +20,7 @@ const Subhead: FC<SubheadProps> = ({
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames(getClassName('Subhead', platform), `Subhead--w-${weight}`)}
+      vkuiClass={classNames(getClassName('Subhead', platform), `Subhead--${weight}`)}
     >
       {children}
     </Component>

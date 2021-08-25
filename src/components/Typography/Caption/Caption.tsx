@@ -27,7 +27,7 @@ const Caption: FC<CaptionProps> = ({
       vkuiClass={
         classNames(
           getClassName('Caption', platform),
-          `Caption--w-${weight}`,
+          `Caption--${weight}`,
           `Caption--l-${level}`,
           {
             'Caption--caps': caps,

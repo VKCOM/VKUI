@@ -18,33 +18,33 @@
   line-height: 22px;
 }
 
-.Title--w-regular {
+.Title--regular {
   font-weight: 400;
 }
 
-.Title--w-medium {
+.Title--medium {
   font-weight: 500;
 }
 
-.Title--w-semibold {
+.Title--semibold {
   font-weight: 600;
 }
 
-.Title--w-bold {
+.Title--bold {
   font-weight: 700;
 }
 
-.Title--w-heavy {
+.Title--heavy {
   font-weight: 800;
 }
 
 /**
  * ANDROID
  */
-.Title--android.Title--w-semibold {
+.Title--android.Title--semibold {
   font-weight: 500;
 }
 
-.Title--android.Title--w-heavy {
+.Title--android.Title--heavy {
   font-weight: 700;
 }

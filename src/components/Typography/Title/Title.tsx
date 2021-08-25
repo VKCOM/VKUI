@@ -41,7 +41,7 @@ const Title: FC<TitleProps> = ({
       vkuiClass={
         classNames(
           getClassName('Title', platform),
-          `Title--w-${weight}`,
+          `Title--${weight}`,
           `Title--l-${level}`,
         )
       }

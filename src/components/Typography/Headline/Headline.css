@@ -5,21 +5,21 @@
   line-height: 20px;
 }
 
-.Headline--w-regular {
+.Headline--regular {
   font-weight: 400;
 }
 
-.Headline--w-medium {
+.Headline--medium {
   font-weight: 500;
 }
 
-.Headline--w-semibold {
+.Headline--semibold {
   font-weight: 600;
 }
 
 /**
  * ANDROID
  */
-.Headline--android.Headline--w-semibold {
+.Headline--android.Headline--semibold {
   font-weight: 500;
 }

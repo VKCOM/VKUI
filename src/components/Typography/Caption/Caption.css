@@ -27,29 +27,29 @@
   line-height: 12px;
 }
 
-.Caption--w-regular {
+.Caption--regular {
   font-weight: 400;
 }
 
-.Caption--w-medium {
+.Caption--medium {
   font-weight: 500;
 }
 
-.Caption--w-semibold {
+.Caption--semibold {
   font-weight: 600;
 }
 
-.Caption--w-bold {
+.Caption--bold {
   font-weight: 700;
 }
 
-.Caption--w-heavy {
+.Caption--heavy {
   font-weight: 800;
 }
 
 /**
  * ANDROID
  */
-.Caption--android.Caption--w-semibold {
+.Caption--android.Caption--semibold {
   font-weight: 500;
 }

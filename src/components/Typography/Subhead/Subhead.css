@@ -4,25 +4,25 @@
   line-height: 18px;
 }
 
-.Subhead--w-regular {
+.Subhead--regular {
   font-weight: 400;
 }
 
-.Subhead--w-medium {
+.Subhead--medium {
   font-weight: 500;
 }
 
-.Subhead--w-semibold {
+.Subhead--semibold {
   font-weight: 600;
 }
 
-.Subhead--w-bold {
+.Subhead--bold {
   font-weight: 700;
 }
 
 /**
  * ANDROID
  */
-.Subhead--android.Subhead--w-semibold {
+.Subhead--android.Subhead--semibold {
   font-weight: 500;
 }

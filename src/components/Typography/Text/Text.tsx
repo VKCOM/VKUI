@@ -28,7 +28,7 @@ const Text: FC<TextProps> = ({
     <Component
       {...restProps}
       ref={getRootRef}
-      vkuiClass={classNames(getClassName('Text', platform), `Text--w-${weight}`)}
+      vkuiClass={classNames(getClassName('Text', platform), `Text--${weight}`)}
     >
       {children}
     </Component>

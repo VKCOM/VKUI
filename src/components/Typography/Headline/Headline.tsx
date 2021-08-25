@@ -20,7 +20,7 @@ const Headline: FC<HeadlineProps> = ({
   return (
     <Component
       {...restProps}
-      vkuiClass={classNames(getClassName('Headline', platform), `Headline--w-${weight}`)}
+      vkuiClass={classNames(getClassName('Headline', platform), `Headline--${weight}`)}
     >
       {children}
     </Component>
