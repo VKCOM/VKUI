@@ -11,6 +11,7 @@ import {
   withAdaptivity,
   ConfigProvider,
   ViewWidth,
+  Platform,
 } from '@vkui';
 import './StyleGuideRenderer.css';
 import { StyleGuideMobile } from './StyleGuideMobile';
@@ -86,7 +87,7 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
-      <ConfigProvider scheme={styleguideScheme} transitionMotionEnabled={false} webviewType="internal">
+      <ConfigProvider platform={Platform.ANDROID} scheme={styleguideScheme} transitionMotionEnabled={false} webviewType="internal">
         <Component toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>{children}</Component>
       </ConfigProvider>
     </StyleGuideContext.Provider>
