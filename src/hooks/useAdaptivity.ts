@@ -4,14 +4,11 @@ import {
   AdaptivityContextInterface,
   AdaptivityProps,
   SizeProps,
-  SizeType,
 } from '../components/AdaptivityProvider/AdaptivityContext';
-
-type UseAdaptivityProps = { [K in keyof SizeProps]: SizeType };
 
 export type { AdaptivityProps };
 
-export const useAdaptivity = (props?: UseAdaptivityProps): AdaptivityContextInterface => {
+export const useAdaptivity = (props?: SizeProps): AdaptivityContextInterface => {
   return {
     ...useContext(AdaptivityContext),
     ...props,
