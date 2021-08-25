@@ -1,4 +1,4 @@
-import { RefCallback } from 'react';
+import { ElementType, RefCallback } from 'react';
 import { PlatformType } from './lib/platform';
 import { Insets } from '@vkontakte/vk-bridge';
 
@@ -22,6 +22,10 @@ export interface HasRef<T> {
 
 export interface HasAlign {
   align?: AlignType;
+}
+
+export interface HasComponent {
+  Component?: ElementType;
 }
 
 export interface HasPlatform {
