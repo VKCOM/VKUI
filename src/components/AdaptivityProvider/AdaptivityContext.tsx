@@ -19,9 +19,27 @@ export enum ViewHeight {
   MEDIUM
 }
 
-export interface AdaptivityContextInterface {
+export interface SizeProps {
   sizeX?: SizeType;
   sizeY?: SizeType;
+}
+
+export interface AdaptivityProps extends SizeProps {
+  /**
+   * @ignore
+   */
+  viewWidth?: ViewWidth;
+  /**
+   * @ignore
+   */
+  viewHeight?: ViewHeight;
+  /**
+   * @ignore
+   */
+  hasMouse?: boolean;
+}
+
+export interface AdaptivityContextInterface extends SizeProps {
   viewWidth?: ViewWidth;
   viewHeight?: ViewHeight;
   hasMouse?: boolean;

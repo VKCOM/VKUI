@@ -47,6 +47,7 @@ const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
 
   return (
     <Component
+      role="presentation"
       {...restProps}
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
@@ -61,11 +62,11 @@ const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
     >
       {children}
       {hasReactNode(after) && (
-        <div vkuiClass="FormField__after">
+        <div role="presentation" vkuiClass="FormField__after">
           {after}
         </div>
       )}
-      <div vkuiClass={classNames('FormField__border', {
+      <div role="presentation" vkuiClass={classNames('FormField__border', {
         'FormField__border--hover': !disabled && hover,
       })} />
     </Component>
