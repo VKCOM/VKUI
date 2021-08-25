@@ -10,7 +10,6 @@
 .Chip__in {
   position: relative;
   display: flex;
-  flex-flow: row nowrap;
   height: 100%;
   padding: 0 8px;
   align-items: center;
