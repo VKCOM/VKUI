@@ -1,11 +1,13 @@
 import React from 'react';
-import { Text, withAdaptivity, ViewWidth } from '@vkui';
+import { Text, ViewWidth, useAdaptivity } from '@vkui';
 import Tooltip from '@rsg-components/Tooltip';
 import { Icon16ErrorCircleOutline } from '@vkontakte/icons';
 import TypeRenderer from '../Type/TypeRenderer';
 import './ComplexType.css';
 
-export const ComplexTypeRenderder = ({ name, raw, viewWidth }) => {
+export const ComplexTypeRenderder = ({ name, raw }) => {
+  const { viewWidth } = useAdaptivity();
+
   if (viewWidth <= ViewWidth.MOBILE) {
     return <TypeRenderer>{raw}</TypeRenderer>;
   }
@@ -20,4 +22,4 @@ export const ComplexTypeRenderder = ({ name, raw, viewWidth }) => {
   );
 };
 
-export default withAdaptivity(ComplexTypeRenderder, { viewWidth: true });
+export default ComplexTypeRenderder;
