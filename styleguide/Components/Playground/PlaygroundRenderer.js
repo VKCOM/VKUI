@@ -34,12 +34,10 @@ class PlaygroundRenderer extends React.Component {
         <div className="Playground__preview" {...wrapperProps} data-preview={name}>
           {cloneElement(preview, { ...preview.props, layout, iframe, containerStyle, integration, config, exampleId })}
         </div>
-        <React.Fragment>
-          <SectionSubheading href={`#/${name}?id=code`}>Редактируемый код</SectionSubheading>
-          <div className="Playground__code">
-            {tabBody}
-          </div>
-        </React.Fragment>
+        <SectionSubheading href={`#/${name}?id=code`}>Редактируемый код</SectionSubheading>
+        <div className="Playground__code">
+          {tabBody}
+        </div>
       </div>
     );
   }
