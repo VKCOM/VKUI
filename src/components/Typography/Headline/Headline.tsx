@@ -1,12 +1,12 @@
-import { AllHTMLAttributes, ElementType, FC } from 'react';
+import { AllHTMLAttributes, FC } from 'react';
+import { HasComponent } from '../../../types';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import './Headline.css';
 
-export interface HeadlineProps extends AllHTMLAttributes<HTMLElement> {
+export interface HeadlineProps extends AllHTMLAttributes<HTMLElement>, HasComponent {
   weight: 'regular' | 'medium' | 'semibold';
-  Component?: ElementType;
 }
 
 const Headline: FC<HeadlineProps> = ({

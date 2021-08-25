@@ -1,12 +1,12 @@
-import { AllHTMLAttributes, ElementType, FC } from 'react';
+import { AllHTMLAttributes, FC } from 'react';
+import { HasComponent } from '../../../types';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import './Subhead.css';
 
-export interface SubheadProps extends AllHTMLAttributes<HTMLElement> {
+export interface SubheadProps extends AllHTMLAttributes<HTMLElement>, HasComponent {
   weight: 'regular' | 'medium' | 'semibold' | 'bold';
-  Component?: ElementType;
 }
 
 const Subhead: FC<SubheadProps> = ({

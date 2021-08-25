@@ -1,14 +1,14 @@
-import { AllHTMLAttributes, ElementType, FC } from 'react';
+import { AllHTMLAttributes, FC } from 'react';
+import { HasComponent } from '../../../types';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import './Caption.css';
 
-export interface CaptionProps extends AllHTMLAttributes<HTMLElement> {
+export interface CaptionProps extends AllHTMLAttributes<HTMLElement>, HasComponent {
   weight: 'regular' | 'medium' | 'semibold' | 'bold';
   level: '1' | '2' | '3' | '4';
   caps?: boolean;
-  Component?: ElementType;
 }
 
 const Caption: FC<CaptionProps> = ({
