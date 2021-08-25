@@ -1,13 +1,14 @@
 import React, { FC, HTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import { classNames } from '../../lib/classNames';
-import { createMasks } from './masks';
 import { useBrowserInfo } from '../../hooks/useBrowserInfo';
 import { usePlatform } from '../../hooks/usePlatform';
+import { hasReactNode } from '../../lib/utils';
+import { classNames } from '../../lib/classNames';
 import { System } from '../../lib/browser';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import Caption from '../Typography/Caption/Caption';
 import Subhead from '../Typography/Subhead/Subhead';
+import { createMasks } from './masks';
 import './UsersStack.css';
 
 export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
@@ -79,7 +80,7 @@ const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
           </Caption>
         }
       </div>
-      {children && <Subhead Component="span" weight="regular" vkuiClass="UsersStack__text">{children}</Subhead>}
+      {hasReactNode(children) && <Subhead Component="span" weight="regular" vkuiClass="UsersStack__text">{children}</Subhead>}
     </div>
   );
 };
