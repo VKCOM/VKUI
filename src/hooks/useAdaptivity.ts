@@ -9,8 +9,11 @@ import {
 export type { AdaptivityProps };
 
 export const useAdaptivity = (props?: SizeProps): AdaptivityContextInterface => {
+  const contextProps = useContext(AdaptivityContext);
+
   return {
-    ...useContext(AdaptivityContext),
-    ...props,
+    ...contextProps,
+    sizeX: props?.sizeX || contextProps.sizeX,
+    sizeY: props?.sizeY || contextProps.sizeY,
   };
 };
