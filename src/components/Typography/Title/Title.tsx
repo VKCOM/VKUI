@@ -16,7 +16,7 @@ const Title: FC<TitleProps> = ({
   children,
   weight,
   level,
-  Component = ('h' + level) as ElementType,
+  Component = 'span',
   ...restProps
 }: TitleProps) => {
   const platform = usePlatform();

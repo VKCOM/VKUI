@@ -12,7 +12,7 @@ export interface HeadlineProps extends AllHTMLAttributes<HTMLElement>, HasCompon
 const Headline: FC<HeadlineProps> = ({
   children,
   weight,
-  Component = 'h3',
+  Component = 'span',
   ...restProps
 }: HeadlineProps) => {
   const platform = usePlatform();

@@ -12,7 +12,7 @@ export interface SubheadProps extends AllHTMLAttributes<HTMLElement>, HasCompone
 const Subhead: FC<SubheadProps> = ({
   children,
   weight,
-  Component = 'h4',
+  Component = 'span',
   ...restProps
 }: SubheadProps) => {
   const platform = usePlatform();
