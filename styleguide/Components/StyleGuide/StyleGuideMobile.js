@@ -1,15 +1,17 @@
-import { View, Panel, PanelHeader, PanelHeaderClose, PanelHeaderButton } from '@vkui';
+import { View, Panel, PanelHeader, PanelHeaderClose, PanelHeaderButton, useAppearance } from '@vkui';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Icon28LogoVk, Icon28MenuOutline, Icon28MoonOutline } from '@vkontakte/icons';
+import { Icon28LogoVk, Icon28MenuOutline, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
 import './StyleGuideMobile.css';
 
 const StyleGuideMobileHeader = ({ left, switchStyleGuideScheme }) => {
+  const appearance = useAppearance();
+
   return (
     <PanelHeader
       left={left}
       right={
-        <PanelHeaderButton>
-          <Icon28MoonOutline onClick={switchStyleGuideScheme} />
+        <PanelHeaderButton onClick={switchStyleGuideScheme} aria-label="Сменить тему">
+          {appearance === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
         </PanelHeaderButton>
       }
     >
@@ -42,7 +44,7 @@ export const StyleGuideMobile = (props) => {
         <StyleGuideMobileHeader
           switchStyleGuideScheme={props.switchStyleGuideScheme}
           left={
-            <PanelHeaderButton onClick={() => setActivePanel('menu')}>
+            <PanelHeaderButton aria-label="Показать меню" onClick={() => setActivePanel('menu')}>
               <Icon28MenuOutline />
             </PanelHeaderButton>
           }
@@ -54,7 +56,7 @@ export const StyleGuideMobile = (props) => {
       <Panel id="menu">
         <StyleGuideMobileHeader
           switchStyleGuideScheme={props.switchStyleGuideScheme}
-          left={<PanelHeaderClose onClick={() => setActivePanel('content')} />}
+          left={<PanelHeaderClose aria-label="Скрыть меню" onClick={() => setActivePanel('content')} />}
         />
         {props.toc}
       </Panel>
