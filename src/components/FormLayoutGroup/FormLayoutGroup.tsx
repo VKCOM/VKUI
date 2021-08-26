@@ -1,21 +1,17 @@
-import { FunctionComponent, HTMLAttributes, MouseEvent } from 'react';
+import { FunctionComponent, HTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
-import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
+import { Removable, RemovableProps } from '../Removable/Removable';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import './FormLayoutGroup.css';
 
-export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, RemovePlaceholderProps {
+export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, RemovableProps {
   mode?: 'vertical' | 'horizontal';
   /**
    * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.
    */
   removable?: boolean;
-  /**
-   * Коллбэк срабатывает при клике на контрол удаления.
-   */
-  onRemove?: (e: MouseEvent) => void;
 }
 
 const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(({

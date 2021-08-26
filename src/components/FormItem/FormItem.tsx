@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, ElementType, FC, ReactNode, MouseEvent, Fragment } from 'react';
+import { AllHTMLAttributes, ElementType, FC, ReactNode, Fragment } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -6,10 +6,10 @@ import { hasReactNode } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
+import { Removable, RemovableProps } from '../Removable/Removable';
 import './FormItem.css';
 
-export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePlaceholderProps {
+export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovableProps {
   top?: ReactNode;
   bottom?: ReactNode;
   status?: 'default' | 'error' | 'valid';
@@ -18,10 +18,6 @@ export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovePla
    * Дает возможность удалить `FormItem`. Рекомендуется использовать только для `Input` или `Select`.
    */
   removable?: boolean;
-  /**
-   * Коллбэк срабатывает при клике на контрол удаления.
-   */
-  onRemove?: (e: MouseEvent) => void;
 }
 
 export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
