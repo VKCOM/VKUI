@@ -8,13 +8,14 @@ import {
   Scheme,
   WebviewType,
   AdaptivityProvider,
-  SplitLayout,
   withAdaptivity,
-  SplitCol,
-  ConfigProvider, SizeType,
+  ConfigProvider,
+  ViewWidth,
+  Platform,
 } from '@vkui';
 import './StyleGuideRenderer.css';
-import { StyleGuideHeader } from './StyleGuideHeader';
+import { StyleGuideMobile } from './StyleGuideMobile';
+import { StyleGuideDesktop } from './StyleGuideDesktop';
 
 export const StyleGuideContext = React.createContext({
   ...defaultConfigProviderProps,
@@ -47,7 +48,7 @@ try {
   console.log(e);
 }
 
-let StyleGuideRenderer = ({ children, toc }) => {
+let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
   const [state, setState] = useState(initialState);
   const [popout, setPopout] = useState(null);
   const { width, height, platform, scheme, hasMouse, styleguideScheme } = state;
@@ -71,40 +72,33 @@ let StyleGuideRenderer = ({ children, toc }) => {
     document.documentElement.style.setProperty('color-scheme', styleGuideAppearance);
   }, [styleguideScheme]);
 
+  const switchStyleGuideScheme = useCallback(() => {
+    const newValue = styleguideScheme === Scheme.SPACE_GRAY ? Scheme.BRIGHT_LIGHT : Scheme.SPACE_GRAY;
+    if (platform !== VKCOM) {
+      setContext({ styleguideScheme: newValue, scheme: newValue });
+    } else {
+      setContext({ styleguideScheme: newValue });
+    }
+  }, [platform, styleguideScheme]);
+
   const providerValue = useMemo(() => ({ ...state, setContext, setPopout }), [width, height, platform, scheme, hasMouse, setContext, setPopout]);
+
+  const Component = viewWidth > ViewWidth.MOBILE ? StyleGuideDesktop : StyleGuideMobile;
 
   return (
     <StyleGuideContext.Provider value={providerValue}>
-      <ConfigProvider scheme={styleguideScheme}>
-        <StyleGuideHeader scheme={styleguideScheme} setScheme={(value) => {
-          if (platform !== VKCOM) {
-            setContext({ styleguideScheme: value, scheme: value });
-          } else {
-            setContext({ styleguideScheme: value });
-          }
-        }} />
-        <SplitLayout className="StyleGuide" popout={popout}>
-          <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuide__sidebar">
-            <div className="StyleGuide__sidebarIn">
-              {toc}
-            </div>
-          </SplitCol>
-          <SplitCol width="100%" className="StyleGuide__content">
-            <div className="StyleGuide__contentIn">
-              {children}
-            </div>
-          </SplitCol>
-        </SplitLayout>
+      <ConfigProvider platform={Platform.ANDROID} scheme={styleguideScheme} transitionMotionEnabled={false} webviewType="internal">
+        <Component toc={toc} popout={popout} switchStyleGuideScheme={switchStyleGuideScheme}>{children}</Component>
       </ConfigProvider>
     </StyleGuideContext.Provider>
   );
 };
 
-StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, { sizeX: true });
+StyleGuideRenderer = withAdaptivity(StyleGuideRenderer, { sizeX: true, viewWidth: true });
 
 const StyleGuideWrapper = (props) => {
   return (
-    <AdaptivityProvider sizeX={SizeType.REGULAR} sizeY={SizeType.COMPACT}>
+    <AdaptivityProvider>
       <AppRoot noLegacyClasses>
         <StyleGuideRenderer {...props} />
       </AppRoot>

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Header, IconButton, SimpleCell, Search, classNames, Separator, Footer } from '@vkui';
+import { Header, IconButton, SimpleCell, Search, classNames, Separator, Footer, withAdaptivity, ViewWidth } from '@vkui';
 import { Icon28ChevronDownOutline, Icon28ChevronUpOutline } from '@vkontakte/icons';
 import './TableOfContents.css';
 import getInfoFromHash from 'react-styleguidist/lib/client/utils/getInfoFromHash';
@@ -203,7 +203,7 @@ class TableOfContents extends React.PureComponent {
               }
               onClick={!section.href ? this.onExpandCellClick : undefined}
               data-section-name={section.name}
-              className={classNames({
+              className={classNames('TableOfContents__section', {
                 'TableOfContents__section--selected': section.name === this.state.currentSectionName,
               })}
             >
@@ -223,10 +223,14 @@ class TableOfContents extends React.PureComponent {
   }
 
   render() {
-    return <div className="TableOfContents">
+    const isMobile = this.props.viewWidth <= ViewWidth.MOBILE;
+    return <div className={classNames('TableOfContents', {
+      'TableOfContents--desktop': !isMobile,
+      'TableOfContents--mobile': isMobile,
+    })}>
       {this.renderSections(this.sections)}
     </div>;
   }
 }
 
-export default TableOfContents;
+export default withAdaptivity(TableOfContents, { viewWidth: true });
