@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, FC, useEffect, useRef, useCallback } from 'react';
+import { InputHTMLAttributes, FC, useEffect, useCallback } from 'react';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -11,8 +11,12 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { SizeType } from '../../hoc/withAdaptivity';
+import { warnOnce } from '../../lib/warnOnce';
 
 import './SimpleCheckbox.css';
+
+const warn = warnOnce('SimpleCheckbox');
+const IS_DEV = process.env.NODE_ENV === 'development';
 
 export interface SimpleCheckboxProps extends
   InputHTMLAttributes<HTMLInputElement>,
@@ -27,35 +31,34 @@ export const SimpleCheckbox: FC<SimpleCheckboxProps> = (props: SimpleCheckboxPro
   const { sizeY } = useAdaptivity();
   const platform = usePlatform();
   const inputRef = useExternRef(getRef);
-  const prevChecked = useRef<boolean | undefined>();
-  const prevIndeterminate = useRef<boolean | undefined>();
 
   useEffect(() => {
-    const indeterminateValue = indeterminate === undefined && !prevIndeterminate.current ? defaultIndeterminate : indeterminate;
-    const checkedValue = restProps.checked === undefined && !prevChecked.current ? restProps.defaultChecked : restProps.checked;
+    const indeterminateValue = indeterminate === undefined ? defaultIndeterminate : indeterminate;
 
     if (inputRef.current) {
-      if (prevChecked.current !== undefined && prevChecked.current !== restProps.checked) {
-        if (prevIndeterminate.current !== undefined && prevIndeterminate.current !== indeterminate) {
-          inputRef.current.indeterminate = indeterminateValue && !checkedValue;
-        } else {
-          inputRef.current.indeterminate = false;
-        }
-      } else {
-        inputRef.current.indeterminate = indeterminateValue && !checkedValue;
-      }
+      inputRef.current.indeterminate = indeterminateValue;
     }
-
-    prevChecked.current = restProps.checked;
-    prevIndeterminate.current = indeterminate;
-  }, [indeterminate, restProps.checked]);
+  }, [indeterminate]);
 
   const handleChange: SimpleCheckboxProps['onChange'] = useCallback((event) => {
     if (defaultIndeterminate !== undefined && indeterminate === undefined && restProps.checked === undefined) {
       inputRef.current.indeterminate = false;
     }
+    if (indeterminate !== undefined) {
+      inputRef.current.indeterminate = indeterminate;
+    }
     onChange && onChange(event);
   }, [onChange, indeterminate, restProps.checked]);
+
+  if (IS_DEV) {
+    if (defaultIndeterminate && restProps.defaultChecked) {
+      warn('defaultIndeterminate and defaultChecked cannot be true at the same time');
+    }
+
+    if (indeterminate && restProps.checked) {
+      warn('indeterminate and checked cannot be true at the same time');
+    }
+  }
 
   return (
     <Tappable
