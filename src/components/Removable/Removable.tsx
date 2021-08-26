@@ -33,8 +33,8 @@ interface RemovableOwnProps extends AllHTMLAttributes<HTMLElement>, RemovablePro
 export const Removable: FC<RemovableOwnProps> = ({
   children,
   onRemove,
-  removePlaceholder,
-  align,
+  removePlaceholder = 'Удалить',
+  align = 'center',
   ...restProps
 }: RemovableOwnProps) => {
   const platform = usePlatform();
@@ -136,9 +136,4 @@ export const Removable: FC<RemovableOwnProps> = ({
       )}
     </div>
   );
-};
-
-Removable.defaultProps = {
-  align: 'center',
-  removePlaceholder: 'Удалить',
 };
