@@ -6,22 +6,22 @@ describe('Cell', () => {
   describeScreenshotFuzz(Cell, [{
     selectable: [true],
     before: [<Avatar key="avatar" />],
-    children: ['Мария Саломея Склодовская-Кюри', 'Михаил Лихачев'],
-    $adaptivity: 'y',
+    children: ['Мария Саломея Склодовская-Кюри'],
     checked: [true, false],
     disabled: [true, false],
-    multiline: [true, false],
-  },
-  {
+  }, {
     removable: [true],
-    $adaptivity: 'y',
-    children: ['Мария Саломея Склодовская-Кюри', 'Евгения Полозова'],
-    multiline: [true, false],
-  },
-  {
+    before: [<Avatar key="avatar" />],
+    children: ['Мария Саломея Склодовская-Кюри'],
+  }, {
     draggable: [true],
-    $adaptivity: 'y',
-    children: ['Мария Саломея Склодовская-Кюри', 'Артур Стамбульцян'],
+    before: [<Avatar key="avatar" />],
+    children: ['Мария Саломея Склодовская-Кюри'],
+  }, {
+    selectable: [undefined, true],
+    draggable: [undefined, true],
+    children: ['Мария Саломея Склодовская-Кюри'],
     multiline: [true, false],
+    $adaptivity: 'y',
   }]);
 });
