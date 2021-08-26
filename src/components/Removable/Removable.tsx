@@ -97,7 +97,7 @@ export const Removable: FC<RemovableOwnProps> = ({
             vkuiClass="Removable__action Removable__action--remove"
             onClick={onRemoveClick}
           >
-            <Icon24Cancel />
+            <Icon24Cancel role="presentation" />
           </IconButton>
         </div>
       )}
