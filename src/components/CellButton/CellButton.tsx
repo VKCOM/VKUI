@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -7,19 +7,19 @@ import './CellButton.css';
 
 export interface CellButtonProps extends SimpleCellProps {
   mode?: 'primary' | 'danger';
-  stopPropagation?: boolean;
   centered?: boolean;
 }
 
-const CellButton: React.FunctionComponent<CellButtonProps> = ({
-  centered,
-  mode,
+const CellButton: FC<CellButtonProps> = ({
+  centered = false,
+  mode = 'primary',
   ...restProps
 }: CellButtonProps) => {
   const platform = usePlatform();
 
   return (
     <SimpleCell
+      stopPropagation={true}
       {...restProps}
       vkuiClass={classNames(
         getClassName('CellButton', platform),
@@ -30,13 +30,6 @@ const CellButton: React.FunctionComponent<CellButtonProps> = ({
       )}
     />
   );
-};
-
-CellButton.defaultProps = {
-  mode: 'primary',
-  Component: 'button',
-  centered: false,
-  stopPropagation: true,
 };
 
 export default CellButton;
