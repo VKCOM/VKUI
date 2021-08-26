@@ -1,14 +1,21 @@
 .FormItem {
+  position: relative;
   display: block;
-  padding: 12px 16px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 12px 0;
 }
 
-.FormItem__removable {
+.FormItem__content {
   flex-grow: 1;
   flex-shrink: initial;
   min-width: 0;
   max-width: 100%;
-  overflow: hidden;
+  padding: 0 16px;
+}
+
+.FormItem--removable .FormItem__content {
+  padding-right: 0;
 }
 
 .FormItem__top {
@@ -20,17 +27,9 @@
   color: var(--text_subhead);
 }
 
-.FormItem--sizeY-compact .FormItem__top {
-  padding-bottom: 6px;
-}
-
 .FormItem__bottom {
   color: var(--text_secondary);
   padding-top: 8px;
-}
-
-.FormItem--sizeY-compact .FormItem__bottom {
-  padding-top: 6px;
 }
 
 .FormItem--error .FormItem__bottom {
@@ -42,41 +41,45 @@
   color: var(--field_valid_border);
 }
 
-.FormItem .Cell,
-.FormItem .SimpleCell,
-.FormItem .RichCell,
-.FormItem .CellButton,
-.FormItem .Radio,
-.FormItem .Checkbox {
-  width: 100%;
-  box-sizing: content-box;
-  margin-left: -16px;
-  margin-right: -16px;
+/**
+ * sizeY: COMPACT
+ */
+.FormItem--sizeY-compact .FormItem__top {
+  padding-bottom: 6px;
+}
+
+.FormItem--sizeY-compact .FormItem__bottom {
+  padding-top: 6px;
 }
 
 /**
  * iOS
  */
-
-.FormItem--ios {
-  padding-left: 12px;
-  padding-right: 12px;
+.FormItem--ios .FormItem__content {
+  padding: 0 12px;
 }
 
-.FormItem--ios .Cell,
-.FormItem--ios .SimpleCell,
-.FormItem--ios .RichCell,
-.FormItem--ios .CellButton,
-.FormItem--ios .Radio,
-.FormItem--ios .Checkbox {
-  margin-left: -12px;
-  margin-right: -12px;
+.FormItem--ios.FormItem--removable .FormItem__content {
+  padding-left: 0;
 }
 
-.FormLayoutGroup .Removable .FormItem--ios.FormItem--withTop {
-  margin-top: -28px;
+/**
+ * CPM:
+ * FormLayoutGroup
+ */
+.FormLayoutGroup--horizontal .FormItem {
+  flex: 1 1 0%;
+  padding: 0;
 }
 
-.FormLayoutGroup .Removable .FormItem--ios.FormItem--sizeY-compact.FormItem--withTop {
+.FormLayoutGroup--horizontal .FormItem + .FormItem {
+  margin-left: 24px;
+}
+
+.FormLayoutGroup--horizontal .FormItem__content {
+  padding: 0;
+}
+
+.FormLayoutGroup--horizontal .FormItem--ios.FormItem--withTop {
   margin-top: -26px;
 }

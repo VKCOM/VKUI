@@ -31,7 +31,9 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
       vkuiClass={classNames(
         getClassName('FormLayoutGroup', platform),
         `FormLayoutGroup--sizeY-${sizeY}`,
-        `FormLayoutGroup--${mode}`,
+        `FormLayoutGroup--${mode}`, {
+          'FormLayoutGroup--removable': isRemovable,
+        },
       )}
       {...restProps}>
       {isRemovable

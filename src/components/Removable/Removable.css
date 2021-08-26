@@ -22,27 +22,9 @@
   align-self: flex-start;
 }
 
-.FormItem .Removable,
-.FormLayoutGroup .Removable {
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-left: -16px;
-  margin-right: -16px;
-}
-
 .FormItem--withTop .Removable__action,
 .FormItem--withTop ~ .Removable__action {
-  top: 28px;
-}
-
-.FormItem--withTop .Removable--sizeY-compact .Removable__action,
-.Removable--sizeY-compact .FormItem--withTop ~ .Removable__action {
   top: 26px;
-}
-
-.Cell .Removable {
-  padding-right: 6px;
-  box-sizing: border-box;
 }
 
 /**
@@ -115,56 +97,30 @@
   background-color: var(--white);
 }
 
-.Cell .Removable--ios {
-  padding-right: 0;
-}
-
-.Cell .Removable--ios .Removable__action--indicator {
-  margin-left: 2px;
-  margin-right: 0;
-}
-
-.FormItem .Removable--ios,
-.FormLayoutGroup .Removable--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-left: -12px;
-  margin-right: -12px;
-}
-
-.FormLayoutGroup .Removable--ios .Removable__content {
-  flex-wrap: wrap;
-}
-
-.FormLayoutGroup .Removable--ios .FormItem--withTop ~ .Removable__offset {
+.FormItem--withTop ~ .Removable__offset {
   order: -1;
   display: block;
   width: 100%;
-  height: 28px;
-}
-
-.FormLayoutGroup .Removable--ios.Removable--sizeY-compact .FormItem--withTop ~ .Removable__offset {
   height: 26px;
 }
 
-/**
- * ANDROID & VKCOM
+/*
+ * sizeY: COMPACT
  */
-.FormItem .Removable--android .Removable__action,
-.FormItem .Removable--vkcom .Removable__action,
-.FormLayoutGroup .Removable--android .Removable__action,
-.FormLayoutGroup .Removable--vkcom .Removable__action {
-   margin-top: -2px;
-   margin-right: -16px;
-   margin-bottom: -2px;
+.Removable--sizeY-compact .Removable__action {
+  margin-top: -4px;
+  margin-bottom: -4px;
 }
 
-.FormItem--sizeY-compact .Removable--android .Removable__action,
-.FormItem--sizeY-compact .Removable--vkcom .Removable__action,
-.FormLayoutGroup--sizeY-compact .Removable--android .Removable__action,
-.FormLayoutGroup--sizeY-compact .Removable--vkcom .Removable__action {
-   margin-left: 2px;
-   margin-top: -4px;
-   margin-right: -14px;
-   margin-bottom: -4px;
+.Removable--sizeY-compact .Removable__toggle {
+  height: 44px;
+}
+
+/**
+ * CPM:
+ * FormLayoutGroup
+ */
+.FormLayoutGroup--ios .Removable__content {
+  flex-wrap: wrap;
+  padding-right: 12px;
 }

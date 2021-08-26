@@ -1,12 +1,15 @@
 .RichCell {
   display: flex;
   min-height: 64px;
-  padding-right: 16px;
-  padding-left: 16px;
+  padding: 0 16px;
   box-sizing: border-box;
   white-space: nowrap;
   text-decoration: none;
   color: var(--text_primary);
+}
+
+.FormItem .RichCell {
+  margin: 0 -16px;
 }
 
 .RichCell--mult {
@@ -99,8 +102,11 @@
  * iOS
  */
 .RichCell--ios {
-  padding-right: 12px;
-  padding-left: 12px;
+  padding: 0 12px;
+}
+
+.FormItem .RichCell--ios {
+  margin: 0 -12px;
 }
 
 /**

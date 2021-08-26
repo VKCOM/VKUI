@@ -1,14 +1,17 @@
 .Cell {
   position: relative;
-  margin: 0;
-  padding: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.FormItem .Cell {
+  margin: 0 -16px;
 }
 
 .List--dragging .Cell:not(.Cell--dragging) {
   transition: transform .3s ease;
 }
 
-.List--dragging .Cell--dragging,
 .Cell--dragging {
   background-color: var(--background_content);
   box-shadow: 0 0 5px rgba(0, 0, 0, .25);
@@ -19,7 +22,7 @@
   position: relative;
 }
 
-.Cell .Cell__dragger .Icon {
+.Cell__dragger .Icon {
   color: var(--icon_secondary);
 }
 
@@ -53,20 +56,20 @@
   visibility: initial;
 }
 
-.Cell--removable .SimpleCell {
-  max-width: 100%;
-  flex-grow: 1;
-  min-width: 0;
-  padding-right: 2px;
-  flex-shrink: initial;
-  overflow: hidden;
-}
-
 /**
  * iOS
  */
-.Cell--ios .Cell__in {
-  transition: transform .6s var(--ios-easing);
+.Cell--ios {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.Cell--ios.Cell--removable {
+  padding-left: 0;
+}
+
+.FormItem .Cell--ios {
+  margin: 0 -12px;
 }
 
 .Cell--ios.Cell--selectable .Cell__marker {
@@ -84,4 +87,11 @@
 .Cell--android .Cell__dragger,
 .Cell--vkcom .Cell__dragger {
   padding-right: 16px;
+}
+
+/**
+ * removable
+ */
+.Cell--removable {
+  padding-right: 0;
 }

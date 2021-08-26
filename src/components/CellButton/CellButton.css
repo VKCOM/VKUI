@@ -1,14 +1,14 @@
 .CellButton {
-  box-sizing: border-box;
-  text-decoration: none;
-  margin: 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  background: transparent;
-  text-align: left;
-  padding-top: 0;
-  padding-bottom: 0;
+  flex-grow: 1;
+  flex-shrink: initial;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0 16px;
+}
+
+.FormItem .CellButton {
+  margin: 0 -16px;
 }
 
 .CellButton[disabled] {
@@ -18,11 +18,6 @@
 .CellButton--centered {
   justify-content: center;
   text-align: center;
-}
-
-.CellButton--centered .SimpleCell__main {
-  flex-grow: initial;
-  max-width: initial;
 }
 
 .CellButton--centered > .Icon {
@@ -37,4 +32,15 @@
 .CellButton--danger,
 .CellButton--danger > .Icon {
   color: var(--destructive);
+}
+
+/**
+ * iOS
+ */
+.CellButton--ios {
+  padding: 0 12px;
+}
+
+.FormItem .CellButton--ios {
+  margin: 0 -12px;
 }

@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, ElementType, FC, ReactNode, Fragment } from 'react';
+import { AllHTMLAttributes, ElementType, FC, ReactNode } from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -36,11 +36,11 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
   const platform = usePlatform();
 
   const wrappedChildren = (
-    <Fragment>
+    <div vkuiClass="FormItem__content">
       {hasReactNode(top) && <Subhead weight="regular" vkuiClass="FormItem__top">{top}</Subhead>}
       {children}
       {hasReactNode(bottom) && <Caption level="1" weight="regular" vkuiClass="FormItem__bottom">{bottom}</Caption>}
-    </Fragment>
+    </div>
   );
 
   return (
@@ -52,14 +52,13 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
         `FormItem--sizeY-${sizeY}`,
         {
           'FormItem--withTop': hasReactNode(top),
+          'FormItem--removable': removable,
         },
       )}
     >
       {removable ? (
         <Removable align="start" onRemove={onRemove} removePlaceholder={removePlaceholder}>
-          <div vkuiClass="FormItem__removable">
-            {wrappedChildren}
-          </div>
+          {wrappedChildren}
         </Removable>
       ) : wrappedChildren}
     </Component>
