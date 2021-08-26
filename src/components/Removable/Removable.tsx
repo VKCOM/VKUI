@@ -12,28 +12,31 @@ import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import Tappable from '../Tappable/Tappable';
 import './Removable.css';
 
-export interface RemovePlaceholderProps {
+export interface RemovableProps {
   /**
    * iOS only. Текст в выезжающей кнопке для удаления ячейки.
    */
   removePlaceholder?: ReactNode;
+  /**
+   * Коллбэк срабатывает при клике на контрол удаления.
+   */
+  onRemove?: (e: MouseEvent) => void;
 }
 
-interface RemovableProps extends AllHTMLAttributes<HTMLElement>, RemovePlaceholderProps {
+interface RemovableOwnProps extends AllHTMLAttributes<HTMLElement>, RemovableProps {
   /**
    * Расположение кнопки удаления.
    */
   align?: 'start' | 'center';
-  onRemove?: (e: MouseEvent) => void;
 }
 
-export const Removable: FC<RemovableProps> = ({
+export const Removable: FC<RemovableOwnProps> = ({
   children,
   onRemove,
   removePlaceholder,
   align,
   ...restProps
-}: RemovableProps) => {
+}: RemovableOwnProps) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
   const { document } = useDOM();

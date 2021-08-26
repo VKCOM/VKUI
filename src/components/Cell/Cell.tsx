@@ -6,12 +6,12 @@ import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Reorder, Icon24ReorderIos, Icon24CheckCircleOn, Icon24CheckCircleOff, Icon24CheckBoxOff, Icon24CheckBoxOn } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
-import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
+import { Removable, RemovableProps } from '../Removable/Removable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ListContext } from '../../components/List/ListContext';
 import './Cell.css';
 
-export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlaceholderProps {
+export interface CellProps extends SimpleCellProps, HasPlatform, Pick<RemovableProps, 'removePlaceholder'> {
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
