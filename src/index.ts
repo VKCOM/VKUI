@@ -84,7 +84,7 @@ export { default as CardScroll } from './components/CardScroll/CardScroll';
 export type { CardScrollProps } from './components/CardScroll/CardScroll';
 export { default as ContentCard } from './components/ContentCard/ContentCard';
 export type { ContentCardProps } from './components/ContentCard/ContentCard';
-export { default as CellButton } from './components/CellButton/CellButton';
+export { CellButton } from './components/CellButton/CellButton';
 export type { CellButtonProps } from './components/CellButton/CellButton';
 export { default as Header } from './components/Header/Header';
 export type { HeaderProps } from './components/Header/Header';
