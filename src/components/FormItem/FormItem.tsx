@@ -26,12 +26,12 @@ export const FormItem: FC<FormItemProps> = withAdaptivity(({
   children,
   top,
   bottom,
-  status,
-  Component,
+  status = 'default',
+  Component = 'div',
   sizeY,
   removable,
   onRemove,
-  removePlaceholder,
+  removePlaceholder = 'Удалить',
   getRootRef,
   ...restProps
 }: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
@@ -71,9 +71,3 @@ export const FormItem: FC<FormItemProps> = withAdaptivity(({
 }, {
   sizeY: true,
 });
-
-FormItem.defaultProps = {
-  status: 'default',
-  Component: 'div',
-  removePlaceholder: 'Удалить',
-};
