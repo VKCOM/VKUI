@@ -20,7 +20,7 @@ export interface RemovableProps {
   /**
    * Коллбэк срабатывает при клике на контрол удаления.
    */
-  onRemove?: (e: MouseEvent) => void;
+  onRemove?: (e: MouseEvent, rootEl?: HTMLElement) => void;
 }
 
 interface RemovableOwnProps extends AllHTMLAttributes<HTMLElement>, RemovableProps {
