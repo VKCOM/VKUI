@@ -1,12 +1,14 @@
 import { FunctionComponent, HTMLAttributes } from 'react';
+import { HasRootRef } from '../../types';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import './FormLayoutGroup.css';
 
-export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, RemovableProps {
+export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, RemovableProps, HasRootRef<HTMLDivElement> {
   mode?: 'vertical' | 'horizontal';
   /**
    * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.
@@ -21,10 +23,12 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
   removePlaceholder,
   onRemove,
   sizeY,
+  getRootRef,
   ...restProps
 }: FormLayoutGroupProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const platform = usePlatform();
   const isRemovable = removable && mode === 'horizontal';
+  const rootEl = useExternRef(getRootRef);
 
   return (
     <div
@@ -35,7 +39,7 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
       )}
       {...restProps}>
       {isRemovable
-        ? <Removable align="start" removePlaceholder={removePlaceholder} onRemove={onRemove}>{children}</Removable>
+        ? <Removable align="start" removePlaceholder={removePlaceholder} onRemove={(e) => onRemove(e, rootEl?.current)}>{children}</Removable>
         : children
       }
     </div>
