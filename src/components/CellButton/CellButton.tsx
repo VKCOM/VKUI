@@ -32,4 +32,4 @@ const CellButton: FC<CellButtonProps> = ({
   );
 };
 
-export default CellButton;
+export { CellButton };
