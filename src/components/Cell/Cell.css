@@ -4,6 +4,12 @@
   padding: 0;
 }
 
+.FormItem .Cell {
+  width: 100%;
+  box-sizing: content-box;
+  margin: 0 -16px;
+}
+
 .List--dragging .Cell:not(.Cell--dragging) {
   transition: transform .3s ease;
 }
@@ -67,6 +73,10 @@
  */
 .Cell--ios .Cell__in {
   transition: transform .6s var(--ios-easing);
+}
+
+.FormItem .Cell--ios {
+  margin: 0 -12px;
 }
 
 .Cell--ios.Cell--selectable .Cell__marker {
