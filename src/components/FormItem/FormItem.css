@@ -52,6 +52,11 @@
   --formitem_padding: 12px;
 }
 
+.FormItem--ios.FormItem--removable {
+  padding-left: 0;
+  margin-left: 0;
+}
+
 .FormLayoutGroup .Removable .FormItem--ios.FormItem--withTop {
   margin-top: -28px;
 }
