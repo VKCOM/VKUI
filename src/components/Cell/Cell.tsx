@@ -11,7 +11,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { ListContext } from '../../components/List/ListContext';
 import './Cell.css';
 
-export interface CellProps extends SimpleCellProps, HasPlatform, Pick<RemovableProps, 'removePlaceholder'> {
+export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
@@ -30,10 +30,6 @@ export interface CellProps extends SimpleCellProps, HasPlatform, Pick<RemovableP
    * В режиме selectable реагирует на входящие значения пропса defaultChecked как неконтролируемый компонент
    */
   defaultChecked?: boolean;
-  /**
-   * Коллбэк срабатывает при клике на контрол удаления.
-   */
-  onRemove?: (e: MouseEvent, rootEl: HTMLElement) => void;
   /**
    * Коллбэк срабатывает при завершении перетаскивания.
    * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
