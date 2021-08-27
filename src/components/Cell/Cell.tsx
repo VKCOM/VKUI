@@ -81,8 +81,10 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     setDragging(true);
 
     const _siblings: HTMLElement[] = Array.from(rootEl.parentElement.childNodes);
+    const rootElIdx = _siblings.indexOf(rootEl);
 
-    setDragStartIndex(_siblings.indexOf(rootEl));
+    setDragStartIndex(rootElIdx);
+    setDragEndIndex(rootElIdx);
     setSiblings(_siblings);
     setDragShift(0);
   };
