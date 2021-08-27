@@ -36,7 +36,9 @@ const FormLayoutGroup: FC<FormLayoutGroupProps> = ({
       vkuiClass={classNames(
         getClassName('FormLayoutGroup', platform),
         `FormLayoutGroup--sizeY-${sizeY}`,
-        `FormLayoutGroup--${mode}`,
+        `FormLayoutGroup--${mode}`, {
+          'FormLayoutGroup--removable': isRemovable,
+        },
       )}
       {...restProps}>
       {isRemovable
