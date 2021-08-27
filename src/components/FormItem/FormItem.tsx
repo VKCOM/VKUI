@@ -1,5 +1,7 @@
 import { AllHTMLAttributes, ElementType, FC, ReactNode, Fragment } from 'react';
+import { HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { hasReactNode } from '../../lib/utils';
@@ -9,7 +11,7 @@ import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import './FormItem.css';
 
-export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovableProps {
+export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, RemovableProps, HasRootRef<HTMLElement> {
   top?: ReactNode;
   bottom?: ReactNode;
   status?: 'default' | 'error' | 'valid';
@@ -31,9 +33,11 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
     removable,
     onRemove,
     removePlaceholder,
+    getRootRef,
     ...restProps
   } = props;
   const platform = usePlatform();
+  const rootEl = useExternRef(getRootRef);
 
   const wrappedChildren = (
     <Fragment>
@@ -46,6 +50,7 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
   return (
     <Component
       {...restProps}
+      getRootRef={rootEl}
       vkuiClass={classNames(
         getClassName('FormItem', platform),
         `FormItem--${status}`,
@@ -56,7 +61,7 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
       )}
     >
       {removable ? (
-        <Removable align="start" onRemove={onRemove} removePlaceholder={removePlaceholder}>
+        <Removable align="start" onRemove={(e) => onRemove(e, rootEl?.current)} removePlaceholder={removePlaceholder}>
           <div vkuiClass="FormItem__removable">
             {wrappedChildren}
           </div>
