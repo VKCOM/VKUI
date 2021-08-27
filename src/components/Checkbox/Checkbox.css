@@ -2,6 +2,12 @@
   display: block;
 }
 
+.FormItem .Checkbox {
+  width: 100%;
+  box-sizing: content-box;
+  margin: 0 -16px;
+}
+
 .Checkbox__input {
   display: none;
 }
@@ -49,6 +55,10 @@
 
 .Checkbox--ios {
   padding: 0 12px;
+}
+
+.FormItem--ios .Checkbox {
+  margin: 0 -12px;
 }
 
 .Checkbox--ios .Checkbox__icon {
