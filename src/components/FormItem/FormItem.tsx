@@ -22,20 +22,19 @@ export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, Removable
   removable?: boolean;
 }
 
-export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
-  const {
-    children,
-    top,
-    bottom,
-    status,
-    Component,
-    sizeY,
-    removable,
-    onRemove,
-    removePlaceholder,
-    getRootRef,
-    ...restProps
-  } = props;
+export const FormItem: FC<FormItemProps> = withAdaptivity(({
+  children,
+  top,
+  bottom,
+  status,
+  Component,
+  sizeY,
+  removable,
+  onRemove,
+  removePlaceholder,
+  getRootRef,
+  ...restProps
+}: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
   const platform = usePlatform();
   const rootEl = useExternRef(getRootRef);
 
