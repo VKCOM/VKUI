@@ -11,12 +11,15 @@ export interface CellButtonProps extends SimpleCellProps {
 }
 
 const CellButton: FC<CellButtonProps> = ({
+  centered = false,
+  mode = 'primary',
   ...restProps
 }: CellButtonProps) => {
   const platform = usePlatform();
 
   return (
     <SimpleCell
+      stopPropagation={true}
       {...restProps}
       vkuiClass={classNames(
         getClassName('CellButton', platform),
@@ -27,13 +30,6 @@ const CellButton: FC<CellButtonProps> = ({
       )}
     />
   );
-};
-
-CellButton.defaultProps = {
-  mode: 'primary',
-  Component: 'button',
-  centered: false,
-  stopPropagation: true,
 };
 
 export default CellButton;
