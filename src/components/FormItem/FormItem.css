@@ -45,7 +45,6 @@
 .FormItem .SimpleCell,
 .FormItem .RichCell,
 .FormItem .CellButton,
-.FormItem .Radio,
 .FormItem .Checkbox {
   width: 100%;
   box-sizing: content-box;
@@ -65,7 +64,6 @@
 .FormItem--ios .SimpleCell,
 .FormItem--ios .RichCell,
 .FormItem--ios .CellButton,
-.FormItem--ios .Radio,
 .FormItem--ios .Checkbox {
   margin-left: -12px;
   margin-right: -12px;

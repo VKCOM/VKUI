@@ -2,6 +2,12 @@
   display: block;
 }
 
+.FormItem .Radio {
+  width: 100%;
+  box-sizing: content-box;
+  margin: 0 -16px;
+}
+
 .Radio__input {
   display: none;
 }
@@ -46,6 +52,10 @@
 
 .Radio--ios {
   padding: 0 12px;
+}
+
+.FormItem--ios .Radio {
+  margin: 0 -12px;
 }
 
 .Radio--ios .Radio__icon {
