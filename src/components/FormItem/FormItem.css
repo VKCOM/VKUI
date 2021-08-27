@@ -20,17 +20,9 @@
   color: var(--text_subhead);
 }
 
-.FormItem--sizeY-compact .FormItem__top {
-  padding-bottom: 6px;
-}
-
 .FormItem__bottom {
   color: var(--text_secondary);
   padding-top: 8px;
-}
-
-.FormItem--sizeY-compact .FormItem__bottom {
-  padding-top: 6px;
 }
 
 .FormItem--error .FormItem__bottom {
@@ -43,9 +35,19 @@
 }
 
 /**
+ * sizeY COMPACT
+ */
+.FormItem--sizeY-compact .FormItem__top {
+  padding-bottom: 6px;
+}
+
+.FormItem--sizeY-compact .FormItem__bottom {
+  padding-top: 6px;
+}
+
+/**
  * iOS
  */
-
 .FormItem--ios {
   padding-left: 12px;
   padding-right: 12px;
