@@ -80,3 +80,20 @@
 .FormLayoutGroup .Removable .FormItem--ios.FormItem--sizeY-compact.FormItem--withTop {
   margin-top: -26px;
 }
+
+/**
+ * CMP:
+ * FormLayoutGroup
+ */
+.FormLayoutGroup--horizontal .FormItem {
+  max-width: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.FormLayoutGroup--horizontal .FormItem + .FormItem {
+  margin-left: 24px;
+}
