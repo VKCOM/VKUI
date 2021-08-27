@@ -11,6 +11,12 @@
   padding-bottom: 0;
 }
 
+.FormItem .CellButton {
+  width: 100%;
+  box-sizing: content-box;
+  margin: 0 -16px;
+}
+
 .CellButton[disabled] {
   opacity: .4;
 }
@@ -37,4 +43,11 @@
 .CellButton--danger,
 .CellButton--danger > .Icon {
   color: var(--destructive);
+}
+
+/**
+ * iOS
+ */
+.FormItem--ios .CellButton {
+  margin: 0 -12px;
 }
