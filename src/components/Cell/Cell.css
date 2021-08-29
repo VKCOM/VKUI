@@ -1,12 +1,9 @@
 .Cell {
   position: relative;
-  margin: 0;
-  padding: 0;
+  touch-action: manipulation;
 }
 
 .FormItem .Cell {
-  width: 100%;
-  box-sizing: content-box;
   margin: 0 calc(-1 * var(--formitem_padding));
 }
 
@@ -14,7 +11,6 @@
   transition: transform .3s ease;
 }
 
-.List--dragging .Cell--dragging,
 .Cell--dragging {
   background-color: var(--background_content);
   box-shadow: 0 0 5px rgba(0, 0, 0, .25);
@@ -23,9 +19,6 @@
 
 .Cell__dragger {
   position: relative;
-}
-
-.Cell .Cell__dragger .Icon {
   color: var(--icon_secondary);
 }
 
@@ -33,7 +26,7 @@
   display: none;
 }
 
-.Cell--selectable .Cell__marker {
+.Cell__marker {
   position: relative;
   flex-shrink: 0;
   width: 24px;
@@ -43,7 +36,7 @@
   color: var(--icon_tertiary);
 }
 
-.Cell--selectable .Cell__marker-in--checked {
+.Cell__marker-in--checked {
   position: absolute;
   top: 0;
   left: 0;
@@ -55,7 +48,7 @@
   opacity: .6;
 }
 
-.Cell--selectable .Cell__checkbox:checked ~ .Cell__marker .Cell__marker-in--checked {
+.Cell__checkbox:checked ~ .Cell__marker .Cell__marker-in--checked {
   visibility: initial;
 }
 
@@ -71,11 +64,7 @@
 /**
  * iOS
  */
-.Cell--ios .Cell__in {
-  transition: transform .6s var(--ios-easing);
-}
-
-.Cell--ios.Cell--selectable .Cell__marker {
+.Cell--ios .Cell__marker {
   margin-right: 12px;
 }
 
