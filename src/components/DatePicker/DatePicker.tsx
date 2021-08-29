@@ -22,6 +22,8 @@ export type DatePickerDateFormat = {
   year: number;
 };
 
+const MIN_DAY = 1;
+
 export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>, HasPlatform, AdaptivityProps {
   min?: DatePickerDateFormat;
   max?: DatePickerDateFormat;
@@ -77,26 +79,86 @@ const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   disabled,
   ...restProps
 }) => {
+  const getSafeDate = (date: DatePickerDateFormat): DatePickerDateFormat => {
+    const isMaxMonthOutOfRange = max.year === date.year && max.month <= date.month;
+    const isMinMonthOutOfRange = min.year === date.year && min.month >= date.month;
+
+    if (isMaxMonthOutOfRange) {
+      date.month = max.month;
+
+      if (max.day < date.day) {
+        date.day = max.day;
+      }
+    }
+
+    if (isMinMonthOutOfRange) {
+      date.month = min.month;
+
+      if (min.day > date.day) {
+        date.day = min.day;
+      }
+    }
+
+    return date;
+  };
+
   const onSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    onDateChange({
+    const date = getSafeDate({
       day,
       month,
       year,
       [e.target.name]: Number(e.target.value),
     });
+
+    onDateChange(
+      getSafeDate(date),
+    );
   };
-  const dayOptions = range(1, getMonthMaxDay(month, year)).map((value) => ({
+
+  const getAvaliableMaxDay = (): number => {
+    if (year === max.year && month === max.month) {
+      return max.day;
+    }
+
+    return getMonthMaxDay(month, year);
+  };
+
+  const getAvaliableMinDay = (): number => {
+    if (year === min.year && month === min.month) {
+      return min.day;
+    }
+
+    return MIN_DAY;
+  };
+
+  const getAvaliableMonthOptions = () => {
+    const currentMonths = monthNames || DefaultMonths;
+    const minMonthIndex = year === min.year ? min.month - 1 : 0;
+    const maxMonthIndex = year === max.year ? max.month - 1 : currentMonths.length - 1;
+
+    const monthOptions = currentMonths.map((name, index) => ({
+      label: name,
+      value: index + 1,
+    }));
+
+    return monthOptions.filter((_, index) => index >= minMonthIndex && index <= maxMonthIndex);
+  };
+
+  const minDay = getAvaliableMinDay();
+  const maxDay = getAvaliableMaxDay();
+
+  const dayOptions = range(minDay, maxDay).map((value) => ({
     label: String(value),
     value,
   }));
-  const monthOptions = (monthNames || DefaultMonths).map((name, index) => ({
-    label: name,
-    value: index + 1,
-  }));
+
+  const monthOptions = getAvaliableMonthOptions();
+
   const yearOptions = range(max.year, min.year).map((value) => ({
     label: String(value),
     value: value,
   }));
+
   return (
     <div vkuiClass="DatePicker" {...restProps}>
       <div vkuiClass="DatePicker__container">

@@ -27,7 +27,7 @@
       <FormItem top="Дата рождения">
         <DatePicker
           min={{day: 1, month: 1, year: 1901}}
-          max={{day: 1, month: 1, year: 2006}}
+          max={{day: 31, month: 5, year: 2006}}
           defaultValue={{day: 2, month: 4, year: 1994}}
           onDateChange={(value) => {console.log(value)}}
         />
