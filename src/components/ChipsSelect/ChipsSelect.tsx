@@ -215,8 +215,11 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
 
   const renderChipWrapper = (renderChipProps: RenderChip<Option>) => {
     const { onRemove } = renderChipProps;
+
     const onRemoveWrapper = (e: React.MouseEvent, value: ChipsInputValue) => {
       e.preventDefault();
+      e.stopPropagation();
+
       onRemove(e, value);
     };
 
