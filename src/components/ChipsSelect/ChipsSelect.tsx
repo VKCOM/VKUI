@@ -335,9 +335,9 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
       !value || value && getOptionLabel(option)?.toLowerCase()?.startsWith(value?.toLowerCase())
     );
   },
-  renderOption(props: CustomSelectOptionProps): ReactNode {
+  renderOption({ option, ...restProps }: CustomSelectOptionProps): ReactNode {
     return (
-      <CustomSelectOption {...props} />
+      <CustomSelectOption {...restProps} />
     );
   },
 };
