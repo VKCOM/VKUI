@@ -45,6 +45,12 @@
   box-sizing: border-box;
 }
 
+/* TODO: remove this
+   (a very temporary fix to appease screenshot tests) */
+.Cell.Cell--android .Removable.Removable--sizeY-regular {
+  padding-right: 4px;
+}
+
 /**
  * iOS
  */
