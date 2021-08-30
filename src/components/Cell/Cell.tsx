@@ -6,12 +6,12 @@ import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Reorder, Icon24ReorderIos, Icon24CheckCircleOn, Icon24CheckCircleOff, Icon24CheckBoxOff, Icon24CheckBoxOn } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
-import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
+import { Removable, RemovableProps } from '../Removable/Removable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ListContext } from '../../components/List/ListContext';
 import './Cell.css';
 
-export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlaceholderProps {
+export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
@@ -30,10 +30,6 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlacehold
    * В режиме selectable реагирует на входящие значения пропса defaultChecked как неконтролируемый компонент
    */
   defaultChecked?: boolean;
-  /**
-   * Коллбэк срабатывает при клике на контрол удаления.
-   */
-  onRemove?: (e: MouseEvent, rootEl: HTMLElement) => void;
   /**
    * Коллбэк срабатывает при завершении перетаскивания.
    * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
