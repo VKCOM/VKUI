@@ -71,6 +71,7 @@ export const SimpleCheckbox: FC<SimpleCheckboxProps> = (props: SimpleCheckboxPro
       style={style}
       disabled={restProps.disabled}
       activeMode={platform === VKCOM ? 'SimpleCheckbox--active' : 'background'}
+      hoverShadowClassName="SimpleCheckbox__hoverShadow"
       activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
     >

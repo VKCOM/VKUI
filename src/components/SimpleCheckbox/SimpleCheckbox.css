@@ -96,7 +96,7 @@
   background-color: var(--background_highlighted);
 }
 
-.SimpleCheckbox--vkcom .vkuiTappable__hoverShadow {
+.SimpleCheckbox--vkcom .SimpleCheckbox__hoverShadow {
   margin: 3px;
   border-radius: inherit;
   width: 16px;
