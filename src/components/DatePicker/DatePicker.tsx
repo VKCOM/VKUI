@@ -110,9 +110,7 @@ const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
       [e.target.name]: Number(e.target.value),
     });
 
-    onDateChange(
-      getSafeDate(date),
-    );
+    onDateChange(date);
   };
 
   const getAvaliableMaxDay = (): number => {
@@ -124,7 +122,10 @@ const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   };
 
   const getAvaliableMinDay = (): number => {
-    if (year === min.year && month === min.month) {
+    if (year === min.year
+          && month === min.month
+          && min.day
+    ) {
       return min.day;
     }
 
