@@ -31,7 +31,6 @@ describe('ChipsSelect', () => {
     };
 
     render(
-      // @ts-ignore
       <ChipsSelectTest {...colorsChipsProps} />,
     );
 
