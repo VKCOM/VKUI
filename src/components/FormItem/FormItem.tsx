@@ -7,7 +7,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { hasReactNode } from '../../lib/utils';
 import Subhead from '../Typography/Subhead/Subhead';
 import Caption from '../Typography/Caption/Caption';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import './FormItem.css';
 
@@ -22,22 +22,21 @@ export interface FormItemProps extends AllHTMLAttributes<HTMLElement>, Removable
   removable?: boolean;
 }
 
-export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps & Pick<AdaptivityProps, 'sizeY'>) => {
-  const {
-    children,
-    top,
-    bottom,
-    status,
-    Component,
-    sizeY,
-    removable,
-    onRemove,
-    removePlaceholder,
-    getRootRef,
-    ...restProps
-  } = props;
+export const FormItem: FC<FormItemProps> = ({
+  children,
+  top,
+  bottom,
+  status = 'default',
+  Component = 'div',
+  removable,
+  onRemove,
+  removePlaceholder = 'Удалить',
+  getRootRef,
+  ...restProps
+}: FormItemProps) => {
   const platform = usePlatform();
   const rootEl = useExternRef(getRootRef);
+  const { sizeY } = useAdaptivity();
 
   const wrappedChildren = (
     <Fragment>
@@ -69,12 +68,4 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
       ) : wrappedChildren}
     </Component>
   );
-}, {
-  sizeY: true,
-});
-
-FormItem.defaultProps = {
-  status: 'default',
-  Component: 'div',
-  removePlaceholder: 'Удалить',
 };
