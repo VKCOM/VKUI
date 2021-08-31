@@ -50,7 +50,7 @@ export const FormItem: FC<FormItemProps> = withAdaptivity((props: FormItemProps 
   return (
     <Component
       {...restProps}
-      getRootRef={rootEl}
+      ref={rootEl}
       vkuiClass={classNames(
         getClassName('FormItem', platform),
         `FormItem--${status}`,

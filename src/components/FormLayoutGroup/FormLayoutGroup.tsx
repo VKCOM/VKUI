@@ -32,6 +32,7 @@ const FormLayoutGroup: FC<FormLayoutGroupProps> = ({
 
   return (
     <div
+      ref={rootEl}
       vkuiClass={classNames(
         getClassName('FormLayoutGroup', platform),
         `FormLayoutGroup--sizeY-${sizeY}`,
