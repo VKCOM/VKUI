@@ -1,4 +1,4 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import { HasRootRef } from '../../types';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -16,7 +16,7 @@ export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, Re
   removable?: boolean;
 }
 
-const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(({
+const FormLayoutGroup: FC<FormLayoutGroupProps> = withAdaptivity(({
   children,
   mode = 'vertical',
   removable,
