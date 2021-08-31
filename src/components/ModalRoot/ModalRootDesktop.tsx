@@ -17,6 +17,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import './ModalRoot.css';
 
 const warn = warnOnce('ModalRoot');
 const IS_DEV = process.env.NODE_ENV === 'development';

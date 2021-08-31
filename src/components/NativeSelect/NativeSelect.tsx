@@ -12,6 +12,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useEnsuredControl } from '../../hooks/useEnsuredControl';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
+import '../Select/Select.css';
 
 export interface NativeSelectProps extends
   SelectHTMLAttributes<HTMLSelectElement>,
