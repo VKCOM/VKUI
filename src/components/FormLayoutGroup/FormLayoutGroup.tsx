@@ -18,9 +18,9 @@ export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, Re
 
 const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(({
   children,
-  mode,
+  mode = 'vertical',
   removable,
-  removePlaceholder,
+  removePlaceholder = 'Удалить',
   onRemove,
   sizeY,
   getRootRef,
@@ -47,10 +47,5 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
 }, {
   sizeY: true,
 });
-
-FormLayoutGroup.defaultProps = {
-  mode: 'vertical',
-  removePlaceholder: 'Удалить',
-};
 
 export default FormLayoutGroup;
