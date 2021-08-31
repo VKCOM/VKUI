@@ -6,6 +6,7 @@ import Input from '../Input/Input';
 import Radio from '../Radio/Radio';
 import RichCell from '../RichCell/RichCell';
 import SimpleCell from '../SimpleCell/SimpleCell';
+import { Cell } from '../Cell/Cell';
 
 describe('FormItem', () => {
   describeScreenshotFuzz(FormItem, [{
@@ -20,6 +21,11 @@ describe('FormItem', () => {
       <Radio key="radio">Radio</Radio>,
       <RichCell key="rcell">RichCell</RichCell>,
       <SimpleCell key="scell">SimpleCell</SimpleCell>,
+      <Cell draggable key="drag">Cell draggable</Cell>,
+      <Cell draggable removable key="dragrem">Cell draggable removable</Cell>,
+      <Cell draggable selectable key="dragsel">Cell draggable selectable</Cell>,
+      <Cell removable key="rem">Cell removable</Cell>,
+      <Cell selectable key="sel">Cell selectable</Cell>,
     ],
   }]);
 });
