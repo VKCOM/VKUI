@@ -1,10 +1,10 @@
 .Checkbox {
   display: block;
+  padding: 0 16px;
 }
 
 .FormItem .Checkbox {
-  width: 100%;
-  box-sizing: content-box;
+  padding: 0 var(--formitem_padding);
   margin: 0 calc(-1 * var(--formitem_padding));
 }
 
@@ -70,10 +70,6 @@
   margin-bottom: 12px;
 }
 
-.Checkbox--android {
-  padding: 0 16px;
-}
-
 .Checkbox--android .Checkbox__icon {
   margin-top: 10px;
 }
@@ -85,10 +81,6 @@
 .Checkbox--android .Checkbox__content {
   margin-top: 12px;
   margin-bottom: 12px;
-}
-
-.Checkbox--vkcom {
-  padding: 0 16px;
 }
 
 .Checkbox--vkcom .Checkbox__icon {
