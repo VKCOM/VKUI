@@ -31,6 +31,10 @@
   overflow: hidden;
 }
 
+.CellButton .SimpleCell__main {
+  flex-grow: initial;
+}
+
 .SimpleCell__main,
 .SimpleCell__indicator {
   padding-top: 11px;
