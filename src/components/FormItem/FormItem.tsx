@@ -56,6 +56,7 @@ export const FormItem: FC<FormItemProps> = ({
         `FormItem--sizeY-${sizeY}`,
         {
           'FormItem--withTop': hasReactNode(top),
+          'FormItem--removable': removable,
         },
       )}
     >

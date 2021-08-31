@@ -33,8 +33,8 @@ interface RemovableOwnProps extends AllHTMLAttributes<HTMLElement>, RemovablePro
 export const Removable: FC<RemovableOwnProps> = ({
   children,
   onRemove,
-  removePlaceholder,
-  align,
+  removePlaceholder = 'Удалить',
+  align = 'center',
   ...restProps
 }: RemovableOwnProps) => {
   const platform = usePlatform();
@@ -94,10 +94,10 @@ export const Removable: FC<RemovableOwnProps> = ({
 
           <IconButton
             aria-label={removePlaceholderString}
-            vkuiClass="Removable__action Removable__action--remove"
+            vkuiClass="Removable__action"
             onClick={onRemoveClick}
           >
-            <Icon24Cancel />
+            <Icon24Cancel role="presentation" />
           </IconButton>
         </div>
       )}
@@ -109,10 +109,10 @@ export const Removable: FC<RemovableOwnProps> = ({
               hasActive={false}
               hasHover={false}
               aria-label={removePlaceholderString}
-              vkuiClass="Removable__action Removable__action--indicator"
+              vkuiClass="Removable__action Removable__toggle"
               onClick={onRemoveActivateClick}
             >
-              <i vkuiClass="Removable__action-in" role="presentation" />
+              <i vkuiClass="Removable__toggle-in" role="presentation" />
             </IconButton>
             {children}
 
@@ -125,20 +125,15 @@ export const Removable: FC<RemovableOwnProps> = ({
             hasHover={false}
             disabled={!isRemoveActivated}
             getRootRef={removeButtonRef}
-            vkuiClass="Removable__action Removable__action--remove"
+            vkuiClass="Removable__remove"
             onClick={onRemoveClick}
             onTransitionEnd={onRemoveTransitionEnd}
             style={{ transform: `translateX(-${removeOffset}px)` }}
           >
-            <span vkuiClass="Removable__action-in">{removePlaceholder}</span>
+            <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
           </Tappable>
         </Fragment>
       )}
     </div>
   );
-};
-
-Removable.defaultProps = {
-  align: 'center',
-  removePlaceholder: 'Удалить',
 };

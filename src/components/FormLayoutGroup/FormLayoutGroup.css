@@ -12,3 +12,7 @@
   padding-left: 12px;
   padding-right: 12px;
 }
+
+.FormLayoutGroup--ios.FormLayoutGroup--removable {
+  padding-left: 0;
+}
