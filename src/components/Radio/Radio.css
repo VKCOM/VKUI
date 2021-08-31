@@ -1,10 +1,10 @@
 .Radio {
   display: block;
+  padding: 0 16px;
 }
 
 .FormItem .Radio {
-  width: 100%;
-  box-sizing: content-box;
+  padding: 0 var(--formitem_padding);
   margin: 0 calc(-1 * var(--formitem_padding));
 }
 
@@ -106,10 +106,6 @@
   margin-top: 1px;
 }
 
-.Radio--android {
-  padding: 0 16px;
-}
-
 .Radio--android .Radio__icon {
   width: 22px;
   height: 22px;
@@ -160,10 +156,6 @@
 .Radio--android .Radio__description {
   margin-top: 1px;
   margin-bottom: 11px;
-}
-
-.Radio--vkcom {
-  padding: 0 16px;
 }
 
 .Radio--vkcom .Radio__icon {
