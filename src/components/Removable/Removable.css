@@ -22,14 +22,6 @@
   align-self: flex-start;
 }
 
-.FormItem .Removable,
-.FormLayoutGroup .Removable {
-  padding-left: var(--formitem_padding);
-  padding-right: var(--formitem_padding);
-  margin-left: calc(-1 * var(--formitem_padding));
-  margin-right: calc(-1 * var(--formitem_padding));
-}
-
 .FormItem--withTop .Removable__action,
 .FormItem--withTop ~ .Removable__action {
   top: 28px;
@@ -39,18 +31,6 @@
 .Removable--sizeY-compact .FormItem--withTop ~ .Removable__action {
   top: 26px;
 }
-
-.Cell .Removable {
-  padding-right: 6px;
-  box-sizing: border-box;
-}
-
-/* TODO: remove this
-   (a very temporary fix to appease screenshot tests) */
-.Cell.Cell--android .Removable.Removable--sizeY-regular {
-  padding-right: 4px;
-}
-
 /**
  * iOS
  */
@@ -142,23 +122,10 @@
 }
 
 /**
- * ANDROID & VKCOM
+ * CPM:
+ * FormLayoutGroup
  */
-.FormItem .Removable--android .Removable__action,
-.FormItem .Removable--vkcom .Removable__action,
-.FormLayoutGroup .Removable--android .Removable__action,
-.FormLayoutGroup .Removable--vkcom .Removable__action {
-   margin-top: -2px;
-   margin-right: -16px;
-   margin-bottom: -2px;
-}
-
-.FormItem--sizeY-compact .Removable--android .Removable__action,
-.FormItem--sizeY-compact .Removable--vkcom .Removable__action,
-.FormLayoutGroup--sizeY-compact .Removable--android .Removable__action,
-.FormLayoutGroup--sizeY-compact .Removable--vkcom .Removable__action {
-   margin-left: 2px;
-   margin-top: -4px;
-   margin-right: -14px;
-   margin-bottom: -4px;
+.FormLayoutGroup--ios .Removable__content {
+  flex-wrap: wrap;
+  padding-right: var(--formlayoutgroup_padding);
 }

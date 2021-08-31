@@ -1,13 +1,13 @@
 .CellButton {
   width: 100%;
   padding: 0 16px;
-  box-sizing: content-box;
   overflow: hidden;
 }
 
 .FormItem .CellButton {
   padding: 0 var(--formitem_padding);
   margin: 0 calc(-1 * var(--formitem_padding));
+  box-sizing: content-box;
 }
 
 .CellButton[disabled] {

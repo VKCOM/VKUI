@@ -164,6 +164,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
   const simpleCell = (
     <SimpleCell
       {...restProps}
+      vkuiClass="Cell__inner"
       disabled={draggable || removable || disabled}
       Component={selectable ? 'label' : Component}
       htmlFor={selectable ? name : undefined}

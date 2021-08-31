@@ -19,6 +19,7 @@
 
   /* paddings */
   --formitem_padding: 16px;
+  --formlayoutgroup_padding: 16px;
 
   /* colors */
   --white: #fff;
