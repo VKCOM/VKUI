@@ -1,8 +1,7 @@
 .RichCell {
   display: flex;
   min-height: 64px;
-  padding-right: 16px;
-  padding-left: 16px;
+  padding: 0 16px;
   box-sizing: border-box;
   white-space: nowrap;
   text-decoration: none;
@@ -10,9 +9,8 @@
 }
 
 .FormItem .RichCell {
-  width: 100%;
-  box-sizing: content-box;
   margin: 0 calc(-1 * var(--formitem_padding));
+  padding: 0 var(--formitem_padding);
 }
 
 .RichCell--mult {
@@ -105,8 +103,7 @@
  * iOS
  */
 .RichCell--ios {
-  padding-right: 12px;
-  padding-left: 12px;
+  padding: 0 12px;
 }
 
 /**
