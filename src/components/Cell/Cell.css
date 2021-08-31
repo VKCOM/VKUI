@@ -74,6 +74,10 @@
   margin-right: 12px;
 }
 
+.Cell--ios .Cell__dragger {
+  padding-left: 12px;
+}
+
 /**
  * ANDROID & VKCOM
  */
