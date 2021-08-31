@@ -1,5 +1,5 @@
 const { resolve, relative } = require('path');
-const { readFileSync } = require('fs');
+const { readFileSync, writeFileSync } = require('fs');
 const { cwd } = require('process');
 const postcss = require('postcss');
 const babel = require('@babel/parser');
@@ -41,7 +41,7 @@ vkuiSelectors.forEach(sel => {
 });
 const candidateRE = new RegExp(`\\.(${Array.from(vkuiBlocks).join('|')})(\b|[-_][-_a-zA-Z0-9]+)`, 'g');
 
-module.exports = () => ({
+const prefixerPlugin = {
   postcssPlugin: 'postcss-prefix-vkui',
   Once: (root) => {
     root.walkRules(candidateRE, rule => {
@@ -56,5 +56,18 @@ module.exports = () => ({
       rule.selector = res;
     });
   }
+};
+
+const processor = postcss([prefixerPlugin]);
+glob.sync(resolve(cwd(), './src/**/*.css')).forEach((path) => {
+  if (path.includes('node_modules')) {
+    return;
+  }
+  processor.process(String(readFileSync(path)), {
+    from: path,
+    to: path,
+    map: false,
+  }).then(result => {
+    writeFileSync(path, result.css);
+  });
 });
-module.exports.postcss = true;

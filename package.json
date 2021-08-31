@@ -100,7 +100,8 @@
     "yargs": "^15.4.1"
   },
   "bin": {
-    "generate_scheme": "./tasks/generate_scheme.js"
+    "generate_scheme": "./tasks/generate_scheme.js",
+    "vkui-migrate": "./tasks/postcss-prefix-vkui.js"
   },
   "peerDependencies": {
     "@vkontakte/icons": "^1.109.0",
