@@ -10,7 +10,7 @@
 .FormItem .SimpleCell {
   width: 100%;
   box-sizing: content-box;
-  margin: 0 -16px;
+  margin: 0 calc(-1 * var(--formitem_padding));
 }
 
 .SimpleCell--mult {
@@ -149,11 +149,6 @@
 .SimpleCell--ios {
   padding-left: 12px;
   padding-right: 12px;
-}
-
-.FormItem--ios .SimpleCell {
-  margin-left: -12px;
-  margin-right: -12px;
 }
 
 .SimpleCell--ios .SimpleCell__main,

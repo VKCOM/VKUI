@@ -12,7 +12,7 @@
 .FormItem .RichCell {
   width: 100%;
   box-sizing: content-box;
-  margin: 0 -16px;
+  margin: 0 calc(-1 * var(--formitem_padding));
 }
 
 .RichCell--mult {
@@ -107,10 +107,6 @@
 .RichCell--ios {
   padding-right: 12px;
   padding-left: 12px;
-}
-
-.FormItem--ios .RichCell {
-  margin: 0 -12px;
 }
 
 /**

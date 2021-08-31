@@ -5,7 +5,7 @@
 .FormItem .Radio {
   width: 100%;
   box-sizing: content-box;
-  margin: 0 -16px;
+  margin: 0 calc(-1 * var(--formitem_padding));
 }
 
 .Radio__input {
@@ -52,10 +52,6 @@
 
 .Radio--ios {
   padding: 0 12px;
-}
-
-.FormItem--ios .Radio {
-  margin: 0 -12px;
 }
 
 .Radio--ios .Radio__icon {

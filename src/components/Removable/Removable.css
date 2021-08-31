@@ -24,10 +24,10 @@
 
 .FormItem .Removable,
 .FormLayoutGroup .Removable {
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-left: -16px;
-  margin-right: -16px;
+  padding-left: var(--formitem_padding);
+  padding-right: var(--formitem_padding);
+  margin-left: calc(-1 * var(--formitem_padding));
+  margin-right: calc(-1 * var(--formitem_padding));
 }
 
 .FormItem--withTop .Removable__action,
@@ -124,14 +124,6 @@
 .Cell .Removable--ios .Removable__action--indicator {
   margin-left: 2px;
   margin-right: 0;
-}
-
-.FormItem .Removable--ios,
-.FormLayoutGroup .Removable--ios {
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-left: -12px;
-  margin-right: -12px;
 }
 
 .FormLayoutGroup .Removable--ios .Removable__content {

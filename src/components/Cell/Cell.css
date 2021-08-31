@@ -7,7 +7,7 @@
 .FormItem .Cell {
   width: 100%;
   box-sizing: content-box;
-  margin: 0 -16px;
+  margin: 0 -(var(--formitem_padding));
 }
 
 .List--dragging .Cell:not(.Cell--dragging) {
@@ -73,10 +73,6 @@
  */
 .Cell--ios .Cell__in {
   transition: transform .6s var(--ios-easing);
-}
-
-.FormItem .Cell--ios {
-  margin: 0 -12px;
 }
 
 .Cell--ios.Cell--selectable .Cell__marker {
