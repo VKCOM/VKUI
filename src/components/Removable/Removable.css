@@ -81,8 +81,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .Removable--ios .Removable__content,
-  .Removable__remove {
+  .Removable--ios .Removable__content {
     transition: transform .6s var(--ios-easing);
   }
 }
