@@ -1,9 +1,10 @@
 .SimpleCell {
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
   min-height: 48px;
-  white-space: nowrap;
-  text-decoration: none;
+  padding: 0 16px;
   color: var(--text_primary);
 }
 
@@ -28,6 +29,12 @@
   min-width: 0;
   flex-shrink: initial;
   overflow: hidden;
+}
+
+.SimpleCell__main,
+.SimpleCell__indicator {
+  padding-top: 11px;
+  padding-bottom: 10px;
 }
 
 .SimpleCell > .Icon {
@@ -145,10 +152,8 @@
 /**
  * iOS
  */
-
 .SimpleCell--ios {
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 0 12px;
 }
 
 .SimpleCell--ios .SimpleCell__main,
@@ -184,27 +189,8 @@
 }
 
 /**
- * Android & VKCOM
- */
-
-.SimpleCell--android,
-.SimpleCell--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
-.SimpleCell--android .SimpleCell__main,
-.SimpleCell--android .SimpleCell__indicator,
-.SimpleCell--vkcom .SimpleCell__main,
-.SimpleCell--vkcom .SimpleCell__indicator {
-  padding-top: 11px;
-  padding-bottom: 10px;
-}
-
-/**
  * sizeY === 'compact'
  */
-
 .SimpleCell--sizeY-compact {
   min-height: 44px;
 }
