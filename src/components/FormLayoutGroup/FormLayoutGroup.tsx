@@ -1,11 +1,11 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import { HasRootRef } from '../../types';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { Removable, RemovableProps } from '../Removable/Removable';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import './FormLayoutGroup.css';
 
 export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, RemovableProps, HasRootRef<HTMLDivElement> {
@@ -16,17 +16,17 @@ export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, Re
   removable?: boolean;
 }
 
-const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(({
+const FormLayoutGroup: FC<FormLayoutGroupProps> = ({
   children,
-  mode,
+  mode = 'vertical',
   removable,
-  removePlaceholder,
+  removePlaceholder = 'Удалить',
   onRemove,
-  sizeY,
   getRootRef,
   ...restProps
-}: FormLayoutGroupProps & Pick<AdaptivityProps, 'sizeY'>) => {
+}: FormLayoutGroupProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
   const isRemovable = removable && mode === 'horizontal';
   const rootEl = useExternRef(getRootRef);
 
@@ -44,13 +44,6 @@ const FormLayoutGroup: FunctionComponent<FormLayoutGroupProps> = withAdaptivity(
       }
     </div>
   );
-}, {
-  sizeY: true,
-});
-
-FormLayoutGroup.defaultProps = {
-  mode: 'vertical',
-  removePlaceholder: 'Удалить',
 };
 
 export default FormLayoutGroup;
