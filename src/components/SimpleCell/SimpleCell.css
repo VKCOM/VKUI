@@ -6,6 +6,15 @@
   min-height: 48px;
   padding: 0 16px;
   color: var(--text_primary);
+  box-sizing: border-box;
+}
+
+.Cell__inner.SimpleCell {
+  flex-grow: 1;
+  flex-shrink: initial;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 .FormItem__content > .SimpleCell {
@@ -13,8 +22,8 @@
   box-sizing: content-box;
 }
 
-.SimpleCell--mult {
-  white-space: normal;
+.SimpleCell:not(.SimpleCell--mult) {
+  white-space: nowrap;
 }
 
 .SimpleCell--mult .SimpleCell__description,
