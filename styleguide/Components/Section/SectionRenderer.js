@@ -38,7 +38,6 @@ export const SectionRenderer = (allProps) => {
 };
 
 SectionRenderer.propTypes = {
-  classes: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
   name: PropTypes.string,
   description: PropTypes.string,
   slug: PropTypes.string.isRequired,

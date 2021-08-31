@@ -12,7 +12,7 @@ class FrameDomProvider extends React.Component {
   };
 
   static propTypes = {
-    appearance: Appearance,
+    appearance: PropTypes.oneOf(Object.values(Appearance)),
   };
 
   state = { ready: false };
