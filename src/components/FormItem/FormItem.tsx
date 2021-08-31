@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, ElementType, FC, ReactNode, Fragment } from 'react';
+import { AllHTMLAttributes, ElementType, FC, ReactNode } from 'react';
 import { HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -39,11 +39,11 @@ export const FormItem: FC<FormItemProps> = ({
   const { sizeY } = useAdaptivity();
 
   const wrappedChildren = (
-    <Fragment>
+    <div vkuiClass="FormItem__content">
       {hasReactNode(top) && <Subhead weight="regular" vkuiClass="FormItem__top">{top}</Subhead>}
       {children}
       {hasReactNode(bottom) && <Caption level="1" weight="regular" vkuiClass="FormItem__bottom">{bottom}</Caption>}
-    </Fragment>
+    </div>
   );
 
   return (
@@ -62,9 +62,7 @@ export const FormItem: FC<FormItemProps> = ({
     >
       {removable ? (
         <Removable align="start" onRemove={(e) => onRemove(e, rootEl?.current)} removePlaceholder={removePlaceholder}>
-          <div vkuiClass="FormItem__removable">
-            {wrappedChildren}
-          </div>
+          {wrappedChildren}
         </Removable>
       ) : wrappedChildren}
     </Component>

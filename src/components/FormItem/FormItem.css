@@ -1,14 +1,17 @@
 .FormItem {
+  position: relative;
   display: block;
-  padding: 12px var(--formitem_padding);
+  min-width: 0;
+  max-width: 100%;
+  padding: 12px 0;
 }
 
-.FormItem__removable {
+.FormItem__content {
   flex-grow: 1;
   flex-shrink: initial;
   min-width: 0;
   max-width: 100%;
-  overflow: hidden;
+  padding: 0 var(--formitem_padding);
 }
 
 .FormItem__top {
@@ -70,12 +73,13 @@
  * FormLayoutGroup
  */
 .FormLayoutGroup--horizontal .FormItem {
-  max-width: 100%;
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 0;
+}
+
+.FormLayoutGroup--horizontal .FormItem__content {
   padding: 0;
-  min-width: 0;
 }
 
 .FormLayoutGroup--horizontal .FormItem + .FormItem {
