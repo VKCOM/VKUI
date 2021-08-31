@@ -24,11 +24,6 @@
 
 .FormItem--withTop .Removable__action,
 .FormItem--withTop ~ .Removable__action {
-  top: 28px;
-}
-
-.FormItem--withTop .Removable--sizeY-compact .Removable__action,
-.Removable--sizeY-compact .FormItem--withTop ~ .Removable__action {
   top: 26px;
 }
 /**
@@ -101,24 +96,26 @@
   background-color: var(--white);
 }
 
-.Removable--sizeY-compact .Removable__toggle {
+.FormItem--withTop ~ .Removable__offset {
+  order: -1;
+  display: block;
+  width: 100%;
+  height: 26px;
+}
+
+/*
+ * sizeY: COMPACT
+ */
+.Removable--sizeY-compact .Removable__action {
   margin-top: -4px;
   margin-bottom: -4px;
 }
 
-.FormLayoutGroup .Removable--ios .Removable__content {
-  flex-wrap: wrap;
-}
-
-.FormLayoutGroup .Removable--ios .FormItem--withTop ~ .Removable__offset {
-  order: -1;
-  display: block;
-  width: 100%;
-  height: 28px;
-}
-
-.FormLayoutGroup .Removable--ios.Removable--sizeY-compact .FormItem--withTop ~ .Removable__offset {
-  height: 26px;
+.Removable--sizeY-compact .Removable__toggle {
+  height: 44px;
+  width: 44px;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 /**
