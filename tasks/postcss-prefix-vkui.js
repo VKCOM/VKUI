@@ -47,7 +47,7 @@ const prefixerPlugin = {
     root.walkRules(candidateRE, rule => {
       const res = rule.selector.replace(candidateRE, sel => {
         const cls = sel.substring(1);
-        if (vkuiSelectors.has(cls)) {
+        if (vkuiSelectors.has(cls) || /^Icon(--[a-zA-Z\-0-9]+)?$/.test(cls)) {
           return `.vkui${cls}`;
         }
         console.log(`${cls} in ${relative(cwd(), rule.source.input.file)} looks like VKUI selector, but does not exist in VKUI`);
