@@ -36,19 +36,16 @@
   position: relative;
   padding-top: 8px;
   padding-bottom: 8px;
-}
-
-.RichCell__top {
   font-size: 0;
   line-height: 0;
 }
 
-.RichCell__top > :first-child:not(.RichCell__content) {
+.RichCell__in > :first-child:not(.RichCell__content) {
   display: none;
   pointer-events: none;
 }
 
-.RichCell__top > .Icon--28:first-child ~ * {
+.RichCell__in > .Icon--28:first-child ~ * {
   margin-right: 32px;
 }
 

@@ -70,22 +70,20 @@ const RichCell: FC<RichCellProps> = ({
     >
       {before}
       <div vkuiClass="RichCell__in">
-        <div vkuiClass="RichCell__top">
-          {/* Этот after будет скрыт из верстки. Он нужен для CSS */}
-          {after}
-          <Text weight="medium" vkuiClass="RichCell__content">
-            <div vkuiClass="RichCell__children">{children}</div>
-            {hasReactNode(after) && <div vkuiClass="RichCell__after">{after}</div>}
-          </Text>
-          {hasReactNode(text) && <Text weight="regular" vkuiClass="RichCell__text">{text}</Text>}
-          {hasReactNode(caption) && <Subhead Component="span" weight="regular" vkuiClass="RichCell__caption">{caption}</Subhead>}
-          {(hasReactNode(bottom) || hasReactNode(actions)) &&
-            <div vkuiClass="RichCell__bottom">
-              {bottom}
-              {hasReactNode(actions) && <div vkuiClass="RichCell__actions">{actions}</div>}
-            </div>
-          }
-        </div>
+        {/* Этот after будет скрыт из верстки. Он нужен для CSS */}
+        {after}
+        <Text weight="medium" vkuiClass="RichCell__content">
+          <div vkuiClass="RichCell__children">{children}</div>
+          {hasReactNode(after) && <div vkuiClass="RichCell__after">{after}</div>}
+        </Text>
+        {hasReactNode(text) && <Text weight="regular" vkuiClass="RichCell__text">{text}</Text>}
+        {hasReactNode(caption) && <Subhead Component="span" weight="regular" vkuiClass="RichCell__caption">{caption}</Subhead>}
+        {(hasReactNode(bottom) || hasReactNode(actions)) && (
+          <div vkuiClass="RichCell__bottom">
+            {bottom}
+            {hasReactNode(actions) && <div vkuiClass="RichCell__actions">{actions}</div>}
+          </div>
+        )}
       </div>
     </Tappable>
   );
