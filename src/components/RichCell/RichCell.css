@@ -90,6 +90,7 @@
 }
 
 .RichCell__caption {
+  display: block;
   margin-top: 1px;
   color: var(--text_secondary);
   overflow: hidden;
