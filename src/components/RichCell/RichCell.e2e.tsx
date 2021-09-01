@@ -9,11 +9,10 @@ import RichCell from './RichCell';
 describe('RichCell', () => {
   describeScreenshotFuzz(RichCell, [
     {
-      before: [<Avatar size={72} key="avatar" />],
+      before: [<Avatar size={72} key="72" />],
       children: ['Тарас Иванов'],
-      disabled: [true],
-      caption: ['Вчера в 20:30'],
-      after: ['1500 руб.', <Icon28UserAddOutline key="icon" />],
+      caption: ['Вчера в 20:30', 'Команда ВКонтакте, Санкт-Петербург'],
+      after: ['1500 руб.', <Icon28UserAddOutline key="icon" />, <div key="div" style={{ display: 'flex' }}>+1500 руб.</div>],
       bottom: [<UsersStack key="stack" photos={['', '', '']}>73 общих друга</UsersStack>],
       actions: [
         <Fragment key="actions">
@@ -21,16 +20,24 @@ describe('RichCell', () => {
           <Button mode="secondary">Отменить</Button>
         </Fragment>,
       ],
+    }, {
+      before: [<Avatar size={72} key="72" />],
+      children: ['Тарас Иванов'],
+      bottom: [undefined, <UsersStack key="stack" photos={['', '', '']}>73 общих друга</UsersStack>],
+      actions: [
+        <Fragment key="actions">
+          <Button>Окей</Button>
+          <Button mode="secondary">Отменить</Button>
+        </Fragment>,
+      ],
       $adaptivity: 'y',
-    },
-    {
-      before: [<Avatar size={48} key="avatar" />],
+    }, {
+      before: [<Avatar size={48} key="48" />],
       children: ['Михаил Лихачев'],
-      disabled: [false],
-      multiline: [true, false],
+      multiline: [true],
       text: [undefined, 'Возврат по договору займа за поездку в Лиссабон'],
       caption: ['Команда ВКонтакте, Санкт-Петербург'],
-      after: ['- 700 руб.'],
+      after: ['- 700 руб.', <Icon28UserAddOutline key="icon" />],
     },
   ]);
 });
