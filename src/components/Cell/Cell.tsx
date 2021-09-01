@@ -56,8 +56,6 @@ export const Cell: React.FC<CellProps> = ({
   onRemove,
   removePlaceholder = 'Удалить',
   onDragFinish,
-  className,
-  style,
   before,
   after,
   disabled,
@@ -116,7 +114,14 @@ export const Cell: React.FC<CellProps> = ({
     <SimpleCell
       hasActive={hasActive}
       hasHover={hasActive}
+      vkuiClass={classNames(getClassName('Cell', platform), {
+        'Cell--dragging': dragging,
+        'Cell--removable': removable,
+        'Cell--selectable': selectable,
+        'Cell--disabled': disabled,
+      })}
       {...restProps}
+      getRootRef={rootElRef}
       disabled={simpleCellDisabled}
       Component={selectable ? 'label' : Component}
       before={
@@ -135,22 +140,8 @@ export const Cell: React.FC<CellProps> = ({
     />
   );
 
-  return (
-    <div
-      vkuiClass={classNames(getClassName('Cell', platform), {
-        'Cell--dragging': dragging,
-        'Cell--removable': removable,
-        'Cell--selectable': selectable,
-        'Cell--disabled': disabled,
-      })}
-      className={className}
-      style={style}
-      ref={rootElRef}
-    >
-      {removable
-        ? <Removable removePlaceholder={removePlaceholder} onRemove={(e) => onRemove(e, rootElRef?.current)}>{simpleCell}</Removable>
-        : simpleCell
-      }
-    </div>
-  );
+  return removable
+    ? <Removable removePlaceholder={removePlaceholder} onRemove={(e) => onRemove(e, rootElRef?.current)}>{simpleCell}</Removable>
+    : simpleCell
+  ;
 };
