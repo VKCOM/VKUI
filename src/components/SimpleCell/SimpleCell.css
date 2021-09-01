@@ -7,6 +7,14 @@
   color: var(--text_primary);
 }
 
+.Removable__content > .SimpleCell {
+  max-width: 100%;
+  flex-grow: 1;
+  min-width: 0;
+  flex-shrink: initial;
+  overflow: hidden;
+}
+
 .FormItem .SimpleCell {
   width: 100%;
   box-sizing: content-box;

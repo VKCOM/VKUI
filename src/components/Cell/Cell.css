@@ -1,12 +1,8 @@
 .Cell {
   position: relative;
-  margin: 0;
-  padding: 0;
 }
 
 .FormItem .Cell {
-  width: 100%;
-  box-sizing: content-box;
   margin: 0 calc(-1 * var(--formitem_padding));
 }
 
@@ -14,7 +10,6 @@
   transition: transform .3s ease;
 }
 
-.List--dragging .Cell--dragging,
 .Cell--dragging {
   background-color: var(--background_content);
   box-shadow: 0 0 5px rgba(0, 0, 0, .25);
