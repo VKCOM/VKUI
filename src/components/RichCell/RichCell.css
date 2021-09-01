@@ -16,7 +16,7 @@
 }
 
 .RichCell--mult {
-  white-space: initial;
+  white-space: normal;
 }
 
 .RichCell__in {
@@ -89,7 +89,7 @@
 .RichCell--mult .RichCell__children,
 .RichCell--mult .RichCell__caption,
 .RichCell--mult .RichCell__text {
-  text-overflow: initial;
+  overflow: auto;
 }
 
 .RichCell__actions {
