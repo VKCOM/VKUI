@@ -1,5 +1,6 @@
 .Tappable {
   position: relative;
+  text-decoration: none;
 }
 
 .Tappable:not([disabled]):not([aria-disabled="true"]) {
