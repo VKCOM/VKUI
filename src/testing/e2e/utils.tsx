@@ -74,6 +74,7 @@ function prettyProps(props: any) {
 type ScreenshotOptions = {
   matchScreenshot?: MatchImageSnapshotOptions;
   platforms?: Platform[];
+  // pass [BRIGHT_LIGHT, SPACE_GRAY] if component depends on appearance
   mobileSchemes?: Scheme[];
   adaptivity?: AdaptivityProps;
   Wrapper?: ComponentType;
@@ -109,7 +110,7 @@ export function describeScreenshotFuzz<Props>(
   const {
     matchScreenshot,
     platforms = Object.values(Platform),
-    mobileSchemes = [Scheme.BRIGHT_LIGHT, Scheme.SPACE_GRAY],
+    mobileSchemes = [Scheme.BRIGHT_LIGHT],
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
