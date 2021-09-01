@@ -5,9 +5,17 @@
 }
 
 .FormItem .Cell {
-  width: 100%;
-  box-sizing: content-box;
   margin: 0 calc(-1 * var(--formitem_padding));
+}
+
+.FormItem .Cell .SimpleCell {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.FormItem .Cell .Removable {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .List--dragging .Cell:not(.Cell--dragging) {
