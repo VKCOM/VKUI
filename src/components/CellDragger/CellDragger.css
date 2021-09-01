@@ -6,6 +6,13 @@
 }
 
 /**
+ * iOS
+ */
+.CellDragger--ios {
+  padding-left: 12px;
+}
+
+/**
  * ANDROID & VKCOM
  */
 .CellDragger--android,
