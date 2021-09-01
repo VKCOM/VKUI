@@ -16,13 +16,7 @@
 }
 
 .RichCell--mult {
-  white-space: normal;
-}
-
-.RichCell--mult .RichCell__children,
-.RichCell--mult .RichCell__caption,
-.RichCell--mult .RichCell__text {
-  text-overflow: initial;
+  white-space: initial;
 }
 
 .RichCell__in {
@@ -77,21 +71,25 @@
   flex-grow: 1;
   max-width: 100%;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.RichCell__text {
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .RichCell__caption {
   display: block;
   margin-top: 1px;
   color: var(--text_secondary);
+}
+
+.RichCell__children,
+.RichCell__text,
+.RichCell__caption {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.RichCell--mult .RichCell__children,
+.RichCell--mult .RichCell__caption,
+.RichCell--mult .RichCell__text {
+  text-overflow: initial;
 }
 
 .RichCell__actions {
