@@ -13,13 +13,22 @@
   flex-grow: 1;
   flex-shrink: initial;
   min-width: 0;
-  padding: 0;
   overflow: hidden;
+}
+
+.Cell--removable .Cell__inner.SimpleCell {
+  padding-right: 0;
 }
 
 .FormItem__content > .SimpleCell {
   margin: 0 calc(-1 * var(--formitem_padding));
+  padding: 0 var(--formitem_padding);
   box-sizing: content-box;
+}
+
+.FormItem__content > .Cell__inner.SimpleCell {
+  margin: 0;
+  padding: 0;
 }
 
 .SimpleCell:not(.SimpleCell--mult) {
@@ -170,6 +179,7 @@
 
 .Cell--removable .Cell__inner.SimpleCell--ios {
   padding-right: 12px;
+  padding-left: 0;
 }
 
 .SimpleCell--ios .SimpleCell__main,

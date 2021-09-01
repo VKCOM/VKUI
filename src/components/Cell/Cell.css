@@ -1,17 +1,11 @@
 .Cell {
   position: relative;
   display: flex;
-  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .FormItem .Cell {
-  padding: 0 var(--formitem_padding);
   margin: 0 calc(-1 * var(--formitem_padding));
-}
-
-.Cell--removable,
-.FormItem .Cell--removable {
-  padding-right: 0;
 }
 
 .List--dragging .Cell:not(.Cell--dragging) {
@@ -62,14 +56,6 @@
 /**
  * iOS
  */
-.Cell--ios {
-  padding: 0 12px;
-}
-
-.Cell--ios.Cell--removable {
-  padding: 0;
-}
-
 .Cell--ios .Cell__marker {
   margin-right: 12px;
 }
