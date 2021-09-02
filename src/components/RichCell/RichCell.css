@@ -86,12 +86,6 @@
   text-overflow: ellipsis;
 }
 
-.RichCell--mult .RichCell__children,
-.RichCell--mult .RichCell__caption,
-.RichCell--mult .RichCell__text {
-  overflow: auto;
-}
-
 .RichCell__actions {
   display: flex;
   margin-top: 8px;
