@@ -40,14 +40,14 @@
   top: 26px;
 }
 
-.Cell .Removable {
+.Cell > .Removable .Removable__content {
   padding-right: 6px;
   box-sizing: border-box;
 }
 
 /* TODO: remove this
    (a very temporary fix to appease screenshot tests) */
-.Cell.Cell--android .Removable.Removable--sizeY-regular {
+.Cell > .Removable--android.Removable--sizeY-regular .Removable__content {
   padding-right: 4px;
 }
 
@@ -70,6 +70,14 @@
   background-color: var(--destructive);
   border: none;
   border-radius: 0;
+}
+
+.FormItem > .Removable .Removable__remove {
+  transform: translateX(var(--formitem_padding));
+}
+
+.FormLayoutGroup > .Removable .Removable__remove {
+  transform: translateX(12px);
 }
 
 .Removable__remove-in {
