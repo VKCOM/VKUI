@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, FC, ReactNode, MouseEvent, useEffect, useRef, useState, Fragment } from 'react';
+import { AllHTMLAttributes, FC, ReactNode, MouseEvent, useEffect, useRef, useState } from 'react';
 import { classNames } from '../../lib/classNames';
 import { getTitleFromChildren } from '../../lib/utils';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -103,21 +103,23 @@ export const Removable: FC<RemovableOwnProps> = ({
       )}
 
       {platform === IOS && (
-        <Fragment>
-          <div vkuiClass="Removable__content" style={{ transform: `translateX(-${removeOffset}px)` }}>
-            <IconButton
-              hasActive={false}
-              hasHover={false}
-              aria-label={removePlaceholderString}
-              vkuiClass="Removable__action Removable__toggle"
-              onClick={onRemoveActivateClick}
-            >
-              <i vkuiClass="Removable__toggle-in" role="presentation" />
-            </IconButton>
-            {children}
+        <div
+          vkuiClass="Removable__content"
+          style={{ transform: `translateX(-${removeOffset}px)` }}
+          onTransitionEnd={onRemoveTransitionEnd}
+        >
+          <IconButton
+            hasActive={false}
+            hasHover={false}
+            aria-label={removePlaceholderString}
+            vkuiClass="Removable__action Removable__toggle"
+            onClick={onRemoveActivateClick}
+          >
+            <i vkuiClass="Removable__toggle-in" role="presentation" />
+          </IconButton>
+          {children}
 
-            <span vkuiClass="Removable__offset" aria-hidden="true"></span>
-          </div>
+          <span vkuiClass="Removable__offset" aria-hidden="true"></span>
 
           <Tappable
             Component="button"
@@ -127,12 +129,10 @@ export const Removable: FC<RemovableOwnProps> = ({
             getRootRef={removeButtonRef}
             vkuiClass="Removable__remove"
             onClick={onRemoveClick}
-            onTransitionEnd={onRemoveTransitionEnd}
-            style={{ transform: `translateX(-${removeOffset}px)` }}
           >
             <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
           </Tappable>
-        </Fragment>
+        </div>
       )}
     </div>
   );
