@@ -54,7 +54,7 @@
 /**
  * iOS
  */
-.Removable--ios {
+.Removable--ios .Removable__content {
   overflow: hidden;
 }
 
