@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import {
   AdaptivityContext,
-  AdaptivityProps,
   SizeType,
   ViewHeight,
   ViewWidth,
 } from '../components/AdaptivityProvider/AdaptivityContext';
+import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 
 export { SizeType, ViewWidth, ViewHeight };
 export type { AdaptivityProps };
