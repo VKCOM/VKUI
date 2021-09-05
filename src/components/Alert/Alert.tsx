@@ -4,7 +4,7 @@ import React, {
   HTMLAttributes,
   MouseEventHandler,
   ReactNode,
-  SyntheticEvent
+  SyntheticEvent,
 } from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
@@ -165,6 +165,7 @@ class Alert extends Component<AlertProps, AlertState> {
         Component={action.Component}
         href={action.href}
         key={`alert-action-${i}`}
+        target={action.target}
       >
         {action.title}
       </Button>
