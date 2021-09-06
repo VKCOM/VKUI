@@ -1,5 +1,6 @@
 import { useContext } from 'react';
-import { AdaptivityContext, AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
+import { AdaptivityContext } from '../components/AdaptivityProvider/AdaptivityContext';
+import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 
 export type { AdaptivityProps };
 
