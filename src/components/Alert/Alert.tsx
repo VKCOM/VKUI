@@ -1,4 +1,11 @@
-import React, { Component, HTMLAttributes, MouseEventHandler, ReactNode, SyntheticEvent } from 'react';
+import React, {
+  AnchorHTMLAttributes,
+  Component,
+  HTMLAttributes,
+  MouseEventHandler,
+  ReactNode,
+  SyntheticEvent,
+} from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { getClassName } from '../../helpers/getClassName';
@@ -16,7 +23,7 @@ import Caption from '../Typography/Caption/Caption';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import './Alert.css';
 
-export type AlertActionInterface = AlertProps['actions'][0];
+export type AlertActionInterface = AlertProps['actions'][0] & AnchorHTMLAttributes<HTMLElement>;
 
 export interface AlertAction extends Pick<ButtonProps, 'Component' | 'href'> {
   title: string;
@@ -132,6 +139,7 @@ class Alert extends Component<AlertProps, AlertState> {
           onClick={this.onItemClick(action)}
           href={action.href}
           key={`alert-action-${i}`}
+          target={action.target}
         >
           {action.title}
         </Tappable>
@@ -157,6 +165,7 @@ class Alert extends Component<AlertProps, AlertState> {
         Component={action.Component}
         href={action.href}
         key={`alert-action-${i}`}
+        target={action.target}
       >
         {action.title}
       </Button>
