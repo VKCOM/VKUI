@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import { clamp } from '../../helpers/math';
 import { UniversalSlider, UniversalSliderProps, UniversalValue } from '../RangeSlider/UniversalSlider';
-import './Slider.css';
 
 export type SliderProps = UniversalSliderProps<number>;
 

@@ -5,6 +5,7 @@ import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import Text from '../Typography/Text/Text';
+import './SliderSwitch.css';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   active?: boolean;

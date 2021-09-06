@@ -7,6 +7,7 @@ import { rescale } from '../../helpers/math';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
+import '../Slider/Slider.css';
 
 export type UniversalValue = [number | null, number];
 

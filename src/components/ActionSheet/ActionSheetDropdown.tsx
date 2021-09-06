@@ -3,6 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ActionSheetProps } from './ActionSheet';
+import './ActionSheet.css';
 
 interface Props {
   closing: boolean;

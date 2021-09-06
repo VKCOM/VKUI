@@ -6,6 +6,7 @@ import { HasPlatform } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { ActionSheetProps } from './ActionSheet';
+import './ActionSheet.css';
 
 interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   closing: boolean;
