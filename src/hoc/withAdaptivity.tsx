@@ -4,8 +4,8 @@ import {
   SizeType,
   ViewHeight,
   ViewWidth,
+  AdaptivityProps,
 } from '../components/AdaptivityProvider/AdaptivityContext';
-import type { AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
 
 export { SizeType, ViewWidth, ViewHeight };
 export type { AdaptivityProps };
