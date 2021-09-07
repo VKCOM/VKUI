@@ -19,7 +19,7 @@ export { default as PanelHeader } from './components/PanelHeader/PanelHeader';
 export type { PanelHeaderProps } from './components/PanelHeader/PanelHeader';
 export { default as PanelHeaderContent } from './components/PanelHeaderContent/PanelHeaderContent';
 export type { PanelHeaderContentProps } from './components/PanelHeaderContent/PanelHeaderContent';
-export { default as PanelHeaderContext } from './components/PanelHeaderContext/PanelHeaderContext';
+export { PanelHeaderContext } from './components/PanelHeaderContext/PanelHeaderContext';
 export type { PanelHeaderContextProps } from './components/PanelHeaderContext/PanelHeaderContext';
 export { SplitLayout } from './components/SplitLayout/SplitLayout';
 export type { SplitLayoutProps } from './components/SplitLayout/SplitLayout';
