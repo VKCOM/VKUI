@@ -5,7 +5,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { ActionSheetProps } from './ActionSheet';
 import './ActionSheet.css';
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;
