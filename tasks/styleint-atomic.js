@@ -10,7 +10,12 @@ module.exports = stylelint.createPlugin(
   ruleName,
   function () {
     return function (root, result) {
-      const cssCmp = path.basename(root.source.input.file).split('.')[0];
+      const { file } = root.source.input;
+      // Only apply to component CSS, not styles/*.css
+      if (file.split(path.sep).includes('styles')) {
+        return;
+      }
+      const cssCmp = path.basename(file).split('.')[0];
       root.walkRules(node => {
         if (node.parent.name === 'keyframes') {
           return;
