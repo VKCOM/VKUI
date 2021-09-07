@@ -13,6 +13,7 @@ const ScreenSpinner: FC<ScreenSpinnerProps> = (props: ScreenSpinnerProps) => {
 
   return (
     <PopoutWrapper
+      hasMask={false}
       vkuiClass={getClassName('ScreenSpinner', platform)}
       className={className}
       style={style}
