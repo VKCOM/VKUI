@@ -88,7 +88,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
   }
 
   componentWillUnmount() {
-    clearInterval(this.onMountResizeTimeout);
+    clearTimeout(this.onMountResizeTimeout);
     this.window.removeEventListener('resize', this.doResize);
 
     this.document.removeEventListener(transitionStartEventName, this.onViewTransitionStart);
