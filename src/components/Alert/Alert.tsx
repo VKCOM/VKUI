@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Tappable from '../Tappable/Tappable';
-import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
+import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { transitionEvent } from '../../lib/supportEvents';

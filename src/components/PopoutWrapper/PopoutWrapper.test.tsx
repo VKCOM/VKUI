@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import { baselineComponent } from '../../testing/utils';
-import PopoutWrapper from './PopoutWrapper';
+import { PopoutWrapper } from './PopoutWrapper';
 
 describe('PopoutWrapper', () => {
   baselineComponent(PopoutWrapper);
@@ -34,7 +35,7 @@ describe('PopoutWrapper', () => {
     it('after animation if mask', () => {
       render(<PopoutWrapper hasMask />);
       expect(isOpened()).toBe(false);
-      jest.runAllTimers();
+      act(() => jest.runAllTimers());
       expect(isOpened()).toBe(true);
     });
   });
