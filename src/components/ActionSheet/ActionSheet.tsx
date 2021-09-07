@@ -2,8 +2,8 @@ import * as React from 'react';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
-import ActionSheetDropdown from './ActionSheetDropdown';
+import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
+import { ActionSheetDropdown } from './ActionSheetDropdown';
 import { hasReactNode } from '../../lib/utils';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
@@ -34,7 +34,7 @@ export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
 
-const ActionSheet: React.FC<ActionSheetProps> = ({
+export const ActionSheet: React.FC<ActionSheetProps> = ({
   children,
   className,
   header,
@@ -44,7 +44,6 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
   ...restProps
 }) => {
   const platform = usePlatform();
-  const elRef = React.useRef();
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
 
@@ -107,7 +106,6 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
         <DropdownComponent
           closing={closing}
           onClose={onClose}
-          elementRef={elRef}
           onTransitionEnd={closing && !isDesktop ? afterClose : null}
           {...restProps}
         >
@@ -132,5 +130,3 @@ const ActionSheet: React.FC<ActionSheetProps> = ({
 ActionSheet.defaultProps = {
   popupDirection: 'bottom',
 };
-
-export default ActionSheet;
