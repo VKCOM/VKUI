@@ -1,7 +1,3 @@
-.ScreenSpinner .PopoutWrapper__overlay {
-  background: none;
-}
-
 .ScreenSpinner {
   animation: vkui-screen-spinner-intro .3s ease;
 }
