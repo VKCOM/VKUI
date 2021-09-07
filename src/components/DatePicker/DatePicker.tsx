@@ -113,6 +113,7 @@ const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
         </div>
         <div vkuiClass="DatePicker__month">
           <CustomSelect
+            vkuiClass="DatePicker__monthSelect"
             name="month"
             value={month}
             options={monthOptions}
