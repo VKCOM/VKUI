@@ -4,7 +4,7 @@ import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 import { hasReactNode } from '../../lib/utils';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import './FormField.css';
 
 export interface FormFieldProps {
@@ -17,22 +17,21 @@ export interface FormFieldProps {
 interface FormFieldOwnProps extends
   AllHTMLAttributes<HTMLElement>,
   HasRootRef<HTMLElement>,
-  AdaptivityProps,
   FormFieldProps {
   Component?: ElementType;
   disabled?: boolean;
 }
 
-export const FormField: FC<FormFieldOwnProps> = withAdaptivity(({
+export const FormField: FC<FormFieldOwnProps> = ({
   Component = 'div',
   children,
   getRootRef,
   after,
   disabled,
-  sizeY,
   ...restProps
 }: FormFieldOwnProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
   const [hover, setHover] = useState(false);
 
   const handleMouseEnter = (e: MouseEvent) => {
@@ -71,6 +70,4 @@ export const FormField: FC<FormFieldOwnProps> = withAdaptivity(({
       })} />
     </Component>
   );
-}, {
-  sizeY: true,
-});
+};
