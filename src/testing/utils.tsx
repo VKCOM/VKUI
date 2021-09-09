@@ -1,7 +1,8 @@
-import { ComponentType } from 'react';
+import { ComponentType, FC } from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
 import AdaptivityProvider, { AdaptivityProviderProps } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ImgOnlyAttributes } from '../lib/utils';
+import { ScrollContext } from '../components/AppRoot/ScrollContext';
 
 export const imgOnlyAttributes: ImgOnlyAttributes = {
   alt: 'test',
@@ -101,3 +102,16 @@ export function mockRect(el: HTMLElement | ({} & any), { x = 0, y = 0, w = 0, h 
     },
   });
 }
+
+export const mockScrollContext = (getY: () => number): [FC, jest.Mock] => {
+  const getScroll = () => ({ x: 0, y: getY() });
+  const scrollTo = jest.fn();
+  return [
+    (props) => (
+      <ScrollContext.Provider value={{ getScroll, scrollTo }}>
+        {props.children}
+      </ScrollContext.Provider>
+    ),
+    scrollTo,
+  ];
+};

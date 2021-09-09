@@ -1,10 +1,11 @@
 import { fireEvent, render } from '@testing-library/react';
 import ConfigProvider from '../ConfigProvider/ConfigProvider';
 import { IOS } from '../../lib/platform';
-import { baselineComponent, mountTest } from '../../testing/utils';
+import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
 import { Panel } from '../Panel/Panel';
-import View, { ViewProps } from './View';
+import View, { scrollsCache, ViewProps } from './View';
 import ViewInfinite from './ViewInfinite';
+import { ComponentType, Fragment } from 'react';
 
 beforeEach(() => jest.useFakeTimers());
 afterEach(() => jest.useRealTimers());
@@ -14,7 +15,7 @@ afterEach(() => jest.useRealTimers());
 describe.each([
   ['View', View],
   ['ViewInfinite', ViewInfinite],
-])('%s', (_name, View) => {
+])('%s', (name, View) => {
   baselineComponent(View);
   describe('With Panel', () =>
     mountTest(() => <View activePanel="panel"><Panel id="panel" /></View>));
@@ -70,7 +71,7 @@ describe.each([
 
   describe('can swipeBack', () => {
     let nowMock: jest.SpyInstance;
-    const setupSwipeBack = () => {
+    const setupSwipeBack = (Wrapper: ComponentType = Fragment) => {
       const events = {
         onSwipeBack: jest.fn(),
         onTransition: jest.fn(),
@@ -78,12 +79,14 @@ describe.each([
         onSwipeBackCancel: jest.fn(),
       };
       const SwipeBack = (p: Partial<ViewProps>) => (
-        <ConfigProvider platform={IOS} isWebView>
-          <View activePanel="p2" history={['p1', 'p2']} {...events} {...p}>
-            <Panel id="p1" />
-            <Panel id="p2" />
-          </View>
-        </ConfigProvider>
+        <Wrapper>
+          <ConfigProvider platform={IOS} isWebView>
+            <View id="scroll" activePanel="p2" history={['p1', 'p2']} {...events} {...p}>
+              <Panel id="p1" />
+              <Panel id="p2" />
+            </View>
+          </ConfigProvider>
+        </Wrapper>
       );
       const h = render(<SwipeBack />);
       jest.runAllTimers();
@@ -132,12 +135,50 @@ describe.each([
     });
     it('recovers after swipeBack', () => {
       const { view, rerender, SwipeBack, ...events } = setupSwipeBack();
+      fireEvent.mouseMove(view, { clientX: window.innerWidth + 1, clientY: 100 });
+      fireEvent.mouseUp(view);
       expect(document.getElementById('p1')).toBeTruthy();
       expect(document.getElementById('p2')).toBeTruthy();
       rerender(<SwipeBack activePanel="p1" history={['p1']} />);
       expect(events.onTransition).toBeCalledTimes(1);
       expect(document.getElementById('p1')).toBeTruthy();
       expect(document.getElementById('p2')).toBeNull();
+    });
+    name === 'View' && it('restores scroll after swipeBack', () => {
+      let y = 101;
+      scrollsCache['scroll']['p1'] = 22;
+      const [MockScroll, scrollTo] = mockScrollContext(() => y);
+      const { view, rerender, SwipeBack } = setupSwipeBack(MockScroll);
+      fireEvent.mouseMove(view, { clientX: window.innerWidth + 1, clientY: 100 });
+      fireEvent.mouseUp(view);
+      rerender(<SwipeBack activePanel="p1" history={['p1']} />);
+      expect(scrollTo).toBeCalledWith(0, 22);
+    });
+  });
+
+  describe('scroll control', () => {
+    const panels = [<Panel id="p1" key="1" />, <Panel id="p2" key="2" />];
+    it('restores on back navigation', () => {
+      let y = 101;
+      const [MockScroll, scrollTo] = mockScrollContext(() => y);
+      const h = render(<MockScroll><View activePanel="p1">{panels}</View></MockScroll>);
+      // trigger scroll save
+      h.rerender(<MockScroll><View activePanel="p2">{panels}</View></MockScroll>);
+      h.rerender(<MockScroll><View activePanel="p1">{panels}</View></MockScroll>);
+      jest.runAllTimers();
+      expect(scrollTo).toBeCalledWith(0, y);
+    });
+    it('does nothing on forward navigation', () => {
+      let y = 101;
+      const [MockScroll, scrollTo] = mockScrollContext(() => y);
+      const h = render(<MockScroll><View activePanel="p2">{panels}</View></MockScroll>);
+      // trigger scroll save
+      h.rerender(<MockScroll><View activePanel="p1">{panels}</View></MockScroll>);
+      jest.runAllTimers();
+      scrollTo.mockReset();
+      h.rerender(<MockScroll><View activePanel="p2">{panels}</View></MockScroll>);
+      jest.runAllTimers();
+      expect(scrollTo).not.toBeCalled();
     });
   });
 });

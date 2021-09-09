@@ -43,7 +43,7 @@ type AnimationEventHandler = (e?: AnimationEvent) => void;
 
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
-let scrollsCache: ViewsScrolls = {};
+export let scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
