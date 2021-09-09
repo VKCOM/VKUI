@@ -45,11 +45,13 @@ export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent<HTMLElement>) 
     && tagName !== 'TEXTAREA'
     && (role === 'button' || role === 'link');
 
+  const isNativeAnchorEl = tagName === 'A' && el.hasAttribute('href');
+
   return isValidKeyboardEventTarget && (
     // trigger buttons on Space
     pressedKey(e) === KeyCode.SPACE && role === 'button'
-    // trigger links and buttons on Enter
-    // if this is NOT a native anchor element
-    || pressedKey(e) === KeyCode.ENTER && !(tagName === 'A' && el.hasAttribute('href'))
+    ||
+    // trigger non-native links and buttons on Enter
+    pressedKey(e) === KeyCode.ENTER && !isNativeAnchorEl
   );
 }
