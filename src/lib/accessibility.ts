@@ -29,6 +29,11 @@ export const ACCESSIBLE_KEYS: AccessibleKey[] = [
     keyCode: 9,
   },
 ];
+
+export function pressedKey(e: KeyboardEvent): KeyCode {
+  return ACCESSIBLE_KEYS.find(({ key, keyCode }) => key.includes(e.key) || keyCode === e.keyCode)?.code || null;
+}
+
 export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent<HTMLElement>) {
   const { target, key } = e;
   const el = target as HTMLElement;
