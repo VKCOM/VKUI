@@ -1,4 +1,4 @@
-import React, { AllHTMLAttributes, ElementType, ReactNode, useState } from 'react';
+import { AllHTMLAttributes, ElementType, FC, ReactNode, useState } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -23,7 +23,7 @@ interface FormFieldOwnProps extends
   disabled?: boolean;
 }
 
-const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
+export const FormField: FC<FormFieldOwnProps> = withAdaptivity(({
   Component,
   children,
   getRootRef,
@@ -78,5 +78,3 @@ const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
 FormField.defaultProps = {
   Component: 'div',
 };
-
-export default FormField;

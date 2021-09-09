@@ -1,7 +1,7 @@
 import { FunctionComponent, InputHTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import FormField, { FormFieldProps } from '../FormField/FormField';
+import { FormField, FormFieldProps } from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
