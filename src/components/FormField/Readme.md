@@ -1,4 +1,4 @@
-Компонент-оболочка для элементов форм (<a href="/#!/Input">Input</a>, <a href="/#!/Select">Select</a>, <a href="/#!/Textarea">Textarea</a> и другие).
+Компонент-оболочка для элементов форм ([Input](#/Input), [Select](#/Select), [Textarea](#/Textarea) и другие).
 
 ```jsx
 const CustomInput = () => {
