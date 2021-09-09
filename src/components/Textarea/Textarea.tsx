@@ -1,6 +1,6 @@
 import { TextareaHTMLAttributes, FC, memo } from 'react';
 import { classNames } from '../../lib/classNames';
-import FormField from '../FormField/FormField';
+import { FormField } from '../FormField/FormField';
 import { HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { getClassName } from '../../helpers/getClassName';

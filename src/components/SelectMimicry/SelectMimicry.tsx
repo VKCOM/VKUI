@@ -1,7 +1,7 @@
 import { FunctionComponent, HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon24Dropdown, Icon20Dropdown } from '@vkontakte/icons';
-import FormField from '../FormField/FormField';
+import { FormField } from '../FormField/FormField';
 import { HasAlign, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';

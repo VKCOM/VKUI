@@ -1,7 +1,7 @@
 import { FC, SelectHTMLAttributes, useState } from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
-import FormField from '../FormField/FormField';
+import { FormField } from '../FormField/FormField';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { getClassName } from '../../helpers/getClassName';

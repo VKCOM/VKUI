@@ -9,7 +9,7 @@ import {
   MouseEvent,
 } from 'react';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
-import FormField, { FormFieldProps } from '../FormField/FormField';
+import { FormField, FormFieldProps } from '../FormField/FormField';
 import { classNames } from '../../lib/classNames';
 import Chip, { ChipProps } from '../Chip/Chip';
 import { noop } from '../../lib/utils';
