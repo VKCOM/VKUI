@@ -47,14 +47,9 @@ export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, HasPlat
   scroll?: ScrollContextInterface;
 }
 
-export type AnimationEndCallback = (e?: AnimationEvent) => void;
-
 export interface RootState {
   activeView: string;
   prevView: string;
-  nextView: string;
-  isBack: boolean;
-  transition: boolean;
 }
 
 const Root: React.FC<RootProps & DOMProps> = ({
@@ -63,78 +58,63 @@ const Root: React.FC<RootProps & DOMProps> = ({
   window, document, scroll, nav,
   ...restProps
 }) => {
-  const [state, setState] = React.useState<RootState>({
-    activeView: _activeView,
-    prevView: null,
-    nextView: null,
-    isBack: undefined,
-    transition: false,
-  });
   const scrolls = React.useRef<Record<string, number>>({});
   const viewNodes = React.useRef<{ [id: string]: HTMLElement }>({});
+  const [{ prevView, activeView }, setState] = React.useState<RootState>({
+    activeView: _activeView,
+    prevView: null,
+  });
+
+  // derived state
+  const transition = !!prevView;
+  const views = (React.Children.toArray(children) as React.ReactElement[])
+    .filter((view) => [prevView, activeView].includes(getNavId(view.props, warn)));
+  const isBack = transition && getNavId(views[0].props, warn) === activeView;
 
   useIsomorphicLayoutEffect(() => {
     (document.activeElement as HTMLElement)?.blur();
-  }, [!!popout, _activeView]);
+  }, [!!popout, activeView]);
 
   // Нужен переход
   useIsomorphicLayoutEffect(() => {
-    const nextView = _activeView;
-    const prevView = state.activeView;
-
-    if (prevView === nextView) {
-      return;
+    if (_activeView !== activeView) {
+      // save scroll
+      scrolls.current[_activeView] = scroll.getScroll().y;
+      // start transition
+      setState({ activeView: _activeView, prevView: activeView });
     }
-
-    let pageYOffset = scroll.getScroll().y;
-    const firstLayerId = [].concat(children)
-      .map((view) => getNavId(view.props, warn))
-      .find((id) => id === state.activeView || id === _activeView);
-    const isBack = firstLayerId === _activeView;
-
-    scrolls.current[_activeView] = pageYOffset;
-    setState({
-      transition: true,
-      activeView: null,
-      nextView,
-      prevView,
-      isBack,
-    });
   }, [_activeView]);
 
   useIsomorphicLayoutEffect(() => {
-    const { nextView, prevView, isBack, activeView } = state;
-
     // Кончился переход
-    if (!state.transition) {
+    if (transition) {
+      // Начался переход
+      const setPanelScroll = (e: HTMLElement, scroll: number) => {
+        // eslint-disable-next-line no-restricted-properties
+        const pan: HTMLElement | null = e.querySelector('[data-vkui-active-panel=true]');
+        pan && (pan.scrollTop = scroll);
+      };
+
+      setPanelScroll(viewNodes.current[prevView], scrolls.current[prevView]);
+      if (isBack) {
+        setPanelScroll(viewNodes.current[activeView], scrolls.current[activeView]);
+      }
+    } else {
       scroll.scrollTo(0, isBack ? scrolls.current[activeView] : 0);
       onTransition && onTransition({ isBack, from: prevView, to: activeView });
-      return;
     }
-
-    // Начался переход
-    const setPanelScroll = (e: HTMLElement, scroll: number) => {
-      // eslint-disable-next-line no-restricted-properties
-      const pan: HTMLElement | null = e.querySelector('[data-vkui-active-panel=true]');
-      pan && (pan.scrollTop = scroll);
-    };
-
-    setPanelScroll(viewNodes.current[prevView], scrolls.current[prevView]);
-    if (isBack) {
-      setPanelScroll(viewNodes.current[nextView], scrolls.current[nextView]);
-    }
-  }, [state.transition]);
+  }, [transition]);
 
   const shouldDisableTransitionMotion = configProvider.transitionMotionEnabled === false || !splitCol.animate;
 
   const fallbackTransition = useTimeout(onAnimationEnd, platform === ANDROID || platform === VKCOM ? 300 : 600);
   React.useEffect(() => {
-    if (!state.transition) {
+    if (!transition) {
       fallbackTransition.clear();
       return;
     }
     shouldDisableTransitionMotion ? onAnimationEnd() : fallbackTransition.set();
-  }, [state.transition]);
+  }, [transition]);
 
   function onAnimationEnd(e?: React.AnimationEvent) {
     if (!e || [
@@ -143,21 +123,9 @@ const Root: React.FC<RootProps & DOMProps> = ({
       'vkui-root-ios-animation-hide-back',
       'vkui-root-ios-animation-show-forward',
     ].includes(e.animationName)) {
-      setState({
-        activeView: state.nextView,
-        prevView: null,
-        nextView: null,
-        transition: false,
-        isBack: undefined,
-      });
+      setState({ activeView, prevView: null });
     }
   };
-
-  const { transition, isBack, prevView, activeView, nextView } = state;
-
-  const Views = React.Children.toArray(children).filter((view: React.ReactElement) => {
-    return [state.nextView, state.prevView, state.activeView].includes(getNavId(view.props, warn));
-  });
 
   const baseClassName = getClassName('Root', platform);
   const disableAnimation = shouldDisableTransitionMotion;
@@ -167,20 +135,20 @@ const Root: React.FC<RootProps & DOMProps> = ({
       'Root--transition': !disableAnimation && transition,
       'Root--no-motion': disableAnimation,
     })}>
-      {Views.map((view: React.ReactElement) => {
+      {views.map((view) => {
         const viewId = getNavId(view.props, warn);
-        const isTransitionTarget = transition && viewId === (isBack ? prevView : nextView);
+        const isTransitionTarget = transition && viewId === (isBack ? prevView : activeView);
         return (
           <div
             key={viewId}
             ref={(e) => viewNodes.current[viewId] = e}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : null}
             vkuiClass={classNames('Root__view', {
-              'Root__view--hide-back': viewId === prevView && isBack,
-              'Root__view--hide-forward': viewId === prevView && !isBack,
-              'Root__view--show-back': viewId === nextView && isBack,
-              'Root__view--show-forward': viewId === nextView && !isBack,
-              'Root__view--active': viewId === activeView,
+              'Root__view--hide-back': transition && viewId === prevView && isBack,
+              'Root__view--hide-forward': transition && viewId === prevView && !isBack,
+              'Root__view--show-back': transition && viewId === activeView && isBack,
+              'Root__view--show-forward': transition && viewId === activeView && !isBack,
+              'Root__view--active': !transition && viewId === activeView,
             })}
           >{view}</div>
         );
