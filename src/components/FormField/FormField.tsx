@@ -24,7 +24,7 @@ interface FormFieldOwnProps extends
 }
 
 export const FormField: FC<FormFieldOwnProps> = withAdaptivity(({
-  Component,
+  Component = 'div',
   children,
   getRootRef,
   after,
@@ -74,7 +74,3 @@ export const FormField: FC<FormFieldOwnProps> = withAdaptivity(({
 }, {
   sizeY: true,
 });
-
-FormField.defaultProps = {
-  Component: 'div',
-};
