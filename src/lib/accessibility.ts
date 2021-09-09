@@ -35,8 +35,7 @@ export function pressedKey(e: KeyboardEvent): KeyCode {
 }
 
 export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent<HTMLElement>) {
-  const { target, key } = e;
-  const el = target as HTMLElement;
+  const el = e.target as HTMLElement;
   const { tagName } = el;
 
   const role = el.getAttribute('role');
@@ -48,9 +47,9 @@ export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent<HTMLElement>) 
 
   return isValidKeyboardEventTarget && (
     // trigger buttons on Space
-    (key === ' ' || key === 'Spacebar') && role === 'button'
+    pressedKey(e) === KeyCode.SPACE && role === 'button'
     // trigger links and buttons on Enter
     // if this is NOT a native anchor element
-    || !(tagName === 'A' && el.hasAttribute('href')) && key === 'Enter'
+    || pressedKey(e) === KeyCode.ENTER && !(tagName === 'A' && el.hasAttribute('href'))
   );
 }
