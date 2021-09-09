@@ -1,4 +1,4 @@
-import { KeyboardEvent } from 'react';
+import { KeyboardEvent as ReactKeyboardEvent } from 'react';
 
 export enum KeyCode {
   ENTER = 'Enter',
@@ -34,7 +34,7 @@ export function pressedKey(e: KeyboardEvent): KeyCode {
   return ACCESSIBLE_KEYS.find(({ key, keyCode }) => key.includes(e.key) || keyCode === e.keyCode)?.code || null;
 }
 
-export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent<HTMLElement>) {
+export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent | ReactKeyboardEvent<HTMLElement>) {
   const el = e.target as HTMLElement;
   const { tagName } = el;
 
@@ -46,12 +46,13 @@ export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent<HTMLElement>) 
     && (role === 'button' || role === 'link');
 
   const isNativeAnchorEl = tagName === 'A' && el.hasAttribute('href');
+  const _pressedKey = pressedKey(e as KeyboardEvent);
 
   return isValidKeyboardEventTarget && (
     // trigger buttons on Space
-    pressedKey(e) === KeyCode.SPACE && role === 'button'
+    _pressedKey === KeyCode.SPACE && role === 'button'
     ||
     // trigger non-native links and buttons on Enter
-    pressedKey(e) === KeyCode.ENTER && !isNativeAnchorEl
+    _pressedKey === KeyCode.ENTER && !isNativeAnchorEl
   );
 }
