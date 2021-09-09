@@ -156,6 +156,8 @@ export { default as FormLayout } from './components/FormLayout/FormLayout';
 export type { FormLayoutProps } from './components/FormLayout/FormLayout';
 export { FormItem } from './components/FormItem/FormItem';
 export type { FormItemProps } from './components/FormItem/FormItem';
+export { FormField } from './components/FormField/FormField';
+export type { FormFieldProps } from './components/FormField/FormField';
 export { default as FormLayoutGroup } from './components/FormLayoutGroup/FormLayoutGroup';
 export type { FormLayoutGroupProps } from './components/FormLayoutGroup/FormLayoutGroup';
 export { FormStatus } from './components/FormStatus/FormStatus';
