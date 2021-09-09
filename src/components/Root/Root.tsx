@@ -2,23 +2,21 @@ import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { ANDROID, VKCOM } from '../../lib/platform';
-import { withPlatform } from '../../hoc/withPlatform';
-import { withContext } from '../../hoc/withContext';
-import { HasPlatform } from '../../types';
-import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
-import { SplitColContextProps, SplitColContext } from '../SplitCol/SplitCol';
+import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
+import { SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { DOMProps, withDOM } from '../../lib/dom';
-import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import { ScrollContext } from '../AppRoot/ScrollContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { useDOM } from '../../lib/dom';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useTimeout } from '../../hooks/useTimeout';
+import { usePlatform } from '../../hooks/usePlatform';
 import './Root.css';
 
 const warn = warnOnce('Root');
 
-export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, HasPlatform, NavIdProps {
+export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, NavIdProps {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**
@@ -33,18 +31,6 @@ export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, HasPlat
    * Свойство для отрисовки `ModalRoot`.
    */
   modal?: React.ReactNode;
-  /**
-   * @ignore
-   */
-  splitCol?: SplitColContextProps;
-  /**
-   * @ignore
-   */
-  configProvider?: ConfigProviderContextInterface;
-  /**
-   * @ignore
-   */
-  scroll?: ScrollContextInterface;
 }
 
 export interface RootState {
@@ -52,12 +38,17 @@ export interface RootState {
   prevView: string;
 }
 
-const Root: React.FC<RootProps & DOMProps> = ({
-  popout = null, modal, platform, children,
-  splitCol, configProvider, activeView: _activeView, onTransition,
-  window, document, scroll, nav,
+const Root: React.FC<RootProps> = ({
+  popout = null, modal, children,
+  activeView: _activeView, onTransition,
+  nav,
   ...restProps
 }) => {
+  const scroll = React.useContext(ScrollContext);
+  const { transitionMotionEnabled = true } = React.useContext(ConfigProviderContext);
+  const splitCol = React.useContext(SplitColContext);
+  const platform = usePlatform();
+  const { document } = useDOM();
   const scrolls = React.useRef<Record<string, number>>({});
   const viewNodes = React.useRef<{ [id: string]: HTMLElement }>({});
   const [{ prevView, activeView }, setState] = React.useState<RootState>({
@@ -105,7 +96,7 @@ const Root: React.FC<RootProps & DOMProps> = ({
     }
   }, [transition]);
 
-  const shouldDisableTransitionMotion = configProvider.transitionMotionEnabled === false || !splitCol.animate;
+  const shouldDisableTransitionMotion = !transitionMotionEnabled || !splitCol.animate;
 
   const fallbackTransition = useTimeout(onAnimationEnd, platform === ANDROID || platform === VKCOM ? 300 : 600);
   React.useEffect(() => {
@@ -161,8 +152,4 @@ const Root: React.FC<RootProps & DOMProps> = ({
   );
 };
 
-export default withContext(withContext(withContext(
-  withPlatform(withDOM<RootProps>(Root)),
-  SplitColContext,
-  'splitCol',
-), ConfigProviderContext, 'configProvider'), ScrollContext, 'scroll');
+export default Root;
