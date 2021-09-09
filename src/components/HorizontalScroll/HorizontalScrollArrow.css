@@ -11,6 +11,9 @@
   background-color: transparent;
   transition: opacity .15s;
   transition-timing-function: var(--android-easing);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .HorizontalScroll:hover .HorizontalScrollArrow,
