@@ -46,13 +46,13 @@ export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent | ReactKeyboar
     && (role === 'button' || role === 'link');
 
   const isNativeAnchorEl = tagName === 'A' && el.hasAttribute('href');
-  const _pressedKey = pressedKey(e as KeyboardEvent);
+  const keyPressed = pressedKey(e as KeyboardEvent);
 
   return isValidKeyboardEventTarget && (
     // trigger buttons on Space
-    _pressedKey === Keys.SPACE && role === 'button'
+    keyPressed === Keys.SPACE && role === 'button'
     ||
     // trigger non-native links and buttons on Enter
-    _pressedKey === Keys.ENTER && !isNativeAnchorEl
+    keyPressed === Keys.ENTER && !isNativeAnchorEl
   );
 }
