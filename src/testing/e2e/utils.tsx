@@ -131,7 +131,7 @@ export function describeScreenshotFuzz<Props>(
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>
               <AdaptivityProvider {...adaptivityProps}>
-                <div style={{ width, position: 'absolute', height: 'auto' }}>
+                <div style={{ width, maxWidth: isVkCom ? '100%' : 'initial', position: 'absolute', height: 'auto' }}>
                   <Wrapper>
                     {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
                       <Fragment key={i}>
