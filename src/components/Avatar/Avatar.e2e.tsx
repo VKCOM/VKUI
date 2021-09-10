@@ -27,7 +27,7 @@ describe('Avatar', () => {
       src: [base64Image],
     },
     {
-      style: [{ backgroundImage: `url('${base64Image}')` }],
+      style: [{ background: 'pink' }],
     },
   ]);
 });
