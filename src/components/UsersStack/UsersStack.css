@@ -43,28 +43,28 @@
   margin-left: 4px;
 }
 
-.UsersStack:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
+.UsersStack .UsersStack__photo + .UsersStack__photo {
   margin-left: -2px;
 }
 
-.UsersStack--size-xs:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
+.UsersStack--size-xs .UsersStack__photo + .UsersStack__photo {
   margin-left: -1px;
   clip-path: url(#users_stack_mask_16_left);
 }
 
-.UsersStack--size-s:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
+.UsersStack--size-s .UsersStack__photo + .UsersStack__photo {
   clip-path: url(#users_stack_mask_24_left);
 }
 
-.UsersStack--size-m:not(.UsersStack--simple) .UsersStack__photo + .UsersStack__photo {
+.UsersStack--size-m .UsersStack__photo + .UsersStack__photo {
   clip-path: url(#users_stack_mask_32_left);
 }
 
-.UsersStack--size-m.UsersStack--others:not(.UsersStack--simple) .UsersStack__photo {
+.UsersStack--size-m.UsersStack--others .UsersStack__photo {
   clip-path: url(#users_stack_mask_32_right);
 }
 
-.UsersStack--size-m.UsersStack--others:not(.UsersStack--simple) .UsersStack__photo:last-child {
+.UsersStack--size-m.UsersStack--others .UsersStack__photo:last-child {
   clip-path: none;
 }
 

@@ -1,14 +1,13 @@
 import React, { FC, HTMLAttributes } from 'react';
 import { getClassName } from '../../helpers/getClassName';
-import { useBrowserInfo } from '../../hooks/useBrowserInfo';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
-import { System } from '../../lib/browser';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import Caption from '../Typography/Caption/Caption';
 import Subhead from '../Typography/Subhead/Subhead';
 import { createMasks } from './masks';
+import { useDOM } from '../../lib/dom';
 import './UsersStack.css';
 
 export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
@@ -32,23 +31,18 @@ export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
-  const { system, systemVersion } = useBrowserInfo();
   const platform = usePlatform();
   const { photos, visibleCount, size, layout, children, ...restProps } = props;
+  const { document } = useDOM();
 
   useIsomorphicLayoutEffect(() => {
-    createMasks();
-  }, []);
+    createMasks(document);
+  }, [document]);
 
   const othersCount = Math.max(0, photos.length - visibleCount);
   const canShowOthers = othersCount > 0 && size === 'm';
 
   const photosShown = photos.slice(0, visibleCount);
-
-  let canUseClipPath = true;
-  if (system === System.IOS) {
-    canUseClipPath = systemVersion && systemVersion.major >= 12;
-  }
 
   return (
     <div
@@ -60,7 +54,6 @@ const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
           `UsersStack--l-${layout}`,
           {
             'UsersStack--others': canShowOthers,
-            'UsersStack--simple': !canUseClipPath,
           },
         )
       }
