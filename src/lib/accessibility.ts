@@ -4,6 +4,7 @@ export enum Keys {
   ENTER = 'Enter',
   SPACE = 'Space',
   TAB = 'Tab',
+  ESCAPE = 'Escape',
 }
 
 interface AccessibleKey {
@@ -27,6 +28,11 @@ const ACCESSIBLE_KEYS: AccessibleKey[] = [
     code: Keys.TAB,
     key: ['Tab'],
     keyCode: 9,
+  },
+  {
+    code: Keys.ESCAPE,
+    key: ['Escape'],
+    keyCode: 27,
   },
 ];
 
