@@ -9,9 +9,7 @@ export function useKeyboardInputTracker(): boolean {
   const [isKeyboardInputActive, toggleKeyboardInput] = useState<boolean>(true);
 
   const enableKeyboardInput = useCallback((e: KeyboardEvent) => {
-    if (pressedKey(e) === Keys.TAB) {
-      toggleKeyboardInput(true);
-    }
+    toggleKeyboardInput(pressedKey(e) === Keys.TAB);
   }, []);
 
   const disableKeyboardInput = useCallback(() => {
