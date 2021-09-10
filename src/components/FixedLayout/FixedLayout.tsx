@@ -175,7 +175,8 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
         ref={this.getRef}
         vkuiClass={classNames(getClassName('FixedLayout', platform), {
           'FixedLayout--filled': filled,
-        }, `FixedLayout--${vertical}`)}
+          [`FixedLayout--${vertical}`]: !!vertical,
+        })}
         style={{ ...style, ...this.state }}
       >
         <div vkuiClass="FixedLayout__in" ref={getRef}>{children}</div>
