@@ -135,7 +135,7 @@ export function describeScreenshotFuzz<Props>(
                   <Wrapper>
                     {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
                       <Fragment key={i}>
-                        <div style={{ wordWrap: 'break-word' }}>{prettyProps(props)}</div>
+                        <div>{prettyProps(props)}</div>
                         <div>
                           <AdaptiveComponent {...props} />
                         </div>
