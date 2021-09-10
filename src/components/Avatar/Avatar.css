@@ -3,6 +3,7 @@
   box-sizing: border-box;
   color: var(--placeholder_icon_background);
   background: currentColor;
+  background-size: cover;
   position: relative;
 }
 
