@@ -119,7 +119,7 @@ export function describeScreenshotFuzz<Props>(
       const isVkCom = platform === 'vkcom';
       const width: number | 'auto' = adaptivity.viewWidth
         ? getAdaptivePxWidth(adaptivity.viewWidth)
-        : 320;
+        : isVkCom ? 'auto' : 320;
       const adaptivityProps = Object.assign(
         isVkCom ? { sizeX: SizeType.COMPACT, sizeY: SizeType.COMPACT } : {},
         adaptivity);
@@ -131,11 +131,11 @@ export function describeScreenshotFuzz<Props>(
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>
               <AdaptivityProvider {...adaptivityProps}>
-                <div style={{ width: isVkCom ? 'auto' : width, position: 'absolute', height: 'auto' }}>
+                <div style={{ width, position: 'absolute', height: 'auto' }}>
                   <Wrapper>
                     {multiCartesian(propSets, { adaptive: !isVkCom }).map((props, i) => (
                       <Fragment key={i}>
-                        <div style={{ maxWidth: width, overflow: 'hidden' }}>{prettyProps(props)}</div>
+                        <div>{prettyProps(props)}</div>
                         <div>
                           <AdaptiveComponent {...props} />
                         </div>
