@@ -12,7 +12,7 @@ interface AccessibleKey {
   keyCode: number;
 }
 
-export const ACCESSIBLE_KEYS: AccessibleKey[] = [
+const ACCESSIBLE_KEYS: AccessibleKey[] = [
   {
     code: Keys.ENTER,
     key: ['Enter'],
