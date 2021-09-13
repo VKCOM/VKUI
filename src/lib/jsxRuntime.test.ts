@@ -1,6 +1,7 @@
 import { HTMLAttributes, Attributes } from 'react';
 import { createScopedElement } from './jsxRuntime';
 import { __controller } from './classScopingMode';
+import { classNames } from './classNames';
 
 describe(createScopedElement, () => {
   beforeEach(() => __controller._noConflict = false);
@@ -12,7 +13,7 @@ describe(createScopedElement, () => {
   describe('prefixes vkuiClass', () => {
     const prefixed = new Set(['A', 'B', 'vkuiA', 'vkuiB']);
     it('from array', () =>
-      expect(classSet(processProps({ vkuiClass: ['A', 'B'] }))).toEqual(prefixed));
+      expect(classSet(processProps({ vkuiClass: classNames('A', 'B') }))).toEqual(prefixed));
     it('from string', () =>
       expect(classSet(processProps({ vkuiClass: 'A B' }))).toEqual(prefixed));
   });
@@ -25,6 +26,8 @@ describe(createScopedElement, () => {
       expect(processProps({})).not.toHaveProperty('className'));
     it('accepts falsy vkuiClass', () =>
       expect(processProps({ vkuiClass: null })).not.toHaveProperty('className'));
+    it('accepts empty vkuiClass', () =>
+      expect(processProps({ vkuiClass: '' })).not.toHaveProperty('className'));
     it('does not require props', () =>
       expect(createScopedElement('div').props).not.toHaveProperty('className'));
   });
@@ -32,14 +35,14 @@ describe(createScopedElement, () => {
     it('passes className without prefixing without vkuiClass', () =>
       expect(processProps({ className: 'B C' }).className).toBe('B C'));
     it('merges className with vkuiClass', () =>
-      expect(classSet(processProps({ vkuiClass: ['S'], className: 'B C' }))).toEqual(new Set(['vkuiS', 'S', 'B', 'C'])));
+      expect(classSet(processProps({ vkuiClass: classNames('S'), className: 'B C' }))).toEqual(new Set(['vkuiS', 'S', 'B', 'C'])));
   });
   it('legacy classes can be controlled', () => {
-    // can be diabled...
+    // can be disabled...
     __controller._noConflict = true;
-    expect(classSet(processProps({ vkuiClass: ['A', 'B'] }))).toEqual(new Set(['vkuiA', 'vkuiB']));
+    expect(classSet(processProps({ vkuiClass: classNames('A', 'B') }))).toEqual(new Set(['vkuiA', 'vkuiB']));
     // ...and enabled back again
     __controller._noConflict = false;
-    expect(classSet(processProps({ vkuiClass: ['A', 'B'] }))).toEqual(new Set(['vkuiA', 'vkuiB', 'A', 'B']));
+    expect(classSet(processProps({ vkuiClass: classNames('A', 'B') }))).toEqual(new Set(['vkuiA', 'vkuiB', 'A', 'B']));
   });
 });

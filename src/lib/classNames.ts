@@ -1,38 +1,62 @@
-export interface ObjectClassNames {
-  [index: string]: boolean | undefined | null;
-}
+export type ObjectClassNames = Record<string, boolean | undefined | null>;
 
 export type ClassName = number | string | ObjectClassNames | false | null | undefined;
 
-export function classNames(...classnames: ClassName[]): string | string[];
-export function classNames() {
-  let result: string[] = [];
+const stringifyClassName = (mix: ClassName): string => {
+  const type = typeof mix;
 
-  for (let i = 0; i < arguments.length; i++) {
-    const item = arguments[i];
-    if (!item) {
-      continue;
-    }
-    switch (typeof item) {
-      case 'string':
-        result.push(item);
-        break;
-      case 'object':
-        for (let key in item) {
-          if (item[key]) {
-            result.push(key);
+  let result = '';
+
+  if (type === 'string' || type === 'number') {
+    result += mix;
+  } else if (type === 'object') {
+    if (Array.isArray(mix)) {
+      let part;
+
+      for (let key = 0; key < mix.length; ++key) {
+        if (mix[key]) {
+          if (part = stringifyClassName(mix[key])) {
+            result && (result += ' ');
+            result += part;
           }
         }
-        break;
-      default:
-        result.push(`${item}`);
+      }
+    } else {
+      const record = mix as ObjectClassNames;
+
+      for (const key in record) {
+        if (record[key]) {
+          result && (result += ' ');
+          result += key;
+        }
+      }
     }
   }
 
-  return result.length > 1 ? result : result[0] || '';
+  return result;
+};
+
+export function classNames(...classnames: ClassName[]): string;
+export function classNames() {
+  const length = arguments.length;
+
+  let result = '';
+
+  let part;
+
+  for (let i = 0; i < length; ++i) {
+    if (part = arguments[i]) {
+      if (part = stringifyClassName(part)) {
+        result && (result += ' ');
+        result += part;
+      }
+    }
+  }
+
+  return result;
 }
 
-export function classNamesString(...args: ClassName[]) {
-  const res = classNames(...args);
-  return typeof res === 'string' ? res : res.join(' ');
-}
+/**
+ * @deprecated use `classNames` instead
+ */
+export const classNamesString = classNames;
