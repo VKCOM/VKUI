@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
 import { ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
-import { ANDROID, IOS, VKCOM } from '../../lib/platform';
+import { IOS } from '../../lib/platform';
 import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
 import { ActionSheetDropdown } from './ActionSheetDropdown';
 import { hasReactNode } from '../../lib/utils';
@@ -10,6 +10,7 @@ import Caption from '../Typography/Caption/Caption';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
 import './ActionSheet.css';
 
 export type PopupDirectionFunction = (elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom';
@@ -49,6 +50,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
 
   const [_closeAction, setCloseAction] = React.useState<VoidFunction>();
   const afterClose = () => {
+    restProps.onClose();
     _closeAction && _closeAction();
     setCloseAction(undefined);
   };
@@ -56,10 +58,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
-  const fallbackTransitionFinish = useTimeout(() => {
-    restProps.onClose();
-    afterClose();
-  }, platform === ANDROID || platform === VKCOM ? 200 : 300);
+  const fallbackTransitionFinish = useTimeout(afterClose, platform === IOS ? 300 : 200);
   React.useEffect(() => {
     if (closing) {
       if (isDesktop) {
@@ -72,7 +71,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     }
   }, [closing]);
 
-  const onItemClick: ItemClickHandler = (action, autoclose) => (event) => {
+  const onItemClick = React.useCallback<ItemClickHandler>((action, autoclose) => (event) => {
     event.persist();
 
     if (autoclose) {
@@ -81,7 +80,8 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     } else {
       action && action(event);
     }
-  };
+  }, []);
+  const contextValue = useObjectMemo({ onItemClick, isDesktop });
 
   const DropdownComponent = isDesktop
     ? ActionSheetDropdownDesktop
@@ -97,12 +97,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
       hasMask={!isDesktop}
       fixed={!isDesktop}
     >
-      <ActionSheetContext.Provider
-        value={{
-          onItemClick,
-          isDesktop,
-        }}
-      >
+      <ActionSheetContext.Provider value={contextValue}>
         <DropdownComponent
           closing={closing}
           onClose={onClose}
