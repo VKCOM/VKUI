@@ -24,7 +24,7 @@ const coordY = (e: VKUITouchEvent): number => {
 };
 
 // eslint-disable-next-line no-restricted-globals
-const touchEnabled: boolean = canUseDOM && 'ontouchstart' in window;
+const touchEnabled = () => canUseDOM && 'ontouchstart' in window;
 
 /*
  * Возвращает массив поддерживаемых событий
@@ -32,7 +32,7 @@ const touchEnabled: boolean = canUseDOM && 'ontouchstart' in window;
  * Если нет, используем события мыши
  */
 function getSupportedEvents(): string[] {
-  if (touchEnabled) {
+  if (touchEnabled()) {
     return ['touchstart', 'touchmove', 'touchend', 'touchcancel'];
   }
 
