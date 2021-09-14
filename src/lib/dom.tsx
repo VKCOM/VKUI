@@ -15,19 +15,17 @@ export interface DOMContextInterface {
 
 export type DOMProps = DOMContextInterface;
 
+/* eslint-disable no-restricted-globals */
 export const getDOM = () => ({
   window: canUseDOM ? window : null,
   document: canUseDOM ? document : null,
 });
+/* eslint-enable no-restricted-globals */
 
 export const DOMContext = React.createContext<DOMContextInterface>(getDOM());
 
 export const useDOM = () => {
-  const dom = React.useContext(DOMContext);
-  return {
-    window: dom.window || (canUseDOM ? window : null),
-    document: dom.document || (canUseDOM ? document : null),
-  };
+  return React.useContext(DOMContext);
 };
 
 export function withDOM<Props>(Component: React.ComponentType<Props & DOMProps>) {

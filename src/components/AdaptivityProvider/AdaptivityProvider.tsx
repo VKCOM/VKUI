@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
-import { canUseDOM, useDOM } from '../../lib/dom';
+import { useDOM } from '../../lib/dom';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface {
   children?: React.ReactNode;
@@ -60,10 +60,6 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     </AdaptivityContext.Provider>
   );
 }
-
-AdaptivityProvider.defaultProps = {
-  window: canUseDOM && window,
-};
 
 function calculateAdaptivity(windowWidth: number, windowHeight: number, props: AdaptivityProviderProps) {
   let viewWidth = ViewWidth.SMALL_MOBILE;

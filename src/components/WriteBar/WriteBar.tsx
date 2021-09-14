@@ -2,6 +2,7 @@ import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useExternRef } from '../../hooks/useExternRef';
 import { hasReactNode, isFunction } from '../../lib/utils';
+import { useDOM } from '../../lib/dom';
 import { getClassName } from '../../helpers/getClassName';
 import { HasRef, HasRootRef } from '../../types';
 import './WriteBar.css';
@@ -48,6 +49,7 @@ export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
 
   const isControlledOutside = value != null;
 
+  const { window } = useDOM();
   const textareaRef = useExternRef(getRef);
   const textareaMinHeightRef = React.useRef<number | null>(null);
 

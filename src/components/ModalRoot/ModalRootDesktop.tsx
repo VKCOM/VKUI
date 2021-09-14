@@ -85,14 +85,6 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
   activeTransitions: number;
 
-  get document(): Document {
-    return this.props.document;
-  }
-
-  get window(): Window {
-    return this.props.window;
-  }
-
   get modals() {
     return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
@@ -124,11 +116,11 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
   componentDidMount() {
     this.initActiveModal();
-    document.addEventListener('keydown', this.handleKeyDownEsc);
+    this.props.document.addEventListener('keydown', this.handleKeyDownEsc);
   }
 
   componentWillUnmount = () => {
-    document.removeEventListener('keydown', this.handleKeyDownEsc);
+    this.props.document.removeEventListener('keydown', this.handleKeyDownEsc);
   };
 
   componentDidUpdate(prevProps: ModalRootProps, prevState: ModalRootState) {

@@ -25,6 +25,7 @@
     "@typescript-eslint/no-unused-vars": ["error", {
       "ignoreRestSiblings": true
     }],
+    "no-restricted-globals": ["error", "window", "document"],
     "no-restricted-imports": ["error", {
       "paths": [
         // prevent absolute imports from src subfolders like `import { ... } from "lib"`
@@ -99,7 +100,8 @@
         "jest": true
       },
       "rules": {
-        "no-restricted-properties": "off"
+        "no-restricted-properties": "off",
+        "no-restricted-globals": "off"
       }
     },
     {

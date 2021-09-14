@@ -43,7 +43,7 @@ type AnimationEventHandler = (e?: AnimationEvent) => void;
 
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
-let scrollsCache: ViewsScrolls = {};
+export let scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
@@ -344,8 +344,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
   swipingBackTransitionEndHandler = (e?: TransitionEvent): void => {
     // indexOf because of vendor prefixes in old browsers
-    const target = e.target as HTMLElement;
-    if (e.propertyName.includes('transform') && target === this.pickPanel(this.state.swipeBackNextPanel)) {
+    if (!e || e?.propertyName.includes('transform') && e?.target === this.pickPanel(this.state.swipeBackNextPanel)) {
       switch (this.state.swipeBackResult) {
         case SwipeBackResults.fail:
           this.onSwipeBackCancel();

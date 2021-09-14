@@ -36,7 +36,8 @@ function resolveInsets(e: BridgeEvent): Insets | null {
 vkBridge.subscribe((e: BridgeEvent) => {
   const insets = resolveInsets(e);
   if (insets) {
-    const htmlElement = window.document.documentElement;
+    // eslint-disable-next-line no-restricted-globals
+    const htmlElement = document.documentElement;
     for (let key in insets) {
       if (insets.hasOwnProperty(key) && (insets[key as keyof Insets] > 0 || key === 'bottom')) {
         htmlElement.style.setProperty(`--safe-area-inset-${key}`, `${insets[key as keyof Insets]}px`);
