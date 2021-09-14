@@ -19,14 +19,6 @@
   position: fixed;
 }
 
-.PopoutWrapper--masked .PopoutWrapper__overlay {
-  background: rgba(0, 0, 0, .4);
-}
-
-.PopoutWrapper--closing .PopoutWrapper__overlay {
-  opacity: 0;
-}
-
 .PopoutWrapper__overlay {
   position: fixed;
   left: 0;
@@ -34,6 +26,16 @@
   width: 100%;
   height: 100%;
   opacity: 1;
+  animation: vkui-animation-full-fade-in .2s ease;
+}
+
+.PopoutWrapper--closing .PopoutWrapper__overlay {
+  opacity: 0;
+  transition: opacity .2s var(--android-easing);
+}
+
+.PopoutWrapper--masked .PopoutWrapper__overlay {
+  background: rgba(0, 0, 0, .4);
 }
 
 .PopoutWrapper--fixed .PopoutWrapper__overlay {
@@ -89,25 +91,11 @@
  */
 
 .PopoutWrapper--ios .PopoutWrapper__overlay {
-  animation: vkui-animation-full-fade-in .3s ease;
+  animation-duration: .3s;
 }
 
 .PopoutWrapper--ios.PopoutWrapper--closing .PopoutWrapper__overlay {
   transition: opacity .3s var(--ios-easing);
-}
-
-/**
- * Android version
- */
-
-.PopoutWrapper--android .PopoutWrapper__overlay,
-.PopoutWrapper--vkcom .PopoutWrapper__overlay {
-  animation: vkui-animation-full-fade-in .2s ease;
-}
-
-.PopoutWrapper--android.PopoutWrapper--closing .PopoutWrapper__overlay,
-.PopoutWrapper--vkcom.PopoutWrapper--closing .PopoutWrapper__overlay {
-  transition: opacity .2s var(--android-easing);
 }
 
 @keyframes vkui-animation-full-fade-in {
