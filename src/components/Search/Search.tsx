@@ -64,7 +64,7 @@ const Search: FC<SearchProps> = ({
 
   const onCancel = () => {
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
     nativeInputValueSetter.call(inputRef.current, '');
 
     const ev2 = new Event('input', { bubbles: true });

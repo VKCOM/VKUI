@@ -21,8 +21,8 @@ const coordY = (e: VKUITouchEvent): number => {
   return e.changedTouches && e.changedTouches[0].clientY;
 };
 
-const isClient: boolean = typeof window !== 'undefined';
-const touchEnabled: boolean = isClient && 'ontouchstart' in window;
+// eslint-disable-next-line no-restricted-globals
+const touchEnabled: boolean = typeof window !== 'undefined' && 'ontouchstart' in window;
 
 /*
  * Возвращает массив поддерживаемых событий

@@ -625,7 +625,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
       clearTimeout(modalState.contentScrollStopTimeout);
 
-      modalState.contentScrollStopTimeout = window.setTimeout(() => {
+      modalState.contentScrollStopTimeout = setTimeout(() => {
         if (modalState.contentScrolled) {
           modalState.contentScrolled = false;
         }

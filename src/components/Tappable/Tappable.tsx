@@ -70,8 +70,8 @@ export interface RootComponentProps extends TouchProps {
 }
 
 export interface StorageItem {
-  activeTimeout: number;
-  timeout?: number;
+  activeTimeout: ReturnType<typeof setTimeout>;
+  timeout?: ReturnType<typeof setTimeout>;
   stop(): void;
 }
 
@@ -125,9 +125,9 @@ class Tappable extends Component<TappableProps, TappableState> {
 
   container: HTMLElement;
 
-  timeout: number;
+  timeout: ReturnType<typeof setTimeout>;
 
-  wavesTimeout: number;
+  wavesTimeout: ReturnType<typeof setTimeout>;
 
   static defaultProps = {
     stopPropagation: false,
@@ -180,7 +180,7 @@ class Tappable extends Component<TappableProps, TappableState> {
 
       storage[this.id] = {
         stop: this.stop,
-        activeTimeout: window.setTimeout(this.start, ACTIVE_DELAY),
+        activeTimeout: setTimeout(this.start, ACTIVE_DELAY),
       };
     }
   };
@@ -215,7 +215,7 @@ class Tappable extends Component<TappableProps, TappableState> {
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = window.setTimeout(this.stop, this.props.activeEffectDelay - now + this.state.ts);
+        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - now + this.state.ts);
         const store = this.getStorage();
 
         if (store) {
@@ -226,7 +226,7 @@ class Tappable extends Component<TappableProps, TappableState> {
       // Очень короткий тап, включаем подсветку
       this.start();
 
-      const timeout = window.setTimeout(this.stop, this.props.activeEffectDelay);
+      const timeout = setTimeout(this.stop, this.props.activeEffectDelay);
 
       if (this.getStorage()) {
         clearTimeout(this.getStorage().activeTimeout);
@@ -261,7 +261,7 @@ class Tappable extends Component<TappableProps, TappableState> {
         };
       });
 
-      this.wavesTimeout = window.setTimeout(() => {
+      this.wavesTimeout = setTimeout(() => {
         this.setState((state: TappableState): TappableState => {
           let clicks = { ...state.clicks };
           delete clicks[key];
