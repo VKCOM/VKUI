@@ -1,3 +1,5 @@
+import { canUseDOM } from '@vkontakte/vkjs';
+
 export interface VKUITouchEvent extends MouseEvent, TouchEvent {}
 export type VKUITouchEventHander = (e: VKUITouchEvent) => void;
 
@@ -22,7 +24,7 @@ const coordY = (e: VKUITouchEvent): number => {
 };
 
 // eslint-disable-next-line no-restricted-globals
-const touchEnabled: boolean = typeof window !== 'undefined' && 'ontouchstart' in window;
+const touchEnabled: boolean = canUseDOM && 'ontouchstart' in window;
 
 /*
  * Возвращает массив поддерживаемых событий
