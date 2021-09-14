@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import * as React from 'react';
 import {
   AdaptivityContext,
   SizeType,
@@ -20,7 +20,7 @@ interface Config {
 
 export function withAdaptivity<T>(TargetComponent: T, config: Config): T {
   function AdaptivityConsumer(props: AdaptivityProps) {
-    const context = useContext(AdaptivityContext);
+    const context = React.useContext(AdaptivityContext);
     let update = false;
 
     if (props.sizeX || props.sizeY) {

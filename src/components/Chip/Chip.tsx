@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode, useCallback, MouseEvent } from 'react';
+import * as React from 'react';
 import { Icon16Cancel } from '@vkontakte/icons';
 import { getTitleFromChildren, hasReactNode, noop } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
@@ -8,17 +8,17 @@ import './Chip.css';
 
 type ChipValue = string | number;
 
-export interface ChipProps extends HTMLAttributes<HTMLDivElement> {
+export interface ChipProps extends React.HTMLAttributes<HTMLDivElement> {
   value: ChipValue;
   option?: { value?: ChipValue };
-  onRemove?: (event?: MouseEvent, value?: ChipValue) => void;
+  onRemove?: (event?: React.MouseEvent, value?: ChipValue) => void;
   removable?: boolean;
   removeAriaLabel?: string;
-  before?: ReactNode;
-  after?: ReactNode;
+  before?: React.ReactNode;
+  after?: React.ReactNode;
 }
 
-const Chip: FC<ChipProps> = ({
+const Chip: React.FC<ChipProps> = ({
   value = '',
   option,
   removable = true,
@@ -29,7 +29,7 @@ const Chip: FC<ChipProps> = ({
   children,
   ...restProps
 }: ChipProps) => {
-  const onRemoveWrapper = useCallback((event: MouseEvent) => {
+  const onRemoveWrapper = React.useCallback((event: React.MouseEvent) => {
     onRemove(event, value);
   }, [onRemove, value]);
   const title = getTitleFromChildren(children);

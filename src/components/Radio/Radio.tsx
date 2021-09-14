@@ -1,4 +1,4 @@
-import { FC, InputHTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -13,14 +13,14 @@ import Text from '../Typography/Text/Text';
 import './Radio.css';
 
 export interface RadioProps extends
-  InputHTMLAttributes<HTMLInputElement>,
+  React.InputHTMLAttributes<HTMLInputElement>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   AdaptivityProps {
-  description?: ReactNode;
+  description?: React.ReactNode;
 }
 
-const Radio: FC<RadioProps> = (props: RadioProps) => {
+const Radio: React.FC<RadioProps> = (props: RadioProps) => {
   const { children, description, style, className, getRef, getRootRef, sizeY, ...restProps } = props;
   const platform = usePlatform();
 

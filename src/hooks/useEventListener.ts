@@ -1,5 +1,5 @@
+import * as React from 'react';
 import { noop } from '../lib/utils';
-import { useCallback, useEffect, useRef } from 'react';
 import { canUseDOM } from '../lib/dom';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
@@ -15,15 +15,15 @@ export function useEventListener<K extends keyof GlobalEventHandlersEventMap>(
 ): EventListenerHandle;
 export function useEventListener(event: string, _cb: (ev: Event) => any, _options?: AddEventListenerOptions): EventListenerHandle;
 export function useEventListener(event: string, _cb: (ev: Event) => any, _options?: AddEventListenerOptions) {
-  const cbRef = useRef(_cb);
+  const cbRef = React.useRef(_cb);
   useIsomorphicLayoutEffect(() => {
     cbRef.current = _cb;
   }, [_cb]);
-  const cb = useCallback<typeof _cb>((e) => cbRef.current(e), []);
+  const cb = React.useCallback<typeof _cb>((e) => cbRef.current(e), []);
 
-  const detach = useRef(noop);
-  const remove = useCallback(() => detach.current(), []);
-  const add = useCallback((el: HTMLElement | Document) => {
+  const detach = React.useRef(noop);
+  const remove = React.useCallback(() => detach.current(), []);
+  const add = React.useCallback((el: HTMLElement | Document) => {
     if (!canUseDOM) {
       return;
     }
@@ -35,7 +35,7 @@ export function useEventListener(event: string, _cb: (ev: Event) => any, _option
       detach.current = noop;
     };
   }, []);
-  useEffect(() => remove, []);
+  React.useEffect(() => remove, []);
 
   return { add, remove };
 }

@@ -1,4 +1,4 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon24Dropdown, Icon20Dropdown } from '@vkontakte/icons';
 import { FormField } from '../FormField/FormField';
@@ -12,7 +12,7 @@ import { VKCOM } from '../../lib/platform';
 import '../Select/Select.css';
 
 export interface SelectMimicryProps extends
-  HTMLAttributes<HTMLElement>,
+  React.HTMLAttributes<HTMLElement>,
   HasAlign,
   HasRootRef<HTMLElement>,
   AdaptivityProps {
@@ -20,7 +20,7 @@ export interface SelectMimicryProps extends
   disabled?: boolean;
 }
 
-const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
+const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   tabIndex,
   placeholder,
   children,

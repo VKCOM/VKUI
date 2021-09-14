@@ -1,4 +1,4 @@
-import { KeyboardEvent as ReactKeyboardEvent } from 'react';
+import * as React from 'react';
 
 export enum Keys {
   ENTER = 'Enter',
@@ -34,7 +34,7 @@ export function pressedKey(e: KeyboardEvent): Keys {
   return ACCESSIBLE_KEYS.find(({ key, keyCode }) => key.includes(e.key) || keyCode === e.keyCode)?.code || null;
 }
 
-export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent | ReactKeyboardEvent<HTMLElement>) {
+export function shouldTriggerClickOnEnterOrSpace(e: KeyboardEvent | React.KeyboardEvent<HTMLElement>) {
   const el = e.target as HTMLElement;
   const { tagName } = el;
 

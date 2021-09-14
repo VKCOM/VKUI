@@ -1,4 +1,4 @@
-import { FC, SelectHTMLAttributes, useState } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import { FormField } from '../FormField/FormField';
@@ -15,7 +15,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import '../Select/Select.css';
 
 export interface NativeSelectProps extends
-  SelectHTMLAttributes<HTMLSelectElement>,
+  React.SelectHTMLAttributes<HTMLSelectElement>,
   HasRef<HTMLSelectElement>,
   HasRootRef<HTMLLabelElement>,
   HasAlign,
@@ -24,19 +24,19 @@ export interface NativeSelectProps extends
 }
 
 export interface SelectState {
-  value?: SelectHTMLAttributes<HTMLSelectElement>['value'];
+  value?: React.SelectHTMLAttributes<HTMLSelectElement>['value'];
   title?: string;
   notSelected?: boolean;
 }
 
-const NativeSelect: FC<NativeSelectProps> = ({
+const NativeSelect: React.FC<NativeSelectProps> = ({
   style, defaultValue = '', align, placeholder, children,
   className, getRef, getRootRef, disabled, sizeX, sizeY,
   ...restProps
 }) => {
   const platform = usePlatform();
-  const [title, setTitle] = useState('');
-  const [notSelected, setNotSelected] = useState(false);
+  const [title, setTitle] = React.useState('');
+  const [notSelected, setNotSelected] = React.useState(false);
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const selectRef = useExternRef(getRef);
   useIsomorphicLayoutEffect(() => {

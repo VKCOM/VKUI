@@ -1,4 +1,4 @@
-import { RefCallback } from 'react';
+import * as React from 'react';
 import { PlatformType } from './lib/platform';
 import { Insets } from '@vkontakte/vk-bridge';
 
@@ -10,7 +10,7 @@ export type RefWithCurrent<T> = {
   current: T | null;
 };
 
-export type Ref<T> = RefCallback<T> | RefWithCurrent<T>;
+export type Ref<T> = React.RefCallback<T> | RefWithCurrent<T>;
 
 export interface HasRootRef<T> {
   getRootRef?: Ref<T>;

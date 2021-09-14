@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import { Icon16Done } from '@vkontakte/icons';
 import { classNames } from '../../lib/classNames';
 import { hasReactNode } from '../../lib/utils';
@@ -9,20 +9,20 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import './CustomSelectOption.css';
 
-export interface CustomSelectOptionProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface CustomSelectOptionProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   option?: any;
   selected?: boolean;
   focused?: boolean;
   hovered?: boolean;
-  before?: ReactNode;
-  after?: ReactNode;
-  description?: ReactNode;
+  before?: React.ReactNode;
+  after?: React.ReactNode;
+  description?: React.ReactNode;
   disabled?: boolean;
 }
 
 const warn = warnOnce('CustomSelectOption');
 
-const CustomSelectOption: FC<CustomSelectOptionProps> = ({
+const CustomSelectOption: React.FC<CustomSelectOptionProps> = ({
   children,
   hovered,
   selected,

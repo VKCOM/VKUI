@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes, ElementType, FC, HTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -10,28 +10,28 @@ import Avatar from '../Avatar/Avatar';
 import { HasRef, HasRootRef } from '../../types';
 import './HorizontalCell.css';
 
-interface CellTypographyProps extends HTMLAttributes<HTMLDivElement> {
+interface CellTypographyProps extends React.HTMLAttributes<HTMLDivElement> {
   size: HorizontalCellProps['size'];
 }
 
-const CellTypography: FC<CellTypographyProps> = ({ size, children, ...restProps }: CellTypographyProps) => {
+const CellTypography: React.FC<CellTypographyProps> = ({ size, children, ...restProps }: CellTypographyProps) => {
   return size === 's'
     ? <Caption level="2" weight="regular" {...restProps}>{children}</Caption>
     : <Subhead weight="regular" {...restProps}>{children}</Subhead>;
 };
 
 export interface HorizontalCellProps extends
-  AnchorHTMLAttributes<HTMLElement>,
+  React.AnchorHTMLAttributes<HTMLElement>,
   HasRootRef<HTMLDivElement>,
   HasRef<HTMLDivElement> {
-  Component?: ElementType;
+  Component?: React.ElementType;
   size?: 's' | 'm' | 'l';
-  header?: ReactNode;
-  subtitle?: ReactNode;
+  header?: React.ReactNode;
+  subtitle?: React.ReactNode;
   disabled?: boolean;
 }
 
-export const HorizontalCell: FC<HorizontalCellProps> = ({
+export const HorizontalCell: React.FC<HorizontalCellProps> = ({
   className,
   header,
   style,

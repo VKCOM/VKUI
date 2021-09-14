@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import vkBridge, { Insets } from '@vkontakte/vk-bridge';
 
 let initialState: Insets = {
@@ -48,9 +48,9 @@ vkBridge.subscribe((e: BridgeEvent) => {
 });
 
 export function useInsets(): Insets {
-  const [insets, setInsets] = useState<Insets>(initialState);
+  const [insets, setInsets] = React.useState<Insets>(initialState);
 
-  useEffect(() => {
+  React.useEffect(() => {
     function connectListener(e: BridgeEvent) {
       const insets = resolveInsets(e);
       if (insets) {

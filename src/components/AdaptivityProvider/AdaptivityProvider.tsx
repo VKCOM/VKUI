@@ -1,10 +1,10 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 import { hasMouse as _hasMouse } from '@vkontakte/vkjs';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
 import { useDOM } from '../../lib/dom';
 
 export interface AdaptivityProviderProps extends AdaptivityContextInterface {
-  children?: ReactNode;
+  children?: React.ReactNode;
 }
 
 export const DESKTOP_SIZE = 1280;
@@ -16,8 +16,8 @@ export const MOBILE_LANDSCAPE_HEIGHT = 414;
 export const MEDIUM_HEIGHT = 720;
 
 export default function AdaptivityProvider(props: AdaptivityProviderProps) {
-  const adaptivityRef = useRef<AdaptivityContextInterface>(null);
-  const [, updateAdaptivity] = useState({});
+  const adaptivityRef = React.useRef<AdaptivityContextInterface>(null);
+  const [, updateAdaptivity] = React.useState({});
 
   const { window } = useDOM();
 
@@ -29,7 +29,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     );
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     function onResize() {
       const calculated = calculateAdaptivity(window.innerWidth, window.innerHeight, props);
       const { viewWidth, viewHeight, sizeX, sizeY, hasMouse } = adaptivityRef.current;

@@ -1,4 +1,4 @@
-import { ElementType, FC, ReactNode } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
@@ -17,8 +17,8 @@ export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
   size?: 's' | 'm' | 'l';
   stretched?: boolean;
-  before?: ReactNode;
-  after?: ReactNode;
+  before?: React.ReactNode;
+  after?: React.ReactNode;
   loading?: boolean;
 }
 
@@ -29,10 +29,10 @@ interface ButtonTypographyProps {
   platform: Platform;
   sizeY: AdaptivityProps['sizeY'];
   children?: ButtonProps['children'];
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
-const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProps) => {
+const ButtonTypography: React.FC<ButtonTypographyProps> = (props: ButtonTypographyProps) => {
   const { size, sizeY, platform, ...restProps } = props;
   const isCompact = sizeY === SizeType.COMPACT;
 
@@ -67,7 +67,7 @@ const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProp
   }
 };
 
-const Button: FC<ButtonProps> = (props: ButtonProps) => {
+const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   const {
     size,

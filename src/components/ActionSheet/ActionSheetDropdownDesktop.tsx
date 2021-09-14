@@ -1,4 +1,4 @@
-import { Component, CSSProperties, HTMLAttributes, MouseEventHandler, RefObject } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -8,19 +8,19 @@ import { DOMProps, withDOM } from '../../lib/dom';
 import { ActionSheetProps } from './ActionSheet';
 import './ActionSheet.css';
 
-interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
+interface Props extends React.HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   closing: boolean;
   onClose(): void;
   popupDirection?: ActionSheetProps['popupDirection'];
   toggleRef: Element;
-  elementRef: RefObject<HTMLDivElement>;
+  elementRef: React.RefObject<HTMLDivElement>;
 }
 
 interface State {
-  dropdownStyles: CSSProperties;
+  dropdownStyles: React.CSSProperties;
 }
 
-class ActionSheetDropdownDesktop extends Component<Props & DOMProps, State> {
+class ActionSheetDropdownDesktop extends React.Component<Props & DOMProps, State> {
   state: State = {
     dropdownStyles: {
       left: '0',
@@ -79,7 +79,7 @@ class ActionSheetDropdownDesktop extends Component<Props & DOMProps, State> {
     this.props.onClose();
   };
 
-  stopPropagation: MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
+  stopPropagation: React.MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
 
   render() {
     const {

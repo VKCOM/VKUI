@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import * as React from 'react';
 import { Icon24Chevron } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -11,7 +11,7 @@ export interface HorizontalScrollArrowProps {
   direction: 'left' | 'right';
 }
 
-const HorizontalScrollArrow: FC<HorizontalScrollArrowProps> = ({ onClick, direction }: HorizontalScrollArrowProps) => {
+const HorizontalScrollArrow: React.FC<HorizontalScrollArrowProps> = ({ onClick, direction }: HorizontalScrollArrowProps) => {
   const platform = usePlatform();
 
   return (

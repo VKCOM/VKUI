@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { HasRootRef } from '../../types';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -8,7 +8,7 @@ import { Removable, RemovableProps } from '../Removable/Removable';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import './FormLayoutGroup.css';
 
-export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, RemovableProps, HasRootRef<HTMLDivElement> {
+export interface FormLayoutGroupProps extends React.HTMLAttributes<HTMLDivElement>, RemovableProps, HasRootRef<HTMLDivElement> {
   mode?: 'vertical' | 'horizontal';
   /**
    * Только для режима horizontal. Дает возможность удалить всю группу `FormItem`.
@@ -16,7 +16,7 @@ export interface FormLayoutGroupProps extends HTMLAttributes<HTMLDivElement>, Re
   removable?: boolean;
 }
 
-const FormLayoutGroup: FC<FormLayoutGroupProps> = ({
+const FormLayoutGroup: React.FC<FormLayoutGroupProps> = ({
   children,
   mode = 'vertical',
   removable,

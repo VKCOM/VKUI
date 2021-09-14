@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, ElementType, FC, ReactNode, useState } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -11,18 +11,18 @@ export interface FormFieldProps {
   /**
    * Иконка 12|16|20|24|28 или `IconButton`.
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
 }
 
 interface FormFieldOwnProps extends
-  AllHTMLAttributes<HTMLElement>,
+  React.AllHTMLAttributes<HTMLElement>,
   HasRootRef<HTMLElement>,
   FormFieldProps {
-  Component?: ElementType;
+  Component?: React.ElementType;
   disabled?: boolean;
 }
 
-export const FormField: FC<FormFieldOwnProps> = ({
+export const FormField: React.FC<FormFieldOwnProps> = ({
   Component = 'div',
   children,
   getRootRef,
@@ -32,7 +32,7 @@ export const FormField: FC<FormFieldOwnProps> = ({
 }: FormFieldOwnProps) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
-  const [hover, setHover] = useState(false);
+  const [hover, setHover] = React.useState(false);
 
   const handleMouseEnter = (e: MouseEvent) => {
     e.stopPropagation();

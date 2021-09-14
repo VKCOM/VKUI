@@ -1,11 +1,4 @@
-import React, {
-  AnchorHTMLAttributes,
-  Component,
-  HTMLAttributes,
-  MouseEventHandler,
-  ReactNode,
-  SyntheticEvent,
-} from 'react';
+import * as React from 'react';
 import Tappable from '../Tappable/Tappable';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { getClassName } from '../../helpers/getClassName';
@@ -23,7 +16,7 @@ import Caption from '../Typography/Caption/Caption';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import './Alert.css';
 
-export type AlertActionInterface = AlertProps['actions'][0] & AnchorHTMLAttributes<HTMLElement>;
+export type AlertActionInterface = AlertProps['actions'][0] & React.AnchorHTMLAttributes<HTMLElement>;
 
 export interface AlertAction extends Pick<ButtonProps, 'Component' | 'href'> {
   title: string;
@@ -32,11 +25,11 @@ export interface AlertAction extends Pick<ButtonProps, 'Component' | 'href'> {
   mode: 'cancel' | 'destructive' | 'default';
 }
 
-export interface AlertProps extends HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
+export interface AlertProps extends React.HTMLAttributes<HTMLElement>, HasPlatform, AdaptivityProps {
   actionsLayout?: 'vertical' | 'horizontal';
   actions?: AlertAction[];
-  header?: ReactNode;
-  text?: ReactNode;
+  header?: React.ReactNode;
+  text?: React.ReactNode;
   onClose?: VoidFunction;
 }
 
@@ -48,7 +41,7 @@ type TransitionEndHandler = (e?: TransitionEvent) => void;
 
 type ItemClickHander = (item: AlertActionInterface) => () => void;
 
-class Alert extends Component<AlertProps, AlertState> {
+class Alert extends React.Component<AlertProps, AlertState> {
   constructor(props: AlertProps) {
     super(props);
     this.element = React.createRef();
@@ -91,7 +84,7 @@ class Alert extends Component<AlertProps, AlertState> {
     });
   };
 
-  stopPropagation: MouseEventHandler = (e: SyntheticEvent) => {
+  stopPropagation: React.MouseEventHandler = (e: React.SyntheticEvent) => {
     e.stopPropagation();
   };
 
@@ -105,7 +98,7 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
-  renderHeader(header: ReactNode) {
+  renderHeader(header: React.ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
         return <Headline vkuiClass="Alert__header" weight="medium">{header}</Headline>;
@@ -116,7 +109,7 @@ class Alert extends Component<AlertProps, AlertState> {
     }
   }
 
-  renderText(text: ReactNode) {
+  renderText(text: React.ReactNode) {
     switch (this.props.platform) {
       case VKCOM:
         return <Caption vkuiClass="Alert__text" level="1" weight="regular">{text}</Caption>;

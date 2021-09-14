@@ -1,8 +1,8 @@
-import { Children, HTMLAttributes, ImgHTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import { Ref, RefWithCurrent } from '../types';
 
 export type ImgOnlyAttributes = {
-  [index in Exclude<keyof ImgHTMLAttributes<HTMLImageElement>, keyof HTMLAttributes<HTMLImageElement>>]: ImgHTMLAttributes<HTMLImageElement>[index];
+  [index in Exclude<keyof React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>]: React.ImgHTMLAttributes<HTMLImageElement>[index];
 };
 
 // Является ли переданное значение числовым
@@ -34,11 +34,11 @@ export function leadingZero(val: number) {
   return strVal;
 }
 
-export function hasReactNode(value: ReactNode): boolean {
+export function hasReactNode(value: React.ReactNode): boolean {
   return value !== undefined && value !== false && value !== null && value !== '';
 }
 
-export function isPrimitiveReactNode(node: ReactNode): boolean {
+export function isPrimitiveReactNode(node: React.ReactNode): boolean {
   return typeof node === 'string' || typeof node === 'number';
 }
 
@@ -85,10 +85,10 @@ export function createCustomEvent(window: any, type: string, eventInitDict?: any
   return new window.CustomEvent(type, eventInitDict);
 }
 
-export function getTitleFromChildren(children: ReactNode): string {
+export function getTitleFromChildren(children: React.ReactNode): string {
   let label = '';
 
-  Children.map(children, (child) => {
+  React.Children.map(children, (child) => {
     if (typeof child === 'string') {
       label += child;
     }

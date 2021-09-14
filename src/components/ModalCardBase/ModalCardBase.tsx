@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
 import Headline from '../Typography/Headline/Headline';
@@ -13,30 +13,30 @@ import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import './ModalCardBase.css';
 
-export interface ModalCardBaseProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface ModalCardBaseProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   /**
    * Иконка.
    *
    * Может быть компонентом иконки, например, `<Icon56MoneyTransferOutline />`, или `<Avatar size={72} src="" />`
    */
-  icon?: ReactNode;
+  icon?: React.ReactNode;
 
   /**
    * Заголовок карточки
    */
-  header?: ReactNode;
+  header?: React.ReactNode;
 
   /**
    * Подзаголовок
    */
-  subheader?: ReactNode;
+  subheader?: React.ReactNode;
 
   /**
    * Кнопки-действия.
    *
    * Рекомендуется использовать `<Button size="l" mode="primary" />` или `<Button size="l" mode="secondary" />`
    */
-  actions?: ReactNode;
+  actions?: React.ReactNode;
 
   /**
    * Тип отображения кнопок: вертикальный или горизонтальный
@@ -45,7 +45,7 @@ export interface ModalCardBaseProps extends HTMLAttributes<HTMLDivElement>, HasR
   onClose?: VoidFunction;
 }
 
-export const ModalCardBase: FC<ModalCardBaseProps> = withAdaptivity(({
+export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity(({
   getRootRef,
   icon,
   header,

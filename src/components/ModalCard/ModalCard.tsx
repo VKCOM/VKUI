@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -15,7 +15,7 @@ export interface ModalCardProps extends HasPlatform, AdaptivityProps, NavIdProps
 
 const warn = warnOnce('ModalCard');
 
-const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
+const ModalCard: React.FC<ModalCardProps> = (props: ModalCardProps) => {
   const {
     icon,
     header,
@@ -34,7 +34,7 @@ const ModalCard: FC<ModalCardProps> = (props: ModalCardProps) => {
 
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
-  const modalContext = useContext(ModalRootContext);
+  const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.CARD);
 
   return (

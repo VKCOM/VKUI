@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, FC, ReactNode } from 'react';
+import * as React from 'react';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -11,14 +11,14 @@ import './PanelHeaderButton.css';
 
 export interface PanelHeaderButtonProps extends Omit<TappableProps, 'label'> {
   primary?: boolean;
-  label?: ReactNode;
+  label?: React.ReactNode;
 }
 
-interface ButtonTypographyProps extends AllHTMLAttributes<HTMLElement> {
+interface ButtonTypographyProps extends React.AllHTMLAttributes<HTMLElement> {
   primary?: PanelHeaderButtonProps['primary'];
 }
 
-const ButtonTypography: FC<ButtonTypographyProps> = ({ primary, children }: ButtonTypographyProps) => {
+const ButtonTypography: React.FC<ButtonTypographyProps> = ({ primary, children }: ButtonTypographyProps) => {
   const platform = usePlatform();
 
   if (platform === IOS) {
@@ -36,7 +36,7 @@ const ButtonTypography: FC<ButtonTypographyProps> = ({ primary, children }: Butt
   );
 };
 
-export const PanelHeaderButton: FC<PanelHeaderButtonProps> = ({
+export const PanelHeaderButton: React.FC<PanelHeaderButtonProps> = ({
   children,
   primary,
   label,

@@ -1,4 +1,4 @@
-import { FC, ImgHTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import Card, { CardProps } from '../Card/Card';
 import Caption from '../Typography/Caption/Caption';
 import Title from '../Typography/Title/Title';
@@ -10,23 +10,23 @@ import { hasReactNode } from '../../lib/utils';
 import { HasRef, HasRootRef } from '../../types';
 import './ContentCard.css';
 
-export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAttributes<HTMLImageElement>, HasRef<HTMLImageElement> {
+export interface ContentCardProps extends HasRootRef<HTMLDivElement>, React.ImgHTMLAttributes<HTMLImageElement>, HasRef<HTMLImageElement> {
   /**
    Текст над заголовком
    */
-  subtitle?: ReactNode;
+  subtitle?: React.ReactNode;
   /**
    Заголовок
    */
-  header?: ReactNode;
+  header?: React.ReactNode;
   /**
    Текст
    */
-  text?: ReactNode;
+  text?: React.ReactNode;
   /**
    Нижний текст
    */
-  caption?: ReactNode;
+  caption?: React.ReactNode;
   /**
     URL или путь к изображению
    */
@@ -53,7 +53,7 @@ export interface ContentCardProps extends HasRootRef<HTMLDivElement>, ImgHTMLAtt
   mode?: CardProps['mode'];
 }
 
-const ContentCard: FC<ContentCardProps> = (props: ContentCardProps) => {
+const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   const {
     subtitle,
     header,

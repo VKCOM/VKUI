@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, useMemo } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Touch from '../Touch/Touch';
@@ -13,13 +13,13 @@ import { useExternRef } from '../../hooks/useExternRef';
 import { warnOnce } from '../../lib/warnOnce';
 import './Panel.css';
 
-export interface PanelProps extends HTMLAttributes<HTMLDivElement>,
+export interface PanelProps extends React.HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>, AdaptivityProps, NavIdProps {
   centered?: boolean;
 }
 
 const warn = warnOnce('Panel');
-const PanelComponent: FC<PanelProps> = (props: PanelProps) => {
+const PanelComponent: React.FC<PanelProps> = (props: PanelProps) => {
   const { centered, children, getRootRef, sizeX, nav, ...restProps } = props;
 
   const platform = usePlatform();
@@ -27,7 +27,7 @@ const PanelComponent: FC<PanelProps> = (props: PanelProps) => {
 
   const navId = getNavId(props, warn);
 
-  const childContext = useMemo<PanelContextProps>(() => {
+  const childContext = React.useMemo<PanelContextProps>(() => {
     return {
       panel: navId,
       getPanelNode: () => containerRef.current,

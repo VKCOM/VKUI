@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -13,27 +13,27 @@ export interface RichCellProps extends TappableProps {
   /**
    * Контейнер для текста под `children`.
    */
-  text?: ReactNode;
+  text?: React.ReactNode;
   /**
    * Контейнер для текста под `text`.
    */
-  caption?: ReactNode;
+  caption?: React.ReactNode;
   /**
    * Контейнер для контента под `caption`. Например `<UsersStack size="s" />`
    */
-  bottom?: ReactNode;
+  bottom?: React.ReactNode;
   /**
    * Кнопка или набор кнопок `<Button size="s" />`. Располагается под `bottom`.
    */
-  actions?: ReactNode;
+  actions?: React.ReactNode;
   /**
    * `<Avatar size={48|72} />`
    */
-  before?: ReactNode;
+  before?: React.ReactNode;
   /**
    * Иконка 28 или текст
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
   /**
    * Убирает анимацию нажатия
    */
@@ -41,7 +41,7 @@ export interface RichCellProps extends TappableProps {
   multiline?: boolean;
 }
 
-const RichCell: FC<RichCellProps> = ({
+const RichCell: React.FC<RichCellProps> = ({
   children,
   text,
   caption,

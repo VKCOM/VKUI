@@ -1,9 +1,9 @@
-import { MutableRefObject, Ref, useMemo, useRef } from 'react';
+import * as React from 'react';
 import { setRef } from '../lib/utils';
 
-export function useExternRef<T>(...externRefs: Array<Ref<T>>): MutableRefObject<T> {
-  const stableRef = useRef<T>();
-  return useMemo(() => ({
+export function useExternRef<T>(...externRefs: Array<React.Ref<T>>): React.MutableRefObject<T> {
+  const stableRef = React.useRef<T>();
+  return React.useMemo(() => ({
     get current() {
       return stableRef.current;
     },

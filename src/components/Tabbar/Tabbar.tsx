@@ -1,10 +1,10 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import './Tabbar.css';
 
-export interface TabbarProps extends HTMLAttributes<HTMLDivElement> {
+export interface TabbarProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Флаг для показа/скрытия верхней тени (Android) или границы (iOS)
    */
@@ -12,7 +12,7 @@ export interface TabbarProps extends HTMLAttributes<HTMLDivElement> {
   itemsLayout?: 'vertical' | 'horizontal' | 'auto';
 }
 
-const Tabbar: FunctionComponent<TabbarProps> = (props: TabbarProps) => {
+const Tabbar: React.FunctionComponent<TabbarProps> = (props: TabbarProps) => {
   const { children, shadow, itemsLayout, ...restProps } = props;
   const platform = usePlatform();
 

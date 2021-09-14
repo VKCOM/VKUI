@@ -1,11 +1,11 @@
-import { createContext, RefObject } from 'react';
+import * as React from 'react';
 
 export interface AppRootContextInterface {
-  appRoot?: RefObject<HTMLDivElement>;
+  appRoot?: React.RefObject<HTMLDivElement>;
   portalRoot?: HTMLDivElement;
   embedded?: boolean;
 }
 
-export const AppRootContext = createContext<AppRootContextInterface>({
+export const AppRootContext = React.createContext<AppRootContextInterface>({
   portalRoot: null,
 });

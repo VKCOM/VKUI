@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import './FocusVisible.css';
 
@@ -8,6 +8,6 @@ interface FocusVisibleProps {
   mode: FocusVisibleMode;
 }
 
-export const FocusVisible: FC<FocusVisibleProps> = ({ mode }: FocusVisibleProps) => (
+export const FocusVisible: React.FC<FocusVisibleProps> = ({ mode }: FocusVisibleProps) => (
   <span aria-hidden="true" vkuiClass={classNames('FocusVisible', `FocusVisible--${mode}`)} />
 );

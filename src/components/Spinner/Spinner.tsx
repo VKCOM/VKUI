@@ -1,14 +1,14 @@
-import { FC, HTMLAttributes, memo } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { Icon24Spinner, Icon32Spinner, Icon44Spinner, Icon16Spinner } from '@vkontakte/icons';
 import { usePlatform } from '../../hooks/usePlatform';
 import './Spinner.css';
 
-export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
+export interface SpinnerProps extends React.HTMLAttributes<HTMLSpanElement> {
   size?: 'small' | 'regular' | 'large' | 'medium';
 }
 
-const Spinner: FC<SpinnerProps> = ({ size, ...restProps }: SpinnerProps) => {
+const Spinner: React.FC<SpinnerProps> = ({ size, ...restProps }: SpinnerProps) => {
   const platform = usePlatform();
 
   let SpinnerIcon = Icon24Spinner;
@@ -37,4 +37,4 @@ Spinner.defaultProps = {
   'aria-label': 'Загружается...',
 };
 
-export default memo(Spinner);
+export default React.memo(Spinner);

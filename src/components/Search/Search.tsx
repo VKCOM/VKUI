@@ -1,11 +1,4 @@
-import {
-  ReactNode,
-  FocusEvent,
-  InputHTMLAttributes,
-  FC,
-  useState,
-  useCallback,
-} from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { withPlatform } from '../../hoc/withPlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -24,18 +17,18 @@ import './Search.css';
 
 export type InputRef = (element: HTMLInputElement) => void;
 
-export interface SearchProps extends InputHTMLAttributes<HTMLInputElement>, HasRef<HTMLInputElement>, HasPlatform {
+export interface SearchProps extends React.InputHTMLAttributes<HTMLInputElement>, HasRef<HTMLInputElement>, HasPlatform {
   /**
    * iOS only. Текст кнопки "отмена", которая чистит текстовое поле и убирает фокус.
    */
-  after?: ReactNode;
-  before?: ReactNode;
-  icon?: ReactNode;
+  after?: React.ReactNode;
+  before?: React.ReactNode;
+  icon?: React.ReactNode;
   onIconClick?: (e: VKUITouchEvent) => void;
   defaultValue?: string;
 }
 
-const Search: FC<SearchProps> = ({
+const Search: React.FC<SearchProps> = ({
   before,
   className,
   defaultValue,
@@ -49,15 +42,15 @@ const Search: FC<SearchProps> = ({
   ...inputProps
 }) => {
   const inputRef = useExternRef(getRef);
-  const [isFocused, setFocused] = useState(false);
+  const [isFocused, setFocused] = React.useState(false);
   const [value, onChange] = useEnsuredControl(inputProps, { defaultValue });
 
-  const onFocus = (e: FocusEvent<HTMLInputElement>) => {
+  const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused(true);
     inputProps.onFocus && inputProps.onFocus(e);
   };
 
-  const onBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     setFocused(false);
     inputProps.onBlur && inputProps.onBlur(e);
   };
@@ -71,9 +64,9 @@ const Search: FC<SearchProps> = ({
     inputRef.current.dispatchEvent(ev2);
   };
 
-  const onIconClickStart = useCallback((e: TouchEvent) => onIconClick(e.originalEvent), [onIconClick]);
+  const onIconClickStart = React.useCallback((e: TouchEvent) => onIconClick(e.originalEvent), [onIconClick]);
 
-  const onIconCancelClickStart = useCallback((e: TouchEvent) => {
+  const onIconCancelClickStart = React.useCallback((e: TouchEvent) => {
     e.originalEvent.preventDefault();
     inputRef.current.focus();
     onCancel();
