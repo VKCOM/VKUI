@@ -1,14 +1,14 @@
-import { FC, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import './Progress.css';
 
-export interface ProgressProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   value?: number;
 }
 
-const Progress: FC<ProgressProps> = ({ value, getRootRef, ...restProps }: ProgressProps) => {
+const Progress: React.FC<ProgressProps> = ({ value, getRootRef, ...restProps }: ProgressProps) => {
   const platform = usePlatform();
 
   return (

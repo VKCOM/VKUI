@@ -1,4 +1,4 @@
-import { TextareaHTMLAttributes, FC, memo } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { FormField } from '../FormField/FormField';
 import { HasRef, HasRootRef } from '../../types';
@@ -11,7 +11,7 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import './Textarea.css';
 
 export interface TextareaProps extends
-  TextareaHTMLAttributes<HTMLTextAreaElement>,
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   HasRef<HTMLTextAreaElement>,
   HasRootRef<HTMLElement>,
   AdaptivityProps {
@@ -20,7 +20,7 @@ export interface TextareaProps extends
   defaultValue?: string;
 }
 
-const Textarea: FC<TextareaProps> = memo(({
+const Textarea: React.FC<TextareaProps> = React.memo(({
   defaultValue,
   grow,
   style,

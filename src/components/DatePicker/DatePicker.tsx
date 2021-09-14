@@ -1,10 +1,4 @@
-import {
-  ChangeEventHandler,
-  HTMLAttributes,
-  FC,
-  useCallback,
-  useState,
-} from 'react';
+import * as React from 'react';
 import Input from '../Input/Input';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { HasPlatform } from '../../types';
@@ -22,7 +16,7 @@ export type DatePickerDateFormat = {
   year: number;
 };
 
-export interface DatePickerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>, HasPlatform, AdaptivityProps {
+export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'min' | 'max'>, HasPlatform, AdaptivityProps {
   min?: DatePickerDateFormat;
   max?: DatePickerDateFormat;
   name?: string;
@@ -65,7 +59,7 @@ const range = (start: number, end: number) => {
   return swap ? arr.reverse() : arr;
 };
 
-const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
+const DatePickerCustom: React.FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   name, min, max,
   dayPlaceholder, monthPlaceholder, yearPlaceholder,
   popupDirection,
@@ -77,7 +71,7 @@ const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   disabled,
   ...restProps
 }) => {
-  const onSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+  const onSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     onDateChange({
       day,
       month,
@@ -140,7 +134,7 @@ const DatePickerCustom: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   );
 };
 
-const DatePickerNative: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
+const DatePickerNative: React.FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   min, max,
   dayPlaceholder, monthPlaceholder, yearPlaceholder,
   popupDirection,
@@ -153,7 +147,7 @@ const DatePickerNative: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   const defProps = day && month && year
     ? { defaultValue: convertToInputFormat({ day, month, year }) }
     : {};
-  const onStringChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
+  const onStringChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback((e) => {
     onDateChange(parseInputDate(e.currentTarget.value));
   }, [onDateChange]);
   return (
@@ -168,14 +162,14 @@ const DatePickerNative: FC<DatePickerProps & Partial<DatePickerDateFormat>> = ({
   );
 };
 
-const DatePicker: FC<DatePickerProps> = ({ hasMouse, defaultValue, ...props }) => {
-  const [value, setValue] = useState<Partial<DatePickerDateFormat>>(defaultValue || {
+const DatePicker: React.FC<DatePickerProps> = ({ hasMouse, defaultValue, ...props }) => {
+  const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(defaultValue || {
     day: 0,
     month: 0,
     year: 0,
   });
 
-  const onDateChange = useCallback((update: DatePickerDateFormat) => {
+  const onDateChange = React.useCallback((update: DatePickerDateFormat) => {
     setValue(update);
     props.onDateChange && props.onDateChange({ ...update });
   }, [props.onDateChange]);

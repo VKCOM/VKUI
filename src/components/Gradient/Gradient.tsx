@@ -1,13 +1,13 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import './Gradient.css';
 
-export interface GradientProps extends HTMLAttributes<HTMLDivElement> {
+export interface GradientProps extends React.HTMLAttributes<HTMLDivElement> {
   mode?: 'tint' | 'white' | 'black';
   to?: 'top' | 'bottom';
 }
 
-const Gradient: FunctionComponent<GradientProps> = ({ mode, children, to, ...restProps }: GradientProps) => {
+const Gradient: React.FunctionComponent<GradientProps> = ({ mode, children, to, ...restProps }: GradientProps) => {
   return (
     <div
       role="presentation"

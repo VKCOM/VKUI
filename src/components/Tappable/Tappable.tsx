@@ -1,11 +1,4 @@
-import React, {
-  AllHTMLAttributes,
-  Component,
-  ElementType,
-  KeyboardEventHandler,
-  KeyboardEvent,
-  RefCallback,
-} from 'react';
+import * as React from 'react';
 import Touch, { TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { classNames } from '../../lib/classNames';
@@ -22,8 +15,8 @@ import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
 import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
 import './Tappable.css';
 
-export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
-  Component?: ElementType;
+export interface TappableProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
+  Component?: React.ElementType;
   /**
    * Длительность показа active-состояния
    */
@@ -103,7 +96,7 @@ function deactivateOtherInstances(exclude?: string) {
 
 const TappableContext = React.createContext<{ insideTappable?: boolean; onEnter?: VoidFunction; onLeave?: VoidFunction }>({ insideTappable: false });
 
-class Tappable extends Component<TappableProps, TappableState> {
+class Tappable extends React.Component<TappableProps, TappableState> {
   constructor(props: TappableProps) {
     super(props);
     this.id = Math.round(Math.random() * 1e8).toString(16);
@@ -147,7 +140,7 @@ class Tappable extends Component<TappableProps, TappableState> {
    * - role="link" (активация по Enter)
    * - role="button" (активация по Space и Enter)
    */
-  onKeyDown: KeyboardEventHandler = (e: KeyboardEvent<HTMLElement>) => {
+  onKeyDown: React.KeyboardEventHandler = (e: React.KeyboardEvent<HTMLElement>) => {
     const { onKeyDown } = this.props;
 
     if (shouldTriggerClickOnEnterOrSpace(e)) {
@@ -318,7 +311,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   /*
    * Берет ref на DOM-ноду из экземпляра Touch
    */
-  getRef: RefCallback<HTMLElement> = (container) => {
+  getRef: React.RefCallback<HTMLElement> = (container) => {
     this.container = container;
     setRef(container, this.props.getRootRef);
   };
@@ -346,7 +339,7 @@ class Tappable extends Component<TappableProps, TappableState> {
   render() {
     const { clicks, active, hovered, hasHover, hasActive } = this.state;
 
-    const defaultComponent: ElementType = this.props.href ? 'a' : 'div';
+    const defaultComponent: React.ElementType = this.props.href ? 'a' : 'div';
 
     const {
       children,

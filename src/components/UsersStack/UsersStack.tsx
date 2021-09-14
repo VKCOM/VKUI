@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { useBrowserInfo } from '../../hooks/useBrowserInfo';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -11,7 +11,7 @@ import Subhead from '../Typography/Subhead/Subhead';
 import { createMasks } from './masks';
 import './UsersStack.css';
 
-export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
+export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Массив ссылок на фотографии
    */
@@ -31,7 +31,7 @@ export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
   visibleCount?: number;
 }
 
-const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
+const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
   const { system, systemVersion } = useBrowserInfo();
   const platform = usePlatform();
   const { photos, visibleCount, size, layout, children, ...restProps } = props;

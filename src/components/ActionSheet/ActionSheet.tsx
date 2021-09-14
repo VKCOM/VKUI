@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes } from 'react';
+import * as React from 'react';
 import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
 import { transitionEvent } from '../../lib/supportEvents';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -14,7 +14,7 @@ import './ActionSheet.css';
 
 export type PopupDirectionFunction = (elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom';
 
-export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
+export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose?: VoidFunction;
@@ -40,7 +40,7 @@ export type CloseCallback = () => void;
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
 
-class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
+class ActionSheet extends React.Component<ActionSheetProps, ActionSheetState> {
   constructor(props: ActionSheetProps) {
     super(props);
     this.elRef = React.createRef();

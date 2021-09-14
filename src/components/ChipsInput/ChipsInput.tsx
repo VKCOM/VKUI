@@ -1,13 +1,4 @@
-import {
-  useState,
-  KeyboardEvent,
-  Fragment,
-  FocusEvent,
-  InputHTMLAttributes,
-  ReactNode,
-  ChangeEvent,
-  MouseEvent,
-} from 'react';
+import * as React from 'react';
 import { HasAlign, HasRef, HasRootRef } from '../../types';
 import { FormField, FormFieldProps } from '../FormField/FormField';
 import { classNames } from '../../lib/classNames';
@@ -34,7 +25,7 @@ export interface RenderChip<Option extends ChipsInputOption> extends ChipProps {
 }
 
 export interface ChipsInputProps<Option extends ChipsInputOption> extends
-  Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>,
+  Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLDivElement>,
   HasAlign,
@@ -42,11 +33,11 @@ export interface ChipsInputProps<Option extends ChipsInputOption> extends
   value: Option[];
   inputValue?: string;
   onChange?: (o: Option[]) => void;
-  onInputChange?: (e?: ChangeEvent<HTMLInputElement>) => void;
+  onInputChange?: (e?: React.ChangeEvent<HTMLInputElement>) => void;
   getOptionValue?: (o?: Option) => ChipsInputValue;
   getOptionLabel?: (o?: Option) => string;
   getNewOptionData?: (v?: ChipsInputValue, l?: string) => Option;
-  renderChip?: (props?: RenderChip<Option>) => ReactNode;
+  renderChip?: (props?: RenderChip<Option>) => React.ReactNode;
   inputAriaLabel?: string;
 }
 
@@ -56,13 +47,13 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
     after, inputAriaLabel, ...restProps } = props;
   const { sizeY } = useAdaptivity();
 
-  const [focused, setFocused] = useState(false);
+  const [focused, setFocused] = React.useState(false);
   const { fieldValue, addOptionFromInput, removeOption, selectedOptions, handleInputChange } = useChipsInput(props);
   const inputRef = useExternRef(getRef);
 
   const isDisabled = restProps.disabled || restProps.readOnly;
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (isDisabled) {
       e.preventDefault();
       return;
@@ -81,25 +72,25 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
     }
   };
 
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (focused) {
       setFocused(false);
     }
     onBlur(e);
   };
 
-  const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     if (!focused) {
       setFocused(true);
     }
     onFocus(e);
   };
 
-  const handleChipRemove = (_: MouseEvent<HTMLInputElement>, value: ChipsInputValue) => {
+  const handleChipRemove = (_: React.MouseEvent<HTMLInputElement>, value: ChipsInputValue) => {
     removeOption(value);
   };
 
-  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isDisabled) {
       e.preventDefault();
       return;
@@ -132,9 +123,9 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
           const label = getOptionLabel(option);
 
           return (
-            <Fragment key={value}>
+            <React.Fragment key={value}>
               {renderChip({ option, value, label, onRemove: handleChipRemove, disabled: restProps.disabled, className: prefixClass('ChipsInput__chip') })}
-            </Fragment>
+            </React.Fragment>
           );
         })}
         <label vkuiClass="ChipsInput__input-container" aria-label={inputAriaLabel}>

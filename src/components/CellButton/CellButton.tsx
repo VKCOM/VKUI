@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -10,7 +10,7 @@ export interface CellButtonProps extends SimpleCellProps {
   centered?: boolean;
 }
 
-const CellButton: FC<CellButtonProps> = ({
+const CellButton: React.FC<CellButtonProps> = ({
   centered = false,
   mode = 'primary',
   ...restProps

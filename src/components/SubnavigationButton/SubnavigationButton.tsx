@@ -1,4 +1,4 @@
-import { FC, ReactNode, ElementType } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { getTitleFromChildren, hasReactNode } from '../../lib/utils';
@@ -19,19 +19,19 @@ export interface SubnavigationButtonProps extends Omit<TappableProps, 'size'> {
   /**
    * Рекомендуется использовать только иконки с размером 24
    */
-  before?: ReactNode;
+  before?: React.ReactNode;
   /**
    * Рекомендуется использовать только `<Counter size="s" />` или `<Badge />`
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
   expandable?: boolean;
 }
 
 interface SubnavButtonTypographyProps extends Pick<SubnavigationButtonProps, 'textLevel'> {
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
-const SubnavigationButtonTypography: FC<SubnavButtonTypographyProps> = ({ textLevel, ...restProps }: SubnavButtonTypographyProps) => {
+const SubnavigationButtonTypography: React.FC<SubnavButtonTypographyProps> = ({ textLevel, ...restProps }: SubnavButtonTypographyProps) => {
   if (textLevel === 1) {
     return <Subhead weight="regular" {...restProps} />;
   }
@@ -45,7 +45,7 @@ const SubnavigationButtonTypography: FC<SubnavButtonTypographyProps> = ({ textLe
   );
 };
 
-export const SubnavigationButton: FC<SubnavigationButtonProps> = (props: SubnavigationButtonProps) => {
+export const SubnavigationButton: React.FC<SubnavigationButtonProps> = (props: SubnavigationButtonProps) => {
   const platform = usePlatform();
   const {
     size,

@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, ReactNode } from 'react';
+import * as React from 'react';
 import {
   Icon24Send,
   Icon28AddCircleOutline,
@@ -17,7 +17,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import { hasReactNode } from '../../lib/utils';
 import './WriteBarIcon.css';
 
-export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface WriteBarIconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Предустановленные типы кнопок в WriteBar для отрисовки иконки в зависимости от платформы.
    * Если передать валидное значение для этого свойства, `children` игнорируется.
@@ -36,7 +36,7 @@ export interface WriteBarIconProps extends ButtonHTMLAttributes<HTMLButtonElemen
 const warn = warnOnce('WriteBarIcon');
 const IS_DEV = process.env.NODE_ENV === 'development';
 
-export const WriteBarIcon: FC<WriteBarIconProps> = ({
+export const WriteBarIcon: React.FC<WriteBarIconProps> = ({
   mode,
   children,
   count,
@@ -44,7 +44,7 @@ export const WriteBarIcon: FC<WriteBarIconProps> = ({
 }: WriteBarIconProps) => {
   const platform = usePlatform();
 
-  let icon: ReactNode;
+  let icon: React.ReactNode;
   let ariaLabel: string;
 
   switch (mode) {

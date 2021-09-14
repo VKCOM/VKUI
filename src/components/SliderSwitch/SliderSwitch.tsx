@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, KeyboardEvent, RefObject, createRef } from 'react';
+import * as React from 'react';
 import SliderSwitchButton from './SliderSwitchButton';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
@@ -9,7 +9,7 @@ export interface SliderSwitchOptionInterface {
   value: string | number;
 }
 
-export interface SliderSwitchProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+export interface SliderSwitchProps extends React.HTMLAttributes<HTMLDivElement>, HasPlatform {
   options: Array<{
     name: string;
     value: string | number;
@@ -33,16 +33,16 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
       hoveredOptionId: -1,
     };
 
-    this.firstButton = createRef();
-    this.secondButton = createRef();
+    this.firstButton = React.createRef();
+    this.secondButton = React.createRef();
   }
 
   static defaultProps = {
     options: [{ name: '', value: '' }, { name: '', value: '' }],
   };
 
-  firstButton: RefObject<HTMLDivElement>;
-  secondButton: RefObject<HTMLDivElement>;
+  firstButton: React.RefObject<HTMLDivElement>;
+  secondButton: React.RefObject<HTMLDivElement>;
 
   onSwitch = (value: SliderSwitchOptionInterface['value']) => {
     const { onSwitch } = this.props;
@@ -86,7 +86,7 @@ export default class SliderSwitch extends React.Component<SliderSwitchProps, Sli
     }));
   };
 
-  switchByKey = (event: KeyboardEvent) => {
+  switchByKey = (event: React.KeyboardEvent) => {
     if (event.key !== 'Enter' && event.key !== 'Spacebar' && event.key !== ' ') {
       return;
     }

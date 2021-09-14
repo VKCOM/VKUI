@@ -1,4 +1,4 @@
-import React, { FunctionComponent, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import './PullToRefresh.css';
 
@@ -7,7 +7,7 @@ function calcStrokeDashOffset(value: number, radius: number) {
   return 2 * Math.PI * radius * (1 - progress);
 }
 
-export interface PullToRefreshSpinnerProps extends HTMLAttributes<HTMLDivElement> {
+export interface PullToRefreshSpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: number;
   strokeWidth?: number;
   on?: boolean;
@@ -15,7 +15,7 @@ export interface PullToRefreshSpinnerProps extends HTMLAttributes<HTMLDivElement
   'aria-label'?: string;
 }
 
-const PullToRefreshSpinner: FunctionComponent<PullToRefreshSpinnerProps> = ({
+const PullToRefreshSpinner: React.FunctionComponent<PullToRefreshSpinnerProps> = ({
   on,
   progress,
   size,

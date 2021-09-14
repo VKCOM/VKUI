@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useRef } from 'react';
+import * as React from 'react';
 import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 import { canUseDOM } from '../lib/dom';
 
 export function useTimeout(cb: () => any, duration: number) {
-  const options = useRef({ cb, duration });
+  const options = React.useRef({ cb, duration });
   useIsomorphicLayoutEffect(() => {
     options.current.cb = cb;
     options.current.duration = duration;
   }, [cb, duration]);
 
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
-  const clear = useCallback(() => canUseDOM && clearTimeout(timeout.current), []);
-  const set = useCallback(() => {
+  const timeout = React.useRef<ReturnType<typeof setTimeout>>();
+  const clear = React.useCallback(() => canUseDOM && clearTimeout(timeout.current), []);
+  const set = React.useCallback(() => {
     clear();
     if (canUseDOM) {
       timeout.current = setTimeout(() => {
@@ -20,7 +20,7 @@ export function useTimeout(cb: () => any, duration: number) {
       }, options.current.duration);
     }
   }, []);
-  useEffect(() => clear, []);
+  React.useEffect(() => clear, []);
 
   return { set, clear };
 }

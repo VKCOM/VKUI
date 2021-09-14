@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, MouseEvent } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { ANDROID, VKCOM } from '../../lib/platform';
@@ -8,7 +8,7 @@ import { HasPlatform } from '../../types';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import './PopoutWrapper.css';
 
-export interface PopoutWrapperProps extends HTMLAttributes<HTMLDivElement>, HasPlatform {
+export interface PopoutWrapperProps extends React.HTMLAttributes<HTMLDivElement>, HasPlatform {
   hasMask?: boolean;
   fixed?: boolean;
   alignY?: 'top' | 'center' | 'bottom';
@@ -24,9 +24,9 @@ export type WindowTouchListener = (e: Event) => void;
 
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
 
-export type ClickHandler = (e: MouseEvent<HTMLDivElement>) => void;
+export type ClickHandler = (e: React.MouseEvent<HTMLDivElement>) => void;
 
-class PopoutWrapper extends Component<PopoutWrapperProps & DOMProps, PopoutWrapperState> {
+class PopoutWrapper extends React.Component<PopoutWrapperProps & DOMProps, PopoutWrapperState> {
   constructor(props: PopoutWrapperProps) {
     super(props);
     this.state = {

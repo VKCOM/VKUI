@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getClassName } from '../../helpers/getClassName';
@@ -47,20 +47,20 @@ let scrollsCache: ViewsScrolls = {};
 
 const swipeBackExcludedTags = ['input', 'textarea'];
 
-export interface ViewProps extends HTMLAttributes<HTMLElement>, HasPlatform, NavIdProps {
+export interface ViewProps extends React.HTMLAttributes<HTMLElement>, HasPlatform, NavIdProps {
   activePanel: string;
   /**
    * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
    *
    * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
    */
-  popout?: ReactNode;
+  popout?: React.ReactNode;
   /**
    * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
    *
    * Свойство для отрисовки `ModalRoot`.
    */
-  modal?: ReactNode;
+  modal?: React.ReactNode;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**
    * callback свайпа назад
@@ -110,7 +110,7 @@ export interface ViewState {
   browserSwipe: boolean;
 }
 
-class View extends Component<ViewProps & DOMProps, ViewState> {
+class View extends React.Component<ViewProps & DOMProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
 
@@ -151,7 +151,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
   }
 
   get panels() {
-    return React.Children.toArray(this.props.children) as ReactElement[];
+    return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
 
   panelNodes: { [id: string]: HTMLDivElement } = {};
@@ -437,7 +437,7 @@ class View extends Component<ViewProps & DOMProps, ViewState> {
     }
   };
 
-  calcPanelSwipeStyles(panelId: string): CSSProperties {
+  calcPanelSwipeStyles(panelId: string): React.CSSProperties {
     if (!canUseDOM) {
       return {};
     }

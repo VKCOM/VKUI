@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -14,9 +14,9 @@ interface Props {
   popupDirection?: ActionSheetProps['popupDirection'];
 }
 
-const stopPropagation: MouseEventHandler = (e) => e.stopPropagation();
+const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();
 
-const ActionSheetDropdown: FC<Props> = ({
+const ActionSheetDropdown: React.FC<Props> = ({
   children,
   elementRef,
   toggleRef,

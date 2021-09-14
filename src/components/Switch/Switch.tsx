@@ -1,4 +1,4 @@
-import { FunctionComponent, InputHTMLAttributes } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -8,12 +8,12 @@ import { useExternRef } from '../../hooks/useExternRef';
 import './Switch.css';
 
 export interface SwitchProps extends
-  InputHTMLAttributes<HTMLInputElement>,
+  React.InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   HasRef<HTMLInputElement>,
   AdaptivityProps { }
 
-export const Switch: FunctionComponent<SwitchProps> = withAdaptivity(({
+export const Switch: React.FunctionComponent<SwitchProps> = withAdaptivity(({
   style,
   className,
   getRef,

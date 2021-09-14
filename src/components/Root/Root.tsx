@@ -1,4 +1,4 @@
-import React, { Component, HTMLAttributes, ReactElement, ReactNode } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { animationEvent } from '../../lib/supportEvents';
@@ -17,7 +17,7 @@ import './Root.css';
 
 const warn = warnOnce('Root');
 
-export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, NavIdProps {
+export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, HasPlatform, NavIdProps {
   activeView: string;
   onTransition?(params: { isBack: boolean; from: string; to: string }): void;
   /**
@@ -25,13 +25,13 @@ export interface RootProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, 
    *
    * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
    */
-  popout?: ReactNode;
+  popout?: React.ReactNode;
   /**
    * @deprecated будет удалено в 5.0.0. Используйте одноименное свойство у `SplitLayout`.
    *
    * Свойство для отрисовки `ModalRoot`.
    */
-  modal?: ReactNode;
+  modal?: React.ReactNode;
   /**
    * @ignore
    */
@@ -60,7 +60,7 @@ export interface RootState {
   transition: boolean;
 }
 
-class Root extends Component<RootProps & DOMProps, RootState> {
+class Root extends React.Component<RootProps & DOMProps, RootState> {
   constructor(props: RootProps) {
     super(props);
 
@@ -196,7 +196,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
     } = this.props;
     const { transition, isBack, prevView, activeView, nextView } = this.state;
 
-    const Views = React.Children.toArray(this.props.children).filter((view: ReactElement) => {
+    const Views = React.Children.toArray(this.props.children).filter((view: React.ReactElement) => {
       return this.state.visibleViews.includes(getNavId(view.props, warn));
     });
 
@@ -208,7 +208,7 @@ class Root extends Component<RootProps & DOMProps, RootState> {
         'Root--transition': !disableAnimation && transition,
         'Root--no-motion': disableAnimation,
       })}>
-        {Views.map((view: ReactElement) => {
+        {Views.map((view: React.ReactElement) => {
           const viewId = getNavId(view.props, warn);
           return (
             <div key={viewId} ref={(e) => this.viewNodes[viewId] = e} vkuiClass={classNames('Root__view', {

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import * as React from 'react';
 import { Icon28ChevronBack, Icon28ChevronLeftOutline, Icon28ArrowLeftOutline } from '@vkontakte/icons';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID, VKCOM, IOS } from '../../lib/platform';
@@ -12,7 +12,7 @@ export type PanelHeaderBackProps = PanelHeaderButtonProps & AdaptivityProps & {
   'aria-label'?: string;
 };
 
-const PanelHeaderBack: FunctionComponent<PanelHeaderBackProps> = ({ label, sizeX, ...restProps }: PanelHeaderButtonProps & AdaptivityProps) => {
+const PanelHeaderBack: React.FunctionComponent<PanelHeaderBackProps> = ({ label, sizeX, ...restProps }: PanelHeaderButtonProps & AdaptivityProps) => {
   const platform = usePlatform();
   const showLabel = platform === VKCOM || platform === IOS && sizeX === SizeType.REGULAR;
 

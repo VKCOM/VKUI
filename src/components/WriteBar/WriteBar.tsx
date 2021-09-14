@@ -1,11 +1,4 @@
-import {
-  ChangeEventHandler,
-  FC,
-  ReactNode,
-  useEffect,
-  useRef,
-  TextareaHTMLAttributes,
-} from 'react';
+import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useExternRef } from '../../hooks/useExternRef';
 import { hasReactNode, isFunction } from '../../lib/utils';
@@ -13,19 +6,19 @@ import { getClassName } from '../../helpers/getClassName';
 import { HasRef, HasRootRef } from '../../types';
 import './WriteBar.css';
 
-export interface WriteBarProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLTextAreaElement> {
+export interface WriteBarProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLTextAreaElement> {
   /**
    * Содержимое, отображаемое слево от поля ввода.
    */
-  before?: ReactNode;
+  before?: React.ReactNode;
   /**
    * Содержимое, отображаемое поверх поля ввода (актуально для iOS)
    */
-  inlineAfter?: ReactNode;
+  inlineAfter?: React.ReactNode;
   /**
    * Содержимое, отображаемое справа от поля ввода
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
   /**
    * Вызывается при смене высоты поля ввода
    */
@@ -34,7 +27,7 @@ export interface WriteBarProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   children?: never;
 }
 
-export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
+export const WriteBar: React.FC<WriteBarProps> = (props: WriteBarProps) => {
   const platform = usePlatform();
   const {
     className,
@@ -56,7 +49,7 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
   const isControlledOutside = value != null;
 
   const textareaRef = useExternRef(getRef);
-  const textareaMinHeightRef = useRef<number | null>(null);
+  const textareaMinHeightRef = React.useRef<number | null>(null);
 
   const resize = () => {
     const textareaEl = textareaRef.current;
@@ -89,7 +82,7 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
     }
   };
 
-  const onTextareaChange: ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+  const onTextareaChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
     if (isFunction(onChange)) {
       onChange(event);
     }
@@ -99,7 +92,7 @@ export const WriteBar: FC<WriteBarProps> = (props: WriteBarProps) => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     resize();
   }, [value]);
 

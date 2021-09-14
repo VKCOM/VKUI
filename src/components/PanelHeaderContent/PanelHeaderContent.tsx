@@ -1,4 +1,4 @@
-import { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable from '../Tappable/Tappable';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -8,13 +8,13 @@ import Headline from '../Typography/Headline/Headline';
 import { IOS } from '../../lib/platform';
 import './PanelHeaderContent.css';
 
-export interface PanelHeaderContentProps extends HTMLAttributes<HTMLDivElement> {
-  aside?: ReactNode;
-  before?: ReactNode;
-  status?: ReactNode;
+export interface PanelHeaderContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  aside?: React.ReactNode;
+  before?: React.ReactNode;
+  status?: React.ReactNode;
 }
 
-const PanelHeaderContent: FunctionComponent<PanelHeaderContentProps> = ({
+const PanelHeaderContent: React.FunctionComponent<PanelHeaderContentProps> = ({
   className,
   style,
   aside,

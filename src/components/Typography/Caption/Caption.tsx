@@ -1,17 +1,17 @@
-import { AllHTMLAttributes, ElementType, FC } from 'react';
+import * as React from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import './Caption.css';
 
-export interface CaptionProps extends AllHTMLAttributes<HTMLElement> {
+export interface CaptionProps extends React.AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold' | 'bold';
   level: '1' | '2' | '3' | '4';
   caps?: boolean;
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
-const Caption: FC<CaptionProps> = ({
+const Caption: React.FC<CaptionProps> = ({
   children,
   weight,
   level,

@@ -1,4 +1,4 @@
-import { ElementType, FC, HTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -12,23 +12,23 @@ import Text from '../Typography/Text/Text';
 import Subhead from '../Typography/Subhead/Subhead';
 import './Header.css';
 
-export interface HeaderProps extends HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface HeaderProps extends React.HTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   mode?: 'primary' | 'secondary' | 'tertiary';
-  subtitle?: ReactNode;
+  subtitle?: React.ReactNode;
   /**
    * Допускаются иконки, текст, Link
    */
-  aside?: ReactNode;
+  aside?: React.ReactNode;
   /**
    * Допускаются текст, Indicator
    */
-  indicator?: ReactNode;
+  indicator?: React.ReactNode;
   multiline?: boolean;
 }
 
-type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode'> & HasPlatform & { Component: ElementType };
+type HeaderContentProps = Pick<HeaderProps, 'children' | 'mode'> & HasPlatform & { Component: React.ElementType };
 
-const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps }) => {
+const HeaderContent: React.FC<HeaderContentProps> = ({ platform, mode, ...restProps }) => {
   if (platform === Platform.IOS) {
     switch (mode) {
       case 'primary':
@@ -58,23 +58,23 @@ const HeaderContent: FC<HeaderContentProps> = ({ platform, mode, ...restProps })
   }
 };
 
-type HeaderAsideProps = Pick<HeaderProps, 'aside'> & HasPlatform & { Component: ElementType };
+type HeaderAsideProps = Pick<HeaderProps, 'aside'> & HasPlatform & { Component: React.ElementType };
 
-const HeaderAside: FC<HeaderAsideProps> = ({ platform, ...restProps }) => {
+const HeaderAside: React.FC<HeaderAsideProps> = ({ platform, ...restProps }) => {
   return platform === Platform.VKCOM
     ? <Subhead weight="regular" {...restProps} />
     : <Text weight="regular" {...restProps} />;
 };
 
-type HeaderSubtitleProps = Pick<HeaderProps, 'subtitle' | 'mode'> & { Component: ElementType };
+type HeaderSubtitleProps = Pick<HeaderProps, 'subtitle' | 'mode'> & { Component: React.ElementType };
 
-const HeaderSubtitle: FC<HeaderSubtitleProps> = ({ mode, ...restProps }) => {
+const HeaderSubtitle: React.FC<HeaderSubtitleProps> = ({ mode, ...restProps }) => {
   return mode === 'secondary'
     ? <Subhead weight="regular" {...restProps} />
     : <Caption weight="regular" level="1" {...restProps} />;
 };
 
-const Header: FC<HeaderProps> = ({
+const Header: React.FC<HeaderProps> = ({
   mode,
   children,
   subtitle,

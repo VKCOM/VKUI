@@ -1,4 +1,4 @@
-import { createContext, RefObject } from 'react';
+import * as React from 'react';
 import { noop } from '../../lib/utils';
 import { clamp } from '../../helpers/math';
 
@@ -7,7 +7,7 @@ export interface ScrollContextInterface {
   scrollTo(x?: number, y?: number): void;
 }
 
-export const ScrollContext = createContext<ScrollContextInterface>({
+export const ScrollContext = React.createContext<ScrollContextInterface>({
   getScroll: () => ({ x: 0, y: 0 }),
   scrollTo: noop,
 });
@@ -22,7 +22,7 @@ export const globalScrollController = (window: Window, document: HTMLDocument) =
   },
 });
 
-export const elementScrollController = (elRef: RefObject<HTMLElement>) => ({
+export const elementScrollController = (elRef: React.RefObject<HTMLElement>) => ({
   getScroll: () => ({ x: elRef.current.scrollLeft, y: elRef.current.scrollTop }),
   scrollTo: (x = 0, y = 0) => {
     const el = elRef.current;

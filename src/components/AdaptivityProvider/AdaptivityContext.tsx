@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import * as React from 'react';
 
 export enum SizeType {
   COMPACT = 'compact',
@@ -45,7 +45,7 @@ export interface AdaptivityContextInterface extends SizeProps {
   hasMouse?: boolean;
 }
 
-export const AdaptivityContext = createContext<AdaptivityContextInterface>({
+export const AdaptivityContext = React.createContext<AdaptivityContextInterface>({
   sizeX: SizeType.COMPACT,
   sizeY: SizeType.REGULAR,
 });
