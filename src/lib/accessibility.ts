@@ -1,5 +1,19 @@
 import * as React from 'react';
 
+export const FOCUSABLE_ELEMENTS_LIST = [
+  'a[href]',
+  'area[href]',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  'button:not([disabled])',
+  'iframe',
+  'audio',
+  'video',
+  '[contenteditable]',
+  '[tabindex]:not([tabindex="-1"])',
+];
+
 export enum Keys {
   ENTER = 'Enter',
   SPACE = 'Space',
