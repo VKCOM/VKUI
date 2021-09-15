@@ -60,7 +60,7 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
     style, onFocus, onKeyDown, className, fetching, renderOption, emptyText,
     getRef, getRootRef, disabled, placeholder, tabIndex, getOptionValue, getOptionLabel, showSelected,
     getNewOptionData, renderChip, popupDirection, creatable, filterFn, inputValue, creatableText, sizeY,
-    closeAfterSelect, onChangeStart, after, ...restProps
+    closeAfterSelect, onChangeStart, after, options, ...restProps
   } = props;
 
   const { document } = useDOM();
