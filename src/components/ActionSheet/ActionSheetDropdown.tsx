@@ -5,20 +5,18 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { ActionSheetProps } from './ActionSheet';
 import './ActionSheet.css';
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   closing: boolean;
   onClose(): void;
   toggleRef: Element;
-  elementRef: React.RefObject<HTMLDivElement>;
   /** Has no effect - only for ActionSheetDropdownDesktip polymorhipsm */
   popupDirection?: ActionSheetProps['popupDirection'];
 }
 
 const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();
 
-const ActionSheetDropdown: React.FC<Props> = ({
+export const ActionSheetDropdown: React.FC<Props> = ({
   children,
-  elementRef,
   toggleRef,
   closing,
   popupDirection,
@@ -30,7 +28,6 @@ const ActionSheetDropdown: React.FC<Props> = ({
   return (
     <div
       {...restProps}
-      ref={elementRef}
       onClick={stopPropagation}
       vkuiClass={classNames(baseClaseName, {
         'ActionSheet--closing': closing,
@@ -40,5 +37,3 @@ const ActionSheetDropdown: React.FC<Props> = ({
     </div>
   );
 };
-
-export default ActionSheetDropdown;
