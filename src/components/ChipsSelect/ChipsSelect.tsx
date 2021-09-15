@@ -326,7 +326,7 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   options: [],
   filterFn: (value?: string, option?: ChipsInputOption, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => {
     return (
-      !value || value && getOptionLabel(option)?.toLowerCase()?.startsWith(value?.toLowerCase())
+      !value || value && getOptionLabel(option)?.toLowerCase()?.includes(value?.toLowerCase())
     );
   },
   renderOption({ option, ...restProps }: CustomSelectOptionProps): React.ReactNode {

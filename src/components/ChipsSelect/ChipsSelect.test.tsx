@@ -29,7 +29,7 @@ describe('ChipsSelect', () => {
 
   it('filters options', () => {
     render(<ChipsSelect options={colors} />);
-    userEvent.type(screen.getByRole('textbox'), colors[1].label.substring(0, 3));
+    userEvent.type(screen.getByRole('textbox'), colors[1].label.substring(1, 4));
     toggleDropdown();
     expect(queryListOption(colors[1])).toBeTruthy();
     expect(screen.queryAllByRole('option')).toHaveLength(1);
