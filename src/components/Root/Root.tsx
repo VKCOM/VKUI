@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import { ANDROID, VKCOM } from '../../lib/platform';
+import { IOS } from '../../lib/platform';
 import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
@@ -35,7 +35,9 @@ export interface RootProps extends React.HTMLAttributes<HTMLDivElement>, NavIdPr
 
 export interface RootState {
   activeView: string;
-  prevView: string;
+  transition: boolean;
+  isBack?: boolean;
+  prevView?: string;
 }
 
 const Root: React.FC<RootProps> = ({
@@ -45,94 +47,90 @@ const Root: React.FC<RootProps> = ({
   ...restProps
 }) => {
   const scroll = React.useContext(ScrollContext);
-  const { transitionMotionEnabled = true } = React.useContext(ConfigProviderContext);
-  const splitCol = React.useContext(SplitColContext);
   const platform = usePlatform();
   const { document } = useDOM();
-  const scrolls = React.useRef<Record<string, number>>({});
-  const viewNodes = React.useRef<{ [id: string]: HTMLElement }>({});
-  const [{ prevView, activeView }, setState] = React.useState<RootState>({
-    activeView: _activeView,
-    prevView: null,
-  });
+  const scrolls = React.useRef<Record<string, number>>({}).current;
+  const viewNodes = React.useRef<Record<string, HTMLElement>>({}).current;
 
-  // derived state
-  const transition = !!prevView;
-  const views = (React.Children.toArray(children) as React.ReactElement[])
-    .filter((view) => [prevView, activeView].includes(getNavId(view.props, warn)));
-  const isBack = transition && getNavId(views[0].props, warn) === activeView;
+  const { transitionMotionEnabled = true } = React.useContext(ConfigProviderContext);
+  const { animate } = React.useContext(SplitColContext);
+  const disableAnimation = !transitionMotionEnabled || !animate;
+
+  const views = React.Children.toArray(children) as React.ReactElement[];
+
+  const [{ prevView, activeView, transition, isBack }, _setState] = React.useState<RootState>({
+    activeView: _activeView,
+    transition: false,
+  });
+  const transitionTo = (panel: string) => {
+    if (panel !== activeView) {
+      const viewIds = views.map((view) => getNavId(view.props, warn));
+      const isBack = viewIds.indexOf(panel) < viewIds.indexOf(activeView);
+      _setState({ activeView: panel, prevView: activeView, transition: true, isBack });
+    }
+  };
+  const finishTransition = () => _setState({ activeView, prevView, isBack, transition: false });
 
   useIsomorphicLayoutEffect(() => {
     (document.activeElement as HTMLElement)?.blur();
   }, [!!popout, activeView]);
 
   // Нужен переход
+  useIsomorphicLayoutEffect(() => transitionTo(_activeView), [_activeView]);
+  // scroll restoration
   useIsomorphicLayoutEffect(() => {
-    if (_activeView !== activeView) {
-      // save scroll
-      scrolls.current[_activeView] = scroll.getScroll().y;
-      // start transition
-      setState({ activeView: _activeView, prevView: activeView });
-    }
-  }, [_activeView]);
-
-  useIsomorphicLayoutEffect(() => {
-    // Кончился переход
     if (transition) {
-      // Начался переход
-      const setPanelScroll = (e: HTMLElement, scroll: number) => {
-        // eslint-disable-next-line no-restricted-properties
-        const pan: HTMLElement | null = e.querySelector('[data-vkui-active-panel=true]');
-        pan && (pan.scrollTop = scroll);
-      };
-
-      setPanelScroll(viewNodes.current[prevView], scrolls.current[prevView]);
-      if (isBack) {
-        setPanelScroll(viewNodes.current[activeView], scrolls.current[activeView]);
-      }
-    } else {
-      scroll.scrollTo(0, isBack ? scrolls.current[activeView] : 0);
+      // save scroll
+      scrolls[prevView] = scroll.getScroll().y;
+      setPanelScroll(viewNodes[prevView], scrolls[prevView]);
+      isBack && setPanelScroll(viewNodes[activeView], scrolls[activeView]);
+    } else if (prevView) {
+      // Закончился переход
+      scroll.scrollTo(0, isBack ? scrolls[activeView] : 0);
+    }
+  }, [transition]);
+  // onTransition
+  useIsomorphicLayoutEffect(() => {
+    if (!transition && prevView) {
       onTransition && onTransition({ isBack, from: prevView, to: activeView });
     }
   }, [transition]);
 
-  const shouldDisableTransitionMotion = !transitionMotionEnabled || !splitCol.animate;
-
-  const fallbackTransition = useTimeout(onAnimationEnd, platform === ANDROID || platform === VKCOM ? 300 : 600);
+  const fallbackTransition = useTimeout(finishTransition, platform === IOS ? 600 : 300);
   React.useEffect(() => {
     if (!transition) {
       fallbackTransition.clear();
       return;
     }
-    shouldDisableTransitionMotion ? onAnimationEnd() : fallbackTransition.set();
+    disableAnimation ? finishTransition() : fallbackTransition.set();
   }, [transition]);
 
-  function onAnimationEnd(e?: React.AnimationEvent) {
-    if (!e || [
+  const onAnimationEnd = (e: React.AnimationEvent) => {
+    if ([
       'vkui-root-android-animation-hide-back',
       'vkui-root-android-animation-show-forward',
       'vkui-root-ios-animation-hide-back',
       'vkui-root-ios-animation-show-forward',
     ].includes(e.animationName)) {
-      setState({ activeView, prevView: null });
+      finishTransition();
     }
   };
 
-  const baseClassName = getClassName('Root', platform);
-  const disableAnimation = shouldDisableTransitionMotion;
-
   return (
-    <div {...restProps} vkuiClass={classNames(baseClassName, {
+    <div {...restProps} vkuiClass={classNames(getClassName('Root', platform), {
       'Root--transition': !disableAnimation && transition,
       'Root--no-motion': disableAnimation,
     })}>
       {views.map((view) => {
         const viewId = getNavId(view.props, warn);
+        if (viewId !== activeView && !(transition && viewId === prevView)) {
+          return null;
+        }
         const isTransitionTarget = transition && viewId === (isBack ? prevView : activeView);
         return (
           <div
             key={viewId}
-            ref={(e) => viewNodes.current[viewId] = e}
+            ref={(e) => viewNodes[viewId] = e}
             onAnimationEnd={isTransitionTarget ? onAnimationEnd : null}
             vkuiClass={classNames('Root__view', {
               'Root__view--hide-back': transition && viewId === prevView && isBack,
@@ -153,3 +151,9 @@ const Root: React.FC<RootProps> = ({
 };
 
 export default Root;
+
+function setPanelScroll(e: HTMLElement, scroll: number) {
+  // eslint-disable-next-line no-restricted-properties
+  const pan: HTMLElement | null = e.querySelector('[data-vkui-active-panel=true]');
+  pan && (pan.scrollTop = scroll);
+}
