@@ -1,5 +1,5 @@
 import { baselineComponent, mountTest } from '../../testing/utils';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ModalPage from '../ModalPage/ModalPage';
 import ModalCard from '../ModalCard/ModalCard';
 import { ModalRootTouch } from './ModalRoot';
@@ -98,12 +98,12 @@ describe.each([
         const onCloseRoot = jest.fn();
         render((
           <ModalRoot onClose={onCloseRoot} activeModal="m">
-            <ModalPage id="m" />
+            <ModalPage data-testid="modal" id="m" />
           </ModalRoot>
         ));
         // wait for animations
         jest.runAllTimers();
-        userEvent.keyboard('{esc}');
+        userEvent.type(screen.getByTestId('modal'), '{esc}');
         expect(onCloseRoot).toBeCalledTimes(1);
       });
     }
