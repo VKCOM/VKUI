@@ -5,7 +5,6 @@ import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContex
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
-import { Ref } from '../../types';
 import { multiRef } from '../../lib/utils';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
@@ -26,7 +25,7 @@ export interface ModalPageProps extends React.HTMLAttributes<HTMLDivElement>, Ad
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
-  getModalContentRef?: Ref<HTMLDivElement>;
+  getModalContentRef?: React.Ref<HTMLDivElement>;
 }
 
 const warn = warnOnce('ModalPage');

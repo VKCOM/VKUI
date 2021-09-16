@@ -6,18 +6,12 @@ export type AnyFunction = (...args: any[]) => any;
 
 export type AlignType = 'left' | 'center' | 'right';
 
-export type RefWithCurrent<T> = {
-  current: T | null;
-};
-
-export type Ref<T> = React.RefCallback<T> | RefWithCurrent<T>;
-
 export interface HasRootRef<T> {
-  getRootRef?: Ref<T>;
+  getRootRef?: React.Ref<T>;
 }
 
 export interface HasRef<T> {
-  getRef?: Ref<T>;
+  getRef?: React.Ref<T>;
 }
 
 export interface HasAlign {
