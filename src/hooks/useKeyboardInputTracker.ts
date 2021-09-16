@@ -6,7 +6,7 @@ import { useGlobalEventListener } from './useGlobalEventListener';
 export function useKeyboardInputTracker(): boolean {
   const { document } = useDOM();
 
-  const [isKeyboardInputActive, toggleKeyboardInput] = React.useState<boolean>(true);
+  const [isKeyboardInputActive, toggleKeyboardInput] = React.useState<boolean>(false);
 
   const enableKeyboardInput = React.useCallback((e: KeyboardEvent) => {
     toggleKeyboardInput(pressedKey(e) === Keys.TAB);
