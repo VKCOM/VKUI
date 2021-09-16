@@ -91,7 +91,7 @@ function getAdaptivePxWidth(viewWidth: ViewWidth) {
 }
 
 const AppWrapper: FC = (props) => (
-  <AppRoot embedded>
+  <AppRoot mode="embedded">
     <View activePanel="panel">
       <Panel id="panel">
         <Group>
