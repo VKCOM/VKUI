@@ -8,7 +8,10 @@
 }
 
 .SimpleCheckbox__input {
-  display: none;
+  position: absolute;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .SimpleCheckbox__container {
