@@ -1,10 +1,8 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import { AppRootContext } from './AppRootContext';
 import AppRoot from './AppRoot';
 import { SizeType } from '../../hoc/withAdaptivity';
-import Button from '../Button/Button';
 
 describe('AppRoot', () => {
   baselineComponent(AppRoot);
@@ -66,24 +64,6 @@ describe('AppRoot', () => {
       ));
       render(<AppRoot mode="embedded" />).unmount();
       expect(document.body).toContainElement(portalRoot1);
-    });
-  });
-  describe('Manages a11y properly', () => {
-    it('has class .AppRoot--keyboard-input on keyboard navigation', () => {
-      render(<AppRoot data-testid="root" mode="embedded"><Button>Hello world</Button></AppRoot>);
-      const root = screen.getByTestId('root');
-
-      // test keyboard nav and outline
-      userEvent.tab();
-      expect(root).toHaveClass('AppRoot--keyboard-input');
-    });
-    it('has no class .AppRoot--keyboard-input on mouse click', () => {
-      render(<AppRoot data-testid="root" mode="embedded"><Button>Hello world</Button></AppRoot>);
-      const root = screen.getByTestId('root');
-
-      // test click and no outline
-      userEvent.click(screen.getByRole('button'));
-      expect(root).not.toHaveClass('AppRoot--keyboard-input');
     });
   });
 });
