@@ -80,7 +80,8 @@
   border-radius: 4px;
 }
 
-.SimpleCheckbox--vkcom .SimpleCheckbox__activeShadow {
+.SimpleCheckbox--vkcom .SimpleCheckbox__activeShadow,
+.SimpleCheckbox--vkcom .SimpleCheckbox__hoverShadow {
   margin: 3px;
   width: 16px;
   height: 16px;
@@ -99,11 +100,8 @@
   background-color: var(--background_highlighted);
 }
 
-.SimpleCheckbox--vkcom .SimpleCheckbox__hoverShadow {
-  margin: 3px;
-  border-radius: inherit;
-  width: 16px;
-  height: 16px;
+.SimpleCheckbox--vkcom.SimpleCheckbox--hover .SimpleCheckbox__hoverShadow {
+  background-color: var(--background_hover);
 }
 
 .SimpleCheckbox--vkcom .SimpleCheckbox__icon {
