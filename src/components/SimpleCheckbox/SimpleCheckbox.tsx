@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, FC, useEffect, useCallback } from 'react';
+import * as React from 'react';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -19,20 +19,20 @@ const warn = warnOnce('SimpleCheckbox');
 const IS_DEV = process.env.NODE_ENV === 'development';
 
 export interface SimpleCheckboxProps extends
-  InputHTMLAttributes<HTMLInputElement>,
+  React.InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   HasRef<HTMLInputElement> {
   indeterminate?: boolean;
   defaultIndeterminate?: boolean;
 }
 
-export const SimpleCheckbox: FC<SimpleCheckboxProps> = (props: SimpleCheckboxProps) => {
+export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (props: SimpleCheckboxProps) => {
   const { className, style, getRootRef, getRef, indeterminate, defaultIndeterminate, onChange, ...restProps } = props;
   const { sizeY } = useAdaptivity();
   const platform = usePlatform();
   const inputRef = useExternRef(getRef);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const indeterminateValue = indeterminate === undefined ? defaultIndeterminate : indeterminate;
 
     if (inputRef.current) {
@@ -40,7 +40,7 @@ export const SimpleCheckbox: FC<SimpleCheckboxProps> = (props: SimpleCheckboxPro
     }
   }, [indeterminate]);
 
-  const handleChange: SimpleCheckboxProps['onChange'] = useCallback((event) => {
+  const handleChange: SimpleCheckboxProps['onChange'] = React.useCallback((event) => {
     if (defaultIndeterminate !== undefined && indeterminate === undefined && restProps.checked === undefined) {
       inputRef.current.indeterminate = false;
     }
