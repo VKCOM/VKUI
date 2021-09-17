@@ -1,4 +1,4 @@
-import { ElementType, FC, ReactNode } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
@@ -10,14 +10,16 @@ import { HasAlign } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { Platform, IOS, VKCOM } from '../../lib/platform';
+import Spinner from '../Spinner/Spinner';
 import './Button.css';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
   size?: 's' | 'm' | 'l';
   stretched?: boolean;
-  before?: ReactNode;
-  after?: ReactNode;
+  before?: React.ReactNode;
+  after?: React.ReactNode;
+  loading?: boolean;
 }
 
 export interface ButtonProps extends Omit<TappableProps, 'size'>, VKUIButtonProps {}
@@ -27,10 +29,10 @@ interface ButtonTypographyProps {
   platform: Platform;
   sizeY: AdaptivityProps['sizeY'];
   children?: ButtonProps['children'];
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
-const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProps) => {
+const ButtonTypography: React.FC<ButtonTypographyProps> = (props: ButtonTypographyProps) => {
   const { size, sizeY, platform, ...restProps } = props;
   const isCompact = sizeY === SizeType.COMPACT;
 
@@ -65,15 +67,31 @@ const ButtonTypography: FC<ButtonTypographyProps> = (props: ButtonTypographyProp
   }
 };
 
-const Button: FC<ButtonProps> = (props: ButtonProps) => {
+const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
-  const { size, mode, stretched, align, children, before, after, getRootRef, sizeY, Component = 'button', ...restProps } = props;
+  const {
+    size,
+    mode,
+    stretched,
+    align,
+    children,
+    before,
+    after,
+    getRootRef,
+    sizeY,
+    Component = 'button',
+    loading,
+    onClick,
+    ...restProps
+  } = props;
+
   const hasIcons = Boolean(before || after);
 
   return (
     <Tappable
       {...restProps}
       Component={restProps.href ? 'a' : Component}
+      onClick={loading ? null : onClick}
       focusVisibleMode="outside"
       vkuiClass={
         classNames(
@@ -83,7 +101,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
           `Button--aln-${align}`,
           `Button--sizeY-${sizeY}`,
           {
-            ['Button--str']: stretched,
+            ['Button--stretched']: stretched,
             ['Button--with-icon']: hasIcons,
           },
         )
@@ -91,6 +109,7 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
       getRootRef={getRootRef}
       activeMode="opacity"
     >
+      {loading && <Spinner size="small" vkuiClass="Button__spinner" />}
       <span vkuiClass="Button__in">
         {before && <span vkuiClass="Button__before">{before}</span>}
         {children && (

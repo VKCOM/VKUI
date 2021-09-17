@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, HTMLAttributes, ReactNode, ReactElement } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getClassName } from '../../helpers/getClassName';
@@ -15,6 +15,7 @@ import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import './View.css';
 
 const warn = warnOnce('ViewInfinite');
 export const transitionStartEventName = 'VKUI:View:transition-start';
@@ -47,10 +48,10 @@ const swipeBackExcludedTags = ['input', 'textarea'];
 
 export type TransitionParams = { from: string; to: string };
 
-export interface ViewInfiniteProps extends HTMLAttributes<HTMLElement>, HasPlatform, NavIdProps {
+export interface ViewInfiniteProps extends React.HTMLAttributes<HTMLElement>, HasPlatform, NavIdProps {
   activePanel: string;
-  popout?: ReactNode;
-  modal?: ReactNode;
+  popout?: React.ReactNode;
+  modal?: React.ReactNode;
   onTransition?(params: TransitionParams & { isBack: boolean }): void;
   /**
    * callback свайпа назад
@@ -101,7 +102,7 @@ export interface ViewInfiniteState {
   browserSwipe: boolean;
 }
 
-class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteState> {
+class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInfiniteState> {
   constructor(props: ViewInfiniteProps) {
     super(props);
 
@@ -142,7 +143,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
   }
 
   get panels() {
-    return React.Children.toArray(this.props.children) as ReactElement[];
+    return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
 
   panelNodes: { [id: string]: HTMLDivElement } = {};
@@ -378,8 +379,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
 
   swipingBackTransitionEndHandler = (e?: TransitionEvent): void => {
     // indexOf because of vendor prefixes in old browsers
-    const target = e.target as HTMLElement;
-    if (e.propertyName.includes('transform') && target === this.pickPanel(this.state.swipeBackNextPanel)) {
+    if (!e || e.propertyName.includes('transform') && e.target === this.pickPanel(this.state.swipeBackNextPanel)) {
       switch (this.state.swipeBackResult) {
         case SwipeBackResults.fail:
           this.onSwipeBackCancel();
@@ -474,7 +474,7 @@ class ViewInfinite extends Component<ViewInfiniteProps & DOMProps, ViewInfiniteS
     }
   };
 
-  calcPanelSwipeStyles(panelId: string): CSSProperties {
+  calcPanelSwipeStyles(panelId: string): React.CSSProperties {
     if (!canUseDOM) {
       return {};
     }

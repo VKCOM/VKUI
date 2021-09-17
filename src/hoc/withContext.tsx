@@ -1,6 +1,6 @@
-import React, { Context } from 'react';
+import * as React from 'react';
 
-export function withContext<T, X>(Component: T, Ctx: Context<X>, prop: string): T {
+export function withContext<T, X>(Component: T, Ctx: React.Context<X>, prop: string): T {
   function WithContext(props: {}) {
     const context = React.useContext<X>(Ctx);
 

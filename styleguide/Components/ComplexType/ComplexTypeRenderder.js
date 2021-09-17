@@ -1,10 +1,17 @@
 import React from 'react';
-import { Text } from '@vkui';
+import { Text, ViewWidth, useAdaptivity } from '@vkui';
 import { HoverDropdown } from '@vkui/unstable';
 import { Icon16ErrorCircleOutline } from '@vkontakte/icons';
+import TypeRenderer from '../Type/TypeRenderer';
 import './ComplexType.css';
 
 export const ComplexTypeRenderder = ({ name, raw }) => {
+  const { viewWidth } = useAdaptivity();
+
+  if (viewWidth <= ViewWidth.MOBILE) {
+    return <TypeRenderer>{raw}</TypeRenderer>;
+  }
+
   return (
     <HoverDropdown placement="right" content={
       <div className="ComplexTypeDropdown">

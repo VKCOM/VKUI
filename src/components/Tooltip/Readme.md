@@ -138,6 +138,11 @@ import { Tooltip, Button } from '@vkontakte/vkui';
         <Avatar />
       </div>
     </Tooltip>
+    <Tooltip text="Двигаем стрелочку" cornerOffset={20}>
+      <div style={{ display: 'inline-block', marginLeft: 100 }}>
+        <Avatar />
+      </div>
+    </Tooltip>
   </TooltipContainer>
   <TooltipContainer
     fixed

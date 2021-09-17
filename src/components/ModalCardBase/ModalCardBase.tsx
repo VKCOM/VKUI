@@ -1,7 +1,7 @@
-import { FC, HTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import { hasReactNode } from '../../lib/utils';
 import Title from '../Typography/Title/Title';
-import Subhead from '../Typography/Subhead/Subhead';
+import Headline from '../Typography/Headline/Headline';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -13,30 +13,30 @@ import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { Icon24Dismiss } from '@vkontakte/icons';
 import './ModalCardBase.css';
 
-export interface ModalCardBaseProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface ModalCardBaseProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   /**
    * Иконка.
    *
    * Может быть компонентом иконки, например, `<Icon56MoneyTransferOutline />`, или `<Avatar size={72} src="" />`
    */
-  icon?: ReactNode;
+  icon?: React.ReactNode;
 
   /**
    * Заголовок карточки
    */
-  header?: ReactNode;
+  header?: React.ReactNode;
 
   /**
    * Подзаголовок
    */
-  subheader?: ReactNode;
+  subheader?: React.ReactNode;
 
   /**
    * Кнопки-действия.
    *
    * Рекомендуется использовать `<Button size="l" mode="primary" />` или `<Button size="l" mode="secondary" />`
    */
-  actions?: ReactNode;
+  actions?: React.ReactNode;
 
   /**
    * Тип отображения кнопок: вертикальный или горизонтальный
@@ -45,7 +45,7 @@ export interface ModalCardBaseProps extends HTMLAttributes<HTMLDivElement>, HasR
   onClose?: VoidFunction;
 }
 
-export const ModalCardBase: FC<ModalCardBaseProps> = withAdaptivity(({
+export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity(({
   getRootRef,
   icon,
   header,
@@ -76,7 +76,7 @@ export const ModalCardBase: FC<ModalCardBaseProps> = withAdaptivity(({
       <div vkuiClass="ModalCardBase__container">
         {hasReactNode(icon) && <div vkuiClass="ModalCardBase__icon">{icon}</div>}
         {hasReactNode(header) && <Title level="2" weight="semibold" vkuiClass="ModalCardBase__header">{header}</Title>}
-        {hasReactNode(subheader) && <Subhead weight="regular" vkuiClass="ModalCardBase__subheader">{subheader}</Subhead>}
+        {hasReactNode(subheader) && <Headline weight="regular" vkuiClass="ModalCardBase__subheader">{subheader}</Headline>}
 
         {children}
 

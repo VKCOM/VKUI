@@ -1,11 +1,11 @@
-import { FC, ReactNode } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
-import Caption from '../Typography/Caption/Caption';
+import Subhead from '../Typography/Subhead/Subhead';
 import { withAdaptivity } from '../../hoc/withAdaptivity';
 import './RichCell.css';
 
@@ -13,27 +13,27 @@ export interface RichCellProps extends TappableProps {
   /**
    * Контейнер для текста под `children`.
    */
-  text?: ReactNode;
+  text?: React.ReactNode;
   /**
    * Контейнер для текста под `text`.
    */
-  caption?: ReactNode;
+  caption?: React.ReactNode;
   /**
    * Контейнер для контента под `caption`. Например `<UsersStack size="s" />`
    */
-  bottom?: ReactNode;
+  bottom?: React.ReactNode;
   /**
    * Кнопка или набор кнопок `<Button size="s" />`. Располагается под `bottom`.
    */
-  actions?: ReactNode;
+  actions?: React.ReactNode;
   /**
    * `<Avatar size={48|72} />`
    */
-  before?: ReactNode;
+  before?: React.ReactNode;
   /**
    * Иконка 28 или текст
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
   /**
    * Убирает анимацию нажатия
    */
@@ -41,7 +41,7 @@ export interface RichCellProps extends TappableProps {
   multiline?: boolean;
 }
 
-const RichCell: FC<RichCellProps> = ({
+const RichCell: React.FC<RichCellProps> = ({
   children,
   text,
   caption,
@@ -70,22 +70,20 @@ const RichCell: FC<RichCellProps> = ({
     >
       {before}
       <div vkuiClass="RichCell__in">
-        <div vkuiClass="RichCell__top">
-          {/* Этот after будет скрыт из верстки. Он нужен для CSS */}
-          {after}
-          <Text weight="medium" vkuiClass="RichCell__content">
-            <div vkuiClass="RichCell__children">{children}</div>
-            {hasReactNode(after) && <div vkuiClass="RichCell__after">{after}</div>}
-          </Text>
-          {hasReactNode(text) && <Text weight="regular" vkuiClass="RichCell__text">{text}</Text>}
-          {hasReactNode(caption) && <Caption level="1" weight="regular" vkuiClass="RichCell__caption">{caption}</Caption>}
-          {(hasReactNode(bottom) || hasReactNode(actions)) &&
-            <div vkuiClass="RichCell__bottom">
-              {bottom}
-              {hasReactNode(actions) && <div vkuiClass="RichCell__actions">{actions}</div>}
-            </div>
-          }
-        </div>
+        {/* Этот after будет скрыт из верстки. Он нужен для CSS */}
+        {after}
+        <Text weight="medium" vkuiClass="RichCell__content">
+          <div vkuiClass="RichCell__children">{children}</div>
+          {hasReactNode(after) && <div vkuiClass="RichCell__after">{after}</div>}
+        </Text>
+        {hasReactNode(text) && <Text weight="regular" vkuiClass="RichCell__text">{text}</Text>}
+        {hasReactNode(caption) && <Subhead Component="span" weight="regular" vkuiClass="RichCell__caption">{caption}</Subhead>}
+        {(hasReactNode(bottom) || hasReactNode(actions)) && (
+          <div vkuiClass="RichCell__bottom">
+            {bottom}
+            {hasReactNode(actions) && <div vkuiClass="RichCell__actions">{actions}</div>}
+          </div>
+        )}
       </div>
     </Tappable>
   );

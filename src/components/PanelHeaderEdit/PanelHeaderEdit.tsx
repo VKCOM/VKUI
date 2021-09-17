@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import * as React from 'react';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { Icon28EditOutline, Icon28DoneOutline } from '@vkontakte/icons';
@@ -19,7 +19,7 @@ export interface PanelHeaderEditProps extends PanelHeaderButtonProps {
   doneLabel?: string;
 }
 
-const PanelHeaderEdit: FunctionComponent<PanelHeaderEditProps> = ({
+const PanelHeaderEdit: React.FunctionComponent<PanelHeaderEditProps> = ({
   isActive,
   editLabel,
   doneLabel,

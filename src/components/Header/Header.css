@@ -56,6 +56,10 @@
   flex-shrink: 0;
 }
 
+.Header--mode-primary .Header__indicator {
+  color: var(--text_subhead);
+}
+
 .Header:not(.Header--pi) .Header__indicator {
   align-self: center;
 }

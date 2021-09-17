@@ -1,11 +1,11 @@
-import { FunctionComponent } from 'react';
+import * as React from 'react';
 import { PanelHeaderButton, PanelHeaderButtonProps } from '../PanelHeaderButton/PanelHeaderButton';
 import { Icon28DoneOutline } from '@vkontakte/icons';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getTitleFromChildren } from '../../lib/utils';
 
-const PanelHeaderSubmit: FunctionComponent<PanelHeaderButtonProps> = ({
+const PanelHeaderSubmit: React.FunctionComponent<PanelHeaderButtonProps> = ({
   children,
   ...restProps
 }: PanelHeaderButtonProps) => {

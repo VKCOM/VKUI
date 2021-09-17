@@ -17,6 +17,9 @@
   --search_default_height: 36px;
   --thin-border: 1px;
 
+  /* paddings */
+  --formitem_padding: 16px;
+
   /* colors */
   --white: #fff;
   --blue_200: #5c9ce6;

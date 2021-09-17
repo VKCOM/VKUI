@@ -1,17 +1,17 @@
-import { MouseEvent, FC, useState, useRef, useEffect, useContext, Fragment } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import { Icon24Reorder, Icon24ReorderIos, Icon24CheckCircleOn, Icon24CheckCircleOff } from '@vkontakte/icons';
+import { Icon24Reorder, Icon24ReorderIos, Icon24CheckCircleOn, Icon24CheckCircleOff, Icon24CheckBoxOff, Icon24CheckBoxOn } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
 import { HasPlatform } from '../../types';
-import { Removable, RemovePlaceholderProps } from '../Removable/Removable';
+import { Removable, RemovableProps } from '../Removable/Removable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { ListContext } from '../../components/List/ListContext';
 import './Cell.css';
 
-export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlaceholderProps {
+export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
   /**
    * В режиме перетаскивания ячейка перестает быть кликабельной, то есть при клике переданный onClick вызываться не будет
    */
@@ -31,10 +31,6 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlacehold
    */
   defaultChecked?: boolean;
   /**
-   * Коллбэк срабатывает при клике на контрол удаления.
-   */
-  onRemove?: (e: MouseEvent, rootEl: HTMLElement) => void;
-  /**
    * Коллбэк срабатывает при завершении перетаскивания.
    * **Важно:** режим перетаскивания не меняет порядок ячеек в DOM. В коллбэке есть объект с полями `from` и `to`.
    * Эти числа нужны для того, чтобы разработчик понимал, с какого индекса на какой произошел переход. В песочнице
@@ -43,7 +39,7 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovePlacehold
   onDragFinish?: ({ from, to }: { from: number; to: number }) => void;
 }
 
-export const Cell: FC<CellProps> = (props: CellProps) => {
+export const Cell: React.FC<CellProps> = (props: CellProps) => {
   const {
     onRemove,
     removePlaceholder,
@@ -64,16 +60,16 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     getRootRef,
     ...restProps
   } = props;
-  const rootElRef = useRef(null);
+  const rootElRef = React.useRef(null);
   const platform = usePlatform();
 
-  const [dragging, setDragging] = useState<boolean>(false);
+  const [dragging, setDragging] = React.useState<boolean>(false);
 
-  const [siblings, setSiblings] = useState<HTMLElement[]>(undefined);
-  const [dragStartIndex, setDragStartIndex] = useState<number>(undefined);
-  const [dragEndIndex, setDragEndIndex] = useState<number>(undefined);
-  const [dragShift, setDragShift] = useState<number>(0);
-  const [dragDirection, setDragDirection] = useState<'down' | 'up'>(undefined);
+  const [siblings, setSiblings] = React.useState<HTMLElement[]>(undefined);
+  const [dragStartIndex, setDragStartIndex] = React.useState<number>(undefined);
+  const [dragEndIndex, setDragEndIndex] = React.useState<number>(undefined);
+  const [dragShift, setDragShift] = React.useState<number>(0);
+  const [dragDirection, setDragDirection] = React.useState<'down' | 'up'>(undefined);
 
   const onDragStart = () => {
     const rootEl = rootElRef?.current;
@@ -81,8 +77,10 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     setDragging(true);
 
     const _siblings: HTMLElement[] = Array.from(rootEl.parentElement.childNodes);
+    const rootElIdx = _siblings.indexOf(rootEl);
 
-    setDragStartIndex(_siblings.indexOf(rootEl));
+    setDragStartIndex(rootElIdx);
+    setDragEndIndex(rootElIdx);
     setSiblings(_siblings);
     setDragShift(0);
   };
@@ -146,19 +144,22 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     props.onDragFinish && props.onDragFinish({ from, to });
   };
 
-  const onDragClick = (e: MouseEvent) => {
+  const onDragClick = (e: React.MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
   };
 
-  const { toggleDrag } = useContext(ListContext);
-  useEffect(() => {
+  const { toggleDrag } = React.useContext(ListContext);
+  React.useEffect(() => {
     if (dragging) {
       toggleDrag(true);
       return () => toggleDrag(false);
     }
     return undefined;
   }, [dragging]);
+
+  const IconOff = platform === ANDROID ? Icon24CheckBoxOff : Icon24CheckCircleOff;
+  const IconOn = platform === ANDROID ? Icon24CheckBoxOn : Icon24CheckCircleOn;
 
   const simpleCell = (
     <SimpleCell
@@ -167,7 +168,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
       Component={selectable ? 'label' : Component}
       htmlFor={selectable ? name : undefined}
       before={
-        <Fragment>
+        <React.Fragment>
           {(platform === ANDROID || platform === VKCOM) && draggable && (
             <Touch
               vkuiClass="Cell__dragger"
@@ -178,7 +179,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
             ><Icon24Reorder /></Touch>
           )}
           {selectable && (
-            <Fragment>
+            <React.Fragment>
               <input
                 type="checkbox"
                 vkuiClass="Cell__checkbox"
@@ -189,16 +190,16 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
                 disabled={disabled}
               />
               <span vkuiClass="Cell__marker">
-                <Icon24CheckCircleOff vkuiClass="Cell__marker-in" />
-                <Icon24CheckCircleOn vkuiClass="Cell__marker-in Cell__marker-in--checked" />
+                <IconOff vkuiClass="Cell__marker-in" />
+                <IconOn vkuiClass="Cell__marker-in Cell__marker-in--checked" />
               </span>
-            </Fragment>
+            </React.Fragment>
           )}
           {before}
-        </Fragment>
+        </React.Fragment>
       }
       after={
-        <Fragment>
+        <React.Fragment>
           {platform === IOS && draggable && (
             <Touch
               vkuiClass="Cell__dragger"
@@ -209,7 +210,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
             ><Icon24ReorderIos /></Touch>
           )}
           {after}
-        </Fragment>
+        </React.Fragment>
       }
     />
   );

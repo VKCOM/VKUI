@@ -1,13 +1,13 @@
-import { HTMLAttributes, FC } from 'react';
+import * as React from 'react';
 import { Icon20Cancel } from '@vkontakte/icons';
 import Tappable from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import './ModalDismissButton.css';
 
-export type ModalDismissButtonProps = HTMLAttributes<HTMLButtonElement>;
+export type ModalDismissButtonProps = React.HTMLAttributes<HTMLButtonElement>;
 
-const ModalDismissButton: FC<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => {
+const ModalDismissButton: React.FC<ModalDismissButtonProps> = (props: ModalDismissButtonProps) => {
   const platform = usePlatform();
 
   return (

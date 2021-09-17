@@ -1,7 +1,7 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { Icon24Dropdown, Icon20Dropdown } from '@vkontakte/icons';
-import FormField from '../FormField/FormField';
+import { FormField } from '../FormField/FormField';
 import { HasAlign, HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -9,9 +9,10 @@ import { getClassName } from '../../helpers/getClassName';
 import Headline from '../Typography/Headline/Headline';
 import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
+import '../Select/Select.css';
 
 export interface SelectMimicryProps extends
-  HTMLAttributes<HTMLElement>,
+  React.HTMLAttributes<HTMLElement>,
   HasAlign,
   HasRootRef<HTMLElement>,
   AdaptivityProps {
@@ -19,7 +20,7 @@ export interface SelectMimicryProps extends
   disabled?: boolean;
 }
 
-const SelectMimicry: FunctionComponent<SelectMimicryProps> = ({
+const SelectMimicry: React.FunctionComponent<SelectMimicryProps> = ({
   tabIndex,
   placeholder,
   children,

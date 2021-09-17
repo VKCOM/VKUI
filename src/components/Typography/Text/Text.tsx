@@ -1,4 +1,4 @@
-import { AllHTMLAttributes, ElementType, FC } from 'react';
+import * as React from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
@@ -6,13 +6,13 @@ import { HasRootRef } from '../../../types';
 import { warnOnce } from '../../../lib/warnOnce';
 import './Text.css';
 
-export interface TextProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
+export interface TextProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
   weight: 'regular' | 'medium' | 'semibold';
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
 const warn = warnOnce('Text');
-const Text: FC<TextProps> = ({
+const Text: React.FC<TextProps> = ({
   children,
   weight,
   Component = 'span',

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { baselineComponent } from '../../testing/utils';
 import Button, { ButtonProps } from './Button';
 
@@ -21,5 +21,13 @@ describe('Button', () => {
   it('Component: Button with valid href overrides passed Component', () => {
     render(<ButtonTest href="#" Component="div">Native Link</ButtonTest>);
     expect(button().tagName.toLowerCase()).toMatch('a');
+  });
+
+  it('Component: Button with loading is not clickable', () => {
+    const handleClick = jest.fn();
+    render(<ButtonTest onClick={handleClick} loading>Button</ButtonTest>);
+
+    fireEvent.click(button());
+    expect(handleClick).toHaveBeenCalledTimes(0);
   });
 });

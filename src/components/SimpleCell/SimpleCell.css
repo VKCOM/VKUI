@@ -7,6 +7,12 @@
   color: var(--text_primary);
 }
 
+.FormItem .SimpleCell {
+  width: 100%;
+  box-sizing: content-box;
+  margin: 0 calc(-1 * var(--formitem_padding));
+}
+
 .SimpleCell--mult {
   white-space: normal;
 }

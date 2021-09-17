@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import * as React from 'react';
 import { ConfigProviderContext } from '../components/ConfigProvider/ConfigProviderContext';
 
-export const useAppearance = () => useContext(ConfigProviderContext).appearance;
+export const useAppearance = () => React.useContext(ConfigProviderContext).appearance;

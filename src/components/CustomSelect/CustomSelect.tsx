@@ -1,13 +1,4 @@
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  createRef,
-  KeyboardEvent,
-  KeyboardEventHandler,
-  MouseEvent,
-  ReactNode,
-  SelectHTMLAttributes,
-} from 'react';
+import * as React from 'react';
 import SelectMimicry from '../SelectMimicry/SelectMimicry';
 import { debounce, setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
@@ -49,7 +40,7 @@ const findIndexBefore = (options: CustomSelectOptionInterface[], endIndex: numbe
   return result;
 };
 
-type SelectValue = SelectHTMLAttributes<HTMLSelectElement>['value'];
+type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
 
 export interface CustomSelectOptionInterface {
   value: SelectValue;
@@ -77,7 +68,7 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * Текст, который будет отображен, если приходит пустой `options`
    */
   emptyText?: string;
-  onInputChange?: (e: ChangeEvent, options: CustomSelectOptionInterface[]) => void | CustomSelectOptionInterface[];
+  onInputChange?: (e: React.ChangeEvent, options: CustomSelectOptionInterface[]) => void | CustomSelectOptionInterface[];
   options: Array<{
     value: SelectValue;
     label: string;
@@ -92,12 +83,12 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
    * Рендер-проп для кастомного рендера опции.
    * В объекте аргумента приходят [свойства опции](#/CustomSelectOption?id=props)
    */
-  renderOption?: (props: CustomSelectOptionProps) => ReactNode;
+  renderOption?: (props: CustomSelectOptionProps) => React.ReactNode;
   /**
    * Рендер-проп для кастомного рендера содержимого дропдауна.
    * В defaultDropdownContent содержится список опций в виде скроллящегося блока.
    */
-  renderDropdown?: ({ defaultDropdownContent }: { defaultDropdownContent: ReactNode }) => ReactNode;
+  renderDropdown?: ({ defaultDropdownContent }: { defaultDropdownContent: React.ReactNode }) => React.ReactNode;
   /**
    * Если true, то в дропдауне вместо списка опций рисуется спиннер. При переданных renderDropdown и fetching: true,
    * "победит" renderDropdown
@@ -107,14 +98,14 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
   onOpen?: VoidFunction;
 }
 
-type MouseEventHandler = (event: MouseEvent<HTMLElement>) => void;
+type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
 const warn = warnOnce('CustomSelect');
 
 class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
   static defaultProps: CustomSelectProps = {
     searchable: false,
-    renderOption({ option, ...props }): ReactNode {
+    renderOption({ option, ...props }): React.ReactNode {
       return (
         <CustomSelectOption {...props} />
       );
@@ -151,7 +142,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   private keyboardInput: string;
   private isControlledOutside: boolean;
   private selectEl: HTMLSelectElement;
-  private readonly scrollBoxRef = createRef<HTMLDivElement>();
+  private readonly scrollBoxRef = React.createRef<HTMLDivElement>();
 
   private readonly resetKeyboardInput = () => {
     this.keyboardInput = '';
@@ -304,15 +295,15 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.focusOptionByIndex(index);
   };
 
-  handleOptionHover: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
+  handleOptionHover: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
     this.focusOptionByIndex(Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget));
   };
 
-  handleOptionDown: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
+  handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
   };
 
-  handleOptionClick: MouseEventHandler = (e: MouseEvent<HTMLElement>) => {
+  handleOptionClick: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
     const index = Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget);
     const option = this.state.options[index];
 
@@ -343,13 +334,13 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
    * Нужен для правильного поведения обработчика onClick на select. Фильтрует клики, которые были сделаны по
    * выпадающему списку.
    */
-  onLabelClick = (e: MouseEvent<HTMLLabelElement>) => {
+  onLabelClick = (e: React.MouseEvent<HTMLLabelElement>) => {
     if (this.scrollBoxRef.current?.contains(e.target as Node)) {
       e.preventDefault();
     }
   };
 
-  onNativeSelectChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+  onNativeSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.currentTarget.value;
     if (!this.isControlledOutside) {
       this.setState({
@@ -361,7 +352,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   };
 
-  onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  onInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     if (this.props.onInputChange) {
       const options = this.props.onInputChange(e, this.props.options);
       if (options) {
@@ -387,7 +378,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   };
 
-  onInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+  onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
     ['ArrowUp', 'ArrowDown', 'Escape', 'Enter'].includes(event.key) && this.areOptionsShown && event.preventDefault();
 
     switch (event.key) {
@@ -406,7 +397,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   };
 
-  handleKeyDownSelect = (event: KeyboardEvent) => {
+  handleKeyDownSelect = (event: React.KeyboardEvent) => {
     const { opened } = this.state;
 
     if (event.key.length === 1 && event.key !== ' ') {

@@ -48,7 +48,7 @@ class ExampleClass extends React.Component {
                   Communities
                 </PanelHeaderContent>
               </PanelHeader>
-              <PanelHeaderContext opened={this.state.contextOpened} fade={!isDesktop} onClose={this.toggleContext}>
+              <PanelHeaderContext opened={this.state.contextOpened} onClose={this.toggleContext}>
                 <List>
                   <Cell
                     before={<Icon28UsersOutline />}

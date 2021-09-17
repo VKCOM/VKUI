@@ -1,11 +1,11 @@
-import { FC, ImgHTMLAttributes, useState } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
 import './Avatar.css';
 
-export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLImageElement> {
+export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement>, HasRef<HTMLImageElement> {
   /**
    * Рекомендуемый сет значений: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24
    */
@@ -14,7 +14,7 @@ export interface AvatarProps extends ImgHTMLAttributes<HTMLElement>, HasRootRef<
   shadow?: boolean;
 }
 
-const Avatar: FC<AvatarProps> = ({
+const Avatar: React.FC<AvatarProps> = ({
   alt,
   crossOrigin,
   decoding,
@@ -38,7 +38,7 @@ const Avatar: FC<AvatarProps> = ({
   ...restProps
 }: AvatarProps) => {
   const platform = usePlatform();
-  const [failedImage, setFailedImage] = useState(false);
+  const [failedImage, setFailedImage] = React.useState(false);
 
   const onImageError = () => {
     setFailedImage(true);

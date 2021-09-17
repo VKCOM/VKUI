@@ -1,9 +1,9 @@
-import React, { Fragment, useState, ReactElement, ReactNode, isValidElement, FC, forwardRef, Ref, CSSProperties, HTMLAttributes, cloneElement, useMemo, Children } from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Subhead from '../Typography/Subhead/Subhead';
-import { usePopper } from 'react-popper';
+import { Modifier, usePopper } from 'react-popper';
 import { Placement } from '@popperjs/core';
 import { tooltipContainerAttr } from './TooltipContainer';
 import { useExternRef } from '../../hooks/useExternRef';
@@ -15,18 +15,18 @@ import './Tooltip.css';
 
 interface SimpleTooltipProps extends Partial<TooltipProps> {
   target?: HTMLDivElement;
-  arrowRef?: Ref<HTMLDivElement>;
+  arrowRef?: React.Ref<HTMLDivElement>;
   style?: {
-    arrow: CSSProperties;
-    container: CSSProperties;
+    arrow: React.CSSProperties;
+    container: React.CSSProperties;
   };
   attributes?: {
-    arrow: HTMLAttributes<HTMLDivElement>;
-    container: HTMLAttributes<HTMLDivElement>;
+    arrow: React.HTMLAttributes<HTMLDivElement>;
+    container: React.HTMLAttributes<HTMLDivElement>;
   };
 }
 
-const isDOMTypeElement = (element: ReactElement): element is React.DOMElement<any, any> => {
+const isDOMTypeElement = (element: React.ReactElement): element is React.DOMElement<any, any> => {
   return React.isValidElement(element) && typeof element.type === 'string';
 };
 
@@ -34,7 +34,7 @@ const baseClassName = getClassName('Tooltip');
 const warn = warnOnce('Tooltip');
 const IS_DEV = process.env.NODE_ENV === 'development';
 
-const SimpleTooltip = forwardRef<HTMLDivElement, SimpleTooltipProps>(
+const SimpleTooltip = React.forwardRef<HTMLDivElement, SimpleTooltipProps>(
   function SimpleTooltip(
     { mode = 'accent', header, text, arrowRef, style = {}, attributes },
     ref,
@@ -62,7 +62,7 @@ export interface TooltipProps {
    * свойство `getRootRef`, которое должно возвращаться ссылку на корневой DOM-элемент компонента,
    * иначе тултип показан не будет. Если передан React-element, то такой проблемы нет.
    */
-  children: ReactElement;
+  children: React.ReactElement;
   mode?: 'accent' | 'light';
   /**
    * Если передан `false`, то рисуется просто `children`.
@@ -71,11 +71,11 @@ export interface TooltipProps {
   /**
    * Текст тултипа.
    */
-  text?: ReactNode;
+  text?: React.ReactNode;
   /**
    * Заголовок тултипа.
    */
-  header?: ReactNode;
+  header?: React.ReactNode;
   /**
    * Положение по горизонтали (прижатие к левому или правому краю `children`).
    * Если не задано, позиция по горизонтали определятся автоматически
@@ -95,14 +95,23 @@ export interface TooltipProps {
    */
   offsetY?: number;
   /**
-   * Сдвиг треугольника (относительно ширины тултипа).
+   * Сдвиг стрелочки относительно центра дочернего элемента.
    */
   cornerOffset?: number;
+  /**
+   * Сдвиг стрелочки относительно ширины тултипа
+   */
+  cornerAbsoluteOffset?: number;
   /**
    * Callback, который вызывается при клике по любому месту в пределах экрана.
    */
   onClose?: () => void;
 }
+
+declare type ArrowOffsetModifierOptions = {
+  offset: number;
+};
+declare type ArrowOffsetModifier = Modifier<'arrowOffset', ArrowOffsetModifierOptions>;
 
 function mapAlignX(x: TooltipProps['alignX']) {
   switch (x) {
@@ -110,22 +119,25 @@ function mapAlignX(x: TooltipProps['alignX']) {
     case 'right': return 'end';
     default: return '';
   }
-};
+}
 function getPlacement(alignX: TooltipProps['alignX'], alignY: TooltipProps['alignY']): Placement {
   return [alignY || 'bottom', mapAlignX(alignX || 'left')].filter((p) => !!p).join('-') as Placement;
 }
+function isVerticalPlacement(placement: Placement) {
+  return placement.startsWith('top') || placement.startsWith('bottom');
+}
 
-const Tooltip: FC<TooltipProps> = ({
+const Tooltip: React.FC<TooltipProps> = ({
   children, isShown, offsetX = 0, offsetY = 15,
-  alignX, alignY, onClose, cornerOffset,
+  alignX, alignY, onClose, cornerOffset, cornerAbsoluteOffset,
   ...restProps
 }) => {
-  const [tooltipRef, setTooltipRef] = useState<HTMLElement>();
-  const [tooltipArrowRef, setTooltipArrowRef] = useState<HTMLElement>();
-  const [target, setTarget] = useState<HTMLElement>();
+  const [tooltipRef, setTooltipRef] = React.useState<HTMLElement>();
+  const [tooltipArrowRef, setTooltipArrowRef] = React.useState<HTMLElement>();
+  const [target, setTarget] = React.useState<HTMLElement>();
 
   if (IS_DEV) {
-    const multiChildren = Children.count(children) > 1;
+    const multiChildren = React.Children.count(children) > 1;
     // Empty children is a noop
     const primitiveChild = hasReactNode(children) && typeof children !== 'object';
     (multiChildren || primitiveChild) && warn([
@@ -137,14 +149,37 @@ const Tooltip: FC<TooltipProps> = ({
 
   /* eslint-disable no-restricted-properties */
   /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/
-  const tooltipContainer = useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
-  const strategy = useMemo(() => target?.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
+  const tooltipContainer = React.useMemo(() => target?.closest(`[${tooltipContainerAttr}]`) as HTMLDivElement, [target]);
+  const strategy = React.useMemo(() => target?.style.position === 'fixed' ? 'fixed' : 'absolute', [target]);
   /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion*/
   /* eslint-enable no-restricted-properties */
 
   if (IS_DEV && target && !tooltipContainer) {
     throw new Error('Use TooltipContainer for Tooltip outside Panel (see docs)');
   }
+
+  const arrowOffsetModiifer = React.useMemo<ArrowOffsetModifier>(() => {
+    return {
+      name: 'arrowOffset',
+      enabled: true,
+      phase: 'main',
+      fn({ state }) {
+        if (isVerticalPlacement(state.placement)) {
+          if (cornerAbsoluteOffset !== undefined) {
+            state.modifiersData.arrow.x = cornerAbsoluteOffset;
+          } else {
+            state.modifiersData.arrow.x += cornerOffset;
+          }
+        } else {
+          if (cornerAbsoluteOffset !== undefined) {
+            state.modifiersData.arrow.y = cornerAbsoluteOffset;
+          } else {
+            state.modifiersData.arrow.y += cornerOffset;
+          }
+        }
+      },
+    };
+  }, [cornerOffset, cornerAbsoluteOffset]);
 
   const placement = getPlacement(alignX, alignY);
   const { styles, attributes } = usePopper(target, tooltipRef, {
@@ -171,6 +206,7 @@ const Tooltip: FC<TooltipProps> = ({
       {
         name: 'flip',
       },
+      arrowOffsetModiifer,
     ],
   });
 
@@ -178,19 +214,15 @@ const Tooltip: FC<TooltipProps> = ({
   useGlobalEventListener(document, 'click', isShown && onClose, { passive: true });
   // NOTE: setting isShown to true used to trigger usePopper().forceUpdate()
 
-  const childRef = isValidElement(children) &&
+  const childRef = React.isValidElement(children) &&
     (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
   const patchedRef = useExternRef(setTarget, childRef);
-  const child = isValidElement(children) ? cloneElement(children, {
+  const child = React.isValidElement(children) ? React.cloneElement(children, {
     [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
   }) : children;
 
-  if (!alignX || !alignY) {
-    cornerOffset = 0;
-  }
-
   return (
-    <Fragment>
+    <React.Fragment>
       {child}
       {isShown && target != null && ReactDOM.createPortal(
         <SimpleTooltip
@@ -202,7 +234,7 @@ const Tooltip: FC<TooltipProps> = ({
         />,
         tooltipContainer,
       )}
-    </Fragment>
+    </React.Fragment>
   );
 };
 

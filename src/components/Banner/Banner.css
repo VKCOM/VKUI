@@ -48,6 +48,7 @@
 }
 
 .Banner__subheader {
+  display: block;
   color: var(--text_subhead);
 }
 
