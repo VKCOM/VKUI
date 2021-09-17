@@ -49,10 +49,6 @@ export interface TappableProps extends AllHTMLAttributes<HTMLElement>, HasRootRe
    * Стиль аутлайна focus visible.
    */
   focusVisibleMode?: FocusVisibleMode;
-  /**
-   * Класс для элемента ховера.
-   */
-  hoverShadowClassName?: string;
 }
 
 export interface TappableState {
@@ -368,7 +364,6 @@ class Tappable extends Component<TappableProps, TappableState> {
       hasActive: propsHasActive,
       activeMode,
       focusVisibleMode,
-      hoverShadowClassName,
       ...restProps
     } = this.props;
 
@@ -389,8 +384,6 @@ class Tappable extends Component<TappableProps, TappableState> {
         [hoverMode]: hasHover && hovered && !isPresetHoverMode,
         [activeMode]: hasActive && active && !isPresetActiveMode,
       });
-
-    const hoverShadowClasses = classNames('Tappable__hoverShadow', hoverShadowClassName);
 
     const RootComponent = restProps.disabled
       ? Component
@@ -459,7 +452,7 @@ class Tappable extends Component<TappableProps, TappableState> {
                         ))}
                       </span>
                     )}
-                    {hasHover && <span aria-hidden="true" vkuiClass={hoverShadowClasses} />}
+                    {hasHover && hoverMode === 'background' && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
                     {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
                   </RootComponent>
                 );

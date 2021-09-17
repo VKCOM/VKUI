@@ -71,7 +71,7 @@ export const SimpleCheckbox: FC<SimpleCheckboxProps> = (props: SimpleCheckboxPro
       style={style}
       disabled={restProps.disabled}
       activeMode={platform === VKCOM ? 'SimpleCheckbox--active' : 'background'}
-      hoverShadowClassName="SimpleCheckbox__hoverShadow"
+      hoverMode={platform === VKCOM ? 'SimpleCheckbox--hover' : 'background'}
       activeEffectDelay={platform === IOS ? 100 : ACTIVE_EFFECT_DELAY}
       getRootRef={getRootRef}
     >
@@ -96,7 +96,8 @@ export const SimpleCheckbox: FC<SimpleCheckboxProps> = (props: SimpleCheckboxPro
           />
         </div>
       </div>
-      {platform === VKCOM && <div vkuiClass="SimpleCheckbox__activeShadow" />}
+      {platform === VKCOM && <div aria-hidden={true} vkuiClass="SimpleCheckbox__activeShadow" />}
+      {platform === VKCOM && <div aria-hidden={true} vkuiClass="SimpleCheckbox__hoverShadow" />}
     </Tappable>
   );
 };
