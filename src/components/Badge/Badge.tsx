@@ -1,14 +1,14 @@
-import { HTMLAttributes, FunctionComponent } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import './Badge.css';
 
-export interface BadgeProps extends HTMLAttributes<HTMLElement> {
+export interface BadgeProps extends React.HTMLAttributes<HTMLElement> {
   mode: 'new' | 'prominent';
-};
+}
 
-export const Badge: FunctionComponent<BadgeProps> = ({
+export const Badge: React.FunctionComponent<BadgeProps> = ({
   mode,
   ...restProps
 }: BadgeProps) => {

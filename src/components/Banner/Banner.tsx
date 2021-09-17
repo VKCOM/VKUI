@@ -1,4 +1,4 @@
-import { Children, FC, ReactNode, HTMLAttributes, MouseEventHandler, ElementType } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -13,7 +13,7 @@ import Text from '../Typography/Text/Text';
 import Title from '../Typography/Title/Title';
 import './Banner.css';
 
-export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
+export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Тип баннера.
    */
@@ -29,7 +29,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Срабатывает при клике на иконку крестика при `asideMode="dismiss"`.
    */
-  onDismiss?: MouseEventHandler<HTMLButtonElement>;
+  onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
   /**
    * `aria-label` для кнопки при `asideMode="dismiss". Необходим, чтобы кнопка была доступной.
    */
@@ -37,22 +37,22 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Содержимое, отображаемое в левой части баннера.
    */
-  before?: ReactNode;
+  before?: React.ReactNode;
   /**
    * Заголовок. <br />
    * При использовании этого свойства рекомендуется не указывать `text`.
    */
-  header?: ReactNode;
+  header?: React.ReactNode;
   /**
    * Подзаголовок. <br />
    * При использовании этого свойства рекомендуется не указывать `text`.
    */
-  subheader?: ReactNode;
+  subheader?: React.ReactNode;
   /**
    * Текст баннера. <br />
    * Это свойство следует использовать без указания `header` и `subheader`.
    */
-  text?: ReactNode;
+  text?: React.ReactNode;
   /**
    * При использовании `mode="image"`.
    *
@@ -65,33 +65,33 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    *
    * Элемент, который нужно стилизовать цветом и/или фоном. Этот элемент будет растянут на 100% ширины и высоты баннера.
    */
-  background?: ReactNode;
+  background?: React.ReactNode;
   /**
    * Кнопки, отображаемые в баннере.
    *
    * - В режиме `tint` или в `image` со светлым фоном рекомендуется использовать только `<Button mode="primary" />` или `<Button mode="tertiary" hasHover={false} />`.
    * - В режиме `image` с тёмным фоном – `<Button mode="overlay_primary" />`.
    */
-  actions?: ReactNode;
+  actions?: React.ReactNode;
 }
 
 interface BannerTypographyProps extends Pick<BannerProps, 'size'> {
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
-const BannerHeader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
+const BannerHeader: React.FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
   return size === 'm'
     ? <Title level="2" weight="medium" {...restProps} />
     : <Headline weight="medium" {...restProps} />;
 };
 
-const BannerSubheader: FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
+const BannerSubheader: React.FC<BannerTypographyProps> = ({ size, ...restProps }: BannerTypographyProps) => {
   return size === 'm'
     ? <Text weight="regular" {...restProps} />
     : <Subhead weight="regular" {...restProps} />;
 };
 
-const Banner: FC<BannerProps> = (props: BannerProps) => {
+const Banner: React.FC<BannerProps> = (props: BannerProps) => {
   const platform = usePlatform();
   const {
     mode, imageTheme, size, before, asideMode, header, subheader, text, children, background, actions,
@@ -133,7 +133,7 @@ const Banner: FC<BannerProps> = (props: BannerProps) => {
             <BannerSubheader Component="span" size={size} vkuiClass="Banner__subheader">{subheader}</BannerSubheader>
           )}
           {hasReactNode(text) && <Text weight="regular" vkuiClass="Banner__text">{text}</Text>}
-          {hasReactNode(actions) && Children.count(actions) > 0 && (
+          {hasReactNode(actions) && React.Children.count(actions) > 0 && (
             <div vkuiClass="Banner__actions">{actions}</div>
           )}
         </div>

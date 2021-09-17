@@ -1,4 +1,4 @@
-import React, { Children, Component, ReactElement } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { isFunction } from '../../lib/utils';
 import { transitionEvent } from '../../lib/supportEvents';
@@ -47,7 +47,7 @@ interface ModalRootState {
   inited?: boolean;
 }
 
-class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, ModalRootState> {
+class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -85,16 +85,8 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
   activeTransitions: number;
 
-  get document(): Document {
-    return this.props.document;
-  }
-
-  get window(): Window {
-    return this.props.window;
-  }
-
   get modals() {
-    return Children.toArray(this.props.children) as ReactElement[];
+    return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
 
   initModalsState() {
@@ -124,11 +116,11 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
 
   componentDidMount() {
     this.initActiveModal();
-    document.addEventListener('keydown', this.handleKeyDownEsc);
+    this.props.document.addEventListener('keydown', this.handleKeyDownEsc);
   }
 
   componentWillUnmount = () => {
-    document.removeEventListener('keydown', this.handleKeyDownEsc);
+    this.props.document.removeEventListener('keydown', this.handleKeyDownEsc);
   };
 
   componentDidUpdate(prevProps: ModalRootProps, prevState: ModalRootState) {
@@ -361,7 +353,7 @@ class ModalRootDesktopComponent extends Component<ModalRootProps & DOMProps, Mod
             ref={this.maskElementRef}
           />
           <div vkuiClass="ModalRoot__viewport">
-            {this.modals.map((Modal: ReactElement) => {
+            {this.modals.map((Modal: React.ReactElement) => {
               const modalId = getNavId(Modal.props, warn);
               if (!visibleModals.includes(modalId)) {
                 return null;

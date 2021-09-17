@@ -39,11 +39,11 @@ export type { FixedLayoutProps } from './components/FixedLayout/FixedLayout';
 /**
  * Popouts
  */
-export { default as PopoutWrapper } from './components/PopoutWrapper/PopoutWrapper';
+export { PopoutWrapper } from './components/PopoutWrapper/PopoutWrapper';
 export type { PopoutWrapperProps } from './components/PopoutWrapper/PopoutWrapper';
 export { default as Alert } from './components/Alert/Alert';
 export type { AlertProps, AlertActionInterface } from './components/Alert/Alert';
-export { default as ActionSheet } from './components/ActionSheet/ActionSheet';
+export { ActionSheet } from './components/ActionSheet/ActionSheet';
 export type { ActionSheetProps } from './components/ActionSheet/ActionSheet';
 export { default as ActionSheetItem } from './components/ActionSheetItem/ActionSheetItem';
 export type { ActionSheetItemProps } from './components/ActionSheetItem/ActionSheetItem';

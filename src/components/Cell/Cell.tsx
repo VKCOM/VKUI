@@ -1,4 +1,4 @@
-import { MouseEvent, FC, useState, useRef, useEffect, useContext, Fragment } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Touch, { TouchEvent } from '../Touch/Touch';
@@ -39,7 +39,7 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps 
   onDragFinish?: ({ from, to }: { from: number; to: number }) => void;
 }
 
-export const Cell: FC<CellProps> = (props: CellProps) => {
+export const Cell: React.FC<CellProps> = (props: CellProps) => {
   const {
     onRemove,
     removePlaceholder,
@@ -60,16 +60,16 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     getRootRef,
     ...restProps
   } = props;
-  const rootElRef = useRef(null);
+  const rootElRef = React.useRef(null);
   const platform = usePlatform();
 
-  const [dragging, setDragging] = useState<boolean>(false);
+  const [dragging, setDragging] = React.useState<boolean>(false);
 
-  const [siblings, setSiblings] = useState<HTMLElement[]>(undefined);
-  const [dragStartIndex, setDragStartIndex] = useState<number>(undefined);
-  const [dragEndIndex, setDragEndIndex] = useState<number>(undefined);
-  const [dragShift, setDragShift] = useState<number>(0);
-  const [dragDirection, setDragDirection] = useState<'down' | 'up'>(undefined);
+  const [siblings, setSiblings] = React.useState<HTMLElement[]>(undefined);
+  const [dragStartIndex, setDragStartIndex] = React.useState<number>(undefined);
+  const [dragEndIndex, setDragEndIndex] = React.useState<number>(undefined);
+  const [dragShift, setDragShift] = React.useState<number>(0);
+  const [dragDirection, setDragDirection] = React.useState<'down' | 'up'>(undefined);
 
   const onDragStart = () => {
     const rootEl = rootElRef?.current;
@@ -144,13 +144,13 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
     props.onDragFinish && props.onDragFinish({ from, to });
   };
 
-  const onDragClick = (e: MouseEvent) => {
+  const onDragClick = (e: React.MouseEvent) => {
     e.nativeEvent.stopPropagation();
     e.preventDefault();
   };
 
-  const { toggleDrag } = useContext(ListContext);
-  useEffect(() => {
+  const { toggleDrag } = React.useContext(ListContext);
+  React.useEffect(() => {
     if (dragging) {
       toggleDrag(true);
       return () => toggleDrag(false);
@@ -168,7 +168,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
       Component={selectable ? 'label' : Component}
       htmlFor={selectable ? name : undefined}
       before={
-        <Fragment>
+        <React.Fragment>
           {(platform === ANDROID || platform === VKCOM) && draggable && (
             <Touch
               vkuiClass="Cell__dragger"
@@ -179,7 +179,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
             ><Icon24Reorder /></Touch>
           )}
           {selectable && (
-            <Fragment>
+            <React.Fragment>
               <input
                 type="checkbox"
                 vkuiClass="Cell__checkbox"
@@ -193,13 +193,13 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
                 <IconOff vkuiClass="Cell__marker-in" />
                 <IconOn vkuiClass="Cell__marker-in Cell__marker-in--checked" />
               </span>
-            </Fragment>
+            </React.Fragment>
           )}
           {before}
-        </Fragment>
+        </React.Fragment>
       }
       after={
-        <Fragment>
+        <React.Fragment>
           {platform === IOS && draggable && (
             <Touch
               vkuiClass="Cell__dragger"
@@ -210,7 +210,7 @@ export const Cell: FC<CellProps> = (props: CellProps) => {
             ><Icon24ReorderIos /></Touch>
           )}
           {after}
-        </Fragment>
+        </React.Fragment>
       }
     />
   );

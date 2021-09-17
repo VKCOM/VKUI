@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
@@ -10,7 +10,7 @@ import { createMasks } from './masks';
 import { useDOM } from '../../lib/dom';
 import './UsersStack.css';
 
-export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
+export interface UsersStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Массив ссылок на фотографии
    */
@@ -30,7 +30,7 @@ export interface UsersStackProps extends HTMLAttributes<HTMLDivElement> {
   visibleCount?: number;
 }
 
-const UsersStack: FC<UsersStackProps> = (props: UsersStackProps) => {
+const UsersStack: React.FC<UsersStackProps> = (props: UsersStackProps) => {
   const platform = usePlatform();
   const { photos, visibleCount, size, layout, children, ...restProps } = props;
   const { document } = useDOM();

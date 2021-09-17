@@ -4,6 +4,7 @@ import { baselineComponent } from '../../testing/utils';
 import { AppRootContext } from './AppRootContext';
 import AppRoot from './AppRoot';
 import { SizeType } from '../../hoc/withAdaptivity';
+import Button from '../Button/Button';
 
 describe('AppRoot', () => {
   baselineComponent(AppRoot);
@@ -67,16 +68,22 @@ describe('AppRoot', () => {
       expect(document.body).toContainElement(portalRoot1);
     });
   });
-  it('has class .AppRoot--keyboard-input on keyboard navigation and no class on mouse click', () => {
-    render(<AppRoot data-testid="root" mode="embedded" />);
-    const root = screen.getByTestId('root');
+  describe('Manages a11y properly', () => {
+    it('has class .AppRoot--keyboard-input on keyboard navigation', () => {
+      render(<AppRoot data-testid="root" mode="embedded"><Button>Hello world</Button></AppRoot>);
+      const root = screen.getByTestId('root');
 
-    // test keyboard nav and outline
-    userEvent.tab();
-    expect(root).toHaveClass('AppRoot--keyboard-input');
+      // test keyboard nav and outline
+      userEvent.tab();
+      expect(root).toHaveClass('AppRoot--keyboard-input');
+    });
+    it('has no class .AppRoot--keyboard-input on mouse click', () => {
+      render(<AppRoot data-testid="root" mode="embedded"><Button>Hello world</Button></AppRoot>);
+      const root = screen.getByTestId('root');
 
-    // test click and no outline
-    userEvent.click(root);
-    expect(root).not.toHaveClass('AppRoot--keyboard-input');
+      // test click and no outline
+      userEvent.click(screen.getByRole('button'));
+      expect(root).not.toHaveClass('AppRoot--keyboard-input');
+    });
   });
 });

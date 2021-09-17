@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import * as React from 'react';
 import vkBridge, { AppearanceSchemeType, AppearanceType } from '@vkontakte/vk-bridge';
 import { PlatformType, platform } from '../../lib/platform';
 
@@ -66,4 +66,4 @@ export const defaultConfigProviderProps = {
   // appearance: Appearance.LIGHT,
 };
 
-export const ConfigProviderContext = createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);
+export const ConfigProviderContext = React.createContext<ConfigProviderContextInterface>(defaultConfigProviderProps);

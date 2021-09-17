@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, RefCallback } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { transitionEndEventName, TransitionStartEventDetail, transitionStartEventName } from '../View/View';
@@ -16,7 +16,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import './FixedLayout.css';
 
 export interface FixedLayoutProps extends
-  HTMLAttributes<HTMLDivElement>,
+  React.HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
   HasRef<HTMLDivElement>,
   HasPlatform {
@@ -146,7 +146,7 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
     }
   };
 
-  getRef: RefCallback<HTMLDivElement> = (element) => {
+  getRef: React.RefCallback<HTMLDivElement> = (element) => {
     this.el = element;
     setRef(element, this.props.getRootRef);
   };
@@ -175,7 +175,8 @@ class FixedLayout extends React.Component<FixedLayoutProps & DOMProps & PanelCon
         ref={this.getRef}
         vkuiClass={classNames(getClassName('FixedLayout', platform), {
           'FixedLayout--filled': filled,
-        }, `FixedLayout--${vertical}`)}
+          [`FixedLayout--${vertical}`]: !!vertical,
+        })}
         style={{ ...style, ...this.state }}
       >
         <div vkuiClass="FixedLayout__in" ref={getRef}>{children}</div>

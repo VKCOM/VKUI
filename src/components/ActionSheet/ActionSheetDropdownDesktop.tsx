@@ -1,117 +1,79 @@
-import { Component, CSSProperties, HTMLAttributes, MouseEventHandler, RefObject } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import { withPlatform } from '../../hoc/withPlatform';
-import { HasPlatform } from '../../types';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
-import { DOMProps, withDOM } from '../../lib/dom';
+import { useDOM } from '../../lib/dom';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { warnOnce } from '../../lib/warnOnce';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { ActionSheetProps } from './ActionSheet';
 import './ActionSheet.css';
 
-interface Props extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   closing: boolean;
   onClose(): void;
   popupDirection?: ActionSheetProps['popupDirection'];
   toggleRef: Element;
-  elementRef: RefObject<HTMLDivElement>;
 }
 
-interface State {
-  dropdownStyles: CSSProperties;
-}
+const warn = warnOnce('ActionSheet');
 
-class ActionSheetDropdownDesktop extends Component<Props & DOMProps, State> {
-  state: State = {
-    dropdownStyles: {
-      left: '0',
-      top: '0',
-      opacity: '0',
-      pointerEvents: 'none',
-    },
-  };
+export const ActionSheetDropdownDesktop: React.FC<Props> = ({
+  children,
+  toggleRef,
+  closing,
+  popupDirection,
+  onClose,
+  ...restProps
+}) => {
+  const { window, document } = useDOM();
+  const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
+  const elementRef = React.useRef<HTMLDivElement>();
 
-  get window(): Window {
-    return this.props.window;
-  }
-
-  componentDidMount = () => {
-    const { toggleRef, elementRef, popupDirection } = this.props;
+  const [dropdownStyles, setDropdownStyles] = React.useState<React.CSSProperties>({
+    left: 0,
+    top: 0,
+    opacity: 0,
+    pointerEvents: 'none',
+  });
+  useIsomorphicLayoutEffect(() => {
+    if (!toggleRef) {
+      if (process.env.NODE_ENV === 'development') {
+        warn('toggleRef not passed');
+      }
+      return;
+    }
 
     const toggleRect = toggleRef.getBoundingClientRect();
     const elementRect = elementRef.current.getBoundingClientRect();
+    const isTop = popupDirection === 'top' || typeof popupDirection === 'function' && popupDirection(elementRef) === 'top';
 
-    let left = toggleRect.left + toggleRect.width - elementRect.width + this.window.pageXOffset;
-    let top: number;
-
-    if (popupDirection === 'top' || typeof popupDirection === 'function' && popupDirection(elementRef) === 'top') {
-      top = toggleRect.top - elementRect.height + this.window.pageYOffset;
-    } else {
-      top = toggleRect.top + toggleRect.height + this.window.pageYOffset;
-    }
-
-    this.setState({
-      dropdownStyles: {
-        left,
-        top,
-        opacity: 1,
-        pointerEvents: 'auto',
-      },
+    setDropdownStyles({
+      left: toggleRect.left + toggleRect.width - elementRect.width + window.pageXOffset,
+      top: toggleRect.top + window.pageYOffset + (isTop ? -elementRect.height : toggleRect.height),
     });
+  }, [toggleRef]);
 
-    setTimeout(() => {
-      this.window.addEventListener('click', this.handleClickOutside);
-    });
-  };
-
-  componentWillUnmount = () => {
-    this.window.removeEventListener('click', this.handleClickOutside);
-  };
-
-  handleClickOutside = (e: MouseEvent) => {
-    const dropdownElement = this.props.elementRef.current;
-
-    if (dropdownElement !== e.target && dropdownElement && !dropdownElement.contains(e.target as Node)) {
-      this.onClose();
+  useGlobalEventListener(document.body, 'click', (e) => {
+    const dropdownElement = elementRef?.current;
+    if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
+      onClose();
     }
-  };
+  });
 
-  onClose = () => {
-    this.props.onClose();
-  };
-
-  stopPropagation: MouseEventHandler<HTMLDivElement> = (e) => e.stopPropagation();
-
-  render() {
-    const {
-      children,
-      platform,
-      elementRef,
-      toggleRef,
-      closing,
-      sizeY,
-      window,
-      document,
-      popupDirection,
-      ...restProps
-    } = this.props;
-    const baseClaseName = getClassName('ActionSheet', platform);
-
-    return (
-      <div
-        {...restProps}
-        ref={elementRef}
-        onClick={this.stopPropagation}
-        style={this.state.dropdownStyles}
-        vkuiClass={classNames(baseClaseName, 'ActionSheet--desktop', {
-          'ActionSheet--closing': this.props.closing,
-        }, `ActionSheet--sizeY-${sizeY}`)}
-      >
-        {children}
-      </div>
-    );
-  }
-}
-
-export default withAdaptivity(withPlatform(withDOM<Props>(ActionSheetDropdownDesktop)), {
-  sizeY: true,
-});
+  return (
+    <div
+      {...restProps}
+      ref={elementRef}
+      onClick={(e) => e.stopPropagation()}
+      style={dropdownStyles}
+      vkuiClass={classNames(getClassName('ActionSheet', platform), 'ActionSheet--desktop', {
+        'ActionSheet--closing': closing,
+      }, `ActionSheet--sizeY-${sizeY}`)}
+    >
+      {children}
+    </div>
+  );
+};

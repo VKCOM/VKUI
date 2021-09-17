@@ -1,10 +1,10 @@
-import { AllHTMLAttributes, FC } from 'react';
+import * as React from 'react';
 import Caption from '../Typography/Caption/Caption';
 import './Footer.css';
 
-type FooterProps = AllHTMLAttributes<HTMLElement>;
+type FooterProps = React.AllHTMLAttributes<HTMLElement>;
 
-const Footer: FC<FooterProps> = ({ children, ...restProps }: FooterProps) => {
+const Footer: React.FC<FooterProps> = ({ children, ...restProps }: FooterProps) => {
   return (
     <Caption Component="footer" {...restProps} level="1" weight="regular" vkuiClass="Footer">
       {children}

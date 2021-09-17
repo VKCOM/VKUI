@@ -1,4 +1,4 @@
-import { HTMLAttributes, FC, useState, useRef, useEffect } from 'react';
+import * as React from 'react';
 import FixedLayout from '../FixedLayout/FixedLayout';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
@@ -11,12 +11,12 @@ import { useTimeout } from '../../hooks/useTimeout';
 import { usePlatform } from '../../hooks/usePlatform';
 import './PanelHeaderContext.css';
 
-export interface PanelHeaderContextProps extends HTMLAttributes<HTMLDivElement> {
+export interface PanelHeaderContextProps extends React.HTMLAttributes<HTMLDivElement> {
   opened: boolean;
   onClose: VoidFunction;
 }
 
-export const PanelHeaderContext: FC<PanelHeaderContextProps> = ({
+export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
   children,
   onClose,
   opened = false,
@@ -24,10 +24,10 @@ export const PanelHeaderContext: FC<PanelHeaderContextProps> = ({
 }) => {
   const { document } = useDOM();
   const platform = usePlatform();
-  const [closing, setClosing] = useState(false);
+  const [closing, setClosing] = React.useState(false);
   const { viewWidth } = useAdaptivity();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
-  const elementRef = useRef<HTMLDivElement>();
+  const elementRef = React.useRef<HTMLDivElement>();
 
   // start closing on "opened" change
   useIsomorphicLayoutEffect(() => {
@@ -44,7 +44,7 @@ export const PanelHeaderContext: FC<PanelHeaderContextProps> = ({
   // fallback onAnimationEnd when animationend not supported
   const onAnimationEnd = () => setClosing(false);
   const animationFallback = useTimeout(onAnimationEnd, 200);
-  useEffect(() => closing ? animationFallback.set() : animationFallback.clear(), [closing]);
+  React.useEffect(() => closing ? animationFallback.set() : animationFallback.clear(), [closing]);
 
   return (
     <FixedLayout {...restProps} vkuiClass={classNames(getClassName('PanelHeaderContext', platform), {

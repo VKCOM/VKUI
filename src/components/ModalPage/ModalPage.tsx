@@ -1,22 +1,21 @@
-import { FC, HTMLAttributes, ReactNode, useContext, useEffect } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { usePlatform } from '../../hooks/usePlatform';
 import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
-import { Ref } from '../../types';
 import { multiRef } from '../../lib/utils';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import './ModalPage.css';
 
-export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps, NavIdProps {
+export interface ModalPageProps extends React.HTMLAttributes<HTMLDivElement>, AdaptivityProps, NavIdProps {
   /**
    * Шапка модальной страницы, `<ModalPageHeader />`
    */
-  header?: ReactNode;
+  header?: React.ReactNode;
   onClose?: VoidFunction;
   /**
    * Процент, на который изначально будет открыта модальная страница. При `settlingHeight={100}` модальная страница раскрывается на всю высоту.
@@ -26,13 +25,13 @@ export interface ModalPageProps extends HTMLAttributes<HTMLDivElement>, Adaptivi
    * Если высота контента в модальной странице может поменяться, нужно установить это свойство
    */
   dynamicContentHeight?: boolean;
-  getModalContentRef?: Ref<HTMLDivElement>;
+  getModalContentRef?: React.Ref<HTMLDivElement>;
 }
 
 const warn = warnOnce('ModalPage');
-const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
+const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
   const platform = usePlatform();
-  const { updateModalHeight } = useContext(ModalRootContext);
+  const { updateModalHeight } = React.useContext(ModalRootContext);
   const {
     children,
     header,
@@ -48,14 +47,14 @@ const ModalPage: FC<ModalPageProps> = (props: ModalPageProps) => {
     ...restProps
   } = props;
 
-  useEffect(() => {
+  React.useEffect(() => {
     updateModalHeight();
   }, [children]);
 
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
 
-  const modalContext = useContext(ModalRootContext);
+  const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);
 
   return (

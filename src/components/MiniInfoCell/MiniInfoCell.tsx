@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -7,18 +7,18 @@ import Tappable from '../../components/Tappable/Tappable';
 import { hasReactNode } from '../../lib/utils';
 import './MiniInfoCell.css';
 
-export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
+export interface MiniInfoCellProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Иконка слева.<br />
    * Рекомендуется использовать иконки размера 20.
    */
-  before: ReactNode;
+  before: React.ReactNode;
 
   /**
    * Содержимое справа.<br />
    * `<UsersStack size="s" />` или `<Avatar size={24} />`
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
 
   /**
    * Тип ячейки:
@@ -48,7 +48,7 @@ export interface MiniInfoCellProps extends HTMLAttributes<HTMLDivElement> {
   textLevel?: 'primary' | 'secondary';
 }
 
-export const MiniInfoCell: FC<MiniInfoCellProps> = (props: MiniInfoCellProps) => {
+export const MiniInfoCell: React.FC<MiniInfoCellProps> = (props: MiniInfoCellProps) => {
   const platform = usePlatform();
   const {
     before,

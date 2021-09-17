@@ -1,20 +1,21 @@
-import React, { Component, HTMLAttributes } from 'react';
-import PopoutWrapper from '../PopoutWrapper/PopoutWrapper';
-import { transitionEvent } from '../../lib/supportEvents';
-import { withPlatform } from '../../hoc/withPlatform';
-import { withAdaptivity, AdaptivityProps, ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
-import { HasPlatform } from '../../types';
-import { ANDROID, IOS, VKCOM } from '../../lib/platform';
-import ActionSheetDropdownDesktop from './ActionSheetDropdownDesktop';
-import ActionSheetDropdown from './ActionSheetDropdown';
+import * as React from 'react';
+import { PopoutWrapper } from '../PopoutWrapper/PopoutWrapper';
+import { ViewWidth, ViewHeight } from '../../hoc/withAdaptivity';
+import { IOS } from '../../lib/platform';
+import { ActionSheetDropdownDesktop } from './ActionSheetDropdownDesktop';
+import { ActionSheetDropdown } from './ActionSheetDropdown';
 import { hasReactNode } from '../../lib/utils';
 import { ActionSheetContext, ItemClickHandler } from './ActionSheetContext';
 import Caption from '../Typography/Caption/Caption';
+import { usePlatform } from '../../hooks/usePlatform';
+import { useTimeout } from '../../hooks/useTimeout';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
 import './ActionSheet.css';
 
 export type PopupDirectionFunction = (elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom';
 
-export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPlatform, AdaptivityProps {
+export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
   onClose?: VoidFunction;
@@ -32,134 +33,95 @@ export interface ActionSheetProps extends HTMLAttributes<HTMLDivElement>, HasPla
   iosCloseItem: React.ReactNode;
 }
 
-export interface ActionSheetState {
-  closing: boolean;
-}
-
-export type CloseCallback = () => void;
-
 export type AnimationEndCallback = (e?: AnimationEvent) => void;
 
-class ActionSheet extends Component<ActionSheetProps, ActionSheetState> {
-  constructor(props: ActionSheetProps) {
-    super(props);
-    this.elRef = React.createRef();
-  }
+export const ActionSheet: React.FC<ActionSheetProps> = ({
+  children,
+  className,
+  header,
+  text,
+  style,
+  iosCloseItem,
+  ...restProps
+}) => {
+  const platform = usePlatform();
+  const [closing, setClosing] = React.useState(false);
+  const onClose = () => setClosing(true);
 
-  state: ActionSheetState = {
-    closing: false,
+  const [_closeAction, setCloseAction] = React.useState<VoidFunction>();
+  const afterClose = () => {
+    restProps.onClose();
+    _closeAction && _closeAction();
+    setCloseAction(undefined);
   };
 
-  elRef: React.RefObject<HTMLDivElement>;
+  const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
+  const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
-  private transitionFinishTimeout: ReturnType<typeof setTimeout>;
+  const fallbackTransitionFinish = useTimeout(afterClose, platform === IOS ? 300 : 200);
+  React.useEffect(() => {
+    if (closing) {
+      if (isDesktop) {
+        afterClose();
+      } else {
+        fallbackTransitionFinish.set();
+      }
+    } else {
+      fallbackTransitionFinish.clear();
+    }
+  }, [closing]);
 
-  static defaultProps: Partial<ActionSheetProps> = {
-    popupDirection: 'bottom',
-  };
-
-  onClose: CloseCallback = () => {
-    this.setState({ closing: true });
-    this.waitTransitionFinish(this.props.onClose);
-  };
-
-  onItemClick: ItemClickHandler = (action, autoclose) => (event) => {
+  const onItemClick = React.useCallback<ItemClickHandler>((action, autoclose) => (event) => {
     event.persist();
 
     if (autoclose) {
-      this.setState({ closing: true });
-      this.waitTransitionFinish(() => {
-        this.props.onClose();
-        action && action(event);
-      });
+      setCloseAction(() => action && action(event));
+      setClosing(true);
     } else {
       action && action(event);
     }
-  };
+  }, []);
+  const contextValue = useObjectMemo({ onItemClick, isDesktop });
 
-  get isDesktop() {
-    const { viewWidth, viewHeight, hasMouse } = this.props;
-    return viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
-  }
+  const DropdownComponent = isDesktop
+    ? ActionSheetDropdownDesktop
+    : ActionSheetDropdown;
 
-  waitTransitionFinish(eventHandler: AnimationEndCallback) {
-    if (this.isDesktop) {
-      return eventHandler();
-    }
-
-    if (transitionEvent.supported) {
-      this.elRef.current.removeEventListener(transitionEvent.name, eventHandler);
-      this.elRef.current.addEventListener(transitionEvent.name, eventHandler);
-    } else {
-      clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300);
-    }
-  }
-
-  render() {
-    const {
-      children,
-      className,
-      header,
-      text,
-      style,
-      platform,
-      viewWidth,
-      viewHeight,
-      hasMouse,
-      iosCloseItem,
-      ...restProps
-    } = this.props;
-
-    const isDesktop = this.isDesktop;
-
-    const DropdownComponent = isDesktop
-      ? ActionSheetDropdownDesktop
-      : ActionSheetDropdown;
-
-    return (
-      <PopoutWrapper
-        closing={this.state.closing}
-        alignY="bottom"
-        className={className}
-        style={style}
-        onClick={!isDesktop ? this.onClose : null}
-        hasMask={!isDesktop}
-        fixed={!isDesktop}
-      >
-        <ActionSheetContext.Provider
-          value={{
-            onItemClick: this.onItemClick,
-            isDesktop,
-          }}
+  return (
+    <PopoutWrapper
+      closing={closing}
+      alignY="bottom"
+      className={className}
+      style={style}
+      onClick={!isDesktop ? onClose : null}
+      hasMask={!isDesktop}
+      fixed={!isDesktop}
+    >
+      <ActionSheetContext.Provider value={contextValue}>
+        <DropdownComponent
+          closing={closing}
+          onClose={onClose}
+          onTransitionEnd={closing && !isDesktop ? afterClose : null}
+          {...restProps}
         >
-          <DropdownComponent
-            closing={this.state.closing}
-            onClose={this.onClose}
-            elementRef={this.elRef}
-            {...restProps}
-          >
-            {(hasReactNode(header) || hasReactNode(text)) &&
-              <header vkuiClass="ActionSheet__header">
-                {hasReactNode(header) &&
-                  <Caption level="1" weight={platform === IOS ? 'semibold' : 'medium'} vkuiClass="ActionSheet__title">
-                    {header}
-                  </Caption>
-                }
-                {hasReactNode(text) && <Caption level="1" weight="regular" vkuiClass="ActionSheet__text">{text}</Caption>}
-              </header>
-            }
-            {children}
-            {platform === IOS && !isDesktop && iosCloseItem}
-          </DropdownComponent>
-        </ActionSheetContext.Provider>
-      </PopoutWrapper>
-    );
-  }
-}
+          {(hasReactNode(header) || hasReactNode(text)) &&
+            <header vkuiClass="ActionSheet__header">
+              {hasReactNode(header) &&
+                <Caption level="1" weight={platform === IOS ? 'semibold' : 'medium'} vkuiClass="ActionSheet__title">
+                  {header}
+                </Caption>
+              }
+              {hasReactNode(text) && <Caption level="1" weight="regular" vkuiClass="ActionSheet__text">{text}</Caption>}
+            </header>
+          }
+          {children}
+          {platform === IOS && !isDesktop && iosCloseItem}
+        </DropdownComponent>
+      </ActionSheetContext.Provider>
+    </PopoutWrapper>
+  );
+};
 
-export default withAdaptivity(withPlatform(ActionSheet), {
-  viewWidth: true,
-  viewHeight: true,
-  hasMouse: true,
-});
+ActionSheet.defaultProps = {
+  popupDirection: 'bottom',
+};

@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import * as React from 'react';
 import Tappable, { ACTIVE_EFFECT_DELAY } from '../Tappable/Tappable';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -14,7 +14,7 @@ import Headline from '../Typography/Headline/Headline';
 import './Checkbox.css';
 
 export interface CheckboxProps extends
-  InputHTMLAttributes<HTMLInputElement>,
+  React.InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
   HasRef<HTMLInputElement>,
   AdaptivityProps { }

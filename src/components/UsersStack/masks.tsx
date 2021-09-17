@@ -7,6 +7,7 @@ export function createMasks(document: Document): void {
     return;
   }
 
+  // eslint-disable-next-line no-restricted-globals
   const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svgElement.setAttributeNS(null, 'id', '__SVG_MASKS_NODE__');
   svgElement.setAttributeNS(null, 'width', '0');
@@ -38,6 +39,7 @@ export function createMasks(document: Document): void {
 </defs>`;
 
   onDOMLoaded(() => {
+    // eslint-disable-next-line no-restricted-globals
     document.body.appendChild(svgElement);
   });
   masksCreated.push(document);

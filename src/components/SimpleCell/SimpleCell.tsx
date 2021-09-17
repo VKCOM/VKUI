@@ -1,4 +1,4 @@
-import { ReactNode, FC, ElementType, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
@@ -17,23 +17,23 @@ export interface SimpleCellOwnProps {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
-  before?: ReactNode;
+  before?: React.ReactNode;
   /**
    * Иконка 12 или `<Badge />`. Добавится справа от текста `children`.
    */
-  badge?: ReactNode;
+  badge?: React.ReactNode;
   /**
    * Контейнер для текста справа от `children`.
    */
-  indicator?: ReactNode;
+  indicator?: React.ReactNode;
   /**
    * Иконка 24|28 или `<Switch />`. Располагается справа от `indicator`.
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
   /**
    * Контейнер для текста под `children`.
    */
-  description?: ReactNode;
+  description?: React.ReactNode;
   /**
    * Убирает анимацию нажатия
    */
@@ -43,16 +43,16 @@ export interface SimpleCellOwnProps {
    */
   expandable?: boolean;
   multiline?: boolean;
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
-interface SimpleCellTypographyProps extends HTMLAttributes<HTMLDivElement> {
-  Component?: ElementType;
+interface SimpleCellTypographyProps extends React.HTMLAttributes<HTMLDivElement> {
+  Component?: React.ElementType;
 }
 
-const SimpleCellTypography: FC<SimpleCellTypographyProps> = (props: SimpleCellTypographyProps) => {
+const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (props: SimpleCellTypographyProps) => {
   const { sizeY } = useAdaptivity();
 
   return sizeY === SizeType.COMPACT
@@ -60,7 +60,7 @@ const SimpleCellTypography: FC<SimpleCellTypographyProps> = (props: SimpleCellTy
     : <Title level="3" weight="regular" {...props} />;
 };
 
-const SimpleCell: FC<SimpleCellProps> = ({
+const SimpleCell: React.FC<SimpleCellProps> = ({
   badge,
   before,
   indicator,
