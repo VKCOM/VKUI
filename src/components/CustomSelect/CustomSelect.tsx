@@ -78,7 +78,7 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
   /**
    * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
    */
-  filterFn?: false | ((value: string, option: CustomSelectOptionInterface, ) => boolean);
+  filterFn?: false | ((value: string, option: CustomSelectOptionInterface, getOptionLabel?: (option: Partial<CustomSelectOptionInterface>) => string) => boolean);
   popupDirection?: 'top' | 'bottom';
   /**
    * Рендер-проп для кастомного рендера опции.
