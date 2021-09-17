@@ -1,9 +1,9 @@
-import { canUseDOM, onDOMLoaded } from '../../lib/dom';
+import { canUseDOM } from '../../lib/dom';
 
-let masksCreated = false;
+const masksCreated: Document[] = [];
 
-export function createMasks(): void {
-  if (!canUseDOM || masksCreated) {
+export function createMasks(document: Document): void {
+  if (!canUseDOM || masksCreated.includes(document)) {
     return;
   }
 
@@ -38,9 +38,6 @@ export function createMasks(): void {
   </clipPath>
 </defs>`;
 
-  onDOMLoaded(() => {
-    // eslint-disable-next-line no-restricted-globals
-    document.body.appendChild(svgElement);
-  });
-  masksCreated = true;
+  document.body.appendChild(svgElement);
+  masksCreated.push(document);
 }
