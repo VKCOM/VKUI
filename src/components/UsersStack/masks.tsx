@@ -1,4 +1,4 @@
-import { canUseDOM, onDOMLoaded } from '../../lib/dom';
+import { canUseDOM } from '../../lib/dom';
 
 const masksCreated: Document[] = [];
 
@@ -38,9 +38,6 @@ export function createMasks(document: Document): void {
   </clipPath>
 </defs>`;
 
-  onDOMLoaded(() => {
-    // eslint-disable-next-line no-restricted-globals
-    document.body.appendChild(svgElement);
-  });
+  document.body.appendChild(svgElement);
   masksCreated.push(document);
 }
