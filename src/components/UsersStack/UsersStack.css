@@ -40,10 +40,6 @@
 }
 
 .UsersStack__photo + .UsersStack__photo {
-  margin-left: 4px;
-}
-
-.UsersStack .UsersStack__photo + .UsersStack__photo {
   margin-left: -2px;
 }
 
