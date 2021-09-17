@@ -13,6 +13,7 @@ import Caption from '../Typography/Caption/Caption';
 import { prefixClass } from '../../lib/prefixClass';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { defaultFilterFn } from '../../lib/select';
 import './ChipsSelect.css';
 
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
@@ -324,11 +325,7 @@ const chipsSelectDefaultProps: ChipsSelectProps<any> = {
   showSelected: true,
   closeAfterSelect: true,
   options: [],
-  filterFn: (value?: string, option?: ChipsInputOption, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => {
-    return (
-      !value || value && getOptionLabel(option)?.toLowerCase()?.includes(value?.toLowerCase())
-    );
-  },
+  filterFn: defaultFilterFn,
   renderOption({ option, ...restProps }: CustomSelectOptionProps): React.ReactNode {
     return (
       <CustomSelectOption {...restProps} />
