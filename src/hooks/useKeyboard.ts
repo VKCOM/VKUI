@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDOM } from '../lib/dom';
 import { useGlobalEventListener } from './useGlobalEventListener';
 
@@ -27,6 +27,8 @@ export function useKeyboard(): SoftwareKeyboardState {
     isPrecise: false,
   });
 
+  const transitionalTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const eventOptions = {
     passive: true,
     capture: false,
@@ -41,6 +43,8 @@ export function useKeyboard(): SoftwareKeyboardState {
   }, [onFocus]);
 
   function onFocus(event: FocusEvent | true) {
+    clearTimeout(transitionalTimeout.current);
+
     let returnObject = {
       isOpened: (event === true || event.type === 'focusin') && (
         document.activeElement?.tagName === 'INPUT' ||
@@ -50,7 +54,7 @@ export function useKeyboard(): SoftwareKeyboardState {
     };
 
     // Ожидаем прохождение анимации раскрытия клавиатуры
-    setTimeout(() => {
+    transitionalTimeout.current = setTimeout(() => {
       returnObject.isPrecise = getPreciseKeyboardState(window);
       setKeyboardState(returnObject);
     }, 300);
