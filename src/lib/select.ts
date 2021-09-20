@@ -38,7 +38,7 @@ export const defaultFilterFn = (
   const words: string[] = label.split(wordSplitters);
   const wordsLength = words.length;
 
-  for (let start = 0; start <= wordsLength - start; start++) {
+  for (let start = 0; start <= wordsLength; start++) {
     for (let end = start + 2; end <= wordsLength; end++) {
       words.push(words.slice(start, end).join(' '));
     }
