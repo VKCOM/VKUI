@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import * as React from 'react';
 import { useDOM } from '../lib/dom';
 import { useGlobalEventListener } from './useGlobalEventListener';
 
@@ -22,12 +22,12 @@ export function getPreciseKeyboardState(window: any): boolean {
 export function useKeyboard(): SoftwareKeyboardState {
   const { window, document } = useDOM();
 
-  const [keyboardState, setKeyboardState] = useState<SoftwareKeyboardState>({
+  const [keyboardState, setKeyboardState] = React.useState<SoftwareKeyboardState>({
     isOpened: false,
     isPrecise: false,
   });
 
-  const transitionalTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const transitionalTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const eventOptions = {
     passive: true,
@@ -38,7 +38,7 @@ export function useKeyboard(): SoftwareKeyboardState {
    У полей с autoFocus не отлавливаются события focus, для этого вызываем вручную,
    чтобы иметь хоть какое-то понимание происходящего.
    */
-  useEffect(() => {
+  React.useEffect(() => {
     onFocus(true);
   }, [onFocus]);
 
