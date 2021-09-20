@@ -19,7 +19,7 @@ import './ChipsSelect.css';
 export interface ChipsSelectProps<Option extends ChipsInputOption> extends ChipsInputProps<Option>, AdaptivityProps {
   popupDirection?: 'top' | 'bottom';
   options?: Option[];
-  filterFn?: (value?: string, option?: Option, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => boolean;
+  filterFn?: false | ((value?: string, option?: Option, getOptionLabel?: Pick<ChipsInputProps<ChipsInputOption>, 'getOptionLabel'>['getOptionLabel']) => boolean);
   /**
    * Возможность создавать чипы которых нет в списке (по enter или с помощью пункта в меню, см creatableText)
    */
