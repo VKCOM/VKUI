@@ -445,7 +445,7 @@ class Tappable extends React.Component<TappableProps, TappableState> {
                         ))}
                       </span>
                     )}
-                    {hasHover && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
+                    {hasHover && hoverMode === 'background' && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
                     {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
                   </RootComponent>
                 );
