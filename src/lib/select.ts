@@ -5,13 +5,20 @@ type Option = {
 
 type GetOptionLabel = (option: Option) => string;
 
-const wordSplitters = /\p{Pd}|\p{Z}/u;
+const findAllIncludes = (target = '', search = '') => {
+  const includes = [];
 
-/**
- * Убирает кавычки, скобки, точки и запятые
- */
-const cleanSentence = (sentence = '') => {
-  return sentence.replace(/\p{Ps}|\p{Pe}|\p{Pi}|\p{Pf}|"|'|,|\./gu, '');
+  for (let i = 0; i <= target.length;) {
+    const index = target.indexOf(search, i);
+    if (index >= 0) {
+      includes.push(index);
+      i = index + 1;
+    } else {
+      return includes;
+    }
+  }
+
+  return includes;
 };
 
 export const defaultFilterFn = (
@@ -30,22 +37,10 @@ export const defaultFilterFn = (
     return true;
   }
 
-  label = cleanSentence(label);
-  if (label.startsWith(query)) {
-    return true;
-  }
+  const includes = findAllIncludes(label, query);
 
-  const words: string[] = label.split(wordSplitters);
-  const wordsLength = words.length;
-
-  for (let start = 0; start <= wordsLength; start++) {
-    for (let end = start + 2; end <= wordsLength; end++) {
-      words.push(words.slice(start, end).join(' '));
-    }
-  }
-
-  for (const word of words) {
-    if (word.startsWith(query)) {
+  for (const index of includes) {
+    if (!/\p{L}/u.test(label[index - 1])) {
       return true;
     }
   }
