@@ -173,6 +173,7 @@ module.exports = {
           '../src/components/RangeSlider/RangeSlider.tsx',
           '../src/components/Radio/Radio.tsx',
           '../src/components/Checkbox/Checkbox.tsx',
+          '../src/components/SimpleCheckbox/SimpleCheckbox.tsx',
           '../src/components/Input/Input.tsx',
           '../src/components/ChipsInput/ChipsInput.tsx',
           '../src/components/Select/Select.tsx',
