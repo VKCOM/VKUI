@@ -11,6 +11,7 @@ import { PanelHeaderButton } from '../PanelHeaderButton/PanelHeaderButton';
 import { IOS } from '../../lib/platform';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { Icon24Dismiss } from '@vkontakte/icons';
+import { useKeyboard } from '../../hooks/useKeyboard';
 import './ModalCardBase.css';
 
 export interface ModalCardBaseProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
@@ -61,6 +62,7 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity(({
 }: ModalCardBaseProps & AdaptivityProps) => {
   const platform = usePlatform();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
+  const isSoftwareKeyboardOpened = useKeyboard().isOpened;
 
   const canShowCloseBtn = viewWidth >= ViewWidth.SMALL_TABLET;
   const canShowCloseBtnIos = platform === IOS && !canShowCloseBtn;
@@ -73,7 +75,9 @@ export const ModalCardBase: React.FC<ModalCardBaseProps> = withAdaptivity(({
       })}
       ref={getRootRef}
     >
-      <div vkuiClass="ModalCardBase__container">
+      <div vkuiClass={classNames('ModalCardBase__container', {
+        'ModalCardBase__container--softwareKeyboardOpened': isSoftwareKeyboardOpened,
+      })}>
         {hasReactNode(icon) && <div vkuiClass="ModalCardBase__icon">{icon}</div>}
         {hasReactNode(header) && <Title level="2" weight="semibold" vkuiClass="ModalCardBase__header">{header}</Title>}
         {hasReactNode(subheader) && <Headline weight="regular" vkuiClass="ModalCardBase__subheader">{subheader}</Headline>}

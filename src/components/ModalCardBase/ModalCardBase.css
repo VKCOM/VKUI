@@ -15,6 +15,10 @@
   pointer-events: initial;
 }
 
+.ModalCardBase__container--softwareKeyboardOpened {
+  margin-bottom: 0;
+}
+
 .ModalCardBase__header,
 .ModalCardBase__subheader {
   text-align: center;
