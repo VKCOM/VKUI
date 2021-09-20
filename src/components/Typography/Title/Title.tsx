@@ -1,21 +1,22 @@
-import { ElementType, FC, AllHTMLAttributes } from 'react';
+import * as React from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
 import { ANDROID } from '../../../lib/platform';
 import Headline, { HeadlineProps } from '../Headline/Headline';
+import './Title.css';
 
-export interface TitleProps extends AllHTMLAttributes<HTMLElement> {
+export interface TitleProps extends React.AllHTMLAttributes<HTMLElement> {
   weight: 'heavy' | 'bold' | 'semibold' | 'medium' | 'regular';
   level: '1' | '2' | '3';
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
-const Title: FC<TitleProps> = ({
+const Title: React.FC<TitleProps> = ({
   children,
   weight,
   level,
-  Component = ('h' + level) as ElementType,
+  Component = ('h' + level) as React.ElementType,
   ...restProps
 }: TitleProps) => {
   const platform = usePlatform();

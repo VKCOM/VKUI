@@ -1,26 +1,27 @@
-import { HTMLAttributes, ReactNode, FC } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRef, HasRootRef } from '../../types';
 import { PopoutRoot } from '../PopoutRoot/PopoutRoot';
 import { usePlatform } from '../../hooks/usePlatform';
+import './SplitLayout.css';
 
 export interface SplitLayoutProps extends
-  HTMLAttributes<HTMLDivElement>,
+  React.HTMLAttributes<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
   HasRef<HTMLDivElement> {
   /**
    * Свойство для отрисовки `Alert`, `ActionSheet` и `ScreenSpinner`.
    */
-  popout?: ReactNode;
+  popout?: React.ReactNode;
   /**
    * Свойство для отрисовки `ModalRoot`.
    */
-  modal?: ReactNode;
-  header?: ReactNode;
+  modal?: React.ReactNode;
+  header?: React.ReactNode;
 }
 
-export const SplitLayout: FC<SplitLayoutProps> = ({
+export const SplitLayout: React.FC<SplitLayoutProps> = ({
   popout,
   modal,
   header,

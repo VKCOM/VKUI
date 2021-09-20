@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import * as React from 'react';
 
 export enum SizeType {
   COMPACT = 'compact',
@@ -19,15 +19,33 @@ export enum ViewHeight {
   MEDIUM
 }
 
-export interface AdaptivityContextInterface {
+export interface SizeProps {
   sizeX?: SizeType;
   sizeY?: SizeType;
+}
+
+export interface AdaptivityProps extends SizeProps {
+  /**
+   * @ignore
+   */
+  viewWidth?: ViewWidth;
+  /**
+   * @ignore
+   */
+  viewHeight?: ViewHeight;
+  /**
+   * @ignore
+   */
+  hasMouse?: boolean;
+}
+
+export interface AdaptivityContextInterface extends SizeProps {
   viewWidth?: ViewWidth;
   viewHeight?: ViewHeight;
   hasMouse?: boolean;
 }
 
-export const AdaptivityContext = createContext<AdaptivityContextInterface>({
+export const AdaptivityContext = React.createContext<AdaptivityContextInterface>({
   sizeX: SizeType.COMPACT,
   sizeY: SizeType.REGULAR,
 });

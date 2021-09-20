@@ -30,6 +30,7 @@
 }
 
 .Search__input {
+  -webkit-appearance: textfield;
   border: none;
   margin: 0;
   height: var(--search_default_height);

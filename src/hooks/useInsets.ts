@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import * as React from 'react';
 import vkBridge, { Insets } from '@vkontakte/vk-bridge';
 
 let initialState: Insets = {
@@ -36,7 +36,8 @@ function resolveInsets(e: BridgeEvent): Insets | null {
 vkBridge.subscribe((e: BridgeEvent) => {
   const insets = resolveInsets(e);
   if (insets) {
-    const htmlElement = window.document.documentElement;
+    // eslint-disable-next-line no-restricted-globals
+    const htmlElement = document.documentElement;
     for (let key in insets) {
       if (insets.hasOwnProperty(key) && (insets[key as keyof Insets] > 0 || key === 'bottom')) {
         htmlElement.style.setProperty(`--safe-area-inset-${key}`, `${insets[key as keyof Insets]}px`);
@@ -47,9 +48,9 @@ vkBridge.subscribe((e: BridgeEvent) => {
 });
 
 export function useInsets(): Insets {
-  const [insets, setInsets] = useState<Insets>(initialState);
+  const [insets, setInsets] = React.useState<Insets>(initialState);
 
-  useEffect(() => {
+  React.useEffect(() => {
     function connectListener(e: BridgeEvent) {
       const insets = resolveInsets(e);
       if (insets) {

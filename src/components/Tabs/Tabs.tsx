@@ -1,18 +1,19 @@
-import { FunctionComponent, HTMLAttributes, createContext } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { IOS } from '../../lib/platform';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import './Tabs.css';
 
-export interface TabsProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
+export interface TabsProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, AdaptivityProps {
   mode?: 'default' | 'buttons' | 'segmented';
 }
 
-export const TabsModeContext = createContext<TabsProps['mode']>('default');
+export const TabsModeContext = React.createContext<TabsProps['mode']>('default');
 
-const Tabs: FunctionComponent<TabsProps> = ({
+const Tabs: React.FunctionComponent<TabsProps> = ({
   children,
   mode,
   getRootRef,

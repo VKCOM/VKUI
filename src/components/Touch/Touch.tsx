@@ -1,11 +1,4 @@
-import {
-  Component,
-  DragEvent,
-  ElementType,
-  MouseEvent as ReactMouseEvent,
-  RefCallback,
-  AllHTMLAttributes,
-} from 'react';
+import * as React from 'react';
 import {
   getSupportedEvents,
   coordX,
@@ -18,7 +11,7 @@ import { HasRootRef } from '../../types';
 import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { setRef, noop } from '../../lib/utils';
 
-export interface TouchProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   onEnter?(outputEvent: MouseEvent): void;
   onLeave?(outputEvent: MouseEvent): void;
   onStart?(outputEvent: TouchEvent): void;
@@ -32,7 +25,7 @@ export interface TouchProps extends AllHTMLAttributes<HTMLElement>, HasRootRef<H
   onEndY?(outputEvent: TouchEvent): void;
   useCapture?: boolean;
   noSlideClick?: boolean;
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
 export interface Gesture {
@@ -56,12 +49,12 @@ export interface TouchEvent extends Gesture {
 }
 
 export type TouchEventHandler = (e: TouchEvent) => void;
-export type ClickHandler = (e: ReactMouseEvent<HTMLElement>) => void;
-export type DragHandler = (e: DragEvent<HTMLElement>) => void;
+export type ClickHandler = (e: React.MouseEvent<HTMLElement>) => void;
+export type DragHandler = (e: React.DragEvent<HTMLElement>) => void;
 
 const events = getSupportedEvents();
 
-class Touch extends Component<TouchProps & DOMProps> {
+class Touch extends React.Component<TouchProps & DOMProps> {
   didSlide = false;
   gesture: Partial<Gesture> = {};
   container: HTMLElement;
@@ -284,7 +277,7 @@ class Touch extends Component<TouchProps & DOMProps> {
    * @param {Object} e Браузерное событие
    * @return {void}
    */
-  onDragStart: DragHandler = (e: DragEvent<HTMLElement>) => {
+  onDragStart: DragHandler = (e: React.DragEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
     if (target.tagName === 'A' || target.tagName === 'IMG') {
       e.preventDefault();
@@ -314,7 +307,7 @@ class Touch extends Component<TouchProps & DOMProps> {
     this.didSlide = false;
   };
 
-  getRef: RefCallback<HTMLElement> = (container) => {
+  getRef: React.RefCallback<HTMLElement> = (container) => {
     this.container = container;
     setRef(container, this.props.getRootRef);
   };

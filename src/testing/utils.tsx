@@ -1,6 +1,22 @@
-import { ComponentType } from 'react';
+import * as React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
 import AdaptivityProvider, { AdaptivityProviderProps } from '../components/AdaptivityProvider/AdaptivityProvider';
+import { ImgOnlyAttributes } from '../lib/utils';
+import { ScrollContext } from '../components/AppRoot/ScrollContext';
+
+export const imgOnlyAttributes: ImgOnlyAttributes = {
+  alt: 'test',
+  crossOrigin: 'anonymous',
+  decoding: 'async',
+  height: 100,
+  width: 100,
+  loading: 'eager',
+  referrerPolicy: 'no-referrer',
+  sizes: 'test',
+  src: 'test',
+  srcSet: 'test',
+  useMap: 'test',
+};
 
 export type ComponentTestOptions = {
   defaultProps?: any;
@@ -13,7 +29,7 @@ export type ComponentTestOptions = {
 
 type BasicProps = { style?: any; className?: string };
 
-export function mountTest(Component: ComponentType<any>) {
+export function mountTest(Component: React.ComponentType<any>) {
   it('renders', () => {
     let api: RenderResult;
     // mount
@@ -26,7 +42,7 @@ export function mountTest(Component: ComponentType<any>) {
 }
 
 export function baselineComponent<Props extends BasicProps>(
-  RawComponent: ComponentType<Props>,
+  RawComponent: React.ComponentType<Props>,
   {
     forward = true,
     style = true,
@@ -35,7 +51,7 @@ export function baselineComponent<Props extends BasicProps>(
     adaptivity,
   }: ComponentTestOptions = {},
 ) {
-  const Component: ComponentType<BasicProps> = adaptivity
+  const Component: React.ComponentType<BasicProps> = adaptivity
     ? (p: Props) => <AdaptivityProvider {...adaptivity}><RawComponent {...p} /></AdaptivityProvider>
     : RawComponent;
   mountTest(Component);
@@ -86,3 +102,16 @@ export function mockRect(el: HTMLElement | ({} & any), { x = 0, y = 0, w = 0, h 
     },
   });
 }
+
+export const mockScrollContext = (getY: () => number): [React.FC, jest.Mock] => {
+  const getScroll = () => ({ x: 0, y: getY() });
+  const scrollTo = jest.fn();
+  return [
+    (props) => (
+      <ScrollContext.Provider value={{ getScroll, scrollTo }}>
+        {props.children}
+      </ScrollContext.Provider>
+    ),
+    scrollTo,
+  ];
+};

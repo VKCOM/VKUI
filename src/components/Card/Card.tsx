@@ -1,14 +1,15 @@
-import { FunctionComponent, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
+import './Card.css';
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   mode?: 'tint' | 'shadow' | 'outline';
 }
 
-const Card: FunctionComponent<CardProps> = ({ mode, children, getRootRef, ...restProps }: CardProps) => {
+const Card: React.FunctionComponent<CardProps> = ({ mode, children, getRootRef, ...restProps }: CardProps) => {
   const platform = usePlatform();
 
   return (

@@ -1,4 +1,4 @@
-import { createContext, FC } from 'react';
+import * as React from 'react';
 import { PlatformType, platform } from './platform';
 import { BrowserInfo, computeBrowserInfo } from './browser';
 import { DOMContext, getDOM } from '../lib/dom';
@@ -9,7 +9,7 @@ export interface SSRContextInterface {
   browserInfo?: BrowserInfo;
 }
 
-export const SSRContext = createContext<SSRContextInterface>({
+export const SSRContext = React.createContext<SSRContextInterface>({
   platform: null,
   userAgent: '',
   browserInfo: undefined,
@@ -20,7 +20,7 @@ export interface SSRWrapperProps {
   browserInfo?: BrowserInfo;
 }
 
-export const SSRWrapper: FC<SSRWrapperProps> = (props) => {
+export const SSRWrapper: React.FC<SSRWrapperProps> = (props) => {
   let { userAgent, browserInfo, children } = props;
 
   if (!browserInfo && userAgent) {

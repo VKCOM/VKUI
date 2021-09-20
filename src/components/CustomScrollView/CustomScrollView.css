@@ -6,6 +6,7 @@
 }
 
 .CustomScrollView__box {
+  max-height: inherit;
   width: 100%;
   height: 100%;
   overflow-y: scroll;
@@ -58,4 +59,12 @@
 .CustomScrollView__trackerY:active::before {
   opacity: .56;
   transform: scaleX(1.34);
+}
+
+/**
+ * CustomSelect
+ */
+
+.CustomSelect .CustomScrollView {
+  max-height: 160px;
 }

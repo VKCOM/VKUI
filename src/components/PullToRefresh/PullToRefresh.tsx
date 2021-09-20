@@ -1,4 +1,4 @@
-import React, { PureComponent, RefObject } from 'react';
+import * as React from 'react';
 import Touch, { TouchProps, TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import FixedLayout from '../FixedLayout/FixedLayout';
@@ -12,6 +12,7 @@ import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
 import { runTapticImpactOccurred } from '../../lib/taptic';
 import { withContext } from '../../hoc/withContext';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import './PullToRefresh.css';
 
 export interface PullToRefreshProps extends TouchProps, HasPlatform {
   /**
@@ -66,7 +67,7 @@ function cancelEvent(event: any) {
   return false;
 }
 
-class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToRefreshState> {
+class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, PullToRefreshState> {
   constructor(props: PullToRefreshProps) {
     super(props);
 
@@ -98,7 +99,7 @@ class PullToRefresh extends PureComponent<PullToRefreshProps & DOMProps, PullToR
 
   params: PullToRefreshParams;
 
-  contentRef: RefObject<HTMLDivElement>;
+  contentRef: React.RefObject<HTMLDivElement>;
 
   get document() {
     return this.props.document;

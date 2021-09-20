@@ -1,10 +1,12 @@
-import { SplitCol, SplitLayout, Link, IconButton, Scheme, Tappable } from '@vkui';
-import { Icon28LogoVk, Icon28MoonOutline } from '@vkontakte/icons';
+import { SplitCol, SplitLayout, Link, IconButton, Tappable, useAppearance } from '@vkui';
+import { Icon28LogoVk, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
 import React from 'react';
 import pkg from '../../../package.json';
 import './StyleGuideHeader.css';
 
-export const StyleGuideHeader = ({ scheme, setScheme }) => {
+export const StyleGuideHeader = ({ switchStyleGuideScheme }) => {
+  const appearance = useAppearance();
+
   return (
     <div className="StyleGuideHeader">
       <SplitLayout>
@@ -35,14 +37,8 @@ export const StyleGuideHeader = ({ scheme, setScheme }) => {
             </Link>
           </div>
           <div className="StyleGuideHeader__aside">
-            <IconButton className="StyleGuideHeader__scheme" onClick={() => {
-              if (scheme === Scheme.SPACE_GRAY) {
-                setScheme(Scheme.BRIGHT_LIGHT);
-              } else if (scheme === Scheme.BRIGHT_LIGHT) {
-                setScheme(Scheme.SPACE_GRAY);
-              }
-            }}>
-              <Icon28MoonOutline />
+            <IconButton aria-label="Сменить тему" className="StyleGuideHeader__scheme" onClick={switchStyleGuideScheme}>
+              {appearance === 'dark' ? <Icon28SunOutline /> : <Icon28MoonOutline />}
             </IconButton>
           </div>
         </SplitCol>

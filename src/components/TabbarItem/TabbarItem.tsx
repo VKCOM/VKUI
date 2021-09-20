@@ -1,30 +1,31 @@
-import { FunctionComponent, ReactNode, HTMLAttributes, ElementType, AnchorHTMLAttributes } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import Counter from '../Counter/Counter';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
+import './TabbarItem.css';
 
-export interface TabbarItemProps extends HTMLAttributes<HTMLElement>, AnchorHTMLAttributes<HTMLElement> {
+export interface TabbarItemProps extends React.HTMLAttributes<HTMLElement>, React.AnchorHTMLAttributes<HTMLElement> {
   selected?: boolean;
   /**
    * Тест рядом с иконкой
    */
-  text?: ReactNode;
+  text?: React.ReactNode;
   /**
    * Индикатор над иконкой. Принимает `<Badge mode="prominent" />` или `<Counter size="s" mode="prominent" />`
    */
-  indicator?: ReactNode;
+  indicator?: React.ReactNode;
   /**
    * @deprecated будет удалено в 5.0.0. Используйте `indicator`
    */
-  label?: ReactNode;
+  label?: React.ReactNode;
 }
 
-const TabbarItem: FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) => {
+const TabbarItem: React.FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) => {
   const { children, selected, label, indicator, text, ...restProps } = props;
   const platform = usePlatform();
-  const Component: ElementType = restProps.href ? 'a' : 'div';
+  const Component: React.ElementType = restProps.href ? 'a' : 'div';
 
   return (
     <Component

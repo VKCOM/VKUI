@@ -1,6 +1,6 @@
-import { createContext } from 'react';
+import * as React from 'react';
 import { noop } from '../../lib/utils';
 
-export const ListContext = createContext({
+export const ListContext = React.createContext({
   toggleDrag: noop as (value: boolean) => void,
 });

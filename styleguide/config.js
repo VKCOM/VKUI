@@ -167,6 +167,7 @@ module.exports = {
           '../src/components/FormLayout/FormLayout.tsx',
           '../src/components/FormItem/FormItem.tsx',
           '../src/components/FormLayoutGroup/FormLayoutGroup.tsx',
+          '../src/components/FormField/FormField.tsx',
           '../src/components/FormStatus/FormStatus.tsx',
           '../src/components/Slider/Slider.tsx',
           '../src/components/RangeSlider/RangeSlider.tsx',

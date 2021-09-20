@@ -1,10 +1,11 @@
-import React, { createRef, Ref } from 'react';
+import * as React from 'react';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { multiRef, setRef } from '../../lib/utils';
+import './CustomScrollView.css';
 
 interface Props extends DOMProps {
   windowResize?: boolean;
-  boxRef: Ref<HTMLDivElement>;
+  boxRef: React.Ref<HTMLDivElement>;
 }
 
 class CustomScrollView extends React.Component<Props> {
@@ -19,8 +20,8 @@ class CustomScrollView extends React.Component<Props> {
   private trackerTop = 0;
 
   private readonly box = multiRef<HTMLDivElement>((e) => setRef(e, this.props.boxRef));
-  private readonly barY = createRef<HTMLDivElement>();
-  private readonly trackerY = createRef<HTMLDivElement>();
+  private readonly barY = React.createRef<HTMLDivElement>();
+  private readonly trackerY = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
     this.chooseTransformProp();

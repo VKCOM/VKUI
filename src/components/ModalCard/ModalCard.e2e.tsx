@@ -5,11 +5,11 @@ import { ModalRoot } from '../ModalRoot/ModalRootAdaptive';
 import Avatar from '../Avatar/Avatar';
 import UsersStack from '../UsersStack/UsersStack';
 import Textarea from '../Textarea/Textarea';
-import { describeScreenshotFuzz } from '../../testing/e2e/utils';
+import { describeScreenshotFuzz } from '../../testing/e2e';
 import AppRoot from '../AppRoot/AppRoot';
 import { Icon56MoneyTransferOutline } from '@vkontakte/icons';
 import { Platform } from '../../lib/platform';
-import { ViewWidth } from '../../components/AdaptivityProvider/AdaptivityContext';
+import { ViewWidth } from '../AdaptivityProvider/AdaptivityContext';
 
 const Component = (props: ModalCardProps) => (
   <div style={{ height: 500, transform: 'translateZ(0)' }}>
@@ -64,6 +64,15 @@ const propSets = [{
   ],
   children: [
     <Textarea key="textarea" defaultValue="В Грузии" />,
+  ],
+}, {
+  nav: ['4'],
+  header: ['Гиппопотомомонстросесквиппедалиофобия'],
+  subheader: ['Гиппопотомомонстросесквиппедалиофобия — боязнь длинных слов, таких как метоксихлордиэтиламинометилбутиламиноакридин'],
+  actions: [
+    <Button size="l" mode="primary" key="button">
+      Понятно
+    </Button>,
   ],
 }];
 

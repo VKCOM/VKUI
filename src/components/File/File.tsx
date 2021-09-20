@@ -1,20 +1,21 @@
-import { HTMLAttributes, FunctionComponent, InputHTMLAttributes } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import Button, { VKUIButtonProps } from '../Button/Button';
 import { HasRef, HasRootRef } from '../../types';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useExternRef } from '../../hooks/useExternRef';
+import './File.css';
 
 export interface FileProps extends
   Omit<VKUIButtonProps, 'size' | 'type'>,
-  Omit<InputHTMLAttributes<HTMLInputElement>, 'onClick' | 'type'>,
-  Pick<HTMLAttributes<HTMLElement>, 'onClick'>,
+  Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onClick' | 'type'>,
+  Pick<React.HTMLAttributes<HTMLElement>, 'onClick'>,
   HasRef<HTMLInputElement>,
   HasRootRef<HTMLElement> {
   controlSize?: VKUIButtonProps['size'];
 }
 
-const File: FunctionComponent<FileProps> = (props: FileProps) => {
+const File: React.FunctionComponent<FileProps> = (props: FileProps) => {
   const { children, align, controlSize, mode, stretched, before, className,
     style, getRef, getRootRef, onClick, ...restProps } = props;
 

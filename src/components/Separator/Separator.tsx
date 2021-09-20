@@ -1,9 +1,10 @@
-import { FC, HTMLAttributes, memo } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
+import './Separator.css';
 
-export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
+export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * С этим свойством компонент не будет иметь отступы слева и справа
    */
@@ -11,7 +12,7 @@ export interface SeparatorProps extends HTMLAttributes<HTMLDivElement> {
   expanded?: boolean;
 }
 
-const Separator: FC<SeparatorProps> = ({ wide, expanded, ...restProps }) => {
+const Separator: React.FC<SeparatorProps> = ({ wide, expanded, ...restProps }) => {
   const platform = usePlatform();
 
   return (
@@ -29,4 +30,4 @@ const Separator: FC<SeparatorProps> = ({ wide, expanded, ...restProps }) => {
   );
 };
 
-export default memo(Separator);
+export default React.memo(Separator);

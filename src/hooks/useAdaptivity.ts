@@ -1,7 +1,8 @@
-import { useContext } from 'react';
-import { AdaptivityContext } from '../components/AdaptivityProvider/AdaptivityContext';
-import { AdaptivityProps } from '../hoc/withAdaptivity';
+import * as React from 'react';
+import { AdaptivityContext, AdaptivityProps } from '../components/AdaptivityProvider/AdaptivityContext';
+
+export type { AdaptivityProps };
 
 export const useAdaptivity = (): AdaptivityProps => {
-  return useContext(AdaptivityContext);
+  return React.useContext(AdaptivityContext);
 };

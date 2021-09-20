@@ -1,20 +1,21 @@
-import { HTMLAttributes, useRef, FC } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { useDOM } from '../../lib/dom';
+import './CardScroll.css';
 
-export interface CardScrollProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+export interface CardScrollProps extends React.HTMLAttributes<HTMLDivElement>, AdaptivityProps {
   size?: 's' | 'm' | 'l';
 }
 
-const CardScroll: FC<CardScrollProps> = ({ children, size, sizeX, ...restProps }: CardScrollProps) => {
+const CardScroll: React.FC<CardScrollProps> = ({ children, size, sizeX, ...restProps }: CardScrollProps) => {
   const platform = usePlatform();
 
-  const refContainer = useRef<HTMLDivElement>(null);
-  const gapRef = useRef<HTMLDivElement>(null);
+  const refContainer = React.useRef<HTMLDivElement>(null);
+  const gapRef = React.useRef<HTMLDivElement>(null);
 
   const { window } = useDOM();
 

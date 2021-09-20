@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, ReactNode } from 'react';
+import * as React from 'react';
 import { AppearanceType } from '@vkontakte/vk-bridge';
 import { canUseDOM, useDOM } from '../../lib/dom';
 import {
@@ -30,9 +30,9 @@ function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
     }
     return node.getAttribute('scheme') as Scheme | ExternalScheme;
   };
-  const [resolvedScheme, setScheme] = useState(getScheme());
+  const [resolvedScheme, setScheme] = React.useState(getScheme());
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!inherit) {
       return noop;
     }
@@ -67,20 +67,20 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Sche
 
 const warn = warnOnce('ConfigProvider');
 
-const ConfigProvider: FC<ConfigProviderProps> = ({
+const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
   ...config
-}: ConfigProviderProps & { children?: ReactNode; schemeTarget?: HTMLElement }) => {
+}: ConfigProviderProps & { children?: React.ReactNode; schemeTarget?: HTMLElement }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
   const { document } = useDOM();
-  const target = schemeTarget || document.body;
+  const target = schemeTarget || document?.body;
 
   useIsomorphicLayoutEffect(() => {
     if (scheme === 'inherit') {
       return noop;
     }
-    if (process.env.NODE_ENV === 'development' && document.body.hasAttribute('scheme')) {
+    if (process.env.NODE_ENV === 'development' && target.hasAttribute('scheme')) {
       warn('<body scheme> was set before VKUI mount - did you forget scheme="inherit"?');
     }
     target.setAttribute('scheme', scheme);

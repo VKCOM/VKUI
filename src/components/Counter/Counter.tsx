@@ -1,4 +1,4 @@
-import { Children, ElementType, FC, HTMLAttributes, memo } from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
@@ -7,8 +7,9 @@ import Text from '../Typography/Text/Text';
 import { VKCOM } from '../../lib/platform';
 import { hasReactNode } from '../../lib/utils';
 import { HasPlatform } from '../../types';
+import './Counter.css';
 
-export interface CounterProps extends HTMLAttributes<HTMLSpanElement> {
+export interface CounterProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
    * Тип счетчика. При использовании компонента в качестве значения свойства `after` у `Button` эти значения игнорируются
    */
@@ -16,19 +17,19 @@ export interface CounterProps extends HTMLAttributes<HTMLSpanElement> {
   size?: 's' | 'm';
 }
 
-type CounterTypographyProps = Pick<CounterProps, 'size'> & HasPlatform & { Component?: ElementType };
+type CounterTypographyProps = Pick<CounterProps, 'size'> & HasPlatform & { Component?: React.ElementType };
 
-const CounterTypography: FC<CounterTypographyProps> = ({ size, platform, ...restProps }) => {
+const CounterTypography: React.FC<CounterTypographyProps> = ({ size, platform, ...restProps }) => {
   return size === 's'
     ? <Caption level="2" weight={platform === VKCOM ? 'medium' : 'regular'} {...restProps} />
     : <Text weight="medium" {...restProps} />;
 };
 
-const Counter: FC<CounterProps> = (props: CounterProps) => {
+const Counter: React.FC<CounterProps> = (props: CounterProps) => {
   const { mode, size, children, ...restProps } = props;
   const platform = usePlatform();
 
-  if (Children.count(children) === 0) {
+  if (React.Children.count(children) === 0) {
     return null;
   }
 
@@ -51,4 +52,4 @@ Counter.defaultProps = {
   size: 'm',
 };
 
-export default memo(Counter);
+export default React.memo(Counter);

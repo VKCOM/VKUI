@@ -4,6 +4,12 @@
   padding: 0;
 }
 
+.FormItem .Cell {
+  width: 100%;
+  box-sizing: content-box;
+  margin: 0 calc(-1 * var(--formitem_padding));
+}
+
 .List--dragging .Cell:not(.Cell--dragging) {
   transition: transform .3s ease;
 }
@@ -75,7 +81,7 @@
 
 .Cell--ios.Cell--removable .SimpleCell {
   padding-left: 0;
-  padding-right: 12px;
+  padding-right: 0;
 }
 
 /**

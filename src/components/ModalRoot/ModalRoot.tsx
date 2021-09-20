@@ -1,4 +1,4 @@
-import React, { Component, createRef, ReactElement, SyntheticEvent } from 'react';
+import * as React from 'react';
 import Touch, { TouchEvent } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { getClassName } from '../../helpers/getClassName';
@@ -22,6 +22,7 @@ import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import './ModalRoot.css';
 
 const warn = warnOnce('ModalRoot');
 const IS_DEV = process.env.NODE_ENV === 'development';
@@ -61,7 +62,7 @@ interface ModalRootState {
   dragging?: boolean;
 }
 
-class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, ModalRootState> {
+class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps, ModalRootState> {
   constructor(props: ModalRootProps) {
     super(props);
 
@@ -100,7 +101,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   private documentScrolling: boolean;
   private activeTransitions: number;
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
-  private readonly viewportRef = createRef<HTMLDivElement>();
+  private readonly viewportRef = React.createRef<HTMLDivElement>();
   private maskAnimationFrame: number;
   private readonly modalRootContext: ModalRootContextInterface;
   private readonly frameIds: {
@@ -116,7 +117,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
   }
 
   getModals() {
-    return React.Children.toArray(this.props.children) as ReactElement[];
+    return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
 
   initModalsState() {
@@ -610,7 +611,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
     }, setStateCallback);
   }
 
-  onScroll = (e: SyntheticEvent) => {
+  onScroll = (e: React.SyntheticEvent) => {
     const activeModal = this.state.activeModal;
 
     const target = e.target as HTMLElement;
@@ -624,7 +625,7 @@ class ModalRootTouchComponent extends Component<ModalRootProps & DOMProps, Modal
 
       clearTimeout(modalState.contentScrollStopTimeout);
 
-      modalState.contentScrollStopTimeout = window.setTimeout(() => {
+      modalState.contentScrollStopTimeout = setTimeout(() => {
         if (modalState.contentScrolled) {
           modalState.contentScrolled = false;
         }

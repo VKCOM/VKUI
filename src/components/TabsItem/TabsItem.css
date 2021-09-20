@@ -9,7 +9,7 @@
 }
 
 .Tabs--default .TabsItem {
-  color: var(--text_secondary);
+  color: var(--text_tertiary);
   max-width: 100%;
   min-width: 0;
   flex-basis: 0;
@@ -86,11 +86,6 @@
 .Tabs--buttons .TabsItem--selected {
   background-color: var(--panel_tab_active_background);
   color: var(--panel_tab_active_text);
-}
-
-.TabsItem__after .Badge {
-  transform: translateY(-2px);
-  margin-left: 6px;
 }
 
 .TabsItem__after .Icon--dropdown_16 {

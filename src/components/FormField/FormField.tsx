@@ -1,38 +1,38 @@
-import React, { AllHTMLAttributes, ElementType, ReactNode, useState } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
 import { hasReactNode } from '../../lib/utils';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
+import './FormField.css';
 
 export interface FormFieldProps {
   /**
    * Иконка 12|16|20|24|28 или `IconButton`.
    */
-  after?: ReactNode;
+  after?: React.ReactNode;
 }
 
 interface FormFieldOwnProps extends
-  AllHTMLAttributes<HTMLElement>,
+  React.AllHTMLAttributes<HTMLElement>,
   HasRootRef<HTMLElement>,
-  AdaptivityProps,
   FormFieldProps {
-  Component?: ElementType;
+  Component?: React.ElementType;
   disabled?: boolean;
 }
 
-const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
-  Component,
+export const FormField: React.FC<FormFieldOwnProps> = ({
+  Component = 'div',
   children,
   getRootRef,
   after,
   disabled,
-  sizeY,
   ...restProps
 }: FormFieldOwnProps) => {
   const platform = usePlatform();
-  const [hover, setHover] = useState(false);
+  const { sizeY } = useAdaptivity();
+  const [hover, setHover] = React.useState(false);
 
   const handleMouseEnter = (e: MouseEvent) => {
     e.stopPropagation();
@@ -46,6 +46,7 @@ const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
 
   return (
     <Component
+      role="presentation"
       {...restProps}
       ref={getRootRef}
       onMouseEnter={handleMouseEnter}
@@ -60,21 +61,13 @@ const FormField: React.FunctionComponent<FormFieldOwnProps> = withAdaptivity(({
     >
       {children}
       {hasReactNode(after) && (
-        <div vkuiClass="FormField__after">
+        <div role="presentation" vkuiClass="FormField__after">
           {after}
         </div>
       )}
-      <div vkuiClass={classNames('FormField__border', {
+      <div role="presentation" vkuiClass={classNames('FormField__border', {
         'FormField__border--hover': !disabled && hover,
       })} />
     </Component>
   );
-}, {
-  sizeY: true,
-});
-
-FormField.defaultProps = {
-  Component: 'div',
 };
-
-export default FormField;

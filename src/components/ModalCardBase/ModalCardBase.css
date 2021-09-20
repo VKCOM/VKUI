@@ -24,6 +24,7 @@
   text-align: center;
   margin: 0;
   padding: 0 8px;
+  word-break: break-word;
 }
 
 .ModalCardBase__header {

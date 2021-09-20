@@ -1,14 +1,15 @@
-import { AllHTMLAttributes, ElementType, FC } from 'react';
+import * as React from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
+import './Headline.css';
 
-export interface HeadlineProps extends AllHTMLAttributes<HTMLElement> {
+export interface HeadlineProps extends React.AllHTMLAttributes<HTMLElement> {
   weight: 'regular' | 'medium' | 'semibold';
-  Component?: ElementType;
+  Component?: React.ElementType;
 }
 
-const Headline: FC<HeadlineProps> = ({
+const Headline: React.FC<HeadlineProps> = ({
   children,
   weight,
   Component = 'h3',

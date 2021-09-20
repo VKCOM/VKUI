@@ -7,7 +7,7 @@ on:
         description: 'version: x.y.z (without "v")'
         required: true
       tag:
-        description: 'tag'
+        description: 'tag: empty for release; "beta" or "alpha" for pre-release'
 
 jobs:
   publish:

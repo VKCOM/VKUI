@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, useMemo, useRef, useState } from 'react';
+import * as React from 'react';
 import { useDOM } from '../../lib/dom';
 import { classNames } from '../../lib/classNames';
 import { AppRootContext } from './AppRootContext';
@@ -14,7 +14,7 @@ import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
 
-export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, AdaptivityProps {
+export interface AppRootProps extends React.HTMLAttributes<HTMLDivElement>, Pick<AdaptivityProps, 'sizeX' | 'hasMouse'> {
   /** @deprecated Use mode="embedded" */
   embedded?: boolean;
   /** Режим встраивания */
@@ -26,18 +26,18 @@ export interface AppRootProps extends HTMLAttributes<HTMLDivElement>, Adaptivity
 }
 
 const warn = warnOnce('AppRoot');
-export const AppRoot: FC<AppRootProps> = withAdaptivity(({
+export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
   children, mode: _mode, embedded: _embedded, sizeX, hasMouse, noLegacyClasses = false, scroll = 'global',
   ...props
 }: AppRootProps) => {
   // normalize mode
   const mode = _mode || (_embedded ? 'embedded' : 'full');
   const isKeyboardInputActive = useKeyboardInputTracker();
-  const rootRef = useRef<HTMLDivElement>();
-  const [portalRoot, setPortalRoot] = useState<HTMLDivElement>(null);
+  const rootRef = React.useRef<HTMLDivElement>();
+  const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement>(null);
   const { window, document } = useDOM();
 
-  const initialized = useRef(false);
+  const initialized = React.useRef(false);
   if (!initialized.current) {
     if (window && mode === 'full') {
       document.documentElement.classList.add('vkui');
@@ -96,7 +96,7 @@ export const AppRoot: FC<AppRootProps> = withAdaptivity(({
     return () => container.classList.remove('vkui--sizeX-regular');
   }, [sizeX]);
 
-  const scrollController = useMemo<ScrollContextInterface>(
+  const scrollController = React.useMemo<ScrollContextInterface>(
     () => scroll === 'contain' ? elementScrollController(rootRef) : globalScrollController(window, document),
     [scroll]);
 

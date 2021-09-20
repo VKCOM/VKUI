@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode, useContext } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
@@ -8,10 +8,11 @@ import { hasReactNode } from '../../lib/utils';
 import Caption from '../Typography/Caption/Caption';
 import { withAdaptivity, AdaptivityProps, SizeType } from '../../hoc/withAdaptivity';
 import ModalRootContext from '../ModalRoot/ModalRootContext';
+import './Group.css';
 
-export interface GroupProps extends HasRootRef<HTMLElement>, HTMLAttributes<HTMLElement>, AdaptivityProps {
-  header?: ReactNode;
-  description?: ReactNode;
+export interface GroupProps extends HasRootRef<HTMLElement>, React.HTMLAttributes<HTMLElement>, AdaptivityProps {
+  header?: React.ReactNode;
+  description?: React.ReactNode;
   /**
     show - разделитель всегда показывается,
     hide – разделитель всегда спрятан,
@@ -27,9 +28,9 @@ export interface GroupProps extends HasRootRef<HTMLElement>, HTMLAttributes<HTML
   mode?: 'plain' | 'card';
 }
 
-const Group: FC<GroupProps> = (props: GroupProps) => {
+const Group: React.FC<GroupProps> = (props: GroupProps) => {
   const { header, description, children, separator, getRootRef, mode, sizeX, ...restProps } = props;
-  const { isInsideModal } = useContext(ModalRootContext);
+  const { isInsideModal } = React.useContext(ModalRootContext);
   const platform = usePlatform();
 
   let computedMode: GroupProps['mode'] = mode;

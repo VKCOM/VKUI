@@ -1,14 +1,15 @@
-import { FC, HTMLAttributes } from 'react';
+import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import HorizontalScroll from '../HorizontalScroll/HorizontalScroll';
+import './SubnavigationBar.css';
 
-export interface SubnavigationBarProps extends HTMLAttributes<HTMLDivElement> {
+export interface SubnavigationBarProps extends React.HTMLAttributes<HTMLDivElement> {
   mode?: 'fixed' | 'overflow';
 }
 
-export const SubnavigationBar: FC<SubnavigationBarProps> = (props: SubnavigationBarProps) => {
+export const SubnavigationBar: React.FC<SubnavigationBarProps> = (props: SubnavigationBarProps) => {
   const platform = usePlatform();
   const {
     mode,

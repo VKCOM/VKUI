@@ -1,11 +1,12 @@
-import { HTMLAttributes, FunctionComponent } from 'react';
+import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRootRef } from '../../types';
+import './Div.css';
 
-export interface DivProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {}
+export interface DivProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {}
 
-export const Div: FunctionComponent<DivProps> = ({ children, getRootRef, ...restProps }: DivProps) => {
+export const Div: React.FunctionComponent<DivProps> = ({ children, getRootRef, ...restProps }: DivProps) => {
   const platform = usePlatform();
   return (
     <div {...restProps} ref={getRootRef} vkuiClass={getClassName('Div', platform)}>

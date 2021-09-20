@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode, useContext } from 'react';
+import * as React from 'react';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
@@ -11,14 +11,15 @@ import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptiv
 import { isPrimitiveReactNode } from '../../lib/utils';
 import Text from '../Typography/Text/Text';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
+import './PanelHeader.css';
 
 export interface PanelHeaderProps extends
-  HTMLAttributes<HTMLDivElement>,
+  React.HTMLAttributes<HTMLDivElement>,
   HasRef<HTMLDivElement>,
   HasRootRef<HTMLDivElement>,
   AdaptivityProps {
-  left?: ReactNode;
-  right?: ReactNode;
+  left?: React.ReactNode;
+  right?: React.ReactNode;
   separator?: boolean;
   transparent?: boolean;
   shadow?: boolean;
@@ -32,7 +33,7 @@ export interface PanelHeaderProps extends
   fixed?: boolean;
 }
 
-const PanelHeaderInTypography: FC<PanelHeaderProps> = ({ children }: PanelHeaderProps) => {
+const PanelHeaderInTypography: React.FC<PanelHeaderProps> = ({ children }: PanelHeaderProps) => {
   const platform = usePlatform();
 
   return platform === VKCOM
@@ -40,8 +41,8 @@ const PanelHeaderInTypography: FC<PanelHeaderProps> = ({ children }: PanelHeader
     : <span vkuiClass="PanelHeader__content-in">{children}</span>;
 };
 
-const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
-  const { webviewType } = useContext(ConfigProviderContext);
+const PanelHeaderIn: React.FC<PanelHeaderProps> = ({ children, left, right }) => {
+  const { webviewType } = React.useContext(ConfigProviderContext);
   const isPrimitive = isPrimitiveReactNode(children);
 
   return (
@@ -59,7 +60,7 @@ const PanelHeaderIn: FC<PanelHeaderProps> = ({ children, left, right }) => {
   );
 };
 
-const PanelHeader: FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
+const PanelHeader: React.FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
   const {
     left,
     children,
@@ -76,7 +77,7 @@ const PanelHeader: FC<PanelHeaderProps> = (props: PanelHeaderProps) => {
     ...restProps
   } = props;
   const platform = usePlatform();
-  const { webviewType } = useContext(ConfigProviderContext);
+  const { webviewType } = React.useContext(ConfigProviderContext);
   const needShadow = shadow && sizeX === SizeType.REGULAR;
   let isFixed = fixed !== undefined ? fixed : platform !== Platform.VKCOM;
 

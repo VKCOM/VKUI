@@ -7,6 +7,8 @@
 .Banner__in {
   position: relative;
   display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
   padding: 12px;
   padding-left: 16px;
   background-color: var(--content_tint_background);
@@ -46,6 +48,7 @@
 }
 
 .Banner__subheader {
+  display: block;
   color: var(--text_subhead);
 }
 
@@ -67,14 +70,8 @@
   flex-flow: row nowrap;
   align-content: center;
   align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-}
-
-.Banner__aside--expand {
-  align-self: center;
   justify-content: flex-end;
+  width: 28px;
   color: var(--icon_tertiary);
 }
 

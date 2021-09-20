@@ -25,6 +25,7 @@
     "@typescript-eslint/no-unused-vars": ["error", {
       "ignoreRestSiblings": true
     }],
+    "no-restricted-globals": ["error", "window", "document"],
     "no-restricted-imports": ["error", {
       "paths": [
         // prevent absolute imports from src subfolders like `import { ... } from "lib"`
@@ -37,12 +38,7 @@
         "styles",
         "testing",
         "types",
-        "unstable",
-        {
-          "name": "react",
-          "importNames": ["useLayoutEffect"],
-          "message": "Prefer lib/useIsomorphicLayoutEffect"
-        }
+        "unstable"
       ],
       "patterns": [
         "@vkontakte/icons/dist/*",
@@ -80,6 +76,10 @@
     }, {
       "property": "getElementById",
       "message": "Absolutely do not use id"
+    }, {
+      "object": "React",
+      "property": "useLayoutEffect",
+      "message": "Prefer lib/useIsomorphicLayoutEffect"
     }],
     "react/react-in-jsx-scope": "off",
     "no-restricted-syntax": ["error",
@@ -100,7 +100,8 @@
         "jest": true
       },
       "rules": {
-        "no-restricted-properties": "off"
+        "no-restricted-properties": "off",
+        "no-restricted-globals": "off"
       }
     },
     {

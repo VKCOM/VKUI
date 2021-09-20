@@ -1,6 +1,7 @@
 import React, { cloneElement } from 'react';
 import { Settings } from '../Settings/Settings';
 import { SectionSubheading } from '../SectionSubheading/SectionSubheading';
+import { withAdaptivity, ViewWidth } from '@vkui';
 
 class PlaygroundRenderer extends React.Component {
   render() {
@@ -10,6 +11,7 @@ class PlaygroundRenderer extends React.Component {
       previewProps,
       tabBody,
       exampleIndex,
+      viewWidth,
     } = this.props;
     const {
       layout = true, // Нужны ли примеру обвесы в виде SplitLayout, SplitCol, etc
@@ -20,6 +22,10 @@ class PlaygroundRenderer extends React.Component {
       ...wrapperProps
     } = previewProps;
     const exampleId = `${name}-${exampleIndex}`;
+
+    if (viewWidth <= ViewWidth.MOBILE) {
+      return null;
+    }
 
     return (
       <div className="Playground">
@@ -37,4 +43,4 @@ class PlaygroundRenderer extends React.Component {
   }
 }
 
-export default PlaygroundRenderer;
+export default withAdaptivity(PlaygroundRenderer, { viewWidth: true });
