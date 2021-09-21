@@ -7,6 +7,8 @@ import { ModalRootDesktop } from './ModalRootDesktop';
 import userEvent from '@testing-library/user-event';
 
 const clickFade = () => userEvent.click(document.querySelector('.ModalRoot__mask'));
+const pressEsc = () => userEvent.keyboard('{esc}');
+
 let rafSpies: jest.SpyInstance[];
 beforeEach(() => {
   jest.useFakeTimers();
@@ -24,7 +26,7 @@ afterEach(() => {
 describe.each([
   ['ModalRootTouch', ModalRootTouch],
   ['ModalRootDesktop', ModalRootDesktop],
-] as const)('%s', (name, ModalRoot) => {
+] as const)('%s', (_, ModalRoot) => {
   baselineComponent<any>(ModalRoot, { forward: false });
   describe('With ModalPage', () =>
     mountTest(() => <ModalRoot activeModal="m"><ModalPage id="m" /></ModalRoot>));
@@ -93,8 +95,23 @@ describe.each([
         expect(onCloseRoot).toBeCalledTimes(1);
       });
     });
-    if (name === 'ModalRootDesktop') {
-      it('on esc click', () => {
+    describe('on pressing {esc}', () => {
+      it('calls modal onClose', () => {
+        const onClose = jest.fn();
+        const onCloseRoot = jest.fn();
+        render((
+          <ModalRoot onClose={onCloseRoot} activeModal="m">
+            <ModalPage id="m" onClose={onClose} />
+          </ModalRoot>
+        ));
+        // wait for animations
+        jest.runAllTimers();
+        pressEsc();
+
+        expect(onClose).toBeCalledTimes(1);
+        expect(onCloseRoot).not.toBeCalled();
+      });
+      it('calls root onClose if modal has no onClose', () => {
         const onCloseRoot = jest.fn();
         render((
           <ModalRoot onClose={onCloseRoot} activeModal="m">
@@ -103,9 +120,10 @@ describe.each([
         ));
         // wait for animations
         jest.runAllTimers();
-        userEvent.keyboard('{esc}');
+        pressEsc();
+
         expect(onCloseRoot).toBeCalledTimes(1);
       });
-    }
+    });
   });
 });
