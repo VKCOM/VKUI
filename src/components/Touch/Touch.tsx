@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getSupportedEvents, coordX, coordY, touchEnabled, VKUITouchEvent } from '../../lib/touch';
 import { HasRootRef } from '../../types';
-import { DOMProps, withDOM } from '../../lib/dom';
+import { useDOM } from '../../lib/dom';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -47,7 +47,7 @@ export type TouchEventHandler = (e: TouchEvent) => void;
 export type ClickHandler = (e: React.MouseEvent<HTMLElement>) => void;
 export type DragHandler = (e: React.DragEvent<HTMLElement>) => void;
 
-const Touch: React.FC<TouchProps & DOMProps> = ({
+const Touch: React.FC<TouchProps> = ({
   onStart,
   onStartX,
   onStartY,
@@ -64,10 +64,9 @@ const Touch: React.FC<TouchProps & DOMProps> = ({
   Component = 'div',
   getRootRef,
   noSlideClick = false,
-  window,
-  document,
   ...restProps
 }) => {
+  const { document } = useDOM();
   const events = React.useMemo(getSupportedEvents, []);
   const didSlide = React.useRef(false);
   const gesture = React.useRef<Partial<Gesture>>({});
@@ -219,4 +218,4 @@ const Touch: React.FC<TouchProps & DOMProps> = ({
   );
 };
 
-export default withDOM<TouchProps>(Touch);
+export default Touch;
