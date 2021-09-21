@@ -29,6 +29,9 @@
   --safe-area-inset-right: 0px;
   --safe-area-inset-bottom: 0px;
   --safe-area-inset-left: 0px;
+
+  /* animations */
+  --duration: .7s;
 }
 
 @media (min-resolution: 2dppx) {
