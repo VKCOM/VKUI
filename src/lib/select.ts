@@ -17,6 +17,13 @@ const findAllIncludes = (target = '', search = '') => {
   return includes;
 };
 
+let letterRegexp: RegExp;
+
+// На момент написания флаг u не поддерживался рядом браузеров, поэтому добавили фоллбэк.
+try {
+  letterRegexp = new RegExp('\\p{L}', 'u');
+} catch (e) {}
+
 export const defaultFilterFn = (
   query = '',
   option: Option,
@@ -32,14 +39,13 @@ export const defaultFilterFn = (
   const includes = findAllIncludes(label, query);
 
   // Если предыдущий символ не является буквой, то значит поиск валидный.
-  // На момент написания флаг u не поддерживался рядом браузеров, поэтому добавили фоллбэк.
-  try {
+  if (letterRegexp) {
     for (const index of includes) {
-      if (!new RegExp('\\p{L}', 'u').test(label[index - 1])) {
+      if (!letterRegexp.test(label[index - 1])) {
         return true;
       }
     }
-  } catch (e) {
+  } else {
     return includes.length > 0;
   }
 

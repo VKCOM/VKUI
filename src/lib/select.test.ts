@@ -31,6 +31,10 @@ describe(defaultFilterFn, () => {
     expect(defaultFilterFn('ерб', { label: 'Санкт-Петербург' })).toBeFalsy();
   });
 
+  it('skips irrelevant options', () => {
+    expect(defaultFilterFn('Моск', { label: 'Санкт-Петербург' })).toBeFalsy();
+  });
+
   it('accepts custom getOptionLabel', () => {
     expect(defaultFilterFn('гог', { description: 'Гоголь' }, (option) => option.description)).toBeTruthy();
   });
