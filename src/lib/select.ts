@@ -8,14 +8,10 @@ type GetOptionLabel = (option: Option) => string;
 const findAllIncludes = (target = '', search = '') => {
   const includes = [];
 
-  for (let i = 0; i <= target.length;) {
-    const index = target.indexOf(search, i);
-    if (index >= 0) {
-      includes.push(index);
-      i = index + 1;
-    } else {
-      return includes;
-    }
+  let i = target.indexOf(search);
+  while (i !== -1) {
+    includes.push(i);
+    i = target.indexOf(search, i + 1);
   }
 
   return includes;
@@ -26,10 +22,6 @@ export const defaultFilterFn = (
   option: Option,
   getOptionLabel: GetOptionLabel = (option) => option.label,
 ) => {
-  if (query.length === 0) {
-    return true;
-  }
-
   query = query.toLowerCase();
   let label = getOptionLabel(option).toLowerCase();
 
