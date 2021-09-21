@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Ref, RefWithCurrent } from '../types';
 
 export type ImgOnlyAttributes = {
   [index in Exclude<keyof React.ImgHTMLAttributes<HTMLImageElement>, keyof React.HTMLAttributes<HTMLImageElement>>]: React.ImgHTMLAttributes<HTMLImageElement>[index];
@@ -42,17 +41,17 @@ export function isPrimitiveReactNode(node: React.ReactNode): boolean {
   return typeof node === 'string' || typeof node === 'number';
 }
 
-export function setRef<T>(element: T, ref: Ref<T>): void {
+export function setRef<T>(element: T, ref: React.Ref<T>): void {
   if (ref) {
     if (typeof ref === 'function') {
       ref(element);
     } else {
-      ref.current = element;
+      (ref as React.MutableRefObject<T>).current = element;
     }
   }
 }
 
-export function multiRef<T>(...refs: Array<Ref<T>>): RefWithCurrent<T> {
+export function multiRef<T>(...refs: Array<React.Ref<T>>): React.RefObject<T> {
   let current: T | null = null;
   return {
     get current() {
