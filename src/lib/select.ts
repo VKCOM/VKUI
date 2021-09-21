@@ -39,10 +39,16 @@ export const defaultFilterFn = (
 
   const includes = findAllIncludes(label, query);
 
-  for (const index of includes) {
-    if (!/\p{L}/u.test(label[index - 1])) {
-      return true;
+  // Если предыдущий символ не является буквой, то значит поиск валидный.
+  // На момент написания флаг u не поддерживался рядом браузеров, поэтому добавили фоллбэк.
+  try {
+    for (const index of includes) {
+      if (!/\p{L}/u.test(label[index - 1])) {
+        return true;
+      }
     }
+  } catch (e) {
+    return includes.length > 0;
   }
 
   return false;
