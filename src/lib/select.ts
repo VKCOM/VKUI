@@ -43,7 +43,7 @@ export const defaultFilterFn = (
   // На момент написания флаг u не поддерживался рядом браузеров, поэтому добавили фоллбэк.
   try {
     for (const index of includes) {
-      if (!/\p{L}/u.test(label[index - 1])) {
+      if (!new RegExp('\\p{L}', 'u').test(label[index - 1])) {
         return true;
       }
     }
