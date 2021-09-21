@@ -5,7 +5,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { Icon16SearchOutline, Icon16Clear, Icon24Cancel } from '@vkontakte/icons';
 import { IOS, VKCOM } from '../../lib/platform';
 import { HasPlatform, HasRef } from '../../types';
-import Touch, { TouchEvent } from '../Touch/Touch';
+import { Touch, TouchEvent } from '../Touch/Touch';
 import { VKUITouchEvent } from '../../lib/touch';
 import { noop } from '../../lib/utils';
 import Text from '../Typography/Text/Text';

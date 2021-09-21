@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Touch, { TouchEvent } from '../Touch/Touch';
+import { Touch, TouchEvent } from '../Touch/Touch';
 import { classNames } from '../../lib/classNames';
 import { HasPlatform } from '../../types';
 import { getClassName } from '../../helpers/getClassName';

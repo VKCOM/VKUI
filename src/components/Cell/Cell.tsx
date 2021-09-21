@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
-import Touch, { TouchEvent } from '../Touch/Touch';
+import { Touch, TouchEvent } from '../Touch/Touch';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { Icon24Reorder, Icon24ReorderIos, Icon24CheckCircleOn, Icon24CheckCircleOff, Icon24CheckBoxOff, Icon24CheckBoxOn } from '@vkontakte/icons';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
