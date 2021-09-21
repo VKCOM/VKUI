@@ -38,14 +38,14 @@ export const defaultFilterFn = (
 
   const includes = findAllIncludes(label, query);
 
-  // Если предыдущий символ не является буквой, то значит поиск валидный.
+  // Ищем вхождение перед началом которого не буква
   if (letterRegexp) {
     for (const index of includes) {
       if (!letterRegexp.test(label[index - 1])) {
         return true;
       }
     }
-  } else {
+  } else { // если regexp не поддерживается, то ищем любое вхождение
     return includes.length > 0;
   }
 
