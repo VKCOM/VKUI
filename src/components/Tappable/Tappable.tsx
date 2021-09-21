@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Touch, { TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
+import { Touch, TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';

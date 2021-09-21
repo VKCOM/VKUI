@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
-import Touch from '../Touch/Touch';
+import { Touch } from '../Touch/Touch';
 import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';

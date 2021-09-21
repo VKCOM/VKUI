@@ -204,7 +204,7 @@ export { default as Div } from './components/Div/Div';
 export type { DivProps } from './components/Div/Div';
 export { default as Tappable } from './components/Tappable/Tappable';
 export type { TappableProps } from './components/Tappable/Tappable';
-export { default as Touch } from './components/Touch/Touch';
+export { Touch } from './components/Touch/Touch';
 export type { TouchProps } from './components/Touch/Touch';
 export { default as PanelSpinner } from './components/PanelSpinner/PanelSpinner';
 export type { PanelSpinnerProps } from './components/PanelSpinner/PanelSpinner';
