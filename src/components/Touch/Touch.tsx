@@ -60,10 +60,10 @@ const Touch: React.FC<TouchProps & DOMProps> = ({
   onEndX,
   onEndY,
   onClickCapture,
-  useCapture,
-  Component,
+  useCapture = false,
+  Component = 'div',
   getRootRef,
-  noSlideClick,
+  noSlideClick = false,
   window,
   document,
   ...restProps
@@ -217,13 +217,6 @@ const Touch: React.FC<TouchProps & DOMProps> = ({
       ref={containerRef}
     />
   );
-};
-
-Touch.defaultProps = {
-  Component: 'div',
-  children: '',
-  useCapture: false,
-  noSlideClick: false,
 };
 
 export default withDOM<TouchProps>(Touch);
