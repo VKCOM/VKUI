@@ -55,7 +55,7 @@ const Config = ({ platform, scheme, webviewType, hasMouse, exampleId, children, 
   );
 };
 
-export default class Preview extends PreviewParent {
+export default withAdaptivity(class Preview extends PreviewParent {
   componentDidUpdate(prevProps) {
     if (this.props.code !== prevProps.code && this.state.error) {
       this.setState({
@@ -77,7 +77,7 @@ export default class Preview extends PreviewParent {
   }
 
   render() {
-    const { code, layout = true, iframe = true, config = {}, exampleId } = this.props;
+    const { code, layout = true, iframe = true, config = {}, exampleId, viewWidth } = this.props;
     const { error, schemeTarget } = this.state;
     const ready = !!schemeTarget;
 
@@ -104,17 +104,19 @@ export default class Preview extends PreviewParent {
               {layout ? <Layout>{example}</Layout> : example}
             </Config>
           );
+          const isMobile = viewWidth <= ViewWidth.MOBILE;
+          const width = isMobile ? window.innerWidth - 32 : styleGuideContext.width;
 
           return (
-            <div ref={this.getSchemeTargetRef} className={classNames('Preview', `Preview--${styleGuideContext.platform}`, { 'Preview--layout': layout } )}>
+            <div ref={this.getSchemeTargetRef} className={classNames('Preview', `Preview--${styleGuideContext.platform}`, { 'Preview--layout': layout })}>
               {ready &&
                 <React.Fragment>
-                  <div className="Preview__shadow" style={layout ? { maxWidth: styleGuideContext.width } : null} />
+                  <div className="Preview__shadow" style={layout ? { maxWidth: width } : null} />
                   <div className="Preview__in" style={layout ? { height: styleGuideContext.height } : null}>
                     {error ?
                       <PlaygroundError message={error} /> :
                       iframe ?
-                        <Frame width={layout && styleGuideContext.width} height={layout && styleGuideContext.height} scheme={styleGuideContext.scheme}>{content}</Frame> :
+                        <Frame width={layout && width} height={layout && styleGuideContext.height} scheme={styleGuideContext.scheme}>{content}</Frame> :
                         content
                     }
                   </div>
@@ -126,4 +128,4 @@ export default class Preview extends PreviewParent {
       </StyleGuideContext.Consumer>
     );
   }
-}
+}, { viewWidth: true });
