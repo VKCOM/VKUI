@@ -5,6 +5,8 @@
  * чтобы в каждом файле были доступны CSS переменные без их дублирования.
  */
 
+@import '../components/AppRoot/AppRoot.css';
+
 /* Typography */
 @import '../components/Typography/Title/Title.css';
 @import '../components/Typography/Headline/Headline.css';

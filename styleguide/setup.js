@@ -6,7 +6,6 @@ import { useState, useRef } from 'react';
 import pkg from '../package';
 import * as VKUI from '../src';
 import * as VKUIUnstable from '../src/unstable';
-import { createMasks } from '../src/components/UsersStack/masks';
 import * as Icons from '@vkontakte/icons';
 import { getRandomInt, getRandomUser, getRandomUsers, importantCountries, getAvatarUrl, perfLogger } from './utils';
 
@@ -17,8 +16,6 @@ for (let i in ui) {
     window[i] = ui[i];
   }
 }
-
-createMasks();
 
 Object.getOwnPropertyNames(Icons).forEach((name) => {
   if (name.startsWith('Icon')) {

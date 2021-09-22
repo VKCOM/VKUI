@@ -52,8 +52,6 @@ export type TouchEventHandler = (e: TouchEvent) => void;
 export type ClickHandler = (e: React.MouseEvent<HTMLElement>) => void;
 export type DragHandler = (e: React.DragEvent<HTMLElement>) => void;
 
-const events = getSupportedEvents();
-
 class Touch extends React.Component<TouchProps & DOMProps> {
   didSlide = false;
   gesture: Partial<Gesture> = {};
@@ -70,10 +68,12 @@ class Touch extends React.Component<TouchProps & DOMProps> {
     return this.props.document;
   }
 
+  private readonly events = getSupportedEvents();
+
   componentDidMount() {
     if (canUseDOM) {
-      this.container.addEventListener(events[0], this.onStart, { capture: this.props.useCapture, passive: false });
-      touchEnabled && this.subscribe(this.container);
+      this.container.addEventListener(this.events[0], this.onStart, { capture: this.props.useCapture, passive: false });
+      touchEnabled() && this.subscribe(this.container);
 
       this.container.addEventListener('mouseenter', this.onEnter, { capture: this.props.useCapture, passive: true });
       this.container.addEventListener('mouseleave', this.onLeave, { capture: this.props.useCapture, passive: true });
@@ -81,7 +81,7 @@ class Touch extends React.Component<TouchProps & DOMProps> {
   }
 
   componentWillUnmount() {
-    this.container.removeEventListener(events[0], this.onStart);
+    this.container.removeEventListener(this.events[0], this.onStart);
     this.unsubscribe();
 
     this.container.removeEventListener('mouseenter', this.onEnter);
@@ -145,7 +145,7 @@ class Touch extends React.Component<TouchProps & DOMProps> {
       this.props.onStartY(outputEvent);
     }
 
-    !touchEnabled && this.subscribe(this.document);
+    !touchEnabled() && this.subscribe(this.document);
   };
 
   /**
@@ -175,8 +175,8 @@ class Touch extends React.Component<TouchProps & DOMProps> {
       if (!isX && !isY) {
         let willBeX = shiftXAbs >= 5 && shiftXAbs > shiftYAbs;
         let willBeY = shiftYAbs >= 5 && shiftYAbs > shiftXAbs;
-        let willBeSlidedX = willBeX && !!this.props.onMoveX || !!this.props.onMove;
-        let willBeSlidedY = willBeY && !!this.props.onMoveY || !!this.props.onMove;
+        let willBeSlidedX = willBeX && (!!this.props.onMoveX || !!this.props.onMove);
+        let willBeSlidedY = willBeY && (!!this.props.onMoveY || !!this.props.onMove);
 
         this.gesture.isY = willBeY;
         this.gesture.isX = willBeX;
@@ -249,22 +249,22 @@ class Touch extends React.Component<TouchProps & DOMProps> {
       this.onLeave(e);
     }
 
-    !touchEnabled && this.unsubscribe();
+    !touchEnabled() && this.unsubscribe();
   };
 
   subscribe(element: HTMLElement | Document) {
     this.unsubscribe();
     const listenerParams = { capture: this.props.useCapture, passive: false };
-    element.addEventListener(events[1], this.onMove, listenerParams);
-    element.addEventListener(events[2], this.onEnd, listenerParams);
-    element.addEventListener(events[3], this.onEnd, listenerParams);
+    element.addEventListener(this.events[1], this.onMove, listenerParams);
+    element.addEventListener(this.events[2], this.onEnd, listenerParams);
+    element.addEventListener(this.events[3], this.onEnd, listenerParams);
     this.unsubscribe = () => {
       // Здесь нужен последний аргумент с такими же параметрами, потому что
       // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
       // https://github.com/VKCOM/VKUI/issues/444
-      element.removeEventListener(events[1], this.onMove, listenerParams);
-      element.removeEventListener(events[2], this.onEnd, listenerParams);
-      element.removeEventListener(events[3], this.onEnd, listenerParams);
+      element.removeEventListener(this.events[1], this.onMove, listenerParams);
+      element.removeEventListener(this.events[2], this.onEnd, listenerParams);
+      element.removeEventListener(this.events[3], this.onEnd, listenerParams);
       this.unsubscribe = noop;
     };
   }

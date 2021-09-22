@@ -8,7 +8,7 @@ const csso = require('postcss-csso');
 const checkKeyframes = require('./tasks/postcss-check-keyframes');
 const { defaultSchemeId } = require('./package.json');
 
-const animationsSource = path.join(__dirname, 'src/styles/animations.css')
+const animationsSource = path.join(__dirname, 'src/styles/animations.css');
 const cssPropSources = [
   path.join(__dirname, 'src/styles/bright_light.css'),
   path.join(__dirname, 'src/styles/constants.css'),

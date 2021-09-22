@@ -29,7 +29,6 @@ const Example = () => {
     value: selectedColors,
     onChange: setSelectedColors,
     options: colors,
-    top:"Выберите или добавьте цвета",
     placeholder:"Не выбраны",
     creatable: true,
   };
@@ -38,7 +37,6 @@ const Example = () => {
       value: selectedColorsCopy,
       onChange: setSelectedColorsCopy,
       options: colors,
-      top:"Выберите или добавьте цвета",
       placeholder:"Не выбраны",
       creatable: true,
       creatableText: '',

@@ -9,7 +9,9 @@ export function useKeyboardInputTracker(): boolean {
   const [isKeyboardInputActive, toggleKeyboardInput] = React.useState<boolean>(false);
 
   const enableKeyboardInput = React.useCallback((e: KeyboardEvent) => {
-    toggleKeyboardInput(pressedKey(e) === Keys.TAB);
+    if (pressedKey(e) === Keys.TAB) {
+      toggleKeyboardInput(true);
+    }
   }, []);
 
   const disableKeyboardInput = React.useCallback(() => {
