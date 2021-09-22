@@ -57,16 +57,6 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
     }
   }
 
-  // setup insets
-  useIsomorphicLayoutEffect(() => {
-    Object.entries(insets).forEach(([key, inset]) => {
-      if (typeof inset === 'number') {
-        rootRef.current.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
-        portalRoot && portalRoot.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
-      }
-    });
-  }, [insets, portalRoot]);
-
   // setup portal
   useIsomorphicLayoutEffect(() => {
     if (mode === 'full') {
@@ -97,6 +87,29 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
       }
     };
   }, []);
+
+  // setup insets
+  useIsomorphicLayoutEffect(() => {
+    if (mode === 'partial') {
+      return noop;
+    }
+
+    const parent = rootRef.current.parentElement;
+
+    Object.entries(insets).forEach(([key, inset]) => {
+      if (typeof inset === 'number') {
+        parent.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+        portalRoot && portalRoot.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+      }
+    });
+
+    return () => {
+      Object.keys(insets).forEach((key) => {
+        parent.style.removeProperty(`--safe-area-inset-${key}`);
+        portalRoot && portalRoot.style.removeProperty(`--safe-area-inset-${key}`);
+      });
+    };
+  }, [insets, portalRoot]);
 
   // adaptivity handler
   useIsomorphicLayoutEffect(() => {
