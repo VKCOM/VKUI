@@ -225,7 +225,7 @@
 }
 
 .ActionSheetItem--android .ActionSheetItem__marker {
-  margin-left: 16px;
+  margin-left: var(--horizontal_padding, 16px);
 }
 
 /**

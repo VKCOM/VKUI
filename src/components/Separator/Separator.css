@@ -26,8 +26,8 @@
 }
 
 .Separator:not(.Separator--wide) .Separator__in {
-  margin-left: 16px;
-  margin-right: 16px;
+  margin-left: var(--horizontal_padding, 16px);
+  margin-right: var(--horizontal_padding, 16px);
 }
 
 /**

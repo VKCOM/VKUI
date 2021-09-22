@@ -38,7 +38,7 @@
   flex-shrink: 0;
   width: 24px;
   height: 24px;
-  margin-right: 16px;
+  margin-right: var(--horizontal_padding, 16px);
   padding: 0;
   color: var(--icon_tertiary);
 }
@@ -89,5 +89,5 @@
  */
 .Cell--android .Cell__dragger,
 .Cell--vkcom .Cell__dragger {
-  padding-right: 16px;
+  padding-right: var(--horizontal_padding, 16px);
 }

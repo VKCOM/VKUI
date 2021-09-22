@@ -1,8 +1,8 @@
 .RichCell {
   display: flex;
   min-height: 64px;
-  padding-right: 16px;
-  padding-left: 16px;
+  padding-right: var(--horizontal_padding, 16px);
+  padding-left: var(--horizontal_padding, 16px);
   box-sizing: border-box;
   white-space: nowrap;
   text-decoration: none;

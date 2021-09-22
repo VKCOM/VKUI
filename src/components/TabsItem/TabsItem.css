@@ -53,7 +53,7 @@
 .Tabs--buttons .TabsItem {
   border-radius: 10px;
   box-sizing: border-box;
-  padding: 0 16px;
+  padding: 0 var(--horizontal_padding, 16px);
 }
 
 .Tabs--buttons .TabsItem__in {

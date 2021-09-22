@@ -3,13 +3,13 @@
 }
 
 .Div--ios {
-  padding: 12px;
+  padding: 12px var(--horizontal_padding, 12px);
 }
 
 .Div--android {
-  padding: 12px 16px;
+  padding: 12px var(--horizontal_padding, 16px);
 }
 
 .Div--vkcom {
-  padding: 12px 16px;
+  padding: 12px var(--horizontal_padding, 16px);
 }

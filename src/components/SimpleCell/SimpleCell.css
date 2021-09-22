@@ -189,8 +189,8 @@
 
 .SimpleCell--android,
 .SimpleCell--vkcom {
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: var(--horizontal_padding, 16px);
+  padding-right: var(--horizontal_padding, 16px);
 }
 
 .SimpleCell--android .SimpleCell__main,

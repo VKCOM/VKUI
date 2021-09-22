@@ -1,6 +1,6 @@
 .Banner {
   margin: 12px 0;
-  padding: 0 16px;
+  padding: 0 var(--horizontal_padding, 16px);
   color: var(--text_primary);
 }
 
@@ -10,7 +10,7 @@
   flex-flow: row nowrap;
   align-items: stretch;
   padding: 12px;
-  padding-left: 16px;
+  padding-left: var(--horizontal_padding, 16px);
   background-color: var(--content_tint_background);
   border-radius: 8px;
   overflow: hidden;
@@ -125,7 +125,7 @@
  * Size "m"
  */
 .Banner--sz-m .Banner__in {
-  padding: 16px;
+  padding: var(--horizontal_padding, 16px);
 }
 
 .Banner--sz-m .Banner__subheader:not(:first-child),
@@ -137,7 +137,7 @@
  * iOS
  */
 .Banner--ios {
-  padding: 0 12px;
+  padding: 0 var(--horizontal_padding, 12px);
 }
 
 .Banner--ios .Banner__in {

@@ -50,6 +50,6 @@
 
 .PromoBanner--android .PromoBanner__head,
 .PromoBanner--vkcom .PromoBanner__head {
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: var(--horizontal_padding, 16px);
+  padding-right: var(--horizontal_padding, 16px);
 }

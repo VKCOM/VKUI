@@ -1,5 +1,5 @@
 .ContentCard__body {
-  padding: 12px 16px;
+  padding: 12px var(--horizontal_padding, 16px);
 }
 
 .ContentCard__tappable {

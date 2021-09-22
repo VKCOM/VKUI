@@ -276,7 +276,7 @@
   Android
  */
 .Search--android {
-  padding: 8px 16px;
+  padding: 8px var(--horizontal_padding, 16px);
 }
 
 /**
@@ -300,7 +300,7 @@
 }
 
 .Search--vkcom .Search__placeholder {
-  padding-left: 16px;
+  padding-left: var(--horizontal_padding, 16px);
 }
 
 .Search--vkcom .Search__icons {
