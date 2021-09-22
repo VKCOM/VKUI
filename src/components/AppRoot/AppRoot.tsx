@@ -10,6 +10,7 @@ import { elementScrollController, globalScrollController, ScrollContext, ScrollC
 import { noop } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
+import { useInsets } from '../../hooks/useInsets';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -36,6 +37,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
   const rootRef = React.useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement>(null);
   const { window, document } = useDOM();
+  const insets = useInsets();
 
   const initialized = React.useRef(false);
   if (!initialized.current) {
@@ -54,6 +56,16 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
       warn(`mode="${mode}" overrides embedded`);
     }
   }
+
+  // setup insets
+  useIsomorphicLayoutEffect(() => {
+    Object.entries(insets).forEach(([key, inset]) => {
+      if (typeof inset === 'number') {
+        rootRef.current.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+        portalRoot && portalRoot.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+      }
+    });
+  }, [insets, portalRoot]);
 
   // setup portal
   useIsomorphicLayoutEffect(() => {
