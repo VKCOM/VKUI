@@ -22,7 +22,7 @@ export const useChipsSelect = <Option extends ChipsInputOption>(props: Partial<C
   };
 
   let filteredOptions = React.useMemo(() => {
-    return options.filter((option: Option) => filterFn(fieldValue, option, getOptionLabel));
+    return filterFn ? options.filter((option: Option) => filterFn(fieldValue, option, getOptionLabel)) : options;
   }, [options, filterFn, fieldValue, getOptionLabel]);
 
   filteredOptions = React.useMemo(() => {

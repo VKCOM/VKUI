@@ -15,6 +15,7 @@ import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
 import Caption from '../Typography/Caption/Caption';
 import { warnOnce } from '../../lib/warnOnce';
 import Spinner from '../Spinner/Spinner';
+import { defaultFilterFn } from '../../lib/select';
 import './CustomSelect.css';
 
 const findIndexAfter = (options: CustomSelectOptionInterface[], startIndex = -1) => {
@@ -77,7 +78,7 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
   /**
    * Функция для кастомной фильтрации. По-умолчанию поиск производится по option.label.
    */
-  filterFn?: false | ((value: string, option: CustomSelectOptionInterface) => boolean);
+  filterFn?: false | ((value: string, option: CustomSelectOptionInterface, getOptionLabel?: (option: Partial<CustomSelectOptionInterface>) => string) => boolean);
   popupDirection?: 'top' | 'bottom';
   /**
    * Рендер-проп для кастомного рендера опции.
@@ -112,7 +113,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     },
     options: [],
     emptyText: 'Ничего не найдено',
-    filterFn: (value, option) => option.label.toLowerCase().includes(value.toLowerCase()),
+    filterFn: defaultFilterFn,
   };
 
   public constructor(props: CustomSelectProps) {
