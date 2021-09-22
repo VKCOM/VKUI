@@ -29,8 +29,8 @@ export const defaultFilterFn = (
   option: Option,
   getOptionLabel: GetOptionLabel = (option) => option.label,
 ) => {
-  query = query.toLowerCase();
-  let label = getOptionLabel(option).toLowerCase();
+  query = query.toLocaleLowerCase();
+  let label = getOptionLabel(option).toLocaleLowerCase();
 
   if (label.startsWith(query)) {
     return true;
