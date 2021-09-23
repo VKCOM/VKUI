@@ -118,7 +118,7 @@
   width: 100%;
   height: 100%;
   background-color: var(--modal_card_background);
-  z-index: 1;
+  z-index: -1;
   content: '';
   transition: opacity .15s ease-out, background-color .15s ease-out;
 }
@@ -127,7 +127,7 @@
   position: absolute;
   right: 0;
   left: 0;
-  z-index: 1;
+  z-index: -1;
   height: 1px;
   content: '';
   top: 0;
