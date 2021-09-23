@@ -106,7 +106,8 @@
   border-top-right-radius: 14px;
 }
 
-.ActionSheetItem--ios:nth-last-child(2) {
+.ActionSheetItem--ios:not(.ActionSheetItem--desktop):nth-last-child(2),
+.ActionSheetItem--ios:last-child {
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
 }
@@ -264,11 +265,6 @@
 .ActionSheetItem--desktop {
   width: auto;
   cursor: pointer;
-}
-
-.ActionSheetItem--desktop.ActionSheetItem--ios:nth-last-child(2) {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
 }
 
 /**
