@@ -70,7 +70,6 @@ export const Touch: React.FC<TouchProps> = ({
   const events = React.useMemo(getSupportedEvents, []);
   const didSlide = React.useRef(false);
   const gesture = React.useRef<Partial<Gesture>>({});
-  const [subscribeTarget, setSubscribeTarget] = React.useState<HTMLElement | Document>();
   const handle = (e: any, handers: any[]) => handers.forEach((cb) => {
     cb && cb({ ...gesture.current, originalEvent: e });
   });
@@ -85,22 +84,13 @@ export const Touch: React.FC<TouchProps> = ({
       isPressed: true,
     };
 
-    // Вызываем нужные колбеки из props
-    const outputEvent = {
-      ...gesture.current,
-      originalEvent: e,
-    };
-
-    onStart && onStart(outputEvent);
-    onStartX && onStartX(outputEvent);
-    onStartY && onStartY(outputEvent);
-
-    !touchEnabled() && setSubscribeTarget(document);
+    handle(e, [onStart, onStartX, onStartY]);
+    !touchEnabled() && subscribe(document);
   }, { capture: useCapture, passive: false });
   const containerRef = useExternRef(getRootRef, mouseEnterHandler.add, mouseLeaveHandler.add, startHandler.add);
 
   useIsomorphicLayoutEffect(() => {
-    touchEnabled() && setSubscribeTarget(containerRef.current);
+    touchEnabled() && subscribe(containerRef.current);
   }, []);
 
   function onMove(e: VKUITouchEvent) {
@@ -164,7 +154,7 @@ export const Touch: React.FC<TouchProps> = ({
       onLeave && onLeave(e);
     }
 
-    !touchEnabled() && setSubscribeTarget(null);
+    !touchEnabled() && subscribe(null);
   }
 
   const listenerParams = { capture: useCapture, passive: false };
@@ -173,10 +163,9 @@ export const Touch: React.FC<TouchProps> = ({
     useEventListener(events[2], onEnd, listenerParams),
     useEventListener(events[3], onEnd, listenerParams),
   ];
-  useIsomorphicLayoutEffect(() => {
-    subscribeTarget && listeners.forEach((l) => l.add(subscribeTarget));
-    return () => listeners.forEach((l) => l.remove());
-  }, [subscribeTarget]);
+  function subscribe(el: HTMLElement | Document | null) {
+    listeners.forEach((l) => l.add(el));
+  }
 
   /**
    * Обработчик событий dragstart
