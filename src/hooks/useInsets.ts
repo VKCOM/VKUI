@@ -1,5 +1,6 @@
 import * as React from 'react';
 import vkBridge, { Insets } from '@vkontakte/vk-bridge';
+import { useIsomorphicLayoutEffect } from '../lib/useIsomorphicLayoutEffect';
 
 let initialState: Insets = {
   bottom: null,
@@ -43,7 +44,7 @@ vkBridge.subscribe((e: BridgeEvent) => {
 export function useInsets(): Insets {
   const [insets, setInsets] = React.useState<Insets>(initialState);
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     function connectListener(e: BridgeEvent) {
       const insets = resolveInsets(e);
       if (insets) {
