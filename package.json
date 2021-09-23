@@ -180,5 +180,10 @@
     "@popperjs/core": "^2.9.2",
     "@vkontakte/vkjs": "^0.22.1",
     "react-popper": "^2.2.5"
+  },
+  "config": {
+    "2kit": {
+      "version": "8.0.0"
+    }
   }
 }
