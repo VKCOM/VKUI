@@ -11,6 +11,7 @@ import { noop } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useInsets } from '../../hooks/useInsets';
+import { Insets } from '@vkontakte/vk-bridge';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -96,18 +97,21 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
 
     const parent = rootRef.current.parentElement;
 
-    Object.entries(insets).forEach(([key, inset]) => {
-      if (typeof inset === 'number') {
+    for (const key in insets) {
+      if (insets.hasOwnProperty(key) && typeof insets[key as keyof Insets] === 'number') {
+        const inset = insets[key as keyof Insets];
         parent.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
         portalRoot && portalRoot.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
       }
-    });
+    }
 
     return () => {
-      Object.keys(insets).forEach((key) => {
-        parent.style.removeProperty(`--safe-area-inset-${key}`);
-        portalRoot && portalRoot.style.removeProperty(`--safe-area-inset-${key}`);
-      });
+      for (const key in insets) {
+        if (insets.hasOwnProperty(key)) {
+          parent.style.removeProperty(`--safe-area-inset-${key}`);
+          portalRoot && portalRoot.style.removeProperty(`--safe-area-inset-${key}`);
+        }
+      }
     };
   }, [insets, portalRoot]);
 
