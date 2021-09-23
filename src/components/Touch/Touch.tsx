@@ -87,11 +87,15 @@ export const Touch: React.FC<TouchProps> = ({
     handle(e, [onStart, onStartX, onStartY]);
     !touchEnabled() && subscribe(document);
   }, { capture: useCapture, passive: false });
-  const containerRef = useExternRef(getRootRef, mouseEnterHandler.add, mouseLeaveHandler.add, startHandler.add);
+  const containerRef = useExternRef(getRootRef);
 
   useIsomorphicLayoutEffect(() => {
-    touchEnabled() && subscribe(containerRef.current);
-  }, []);
+    const el = containerRef.current;
+    mouseEnterHandler.add(el);
+    mouseLeaveHandler.add(el);
+    startHandler.add(el);
+    touchEnabled() && subscribe(el);
+  }, [Component]);
 
   function onMove(e: VKUITouchEvent) {
     const { isPressed, isX, isY, startX, startY } = gesture.current;
