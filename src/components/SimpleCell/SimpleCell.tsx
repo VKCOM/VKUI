@@ -71,7 +71,7 @@ const SimpleCell: React.FC<SimpleCellProps> = ({
   multiline,
   sizeY,
   ...restProps
-}) => {
+}: SimpleCellProps) => {
   const platform = usePlatform();
   const hasAfter = hasReactNode(after) || expandable && platform === IOS;
 
