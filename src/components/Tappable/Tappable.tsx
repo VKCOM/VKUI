@@ -56,8 +56,7 @@ export interface TappableState {
   hovered?: boolean;
   active?: boolean;
   ts?: number;
-  hasHover?: boolean;
-  hasActive?: boolean;
+  childHover?: boolean;
 }
 
 export interface RootComponentProps extends TouchProps {
@@ -106,10 +105,17 @@ class Tappable extends React.Component<TappableProps, TappableState> {
       clicks: [],
       active: false,
       ts: null,
-      hasHover: props.hasHover,
-      hasActive: props.hasActive,
+      childHover: false,
     };
     this.isSlide = false;
+  }
+
+  get hasActive() {
+    return this.props.hasActive && !this.state.childHover;
+  }
+
+  get hasHover() {
+    return this.props.hasHover && !this.state.childHover;
   }
 
   id: string;
@@ -161,7 +167,7 @@ class Tappable extends React.Component<TappableProps, TappableState> {
   onStart: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
 
-    if (this.state.hasActive) {
+    if (this.hasActive) {
       if (originalEvent.touches && originalEvent.touches.length > 1) {
         deactivateOtherInstances();
         return;
@@ -259,7 +265,7 @@ class Tappable extends React.Component<TappableProps, TappableState> {
    * Устанавливает активное выделение
    */
   start: VoidFunction = () => {
-    if (!this.state.active && this.state.hasActive) {
+    if (!this.state.active && this.hasActive) {
       this.setState({
         active: true,
         ts: ts(),
@@ -309,9 +315,6 @@ class Tappable extends React.Component<TappableProps, TappableState> {
   }
 
   componentDidUpdate(prevProps: TappableProps) {
-    if (prevProps.hasHover !== this.props.hasHover || prevProps.hasActive !== this.props.hasActive) {
-      this.setState({ hasHover: this.props.hasHover, hasActive: this.props.hasActive });
-    }
     if (!prevProps.disabled && this.props.disabled) {
       this.setState({ hovered: false });
     }
@@ -322,7 +325,8 @@ class Tappable extends React.Component<TappableProps, TappableState> {
   }
 
   render() {
-    const { clicks, active, hovered, hasHover, hasActive } = this.state;
+    const { hasHover, hasActive } = this;
+    const { clicks, active, hovered } = this.state;
 
     const defaultComponent: React.ElementType = this.props.href ? 'a' : 'div';
 
@@ -417,8 +421,8 @@ class Tappable extends React.Component<TappableProps, TappableState> {
                     <TappableContext.Provider
                       value={{
                         insideTappable: true,
-                        onEnter: () => this.setState({ hasHover: false, hasActive: false }),
-                        onLeave: () => this.setState({ hasHover: propsHasHover, hasActive: propsHasActive }),
+                        onEnter: () => this.setState({ childHover: true }),
+                        onLeave: () => this.setState({ childHover: false }),
                       }}
                     >
                       {children}
