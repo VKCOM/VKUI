@@ -25,7 +25,7 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
 function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
   const inherit = _scheme === 'inherit';
   const getScheme = () => {
-    if (!inherit || !canUseDOM) {
+    if (!inherit || !canUseDOM || !node) {
       return undefined;
     }
     return node.getAttribute('scheme') as Scheme | ExternalScheme;
