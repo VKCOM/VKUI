@@ -12,6 +12,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
 import { useInsets } from '../../hooks/useInsets';
 import { Insets } from '@vkontakte/vk-bridge';
+import './AppRoot.css';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
