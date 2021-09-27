@@ -1,15 +1,10 @@
 import * as React from 'react';
-import {
-  getSupportedEvents,
-  coordX,
-  coordY,
-  touchEnabled,
-  VKUITouchEvent,
-  VKUITouchEventHander,
-} from '../../lib/touch';
+import { getSupportedEvents, coordX, coordY, touchEnabled, VKUITouchEvent } from '../../lib/touch';
 import { HasRootRef } from '../../types';
-import { canUseDOM, DOMProps, withDOM } from '../../lib/dom';
-import { setRef, noop } from '../../lib/utils';
+import { useDOM } from '../../lib/dom';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useEventListener } from '../../hooks/useEventListener';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   onEnter?(outputEvent: MouseEvent): void;
@@ -52,110 +47,58 @@ export type TouchEventHandler = (e: TouchEvent) => void;
 export type ClickHandler = (e: React.MouseEvent<HTMLElement>) => void;
 export type DragHandler = (e: React.DragEvent<HTMLElement>) => void;
 
-class Touch extends React.Component<TouchProps & DOMProps> {
-  didSlide = false;
-  gesture: Partial<Gesture> = {};
-  container: HTMLElement;
+export const Touch: React.FC<TouchProps> = ({
+  onStart,
+  onStartX,
+  onStartY,
+  onMove: _onMove,
+  onMoveX,
+  onMoveY,
+  onLeave,
+  onEnter,
+  onEnd: _onEnd,
+  onEndX,
+  onEndY,
+  onClickCapture,
+  useCapture = false,
+  Component = 'div',
+  getRootRef,
+  noSlideClick = false,
+  ...restProps
+}) => {
+  const { document } = useDOM();
+  const events = React.useMemo(getSupportedEvents, []);
+  const didSlide = React.useRef(false);
+  const gesture = React.useRef<Partial<Gesture>>({});
+  const handle = (e: any, handers: any[]) => handers.forEach((cb) => {
+    cb && cb({ ...gesture.current, originalEvent: e });
+  });
 
-  static defaultProps: TouchProps = {
-    Component: 'div',
-    children: '',
-    useCapture: false,
-    noSlideClick: false,
-  };
-
-  get document() {
-    return this.props.document;
-  }
-
-  private readonly events = getSupportedEvents();
-
-  componentDidMount() {
-    if (canUseDOM) {
-      this.container.addEventListener(this.events[0], this.onStart, { capture: this.props.useCapture, passive: false });
-      touchEnabled() && this.subscribe(this.container);
-
-      this.container.addEventListener('mouseenter', this.onEnter, { capture: this.props.useCapture, passive: true });
-      this.container.addEventListener('mouseleave', this.onLeave, { capture: this.props.useCapture, passive: true });
-    }
-  }
-
-  componentWillUnmount() {
-    this.container.removeEventListener(this.events[0], this.onStart);
-    this.unsubscribe();
-
-    this.container.removeEventListener('mouseenter', this.onEnter);
-    this.container.removeEventListener('mouseleave', this.onLeave);
-  }
-
-  /**
-   * Обработчик событий mouseenter
-   *
-   * @param {Object} e Браузерное событие
-   * @return {void}
-   */
-  onEnter = (e: MouseEvent) => {
-    if (this.props.onEnter) {
-      this.props.onEnter(e);
-    }
-  };
-
-  /**
-   * Обработчик событий mouseleave
-   *
-   * @param {Object} e Браузерное событие
-   * @param {boolean} simulated флаг, с которым обработчик был вызван симулятивно
-   * @return {void}
-   */
-  onLeave = (e: MouseEvent) => {
-    if (this.props.onLeave) {
-      this.props.onLeave(e);
-    }
-  };
-
-  /**
-   * Обработчик событий touchstart
-   *
-   * @param {Object} e Браузерное событие
-   * @return {void}
-   */
-  onStart: VKUITouchEventHander = (e: VKUITouchEvent) => {
-    this.gesture = {
+  const mouseEnterHandler = useEventListener('mouseenter', onEnter);
+  const mouseLeaveHandler = useEventListener('mouseleave', onLeave);
+  const startHandler = useEventListener(events[0], (e: VKUITouchEvent) => {
+    gesture.current = {
       startX: coordX(e),
       startY: coordY(e),
       startT: new Date(),
       isPressed: true,
     };
 
-    // Вызываем нужные колбеки из props
-    const outputEvent = {
-      ...this.gesture,
-      originalEvent: e,
-    };
+    handle(e, [onStart, onStartX, onStartY]);
+    !touchEnabled() && subscribe(document);
+  }, { capture: useCapture, passive: false });
+  const containerRef = useExternRef(getRootRef);
 
-    if (this.props.onStart) {
-      this.props.onStart(outputEvent);
-    }
+  useIsomorphicLayoutEffect(() => {
+    const el = containerRef.current;
+    mouseEnterHandler.add(el);
+    mouseLeaveHandler.add(el);
+    startHandler.add(el);
+    touchEnabled() && subscribe(el);
+  }, [Component]);
 
-    if (this.props.onStartX) {
-      this.props.onStartX(outputEvent);
-    }
-
-    if (this.props.onStartY) {
-      this.props.onStartY(outputEvent);
-    }
-
-    !touchEnabled() && this.subscribe(this.document);
-  };
-
-  /**
-   * Обработчик событий touchmove
-   *
-   * @param {Object} e Браузерное событие
-   * @return {void}
-   */
-  onMove: VKUITouchEventHander = (e: VKUITouchEvent) => {
-    const { isPressed, isX, isY, startX, startY } = this.gesture;
+  function onMove(e: VKUITouchEvent) {
+    const { isPressed, isX, isY, startX, startY } = gesture.current;
 
     if (isPressed) {
       // смещения
@@ -168,116 +111,71 @@ class Touch extends React.Component<TouchProps & DOMProps> {
 
       // Если определяем мультитач, то прерываем жест
       if (!!e.touches && e.touches.length > 1) {
-        return this.onEnd(e);
+        return onEnd(e);
       }
 
       // если мы ещё не определились
       if (!isX && !isY) {
-        let willBeX = shiftXAbs >= 5 && shiftXAbs > shiftYAbs;
-        let willBeY = shiftYAbs >= 5 && shiftYAbs > shiftXAbs;
-        let willBeSlidedX = willBeX && (!!this.props.onMoveX || !!this.props.onMove);
-        let willBeSlidedY = willBeY && (!!this.props.onMoveY || !!this.props.onMove);
+        const willBeX = shiftXAbs >= 5 && shiftXAbs > shiftYAbs;
+        const willBeY = shiftYAbs >= 5 && shiftYAbs > shiftXAbs;
+        const willBeSlidedX = willBeX && (!!onMoveX || !!_onMove);
+        const willBeSlidedY = willBeY && (!!onMoveY || !!_onMove);
 
-        this.gesture.isY = willBeY;
-        this.gesture.isX = willBeX;
-        this.gesture.isSlideX = willBeSlidedX;
-        this.gesture.isSlideY = willBeSlidedY;
-        this.gesture.isSlide = willBeSlidedX || willBeSlidedY;
+        Object.assign(gesture.current, {
+          isY: willBeY,
+          isX: willBeX,
+          isSlideX: willBeSlidedX,
+          isSlideY: willBeSlidedY,
+          isSlide: willBeSlidedX || willBeSlidedY,
+        });
       }
 
-      if (this.gesture.isSlide) {
-        this.gesture.shiftX = shiftX;
-        this.gesture.shiftY = shiftY;
-        this.gesture.shiftXAbs = shiftXAbs;
-        this.gesture.shiftYAbs = shiftYAbs;
+      if (gesture.current.isSlide) {
+        Object.assign(gesture.current, {
+          shiftX,
+          shiftY,
+          shiftXAbs,
+          shiftYAbs,
+        });
 
-        // Вызываем нужные колбеки из props
-        const outputEvent: TouchEvent = {
-          ...this.gesture,
-          originalEvent: e,
-        };
-
-        if (this.props.onMove) {
-          this.props.onMove(outputEvent);
-        }
-
-        if (this.gesture.isSlideX && this.props.onMoveX) {
-          this.props.onMoveX(outputEvent);
-        }
-
-        if (this.gesture.isSlideY && this.props.onMoveY) {
-          this.props.onMoveY(outputEvent);
-        }
+        handle(e, [_onMove, gesture.current.isSlideX && onMoveX, gesture.current.isSlideY && onMoveY]);
       }
     }
-  };
+  }
 
-  /**
-   * Обработчик событий touchend, touchcancel
-   *
-   * @param {Object} e Браузерное событие
-   * @return {void}
-   */
-  onEnd: VKUITouchEventHander = (e: VKUITouchEvent) => {
-    const { isPressed, isSlide, isSlideX, isSlideY } = this.gesture;
+  function onEnd(e: VKUITouchEvent) {
+    const { isPressed, isSlide, isSlideX, isSlideY } = gesture.current;
 
     if (isPressed) {
-      // Вызываем нужные колбеки из props
-      const outputEvent: TouchEvent = {
-        ...this.gesture,
-        originalEvent: e,
-      };
-
-      if (this.props.onEnd) {
-        this.props.onEnd(outputEvent);
-      }
-
-      if (isSlideY && this.props.onEndY) {
-        this.props.onEndY(outputEvent);
-      }
-
-      if (isSlideX && this.props.onEndX) {
-        this.props.onEndX(outputEvent);
-      }
+      handle(e, [_onEnd, isSlideY && onEndY, isSlideX && onEndX]);
     }
 
-    this.didSlide = isSlide;
-    this.gesture = {};
+    didSlide.current = isSlide;
+    gesture.current = {};
 
     // Если это был тач-евент, симулируем отмену hover
     if (e.type === 'touchend' || e.type === 'touchcancel') {
-      this.onLeave(e);
+      onLeave && onLeave(e);
     }
 
-    !touchEnabled() && this.unsubscribe();
-  };
-
-  subscribe(element: HTMLElement | Document) {
-    this.unsubscribe();
-    const listenerParams = { capture: this.props.useCapture, passive: false };
-    element.addEventListener(this.events[1], this.onMove, listenerParams);
-    element.addEventListener(this.events[2], this.onEnd, listenerParams);
-    element.addEventListener(this.events[3], this.onEnd, listenerParams);
-    this.unsubscribe = () => {
-      // Здесь нужен последний аргумент с такими же параметрами, потому что
-      // некоторые браузеры на странных вендорах типа Meizu не удаляют обработчик.
-      // https://github.com/VKCOM/VKUI/issues/444
-      element.removeEventListener(this.events[1], this.onMove, listenerParams);
-      element.removeEventListener(this.events[2], this.onEnd, listenerParams);
-      element.removeEventListener(this.events[3], this.onEnd, listenerParams);
-      this.unsubscribe = noop;
-    };
+    !touchEnabled() && subscribe(null);
   }
-  unsubscribe = noop;
+
+  const listenerParams = { capture: useCapture, passive: false };
+  const listeners = [
+    useEventListener(events[1], onMove, listenerParams),
+    useEventListener(events[2], onEnd, listenerParams),
+    useEventListener(events[3], onEnd, listenerParams),
+  ];
+  function subscribe(el: HTMLElement | Document | null) {
+    listeners.forEach((l) => l.add(el));
+  }
 
   /**
    * Обработчик событий dragstart
    * Отменяет нативное браузерное поведение для вложенных ссылок и изображений
-   *
-   * @param {Object} e Браузерное событие
-   * @return {void}
    */
-  onDragStart: DragHandler = (e: React.DragEvent<HTMLElement>) => {
+  const onDragStart = (e: React.DragEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
     if (target.tagName === 'A' || target.tagName === 'IMG') {
       e.preventDefault();
@@ -287,13 +185,9 @@ class Touch extends React.Component<TouchProps & DOMProps> {
   /**
    * Обработчик клика по компоненту
    * Отменяет переход по вложенной ссылке, если был зафиксирован свайп
-   *
-   * @param {Object} e Браузерное событие
-   * @return {void}
    */
-  postGestureClick: ClickHandler = (e) => {
-    const { onClickCapture, noSlideClick } = this.props;
-    if (!this.didSlide) {
+  const postGestureClick: typeof onClickCapture = (e) => {
+    if (!didSlide.current) {
       return onClickCapture && onClickCapture(e);
     }
     if ((e.target as HTMLElement).tagName === 'A') {
@@ -304,47 +198,15 @@ class Touch extends React.Component<TouchProps & DOMProps> {
     } else {
       onClickCapture && onClickCapture(e);
     }
-    this.didSlide = false;
+    didSlide.current = false;
   };
 
-  getRef: React.RefCallback<HTMLElement> = (container) => {
-    this.container = container;
-    setRef(container, this.props.getRootRef);
-  };
-
-  render() {
-    const {
-      onStart,
-      onStartX,
-      onStartY,
-      onMove,
-      onMoveX,
-      onMoveY,
-      onLeave,
-      onEnter,
-      onEnd,
-      onEndX,
-      onEndY,
-      useCapture,
-      Component,
-      getRootRef,
-      noSlideClick,
-      window,
-      document,
-      ...restProps
-    } = this.props;
-
-    return (
-      <Component
-        {...restProps}
-        onDragStart={this.onDragStart}
-        onClickCapture={this.postGestureClick}
-        ref={this.getRef}
-      >
-        {this.props.children}
-      </Component>
-    );
-  }
-}
-
-export default withDOM<TouchProps>(Touch);
+  return (
+    <Component
+      {...restProps}
+      onDragStart={onDragStart}
+      onClickCapture={postGestureClick}
+      ref={containerRef}
+    />
+  );
+};

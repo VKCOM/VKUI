@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Touch, { TouchEvent, TouchEventHandler } from '../Touch/Touch';
+import { Touch, TouchEvent, TouchEventHandler } from '../Touch/Touch';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRootRef } from '../../types';
