@@ -95,9 +95,10 @@ function deactivateOtherInstances(exclude?: string) {
   });
 }
 
-const TappableContext = React.createContext<{ insideTappable?: boolean; onEnter?: VoidFunction; onLeave?: VoidFunction }>({ insideTappable: false });
+type TappableContextInterface = { onEnter?: VoidFunction; onLeave?: VoidFunction };
+const TappableContext = React.createContext<TappableContextInterface>({});
 
-class Tappable extends React.Component<TappableProps, TappableState> {
+class Tappable extends React.Component<TappableProps & TappableContextInterface, TappableState> {
   constructor(props: TappableProps) {
     super(props);
     this.id = Math.round(Math.random() * 1e8).toString(16);
@@ -335,6 +336,8 @@ class Tappable extends React.Component<TappableProps, TappableState> {
       Component = defaultComponent,
       onClick,
       onKeyDown,
+      onEnter,
+      onLeave,
       activeEffectDelay,
       stopPropagation,
       getRootRef,
@@ -383,63 +386,61 @@ class Tappable extends React.Component<TappableProps, TappableState> {
     const role: string = restProps.href ? 'link' : 'button';
 
     return (
-      <TappableContext.Consumer>
-        {({ insideTappable, onEnter, onLeave }) => {
+      <TouchRootContext.Consumer>
+        {(insideTouchRoot: boolean) => {
+          this.insideTouchRoot = insideTouchRoot;
+          const touchProps = restProps.disabled ? {} : {
+            onEnter: () => {
+              onEnter && onEnter();
+              !restProps.disabled && this.onEnter();
+            },
+            onLeave: () => {
+              onLeave && onLeave();
+              !restProps.disabled && this.onLeave();
+            },
+          };
           return (
-            <TouchRootContext.Consumer>
-              {(insideTouchRoot: boolean) => {
-                this.insideTouchRoot = insideTouchRoot;
-                const touchProps = restProps.disabled ? {} : {
-                  onEnter: () => {
-                    insideTappable && onEnter();
-                    !restProps.disabled && this.onEnter();
-                  },
-                  onLeave: () => {
-                    insideTappable && onLeave();
-                    !restProps.disabled && this.onLeave();
-                  },
-                };
-                return (
-                  <Touch
-                    {...touchProps}
-                    type={Component === 'button' ? 'button' : undefined}
-                    tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
-                    role={isCustomElement ? role : undefined}
-                    {...restProps}
-                    vkuiClass={classes}
-                    Component={Component}
-                    getRootRef={this.getRef}
-                    {...props}>
-                    <TappableContext.Provider
-                      value={{
-                        insideTappable: true,
-                        onEnter: () => this.setState({ childHover: true }),
-                        onLeave: () => this.setState({ childHover: false }),
-                      }}
-                    >
-                      {children}
-                    </TappableContext.Provider>
-                    {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' && (
-                      <span aria-hidden="true" vkuiClass="Tappable__waves">
-                        {clicks.map((wave) => (
-                          <Wave {...wave} key={wave.id} onClear={() => this.removeWave(wave.id)} />
-                        ))}
-                      </span>
-                    )}
-                    {hasHover && hoverMode === 'background' && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
-                    {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
-                  </Touch>
-                );
-              }}
-            </TouchRootContext.Consumer>
+            <Touch
+              {...touchProps}
+              type={Component === 'button' ? 'button' : undefined}
+              tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
+              role={isCustomElement ? role : undefined}
+              {...restProps}
+              vkuiClass={classes}
+              Component={Component}
+              getRootRef={this.getRef}
+              {...props}>
+              <TappableContext.Provider
+                value={{
+                  onEnter: () => this.setState({ childHover: true }),
+                  onLeave: () => this.setState({ childHover: false }),
+                }}
+              >
+                {children}
+              </TappableContext.Provider>
+              {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' && (
+                <span aria-hidden="true" vkuiClass="Tappable__waves">
+                  {clicks.map((wave) => (
+                    <Wave {...wave} key={wave.id} onClear={() => this.removeWave(wave.id)} />
+                  ))}
+                </span>
+              )}
+              {hasHover && hoverMode === 'background' && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
+              {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
+            </Touch>
           );
         }}
-      </TappableContext.Consumer>
+      </TouchRootContext.Consumer>
     );
   }
 }
 
-export default withAdaptivity(withPlatform(Tappable), { sizeX: true, hasMouse: true });
+const TappableNest: React.FC<TappableProps> = (props) => {
+  const parent = React.useContext(TappableContext);
+  return <Tappable {...props} {...parent} />;
+};
+
+export default withAdaptivity(withPlatform(TappableNest), { sizeX: true, hasMouse: true });
 
 function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
   const timeout = useTimeout(onClear, 225);
