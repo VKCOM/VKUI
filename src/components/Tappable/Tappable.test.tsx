@@ -192,7 +192,7 @@ describe('Tappable', () => {
         render(<Tappable data-testid="x"><Tappable data-testid="c" /></Tappable>);
         userEvent.hover(screen.getByTestId('c'));
         expect(isHovered()).toBe(false);
-        fireEvent.mouseLeave(screen.getByTestId('c'));
+        fireEvent.pointerLeave(screen.getByTestId('c'));
         expect(isHovered()).toBe(true);
       });
       it('restores hover on child unmount', () => {

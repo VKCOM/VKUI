@@ -411,6 +411,7 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
               tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
               role={isCustomElement ? role : undefined}
               {...restProps}
+              usePointerHover
               vkuiClass={classes}
               Component={Component}
               getRootRef={this.getRef}
