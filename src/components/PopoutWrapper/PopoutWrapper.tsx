@@ -5,6 +5,7 @@ import { IOS } from '../../lib/platform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { useDOM } from '../../lib/dom';
 import './PopoutWrapper.css';
 
@@ -44,6 +45,8 @@ export const PopoutWrapper: React.FC<PopoutWrapperProps> = ({
   useGlobalEventListener(window, 'touchmove', (e) => e.preventDefault(), { passive: false });
 
   const baseClassNames = getClassName('PopoutWrapper', platform);
+
+  useFocusTrap(elRef, () => onClick(null));
 
   return (
     <div
