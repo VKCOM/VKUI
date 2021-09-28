@@ -108,7 +108,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
       ts: null,
       childHover: false,
     };
-    this.isSlide = false;
   }
 
   get hasActive() {
@@ -120,8 +119,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
   }
 
   id: string;
-
-  isSlide: boolean;
 
   insideTouchRoot: boolean;
 
@@ -188,10 +185,9 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
   /*
    * Обрабатывает событие touchmove
    */
-  onMove: TouchEventHandler = ({ originalEvent, shiftXAbs, shiftYAbs }: TouchEvent) => {
+  onMove: TouchEventHandler = ({ originalEvent, isSlide }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
-    if (shiftXAbs > 20 || shiftYAbs > 20) {
-      this.isSlide = true;
+    if (isSlide) {
       this.stop();
     }
   };
@@ -199,12 +195,11 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
   /*
    * Обрабатывает событие touchend
    */
-  onEnd: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
+  onEnd: TouchEventHandler = ({ originalEvent, isSlide }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
     const now = ts();
 
     if (originalEvent.touches && originalEvent.touches.length > 0) {
-      this.isSlide = false;
       this.stop();
       return;
     }
@@ -222,7 +217,7 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
           store.timeout = timeout;
         }
       }
-    } else if (!this.isSlide) {
+    } else if (!isSlide) {
       // Очень короткий тап, включаем подсветку
       this.start();
 
@@ -235,8 +230,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
         this.timeout = timeout;
       }
     }
-
-    this.isSlide = false;
   };
 
   /*
@@ -411,6 +404,7 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
               tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
               role={isCustomElement ? role : undefined}
               {...restProps}
+              slideThreshold={20}
               usePointerHover
               vkuiClass={classes}
               Component={Component}
