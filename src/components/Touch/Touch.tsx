@@ -32,6 +32,7 @@ export interface Gesture {
   startX?: number;
   startY?: number;
   startT?: Date;
+  duration?: number;
   isPressed?: boolean;
   isY?: boolean;
   isX?: boolean;
@@ -78,7 +79,8 @@ export const Touch: React.FC<TouchProps> = ({
   const didSlide = React.useRef(false);
   const gesture = React.useRef<Partial<Gesture>>({});
   const handle = (e: any, handers: any[]) => handers.forEach((cb) => {
-    cb && cb({ ...gesture.current, originalEvent: e });
+    const duration = Date.now() - gesture.current.startT.getTime();
+    cb && cb({ ...gesture.current, duration, originalEvent: e });
   });
 
   const enterHandler = useEventListener(usePointerHover ? 'pointerenter' : 'mouseenter', onEnter);
