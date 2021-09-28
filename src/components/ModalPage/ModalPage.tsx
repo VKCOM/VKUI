@@ -3,12 +3,15 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { ModalRootContext, useModalRegistry } from '../ModalRoot/ModalRootContext';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useExternRef } from '../../hooks/useExternRef';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { withAdaptivity, AdaptivityProps, ViewHeight, ViewWidth } from '../../hoc/withAdaptivity';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
 import { multiRef } from '../../lib/utils';
 import { ModalType } from '../ModalRoot/types';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { IOS } from '../../lib/platform';
 import './ModalPage.css';
 
 export interface ModalPageProps extends React.HTMLAttributes<HTMLDivElement>, AdaptivityProps, NavIdProps {
@@ -39,7 +42,7 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
     viewHeight,
     sizeX,
     hasMouse,
-    onClose,
+    onClose: _onClose,
     settlingHeight,
     dynamicContentHeight,
     getModalContentRef,
@@ -56,6 +59,12 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
 
   const modalContext = React.useContext(ModalRootContext);
   const { refs } = useModalRegistry(getNavId(props, warn), ModalType.PAGE);
+  const onClose = _onClose || modalContext.onClose;
+
+  const innerElementRef = useExternRef<HTMLDivElement>(refs.innerElement);
+  useFocusTrap(innerElementRef, onClose, {
+    timeout: platform === IOS ? 400 : 320,
+  });
 
   return (
     <div
@@ -64,7 +73,7 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
         'ModalPage--desktop': isDesktop,
       })}
     >
-      <div vkuiClass="ModalPage__in-wrap" ref={refs.innerElement}>
+      <div vkuiClass="ModalPage__in-wrap" ref={innerElementRef}>
         <div vkuiClass="ModalPage__in">
           <div vkuiClass="ModalPage__header" ref={refs.headerElement}>
             {header}
@@ -77,7 +86,7 @@ const ModalPage: React.FC<ModalPageProps> = (props: ModalPageProps) => {
               </div>
             </div>
           </div>
-          {canShowCloseBtn && <ModalDismissButton onClick={onClose || modalContext.onClose} />}
+          {canShowCloseBtn && <ModalDismissButton onClick={onClose} />}
         </div>
       </div>
     </div>
