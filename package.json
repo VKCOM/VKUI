@@ -165,6 +165,7 @@
     "lint:es": "eslint --ext .jsx,.js,.ts,.tsx src/ e2e/ styleguide/ --cache --cache-location .cache/.eslintcache",
     "lint:es:ci": "yarn lint:es -o lint-results.json -f json",
     "lint:style": "cross-env LINT_PRECOMMIT_RUN=1 stylelint \"./src/**/*.css\" --cache --cache-location .cache/.stylelintcache",
+    "lint:import_order": "node ./tasks/sort_imports.js",
     "typecheck": "tsc --incremental --emitDeclarationOnly --declaration --tsBuildInfoFile .cache/.tsbuildinfo --outDir .cache/ts",
     "test:static": "concurrently 'yarn typecheck' 'yarn lint:es' 'yarn lint:style'",
     "test:static:ci": "concurrently 'yarn typecheck' 'yarn lint:es:ci' 'yarn lint:style'",
@@ -173,7 +174,8 @@
     "codesandbox:install": "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 yarn install"
   },
   "pre-commit": [
-    "test:static"
+    "test:static",
+    "lint:import_order"
   ],
   "dependencies": {
     "@babel/runtime": "^7.14.6",
