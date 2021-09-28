@@ -367,23 +367,13 @@ class Tappable extends React.Component<TappableProps, TappableState> {
         [activeMode]: hasActive && active && !isPresetActiveMode,
       });
 
-    const RootComponent = restProps.disabled
-      ? Component
-      : Touch;
-
-    let props: RootComponentProps = {};
+    const props: RootComponentProps = {};
     if (!restProps.disabled) {
-      props.Component = Component;
-      /* eslint-disable */
       props.onStart = this.onStart;
       props.onMove = this.onMove;
       props.onEnd = this.onEnd;
       props.onClick = onClick;
       props.onKeyDown = isCustomElement ? this.onKeyDown : onKeyDown;
-      /* eslint-enable */
-      props.getRootRef = this.getRef;
-    } else {
-      props.ref = this.getRef;
     }
 
     if (isCustomElement) {
@@ -410,13 +400,15 @@ class Tappable extends React.Component<TappableProps, TappableState> {
                   },
                 };
                 return (
-                  <RootComponent
+                  <Touch
                     {...touchProps}
                     type={Component === 'button' ? 'button' : undefined}
                     tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
                     role={isCustomElement ? role : undefined}
                     {...restProps}
                     vkuiClass={classes}
+                    Component={Component}
+                    getRootRef={this.getRef}
                     {...props}>
                     <TappableContext.Provider
                       value={{
@@ -436,7 +428,7 @@ class Tappable extends React.Component<TappableProps, TappableState> {
                     )}
                     {hasHover && hoverMode === 'background' && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
                     {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
-                  </RootComponent>
+                  </Touch>
                 );
               }}
             </TouchRootContext.Consumer>
