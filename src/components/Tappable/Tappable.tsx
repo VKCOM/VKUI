@@ -55,7 +55,6 @@ export interface TappableState {
   clicks?: Wave[];
   hovered?: boolean;
   active?: boolean;
-  ts?: number;
   childHover?: boolean;
 }
 
@@ -74,8 +73,6 @@ export interface Storage {
 }
 
 export type GetStorage = () => StorageItem;
-
-const ts = () => +Date.now();
 
 export const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
@@ -105,7 +102,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     this.state = {
       clicks: [],
       active: false,
-      ts: null,
       childHover: false,
     };
   }
@@ -195,9 +191,8 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
   /*
    * Обрабатывает событие touchend
    */
-  onEnd: TouchEventHandler = ({ originalEvent, isSlide }: TouchEvent) => {
+  onEnd: TouchEventHandler = ({ originalEvent, isSlide, duration }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
-    const now = ts();
 
     if (originalEvent.touches && originalEvent.touches.length > 0) {
       this.stop();
@@ -205,12 +200,12 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     }
 
     if (this.state.active) {
-      if (now - this.state.ts >= 100) {
+      if (duration >= 100) {
         // Долгий тап, выключаем подсветку
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - now + this.state.ts);
+        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - duration);
         const store = this.getStorage();
 
         if (store) {
@@ -267,7 +262,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     if (!this.state.active && this.hasActive) {
       this.setState({
         active: true,
-        ts: ts(),
       });
     }
     deactivateOtherInstances(this.id);
@@ -280,7 +274,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     if (this.state.active) {
       this.setState({
         active: false,
-        ts: null,
       });
     }
     if (this.getStorage()) {

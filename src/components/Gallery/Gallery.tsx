@@ -39,7 +39,6 @@ export interface GalleryState {
   layerWidth?: number;
   min?: number;
   max?: number;
-  startT?: Date;
   deltaX: number;
   shiftX: number;
   slides: GallerySlidesState[];
@@ -209,10 +208,10 @@ class BaseGallery extends React.Component<BaseGalleryProps & DOMProps & Adaptivi
   /*
    * Получает индекс слайда, к которому будет осуществлен переход
    */
-  getTarget() {
-    const { slides, deltaX, shiftX, startT, max } = this.state;
+  getTarget(e: TouchEvent) {
+    const { slides, deltaX, shiftX, max } = this.state;
     const { slideIndex } = this.props;
-    const expectDeltaX = deltaX / (Date.now() - startT.getTime()) * 240 * 0.6;
+    const expectDeltaX = deltaX / e.duration * 240 * 0.6;
     const shift = shiftX + deltaX + expectDeltaX - max;
     const direction = deltaX < 0 ? 1 : -1;
 
@@ -237,10 +236,9 @@ class BaseGallery extends React.Component<BaseGalleryProps & DOMProps & Adaptivi
     return targetIndex;
   }
 
-  onStart: TouchEventHandler = (e: TouchEvent) => {
+  onStart: TouchEventHandler = () => {
     this.setState({
       animation: false,
-      startT: e.startT,
     });
   };
 
@@ -262,7 +260,7 @@ class BaseGallery extends React.Component<BaseGalleryProps & DOMProps & Adaptivi
   };
 
   onEnd: TouchEventHandler = (e: TouchEvent) => {
-    const targetIndex = e.isSlide ? this.getTarget() : this.props.slideIndex;
+    const targetIndex = e.isSlide ? this.getTarget(e) : this.props.slideIndex;
     this.props.onDragEnd && this.props.onDragEnd(e);
     this.setState({ deltaX: 0, animation: true }, () => this.props.onChange(targetIndex));
 

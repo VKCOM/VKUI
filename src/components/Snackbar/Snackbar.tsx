@@ -70,7 +70,6 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
 
   const shiftXPercentRef = React.useRef<number>(0);
   const shiftXCurrentRef = React.useRef<number>(0);
-  const touchStartTimeRef = React.useRef<Date | null>(null);
 
   const bodyElRef = React.useRef<HTMLDivElement | null>(null);
   const innerElRef = React.useRef<HTMLDivElement | null>(null);
@@ -109,7 +108,7 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
   const onTouchStart = closeTimeout.clear;
 
   const onTouchMoveX = (event: TouchEvent) => {
-    const { shiftX, startT, originalEvent } = event;
+    const { shiftX, originalEvent } = event;
     originalEvent.preventDefault();
 
     if (!touched) {
@@ -118,17 +117,16 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
 
     shiftXPercentRef.current = shiftX / bodyElRef.current.offsetWidth * 100;
     shiftXCurrentRef.current = rubber(shiftXPercentRef.current, 72, 1.2, platform === ANDROID || platform === VKCOM);
-    touchStartTimeRef.current = startT;
 
     setBodyTransform(shiftXCurrentRef.current);
   };
 
-  const onTouchEnd = () => {
+  const onTouchEnd = (e: TouchEvent) => {
     let callback: VoidFunction | undefined;
 
     if (touched) {
       let shiftXCurrent = shiftXCurrentRef.current;
-      const expectTranslateY = shiftXCurrent / (Date.now() - touchStartTimeRef.current.getTime()) * 240 * 0.6;
+      const expectTranslateY = shiftXCurrent / e.duration * 240 * 0.6;
       shiftXCurrent = shiftXCurrent + expectTranslateY;
 
       if (isDesktop && shiftXCurrent <= -50) {

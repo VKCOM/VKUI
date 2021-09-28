@@ -419,7 +419,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
   };
 
   onPageTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
-    const { shiftY, startT, originalEvent } = event;
+    const { shiftY, originalEvent } = event;
     const target = originalEvent.target as HTMLElement;
 
     if (!event.isY) {
@@ -438,7 +438,6 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
     const { expandable, contentScrolled, collapsed, expanded } = modalState;
 
     if (!this.state.touchDown) {
-      modalState.touchStartTime = startT;
       modalState.touchStartContentScrollTop = modalState.contentElement.scrollTop;
       this.setState({ touchDown: true });
     }
@@ -477,11 +476,10 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
   }
 
   onCardTouchMove(event: TouchEvent, modalState: ModalsStateEntry) {
-    const { originalEvent, shiftY, startT } = event;
+    const { originalEvent, shiftY } = event;
     const target = originalEvent.target as HTMLElement;
     if (modalState.innerElement.contains(target)) {
       if (!this.state.touchDown) {
-        modalState.touchStartTime = startT;
         this.setState({ touchDown: true, dragging: true });
       }
 
@@ -508,7 +506,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
     }
 
     if (modalState.type === ModalType.CARD) {
-      return this.onCardTouchEnd(modalState);
+      return this.onCardTouchEnd(e, modalState);
     }
   };
 
@@ -524,7 +522,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
       const shiftYEndPercent = (startY + shiftY) / this.window.innerHeight * 100;
 
       let translateY = modalState.translateYCurrent;
-      const expectTranslateY = translateY / (Date.now() - modalState.touchStartTime.getTime()) * 240 * 0.6 * (modalState.touchShiftYPercent < 0 ? -1 : 1);
+      const expectTranslateY = translateY / event.duration * 240 * 0.6 * (modalState.touchShiftYPercent < 0 ? -1 : 1);
       translateY = rangeTranslate(translateY + expectTranslateY);
 
       if (modalState.settlingHeight !== 100) {
@@ -574,13 +572,13 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
     }, setStateCallback);
   }
 
-  onCardTouchEnd(modalState: ModalsStateEntry) {
+  onCardTouchEnd({ duration }: TouchEvent, modalState: ModalsStateEntry) {
     let setStateCallback;
 
     if (this.state.dragging) {
       let translateY = modalState.translateYCurrent;
 
-      const expectTranslateY = translateY / (Date.now() - modalState.touchStartTime.getTime()) * 240 * 0.6 * (modalState.touchShiftYPercent < 0 ? -1 : 1);
+      const expectTranslateY = translateY / duration * 240 * 0.6 * (modalState.touchShiftYPercent < 0 ? -1 : 1);
       translateY = Math.max(0, translateY + expectTranslateY);
 
       if (translateY >= 30) {
