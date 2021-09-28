@@ -86,8 +86,11 @@ export const useFocusTrap = (
       return noop;
     }
 
+    focusableNodesRef.current = Array
     // eslint-disable-next-line no-restricted-properties
-    focusableNodesRef.current = Array.from(trapRef.current.querySelectorAll(FOCUSABLE_ELEMENTS));
+      .from(trapRef.current.querySelectorAll(FOCUSABLE_ELEMENTS))
+      .filter((el: HTMLElement) => !el.dataset.vkuiHidden) as HTMLElement[]
+    || [];
 
     if (!focusableNodesRef.current.length) {
       warnDev('Внутри ловушки нет ни одного фокусируемого элемента');

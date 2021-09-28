@@ -125,6 +125,7 @@ const ActionSheetItem: React.FC<ActionSheetItemProps> = ({
       {selectable &&
         <div vkuiClass="ActionSheetItem__after">
           <input
+            data-vkui-hidden
             type="radio"
             vkuiClass="ActionSheetItem__radio"
             name={name}
