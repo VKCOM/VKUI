@@ -307,6 +307,9 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
   };
 
   componentWillUnmount() {
+    if (this.state.hovered && !this.props.disabled && this.props.onLeave) {
+      this.props.onLeave();
+    }
     if (storage[this.id]) {
       clearTimeout(storage[this.id].timeout);
       clearTimeout(storage[this.id].activeTimeout);
@@ -315,9 +318,14 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     }
   }
 
-  componentDidUpdate(prevProps: TappableProps) {
-    if (!prevProps.disabled && this.props.disabled) {
-      this.setState({ hovered: false });
+  componentDidUpdate(prevProps: TappableProps, prevState: TappableState) {
+    const hovered = this.state.hovered && !this.props.disabled;
+    const prevHovered = prevState.hovered && !prevProps.disabled;
+    if (!prevHovered && hovered && this.props.onEnter) {
+      this.props.onEnter();
+    }
+    if (prevHovered && !hovered && this.props.onLeave) {
+      this.props.onLeave();
     }
   }
 
@@ -327,7 +335,8 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
 
   render() {
     const { hasHover, hasActive } = this;
-    const { clicks, active, hovered } = this.state;
+    const { clicks, active } = this.state;
+    const hovered = this.state.hovered && !this.props.disabled;
 
     const defaultComponent: React.ElementType = this.props.href ? 'a' : 'div';
 
@@ -389,19 +398,10 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
       <TouchRootContext.Consumer>
         {(insideTouchRoot: boolean) => {
           this.insideTouchRoot = insideTouchRoot;
-          const touchProps = restProps.disabled ? {} : {
-            onEnter: () => {
-              onEnter && onEnter();
-              !restProps.disabled && this.onEnter();
-            },
-            onLeave: () => {
-              onLeave && onLeave();
-              !restProps.disabled && this.onLeave();
-            },
-          };
           return (
             <Touch
-              {...touchProps}
+              onEnter={this.onEnter}
+              onLeave={this.onLeave}
               type={Component === 'button' ? 'button' : undefined}
               tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
               role={isCustomElement ? role : undefined}
