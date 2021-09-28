@@ -262,6 +262,11 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     this.setState({ hovered: false });
   };
 
+  childContext: TappableContextInterface= {
+    onEnter: () => this.setState({ childHover: true }),
+    onLeave: () => this.setState({ childHover: false }),
+  };
+
   /*
    * Устанавливает активное выделение
    */
@@ -410,12 +415,7 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
               Component={Component}
               getRootRef={this.getRef}
               {...props}>
-              <TappableContext.Provider
-                value={{
-                  onEnter: () => this.setState({ childHover: true }),
-                  onLeave: () => this.setState({ childHover: false }),
-                }}
-              >
+              <TappableContext.Provider value={this.childContext}>
                 {children}
               </TappableContext.Provider>
               {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' && (
