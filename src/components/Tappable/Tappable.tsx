@@ -55,7 +55,6 @@ export interface TappableState {
   clicks?: Wave[];
   hovered?: boolean;
   active?: boolean;
-  ts?: number;
   childHover?: boolean;
 }
 
@@ -74,8 +73,6 @@ export interface Storage {
 }
 
 export type GetStorage = () => StorageItem;
-
-const ts = () => +Date.now();
 
 export const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
@@ -105,10 +102,8 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     this.state = {
       clicks: [],
       active: false,
-      ts: null,
       childHover: false,
     };
-    this.isSlide = false;
   }
 
   get hasActive() {
@@ -120,8 +115,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
   }
 
   id: string;
-
-  isSlide: boolean;
 
   insideTouchRoot: boolean;
 
@@ -188,10 +181,9 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
   /*
    * Обрабатывает событие touchmove
    */
-  onMove: TouchEventHandler = ({ originalEvent, shiftXAbs, shiftYAbs }: TouchEvent) => {
+  onMove: TouchEventHandler = ({ originalEvent, isSlide }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
-    if (shiftXAbs > 20 || shiftYAbs > 20) {
-      this.isSlide = true;
+    if (isSlide) {
       this.stop();
     }
   };
@@ -199,30 +191,28 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
   /*
    * Обрабатывает событие touchend
    */
-  onEnd: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
+  onEnd: TouchEventHandler = ({ originalEvent, isSlide, duration }: TouchEvent) => {
     !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
-    const now = ts();
 
     if (originalEvent.touches && originalEvent.touches.length > 0) {
-      this.isSlide = false;
       this.stop();
       return;
     }
 
     if (this.state.active) {
-      if (now - this.state.ts >= 100) {
+      if (duration >= 100) {
         // Долгий тап, выключаем подсветку
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - now + this.state.ts);
+        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - duration);
         const store = this.getStorage();
 
         if (store) {
           store.timeout = timeout;
         }
       }
-    } else if (!this.isSlide) {
+    } else if (!isSlide) {
       // Очень короткий тап, включаем подсветку
       this.start();
 
@@ -235,8 +225,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
         this.timeout = timeout;
       }
     }
-
-    this.isSlide = false;
   };
 
   /*
@@ -274,7 +262,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     if (!this.state.active && this.hasActive) {
       this.setState({
         active: true,
-        ts: ts(),
       });
     }
     deactivateOtherInstances(this.id);
@@ -287,7 +274,6 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     if (this.state.active) {
       this.setState({
         active: false,
-        ts: null,
       });
     }
     if (this.getStorage()) {
@@ -411,6 +397,7 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
               tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
               role={isCustomElement ? role : undefined}
               {...restProps}
+              slideThreshold={20}
               usePointerHover
               vkuiClass={classes}
               Component={Component}

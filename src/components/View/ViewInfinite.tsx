@@ -84,7 +84,6 @@ export interface ViewInfiniteProps extends React.HTMLAttributes<HTMLElement>, Ha
 export interface ViewInfiniteState {
   scrolls: Scrolls;
   animated: boolean;
-  startT?: Date;
 
   visiblePanels: string[];
   activePanel: string;
@@ -439,7 +438,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         this.setState({
           swipingBack: true,
           swipebackStartX: e.startX,
-          startT: e.startT,
           swipeBackPrevPanel: this.state.activePanel,
           swipeBackNextPanel: this.props.history.slice(-2)[0],
           scrolls,
@@ -459,9 +457,9 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
     }
   };
 
-  onEnd = (): void => {
+  onEnd = (e: TouchEvent): void => {
     if (this.state.swipingBack) {
-      const speed = this.state.swipeBackShift / (Date.now() - this.state.startT.getTime()) * 1000;
+      const speed = this.state.swipeBackShift / e.duration * 1000;
       if (this.state.swipeBackShift === 0) {
         this.onSwipeBackCancel();
       } else if (this.state.swipeBackShift >= this.window.innerWidth) {
