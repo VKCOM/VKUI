@@ -16,12 +16,12 @@ const getTagNameByText = (text: string) => screen.getByText(text).tagName.toLowe
 describe('Banner', () => {
   baselineComponent(Banner);
 
-  it('[typography] header is h2 regardless of sizeY', () => {
+  it('[typography] header is span regardless of sizeY', () => {
     const { rerender } = render(<BannerTest header="Большой концерт" />);
-    expect(getTagNameByText('Большой концерт')).toMatch('h2');
+    expect(getTagNameByText('Большой концерт')).toMatch('span');
 
     rerender(<BannerTest sizeY={SizeType.COMPACT} header="Маленький концерт" />);
-    expect(getTagNameByText('Маленький концерт')).toMatch('h2');
+    expect(getTagNameByText('Маленький концерт')).toMatch('span');
   });
 
   it('[typography] subheader is a span regardless of sizeY', () => {
