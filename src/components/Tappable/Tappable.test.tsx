@@ -147,11 +147,88 @@ describe('Tappable', () => {
     expect(handleClick).toHaveBeenCalledTimes(0);
   });
 
-  it('checks that hover state is removed if component becomes disabled', () => {
-    const { rerender } = render(<TappableTest>Test</TappableTest>);
-    fireEvent.mouseEnter(tappable());
-    expect(tappable()).toHaveClass('Tappable--hover-background');
-    rerender(<TappableTest disabled>Test</TappableTest>);
-    expect(tappable()).not.toHaveClass('Tappable--hover-background');
+  describe('hover', () => {
+    const isHovered = (testId = 'x') => screen.getByTestId(testId).classList.contains('Tappable--hover-background');
+
+    it('is not hovered by default', () => {
+      render(<Tappable data-testid="x" />);
+      expect(isHovered()).toBe(false);
+    });
+    it('tracks mouse', () => {
+      render(<Tappable data-testid="x" />);
+      userEvent.hover(screen.getByTestId('x'));
+      expect(isHovered()).toBe(true);
+      userEvent.unhover(screen.getByTestId('x'));
+      expect(isHovered()).toBe(false);
+    });
+    describe('no hover when disabled', () => {
+      describe.each([
+        ['as form item', 'button'],
+        ['as div', 'div'],
+      ] as const)('%s', (_, cmp) => {
+        it('does not hover when disabled', () => {
+          render(<Tappable Component={cmp} data-testid="x" disabled />);
+          userEvent.hover(screen.getByTestId('x'));
+          expect(isHovered()).toBe(false);
+        });
+        it('suspends hover while disabled', () => {
+          const h = render(<Tappable Component={cmp} data-testid="x" />);
+          userEvent.hover(screen.getByTestId('x'));
+          h.rerender(<Tappable Component={cmp} data-testid="x" disabled />);
+          expect(isHovered()).toBe(false);
+          h.rerender(<Tappable Component={cmp} data-testid="x" />);
+          expect(isHovered()).toBe(true);
+        });
+        it('tracks hover occurred while disabled', () => {
+          const h = render(<Tappable Component={cmp} data-testid="x" disabled />);
+          userEvent.hover(screen.getByTestId('x'));
+          h.rerender(<Tappable Component={cmp} data-testid="x" />);
+          expect(isHovered()).toBe(true);
+        });
+      });
+    });
+    describe('nested hover', () => {
+      it('unhovers on child hover', () => {
+        render(<Tappable data-testid="x"><Tappable data-testid="c" /></Tappable>);
+        userEvent.hover(screen.getByTestId('c'));
+        expect(isHovered()).toBe(false);
+        fireEvent.pointerLeave(screen.getByTestId('c'));
+        expect(isHovered()).toBe(true);
+      });
+      it('restores hover on child unmount', () => {
+        const h = render(<Tappable data-testid="x"><Tappable data-testid="c" /></Tappable>);
+        userEvent.hover(screen.getByTestId('c'));
+        h.rerender(<Tappable data-testid="x" />);
+        expect(isHovered()).toBe(true);
+      });
+      describe('handles disabled children', () => {
+        describe.each([
+          ['as form item', 'button'],
+          ['as div', 'div'],
+        ] as const)('%s', (_, cmp) => {
+          it('hovers on disabled child hover', () => {
+            render((
+              <Tappable data-testid="x">
+                <Tappable Component={cmp} data-testid="c" disabled />
+              </Tappable>
+            ));
+            userEvent.hover(screen.getByTestId('c'));
+            expect(isHovered()).toBe(true);
+          });
+          it('restores hover on child disable', () => {
+            const h = render(<Tappable data-testid="x"><Tappable data-testid="c" /></Tappable>);
+            userEvent.hover(screen.getByTestId('c'));
+            h.rerender((
+              <Tappable data-testid="x">
+                <Tappable Component={cmp} data-testid="c" disabled />
+              </Tappable>
+            ));
+            expect(isHovered()).toBe(true);
+            h.rerender(<Tappable data-testid="x"><Tappable data-testid="c" /></Tappable>);
+            expect(isHovered()).toBe(false);
+          });
+        });
+      });
+    });
   });
 });

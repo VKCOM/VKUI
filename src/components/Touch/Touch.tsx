@@ -18,6 +18,10 @@ export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRoo
   onEnd?(outputEvent: TouchEvent): void;
   onEndX?(outputEvent: TouchEvent): void;
   onEndY?(outputEvent: TouchEvent): void;
+  /**
+   * Привязать onEnter и onLeave через pointer-events - работает на disabled-инпутах
+   */
+  usePointerHover?: boolean;
   useCapture?: boolean;
   noSlideClick?: boolean;
   Component?: React.ElementType;
@@ -60,6 +64,7 @@ export const Touch: React.FC<TouchProps> = ({
   onEndX,
   onEndY,
   onClickCapture,
+  usePointerHover,
   useCapture = false,
   Component = 'div',
   getRootRef,
@@ -74,8 +79,8 @@ export const Touch: React.FC<TouchProps> = ({
     cb && cb({ ...gesture.current, originalEvent: e });
   });
 
-  const mouseEnterHandler = useEventListener('mouseenter', onEnter);
-  const mouseLeaveHandler = useEventListener('mouseleave', onLeave);
+  const enterHandler = useEventListener(usePointerHover ? 'pointerenter' : 'mouseenter', onEnter);
+  const leaveHandler = useEventListener(usePointerHover ? 'pointerleave' : 'mouseleave', onLeave);
   const startHandler = useEventListener(events[0], (e: VKUITouchEvent) => {
     gesture.current = {
       startX: coordX(e),
@@ -91,8 +96,8 @@ export const Touch: React.FC<TouchProps> = ({
 
   useIsomorphicLayoutEffect(() => {
     const el = containerRef.current;
-    mouseEnterHandler.add(el);
-    mouseLeaveHandler.add(el);
+    enterHandler.add(el);
+    leaveHandler.add(el);
     startHandler.add(el);
     touchEnabled() && subscribe(el);
   }, [Component]);
