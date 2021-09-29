@@ -14,13 +14,7 @@ const testFiles = [
 
 module.exports = {
   presets: [
-    ['@babel/preset-env', {
-      modules: useModules ? false : 'commonjs',
-      exclude: [
-        '@babel/plugin-proposal-unicode-property-regex',
-        '@babel/plugin-transform-unicode-regex'
-      ]
-    }],
+    ['@babel/preset-env', { modules: useModules ? false : 'commonjs' }],
     ['@babel/preset-react', {
       pragma: "createScopedElement",
       pragmaFrag: "createScopedElement.Fragment",
@@ -31,6 +25,9 @@ module.exports = {
     }]
   ],
   plugins: [
+    [require.resolve('./babel-flatten-css'), {
+      test: filename => filename.includes('/components/'),
+    }],
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
     ['@babel/plugin-transform-runtime', { version: runtimeVersion }],
