@@ -127,7 +127,7 @@ const Banner: React.FC<BannerProps> = (props: BannerProps) => {
 
         <div vkuiClass="Banner__content">
           {hasReactNode(header) && (
-            <BannerHeader size={size} Component="h2" vkuiClass="Banner__header">{header}</BannerHeader>
+            <BannerHeader size={size} Component="span" vkuiClass="Banner__header">{header}</BannerHeader>
           )}
           {hasReactNode(subheader) && (
             <BannerSubheader Component="span" size={size} vkuiClass="Banner__subheader">{subheader}</BannerSubheader>

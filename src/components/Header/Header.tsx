@@ -93,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({
       vkuiClass={classNames(getClassName('Header', platform), `Header--mode-${mode}`, { 'Header--pi': isPrimitiveReactNode(indicator) })}
     >
       <div vkuiClass="Header__main">
-        <HeaderContent vkuiClass="Header__content" Component="h3" mode={mode} platform={platform}>
+        <HeaderContent vkuiClass="Header__content" Component="span" mode={mode} platform={platform}>
           <span vkuiClass={classNames('Header__content-in', { 'Header__content-in--multiline': multiline })}>{children}</span>
           {hasReactNode(indicator) && (
             <Caption
