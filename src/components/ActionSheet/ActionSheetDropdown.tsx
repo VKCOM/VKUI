@@ -2,23 +2,16 @@ import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
-import { ActionSheetProps } from './ActionSheet';
+import { SharedDropdownProps } from './types';
 import './ActionSheet.css';
-
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  closing: boolean;
-  onClose(): void;
-  toggleRef: Element;
-  /** Has no effect - only for ActionSheetDropdownDesktip polymorhipsm */
-  popupDirection?: ActionSheetProps['popupDirection'];
-}
 
 const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();
 
-export const ActionSheetDropdown: React.FC<Props> = ({
+export const ActionSheetDropdown: React.FC<SharedDropdownProps> = ({
   children,
-  toggleRef,
   closing,
+  // these 2 props are only omitted - ActionSheetDesktop compat
+  toggleRef,
   popupDirection,
   ...restProps
 }) => {

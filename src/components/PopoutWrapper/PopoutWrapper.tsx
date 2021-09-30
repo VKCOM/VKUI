@@ -25,7 +25,7 @@ export const PopoutWrapper: React.FC<PopoutWrapperProps> = ({
   children,
   onClick,
   ...restProps
-}) => {
+}: PopoutWrapperProps) => {
   const platform = usePlatform();
   const [opened, setOpened] = React.useState(!hasMask);
   const elRef = React.useRef<HTMLDivElement>();

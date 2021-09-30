@@ -38,7 +38,7 @@ const warn = warnOnce('FixedLayout');
 const FixedLayout: React.FC<FixedLayoutProps> = ({
   children, style, vertical, getRootRef, getRef, filled,
   ...restProps
-}) => {
+}: FixedLayoutProps) => {
   const platform = usePlatform();
   const { colRef } = React.useContext(SplitColContext);
   const { window, document } = useDOM();
