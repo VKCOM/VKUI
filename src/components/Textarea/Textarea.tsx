@@ -30,7 +30,7 @@ const Textarea: React.FC<TextareaProps> = React.memo(({
   getRef,
   sizeY,
   ...restProps
-}) => {
+}: TextareaProps) => {
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
   const elementRef = useExternRef(getRef);
   const platform = usePlatform();

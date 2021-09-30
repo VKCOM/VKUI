@@ -9,7 +9,7 @@
   box-sizing: border-box;
   resize: none;
   appearance: none;
-  line-height: 19px;
+  line-height: 20px;
   font-size: 16px;
   color: var(--text_primary);
   padding: 11px;
@@ -25,8 +25,11 @@
   padding-top: 7px;
   padding-bottom: 7px;
   font-size: 15px;
-  line-height: 20px;
   min-height: 54px;
+}
+
+.Textarea__el[rows] {
+  min-height: 0;
 }
 
 .Textarea__el::placeholder {
