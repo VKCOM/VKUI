@@ -6,6 +6,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { warnOnce } from '../../lib/warnOnce';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { useEventListener } from '../../hooks/useEventListener';
 import { SharedDropdownProps } from './types';
 import './ActionSheet.css';
 
@@ -52,20 +53,17 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
     });
   }, [toggleRef]);
 
-  const onBodyClick = React.useCallback((e) => {
+  const bodyClickListener = useEventListener('click', (e) => {
     const dropdownElement = elementRef?.current;
     if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
       onClose();
     }
-  }, []);
+  });
 
   React.useEffect(() => {
     setTimeout(() => {
-      document.body.addEventListener('click', onBodyClick);
+      bodyClickListener.add(document.body);
     });
-    return () => {
-      document.body.removeEventListener('click', onBodyClick);
-    };
   }, []);
 
   return (
