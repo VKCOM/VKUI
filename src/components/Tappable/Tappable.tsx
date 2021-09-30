@@ -200,12 +200,13 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     }
 
     if (this.state.active) {
-      if (duration >= 100) {
+      const activeDuraion = duration - ACTIVE_DELAY;
+      if (activeDuraion >= 100) {
         // Долгий тап, выключаем подсветку
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - duration);
+        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - activeDuraion);
         const store = this.getStorage();
 
         if (store) {
