@@ -21,7 +21,7 @@ export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Закрыть попап по клику снаружи. В v5 будет обязательным.
    */
-  onClose?: () => {};
+  onClose?: VoidFunction;
   /**
    * Элемент, рядом с которым вылезает попап на десктопе.
    * Лучше передавать RefObject c current.
