@@ -7,17 +7,6 @@ import { useEventListener } from '../../hooks/useEventListener';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
-  onEnter?(outputEvent: MouseEvent): void;
-  onLeave?(outputEvent: MouseEvent): void;
-  onStart?(outputEvent: TouchEvent): void;
-  onStartX?(outputEvent: TouchEvent): void;
-  onStartY?(outputEvent: TouchEvent): void;
-  onMove?(outputEvent: TouchEvent): void;
-  onMoveX?(outputEvent: TouchEvent): void;
-  onMoveY?(outputEvent: TouchEvent): void;
-  onEnd?(outputEvent: TouchEvent): void;
-  onEndX?(outputEvent: TouchEvent): void;
-  onEndY?(outputEvent: TouchEvent): void;
   /**
    * Привязать onEnter и onLeave через pointer-events - работает на disabled-инпутах
    */
@@ -26,6 +15,17 @@ export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRoo
   slideThreshold?: number;
   noSlideClick?: boolean;
   Component?: React.ElementType;
+  onEnter?: HoverHandler;
+  onLeave?: HoverHandler;
+  onStart?: TouchEventHandler;
+  onStartX?: TouchEventHandler;
+  onStartY?: TouchEventHandler;
+  onMove?: TouchEventHandler;
+  onMoveX?: TouchEventHandler;
+  onMoveY?: TouchEventHandler;
+  onEnd?: TouchEventHandler;
+  onEndX?: TouchEventHandler;
+  onEndY?: TouchEventHandler;
 }
 
 export interface Gesture {
@@ -49,6 +49,7 @@ export interface TouchEvent extends Gesture {
   originalEvent: VKUITouchEvent;
 }
 
+type HoverHandler = (outputEvent: MouseEvent) => void;
 export type TouchEventHandler = (e: TouchEvent) => void;
 export type ClickHandler = (e: React.MouseEvent<HTMLElement>) => void;
 export type DragHandler = (e: React.DragEvent<HTMLElement>) => void;
@@ -73,7 +74,7 @@ export const Touch: React.FC<TouchProps> = ({
   getRootRef,
   noSlideClick = false,
   ...restProps
-}) => {
+}: TouchProps) => {
   const { document } = useDOM();
   const events = React.useMemo(getSupportedEvents, []);
   const didSlide = React.useRef(false);

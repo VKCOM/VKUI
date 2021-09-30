@@ -45,7 +45,7 @@ const Root: React.FC<RootProps> = ({
   activeView: _activeView, onTransition,
   nav,
   ...restProps
-}) => {
+}: RootProps) => {
   const scroll = React.useContext(ScrollContext);
   const platform = usePlatform();
   const { document } = useDOM();
