@@ -66,12 +66,6 @@ type TappableContextInterface = { onEnter?: VoidFunction; onLeave?: VoidFunction
 const TappableContext = React.createContext<TappableContextInterface>({});
 
 const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouchRoot: boolean }> = (props) => {
-  const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
-  const [clicks, setClicks] = React.useState<Wave[]>([]);
-  const [active, setActive] = React.useState(false);
-  const [childHover, setChildHover] = React.useState(false);
-  const [_hovered, setHovered] = React.useState(false);
-
   const {
     children,
     Component = props.href ? 'a' : 'div',
@@ -85,22 +79,28 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
     platform,
     sizeX,
     hasMouse,
-    hasHover: propsHasHover,
+    hasHover: _hasHover,
     hoverMode,
-    hasActive: propsHasActive,
+    hasActive: _hasActive,
     activeMode,
     focusVisibleMode,
     insideTouchRoot,
     ...restProps
   } = props;
 
+  const [clicks, setClicks] = React.useState<Wave[]>([]);
+  const [active, setActive] = React.useState(false);
+  const [childHover, setChildHover] = React.useState(false);
+  const [_hovered, setHovered] = React.useState(false);
+
   const hovered = _hovered && !props.disabled;
-  const hasActive = props.hasActive && !childHover;
-  const hasHover = props.hasHover && !childHover;
-  const isCustomElement: boolean = Component !== 'a' && Component !== 'button' && !restProps.contentEditable;
+  const hasActive = _hasActive && !childHover;
+  const hasHover = _hasHover && !childHover;
+  const isCustomElement = Component !== 'a' && Component !== 'button' && !restProps.contentEditable;
   const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
   const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
 
+  const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
   const containerRef = useExternRef(getRootRef);
   const stopTimeout = useTimeout(stop, activeEffectDelay);
   const activeTimeout = useTimeout(start, ACTIVE_DELAY);
@@ -120,7 +120,7 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
    * - role="button" (активация по Space и Enter)
    */
   function onKeyDown(e: React.KeyboardEvent<HTMLElement>) {
-    if (shouldTriggerClickOnEnterOrSpace(e)) {
+    if (isCustomElement && shouldTriggerClickOnEnterOrSpace(e)) {
       e.preventDefault();
       containerRef.current.click();
     }
@@ -252,20 +252,8 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
       [activeMode]: hasActive && active && !isPresetActiveMode,
     });
 
-  const overrides: RootComponentProps = {};
-  if (!restProps.disabled) {
-    overrides.onStart = onStart;
-    overrides.onMove = onMove;
-    overrides.onEnd = onEnd;
-    overrides.onClick = onClick;
-    overrides.onKeyDown = isCustomElement ? onKeyDown : _onKeyDown;
-  }
-
-  if (isCustomElement) {
-    overrides['aria-disabled'] = restProps.disabled;
-  }
-
-  const role: string = restProps.href ? 'link' : 'button';
+  const handlers: RootComponentProps = { onStart, onMove, onEnd, onClick, onKeyDown };
+  const role = props.href ? 'link' : 'button';
 
   return (
     <Touch
@@ -274,13 +262,14 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
       type={Component === 'button' ? 'button' : undefined}
       tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
       role={isCustomElement ? role : undefined}
+      aria-disabled={isCustomElement ? restProps.disabled : null}
       {...restProps}
       slideThreshold={20}
       usePointerHover
       vkuiClass={classes}
       Component={Component}
       getRootRef={containerRef}
-      {...overrides}>
+      {...(props.disabled ? {} : handlers)}>
       <TappableContext.Provider value={childContext}>
         {children}
       </TappableContext.Provider>
