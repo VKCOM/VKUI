@@ -11,13 +11,13 @@ export function useTimeout(cb: () => any, duration: number) {
 
   const timeout = React.useRef<ReturnType<typeof setTimeout>>();
   const clear = React.useCallback(() => canUseDOM && clearTimeout(timeout.current), []);
-  const set = React.useCallback(() => {
+  const set = React.useCallback((duration = options.current.duration) => {
     clear();
     if (canUseDOM) {
       timeout.current = setTimeout(() => {
         const { cb } = options.current;
         typeof cb === 'function' && cb();
-      }, options.current.duration);
+      }, duration);
     }
   }, []);
   React.useEffect(() => clear, []);
