@@ -21,6 +21,7 @@ export interface NativeSelectProps extends
   HasAlign,
   AdaptivityProps {
   placeholder?: string;
+  multiline?: boolean;
 }
 
 export interface SelectState {
@@ -31,7 +32,7 @@ export interface SelectState {
 
 const NativeSelect: React.FC<NativeSelectProps> = ({
   style, defaultValue = '', align, placeholder, children,
-  className, getRef, getRootRef, disabled, sizeX, sizeY,
+  className, getRef, getRootRef, disabled, sizeX, sizeY, multiline,
   ...restProps
 }) => {
   const platform = usePlatform();
@@ -57,6 +58,7 @@ const NativeSelect: React.FC<NativeSelectProps> = ({
         [`Select--align-${align}`]: !!align,
         [`Select--sizeX--${sizeX}`]: !!sizeX,
         [`Select--sizeY--${sizeY}`]: !!sizeY,
+        'Select--multiline': multiline,
       })}
       className={className}
       style={style}
