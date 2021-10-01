@@ -13,7 +13,6 @@
   font-size: 16px;
   color: var(--text_primary);
   padding: 11px;
-  min-height: 84px;
   max-height: 196px;
   border: none;
   z-index: 2;
@@ -25,11 +24,6 @@
   padding-top: 7px;
   padding-bottom: 7px;
   font-size: 15px;
-  min-height: 54px;
-}
-
-.Textarea__el[rows] {
-  min-height: 0;
 }
 
 .Textarea__el::placeholder {

@@ -21,14 +21,15 @@ export interface TextareaProps extends
 }
 
 const Textarea: React.FC<TextareaProps> = React.memo(({
-  defaultValue,
-  grow,
+  defaultValue = '',
+  grow = true,
   style,
   onResize,
   className,
   getRootRef,
   getRef,
   sizeY,
+  rows = 2,
   ...restProps
 }: TextareaProps) => {
   const [value, onChange] = useEnsuredControl(restProps, { defaultValue });
@@ -56,6 +57,7 @@ const Textarea: React.FC<TextareaProps> = React.memo(({
     >
       <textarea
         {...restProps}
+        rows={rows}
         vkuiClass="Textarea__el"
         value={value}
         onChange={onChange}
@@ -64,10 +66,5 @@ const Textarea: React.FC<TextareaProps> = React.memo(({
     </FormField>
   );
 });
-
-Textarea.defaultProps = {
-  defaultValue: '',
-  grow: true,
-};
 
 export default withAdaptivity(Textarea, { sizeY: true });
