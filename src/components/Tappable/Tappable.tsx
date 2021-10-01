@@ -61,9 +61,63 @@ export const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
 
 const activeBus = mitt<{ active: string }>();
+const TapState = { none: 0, pending: 1, active: 2, exiting: 3 } as const;
 
 type TappableContextInterface = { onHoverChange: (s: boolean) => void };
 const TappableContext = React.createContext<TappableContextInterface>({ onHoverChange: noop });
+
+function useActivity(hasActive: boolean, stopDelay: number) {
+  const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
+
+  const [activity, setActivity] = React.useState<typeof TapState[keyof typeof TapState]>(TapState.none);
+  const _stop = () => setActivity(TapState.none);
+  const start = () => hasActive && setActivity(TapState.active);
+  const delayStart = () => {
+    hasActive && setActivity(TapState.pending);
+  };
+
+  const activeTimeout = useTimeout(start, ACTIVE_DELAY);
+  const stopTimeout = useTimeout(_stop, stopDelay);
+
+  useIsomorphicLayoutEffect(() => {
+    if (activity === TapState.pending) {
+      activeTimeout.set();
+      return activeTimeout.clear;
+    }
+    if (activity === TapState.exiting) {
+      return stopTimeout.clear;
+    }
+    if (activity === TapState.active) {
+      activeBus.emit('active', id);
+    }
+    return noop;
+  }, [activity]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (activity === TapState.none) {
+      return noop;
+    }
+    const onActiveChange = (activeId: string) => {
+      activeId !== id && _stop();
+    };
+    activeBus.on('active', onActiveChange);
+    return () => activeBus.off('active', onActiveChange);
+  }, [activity === TapState.none]);
+
+  useIsomorphicLayoutEffect(() => {
+    !hasActive && _stop();
+  }, [hasActive]);
+
+  const stop = (delay?: number) => {
+    if (delay) {
+      setActivity(TapState.exiting);
+      return stopTimeout.set(delay);
+    }
+    _stop();
+  };
+
+  return [activity, { delayStart, start, stop }] as const;
+}
 
 const Tappable: React.FC<TappableProps> = (props) => {
   const { onHoverChange } = React.useContext(TappableContext);
@@ -88,7 +142,6 @@ const Tappable: React.FC<TappableProps> = (props) => {
   } = props;
 
   const [clicks, setClicks] = React.useState<Wave[]>([]);
-  const [active, setActive] = React.useState(false);
   const [childHover, setChildHover] = React.useState(false);
   const [_hovered, setHovered] = React.useState(false);
 
@@ -99,30 +152,12 @@ const Tappable: React.FC<TappableProps> = (props) => {
   const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
   const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
 
-  const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
+  const [activity, { start, stop, delayStart }] = useActivity(
+    hasActive && !props.disabled,
+    activeEffectDelay);
+  const active = activity === TapState.active || activity === TapState.exiting;
+
   const containerRef = useExternRef(getRootRef);
-  const activeTimeout = useTimeout(start, ACTIVE_DELAY);
-  const stopTimeout = useTimeout(stop, activeEffectDelay);
-
-  const onActiveChange = React.useCallback((activeId: string) => {
-    if (activeId !== id) {
-      stopTimeout.clear();
-      stop();
-    }
-  }, []);
-
-  function start() {
-    if (hasActive) {
-      setActive(true);
-      activeBus.emit('active', id);
-    }
-  }
-
-  function stop() {
-    setActive(false);
-    activeTimeout.clear();
-    activeBus.off('active', onActiveChange);
-  }
 
   // hover propagation
   const childContext = React.useRef({ onHoverChange: setChildHover }).current;
@@ -156,8 +191,7 @@ const Tappable: React.FC<TappableProps> = (props) => {
     if (hasActive) {
       if (originalEvent.touches && originalEvent.touches.length > 1) {
         // r сожалению я так и не понял, что это делает и можно ли упихнуть его в Touch
-        activeBus.emit('active');
-        return;
+        return stop();
       }
 
       if (platform === ANDROID) {
@@ -167,8 +201,7 @@ const Tappable: React.FC<TappableProps> = (props) => {
         setClicks([...clicks, { x, y, id: Date.now().toString() }]);
       }
 
-      activeTimeout.set();
-      activeBus.on('active', onActiveChange);
+      delayStart();
     }
   }
 
@@ -178,34 +211,19 @@ const Tappable: React.FC<TappableProps> = (props) => {
     }
   }
 
-  function onEnd({ originalEvent, isSlide, duration }: TouchEvent) {
-    if (originalEvent.touches && originalEvent.touches.length > 0) {
-      stop();
+  function onEnd({ originalEvent, duration }: TouchEvent) {
+    if (activity === TapState.none) {
       return;
     }
-
-    if (active) {
-      const activeDuraion = duration - ACTIVE_DELAY;
-      if (activeDuraion >= 100) {
-        // Долгий тап, выключаем подсветку
-        stop();
-      } else {
-        // Короткий тап, оставляем подсветку
-        stopTimeout.set(activeEffectDelay - activeDuraion);
-      }
-    } else if (!isSlide) {
-      // Очень короткий тап, включаем подсветку
+    if (activity === TapState.pending) {
+      // активировать при коротком тапе
       start();
-
-      activeTimeout.clear();
-      stopTimeout.set();
     }
-  }
 
-  // active subscription cleanup
-  useIsomorphicLayoutEffect(() => () => {
-    activeBus.off('active', onActiveChange);
-  }, []);
+    const activeDuraion = duration - ACTIVE_DELAY;
+    const isMutliTouch = originalEvent.touches && originalEvent.touches.length > 0;
+    stop(activeDuraion >= 100 || isMutliTouch ? 0 : activeEffectDelay - activeDuraion);
+  }
 
   const classes = classNames(
     getClassName('Tappable', platform),

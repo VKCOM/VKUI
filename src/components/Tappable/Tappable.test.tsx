@@ -177,7 +177,7 @@ describe('Tappable', () => {
     const isActive = (e = tappable()) => e.classList.contains('Tappable--active');
     it('activates on click', () => {
       render(<TappableTest />);
-      act(() => userEvent.click(tappable()));
+      userEvent.click(tappable());
       expect(isActive()).toBe(true);
       act(() => jest.runOnlyPendingTimers());
       expect(isActive()).toBe(false);
@@ -191,7 +191,7 @@ describe('Tappable', () => {
       fireEvent.mouseUp(tappable());
       expect(isActive()).toBe(true);
     });
-    it('deactivates on other Tappable activation', () => {
+    it.only('deactivates on other Tappable activation', () => {
       render(<div>
         <TappableTest />
         <Tappable data-testid="other" />
@@ -228,6 +228,9 @@ describe('Tappable', () => {
         fireEvent.touchMove(tappable(), { touches: [{}, {}], changedTouches: [{}] });
         expect(isActive()).toBe(false);
       });
+      // disable
+      // child hover
+      // hasActive=false
     });
   });
 
