@@ -7,7 +7,7 @@ import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
-import { coordX, coordY, VKUITouchEvent } from '../../lib/touch';
+import { coordX, coordY } from '../../lib/touch';
 import { HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
@@ -101,8 +101,8 @@ const Tappable: React.FC<TappableProps> = (props) => {
 
   const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
   const containerRef = useExternRef(getRootRef);
-  const stopTimeout = useTimeout(stop, activeEffectDelay);
   const activeTimeout = useTimeout(start, ACTIVE_DELAY);
+  const stopTimeout = useTimeout(stop, activeEffectDelay);
 
   const onActiveChange = React.useCallback((activeId: string) => {
     if (activeId !== id) {
@@ -110,6 +110,19 @@ const Tappable: React.FC<TappableProps> = (props) => {
       stop();
     }
   }, []);
+
+  function start() {
+    if (hasActive) {
+      setActive(true);
+      activeBus.emit('active', id);
+    }
+  }
+
+  function stop() {
+    setActive(false);
+    activeTimeout.clear();
+    activeBus.off('active', onActiveChange);
+  }
 
   // hover propagation
   const childContext = React.useRef({ onHoverChange: setChildHover }).current;
@@ -140,8 +153,6 @@ const Tappable: React.FC<TappableProps> = (props) => {
   }
 
   function onStart({ originalEvent }: TouchEvent) {
-    !insideTouchRoot && stopPropagation && originalEvent.stopPropagation();
-
     if (hasActive) {
       if (originalEvent.touches && originalEvent.touches.length > 1) {
         activeBus.emit('active');
@@ -149,7 +160,10 @@ const Tappable: React.FC<TappableProps> = (props) => {
       }
 
       if (platform === ANDROID) {
-        onDown(originalEvent);
+        const { top, left } = getOffsetRect(containerRef.current);
+        const x = coordX(originalEvent) - left;
+        const y = coordY(originalEvent) - top;
+        setClicks([...clicks, { x, y, id: Date.now().toString() }]);
       }
 
       activeTimeout.set();
@@ -157,16 +171,13 @@ const Tappable: React.FC<TappableProps> = (props) => {
     }
   }
 
-  function onMove({ originalEvent, isSlide }: TouchEvent) {
-    !insideTouchRoot && stopPropagation && originalEvent.stopPropagation();
+  function onMove({ isSlide }: TouchEvent) {
     if (isSlide) {
       stop();
     }
   }
 
   function onEnd({ originalEvent, isSlide, duration }: TouchEvent) {
-    !insideTouchRoot && stopPropagation && originalEvent.stopPropagation();
-
     if (originalEvent.touches && originalEvent.touches.length > 0) {
       stop();
       return;
@@ -188,38 +199,6 @@ const Tappable: React.FC<TappableProps> = (props) => {
       activeTimeout.clear();
       stopTimeout.set();
     }
-  }
-
-  /*
-   * Реализует эффект при тапе для Андроида
-   */
-  function onDown(e: VKUITouchEvent) {
-    if (platform === ANDROID) {
-      const { top, left } = getOffsetRect(containerRef.current);
-      const x = coordX(e) - left;
-      const y = coordY(e) - top;
-
-      setClicks([...clicks, { x, y, id: Date.now().toString() }]);
-    }
-  }
-
-  /*
-   * Устанавливает активное выделение
-   */
-  function start() {
-    if (hasActive) {
-      setActive(true);
-    }
-    activeBus.emit('active', id);
-  }
-
-  /*
-   * Снимает активное выделение
-   */
-  function stop() {
-    setActive(false);
-    activeTimeout.clear();
-    activeBus.off('active', onActiveChange);
   }
 
   // active subscription cleanup
@@ -251,6 +230,7 @@ const Tappable: React.FC<TappableProps> = (props) => {
       tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
       role={isCustomElement ? role : undefined}
       aria-disabled={isCustomElement ? restProps.disabled : null}
+      stopPropagation={stopPropagation && !insideTouchRoot && !props.disabled}
       {...restProps}
       slideThreshold={20}
       usePointerHover
