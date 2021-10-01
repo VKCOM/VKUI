@@ -8,17 +8,17 @@ import { getClassName } from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
 import { coordX, coordY, VKUITouchEvent } from '../../lib/touch';
-import { HasPlatform, HasRootRef } from '../../types';
-import { withPlatform } from '../../hoc/withPlatform';
+import { HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useExternRef } from '../../hooks/useExternRef';
+import { usePlatform } from '../../hooks/usePlatform';
 import './Tappable.css';
 
-export interface TappableProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
+export interface TappableProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, AdaptivityProps {
   Component?: React.ElementType;
   /**
    * Длительность показа active-состояния
@@ -62,21 +62,21 @@ export const ACTIVE_EFFECT_DELAY = 600;
 
 const activeBus = mitt<{ active: string }>();
 
-type TappableContextInterface = { onEnter?: VoidFunction; onLeave?: VoidFunction };
-const TappableContext = React.createContext<TappableContextInterface>({});
+type TappableContextInterface = { onHoverChange: (s: boolean) => void };
+const TappableContext = React.createContext<TappableContextInterface>({ onHoverChange: noop });
 
-const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouchRoot: boolean }> = (props) => {
+const Tappable: React.FC<TappableProps> = (props) => {
+  const { onHoverChange } = React.useContext(TappableContext);
+  const insideTouchRoot = React.useContext(TouchRootContext);
+  const platform = usePlatform();
   const {
     children,
     Component = props.href ? 'a' : 'div',
     onClick,
     onKeyDown: _onKeyDown,
-    onEnter: parentOnEnter,
-    onLeave: parentOnLeave,
     activeEffectDelay,
     stopPropagation,
     getRootRef,
-    platform,
     sizeX,
     hasMouse,
     hasHover: _hasHover,
@@ -84,7 +84,6 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
     hasActive: _hasActive,
     activeMode,
     focusVisibleMode,
-    insideTouchRoot,
     ...restProps
   } = props;
 
@@ -111,6 +110,16 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
       stop();
     }
   }, []);
+
+  // hover propagation
+  const childContext = React.useRef({ onHoverChange: setChildHover }).current;
+  useIsomorphicLayoutEffect(() => {
+    if (!hovered) {
+      return noop;
+    }
+    onHoverChange(true);
+    return () => onHoverChange(false);
+  }, [hovered]);
 
   /*
    * [a11y]
@@ -194,14 +203,6 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
     }
   }
 
-  const onEnter = () => setHovered(true);
-  const onLeave = () => setHovered(false);
-
-  const childContext = React.useMemo(() => ({
-    onEnter: () => setChildHover(true),
-    onLeave: () => setChildHover(false),
-  }), []);
-
   /*
    * Устанавливает активное выделение
    */
@@ -226,19 +227,6 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
     activeBus.off('active', onActiveChange);
   }, []);
 
-  // hover propagation
-  useIsomorphicLayoutEffect(() => {
-    if (!hovered) {
-      return noop;
-    }
-    parentOnEnter && parentOnEnter();
-    return () => parentOnLeave && parentOnLeave();
-  }, [hovered]);
-
-  function removeWave(id: Wave['id']) {
-    setClicks(clicks.filter((c) => c.id !== id));
-  }
-
   const classes = classNames(
     getClassName('Tappable', platform),
     `Tappable--sizeX-${sizeX}`,
@@ -257,8 +245,8 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
 
   return (
     <Touch
-      onEnter={onEnter}
-      onLeave={onLeave}
+      onEnter={() => setHovered(true)}
+      onLeave={() => setHovered(false)}
       type={Component === 'button' ? 'button' : undefined}
       tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
       role={isCustomElement ? role : undefined}
@@ -276,7 +264,7 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
       {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' && (
         <span aria-hidden="true" vkuiClass="Tappable__waves">
           {clicks.map((wave) => (
-            <Wave {...wave} key={wave.id} onClear={() => removeWave(wave.id)} />
+            <Wave {...wave} key={wave.id} onClear={() => setClicks(clicks.filter((c) => c.id !== wave.id))} />
           ))}
         </span>
       )}
@@ -297,13 +285,7 @@ Tappable.defaultProps = {
   activeEffectDelay: ACTIVE_EFFECT_DELAY,
 };
 
-const TappableNest: React.FC<TappableProps> = (props) => {
-  const parent = React.useContext(TappableContext);
-  const insideTouchRoot = React.useContext(TouchRootContext);
-  return <Tappable {...props} {...parent} insideTouchRoot={insideTouchRoot} />;
-};
-
-export default withAdaptivity(withPlatform(TappableNest), { sizeX: true, hasMouse: true });
+export default withAdaptivity(Tappable, { sizeX: true, hasMouse: true });
 
 function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
   const timeout = useTimeout(onClear, 225);
