@@ -1,4 +1,5 @@
 import * as React from 'react';
+import mitt from 'mitt';
 import { Touch, TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { classNames } from '../../lib/classNames';
@@ -62,35 +63,10 @@ export interface RootComponentProps extends TouchProps {
   ref?: React.Ref<HTMLElement>;
 }
 
-export interface StorageItem {
-  activeTimeout: ReturnType<typeof setTimeout>;
-  timeout?: ReturnType<typeof setTimeout>;
-  stop(): void;
-}
-
-export interface Storage {
-  [index: string]: StorageItem;
-}
-
-export type GetStorage = () => StorageItem;
-
 export const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
 
-let storage: Storage = {};
-
-/*
- * Очищает таймауты и хранилище для всех экземпляров компонента, кроме переданного
- */
-function deactivateOtherInstances(exclude?: string) {
-  Object.keys(storage).filter((id: string) => id !== exclude).forEach((id: string) => {
-    clearTimeout(storage[id].activeTimeout);
-    clearTimeout(storage[id].timeout);
-    storage[id].stop();
-
-    delete storage[id];
-  });
-}
+const activeBus = mitt<{ active: string }>();
 
 type TappableContextInterface = { onEnter?: VoidFunction; onLeave?: VoidFunction };
 const TappableContext = React.createContext<TappableContextInterface>({});
@@ -114,13 +90,21 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     return this.props.hasHover && !this.state.childHover;
   }
 
+  onActiveChange = (id: string) => {
+    if (id !== this.id) {
+      clearTimeout(this.stopTimeout);
+      this.stop();
+    }
+  };
+
   id: string;
 
   insideTouchRoot: boolean;
 
   container: HTMLElement;
 
-  timeout: ReturnType<typeof setTimeout>;
+  stopTimeout: ReturnType<typeof setTimeout>;
+  activeTimeout: ReturnType<typeof setTimeout>;
 
   static defaultProps = {
     stopPropagation: false,
@@ -163,7 +147,7 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
 
     if (this.hasActive) {
       if (originalEvent.touches && originalEvent.touches.length > 1) {
-        deactivateOtherInstances();
+        activeBus.emit('active');
         return;
       }
 
@@ -171,10 +155,8 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
         this.onDown(originalEvent);
       }
 
-      storage[this.id] = {
-        stop: this.stop,
-        activeTimeout: setTimeout(this.start, ACTIVE_DELAY),
-      };
+      this.activeTimeout = setTimeout(this.start, ACTIVE_DELAY);
+      activeBus.on('active', this.onActiveChange);
     }
   };
 
@@ -206,25 +188,14 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
         this.stop();
       } else {
         // Короткий тап, оставляем подсветку
-        const timeout = setTimeout(this.stop, this.props.activeEffectDelay - activeDuraion);
-        const store = this.getStorage();
-
-        if (store) {
-          store.timeout = timeout;
-        }
+        this.stopTimeout = setTimeout(this.stop, this.props.activeEffectDelay - activeDuraion);
       }
     } else if (!isSlide) {
       // Очень короткий тап, включаем подсветку
       this.start();
 
-      const timeout = setTimeout(this.stop, this.props.activeEffectDelay);
-
-      if (this.getStorage()) {
-        clearTimeout(this.getStorage().activeTimeout);
-        this.getStorage().timeout = timeout;
-      } else {
-        this.timeout = timeout;
-      }
+      clearTimeout(this.activeTimeout);
+      this.stopTimeout = setTimeout(this.stop, this.props.activeEffectDelay);
     }
   };
 
@@ -265,7 +236,7 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
         active: true,
       });
     }
-    deactivateOtherInstances(this.id);
+    activeBus.emit('active', this.id);
   };
 
   /*
@@ -277,17 +248,8 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
         active: false,
       });
     }
-    if (this.getStorage()) {
-      clearTimeout(this.getStorage().activeTimeout);
-      delete storage[this.id];
-    }
-  };
-
-  /*
-   * Возвращает хранилище для экземпляра компонента
-   */
-  getStorage: GetStorage = () => {
-    return storage[this.id];
+    clearTimeout(this.activeTimeout);
+    activeBus.off('active', this.onActiveChange);
   };
 
   /*
@@ -302,12 +264,9 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
     if (this.state.hovered && !this.props.disabled && this.props.onLeave) {
       this.props.onLeave();
     }
-    if (storage[this.id]) {
-      clearTimeout(storage[this.id].timeout);
-      clearTimeout(storage[this.id].activeTimeout);
-
-      delete storage[this.id];
-    }
+    activeBus.off('active', this.onActiveChange);
+    clearTimeout(this.activeTimeout);
+    clearTimeout(this.stopTimeout);
   }
 
   componentDidUpdate(prevProps: TappableProps, prevState: TappableState) {
