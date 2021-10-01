@@ -53,13 +53,6 @@ interface Wave {
   id: string;
 }
 
-export interface TappableState {
-  clicks?: Wave[];
-  hovered?: boolean;
-  active?: boolean;
-  childHover?: boolean;
-}
-
 export interface RootComponentProps extends TouchProps {
   ref?: React.Ref<HTMLElement>;
 }
@@ -74,13 +67,10 @@ const TappableContext = React.createContext<TappableContextInterface>({});
 
 const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouchRoot: boolean }> = (props) => {
   const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
-  const [state, setState] = React.useState<TappableState>({
-    clicks: [],
-    active: false,
-    childHover: false,
-    hovered: false,
-  });
-  const { clicks, active } = state;
+  const [clicks, setClicks] = React.useState<Wave[]>([]);
+  const [active, setActive] = React.useState(false);
+  const [childHover, setChildHover] = React.useState(false);
+  const [_hovered, setHovered] = React.useState(false);
 
   const {
     children,
@@ -104,9 +94,9 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
     ...restProps
   } = props;
 
-  const hovered = state.hovered && !props.disabled;
-  const hasActive = props.hasActive && !state.childHover;
-  const hasHover = props.hasHover && !state.childHover;
+  const hovered = _hovered && !props.disabled;
+  const hasActive = props.hasActive && !childHover;
+  const hasHover = props.hasHover && !childHover;
   const isCustomElement: boolean = Component !== 'a' && Component !== 'button' && !restProps.contentEditable;
   const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
   const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
@@ -200,27 +190,24 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
       const x = coordX(e) - left;
       const y = coordY(e) - top;
 
-      setState({
-        ...state,
-        clicks: [...clicks, { x, y, id: Date.now().toString() }],
-      });
+      setClicks([...clicks, { x, y, id: Date.now().toString() }]);
     }
   }
 
-  const onEnter = () => setState({ ...state, hovered: true });
-  const onLeave = () => setState({ ...state, hovered: false });
+  const onEnter = () => setHovered(true);
+  const onLeave = () => setHovered(false);
 
   const childContext = React.useMemo(() => ({
-    onEnter: () => setState((s) => ({ ...s, childHover: true })),
-    onLeave: () => setState((s) => ({ ...s, childHover: false })),
+    onEnter: () => setChildHover(true),
+    onLeave: () => setChildHover(false),
   }), []);
 
   /*
    * Устанавливает активное выделение
    */
   function start() {
-    if (!active && hasActive) {
-      setState({ ...state, active: true });
+    if (hasActive) {
+      setActive(true);
     }
     activeBus.emit('active', id);
   }
@@ -229,9 +216,7 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
    * Снимает активное выделение
    */
   function stop() {
-    if (active) {
-      setState({ ...state, active: false });
-    }
+    setActive(false);
     activeTimeout.clear();
     activeBus.off('active', onActiveChange);
   }
@@ -251,7 +236,7 @@ const Tappable: React.FC<TappableProps & TappableContextInterface & { insideTouc
   }, [hovered]);
 
   function removeWave(id: Wave['id']) {
-    setState({ ...state, clicks: clicks.filter((c) => c.id !== id) });
+    setClicks(clicks.filter((c) => c.id !== id));
   }
 
   const classes = classNames(
