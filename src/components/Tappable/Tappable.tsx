@@ -155,6 +155,7 @@ const Tappable: React.FC<TappableProps> = (props) => {
   function onStart({ originalEvent }: TouchEvent) {
     if (hasActive) {
       if (originalEvent.touches && originalEvent.touches.length > 1) {
+        // r сожалению я так и не понял, что это делает и можно ли упихнуть его в Touch
         activeBus.emit('active');
         return;
       }
