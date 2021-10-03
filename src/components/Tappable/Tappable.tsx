@@ -209,7 +209,7 @@ const Tappable: React.FC<TappableProps> = (props) => {
     }
   }
 
-  function onEnd({ originalEvent, duration }: TouchEvent) {
+  function onEnd({ duration }: TouchEvent) {
     if (activity === TapState.none) {
       return;
     }
@@ -218,9 +218,9 @@ const Tappable: React.FC<TappableProps> = (props) => {
       start();
     }
 
+    // отключить без задержки при длинном тапе
     const activeDuraion = duration - ACTIVE_DELAY;
-    const isMutliTouch = originalEvent.touches && originalEvent.touches.length > 0;
-    stop(activeDuraion >= 100 || isMutliTouch ? 0 : activeEffectDelay - activeDuraion);
+    stop(activeDuraion >= 100 ? 0 : activeEffectDelay - activeDuraion);
   }
 
   const classes = classNames(
