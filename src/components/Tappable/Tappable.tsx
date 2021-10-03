@@ -146,15 +146,13 @@ const Tappable: React.FC<TappableProps> = (props) => {
   const [_hovered, setHovered] = React.useState(false);
 
   const hovered = _hovered && !props.disabled;
-  const hasActive = _hasActive && !childHover;
+  const hasActive = _hasActive && !childHover && !props.disabled;
   const hasHover = _hasHover && !childHover;
   const isCustomElement = Component !== 'a' && Component !== 'button' && !restProps.contentEditable;
   const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
   const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
 
-  const [activity, { start, stop, delayStart }] = useActivity(
-    hasActive && !props.disabled,
-    activeEffectDelay);
+  const [activity, { start, stop, delayStart }] = useActivity(hasActive, activeEffectDelay);
   const active = activity === TapState.active || activity === TapState.exiting;
 
   const containerRef = useExternRef(getRootRef);
