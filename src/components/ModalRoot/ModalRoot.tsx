@@ -22,6 +22,7 @@ import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { AppRootContext } from '../AppRoot/AppRootContext';
 import './ModalRoot.css';
 
 const warn = warnOnce('ModalRoot');
@@ -61,6 +62,12 @@ interface ModalRootState {
   touchDown?: boolean;
   dragging?: boolean;
 }
+
+const FOCUSABLE_ELEMENTS_LIST = [
+  'input[type="text"]',
+  '.vkuiTappable',
+  '.vkuiSelect',
+];
 
 class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps, ModalRootState> {
   constructor(props: ModalRootProps) {
@@ -198,6 +205,31 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
       this.toggleDocumentScrolling(true);
     } else {
       this.toggleDocumentScrolling(false);
+    }
+
+    if (!prevState.activeModal && this.state.activeModal) {
+      console.log('sth');
+      const firstFocusable = this.viewportRef.current.querySelectorAll(FOCUSABLE_ELEMENTS_LIST.join(','))[0];
+      firstFocusable.focus();
+      if (this.props.appRootContext.isKeyboardInputActive && firstFocusable) {
+        this.viewportRef.current.addEventListener('keydown', this.onKeyDown);
+      }
+    }
+
+    if (prevState.activeModal && !this.state.activeModal) {
+      this.viewportRef.current.removeEventListener('keydown', this.onKeyDown);
+    }
+  }
+
+  onKeyDown = (e) => {
+    const focusableList = Array.from(this.viewportRef.current.querySelectorAll(FOCUSABLE_ELEMENTS_LIST.join(',')));
+    if (e.key === 'Tab' && !e.shiftKey && focusableList.indexOf(this.document.activeElement) === focusableList.length - 1) {
+      e.preventDefault();
+      focusableList[0].focus();
+    }
+    if (e.key === 'Tab' && e.shiftKey && focusableList.indexOf(this.document.activeElement) === 0) {
+      e.preventDefault();
+      focusableList[focusableList.length - 1].focus();
     }
   }
 
@@ -682,6 +714,10 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
       }
     }
 
+    if (!prevModal && this.document.activeElement) {
+      this.focusTrigger = this.document.activeElement;
+    }
+
     this.activeTransitions += 1;
     this.waitTransitionFinish(nextModalState, this.prevNextSwitchEndHandler);
     this.animateTranslate(nextModalState, nextModalState.translateY);
@@ -706,6 +742,9 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
 
     if (!activeModal) {
       newState.history = [];
+      if (this.focusTrigger) {
+        this.focusTrigger.focus();
+      }
     }
 
     this.setState(newState);
@@ -836,4 +875,4 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
   }
 }
 
-export const ModalRootTouch = withContext(withPlatform(withDOM<ModalRootProps>(ModalRootTouchComponent)), ConfigProviderContext, 'configProvider');
+export const ModalRootTouch = withContext(withContext(withPlatform(withDOM<ModalRootProps>(ModalRootTouchComponent)), ConfigProviderContext, 'configProvider'), AppRootContext, 'appRootContext');

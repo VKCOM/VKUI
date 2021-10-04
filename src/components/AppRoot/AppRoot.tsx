@@ -135,6 +135,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
       appRoot: rootRef,
       portalRoot: portalRoot,
       embedded: mode === 'embedded',
+      isKeyboardInputActive,
     }}>
       <ScrollContext.Provider value={scrollController}>
         <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>
