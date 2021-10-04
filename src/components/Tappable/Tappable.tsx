@@ -119,10 +119,7 @@ function useActivity(hasActive: boolean, stopDelay: number) {
   return [activity, { delayStart, start, stop }] as const;
 }
 
-const Tappable: React.FC<TappableProps> = (props) => {
-  const { onHoverChange } = React.useContext(TappableContext);
-  const insideTouchRoot = React.useContext(TouchRootContext);
-  const platform = usePlatform();
+const Tappable: React.FC<TappableProps> = (props: TappableProps) => {
   const {
     children,
     Component = props.href ? 'a' : 'div',
@@ -140,6 +137,10 @@ const Tappable: React.FC<TappableProps> = (props) => {
     focusVisibleMode,
     ...restProps
   } = props;
+
+  const { onHoverChange } = React.useContext(TappableContext);
+  const insideTouchRoot = React.useContext(TouchRootContext);
+  const platform = usePlatform();
 
   const [clicks, setClicks] = React.useState<Wave[]>([]);
   const [childHover, setChildHover] = React.useState(false);
