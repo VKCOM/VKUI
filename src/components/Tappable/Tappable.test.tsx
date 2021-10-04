@@ -191,20 +191,6 @@ describe('Tappable', () => {
       fireEvent.mouseUp(tappable());
       expect(isActive()).toBe(true);
     });
-    it.only('deactivates on other Tappable activation', () => {
-      render(<div>
-        <TappableTest />
-        <Tappable data-testid="other" />
-      </div>);
-      // activate tappable
-      fireEvent.mouseDown(tappable());
-      act(() => jest.runOnlyPendingTimers());
-      const other = screen.getByTestId('other');
-      // OK, click during mousedown on other element is fake
-      userEvent.click(other);
-      expect(isActive()).toBe(false);
-      expect(isActive(other)).toBe(true);
-    });
     it('does not activate on child Tappable click', () => {
       render(<Tappable data-testid="parent"><TappableTest data-testid="child" /></Tappable>);
       const child = screen.getByTestId('child');
@@ -225,12 +211,30 @@ describe('Tappable', () => {
         render(<TappableTest />);
         fireEvent.touchStart(tappable(), { touches: [{}], changedTouches: [{}] });
         act(() => jest.runOnlyPendingTimers());
-        fireEvent.touchMove(tappable(), { touches: [{}, {}], changedTouches: [{}] });
+        fireEvent.touchStart(tappable(), { touches: [{}, {}], changedTouches: [{}] });
         expect(isActive()).toBe(false);
       });
-      // disable
-      // child hover
-      // hasActive=false
+      it('on disable', () => {
+        const h = render(<TappableTest />);
+        fireEvent.mouseDown(tappable());
+        act(() => jest.runOnlyPendingTimers());
+        h.rerender(<TappableTest disabled />);
+        expect(isActive()).toBe(false);
+      });
+      it('on hasActive=false', () => {
+        const h = render(<TappableTest />);
+        fireEvent.mouseDown(tappable());
+        act(() => jest.runOnlyPendingTimers());
+        h.rerender(<TappableTest hasActive={false} />);
+        expect(isActive()).toBe(false);
+      });
+      it('on child hover', () => {
+        render(<TappableTest><Tappable data-testid="c" /></TappableTest>);
+        fireEvent.mouseDown(tappable());
+        act(() => jest.runOnlyPendingTimers());
+        userEvent.hover(screen.getByTestId('c'));
+        expect(isActive()).toBe(false);
+      });
     });
   });
 

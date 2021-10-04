@@ -20,7 +20,7 @@ export function useTimeout(cb: () => any, duration: number) {
       }, duration);
     }
   }, []);
-  React.useEffect(() => clear, []);
+  useIsomorphicLayoutEffect(() => clear, []);
 
   return { set, clear };
 }
