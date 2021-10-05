@@ -29,9 +29,6 @@ interface Scrolls {
 
 export type TransitionStartEventDetail = {
   scrolls: Scrolls;
-  from: string;
-  to: string;
-  isBack: boolean;
 };
 
 interface ViewsScrolls {
@@ -206,7 +203,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       });
     }
 
-    const scrolls = this.scrolls;
+    // const scrolls = this.scrolls;
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
@@ -215,15 +212,9 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         [prevPanel]: this.scrolls[prevPanel],
         [nextPanel]: isBack ? this.scrolls[nextPanel] : 0,
       };
-      const transitionStartEventData = {
-        detail: {
-          from: prevPanel,
-          to: nextPanel,
-          isBack,
-          scrolls,
-        },
-      };
-      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, transitionStartEventData));
+      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, {
+        detail: { scrolls },
+      }));
       const nextPanelElement = this.pickPanel(nextPanel);
       const prevPanelElement = this.pickPanel(prevPanel);
 
@@ -239,14 +230,9 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         [swipeBackPrevPanel]: this.scrolls[swipeBackPrevPanel],
         [swipeBackNextPanel]: this.scrolls[swipeBackNextPanel],
       };
-      const transitionStartEventData = {
-        detail: {
-          from: swipeBackPrevPanel,
-          to: swipeBackNextPanel,
-          scrolls,
-        },
-      };
-      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, transitionStartEventData));
+      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, {
+        detail: { scrolls },
+      }));
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
       const nextPanelElement = this.pickPanel(swipeBackNextPanel);
       const prevPanelElement = this.pickPanel(swipeBackPrevPanel);
@@ -262,7 +248,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
     // Если свайп назад отменился (когда пользователь недостаточно сильно свайпнул)
     if (prevState.swipeBackResult === SwipeBackResults.fail && !this.state.swipeBackResult) {
-      this.props.scroll.scrollTo(0, scrolls[this.state.activePanel]);
+      this.props.scroll.scrollTo(0, this.scrolls[this.state.activePanel]);
     }
 
     // Закончился Safari свайп

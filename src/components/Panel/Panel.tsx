@@ -9,7 +9,7 @@ import { PanelContext, PanelContextProps } from './PanelContext';
 import { IOS } from '../../lib/platform';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
-import { useExternRef } from '../../hooks/useExternRef';
+import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { warnOnce } from '../../lib/warnOnce';
 import './Panel.css';
 
@@ -23,22 +23,16 @@ const PanelComponent: React.FC<PanelProps> = (props: PanelProps) => {
   const { centered, children, getRootRef, sizeX, nav, ...restProps } = props;
 
   const platform = usePlatform();
-  const containerRef = useExternRef(getRootRef);
 
-  const navId = getNavId(props, warn);
-
-  const childContext = React.useMemo<PanelContextProps>(() => {
-    return {
-      panel: navId,
-      getPanelNode: () => containerRef.current,
-    };
-  }, [navId]);
+  const childContext = useObjectMemo<PanelContextProps>({
+    panel: getNavId(props, warn),
+  });
 
   return (
     <PanelContext.Provider value={childContext}>
       <div
         {...restProps}
-        ref={containerRef}
+        ref={getRootRef}
         vkuiClass={classNames(getClassName('Panel', platform), `Panel--${sizeX}`, {
           'Panel--centered': centered,
           [`Panel--sizeX-${sizeX}`]: true,
