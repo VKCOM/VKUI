@@ -107,8 +107,8 @@ describe('Tappable', () => {
   });
 
   it('a11y(disabled): custom Tappable element has aria-disabled', () => {
-    render(<TappableTest>Tappable w/ aria-disabled</TappableTest>);
-    expect(tappable()).toHaveAttribute('aria-disabled');
+    render(<TappableTest disabled>Tappable w/ aria-disabled</TappableTest>);
+    expect(tappable()).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('a11y(button): custom button keyboard events', () => {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import mitt from 'mitt';
-import { hasHover, noop } from '@vkontakte/vkjs';
+import { hasHover as deviceHasHover, noop } from '@vkontakte/vkjs';
 import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { classNames } from '../../lib/classNames';
@@ -119,24 +119,24 @@ function useActivity(hasActive: boolean, stopDelay: number) {
   return [activity, { delayStart, start, stop }] as const;
 }
 
-const Tappable: React.FC<TappableProps> = (props: TappableProps) => {
-  const {
-    children,
-    Component = props.href ? 'a' : 'div',
-    onClick,
-    onKeyDown: _onKeyDown,
-    activeEffectDelay,
-    stopPropagation,
-    getRootRef,
-    sizeX,
-    hasMouse,
-    hasHover: _hasHover,
-    hoverMode,
-    hasActive: _hasActive,
-    activeMode,
-    focusVisibleMode,
-    ...restProps
-  } = props;
+const Tappable: React.FC<TappableProps> = ({
+  children,
+  Component,
+  onClick,
+  onKeyDown: _onKeyDown,
+  activeEffectDelay = ACTIVE_EFFECT_DELAY,
+  stopPropagation = false,
+  getRootRef,
+  sizeX,
+  hasMouse,
+  hasHover: _hasHover = deviceHasHover,
+  hoverMode = 'background',
+  hasActive: _hasActive = true,
+  activeMode = 'background',
+  focusVisibleMode = 'inside',
+  ...props
+}: TappableProps) => {
+  Component = Component || (props.href ? 'a' : 'div') as React.ElementType;
 
   const { onHoverChange } = React.useContext(TappableContext);
   const insideTouchRoot = React.useContext(TouchRootContext);
@@ -149,7 +149,7 @@ const Tappable: React.FC<TappableProps> = (props: TappableProps) => {
   const hovered = _hovered && !props.disabled;
   const hasActive = _hasActive && !childHover && !props.disabled;
   const hasHover = _hasHover && !childHover;
-  const isCustomElement = Component !== 'a' && Component !== 'button' && !restProps.contentEditable;
+  const isCustomElement = Component !== 'a' && Component !== 'button' && !props.contentEditable;
   const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
   const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
 
@@ -229,7 +229,6 @@ const Tappable: React.FC<TappableProps> = (props: TappableProps) => {
     `Tappable--sizeX-${sizeX}`,
     {
       'Tappable--active': hasActive && active,
-      'Tappable--inactive': !active,
       'Tappable--mouse': hasMouse,
       [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
       [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
@@ -245,11 +244,11 @@ const Tappable: React.FC<TappableProps> = (props: TappableProps) => {
       onEnter={() => setHovered(true)}
       onLeave={() => setHovered(false)}
       type={Component === 'button' ? 'button' : undefined}
-      tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
+      tabIndex={isCustomElement && !props.disabled ? 0 : undefined}
       role={isCustomElement ? role : undefined}
-      aria-disabled={isCustomElement ? restProps.disabled : null}
+      aria-disabled={isCustomElement ? props.disabled : null}
       stopPropagation={stopPropagation && !insideTouchRoot && !props.disabled}
-      {...restProps}
+      {...props}
       slideThreshold={20}
       usePointerHover
       vkuiClass={classes}
@@ -267,20 +266,9 @@ const Tappable: React.FC<TappableProps> = (props: TappableProps) => {
         </span>
       )}
       {hasHover && hoverMode === 'background' && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
-      {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
+      {!props.disabled && <FocusVisible mode={focusVisibleMode} />}
     </Touch>
   );
-};
-
-Tappable.defaultProps = {
-  stopPropagation: false,
-  disabled: false,
-  focusVisibleMode: 'inside',
-  hasHover,
-  hoverMode: 'background',
-  hasActive: true,
-  activeMode: 'background',
-  activeEffectDelay: ACTIVE_EFFECT_DELAY,
 };
 
 export default withAdaptivity(Tappable, { sizeX: true, hasMouse: true });
