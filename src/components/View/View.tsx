@@ -8,28 +8,22 @@ import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withContext } from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
-import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import { FixedLayoutContainer } from '../FixedLayout/FixedLayoutContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import './View.css';
 
 const warn = warnOnce('View');
-export const transitionStartEventName = 'VKUI:View:transition-start';
-export const transitionEndEventName = 'VKUI:View:transition-end';
 
 enum SwipeBackResults { fail = 1, success}
 
 interface Scrolls {
   [index: string]: number;
 }
-
-export type TransitionStartEventDetail = {
-  scrolls: Scrolls;
-};
 
 interface ViewsScrolls {
   [index: string]: Scrolls;
@@ -102,6 +96,7 @@ export interface ViewState {
   swipeBackResult: SwipeBackResults;
 
   browserSwipe: boolean;
+  transitionScrolls: Scrolls;
 }
 
 class View extends React.Component<ViewProps & DOMProps, ViewState> {
@@ -125,6 +120,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       swipeBackResult: null,
 
       browserSwipe: false,
+      transitionScrolls: {},
     };
   }
 
@@ -159,9 +155,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       scrolls[panelId] = targetScroll;
       panelElement.scrollTop = targetScroll;
     });
-    this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, {
-      detail: { scrolls },
-    }));
+    this.setState({ transitionScrolls: scrolls });
   }
 
   componentWillUnmount() {
@@ -210,8 +204,8 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         swipeBackShift: 0,
         activePanel: nextPanel,
         visiblePanels: [nextPanel],
+        transitionScrolls: {},
       }, () => {
-        this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
         this.props.scroll.scrollTo(0, this.scrolls[this.state.activePanel]);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
@@ -304,7 +298,6 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       const activePanel = this.props.activePanel;
       const isBack = this.state.isBack;
       const prevPanel = this.state.prevPanel;
-      this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
       if (isBack) {
         this.scrolls[prevPanel] = 0;
       }
@@ -315,6 +308,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         activePanel: activePanel,
         animated: false,
         isBack: undefined,
+        transitionScrolls: {},
       }, () => {
         isBack && this.props.scroll.scrollTo(0, this.scrolls[activePanel]);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
@@ -348,8 +342,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       swipeBackResult: null,
       swipebackStartX: 0,
       swipeBackShift: 0,
-    }, () => {
-      this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
+      transitionScrolls: {},
     });
   }
 
@@ -457,7 +450,10 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       window, document, scroll,
       ...restProps
     } = this.props;
-    const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult } = this.state;
+    const {
+      prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel,
+      swipeBackResult, transitionScrolls,
+    } = this.state;
 
     const hasPopout = !!popout;
     const hasModal = !!modal;
@@ -507,7 +503,9 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
                 key={panelId}
               >
                 <div vkuiClass="View__panel-in">
-                  {panel}
+                  <FixedLayoutContainer scrollCompensation={transitionScrolls[panelId]}>
+                    {panel}
+                  </FixedLayoutContainer>
                 </div>
               </div>
             );

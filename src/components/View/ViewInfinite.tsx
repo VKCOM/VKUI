@@ -8,31 +8,22 @@ import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
 import { withContext } from '../../hoc/withContext';
 import { ConfigProviderContext, ConfigProviderContextInterface } from '../ConfigProvider/ConfigProviderContext';
-import { createCustomEvent } from '../../lib/utils';
 import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
+import { FixedLayoutContainer } from '../FixedLayout/FixedLayoutContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import './View.css';
 
 const warn = warnOnce('ViewInfinite');
-export const transitionStartEventName = 'VKUI:View:transition-start';
-export const transitionEndEventName = 'VKUI:View:transition-end';
 
 enum SwipeBackResults { fail = 1, success}
 
 interface Scrolls {
   [index: string]: number[];
 }
-
-export type TransitionStartEventDetail = {
-  scrolls: Scrolls;
-  from: string;
-  to: string;
-  isBack: boolean;
-};
 
 interface ViewsScrolls {
   [index: string]: Scrolls;
@@ -98,6 +89,7 @@ export interface ViewInfiniteState {
   swipeBackResult: SwipeBackResults;
 
   browserSwipe: boolean;
+  transitionScrolls: Record<string, number>;
 }
 
 class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInfiniteState> {
@@ -121,6 +113,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       swipeBackResult: null,
 
       browserSwipe: false,
+      transitionScrolls: {},
     };
   }
 
@@ -157,9 +150,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       scrolls[panelId] = targetScroll;
       panelElement.scrollTop = targetScroll;
     });
-    this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, {
-      detail: { scrolls },
-    }));
+    this.setState({ transitionScrolls: scrolls });
   }
 
   componentWillUnmount() {
@@ -228,8 +219,8 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         swipeBackShift: 0,
         activePanel: nextPanel,
         visiblePanels: [nextPanel],
+        transitionScrolls: {},
       }, () => {
-        this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
         this.props.scroll.scrollTo(0, scrollPosition);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
       });
@@ -341,7 +332,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         };
       }
 
-      this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
       this.setState({
         prevPanel: null,
         nextPanel: null,
@@ -349,6 +339,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         activePanel: activePanel,
         animated: false,
         isBack: undefined,
+        transitionScrolls: {},
       }, () => {
         isBack && this.props.scroll.scrollTo(0, scrollPosition);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
@@ -382,8 +373,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       swipeBackResult: null,
       swipebackStartX: 0,
       swipeBackShift: 0,
-    }, () => {
-      this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
+      transitionScrolls: {},
     });
   }
 
@@ -419,7 +409,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
           swipingBack: true,
           swipebackStartX: e.startX,
           swipeBackPrevPanel: this.state.activePanel,
-          swipeBackNextPanel: this.props.history.slice(-2)[0]
+          swipeBackNextPanel: this.props.history.slice(-2)[0],
         });
       }
       if (this.state.swipingBack) {
@@ -496,7 +486,10 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       window, document, scroll, isBackCheck,
       ...restProps
     } = this.props;
-    const { prevPanel, nextPanel, activePanel, swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult, swipingBack } = this.state;
+    const {
+      prevPanel, nextPanel, activePanel, transitionScrolls,
+      swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult, swipingBack,
+    } = this.state;
 
     const hasPopout = !!popout;
     const hasModal = !!modal;
@@ -562,7 +555,9 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
                 key={panelId}
               >
                 <div vkuiClass="View__panel-in">
-                  {panel}
+                  <FixedLayoutContainer scrollCompensation={transitionScrolls[panelId]}>
+                    {panel}
+                  </FixedLayoutContainer>
                 </div>
               </div>
             );
