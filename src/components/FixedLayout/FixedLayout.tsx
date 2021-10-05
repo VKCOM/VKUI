@@ -51,13 +51,7 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
   React.useEffect(doResize, []);
   useGlobalEventListener(window, 'resize', doResize);
   useGlobalEventListener(document, transitionStartEventName, (e: CustomEvent<TransitionStartEventDetail>) => {
-    let panelScroll = e.detail.scrolls[panel] || 0;
-
-    // support for unstable ViewInfinite
-    if (Array.isArray(panelScroll)) {
-      const scrolls = panelScroll as number[];
-      panelScroll = scrolls[scrolls.length - 1];
-    }
+    const panelScroll = e.detail.scrolls[panel] || 0;
 
     const fromPanelHasScroll = panel === e.detail.from && panelScroll > 0;
     const toPanelHasScroll = panel === e.detail.to && panelScroll > 0;
