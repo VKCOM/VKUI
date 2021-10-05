@@ -82,7 +82,6 @@ export interface ViewInfiniteProps extends React.HTMLAttributes<HTMLElement>, Ha
 }
 
 export interface ViewInfiniteState {
-  scrolls: Scrolls;
   animated: boolean;
 
   visiblePanels: string[];
@@ -106,7 +105,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
     super(props);
 
     this.state = {
-      scrolls: scrollsCache[getNavId(props, warn)] || {},
       animated: false,
 
       visiblePanels: [props.activePanel],
@@ -130,6 +128,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
     history: [],
   };
 
+  private scrolls = scrollsCache[getNavId(this.props, warn)] || {};
   private transitionFinishTimeout: ReturnType<typeof setTimeout>;
   private animationFinishTimeout: ReturnType<typeof setTimeout>;
 
@@ -150,7 +149,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
   componentWillUnmount() {
     const id = getNavId(this.props);
     if (id) {
-      scrollsCache[id] = this.state.scrolls;
+      scrollsCache[id] = this.scrolls;
     }
   }
 
@@ -173,11 +172,12 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
 
       this.blurActiveElement();
 
-      const prevScrolls = prevState.scrolls[prevProps.activePanel] || [];
+      const prevScrolls = this.scrolls[prevProps.activePanel] || [];
       const scrolls = {
-        ...prevState.scrolls,
+        ...this.scrolls,
         [prevProps.activePanel]: [...prevScrolls, this.props.scroll.getScroll().y],
       };
+      this.scrolls = scrolls;
 
       this.setState({
         visiblePanels: [prevProps.activePanel, this.props.activePanel],
@@ -185,7 +185,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         nextPanel: this.props.activePanel,
         activePanel: null,
         animated: true,
-        scrolls,
         isBack,
       });
     }
@@ -195,11 +194,11 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       const nextPanel = this.state.swipeBackNextPanel;
       const prevPanel = this.state.swipeBackPrevPanel;
 
-      const prevPanelScrolls = [...prevState.scrolls[prevPanel] || []].slice(0, -1);
-      const newPanelScrolls = [...prevState.scrolls[nextPanel] || []];
+      const prevPanelScrolls = [...this.scrolls[prevPanel] || []].slice(0, -1);
+      const newPanelScrolls = [...this.scrolls[nextPanel] || []];
       const scrollPosition = newPanelScrolls.pop();
-      const newScrolls = {
-        ...prevState.scrolls || {},
+      this.scrolls = {
+        ...this.scrolls,
         [nextPanel]: newPanelScrolls,
         [prevPanel]: prevPanelScrolls,
       };
@@ -213,7 +212,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         swipeBackShift: 0,
         activePanel: nextPanel,
         visiblePanels: [nextPanel],
-        scrolls: newScrolls,
       }, () => {
         this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
         this.props.scroll.scrollTo(0, scrollPosition);
@@ -221,7 +219,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       });
     }
 
-    const scrolls = this.state.scrolls;
+    const scrolls = this.scrolls;
 
     // Начался переход
     if (!prevState.animated && this.state.animated) {
@@ -271,14 +269,12 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
     if (prevState.swipeBackResult === SwipeBackResults.fail && !this.state.swipeBackResult) {
       const newPanelScrolls = [...scrolls[this.state.activePanel] || []];
       const scrollPosition = newPanelScrolls.pop();
-      const newScrolls = {
+      this.scrolls = {
         ...scrolls,
         [this.state.activePanel]: newPanelScrolls,
       };
 
       this.props.scroll.scrollTo(0, scrollPosition);
-
-      this.setState({ scrolls: newScrolls });
     }
 
     // Закончился Safari свайп
@@ -349,16 +345,16 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       const prevPanel = this.state.prevPanel;
       const isBack = this.state.isBack;
 
-      const prevPanelScrolls = [...this.state.scrolls[prevPanel] || []].slice(0, -1);
-      const newPanelScrolls = [...this.state.scrolls[activePanel] || []];
+      const prevPanelScrolls = [...this.scrolls[prevPanel] || []].slice(0, -1);
+      const newPanelScrolls = [...this.scrolls[activePanel] || []];
       const scrollPosition = isBack ? newPanelScrolls.pop() : 0;
-      const scrolls = isBack
-        ? {
-          ...this.state.scrolls || {},
+      if (isBack) {
+        this.scrolls = {
+          ...this.scrolls,
           [prevPanel]: prevPanelScrolls,
           [activePanel]: newPanelScrolls,
-        }
-        : this.state.scrolls;
+        };
+      }
 
       this.document.dispatchEvent(createCustomEvent(this.window, transitionEndEventName));
       this.setState({
@@ -368,7 +364,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         activePanel: activePanel,
         animated: false,
         isBack: undefined,
-        scrolls,
       }, () => {
         isBack && this.props.scroll.scrollTo(0, scrollPosition);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
@@ -429,9 +424,9 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       }
 
       if (e.startX <= 70 && !this.state.swipingBack && this.props.history.length > 1) {
-        const prevScrolls = this.state.scrolls[this.state.activePanel] || [];
-        const scrolls = {
-          ...this.state.scrolls,
+        const prevScrolls = this.scrolls[this.state.activePanel] || [];
+        this.scrolls = {
+          ...this.scrolls,
           [this.state.activePanel]: [...prevScrolls, this.props.scroll.getScroll().y],
         };
 
@@ -439,8 +434,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
           swipingBack: true,
           swipebackStartX: e.startX,
           swipeBackPrevPanel: this.state.activePanel,
-          swipeBackNextPanel: this.props.history.slice(-2)[0],
-          scrolls,
+          swipeBackNextPanel: this.props.history.slice(-2)[0]
         });
       }
       if (this.state.swipingBack) {
