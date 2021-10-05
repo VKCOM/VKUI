@@ -150,6 +150,20 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
 
   panelNodes: { [id: string]: HTMLDivElement } = {};
 
+  fakeScrolls(panels: string[]) {
+    const scrolls: Scrolls = {};
+    panels.forEach((panelId) => {
+      const panelElement = this.pickPanel(panelId);
+      const canScroll = panelElement.scrollHeight > panelElement.clientHeight;
+      const targetScroll = canScroll ? this.scrolls[panelId] : 0;
+      scrolls[panelId] = targetScroll;
+      panelElement.scrollTop = targetScroll;
+    });
+    this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, {
+      detail: { scrolls },
+    }));
+  }
+
   componentWillUnmount() {
     const id = getNavId(this.props);
     if (id) {
@@ -203,42 +217,18 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       });
     }
 
-    // const scrolls = this.scrolls;
-
     // Начался переход
     if (!prevState.animated && this.state.animated) {
       const { prevPanel, nextPanel, isBack } = this.state;
-      const scrolls = {
-        [prevPanel]: this.scrolls[prevPanel],
-        [nextPanel]: isBack ? this.scrolls[nextPanel] : 0,
-      };
-      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, {
-        detail: { scrolls },
-      }));
-      const nextPanelElement = this.pickPanel(nextPanel);
-      const prevPanelElement = this.pickPanel(prevPanel);
-
-      prevPanelElement.scrollTop = scrolls[prevPanel];
-      nextPanelElement.scrollTop = scrolls[nextPanel];
+      this.fakeScrolls([prevPanel].concat(isBack ? nextPanel : []));
       this.waitAnimationFinish(this.pickPanel(isBack ? prevPanel : nextPanel), this.transitionEndHandler);
     }
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
       const { swipeBackNextPanel, swipeBackPrevPanel } = this.state;
-      const scrolls = {
-        [swipeBackPrevPanel]: this.scrolls[swipeBackPrevPanel],
-        [swipeBackNextPanel]: this.scrolls[swipeBackNextPanel],
-      };
-      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, {
-        detail: { scrolls },
-      }));
+      this.fakeScrolls([swipeBackPrevPanel, swipeBackNextPanel]);
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
-      const nextPanelElement = this.pickPanel(swipeBackNextPanel);
-      const prevPanelElement = this.pickPanel(swipeBackPrevPanel);
-
-      nextPanelElement.scrollTop = scrolls[swipeBackNextPanel];
-      prevPanelElement.scrollTop = scrolls[swipeBackPrevPanel];
     }
 
     // Началась анимация завершения свайпа назад.

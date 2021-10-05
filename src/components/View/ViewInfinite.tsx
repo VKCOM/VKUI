@@ -146,6 +146,22 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
 
   panelNodes: { [id: string]: HTMLDivElement } = {};
 
+  fakeScrolls(panels: string[]) {
+    const scrolls: Record<string, number> = {};
+    panels.forEach((panelId) => {
+      const panelElement = this.pickPanel(panelId);
+      const canScroll = panelElement.scrollHeight > panelElement.clientHeight;
+      const scrollList = this.scrolls[panelId] || [];
+      const lastScroll = scrollList[scrollList.length - 1] || 0;
+      const targetScroll = canScroll ? lastScroll : 0;
+      scrolls[panelId] = targetScroll;
+      panelElement.scrollTop = targetScroll;
+    });
+    this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, {
+      detail: { scrolls },
+    }));
+  }
+
   componentWillUnmount() {
     const id = getNavId(this.props);
     if (id) {
@@ -222,48 +238,15 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
     // Начался переход
     if (!prevState.animated && this.state.animated) {
       const { prevPanel, nextPanel, isBack } = this.state;
-      const scrolls = {
-        [prevPanel]: this.getLastPanelScrollPosition(this.scrolls, prevPanel),
-        [nextPanel]: isBack ? this.getLastPanelScrollPosition(this.scrolls, nextPanel) : 0,
-      };
-      const transitionStartEventData = {
-        detail: {
-          from: prevPanel,
-          to: nextPanel,
-          isBack: isBack,
-          scrolls,
-        },
-      };
-      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, transitionStartEventData));
-      const nextPanelElement = this.pickPanel(nextPanel);
-      const prevPanelElement = this.pickPanel(prevPanel);
-
-      prevPanelElement.scrollTop = scrolls[prevPanel];
-      nextPanelElement.scrollTop = scrolls[nextPanel];
+      this.fakeScrolls([prevPanel].concat(isBack ? nextPanel : []));
       this.waitAnimationFinish(this.pickPanel(isBack ? prevPanel : nextPanel), this.transitionEndHandler);
     }
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
       const { swipeBackPrevPanel, swipeBackNextPanel } = this.state;
-      const scrolls = {
-        [swipeBackPrevPanel]: this.getLastPanelScrollPosition(this.scrolls, swipeBackPrevPanel),
-        [swipeBackNextPanel]: this.getLastPanelScrollPosition(this.scrolls, swipeBackNextPanel),
-      };
-      const transitionStartEventData = {
-        detail: {
-          from: swipeBackPrevPanel,
-          to: swipeBackNextPanel,
-          scrolls,
-        },
-      };
-      this.document.dispatchEvent(new (this.window as any).CustomEvent(transitionStartEventName, transitionStartEventData));
+      this.fakeScrolls([swipeBackPrevPanel, swipeBackNextPanel]);
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
-      const nextPanelElement = this.pickPanel(swipeBackNextPanel);
-      const prevPanelElement = this.pickPanel(swipeBackPrevPanel);
-
-      nextPanelElement.scrollTop = scrolls[swipeBackNextPanel];
-      prevPanelElement.scrollTop = scrolls[swipeBackPrevPanel];
     }
 
     // Началась анимация завершения свайпа назад.
@@ -294,10 +277,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         activePanel: this.props.activePanel,
       });
     }
-  }
-
-  getLastPanelScrollPosition(scrolls: Scrolls, panel: string) {
-    return scrolls[panel]?.length > 0 ? scrolls[panel][scrolls[panel].length - 1] : 0;
   }
 
   shouldDisableTransitionMotion(): boolean {
