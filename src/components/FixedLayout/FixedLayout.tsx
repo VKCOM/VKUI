@@ -29,17 +29,28 @@ export interface FixedLayoutState {
   width: string;
 }
 
-const FixedLayout: React.FC<FixedLayoutProps> = ({
-  children, style, vertical, getRootRef, getRef, filled,
-  ...restProps
-}: FixedLayoutProps) => {
+function FixedLayoutSimple({ children, vertical, getRootRef, getRef, filled, ...restProps }: FixedLayoutProps) {
   const platform = usePlatform();
+  return (
+    <TooltipContainer
+      {...restProps}
+      fixed
+      ref={getRootRef}
+      vkuiClass={classNames(getClassName('FixedLayout', platform), {
+        'FixedLayout--filled': filled,
+      }, `FixedLayout--${vertical}`)}
+    >
+      <div vkuiClass="FixedLayout__in" ref={getRef}>{children}</div>
+    </TooltipContainer>
+  );
+}
 
+const FixedLayout: React.FC<FixedLayoutProps> = (props: FixedLayoutProps) => {
   const { scrollCompensation } = React.useContext(FixedLayoutContext);
   const transitionOverrideStyle = React.useMemo<React.CSSProperties>(() => scrollCompensation > 0 ? {
     position: 'absolute',
-    top: vertical === 'top' ? scrollCompensation : null,
-    bottom: vertical === 'bottom' ? -scrollCompensation : null,
+    top: props.vertical === 'top' ? scrollCompensation : null,
+    bottom: props.vertical === 'bottom' ? -scrollCompensation : null,
   } : {}, [scrollCompensation]);
 
   const [width, setWidth] = React.useState<string>(null);
@@ -49,19 +60,7 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
   React.useEffect(doResize, []);
   useGlobalEventListener(window, 'resize', doResize);
 
-  return (
-    <TooltipContainer
-      {...restProps}
-      fixed
-      ref={getRootRef}
-      vkuiClass={classNames(getClassName('FixedLayout', platform), {
-        'FixedLayout--filled': filled,
-      }, `FixedLayout--${vertical}`)}
-      style={{ ...style, ...transitionOverrideStyle, width }}
-    >
-      <div vkuiClass="FixedLayout__in" ref={getRef}>{children}</div>
-    </TooltipContainer>
-  );
+  return <FixedLayoutSimple {...props} style={{ ...props.style, ...transitionOverrideStyle, width }} />;
 };
 
 export default FixedLayout;
