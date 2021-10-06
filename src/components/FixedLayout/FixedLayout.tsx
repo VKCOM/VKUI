@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { HasRef, HasRootRef } from '../../types';
@@ -20,6 +21,7 @@ export interface FixedLayoutProps extends
    * Это часто необходимо для фиксированных кнопок в нижней части экрана.
    */
   filled?: boolean;
+  portal?: boolean;
 }
 
 export interface FixedLayoutState {
@@ -45,7 +47,7 @@ function FixedLayoutSimple({ children, vertical, getRootRef, getRef, filled, ...
   );
 }
 
-const FixedLayout: React.FC<FixedLayoutProps> = (props: FixedLayoutProps) => {
+function FixedLayoutHack(props: FixedLayoutProps) {
   const { scrollCompensation } = React.useContext(FixedLayoutContext);
   const transitionOverrideStyle = React.useMemo<React.CSSProperties>(() => scrollCompensation > 0 ? {
     position: 'absolute',
@@ -61,6 +63,16 @@ const FixedLayout: React.FC<FixedLayoutProps> = (props: FixedLayoutProps) => {
   useGlobalEventListener(window, 'resize', doResize);
 
   return <FixedLayoutSimple {...props} style={{ ...props.style, ...transitionOverrideStyle, width }} />;
+}
+
+function FixedLayoutPortal(props: FixedLayoutProps) {
+  const { portalEl, itemClass } = React.useContext(FixedLayoutContext);
+  const jsx = <FixedLayoutSimple {...props} vkuiClass={itemClass} />;
+  return portalEl ? ReactDOM.createPortal(jsx, portalEl) : jsx;
+}
+
+const FixedLayout: React.FC<FixedLayoutProps> = ({ portal = true, ...props }: FixedLayoutProps) => {
+  return React.createElement(portal ? FixedLayoutPortal : FixedLayoutHack, props);
 };
 
 export default FixedLayout;

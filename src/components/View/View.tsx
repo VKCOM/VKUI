@@ -487,27 +487,26 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
             const panelId = getNavId(panel.props, warn);
 
             return (
-              <div
-                vkuiClass={classNames('View__panel', {
-                  'View__panel--active': panelId === activePanel,
-                  'View__panel--prev': panelId === prevPanel,
-                  'View__panel--next': panelId === nextPanel,
-                  'View__panel--swipe-back-prev': panelId === swipeBackPrevPanel,
-                  'View__panel--swipe-back-next': panelId === swipeBackNextPanel,
-                  'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
-                  'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
-                })}
-                ref={(el) => this.panelNodes[panelId] = el}
-                data-vkui-active-panel={panelId === activePanel ? 'true' : ''}
-                style={this.calcPanelSwipeStyles(panelId)}
-                key={panelId}
-              >
-                <div vkuiClass="View__panel-in">
-                  <FixedLayoutContainer scrollCompensation={transitionScrolls[panelId]}>
+              <FixedLayoutContainer scrollCompensation={transitionScrolls[panelId]} key={panelId}>
+                <div
+                  vkuiClass={classNames('View__panel', {
+                    'View__panel--active': panelId === activePanel,
+                    'View__panel--prev': panelId === prevPanel,
+                    'View__panel--next': panelId === nextPanel,
+                    'View__panel--swipe-back-prev': panelId === swipeBackPrevPanel,
+                    'View__panel--swipe-back-next': panelId === swipeBackNextPanel,
+                    'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
+                    'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
+                  })}
+                  ref={(el) => this.panelNodes[panelId] = el}
+                  data-vkui-active-panel={panelId === activePanel ? 'true' : ''}
+                  style={this.calcPanelSwipeStyles(panelId)}
+                >
+                  <div vkuiClass="View__panel-in">
                     {panel}
-                  </FixedLayoutContainer>
+                  </div>
                 </div>
-              </div>
+              </FixedLayoutContainer>
             );
           })}
         </div>
