@@ -57,15 +57,13 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
 
   // setup portal
   useIsomorphicLayoutEffect(() => {
-    if (mode === 'full') {
-      return noop;
-    }
-
     const portal = document.createElement('div');
     portal.classList.add('vkui__portal-root');
     document.body.appendChild(portal);
     setPortalRoot(portal);
-    return () => portal.parentElement.removeChild(portal);
+    return () => {
+      portal.parentElement.removeChild(portal);
+    };
   }, []);
 
   // setup root classes
@@ -105,6 +103,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
       appRoot: rootRef,
       portalRoot: portalRoot,
       embedded: mode === 'embedded',
+      mode,
     }}>
       <ScrollContext.Provider value={scrollController}>
         <IconSettingsProvider classPrefix="vkui" globalClasses={!noLegacyClasses}>

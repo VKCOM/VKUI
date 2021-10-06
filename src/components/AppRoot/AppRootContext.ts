@@ -4,6 +4,7 @@ export interface AppRootContextInterface {
   appRoot?: React.RefObject<HTMLDivElement>;
   portalRoot?: HTMLDivElement;
   embedded?: boolean;
+  mode?: 'partial' | 'embedded' | 'full';
 }
 
 export const AppRootContext = React.createContext<AppRootContextInterface>({
