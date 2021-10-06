@@ -7,20 +7,17 @@
 реализующие логику скрытия и показа по клику и по ховеру соответственно.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-const Example = () => {
-  const [shown, setShown] = React.useState(false);
-  const [buttonRef, setButtonRef] = React.useState(null);
+const [shown, setShown] = React.useState(false);
+const buttonRef = React.useRef();
 
-  return (
-    <React.Fragment>
-      <Button getRootRef={setButtonRef} onClick={() => setShown(!shown)} style={{ margin: 50 }}>{shown ? 'Закрыть' : 'Открыть'}</Button>
-      {shown &&
-        <Dropdown offsetDistance={8} mode="card" style={{ padding: '9px 12px' }} targetNode={buttonRef}>
-          Привет
-        </Dropdown> 
-      }
-    </React.Fragment>
-  )
-}
-<Example />
+return (
+  <React.Fragment>
+    <Button getRootRef={buttonRef} onClick={() => setShown(!shown)} style={{ margin: 50 }}>{shown ? 'Закрыть' : 'Открыть'}</Button>
+    {shown &&
+      <Dropdown offsetDistance={8} mode="card" style={{ padding: '9px 12px' }} targetRef={buttonRef}>
+        Привет
+      </Dropdown> 
+    }
+  </React.Fragment>
+)
 ```

@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes, useCallback, useEffect } from 'react';
+import React, { FC, HTMLAttributes, RefObject, useCallback, useEffect } from 'react';
 import { usePopper } from 'react-popper';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { HasRef } from '../../types';
@@ -25,11 +25,6 @@ export interface DropdownCommonProps extends HTMLAttributes<HTMLElement>, HasRef
    */
   offsetDistance?: number;
   /**
-   * Актуально для [mode="embedded"](#/Modes). Если передан true, то дропдаун отрисуется не рядом с `targetNode`,
-   * а в портале в конце `body`.
-   */
-  portal?: boolean;
-  /**
    * Стиль дропдауна. Если хочется стилизовать дропдаун по-своему, то следует использовать `plain`, так как он
    * не содержит никаких собственных css-правил.
    */
@@ -38,14 +33,11 @@ export interface DropdownCommonProps extends HTMLAttributes<HTMLElement>, HasRef
 }
 
 export interface DropdownProps extends DropdownCommonProps {
-  /**
-   * Ссылка на DOM-элемент, рядом с которым должен открыться `Dropdown`
-   */
-  targetNode?: HTMLElement;
+  targetRef?: RefObject<HTMLElement>;
 }
 
 export const Dropdown: FC<DropdownProps> = ({
-  targetNode,
+  targetRef,
   children,
   getRef,
   placement = 'bottom-start',
@@ -64,7 +56,7 @@ export const Dropdown: FC<DropdownProps> = ({
     setDropdownNode(el);
   }, []);
 
-  const { styles, state } = usePopper(targetNode, dropdownNode, {
+  const { styles, state } = usePopper(targetRef.current, dropdownNode, {
     placement,
     modifiers: [
       {
@@ -98,5 +90,5 @@ export const Dropdown: FC<DropdownProps> = ({
     </div>
   );
 
-  return (<AppRootPortal vkuiClass="DropdownPortal">{dropdown}</AppRootPortal>);
+  return (<AppRootPortal forcePortal vkuiClass="DropdownPortal">{dropdown}</AppRootPortal>);
 };

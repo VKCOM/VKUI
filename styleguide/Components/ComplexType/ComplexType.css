@@ -13,7 +13,6 @@
 
 .ComplexTypeDropdown {
   padding: 10px;
-  z-index: 2;
   max-width: 340px;
   word-break: break-word;
 }

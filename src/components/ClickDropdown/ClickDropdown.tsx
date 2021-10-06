@@ -1,31 +1,21 @@
-import React, {
-  cloneElement,
-  FC,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import * as React from 'react';
 import { useDOM } from '../../lib/dom';
 import { Dropdown, DropdownCommonProps } from '../Dropdown/Dropdown';
 import { useExternRef } from '../../hooks/useExternRef';
-
-const isDOMTypeElement = (element: ReactElement): element is React.DOMElement<any, any> => {
-  return React.isValidElement(element) && typeof element.type === 'string';
-};
+import { useEventListener } from '../../hooks/useEventListener';
+import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
+import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
 
 export interface ClickDropdownProps extends DropdownCommonProps {
   /**
    * Содержимое `ClickDropdown`
    */
-  content?: ReactNode;
+  content?: React.ReactNode;
   shown?: boolean;
   onShownChange?: (shown: boolean) => void;
 }
 
-export const ClickDropdown: FC<ClickDropdownProps> = ({
+export const ClickDropdown: React.FC<ClickDropdownProps> = ({
   getRef,
   content,
   children,
@@ -35,55 +25,44 @@ export const ClickDropdown: FC<ClickDropdownProps> = ({
   offsetDistance = 8,
   ...restProps
 }: ClickDropdownProps) => {
-  const [computedShown, setComputedShown] = useState(shown);
-  const [dropdownNode, setDropdownNode] = useState(null);
-  const [targetNode, setTargetNode] = useState(null);
+  const [computedShown, setComputedShown] = React.useState(shown);
+  const [dropdownNode, setDropdownNode] = React.useState(null);
 
   const { document } = useDOM();
 
   const patchedDropdownRef = useExternRef(setDropdownNode, getRef);
 
-  const childRef = isValidElement(children) && (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
-  const patchedRef = useExternRef(setTargetNode, childRef);
-  const child = isValidElement(children) ? cloneElement(children, {
-    [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
-  }) : children;
+  const [childRef, child] = usePatchChildrenRef(children);
 
-  const onDocumentClick = useCallback((e) => {
-    if (e.target !== targetNode && !targetNode.contains(e.target) && e.target !== dropdownNode && !dropdownNode.contains(e.target)) {
+  const onDocumentClick = (e: MouseEvent) => {
+    if (dropdownNode && e.target !== childRef.current && !childRef.current.contains(e.target as Node) && e.target !== dropdownNode && !dropdownNode.contains(e.target)) {
       if (typeof shown !== 'boolean') {
         setComputedShown(false);
       }
       typeof onShownChange === 'function' && onShownChange(false);
     }
-  }, [targetNode, dropdownNode, onShownChange, shown]);
+  };
 
-  useEffect(() => {
+  useGlobalEventListener(document, 'click', onDocumentClick);
+
+  React.useEffect(() => {
     if (typeof shown === 'boolean') {
       setComputedShown(shown);
     }
   }, [shown]);
 
-  useEffect(() => {
-    dropdownNode && document.addEventListener('pointerup', onDocumentClick);
-    return () => {
-      dropdownNode && document.removeEventListener('pointerup', onDocumentClick);
-    };
-  }, [targetNode, dropdownNode]);
-
-  const onTargetClick = useCallback(() => {
+  const onTargetClick = React.useCallback(() => {
     if (typeof shown !== 'boolean') {
       setComputedShown(!computedShown);
     }
     typeof onShownChange === 'function' && onShownChange(!computedShown);
-  }, [targetNode, shown, computedShown]);
+  }, [onShownChange, shown, computedShown]);
 
-  useEffect(() => {
-    targetNode && targetNode.addEventListener('pointerup', onTargetClick);
-    return () => {
-      targetNode && targetNode.removeEventListener('pointerup', onTargetClick);
-    };
-  }, [targetNode, computedShown]);
+  const targetClickEvent = useEventListener('pointerup', onTargetClick);
+
+  React.useEffect(() => {
+    targetClickEvent.add(childRef.current);
+  }, []);
 
   return (
     <React.Fragment>
@@ -93,7 +72,7 @@ export const ClickDropdown: FC<ClickDropdownProps> = ({
           {...restProps}
           mode={mode}
           offsetDistance={offsetDistance}
-          targetNode={targetNode}
+          targetRef={childRef}
           getRef={patchedDropdownRef}
         >
           {content}

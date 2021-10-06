@@ -1,26 +1,14 @@
-import React, {
-  cloneElement,
-  FC,
-  isValidElement,
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import * as React from 'react';
 import { Dropdown, DropdownCommonProps } from '../Dropdown/Dropdown';
-import { useExternRef } from '../../hooks/useExternRef';
-
-const isDOMTypeElement = (element: ReactElement): element is React.DOMElement<any, any> => {
-  return React.isValidElement(element) && typeof element.type === 'string';
-};
+import { useEventListener } from '../../hooks/useEventListener';
+import { useTimeout } from '../../hooks/useTimeout';
+import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
 
 export interface HoverDropdownProps extends DropdownCommonProps {
   /**
    * Содержимое `HoverDropdown`
    */
-  content?: ReactNode;
+  content?: React.ReactNode;
   shown?: boolean;
   onShownChange?: (shown: boolean) => void;
   /**
@@ -33,7 +21,7 @@ export interface HoverDropdownProps extends DropdownCommonProps {
   hideDelay?: number;
 }
 
-export const HoverDropdown: FC<HoverDropdownProps> = ({
+export const HoverDropdown: React.FC<HoverDropdownProps> = ({
   getRef,
   content,
   children,
@@ -45,69 +33,63 @@ export const HoverDropdown: FC<HoverDropdownProps> = ({
   offsetDistance = 8,
   ...restProps
 }: HoverDropdownProps) => {
-  const [computedShown, setComputedShown] = useState(shown);
-  const [targetNode, setTargetNode] = useState<HTMLElement>(null);
-  const showTimeout = useRef<ReturnType<typeof setTimeout>>();
-  const hideTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const [computedShown, setComputedShown] = React.useState(shown);
 
-  const childRef = isValidElement(children) && (isDOMTypeElement(children) ? children.ref : children.props.getRootRef);
-  const patchedRef = useExternRef(setTargetNode, childRef);
-  const child = isValidElement(children) ? cloneElement(children, {
-    [isDOMTypeElement(children) ? 'ref' : 'getRootRef']: patchedRef,
-  }) : children;
+  const showTimeout = useTimeout(() => {
+    if (typeof shown !== 'boolean') {
+      setComputedShown(true);
+    }
+    typeof onShownChange === 'function' && onShownChange(true);
+  }, showDelay);
 
-  useEffect(() => {
+  const hideTimeout = useTimeout(() => {
+    if (typeof shown !== 'boolean') {
+      setComputedShown(false);
+    }
+    typeof onShownChange === 'function' && onShownChange(false);
+  }, hideDelay);
+
+  const [childRef, child] = usePatchChildrenRef(children);
+
+  React.useEffect(() => {
     if (typeof shown === 'boolean') {
       setComputedShown(shown);
     }
   }, [shown]);
 
-  const onTargetEnter = useCallback(() => {
-    clearTimeout(showTimeout.current);
-    clearTimeout(hideTimeout.current);
-    showTimeout.current = setTimeout(() => {
-      if (typeof shown !== 'boolean') {
-        setComputedShown(true);
-      }
-      typeof onShownChange === 'function' && onShownChange(true);
-    }, showDelay);
-  }, [targetNode, shown, computedShown, showDelay]);
+  const onTargetEnter = () => {
+    hideTimeout.clear();
+    showTimeout.set();
+  };
 
-  const onTargetOut = useCallback(() => {
-    clearTimeout(showTimeout.current);
-    clearTimeout(hideTimeout.current);
-    hideTimeout.current = setTimeout(() => {
-      if (typeof shown !== 'boolean') {
-        setComputedShown(false);
-      }
-      typeof onShownChange === 'function' && onShownChange(false);
-    }, hideDelay);
-  }, [targetNode, shown, computedShown, hideDelay]);
+  const onTargetLeave = () => {
+    showTimeout.clear();
+    hideTimeout.set();
+  };
 
-  useEffect(() => {
-    targetNode && targetNode.addEventListener('mouseenter', onTargetEnter);
-    targetNode && targetNode.addEventListener('mouseleave', onTargetOut);
-    return () => {
-      targetNode && targetNode.removeEventListener('mouseenter', onTargetEnter);
-      targetNode && targetNode.removeEventListener('mouseleave', onTargetOut);
-    };
-  }, [targetNode, computedShown]);
+  const targetEnterListener = useEventListener('mouseenter', onTargetEnter);
+  const targetLeaveListener = useEventListener('mouseleave', onTargetLeave);
+
+  React.useEffect(() => {
+    targetEnterListener.add(childRef.current);
+    targetLeaveListener.add(childRef.current);
+  }, []);
 
   return (
     <React.Fragment>
       {child}
       {computedShown &&
-      <Dropdown
-        {...restProps}
-        onMouseOver={() => clearTimeout(hideTimeout.current)}
-        onMouseOut={onTargetOut}
-        mode={mode}
-        offsetDistance={offsetDistance}
-        getRef={getRef}
-        targetNode={targetNode}
-      >
-        {content}
-      </Dropdown>
+        <Dropdown
+          {...restProps}
+          onMouseOver={hideTimeout.clear}
+          onMouseOut={onTargetLeave}
+          mode={mode}
+          offsetDistance={offsetDistance}
+          getRef={getRef}
+          targetRef={childRef}
+        >
+          {content}
+        </Dropdown>
       }
     </React.Fragment>
   );
