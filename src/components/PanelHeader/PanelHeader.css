@@ -135,6 +135,13 @@
   padding: 4px 4px 4px 0;
 }
 
+/* HACK override portal cut boundary */
+.View--ios .PanelHeader__left,
+.View--ios .PanelHeader__right,
+.View--ios .PanelHeader__content {
+  transition: opacity .3s var(--ios-easing);
+}
+
 .View--ios .View__panel--prev .PanelHeader__left,
 .View--ios .View__panel--prev .PanelHeader__right,
 .View--ios .View__panel--prev .PanelHeader__content {

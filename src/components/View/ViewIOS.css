@@ -45,16 +45,17 @@
 }
 
 .View--ios .View__panel--next {
-  animation: vkui-animation-ios-next-back .6s var(--ios-easing);
-}
-
-.View--ios .View__panel--prev ~ .View__panel--next {
   animation: vkui-animation-ios-next-forward .6s var(--ios-easing);
 }
 
-.View--ios .View__panel--next ~ .View__panel--prev {
+.View--ios.View--back .View__panel--prev {
   animation: vkui-animation-ios-prev-back .6s var(--ios-easing);
 }
+
+.View--ios.View--back .View__panel--next {
+  animation: vkui-animation-ios-next-back .6s var(--ios-easing);
+}
+
 
 .View--ios .View__panel--prev .Panel__fade,
 .View--ios .View__panel--next .Panel__fade {
@@ -76,8 +77,8 @@
   animation: vkui-animation-ios-fade-out .6s var(--ios-easing);
 }
 
-.View--ios .View__panel--prev ~ .View__panel--next .Panel__fade,
-.View--ios .View__panel--next ~ .View__panel--prev .Panel__fade {
+.View--ios:not(.View--back) .View__panel--next .Panel__fade,
+.View--ios.View--back .View__panel--prev .Panel__fade {
   display: none;
 }
 

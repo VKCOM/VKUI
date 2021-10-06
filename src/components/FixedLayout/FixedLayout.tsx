@@ -66,8 +66,8 @@ function FixedLayoutHack(props: FixedLayoutProps) {
 }
 
 function FixedLayoutPortal(props: FixedLayoutProps) {
-  const { portalEl, itemClass } = React.useContext(FixedLayoutContext);
-  const jsx = <FixedLayoutSimple {...props} vkuiClass={itemClass} />;
+  const { portalEl } = React.useContext(FixedLayoutContext);
+  const jsx = <FixedLayoutSimple {...props} />;
   return portalEl ? ReactDOM.createPortal(jsx, portalEl) : jsx;
 }
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames } from '../../lib/classNames';
+import { classNames, classNamesString } from '../../lib/classNames';
 import { transitionEvent, animationEvent } from '../../lib/supportEvents';
 import { getClassName } from '../../helpers/getClassName';
 import { IOS, ANDROID, VKCOM } from '../../lib/platform';
@@ -472,6 +472,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       'View--animated': !disableAnimation && this.state.animated,
       'View--swiping-back': !disableAnimation && this.state.swipingBack,
       'View--no-motion': disableAnimation,
+      'View--back': this.state.isBack || this.state.swipingBack,
     };
 
     return (
@@ -485,18 +486,24 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         <div vkuiClass="View__panels">
           {panels.map((panel: React.ReactElement) => {
             const panelId = getNavId(panel.props, warn);
+            const transitionClasses = classNamesString({
+              'View__panel--prev': panelId === prevPanel,
+              'View__panel--next': panelId === nextPanel,
+              'View__panel--swipe-back-prev': panelId === swipeBackPrevPanel,
+              'View__panel--swipe-back-next': panelId === swipeBackNextPanel,
+              'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
+              'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
+            });
 
             return (
-              <FixedLayoutContainer scrollCompensation={transitionScrolls[panelId]} key={panelId}>
+              <FixedLayoutContainer
+                scrollCompensation={transitionScrolls[panelId]}
+                key={panelId}
+                portalClass={transitionClasses}
+              >
                 <div
-                  vkuiClass={classNames('View__panel', {
+                  vkuiClass={classNames('View__panel', transitionClasses, {
                     'View__panel--active': panelId === activePanel,
-                    'View__panel--prev': panelId === prevPanel,
-                    'View__panel--next': panelId === nextPanel,
-                    'View__panel--swipe-back-prev': panelId === swipeBackPrevPanel,
-                    'View__panel--swipe-back-next': panelId === swipeBackNextPanel,
-                    'View__panel--swipe-back-success': swipeBackResult === SwipeBackResults.success,
-                    'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
                   })}
                   ref={(el) => this.panelNodes[panelId] = el}
                   data-vkui-active-panel={panelId === activePanel ? 'true' : ''}

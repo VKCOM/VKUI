@@ -88,15 +88,16 @@
 /**
  * Panel transition
  */
-.View__panel--next ~ .View__panel--prev {
+.View--back .View__panel--prev {
   animation: vkui-animation-view-prev-back .3s var(--android-easing);
 }
 
-.View__panel--prev ~ .View__panel--next {
+.View__panel--next {
   animation: vkui-animation-view-next-forward .3s var(--android-easing);
 }
 
-.View--no-motion .View__panel {
+.View--no-motion .View__panel,
+.View--back .View__panel--next {
   animation: none;
 }
 
