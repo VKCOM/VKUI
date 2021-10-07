@@ -41,6 +41,14 @@ const findIndexBefore = (options: CustomSelectOptionInterface[], endIndex: numbe
   return result;
 };
 
+const warn = warnOnce('CustomSelect');
+
+const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
+  if (new Set(options.map((item) => typeof item.value)).size > 1) {
+    warn('Some values of your options have different types. CustomSelect onChange always returns a string type.');
+  }
+};
+
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
 
 export interface CustomSelectOptionInterface {
@@ -101,8 +109,6 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-const warn = warnOnce('CustomSelect');
-
 class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
   static defaultProps: CustomSelectProps = {
     searchable: false,
@@ -126,7 +132,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     this.keyboardInput = '';
 
     if (process.env.NODE_ENV === 'development') {
-      this.checkOptionsValueType(props.options);
+      checkOptionsValueType(props.options);
     }
 
     this.state = {
@@ -442,18 +448,12 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   };
 
-  checkOptionsValueType(options: CustomSelectOptionInterface[]) {
-    if (new Set(options.map((item) => typeof item.value)).size > 1) {
-      warn('Some values of your options have different types. CustomSelect onChange always returns a string type.');
-    }
-  }
-
   handleKeyUp = debounce(this.resetKeyboardInput, 1000);
 
   componentDidUpdate(prevProps: CustomSelectProps) {
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
       if (process.env.NODE_ENV === 'development') {
-        this.checkOptionsValueType(this.props.options);
+        checkOptionsValueType(this.props.options);
       }
 
       this.isControlledOutside = this.props.value !== undefined;
