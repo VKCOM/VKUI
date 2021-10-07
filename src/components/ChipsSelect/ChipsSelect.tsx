@@ -281,9 +281,10 @@ const ChipsSelect = <Option extends ChipsInputOption>(props: ChipsSelectProps<Op
                     const selected = selectedOptions.find((selectedOption: Option) => {
                       return getOptionValue(selectedOption) === getOptionValue(option);
                     });
+                    const value = getOptionValue(option);
 
                     return (
-                      <React.Fragment key={getOptionValue(option)}>
+                      <React.Fragment key={`${typeof value}-${value}`}>
                         {renderOption({
                           className: prefixClass('ChipsSelect__option'),
                           option,

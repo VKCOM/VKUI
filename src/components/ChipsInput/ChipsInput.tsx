@@ -123,7 +123,7 @@ const ChipsInput = <Option extends ChipsInputOption>(props: ChipsInputProps<Opti
           const label = getOptionLabel(option);
 
           return (
-            <React.Fragment key={value}>
+            <React.Fragment key={`${typeof value}-${value}`}>
               {renderChip({ option, value, label, onRemove: handleChipRemove, disabled: restProps.disabled, className: prefixClass('ChipsInput__chip') })}
             </React.Fragment>
           );

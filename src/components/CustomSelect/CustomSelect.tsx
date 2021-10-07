@@ -125,6 +125,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
     this.keyboardInput = '';
 
+    if (process.env.NODE_ENV === 'development') {
+      this.checkOptionsValueType(props.options);
+    }
+
     this.state = {
       opened: false,
       focusedOptionIndex: -1,
@@ -438,10 +442,20 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   };
 
+  checkOptionsValueType(options: CustomSelectOptionInterface[]) {
+    if (new Set(options.map((item) => typeof item.value)).size > 1) {
+      warn('Some values of your options have different types. CustomSelect onChange always returns a string type.');
+    }
+  }
+
   handleKeyUp = debounce(this.resetKeyboardInput, 1000);
 
   componentDidUpdate(prevProps: CustomSelectProps) {
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
+      if (process.env.NODE_ENV === 'development') {
+        this.checkOptionsValueType(this.props.options);
+      }
+
       this.isControlledOutside = this.props.value !== undefined;
       const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
       const options = this.props.searchable ? this.filter(this.props.options, this.state.inputValue, this.props.filterFn) : this.props.options;
