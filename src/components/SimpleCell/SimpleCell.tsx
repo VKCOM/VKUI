@@ -56,8 +56,8 @@ const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (props: Simple
   const { sizeY } = useAdaptivity();
 
   return sizeY === SizeType.COMPACT
-    ? <Text weight="regular" {...props} />
-    : <Title level="3" weight="regular" {...props} />;
+    ? <Text Component="span" weight="regular" {...props} />
+    : <Title Component="span" level="3" weight="regular" {...props} />;
 };
 
 const SimpleCell: React.FC<SimpleCellProps> = ({
