@@ -263,7 +263,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     }
   }
 
-  focusOptionByIndex = (index: number) => {
+  focusOptionByIndex = (index: number, scrollTo = true) => {
     if (index < 0 || index > this.state.options.length - 1) {
       return;
     }
@@ -274,7 +274,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
       return;
     }
 
-    this.scrollToElement(index);
+    scrollTo && this.scrollToElement(index);
 
     this.setState(() => ({
       focusedOptionIndex: index,
@@ -297,7 +297,7 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   };
 
   handleOptionHover: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
-    this.focusOptionByIndex(Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget));
+    this.focusOptionByIndex(Array.prototype.indexOf.call(e.currentTarget.parentNode.children, e.currentTarget), false);
   };
 
   handleOptionDown: MouseEventHandler = (e: React.MouseEvent<HTMLElement>) => {
