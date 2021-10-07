@@ -1,10 +1,17 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import ConfigProvider from '../ConfigProvider/ConfigProvider';
 import { baselineComponent } from '../../testing/utils';
 import Tappable, { TappableProps } from './Tappable';
+import { ANDROID } from '../../lib/platform';
+import { act } from 'react-dom/test-utils';
 
 const TappableTest = (props: TappableProps) => <Tappable data-testid="tappable" {...props} />;
 const tappable = () => screen.getByTestId('tappable');
+
+beforeEach(() => jest.useFakeTimers());
+afterEach(() => jest.useRealTimers());
+afterEach(() => delete window['ontouchstart']);
 
 describe('Tappable', () => {
   baselineComponent(TappableTest);
@@ -100,8 +107,8 @@ describe('Tappable', () => {
   });
 
   it('a11y(disabled): custom Tappable element has aria-disabled', () => {
-    render(<TappableTest>Tappable w/ aria-disabled</TappableTest>);
-    expect(tappable()).toHaveAttribute('aria-disabled');
+    render(<TappableTest disabled>Tappable w/ aria-disabled</TappableTest>);
+    expect(tappable()).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('a11y(button): custom button keyboard events', () => {
@@ -136,6 +143,13 @@ describe('Tappable', () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
+  it('Tappable calls onKeyDown prop', () => {
+    const onKeyDown = jest.fn();
+    render(<TappableTest Component="div" onKeyDown={onKeyDown} />);
+    fireEvent.keyDown(tappable(), {});
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+  });
+
   it('disabled: default Tappable w/ disabled does not react to events', () => {
     const handleClick = jest.fn();
     render(<TappableTest onClick={handleClick} disabled />);
@@ -145,6 +159,83 @@ describe('Tappable', () => {
 
     fireEvent.keyDown(tappable(), { key: 'Enter', code: 'Enter' });
     expect(handleClick).toHaveBeenCalledTimes(0);
+  });
+
+  describe('active', () => {
+    afterEach(() => jest.clearAllMocks());
+    it('shows waves on android', () => {
+      const waveCount = () => document.querySelectorAll('.Tappable__wave').length;
+      render(<ConfigProvider platform={ANDROID}><Tappable data-testid="x" /></ConfigProvider>);
+      userEvent.click(screen.getByTestId('x'));
+      expect(waveCount()).toBe(1);
+      userEvent.click(screen.getByTestId('x'));
+      expect(waveCount()).toBe(2);
+      act(() => jest.runAllTimers());
+      // removes waves
+      expect(waveCount()).toBe(0);
+    });
+    const isActive = (e = tappable()) => e.classList.contains('Tappable--active');
+    it('activates on click', () => {
+      render(<TappableTest />);
+      userEvent.click(tappable());
+      expect(isActive()).toBe(true);
+      act(() => jest.runOnlyPendingTimers());
+      expect(isActive()).toBe(false);
+    });
+    it('activates during longtap', () => {
+      render(<TappableTest />);
+      fireEvent.mouseDown(tappable());
+      expect(isActive()).toBe(false);
+      act(() => jest.runOnlyPendingTimers());
+      expect(isActive()).toBe(true);
+      fireEvent.mouseUp(tappable());
+      expect(isActive()).toBe(true);
+    });
+    it('does not activate on child Tappable click', () => {
+      render(<Tappable data-testid="parent"><TappableTest data-testid="child" /></Tappable>);
+      const child = screen.getByTestId('child');
+      userEvent.click(child);
+      expect(isActive(child)).toBe(true);
+      expect(isActive(screen.getByTestId('parent'))).toBe(false);
+    });
+    describe('prevents early', () => {
+      it('on slide', () => {
+        render(<TappableTest />);
+        fireEvent.mouseDown(tappable(), { clientX: 10 });
+        act(() => jest.runOnlyPendingTimers());
+        fireEvent.mouseMove(tappable(), { clientX: 40 });
+        expect(isActive()).toBe(false);
+      });
+      it('on multi-touch', () => {
+        window.ontouchstart = null;
+        render(<TappableTest />);
+        fireEvent.touchStart(tappable(), { touches: [{}], changedTouches: [{}] });
+        act(() => jest.runOnlyPendingTimers());
+        fireEvent.touchStart(tappable(), { touches: [{}, {}], changedTouches: [{}] });
+        expect(isActive()).toBe(false);
+      });
+      it('on disable', () => {
+        const h = render(<TappableTest />);
+        fireEvent.mouseDown(tappable());
+        act(() => jest.runOnlyPendingTimers());
+        h.rerender(<TappableTest disabled />);
+        expect(isActive()).toBe(false);
+      });
+      it('on hasActive=false', () => {
+        const h = render(<TappableTest />);
+        fireEvent.mouseDown(tappable());
+        act(() => jest.runOnlyPendingTimers());
+        h.rerender(<TappableTest hasActive={false} />);
+        expect(isActive()).toBe(false);
+      });
+      it('on child hover', () => {
+        render(<TappableTest><Tappable data-testid="c" /></TappableTest>);
+        fireEvent.mouseDown(tappable());
+        act(() => jest.runOnlyPendingTimers());
+        userEvent.hover(screen.getByTestId('c'));
+        expect(isActive()).toBe(false);
+      });
+    });
   });
 
   describe('hover', () => {

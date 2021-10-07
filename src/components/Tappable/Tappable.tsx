@@ -1,23 +1,24 @@
 import * as React from 'react';
 import mitt from 'mitt';
-import { Touch, TouchEvent, TouchEventHandler, TouchProps } from '../Touch/Touch';
+import { hasHover as deviceHasHover, noop } from '@vkontakte/vkjs';
+import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import { ANDROID } from '../../lib/platform';
 import { getOffsetRect } from '../../lib/offset';
-import { coordX, coordY, VKUITouchEvent, VKUITouchEventHander } from '../../lib/touch';
-import { HasPlatform, HasRootRef } from '../../types';
-import { withPlatform } from '../../hoc/withPlatform';
-import { hasHover } from '@vkontakte/vkjs';
-import { setRef } from '../../lib/utils';
+import { coordX, coordY } from '../../lib/touch';
+import { HasRootRef } from '../../types';
 import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
 import { shouldTriggerClickOnEnterOrSpace } from '../../lib/accessibility';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { FocusVisible, FocusVisibleMode } from '../FocusVisible/FocusVisible';
 import { useTimeout } from '../../hooks/useTimeout';
+import { useExternRef } from '../../hooks/useExternRef';
+import { usePlatform } from '../../hooks/usePlatform';
 import './Tappable.css';
 
-export interface TappableProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasPlatform, AdaptivityProps {
+export interface TappableProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, AdaptivityProps {
   Component?: React.ElementType;
   /**
    * Длительность показа active-состояния
@@ -52,13 +53,6 @@ interface Wave {
   id: string;
 }
 
-export interface TappableState {
-  clicks?: Wave[];
-  hovered?: boolean;
-  active?: boolean;
-  childHover?: boolean;
-}
-
 export interface RootComponentProps extends TouchProps {
   ref?: React.Ref<HTMLElement>;
 }
@@ -67,55 +61,112 @@ export const ACTIVE_DELAY = 70;
 export const ACTIVE_EFFECT_DELAY = 600;
 
 const activeBus = mitt<{ active: string }>();
+const TapState = { none: 0, pending: 1, active: 2, exiting: 3 } as const;
 
-type TappableContextInterface = { onEnter?: VoidFunction; onLeave?: VoidFunction };
-const TappableContext = React.createContext<TappableContextInterface>({});
+type TappableContextInterface = { onHoverChange: (s: boolean) => void };
+const TappableContext = React.createContext<TappableContextInterface>({ onHoverChange: noop });
 
-class Tappable extends React.Component<TappableProps & TappableContextInterface, TappableState> {
-  constructor(props: TappableProps) {
-    super(props);
-    this.id = Math.round(Math.random() * 1e8).toString(16);
-    this.state = {
-      clicks: [],
-      active: false,
-      childHover: false,
-    };
-  }
+function useActivity(hasActive: boolean, stopDelay: number) {
+  const id = React.useMemo(() => Math.round(Math.random() * 1e8).toString(16), []);
 
-  get hasActive() {
-    return this.props.hasActive && !this.state.childHover;
-  }
+  const [activity, setActivity] = React.useState<typeof TapState[keyof typeof TapState]>(TapState.none);
+  const _stop = () => setActivity(TapState.none);
+  const start = () => hasActive && setActivity(TapState.active);
+  const delayStart = () => {
+    hasActive && setActivity(TapState.pending);
+  };
 
-  get hasHover() {
-    return this.props.hasHover && !this.state.childHover;
-  }
+  const activeTimeout = useTimeout(start, ACTIVE_DELAY);
+  const stopTimeout = useTimeout(_stop, stopDelay);
 
-  onActiveChange = (id: string) => {
-    if (id !== this.id) {
-      clearTimeout(this.stopTimeout);
-      this.stop();
+  useIsomorphicLayoutEffect(() => {
+    if (activity === TapState.pending) {
+      activeTimeout.set();
+      return activeTimeout.clear;
     }
+    if (activity === TapState.exiting) {
+      return stopTimeout.clear;
+    }
+    if (activity === TapState.active) {
+      activeBus.emit('active', id);
+    }
+    return noop;
+  }, [activity]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (activity === TapState.none) {
+      return noop;
+    }
+    const onActiveChange = (activeId: string) => {
+      activeId !== id && _stop();
+    };
+    activeBus.on('active', onActiveChange);
+    return () => activeBus.off('active', onActiveChange);
+  }, [activity === TapState.none]);
+
+  useIsomorphicLayoutEffect(() => {
+    !hasActive && _stop();
+  }, [hasActive]);
+
+  const stop = (delay?: number) => {
+    if (delay) {
+      setActivity(TapState.exiting);
+      return stopTimeout.set(delay);
+    }
+    _stop();
   };
 
-  id: string;
+  return [activity, { delayStart, start, stop }] as const;
+}
 
-  insideTouchRoot: boolean;
+const Tappable: React.FC<TappableProps> = ({
+  children,
+  Component,
+  onClick,
+  onKeyDown: _onKeyDown,
+  activeEffectDelay = ACTIVE_EFFECT_DELAY,
+  stopPropagation = false,
+  getRootRef,
+  sizeX,
+  hasMouse,
+  hasHover: _hasHover = deviceHasHover,
+  hoverMode = 'background',
+  hasActive: _hasActive = true,
+  activeMode = 'background',
+  focusVisibleMode = 'inside',
+  ...props
+}: TappableProps) => {
+  Component = Component || (props.href ? 'a' : 'div') as React.ElementType;
 
-  container: HTMLElement;
+  const { onHoverChange } = React.useContext(TappableContext);
+  const insideTouchRoot = React.useContext(TouchRootContext);
+  const platform = usePlatform();
 
-  stopTimeout: ReturnType<typeof setTimeout>;
-  activeTimeout: ReturnType<typeof setTimeout>;
+  const [clicks, setClicks] = React.useState<Wave[]>([]);
+  const [childHover, setChildHover] = React.useState(false);
+  const [_hovered, setHovered] = React.useState(false);
 
-  static defaultProps = {
-    stopPropagation: false,
-    disabled: false,
-    focusVisibleMode: 'inside',
-    hasHover,
-    hoverMode: 'background',
-    hasActive: true,
-    activeMode: 'background',
-    activeEffectDelay: ACTIVE_EFFECT_DELAY,
-  };
+  const hovered = _hovered && !props.disabled;
+  const hasActive = _hasActive && !childHover && !props.disabled;
+  const hasHover = _hasHover && !childHover;
+  const isCustomElement = Component !== 'a' && Component !== 'button' && !props.contentEditable;
+  const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
+  const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
+
+  const [activity, { start, stop, delayStart }] = useActivity(hasActive, activeEffectDelay);
+  const active = activity === TapState.active || activity === TapState.exiting;
+
+  const containerRef = useExternRef(getRootRef);
+
+  // hover propagation
+  const childContext = React.useRef({ onHoverChange: setChildHover }).current;
+  useIsomorphicLayoutEffect(() => {
+    if (!hovered) {
+      return noop;
+    }
+    onHoverChange(true);
+    return () => onHoverChange(false);
+  }, [hovered]);
 
   /*
    * [a11y]
@@ -124,271 +175,103 @@ class Tappable extends React.Component<TappableProps & TappableContextInterface,
    * - role="link" (активация по Enter)
    * - role="button" (активация по Space и Enter)
    */
-  onKeyDown: React.KeyboardEventHandler = (e: React.KeyboardEvent<HTMLElement>) => {
-    const { onKeyDown } = this.props;
-
-    if (shouldTriggerClickOnEnterOrSpace(e)) {
+  function onKeyDown(e: React.KeyboardEvent<HTMLElement>) {
+    if (isCustomElement && shouldTriggerClickOnEnterOrSpace(e)) {
       e.preventDefault();
-      this.container.click();
+      containerRef.current.click();
     }
 
-    {
-      if (typeof onKeyDown === 'function') {
-        return onKeyDown(e);
-      }
+    if (typeof _onKeyDown === 'function') {
+      return _onKeyDown(e);
     }
-  };
+  }
 
-  /*
-   * Обрабатывает событие touchstart
-   */
-  onStart: TouchEventHandler = ({ originalEvent }: TouchEvent) => {
-    !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
-
-    if (this.hasActive) {
+  function onStart({ originalEvent }: TouchEvent) {
+    if (hasActive) {
       if (originalEvent.touches && originalEvent.touches.length > 1) {
-        activeBus.emit('active');
-        return;
+        // r сожалению я так и не понял, что это делает и можно ли упихнуть его в Touch
+        return stop();
       }
 
-      if (this.props.platform === ANDROID) {
-        this.onDown(originalEvent);
+      if (platform === ANDROID) {
+        const { top, left } = getOffsetRect(containerRef.current);
+        const x = coordX(originalEvent) - left;
+        const y = coordY(originalEvent) - top;
+        setClicks([...clicks, { x, y, id: Date.now().toString() }]);
       }
 
-      this.activeTimeout = setTimeout(this.start, ACTIVE_DELAY);
-      activeBus.on('active', this.onActiveChange);
+      delayStart();
     }
-  };
+  }
 
-  /*
-   * Обрабатывает событие touchmove
-   */
-  onMove: TouchEventHandler = ({ originalEvent, isSlide }: TouchEvent) => {
-    !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
+  function onMove({ isSlide }: TouchEvent) {
     if (isSlide) {
-      this.stop();
+      stop();
     }
-  };
+  }
 
-  /*
-   * Обрабатывает событие touchend
-   */
-  onEnd: TouchEventHandler = ({ originalEvent, isSlide, duration }: TouchEvent) => {
-    !this.insideTouchRoot && this.props.stopPropagation && originalEvent.stopPropagation();
-
-    if (originalEvent.touches && originalEvent.touches.length > 0) {
-      this.stop();
+  function onEnd({ duration }: TouchEvent) {
+    if (activity === TapState.none) {
       return;
     }
-
-    if (this.state.active) {
-      const activeDuraion = duration - ACTIVE_DELAY;
-      if (activeDuraion >= 100) {
-        // Долгий тап, выключаем подсветку
-        this.stop();
-      } else {
-        // Короткий тап, оставляем подсветку
-        this.stopTimeout = setTimeout(this.stop, this.props.activeEffectDelay - activeDuraion);
-      }
-    } else if (!isSlide) {
-      // Очень короткий тап, включаем подсветку
-      this.start();
-
-      clearTimeout(this.activeTimeout);
-      this.stopTimeout = setTimeout(this.stop, this.props.activeEffectDelay);
+    if (activity === TapState.pending) {
+      // активировать при коротком тапе
+      start();
     }
-  };
 
-  /*
-   * Реализует эффект при тапе для Андроида
-   */
-  onDown: VKUITouchEventHander = (e: VKUITouchEvent) => {
-    if (this.props.platform === ANDROID) {
-      const { top, left } = getOffsetRect(this.container);
-      const x = coordX(e) - left;
-      const y = coordY(e) - top;
-
-      this.setState({
-        clicks: [...this.state.clicks, { x, y, id: Date.now().toString() }],
-      });
-    }
-  };
-
-  onEnter = () => {
-    this.setState({ hovered: true });
-  };
-
-  onLeave = () => {
-    this.setState({ hovered: false });
-  };
-
-  childContext: TappableContextInterface= {
-    onEnter: () => this.setState({ childHover: true }),
-    onLeave: () => this.setState({ childHover: false }),
-  };
-
-  /*
-   * Устанавливает активное выделение
-   */
-  start: VoidFunction = () => {
-    if (!this.state.active && this.hasActive) {
-      this.setState({
-        active: true,
-      });
-    }
-    activeBus.emit('active', this.id);
-  };
-
-  /*
-   * Снимает активное выделение
-   */
-  stop: VoidFunction = () => {
-    if (this.state.active) {
-      this.setState({
-        active: false,
-      });
-    }
-    clearTimeout(this.activeTimeout);
-    activeBus.off('active', this.onActiveChange);
-  };
-
-  /*
-   * Берет ref на DOM-ноду из экземпляра Touch
-   */
-  getRef: React.RefCallback<HTMLElement> = (container) => {
-    this.container = container;
-    setRef(container, this.props.getRootRef);
-  };
-
-  componentWillUnmount() {
-    if (this.state.hovered && !this.props.disabled && this.props.onLeave) {
-      this.props.onLeave();
-    }
-    activeBus.off('active', this.onActiveChange);
-    clearTimeout(this.activeTimeout);
-    clearTimeout(this.stopTimeout);
+    // отключить без задержки при длинном тапе
+    const activeDuraion = duration - ACTIVE_DELAY;
+    stop(activeDuraion >= 100 ? 0 : activeEffectDelay - activeDuraion);
   }
 
-  componentDidUpdate(prevProps: TappableProps, prevState: TappableState) {
-    const hovered = this.state.hovered && !this.props.disabled;
-    const prevHovered = prevState.hovered && !prevProps.disabled;
-    if (!prevHovered && hovered && this.props.onEnter) {
-      this.props.onEnter();
-    }
-    if (prevHovered && !hovered && this.props.onLeave) {
-      this.props.onLeave();
-    }
-  }
+  const classes = classNames(
+    getClassName('Tappable', platform),
+    `Tappable--sizeX-${sizeX}`,
+    {
+      'Tappable--active': hasActive && active,
+      'Tappable--mouse': hasMouse,
+      [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
+      [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
+      [hoverMode]: hasHover && hovered && !isPresetHoverMode,
+      [activeMode]: hasActive && active && !isPresetActiveMode,
+    });
 
-  removeWave(id: Wave['id']) {
-    this.setState({ clicks: this.state.clicks.filter((c) => c.id !== id) });
-  }
+  const handlers: RootComponentProps = { onStart, onMove, onEnd, onClick, onKeyDown };
+  const role = props.href ? 'link' : 'button';
 
-  render() {
-    const { hasHover, hasActive } = this;
-    const { clicks, active } = this.state;
-    const hovered = this.state.hovered && !this.props.disabled;
-
-    const defaultComponent: React.ElementType = this.props.href ? 'a' : 'div';
-
-    const {
-      children,
-      Component = defaultComponent,
-      onClick,
-      onKeyDown,
-      onEnter,
-      onLeave,
-      activeEffectDelay,
-      stopPropagation,
-      getRootRef,
-      platform,
-      sizeX,
-      hasMouse,
-      hasHover: propsHasHover,
-      hoverMode,
-      hasActive: propsHasActive,
-      activeMode,
-      focusVisibleMode,
-      ...restProps
-    } = this.props;
-
-    const isCustomElement: boolean = Component !== 'a' && Component !== 'button' && !restProps.contentEditable;
-
-    const isPresetHoverMode = ['opacity', 'background'].includes(hoverMode);
-    const isPresetActiveMode = ['opacity', 'background'].includes(activeMode);
-
-    const classes = classNames(
-      getClassName('Tappable', platform),
-      `Tappable--sizeX-${sizeX}`,
-      {
-        'Tappable--active': hasActive && active,
-        'Tappable--inactive': !active,
-        'Tappable--mouse': hasMouse,
-        [`Tappable--hover-${hoverMode}`]: hasHover && hovered && isPresetHoverMode,
-        [`Tappable--active-${activeMode}`]: hasActive && active && isPresetActiveMode,
-        [hoverMode]: hasHover && hovered && !isPresetHoverMode,
-        [activeMode]: hasActive && active && !isPresetActiveMode,
-      });
-
-    const props: RootComponentProps = {};
-    if (!restProps.disabled) {
-      props.onStart = this.onStart;
-      props.onMove = this.onMove;
-      props.onEnd = this.onEnd;
-      props.onClick = onClick;
-      props.onKeyDown = isCustomElement ? this.onKeyDown : onKeyDown;
-    }
-
-    if (isCustomElement) {
-      props['aria-disabled'] = restProps.disabled;
-    }
-
-    const role: string = restProps.href ? 'link' : 'button';
-
-    return (
-      <TouchRootContext.Consumer>
-        {(insideTouchRoot: boolean) => {
-          this.insideTouchRoot = insideTouchRoot;
-          return (
-            <Touch
-              onEnter={this.onEnter}
-              onLeave={this.onLeave}
-              type={Component === 'button' ? 'button' : undefined}
-              tabIndex={isCustomElement && !restProps.disabled ? 0 : undefined}
-              role={isCustomElement ? role : undefined}
-              {...restProps}
-              slideThreshold={20}
-              usePointerHover
-              vkuiClass={classes}
-              Component={Component}
-              getRootRef={this.getRef}
-              {...props}>
-              <TappableContext.Provider value={this.childContext}>
-                {children}
-              </TappableContext.Provider>
-              {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' && (
-                <span aria-hidden="true" vkuiClass="Tappable__waves">
-                  {clicks.map((wave) => (
-                    <Wave {...wave} key={wave.id} onClear={() => this.removeWave(wave.id)} />
-                  ))}
-                </span>
-              )}
-              {hasHover && hoverMode === 'background' && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
-              {!restProps.disabled && <FocusVisible mode={focusVisibleMode} />}
-            </Touch>
-          );
-        }}
-      </TouchRootContext.Consumer>
-    );
-  }
-}
-
-const TappableNest: React.FC<TappableProps> = (props) => {
-  const parent = React.useContext(TappableContext);
-  return <Tappable {...props} {...parent} />;
+  return (
+    <Touch
+      onEnter={() => setHovered(true)}
+      onLeave={() => setHovered(false)}
+      type={Component === 'button' ? 'button' : undefined}
+      tabIndex={isCustomElement && !props.disabled ? 0 : undefined}
+      role={isCustomElement ? role : undefined}
+      aria-disabled={isCustomElement ? props.disabled : null}
+      stopPropagation={stopPropagation && !insideTouchRoot && !props.disabled}
+      {...props}
+      slideThreshold={20}
+      usePointerHover
+      vkuiClass={classes}
+      Component={Component}
+      getRootRef={containerRef}
+      {...(props.disabled ? {} : handlers)}>
+      <TappableContext.Provider value={childContext}>
+        {children}
+      </TappableContext.Provider>
+      {platform === ANDROID && !hasMouse && hasActive && activeMode === 'background' && (
+        <span aria-hidden="true" vkuiClass="Tappable__waves">
+          {clicks.map((wave) => (
+            <Wave {...wave} key={wave.id} onClear={() => setClicks(clicks.filter((c) => c.id !== wave.id))} />
+          ))}
+        </span>
+      )}
+      {hasHover && hoverMode === 'background' && <span aria-hidden="true" vkuiClass="Tappable__hoverShadow" />}
+      {!props.disabled && <FocusVisible mode={focusVisibleMode} />}
+    </Touch>
+  );
 };
 
-export default withAdaptivity(withPlatform(TappableNest), { sizeX: true, hasMouse: true });
+export default withAdaptivity(Tappable, { sizeX: true, hasMouse: true });
 
 function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
   const timeout = useTimeout(onClear, 225);

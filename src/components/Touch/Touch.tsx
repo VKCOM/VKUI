@@ -26,6 +26,7 @@ export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRoo
   onEnd?: TouchEventHandler;
   onEndX?: TouchEventHandler;
   onEndY?: TouchEventHandler;
+  stopPropagation?: boolean;
 }
 
 export interface Gesture {
@@ -73,16 +74,20 @@ export const Touch: React.FC<TouchProps> = ({
   Component = 'div',
   getRootRef,
   noSlideClick = false,
+  stopPropagation = false,
   ...restProps
 }: TouchProps) => {
   const { document } = useDOM();
   const events = React.useMemo(getSupportedEvents, []);
   const didSlide = React.useRef(false);
   const gesture = React.useRef<Partial<Gesture>>({});
-  const handle = (e: any, handers: any[]) => handers.forEach((cb) => {
-    const duration = Date.now() - gesture.current.startT.getTime();
-    cb && cb({ ...gesture.current, duration, originalEvent: e });
-  });
+  const handle = (e: VKUITouchEvent, handers: TouchEventHandler[]) => {
+    stopPropagation && e.stopPropagation();
+    handers.forEach((cb) => {
+      const duration = Date.now() - gesture.current.startT.getTime();
+      cb && cb({ ...gesture.current, duration, originalEvent: e });
+    });
+  };
 
   const enterHandler = useEventListener(usePointerHover ? 'pointerenter' : 'mouseenter', onEnter);
   const leaveHandler = useEventListener(usePointerHover ? 'pointerleave' : 'mouseleave', onLeave);

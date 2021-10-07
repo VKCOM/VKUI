@@ -12,12 +12,13 @@
 
 /**
  * active
+ * increased specificity to override CellButton styles
  */
-.Tappable--active-background:not([disabled]):not([aria-disabled="true"]) {
+.Tappable--active-background.Tappable--active-background.Tappable--active-background {
   background: var(--background_highlighted);
 }
 
-.Tappable--active-opacity:not([disabled]):not([aria-disabled="true"]) {
+.Tappable--active-opacity.Tappable--active-opacity.Tappable--active-opacity {
   opacity: .7;
 }
 
@@ -63,7 +64,7 @@
   transition: background-color .15s ease-out;
 }
 
-.Tappable--ios.Tappable--active-background.Tappable--active:not([disabled]) {
+.Tappable--ios.Tappable--active-background {
   transition: none;
 }
 
