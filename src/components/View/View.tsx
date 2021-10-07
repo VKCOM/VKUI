@@ -12,7 +12,6 @@ import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
-import { FixedLayoutContainer } from '../FixedLayout/FixedLayoutContext';
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
@@ -507,11 +506,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
                   <NavTransitionProvider
                     scrollCompensation={transitionScrolls[panelId]}
                     entering={panelId === nextPanel || panelId === swipeBackNextPanel}
-                  >
-                    <FixedLayoutContainer scrollCompensation={transitionScrolls[panelId]}>
-                      {panel}
-                    </FixedLayoutContainer>
-                  </NavTransitionProvider>
+                  >{panel}</NavTransitionProvider>
                 </div>
               </div>
             );
