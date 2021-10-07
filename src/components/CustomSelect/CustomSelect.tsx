@@ -41,6 +41,14 @@ const findIndexBefore = (options: CustomSelectOptionInterface[], endIndex: numbe
   return result;
 };
 
+const warn = warnOnce('CustomSelect');
+
+const checkOptionsValueType = (options: CustomSelectOptionInterface[]) => {
+  if (new Set(options.map((item) => typeof item.value)).size > 1) {
+    warn('Some values of your options have different types. CustomSelect onChange always returns a string type.');
+  }
+};
+
 type SelectValue = React.SelectHTMLAttributes<HTMLSelectElement>['value'];
 
 export interface CustomSelectOptionInterface {
@@ -101,8 +109,6 @@ export interface CustomSelectProps extends NativeSelectProps, HasPlatform, FormF
 
 type MouseEventHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-const warn = warnOnce('CustomSelect');
-
 class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState> {
   static defaultProps: CustomSelectProps = {
     searchable: false,
@@ -124,6 +130,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
     const initialValue = value !== undefined ? value : defaultValue;
 
     this.keyboardInput = '';
+
+    if (process.env.NODE_ENV === 'development') {
+      checkOptionsValueType(props.options);
+    }
 
     this.state = {
       opened: false,
@@ -442,6 +452,10 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
 
   componentDidUpdate(prevProps: CustomSelectProps) {
     if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
+      if (process.env.NODE_ENV === 'development') {
+        checkOptionsValueType(this.props.options);
+      }
+
       this.isControlledOutside = this.props.value !== undefined;
       const value = this.props.value === undefined ? this.state.nativeSelectValue : this.props.value;
       const options = this.props.searchable ? this.filter(this.props.options, this.state.inputValue, this.props.filterFn) : this.props.options;
