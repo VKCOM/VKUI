@@ -14,43 +14,40 @@
 а `onShownChange` вызывается дропдауном в тех случаях, когда должна произойти смена состояния.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-const Example = () => {
-  const [shown, setShown] = React.useState(false);
+const [shown, setShown] = React.useState(true);
 
-  return (
-    <div>
-      <HoverDropdown content={<Text>Привет</Text>}>
-        <Button style={{ margin: 150 }}>Наведи</Button>
-      </HoverDropdown>
+return (
+  <div>
+    <HoverDropdown placement="right" content={<Text>Привет</Text>}>
+      <Button style={{ margin: 150 }}>Наведи</Button>
+    </HoverDropdown>
 
-      <HoverDropdown
-        mode="card"
-        shown={shown}
-        onShownChange={setShown}
-        content={
-          <FormLayout>
-            <FormItem top="Имя">
-              <Input />
-            </FormItem>
-            <FormItem top="Фамилия">
-              <Input />
-            </FormItem>
-            <FormItem top="Пол">
-               <Radio sizeX="compact" name="gender">Мужской</Radio>
-               <Radio sizeX="compact" name="gender">Женский</Radio>
-            </FormItem>
-            <FormItem>
-              <Button onClick={() => setShown(false)}>Отправить</Button>
-            </FormItem>
-          </FormLayout>
-        }
-      >
-        <Button style={{ margin: 150 }}>
-          Наведи
-        </Button>
-      </HoverDropdown>
-    </div>
-  )
-}
-<Example />
+    <HoverDropdown
+      shown={shown}
+      mode="card"
+      onShownChange={setShown}
+      content={
+        <FormLayout>
+          <FormItem top="Имя">
+            <Input />
+          </FormItem>
+          <FormItem top="Фамилия">
+            <Input />
+          </FormItem>
+          <FormItem top="Пол">
+             <Radio sizeX="compact" name="gender">Мужской</Radio>
+             <Radio sizeX="compact" name="gender">Женский</Radio>
+          </FormItem>
+          <FormItem>
+            <Button onClick={() => setShown(false)}>Отправить</Button>
+          </FormItem>
+        </FormLayout>
+      }
+    >
+      <Button style={{ margin: 150 }}>
+        Наведи
+      </Button>
+    </HoverDropdown>
+  </div>
+)
 ```

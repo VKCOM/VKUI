@@ -29,6 +29,7 @@ export interface DropdownCommonProps extends HTMLAttributes<HTMLElement>, HasRef
    * не содержит никаких собственных css-правил.
    */
   mode?: 'card' | 'tooltip' | 'plain';
+  arrow?: boolean;
   onPlacementChange?: (data: { placement?: Placement }) => void;
 }
 
@@ -46,29 +47,39 @@ export const Dropdown: FC<DropdownProps> = ({
   offsetDistance,
   offsetSkidding,
   style: compStyles,
+  arrow,
   ...restProps
 }: DropdownProps) => {
   const [dropdownNode, setDropdownNode] = React.useState(null);
   const platform = usePlatform();
+
+  arrow = typeof arrow === 'boolean' ? arrow : mode === 'tooltip';
 
   const setExternalRef = useCallback((el) => {
     setRef(el, getRef);
     setDropdownNode(el);
   }, []);
 
-  const { styles, state } = usePopper(targetRef.current, dropdownNode, {
+  const modifiers = [{
+    name: 'preventOverflow',
+  }, {
+    name: 'offset',
+    options: {
+      offset: [offsetSkidding, arrow ? offsetDistance + 8 : offsetDistance],
+    },
+  }, {
+    name: 'flip',
+  }];
+
+  if (arrow) {
+    modifiers.push({
+      name: 'arrow',
+    });
+  }
+
+  const { styles, state, attributes } = usePopper(targetRef.current, dropdownNode, {
     placement,
-    modifiers: [
-      {
-        name: 'preventOverflow',
-      },
-      {
-        name: 'offset',
-        options: {
-          offset: [offsetSkidding, offsetDistance],
-        },
-      },
-    ],
+    modifiers,
   });
 
   const resolvedPlacement = state?.placement;
@@ -85,8 +96,12 @@ export const Dropdown: FC<DropdownProps> = ({
       vkuiClass={classNames(getClassName('Dropdown', platform), `Dropdown--${mode}`)}
       ref={setExternalRef}
       style={{ ...compStyles, ...styles.popper }}
+      {...attributes.popper}
     >
-      {children}
+      {arrow && <div vkuiClass="Dropdown__arrow" data-popper-arrow={true} {...attributes.arrow} style={styles.arrow} />}
+      <div vkuiClass="Dropdown__content">
+        {children}
+      </div>
     </div>
   );
 
