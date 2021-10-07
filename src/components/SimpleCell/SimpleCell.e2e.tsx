@@ -15,6 +15,13 @@ describe('SimpleCell', () => {
         <IconButton key="icon-w16"><Icon16MessageHeart /></IconButton>,
         <IconButton key="icon-w08"><Icon16MoreVertical /></IconButton>,
       ],
+    }, {
+      before: [<Avatar key="avatar" size={40} />],
+      children: ['Very long children Very long children Very long children Very long children'],
+      description: ['Very long description Very long description Very long description Very long description'],
+      after: [
+        <IconButton key="icon-w28"><Icon28MessageOutline /></IconButton>,
+      ],
     },
   ]);
 });
