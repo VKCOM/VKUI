@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import ConfigProvider from '../ConfigProvider/ConfigProvider';
 import { IOS } from '../../lib/platform';
 import { baselineComponent, mockScrollContext, mountTest } from '../../testing/utils';
@@ -71,7 +71,7 @@ describe.each([
 
   describe('can swipeBack', () => {
     let nowMock: jest.SpyInstance;
-    const setupSwipeBack = (Wrapper: ComponentType = Fragment) => {
+    const setupSwipeBack = (Wrapper: ComponentType = Fragment, children: any = null) => {
       const events = {
         onSwipeBack: jest.fn(),
         onTransition: jest.fn(),
@@ -83,7 +83,7 @@ describe.each([
           <ConfigProvider platform={IOS} isWebView>
             <View id="scroll" activePanel="p2" history={['p1', 'p2']} {...events} {...p}>
               <Panel id="p1" />
-              <Panel id="p2" />
+              <Panel id="p2">{children}</Panel>
             </View>
           </ConfigProvider>
         </Wrapper>
@@ -111,6 +111,18 @@ describe.each([
       fireEvent.mouseUp(view);
       expect(events.onSwipeBack).toBeCalledTimes(1);
       expect(events.onSwipeBackCancel).not.toBeCalled();
+    });
+    describe('does not swipeback on', () => {
+      it.each([
+        ['input', <input data-testid="ex" key="" />],
+        ['textarea', <textarea data-testid="ex" key="" />],
+        ['[data-vkui-swipe-back=false]', <div data-vkui-swipe-back={false} data-testid="ex" key="" />],
+      ])('%s', (_name, cmp) => {
+        const { view, ...events } = setupSwipeBack(Fragment, cmp);
+        fireEvent.mouseMove(screen.getByTestId('ex'), { clientX: window.innerWidth + 1, clientY: 100 });
+        fireEvent.mouseUp(screen.getByTestId('ex'));
+        expect(events.onSwipeBack).not.toBeCalled();
+      });
     });
     it('does swipeBack after animation', () => {
       const { view, ...events } = setupSwipeBack();

@@ -57,55 +57,45 @@ const [activePanel, setActivePanel] = useState('panel1');
 можно явно передать в `СonfigProvider` свойство `isWebView={true}`.
 - При попадании на первую панель слать `vk-bridge` событие `VKWebAppEnableSwipeBack`. При уходе с первой панели –
 слать `VKWebAppDisableSwipeBack`. Таким образом VKUI свайп не будет конфликтовать со свайпом нативного клиента.
+- Компоненты, которые сами обрабатывают жесты (например, карта), могут конфликтовать со свайпбеком — повесьте на них свойство `data-vkui-swipe-back={false}`
 
-Пример:
-
-```jsx static
-import React from 'react';
-import { View, Panel, ConfigProvider } from '@vkontakte/vkui';
+```jsx
 import vkBridge from '@vkontakte/vk-bridge';
 
-class App extends React.Component {
+const [history, setHistory] = useState(['main']);
+const activePanel = history[history.length - 1];
+const isFirst = history.length === 1;
 
-  state = {
-    activePanel: 'main',
-    history: ['main']
-  }
+React.useEffect(() => {
+  vkBridge.send(isFirst
+    ? 'VKWebAppEnableSwipeBack'
+    : 'VKWebAppDisableSwipeBack');
+}, [isFirst]);
 
-  goBack = () => {
-    const history = [...this.state.history];
-    history.pop();
-    const activePanel = history[history.length - 1];
-    if (activePanel === 'main') {
-      vkBridge.send('VKWebAppEnableSwipeBack');
-    }
-    this.setState({ history, activePanel });
-  }
+const goBack = () => setHistory(history.slice(0, -1));
+const go = (panel) => setHistory([...history, panel]);
 
-  goForward = (activePanel) => {
-    const history = [...this.state.history];
-    history.push(activePanel);
-    if (this.state.activePanel === 'main') {
-      vkBridge.send('VKWebAppDisableSwipeBack');
-    }
-    this.setState({ history, activePanel });
-  }
-
-  render () {
-    return (
-      <ConfigProvider isWebView={true}>
-        <View
-          onSwipeBack={this.goBack}
-          history={this.state.history}
-          activePanel={this.state.activePanel}
-        >
-          <Panel id="main"/>
-          <Panel id="profile"/>
-          <Panel id="education"/>
-        </View>
-      </ConfigProvider>
-    )
-  }
-}
-
+<ConfigProvider platform={IOS} isWebView>
+  <View
+    onSwipeBack={goBack}
+    history={history}
+    activePanel={activePanel}
+  >
+    <Panel id="main">
+      <PanelHeader>Main</PanelHeader>
+      <Group>
+        <CellButton onClick={() => go('profile')}>profile</CellButton>
+      </Group>
+    </Panel>
+    <Panel id="profile">
+      <PanelHeader>Профиль</PanelHeader>
+      <Group>
+        <Placeholder>Теперь свайпните от левого края направо, чтобы вернуться</Placeholder>
+        <Div style={{ height: 50, background: '#eee' }} data-vkui-swipe-back={false}>
+          Здесь свайпбек отключен
+        </Div>
+      </Group>
+    </Panel>
+  </View>
+</ConfigProvider>
 ```
