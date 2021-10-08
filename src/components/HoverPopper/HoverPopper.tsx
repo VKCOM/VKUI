@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Dropdown, DropdownCommonProps } from '../Dropdown/Dropdown';
+import { Popper, PopperCommonProps } from '../Popper/Popper';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useTimeout } from '../../hooks/useTimeout';
 import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
 
-export interface HoverDropdownProps extends DropdownCommonProps {
+export interface HoverPopperProps extends PopperCommonProps {
   /**
-   * Содержимое `HoverDropdown`
+   * Содержимое `HoverPopper`
    */
   content?: React.ReactNode;
   shown?: boolean;
@@ -21,7 +21,7 @@ export interface HoverDropdownProps extends DropdownCommonProps {
   hideDelay?: number;
 }
 
-export const HoverDropdown: React.FC<HoverDropdownProps> = ({
+export const HoverPopper: React.FC<HoverPopperProps> = ({
   getRef,
   content,
   children,
@@ -29,10 +29,8 @@ export const HoverDropdown: React.FC<HoverDropdownProps> = ({
   shown,
   showDelay,
   hideDelay = 150,
-  mode = 'tooltip',
-  offsetDistance = 8,
   ...restProps
-}: HoverDropdownProps) => {
+}: HoverPopperProps) => {
   const [computedShown, setComputedShown] = React.useState(shown);
 
   const showTimeout = useTimeout(() => {
@@ -79,17 +77,17 @@ export const HoverDropdown: React.FC<HoverDropdownProps> = ({
     <React.Fragment>
       {child}
       {computedShown &&
-        <Dropdown
+        <Popper
           {...restProps}
-          onMouseOver={hideTimeout.clear}
+          onMouseOver={() => {
+            hideTimeout.clear();
+          }}
           onMouseOut={onTargetLeave}
-          mode={mode}
-          offsetDistance={offsetDistance}
           getRef={getRef}
           targetRef={childRef}
         >
           {content}
-        </Dropdown>
+        </Popper>
       }
     </React.Fragment>
   );

@@ -1,0 +1,39 @@
+.PopperPortal {
+  position: relative;
+  z-index: 1;
+}
+
+.Popper__arrow::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 8px;
+}
+
+[data-popper-placement^="bottom"] .Popper__arrow {
+  bottom: 100%;
+}
+
+[data-popper-placement^="top"] .Popper__arrow {
+  top: 100%;
+}
+
+[data-popper-placement^="top"] .Popper__arrow::after {
+  transform: rotate(180deg);
+}
+
+[data-popper-placement^="left"] .Popper__arrow {
+  left: calc(100% - 6px);
+}
+
+[data-popper-placement^="left"] .Popper__arrow::after {
+  transform: rotate(90deg);
+}
+
+[data-popper-placement^="right"] .Popper__arrow {
+  right: calc(100% - 6px);
+}
+
+[data-popper-placement^="right"] .Popper__arrow::after {
+  transform: rotate(270deg);
+}

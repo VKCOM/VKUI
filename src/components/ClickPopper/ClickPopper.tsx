@@ -1,36 +1,34 @@
 import * as React from 'react';
 import { useDOM } from '../../lib/dom';
-import { Dropdown, DropdownCommonProps } from '../Dropdown/Dropdown';
+import { Popper, PopperCommonProps } from '../Popper/Popper';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
 
-export interface ClickDropdownProps extends DropdownCommonProps {
+export interface ClickPopperProps extends PopperCommonProps {
   /**
-   * Содержимое `ClickDropdown`
+   * Содержимое `ClickPopper`
    */
   content?: React.ReactNode;
   shown?: boolean;
   onShownChange?: (shown: boolean) => void;
 }
 
-export const ClickDropdown: React.FC<ClickDropdownProps> = ({
+export const ClickPopper: React.FC<ClickPopperProps> = ({
   getRef,
   content,
   children,
   onShownChange,
   shown,
-  mode = 'card',
-  offsetDistance = 8,
   ...restProps
-}: ClickDropdownProps) => {
+}: ClickPopperProps) => {
   const [computedShown, setComputedShown] = React.useState(shown);
-  const [dropdownNode, setDropdownNode] = React.useState(null);
+  const [dropdownNode, setPopperNode] = React.useState(null);
 
   const { document } = useDOM();
 
-  const patchedDropdownRef = useExternRef(setDropdownNode, getRef);
+  const patchedPopperRef = useExternRef(setPopperNode, getRef);
 
   const [childRef, child] = usePatchChildrenRef(children);
 
@@ -68,15 +66,13 @@ export const ClickDropdown: React.FC<ClickDropdownProps> = ({
     <React.Fragment>
       {child}
       {computedShown &&
-        <Dropdown
+        <Popper
           {...restProps}
-          mode={mode}
-          offsetDistance={offsetDistance}
           targetRef={childRef}
-          getRef={patchedDropdownRef}
+          getRef={patchedPopperRef}
         >
           {content}
-        </Dropdown>
+        </Popper>
       }
     </React.Fragment>
   );

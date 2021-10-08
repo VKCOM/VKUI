@@ -104,9 +104,16 @@ module.exports = {
           '../src/components/Alert/Alert.tsx',
           '../src/components/ScreenSpinner/ScreenSpinner.tsx',
           '../src/components/Snackbar/Snackbar.tsx',
+        ],
+      }, {
+        name: 'Poppers',
+        components: () => [
+          '../src/components/Popper/Popper.tsx',
+          '../src/components/ClickPopper/ClickPopper.tsx',
+          '../src/components/HoverPopper/HoverPopper.tsx',
           '../src/components/Dropdown/Dropdown.tsx',
-          '../src/components/ClickDropdown/ClickDropdown.tsx',
-          '../src/components/HoverDropdown/HoverDropdown.tsx',
+          '../src/components/ContextualTooltip/ContextualTooltip.tsx',
+          '../src/components/Tooltip/Tooltip.tsx',
         ],
       }, {
         name: 'Modals',
@@ -149,7 +156,6 @@ module.exports = {
           '../src/components/Search/Search.tsx',
           '../src/components/Tabs/Tabs.tsx',
           '../src/components/TabsItem/TabsItem.tsx',
-          '../src/components/Tooltip/Tooltip.tsx',
           '../src/components/PullToRefresh/PullToRefresh.tsx',
           '../src/components/Counter/Counter.tsx',
           '../src/components/UsersStack/UsersStack.tsx',

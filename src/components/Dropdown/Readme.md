@@ -1,23 +1,39 @@
->**Важно**
->
->Это нестабильный компонент. Его API может меняться в рамках одной мажорной версии. [Подробнее про нестабильные компоненты](#/Unstable).
-
-Низкоуровневый компонент для отрисовки дропдауна. Единственная его задача — корректно позициионироваться
-рядом с целевым элементом. На основе этого компонента сделаны [ClickDropdown](#/ClickDropdown) и [HoverDropdown](#/HoverDropdown),
-реализующие логику скрытия и показа по клику и по ховеру соответственно.
+Может открываться при клики или наведении мыши на `children`. Создан на базе [HoverPopper](#/HoverPopper) и [ClickPopper](#/ClickPopper).
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-const [shown, setShown] = React.useState(false);
-const buttonRef = React.useRef();
+const [shown, setShown] = React.useState(true);
 
 return (
-  <React.Fragment>
-    <Button getRootRef={buttonRef} onClick={() => setShown(!shown)} style={{ margin: 50 }}>{shown ? 'Закрыть' : 'Открыть'}</Button>
-    {shown &&
-      <Dropdown offsetDistance={8} mode="card" style={{ padding: '9px 12px' }} targetRef={buttonRef}>
-        Привет
-      </Dropdown> 
-    }
-  </React.Fragment>
+  <div>
+    <Dropdown action="hover" placement="right" content={<Div><Text>Привет</Text></Div>}>
+      <Button style={{ margin: 50 }}>Наведи</Button>
+    </Dropdown>
+
+    <Dropdown
+      shown={shown}
+      onShownChange={setShown}
+      content={
+        <FormLayout>
+          <FormItem top="Имя">
+            <Input />
+          </FormItem>
+          <FormItem top="Фамилия">
+            <Input />
+          </FormItem>
+          <FormItem top="Пол">
+             <Radio sizeX="compact" name="gender">Мужской</Radio>
+             <Radio sizeX="compact" name="gender">Женский</Radio>
+          </FormItem>
+          <FormItem>
+            <Button onClick={() => setShown(false)}>Отправить</Button>
+          </FormItem>
+        </FormLayout>
+      }
+    >
+      <Button style={{ margin: 50 }}>
+        Кликни
+      </Button>
+    </Dropdown>
+  </div>
 )
 ```

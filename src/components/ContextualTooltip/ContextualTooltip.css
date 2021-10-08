@@ -1,0 +1,11 @@
+.ContextualTooltip {
+  border-radius: 8px;
+  background: rgba(44, 45, 46, .88); /*TODO узнать у дизайнеров название токена*/
+  padding: 8px 12px 9px;
+  color: var(--white);
+  box-shadow: 0 0 4px rgba(0, 0, 0, .04), 0 4px 32px rgba(0, 0, 0, .16);
+}
+
+.ContextualTooltip__arrow {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDIwIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTAgMEMxMyAwIDE1Ljk5OTkgOCAyMCA4SDBDMy45NzQ5IDggNyAwIDEwIDBaIiBmaWxsPSIjMkMyRDJFIiBmaWxsLW9wYWNpdHk9IjAuODgiLz4KPC9zdmc+Cg==);
+}
