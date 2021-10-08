@@ -9,13 +9,19 @@ export interface DropdownProps extends Omit<HoverPopperProps, 'arrow'>, Omit<Cli
   action?: 'click' | 'hover';
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({ children, action = 'click', ...popperProps }: DropdownProps) => {
+export const Dropdown: React.FC<DropdownProps> = ({ action = 'click', ...popperProps }: DropdownProps) => {
   const platform = usePlatform();
+
+  let Component;
 
   switch (action) {
     case 'click':
-      return <ClickPopper vkuiClass={getClassName('Dropdown', platform)} {...popperProps}>{children}</ClickPopper>;
+      Component = ClickPopper;
+      break;
     case 'hover':
-      return <HoverPopper vkuiClass={getClassName('Dropdown', platform)} {...popperProps}>{children}</HoverPopper>;
+      Component = HoverPopper;
+      break;
   }
+
+  return <Component vkuiClass={getClassName('Dropdown', platform)} {...popperProps} />;
 };
