@@ -89,7 +89,6 @@ export interface ViewInfiniteState {
   swipeBackResult: SwipeBackResults;
 
   browserSwipe: boolean;
-  transitionScrolls: Record<string, number>;
 }
 
 class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInfiniteState> {
@@ -113,7 +112,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       swipeBackResult: null,
 
       browserSwipe: false,
-      transitionScrolls: {},
     };
   }
 
@@ -138,20 +136,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
   }
 
   panelNodes: { [id: string]: HTMLDivElement } = {};
-
-  fakeScrolls(panels: string[]) {
-    const scrolls: Record<string, number> = {};
-    panels.forEach((panelId) => {
-      const panelElement = this.pickPanel(panelId);
-      const canScroll = panelElement.scrollHeight > panelElement.clientHeight;
-      const scrollList = this.scrolls[panelId] || [];
-      const lastScroll = scrollList[scrollList.length - 1] || 0;
-      const targetScroll = canScroll ? lastScroll : 0;
-      scrolls[panelId] = targetScroll;
-      panelElement.scrollTop = targetScroll;
-    });
-    this.setState({ transitionScrolls: scrolls });
-  }
 
   componentWillUnmount() {
     const id = getNavId(this.props);
@@ -219,7 +203,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         swipeBackShift: 0,
         activePanel: nextPanel,
         visiblePanels: [nextPanel],
-        transitionScrolls: {},
       }, () => {
         this.props.scroll.scrollTo(0, scrollPosition);
         prevProps.onTransition && prevProps.onTransition({ isBack: true, from: prevPanel, to: nextPanel });
@@ -229,14 +212,11 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
     // Начался переход
     if (!prevState.animated && this.state.animated) {
       const { prevPanel, nextPanel, isBack } = this.state;
-      this.fakeScrolls([prevPanel].concat(isBack ? nextPanel : []));
       this.waitAnimationFinish(this.pickPanel(isBack ? prevPanel : nextPanel), this.transitionEndHandler);
     }
 
     // Начался свайп назад
     if (!prevState.swipingBack && this.state.swipingBack) {
-      const { swipeBackPrevPanel, swipeBackNextPanel } = this.state;
-      this.fakeScrolls([swipeBackPrevPanel, swipeBackNextPanel]);
       this.props.onSwipeBackStart && this.props.onSwipeBackStart();
     }
 
@@ -339,7 +319,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         activePanel: activePanel,
         animated: false,
         isBack: undefined,
-        transitionScrolls: {},
       }, () => {
         isBack && this.props.scroll.scrollTo(0, scrollPosition);
         this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
@@ -373,7 +352,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       swipeBackResult: null,
       swipebackStartX: 0,
       swipeBackShift: 0,
-      transitionScrolls: {},
     });
   }
 
@@ -487,7 +465,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
       ...restProps
     } = this.props;
     const {
-      prevPanel, nextPanel, activePanel, transitionScrolls,
+      prevPanel, nextPanel, activePanel, isBack,
       swipeBackPrevPanel, swipeBackNextPanel, swipeBackResult, swipingBack,
     } = this.state;
 
@@ -537,6 +515,10 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
         <div vkuiClass="View__panels">
           {panels.map((panel: React.ReactElement) => {
             const panelId = getNavId(panel.props, warn);
+            const isPrev = panelId === prevPanel || panelId === swipeBackPrevPanel;
+            const compensateScroll = isPrev || panelId === swipeBackNextPanel || panelId === nextPanel && isBack;
+            const scrollList = this.scrolls[panelId] || [];
+            const scroll = scrollList[scrollList.length - 1] || 0;
 
             return (
               <div
@@ -554,11 +536,10 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
-                <div vkuiClass="View__panel-in">
-                  <NavTransitionProvider
-                    scrollCompensation={transitionScrolls[panelId]}
-                    entering={panelId === nextPanel || panelId === swipeBackNextPanel}
-                  >{panel}</NavTransitionProvider>
+                <div vkuiClass="View__panel-in" style={{ marginTop: compensateScroll ? -scroll : null }}>
+                  <NavTransitionProvider entering={panelId === nextPanel || panelId === swipeBackNextPanel}>
+                    {panel}
+                  </NavTransitionProvider>
                 </div>
               </div>
             );
