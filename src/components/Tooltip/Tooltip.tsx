@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Subhead from '../Typography/Subhead/Subhead';
+import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import { Modifier, usePopper } from 'react-popper';
 import { Placement } from '@popperjs/core';
 import { tooltipContainerAttr } from './TooltipContainer';
@@ -128,10 +129,12 @@ function isVerticalPlacement(placement: Placement) {
 }
 
 const Tooltip: React.FC<TooltipProps> = ({
-  children, isShown, offsetX = 0, offsetY = 15,
+  children, isShown: _isShown, offsetX = 0, offsetY = 15,
   alignX, alignY, onClose, cornerOffset, cornerAbsoluteOffset,
   ...restProps
 }) => {
+  const { entering } = useNavTransition();
+  const isShown = _isShown && !entering;
   const [tooltipRef, setTooltipRef] = React.useState<HTMLElement>();
   const [tooltipArrowRef, setTooltipArrowRef] = React.useState<HTMLElement>();
   const [target, setTarget] = React.useState<HTMLElement>();

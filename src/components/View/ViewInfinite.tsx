@@ -12,7 +12,7 @@ import { SplitColContext, SplitColContextProps } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { canUseDOM, withDOM, DOMProps } from '../../lib/dom';
 import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext';
-import { FixedLayoutContainer } from '../FixedLayout/FixedLayoutContext';
+import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import './View.css';
@@ -555,9 +555,10 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
                 key={panelId}
               >
                 <div vkuiClass="View__panel-in">
-                  <FixedLayoutContainer scrollCompensation={transitionScrolls[panelId]}>
-                    {panel}
-                  </FixedLayoutContainer>
+                  <NavTransitionProvider
+                    scrollCompensation={transitionScrolls[panelId]}
+                    entering={panelId === nextPanel || panelId === swipeBackNextPanel}
+                  >{panel}</NavTransitionProvider>
                 </div>
               </div>
             );

@@ -7,7 +7,7 @@ import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { useDOM } from '../../lib/dom';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
-import { FixedLayoutContext } from './FixedLayoutContext';
+import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import './FixedLayout.css';
 
 export interface FixedLayoutProps extends
@@ -35,7 +35,7 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
 }: FixedLayoutProps) => {
   const platform = usePlatform();
 
-  const { scrollCompensation } = React.useContext(FixedLayoutContext);
+  const { scrollCompensation } = useNavTransition();
   const transitionOverrideStyle = React.useMemo<React.CSSProperties>(() => scrollCompensation > 0 ? {
     position: 'absolute',
     top: vertical === 'top' ? scrollCompensation : null,
