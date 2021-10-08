@@ -20,11 +20,13 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
   content,
   children,
   onShownChange,
-  shown,
+  shown: _shown,
   ...restProps
 }: ClickPopperProps) => {
-  const [computedShown, setComputedShown] = React.useState(shown);
+  const [computedShown, setComputedShown] = React.useState(_shown || false);
   const [dropdownNode, setPopperNode] = React.useState(null);
+
+  const shown = typeof _shown === 'boolean' ? _shown : computedShown;
 
   const { document } = useDOM();
 
@@ -32,29 +34,24 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
 
   const [childRef, child] = usePatchChildrenRef(children);
 
+  const setShown = (value: boolean) => {
+    if (typeof _shown !== 'boolean') {
+      setComputedShown(value);
+    }
+    typeof onShownChange === 'function' && onShownChange(value);
+  };
+
   const onDocumentClick = (e: MouseEvent) => {
     if (dropdownNode && e.target !== childRef.current && !childRef.current.contains(e.target as Node) && e.target !== dropdownNode && !dropdownNode.contains(e.target)) {
-      if (typeof shown !== 'boolean') {
-        setComputedShown(false);
-      }
-      typeof onShownChange === 'function' && onShownChange(false);
+      setShown(false);
     }
   };
 
   useGlobalEventListener(document, 'click', onDocumentClick);
 
-  React.useEffect(() => {
-    if (typeof shown === 'boolean') {
-      setComputedShown(shown);
-    }
-  }, [shown]);
-
   const onTargetClick = React.useCallback(() => {
-    if (typeof shown !== 'boolean') {
-      setComputedShown(!computedShown);
-    }
-    typeof onShownChange === 'function' && onShownChange(!computedShown);
-  }, [onShownChange, shown, computedShown]);
+    setShown(!shown);
+  }, [shown]);
 
   const targetClickEvent = useEventListener('pointerup', onTargetClick);
 
@@ -65,7 +62,7 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
   return (
     <React.Fragment>
       {child}
-      {computedShown &&
+      {shown &&
         <Popper
           {...restProps}
           targetRef={childRef}

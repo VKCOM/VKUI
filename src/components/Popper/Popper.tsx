@@ -2,10 +2,10 @@ import * as React from 'react';
 import { usePopper } from 'react-popper';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { HasRef } from '../../types';
-import { setRef } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
+import { useExternRef } from '../../hooks/useExternRef';
 import './Popper.css';
 
 type Placement = 'auto' | 'auto-start' | 'auto-end' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' |
@@ -49,10 +49,7 @@ export const Popper: React.FC<PopperProps> = ({
   const [dropdownNode, setPopperNode] = React.useState(null);
   const platform = usePlatform();
 
-  const setExternalRef = React.useCallback((el) => {
-    setRef(el, getRef);
-    setPopperNode(el);
-  }, []);
+  const setExternalRef = useExternRef(getRef, setPopperNode);
 
   const modifiers = [{
     name: 'preventOverflow',

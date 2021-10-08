@@ -3,6 +3,7 @@ import { Popper, PopperCommonProps } from '../Popper/Popper';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useTimeout } from '../../hooks/useTimeout';
 import { usePatchChildrenRef } from '../../hooks/usePatchChildrenRef';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface HoverPopperProps extends PopperCommonProps {
   /**
@@ -26,34 +27,31 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
   content,
   children,
   onShownChange,
-  shown,
+  shown: _shown,
   showDelay,
   hideDelay = 150,
   ...restProps
 }: HoverPopperProps) => {
-  const [computedShown, setComputedShown] = React.useState(shown);
+  const [computedShown, setComputedShown] = React.useState(_shown || false);
+
+  const shown = typeof _shown === 'boolean' ? _shown : computedShown;
+
+  const setShown = (value: boolean) => {
+    if (typeof _shown !== 'boolean') {
+      setComputedShown(value);
+    }
+    typeof onShownChange === 'function' && onShownChange(value);
+  };
 
   const showTimeout = useTimeout(() => {
-    if (typeof shown !== 'boolean') {
-      setComputedShown(true);
-    }
-    typeof onShownChange === 'function' && onShownChange(true);
+    setShown(true);
   }, showDelay);
 
   const hideTimeout = useTimeout(() => {
-    if (typeof shown !== 'boolean') {
-      setComputedShown(false);
-    }
-    typeof onShownChange === 'function' && onShownChange(false);
+    setShown(false);
   }, hideDelay);
 
   const [childRef, child] = usePatchChildrenRef(children);
-
-  React.useEffect(() => {
-    if (typeof shown === 'boolean') {
-      setComputedShown(shown);
-    }
-  }, [shown]);
 
   const onTargetEnter = () => {
     hideTimeout.clear();
@@ -65,10 +63,10 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
     hideTimeout.set();
   };
 
-  const targetEnterListener = useEventListener('mouseenter', onTargetEnter);
-  const targetLeaveListener = useEventListener('mouseleave', onTargetLeave);
+  const targetEnterListener = useEventListener('pointerenter', onTargetEnter);
+  const targetLeaveListener = useEventListener('pointerleave', onTargetLeave);
 
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     targetEnterListener.add(childRef.current);
     targetLeaveListener.add(childRef.current);
   }, []);
@@ -76,12 +74,10 @@ export const HoverPopper: React.FC<HoverPopperProps> = ({
   return (
     <React.Fragment>
       {child}
-      {computedShown &&
+      {shown &&
         <Popper
           {...restProps}
-          onMouseOver={() => {
-            hideTimeout.clear();
-          }}
+          onMouseOver={hideTimeout.clear}
           onMouseOut={onTargetLeave}
           getRef={getRef}
           targetRef={childRef}
