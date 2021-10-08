@@ -16,6 +16,7 @@ describe('SimpleCell', () => {
         <IconButton key="icon-w08"><Icon16MoreVertical /></IconButton>,
       ],
     }, {
+      $adaptivity: 'y',
       before: [<Avatar key="avatar" size={40} />],
       children: ['Very long children Very long children Very long children Very long children Very long children Very long children Very long children Very long children'],
       description: ['Very long description Very long description Very long description Very long description Very long ' +
