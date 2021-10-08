@@ -10,6 +10,9 @@ import { elementScrollController, globalScrollController, ScrollContext, ScrollC
 import { noop } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
 import { useKeyboardInputTracker } from '../../hooks/useKeyboardInputTracker';
+import { useInsets } from '../../hooks/useInsets';
+import { Insets } from '@vkontakte/vk-bridge';
+import './AppRoot.css';
 
 // Используйте classList, но будьте осторожны
 /* eslint-disable no-restricted-properties */
@@ -36,6 +39,7 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
   const rootRef = React.useRef<HTMLDivElement>();
   const [portalRoot, setPortalRoot] = React.useState<HTMLDivElement>(null);
   const { window, document } = useDOM();
+  const insets = useInsets();
 
   const initialized = React.useRef(false);
   if (!initialized.current) {
@@ -83,6 +87,32 @@ export const AppRoot: React.FC<AppRootProps> = withAdaptivity(({
       }
     };
   }, []);
+
+  // setup insets
+  useIsomorphicLayoutEffect(() => {
+    if (mode === 'partial') {
+      return noop;
+    }
+
+    const parent = rootRef.current.parentElement;
+
+    for (const key in insets) {
+      if (insets.hasOwnProperty(key) && typeof insets[key as keyof Insets] === 'number') {
+        const inset = insets[key as keyof Insets];
+        parent.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+        portalRoot && portalRoot.style.setProperty(`--safe-area-inset-${key}`, `${inset}px`);
+      }
+    }
+
+    return () => {
+      for (const key in insets) {
+        if (insets.hasOwnProperty(key)) {
+          parent.style.removeProperty(`--safe-area-inset-${key}`);
+          portalRoot && portalRoot.style.removeProperty(`--safe-area-inset-${key}`);
+        }
+      }
+    };
+  }, [insets, portalRoot]);
 
   // adaptivity handler
   useIsomorphicLayoutEffect(() => {

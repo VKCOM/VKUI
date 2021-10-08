@@ -4,22 +4,18 @@ import { classNames } from '../../lib/classNames';
 import { useDOM } from '../../lib/dom';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
-import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { warnOnce } from '../../lib/warnOnce';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { ActionSheetProps } from './ActionSheet';
+import { useEventListener } from '../../hooks/useEventListener';
+import { SharedDropdownProps } from './types';
 import './ActionSheet.css';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  closing: boolean;
-  onClose(): void;
-  popupDirection?: ActionSheetProps['popupDirection'];
-  toggleRef: Element;
+const warn = warnOnce('ActionSheet');
+function getEl(ref: SharedDropdownProps['toggleRef']): Element | null | undefined {
+  return ref && 'current' in ref ? ref.current : ref as Element | null | undefined;
 }
 
-const warn = warnOnce('ActionSheet');
-
-export const ActionSheetDropdownDesktop: React.FC<Props> = ({
+export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   children,
   toggleRef,
   closing,
@@ -39,14 +35,15 @@ export const ActionSheetDropdownDesktop: React.FC<Props> = ({
     pointerEvents: 'none',
   });
   useIsomorphicLayoutEffect(() => {
-    if (!toggleRef) {
+    const toggleEl = getEl(toggleRef);
+    if (!toggleEl) {
       if (process.env.NODE_ENV === 'development') {
         warn('toggleRef not passed');
       }
       return;
     }
 
-    const toggleRect = toggleRef.getBoundingClientRect();
+    const toggleRect = toggleEl.getBoundingClientRect();
     const elementRect = elementRef.current.getBoundingClientRect();
     const isTop = popupDirection === 'top' || typeof popupDirection === 'function' && popupDirection(elementRef) === 'top';
 
@@ -56,12 +53,18 @@ export const ActionSheetDropdownDesktop: React.FC<Props> = ({
     });
   }, [toggleRef]);
 
-  useGlobalEventListener(document.body, 'click', (e) => {
+  const bodyClickListener = useEventListener('click', (e) => {
     const dropdownElement = elementRef?.current;
     if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
       onClose();
     }
   });
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      bodyClickListener.add(document.body);
+    });
+  }, []);
 
   return (
     <div

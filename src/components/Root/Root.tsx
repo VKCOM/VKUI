@@ -6,6 +6,7 @@ import { ConfigProviderContext } from '../ConfigProvider/ConfigProviderContext';
 import { SplitColContext } from '../SplitCol/SplitCol';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { ScrollContext } from '../AppRoot/ScrollContext';
+import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import { useDOM } from '../../lib/dom';
@@ -45,7 +46,7 @@ const Root: React.FC<RootProps> = ({
   activeView: _activeView, onTransition,
   nav,
   ...restProps
-}) => {
+}: RootProps) => {
   const scroll = React.useContext(ScrollContext);
   const platform = usePlatform();
   const { document } = useDOM();
@@ -139,7 +140,11 @@ const Root: React.FC<RootProps> = ({
               'Root__view--show-forward': transition && viewId === activeView && !isBack,
               'Root__view--active': !transition && viewId === activeView,
             })}
-          >{view}</div>
+          >
+            <NavTransitionProvider entering={transition && viewId === activeView}>
+              {view}
+            </NavTransitionProvider>
+          </div>
         );
       })}
       <AppRootPortal>

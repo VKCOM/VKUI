@@ -11,29 +11,34 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
+import { warnOnce } from '../../lib/warnOnce';
+import { SharedDropdownProps, PopupDirection, ToggleRef } from './types';
 import './ActionSheet.css';
-
-export type PopupDirectionFunction = (elRef: React.RefObject<HTMLDivElement>) => 'top' | 'bottom';
 
 export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   text?: React.ReactNode;
+  /**
+   * Закрыть попап по клику снаружи. В v5 будет обязательным.
+   */
   onClose?: VoidFunction;
   /**
-   * Desktop only
+   * Элемент, рядом с которым вылезает попап на десктопе.
+   * Лучше передавать RefObject c current.
+   * В v5 будет обязательным.
    */
-  toggleRef: Element;
+  toggleRef?: ToggleRef;
   /**
-   * Desktop only
+   * Направление на десктопе
    */
-  popupDirection?: 'top' | 'bottom' | PopupDirectionFunction;
+  popupDirection?: PopupDirection;
   /**
-   * iOS only
+   * Только iOS. В v5 будет обязательным.
    */
-  iosCloseItem: React.ReactNode;
+  iosCloseItem?: React.ReactNode;
 }
 
-export type AnimationEndCallback = (e?: AnimationEvent) => void;
+const warn = warnOnce('ActionSheet');
 
 export const ActionSheet: React.FC<ActionSheetProps> = ({
   children,
@@ -43,7 +48,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   style,
   iosCloseItem,
   ...restProps
-}) => {
+}: ActionSheetProps) => {
   const platform = usePlatform();
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
@@ -54,6 +59,10 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     _closeAction && _closeAction();
     setCloseAction(undefined);
   };
+
+  if (process.env.NODE_ENV === 'development' && !restProps.onClose) {
+    warn('can\'t close on outer click without onClose');
+  }
 
   const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
@@ -102,7 +111,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
           closing={closing}
           onClose={onClose}
           onTransitionEnd={closing && !isDesktop ? afterClose : null}
-          {...restProps}
+          {...restProps as Omit<SharedDropdownProps, 'closing'>}
         >
           {(hasReactNode(header) || hasReactNode(text)) &&
             <header vkuiClass="ActionSheet__header">

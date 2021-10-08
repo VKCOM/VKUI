@@ -37,7 +37,6 @@ export interface ModalsStateEntry extends ModalElements {
    */
   translateYCurrent?: number;
 
-  touchStartTime?: Date;
   touchStartContentScrollTop?: number;
   touchMovePositive?: boolean | null;
   touchShiftYPercent?: number;

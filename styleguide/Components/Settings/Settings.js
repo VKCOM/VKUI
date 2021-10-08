@@ -7,10 +7,12 @@ import { ViewHeightSelect } from './ViewHeightSelect';
 import { ViewWidthSelect } from './ViewWidthSelect';
 // import { IntegrationSelect } from '../IntegrationSelect';
 import './Settings.css';
-import { Platform } from '@vkui';
+import { Platform, useAdaptivity, ViewWidth } from '@vkui';
 import { StyleGuideContext } from '../StyleGuide/StyleGuideRenderer';
 
 export const Settings = ({ layout }) => {
+  const { viewWidth } = useAdaptivity();
+  const isMobile = viewWidth <= ViewWidth.MOBILE;
   return (
     <StyleGuideContext.Consumer>
       {(context) => {
@@ -22,15 +24,18 @@ export const Settings = ({ layout }) => {
               {/*  value={context.integration}*/}
               {/* />*/}
               <PlatformSelect
+                allowVkCom={!isMobile}
                 onChange={(platform) => context.setContext({ platform })}
                 value={context.platform}
               />
-              <SchemeSelect
-                onChange={(scheme) => context.setContext({ scheme })}
-                value={context.scheme}
-                disabled={context.platform === Platform.VKCOM}
-              />
-              {layout &&
+              {!isMobile && (
+                <SchemeSelect
+                  onChange={(scheme) => context.setContext({ scheme })}
+                  value={context.scheme}
+                  disabled={context.platform === Platform.VKCOM}
+                />
+              )}
+              {layout && !isMobile &&
                 <Fragment>
                   <WebviewTypeSelect
                     onChange={(webviewType) => context.setContext({ webviewType })}
