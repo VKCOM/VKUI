@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes, RefObject, useCallback, useEffect } from 'react';
+import * as React from 'react';
 import { usePopper } from 'react-popper';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { HasRef } from '../../types';
@@ -11,7 +11,7 @@ import './Popper.css';
 type Placement = 'auto' | 'auto-start' | 'auto-end' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' |
 'right-start' | 'right-end' | 'left-start' | 'left-end' | 'top' | 'bottom' | 'left' | 'right';
 
-export interface PopperCommonProps extends HTMLAttributes<HTMLElement>, HasRef<HTMLElement> {
+export interface PopperCommonProps extends React.HTMLAttributes<HTMLElement>, HasRef<HTMLElement> {
   /**
    * По умолчанию `Popper` выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства.
    */
@@ -30,10 +30,10 @@ export interface PopperCommonProps extends HTMLAttributes<HTMLElement>, HasRef<H
 }
 
 export interface PopperProps extends PopperCommonProps {
-  targetRef?: RefObject<HTMLElement>;
+  targetRef?: React.RefObject<HTMLElement>;
 }
 
-export const Popper: FC<PopperProps> = ({
+export const Popper: React.FC<PopperProps> = ({
   targetRef,
   children,
   getRef,
@@ -49,7 +49,7 @@ export const Popper: FC<PopperProps> = ({
   const [dropdownNode, setPopperNode] = React.useState(null);
   const platform = usePlatform();
 
-  const setExternalRef = useCallback((el) => {
+  const setExternalRef = React.useCallback((el) => {
     setRef(el, getRef);
     setPopperNode(el);
   }, []);
@@ -78,7 +78,7 @@ export const Popper: FC<PopperProps> = ({
 
   const resolvedPlacement = state?.placement;
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (resolvedPlacement) {
       onPlacementChange && onPlacementChange({ placement: resolvedPlacement });
     }
