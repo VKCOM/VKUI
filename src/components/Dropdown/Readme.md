@@ -10,6 +10,7 @@ return (
     </Dropdown>
 
     <Dropdown
+      arrow
       shown={shown}
       onShownChange={setShown}
       content={
