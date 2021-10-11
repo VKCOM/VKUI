@@ -42,6 +42,7 @@ export interface PopperProps extends PopperCommonProps {
 
 const ARROW_PADDING = 10;
 const ARROW_WIDTH = 20;
+const ARROW_HEIGHT = 20;
 
 export const Popper: React.FC<PopperProps> = ({
   targetRef,
@@ -78,7 +79,7 @@ export const Popper: React.FC<PopperProps> = ({
     options: {
       offset: [
         arrow ? offsetSkidding - smallTargetOffsetSkidding : offsetSkidding,
-        arrow ? offsetDistance + 8 : offsetDistance,
+        arrow ? offsetDistance + ARROW_HEIGHT : offsetDistance,
       ],
     },
   }, {
