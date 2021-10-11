@@ -42,10 +42,10 @@
   opacity: .4;
 }
 
-.Button--lvl-primary[disabled],
-.Button--lvl-secondary[disabled],
+.Button--lvl-primary[disabled]:not(.Button--clr-positive):not(.Button--clr-negative):not(.Button--clr-overlay),
+.Button--lvl-secondary[disabled]:not(.Button--clr-overlay),
 .Button--lvl-tertiary[disabled],
-.Button--lvl-outline[disabled] {
+.Button--lvl-outline[disabled]:not(.Button--clr-overlay) {
   opacity: .64;
 }
 
