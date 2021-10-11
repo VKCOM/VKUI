@@ -63,7 +63,7 @@ export const defaultConfigProviderProps = {
   scheme: Scheme.BRIGHT_LIGHT,
   transitionMotionEnabled: true,
   platform: platform(),
-  tokens: 'appereance',
+  tokens: 'appearance',
   // appearance is auto-detected by default
   // appearance: Appearance.LIGHT,
 };

@@ -104,7 +104,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     let stylesheet = '';
 
     switch (tokens) {
-      case 'appereance':
+      case 'appearance':
         break;
       case 'vkui-tokens':
         stylesheet = compileStyles('css', expandAll(vkBaseTheme).pixelifyTheme);

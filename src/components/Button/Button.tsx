@@ -78,7 +78,7 @@ interface ResolvedButtonAppereance {
  * Обработка (в будущем) устаревших режимов,
  * для обратной совместимости кнопок с новыми токенами
  */
-function resolveButtonAppereance(
+function resolveButtonAppearance(
   mode: VKUIButtonProps['mode'],
   color: VKUIButtonProps['color'],
 ): ResolvedButtonAppereance {
@@ -149,7 +149,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
     resolvedColor,
     resolvedMode,
     isFallback,
-  } = resolveButtonAppereance(mode, color);
+  } = resolveButtonAppearance(mode, color);
 
   return (
     <Tappable
