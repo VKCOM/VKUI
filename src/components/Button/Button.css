@@ -165,10 +165,16 @@
 /*
   Buttons text colors
 */
-.Button--lvl-primary.Button--clr-accent,
-.Button--lvl-primary.Button--clr-negative,
-.Button--lvl-primary.Button--clr-positive {
+.Button--lvl-primary.Button--clr-accent {
   color: var(--vkui--color_text_contrast, var(--button_primary_foreground));
+}
+
+.Button--lvl-primary.Button--clr-negative {
+  color: var(--vkui--color_text_contrast, var(--white));
+}
+
+.Button--lvl-primary.Button--clr-positive {
+  color: var(--vkui--color_text_contrast, var(--button_commerce_foreground));
 }
 
 .Button--lvl-primary.Button--clr-accent.Button--hover,
@@ -186,10 +192,16 @@
 /*
   Text colors of background-colored buttons
 */
-.Button--lvl-tertiary.Button--clr-accent,
-.Button--lvl-secondary.Button--clr-accent,
-.Button--lvl-outline.Button--clr-accent {
+.Button--lvl-tertiary.Button--clr-accent {
   color: var(--vkui--color_text_accent, var(--button_tertiary_foreground));
+}
+
+.Button--lvl-secondary.Button--clr-accent {
+  color: var(--vkui--color_text_accent, var(--button_secondary_foreground));
+}
+
+.Button--lvl-outline.Button--clr-accent {
+  color: var(--vkui--color_text_accent, var(--button_outline_foreground));
 }
 
 .Button--lvl-tertiary.Button--clr-accent.Button--hover,
