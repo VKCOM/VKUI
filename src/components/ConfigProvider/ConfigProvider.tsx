@@ -118,7 +118,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   }, [tokens]);
 
   const realScheme = useSchemeDetector(target, scheme);
-  const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
+  const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), tokens: tokens, ...config });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
