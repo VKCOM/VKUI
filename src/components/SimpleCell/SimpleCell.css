@@ -47,6 +47,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   margin-top: 3px;
+  display: block;
 }
 
 .SimpleCell > .Avatar--sz-32 ~ .SimpleCell__main .SimpleCell__description,
@@ -67,6 +68,7 @@
   color: inherit;
   text-overflow: ellipsis;
   overflow: hidden;
+  display: block;
 }
 
 .SimpleCell__badge {
