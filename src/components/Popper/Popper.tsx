@@ -11,17 +11,24 @@ import './Popper.css';
 type Placement = 'auto' | 'auto-start' | 'auto-end' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' |
 'right-start' | 'right-end' | 'left-start' | 'left-end' | 'top' | 'bottom' | 'left' | 'right';
 
+type Modifier = {
+  name: string;
+  options?: {
+    [index: string]: any;
+  };
+};
+
 export interface PopperCommonProps extends React.HTMLAttributes<HTMLElement>, HasRef<HTMLElement> {
   /**
-   * По умолчанию `Popper` выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства.
+   * По умолчанию компонент выберет наилучшее расположение сам. Но его можно задать извне с помощью этого свойства
    */
   placement?: Placement;
   /**
-   * Отступ от `targetNode` по вспомогательной оси
+   * Отступ по вспомогательной оси
    */
   offsetSkidding?: number;
   /**
-   * Отступ от `targetNode` по главной оси
+   * Отступ по главной оси
    */
   offsetDistance?: number;
   arrow?: boolean;
@@ -33,6 +40,9 @@ export interface PopperProps extends PopperCommonProps {
   targetRef?: React.RefObject<HTMLElement>;
 }
 
+const ARROW_PADDING = 10;
+const ARROW_WIDTH = 20;
+
 export const Popper: React.FC<PopperProps> = ({
   targetRef,
   children,
@@ -42,21 +52,34 @@ export const Popper: React.FC<PopperProps> = ({
   arrow,
   arrowClassName,
   offsetDistance = 8,
-  offsetSkidding,
+  offsetSkidding = 0,
   style: compStyles,
   ...restProps
 }: PopperProps) => {
   const [dropdownNode, setPopperNode] = React.useState(null);
+  const [smallTargetOffsetSkidding, setSmallTargetOffsetSkidding] = React.useState(0);
   const platform = usePlatform();
 
   const setExternalRef = useExternRef(getRef, setPopperNode);
 
-  const modifiers = [{
+  React.useEffect(() => {
+    if (arrow) {
+      const targetWidth = targetRef.current.offsetWidth;
+      if (targetWidth < ARROW_WIDTH + 2 * ARROW_PADDING) {
+        setSmallTargetOffsetSkidding(ARROW_PADDING + ARROW_WIDTH / 2);
+      }
+    }
+  }, [arrow]);
+
+  const modifiers: Modifier[] = [{
     name: 'preventOverflow',
   }, {
     name: 'offset',
     options: {
-      offset: [offsetSkidding, arrow ? offsetDistance + 8 : offsetDistance],
+      offset: [
+        arrow ? offsetSkidding - smallTargetOffsetSkidding : offsetSkidding,
+        arrow ? offsetDistance + 8 : offsetDistance,
+      ],
     },
   }, {
     name: 'flip',
@@ -65,6 +88,9 @@ export const Popper: React.FC<PopperProps> = ({
   if (arrow) {
     modifiers.push({
       name: 'arrow',
+      options: {
+        padding: ARROW_PADDING,
+      },
     });
   }
 
@@ -89,7 +115,16 @@ export const Popper: React.FC<PopperProps> = ({
       style={{ ...compStyles, ...styles.popper }}
       {...attributes.popper}
     >
-      {arrow && <div vkuiClass={classNames('Popper__arrow', arrowClassName)} data-popper-arrow={true} {...attributes.arrow} style={styles.arrow} />}
+      {arrow && (
+        <div
+          vkuiClass="Popper__arrow"
+          data-popper-arrow={true}
+          {...attributes.arrow}
+          style={styles.arrow}
+        >
+          <div vkuiClass="Popper__arrow-in" className={arrowClassName} />
+        </div>
+      )}
       <div vkuiClass="Popper__content">
         {children}
       </div>

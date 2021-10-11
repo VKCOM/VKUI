@@ -109,10 +109,9 @@ module.exports = {
         name: 'Poppers',
         components: () => [
           '../src/components/Popper/Popper.tsx',
-          '../src/components/ClickPopper/ClickPopper.tsx',
-          '../src/components/HoverPopper/HoverPopper.tsx',
           '../src/components/Dropdown/Dropdown.tsx',
-          '../src/components/ContextualTooltip/ContextualTooltip.tsx',
+          '../src/components/TextTooltip/TextTooltip.tsx',
+          '../src/components/RichTooltip/RichTooltip.tsx',
           '../src/components/Tooltip/Tooltip.tsx',
         ],
       }, {

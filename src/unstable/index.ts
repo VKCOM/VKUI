@@ -7,14 +7,11 @@ export type { ChipsSelectProps } from './../components/ChipsSelect/ChipsSelect';
 export { Dropdown } from '../components/Dropdown/Dropdown';
 export type { DropdownProps } from '../components/Dropdown/Dropdown';
 
-export { ContextualTooltip } from '../components/ContextualTooltip/ContextualTooltip';
-export type { ContextualTooltipProps } from '../components/ContextualTooltip/ContextualTooltip';
+export { TextTooltip } from '../components/TextTooltip/TextTooltip';
+export type { TextTooltipProps } from '../components/TextTooltip/TextTooltip';
 
-export { ClickPopper } from '../components/ClickPopper/ClickPopper';
-export type { ClickPopperProps } from '../components/ClickPopper/ClickPopper';
-
-export { HoverPopper } from '../components/HoverPopper/HoverPopper';
-export type { HoverPopperProps } from '../components/HoverPopper/HoverPopper';
+export { RichTooltip } from '../components/RichTooltip/RichTooltip';
+export type { RichTooltipProps } from '../components/RichTooltip/RichTooltip';
 
 export { Popper } from '../components/Popper/Popper';
 export type { PopperProps } from '../components/Popper/Popper';

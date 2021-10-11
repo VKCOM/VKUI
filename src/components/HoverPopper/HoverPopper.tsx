@@ -7,10 +7,16 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface HoverPopperProps extends PopperCommonProps {
   /**
-   * Содержимое `HoverPopper`
+   * Содержимое тултипа
    */
   content?: React.ReactNode;
+  /**
+   * Если передан, то тултип будет показыван/скрыт в зависимости от значения свойства
+   */
   shown?: boolean;
+  /**
+   * Вызывается при каждом изменении видимости тултипа
+   */
   onShownChange?: (shown: boolean) => void;
   /**
    * Количество миллисекунд, после которых произойдет показ дропдауна

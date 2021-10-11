@@ -1,16 +1,16 @@
-Может открываться при клики или наведении мыши на `children`. Создан на базе [HoverPopper](#/HoverPopper) и [ClickPopper](#/ClickPopper).
+Может открываться при клике или наведении мыши на `children`. Ограничений по содержимому нет. Предназначен для 
+отрисовки части интерфейса в выпадающем окне.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
 const [shown, setShown] = React.useState(true);
 
 return (
-  <div>
+  <React.Fragment>
     <Dropdown action="hover" placement="right" content={<Div><Text>Привет</Text></Div>}>
       <Button style={{ margin: 50 }}>Наведи</Button>
     </Dropdown>
 
     <Dropdown
-      arrow
       shown={shown}
       onShownChange={setShown}
       content={
@@ -35,6 +35,6 @@ return (
         Кликни
       </Button>
     </Dropdown>
-  </div>
+  </React.Fragment>
 )
 ```

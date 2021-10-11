@@ -3,7 +3,7 @@
   z-index: 1;
 }
 
-.Popper__arrow::after {
+.Popper__arrow-in {
   content: '';
   display: block;
   width: 20px;
@@ -18,7 +18,7 @@
   top: 100%;
 }
 
-[data-popper-placement^="top"] .Popper__arrow::after {
+[data-popper-placement^="top"] .Popper__arrow-in {
   transform: rotate(180deg);
 }
 
@@ -26,7 +26,7 @@
   left: calc(100% - 6px);
 }
 
-[data-popper-placement^="left"] .Popper__arrow::after {
+[data-popper-placement^="left"] .Popper__arrow-in {
   transform: rotate(90deg);
 }
 
@@ -34,6 +34,6 @@
   right: calc(100% - 6px);
 }
 
-[data-popper-placement^="right"] .Popper__arrow::after {
+[data-popper-placement^="right"] .Popper__arrow-in {
   transform: rotate(270deg);
 }

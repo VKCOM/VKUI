@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { HoverPopper, HoverPopperProps } from '../HoverPopper/HoverPopper';
-import { ClickPopper, ClickPopperProps } from '../ClickPopper/ClickPopper';
 import { getClassName } from '../../helpers/getClassName';
 import { usePlatform } from '../../hooks/usePlatform';
+import { useAppearance } from '../../hooks/useAppearance';
 import { classNames } from '../../lib/classNames';
-import './Dropdown.css';
+import { prefixClass } from '../../lib/prefixClass';
+import './RichTooltip.css';
 
-export interface DropdownProps extends HoverPopperProps, ClickPopperProps {
-  action?: 'click' | 'hover';
+export interface RichTooltipProps extends HoverPopperProps {
   /**
    * @ignore
    * Можно было бы использовать Omit, но react-docgen-typescript в таком случае выкидывает из документации все свойства наследуемого интерфейса
@@ -18,23 +18,24 @@ export interface DropdownProps extends HoverPopperProps, ClickPopperProps {
    * @ignore
    */
   arrowClassName?: HoverPopperProps['arrowClassName'];
+  text?: React.ReactNode;
+  header?: React.ReactNode;
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({ action = 'click', ...popperProps }: DropdownProps) => {
+export const RichTooltip: React.FC<RichTooltipProps> = ({ children, ...popperProps }: RichTooltipProps) => {
   const platform = usePlatform();
-
-  let Component;
-
-  switch (action) {
-    case 'click':
-      Component = ClickPopper;
-      break;
-    case 'hover':
-      Component = HoverPopper;
-      break;
-  }
+  const appearance = useAppearance();
 
   return (
-    <Component vkuiClass={classNames(getClassName('Dropdown', platform))} {...popperProps} />
+    <HoverPopper
+      vkuiClass={classNames(getClassName('RichTooltip', platform), {
+        [`RichTooltip--${appearance}`]: !!appearance,
+      })}
+      arrow
+      arrowClassName={prefixClass('RichTooltip__arrow')}
+      {...popperProps}
+    >
+      {children}
+    </HoverPopper>
   );
 };
