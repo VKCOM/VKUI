@@ -23,7 +23,7 @@ export interface VKUIButtonProps extends HasAlign {
   loading?: boolean;
 }
 
-export interface ButtonProps extends Omit<Omit<TappableProps, 'size'>, 'color'>, VKUIButtonProps {}
+export interface ButtonProps extends Omit<TappableProps, 'size' | 'color'>, VKUIButtonProps {}
 
 interface ButtonTypographyProps {
   size: ButtonProps['size'];
