@@ -7,7 +7,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import './File.css';
 
 export interface FileProps extends
-  Omit<VKUIButtonProps, 'size' | 'type'>,
+  Omit<VKUIButtonProps, 'size' | 'type' | 'color'>,
   Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onClick' | 'type'>,
   Pick<React.HTMLAttributes<HTMLElement>, 'onClick'>,
   HasRef<HTMLInputElement>,
