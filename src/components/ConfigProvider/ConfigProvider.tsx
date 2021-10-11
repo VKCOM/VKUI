@@ -14,12 +14,21 @@ import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { noop } from '../../lib/utils';
 import { warnOnce } from '../../lib/warnOnce';
+import { lightTheme as vkBaseTheme } from '@vkontakte/vkui-tokens/themeDescriptions/base/vk';
+import { compileStyles } from '@vkontakte/vkui-tokens/build/compilers/styles/compileStyles';
+import { expandAll } from '@vkontakte/vkui-tokens/build/expandTheme';
 
 export interface ConfigProviderProps extends ConfigProviderContextInterface {
   /**
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
+  /**
+   * Источник токенов, по-умолчанию `appereance`.
+   *
+   * **Если вы не знаете что это такое, то лучше не трогайте!**
+   */
+  tokens?: string;
 }
 
 function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
@@ -70,6 +79,7 @@ const warn = warnOnce('ConfigProvider');
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
+  tokens,
   ...config
 }: ConfigProviderProps & { children?: React.ReactNode; schemeTarget?: HTMLElement }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
@@ -86,6 +96,26 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     target.setAttribute('scheme', scheme);
     return () => target.removeAttribute('scheme');
   }, [scheme]);
+
+  useIsomorphicLayoutEffect(() => {
+    const style = document.createElement('style');
+    document.head.appendChild(style);
+
+    let stylesheet = '';
+
+    switch (tokens) {
+      case 'appereance':
+        break;
+      case 'vkui-tokens':
+        stylesheet = compileStyles('css', expandAll(vkBaseTheme).pixelifyTheme);
+        break;
+    }
+    style.appendChild(document.createTextNode(stylesheet));
+
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, [tokens]);
 
   const realScheme = useSchemeDetector(target, scheme);
   const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
