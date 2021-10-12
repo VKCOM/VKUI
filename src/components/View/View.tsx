@@ -480,7 +480,6 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
                   'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
                 })}
                 ref={(el) => this.panelNodes[panelId] = el}
-                data-vkui-active-panel={panelId === activePanel ? 'true' : ''}
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >

@@ -532,7 +532,6 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
                   'View__panel--swipe-back-failed': swipeBackResult === SwipeBackResults.fail,
                 })}
                 ref={(el) => this.panelNodes[panelId] = el}
-                data-vkui-active-panel={panelId === activePanel ? 'true' : ''}
                 style={this.calcPanelSwipeStyles(panelId)}
                 key={panelId}
               >
