@@ -13,6 +13,15 @@ describe('PanelHeaderContext', () => {
     beforeEach(() => jest.useFakeTimers());
     afterEach(() => jest.useRealTimers());
 
+    it('does not close on mount', () => {
+      render((
+        <PanelHeaderContext opened={false} onClose={noop}>
+          <div data-testid="xxx" />
+        </PanelHeaderContext>
+      ));
+      expect(screen.queryByTestId('xxx')).toBeNull();
+    });
+
     it('on desktop outer click', () => {
       const onClose = jest.fn();
       render((

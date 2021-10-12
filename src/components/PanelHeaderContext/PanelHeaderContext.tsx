@@ -24,14 +24,14 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
 }) => {
   const { document } = useDOM();
   const platform = usePlatform();
-  const [closing, setClosing] = React.useState(false);
+  const [visible, setVisible] = React.useState(opened);
+  const closing = visible && !opened;
   const { viewWidth } = useAdaptivity();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
   const elementRef = React.useRef<HTMLDivElement>();
 
-  // start closing on "opened" change
   useIsomorphicLayoutEffect(() => {
-    !opened && setClosing(true);
+    opened && setVisible(true);
   }, [opened]);
 
   // start closing on outer click
@@ -42,7 +42,7 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
   }));
 
   // fallback onAnimationEnd when animationend not supported
-  const onAnimationEnd = () => setClosing(false);
+  const onAnimationEnd = () => setVisible(false);
   const animationFallback = useTimeout(onAnimationEnd, 200);
   React.useEffect(() => closing ? animationFallback.set() : animationFallback.clear(), [closing]);
 
@@ -54,10 +54,10 @@ export const PanelHeaderContext: React.FC<PanelHeaderContextProps> = ({
     })} vertical="top">
       <div vkuiClass="PanelHeaderContext__in" ref={elementRef} onAnimationEnd={closing ? onAnimationEnd : null}>
         <div vkuiClass="PanelHeaderContext__content">
-          {(opened || closing) && children}
+          {visible && children}
         </div>
       </div>
-      {!isDesktop && (opened || closing) && <div onClick={onClose} vkuiClass="PanelHeaderContext__fade" />}
+      {!isDesktop && visible && <div onClick={onClose} vkuiClass="PanelHeaderContext__fade" />}
     </FixedLayout>
   );
 };
