@@ -1,6 +1,6 @@
 .Input {
   position: relative;
-  line-height: 19px;
+  line-height: 20px;
   font-size: 16px;
 }
 
@@ -22,7 +22,7 @@
   appearance: none;
   text-overflow: ellipsis;
   height: 42px;
-  line-height: 19px;
+  line-height: 20px;
   font-size: 16px;
   color: var(--text_primary);
   padding: 11px;
