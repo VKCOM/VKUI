@@ -67,6 +67,7 @@ const Root: React.FC<RootProps> = ({
     if (panel !== activeView) {
       const viewIds = views.map((view) => getNavId(view.props, warn));
       const isBack = viewIds.indexOf(panel) < viewIds.indexOf(activeView);
+      scrolls[activeView] = scroll.getScroll().y;
       _setState({ activeView: panel, prevView: activeView, transition: true, isBack });
     }
   };
@@ -78,21 +79,10 @@ const Root: React.FC<RootProps> = ({
 
   // Нужен переход
   useIsomorphicLayoutEffect(() => transitionTo(_activeView), [_activeView]);
-  // scroll restoration
-  useIsomorphicLayoutEffect(() => {
-    if (transition) {
-      // save scroll
-      scrolls[prevView] = scroll.getScroll().y;
-      setPanelScroll(viewNodes[prevView], scrolls[prevView]);
-      isBack && setPanelScroll(viewNodes[activeView], scrolls[activeView]);
-    } else if (prevView) {
-      // Закончился переход
-      scroll.scrollTo(0, isBack ? scrolls[activeView] : 0);
-    }
-  }, [transition]);
-  // onTransition
   useIsomorphicLayoutEffect(() => {
     if (!transition && prevView) {
+      // Закончился переход
+      scroll.scrollTo(0, isBack ? scrolls[activeView] : 0);
       onTransition && onTransition({ isBack, from: prevView, to: activeView });
     }
   }, [transition]);
@@ -128,6 +118,7 @@ const Root: React.FC<RootProps> = ({
           return null;
         }
         const isTransitionTarget = transition && viewId === (isBack ? prevView : activeView);
+        const compensateScroll = transition && (viewId === prevView || isBack && viewId === activeView);
         return (
           <div
             key={viewId}
@@ -142,7 +133,9 @@ const Root: React.FC<RootProps> = ({
             })}
           >
             <NavTransitionProvider entering={transition && viewId === activeView}>
-              {view}
+              <div style={{ marginTop: compensateScroll ? -scrolls[viewId] : null }}>
+                {view}
+              </div>
             </NavTransitionProvider>
           </div>
         );
@@ -156,9 +149,3 @@ const Root: React.FC<RootProps> = ({
 };
 
 export default Root;
-
-function setPanelScroll(e: HTMLElement, scroll: number) {
-  // eslint-disable-next-line no-restricted-properties
-  const pan: HTMLElement | null = e.querySelector('[data-vkui-active-panel=true]');
-  pan && (pan.scrollTop = scroll);
-}
