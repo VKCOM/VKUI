@@ -1,15 +1,15 @@
 Тултип, открывающийся при наведеннии мыши на `children`. В отличие от [TextTooltip](#/TextTooltip), имеет меньше ограничений 
-по содержимому тултипа. Компонент всё ещё предназначен для информирования пользователей, но внутри допускаются кнопки, ссылки, картинки.
+по содержимому. Компонент всё ещё предназначен для информирования пользователей, но внутри допускаются кнопки, ссылки, картинки.
 
 ```jsx { "props": { "layout": false, "iframe": false } }
   <Checkbox style={{ marginTop: 10 }}>
     Специальные возможности
     <RichTooltip style={{ maxWidth: 320 }} content={
-      <Caption weight="normal" level="1" style={{ padding: 10 }}>
+      <Subhead weight="regular" style={{ padding: '8px 12px', color: 'var(--text_primary)' }}>
         Если включить эту настройку, элементы управления на сайте будут определены и озвучены синтезатором речи.
         <br/><br/>
         Настройка повышает доступность сайта и подходит для пользователей с ограниченными возможностями.
-      </Caption>
+      </Subhead>
     }>
       <Icon16HelpOutline style={{ display: 'inline-block', verticalAlign: 'middle', position: 'relative', top: -1, color: 'var(--icon_secondary)' }} />
     </RichTooltip>
