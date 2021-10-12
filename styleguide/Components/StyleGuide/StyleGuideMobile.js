@@ -1,6 +1,7 @@
 import { View, Panel, PanelHeader, PanelHeaderClose, PanelHeaderButton, useAppearance } from '@vkui';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Icon28LogoVk, Icon28MenuOutline, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
+import { Icon28MenuOutline, Icon28MoonOutline, Icon28SunOutline } from '@vkontakte/icons';
+import { Logo } from '../Logo/Logo';
 import './StyleGuideMobile.css';
 
 const StyleGuideMobileHeader = ({ left, switchStyleGuideScheme }) => {
@@ -16,8 +17,7 @@ const StyleGuideMobileHeader = ({ left, switchStyleGuideScheme }) => {
       }
     >
       <div className="StyleGuideMobile__header">
-        <Icon28LogoVk />
-        <span className="StyleGuideMobile__headerText">ui</span>
+        <Logo />
       </div>
     </PanelHeader>
   );

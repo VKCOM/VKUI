@@ -24,10 +24,6 @@
 .StyleGuideHeader__logo {
   display: flex;
   align-items: center;
-  font-size: 21px;
-  font-family: var(--font-tt);
-  font-weight: 500;
-  color: var(--accent);
   text-decoration: none;
 }
 
