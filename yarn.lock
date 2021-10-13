@@ -2541,10 +2541,10 @@
   resolved "https://registry.yarnpkg.com/@vkontakte/vkjs/-/vkjs-0.22.1.tgz#ab740365626873fd7940c3b430d438d5bf33b110"
   integrity sha512-gDlJYAIIH4K0L8Qz2bE/cIdz5XWSwvEVytkK4mXC7lGTVTF/PuidUb8MZ792AaqTxdoASOoBD1Jy89q/GjaOSg==
 
-"@vkontakte/vkui-tokens@^4.0.0-rc.5":
-  version "4.0.0-rc.5"
-  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.0.0-rc.5.tgz#f5af669a95f94f71896dfb6dfc4654612a6df9eb"
-  integrity sha512-JoVqwAVvOLJfa43JKwGdJkzjAKaWgQ+7gGF7DkdwER3CQPOFhRGfyucPt4/6BTyQIr06cSaxJLgNL2NPNOaS5Q==
+"@vkontakte/vkui-tokens@4.0.0-rc.55-0":
+  version "4.0.0-rc.55-0"
+  resolved "https://registry.yarnpkg.com/@vkontakte/vkui-tokens/-/vkui-tokens-4.0.0-rc.55-0.tgz#d761d1bed2f0cf1027e1771bdae859e2d82bee99"
+  integrity sha512-Hyw27sw2YBm2oasIYy2InKYcc2JVe3EKiE+N3GBUglWS1FjxXYjabcgUo8szTVsbsQCGKU29x0DqJMaJ0mWXzQ==
   dependencies:
     csstype "3.0.8"
 
