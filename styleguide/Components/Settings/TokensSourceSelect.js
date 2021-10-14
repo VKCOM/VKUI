@@ -5,10 +5,7 @@ export const TokensSourceSelect = ({ onChange, value, ...restProps }) => (
   <Setting
     {...restProps}
     label="Источник токенов"
-    options={[
-      { value: 'appearance', title: 'appearance' },
-      { value: 'vkui-tokens', title: 'vkui-tokens' },
-    ]}
+    options={['appereance', 'vkBaseLight', 'paradigmBaseLight', 'paradigmBaseDark']}
     onChange={onChange}
     value={value}
   >
