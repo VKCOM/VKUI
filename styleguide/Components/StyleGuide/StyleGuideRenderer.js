@@ -24,6 +24,7 @@ export const StyleGuideContext = React.createContext({
   height: SMALL_HEIGHT,
   hasMouse: true,
   styleguideScheme: Scheme.BRIGHT_LIGHT,
+  tokens: 'appearance',
 });
 
 let initialState = {
@@ -34,6 +35,7 @@ let initialState = {
   height: SMALL_HEIGHT,
   hasMouse: true,
   styleguideScheme: Scheme.BRIGHT_LIGHT,
+  tokens: 'appearance',
 };
 
 try {

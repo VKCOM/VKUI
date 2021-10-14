@@ -54,7 +54,6 @@ export interface ConfigProviderContextInterface {
    * Платформа
    */
   platform?: PlatformType;
-  tokens?: string;
 }
 
 export const defaultConfigProviderProps = {
@@ -63,7 +62,6 @@ export const defaultConfigProviderProps = {
   scheme: Scheme.BRIGHT_LIGHT,
   transitionMotionEnabled: true,
   platform: platform(),
-  tokens: 'appearance',
   // appearance is auto-detected by default
   // appearance: Appearance.LIGHT,
 };

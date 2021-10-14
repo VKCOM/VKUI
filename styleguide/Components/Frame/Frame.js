@@ -4,6 +4,13 @@ import { Appearance, Scheme } from '@vkui/components/ConfigProvider/ConfigProvid
 import { DOMContext } from '@vkui/lib/dom';
 import ReactFrame from 'react-frame-component';
 import './Frame.css';
+import { compileStyles } from '@vkontakte/vkui-tokens/build/compilers/styles/compileStyles';
+import { expandAll } from '@vkontakte/vkui-tokens/build/expandTheme';
+import { lightTheme as vkBaseThemeLight } from '@vkontakte/vkui-tokens/themeDescriptions/base/vk';
+import {
+  darkTheme as paradigmBaseThemeDark,
+  lightTheme as paradigmBaseThemeLight,
+} from '@vkontakte/vkui-tokens/themeDescriptions/base/paradigm';
 
 class FrameDomProvider extends React.Component {
   static contextTypes = {
@@ -13,9 +20,41 @@ class FrameDomProvider extends React.Component {
 
   static propTypes = {
     appearance: PropTypes.oneOf(Object.values(Appearance)),
+    tokens: PropTypes.string.isRequired,
   };
 
   state = { ready: false };
+
+  setTokens = (tokens) => {
+    // checking if tokens style element is present
+    const tokensStyleEl = this.context.document.head.querySelectorAll('.vkui-tokens-controller')[0];
+    if (tokensStyleEl) {
+      // removing it in case if present
+      this.context.document.head.removeChild(tokensStyleEl);
+    }
+
+    // adding tokens styles
+    const style = document.createElement('style');
+    style.classList.add('vkui-tokens-controller');
+    let stylesheet = '';
+
+    switch (tokens) {
+      case 'vkBaseLight':
+        stylesheet = compileStyles('css', expandAll(vkBaseThemeLight).pixelifyTheme);
+        break;
+      case 'paradigmBaseLight':
+        stylesheet = compileStyles('css', expandAll(paradigmBaseThemeLight).pixelifyTheme);
+        break;
+      case 'paradigmBaseDark':
+        stylesheet = compileStyles('css', expandAll(paradigmBaseThemeDark).pixelifyTheme);
+        break;
+      default:
+        break;
+    }
+
+    style.appendChild(document.createTextNode(stylesheet));
+    this.context.document.head.appendChild(style);
+  }
 
   setAppearance = (appearance) => {
     this.context.document.documentElement.style.setProperty('color-scheme', appearance);
@@ -52,6 +91,7 @@ class FrameDomProvider extends React.Component {
       }
     });
     this.context.document.head.appendChild(frameAssets);
+    this.setTokens(this.props.tokens);
     this.setState({ ready: true });
     this.setAppearance(this.props.appearance);
   }
@@ -63,6 +103,9 @@ class FrameDomProvider extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.appearance !== this.props.appearance) {
       this.setAppearance(this.props.appearance);
+    }
+    if (prevProps.tokens !== this.props.tokens) {
+      this.setTokens(this.props.tokens);
     }
   }
 
@@ -90,7 +133,7 @@ const initialFrameContent = `
 </html>
 `;
 
-export const Frame = ({ children, width, height, scheme }) => {
+export const Frame = ({ children, width, height, scheme, tokens }) => {
   return (
     <ReactFrame
       mountTarget="body"
@@ -98,7 +141,7 @@ export const Frame = ({ children, width, height, scheme }) => {
       style={{ height, width }}
       initialContent={initialFrameContent}
     >
-      <FrameDomProvider appearance={scheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT}>
+      <FrameDomProvider tokens={tokens} appearance={scheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT}>
         {children}
       </FrameDomProvider>
     </ReactFrame>
