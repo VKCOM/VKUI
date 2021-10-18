@@ -16,6 +16,7 @@ import Caption from '../Typography/Caption/Caption';
 import { warnOnce } from '../../lib/warnOnce';
 import Spinner from '../Spinner/Spinner';
 import { defaultFilterFn } from '../../lib/select';
+import { is } from '../../lib/is';
 import './CustomSelect.css';
 
 const findIndexAfter = (options: CustomSelectOptionInterface[], startIndex = -1) => {
@@ -451,7 +452,8 @@ class CustomSelect extends React.Component<CustomSelectProps, CustomSelectState>
   handleKeyUp = debounce(this.resetKeyboardInput, 1000);
 
   componentDidUpdate(prevProps: CustomSelectProps) {
-    if (prevProps.value !== this.props.value || prevProps.options !== this.props.options) {
+    // Внутри useEffect и так is, можно убрать
+    if (!is(prevProps.value, this.props.value) || prevProps.options !== this.props.options) {
       if (process.env.NODE_ENV === 'development') {
         checkOptionsValueType(this.props.options);
       }
