@@ -35,7 +35,7 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --button_secondary_background_highlighted: #656565;
   --button_secondary_destructive_background: #555555;
   --button_secondary_destructive_background_highlighted: rgba(85, 85, 85, 0.60);
-  --button_secondary_destructive_foreground: #ffd6cc;
+  --button_secondary_destructive_foreground: #ff5c5c;
   --button_secondary_destructive_foreground_highlighted: rgba(230, 70, 70, 0.16);
   --button_secondary_foreground: #e1e3e6;
   --button_secondary_foreground_highlighted: #e1e3e6;
@@ -59,7 +59,7 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --counter_prominent_text: #ffffff;
   --counter_secondary_background: #828282;
   --counter_secondary_text: #222222;
-  --destructive: #ffd6cc;
+  --destructive: #ff5c5c;
   --dynamic_blue: #5181b8;
   --dynamic_gray: #aeb7c2;
   --dynamic_green: #4bb34b;
@@ -162,7 +162,7 @@ body[scheme="vkcom_dark"], [scheme="vkcom_dark"] {
   --landing_text_primary: #e1e3e6;
   --landing_text_secondary: #828282;
   --landing_text_title: #ffffff;
-  --like_text_tint: #ffd6cc;
+  --like_text_tint: #ff5c5c;
   --link_alternate: #939393;
   --loader_background: #555555;
   --loader_tint: #828282;

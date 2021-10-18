@@ -42,7 +42,7 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --button_tertiary_background: rgba(0, 0, 0, 0.00);
   --button_tertiary_foreground: #2a5885;
   --cell_button_foreground: #2a5885;
-  --content_negative_background: #ffd6cc;
+  --content_negative_background: #ff5c5c;
   --content_placeholder_icon: #99a2ad;
   --content_placeholder_text: #818c99;
   --content_positive_background: #def0d3;
@@ -71,7 +71,7 @@ body[scheme="vkcom_light"], [scheme="vkcom_light"] {
   --feed_recommended_friend_promo_background: #5181b8;
   --field_background: #f7f8fa;
   --field_border: #dce1e6;
-  --field_error_background: #ffd6cc;
+  --field_error_background: #ff5c5c;
   --field_error_border: #e64646;
   --field_text_placeholder: #818c99;
   --field_valid_border: #4bb34b;
