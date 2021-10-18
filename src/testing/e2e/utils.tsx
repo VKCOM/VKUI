@@ -1,4 +1,4 @@
-import { ComponentType, Fragment, isValidElement, FC } from 'react';
+import { ComponentType, FC, Fragment, isValidElement } from 'react';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { screenshot } from '@react-playwright';
 // Импорты из отдельных модулей помогают jest отслеживать зависимости
@@ -9,9 +9,9 @@ import { Scheme } from '../../components/ConfigProvider/ConfigProviderContext';
 import AdaptivityProvider, {
   AdaptivityProviderProps,
   DESKTOP_SIZE,
-  TABLET_SIZE,
-  SMALL_TABLET_SIZE,
   MOBILE_SIZE,
+  SMALL_TABLET_SIZE,
+  TABLET_SIZE,
 } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { SizeType, ViewWidth } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProps, withAdaptivity } from '../../hoc/withAdaptivity';
@@ -130,6 +130,7 @@ export function describeScreenshotFuzz<Props>(
       const AdaptiveComponent = withAdaptivity(Component, { sizeX: true, sizeY: true });
 
       (isVkCom ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
+        scheme = scheme === Scheme.VKCOM_LIGHT ? Scheme.VKCOM : scheme; // Снести после мержа 1978
         it(`${scheme}${adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ''}`, async () => {
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>
