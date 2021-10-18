@@ -9,7 +9,7 @@ import {
   ConfigProviderContext,
   ConfigProviderContextInterface,
   Scheme,
-  WebviewType
+  WebviewType,
 } from './ConfigProviderContext';
 
 describe('ConfigProvider', () => {

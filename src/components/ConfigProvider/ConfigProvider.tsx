@@ -54,11 +54,11 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Sche
     return scheme;
   }
   if (scheme === Scheme.VKCOM) {
-    warn(`scheme "${Scheme.VKCOM}" is deprecated and will be removed in 5.0.0. Use "${Scheme.VKCOM_LIGHT}" instead`);
+    warn(`Схема "${Scheme.VKCOM}" устарела и будет удалена 5.0.0. Вместо неё используйте "${Scheme.VKCOM_LIGHT}"`);
     return Scheme.VKCOM_LIGHT;
   }
   if (platform === VKCOM && (scheme === Scheme.BRIGHT_LIGHT || scheme === Scheme.SPACE_GRAY)) {
-    warn(`platform "vkcom" and scheme "${scheme}" are incompatible. With that platform you have to use "${Scheme.VKCOM_LIGHT}" or "${Scheme.VKCOM_DARK}"`);
+    warn(`Платформа "vkcom" и схема "${scheme}" несовместимы. С этой платформой можно использовать схемы "${Scheme.VKCOM_LIGHT}" или "${Scheme.VKCOM_DARK}"`);
     return Scheme.VKCOM_LIGHT;
   }
   switch (scheme) {
