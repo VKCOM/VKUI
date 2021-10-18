@@ -2511,9 +2511,9 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@vkontakte/appearance@https://github.com/VKCOM/Appearance#v9.2.0":
+"@vkontakte/appearance@https://github.com/VKCOM/Appearance#v9.27.2":
   version "1.0.0"
-  resolved "https://github.com/VKCOM/Appearance#114f791afd871f76562b14d70fc89629ac17045b"
+  resolved "https://github.com/VKCOM/Appearance#4352ad18d5862e4abe3eff80bfc78b26a696722c"
 
 "@vkontakte/eslint-config@2.5.0":
   version "2.5.0"

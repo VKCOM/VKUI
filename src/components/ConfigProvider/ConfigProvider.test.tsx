@@ -4,7 +4,7 @@ import { useContext, FC } from 'react';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import ConfigProvider from './ConfigProvider';
-import { ConfigProviderContext, ConfigProviderContextInterface, WebviewType, Scheme, ExternalScheme, Appearance } from './ConfigProviderContext';
+import { ConfigProviderContext, ConfigProviderContextInterface, WebviewType, Scheme, Appearance } from './ConfigProviderContext';
 
 describe('ConfigProvider', () => {
   baselineComponent<any>(ConfigProvider, { forward: false });
@@ -63,9 +63,9 @@ describe('ConfigProvider', () => {
       rerender(<ConfigProvider scheme="client_light" />);
       expect(document.body).toHaveAttribute('scheme', 'bright_light');
     });
-    it('enforces vkcom scheme on vkcom platform', () => {
+    it('enforces vkcom_light scheme on vkcom platform', () => {
       render(<ConfigProvider scheme="bright_light" platform={VKCOM} />);
-      expect(document.body).toHaveAttribute('scheme', 'vkcom');
+      expect(document.body).toHaveAttribute('scheme', 'vkcom_light');
     });
   });
   describe('resolves appearance from external scheme', () => {
@@ -79,8 +79,8 @@ describe('ConfigProvider', () => {
       [Scheme.SPACE_GRAY, 'dark'],
       [Scheme.BRIGHT_LIGHT, 'light'],
       [Scheme.VKCOM, 'light'],
-      [ExternalScheme.VKCOM_DARK, 'dark'],
-      [ExternalScheme.VKCOM_LIGHT, 'light'],
+      [Scheme.VKCOM_DARK, 'dark'],
+      [Scheme.VKCOM_LIGHT, 'light'],
     ] as const)('%s => %s', (scheme, expectAppearance) => {
       document.body.setAttribute('scheme', scheme);
       render(<ConfigProvider scheme="inherit"><ReadAppearance /></ConfigProvider>);
