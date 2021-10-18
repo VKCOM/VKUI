@@ -1,10 +1,16 @@
 import { render } from '@testing-library/react';
 import { AppearanceType } from '@vkontakte/vk-bridge';
-import { useContext, FC } from 'react';
+import { FC, useContext } from 'react';
 import { ANDROID, VKCOM } from '../../lib/platform';
 import { baselineComponent } from '../../testing/utils';
 import ConfigProvider from './ConfigProvider';
-import { ConfigProviderContext, ConfigProviderContextInterface, WebviewType, Scheme, Appearance } from './ConfigProviderContext';
+import {
+  Appearance,
+  ConfigProviderContext,
+  ConfigProviderContextInterface,
+  Scheme,
+  WebviewType
+} from './ConfigProviderContext';
 
 describe('ConfigProvider', () => {
   baselineComponent<any>(ConfigProvider, { forward: false });
@@ -62,6 +68,10 @@ describe('ConfigProvider', () => {
       expect(document.body).toHaveAttribute('scheme', 'space_gray');
       rerender(<ConfigProvider scheme="client_light" />);
       expect(document.body).toHaveAttribute('scheme', 'bright_light');
+    });
+    it('maps legacy vkcom scheme', () => {
+      render(<ConfigProvider scheme={Scheme.VKCOM} />);
+      expect(document.body).toHaveAttribute('scheme', 'vkcom_light');
     });
     it('enforces vkcom_light scheme on vkcom platform', () => {
       render(<ConfigProvider scheme="bright_light" platform={VKCOM} />);
