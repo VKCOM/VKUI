@@ -55,17 +55,28 @@ let StyleGuideRenderer = ({ children, toc, viewWidth }) => {
 
   const setContext = useCallback((data) => {
     const newState = { ...state, ...data };
+    if (data.platform && data.platform !== state.platform) {
+      if (data.platform === Platform.VKCOM) {
+        newState.scheme = Scheme.VKCOM_LIGHT;
+      } else {
+        newState.scheme = Scheme.BRIGHT_LIGHT;
+      }
+    }
     localStorage.setItem('vkui:state', JSON.stringify(newState));
     setState(newState);
   }, [state]);
 
   useEffect(() => {
     if (platform === VKCOM) {
-      setContext({ hasMouse: true, width: TABLET_SIZE, scheme: Scheme.VKCOM });
-    } else if (scheme === Scheme.VKCOM) {
-      setContext({ scheme: Scheme.BRIGHT_LIGHT });
+      setContext({ hasMouse: true, width: TABLET_SIZE });
     }
-  }, [platform, scheme]);
+  }, [platform]);
+
+  useEffect(() => {
+    if (scheme === Scheme.VKCOM) {
+      setContext({ scheme: Scheme.VKCOM_LIGHT });
+    }
+  }, [scheme]);
 
   useEffect(() => {
     const styleGuideAppearance = styleguideScheme === Scheme.SPACE_GRAY ? Appearance.DARK : Appearance.LIGHT;
