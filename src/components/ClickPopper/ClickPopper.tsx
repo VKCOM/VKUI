@@ -19,6 +19,10 @@ export interface ClickPopperProps extends PopperCommonProps {
    * Вызывается при каждом изменении видимости тултипа
    */
   onShownChange?: (shown: boolean) => void;
+  /**
+   * Либо html-элемент, либо компонент со свойством `getRootRef`, которое применяется к корневому элемнету компонента
+   */
+  children?: React.ReactElement;
 }
 
 export const ClickPopper: React.FC<ClickPopperProps> = ({

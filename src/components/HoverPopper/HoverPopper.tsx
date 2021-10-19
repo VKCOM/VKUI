@@ -26,6 +26,10 @@ export interface HoverPopperProps extends PopperCommonProps {
    * Количество миллисекунд, после которых произойдет скрытие дропдауна
    */
   hideDelay?: number;
+  /**
+   * Либо html-элемент, либо компонент со свойством `getRootRef`, которое применяется к корневому элемнету компонента
+   */
+  children?: React.ReactElement;
 }
 
 export const HoverPopper: React.FC<HoverPopperProps> = ({
