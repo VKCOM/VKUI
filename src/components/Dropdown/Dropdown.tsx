@@ -14,6 +14,16 @@ export interface DropdownProps extends HoverPopperProps, ClickPopperProps {
    */
   arrow?: HoverPopperProps['arrow'];
   /**
+   * Актуально только для action="hover"
+   * Количество миллисекунд, после которых произойдет показ дропдауна
+   */
+  showDelay?: HoverPopperProps['showDelay'];
+  /**
+   * Актуально только для action="hover"
+   * Количество миллисекунд, после которых произойдет скрытие дропдауна
+   */
+  hideDelay?: HoverPopperProps['hideDelay'];
+  /**
    * @ignore
    */
   arrowClassName?: HoverPopperProps['arrowClassName'];
