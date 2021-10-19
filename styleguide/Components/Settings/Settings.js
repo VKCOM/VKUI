@@ -30,9 +30,9 @@ export const Settings = ({ layout }) => {
               />
               {!isMobile && (
                 <SchemeSelect
+                  platform={context.platform}
                   onChange={(scheme) => context.setContext({ scheme })}
                   value={context.scheme}
-                  disabled={context.platform === Platform.VKCOM}
                 />
               )}
               {layout && !isMobile &&

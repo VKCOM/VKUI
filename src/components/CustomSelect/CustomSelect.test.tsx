@@ -6,6 +6,11 @@ import { render, screen, fireEvent } from '@testing-library/react';
 describe('CustomSelect', () => {
   baselineComponent(CustomSelect);
 
+  it('Does not explode on NaN value', () => {
+    const h = render(<CustomSelect value={NaN} />);
+    expect(() => h.rerender(<CustomSelect value={NaN} />)).not.toThrow();
+  });
+
   it('works correctly as uncontrolled component', () => {
     render(
       <CustomSelect
