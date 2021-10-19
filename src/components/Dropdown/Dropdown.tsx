@@ -19,21 +19,23 @@ export interface DropdownProps extends HoverPopperProps, ClickPopperProps {
   arrowClassName?: HoverPopperProps['arrowClassName'];
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({ action = 'click', ...popperProps }: DropdownProps) => {
+export const Dropdown: React.FC<DropdownProps> = ({ action = 'click', hideDelay, showDelay, ...popperProps }: DropdownProps) => {
   const platform = usePlatform();
 
   let Component;
+  let actionSpecificProps: Partial<DropdownProps> = {};
 
   switch (action) {
     case 'click':
       Component = ClickPopper;
       break;
     case 'hover':
+      actionSpecificProps = { hideDelay, showDelay };
       Component = HoverPopper;
       break;
   }
 
   return (
-    <Component vkuiClass={getClassName('Dropdown', platform)} {...popperProps} />
+    <Component vkuiClass={getClassName('Dropdown', platform)} {...actionSpecificProps} {...popperProps} />
   );
 };
