@@ -47,19 +47,15 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
     typeof onShownChange === 'function' && onShownChange(value);
   };
 
-  const onDocumentClick = (e: MouseEvent) => {
+  useGlobalEventListener(document, 'click', (e: MouseEvent) => {
     if (dropdownNode && e.target !== childRef.current && !childRef.current.contains(e.target as Node) && e.target !== dropdownNode && !dropdownNode.contains(e.target)) {
       setShown(false);
     }
-  };
+  });
 
-  useGlobalEventListener(document, 'click', onDocumentClick);
-
-  const onTargetClick = React.useCallback(() => {
+  const targetClickEvent = useEventListener('pointerup', () => {
     setShown(!shown);
-  }, [shown]);
-
-  const targetClickEvent = useEventListener('pointerup', onTargetClick);
+  });
 
   React.useEffect(() => {
     targetClickEvent.add(childRef.current);
