@@ -92,7 +92,7 @@ export const Popper: React.FC<PopperProps> = ({
   });
 
   const resolvedPlacement = state?.placement;
-  const isEdgePlacement = !!resolvedPlacement && resolvedPlacement.includes('-');
+  const isEdgePlacement = !!resolvedPlacement && resolvedPlacement.includes('-'); // true, если поппер отрисован скраю
 
   // Если поппер рисуется скраю, то нужно опционально сместить его в тех случаях, когда стрелка не дотягивается до
   // таргета из-за маленьких размеров последнего
