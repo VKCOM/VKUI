@@ -8,5 +8,5 @@
 }
 
 .TextTooltip__arrow {
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDIwIDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTAgMEMxMyAwIDE1Ljk5OTkgOCAyMCA4SDBDMy45NzQ5IDggNyAwIDEwIDBaIiBmaWxsPSIjMkMyRDJFIiBmaWxsLW9wYWNpdHk9IjAuODgiLz4KPC9zdmc+Cg==);
+  color: rgba(44, 45, 46, .88);
 }

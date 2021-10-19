@@ -125,7 +125,9 @@ export const Popper: React.FC<PopperProps> = ({
           {...attributes.arrow}
           style={styles.arrow}
         >
-          <div vkuiClass="Popper__arrow-in" className={arrowClassName} />
+          <svg vkuiClass="Popper__arrow-in" className={arrowClassName} width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" clipRule="evenodd" d="M10 0C13 0 15.9999 8 20 8H0C3.9749 8 7 0 10 0Z" fill="currentColor" />
+          </svg>
         </div>
       )}
       <div vkuiClass="Popper__content">
