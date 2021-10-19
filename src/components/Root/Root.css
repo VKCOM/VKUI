@@ -14,13 +14,10 @@
   position: relative;
 }
 
-.Root--transition .Root__view:not(.Root__view--hide-forward) {
+.Root--transition .Root__view {
   position: fixed;
   left: 0;
   top: 0;
-}
-
-.Root--transition .Root__view:not(.Root__view--hide-forward) .View__panel {
   overflow: hidden;
 }
 
