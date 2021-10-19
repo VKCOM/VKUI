@@ -163,11 +163,11 @@ const DatePickerNative: React.FC<DatePickerProps & Partial<DatePickerDateFormat>
 };
 
 const DatePicker: React.FC<DatePickerProps> = ({ hasMouse, defaultValue, ...props }) => {
-  const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(defaultValue || {
-    day: 0,
-    month: 0,
-    year: 0,
-  });
+  const [value, setValue] = React.useState<Partial<DatePickerDateFormat>>(() => ({
+    day: defaultValue?.day || 0,
+    month: defaultValue?.month || 0,
+    year: defaultValue?.year || 0,
+  }));
 
   const onDateChange = React.useCallback((update: DatePickerDateFormat) => {
     setValue(update);
