@@ -1,37 +1,9 @@
-import { baselineComponent } from '../../testing/utils';
+import { baselineComponent, fireMouseSwipe, fireTouchSwipe } from '../../testing/utils';
 import { render, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { noop } from '../../lib/utils';
 import { Touch } from './Touch';
 import { createElement } from 'react';
-
-// Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508
-const asClientPos = ([clientX = 0, clientY = 0] = []): Touch & MouseEvent => ({ clientX, clientY }) as any;
-
-function fireMouseSwipe(e: HTMLElement, [start, ...move]: any[], ops: { startEl?: HTMLElement } = {}) {
-  fireEvent.mouseDown(ops.startEl || e, asClientPos(start));
-  move.forEach((p) => fireEvent.mouseMove(e, asClientPos(p)));
-  fireEvent.mouseUp(e, asClientPos(move[move.length - 1]));
-  return fireEvent.click(e, asClientPos(move[move.length - 1]));
-}
-
-function fireTouchSwipe(e: HTMLElement, [start, ...move]: any[]) {
-  let prevTouches: number[][] = [];
-  const eventProps = (p: any) => {
-    const touches: number[][] = Array.isArray(p[0]) ? p : [p];
-    const changedTouches = touches
-      .filter((t, i) => !prevTouches[i] || prevTouches[i].some((pos, j) => t[j] !== pos))
-      .concat(prevTouches.slice(touches.length));
-    if (!changedTouches.length) {
-      throw new Error('no changed touches');
-    }
-    prevTouches = touches;
-    return { changedTouches: changedTouches.map(asClientPos), touches: touches.map(asClientPos) };
-  };
-  fireEvent.touchStart(e, eventProps(start));
-  move.forEach((p) => fireEvent.touchMove(e, eventProps(p)));
-  fireEvent.touchEnd(e, eventProps([]));
-};
 
 const threshold = 10;
 const slideRight = (target: HTMLElement) => fireMouseSwipe(target, [[0, 0], [threshold, 0]]);

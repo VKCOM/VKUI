@@ -5,6 +5,7 @@ import { useDOM } from '../../lib/dom';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
+import { timeSince } from '../../lib/timeSince';
 
 export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   /**
@@ -83,8 +84,8 @@ export const Touch: React.FC<TouchProps> = ({
   const gesture = React.useRef<Partial<Gesture>>({});
   const handle = (e: VKUITouchEvent, handers: TouchEventHandler[]) => {
     stopPropagation && e.stopPropagation();
+    const duration = timeSince(gesture.current.startT.getTime());
     handers.forEach((cb) => {
-      const duration = Date.now() - gesture.current.startT.getTime();
       cb && cb({ ...gesture.current, duration, originalEvent: e });
     });
   };
