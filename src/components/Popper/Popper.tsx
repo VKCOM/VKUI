@@ -40,7 +40,7 @@ export interface PopperProps extends PopperCommonProps {
   targetRef?: React.RefObject<HTMLElement>;
 }
 
-const ARROW_PADDING = 10;
+const ARROW_PADDING = 8;
 const ARROW_WIDTH = 20;
 const ARROW_HEIGHT = 8;
 
@@ -57,22 +57,11 @@ export const Popper: React.FC<PopperProps> = ({
   style: compStyles,
   ...restProps
 }: PopperProps) => {
-  const [dropdownNode, setPopperNode] = React.useState(null);
-  const [ready, setReady] = React.useState(!arrow);
+  const [popperNode, setPopperNode] = React.useState(null);
   const [smallTargetOffsetSkidding, setSmallTargetOffsetSkidding] = React.useState(0);
   const platform = usePlatform();
 
   const setExternalRef = useExternRef(getRef, setPopperNode);
-
-  React.useEffect(() => {
-    if (arrow) {
-      const targetWidth = targetRef.current.offsetWidth;
-      if (targetWidth < ARROW_WIDTH + 2 * ARROW_PADDING) {
-        setSmallTargetOffsetSkidding(ARROW_PADDING + ARROW_WIDTH / 2);
-      }
-      setReady(true);
-    }
-  }, [arrow]);
 
   const modifiers: Modifier[] = [{
     name: 'preventOverflow',
@@ -97,12 +86,30 @@ export const Popper: React.FC<PopperProps> = ({
     });
   }
 
-  const { styles, state, attributes } = usePopper(targetRef.current, dropdownNode, {
+  const { styles, state, attributes } = usePopper(targetRef.current, popperNode, {
     placement,
     modifiers,
   });
 
   const resolvedPlacement = state?.placement;
+  const isEdgePlacement = !!resolvedPlacement && resolvedPlacement.includes('-');
+
+  // Если поппер рисуется скраю, то нужно опционально сместить его в тех случаях, когда стрелка не дотягивается до
+  // таргета из-за маленьких размеров последнего
+  React.useEffect(() => {
+    if (arrow && isEdgePlacement) {
+      const placementDirection = resolvedPlacement.startsWith('bottom') || resolvedPlacement.startsWith('top') ? 'vertical' : 'horizontal';
+
+      const arrowSize = placementDirection === 'vertical' ? ARROW_WIDTH : ARROW_HEIGHT;
+      const targetSize = placementDirection === 'vertical' ? targetRef.current.offsetWidth : targetRef.current.offsetHeight;
+
+      if (targetSize < arrowSize + 2 * ARROW_PADDING) {
+        setSmallTargetOffsetSkidding(ARROW_PADDING + arrowSize / 2);
+      } else {
+        setSmallTargetOffsetSkidding(0);
+      }
+    }
+  }, [arrow, isEdgePlacement]);
 
   React.useEffect(() => {
     if (resolvedPlacement) {
@@ -113,16 +120,18 @@ export const Popper: React.FC<PopperProps> = ({
   const dropdown = (
     <div
       {...restProps}
-      vkuiClass={classNames(getClassName('Popper', platform))}
+      {...attributes.popper}
+      vkuiClass={classNames(getClassName('Popper', platform), {
+        'Popper--ready': isEdgePlacement && arrow ? typeof smallTargetOffsetSkidding === 'number' : true,
+      })}
       ref={setExternalRef}
       style={{ ...compStyles, ...styles.popper }}
-      {...attributes.popper}
     >
       {arrow && (
         <div
+          {...attributes.arrow}
           vkuiClass="Popper__arrow"
           data-popper-arrow={true}
-          {...attributes.arrow}
           style={styles.arrow}
         >
           <svg vkuiClass="Popper__arrow-in" className={arrowClassName} width="20" height="8" viewBox="0 0 20 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -136,5 +145,5 @@ export const Popper: React.FC<PopperProps> = ({
     </div>
   );
 
-  return ready ? <AppRootPortal forcePortal vkuiClass="PopperPortal">{dropdown}</AppRootPortal> : null;
+  return <AppRootPortal forcePortal vkuiClass="PopperPortal">{dropdown}</AppRootPortal>;
 };
