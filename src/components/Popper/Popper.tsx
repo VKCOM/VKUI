@@ -58,6 +58,7 @@ export const Popper: React.FC<PopperProps> = ({
   ...restProps
 }: PopperProps) => {
   const [dropdownNode, setPopperNode] = React.useState(null);
+  const [ready, setReady] = React.useState(!arrow);
   const [smallTargetOffsetSkidding, setSmallTargetOffsetSkidding] = React.useState(0);
   const platform = usePlatform();
 
@@ -69,6 +70,7 @@ export const Popper: React.FC<PopperProps> = ({
       if (targetWidth < ARROW_WIDTH + 2 * ARROW_PADDING) {
         setSmallTargetOffsetSkidding(ARROW_PADDING + ARROW_WIDTH / 2);
       }
+      setReady(true);
     }
   }, [arrow]);
 
@@ -132,5 +134,5 @@ export const Popper: React.FC<PopperProps> = ({
     </div>
   );
 
-  return (<AppRootPortal forcePortal vkuiClass="PopperPortal">{dropdown}</AppRootPortal>);
+  return ready ? <AppRootPortal forcePortal vkuiClass="PopperPortal">{dropdown}</AppRootPortal> : null;
 };
