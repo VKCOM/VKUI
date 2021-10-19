@@ -9,7 +9,6 @@ import { withAdaptivity, AdaptivityProps, ViewWidth } from '../../hoc/withAdapti
 import Text from '../Typography/Text/Text';
 import Button from '../Button/Button';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
-import { useWaitTransitionFinish } from '../../hooks/useWaitTransitionFinish';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useTimeout } from '../../hooks/useTimeout';
 import './Snackbar.css';
@@ -63,28 +62,24 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
 
   const platform = usePlatform();
 
-  const { waitTransitionFinish } = useWaitTransitionFinish();
-
   const [closing, setClosing] = React.useState(false);
+  const [swipingAway, setSwipingAway] = React.useState(false);
+  const exiting = closing || swipingAway;
   const [touched, setTouched] = React.useState(false);
 
-  const shiftXPercentRef = React.useRef<number>(0);
   const shiftXCurrentRef = React.useRef<number>(0);
 
   const bodyElRef = React.useRef<HTMLDivElement | null>(null);
-  const innerElRef = React.useRef<HTMLDivElement | null>(null);
 
   const animationFrameRef = React.useRef<ReturnType<typeof requestAnimationFrame> | null>(null);
 
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
-  const transitionFinishDurationFallback = platform === ANDROID || platform === VKCOM ? 400 : 320;
+  const exitTransitionFallback = useTimeout(onClose, platform === ANDROID || platform === VKCOM ? 400 : 320);
+  React.useEffect(() => {
+    exiting && exitTransitionFallback.set();
+  }, [exiting]);
 
-  const close = () => {
-    setClosing(true);
-    waitTransitionFinish(innerElRef.current, () => {
-      onClose();
-    }, transitionFinishDurationFallback);
-  };
+  const close = () => setClosing(true);
 
   const handleActionClick: React.MouseEventHandler<HTMLElement> = (e) => {
     close();
@@ -115,44 +110,33 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
       setTouched(true);
     }
 
-    shiftXPercentRef.current = shiftX / bodyElRef.current.offsetWidth * 100;
-    shiftXCurrentRef.current = rubber(shiftXPercentRef.current, 72, 1.2, platform === ANDROID || platform === VKCOM);
+    const shiftXPercentRef = shiftX / bodyElRef.current.offsetWidth * 100;
+    shiftXCurrentRef.current = rubber(shiftXPercentRef, 72, 1.2, platform === ANDROID || platform === VKCOM);
 
     setBodyTransform(shiftXCurrentRef.current);
   };
 
   const onTouchEnd = (e: TouchEvent) => {
-    let callback: VoidFunction | undefined;
-
     if (touched) {
       let shiftXCurrent = shiftXCurrentRef.current;
       const expectTranslateY = shiftXCurrent / e.duration * 240 * 0.6;
       shiftXCurrent = shiftXCurrent + expectTranslateY;
 
       if (isDesktop && shiftXCurrent <= -50) {
-        closeTimeout.clear();
-        waitTransitionFinish(bodyElRef.current, () => {
-          onClose();
-        }, transitionFinishDurationFallback);
+        setSwipingAway(true);
         setBodyTransform(-120);
       } else if (!isDesktop && shiftXCurrent >= 50) {
-        closeTimeout.clear();
-        waitTransitionFinish(bodyElRef.current, () => {
-          onClose();
-        }, transitionFinishDurationFallback);
+        setSwipingAway(true);
         setBodyTransform(120);
       } else {
-        callback = () => {
-          closeTimeout.set();
-          setBodyTransform(0);
-        };
+        closeTimeout.set();
+        setBodyTransform(0);
       }
     } else {
       closeTimeout.set();
     }
 
     setTouched(false);
-    callback && requestAnimationFrame(callback);
   };
 
   React.useEffect(closeTimeout.set, []);
@@ -171,12 +155,12 @@ const SnackbarComponent: React.FC<SnackbarProps> = (props: SnackbarProps) => {
       >
         <Touch
           vkuiClass="Snackbar__in"
-          getRootRef={innerElRef}
+          onTransitionEnd={closing ? onClose : null}
           onStart={onTouchStart}
           onMoveX={onTouchMoveX}
           onEnd={onTouchEnd}
         >
-          <div vkuiClass="Snackbar__body" ref={bodyElRef}>
+          <div vkuiClass="Snackbar__body" ref={bodyElRef} onTransitionEnd={swipingAway ? onClose : null}>
             {before &&
             <div vkuiClass="Snackbar__before">
               {before}
