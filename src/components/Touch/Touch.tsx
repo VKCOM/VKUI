@@ -205,7 +205,8 @@ export const Touch: React.FC<TouchProps> = ({
     if (!didSlide.current) {
       return onClickCapture && onClickCapture(e);
     }
-    if ((e.target as HTMLElement).tagName === 'A') {
+    // eslint-disable-next-line no-restricted-properties
+    if ((e.target as HTMLElement).closest('a')) {
       e.preventDefault();
     }
     if (noSlideClick) {
