@@ -111,11 +111,7 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
     }
 
     if (pressedKey(e) === Keys.ESCAPE) {
-      e.preventDefault();
-      e.stopPropagation();
-
       onClose && onClose(null);
-      return true;
     }
 
     return true;
