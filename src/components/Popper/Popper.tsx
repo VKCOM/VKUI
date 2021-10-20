@@ -105,10 +105,8 @@ export const Popper: React.FC<PopperProps> = ({
 
       if (targetSize < arrowSize + 2 * ARROW_PADDING) {
         setSmallTargetOffsetSkidding(ARROW_PADDING + arrowSize / 2);
-      } else {
-        setSmallTargetOffsetSkidding(0);
       }
-    } else if (arrow && !isEdgePlacement) {
+    } else {
       setSmallTargetOffsetSkidding(0);
     }
   }, [arrow, isEdgePlacement]);
