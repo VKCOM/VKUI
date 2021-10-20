@@ -114,20 +114,9 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
     }, {});
   }
 
-  handleKeyDownEsc = (e: KeyboardEvent): void => {
-    if (e.key === 'Escape') {
-      this.triggerActiveModalClose();
-    }
-  };
-
   componentDidMount() {
     this.initActiveModal();
-    this.props.document.addEventListener('keydown', this.handleKeyDownEsc);
   }
-
-  componentWillUnmount = () => {
-    this.props.document.removeEventListener('keydown', this.handleKeyDownEsc);
-  };
 
   componentDidUpdate(prevProps: ModalRootProps, prevState: ModalRootState) {
     if (this.props.activeModal !== prevProps.activeModal) {
