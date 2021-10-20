@@ -96,7 +96,6 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
   }
 
   params: PullToRefreshParams;
-  refreshingFinished = false;
   contentRef: React.RefObject<HTMLDivElement>;
   waitFetchingTimeout: ReturnType<typeof setTimeout>;
 
@@ -128,12 +127,30 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
     clearTimeout(this.waitFetchingTimeout);
   }
 
-  componentDidUpdate(prevProps: PullToRefreshProps) {
+  componentDidUpdate(prevProps: PullToRefreshProps, prevState: PullToRefreshState) {
     if (prevProps.isFetching && !this.props.isFetching) {
       this.onRefreshingFinish();
     }
     if (!prevProps.isFetching && this.props.isFetching) {
       clearTimeout(this.waitFetchingTimeout);
+    }
+
+    if (prevState.touchDown && !this.state.touchDown) {
+      const { refreshing, canRefresh } = this.state;
+      if (!refreshing && canRefresh) {
+        this.runRefreshing();
+      } else if (refreshing && !this.props.isFetching) {
+        // only iOS can start refresh before gesture end
+        this.resetRefreshingState();
+      } else {
+        // refreshing && isFetching: refresh in progress
+        // OR !refreshing && !canRefresh: pull was not strong enough
+        this.setState({
+          spinnerY: refreshing ? this.params.refreshing : this.params.start,
+          spinnerProgress: 0,
+          contentShift: 0,
+        });
+      }
     }
   }
 
@@ -190,24 +207,10 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
     }
   };
 
-  onTouchEnd: VoidFunction = () => {
-    const { refreshing, canRefresh } = this.state;
-
+  onTouchEnd = () => {
     this.setState({
       watching: false,
       touchDown: false,
-    }, () => {
-      if (canRefresh && !refreshing) {
-        this.runRefreshing();
-      } else if (refreshing && this.refreshingFinished) {
-        this.resetRefreshingState();
-      } else {
-        this.setState({
-          spinnerY: refreshing ? this.params.refreshing : this.params.start,
-          spinnerProgress: 0,
-          contentShift: 0,
-        });
-      }
     });
   };
 
@@ -226,14 +229,12 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
   }
 
   onRefreshingFinish: VoidFunction = () => {
-    this.refreshingFinished = true;
     if (!this.state.touchDown) {
       this.resetRefreshingState();
     }
   };
 
   resetRefreshingState() {
-    this.refreshingFinished = false;
     this.setState({
       watching: false,
       canRefresh: false,
