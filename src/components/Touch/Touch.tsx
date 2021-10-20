@@ -100,7 +100,15 @@ export const Touch: React.FC<TouchProps> = ({
     };
 
     handle(e, [onStart, onStartX, onStartY]);
-    !touchEnabled() && subscribe(document);
+    // 1 line, 2 bad specs, 2 workarounds:
+    subscribe(touchEnabled()
+      // Touch events fire on initial target, and won't bubble if its removed
+      // see: #235, #1968, https://stackoverflow.com/a/45760014
+      ? e.target as HTMLElement
+      // Mouse events fire on the element under pointer, so we lose move / end
+      // if pointer goes outside container.
+      // Can be fixed by PointerEvents' setPointerCapture later
+      : document);
   }, { capture: useCapture, passive: false });
   const containerRef = useExternRef(getRootRef);
 
@@ -109,7 +117,6 @@ export const Touch: React.FC<TouchProps> = ({
     enterHandler.add(el);
     leaveHandler.add(el);
     startHandler.add(el);
-    touchEnabled() && subscribe(el);
   }, [Component]);
 
   function onMove(e: VKUITouchEvent) {
@@ -169,11 +176,10 @@ export const Touch: React.FC<TouchProps> = ({
     gesture.current = {};
 
     // Если это был тач-евент, симулируем отмену hover
-    if (e.type === 'touchend' || e.type === 'touchcancel') {
+    if (touchEnabled()) {
       onLeave && onLeave(e);
     }
-
-    !touchEnabled() && subscribe(null);
+    subscribe(null);
   }
 
   const listenerParams = { capture: useCapture, passive: false };

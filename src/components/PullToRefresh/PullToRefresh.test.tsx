@@ -32,12 +32,13 @@ function Refresher(props: any) {
 
 function renderRefresher({ platform = ANDROID } = {}) {
   let controller: (v: boolean) => void;
+  const setFetching = (v: boolean) => act(() => controller(v));
   const handle = render((
     <ConfigProvider platform={platform}>
       <Refresher controller={(e: any) => controller = e} />
     </ConfigProvider>
   ));
-  return { setFetching: (v: boolean) => act(() => controller(v)), ...handle };
+  return { setFetching, ...handle };
 }
 
 describe('PullToRefresh', () => {
@@ -65,6 +66,8 @@ describe('PullToRefresh', () => {
   });
 
   describe('shows spinner', () => {
+    // reset touch detection
+    afterEach(() => delete window['ontouchstart']);
     it('after a gesture', () => {
       renderRefresher();
       firePull(screen.getByTestId('xxx'));

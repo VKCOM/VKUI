@@ -15,7 +15,7 @@ function fireMouseSwipe(e: HTMLElement, [start, ...move]: any[], ops: { startEl?
   return fireEvent.click(e, asClientPos(move[move.length - 1]));
 }
 
-function fireTouchSwipe(e: HTMLElement, [start, ...move]: any[]) {
+function fireTouchSwipe(e: HTMLElement, [start, ...move]: any[], { end = true } = {}) {
   let prevTouches: number[][] = [];
   const eventProps = (p: any) => {
     const touches: number[][] = Array.isArray(p[0]) ? p : [p];
@@ -30,7 +30,9 @@ function fireTouchSwipe(e: HTMLElement, [start, ...move]: any[]) {
   };
   fireEvent.touchStart(e, eventProps(start));
   move.forEach((p) => fireEvent.touchMove(e, eventProps(p)));
-  fireEvent.touchEnd(e, eventProps([]));
+  const fireEnd = () => fireEvent.touchEnd(e, eventProps([]));
+  end && fireEnd();
+  return fireEnd;
 };
 
 const threshold = 10;
@@ -160,6 +162,19 @@ describe('Touch', () => {
           expect(handlers.onMoveY).toBeCalledTimes(2);
           expect(handlers.onEnd).toBeCalledTimes(1);
           expect(handlers.onEnd).toBeCalledWith(expect.objectContaining({ isSlideY: true, shiftY: 10 }));
+        });
+      }
+      if (input === 'touch') {
+        // https://stackoverflow.com/questions/33298828
+        it('fires end if touchStart element removed', () => {
+          const handlers = makeHandlers();
+          const h = render((
+            <Touch {...handlers} data-testid="__t__"><div data-testid="__c__" /></Touch>
+          ));
+          const fireEnd = fireTouchSwipe(screen.getByTestId('__c__'), [[0, 0], [10, 20]], { end: false });
+          h.rerender(<Touch {...handlers} data-testid="__t__" />);
+          fireEnd();
+          expect(handlers.onEnd).toBeCalledTimes(1);
         });
       }
     });
