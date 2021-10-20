@@ -2,10 +2,10 @@ import * as React from 'react';
 import { usePopper } from 'react-popper';
 import { AppRootPortal } from '../AppRoot/AppRootPortal';
 import { HasRef } from '../../types';
-import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { useExternRef } from '../../hooks/useExternRef';
+import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import './Popper.css';
 
 type Placement = 'auto' | 'auto-start' | 'auto-end' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' |
@@ -96,7 +96,7 @@ export const Popper: React.FC<PopperProps> = ({
 
   // Если поппер рисуется скраю, то нужно опционально сместить его в тех случаях, когда стрелка не дотягивается до
   // таргета из-за маленьких размеров последнего
-  React.useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (arrow && isEdgePlacement) {
       const placementDirection = resolvedPlacement.startsWith('bottom') || resolvedPlacement.startsWith('top') ? 'vertical' : 'horizontal';
 
@@ -108,6 +108,8 @@ export const Popper: React.FC<PopperProps> = ({
       } else {
         setSmallTargetOffsetSkidding(0);
       }
+    } else if (arrow && !isEdgePlacement) {
+      setSmallTargetOffsetSkidding(0);
     }
   }, [arrow, isEdgePlacement]);
 
@@ -121,9 +123,7 @@ export const Popper: React.FC<PopperProps> = ({
     <div
       {...restProps}
       {...attributes.popper}
-      vkuiClass={classNames(getClassName('Popper', platform), {
-        'Popper--ready': isEdgePlacement && arrow ? typeof smallTargetOffsetSkidding === 'number' : true,
-      })}
+      vkuiClass={getClassName('Popper', platform)}
       ref={setExternalRef}
       style={{ ...compStyles, ...styles.popper }}
     >

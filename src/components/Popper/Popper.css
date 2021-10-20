@@ -3,14 +3,6 @@
   z-index: 1;
 }
 
-.Popper {
-  visibility: hidden;
-}
-
-.Popper--ready {
-  visibility: visible;
-}
-
 .Popper__arrow-in {
   content: '';
   display: block;
