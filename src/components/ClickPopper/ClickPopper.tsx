@@ -52,7 +52,7 @@ export const ClickPopper: React.FC<ClickPopperProps> = ({
   };
 
   useGlobalEventListener(document, 'click', (e: MouseEvent) => {
-    if (dropdownNode && e.target !== childRef.current && !childRef.current.contains(e.target as Node) && e.target !== dropdownNode && !dropdownNode.contains(e.target)) {
+    if (dropdownNode && !childRef.current.contains(e.target as Node) && !dropdownNode.contains(e.target)) {
       setShown(false);
     }
   });
