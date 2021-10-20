@@ -98,7 +98,6 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
 
       if (shouldFocusFirstNode || targetIdx === 0 && e.shiftKey) {
         e.preventDefault();
-        e.stopPropagation();
 
         const node = focusableNodes[shouldFocusFirstNode ? 0 : lastIdx];
 
