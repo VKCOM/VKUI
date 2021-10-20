@@ -98,6 +98,7 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
   params: PullToRefreshParams;
   refreshingFinished = false;
   contentRef: React.RefObject<HTMLDivElement>;
+  waitFetchingTimeout: ReturnType<typeof setTimeout>;
 
   get document() {
     return this.props.document;
@@ -124,11 +125,15 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
         passive: false,
       });
     }
+    clearTimeout(this.waitFetchingTimeout);
   }
 
   componentDidUpdate(prevProps: PullToRefreshProps) {
     if (prevProps.isFetching && !this.props.isFetching) {
       this.onRefreshingFinish();
+    }
+    if (!prevProps.isFetching && this.props.isFetching) {
+      clearTimeout(this.waitFetchingTimeout);
     }
   }
 
@@ -208,6 +213,8 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
 
   runRefreshing() {
     if (!this.state.refreshing && this.props.onRefresh) {
+      // cleanup if the consumer does not start fetching in 1s
+      this.waitFetchingTimeout = setTimeout(this.onRefreshingFinish, 1000);
       this.setState({
         refreshing: true,
         spinnerY: this.props.platform === ANDROID || this.props.platform === VKCOM ? this.params.refreshing : this.state.spinnerY,
