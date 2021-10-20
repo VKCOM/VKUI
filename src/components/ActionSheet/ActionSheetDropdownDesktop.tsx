@@ -8,6 +8,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { useEventListener } from '../../hooks/useEventListener';
 import { SharedDropdownProps } from './types';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import './ActionSheet.css';
 
 const warn = warnOnce('ActionSheet');
@@ -53,7 +54,7 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
     });
   }, [toggleRef]);
 
-  const bodyClickListener = useEventListener('click', (e) => {
+  const bodyClickListener = useEventListener('click', (e: MouseEvent) => {
     const dropdownElement = elementRef?.current;
     if (dropdownElement && !dropdownElement.contains(e.target as Node)) {
       onClose();
@@ -66,17 +67,20 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
     });
   }, []);
 
+  const onClick = React.useCallback((e) => e.stopPropagation(), []);
+
   return (
-    <div
+    <FocusTrap
+      onClose={onClose}
       {...restProps}
-      ref={elementRef}
-      onClick={(e) => e.stopPropagation()}
+      getRootRef={elementRef}
+      onClick={onClick}
       style={dropdownStyles}
       vkuiClass={classNames(getClassName('ActionSheet', platform), 'ActionSheet--desktop', {
         'ActionSheet--closing': closing,
       }, `ActionSheet--sizeY-${sizeY}`)}
     >
       {children}
-    </div>
+    </FocusTrap>
   );
 };

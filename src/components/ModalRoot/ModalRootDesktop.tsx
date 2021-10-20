@@ -17,6 +17,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import './ModalRoot.css';
 
 const warn = warnOnce('ModalRoot');
@@ -82,8 +83,13 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
   private readonly maskElementRef: React.RefObject<HTMLDivElement>;
   private maskAnimationFrame: number;
   private readonly modalRootContext: ModalRootContextInterface;
+  private restoreFocusTo: HTMLElement;
 
   activeTransitions: number;
+
+  get timeout() {
+    return this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400;
+  }
 
   get modals() {
     return React.Children.toArray(this.props.children) as React.ReactElement[];
@@ -108,20 +114,9 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
     }, {});
   }
 
-  handleKeyDownEsc = (e: KeyboardEvent): void => {
-    if (e.key === 'Escape') {
-      this.triggerActiveModalClose();
-    }
-  };
-
   componentDidMount() {
     this.initActiveModal();
-    this.props.document.addEventListener('keydown', this.handleKeyDownEsc);
   }
-
-  componentWillUnmount = () => {
-    this.props.document.removeEventListener('keydown', this.handleKeyDownEsc);
-  };
 
   componentDidUpdate(prevProps: ModalRootProps, prevState: ModalRootState) {
     if (this.props.activeModal !== prevProps.activeModal) {
@@ -218,7 +213,7 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
       modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
     } else {
-      setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400);
+      setTimeout(eventHandler, this.timeout);
     }
   }
 
@@ -260,6 +255,10 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
       });
     }
 
+    if (!prevModal && this.props.document.activeElement) {
+      this.restoreFocusTo = this.props.document.activeElement as HTMLElement;
+    }
+
     this.activeTransitions += 1;
     this.waitTransitionFinish(nextModalState, this.prevNextSwitchEndHandler);
     requestAnimationFrame(() => {
@@ -286,6 +285,9 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
     if (!activeModal) {
       newState.history = [];
+      if (this.restoreFocusTo) {
+        this.restoreFocusTo.focus();
+      }
     }
 
     this.setState(newState);
@@ -362,14 +364,17 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
               const key = `modal-${modalId}`;
 
               return (
-                <div
+                <FocusTrap
+                  restoreFocus={false}
+                  onClose={this.triggerActiveModalClose}
+                  timeout={this.timeout}
                   key={key}
                   vkuiClass={classNames('ModalRoot__modal', {
                     'ModalRoot__modal--active': modalId === activeModal,
                     'ModalRoot__modal--prev': modalId === prevModal,
                     'ModalRoot__modal--next': modalId === nextModal,
                   })}
-                >{Modal}</div>
+                >{Modal}</FocusTrap>
               );
             })}
           </div>
