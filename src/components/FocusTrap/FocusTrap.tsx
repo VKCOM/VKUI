@@ -13,14 +13,14 @@ const FOCUSABLE_ELEMENTS: string = FOCUSABLE_ELEMENTS_LIST.join();
 
 export interface FocusTrapProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
   Component?: React.ElementType;
-  onClose?: (e?: MouseEvent) => void;
+  onClose?: (props?: any) => void;
   restoreFocus?: boolean;
   timeout?: number;
 }
 
 export const FocusTrap: React.FC<FocusTrapProps> = ({
   Component = 'div',
-  onClose,
+  onClose = noop,
   restoreFocus = true,
   timeout = 0,
   getRootRef,
@@ -78,7 +78,6 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
       restoreFocusTo.focus();
     }
   }, timeout);
-
   useIsomorphicLayoutEffect(() => {
     if (restoreFocus) {
       setRestoreFocusTo(activeElement);
@@ -103,7 +102,7 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
 
         const node = focusableNodes[shouldFocusFirstNode ? 0 : lastIdx];
 
-        if (node !== document.activeElement) {
+        if (node !== activeElement) {
           node.focus();
         }
 
@@ -112,7 +111,7 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
     }
 
     if (pressedKey(e) === Keys.ESCAPE) {
-      onClose && onClose(null);
+      onClose();
     }
 
     return true;
@@ -120,10 +119,7 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
   useGlobalEventListener(document, 'keydown', onDocumentKeydown, { capture: true });
 
   return (
-    <Component
-      ref={ref}
-      {...restProps}
-    >
+    <Component ref={ref} {...restProps}>
       {children}
     </Component>
   );
