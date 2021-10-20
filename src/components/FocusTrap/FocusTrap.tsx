@@ -43,14 +43,19 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
       focusableNodes[0].focus();
     }
   }, timeout);
+  useIsomorphicLayoutEffect(() => {
+    focusOnTrapMount.set();
+  }, []);
+
+  // HANDLE FOCUSABLE NODES
 
   useIsomorphicLayoutEffect(() => {
     if (!ref.current) {
       return noop();
     }
 
-    // eslint-disable-next-line no-restricted-properties
     const nodes: HTMLElement[] = [];
+    // eslint-disable-next-line no-restricted-properties
     ref.current?.querySelectorAll(FOCUSABLE_ELEMENTS).forEach((focusableEl) => {
       const { display, visibility } = window.getComputedStyle(focusableEl);
 
@@ -59,15 +64,12 @@ export const FocusTrap: React.FC<FocusTrapProps> = ({
       }
     });
 
-    if (!nodes?.length) {
-      return noop();
+    if (nodes?.length) {
+      setFocusableNodes(nodes);
     }
 
-    setFocusableNodes(nodes);
-    focusOnTrapMount.set();
-
     return noop();
-  }, []);
+  }, [children]);
 
   // HANDLE TRAP UNMOUNT
 
