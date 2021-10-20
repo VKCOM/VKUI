@@ -67,7 +67,9 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   const { viewWidth, viewHeight, hasMouse } = useAdaptivity();
   const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET && (hasMouse || viewHeight >= ViewHeight.MEDIUM);
 
-  const fallbackTransitionFinish = useTimeout(afterClose, platform === IOS ? 300 : 200);
+  const timeout = platform === IOS ? 300 : 200;
+
+  const fallbackTransitionFinish = useTimeout(afterClose, timeout);
   React.useEffect(() => {
     if (closing) {
       if (isDesktop) {
@@ -111,6 +113,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
           closing={closing}
           onClose={onClose}
           onTransitionEnd={closing && !isDesktop ? afterClose : null}
+          timeout={timeout}
           {...restProps as Omit<SharedDropdownProps, 'closing'>}
         >
           {(hasReactNode(header) || hasReactNode(text)) &&
