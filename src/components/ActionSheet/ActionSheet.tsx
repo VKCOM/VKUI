@@ -111,10 +111,10 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
       <ActionSheetContext.Provider value={contextValue}>
         <DropdownComponent
           closing={closing}
-          onClose={onClose}
           onTransitionEnd={closing && !isDesktop ? afterClose : null}
           timeout={timeout}
           {...restProps as Omit<SharedDropdownProps, 'closing'>}
+          onClose={onClose}
         >
           {(hasReactNode(header) || hasReactNode(text)) &&
             <header vkuiClass="ActionSheet__header">
