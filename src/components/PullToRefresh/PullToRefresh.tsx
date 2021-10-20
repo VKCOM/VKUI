@@ -33,7 +33,6 @@ export interface PullToRefreshState {
   canRefresh: boolean;
 
   touchDown: boolean;
-  refreshingFinished: boolean;
 
   touchY: number;
   spinnerY: PullToRefreshParams['start'];
@@ -86,7 +85,6 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
       canRefresh: false,
 
       touchDown: false,
-      refreshingFinished: false,
 
       touchY: 0,
       spinnerY: this.params.start,
@@ -98,7 +96,7 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
   }
 
   params: PullToRefreshParams;
-
+  refreshingFinished = false;
   contentRef: React.RefObject<HTMLDivElement>;
 
   get document() {
@@ -188,7 +186,7 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
   };
 
   onTouchEnd: VoidFunction = () => {
-    const { refreshing, canRefresh, refreshingFinished } = this.state;
+    const { refreshing, canRefresh } = this.state;
 
     this.setState({
       watching: false,
@@ -196,7 +194,7 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
     }, () => {
       if (canRefresh && !refreshing) {
         this.runRefreshing();
-      } else if (refreshing && refreshingFinished) {
+      } else if (refreshing && this.refreshingFinished) {
         this.resetRefreshingState();
       } else {
         this.setState({
@@ -221,19 +219,18 @@ class PullToRefresh extends React.PureComponent<PullToRefreshProps & DOMProps, P
   }
 
   onRefreshingFinish: VoidFunction = () => {
-    this.setState({
-      refreshingFinished: true,
-    }, () => {
-      !this.state.touchDown && this.resetRefreshingState();
-    });
+    this.refreshingFinished = true;
+    if (!this.state.touchDown) {
+      this.resetRefreshingState();
+    }
   };
 
   resetRefreshingState() {
+    this.refreshingFinished = false;
     this.setState({
       watching: false,
       canRefresh: false,
       refreshing: false,
-      refreshingFinished: false,
       spinnerY: this.params.start,
       spinnerProgress: 0,
       contentShift: 0,
