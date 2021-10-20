@@ -22,6 +22,7 @@ import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import './ModalRoot.css';
 
 const warn = warnOnce('ModalRoot');
@@ -107,6 +108,11 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
   private readonly frameIds: {
     [index: string]: number;
   };
+  private restoreFocusTo: HTMLElement;
+
+  get timeout(): number {
+    return this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400;
+  }
 
   get document(): Document {
     return this.props.document;
@@ -640,7 +646,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
 
       modalState.innerElement.addEventListener(transitionEvent.name, onceHandler);
     } else {
-      setTimeout(eventHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400);
+      setTimeout(eventHandler, this.timeout);
     }
   }
 
@@ -682,6 +688,10 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
       }
     }
 
+    if (!prevModal && this.document.activeElement) {
+      this.restoreFocusTo = this.document.activeElement as HTMLElement;
+    }
+
     this.activeTransitions += 1;
     this.waitTransitionFinish(nextModalState, this.prevNextSwitchEndHandler);
     this.animateTranslate(nextModalState, nextModalState.translateY);
@@ -706,6 +716,9 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
 
     if (!activeModal) {
       newState.history = [];
+      if (this.restoreFocusTo) {
+        this.restoreFocusTo.focus();
+      }
     }
 
     this.setState(newState);
@@ -811,9 +824,11 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
                 const key = `modal-${modalId}`;
 
                 return (
-                  <div
+                  <FocusTrap
                     key={key}
-                    ref={(e) => this.modalsState[modalId].modalElement = e}
+                    getRootRef={(e) => this.modalsState[modalId].modalElement = e}
+                    onClose={this.triggerActiveModalClose}
+                    timeout={this.timeout}
                     vkuiClass={classNames('ModalRoot__modal', {
                       'ModalRoot__modal--active': modalId === activeModal,
                       'ModalRoot__modal--prev': modalId === prevModal,
@@ -825,7 +840,8 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
                       'ModalRoot__modal--expanded': isPage && modalState.expanded,
                       'ModalRoot__modal--collapsed': isPage && modalState.collapsed,
                     })}
-                  >{Modal}</div>
+                    restoreFocus={false}
+                  >{Modal}</FocusTrap>
                 );
               })}
             </div>
