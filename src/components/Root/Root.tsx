@@ -133,7 +133,10 @@ const Root: React.FC<RootProps> = ({
             })}
           >
             <NavTransitionProvider entering={transition && viewId === activeView}>
-              <div style={{ marginTop: compensateScroll ? -scrolls[viewId] : null }}>
+              <div
+                vkuiClass="Root__scrollCompensation"
+                style={{ marginTop: compensateScroll ? -scrolls[viewId] : null }}
+              >
                 {view}
               </div>
             </NavTransitionProvider>
