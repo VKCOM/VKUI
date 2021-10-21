@@ -21,11 +21,10 @@
             <Group header={<Header mode="secondary">Sticks right</Header>}>
               <Gallery
                 slideWidth="90%"
-                style={{ height: 150 }}
                 bullets="dark"
               >
-                <div style={{ backgroundColor: 'var(--destructive)' }} />
-                <div style={{ backgroundColor: 'var(--button_commerce_background)' }} />
+                <div style={{ height: 150, backgroundColor: 'var(--destructive)' }} />
+                <div style={{ height: 120, backgroundColor: 'var(--button_commerce_background)' }} />
                 <div style={{ backgroundColor: 'var(--accent)' }} />
               </Gallery>
             </Group>
