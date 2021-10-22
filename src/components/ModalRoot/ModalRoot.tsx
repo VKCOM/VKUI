@@ -137,13 +137,15 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
 
   componentDidMount() {
     this.initActiveModal();
+    // Отслеживаем изменение размеров viewport (Необходимо для iOS)
+    if (this.props.platform === IOS) {
+      this.window.addEventListener('resize', this.updateModalTranslate, false);
+    }
   }
 
   componentWillUnmount() {
     this.toggleDocumentScrolling(true);
-    if (this.props.platform === IOS) {
-      this.window.removeEventListener('resize', this.updateModalTranslate, false);
-    }
+    this.window.removeEventListener('resize', this.updateModalTranslate, false);
   }
 
   componentDidUpdate(prevProps: ModalRootProps, prevState: ModalRootState) {
@@ -255,11 +257,6 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
 
     if (!modalState) {
       return;
-    }
-
-    // Отслеживаем изменение размеров viewport (Необходимо для iOS)
-    if (this.props.platform === IOS) {
-      this.window.addEventListener('resize', this.updateModalTranslate, false);
     }
 
     switch (modalState.type) {
@@ -386,10 +383,6 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
   closeModal(id: string) {
     // Сбрасываем состояния, которые могут помешать закрытию модального окна
     this.setState({ touchDown: false });
-
-    if (this.props.platform === IOS) {
-      this.window.removeEventListener('resize', this.updateModalTranslate, false);
-    }
 
     const prevModalState = this.modalsState[id];
 
