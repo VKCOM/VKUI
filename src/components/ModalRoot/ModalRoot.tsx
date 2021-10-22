@@ -17,13 +17,13 @@ import {
   ConfigProviderContextInterface,
   WebviewType,
 } from '../ConfigProvider/ConfigProviderContext';
-import { ModalsState, ModalsStateEntry, ModalType, TranslateRange } from './types';
+import { ModalsStateEntry, ModalType, TranslateRange } from './types';
 import { MODAL_PAGE_DEFAULT_PERCENT_HEIGHT } from './constants';
 import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
-import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
+import { useModalManager, ModalTransitionProps } from './useModalManager';
 import './ModalRoot.css';
 
 const warn = warnOnce('ModalRoot');
@@ -50,119 +50,9 @@ export interface ModalRootProps extends HasPlatform {
   configProvider?: ConfigProviderContextInterface;
 }
 
-interface ModalTransitionState {
-  activeModal?: string;
-  enteringModal?: string;
-  exitingModal?: string;
-
-  history?: string[];
-  isBack?: boolean;
-}
-
-interface ModalTransitionProps extends ModalTransitionState {
-  onEnter: (id: string) => void;
-  onExit: (id: string) => void;
-  modalsState: ModalsState;
-}
-
 interface ModalRootState {
   touchDown?: boolean;
   dragging?: boolean;
-}
-
-function getModals(children: React.ReactChildren) {
-  return React.Children.toArray(children) as React.ReactElement[];
-}
-
-function modalTransitionReducer(
-  state: ModalTransitionState,
-  action: { type: 'setActive' | 'entered' | 'exited' | 'inited'; id: string },
-): ModalTransitionState {
-  if (action.type === 'setActive') {
-    const nextModal = action.id;
-    // preserve exiting modal if switching mid-transition
-    const prevModal = state.exitingModal || state.activeModal;
-    let history = [...state.history];
-    const isBack = history.includes(nextModal);
-
-    if (nextModal === null) {
-      history = [];
-    } else if (isBack) {
-      history = history.splice(0, history.indexOf(nextModal) + 1);
-    } else {
-      history.push(nextModal);
-    }
-
-    return {
-      activeModal: nextModal,
-      // not entering yet
-      exitingModal: prevModal,
-      history,
-      isBack,
-    };
-  }
-  if (action.type === 'entered' && action.id === state.enteringModal) {
-    return { ...state, enteringModal: null };
-  }
-  if (action.type === 'exited' && action.id === state.exitingModal) {
-    return { ...state, exitingModal: null };
-  }
-  if (action.type === 'inited' && action.id === state.activeModal) {
-    return { ...state, enteringModal: action.id };
-  }
-  return state;
-}
-
-function useModalManager(activeModal: string, children: React.ReactChildren): ModalTransitionProps {
-  const [transitionState, dispatchTransition] = React.useReducer(modalTransitionReducer, {
-    activeModal,
-    exitingModal: null,
-    history: activeModal ? [activeModal] : [],
-    isBack: false,
-  });
-  const modalsState = React.useRef(getModals(children).reduce<ModalsState>((acc, Modal) => {
-    const modalProps = Modal.props;
-    const state: ModalsStateEntry = {
-      id: getNavId(modalProps, warn),
-      onClose: Modal.props.onClose,
-      dynamicContentHeight: !!modalProps.dynamicContentHeight,
-    };
-
-    // ModalPage props
-    if (typeof modalProps.settlingHeight === 'number') {
-      state.settlingHeight = modalProps.settlingHeight;
-    }
-
-    acc[state.id] = state;
-    return acc;
-  }, {})).current;
-
-  // transition phase 1: map state to props, render activeModal for init
-  useIsomorphicLayoutEffect(() => {
-    if (IS_DEV && activeModal !== null && !modalsState[activeModal]) {
-      return warn(`Can't transition - modal ${activeModal} not found`);
-    }
-    dispatchTransition({ type: 'setActive', id: activeModal });
-  }, [activeModal]);
-
-  useIsomorphicLayoutEffect(() => {
-    if (transitionState.activeModal) {
-      // transition phase 2: read activeModal data & set enteringModal
-      initModal(modalsState[transitionState.activeModal]);
-      dispatchTransition({ type: 'inited', id: transitionState.activeModal });
-    }
-  }, [transitionState.activeModal]);
-
-  const { enteringModal, exitingModal } = transitionState;
-  const canEnter = enteringModal && (!exitingModal || modalsState[enteringModal]?.type === ModalType.PAGE);
-
-  return {
-    onEnter: (id: string) => dispatchTransition({ type: 'entered', id }),
-    onExit: (id: string) => dispatchTransition({ type: 'exited', id }),
-    ...transitionState,
-    enteringModal: canEnter ? transitionState.enteringModal : null,
-    modalsState,
-  };
 }
 
 class ModalRootTouchComponentDumb extends React.Component<ModalRootProps & DOMProps & ModalTransitionProps, ModalRootState> {
@@ -717,7 +607,7 @@ class ModalRootTouchComponentDumb extends React.Component<ModalRootProps & DOMPr
 }
 
 const ModalRootTouchComponent: React.FC<ModalRootProps> = (props) => {
-  const transitionManager = useModalManager(props.activeModal, props.children as any);
+  const transitionManager = useModalManager(props.activeModal, props.children as any, initModal);
   return <ModalRootTouchComponentDumb {...props} {...transitionManager} />;
 };
 
