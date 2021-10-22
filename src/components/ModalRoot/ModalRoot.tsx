@@ -23,7 +23,7 @@ import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
-import { useModalManager, ModalTransitionProps } from './useModalManager';
+import { ModalTransitionProps, withModalManager } from './useModalManager';
 import './ModalRoot.css';
 
 const warn = warnOnce('ModalRoot');
@@ -55,7 +55,7 @@ interface ModalRootState {
   dragging?: boolean;
 }
 
-class ModalRootTouchComponentDumb extends React.Component<ModalRootProps & DOMProps & ModalTransitionProps, ModalRootState> {
+class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps & ModalTransitionProps, ModalRootState> {
   constructor(props: ModalRootProps & ModalTransitionProps) {
     super(props);
     this.state = {
@@ -606,12 +606,9 @@ class ModalRootTouchComponentDumb extends React.Component<ModalRootProps & DOMPr
   }
 }
 
-const ModalRootTouchComponent: React.FC<ModalRootProps> = (props) => {
-  const transitionManager = useModalManager(props.activeModal, props.children as any, initModal);
-  return <ModalRootTouchComponentDumb {...props} {...transitionManager} />;
-};
-
-export const ModalRootTouch = withContext(withPlatform(withDOM<ModalRootProps>(ModalRootTouchComponent)), ConfigProviderContext, 'configProvider');
+export const ModalRootTouch = withContext(withPlatform(withDOM<ModalRootProps>(
+  withModalManager(initModal)(ModalRootTouchComponent),
+)), ConfigProviderContext, 'configProvider');
 
 /**
  * Инициализирует модалку перед анимацией открытия

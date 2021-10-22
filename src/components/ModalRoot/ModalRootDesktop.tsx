@@ -18,7 +18,7 @@ import { DOMProps, withDOM } from '../../lib/dom';
 import { getNavId } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
 import { FocusTrap } from '../FocusTrap/FocusTrap';
-import { useModalManager, ModalTransitionProps } from './useModalManager';
+import { ModalTransitionProps, withModalManager } from './useModalManager';
 import './ModalRoot.css';
 
 const warn = warnOnce('ModalRoot');
@@ -37,7 +37,7 @@ export interface ModalRootProps extends HasPlatform {
   onClose?(modalId: string): void;
 }
 
-class ModalRootDesktopComponentDumb extends React.Component<ModalRootProps & DOMProps & ModalTransitionProps> {
+class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProps & ModalTransitionProps> {
   constructor(props: ModalRootProps & ModalTransitionProps) {
     super(props);
 
@@ -213,9 +213,10 @@ class ModalRootDesktopComponentDumb extends React.Component<ModalRootProps & DOM
   }
 }
 
-const ModalRootDesktopComponent: React.FC<ModalRootProps> = (props) => {
-  const transitionManager = useModalManager(props.activeModal, props.children as any);
-  return <ModalRootDesktopComponentDumb {...props} {...transitionManager} />;
-};
-
-export const ModalRootDesktop = withContext(withPlatform(withDOM<ModalRootProps>(ModalRootDesktopComponent)), ConfigProviderContext, 'configProvider');
+export const ModalRootDesktop = withContext(
+  withPlatform(
+    withDOM<ModalRootProps>(
+      withModalManager()(ModalRootDesktopComponent),
+    ),
+  ),
+  ConfigProviderContext, 'configProvider');

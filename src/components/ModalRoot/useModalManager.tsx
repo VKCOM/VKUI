@@ -120,3 +120,14 @@ export function useModalManager(
     modalsState,
   };
 }
+
+export function withModalManager(initModal: (a: ModalsStateEntry) => void = noop) {
+  return function<Props extends ModalTransitionProps>(
+    Wrapped: React.ComponentType<Props>,
+  ): React.FC<Omit<Props, keyof ModalTransitionProps> & { activeModal: string }> {
+    return function WithModalManager(props) {
+      const transitionManager = useModalManager(props.activeModal, props.children as any, initModal);
+      return <Wrapped {...props as any} {...transitionManager} />;
+    };
+  };
+}
