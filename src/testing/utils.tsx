@@ -3,6 +3,14 @@ import { render, RenderResult, screen } from '@testing-library/react';
 import AdaptivityProvider, { AdaptivityProviderProps } from '../components/AdaptivityProvider/AdaptivityProvider';
 import { ImgOnlyAttributes } from '../lib/utils';
 import { ScrollContext } from '../components/AppRoot/ScrollContext';
+import { act } from 'react-dom/test-utils';
+
+export function fakeTimers() {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => jest.useRealTimers());
+}
+
+export const runAllTimers = () => act(() => jest.runAllTimers());
 
 export const imgOnlyAttributes: ImgOnlyAttributes = {
   alt: 'test',
