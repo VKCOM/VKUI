@@ -259,22 +259,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
       return;
     }
 
-    switch (modalState.type) {
-      case ModalType.PAGE:
-        modalState.settlingHeight = modalState.settlingHeight || MODAL_PAGE_DEFAULT_PERCENT_HEIGHT;
-        this.initPageModal(modalState);
-        break;
-
-      case ModalType.CARD:
-        this.initCardModal(modalState);
-        break;
-
-      default:
-        if (IS_DEV) {
-          warn('[initActiveModal] modalState.type is unknown');
-        }
-    }
-
+    initModal(modalState);
     this.setState({ enteringModal: activeModal });
   }
 
@@ -283,71 +268,12 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
     modalState && this.animateTranslate(modalState, modalState.translateY);
   };
 
-  initPageModal(modalState: ModalsStateEntry) {
-    const { contentElement } = modalState;
-    const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
-
-    let prevTranslateY = modalState.translateY;
-
-    modalState.expandable = contentHeight > contentElement.clientHeight || modalState.settlingHeight === 100;
-
-    let collapsed = false;
-    let expanded = false;
-    let translateYFrom;
-    let translateY;
-    let expandedRange: TranslateRange;
-    let collapsedRange: TranslateRange;
-    let hiddenRange: TranslateRange;
-
-    if (modalState.expandable) {
-      translateYFrom = 100 - modalState.settlingHeight;
-
-      const shiftHalf = translateYFrom / 2;
-      const visiblePart = 100 - translateYFrom;
-
-      expandedRange = [0, shiftHalf];
-      collapsedRange = [shiftHalf, translateYFrom + visiblePart / 4];
-      hiddenRange = [translateYFrom + visiblePart / 4, 100];
-
-      collapsed = translateYFrom > 0;
-      expanded = translateYFrom <= 0;
-      translateY = translateYFrom;
-    } else {
-      const headerHeight = modalState.headerElement.offsetHeight;
-      const height = contentHeight + headerHeight;
-
-      translateYFrom = 100 - height / modalState.innerElement.parentElement.offsetHeight * 100;
-      translateY = translateYFrom;
-
-      expandedRange = [translateY, translateY + 25];
-      collapsedRange = [translateY + 25, translateY + 25];
-      hiddenRange = [translateY + 25, translateY + 100];
-    }
-
-    // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
-    if (modalState.expandable && translateY > prevTranslateY || modalState.settlingHeight === 100) {
-      translateY = 0;
-    }
-
-    modalState.expandedRange = expandedRange;
-    modalState.collapsedRange = collapsedRange;
-    modalState.hiddenRange = hiddenRange;
-    modalState.translateY = translateY;
-    modalState.translateYFrom = translateYFrom;
-    modalState.collapsed = collapsed;
-    modalState.expanded = expanded;
-  }
-
-  initCardModal(modalState: ModalsStateEntry) {
-    modalState.translateY = 0;
-  }
-
   checkPageContentHeight() {
     const modalState = this.modalsState[this.state.activeModal];
 
     if (modalState?.type === ModalType.PAGE && modalState?.modalElement) {
       const prevModalState = { ...modalState };
-      this.initPageModal(modalState);
+      initPageModal(modalState);
       const currentModalState = { ...modalState };
 
       let needAnimate = false;
@@ -772,3 +698,77 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
 }
 
 export const ModalRootTouch = withContext(withPlatform(withDOM<ModalRootProps>(ModalRootTouchComponent)), ConfigProviderContext, 'configProvider');
+
+/**
+ * Инициализирует модалку перед анимацией открытия
+ */
+function initModal(modalState: ModalsStateEntry) {
+  switch (modalState.type) {
+    case ModalType.PAGE:
+      modalState.settlingHeight = modalState.settlingHeight || MODAL_PAGE_DEFAULT_PERCENT_HEIGHT;
+      return initPageModal(modalState);
+    case ModalType.CARD:
+      return initCardModal(modalState);
+    default:
+      IS_DEV && warn('[initActiveModal] modalState.type is unknown');
+  }
+}
+
+function initPageModal(modalState: ModalsStateEntry) {
+  const { contentElement } = modalState;
+  const contentHeight = (contentElement.firstElementChild as HTMLElement).offsetHeight;
+
+  let prevTranslateY = modalState.translateY;
+
+  modalState.expandable = contentHeight > contentElement.clientHeight || modalState.settlingHeight === 100;
+
+  let collapsed = false;
+  let expanded = false;
+  let translateYFrom;
+  let translateY;
+  let expandedRange: TranslateRange;
+  let collapsedRange: TranslateRange;
+  let hiddenRange: TranslateRange;
+
+  if (modalState.expandable) {
+    translateYFrom = 100 - modalState.settlingHeight;
+
+    const shiftHalf = translateYFrom / 2;
+    const visiblePart = 100 - translateYFrom;
+
+    expandedRange = [0, shiftHalf];
+    collapsedRange = [shiftHalf, translateYFrom + visiblePart / 4];
+    hiddenRange = [translateYFrom + visiblePart / 4, 100];
+
+    collapsed = translateYFrom > 0;
+    expanded = translateYFrom <= 0;
+    translateY = translateYFrom;
+  } else {
+    const headerHeight = modalState.headerElement.offsetHeight;
+    const height = contentHeight + headerHeight;
+
+    translateYFrom = 100 - height / modalState.innerElement.parentElement.offsetHeight * 100;
+    translateY = translateYFrom;
+
+    expandedRange = [translateY, translateY + 25];
+    collapsedRange = [translateY + 25, translateY + 25];
+    hiddenRange = [translateY + 25, translateY + 100];
+  }
+
+  // Если модалка может открываться на весь экран, и новый сдвиг больше предыдущего, то откроем её на весь экран
+  if (modalState.expandable && translateY > prevTranslateY || modalState.settlingHeight === 100) {
+    translateY = 0;
+  }
+
+  modalState.expandedRange = expandedRange;
+  modalState.collapsedRange = collapsedRange;
+  modalState.hiddenRange = hiddenRange;
+  modalState.translateY = translateY;
+  modalState.translateYFrom = translateYFrom;
+  modalState.collapsed = collapsed;
+  modalState.expanded = expanded;
+}
+
+function initCardModal(modalState: ModalsStateEntry) {
+  modalState.translateY = 0;
+}
