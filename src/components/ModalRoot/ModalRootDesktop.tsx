@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { classNames } from '../../lib/classNames';
-import { isFunction } from '../../lib/utils';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasPlatform } from '../../types';
 import { withPlatform } from '../../hoc/withPlatform';
@@ -22,7 +21,6 @@ import { ModalTransitionProps, withModalManager } from './useModalManager';
 import './ModalRoot.css';
 
 const warn = warnOnce('ModalRoot');
-const IS_DEV = process.env.NODE_ENV === 'development';
 
 export interface ModalRootProps extends HasPlatform {
   activeModal?: string | null;
@@ -46,7 +44,7 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
     this.modalRootContext = {
       updateModalHeight: () => undefined,
       registerModal: ({ id, ...data }) => Object.assign(this.getModalState(id), data),
-      onClose: this.triggerActiveModalClose,
+      onClose: () => this.props.closeActiveModal(),
       isInsideModal: true,
     };
   }
@@ -56,11 +54,11 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
   private readonly modalRootContext: ModalRootContextInterface;
   private restoreFocusTo: HTMLElement;
 
-  get timeout() {
+  private get timeout() {
     return this.props.platform === ANDROID || this.props.platform === VKCOM ? 320 : 400;
   }
 
-  get modals() {
+  private get modals() {
     return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
 
@@ -144,26 +142,6 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
     });
   }
 
-  /**
-   * Закрывает текущую модалку
-   */
-  triggerActiveModalClose = () => {
-    const activeModalState = this.getModalState(this.props.activeModal);
-    if (activeModalState) {
-      this.doCloseModal(activeModalState);
-    }
-  };
-
-  private readonly doCloseModal = (modalState: ModalsStateEntry) => {
-    if (isFunction(modalState.onClose)) {
-      modalState.onClose();
-    } else if (isFunction(this.props.onClose)) {
-      this.props.onClose(modalState.id);
-    } else if (IS_DEV) {
-      warn('onClose is undefined');
-    }
-  };
-
   render() {
     const { exitingModal, activeModal, enteringModal } = this.props;
 
@@ -180,8 +158,8 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
         >
           <div
             vkuiClass="ModalRoot__mask"
-            onClick={this.triggerActiveModalClose}
             ref={this.maskElementRef}
+            onClick={this.props.closeActiveModal}
           />
           <div vkuiClass="ModalRoot__viewport">
             {this.modals.map((Modal: React.ReactElement) => {
@@ -195,7 +173,7 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
               return (
                 <FocusTrap
                   restoreFocus={false}
-                  onClose={this.triggerActiveModalClose}
+                  onClose={this.props.closeActiveModal}
                   timeout={this.timeout}
                   key={key}
                   vkuiClass={classNames('ModalRoot__modal', {

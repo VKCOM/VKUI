@@ -5,7 +5,6 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { setTransformStyle } from '../../lib/styles';
 import { rubber } from '../../lib/touch';
-import { isFunction } from '../../lib/utils';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import { transitionEvent } from '../../lib/supportEvents';
 import { HasPlatform } from '../../types';
@@ -68,7 +67,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps 
     this.modalRootContext = {
       updateModalHeight: this.updateModalHeight,
       registerModal: ({ id, ...data }) => Object.assign(this.getModalState(id), data),
-      onClose: this.triggerActiveModalClose,
+      onClose: () => this.props.closeActiveModal(),
       isInsideModal: true,
     };
 
@@ -394,7 +393,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps 
       modalState.hidden = translateY === 100;
 
       if (modalState.hidden) {
-        this.doCloseModal(modalState);
+        this.props.closeActiveModal();
       }
 
       setStateCallback = () => {
@@ -431,7 +430,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps 
       modalState.hidden = translateY === 100;
 
       if (modalState.hidden) {
-        this.doCloseModal(modalState);
+        this.props.closeActiveModal();
       }
 
       setStateCallback = () => {
@@ -517,29 +516,6 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps 
     });
   }
 
-  /**
-   * Закрывает текущую модалку
-   */
-  triggerActiveModalClose = () => {
-    const activeModalState = this.getModalState(this.props.activeModal);
-    if (activeModalState) {
-      this.doCloseModal(activeModalState);
-    }
-  };
-
-  private readonly doCloseModal = (modalState: ModalsStateEntry) => {
-    // Сбрасываем состояния, которые могут помешать закрытию модального окна
-    this.setState({ touchDown: false });
-
-    if (isFunction(modalState.onClose)) {
-      modalState.onClose();
-    } else if (isFunction(this.props.onClose)) {
-      this.props.onClose(modalState.id);
-    } else if (IS_DEV) {
-      warn('onClose is undefined');
-    }
-  };
-
   render() {
     const { activeModal, exitingModal, enteringModal } = this.props;
     const { touchDown, dragging } = this.state;
@@ -563,7 +539,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps 
           >
             <div
               vkuiClass="ModalRoot__mask"
-              onClick={this.triggerActiveModalClose}
+              onClick={this.props.closeActiveModal}
               ref={this.maskElementRef}
             />
             <div vkuiClass="ModalRoot__viewport" ref={this.viewportRef}>
@@ -581,7 +557,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps 
                   <FocusTrap
                     key={key}
                     getRootRef={(e) => this.getModalState(modalId).modalElement = e}
-                    onClose={this.triggerActiveModalClose}
+                    onClose={this.props.closeActiveModal}
                     timeout={this.timeout}
                     vkuiClass={classNames('ModalRoot__modal', {
                       'ModalRoot__modal--active': modalId === activeModal,

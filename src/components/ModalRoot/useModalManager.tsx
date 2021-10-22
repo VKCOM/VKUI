@@ -3,7 +3,7 @@ import { ModalsState, ModalsStateEntry, ModalType } from './types';
 import { warnOnce } from '../../lib/warnOnce';
 import { getNavId } from '../../lib/getNavId';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
-import { noop } from '../../lib/utils';
+import { noop, isFunction } from '../../lib/utils';
 
 interface ModalTransitionState {
   activeModal?: string;
@@ -18,6 +18,7 @@ export interface ModalTransitionProps extends ModalTransitionState {
   onEnter: (id: string) => void;
   onExit: (id: string) => void;
   getModalState: (id: string) => ModalsStateEntry;
+  closeActiveModal: VoidFunction;
 }
 
 function getModals(children: React.ReactChildren) {
@@ -80,6 +81,7 @@ function modalTransitionReducer(
 export function useModalManager(
   activeModal: string,
   children: React.ReactChildren,
+  onClose: (id: string) => void,
   initModal: (state: ModalsStateEntry) => void = noop,
 ): ModalTransitionProps {
   const [transitionState, dispatchTransition] = React.useReducer(modalTransitionReducer, {
@@ -128,12 +130,26 @@ export function useModalManager(
   const onExit = React.useCallback((id: string) => dispatchTransition({ type: 'exited', id }), []);
   const getModalState = React.useCallback((id: string) => modalsState[id], []);
 
+  function closeActiveModal() {
+    const modalState = modalsState[transitionState.activeModal];
+    if (modalState) {
+      if (isFunction(modalState.onClose)) {
+        modalState.onClose();
+      } else if (isFunction(onClose)) {
+        onClose(modalState.id);
+      } else if (process.env.NODE_ENV === 'development') {
+        warn('onClose is undefined');
+      }
+    }
+  }
+
   return {
     onEnter,
     onExit,
     ...transitionState,
     enteringModal: canEnter ? transitionState.enteringModal : null,
     getModalState,
+    closeActiveModal,
   };
 }
 
@@ -142,7 +158,11 @@ export function withModalManager(initModal: (a: ModalsStateEntry) => void = noop
     Wrapped: React.ComponentType<Props>,
   ): React.FC<Omit<Props, keyof ModalTransitionProps> & { activeModal: string }> {
     return function WithModalManager(props) {
-      const transitionManager = useModalManager(props.activeModal, props.children as any, initModal);
+      const transitionManager = useModalManager(
+        props.activeModal,
+        props.children as any,
+        (props as any).onClose,
+        initModal);
       return <Wrapped {...props as any} {...transitionManager} />;
     };
   };
