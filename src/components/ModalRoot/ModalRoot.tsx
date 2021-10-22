@@ -58,7 +58,6 @@ interface ModalRootState {
   switching?: boolean;
   history?: string[];
   isBack?: boolean;
-  inited?: boolean;
   touchDown?: boolean;
   dragging?: boolean;
 }
@@ -78,7 +77,6 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
       switching: false,
       history: activeModal ? [activeModal] : [],
       isBack: false,
-      inited: false,
       touchDown: false,
       dragging: false,
     };
@@ -185,7 +183,6 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
         history,
         isBack,
         animated: true,
-        inited: false,
         switching: false,
       }, () => {
         if (nextModal === null) {
@@ -269,7 +266,7 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
         }
     }
 
-    this.setState({ inited: true, switching: true });
+    this.setState({ switching: true });
   }
 
   updateModalTranslate = () => {
@@ -737,13 +734,6 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps,
 
     this.frameIds[frameId] = requestAnimationFrame(() => {
       setTransformStyle(modalState.innerElement, `translate3d(0, ${percent}%, 0)`);
-
-      if (modalState.type === ModalType.PAGE && modalState.footerElement) {
-        const footerHeight = modalState.footerElement.offsetHeight;
-        const factor = modalState.innerElement.offsetHeight * (percent / 100);
-
-        setTransformStyle(modalState.footerElement, `translateY(calc(${footerHeight}px * -${factor / footerHeight}))`);
-      }
     });
   }
 
