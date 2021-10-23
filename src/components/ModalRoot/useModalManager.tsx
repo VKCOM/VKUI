@@ -17,7 +17,7 @@ interface ModalTransitionState {
 export interface ModalTransitionProps extends ModalTransitionState {
   onEnter: (id: string) => void;
   onExit: (id: string) => void;
-  modalsState: ModalsState;
+  getModalState: (id: string) => ModalsStateEntry;
 }
 
 function getModals(children: React.ReactChildren) {
@@ -126,13 +126,14 @@ export function useModalManager(
   const canEnter = enteringModal && (!exitingModal || modalsState[enteringModal]?.type === ModalType.PAGE);
   const onEnter = React.useCallback((id: string) => dispatchTransition({ type: 'entered', id }), []);
   const onExit = React.useCallback((id: string) => dispatchTransition({ type: 'exited', id }), []);
+  const getModalState = React.useCallback((id: string) => modalsState[id], []);
 
   return {
     onEnter,
     onExit,
     ...transitionState,
     enteringModal: canEnter ? transitionState.enteringModal : null,
-    modalsState,
+    getModalState,
   };
 }
 

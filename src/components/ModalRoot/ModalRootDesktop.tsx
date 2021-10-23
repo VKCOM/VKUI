@@ -45,7 +45,7 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
     this.modalRootContext = {
       updateModalHeight: () => undefined,
-      registerModal: ({ id, ...data }) => Object.assign(this.modalsState[id], data),
+      registerModal: ({ id, ...data }) => Object.assign(this.getModalState(id), data),
       onClose: this.triggerActiveModalClose,
       isInsideModal: true,
     };
@@ -64,8 +64,8 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
     return React.Children.toArray(this.props.children) as React.ReactElement[];
   }
 
-  get modalsState() {
-    return this.props.modalsState;
+  getModalState(id: string) {
+    return this.props.getModalState(id);
   }
 
   componentDidUpdate(prevProps: ModalRootProps & ModalTransitionProps) {
@@ -77,7 +77,7 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
     // transition phase 3: animate entering modal
     if (this.props.enteringModal && this.props.enteringModal !== prevProps.enteringModal) {
       const { enteringModal } = this.props;
-      const enteringState = this.modalsState[enteringModal];
+      const enteringState = this.getModalState(enteringModal);
       requestAnimationFrame(() => {
         if (this.props.enteringModal === enteringModal) {
           this.waitTransitionFinish(enteringState, () => this.props.onEnter(enteringModal));
@@ -97,7 +97,7 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
   }
 
   closeModal(id: string) {
-    const prevModalState = this.modalsState[id];
+    const prevModalState = this.getModalState(id);
     if (!prevModalState) {
       return;
     }
@@ -148,7 +148,7 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
    * Закрывает текущую модалку
    */
   triggerActiveModalClose = () => {
-    const activeModalState = this.modalsState[this.props.activeModal];
+    const activeModalState = this.getModalState(this.props.activeModal);
     if (activeModalState) {
       this.doCloseModal(activeModalState);
     }
