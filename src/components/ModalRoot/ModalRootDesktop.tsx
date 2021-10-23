@@ -122,6 +122,7 @@ class ModalRootDesktopComponent extends React.Component<ModalRootProps & DOMProp
 
   /* Анимирует сдивг модалки */
   animateModalOpacity(modalState: ModalsStateEntry, display: boolean) {
+    modalState.innerElement.style.transitionDelay = display && this.props.delayEnter ? `${this.timeout}ms` : null;
     modalState.innerElement.style.opacity = display ? '1' : '0';
   }
 

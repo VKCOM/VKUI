@@ -19,6 +19,7 @@ export interface ModalTransitionProps extends ModalTransitionState {
   onExit: (id: string) => void;
   getModalState: (id: string) => ModalsStateEntry;
   closeActiveModal: VoidFunction;
+  delayEnter: boolean;
 }
 
 function getModals(children: React.ReactNode | React.ReactNode[]) {
@@ -49,6 +50,7 @@ export function modalTransitionReducer(
     return {
       activeModal: nextModal,
       // not entering yet
+      enteringModal: null,
       exitingModal: prevModal,
       history,
       isBack,
@@ -104,6 +106,7 @@ export function useModalManager(
   const safeActiveModal = isMissing ? null : activeModal;
   const [transitionState, dispatchTransition] = React.useReducer(modalTransitionReducer, {
     activeModal: safeActiveModal,
+    enteringModal: null,
     exitingModal: null,
     history: safeActiveModal ? [safeActiveModal] : [],
     isBack: false,
@@ -126,10 +129,10 @@ export function useModalManager(
     }
   }, [transitionState.activeModal]);
 
-  const { enteringModal, exitingModal } = transitionState;
-  const canEnter = enteringModal && (!exitingModal || modalsState[enteringModal]?.type === ModalType.PAGE);
+  const isCard = (id: string) => modalsState[id]?.type === ModalType.CARD;
   const onEnter = React.useCallback((id: string) => dispatchTransition({ type: 'entered', id }), []);
   const onExit = React.useCallback((id: string) => dispatchTransition({ type: 'exited', id }), []);
+  const delayEnter = Boolean(transitionState.exitingModal && (isCard(activeModal) || isCard(transitionState.exitingModal)));
   const getModalState = React.useCallback((id: string) => modalsState[id], []);
 
   function closeActiveModal() {
@@ -149,7 +152,7 @@ export function useModalManager(
     onEnter,
     onExit,
     ...transitionState,
-    enteringModal: canEnter ? transitionState.enteringModal : null,
+    delayEnter,
     getModalState,
     closeActiveModal,
   };

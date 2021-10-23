@@ -10,10 +10,9 @@ describe(useModalManager, () => {
     const modals = [<MockModal id="m1" key="m1" />, <MockModal id="m2" key="m2" />];
     it('can enter on mount', () => {
       const handle = renderHook(({ id = 'm1' } = {} as any) => useModalManager(id, modals, noop));
-      expect(handle.result.all).toMatchObject([
-        { activeModal: 'm1', enteringModal: null, exitingModal: null },
-        { activeModal: 'm1', enteringModal: 'm1', exitingModal: null },
-      ]);
+      expect(handle.result.current).toMatchObject(
+        { activeModal: 'm1', enteringModal: 'm1', exitingModal: null, delayEnter: false },
+      );
       handle.result.current.onEnter('m1');
       expect(handle.result.current).toMatchObject(
         { activeModal: 'm1', enteringModal: null, exitingModal: null },
@@ -25,10 +24,9 @@ describe(useModalManager, () => {
         { activeModal: null, enteringModal: null, exitingModal: null },
       ]);
       handle.rerender({ id: 'm1' });
-      expect(handle.result.all.slice(-2)).toMatchObject([
-        { activeModal: 'm1', enteringModal: null, exitingModal: null },
-        { activeModal: 'm1', enteringModal: 'm1', exitingModal: null },
-      ]);
+      expect(handle.result.current).toMatchObject(
+        { activeModal: 'm1', enteringModal: 'm1', exitingModal: null, delayEnter: false },
+      );
       handle.result.current.onEnter('m1');
       expect(handle.result.current).toMatchObject(
         { activeModal: 'm1', enteringModal: null, exitingModal: null },
@@ -50,38 +48,25 @@ describe(useModalManager, () => {
         { activeModal: null, enteringModal: null, exitingModal: null },
       );
     });
-    describe('transitions between modals', () => {
-      it('transitions to non-page modal with blocking', () => {
-        const handle = flushMount('m1');
-        handle.rerender({ id: 'm2' });
-        expect(handle.result.current).toMatchObject(
-          { activeModal: 'm2', enteringModal: null, exitingModal: 'm1' },
-        );
-        handle.result.current.onExit('m1');
-        expect(handle.result.current).toMatchObject(
-          { activeModal: 'm2', enteringModal: 'm2', exitingModal: null },
-        );
-        handle.result.current.onEnter('m2');
-        expect(handle.result.current).toMatchObject(
-          { activeModal: 'm2', enteringModal: null, exitingModal: null },
-        );
-      });
-      it('transitions to page modal without blocking', () => {
-        const handle = flushMount('m1');
-        handle.result.current.getModalState('m2').type = ModalType.PAGE;
-        handle.rerender({ id: 'm2' });
-        expect(handle.result.current).toMatchObject(
-          { activeModal: 'm2', enteringModal: 'm2', exitingModal: 'm1' },
-        );
-        handle.result.current.onExit('m1');
-        expect(handle.result.current).toMatchObject(
-          { activeModal: 'm2', enteringModal: 'm2', exitingModal: null },
-        );
-        handle.result.current.onEnter('m2');
-        expect(handle.result.current).toMatchObject(
-          { activeModal: 'm2', enteringModal: null, exitingModal: null },
-        );
-      });
+    it.each([
+      [ModalType.CARD, ModalType.CARD, true],
+      [ModalType.PAGE, ModalType.PAGE, false],
+    ])('transitions %s -> %s with delay=%s', (t1, t2, delayEnter) => {
+      const handle = flushMount('m1');
+      handle.result.current.getModalState('m1').type = t1;
+      handle.result.current.getModalState('m2').type = t2;
+      handle.rerender({ id: 'm2' });
+      expect(handle.result.current).toMatchObject(
+        { activeModal: 'm2', enteringModal: 'm2', exitingModal: 'm1', delayEnter },
+      );
+      handle.result.current.onExit('m1');
+      expect(handle.result.current).toMatchObject(
+        { activeModal: 'm2', enteringModal: 'm2', exitingModal: null },
+      );
+      handle.result.current.onEnter('m2');
+      expect(handle.result.current).toMatchObject(
+        { activeModal: 'm2', enteringModal: null, exitingModal: null },
+      );
     });
   });
 

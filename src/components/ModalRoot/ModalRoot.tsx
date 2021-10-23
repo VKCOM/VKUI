@@ -126,7 +126,11 @@ class ModalRootTouchComponent extends React.Component<ModalRootProps & DOMProps 
     if (this.props.enteringModal && this.props.enteringModal !== prevProps.enteringModal) {
       const { enteringModal } = this.props;
       const enteringState = this.getModalState(enteringModal);
-      this.waitTransitionFinish(enteringState, () => this.props.onEnter(enteringModal));
+      this.waitTransitionFinish(enteringState, () => {
+        enteringState.innerElement.style.transitionDelay = null;
+        this.props.onEnter(enteringModal);
+      });
+      enteringState.innerElement.style.transitionDelay = this.props.delayEnter ? `${this.timeout}ms` : null;
       this.animateTranslate(enteringState, enteringState.translateY);
     }
 
