@@ -21,13 +21,13 @@ export interface ModalTransitionProps extends ModalTransitionState {
   closeActiveModal: VoidFunction;
 }
 
-function getModals(children: React.ReactChildren) {
+function getModals(children: React.ReactNode | React.ReactNode[]) {
   return React.Children.toArray(children) as React.ReactElement[];
 }
 
 const warn = warnOnce('ModalRoot');
 
-function modalTransitionReducer(
+export function modalTransitionReducer(
   state: ModalTransitionState,
   action: { type: 'setActive' | 'entered' | 'exited' | 'inited'; id: string },
 ): ModalTransitionState {
@@ -80,17 +80,10 @@ function modalTransitionReducer(
  */
 export function useModalManager(
   activeModal: string,
-  children: React.ReactChildren,
+  children: React.ReactNode | React.ReactNode[],
   onClose: (id: string) => void,
   initModal: (state: ModalsStateEntry) => void = noop,
 ): ModalTransitionProps {
-  const [transitionState, dispatchTransition] = React.useReducer(modalTransitionReducer, {
-    activeModal,
-    exitingModal: null,
-    history: activeModal ? [activeModal] : [],
-    isBack: false,
-  });
-
   const modalsState = React.useRef<ModalsState>({}).current;
   getModals(children).forEach((Modal) => {
     const modalProps = Modal.props;
@@ -107,13 +100,22 @@ export function useModalManager(
     modalsState[state.id] = state;
   });
 
+  const isMissing = activeModal && !modalsState[activeModal];
+  const safeActiveModal = isMissing ? null : activeModal;
+  const [transitionState, dispatchTransition] = React.useReducer(modalTransitionReducer, {
+    activeModal: safeActiveModal,
+    exitingModal: null,
+    history: safeActiveModal ? [safeActiveModal] : [],
+    isBack: false,
+  });
+
   // Map props to state, render activeModal for init
   useIsomorphicLayoutEffect(() => {
     // ignore non-existent activeModal
-    if (process.env.NODE_ENV === 'development' && activeModal && !modalsState[activeModal]) {
-      return warn(`Can't transition - modal ${activeModal} not found`);
+    if (process.env.NODE_ENV === 'development' && isMissing) {
+      warn(`Can't transition - modal ${activeModal} not found`);
     }
-    dispatchTransition({ type: 'setActive', id: activeModal });
+    dispatchTransition({ type: 'setActive', id: safeActiveModal });
   }, [activeModal]);
 
   // Init activeModal & set enteringModal
@@ -160,7 +162,7 @@ export function withModalManager(initModal: (a: ModalsStateEntry) => void = noop
     return function WithModalManager(props) {
       const transitionManager = useModalManager(
         props.activeModal,
-        props.children as any,
+        props.children,
         (props as any).onClose,
         initModal);
       return <Wrapped {...props as any} {...transitionManager} />;
