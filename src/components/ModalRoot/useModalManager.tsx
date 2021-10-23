@@ -65,6 +65,18 @@ function modalTransitionReducer(
   return state;
 }
 
+/**
+ * Реализует переход модалок. При смене activeModal m1 -> m2:
+ * 1. activeModal: m1, exitingModal: null, enteringModal: null, триггер перехода
+ * 2. activeModal: m2, exitingModal: m1, enteringModal: null, рендерим m2 чтобы прошел init, начинаем анимацию выхода
+ * одновременный переход между ModalPage:
+ *   3a. activeModal: m2, exitingModal: m1, enteringModal: m2
+ *   4a. exitingModal и enteringModal переходят в null в порядке завершения анимации
+ * ИЛИ дожидаемся скрытия ModalCard
+ *   3b. activeModal: m2, exitingModal: null, enteringModal: m2
+ *   4b. enteringModal переходит в null после завершения анимации
+ * 5. activeModal: m2, exitingModal: null, enteringModal: null, переход закончен
+ */
 export function useModalManager(
   activeModal: string,
   children: React.ReactChildren,
@@ -76,34 +88,35 @@ export function useModalManager(
     history: activeModal ? [activeModal] : [],
     isBack: false,
   });
-  const modalsState = React.useRef(getModals(children).reduce<ModalsState>((acc, Modal) => {
-    const modalProps = Modal.props;
-    const state: ModalsStateEntry = {
-      id: getNavId(modalProps, warn),
-      onClose: Modal.props.onClose,
-      dynamicContentHeight: !!modalProps.dynamicContentHeight,
-    };
 
+  const modalsState = React.useRef<ModalsState>({}).current;
+  getModals(children).forEach((Modal) => {
+    const modalProps = Modal.props;
+    const id = getNavId(modalProps, warn);
+    const state: ModalsStateEntry = modalsState[id] || { id };
+
+    state.onClose = Modal.props.onClose;
+    state.dynamicContentHeight = !!modalProps.dynamicContentHeight;
     // ModalPage props
     if (typeof modalProps.settlingHeight === 'number') {
       state.settlingHeight = modalProps.settlingHeight;
     }
 
-    acc[state.id] = state;
-    return acc;
-  }, {})).current;
+    modalsState[state.id] = state;
+  });
 
-  // transition phase 1: map state to props, render activeModal for init
+  // Map props to state, render activeModal for init
   useIsomorphicLayoutEffect(() => {
+    // ignore non-existent activeModal
     if (process.env.NODE_ENV === 'development' && activeModal && !modalsState[activeModal]) {
       return warn(`Can't transition - modal ${activeModal} not found`);
     }
     dispatchTransition({ type: 'setActive', id: activeModal });
   }, [activeModal]);
 
+  // Init activeModal & set enteringModal
   useIsomorphicLayoutEffect(() => {
     if (transitionState.activeModal) {
-      // transition phase 2: read activeModal data & set enteringModal
       initModal(modalsState[transitionState.activeModal]);
       dispatchTransition({ type: 'inited', id: transitionState.activeModal });
     }
@@ -111,10 +124,12 @@ export function useModalManager(
 
   const { enteringModal, exitingModal } = transitionState;
   const canEnter = enteringModal && (!exitingModal || modalsState[enteringModal]?.type === ModalType.PAGE);
+  const onEnter = React.useCallback((id: string) => dispatchTransition({ type: 'entered', id }), []);
+  const onExit = React.useCallback((id: string) => dispatchTransition({ type: 'exited', id }), []);
 
   return {
-    onEnter: (id: string) => dispatchTransition({ type: 'entered', id }),
-    onExit: (id: string) => dispatchTransition({ type: 'exited', id }),
+    onEnter,
+    onExit,
     ...transitionState,
     enteringModal: canEnter ? transitionState.enteringModal : null,
     modalsState,
