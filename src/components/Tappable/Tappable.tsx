@@ -1,6 +1,6 @@
 import * as React from 'react';
 import mitt from 'mitt';
-import { hasHover as deviceHasHover, noop } from '@vkontakte/vkjs';
+import { noop } from '@vkontakte/vkjs';
 import { Touch, TouchEvent, TouchProps } from '../Touch/Touch';
 import TouchRootContext from '../Touch/TouchContext';
 import { classNames } from '../../lib/classNames';
@@ -129,7 +129,7 @@ const Tappable: React.FC<TappableProps> = ({
   getRootRef,
   sizeX,
   hasMouse,
-  hasHover: _hasHover = deviceHasHover,
+  hasHover: _hasHover,
   hoverMode = 'background',
   hasActive: _hasActive = true,
   activeMode = 'background',
@@ -271,7 +271,7 @@ const Tappable: React.FC<TappableProps> = ({
   );
 };
 
-export default withAdaptivity(Tappable, { sizeX: true, hasMouse: true });
+export default withAdaptivity(Tappable, { sizeX: true, hasMouse: true, hasHover: true });
 
 function Wave({ x, y, onClear }: Wave & { onClear: VoidFunction }) {
   const timeout = useTimeout(onClear, 225);

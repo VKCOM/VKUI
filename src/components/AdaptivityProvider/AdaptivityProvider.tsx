@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { hasMouse as _hasMouse } from '@vkontakte/vkjs';
+import { hasMouse as _hasMouse, hasHover as _hasHover } from '@vkontakte/vkjs';
 import { AdaptivityContext, AdaptivityContextInterface, SizeType, ViewHeight, ViewWidth } from './AdaptivityContext';
 import { useDOM } from '../../lib/dom';
 
@@ -32,14 +32,15 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
   React.useEffect(() => {
     function onResize() {
       const calculated = calculateAdaptivity(window.innerWidth, window.innerHeight, props);
-      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse } = adaptivityRef.current;
+      const { viewWidth, viewHeight, sizeX, sizeY, hasMouse, hasHover } = adaptivityRef.current;
 
       if (
         viewWidth !== calculated.viewWidth ||
         viewHeight !== calculated.viewHeight ||
         sizeX !== calculated.sizeX ||
         sizeY !== calculated.sizeY ||
-        hasMouse !== calculated.hasMouse
+        hasMouse !== calculated.hasMouse ||
+        hasHover !== calculated.hasHover
       ) {
         adaptivityRef.current = calculated;
         updateAdaptivity({});
@@ -52,7 +53,7 @@ export default function AdaptivityProvider(props: AdaptivityProviderProps) {
     return () => {
       window.removeEventListener('resize', onResize, false);
     };
-  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse]);
+  }, [props.viewWidth, props.viewHeight, props.sizeX, props.sizeY, props.hasMouse, props.hasHover]);
 
   return (
     <AdaptivityContext.Provider value={adaptivityRef.current}>
@@ -67,6 +68,7 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
   let sizeY = SizeType.REGULAR;
   let sizeX = SizeType.REGULAR;
   let hasMouse = typeof props.hasMouse === 'boolean' ? props.hasMouse : _hasMouse;
+  let hasHover = typeof props.hasHover === 'boolean' ? props.hasHover : _hasHover;
 
   if (windowWidth >= DESKTOP_SIZE) {
     viewWidth = ViewWidth.DESKTOP;
@@ -102,5 +104,5 @@ function calculateAdaptivity(windowWidth: number, windowHeight: number, props: A
   props.sizeX && (sizeX = props.sizeX);
   props.sizeY && (sizeY = props.sizeY);
 
-  return { viewWidth, viewHeight, sizeX, sizeY, hasMouse };
+  return { viewWidth, viewHeight, sizeX, sizeY, hasMouse, hasHover };
 }

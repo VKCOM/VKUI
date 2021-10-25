@@ -37,12 +37,17 @@ export interface AdaptivityProps extends SizeProps {
    * @ignore
    */
   hasMouse?: boolean;
+  /**
+   * @ignore
+   */
+  hasHover?: boolean;
 }
 
 export interface AdaptivityContextInterface extends SizeProps {
   viewWidth?: ViewWidth;
   viewHeight?: ViewHeight;
   hasMouse?: boolean;
+  hasHover?: boolean;
 }
 
 export const AdaptivityContext = React.createContext<AdaptivityContextInterface>({
