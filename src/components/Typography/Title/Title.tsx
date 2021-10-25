@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { HasComponent } from '../../../types';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
@@ -6,10 +7,9 @@ import { ANDROID } from '../../../lib/platform';
 import Headline, { HeadlineProps } from '../Headline/Headline';
 import './Title.css';
 
-export interface TitleProps extends React.AllHTMLAttributes<HTMLElement> {
+export interface TitleProps extends React.AllHTMLAttributes<HTMLElement>, HasComponent {
   weight: 'heavy' | 'bold' | 'semibold' | 'medium' | 'regular';
   level: '1' | '2' | '3';
-  Component?: React.ElementType;
 }
 
 const Title: React.FC<TitleProps> = ({
