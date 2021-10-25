@@ -43,39 +43,29 @@ export const Removable: React.FC<RemovableOwnProps> = ({
 
   const removeButtonRef = React.useRef(null);
 
-  const [isRemoveActivated, setRemoveActivated] = React.useState(false);
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
-  useGlobalEventListener(document, 'click', isRemoveActivated && (() => {
-    setRemoveActivated(false);
+  useGlobalEventListener(document, 'click', removeOffset > 0 && (() => {
     updateRemoveOffset(0);
   }));
 
   const onRemoveTransitionEnd = () => {
-    if (isRemoveActivated) {
+    if (removeOffset > 0) {
       removeButtonRef?.current?.focus();
     }
   };
 
   const onRemoveActivateClick = (e: React.MouseEvent) => {
-    e.nativeEvent.stopPropagation();
-    e.preventDefault();
-    setRemoveActivated(true);
+    e.stopPropagation();
+
+    updateRemoveOffset(removeButtonRef?.current.offsetWidth);
   };
 
   const onRemoveClick = (e: React.MouseEvent) => {
-    e.nativeEvent.stopImmediatePropagation();
     e.preventDefault();
+
     onRemove && onRemove(e);
   };
-
-  React.useEffect(() => {
-    const removeButton = removeButtonRef?.current;
-
-    if (isRemoveActivated && removeButton) {
-      updateRemoveOffset(removeButton.offsetWidth);
-    }
-  }, [isRemoveActivated]);
 
   const removePlaceholderString: string = getTitleFromChildren(removePlaceholder);
 
@@ -93,9 +83,11 @@ export const Removable: React.FC<RemovableOwnProps> = ({
           {children}
 
           <IconButton
-            aria-label={removePlaceholderString}
+            activeMode="opacity"
+            hoverMode="opacity"
             vkuiClass="Removable__action"
             onClick={onRemoveClick}
+            aria-label={removePlaceholderString}
           >
             <Icon24Cancel role="presentation" />
           </IconButton>
@@ -103,36 +95,37 @@ export const Removable: React.FC<RemovableOwnProps> = ({
       )}
 
       {platform === IOS && (
-        <React.Fragment>
-          <div vkuiClass="Removable__content" style={{ transform: `translateX(-${removeOffset}px)` }}>
-            <IconButton
-              hasActive={false}
-              hasHover={false}
-              aria-label={removePlaceholderString}
-              vkuiClass="Removable__action Removable__toggle"
-              onClick={onRemoveActivateClick}
-            >
-              <i vkuiClass="Removable__toggle-in" role="presentation" />
-            </IconButton>
-            {children}
+        <div
+          vkuiClass="Removable__content"
+          style={{ transform: `translateX(-${removeOffset || 0}px)` }}
+          onTransitionEnd={onRemoveTransitionEnd}
+        >
+          <IconButton
+            hasActive={false}
+            hasHover={false}
+            aria-label={removePlaceholderString}
+            vkuiClass="Removable__action Removable__toggle"
+            onClick={onRemoveActivateClick}
+          >
+            <i vkuiClass="Removable__toggle-in" role="presentation" />
+          </IconButton>
+          {children}
 
-            <span vkuiClass="Removable__offset" aria-hidden="true"></span>
-          </div>
+          <span vkuiClass="Removable__offset" aria-hidden="true"></span>
 
           <Tappable
             Component="button"
             hasActive={false}
             hasHover={false}
-            disabled={!isRemoveActivated}
+            disabled={removeOffset === 0}
             getRootRef={removeButtonRef}
             vkuiClass="Removable__remove"
             onClick={onRemoveClick}
             onTransitionEnd={onRemoveTransitionEnd}
-            style={{ transform: `translateX(-${removeOffset}px)` }}
           >
             <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
           </Tappable>
-        </React.Fragment>
+        </div>
       )}
     </div>
   );
