@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { HasComponent } from '../../types';
 import { classNames } from '../../lib/classNames';
 import { getClassName } from '../../helpers/getClassName';
 import Tappable, { TappableProps } from '../Tappable/Tappable';
@@ -13,7 +14,7 @@ import Text from '../Typography/Text/Text';
 import Subhead from '../Typography/Subhead/Subhead';
 import './SimpleCell.css';
 
-export interface SimpleCellOwnProps {
+export interface SimpleCellOwnProps extends HasComponent {
   /**
    * Иконка 28 или `<Avatar size={28|32|40|48|72} />`
    */
@@ -43,14 +44,11 @@ export interface SimpleCellOwnProps {
    */
   expandable?: boolean;
   multiline?: boolean;
-  Component?: React.ElementType;
 }
 
 export interface SimpleCellProps extends SimpleCellOwnProps, TappableProps {}
 
-interface SimpleCellTypographyProps extends React.HTMLAttributes<HTMLDivElement> {
-  Component?: React.ElementType;
-}
+type SimpleCellTypographyProps = React.HTMLAttributes<HTMLDivElement> & HasComponent;
 
 const SimpleCellTypography: React.FC<SimpleCellTypographyProps> = (props: SimpleCellTypographyProps) => {
   const { sizeY } = useAdaptivity();
