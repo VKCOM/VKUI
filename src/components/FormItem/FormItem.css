@@ -3,6 +3,11 @@
   padding: 12px var(--formitem_padding);
 }
 
+.FormItem--removable {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .FormItem__removable {
   flex-grow: 1;
   flex-shrink: initial;
@@ -50,11 +55,6 @@
  */
 .FormItem--ios {
   --formitem_padding: 12px;
-}
-
-.FormItem--ios.FormItem--removable {
-  padding-left: 0;
-  margin-left: 0;
 }
 
 .FormLayoutGroup .Removable .FormItem--ios.FormItem--withTop {

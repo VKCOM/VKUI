@@ -13,6 +13,14 @@
   margin: 0 calc(-1 * var(--formitem_padding));
 }
 
+.Cell--removable .SimpleCell {
+  max-width: 100%;
+  flex-grow: 1;
+  min-width: 0;
+  flex-shrink: initial;
+  overflow: hidden;
+}
+
 .SimpleCell--mult {
   white-space: normal;
 }

@@ -32,6 +32,8 @@
   opacity: .6;
 }
 
+.FormItem--removable .Removable__content > .IconButton,
+.FormLayoutGroup--removable .Removable__content > .IconButton,
 .FormField__after .IconButton {
   display: flex;
   align-items: center;
@@ -59,6 +61,11 @@
 
 .FormField__after .IconButton--sizeY-compact {
   width: 36px;
+  height: 36px;
+}
+
+.FormItem--removable .Removable__content > .IconButton--sizeY-compact,
+.FormLayoutGroup--removable .Removable__content > .IconButton--sizeY-compact {
   height: 36px;
 }
 
