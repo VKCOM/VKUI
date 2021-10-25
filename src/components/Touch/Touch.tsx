@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { getSupportedEvents, coordX, coordY, touchEnabled, VKUITouchEvent } from '../../lib/touch';
-import { HasRootRef } from '../../types';
+import { HasComponent, HasRootRef } from '../../types';
 import { useDOM } from '../../lib/dom';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
-export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasComponent {
   /**
    * Привязать onEnter и onLeave через pointer-events - работает на disabled-инпутах
    */
@@ -14,7 +14,6 @@ export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRoo
   useCapture?: boolean;
   slideThreshold?: number;
   noSlideClick?: boolean;
-  Component?: React.ElementType;
   onEnter?: HoverHandler;
   onLeave?: HoverHandler;
   onStart?: TouchEventHandler;
