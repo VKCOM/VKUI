@@ -161,6 +161,10 @@
   padding-right: 12px;
 }
 
+.Cell--removable .SimpleCell--ios {
+  padding-left: 0;
+}
+
 .SimpleCell--ios .SimpleCell__main,
 .SimpleCell--ios .SimpleCell__indicator {
   padding-top: 9px;
@@ -201,6 +205,11 @@
 .SimpleCell--vkcom {
   padding-left: 16px;
   padding-right: 16px;
+}
+
+.Cell--removable .SimpleCell--android,
+.Cell--removable .SimpleCell--vkcom {
+  padding-right: 0;
 }
 
 .SimpleCell--android .SimpleCell__main,
