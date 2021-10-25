@@ -23,26 +23,20 @@ export interface RemovableProps {
   onRemove?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
 }
 
-interface RemovableOwnProps extends React.AllHTMLAttributes<HTMLElement>, RemovableProps {
-  /**
-   * Расположение кнопки удаления.
-   */
-  align?: 'start' | 'center';
+interface RemovableIosOwnProps extends Pick<RemovableProps, 'removePlaceholder'> {
+  onRemoveClick?: (e: React.MouseEvent, rootEl?: HTMLElement) => void;
+  removePlaceholderString?: string;
 }
 
-export const Removable: React.FC<RemovableOwnProps> = ({
+const RemovableIos: React.FC<RemovableIosOwnProps> = ({
+  onRemoveClick,
+  removePlaceholder,
+  removePlaceholderString,
   children,
-  onRemove,
-  removePlaceholder = 'Удалить',
-  align = 'center',
-  ...restProps
-}: RemovableOwnProps) => {
-  const platform = usePlatform();
-  const { sizeY } = useAdaptivity();
+}) => {
   const { document } = useDOM();
 
   const removeButtonRef = React.useRef(null);
-
   const [removeOffset, updateRemoveOffset] = React.useState(0);
 
   useGlobalEventListener(document, 'click', removeOffset > 0 && (() => {
@@ -60,6 +54,58 @@ export const Removable: React.FC<RemovableOwnProps> = ({
 
     updateRemoveOffset(removeButtonRef?.current.offsetWidth);
   };
+
+  return (
+    <div
+      vkuiClass="Removable__content"
+      style={{ transform: `translateX(-${removeOffset || 0}px)` }}
+      onTransitionEnd={onRemoveTransitionEnd}
+    >
+      <IconButton
+        hasActive={false}
+        hasHover={false}
+        aria-label={removePlaceholderString}
+        vkuiClass="Removable__action Removable__toggle"
+        onClick={onRemoveActivateClick}
+      >
+        <i vkuiClass="Removable__toggle-in" role="presentation" />
+      </IconButton>
+      {children}
+
+      <span vkuiClass="Removable__offset" aria-hidden="true"></span>
+
+      <Tappable
+        Component="button"
+        hasActive={false}
+        hasHover={false}
+        disabled={removeOffset === 0}
+        getRootRef={removeButtonRef}
+        vkuiClass="Removable__remove"
+        onClick={onRemoveClick}
+        onTransitionEnd={onRemoveTransitionEnd}
+      >
+        <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
+      </Tappable>
+    </div>
+  );
+};
+
+interface RemovableOwnProps extends React.AllHTMLAttributes<HTMLElement>, RemovableProps {
+  /**
+   * Расположение кнопки удаления.
+   */
+  align?: 'start' | 'center';
+}
+
+export const Removable: React.FC<RemovableOwnProps> = ({
+  children,
+  onRemove,
+  removePlaceholder = 'Удалить',
+  align = 'center',
+  ...restProps
+}: RemovableOwnProps) => {
+  const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
 
   const onRemoveClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -95,37 +141,13 @@ export const Removable: React.FC<RemovableOwnProps> = ({
       )}
 
       {platform === IOS && (
-        <div
-          vkuiClass="Removable__content"
-          style={{ transform: `translateX(-${removeOffset || 0}px)` }}
-          onTransitionEnd={onRemoveTransitionEnd}
+        <RemovableIos
+          onRemoveClick={onRemoveClick}
+          removePlaceholder={removePlaceholder}
+          removePlaceholderString={removePlaceholderString}
         >
-          <IconButton
-            hasActive={false}
-            hasHover={false}
-            aria-label={removePlaceholderString}
-            vkuiClass="Removable__action Removable__toggle"
-            onClick={onRemoveActivateClick}
-          >
-            <i vkuiClass="Removable__toggle-in" role="presentation" />
-          </IconButton>
           {children}
-
-          <span vkuiClass="Removable__offset" aria-hidden="true"></span>
-
-          <Tappable
-            Component="button"
-            hasActive={false}
-            hasHover={false}
-            disabled={removeOffset === 0}
-            getRootRef={removeButtonRef}
-            vkuiClass="Removable__remove"
-            onClick={onRemoveClick}
-            onTransitionEnd={onRemoveTransitionEnd}
-          >
-            <span vkuiClass="Removable__remove-in">{removePlaceholder}</span>
-          </Tappable>
-        </div>
+        </RemovableIos>
       )}
     </div>
   );
