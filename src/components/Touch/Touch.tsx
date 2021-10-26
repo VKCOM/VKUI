@@ -4,6 +4,7 @@ import { HasComponent, HasRootRef } from '../../types';
 import { useDOM } from '../../lib/dom';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
+import { useUnmountCleanup } from '../../hooks/useUnmountCleanup';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
 export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasComponent {
@@ -78,6 +79,8 @@ export const Touch: React.FC<TouchProps> = ({
 }: TouchProps) => {
   const { document } = useDOM();
   const events = React.useMemo(getSupportedEvents, []);
+  // Save last event to trigger end* on unmount
+  const lastEvent = React.useRef<VKUITouchEvent>();
   const didSlide = React.useRef(false);
   const gesture = React.useRef<Partial<Gesture>>({});
   const handle = (e: VKUITouchEvent, handers: TouchEventHandler[]) => {
@@ -91,6 +94,7 @@ export const Touch: React.FC<TouchProps> = ({
   const enterHandler = useEventListener(usePointerHover ? 'pointerenter' : 'mouseenter', onEnter);
   const leaveHandler = useEventListener(usePointerHover ? 'pointerleave' : 'mouseleave', onLeave);
   const startHandler = useEventListener(events[0], (e: VKUITouchEvent) => {
+    lastEvent.current = e;
     gesture.current = {
       startX: coordX(e),
       startY: coordY(e),
@@ -118,7 +122,14 @@ export const Touch: React.FC<TouchProps> = ({
     startHandler.add(el);
   }, [Component]);
 
+  useUnmountCleanup(() => {
+    if (gesture.current.isPressed) {
+      onEnd(lastEvent.current);
+    }
+  });
+
   function onMove(e: VKUITouchEvent) {
+    lastEvent.current = e;
     const { isPressed, isX, isY, startX, startY } = gesture.current;
 
     if (isPressed) {
@@ -173,6 +184,7 @@ export const Touch: React.FC<TouchProps> = ({
 
     didSlide.current = isSlide;
     gesture.current = {};
+    lastEvent.current = null;
 
     // Если это был тач-евент, симулируем отмену hover
     if (touchEnabled()) {

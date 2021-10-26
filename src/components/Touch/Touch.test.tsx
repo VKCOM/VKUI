@@ -8,7 +8,7 @@ import { createElement } from 'react';
 // Настоящего Touch нет в jsdom: https://github.com/jsdom/jsdom/issues/1508
 const asClientPos = ([clientX = 0, clientY = 0] = []): Touch & MouseEvent => ({ clientX, clientY }) as any;
 
-function fireMouseSwipe(e: HTMLElement, [start, ...move]: any[], ops: { startEl?: HTMLElement } = {}) {
+function fireMouseSwipe(e: HTMLElement, [start, ...move]: any[], ops: { startEl?: HTMLElement; end?: boolean } = {}) {
   fireEvent.mouseDown(ops.startEl || e, asClientPos(start));
   move.forEach((p) => fireEvent.mouseMove(e, asClientPos(p)));
   fireEvent.mouseUp(e, asClientPos(move[move.length - 1]));
@@ -140,6 +140,13 @@ describe('Touch', () => {
           isSlideY: true,
           isSlideX: false,
         }));
+      });
+      it('calls onEnd when unmounting', () => {
+        const handlers = makeHandlers();
+        const h = render(<Touch {...handlers} data-testid="__t__" />);
+        fireGesture(screen.getByTestId('__t__'), [[20, 20], [20, 30]], { end: false });
+        h.unmount();
+        expect(handlers.onEnd).toBeCalledTimes(1);
       });
       if (input === 'touch') {
         it('stops gesture if multitouch', () => {
