@@ -49,16 +49,15 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
     }
   };
 
-  const onRemoveActivateClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-
-    updateRemoveOffset(removeButtonRef?.current.offsetWidth);
+  const onRemoveActivateClick = () => {
+    const { offsetWidth = 0 } = removeButtonRef?.current;
+    updateRemoveOffset(offsetWidth);
   };
 
   return (
     <div
       vkuiClass="Removable__content"
-      style={{ transform: `translateX(-${removeOffset || 0}px)` }}
+      style={{ transform: `translateX(-${removeOffset ?? 0}px)` }}
       onTransitionEnd={onRemoveTransitionEnd}
     >
       <IconButton
