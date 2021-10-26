@@ -3,12 +3,10 @@
   min-width: 0;
   max-width: 100%;
   flex-grow: 1;
-  flex-shrink: initial;
 }
 
 .Removable__content {
   display: flex;
-  flex-flow: row nowrap;
   align-items: center;
 }
 

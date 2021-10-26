@@ -17,8 +17,6 @@
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
-  flex-shrink: initial;
-  overflow: hidden;
 }
 
 .SimpleCell--mult {
@@ -34,7 +32,6 @@
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
-  flex-shrink: initial;
   overflow: hidden;
 }
 
@@ -65,7 +62,6 @@
 
 .SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
   display: flex;
-  flex-flow: row nowrap;
   align-content: flex-start;
   align-items: center;
   justify-content: flex-start;

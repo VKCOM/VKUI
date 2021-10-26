@@ -1,6 +1,5 @@
 .FormLayoutGroup--horizontal {
   display: flex;
-  flex-wrap: nowrap;
   padding: 12px var(--formitem_padding);
 }
 

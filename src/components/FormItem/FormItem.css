@@ -10,7 +10,6 @@
 
 .FormItem__removable {
   flex-grow: 1;
-  flex-shrink: initial;
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
