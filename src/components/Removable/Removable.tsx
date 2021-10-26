@@ -66,6 +66,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
         aria-label={removePlaceholderString}
         vkuiClass="Removable__action Removable__toggle"
         onClick={onRemoveActivateClick}
+        disabled={removeOffset > 0}
       >
         <i vkuiClass="Removable__toggle-in" role="presentation" />
       </IconButton>
