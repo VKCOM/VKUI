@@ -14,6 +14,10 @@ export interface HasRef<T> {
   getRef?: React.Ref<T>;
 }
 
+export interface HasComponent {
+  Component?: React.ElementType;
+}
+
 export interface HasAlign {
   align?: AlignType;
 }

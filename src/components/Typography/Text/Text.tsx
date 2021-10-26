@@ -2,13 +2,12 @@ import * as React from 'react';
 import { usePlatform } from '../../../hooks/usePlatform';
 import { classNames } from '../../../lib/classNames';
 import { getClassName } from '../../../helpers/getClassName';
-import { HasRootRef } from '../../../types';
+import { HasComponent, HasRootRef } from '../../../types';
 import { warnOnce } from '../../../lib/warnOnce';
 import './Text.css';
 
-export interface TextProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement> {
+export interface TextProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement>, HasComponent {
   weight: 'regular' | 'medium' | 'semibold';
-  Component?: React.ElementType;
 }
 
 const warn = warnOnce('Text');
