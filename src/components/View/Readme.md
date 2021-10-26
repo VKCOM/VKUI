@@ -46,17 +46,10 @@ const [activePanel, setActivePanel] = useState('panel1');
 В iOS есть возможность свайпнуть от левого края назад, чтобы перейти на предыдущую панель. Для того, чтобы
 повторить такое поведение в VKUI нужно:
 
-- Передать во `View` свойство `onSwipeBack`. Это callback, срабатывающий при завершении анимации свайпа.
-Как правило в нём прописывают логику, которая выставит нужный `activePanel` и обновит свойство `history`.
-- Передать во `View` свойство `history`. Это массив, состоящий из id панелей, которые были открыты на текущий момент.
-Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то
-`history=['main', 'profile', 'education']`.
-- Убедиться, что приложение открыто внутри webview (так как внутри обычного мобильного браузера
-как правило есть свой swipe back). Для этого достаточно обернуть ваше приложение компонентом `ConfigProvider`.
-Он внутри себя определяет, открыто приложение внутри webview или в мобильном браузере. Для тестов в браузере
-можно явно передать в `СonfigProvider` свойство `isWebView={true}`.
-- При попадании на первую панель слать `vk-bridge` событие `VKWebAppEnableSwipeBack`. При уходе с первой панели –
-слать `VKWebAppDisableSwipeBack`. Таким образом VKUI свайп не будет конфликтовать со свайпом нативного клиента.
+- Передать во `View` коллбек `onSwipeBack` — он сработает при завершении анимации свайпа. Поменяйте в нем `activePanel` и обновите `history`.
+- Передать во `View` проп `history` — массив из id панелей в порядке открытия. Например, если пользователь из `main` перешел в `profile`, а оттуда попал в `education`, то `history=['main', 'profile', 'education']`.
+- Обернуть ваше приложение в `ConfigProvider` — он определит, открыто приложение в webview клиента VK или в браузере (там есть свой swipe back, который будет конфликтовать с нашим). Для проверки в браузере форсируйте определение webview: `<СonfigProvider isWebView>`.
+- На первой панели должен включаться свайпбек нативного клиента, чтобы пользователь смог выйти из приложения — для этого используют `vk-bridge`. __Если вы не из ВК,__ при переходах отправляйте [событие `VKWebAppSetSwipeSettings`](https://vk.com/dev.php?method=vk_bridge_events_10&f=Включение%20swipe%20как%20в%20браузере) с `history: true` на первой панели или `history: false` на других. __Если вы из ВК,__ при переходе на первую панель отправляйте событие `VKWebAppEnableSwipeBack`, на любую другую — `VKWebAppDisableSwipeBack`.
 - Компоненты, которые сами обрабатывают жесты (например, карта), могут конфликтовать со свайпбеком — повесьте на них свойство `data-vkui-swipe-back={false}`
 
 ```jsx
@@ -67,9 +60,12 @@ const activePanel = history[history.length - 1];
 const isFirst = history.length === 1;
 
 React.useEffect(() => {
+  // Если вы из ВК, делайте так
   vkBridge.send(isFirst
     ? 'VKWebAppEnableSwipeBack'
     : 'VKWebAppDisableSwipeBack');
+  // Если вы не из ВК, то так:
+  bridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
 }, [isFirst]);
 
 const goBack = () => setHistory(history.slice(0, -1));
