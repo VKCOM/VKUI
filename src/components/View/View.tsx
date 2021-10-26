@@ -15,6 +15,7 @@ import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext'
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { swipeBackExcluded } from './utils';
 import './View.css';
 
 const warn = warnOnce('View');
@@ -34,8 +35,6 @@ type AnimationEventHandler = (e?: AnimationEvent) => void;
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
 export let scrollsCache: ViewsScrolls = {};
-
-const swipeBackExcludedTags = ['input', 'textarea'];
 
 export interface ViewProps extends React.HTMLAttributes<HTMLElement>, HasPlatform, NavIdProps {
   activePanel: string;
@@ -327,12 +326,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
   }
 
   onMoveX = (e: TouchEvent): void => {
-    const target = e.originalEvent.target as HTMLElement;
-    if (
-      target &&
-      typeof target.tagName === 'string' &&
-      swipeBackExcludedTags.includes(target.tagName.toLowerCase())
-    ) {
+    if (swipeBackExcluded(e)) {
       return;
     }
 

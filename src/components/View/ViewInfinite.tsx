@@ -15,6 +15,7 @@ import { ScrollContext, ScrollContextInterface } from '../AppRoot/ScrollContext'
 import { NavTransitionProvider } from '../NavTransitionContext/NavTransitionContext';
 import { getNavId, NavIdProps } from '../../lib/getNavId';
 import { warnOnce } from '../../lib/warnOnce';
+import { swipeBackExcluded } from './utils';
 import './View.css';
 
 const warn = warnOnce('ViewInfinite');
@@ -34,8 +35,6 @@ type AnimationEventHandler = (e?: AnimationEvent) => void;
 type TransitionEventHandler = (e?: TransitionEvent) => void;
 
 let scrollsCache: ViewsScrolls = {};
-
-const swipeBackExcludedTags = ['input', 'textarea'];
 
 export type TransitionParams = { from: string; to: string };
 
@@ -356,12 +355,7 @@ class ViewInfinite extends React.Component<ViewInfiniteProps & DOMProps, ViewInf
   }
 
   onMoveX = (e: TouchEvent): void => {
-    const target = e.originalEvent.target as HTMLElement;
-    if (
-      target &&
-      typeof target.tagName === 'string' &&
-      swipeBackExcludedTags.includes(target.tagName.toLowerCase())
-    ) {
+    if (swipeBackExcluded(e)) {
       return;
     }
 
