@@ -4,7 +4,7 @@
 
 Рекомендуется использовать в случаях, когда требуется заблокировать интерфейс до завершения асинхронного процесса.
 
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true } }
 class Example extends React.Component {
 
   constructor (props) {
@@ -21,14 +21,18 @@ class Example extends React.Component {
 
   render () {
     return (
-      <View popout={this.state.popout} activePanel="spinner">
-        <Panel id="spinner">
-          <PanelHeader>ScreenSpinner</PanelHeader>
-          <Group>
-            <CellButton onClick={this.onClick.bind(this)}>Запустить долгий процесс</CellButton>
-          </Group>
-        </Panel>
-      </View>
+      <SplitLayout popout={this.state.popout}>
+        <SplitCol>
+        <View activePanel="spinner">
+          <Panel id="spinner">
+            <PanelHeader>ScreenSpinner</PanelHeader>
+            <Group>
+              <CellButton onClick={this.onClick.bind(this)}>Запустить долгий процесс</CellButton>
+            </Group>
+          </Panel>
+        </View>
+        </SplitCol>
+      </SplitLayout>
     )
   }
 }
