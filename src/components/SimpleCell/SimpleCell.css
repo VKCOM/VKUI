@@ -13,6 +13,12 @@
   margin: 0 calc(-1 * var(--formitem_padding));
 }
 
+.Cell--removable .SimpleCell {
+  max-width: 100%;
+  flex-grow: 1;
+  min-width: 0;
+}
+
 .SimpleCell--mult {
   white-space: normal;
 }
@@ -26,7 +32,6 @@
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
-  flex-shrink: initial;
   overflow: hidden;
 }
 
@@ -57,7 +62,6 @@
 
 .SimpleCell:not(.SimpleCell--mult) .SimpleCell__content {
   display: flex;
-  flex-flow: row nowrap;
   align-content: flex-start;
   align-items: center;
   justify-content: flex-start;
@@ -153,6 +157,10 @@
   padding-right: 12px;
 }
 
+.Cell--removable .SimpleCell--ios {
+  padding-left: 0;
+}
+
 .SimpleCell--ios .SimpleCell__main,
 .SimpleCell--ios .SimpleCell__indicator {
   padding-top: 9px;
@@ -193,6 +201,11 @@
 .SimpleCell--vkcom {
   padding-left: 16px;
   padding-right: 16px;
+}
+
+.Cell--removable .SimpleCell--android,
+.Cell--removable .SimpleCell--vkcom {
+  padding-right: 0;
 }
 
 .SimpleCell--android .SimpleCell__main,
