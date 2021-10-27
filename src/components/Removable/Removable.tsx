@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
-import { getTitleFromChildren } from '../../lib/utils';
+import { getTitleFromChildren, noop } from '../../lib/utils';
 import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
@@ -102,7 +102,7 @@ interface RemovableOwnProps extends React.AllHTMLAttributes<HTMLElement>, Remova
 export const Removable: React.FC<RemovableOwnProps> = ({
   getRootRef,
   children,
-  onRemove,
+  onRemove = noop,
   removePlaceholder = 'Удалить',
   align = 'center',
   ...restProps
