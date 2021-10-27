@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
 import { getTitleFromChildren } from '../../lib/utils';
+import { useExternRef } from '../../hooks/useExternRef';
 import { usePlatform } from '../../hooks/usePlatform';
 import { getClassName } from '../../helpers/getClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -90,7 +92,7 @@ const RemovableIos: React.FC<RemovableIosOwnProps> = ({
   );
 };
 
-interface RemovableOwnProps extends React.AllHTMLAttributes<HTMLElement>, RemovableProps {
+interface RemovableOwnProps extends React.AllHTMLAttributes<HTMLElement>, RemovableProps, HasRootRef<HTMLDivElement> {
   /**
    * Расположение кнопки удаления.
    */
@@ -98,6 +100,7 @@ interface RemovableOwnProps extends React.AllHTMLAttributes<HTMLElement>, Remova
 }
 
 export const Removable: React.FC<RemovableOwnProps> = ({
+  getRootRef,
   children,
   onRemove,
   removePlaceholder = 'Удалить',
@@ -106,6 +109,8 @@ export const Removable: React.FC<RemovableOwnProps> = ({
 }: RemovableOwnProps) => {
   const platform = usePlatform();
   const { sizeY } = useAdaptivity();
+
+  const ref = useExternRef(getRootRef);
 
   const onRemoveClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -118,6 +123,7 @@ export const Removable: React.FC<RemovableOwnProps> = ({
   return (
     <div
       {...restProps}
+      ref={ref}
       vkuiClass={classNames(
         getClassName('Removable', platform),
         `Removable--${align}`,

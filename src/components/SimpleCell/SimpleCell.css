@@ -7,7 +7,7 @@
   color: var(--text_primary);
 }
 
-.Removable__content > .SimpleCell {
+.Cell--removable .SimpleCell {
   max-width: 100%;
   flex-grow: 1;
   min-width: 0;
