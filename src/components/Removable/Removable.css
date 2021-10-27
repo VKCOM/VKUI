@@ -1,8 +1,7 @@
 .Removable {
   position: relative;
-  min-width: 0;
-  max-width: 100%;
   flex-grow: 1;
+  min-width: 0;
 }
 
 .Removable__content {
@@ -10,8 +9,7 @@
   align-items: center;
 }
 
-.FormItem--removable .Removable__content,
-.FormLayoutGroup--removable .Removable__content {
+.Removable__content {
   padding-left: var(--formitem_padding);
 }
 
@@ -107,8 +105,7 @@
   background-color: var(--white);
 }
 
-.FormItem--removable .Removable--ios .Removable__content,
-.FormLayoutGroup--removable .Removable--ios .Removable__content {
+.Removable--ios .Removable__content {
   padding-left: 0;
   padding-right: var(--formitem_padding);
 }

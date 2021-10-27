@@ -1,3 +1,8 @@
+.Cell {
+  flex-grow: 1;
+  min-width: 0;
+}
+
 .List--dragging .Cell:not(.Cell--dragging) {
   transition: transform .3s ease;
 }
@@ -10,4 +15,12 @@
 
 .Cell--selectable.Cell--disabled {
   opacity: .6;
+}
+
+/**
+ * CMP:
+ * FormItem
+ */
+.FormItem > .Cell {
+  margin: 0 calc(-1 * var(--formitem_padding));
 }
