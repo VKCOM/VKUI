@@ -8,8 +8,8 @@ import { Removable, RemovableProps } from '../Removable/Removable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDraggable } from './useDraggable';
 import { ListContext } from '../List/ListContext';
-import { CellDragger } from '../CellDragger/CellDragger';
-import { CellCheckbox, CellCheckboxProps } from '../CellCheckbox/CellCheckbox';
+import { CellDragger } from './CellDragger/CellDragger';
+import { CellCheckbox, CellCheckboxProps } from './CellCheckbox/CellCheckbox';
 import './Cell.css';
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {

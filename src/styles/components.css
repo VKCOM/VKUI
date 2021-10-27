@@ -71,8 +71,8 @@
 @import '../components/Gradient/Gradient.css';
 @import '../components/SimpleCell/SimpleCell.css';
 @import '../components/Cell/Cell.css';
-@import '../components/CellDragger/CellDragger.css';
-@import '../components/CellCheckbox/CellCheckbox.css';
+@import '../components/Cell/CellCheckbox/CellCheckbox.css';
+@import '../components/Cell/CellDragger/CellDragger.css';
 @import '../components/CellButton/CellButton.css';
 @import '../components/RichCell/RichCell.css';
 @import '../components/HorizontalCell/HorizontalCell.css';

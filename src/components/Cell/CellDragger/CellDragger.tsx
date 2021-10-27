@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Icon24Reorder, Icon24ReorderIos } from '@vkontakte/icons';
-import { getClassName } from '../../helpers/getClassName';
-import { usePlatform } from '../../hooks/usePlatform';
-import { classNames } from '../../lib/classNames';
-import { IOS } from '../../lib/platform';
-import { Touch } from '../Touch/Touch';
-import { DraggableProps } from '../Cell/useDraggable';
+import { getClassName } from '../../../helpers/getClassName';
+import { usePlatform } from '../../../hooks/usePlatform';
+import { classNames } from '../../../lib/classNames';
+import { IOS } from '../../../lib/platform';
+import { Touch } from '../../Touch/Touch';
+import { DraggableProps } from '../useDraggable';
 import './CellDragger.css';
 
 type CellDraggerProps = DraggableProps & React.HTMLAttributes<HTMLElement>;
