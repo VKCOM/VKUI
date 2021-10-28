@@ -77,7 +77,7 @@ export default withAdaptivity(class Preview extends PreviewParent {
   }
 
   render() {
-    const { code, layout = true, iframe = true, config = {}, exampleId, viewWidth } = this.props;
+    const { code, layout = true, adaptivity = true, iframe = true, config = {}, exampleId, viewWidth } = this.props;
     const { error, schemeTarget } = this.state;
     const ready = !!schemeTarget;
 
@@ -111,12 +111,12 @@ export default withAdaptivity(class Preview extends PreviewParent {
             <div ref={this.getSchemeTargetRef} className={classNames('Preview', `Preview--${styleGuideContext.platform}`, { 'Preview--layout': layout })}>
               {ready &&
                 <React.Fragment>
-                  <div className="Preview__shadow" style={layout ? { maxWidth: width } : null} />
-                  <div className="Preview__in" style={layout ? { height: styleGuideContext.height } : null}>
+                  <div className="Preview__shadow" style={adaptivity ? { maxWidth: width } : null} />
+                  <div className="Preview__in" style={adaptivity ? { height: styleGuideContext.height } : null}>
                     {error ?
                       <PlaygroundError message={error} /> :
                       iframe ?
-                        <Frame width={layout && width} height={layout && styleGuideContext.height} scheme={styleGuideContext.scheme}>{content}</Frame> :
+                        <Frame width={adaptivity && width} height={adaptivity && styleGuideContext.height} scheme={styleGuideContext.scheme}>{content}</Frame> :
                         content
                     }
                   </div>
