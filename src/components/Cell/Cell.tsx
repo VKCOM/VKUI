@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { classNames } from '../../lib/classNames';
+import { warnOnce } from '../../lib/warnOnce';
 import { getClassName } from '../../helpers/getClassName';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
@@ -55,6 +56,9 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps 
   draggerLabel?: string;
 }
 
+const warn = warnOnce('Cell');
+const IS_DEV = process.env.NODE_ENV === 'development';
+
 export const Cell: React.FC<CellProps> = ({
   mode: propsMode, // TODO: убрать переименование в propsMode перед 5.0.0
   onRemove,
@@ -75,14 +79,23 @@ export const Cell: React.FC<CellProps> = ({
   draggerLabel = 'Перенести ячейку',
   ...restProps
 }: CellProps) => {
-  // TODO: удалить эту и следующие 7 строк перед 5.0.0
+  // TODO: удалить перед 5.0.0
   let mode: CellProps['mode'] = propsMode;
 
   if (!propsMode && (deprecatedSelectable || deprecatedRemovable)) {
     mode = deprecatedSelectable
       ? 'selectable'
       : 'removable';
+
+    if (deprecatedSelectable && IS_DEV) {
+      warn('Свойство selectable устарелo и будет удалено в 5.0.0. Используйте mode="selectable".');
+    }
+
+    if (deprecatedRemovable && IS_DEV) {
+      warn('Свойство removable устарелo и будет удалено в 5.0.0. Используйте mode="removable".');
+    }
   }
+  // /end TODO
 
   const selectable = mode === 'selectable';
   const removable = mode === 'removable';
