@@ -11,6 +11,7 @@ import ActionSheetItem from '../ActionSheetItem/ActionSheetItem';
 import View from '../View/View';
 import { Panel } from '../Panel/Panel';
 import { SplitLayout } from '../SplitLayout/SplitLayout';
+import { SplitCol } from '../SplitCol/SplitCol';
 import { CellButton } from '../CellButton/CellButton';
 
 beforeEach(() => jest.useFakeTimers());
@@ -46,15 +47,17 @@ const ActionSheetTest: React.FC<Partial<ActionSheetProps> & Partial<FocusTrapPro
     <AppRoot>
       <AdaptivityProvider hasMouse>
         <SplitLayout popout={actionSheet}>
-          <View activePanel="panel">
-            <Panel id="panel">
-              <CellButton
-                data-testid="toggle"
-                getRootRef={toggleRef}
-                onClick={() => toggleActionSheet(_actionSheet)}
-              >Toggle ActionSheet</CellButton>
-            </Panel>
-          </View>
+          <SplitCol>
+            <View activePanel="panel">
+              <Panel id="panel">
+                <CellButton
+                  data-testid="toggle"
+                  getRootRef={toggleRef}
+                  onClick={() => toggleActionSheet(_actionSheet)}
+                >Toggle ActionSheet</CellButton>
+              </Panel>
+            </View>
+          </SplitCol>
         </SplitLayout>
       </AdaptivityProvider>
     </AppRoot>
