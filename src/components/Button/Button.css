@@ -61,7 +61,6 @@
 }
 
 .Button__content {
-  flex-grow: 1;
   position: relative;
   white-space: nowrap;
   text-overflow: ellipsis;
