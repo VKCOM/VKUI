@@ -14,9 +14,9 @@ export interface TitleProps extends React.AllHTMLAttributes<HTMLElement>, HasCom
 
 const Title: React.FC<TitleProps> = ({
   children,
-  weight,
-  level,
-  Component = ('h' + level) as React.ElementType,
+  weight = 'regular',
+  level = '1',
+  Component = 'h1',
   ...restProps
 }: TitleProps) => {
   const platform = usePlatform();

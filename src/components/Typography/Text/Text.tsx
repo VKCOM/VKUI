@@ -13,7 +13,7 @@ export interface TextProps extends React.AllHTMLAttributes<HTMLElement>, HasRoot
 const warn = warnOnce('Text');
 const Text: React.FC<TextProps> = ({
   children,
-  weight,
+  weight = 'regular',
   Component = 'span',
   getRootRef,
   ...restProps
