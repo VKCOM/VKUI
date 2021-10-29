@@ -35,6 +35,7 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   return (
     <Tappable
       Component="label"
+      role={null}
       vkuiClass={classNames(getClassName('Checkbox', platform), `Checkbox--sizeY-${sizeY}`)}
       className={className}
       style={style}
