@@ -29,6 +29,7 @@ const Radio: React.FC<RadioProps> = (props: RadioProps) => {
   return (
     <Tappable
       Component="label"
+      role={null}
       style={style}
       className={className}
       vkuiClass={classNames(getClassName('Radio', platform), `Radio--sizeY-${sizeY}`)}
