@@ -63,6 +63,7 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (props: SimpleCheck
   return (
     <Tappable
       Component="label"
+      role={null}
       vkuiClass={classNames(
         getClassName('SimpleCheckbox', platform),
         `SimpleCheckbox--sizeY-${sizeY}`,
