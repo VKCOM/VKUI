@@ -6,7 +6,7 @@
   border: none;
   min-height: 28px;
   margin: 0;
-  padding: 1px 16px;
+  padding: 0;
   user-select: none;
   border-radius: 8px;
   max-width: 100%;
@@ -25,6 +25,7 @@
   justify-content: center;
   width: 100%;
   min-height: inherit;
+  padding: 1px 16px;
   text-align: center;
   box-sizing: border-box;
 }
@@ -131,11 +132,6 @@
   color: var(--white);
 }
 
-.Button--sz-l {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
 .Button--sz-l .Button__before:not(:last-child) {
   margin-right: 8px;
 }
@@ -146,6 +142,8 @@
 
 .Button--sz-l .Button__in {
   justify-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /**
