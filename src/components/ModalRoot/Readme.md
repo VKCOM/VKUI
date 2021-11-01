@@ -8,7 +8,7 @@
 **Важно:** структура модальных страниц и карточек должна определяться единожды на старте приложения. Структура – это *декларация* приложения.
 То есть, один раз определив структуру вида:
 
-```jsx static
+```jsx static { "props": { "layout": false, "adaptivity": true } }
 class App extends Component {
   render() {
     const modal = (
@@ -23,9 +23,9 @@ class App extends Component {
     );
 
     return (
-      <View modal={modal}>
+      <SplitLayout modal={modal}>
         ...
-      </View>
+      </SplitLayout>
     );
   }
 }
@@ -410,25 +410,29 @@ const App = withPlatform(withAdaptivity(class App extends React.Component {
     );
 
     return (
-      <View activePanel="modals" modal={modal}>
-        <Panel id="modals">
-          <PanelHeader>Модальные окна</PanelHeader>
-            <Group>
-              <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
-                Открыть модальную страницу
-              </CellButton>
-              <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN)}>
-                Открыть полноэкранную модальную страницу
-              </CellButton>
-              <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_DYNAMIC)}>
-                Открыть модальную страницу с динамической высотой
-              </CellButton>
-              <CellButton onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
-                Открыть модальные карточки
-              </CellButton>
-            </Group>
-        </Panel>
-      </View>
+      <SplitLayout modal={modal}>
+        <SplitCol>
+        <View activePanel="modals">
+          <Panel id="modals">
+            <PanelHeader>Модальные окна</PanelHeader>
+              <Group>
+                <CellButton onClick={() => this.setActiveModal(MODAL_PAGE_FILTERS)}>
+                  Открыть модальную страницу
+                </CellButton>
+                <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_FULLSCREEN)}>
+                  Открыть полноэкранную модальную страницу
+                </CellButton>
+                <CellButton multiline onClick={() => this.setActiveModal(MODAL_PAGE_DYNAMIC)}>
+                  Открыть модальную страницу с динамической высотой
+                </CellButton>
+                <CellButton onClick={() => this.setActiveModal(MODAL_CARD_MONEY_SEND)}>
+                  Открыть модальные карточки
+                </CellButton>
+              </Group>
+          </Panel>
+        </View>
+        </SplitCol>
+      </SplitLayout>
     );
   }
 }, {
@@ -464,11 +468,15 @@ class App extends Component {
     );
 
     return (
-      <View activePanel="main" modal={modal}>
-        <Panel id="main">
-          ...
-        </Panel>
-      </View>
+      <SplitLayout modal={modal}>
+        <SplitCol>
+        <View activePanel="main">
+          <Panel id="main">
+            ...
+          </Panel>
+        </View>
+        </SplitCol>
+      </SplitLayout>
     );
   }
 }
