@@ -13,9 +13,9 @@ export const SplitColContext = React.createContext<SplitColContextProps>({
 });
 
 export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
-  width?: string;
-  maxWidth?: string;
-  minWidth?: string;
+  width?: number | string;
+  maxWidth?: number | string;
+  minWidth?: number | string;
   /**
    * Если false, то переходы между Panel происходят без анимации
    */
@@ -28,7 +28,7 @@ export interface SplitColProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
-  const { children, width, maxWidth, minWidth, spaced, animate, fixed, style, ...restProps } = props;
+  const { children, width, maxWidth, minWidth, spaced, animate = false, fixed, style, ...restProps } = props;
   const baseRef = React.useRef<HTMLDivElement>();
 
   const contextValue = React.useMemo(() => {
@@ -58,8 +58,4 @@ export const SplitCol: React.FC<SplitColProps> = (props: SplitColProps) => {
       </SplitColContext.Provider>
     </div>
   );
-};
-
-SplitCol.defaultProps = {
-  animate: false,
 };
