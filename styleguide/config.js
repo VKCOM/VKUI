@@ -141,6 +141,7 @@ module.exports = {
           '../src/components/Switch/Switch.tsx',
           '../src/components/InfoRow/InfoRow.tsx',
           '../src/components/Avatar/Avatar.tsx',
+          '../src/components/OwnerAvatar/OwnerAvatar.tsx',
           '../src/components/Gallery/Gallery.tsx',
           '../src/components/Progress/Progress.tsx',
           '../src/components/Search/Search.tsx',

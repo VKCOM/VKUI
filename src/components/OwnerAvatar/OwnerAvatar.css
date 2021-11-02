@@ -1,0 +1,219 @@
+.OwnerAvatar {
+  position: relative;
+
+  --owner-avatar-image-offset: 2px;
+  --owner-avatar-size-24-font-size: 9px;
+  --owner-avatar-size-28-font-size: 10px;
+  --owner-avatar-size-32-font-size: 11px;
+  --owner-avatar-size-36-font-size: 13px;
+  --owner-avatar-size-40-font-size: 14px;
+  --owner-avatar-size-44-font-size: 16px;
+  --owner-avatar-size-48-font-size: 17px;
+  --owner-avatar-size-50-font-size: 18px;
+  --owner-avatar-size-52-font-size: 19px;
+  --owner-avatar-size-56-font-size: 20px;
+  --owner-avatar-size-64-font-size: 23px;
+  --owner-avatar-size-72-font-size: 26px;
+  --owner-avatar-size-80-font-size: 29px;
+  --owner-avatar-size-88-font-size: 32px;
+  --owner-avatar-size-96-font-size: 34px;
+  --owner-avatar-size-192-font-size: 69px;
+  --owner-avatar-gradient-1-from: #ff5c5c;
+  --owner-avatar-gradient-1-to: #e54646;
+  --owner-avatar-gradient-2-from: #ffb829;
+  --owner-avatar-gradient-2-to: #fa7f14;
+  --owner-avatar-gradient-3-from: #ffdc50;
+  --owner-avatar-gradient-3-to: #f2b40b;
+  --owner-avatar-gradient-4-from: #78e070;
+  --owner-avatar-gradient-4-to: #46b864;
+  --owner-avatar-gradient-5-from: #78f1fa;
+  --owner-avatar-gradient-5-to: #46bddb;
+  --owner-avatar-gradient-6-from: #e664fa;
+  --owner-avatar-gradient-6-to: #a73ddb;
+}
+
+/* Text mode */
+
+.OwnerAvatar--size-24 {
+  font-size: var(--owner-avatar-size-24-font-size);
+}
+
+.OwnerAvatar--size-28 {
+  font-size: var(--owner-avatar-size-28-font-size);
+}
+
+.OwnerAvatar--size-32 {
+  font-size: var(--owner-avatar-size-32-font-size);
+}
+
+.OwnerAvatar--size-36 {
+  font-size: var(--owner-avatar-size-36-font-size);
+}
+
+.OwnerAvatar--size-40 {
+  font-size: var(--owner-avatar-size-40-font-size);
+}
+
+.OwnerAvatar--size-44 {
+  font-size: var(--owner-avatar-size-44-font-size);
+}
+
+.OwnerAvatar--size-48 {
+  font-size: var(--owner-avatar-size-48-font-size);
+}
+
+.OwnerAvatar--size-50 {
+  font-size: var(--owner-avatar-size-50-font-size);
+}
+
+.OwnerAvatar--size-56 {
+  font-size: var(--owner-avatar-size-56-font-size);
+}
+
+.OwnerAvatar--size-64 {
+  font-size: var(--owner-avatar-size-64-font-size);
+}
+
+.OwnerAvatar--size-72 {
+  font-size: var(--owner-avatar-size-72-font-size);
+}
+
+.OwnerAvatar--size-80 {
+  font-size: var(--owner-avatar-size-80-font-size);
+}
+
+.OwnerAvatar--size-88 {
+  font-size: var(--owner-avatar-size-88-font-size);
+}
+
+.OwnerAvatar--size-96 {
+  font-size: var(--owner-avatar-size-96-font-size);
+}
+
+.OwnerAvatar--mode-text .vkuiAvatar__children {
+  line-height: 1.83;
+  font-weight: 600;
+  color: var(--white); /* stylelint-disable-line plugin/only-tokens-are-allowed */
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.OwnerAvatar--gradient-1 {
+  background: var(--owner-avatar-gradient-1-to);
+  background: linear-gradient(135deg, var(--owner-avatar-gradient-1-from), var(--owner-avatar-gradient-1-to));
+}
+
+.OwnerAvatar--gradient-2 {
+  background: var(--owner-avatar-gradient-2-to);
+  background: linear-gradient(135deg, var(--owner-avatar-gradient-2-from), var(--owner-avatar-gradient-2-to));
+}
+
+.OwnerAvatar--gradient-3 {
+  background: var(--owner-avatar-gradient-3-to);
+  background: linear-gradient(135deg, var(--owner-avatar-gradient-3-from), var(--owner-avatar-gradient-3-to));
+}
+
+.OwnerAvatar--gradient-4 {
+  background: var(--owner-avatar-gradient-4-to);
+  background: linear-gradient(135deg, var(--owner-avatar-gradient-4-from), var(--owner-avatar-gradient-4-to));
+}
+
+.OwnerAvatar--gradient-5 {
+  background: var(--owner-avatar-gradient-5-to);
+  background: linear-gradient(135deg, var(--owner-avatar-gradient-5-from), var(--owner-avatar-gradient-5-to));
+}
+
+.OwnerAvatar--gradient-6 {
+  background: var(--owner-avatar-gradient-6-to);
+  background: linear-gradient(135deg, var(--owner-avatar-gradient-6-from), var(--owner-avatar-gradient-6-to));
+}
+
+/* Images grid */
+
+.OwnerAvatar--images-1,
+.OwnerAvatar--images-2,
+.OwnerAvatar--images-3,
+.OwnerAvatar--images-4 {
+  background-color: transparent;
+}
+
+.OwnerAvatar--images-1 .OwnerAvatar__grid .Avatar--shadow::after,
+.OwnerAvatar--images-2 .OwnerAvatar__grid .Avatar--shadow::after,
+.OwnerAvatar--images-3 .OwnerAvatar__grid .Avatar--shadow::after,
+.OwnerAvatar--images-4 .OwnerAvatar__grid .Avatar--shadow::after {
+  box-shadow: none;
+}
+
+.OwnerAvatar__grid {
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.OwnerAvatar__grid .Avatar {
+  float: left;
+}
+
+.OwnerAvatar__grid .Avatar__img {
+  object-fit: cover;
+}
+
+.OwnerAvatar--images-1 .Avatar,
+.OwnerAvatar--images-2 .Avatar,
+.OwnerAvatar--images-3 .Avatar {
+  height: 100%;
+}
+
+.OwnerAvatar--mode-default.OwnerAvatar--images-4 .OwnerAvatar__gridAvatar,
+.OwnerAvatar--mode-default.OwnerAvatar--images-3 .OwnerAvatar__gridAvatar--2,
+.OwnerAvatar--mode-default.OwnerAvatar--images-3 .OwnerAvatar__gridAvatar--3 {
+  height: calc((100% - var(--owner-avatar-image-offset)) / 2);
+}
+
+.OwnerAvatar--mode-default.OwnerAvatar--images-2 .OwnerAvatar__gridAvatar,
+.OwnerAvatar--mode-default.OwnerAvatar--images-3 .OwnerAvatar__gridAvatar,
+.OwnerAvatar--mode-default.OwnerAvatar--images-4 .OwnerAvatar__gridAvatar {
+  width: calc((100% - var(--owner-avatar-image-offset)) / 2);
+}
+
+.OwnerAvatar--mode-default.OwnerAvatar--images-2 .OwnerAvatar__gridAvatar--1,
+.OwnerAvatar--mode-default.OwnerAvatar--images-3 .OwnerAvatar__gridAvatar--1,
+.OwnerAvatar--mode-default.OwnerAvatar--images-4 .OwnerAvatar__gridAvatar--1,
+.OwnerAvatar--mode-default.OwnerAvatar--images-4 .OwnerAvatar__gridAvatar--3 {
+  margin-right: var(--owner-avatar-image-offset);
+}
+
+.OwnerAvatar--mode-default.OwnerAvatar--images-3 .OwnerAvatar__gridAvatar--2,
+.OwnerAvatar--mode-default.OwnerAvatar--images-4 .OwnerAvatar__gridAvatar--1,
+.OwnerAvatar--mode-default.OwnerAvatar--images-4 .OwnerAvatar__gridAvatar--2 {
+  margin-bottom: var(--owner-avatar-image-offset);
+}
+
+/* Online status */
+
+.OwnerAvatar {
+  position: relative;
+}
+
+.OwnerAvatar__status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  color: var(--dynamic_green);
+}
+
+.OwnerAvatar__status--mobile {
+  border: 2px solid var(--background_content);
+  border-radius: 3px;
+  bottom: -1px;
+  background-color: var(--owner-avatar-online-pane, var(--background_content));
+}
+
+.OwnerAvatar__status--common {
+  width: 10px;
+  height: 10px;
+  background: var(--dynamic_green);
+  border-radius: 100%;
+  border: 3px solid var(--background_content);
+}

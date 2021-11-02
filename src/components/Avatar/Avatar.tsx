@@ -9,8 +9,8 @@ export interface AvatarProps extends React.ImgHTMLAttributes<HTMLElement>, HasRo
   /**
    * Рекомендуемый сет значений: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24
    */
-  size?: number;
-  mode?: 'default' | 'image' | 'app';
+  size?: number | 'unset';
+  mode?: 'default' | 'image' | 'app' | 'grid';
   shadow?: boolean;
 }
 
@@ -63,11 +63,16 @@ const Avatar: React.FC<AvatarProps> = ({
       size >= 64 && size < 84 && (borderRadius = 16);
       size >= 84 && (borderRadius = 18);
       break;
+    case 'grid':
+      borderRadius = 0;
+      break;
     default:
       break;
   }
 
   const hasSrc = src || srcSet;
+
+  const sizeStyle: React.CSSProperties = size === 'unset' ? {} : { width: size, height: size };
 
   return (
     <div
@@ -80,7 +85,7 @@ const Avatar: React.FC<AvatarProps> = ({
       ref={getRootRef}
       role={hasSrc ? 'img' : 'presentation'}
       aria-label={alt || ariaLabel}
-      style={{ ...style, width: size, height: size, borderRadius }}
+      style={{ ...style, ...sizeStyle, borderRadius }}
     >
       {hasSrc &&
         <img
