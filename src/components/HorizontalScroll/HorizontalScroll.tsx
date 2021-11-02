@@ -24,6 +24,8 @@ interface ScrollContext {
   initialScrollWidth: number;
 }
 
+export type ScrollPositionHandler = (currentPosition: number) => number;
+
 export interface HorizontalScrollProps extends
   React.HTMLAttributes<HTMLDivElement>,
   AdaptivityProps,
@@ -31,11 +33,11 @@ export interface HorizontalScrollProps extends
   /**
    * Функция для расчета величины прокрутки при клике на левую стрелку.
    */
-  getScrollToLeft?: (currentPosition: number) => number;
+  getScrollToLeft?: ScrollPositionHandler;
   /**
    * Функция для расчета величины прокрутки при клике на правую стрелку.
    */
-  getScrollToRight?: (currentPosition: number) => number;
+  getScrollToRight?: ScrollPositionHandler;
   showArrows?: boolean;
   scrollAnimationDuration?: number;
 }
