@@ -173,3 +173,11 @@
   border: none;
   transform: translateX(16px);
 }
+
+/**
+ * CMP:
+ * SimpleCell
+ */
+.SimpleCell .Switch {
+  margin-left: 10px;
+}

@@ -124,10 +124,6 @@
   padding-right: 2px;
 }
 
-.SimpleCell .Switch {
-  padding-left: 10px;
-}
-
 .SimpleCell__after .IconButton .Icon--28,
 .SimpleCell__after .IconButton .Icon--28 ~ * {
   margin-right: -8px;
