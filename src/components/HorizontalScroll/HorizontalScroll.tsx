@@ -114,18 +114,16 @@ function doScroll({
   })();
 }
 
-const HorizontalScroll: React.FC<HorizontalScrollProps> = (props: HorizontalScrollProps) => {
-  const {
-    children,
-    getScrollToLeft,
-    getScrollToRight,
-    showArrows,
-    scrollAnimationDuration,
-    hasMouse,
-    getRef,
-    ...restProps
-  } = props;
-
+const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
+  children,
+  getScrollToLeft,
+  getScrollToRight,
+  showArrows = true,
+  scrollAnimationDuration,
+  hasMouse,
+  getRef,
+  ...restProps
+}: HorizontalScrollProps) => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(false);
 
@@ -189,10 +187,6 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = (props: HorizontalScro
       </div>
     </div>
   );
-};
-
-HorizontalScroll.defaultProps = {
-  showArrows: true,
 };
 
 export default withAdaptivity(HorizontalScroll, {
