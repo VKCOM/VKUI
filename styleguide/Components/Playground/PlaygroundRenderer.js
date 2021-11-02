@@ -16,7 +16,7 @@ class PlaygroundRenderer extends React.Component {
     const {
       layout = true, // Нужны ли примеру обвесы в виде SplitLayout, SplitCol, etc
       iframe = true, // Нужно ли рендерить пример в айфреме
-      adaptivity: _adaptivity = true, // Нужно ли показывать продвинутые контролы адаптивности
+      adaptivity: _adaptivity, // Нужно ли показывать продвинутые контролы адаптивности
       integration,
       containerStyle,
       config,
@@ -24,9 +24,7 @@ class PlaygroundRenderer extends React.Component {
     } = previewProps;
     const exampleId = `${name}-${exampleIndex}`;
 
-    let adaptivity = layout === false && _adaptivity !== true
-      ? false
-      : true;
+    const adaptivity = _adaptivity ?? layout;
 
     return (
       <div className="Playground">
