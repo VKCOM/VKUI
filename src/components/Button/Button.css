@@ -61,11 +61,9 @@
 }
 
 .Button__content {
-  position: relative;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  transform: translateY(-1px);
 }
 
 .Button__content--caps {
@@ -143,6 +141,10 @@
   justify-content: center;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.Button:not(.Button--sz-s) .Button__content {
+  transform: translateY(-1px);
 }
 
 /**
