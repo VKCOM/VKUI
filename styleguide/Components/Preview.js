@@ -111,8 +111,8 @@ export default withAdaptivity(class Preview extends PreviewParent {
             <div ref={this.getSchemeTargetRef} className={classNames('Preview', `Preview--${styleGuideContext.platform}`, { 'Preview--layout': layout })}>
               {ready &&
                 <React.Fragment>
-                  <div className="Preview__shadow" style={adaptivity ? { maxWidth: width } : null} />
-                  <div className="Preview__in" style={adaptivity ? { height: styleGuideContext.height } : null}>
+                  <div className="Preview__shadow" style={adaptivity ? { maxWidth: width, maxHeight: styleGuideContext.height } : null} />
+                  <div className="Preview__in" style={adaptivity ? { height: styleGuideContext.height, width } : null}>
                     {error ?
                       <PlaygroundError message={error} /> :
                       iframe ?
