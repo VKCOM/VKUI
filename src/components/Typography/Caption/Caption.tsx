@@ -13,8 +13,8 @@ export interface CaptionProps extends React.AllHTMLAttributes<HTMLElement>, HasC
 
 const Caption: React.FC<CaptionProps> = ({
   children,
-  weight,
-  level,
+  weight = 'regular',
+  level = '1',
   caps,
   Component = 'span',
   ...restProps

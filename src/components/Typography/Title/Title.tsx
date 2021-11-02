@@ -14,12 +14,16 @@ export interface TitleProps extends React.AllHTMLAttributes<HTMLElement>, HasCom
 
 const Title: React.FC<TitleProps> = ({
   children,
-  weight,
-  level,
-  Component = ('h' + level) as React.ElementType,
+  weight = 'regular',
+  level = '1',
+  Component,
   ...restProps
 }: TitleProps) => {
   const platform = usePlatform();
+
+  if (!Component) {
+    Component = ('h' + level) as React.ElementType;
+  }
 
   if (platform === ANDROID && level === '3') {
     const headlineWeight: HeadlineProps['weight'] = weight === 'regular' ? weight : 'medium';

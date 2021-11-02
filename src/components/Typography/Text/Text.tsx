@@ -6,14 +6,14 @@ import { HasComponent, HasRootRef } from '../../../types';
 import { warnOnce } from '../../../lib/warnOnce';
 import './Text.css';
 
-export interface TextProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLDivElement>, HasComponent {
+export interface TextProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasComponent {
   weight: 'regular' | 'medium' | 'semibold';
 }
 
 const warn = warnOnce('Text');
 const Text: React.FC<TextProps> = ({
   children,
-  weight,
+  weight = 'regular',
   Component = 'span',
   getRootRef,
   ...restProps
