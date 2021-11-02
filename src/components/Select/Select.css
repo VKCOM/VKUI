@@ -1,5 +1,6 @@
 .Select {
   position: relative;
+  cursor: pointer;
   box-sizing: border-box;
 }
 
@@ -25,7 +26,6 @@
   box-sizing: border-box;
   position: relative;
   z-index: 2;
-  cursor: pointer;
   overflow: hidden;
 }
 
