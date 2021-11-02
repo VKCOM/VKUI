@@ -42,7 +42,7 @@ function App() {
       <AdaptivityProvider>
         <AppRoot>
           <SplitLayout>
-            <SplitCol width="280px">
+            <SplitCol width={280}>
               <SideCol />
             </SplitCol>
             <SplitCol>
@@ -79,7 +79,7 @@ function App({ viewWidth }) {
   // ...
     <SplitLayout header={viewWidth >= ViewWidth.SMALL_TABLET && <PanelHeader separator={false} />}>
       {viewWidth === ViewWidth.DESKTOP &&
-        <SplitCol width="280px">
+        <SplitCol width={280}>
           <Panel id="nav">Navigation</Panel>
         </SplitCol>
       }

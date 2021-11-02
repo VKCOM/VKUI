@@ -46,7 +46,7 @@ const Example = withAdaptivity(
         modal={modalRoot}
       >
         {isDesktop && (
-          <SplitCol fixed width="280px" maxWidth="280px">
+          <SplitCol fixed width={280} maxWidth={280}>
             <Panel>
               {hasHeader && <PanelHeader />}
               <Group>

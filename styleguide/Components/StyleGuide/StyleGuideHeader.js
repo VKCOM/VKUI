@@ -11,7 +11,7 @@ export const StyleGuideHeader = ({ switchStyleGuideScheme }) => {
   return (
     <div className="StyleGuideHeader">
       <SplitLayout>
-        <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuideHeader__left">
+        <SplitCol minWidth={340} width="30%" maxWidth={480} className="StyleGuideHeader__left">
           <div className="StyleGuideHeader__leftIn">
             <Tappable hasActive={false} hasHover={false} Component="a" href="#/About" className="StyleGuideHeader__logo">
               <Logo />
