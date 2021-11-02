@@ -3,25 +3,25 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { HasRef, HasRootRef } from '../../types';
-import { withAdaptivity, AdaptivityProps } from '../../hoc/withAdaptivity';
+import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useExternRef } from '../../hooks/useExternRef';
 import './Switch.css';
 
 export interface SwitchProps extends
   React.InputHTMLAttributes<HTMLInputElement>,
   HasRootRef<HTMLLabelElement>,
-  HasRef<HTMLInputElement>,
-  AdaptivityProps { }
+  HasRef<HTMLInputElement> {};
 
-export const Switch: React.FunctionComponent<SwitchProps> = withAdaptivity(({
+export const Switch: React.FC<SwitchProps> = ({
   style,
   className,
   getRef,
   getRootRef,
-  sizeY,
   ...restProps
 }: SwitchProps) => {
   const platform = usePlatform();
+  const { sizeY } = useAdaptivity();
+
   const inputRef = useExternRef(getRef);
 
   return (
@@ -30,4 +30,4 @@ export const Switch: React.FunctionComponent<SwitchProps> = withAdaptivity(({
       <span vkuiClass="Switch__pseudo" />
     </label>
   );
-}, { sizeY: true });
+};
