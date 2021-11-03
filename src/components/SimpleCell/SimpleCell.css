@@ -247,11 +247,11 @@
  */
 .Cell .SimpleCell {
   max-width: 100%;
-  flex-grow: 1;
   min-width: 0;
 }
 
 .Cell--removable .SimpleCell {
+  flex-grow: 1;
   padding-right: 0;
   padding-left: 0;
 }
