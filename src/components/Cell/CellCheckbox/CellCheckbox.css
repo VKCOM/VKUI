@@ -1,10 +1,7 @@
 .CellCheckbox {
   position: relative;
-  flex-shrink: 0;
-  display: inline-block;
   width: 24px;
   height: 24px;
-  margin-right: 16px;
   padding: 0;
   color: var(--icon_tertiary);
 }
@@ -21,11 +18,4 @@
 .CellCheckbox__input:not(:checked) ~ .CellCheckbox__icon--off,
 .CellCheckbox__input:checked ~ .CellCheckbox__icon--on {
   display: block;
-}
-
-/**
- * iOS
- */
-.CellCheckbox--ios {
-  margin-right: 12px;
 }

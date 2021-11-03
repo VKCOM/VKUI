@@ -23,12 +23,21 @@
   z-index: 2;
 }
 
+.Cell__checkbox {
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
 /**
  * iOS
  */
 .Cell--ios .Cell__dragger {
   margin-right: 0;
   margin-left: 12px;
+}
+
+.Cell--ios .Cell__checkbox {
+  margin-right: 12px;
 }
 
 /**

@@ -117,7 +117,7 @@ export const Cell: React.FC<CellProps> = ({
   let checkbox;
   if (selectable) {
     const checkboxProps: CellCheckboxProps = { name, onChange, defaultChecked, checked, disabled };
-    checkbox = <CellCheckbox {...checkboxProps} />;
+    checkbox = <CellCheckbox vkuiClass="Cell__checkbox" {...checkboxProps} />;
   }
 
   const simpleCellDisabled = draggable && !selectable || removable || disabled;
