@@ -19,12 +19,6 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
    * Цветовая схема приложения
    */
   scheme?: AppearanceScheme;
-  /**
-   * Источник токенов, по-умолчанию `appereance`.
-   *
-   * **Если вы не знаете что это такое, то лучше не трогайте!**
-   */
-  tokens?: string;
 }
 
 const warn = warnOnce('ConfigProvider');
@@ -80,7 +74,6 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Sche
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,
   schemeTarget,
-  tokens,
   ...config
 }: ConfigProviderProps & { children?: React.ReactNode; schemeTarget?: HTMLElement }) => {
   const scheme = normalizeScheme(config.scheme, config.platform);
@@ -99,7 +92,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
   }, [scheme]);
 
   const realScheme = useSchemeDetector(target, scheme);
-  const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), tokens: tokens, ...config });
+  const configContext = useObjectMemo({ appearance: deriveAppearance(realScheme), ...config });
 
   return (
     <ConfigProviderContext.Provider value={configContext}>
