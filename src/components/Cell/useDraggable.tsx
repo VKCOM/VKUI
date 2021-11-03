@@ -51,27 +51,31 @@ export const useDraggable = ({ onDragFinish }: Pick<CellProps, 'onDragFinish'>) 
 
     siblings.forEach((sibling: HTMLElement, siblingIndex: number) => {
       const siblingGesture = sibling.getBoundingClientRect();
+      const siblingHalfHeight = siblingGesture.height / 2;
+
+      const rootOverSibling = rootGesture.bottom > siblingGesture.top + siblingHalfHeight;
+      const rootUnderSibling = rootGesture.top < siblingGesture.bottom - siblingHalfHeight;
 
       if (dragStartIndex < siblingIndex) {
-        if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2) {
+        if (rootOverSibling) {
           if (dragDirection === 'down') {
             sibling.style.transform = 'translateY(-100%)';
           }
 
           setDragEndIndex((dragEndIndex) => dragEndIndex + 1);
         }
-        if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2 && dragDirection === 'up') {
+        if (rootUnderSibling && dragDirection === 'up') {
           sibling.style.transform = 'translateY(0)';
         }
       } else if (dragStartIndex > siblingIndex) {
-        if (rootGesture.top < siblingGesture.bottom - siblingGesture.height / 2) {
+        if (rootUnderSibling) {
           if (dragDirection === 'up') {
             sibling.style.transform = 'translateY(100%)';
           }
 
           setDragEndIndex((dragEndIndex) => dragEndIndex - 1);
         }
-        if (rootGesture.bottom > siblingGesture.top + siblingGesture.height / 2 && dragDirection === 'down') {
+        if (rootOverSibling && dragDirection === 'down') {
           sibling.style.transform = 'translateY(0)';
         }
       }
