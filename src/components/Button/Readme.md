@@ -136,7 +136,10 @@ const Example = () => {
             <Button href="#">I am link</Button>
           </Div>
         </Group>
-        <Group>
+        <Group 
+          header={<Header mode="secondary">Кнопки с новыми токенами</Header>}
+          description="Для корректной работы смените источник токенов с appearance на любой другой"
+        >
           <FormItem top="Color">
             <Select value={color} onChange={(e) => setColor(e.target.value)} options={[
               {label: "Accent", value: "accent"},
@@ -183,8 +186,7 @@ const Example = () => {
           <Checkbox onChange={(e) => setStretched(e.target.checked)}>Stretched</Checkbox>
           <Checkbox onChange={(e) => setLoading(e.target.checked)}>Loading</Checkbox>
           <Checkbox onChange={(e) => setDisabled(e.target.checked)}>Disabled</Checkbox>
-        </Group>
-        <Group header={<Header mode="secondary">Preview</Header>}>
+          <Spacing size={12}/>
           <div style={{ background: color === 'overlay' ? '#232323' : 'unset' }}>
             <Div>
               <Button
