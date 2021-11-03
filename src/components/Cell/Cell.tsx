@@ -4,7 +4,7 @@ import { warnOnce } from '../../lib/warnOnce';
 import { getClassName } from '../../helpers/getClassName';
 import { ANDROID, IOS, VKCOM } from '../../lib/platform';
 import SimpleCell, { SimpleCellProps } from '../SimpleCell/SimpleCell';
-import { HasPlatform, HasRootRef } from '../../types';
+import { HasPlatform } from '../../types';
 import { Removable, RemovableProps } from '../Removable/Removable';
 import { usePlatform } from '../../hooks/usePlatform';
 import { useDraggable } from './useDraggable';
@@ -12,10 +12,6 @@ import { ListContext } from '../List/ListContext';
 import { CellDragger } from './CellDragger/CellDragger';
 import { CellCheckbox, CellCheckboxProps } from './CellCheckbox/CellCheckbox';
 import './Cell.css';
-
-const CellWrapper: React.FC<HasRootRef<HTMLDivElement> & RemovableProps> = ({ getRootRef, children, removePlaceholder, onRemove, ...restProps }) => (
-  <div ref={getRootRef} {...restProps}>{children}</div>
-);
 
 export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps {
   mode?: 'removable' | 'selectable';
@@ -127,41 +123,48 @@ export const Cell: React.FC<CellProps> = ({
   const simpleCellDisabled = draggable && !selectable || removable || disabled;
   const hasActive = !simpleCellDisabled && !dragging;
 
-  const WrapperComponent = removable ? Removable : CellWrapper;
+  const cellClasses = classNames(getClassName('Cell', platform), {
+    'Cell--dragging': dragging,
+    'Cell--removable': removable,
+    'Cell--selectable': selectable,
+    'Cell--disabled': disabled,
+  });
 
-  return (
-    <WrapperComponent
-      vkuiClass={classNames(getClassName('Cell', platform), {
-        'Cell--dragging': dragging,
-        'Cell--removable': removable,
-        'Cell--selectable': selectable,
-        'Cell--disabled': disabled,
-      })}
-      getRootRef={rootElRef}
-      removePlaceholder={removePlaceholder}
-      onRemove={(e) => onRemove(e, rootElRef?.current)}
-    >
-      <SimpleCell
-        hasActive={hasActive}
-        hasHover={hasActive}
-        {...restProps}
-        getRootRef={rootElRef}
-        disabled={simpleCellDisabled}
-        Component={selectable ? 'label' : Component}
-        before={
-          <React.Fragment>
-            {draggable && (platform === ANDROID || platform === VKCOM) && dragger}
-            {selectable && checkbox}
-            {before}
-          </React.Fragment>
-        }
-        after={
-          <React.Fragment>
-            {draggable && platform === IOS && dragger}
-            {after}
-          </React.Fragment>
-        }
-      />
-    </WrapperComponent>
+  const simpleCell = (
+    <SimpleCell
+      hasActive={hasActive}
+      hasHover={hasActive}
+      {...restProps}
+      disabled={simpleCellDisabled}
+      Component={selectable ? 'label' : Component}
+      before={
+        <React.Fragment>
+          {draggable && (platform === ANDROID || platform === VKCOM) && dragger}
+          {selectable && checkbox}
+          {before}
+        </React.Fragment>
+      }
+      after={
+        <React.Fragment>
+          {draggable && platform === IOS && dragger}
+          {after}
+        </React.Fragment>
+      }
+    />
   );
+
+  if (removable) {
+    return (
+      <Removable
+        vkuiClass={cellClasses}
+        getRootRef={rootElRef}
+        removePlaceholder={removePlaceholder}
+        onRemove={(e) => onRemove(e, rootElRef?.current)}
+      >
+        {simpleCell}
+      </Removable>
+    );
+  }
+
+  return (<div vkuiClass={cellClasses} ref={rootElRef}>{simpleCell}</div>);
 };
