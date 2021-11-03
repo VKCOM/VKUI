@@ -111,7 +111,7 @@ export const Cell: React.FC<CellProps> = ({
 
   let dragger;
   if (draggable) {
-    dragger = <CellDragger aria-label={draggerLabel} {...draggableProps} />;
+    dragger = <CellDragger vkuiClass="Cell__dragger" aria-label={draggerLabel} {...draggableProps} />;
   }
 
   let checkbox;

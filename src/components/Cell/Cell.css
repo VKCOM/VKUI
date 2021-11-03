@@ -17,6 +17,20 @@
   opacity: .6;
 }
 
+.Cell__dragger {
+  position: relative;
+  margin-right: 16px;
+  z-index: 2;
+}
+
+/**
+ * iOS
+ */
+.Cell--ios .Cell__dragger {
+  margin-right: 0;
+  margin-left: 12px;
+}
+
 /**
  * CMP:
  * FormItem
