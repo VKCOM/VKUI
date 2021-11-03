@@ -343,19 +343,19 @@
 }
 
 .Button--lvl-secondary.Button--clr-overlay {
-  background-color: var(--vkui--color_background_secondary_alpha, rgba(255, 255, 255, .2));
+  background-color: var(--vkui--color_background_contrast_secondary_alpha, rgba(255, 255, 255, .2));
 }
 
 .Button--lvl-secondary.Button--clr-overlay.Button--hover,
 .Button--lvl-tertiary.Button--clr-overlay.Button--hover,
 .Button--lvl-outline.Button--clr-overlay.Button--hover {
-  background-color: var(--vkui--color_background_secondary_alpha--hover);
+  background-color: var(--vkui--color_background_contrast_secondary_alpha--hover);
 }
 
 .Button--lvl-secondary.Button--clr-overlay.Button--active,
 .Button--lvl-tertiary.Button--clr-overlay.Button--active,
 .Button--lvl-outline.Button--clr-overlay.Button--active {
-  background-color: var(--vkui--color_background_secondary_alpha--active);
+  background-color: var(--vkui--color_background_contrast_secondary_alpha--active);
 }
 
 /* Text colors */

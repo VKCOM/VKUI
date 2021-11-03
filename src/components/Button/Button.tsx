@@ -75,7 +75,7 @@ interface ResolvedButtonAppereance {
 }
 
 /**
- * Обработка (в будущем) устаревших режимов,
+ * Обработка [в будущем] устаревших режимов,
  * для обратной совместимости кнопок с новыми токенами
  */
 function resolveButtonAppearance(
