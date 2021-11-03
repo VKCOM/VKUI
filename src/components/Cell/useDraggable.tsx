@@ -24,7 +24,7 @@ export const useDraggable = ({ onDragFinish }: Pick<CellProps, 'onDragFinish'>) 
   const [dragDirection, setDragDirection] = React.useState<'down' | 'up'>(undefined);
 
   const onDragStart = () => {
-    const rootEl = rootElRef?.current;
+    const rootEl = rootElRef.current;
 
     setDragging(true);
 
@@ -40,16 +40,16 @@ export const useDraggable = ({ onDragFinish }: Pick<CellProps, 'onDragFinish'>) 
   const onDragMove = (e: TouchEvent) => {
     e.originalEvent.preventDefault();
 
-    const rootEl = rootElRef?.current;
+    const rootEl = rootElRef.current;
 
     rootEl.style.transform = `translateY(${e.shiftY}px)`;
+    const rootGesture = rootEl.getBoundingClientRect();
+
     setDragDirection(dragShift - e.shiftY < 0 ? 'down' : 'up');
     setDragShift(e.shiftY);
     setDragEndIndex(dragStartIndex);
 
     siblings.forEach((sibling: HTMLElement, siblingIndex: number) => {
-      const rootGesture = rootEl.getBoundingClientRect();
-
       const siblingGesture = sibling.getBoundingClientRect();
 
       if (dragStartIndex < siblingIndex) {
