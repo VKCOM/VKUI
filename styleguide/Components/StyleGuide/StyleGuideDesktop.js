@@ -6,7 +6,7 @@ export const StyleGuideDesktop = ({ popout, switchStyleGuideScheme, toc, childre
     <React.Fragment>
       <StyleGuideHeader switchStyleGuideScheme={switchStyleGuideScheme} />
       <SplitLayout className="StyleGuide" popout={popout}>
-        <SplitCol minWidth="340px" width="30%" maxWidth="480px" className="StyleGuide__sidebar">
+        <SplitCol minWidth={340} width="30%" maxWidth={480} className="StyleGuide__sidebar">
           <div className="StyleGuide__sidebarIn">
             {toc}
           </div>

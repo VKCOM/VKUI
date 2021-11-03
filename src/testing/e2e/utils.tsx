@@ -1,4 +1,4 @@
-import { ComponentType, Fragment, isValidElement, FC } from 'react';
+import { ComponentType, FC, Fragment, isValidElement } from 'react';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { screenshot } from '@react-playwright';
 // Импорты из отдельных модулей помогают jest отслеживать зависимости
@@ -9,9 +9,9 @@ import { Scheme } from '../../components/ConfigProvider/ConfigProviderContext';
 import AdaptivityProvider, {
   AdaptivityProviderProps,
   DESKTOP_SIZE,
-  TABLET_SIZE,
-  SMALL_TABLET_SIZE,
   MOBILE_SIZE,
+  SMALL_TABLET_SIZE,
+  TABLET_SIZE,
 } from '../../components/AdaptivityProvider/AdaptivityProvider';
 import { SizeType, ViewWidth } from '../../components/AdaptivityProvider/AdaptivityContext';
 import { AdaptivityProps, withAdaptivity } from '../../hoc/withAdaptivity';
@@ -75,7 +75,9 @@ type ScreenshotOptions = {
   matchScreenshot?: MatchImageSnapshotOptions;
   platforms?: Platform[];
   // pass [BRIGHT_LIGHT, SPACE_GRAY] if component depends on appearance
-  mobileSchemes?: Scheme[];
+  mobileSchemes?: Array<Scheme.BRIGHT_LIGHT | Scheme.SPACE_GRAY>;
+  // pass [VKCOM_LIGHT, VKCOM_DARK] if component depends on appearance
+  vkcomSchemes?: Array<Scheme.VKCOM_LIGHT | Scheme.VKCOM_DARK>;
   adaptivity?: AdaptivityProps;
   Wrapper?: ComponentType;
 };
@@ -111,6 +113,7 @@ export function describeScreenshotFuzz<Props>(
     matchScreenshot,
     platforms = Object.values(Platform),
     mobileSchemes = [Scheme.BRIGHT_LIGHT],
+    vkcomSchemes = [Scheme.VKCOM_LIGHT],
     adaptivity = {},
     Wrapper = AppWrapper,
   } = options;
@@ -126,7 +129,8 @@ export function describeScreenshotFuzz<Props>(
 
       const AdaptiveComponent = withAdaptivity(Component, { sizeX: true, sizeY: true });
 
-      (isVkCom ? [Scheme.VKCOM] : mobileSchemes).forEach((scheme) => {
+      (isVkCom ? vkcomSchemes : mobileSchemes).forEach((scheme: Scheme) => {
+        scheme = scheme === Scheme.VKCOM_LIGHT ? Scheme.VKCOM : scheme; // Снести после мержа 1978
         it(`${scheme}${adaptivityProps.viewWidth ? ` w_${adaptivityProps.viewWidth}` : ''}`, async () => {
           expect(await screenshot((
             <ConfigProvider scheme={scheme} platform={platform}>

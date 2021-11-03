@@ -2,12 +2,11 @@ import * as React from 'react';
 import { AppearanceType } from '@vkontakte/vk-bridge';
 import { canUseDOM, useDOM } from '../../lib/dom';
 import {
+  AppearanceScheme,
   ConfigProviderContext,
   ConfigProviderContextInterface,
-  Scheme,
-  AppearanceScheme,
   defaultConfigProviderProps,
-  ExternalScheme,
+  Scheme,
 } from './ConfigProviderContext';
 import { PlatformType, VKCOM } from '../../lib/platform';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
@@ -28,13 +27,15 @@ export interface ConfigProviderProps extends ConfigProviderContextInterface {
   tokens?: string;
 }
 
+const warn = warnOnce('ConfigProvider');
+
 function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
   const inherit = _scheme === 'inherit';
   const getScheme = () => {
     if (!inherit || !canUseDOM) {
       return undefined;
     }
-    return node.getAttribute('scheme') as Scheme | ExternalScheme;
+    return node.getAttribute('scheme') as Scheme;
   };
   const [resolvedScheme, setScheme] = React.useState(getScheme());
 
@@ -51,15 +52,20 @@ function useSchemeDetector(node: HTMLElement, _scheme: Scheme | 'inherit') {
   return _scheme === 'inherit' ? resolvedScheme : _scheme;
 }
 
-const deriveAppearance = (scheme: Scheme | ExternalScheme): AppearanceType =>
-  scheme === Scheme.SPACE_GRAY || scheme === ExternalScheme.VKCOM_DARK ? 'dark' : 'light';
+const deriveAppearance = (scheme: Scheme): AppearanceType =>
+  scheme === Scheme.SPACE_GRAY || scheme === Scheme.VKCOM_DARK ? 'dark' : 'light';
 
 function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Scheme | 'inherit' {
   if (scheme === 'inherit') {
     return scheme;
   }
-  if (platform === VKCOM) {
-    return Scheme.VKCOM;
+  if (scheme === Scheme.VKCOM) {
+    process.env.NODE_ENV === 'development' && warn(`Схема "${Scheme.VKCOM}" устарела и будет удалена 5.0.0. Вместо неё используйте "${Scheme.VKCOM_LIGHT}"`);
+    return Scheme.VKCOM_LIGHT;
+  }
+  if (platform === VKCOM && (scheme === Scheme.BRIGHT_LIGHT || scheme === Scheme.SPACE_GRAY)) {
+    process.env.NODE_ENV === 'development' && warn(`Платформа "vkcom" и схема "${scheme}" несовместимы. С этой платформой можно использовать схемы "${Scheme.VKCOM_LIGHT}" или "${Scheme.VKCOM_DARK}"`);
+    return Scheme.VKCOM_LIGHT;
   }
   switch (scheme) {
     case Scheme.DEPRECATED_CLIENT_LIGHT:
@@ -70,8 +76,6 @@ function normalizeScheme(scheme: AppearanceScheme, platform: PlatformType): Sche
       return scheme as Scheme;
   }
 }
-
-const warn = warnOnce('ConfigProvider');
 
 const ConfigProvider: React.FC<ConfigProviderProps> = ({
   children,

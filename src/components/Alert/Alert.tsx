@@ -14,6 +14,7 @@ import Headline from '../Typography/Headline/Headline';
 import Title from '../Typography/Title/Title';
 import Caption from '../Typography/Caption/Caption';
 import ModalDismissButton from '../ModalDismissButton/ModalDismissButton';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import './Alert.css';
 
 export type AlertActionInterface = AlertProps['actions'][0] & React.AnchorHTMLAttributes<HTMLElement>;
@@ -59,6 +60,10 @@ class Alert extends React.Component<AlertProps, AlertState> {
     actions: [],
   };
 
+  private get timeout(): number {
+    return this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300;
+  }
+
   onItemClick: ItemClickHander = (item: AlertActionInterface) => () => {
     const { action, autoclose } = item;
 
@@ -94,7 +99,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
       this.element.current.addEventListener(transitionEvent.name, eventHandler);
     } else {
       clearTimeout(this.transitionFinishTimeout);
-      this.transitionFinishTimeout = setTimeout(eventHandler.bind(this), this.props.platform === ANDROID || this.props.platform === VKCOM ? 200 : 300);
+      this.transitionFinishTimeout = setTimeout(eventHandler.bind(this), this.timeout);
     }
   }
 
@@ -180,10 +185,12 @@ class Alert extends React.Component<AlertProps, AlertState> {
         style={style}
         onClick={this.onClose}
       >
-        <div
+        <FocusTrap
           {...restProps}
-          ref={this.element}
+          getRootRef={this.element}
           onClick={this.stopPropagation}
+          onClose={this.onClose}
+          timeout={this.timeout}
           vkuiClass={classNames(getClassName('Alert', platform), {
             'Alert--v': resolvedActionsLayout === 'vertical',
             'Alert--h': resolvedActionsLayout === 'horizontal',
@@ -200,7 +207,7 @@ class Alert extends React.Component<AlertProps, AlertState> {
           <footer vkuiClass="Alert__actions">
             {actions.map(this.renderAction)}
           </footer>
-        </div>
+        </FocusTrap>
       </PopoutWrapper>
     );
   }

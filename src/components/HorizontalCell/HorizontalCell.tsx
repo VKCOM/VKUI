@@ -7,7 +7,7 @@ import Caption from '../Typography/Caption/Caption';
 import Tappable from '../Tappable/Tappable';
 import Subhead from '../Typography/Subhead/Subhead';
 import Avatar from '../Avatar/Avatar';
-import { HasRef, HasRootRef } from '../../types';
+import { HasComponent, HasRef, HasRootRef } from '../../types';
 import './HorizontalCell.css';
 
 interface CellTypographyProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -23,8 +23,8 @@ const CellTypography: React.FC<CellTypographyProps> = ({ size, children, ...rest
 export interface HorizontalCellProps extends
   React.AnchorHTMLAttributes<HTMLElement>,
   HasRootRef<HTMLDivElement>,
-  HasRef<HTMLDivElement> {
-  Component?: React.ElementType;
+  HasRef<HTMLDivElement>,
+  HasComponent {
   size?: 's' | 'm' | 'l';
   header?: React.ReactNode;
   subtitle?: React.ReactNode;

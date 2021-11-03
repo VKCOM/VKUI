@@ -22,6 +22,7 @@
 
 .Tabs--default .TabsItem__in {
   overflow: hidden;
+  overflow: -moz-hidden-unscrollable; /* Лечит баг с ломающимся выравниванием по baseline в FF https://stackoverflow.com/questions/4310047/css-why-is-vertical-align-baseline-stop-working-on-firefox-when-using-overflow */
   text-overflow: ellipsis;
   padding: 14px 0;
 }

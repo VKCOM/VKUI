@@ -1,8 +1,7 @@
 Кнопка для закрытия модальных окон на широком экране.
 Для правильной отрисовки нужно расположить в контейнере с `position: "relative"` и отображать при достаточной ширине экрана (от `ViewWidth.SMALL_TABLET`)
 
-```jsx
-
+```jsx { "props": { "layout": false, "adaptivity": true } }
 const CustomPopout = withAdaptivity(({ onClose, viewWidth }) => {
   return (
     <PopoutWrapper onClick={onClose}>
@@ -29,14 +28,18 @@ const Example = () => {
   );
 
   return (
-    <View popout={popout} activePanel="popout">
-      <Panel id="popout">
-        <PanelHeader>ModalDismissButton</PanelHeader>
-        <Group>
-          <CellButton onClick={onClick}>Открыть модальное окно</CellButton>
-        </Group>
-      </Panel>
-    </View>
+    <SplitLayout popout={popout}>
+      <SplitCol>
+      <View activePanel="popout">
+        <Panel id="popout">
+          <PanelHeader>ModalDismissButton</PanelHeader>
+          <Group>
+            <CellButton onClick={onClick}>Открыть модальное окно</CellButton>
+          </Group>
+        </Panel>
+      </View>
+      </SplitCol>
+    </SplitLayout>
   );
 }
 

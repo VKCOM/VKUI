@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { getSupportedEvents, coordX, coordY, touchEnabled, VKUITouchEvent } from '../../lib/touch';
-import { HasRootRef } from '../../types';
+import { HasComponent, HasRootRef } from '../../types';
 import { useDOM } from '../../lib/dom';
 import { useExternRef } from '../../hooks/useExternRef';
 import { useEventListener } from '../../hooks/useEventListener';
 import { useIsomorphicLayoutEffect } from '../../lib/useIsomorphicLayoutEffect';
 
-export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement> {
+export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRootRef<HTMLElement>, HasComponent {
   /**
    * Привязать onEnter и onLeave через pointer-events - работает на disabled-инпутах
    */
@@ -14,7 +14,6 @@ export interface TouchProps extends React.AllHTMLAttributes<HTMLElement>, HasRoo
   useCapture?: boolean;
   slideThreshold?: number;
   noSlideClick?: boolean;
-  Component?: React.ElementType;
   onEnter?: HoverHandler;
   onLeave?: HoverHandler;
   onStart?: TouchEventHandler;
@@ -100,7 +99,15 @@ export const Touch: React.FC<TouchProps> = ({
     };
 
     handle(e, [onStart, onStartX, onStartY]);
-    !touchEnabled() && subscribe(document);
+    // 1 line, 2 bad specs, 2 workarounds:
+    subscribe(touchEnabled()
+      // Touch events fire on initial target, and won't bubble if its removed
+      // see: #235, #1968, https://stackoverflow.com/a/45760014
+      ? e.target as HTMLElement
+      // Mouse events fire on the element under pointer, so we lose move / end
+      // if pointer goes outside container.
+      // Can be fixed by PointerEvents' setPointerCapture later
+      : document);
   }, { capture: useCapture, passive: false });
   const containerRef = useExternRef(getRootRef);
 
@@ -109,7 +116,6 @@ export const Touch: React.FC<TouchProps> = ({
     enterHandler.add(el);
     leaveHandler.add(el);
     startHandler.add(el);
-    touchEnabled() && subscribe(el);
   }, [Component]);
 
   function onMove(e: VKUITouchEvent) {
@@ -169,11 +175,10 @@ export const Touch: React.FC<TouchProps> = ({
     gesture.current = {};
 
     // Если это был тач-евент, симулируем отмену hover
-    if (e.type === 'touchend' || e.type === 'touchcancel') {
+    if (touchEnabled()) {
       onLeave && onLeave(e);
     }
-
-    !touchEnabled() && subscribe(null);
+    subscribe(null);
   }
 
   const listenerParams = { capture: useCapture, passive: false };
@@ -205,7 +210,8 @@ export const Touch: React.FC<TouchProps> = ({
     if (!didSlide.current) {
       return onClickCapture && onClickCapture(e);
     }
-    if ((e.target as HTMLElement).tagName === 'A') {
+    // eslint-disable-next-line no-restricted-properties
+    if ((e.target as HTMLElement).closest('a')) {
       e.preventDefault();
     }
     if (noSlideClick) {

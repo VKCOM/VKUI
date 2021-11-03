@@ -59,15 +59,6 @@
   visibility: initial;
 }
 
-.Cell--removable .SimpleCell {
-  max-width: 100%;
-  flex-grow: 1;
-  min-width: 0;
-  padding-right: 2px;
-  flex-shrink: initial;
-  overflow: hidden;
-}
-
 /**
  * iOS
  */
@@ -77,11 +68,6 @@
 
 .Cell--ios.Cell--selectable .Cell__marker {
   margin-right: 12px;
-}
-
-.Cell--ios.Cell--removable .SimpleCell {
-  padding-left: 0;
-  padding-right: 0;
 }
 
 /**

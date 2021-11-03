@@ -3,6 +3,7 @@ import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { SharedDropdownProps } from './types';
+import { FocusTrap } from '../FocusTrap/FocusTrap';
 import './ActionSheet.css';
 
 const stopPropagation: React.MouseEventHandler = (e) => e.stopPropagation();
@@ -19,7 +20,7 @@ export const ActionSheetDropdown: React.FC<SharedDropdownProps> = ({
   const baseClaseName = getClassName('ActionSheet', platform);
 
   return (
-    <div
+    <FocusTrap
       {...restProps}
       onClick={stopPropagation}
       vkuiClass={classNames(baseClaseName, {
@@ -27,6 +28,6 @@ export const ActionSheetDropdown: React.FC<SharedDropdownProps> = ({
       })}
     >
       {children}
-    </div>
+    </FocusTrap>
   );
 };

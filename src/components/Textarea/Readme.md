@@ -10,6 +10,9 @@
         <FormItem top="Любимая музыка">
           <Textarea placeholder="Группы, исполнители, продюсеры" />
         </FormItem>
+        <FormItem top="Прикидываемся Input">
+          <Textarea rows={1} placeholder="Once upon a time" />
+        </FormItem>
       </Group>
     </Panel>
   </View>

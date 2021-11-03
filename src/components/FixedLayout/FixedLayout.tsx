@@ -7,7 +7,6 @@ import { TooltipContainer } from '../Tooltip/TooltipContainer';
 import { useDOM } from '../../lib/dom';
 import { useGlobalEventListener } from '../../hooks/useGlobalEventListener';
 import { usePlatform } from '../../hooks/usePlatform';
-import { useNavTransition } from '../NavTransitionContext/NavTransitionContext';
 import './FixedLayout.css';
 
 export interface FixedLayoutProps extends
@@ -34,14 +33,6 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
   ...restProps
 }: FixedLayoutProps) => {
   const platform = usePlatform();
-
-  const { scrollCompensation } = useNavTransition();
-  const transitionOverrideStyle = React.useMemo<React.CSSProperties>(() => scrollCompensation > 0 ? {
-    position: 'absolute',
-    top: vertical === 'top' ? scrollCompensation : null,
-    bottom: vertical === 'bottom' ? -scrollCompensation : null,
-  } : {}, [scrollCompensation]);
-
   const [width, setWidth] = React.useState<string>(null);
   const { window } = useDOM();
   const { colRef } = React.useContext(SplitColContext);
@@ -57,7 +48,7 @@ const FixedLayout: React.FC<FixedLayoutProps> = ({
       vkuiClass={classNames(getClassName('FixedLayout', platform), {
         'FixedLayout--filled': filled,
       }, `FixedLayout--${vertical}`)}
-      style={{ ...style, ...transitionOverrideStyle, width }}
+      style={{ ...style, width }}
     >
       <div vkuiClass="FixedLayout__in" ref={getRef}>{children}</div>
     </TooltipContainer>

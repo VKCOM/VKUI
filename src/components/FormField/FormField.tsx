@@ -2,7 +2,7 @@ import * as React from 'react';
 import { getClassName } from '../../helpers/getClassName';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
-import { HasRootRef } from '../../types';
+import { HasComponent, HasRootRef } from '../../types';
 import { hasReactNode } from '../../lib/utils';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
 import './FormField.css';
@@ -17,8 +17,8 @@ export interface FormFieldProps {
 interface FormFieldOwnProps extends
   React.AllHTMLAttributes<HTMLElement>,
   HasRootRef<HTMLElement>,
+  HasComponent,
   FormFieldProps {
-  Component?: React.ElementType;
   disabled?: boolean;
 }
 

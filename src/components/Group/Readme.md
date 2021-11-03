@@ -1,6 +1,6 @@
 Группа – базовый компонент для группировки контента по смыслу.
 
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true } }
 const MODAL_NAME = 'modal'
 
 class App extends React.Component {
@@ -91,21 +91,25 @@ class App extends React.Component {
     );
 
     return (
-      <View activePanel="group" modal={modal}>
-        <Panel id="group">
-          <PanelHeader>
-            Group
-          </PanelHeader>
+      <SplitLayout modal={modal}>
+        <SplitCol>
+        <View activePanel="group">
+          <Panel id="group">
+            <PanelHeader>
+              Group
+            </PanelHeader>
 
-          {this.renderGroup()}
+            {this.renderGroup()}
 
-          <Group header={<Header mode="secondary">Модальное окно с Group</Header>}>
-            <SimpleCell onClick={() => this.setState({ isModalOpened: true })}>
-              Открыть Group в модальном окне
-            </SimpleCell>
-          </Group>
-        </Panel>
-      </View>
+            <Group header={<Header mode="secondary">Модальное окно с Group</Header>}>
+              <SimpleCell onClick={() => this.setState({ isModalOpened: true })}>
+                Открыть Group в модальном окне
+              </SimpleCell>
+            </Group>
+          </Panel>
+        </View>
+        </SplitCol>
+      </SplitLayout>
     )
   }
 }
