@@ -4,9 +4,9 @@
   box-sizing: border-box;
   text-decoration: none;
   border: none;
-  min-height: var(--vkui--size_button_small_height--regular, 30px);
+  min-height: var(--vkui--size_button_small_height--regular, 28px);
   margin: 0;
-  padding: 1px 16px;
+  padding: 0;
   user-select: none;
   border-radius: var(--vkui--size_border_radius, 8px);
   max-width: 100%;
@@ -24,8 +24,10 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  min-height: inherit;
+  padding: 1px 16px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .Button--aln-left .Button__in {
@@ -59,16 +61,13 @@
 }
 
 .Button__content {
-  padding-top: 4px;
-  padding-bottom: 6px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
 .Button__content--caps {
-  padding-top: 7px;
-  padding-bottom: 7px;
+  transform: translateY(0);
 }
 
 .Button__spinner {
@@ -402,21 +401,6 @@
   box-shadow: inset 0 0 0 1px var(--vkui--color_stroke_contrast--active);
 }
 
-.Button--sz-m {
-  min-height: var(--vkui--size_button_medium_height--regular, 36px);
-}
-
-.Button--sz-m .Button__content {
-  padding-top: 5px;
-  padding-bottom: 7px;
-}
-
-.Button--sz-l {
-  min-height: var(--vkui--size_button_large_height--regular, 36px);
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
 .Button--sz-l .Button__before:not(:last-child) {
   margin-right: 8px;
 }
@@ -425,31 +409,29 @@
   margin-left: 8px;
 }
 
-.Button--sz-l .Button__content {
-  padding-top: 10px;
-  padding-bottom: 12px;
-}
-
 .Button--sz-l .Button__in {
   justify-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.Button:not(.Button--sz-s) .Button__content {
+  transform: translateY(-1px);
 }
 
 /**
  * iOS
  */
 .Button--ios {
+  min-height: 26px;
   border-radius: 10px;
-}
-
-.Button--ios.Button--sz-l .Button__content {
-  padding-top: 9px;
-  padding-bottom: 11px;
 }
 
 /**
  * VKCOM
  */
 .Button--vkcom {
+  min-height: 26px;
   border-radius: 4px;
 }
 
@@ -462,40 +444,32 @@
 /**
  * sizeY COMPACT
  */
-.Button--sizeY-compact {
-  min-height: var(--vkui--size_button_small_height--compact, 26px);
-}
-
-.Button--sizeY-compact .Button__content {
-  padding-top: 3px;
-  padding-bottom: 5px;
-}
-
-.Button--sizeY-compact .Button__content--caps {
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.Button--sizeY-compact.Button--sz-m {
+.Button--sz-m {
   min-height: var(--vkui--size_button_medium_height--compact, 32px);
 }
 
-.Button--sizeY-compact.Button--sz-m .Button__content {
-  padding-top: 4px;
-  padding-bottom: 6px;
-}
-
-.Button--sizeY-compact.Button--sz-l {
+.Button--sz-l {
   min-height: var(--vkui--size_button_large_height--compact, 36px);
 }
 
-.Button--sizeY-compact.Button--sz-l .Button__content {
-  padding-top: 6px;
-  padding-bottom: 8px;
+/**
+ * sizeY REGULAR
+ */
+.Button--sizeY-regular {
+  min-height: var(--vkui--size_button_small_height--regular, 30px);
+}
+
+.Button--sizeY-regular.Button--sz-m {
+  min-height: var(--vkui--size_button_medium_height--regular, 36px);
+}
+
+.Button--sizeY-regular.Button--sz-l {
+  min-height: var(--vkui--size_button_large_height--regular, 44px);
 }
 
 /**
- * .Banner__actions
+ * CMP:
+ * Banner
  */
 .Banner__actions > .Button {
   margin-top: 12px;
