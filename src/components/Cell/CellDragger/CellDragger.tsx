@@ -20,7 +20,6 @@ export const CellDragger = ({
 
   const onClick = React.useCallback((e: React.MouseEvent) => {
     e.preventDefault();
-    e.stopPropagation();
   }, []);
 
   return (
