@@ -1,4 +1,4 @@
-Обертка для `<Avatar />`. Используется для показа информации об онлайне, либо рендеринге текстового аватара
+Обертка для `<Avatar />`, позволяющая отображать статус онлайна и рендерить текстовый аватар
 
 ```jsx
   <View activePanel="owneravatar">
@@ -7,13 +7,13 @@
       <Group>
         <Header mode="secondary">Статус онлайна</Header>
         <SimpleCell
-          description="VKontakte"
+          description="VK"
           before={<OwnerAvatar src={getAvatarUrl('user_wayshev')} online={true} />}
         >
           Иван Барышев
         </SimpleCell>
         <SimpleCell
-          description="VKontakte"
+          description="VK"
           before={<OwnerAvatar src={getAvatarUrl('user_wayshev')} online="mobile" />}
         >
           Иван Барышев
@@ -43,37 +43,37 @@
       <Group>
         <Header mode="secondary">Текстовые версии</Header>
         <SimpleCell
-          description="VKontakte"
+          description="VK"
           before={<OwnerAvatar mode="text" gradientColor={1} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
         >
           Артур Стамбульцян
         </SimpleCell>
         <SimpleCell
-          description="VKontakte"
+          description="VK"
           before={<OwnerAvatar mode="text" gradientColor={2} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
         >
           Артур Стамбульцян
         </SimpleCell>
         <SimpleCell
-          description="VKontakte"
+          description="VK"
           before={<OwnerAvatar mode="text" gradientColor={3} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
         >
           Артур Стамбульцян
         </SimpleCell>
         <SimpleCell
-          description="VKontakte"
+          description="VK"
           before={<OwnerAvatar mode="text" gradientColor={4} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
         >
           Артур Стамбульцян
         </SimpleCell>
         <SimpleCell
-          description="VKontakte"
+          description="VK"
           before={<OwnerAvatar mode="text" gradientColor={5} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
         >
           Артур Стамбульцян
         </SimpleCell>
         <SimpleCell
-          description="VKontakte"
+          description="VK"
           before={<OwnerAvatar mode="text" gradientColor={6} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
         >
           Артур Стамбульцян

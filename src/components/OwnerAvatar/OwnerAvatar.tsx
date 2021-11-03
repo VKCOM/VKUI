@@ -1,15 +1,22 @@
 import React from 'react';
 import { classNames } from '../../lib/classNames';
-import Avatar, { AvatarProps } from '../../components/Avatar/Avatar';
+import Avatar from '../../components/Avatar/Avatar';
 import { Icon16OnlineMobile } from '@vkontakte/icons';
 import { isArray } from '@vkontakte/vkjs';
 
 import './OwnerAvatar.css';
 
-export type OwnerAvatarProps = {
+type OwnerAvatarModeDefault = {
+};
+
+type OwnerAvatarModeText = {
+  text: string;
+  gradientColor: 1 | 2 | 3 | 4 | 5 | 6;
+};
+
+type OwnerAvatarBaseProps = {
   mode?: 'text' | 'default';
   online?: 'mobile' | boolean | React.ReactElement;
-  avatarProps?: AvatarProps;
   className?: string;
   /**
    * Ограниченный сет размеров, так как под каждый выбирается определенный размер шрифты
@@ -19,28 +26,22 @@ export type OwnerAvatarProps = {
    * Передав массив строчек, можно получить сетку аватарок. Максимум 4 элемента
    */
   src?: string | string[];
-} & (
-  {
-    mode?: 'text';
-    text: string;
-    gradientColor: 1 | 2 | 3 | 4 | 5 | 6;
-  } |
-  {
-    mode?: 'default';
-  }
-);
+};
+
+// TODO: Сделать условный тип, зависящий от mode, при этом не сломать спред параметров функции
+export type OwnerAvatarProps = OwnerAvatarBaseProps & OwnerAvatarModeDefault & OwnerAvatarModeText;
 
 const MIN_GRID_LENGTH = 1;
 const MAX_GRID_LENGTH = 4;
 
-const OwnerAvatar: React.FC<OwnerAvatarProps> = (props) => {
+const OwnerAvatar: React.FC<OwnerAvatarProps> = ({ mode, online, size, src, gradientColor, text, ...restProps }) => {
   let content = null;
-  if (props.mode === 'text') {
-    content = <div vkuiClass="OwnerAvatar__text">{props.text}</div>;
-  } else if (isArray(props.src)) {
+  if (mode === 'text') {
+    content = <div vkuiClass="OwnerAvatar__text">{text}</div>;
+  } else if (isArray(src)) {
     content = (
       <div vkuiClass="OwnerAvatar__grid">
-        {props.src.slice(0, MAX_GRID_LENGTH).map((src, i) => {
+        {src.slice(0, MAX_GRID_LENGTH).map((src, i) => {
           return (
             <Avatar
               key={i}
@@ -56,28 +57,26 @@ const OwnerAvatar: React.FC<OwnerAvatarProps> = (props) => {
   }
 
   let status: React.ReactElement | null = null;
-  if (props.online === 'mobile') {
+  if (online === 'mobile') {
     status = <div vkuiClass={classNames('OwnerAvatar__status', 'OwnerAvatar__status--mobile')}><Icon16OnlineMobile /></div>;
-  } else if (props.online === true) {
+  } else if (online === true) {
     status = <div vkuiClass={classNames('OwnerAvatar__status', 'OwnerAvatar__status--common')} />;
-  } else if (React.isValidElement(props.online)) {
-    status = <div vkuiClass="OwnerAvatar__status">{props.online}</div>;
+  } else if (React.isValidElement(online)) {
+    status = <div vkuiClass="OwnerAvatar__status">{online}</div>;
   }
 
   return (
     <Avatar
-      {...props.avatarProps}
-      src={!isArray(props.src) && props.mode === 'default' && props.src}
+      {...restProps}
+      src={!isArray(src) && mode === 'default' && src}
       vkuiClass={classNames(
         'OwnerAvatar',
-        `OwnerAvatar--mode-${props.mode}`,
-        `OwnerAvatar--size-${props.size}`,
-        props.mode === 'text' && `OwnerAvatar--gradient-${props.gradientColor}`,
-        isArray(props.src) && `OwnerAvatar--images-${Math.max(MIN_GRID_LENGTH, Math.min(MAX_GRID_LENGTH, props.src.length))}`,
-        props.className,
-        props.avatarProps?.className,
+        `OwnerAvatar--mode-${mode}`,
+        `OwnerAvatar--size-${size}`,
+        mode === 'text' && `OwnerAvatar--gradient-${gradientColor}`,
+        isArray(src) && `OwnerAvatar--images-${Math.max(MIN_GRID_LENGTH, Math.min(MAX_GRID_LENGTH, src.length))}`,
       )}
-      size={props.size}
+      size={size}
     >
       {content}
       {status}
