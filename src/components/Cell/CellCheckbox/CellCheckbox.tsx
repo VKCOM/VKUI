@@ -9,7 +9,11 @@ import './CellCheckbox.css';
 
 export type CellCheckboxProps = Pick<CellProps, 'defaultChecked' | 'checked'> & React.InputHTMLAttributes<HTMLInputElement>;
 
-export const CellCheckbox = ({ className, ...restProps }: CellCheckboxProps) => {
+export const CellCheckbox: React.FC<CellCheckboxProps> = ({
+  className,
+  style,
+  ...restProps
+}) => {
   const platform = usePlatform();
 
   const IconOff = platform === ANDROID
@@ -24,6 +28,7 @@ export const CellCheckbox = ({ className, ...restProps }: CellCheckboxProps) => 
     <div
       vkuiClass={classNames(getClassName('CellCheckbox', platform))}
       className={className}
+      style={style}
     >
       <input
         vkuiClass="CellCheckbox__input"
