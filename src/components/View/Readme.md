@@ -65,7 +65,7 @@ React.useEffect(() => {
     ? 'VKWebAppEnableSwipeBack'
     : 'VKWebAppDisableSwipeBack');
   // Если вы не из ВК, то так:
-  bridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
+  vkBridge.send('VKWebAppSetSwipeSettings', { history: isFirst });
 }, [isFirst]);
 
 const goBack = () => setHistory(history.slice(0, -1));
