@@ -109,6 +109,8 @@ export { default as Gallery } from './components/Gallery/Gallery';
 export type { GalleryProps } from './components/Gallery/Gallery';
 export { default as Avatar } from './components/Avatar/Avatar';
 export type { AvatarProps } from './components/Avatar/Avatar';
+export { OwnerAvatar } from './components/OwnerAvatar/OwnerAvatar';
+export type { OwnerAvatarProps } from './components/OwnerAvatar/OwnerAvatar';
 export { default as Progress } from './components/Progress/Progress';
 export type { ProgressProps } from './components/Progress/Progress';
 export { default as Search } from './components/Search/Search';

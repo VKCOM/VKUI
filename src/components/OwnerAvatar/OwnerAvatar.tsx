@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { classNames } from '../../lib/classNames';
-import Avatar from '../../components/Avatar/Avatar';
+import Avatar, { AvatarProps } from '../../components/Avatar/Avatar';
 import { Icon16OnlineMobile } from '@vkontakte/icons';
 import { isArray } from '@vkontakte/vkjs';
 
@@ -19,7 +19,7 @@ type OwnerAvatarBaseProps = {
   online?: 'mobile' | boolean | React.ReactElement;
   className?: string;
   /**
-   * Ограниченный сет размеров, так как под каждый выбирается определенный размер шрифты
+   * Ограниченный сет размеров, так как под каждый выбирается определенный размер шрифта
    */
   size?: 96 | 88 | 80 | 72 | 64 | 56 | 48 | 44 | 40 | 36 | 32 | 28 | 24;
   /**
@@ -29,12 +29,20 @@ type OwnerAvatarBaseProps = {
 };
 
 // TODO: Сделать условный тип, зависящий от mode, при этом не сломать спред параметров функции
-export type OwnerAvatarProps = OwnerAvatarBaseProps & OwnerAvatarModeDefault & OwnerAvatarModeText;
+export type OwnerAvatarProps = OwnerAvatarBaseProps & OwnerAvatarModeDefault & OwnerAvatarModeText & Omit<AvatarProps, 'mode' | 'src' | 'size'>;
 
 const MIN_GRID_LENGTH = 1;
 const MAX_GRID_LENGTH = 4;
 
-const OwnerAvatar: React.FC<OwnerAvatarProps> = ({ mode, online, size, src, gradientColor, text, ...restProps }) => {
+const OwnerAvatar: React.FC<OwnerAvatarProps> = ({
+  mode = 'default',
+  online = false,
+  size = 48,
+  src,
+  gradientColor,
+  text,
+  ...restProps
+}) => {
   let content = null;
   if (mode === 'text') {
     content = <div vkuiClass="OwnerAvatar__text">{text}</div>;

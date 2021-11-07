@@ -2,92 +2,64 @@
   position: relative;
 
   --owner-avatar-image-offset: 2px;
-  --owner-avatar-size-24-font-size: 9px;
-  --owner-avatar-size-28-font-size: 10px;
-  --owner-avatar-size-32-font-size: 11px;
-  --owner-avatar-size-36-font-size: 13px;
-  --owner-avatar-size-40-font-size: 14px;
-  --owner-avatar-size-44-font-size: 16px;
-  --owner-avatar-size-48-font-size: 17px;
-  --owner-avatar-size-50-font-size: 18px;
-  --owner-avatar-size-52-font-size: 19px;
-  --owner-avatar-size-56-font-size: 20px;
-  --owner-avatar-size-64-font-size: 23px;
-  --owner-avatar-size-72-font-size: 26px;
-  --owner-avatar-size-80-font-size: 29px;
-  --owner-avatar-size-88-font-size: 32px;
-  --owner-avatar-size-96-font-size: 34px;
-  --owner-avatar-size-192-font-size: 69px;
-  --owner-avatar-gradient-1-from: #ff5c5c;
-  --owner-avatar-gradient-1-to: #e54646;
-  --owner-avatar-gradient-2-from: #ffb829;
-  --owner-avatar-gradient-2-to: #fa7f14;
-  --owner-avatar-gradient-3-from: #ffdc50;
-  --owner-avatar-gradient-3-to: #f2b40b;
-  --owner-avatar-gradient-4-from: #78e070;
-  --owner-avatar-gradient-4-to: #46b864;
-  --owner-avatar-gradient-5-from: #78f1fa;
-  --owner-avatar-gradient-5-to: #46bddb;
-  --owner-avatar-gradient-6-from: #e664fa;
-  --owner-avatar-gradient-6-to: #a73ddb;
 }
 
 /* Text mode */
 
 .OwnerAvatar--size-24 {
-  font-size: var(--owner-avatar-size-24-font-size);
+  font-size: 9px;
 }
 
 .OwnerAvatar--size-28 {
-  font-size: var(--owner-avatar-size-28-font-size);
+  font-size: 10px;
 }
 
 .OwnerAvatar--size-32 {
-  font-size: var(--owner-avatar-size-32-font-size);
+  font-size: 11px;
 }
 
 .OwnerAvatar--size-36 {
-  font-size: var(--owner-avatar-size-36-font-size);
+  font-size: 13px;
 }
 
 .OwnerAvatar--size-40 {
-  font-size: var(--owner-avatar-size-40-font-size);
+  font-size: 14px;
 }
 
 .OwnerAvatar--size-44 {
-  font-size: var(--owner-avatar-size-44-font-size);
+  font-size: 16px;
 }
 
 .OwnerAvatar--size-48 {
-  font-size: var(--owner-avatar-size-48-font-size);
+  font-size: 17px;
 }
 
 .OwnerAvatar--size-50 {
-  font-size: var(--owner-avatar-size-50-font-size);
+  font-size: 18px;
 }
 
 .OwnerAvatar--size-56 {
-  font-size: var(--owner-avatar-size-56-font-size);
+  font-size: 20px;
 }
 
 .OwnerAvatar--size-64 {
-  font-size: var(--owner-avatar-size-64-font-size);
+  font-size: 23px;
 }
 
 .OwnerAvatar--size-72 {
-  font-size: var(--owner-avatar-size-72-font-size);
+  font-size: 26px;
 }
 
 .OwnerAvatar--size-80 {
-  font-size: var(--owner-avatar-size-80-font-size);
+  font-size: 29px;
 }
 
 .OwnerAvatar--size-88 {
-  font-size: var(--owner-avatar-size-88-font-size);
+  font-size: 32px;
 }
 
 .OwnerAvatar--size-96 {
-  font-size: var(--owner-avatar-size-96-font-size);
+  font-size: 34px;
 }
 
 .OwnerAvatar--mode-text .vkuiAvatar__children {
@@ -99,33 +71,33 @@
 }
 
 .OwnerAvatar--gradient-1 {
-  background: var(--owner-avatar-gradient-1-to);
-  background: linear-gradient(135deg, var(--owner-avatar-gradient-1-from), var(--owner-avatar-gradient-1-to));
+  background: #e54646;
+  background: linear-gradient(135deg, #ff5c5c, #e54646);
 }
 
 .OwnerAvatar--gradient-2 {
-  background: var(--owner-avatar-gradient-2-to);
-  background: linear-gradient(135deg, var(--owner-avatar-gradient-2-from), var(--owner-avatar-gradient-2-to));
+  background: #fa7f14;
+  background: linear-gradient(135deg, #ffb829, #fa7f14);
 }
 
 .OwnerAvatar--gradient-3 {
-  background: var(--owner-avatar-gradient-3-to);
-  background: linear-gradient(135deg, var(--owner-avatar-gradient-3-from), var(--owner-avatar-gradient-3-to));
+  background: #f2b40b;
+  background: linear-gradient(135deg, #ffdc50, #f2b40b);
 }
 
 .OwnerAvatar--gradient-4 {
-  background: var(--owner-avatar-gradient-4-to);
-  background: linear-gradient(135deg, var(--owner-avatar-gradient-4-from), var(--owner-avatar-gradient-4-to));
+  background: #46b864;
+  background: linear-gradient(135deg, #78e070, #46b864);
 }
 
 .OwnerAvatar--gradient-5 {
-  background: var(--owner-avatar-gradient-5-to);
-  background: linear-gradient(135deg, var(--owner-avatar-gradient-5-from), var(--owner-avatar-gradient-5-to));
+  background: #46bddb;
+  background: linear-gradient(135deg, #78f1fa, #46bddb);
 }
 
 .OwnerAvatar--gradient-6 {
-  background: var(--owner-avatar-gradient-6-to);
-  background: linear-gradient(135deg, var(--owner-avatar-gradient-6-from), var(--owner-avatar-gradient-6-to));
+  background: #a73ddb;
+  background: linear-gradient(135deg, #e664fa, #a73ddb);
 }
 
 /* Images grid */
@@ -207,7 +179,7 @@
   border: 2px solid var(--background_content);
   border-radius: 3px;
   bottom: -1px;
-  background-color: var(--owner-avatar-online-pane, var(--background_content));
+  background-color: var(--background_content);
 }
 
 .OwnerAvatar__status--common {
