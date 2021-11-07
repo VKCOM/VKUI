@@ -44,6 +44,12 @@
         <Header mode="secondary">Текстовые версии</Header>
         <SimpleCell
           description="VK"
+          before={<OwnerAvatar mode="text" gradientColor={0} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
+        >
+          Артур Стамбульцян
+        </SimpleCell>
+        <SimpleCell
+          description="VK"
           before={<OwnerAvatar mode="text" gradientColor={1} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
         >
           Артур Стамбульцян
@@ -75,6 +81,18 @@
         <SimpleCell
           description="VK"
           before={<OwnerAvatar mode="text" gradientColor={6} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
+        >
+          Артур Стамбульцян
+        </SimpleCell>
+        <SimpleCell
+          description="VK"
+          before={<OwnerAvatar mode="text" gradientColor={7} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
+        >
+          Артур Стамбульцян
+        </SimpleCell>
+        <SimpleCell
+          description="VK"
+          before={<OwnerAvatar mode="text" gradientColor={8} text="АС" src={getAvatarUrl('user_arthurstam')}/>}
         >
           Артур Стамбульцян
         </SimpleCell>
