@@ -38,7 +38,6 @@ export function useModalRegistry(id: string, type: ModalType) {
     innerElement: (e) => elements.innerElement = e,
     headerElement: (e) => elements.headerElement = e,
     contentElement: (e) => elements.contentElement = e,
-    footerElement: (e) => elements.footerElement = e,
   }).current;
   return { refs };
 }
