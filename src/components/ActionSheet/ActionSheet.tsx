@@ -53,12 +53,10 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
 
-  const [_closeAction, setCloseAction] = React.useState<VoidFunction>();
+  const closeAction = React.useRef<VoidFunction>();
   const afterClose = () => {
-    const closeAction = _closeAction;
-    setCloseAction(undefined);
     restProps.onClose();
-    closeAction && closeAction();
+    closeAction.current && closeAction.current();
   };
 
   if (process.env.NODE_ENV === 'development' && !restProps.onClose) {
@@ -87,7 +85,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     event.persist();
 
     if (autoclose) {
-      setCloseAction(() => () => action && action(event));
+      closeAction.current = () => action && action(event);
       setClosing(true);
     } else {
       action && action(event);
