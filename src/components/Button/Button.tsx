@@ -15,7 +15,7 @@ import './Button.css';
 
 export interface VKUIButtonProps extends HasAlign {
   mode?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'commerce' | 'destructive' | 'overlay_primary' | 'overlay_secondary' | 'overlay_outline';
-  color?: 'accent' | 'positive' | 'negative' | 'neutral' | 'overlay';
+  appearance?: 'accent' | 'positive' | 'negative' | 'neutral' | 'overlay';
   size?: 's' | 'm' | 'l';
   stretched?: boolean;
   before?: React.ReactNode;
@@ -69,7 +69,7 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (props: ButtonTypograp
 
 interface ResolvedButtonAppereance {
   resolvedMode: VKUIButtonProps['mode'];
-  resolvedColor: VKUIButtonProps['color'];
+  resolvedAppearance: VKUIButtonProps['appearance'];
   isFallback: boolean;
 }
 
@@ -79,45 +79,45 @@ interface ResolvedButtonAppereance {
  */
 function resolveButtonAppearance(
   mode: VKUIButtonProps['mode'],
-  color: VKUIButtonProps['color'],
+  appearance: VKUIButtonProps['appearance'],
 ): ResolvedButtonAppereance {
-  let isFallback: boolean = color === undefined;
+  let isFallback: boolean = appearance === undefined;
 
   switch (mode) {
     case 'commerce':
       return {
         resolvedMode: 'primary',
-        resolvedColor: 'positive',
+        resolvedAppearance: 'positive',
         isFallback,
       };
     case 'destructive':
       return {
         resolvedMode: 'primary',
-        resolvedColor: 'negative',
+        resolvedAppearance: 'negative',
         isFallback,
       };
     case 'overlay_primary':
       return {
         resolvedMode: 'primary',
-        resolvedColor: 'overlay',
+        resolvedAppearance: 'overlay',
         isFallback,
       };
     case 'overlay_secondary':
       return {
         resolvedMode: 'secondary',
-        resolvedColor: 'overlay',
+        resolvedAppearance: 'overlay',
         isFallback,
       };
     case 'overlay_outline':
       return {
         resolvedMode: 'outline',
-        resolvedColor: 'overlay',
+        resolvedAppearance: 'overlay',
         isFallback,
       };
     default:
       return {
         resolvedMode: mode,
-        resolvedColor: color === undefined ? 'accent' : color,
+        resolvedAppearance: appearance === undefined ? 'accent' : appearance,
         isFallback,
       };
   }
@@ -128,7 +128,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const {
     size,
     mode,
-    color,
+    appearance,
     stretched,
     align,
     children,
@@ -145,10 +145,10 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const hasIcons = Boolean(before || after);
 
   const {
-    resolvedColor,
+    resolvedAppearance,
     resolvedMode,
     isFallback,
-  } = resolveButtonAppearance(mode, color);
+  } = resolveButtonAppearance(mode, appearance);
 
   return (
     <Tappable
@@ -161,7 +161,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
           getClassName('Button', platform),
           `Button--sz-${size}`,
           `Button--lvl-${resolvedMode}`,
-          `Button--clr-${resolvedColor}`,
+          `Button--clr-${resolvedAppearance}`,
           `Button--aln-${align}`,
           `Button--sizeY-${sizeY}`,
           {
