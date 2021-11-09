@@ -62,7 +62,9 @@ describe('PanelHeaderContext', () => {
           <div data-testid="xxx" />
         </PanelHeaderContext>
       ));
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(screen.queryByTestId('xxx')).toBeNull();
     });
   });

@@ -28,7 +28,9 @@ describe('Root', () => {
     it('after prop update', () => {
       render(<Root activeView="v1">{views}</Root>)
         .rerender(<Root activeView="v2">{views}</Root>);
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(document.getElementById('v1')).toBeNull();
       expect(document.getElementById('v2')).not.toBeNull();
     });
@@ -49,7 +51,9 @@ describe('Root', () => {
           <Root activeView="v2" onTransition={onTransition}>{views}</Root>
         </ConfigProvider>
       ));
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(onTransition).toBeCalledTimes(1);
       expect(onTransition).toBeCalledWith({ from: 'v1', to: 'v2', isBack: false });
     });
@@ -57,7 +61,9 @@ describe('Root', () => {
       const onTransition = jest.fn();
       render(<Root activeView="v2" onTransition={onTransition}>{views}</Root>)
         .rerender(<Root activeView="v1" onTransition={onTransition}>{views}</Root>);
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(onTransition).toBeCalledWith({ from: 'v2', to: 'v1', isBack: true });
     });
     it('once on rapid transitions', () => {
@@ -65,7 +71,9 @@ describe('Root', () => {
       const h = render(<Root activeView="v2" onTransition={onTransition}>{views}</Root>);
       h.rerender(<Root activeView="v1" onTransition={onTransition}>{views}</Root>);
       h.rerender(<Root activeView="v3" onTransition={onTransition}>{views}</Root>);
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(onTransition).toBeCalledTimes(1);
       expect(onTransition).toBeCalledWith({ from: 'v1', to: 'v3', isBack: false });
     });
@@ -74,7 +82,9 @@ describe('Root', () => {
       const h = render(<Root activeView="v1" onTransition={onTransition}>{views}</Root>);
       h.rerender(<Root activeView="v2" onTransition={onTransition}>{views}</Root>);
       h.rerender(<Root activeView="v1" onTransition={onTransition}>{views}</Root>);
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(onTransition).toBeCalledTimes(1);
       expect(onTransition).toBeCalledWith({ from: 'v2', to: 'v1', isBack: true });
     });
@@ -105,7 +115,9 @@ describe('Root', () => {
       // trigger scroll save
       h.rerender(<MockScroll><Root activeView="v2">{views}</Root></MockScroll>);
       h.rerender(<MockScroll><Root activeView="v1">{views}</Root></MockScroll>);
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(scrollTo).toBeCalledWith(0, y);
     });
     it('resets on forward navigation', () => {
@@ -115,7 +127,9 @@ describe('Root', () => {
       // trigger scroll save
       h.rerender(<MockScroll><Root activeView="v1">{views}</Root></MockScroll>);
       h.rerender(<MockScroll><Root activeView="v2">{views}</Root></MockScroll>);
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       expect(scrollTo.mock.calls[scrollTo.mock.calls.length - 1]).toEqual([0, 0]);
     });
   });

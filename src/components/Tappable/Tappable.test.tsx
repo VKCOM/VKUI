@@ -170,7 +170,9 @@ describe('Tappable', () => {
       expect(waveCount()).toBe(1);
       userEvent.click(screen.getByTestId('x'));
       expect(waveCount()).toBe(2);
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       // removes waves
       expect(waveCount()).toBe(0);
     });
@@ -179,14 +181,18 @@ describe('Tappable', () => {
       render(<TappableTest />);
       userEvent.click(tappable());
       expect(isActive()).toBe(true);
-      act(() => jest.runOnlyPendingTimers());
+      act(() => {
+        jest.runOnlyPendingTimers();
+      });
       expect(isActive()).toBe(false);
     });
     it('activates during longtap', () => {
       render(<TappableTest />);
       fireEvent.mouseDown(tappable());
       expect(isActive()).toBe(false);
-      act(() => jest.runOnlyPendingTimers());
+      act(() => {
+        jest.runOnlyPendingTimers();
+      });
       expect(isActive()).toBe(true);
       fireEvent.mouseUp(tappable());
       expect(isActive()).toBe(true);
@@ -202,7 +208,9 @@ describe('Tappable', () => {
       it('on slide', () => {
         render(<TappableTest />);
         fireEvent.mouseDown(tappable(), { clientX: 10 });
-        act(() => jest.runOnlyPendingTimers());
+        act(() => {
+          jest.runOnlyPendingTimers();
+        });
         fireEvent.mouseMove(tappable(), { clientX: 40 });
         expect(isActive()).toBe(false);
       });
@@ -210,28 +218,36 @@ describe('Tappable', () => {
         window.ontouchstart = null;
         render(<TappableTest />);
         fireEvent.touchStart(tappable(), { touches: [{}], changedTouches: [{}] });
-        act(() => jest.runOnlyPendingTimers());
+        act(() => {
+          jest.runOnlyPendingTimers();
+        });
         fireEvent.touchStart(tappable(), { touches: [{}, {}], changedTouches: [{}] });
         expect(isActive()).toBe(false);
       });
       it('on disable', () => {
         const h = render(<TappableTest />);
         fireEvent.mouseDown(tappable());
-        act(() => jest.runOnlyPendingTimers());
+        act(() => {
+          jest.runOnlyPendingTimers();
+        });
         h.rerender(<TappableTest disabled />);
         expect(isActive()).toBe(false);
       });
       it('on hasActive=false', () => {
         const h = render(<TappableTest />);
         fireEvent.mouseDown(tappable());
-        act(() => jest.runOnlyPendingTimers());
+        act(() => {
+          jest.runOnlyPendingTimers();
+        });
         h.rerender(<TappableTest hasActive={false} />);
         expect(isActive()).toBe(false);
       });
       it('on child hover', () => {
         render(<TappableTest><Tappable data-testid="c" /></TappableTest>);
         fireEvent.mouseDown(tappable());
-        act(() => jest.runOnlyPendingTimers());
+        act(() => {
+          jest.runOnlyPendingTimers();
+        });
         userEvent.hover(screen.getByTestId('c'));
         expect(isActive()).toBe(false);
       });

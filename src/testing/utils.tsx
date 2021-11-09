@@ -10,7 +10,9 @@ export function fakeTimers() {
   afterEach(() => jest.useRealTimers());
 }
 
-export const runAllTimers = () => act(() => jest.runAllTimers());
+export const runAllTimers = () => act(() => {
+  jest.runAllTimers();
+});
 
 export const imgOnlyAttributes: ImgOnlyAttributes = {
   alt: 'test',

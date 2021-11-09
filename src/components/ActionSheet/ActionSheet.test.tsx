@@ -56,7 +56,9 @@ describe('ActionSheet', () => {
     ])('does not close on %s click', (_name, getNode) => {
       const onClose = jest.fn();
       render(<ActionSheet onClose={onClose}><div data-testid="xxx" /></ActionSheet>);
-      act(() => jest.runAllTimers());
+      act(() => {
+        jest.runAllTimers();
+      });
       userEvent.click(getNode());
       expect(onClose).not.toBeCalled();
     });
