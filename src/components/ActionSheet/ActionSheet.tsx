@@ -13,6 +13,7 @@ import { useAdaptivity } from '../../hooks/useAdaptivity';
 import { useObjectMemo } from '../../hooks/useObjectMemo';
 import { warnOnce } from '../../lib/warnOnce';
 import { SharedDropdownProps, PopupDirection, ToggleRef } from './types';
+import { noop } from '@vkontakte/vkjs';
 import './ActionSheet.css';
 
 export interface ActionSheetProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -53,11 +54,10 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
   const [closing, setClosing] = React.useState(false);
   const onClose = () => setClosing(true);
 
-  const [_closeAction, setCloseAction] = React.useState<VoidFunction>();
+  const closeAction = React.useRef<VoidFunction>(noop);
   const afterClose = () => {
     restProps.onClose();
-    _closeAction && _closeAction();
-    setCloseAction(undefined);
+    closeAction.current();
   };
 
   if (process.env.NODE_ENV === 'development' && !restProps.onClose) {
@@ -86,7 +86,7 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
     event.persist();
 
     if (autoclose) {
-      setCloseAction(() => action && action(event));
+      closeAction.current = () => action && action(event);
       setClosing(true);
     } else {
       action && action(event);
@@ -111,7 +111,6 @@ export const ActionSheet: React.FC<ActionSheetProps> = ({
       <ActionSheetContext.Provider value={contextValue}>
         <DropdownComponent
           closing={closing}
-          onTransitionEnd={closing && !isDesktop ? afterClose : null}
           timeout={timeout}
           {...restProps as Omit<SharedDropdownProps, 'closing'>}
           onClose={onClose}
