@@ -101,7 +101,7 @@ describe('Touch', () => {
           startX: x,
           startY: y,
           startT: expect.any(Date),
-          duration: 0,
+          duration: expect.any(Number),
           isPressed: true,
           isY: false,
           isX: false,
