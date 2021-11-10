@@ -7,9 +7,6 @@
 .Removable__content {
   display: flex;
   align-items: center;
-}
-
-.Removable__content {
   padding-left: var(--formitem_padding);
 }
 
