@@ -53,8 +53,6 @@ export interface CellProps extends SimpleCellProps, HasPlatform, RemovableProps 
 }
 
 const warn = warnOnce('Cell');
-const IS_DEV = process.env.NODE_ENV === 'development';
-
 export const Cell: React.FC<CellProps> = ({
   mode: propsMode, // TODO: убрать переименование в propsMode перед 5.0.0
   onRemove,
@@ -83,12 +81,9 @@ export const Cell: React.FC<CellProps> = ({
       ? 'selectable'
       : 'removable';
 
-    if (deprecatedSelectable && IS_DEV) {
-      warn('Свойство selectable устарелo и будет удалено в 5.0.0. Используйте mode="selectable".');
-    }
-
-    if (deprecatedRemovable && IS_DEV) {
-      warn('Свойство removable устарелo и будет удалено в 5.0.0. Используйте mode="removable".');
+    if (process.env.NODE_ENV === 'development') {
+      deprecatedSelectable && warn('Свойство selectable устарелo и будет удалено в 5.0.0. Используйте mode="selectable".');
+      deprecatedRemovable && warn('Свойство removable устарелo и будет удалено в 5.0.0. Используйте mode="removable".');
     }
   }
   // /end TODO
