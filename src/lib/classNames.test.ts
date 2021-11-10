@@ -9,10 +9,10 @@ describe(classNames, () => {
     expect(classNames('a', false, 'b', null, 'c', undefined)).toEqual(['a', 'b', 'c']));
   it('supports heterogenous args', () =>
     expect(classNames('a', { b: true, no: false }, 'c')).toEqual(['a', 'b', 'c']));
-  it('returns single class as string', () =>
-    expect(classNames({ b: true, no: false })).toEqual('b'));
-  it('returns empty string', () =>
-    expect(classNames(false, { no: false })).toEqual(''));
+  it('returns single class as array', () =>
+    expect(classNames({ b: true, no: false })).toEqual(['b']));
+  it('returns empty array', () =>
+    expect(classNames(false, { no: false })).toEqual([]));
 });
 
 describe(classNamesString, () => {
