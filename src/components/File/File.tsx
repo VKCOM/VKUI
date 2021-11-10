@@ -7,7 +7,7 @@ import { useExternRef } from '../../hooks/useExternRef';
 import './File.css';
 
 export interface FileProps extends
-  Omit<VKUIButtonProps, 'size' | 'type' | 'color'>,
+  Omit<VKUIButtonProps, 'size' | 'type'>,
   Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onClick' | 'type'>,
   Pick<React.HTMLAttributes<HTMLElement>, 'onClick'>,
   HasRef<HTMLInputElement>,
@@ -17,7 +17,7 @@ export interface FileProps extends
 
 const File: React.FunctionComponent<FileProps> = (props: FileProps) => {
   const { children, align, controlSize, mode, stretched, before, className,
-    style, getRef, getRootRef, onClick, ...restProps } = props;
+    style, getRef, getRootRef, onClick, appearance, ...restProps } = props;
 
   const platform = usePlatform();
   const inputRef = useExternRef(getRef);
@@ -29,6 +29,7 @@ const File: React.FunctionComponent<FileProps> = (props: FileProps) => {
       className={className}
       stretched={stretched}
       mode={mode}
+      appearance={appearance}
       size={controlSize}
       before={before}
       style={style}
