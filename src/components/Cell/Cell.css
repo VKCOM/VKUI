@@ -5,6 +5,7 @@
 
 .List--dragging .Cell:not(.Cell--dragging) {
   transition: transform .3s ease;
+  pointer-events: none;
 }
 
 .Cell--dragging {
