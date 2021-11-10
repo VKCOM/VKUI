@@ -5,6 +5,7 @@ import { classNames } from "../../lib/classNames";
 import { usePlatform } from "../../hooks/usePlatform";
 import { withAdaptivity } from "../../hoc/withAdaptivity";
 import { IOS } from "../../lib/platform";
+import { warnOnce } from "../../lib/warnOnce";
 import "./IconButton.css";
 
 export interface IconButtonProps extends TappableProps {
@@ -14,6 +15,7 @@ export interface IconButtonProps extends TappableProps {
   icon?: React.ReactNode;
 }
 
+const warn = warnOnce("IconButton");
 const IconButton: React.FC<IconButtonProps> = ({
   icon,
   sizeY,
@@ -22,6 +24,12 @@ const IconButton: React.FC<IconButtonProps> = ({
   ...restProps
 }: IconButtonProps) => {
   const platform = usePlatform();
+
+  if (icon && process.env.NODE_ENV === "development") {
+    warn(
+      "Свойство icon устарело и будет удалено в 5.0.0. Используйте children"
+    );
+  }
 
   return (
     <Tappable
