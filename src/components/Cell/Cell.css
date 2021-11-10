@@ -17,15 +17,15 @@
   opacity: .6;
 }
 
+.Cell__checkbox,
 .Cell__dragger {
   position: relative;
-  margin-right: 16px;
-  z-index: 2;
-}
-
-.Cell__checkbox {
   flex-shrink: 0;
   margin-right: 16px;
+}
+
+.Cell__dragger {
+  z-index: 2;
 }
 
 /**
