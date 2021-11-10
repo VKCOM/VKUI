@@ -1,5 +1,7 @@
 .AppRoot--keyboard-input .Tappable:focus > .FocusVisible,
-.Tappable:focus-visible > .FocusVisible {
+.Tappable:focus-visible > .FocusVisible,
+.AppRoot--keyboard-input input:focus ~ .FocusVisible,
+input:focus-visible ~ .FocusVisible {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -14,7 +16,9 @@
 }
 
 .AppRoot--keyboard-input .Tappable:focus > .FocusVisible--outside,
-.Tappable:focus-visible > .FocusVisible--outside {
+.Tappable:focus-visible > .FocusVisible--outside,
+.AppRoot--keyboard-input input:focus ~ .FocusVisible--outside,
+input:focus-visible ~ .FocusVisible--outside {
   top: -2px;
   left: -2px;
   right: -2px;
@@ -29,7 +33,9 @@
  */
 @media (prefers-reduced-motion: no-preference) {
   .AppRoot--keyboard-input .Tappable:focus > .FocusVisible,
-  .Tappable:focus-visible > .FocusVisible {
+  .Tappable:focus-visible > .FocusVisible,
+  .AppRoot--keyboard-input input:focus ~ .FocusVisible,
+  input:focus-visible ~ .FocusVisible {
     top: 4px;
     left: 4px;
     right: 4px;
@@ -40,7 +46,9 @@
   }
 
   .AppRoot--keyboard-input .Tappable:focus > .FocusVisible--outside,
-  .Tappable:focus-visible > .FocusVisible--outside {
+  .Tappable:focus-visible > .FocusVisible--outside,
+  .AppRoot--keyboard-input input:focus ~ .FocusVisible--outside,
+  input:focus-visible ~ .FocusVisible--outside {
     top: 0;
     left: 0;
     bottom: 0;
