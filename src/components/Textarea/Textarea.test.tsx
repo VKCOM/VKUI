@@ -66,9 +66,15 @@ describe('Textarea', () => {
     });
     it('won\'t resize if parent is invisible', () => {
       const onResize = jest.fn();
-      render(<div style={{ display: 'none' }}>
-        <Textarea onResize={onResize} />
-      </div>).rerender(<Textarea value="\n\n\n\n" onResize={onResize} />);
+      render(
+        <div style={{ display: 'none' }}>
+          <Textarea onResize={onResize} />
+        </div>,
+      ).rerender(
+        <div style={{ display: 'none' }}>
+          <Textarea value="\n\n\n\n" onResize={onResize} />
+        </div>,
+      );
       expect(onResize).not.toHaveBeenCalled();
     });
   });
