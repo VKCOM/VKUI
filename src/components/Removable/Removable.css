@@ -1,10 +1,5 @@
-.Removable {
-  position: relative;
-  flex-grow: 1;
-  min-width: 0;
-}
-
 .Removable__content {
+  position: relative;
   display: flex;
   align-items: center;
   padding-left: var(--formitem_padding);
