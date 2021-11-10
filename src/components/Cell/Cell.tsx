@@ -135,6 +135,7 @@ export const Cell: React.FC<CellProps> = ({
       hasActive={hasActive}
       hasHover={hasActive}
       {...restProps}
+      vkuiClass="Cell__content"
       disabled={simpleCellDisabled}
       Component={selectable ? 'label' : Component}
       before={

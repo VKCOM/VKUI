@@ -24,6 +24,17 @@
   z-index: 2;
 }
 
+.Cell__content {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.Cell--removable .Cell__content {
+  flex-grow: 1;
+  padding-right: 0;
+  padding-left: 0;
+}
+
 /**
  * iOS
  */

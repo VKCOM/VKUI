@@ -238,18 +238,3 @@
 .FormItem > .SimpleCell {
   margin: 0 calc(-1 * var(--formitem_padding));
 }
-
-/**
- * CMP:
- * Cell
- */
-.Cell .SimpleCell {
-  max-width: 100%;
-  min-width: 0;
-}
-
-.Cell--removable .SimpleCell {
-  flex-grow: 1;
-  padding-right: 0;
-  padding-left: 0;
-}
