@@ -7,6 +7,7 @@ import Tappable, { TappableProps } from "../Tappable/Tappable";
 import { getClassName } from "../../helpers/getClassName";
 import { usePlatform } from "../../hooks/usePlatform";
 import { hasReactNode } from "../../lib/utils";
+import { warnOnce } from "../../lib/warnOnce";
 import { HasRef, HasRootRef } from "../../types";
 import { classNames } from "../../lib/classNames";
 import "./ContentCard.css";
@@ -46,6 +47,7 @@ export interface ContentCardProps
   mode?: CardProps["mode"];
 }
 
+const warn = warnOnce("ContentCard");
 const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   const {
     subtitle,
@@ -77,6 +79,10 @@ const ContentCard: React.FC<ContentCardProps> = (props: ContentCardProps) => {
   const platform = usePlatform();
 
   const source = image || src;
+
+  if (image && process.env.NODE_ENV === "development") {
+    warn("Свойство image устарело и будет удалено в 5.0.0. Используйте src");
+  }
 
   return (
     <Card
