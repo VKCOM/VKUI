@@ -114,8 +114,7 @@ export const Removable: React.FC<RemovableOwnProps> = ({
 
   const onRemoveClick = (e: React.MouseEvent) => {
     e.preventDefault();
-
-    onRemove && onRemove(e);
+    onRemove(e);
   };
 
   const removePlaceholderString: string = getTitleFromChildren(removePlaceholder);
