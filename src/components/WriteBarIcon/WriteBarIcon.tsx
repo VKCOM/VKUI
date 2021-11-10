@@ -35,7 +35,6 @@ export interface WriteBarIconProps
 }
 
 const warn = warnOnce("WriteBarIcon");
-const IS_DEV = process.env.NODE_ENV === "development";
 
 export const WriteBarIcon: React.FC<WriteBarIconProps> = ({
   mode,
@@ -74,9 +73,13 @@ export const WriteBarIcon: React.FC<WriteBarIconProps> = ({
       break;
   }
 
-  if (IS_DEV && !restProps["aria-label"] && !ariaLabel) {
+  if (
+    !restProps["aria-label"] &&
+    !ariaLabel &&
+    process.env.NODE_ENV === "development"
+  ) {
     warn(
-      "[WriteBarIcon/a11y] У WriteBarIcon нет aria-label. Кнопка будет недоступной для части пользователей."
+      "Отсутствует aria-label. Кнопка будет недоступной для части пользователей."
     );
   }
 
