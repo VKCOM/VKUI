@@ -4,35 +4,30 @@ export interface ObjectClassNames {
 
 export type ClassName = number | string | ObjectClassNames | false | null | undefined;
 
-export function classNames(...classnames: ClassName[]): string | string[];
-export function classNames() {
+export function classNames(...classnames: ClassName[]): string[] {
   let result: string[] = [];
 
-  for (let i = 0; i < arguments.length; i++) {
-    const item = arguments[i];
+  for (let i = 0; i < classnames.length; i++) {
+    const item = classnames[i];
     if (!item) {
       continue;
     }
-    switch (typeof item) {
-      case 'string':
-        result.push(item);
-        break;
-      case 'object':
-        for (let key in item) {
-          if (item[key]) {
-            result.push(key);
-          }
+
+    if (typeof item === 'object') {
+      Object.keys(item).forEach((key) => {
+        if (item[key]) {
+          result.push(key);
         }
-        break;
-      default:
-        result.push(`${item}`);
+      });
+      continue;
     }
+
+    result.push(`${item}`);
   }
 
-  return result.length > 1 ? result : result[0] || '';
+  return result;
 }
 
 export function classNamesString(...args: ClassName[]) {
-  const res = classNames(...args);
-  return typeof res === 'string' ? res : res.join(' ');
+  return classNames(...args).join(' ');
 }
