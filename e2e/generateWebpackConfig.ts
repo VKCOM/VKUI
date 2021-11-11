@@ -16,7 +16,7 @@ export async function generateWebpackConfig() {
       main: [
         path.resolve(__dirname, 'browser/runtime.ts'),
         path.resolve(__dirname, 'styles.test.css'),
-        path.resolve(__dirname, 'node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css'),
+        path.resolve(__dirname, '../node_modules/@vkontakte/vkui-tokens/themes/vkBase/cssVars/declarations/index.css'),
         ...testFiles,
       ],
     },
