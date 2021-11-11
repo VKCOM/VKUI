@@ -40,5 +40,10 @@ describe('Button', () => {
     after: [<Counter key="counter">16</Counter>],
     size: ['s', 'm', 'l'],
     loading: [true],
+  }, {
+    mode: ['primary', 'secondary', 'tertiary', 'outline'],
+    appearance: ['accent', 'positive', 'negative', 'neutral', 'overlay'],
+    size: ['s', 'm', 'l'],
+    $adaptivity: 'y',
   }]);
 });
