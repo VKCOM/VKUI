@@ -16,13 +16,13 @@
   align-self: flex-start;
 }
 
-.FormItem--withTop .Removable__action,
-.FormItem--withTop ~ .Removable__action {
+.FormItem--removable.FormItem--withTop .Removable__action,
+.FormLayoutGroup--removable .FormItem--withTop ~ .Removable__action {
   top: 28px;
 }
 
-.FormItem--withTop .Removable--sizeY-compact .Removable__action,
-.Removable--sizeY-compact .FormItem--withTop ~ .Removable__action {
+.FormItem--sizeY-compact.FormItem--removable.FormItem--withTop .Removable__action,
+.FormLayoutGroup--sizeY-compact.FormLayoutGroup--removable .FormItem--withTop ~ .Removable__action {
   top: 26px;
 }
 
@@ -102,17 +102,17 @@
   padding-right: var(--formitem_padding);
 }
 
-.FormLayoutGroup--removable.FormLayoutGroup--sizeY-compact .Removable__content {
+.FormLayoutGroup--removable .Removable__content {
   flex-wrap: wrap;
 }
 
-.FormLayoutGroup--removable .Removable--ios .FormItem--withTop ~ .Removable__offset {
+.FormLayoutGroup--removable .FormItem--ios.FormItem--withTop ~ .Removable__offset {
   order: -1;
   display: block;
   width: 100%;
   height: 28px;
 }
 
-.FormLayoutGroup--removable.FormLayoutGroup--sizeY-compact .Removable--ios .FormItem--withTop ~ .Removable__offset {
+.FormLayoutGroup--removable.FormLayoutGroup--sizeY-compact .FormItem--ios.FormItem--withTop ~ .Removable__offset {
   height: 26px;
 }

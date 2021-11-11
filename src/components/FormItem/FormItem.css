@@ -56,14 +56,6 @@
   --formitem_padding: 12px;
 }
 
-.FormLayoutGroup .Removable .FormItem--ios.FormItem--withTop {
-  margin-top: -28px;
-}
-
-.FormLayoutGroup .Removable .FormItem--ios.FormItem--sizeY-compact.FormItem--withTop {
-  margin-top: -26px;
-}
-
 /**
  * CMP:
  * FormLayoutGroup
@@ -79,4 +71,12 @@
 
 .FormLayoutGroup--horizontal .FormItem + .FormItem {
   margin-left: 24px;
+}
+
+.FormLayoutGroup--removable .FormItem--ios.FormItem--withTop {
+  margin-top: -28px;
+}
+
+.FormLayoutGroup--removable .FormItem--ios.FormItem--withTop.FormItem--sizeY-compact {
+  margin-top: -26px;
 }
