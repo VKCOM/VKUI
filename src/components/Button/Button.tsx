@@ -171,7 +171,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
         )
       }
       getRootRef={getRootRef}
-      hoverMode={!isFallback && 'Button--hover'}
+      hoverMode={!isFallback ? 'Button--hover' : 'background'}
       activeMode={!isFallback ? 'Button--active' : 'opacity'}
     >
       {loading && <Spinner size="small" vkuiClass="Button__spinner" />}
