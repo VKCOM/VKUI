@@ -1,6 +1,6 @@
  ```jsx
 const Example = () => {
-  const [color, setColor] = useState('accent');
+  const [appearance, setAppearance] = useState('accent');
   const [stretched, setStretched] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [size, setSize] = useState("s");
@@ -141,7 +141,7 @@ const Example = () => {
           description="Для корректной работы смените источник токенов с appearance на любой другой"
         >
           <FormItem top="Color">
-            <Select value={color} onChange={(e) => setColor(e.target.value)} options={[
+            <Select value={appearance} onChange={(e) => setAppearance(e.target.value)} options={[
               {label: "Accent", value: "accent"},
               {label: "Positive", value: "positive"},
               {label: "Negative", value: "negative"},
@@ -187,10 +187,10 @@ const Example = () => {
           <Checkbox onChange={(e) => setLoading(e.target.checked)}>Loading</Checkbox>
           <Checkbox onChange={(e) => setDisabled(e.target.checked)}>Disabled</Checkbox>
           <Spacing size={12}/>
-          <div style={{ background: color === 'overlay' ? '#232323' : 'unset' }}>
+          <div style={{ background: appearance === 'overlay' ? '#232323' : 'unset' }}>
             <Div>
               <Button
-                color={color}
+                appearance={appearance}
                 stretched={stretched}
                 disabled={disabled}
                 size={size}
@@ -201,7 +201,7 @@ const Example = () => {
             </Div>
             <Div>
               <Button
-                color={color}
+                appearance={appearance}
                 stretched={stretched}
                 mode="secondary"
                 disabled={disabled}
@@ -213,7 +213,7 @@ const Example = () => {
             </Div>
             <Div>
               <Button
-                color={color}
+                appearance={appearance}
                 stretched={stretched}
                 mode="tertiary"
                 disabled={disabled}
@@ -225,7 +225,7 @@ const Example = () => {
             </Div>
             <Div>
               <Button
-                color={color}
+                appearance={appearance}
                 stretched={stretched}
                 mode="outline"
                 disabled={disabled}
