@@ -11,6 +11,7 @@ import { usePlatform } from '../../hooks/usePlatform';
 import { AdaptivityProps, SizeType, withAdaptivity } from '../../hoc/withAdaptivity';
 import { Platform, IOS, VKCOM } from '../../lib/platform';
 import Spinner from '../Spinner/Spinner';
+import './Button.tokenized.css';
 import './Button.css';
 
 export interface VKUIButtonProps extends HasAlign {
@@ -67,62 +68,6 @@ const ButtonTypography: React.FC<ButtonTypographyProps> = (props: ButtonTypograp
   }
 };
 
-interface ResolvedButtonAppereance {
-  resolvedMode: VKUIButtonProps['mode'];
-  resolvedAppearance: VKUIButtonProps['appearance'];
-  isFallback: boolean;
-}
-
-/**
- * Обработка [в будущем] устаревших режимов,
- * для обратной совместимости кнопок с новыми токенами
- */
-function resolveButtonAppearance(
-  mode: VKUIButtonProps['mode'],
-  appearance: VKUIButtonProps['appearance'],
-): ResolvedButtonAppereance {
-  let isFallback: boolean = appearance === undefined;
-
-  switch (mode) {
-    case 'commerce':
-      return {
-        resolvedMode: 'primary',
-        resolvedAppearance: 'positive',
-        isFallback,
-      };
-    case 'destructive':
-      return {
-        resolvedMode: 'primary',
-        resolvedAppearance: 'negative',
-        isFallback,
-      };
-    case 'overlay_primary':
-      return {
-        resolvedMode: 'primary',
-        resolvedAppearance: 'overlay',
-        isFallback,
-      };
-    case 'overlay_secondary':
-      return {
-        resolvedMode: 'secondary',
-        resolvedAppearance: 'overlay',
-        isFallback,
-      };
-    case 'overlay_outline':
-      return {
-        resolvedMode: 'outline',
-        resolvedAppearance: 'overlay',
-        isFallback,
-      };
-    default:
-      return {
-        resolvedMode: mode,
-        resolvedAppearance: appearance === undefined ? 'accent' : appearance,
-        isFallback,
-      };
-  }
-}
-
 const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const platform = usePlatform();
   const {
@@ -143,12 +88,7 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   } = props;
 
   const hasIcons = Boolean(before || after);
-
-  const {
-    resolvedAppearance,
-    resolvedMode,
-    isFallback,
-  } = resolveButtonAppearance(mode, appearance);
+  const isFallback: boolean = appearance === undefined;
 
   return (
     <Tappable
@@ -160,13 +100,14 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
         classNames(
           getClassName('Button', platform),
           `Button--sz-${size}`,
-          `Button--lvl-${resolvedMode}`,
-          `Button--clr-${resolvedAppearance}`,
+          `Button--lvl-${mode}`,
           `Button--aln-${align}`,
           `Button--sizeY-${sizeY}`,
           {
+            [`Button--clr-${appearance}`]: !!appearance,
             ['Button--stretched']: stretched,
             ['Button--with-icon']: hasIcons,
+            ['Button--tokenized']: !isFallback,
           },
         )
       }
