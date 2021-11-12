@@ -159,23 +159,27 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
         .find((id) => id === prevProps.activePanel || id === this.props.activePanel);
 
       const isBack = firstLayerId === this.props.activePanel;
-
-      this.blurActiveElement();
-
       this.scrolls[prevProps.activePanel] = this.props.scroll.getScroll().y;
-      this.setState({
-        visiblePanels: [prevProps.activePanel, this.props.activePanel],
-        prevPanel: prevProps.activePanel,
-        nextPanel: this.props.activePanel,
-        activePanel: null,
-        animated: true,
-        isBack,
-      });
 
-      // Фолбек анимации перехода
-      if (!animationEvent.supported) {
-        clearTimeout(this.animationFinishTimeout);
-        this.animationFinishTimeout = setTimeout(this.transitionEndHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
+      if (this.shouldDisableTransitionMotion()) {
+        this.flushTransition(prevProps.activePanel, isBack);
+      } else {
+        this.blurActiveElement();
+
+        this.setState({
+          visiblePanels: [prevProps.activePanel, this.props.activePanel],
+          prevPanel: prevProps.activePanel,
+          nextPanel: this.props.activePanel,
+          activePanel: null,
+          animated: true,
+          isBack,
+        });
+
+        // Фолбек анимации перехода
+        if (!animationEvent.supported) {
+          clearTimeout(this.animationFinishTimeout);
+          this.animationFinishTimeout = setTimeout(this.transitionEndHandler, this.props.platform === ANDROID || this.props.platform === VKCOM ? 300 : 600);
+        }
       }
     }
 
@@ -252,6 +256,24 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
     return this.panelNodes[id];
   }
 
+  flushTransition(prevPanel: string, isBack: boolean) {
+    const activePanel = this.props.activePanel;
+    if (isBack) {
+      this.scrolls[prevPanel] = 0;
+    }
+    this.setState({
+      prevPanel: null,
+      nextPanel: null,
+      visiblePanels: [activePanel],
+      activePanel,
+      animated: false,
+      isBack: undefined,
+    }, () => {
+      this.props.scroll.scrollTo(0, isBack ? this.scrolls[activePanel] : 0);
+      this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
+    });
+  }
+
   transitionEndHandler = (e?: React.AnimationEvent): void => {
     if (!e || [
       'vkui-animation-ios-next-forward',
@@ -259,23 +281,7 @@ class View extends React.Component<ViewProps & DOMProps, ViewState> {
       'vkui-animation-view-next-forward',
       'vkui-animation-view-prev-back',
     ].includes(e.animationName)) {
-      const activePanel = this.props.activePanel;
-      const isBack = this.state.isBack;
-      const prevPanel = this.state.prevPanel;
-      if (isBack) {
-        this.scrolls[prevPanel] = 0;
-      }
-      this.setState({
-        prevPanel: null,
-        nextPanel: null,
-        visiblePanels: [activePanel],
-        activePanel: activePanel,
-        animated: false,
-        isBack: undefined,
-      }, () => {
-        isBack && this.props.scroll.scrollTo(0, this.scrolls[activePanel]);
-        this.props.onTransition && this.props.onTransition({ isBack, from: prevPanel, to: activePanel });
-      });
+      this.flushTransition(this.state.prevPanel, this.state.isBack);
     }
   };
 

@@ -180,7 +180,7 @@ describe.each([
       jest.runAllTimers();
       expect(scrollTo).toBeCalledWith(0, y);
     });
-    it('does nothing on forward navigation', () => {
+    it('resets scroll on forward navigation', () => {
       let y = 101;
       const [MockScroll, scrollTo] = mockScrollContext(() => y);
       const h = render(<MockScroll><View activePanel="p2">{panels}</View></MockScroll>);
@@ -190,7 +190,7 @@ describe.each([
       scrollTo.mockReset();
       h.rerender(<MockScroll><View activePanel="p2">{panels}</View></MockScroll>);
       jest.runAllTimers();
-      expect(scrollTo).not.toBeCalled();
+      expect(scrollTo).toBeCalledWith(0, 0);
     });
   });
 });
