@@ -235,9 +235,9 @@
 }
 
 .OwnerAvatar__status--mobile {
-  border: 2px solid var(--background_content);
-  border-radius: 3px;
+  border-radius: 4px;
   bottom: -1px;
+  right: 1px;
   background-color: var(--background_content);
 }
 
