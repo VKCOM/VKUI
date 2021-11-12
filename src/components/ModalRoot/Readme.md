@@ -8,7 +8,7 @@
 **Важно:** структура модальных страниц и карточек должна определяться единожды на старте приложения. Структура – это *декларация* приложения.
 То есть, один раз определив структуру вида:
 
-```jsx static { "props": { "layout": false, "adaptivity": true } }
+```jsx static
 class App extends Component {
   render() {
     const modal = (
@@ -47,7 +47,7 @@ class App extends Component {
 либо идентификатор предыдущей модалки, либо `null` для скрытия.
 Каждой конкретной `ModalPage` или `ModalCard` можно передать свой обработчик `onClose`, если нужно переопределить поведение.
 
-```jsx
+```jsx { "props": { "layout": false, "adaptivity": true } }
 const MODAL_PAGE_FILTERS = 'filters';
 const MODAL_PAGE_COUNTRIES = 'countries';
 const MODAL_PAGE_STORY_FEEDBACK = 'story-feedback';
