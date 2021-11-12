@@ -168,30 +168,26 @@
   background-color: transparent;
 }
 
-.OwnerAvatar--images-1 .OwnerAvatar__grid .Avatar--shadow::after,
-.OwnerAvatar--images-2 .OwnerAvatar__grid .Avatar--shadow::after,
-.OwnerAvatar--images-3 .OwnerAvatar__grid .Avatar--shadow::after,
-.OwnerAvatar--images-4 .OwnerAvatar__grid .Avatar--shadow::after {
-  box-shadow: none;
-}
-
 .OwnerAvatar__grid {
   height: 100%;
+  width: 100%;
   overflow: hidden;
   border-radius: inherit;
 }
 
-.OwnerAvatar__grid .Avatar {
+.OwnerAvatar__grid .OwnerAvatar__gridAvatar {
   float: left;
 }
 
-.OwnerAvatar__grid .Avatar__img {
-  object-fit: cover;
+.OwnerAvatar__grid .OwnerAvatar__gridAvatar {
+  background-size: cover;
+  background-position: center;
+  background-color: var(--placeholder_icon_background);
 }
 
-.OwnerAvatar--images-1 .Avatar,
-.OwnerAvatar--images-2 .Avatar,
-.OwnerAvatar--images-3 .Avatar {
+.OwnerAvatar--images-1 .OwnerAvatar__gridAvatar,
+.OwnerAvatar--images-2 .OwnerAvatar__gridAvatar,
+.OwnerAvatar--images-3 .OwnerAvatar__gridAvatar {
   height: 100%;
 }
 
@@ -242,9 +238,11 @@
 }
 
 .OwnerAvatar__status--common {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
+  bottom: 1px;
+  right: 1px;
   background: var(--dynamic_green);
   border-radius: 100%;
-  border: 3px solid var(--background_content);
+  border: 2px solid var(--background_content);
 }

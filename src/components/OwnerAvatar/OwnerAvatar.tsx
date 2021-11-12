@@ -51,13 +51,12 @@ const OwnerAvatar: React.FC<OwnerAvatarProps> = ({
       <div vkuiClass="OwnerAvatar__grid">
         {src.slice(0, MAX_GRID_LENGTH).map((src, i) => {
           return (
-            <Avatar
+            <div
               key={i}
-              src={src}
-              mode="grid"
-              size="unset"
               vkuiClass={classNames('OwnerAvatar__gridAvatar', `OwnerAvatar__gridAvatar--${i + 1}`)}
-            />
+              style={{ backgroundImage: `url(${src})` }}
+            >
+            </div>
           );
         })}
       </div>
