@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon20Dropdown, Icon24Dropdown } from '@vkontakte/icons';
+import { Icon20Dropdown, Icon24ChevronDown } from '@vkontakte/icons';
 import { SizeType } from '../AdaptivityProvider/AdaptivityContext';
 import { getClassName } from '../../helpers/getClassName';
 import { useAdaptivity } from '../../hooks/useAdaptivity';
@@ -12,7 +12,7 @@ export const DropdownIcon: React.FC<React.HTMLAttributes<HTMLElement>> = (props)
 
   const Icon = sizeY === SizeType.COMPACT
     ? Icon20Dropdown
-    : Icon24Dropdown;
+    : Icon24ChevronDown;
 
   return (
     <Icon vkuiClass={getClassName('DropdownIcon', platform)} {...props} />
