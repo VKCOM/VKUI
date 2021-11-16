@@ -34,6 +34,7 @@ describe('GridAvatar', () => {
     const errorLog = jest.spyOn(global.console, 'error').mockImplementation();
 
     render(<GridAvatarTest src={['#', '#', '#', '#', '#']} />);
+    expect(items().length).toBe(4);
     expect(errorLog).toHaveBeenCalledWith(expect.stringContaining('src length (5) is larger than maxiumum (4)'));
   });
 });
