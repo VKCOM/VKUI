@@ -21,9 +21,6 @@ import { warnOnce } from "../../lib/warnOnce";
 
 import "./SimpleCheckbox.css";
 
-const warn = warnOnce("SimpleCheckbox");
-const IS_DEV = process.env.NODE_ENV === "development";
-
 export interface SimpleCheckboxProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     HasRootRef<HTMLLabelElement>,
@@ -32,6 +29,7 @@ export interface SimpleCheckboxProps
   defaultIndeterminate?: boolean;
 }
 
+const warn = warnOnce("SimpleCheckbox");
 export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
   props: SimpleCheckboxProps
 ) => {
@@ -75,15 +73,15 @@ export const SimpleCheckbox: React.FC<SimpleCheckboxProps> = (
     [onChange, indeterminate, restProps.checked]
   );
 
-  if (IS_DEV) {
+  if (process.env.NODE_ENV === "development") {
     if (defaultIndeterminate && restProps.defaultChecked) {
       warn(
-        "defaultIndeterminate and defaultChecked cannot be true at the same time"
+        '"defaultIndeterminate" и "defaultChecked" не могут быть true одновременно'
       );
     }
 
     if (indeterminate && restProps.checked) {
-      warn("indeterminate and checked cannot be true at the same time");
+      warn('"indeterminate" and "checked" не могут быть true одновременно');
     }
   }
 
