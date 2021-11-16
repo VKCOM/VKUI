@@ -79,7 +79,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
       target.hasAttribute("scheme")
     ) {
       warn(
-        '<body scheme> was set before VKUI mount - did you forget scheme="inherit"?'
+        '<body scheme> установился до маунта VKUI — возможно, вы забыли использовать scheme="inherit"?'
       );
     }
     target.setAttribute("scheme", scheme);
