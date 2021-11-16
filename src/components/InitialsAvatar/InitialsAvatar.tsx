@@ -1,6 +1,6 @@
 import { omit } from '../../lib/utils';
 import { classNames } from '../../lib/classNames';
-import Avatar, { AvatarProps } from '../Avatar/Avatar';
+import Avatar, { AvatarProps, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
 
 import './InitialsAvatar.css';
 
@@ -57,7 +57,7 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
       shadow={false}
       style={{
         ...restProps.style,
-        fontSize: getInitialsFontSize(restProps.size || 48),
+        fontSize: getInitialsFontSize(restProps.size || AVATAR_DEFAULT_SIZE),
       }}
       vkuiClass={classNames(
         'InitialsAvatar',
