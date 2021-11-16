@@ -56,6 +56,7 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
       {...restProps}
       shadow={false}
       style={{
+        ...restProps.style,
         fontSize: getInitialsFontSize(restProps.size),
       }}
       vkuiClass={classNames(
