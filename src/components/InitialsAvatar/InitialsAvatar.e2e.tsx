@@ -9,7 +9,7 @@ describe('InitialsAvatar', () => {
       children: ['A', 'AB'],
     },
     {
-      gradientColor: [1, 2, 3, 5, 6, 'gray', 'blue'],
+      gradientColor: [1, 2, 3, 5, 6, 'blue', undefined],
     },
   ]);
 });

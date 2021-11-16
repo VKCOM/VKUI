@@ -4,7 +4,7 @@
 ```jsx { "props": { "layout": false, "iframe": false } }
 <div style={{ display: 'flex', justifyContent: 'center', gap: 8, flexFlow: 'row wrap' }}>
   {getRandomUsers(6).map((user) => (
-    <InitialsAvatar gradientColor={user.id % 6 + 1}>{user.initials}</InitialsAvatar>
+    <InitialsAvatar gradientColor={user.id % 6 + 1}>{user.initials}AAA</InitialsAvatar>
   ))}
 </div>
 ```

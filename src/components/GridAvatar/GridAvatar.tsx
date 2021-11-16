@@ -21,8 +21,8 @@ export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [],
   ...restProps
 }) => {
-  if (src.length > MAX_GRID_LENGTH) {
-    warn(`src length (${src.length}) is larger than maxiumum (${MAX_GRID_LENGTH})`);
+  if (process.env.NODE_ENV === 'development' && src.length > MAX_GRID_LENGTH) {
+    warn(`Размер пропа src (${src.length}) больше максимального (${MAX_GRID_LENGTH})`);
   }
 
   restProps = omit(restProps, ...FORBIDDEN_AVATAR_PROPS_ARRAY as any);

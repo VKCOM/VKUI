@@ -35,6 +35,6 @@ describe('GridAvatar', () => {
 
     render(<GridAvatarTest src={['#', '#', '#', '#', '#']} />);
     expect(items().length).toBe(4);
-    expect(errorLog).toHaveBeenCalledWith(expect.stringContaining('src length (5) is larger than maxiumum (4)'));
+    expect(errorLog).toHaveBeenCalledWith(expect.stringContaining('Размер пропа src src (5) больше максимального (4)'));
   });
 });

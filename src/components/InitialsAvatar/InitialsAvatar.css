@@ -1,3 +1,9 @@
+.InitialsAvatar {
+  overflow: hidden;
+  background: #99a2ad;
+  background: linear-gradient(135deg, #b1b6bd, #99a2ad);
+}
+
 .InitialsAvatar__text {
   font-family: var(--font-tt);
   font-weight: 600;
@@ -18,10 +24,7 @@
   font-size: 10px;
 }
 
-.InitialsAvatar--size-30 {
-  font-size: 11px;
-}
-
+.InitialsAvatar--size-40,
 .InitialsAvatar--size-32 {
   font-size: 11px;
 }
@@ -34,10 +37,7 @@
   font-size: 14px;
 }
 
-.InitialsAvatar--size-44 {
-  font-size: 16px;
-}
-
+.InitialsAvatar--size-44,
 .InitialsAvatar--size-46 {
   font-size: 16px;
 }
@@ -84,11 +84,6 @@
 
 .InitialsAvatar--size-200 {
   font-size: 68px;
-}
-
-.InitialsAvatar--color-gray {
-  background: #99a2ad;
-  background: linear-gradient(135deg, #b1b6bd, #99a2ad);
 }
 
 .InitialsAvatar--color-red {

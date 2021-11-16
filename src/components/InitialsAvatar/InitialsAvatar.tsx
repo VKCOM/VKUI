@@ -10,7 +10,6 @@ import './InitialsAvatar.css';
  */
 export type InitialsAvatarNumberGradients = 1 | 2 | 3 | 4 | 5 | 6;
 export type InitialsAvatarTextGradients =
-  | 'gray'
   | 'red'
   | 'pink'
   | 'orange'
@@ -23,7 +22,7 @@ export type InitialsAvatarTextGradients =
 type ForbiddenAvatarProps = 'src' | 'mode' | 'shadow';
 export interface InitialsAvatarProps extends Omit<AvatarProps, ForbiddenAvatarProps | 'size' | 'children'> {
   children?: React.ReactNode;
-  gradientColor: InitialsAvatarTextGradients | InitialsAvatarNumberGradients;
+  gradientColor?: InitialsAvatarTextGradients | InitialsAvatarNumberGradients;
   /**
  * Ограниченный сет размеров, так как под каждый выбирается определенный размер шрифта
  */
@@ -43,7 +42,7 @@ const FORBIDDEN_AVATAR_PROPS_ARRAY: ForbiddenAvatarProps[] = ['src', 'mode', 'sh
 
 export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
   children,
-  gradientColor = 'gray',
+  gradientColor,
   size,
   ...restProps
 }: InitialsAvatarProps) => {
@@ -54,6 +53,7 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
   return (
     <Avatar
       {...restProps}
+      shadow={false}
       vkuiClass={classNames(
         'InitialsAvatar',
         `InitialsAvatar--color-${gradientName}`,
