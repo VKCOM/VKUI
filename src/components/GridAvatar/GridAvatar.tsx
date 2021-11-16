@@ -17,7 +17,7 @@ const MAX_GRID_LENGTH = 4;
 
 const warn = warnOnce('GridAvatar');
 
-export const GridAvatar: React.FC<GridAvatarProps & AvatarProps> = ({
+export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [],
   ...restProps
 }) => {

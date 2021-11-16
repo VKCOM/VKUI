@@ -14,7 +14,6 @@
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-color: var(--placeholder_icon_background);
 }
 
 .GridAvatar--images-1 .GridAvatar__item {
