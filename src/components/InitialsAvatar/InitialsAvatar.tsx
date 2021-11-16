@@ -19,14 +19,10 @@ export type InitialsAvatarTextGradients =
   | 'blue'
   | 'violet';
 
-type ForbiddenAvatarProps = 'src' | 'mode' | 'shadow';
-export interface InitialsAvatarProps extends Omit<AvatarProps, ForbiddenAvatarProps | 'size' | 'children'> {
+type ForbiddenAvatarProps = 'src' | 'mode';
+export interface InitialsAvatarProps extends Omit<AvatarProps, ForbiddenAvatarProps | 'children'> {
   children?: React.ReactNode;
   gradientColor?: InitialsAvatarTextGradients | InitialsAvatarNumberGradients;
-  /**
- * Ограниченный сет размеров, так как под каждый выбирается определенный размер шрифта
- */
-  size?: 200 | 192 | 160 | 96 | 88 | 80 | 72 | 64 | 56 | 50 | 48 | 46 | 44 | 40 | 36 | 32 | 30 | 28 | 24 | 16;
 }
 
 const COLORS_NUMBER_TO_TEXT_MAP: Record<InitialsAvatarNumberGradients, InitialsAvatarTextGradients> = {
@@ -38,12 +34,17 @@ const COLORS_NUMBER_TO_TEXT_MAP: Record<InitialsAvatarNumberGradients, InitialsA
   6: 'violet',
 };
 
-const FORBIDDEN_AVATAR_PROPS_ARRAY: ForbiddenAvatarProps[] = ['src', 'mode', 'shadow'];
+const FORBIDDEN_AVATAR_PROPS_ARRAY: ForbiddenAvatarProps[] = ['src', 'mode'];
+
+function getInitialsFontSize(avatarSize: number) {
+  const calculatedFontSize = Math.ceil(avatarSize * 0.36);
+  const evenFix = calculatedFontSize % 2;
+  return calculatedFontSize + evenFix;
+}
 
 export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
   children,
   gradientColor,
-  size,
   ...restProps
 }: InitialsAvatarProps) => {
   const gradientName = typeof gradientColor === 'string' ? gradientColor : COLORS_NUMBER_TO_TEXT_MAP[gradientColor];
@@ -54,10 +55,12 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
     <Avatar
       {...restProps}
       shadow={false}
+      style={{
+        fontSize: getInitialsFontSize(restProps.size),
+      }}
       vkuiClass={classNames(
         'InitialsAvatar',
         `InitialsAvatar--color-${gradientName}`,
-        `InitialsAvatar--size-${size}`,
       )}
     >
       <span aria-hidden="true" vkuiClass="InitialsAvatar__text">

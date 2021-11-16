@@ -16,11 +16,6 @@ describe('InitialsAvatar', () => {
     expect(img()).not.toBeInTheDocument();
   });
 
-  it('[forbidden props] don\'t allow to set shadow', () => {
-    render(<InitialsAvatarTest shadow={true} />);
-    expect(avatar()).not.toHaveClass('Avatar--shadow');
-  });
-
   it('[forbidden props] don\'t allow to set mode', () => {
     const { rerender } = render(<InitialsAvatarTest mode="app" />);
     expect(avatar()).not.toHaveClass('Avatar--type-app');
