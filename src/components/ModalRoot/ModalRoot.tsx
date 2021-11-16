@@ -27,9 +27,6 @@ import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { ModalTransitionProps, withModalManager } from "./useModalManager";
 import "./ModalRoot.css";
 
-const warn = warnOnce("ModalRoot");
-const IS_DEV = process.env.NODE_ENV === "development";
-
 function numberInRange(number: number, range: TranslateRange) {
   return number >= range[0] && number <= range[1];
 }
@@ -56,6 +53,7 @@ interface ModalRootState {
   dragging?: boolean;
 }
 
+const warn = warnOnce("ModalRoot");
 class ModalRootTouchComponent extends React.Component<
   ModalRootProps & DOMProps & ModalTransitionProps,
   ModalRootState
@@ -714,7 +712,9 @@ function initModal(modalState: ModalsStateEntry) {
     case ModalType.CARD:
       return initCardModal(modalState);
     default:
-      IS_DEV && warn("[initActiveModal] modalState.type is unknown");
+      if (process.env.NODE_ENV === "development") {
+        warn("[initActiveModal] modalState.type неизвестен");
+      }
   }
 }
 
