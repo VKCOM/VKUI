@@ -13,7 +13,6 @@ import { FocusTrap } from "../FocusTrap/FocusTrap";
 import { Popper } from "../Popper/Popper";
 import "./ActionSheet.css";
 
-const warn = warnOnce("ActionSheet");
 function getEl(
   ref: SharedDropdownProps["toggleRef"]
 ): Element | null | undefined {
@@ -22,6 +21,7 @@ function getEl(
     : (ref as Element | null | undefined);
 }
 
+const warn = warnOnce("ActionSheetDropdown");
 export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   children,
   toggleRef,
@@ -38,7 +38,10 @@ export const ActionSheetDropdownDesktop: React.FC<SharedDropdownProps> = ({
   useEffectDev(() => {
     const toggleEl = getEl(toggleRef);
     if (!toggleEl) {
-      warn("toggleRef not passed");
+      if (process.env.NODE_ENV === "development") {
+        warn("Не передан toggleRef");
+      }
+      return;
     }
   }, [toggleRef]);
 
