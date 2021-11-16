@@ -72,10 +72,17 @@ export function getAvatarUrl(id, size) {
   }
 }
 
+function prepareUser(user) {
+  user.name = `${user.first_name} ${user.last_name}`;
+  user.initials = `${user.first_name[0]}${user.last_name[0]}`;
+  return user;
+}
+
 export function getRandomUser() {
   const user = Object.assign({}, getRandomArrayElement(users));
   user.id = getRandomInt(1, 20e8);
-  return user;
+
+  return prepareUser(user);
 }
 
 export function getRandomUsers(count) {
