@@ -20,17 +20,15 @@ export type InitialsAvatarTextGradients =
   | 'blue'
   | 'violet';
 
+type ForbiddenAvatarProps = 'src' | 'mode' | 'shadow';
 export interface InitialsAvatarProps extends Omit<AvatarProps, ForbiddenAvatarProps | 'size' | 'children'> {
-  initials?: string;
   children?: React.ReactNode;
-  gradientColor: InitialsAvatarTextGradients & InitialsAvatarNumberGradients;
+  gradientColor: InitialsAvatarTextGradients | InitialsAvatarNumberGradients;
   /**
  * Ограниченный сет размеров, так как под каждый выбирается определенный размер шрифта
  */
   size?: 200 | 192 | 160 | 96 | 88 | 80 | 72 | 64 | 56 | 50 | 48 | 46 | 44 | 40 | 36 | 32 | 30 | 28 | 24 | 16;
 }
-
-type ForbiddenAvatarProps = 'src' | 'mode' | 'shadow';
 
 const COLORS_NUMBER_TO_TEXT_MAP: Record<InitialsAvatarNumberGradients, InitialsAvatarTextGradients> = {
   1: 'red',
@@ -48,7 +46,7 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
   gradientColor = 'gray',
   size,
   ...restProps
-}) => {
+}: InitialsAvatarProps) => {
   const gradientName = typeof gradientColor === 'string' ? gradientColor : COLORS_NUMBER_TO_TEXT_MAP[gradientColor];
 
   restProps = omit(restProps, ...FORBIDDEN_AVATAR_PROPS_ARRAY as any);
