@@ -53,7 +53,7 @@
 }
 
 .View--ios .View__panel--next ~ .View__panel--prev {
-  animation: vkui-animation-ios-prev-back .6s var(--ios-easing);
+  animation: vkui-animation-ios-prev-back .6s var(--ios-easing) forwards;
 }
 
 .View--ios .View__panel--prev .Panel__fade,
@@ -73,7 +73,7 @@
 }
 
 .View--ios .View__panel--next .Panel__fade {
-  animation: vkui-animation-ios-fade-out .6s var(--ios-easing);
+  animation: vkui-animation-ios-fade-out .6s var(--ios-easing) forwards;
 }
 
 .View--ios .View__panel--prev ~ .View__panel--next .Panel__fade,
