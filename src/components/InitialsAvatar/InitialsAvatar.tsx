@@ -62,9 +62,9 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
         `InitialsAvatar--size-${size}`,
       )}
     >
-      <div vkuiClass="InitialsAvatar__text">
+      <span aria-hidden="true" vkuiClass="InitialsAvatar__text">
         {children}
-      </div>
+      </span>
     </Avatar>
   );
 };
