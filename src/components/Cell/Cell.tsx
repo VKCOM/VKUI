@@ -71,6 +71,8 @@ export const Cell: React.FC<CellProps> = ({
   defaultChecked,
   getRootRef,
   draggerLabel = 'Перенести ячейку',
+  className,
+  style,
   ...restProps
 }: CellProps) => {
   // TODO: удалить перед 5.0.0
@@ -153,6 +155,8 @@ export const Cell: React.FC<CellProps> = ({
     return (
       <Removable
         vkuiClass={cellClasses}
+        className={className}
+        style={style}
         getRootRef={rootElRef}
         removePlaceholder={removePlaceholder}
         onRemove={(e) => onRemove(e, rootElRef?.current)}
@@ -162,5 +166,14 @@ export const Cell: React.FC<CellProps> = ({
     );
   }
 
-  return (<div vkuiClass={cellClasses} ref={rootElRef}>{simpleCell}</div>);
+  return (
+    <div
+      vkuiClass={cellClasses}
+      className={className}
+      style={style}
+      ref={rootElRef}
+    >
+      {simpleCell}
+    </div>
+  );
 };
