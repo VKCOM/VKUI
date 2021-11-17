@@ -1,8 +1,7 @@
-import { HTMLAttributes } from 'react';
+import * as React from 'react';
 import { HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
-import Avatar, { AvatarProps, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
-
+import Avatar, { AVATAR_DEFAULT_SHADOW, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
 import './InitialsAvatar.css';
 
 /**
@@ -20,9 +19,28 @@ export type InitialsAvatarTextGradients =
   | 'blue'
   | 'violet';
 
-export interface InitialsAvatarProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, Pick<AvatarProps, 'size'| 'shadow'> {
+export interface InitialsAvatarProps extends React.HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement> {
   children?: React.ReactNode;
-  gradientColor?: InitialsAvatarTextGradients | InitialsAvatarNumberGradients;
+  /**
+   * `'red' | 'pink' | 'orange' | 'yellow' | 'green' | 'l-blue' | 'blue' | 'violet'`
+   *
+   * Если передано число, то оно будет сконвертировано в строчное представление цвета по следующей схеме:
+   *
+   * 1: 'red'
+   *
+   * 2: 'orange'
+   *
+   * 3: 'yellow'
+   *
+   * 4: 'green'
+   *
+   * 5: 'l-blue'
+   *
+   * 6: 'violet'
+   */
+  gradientColor?: InitialsAvatarNumberGradients | InitialsAvatarTextGradients;
+  size?: number;
+  shadow?: boolean;
 }
 
 const COLORS_NUMBER_TO_TEXT_MAP: Record<InitialsAvatarNumberGradients, InitialsAvatarTextGradients> = {
@@ -42,6 +60,7 @@ function getInitialsFontSize(avatarSize: number) {
 
 export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
   size = AVATAR_DEFAULT_SIZE,
+  shadow = AVATAR_DEFAULT_SHADOW,
   children,
   gradientColor,
   style,
@@ -54,8 +73,9 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
       {...restProps}
       style={{
         ...style,
-        fontSize: getInitialsFontSize(size || AVATAR_DEFAULT_SIZE),
+        fontSize: getInitialsFontSize(size),
       }}
+      shadow={shadow}
       size={size}
       vkuiClass={classNames(
         'InitialsAvatar',

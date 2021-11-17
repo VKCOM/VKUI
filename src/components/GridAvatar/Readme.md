@@ -1,8 +1,8 @@
-Отображение нескольких аватаров в сетке от 1 до 4 элементов. Внутри использует компонент [Avatar](#!/Avatar).
+Отображение нескольких аватаров в сетке от 1 до 4 элементов.
 
 
 ```jsx { "props": { "layout": false, "iframe": false } }
-<div style={{ display: 'flex', justifyContent: 'center', gap: 8, flexFlow: 'row wrap' }}>
+<div style={{ display: 'flex', padding: 12, gap: 8, flexFlow: 'row wrap' }}>
   <GridAvatar />
   <GridAvatar src={[getAvatarUrl('user_ji')]} />
   <GridAvatar src={[getAvatarUrl('user_wayshev'), getAvatarUrl('user_mm')]} />
