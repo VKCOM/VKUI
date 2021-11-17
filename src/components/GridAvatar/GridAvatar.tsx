@@ -5,12 +5,12 @@ import { omit } from '../../lib/utils';
 
 import './GridAvatar.css';
 
-type ForbiddenAvatarProps = 'src' | 'mode' | 'shadow';
+type ForbiddenAvatarProps = 'mode' | 'shadow';
 export interface GridAvatarProps extends Omit<AvatarProps, ForbiddenAvatarProps | 'src'> {
   src: string[];
 }
 
-const FORBIDDEN_AVATAR_PROPS_ARRAY: ForbiddenAvatarProps[] = ['src', 'mode', 'shadow'];
+const FORBIDDEN_AVATAR_PROPS_ARRAY: ForbiddenAvatarProps[] = ['mode', 'shadow'];
 
 const MIN_GRID_LENGTH = 1;
 const MAX_GRID_LENGTH = 4;
