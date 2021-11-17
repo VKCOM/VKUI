@@ -106,8 +106,10 @@ const Avatar: React.FC<AvatarProps> = ({
   );
 };
 
+export const AVATAR_DEFAULT_SIZE = 48;
+
 Avatar.defaultProps = {
-  size: 48,
+  size: AVATAR_DEFAULT_SIZE,
   mode: 'default',
   shadow: true,
 };
