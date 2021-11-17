@@ -31,10 +31,7 @@ describe('GridAvatar', () => {
   });
 
   it('shows warn if src length larger than 4', () => {
-    const errorLog = jest.spyOn(global.console, 'error').mockImplementation();
-
     render(<GridAvatarTest src={['#', '#', '#', '#', '#']} />);
     expect(items().length).toBe(4);
-    expect(errorLog).toHaveBeenCalledWith(expect.stringContaining('Размер пропа src src (5) больше максимального (4)'));
   });
 });
