@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
-import Avatar, { AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
+import Avatar, { AVATAR_DEFAULT_SHADOW, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
 import './InitialsAvatar.css';
 
 /**
@@ -59,8 +59,8 @@ function getInitialsFontSize(avatarSize: number) {
 }
 
 export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
-  size,
-  shadow,
+  size = AVATAR_DEFAULT_SIZE,
+  shadow = AVATAR_DEFAULT_SHADOW,
   children,
   gradientColor,
   style,
@@ -73,7 +73,7 @@ export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
       {...restProps}
       style={{
         ...style,
-        fontSize: getInitialsFontSize(size || AVATAR_DEFAULT_SIZE),
+        fontSize: getInitialsFontSize(size),
       }}
       shadow={shadow}
       size={size}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Avatar from '../Avatar/Avatar';
+import Avatar, { AVATAR_DEFAULT_SHADOW, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
 import { classNames } from '../../lib/classNames';
 import { warnOnce } from '../../lib/warnOnce';
 import { HasRootRef } from '../../types';
@@ -18,8 +18,8 @@ const warn = warnOnce('GridAvatar');
 
 export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [],
-  size,
-  shadow,
+  size = AVATAR_DEFAULT_SIZE,
+  shadow = AVATAR_DEFAULT_SHADOW,
   ...restProps
 }: GridAvatarProps) => {
   if (process.env.NODE_ENV === 'development' && src.length > MAX_GRID_LENGTH) {
