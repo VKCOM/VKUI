@@ -4,11 +4,15 @@ import Counter from '../Counter/Counter';
 import { classNames } from '../../lib/classNames';
 import { usePlatform } from '../../hooks/usePlatform';
 import { hasReactNode } from '../../lib/utils';
-import Tappable, { TappableProps } from '../Tappable/Tappable';
+import Tappable from '../Tappable/Tappable';
 import { Platform } from '../../lib/platform';
+import { HasComponent, HasRootRef } from '../../types';
 import './TabbarItem.css';
 
-export interface TabbarItemProps extends Omit<TappableProps, 'label'> { // TODO убрать Omit после удаления свойства label
+export interface TabbarItemProps extends
+  Omit<React.AllHTMLAttributes<HTMLElement>, 'label'>, // TODO убрать Omit после удаления свойства label
+  HasRootRef<HTMLElement>,
+  HasComponent {
   selected?: boolean;
   /**
    * Тест рядом с иконкой
@@ -24,38 +28,46 @@ export interface TabbarItemProps extends Omit<TappableProps, 'label'> { // TODO 
   label?: React.ReactNode;
 }
 
-const TabbarItem: React.FunctionComponent<TabbarItemProps> = (props: TabbarItemProps) => {
-  const { children, selected, label, indicator, text, Component, ...restProps } = props;
+const TabbarItem: React.FunctionComponent<TabbarItemProps> = ({
+  children,
+  selected,
+  label,
+  indicator,
+  text,
+  href,
+  Component = href ? 'a' : 'button',
+  ...restProps
+}: TabbarItemProps) => {
   const platform = usePlatform();
 
-  return (
+  // @ts-ignore ругается на то, что у AllHTMLAttributes type это строка, а button не любую строку считает валидным значением
+  return (<Component
+    {...restProps}
+    href={href}
+    vkuiClass={classNames(getClassName('TabbarItem', platform), {
+      'TabbarItem--selected': selected,
+      'TabbarItem--text': !!text,
+    })}
+  >
     <Tappable
-      {...restProps}
-      Component={restProps.href ? 'a' : Component}
-      activeMode={platform === Platform.IOS ? 'TabbarItem--active' : 'background'}
+      role="presentation"
+      Component="div"
+      activeMode={platform === Platform.IOS ? 'TabbarItem__tappable--active' : 'background'}
       activeEffectDelay={0}
       hasHover={false}
-      vkuiClass={classNames(getClassName('TabbarItem', platform), {
-        'TabbarItem--selected': selected,
-        'TabbarItem--text': !!text,
-      })}
-    >
-      <div vkuiClass="TabbarItem__in">
-        <div vkuiClass="TabbarItem__icon">
-          {children}
-          <div vkuiClass="TabbarItem__label">
-            {hasReactNode(indicator) && indicator}
-            {!indicator && label && <Counter size="s" mode="prominent">{label}</Counter>}
-          </div>
+      vkuiClass="TabbarItem__tappable"
+    />
+    <div vkuiClass="TabbarItem__in">
+      <div vkuiClass="TabbarItem__icon">
+        {children}
+        <div vkuiClass="TabbarItem__label">
+          {hasReactNode(indicator) && indicator}
+          {!indicator && label && <Counter size="s" mode="prominent">{label}</Counter>}
         </div>
-        {text && <div vkuiClass="TabbarItem__text">{text}</div>}
       </div>
-    </Tappable>
-  );
-};
-
-TabbarItem.defaultProps = {
-  Component: 'button',
+      {text && <div vkuiClass="TabbarItem__text">{text}</div>}
+    </div>
+  </Component>);
 };
 
 export default TabbarItem;

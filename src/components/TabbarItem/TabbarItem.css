@@ -1,9 +1,4 @@
 .TabbarItem {
-  flex-shrink: 0;
-  max-width: 100%;
-  flex-grow: 1;
-  flex-basis: 0;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,22 +7,41 @@
   border: none;
   outline: none;
   padding: 0;
-  margin: 0;
   background: transparent;
+  height: var(--tabbar_height);
+  position: relative;
+}
+
+.Tabbar .TabbarItem {
+  flex-shrink: 0;
+  max-width: 100%;
+  min-width: 0;
+  flex-grow: 1;
+  flex-basis: 0;
 }
 
 .TabbarItem--selected {
   color: var(--tabbar_active_icon);
 }
 
+.TabbarItem__tappable {
+  position: absolute;
+}
+
 .TabbarItem__in {
   align-self: center;
   display: flex;
-  max-width: 100%;
   padding: 0 2px;
-  box-sizing: border-box;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
+  height: 100%;
+  overflow: hidden;
+}
+
+.Tabbar--l-vertical .TabbarItem--text .TabbarItem__in {
+  position: relative;
+  top: 2px;
 }
 
 .Tabbar--l-vertical .TabbarItem__in {
@@ -78,14 +92,10 @@
  * Android
  */
 
-.TabbarItem--android::after {
-  content: '';
-  padding-bottom: 100%;
-  width: 100%;
-}
-
-.TabbarItem--android {
-  transform: translateY(calc(-1 * (100% - var(--tabbar_height)) / 2));
+.TabbarItem--android .TabbarItem__tappable {
+  position: absolute;
+  width: calc(100% + 16px);
+  padding-bottom: calc(100% + 16px);
   border-radius: 50%;
 }
 
@@ -99,31 +109,21 @@
   border-bottom-right-radius: 0;
 }
 
-.TabbarItem--android .TabbarItem__in {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.Tabbar--android.Tabbar--l-vertical .TabbarItem--text .TabbarItem__in {
-  top: 2px;
-}
-
 /**
  * iOS
  */
 
-.TabbarItem--ios {
+.TabbarItem--ios .TabbarItem__tappable {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.TabbarItem--ios .TabbarItem__in {
   transition: transform .07s var(--ios-easing);
 }
 
-.TabbarItem--ios.TabbarItem--active {
+.TabbarItem--ios .TabbarItem__tappable--active + .TabbarItem__in {
   transform: scale(.96);
-}
-
-.Tabbar--ios.Tabbar--l-vertical .TabbarItem--text .TabbarItem__in {
-  position: relative;
-  top: 2px;
 }
