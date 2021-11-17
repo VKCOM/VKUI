@@ -19,6 +19,7 @@ const warn = warnOnce('GridAvatar');
 export const GridAvatar: React.FC<GridAvatarProps> = ({
   src = [],
   size,
+  shadow,
   ...restProps
 }: GridAvatarProps) => {
   if (process.env.NODE_ENV === 'development' && src.length > MAX_GRID_LENGTH) {
@@ -34,6 +35,7 @@ export const GridAvatar: React.FC<GridAvatarProps> = ({
         'GridAvatar',
         `GridAvatar--images-${count}`,
       )}
+      shadow={shadow}
       size={size}
     >
       <div vkuiClass="GridAvatar__in">

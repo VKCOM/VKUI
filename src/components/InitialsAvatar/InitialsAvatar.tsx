@@ -59,7 +59,7 @@ function getInitialsFontSize(avatarSize: number) {
 }
 
 export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
-  size = AVATAR_DEFAULT_SIZE,
+  size,
   shadow,
   children,
   gradientColor,
