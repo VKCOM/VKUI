@@ -2,9 +2,10 @@ import { HTMLAttributes } from 'react';
 import Avatar, { AvatarProps } from '../Avatar/Avatar';
 import { classNames } from '../../lib/classNames';
 import { warnOnce } from '../../lib/warnOnce';
+import { HasRootRef } from '../../types';
 
 import './GridAvatar.css';
-export interface GridAvatarProps extends HTMLAttributes<HTMLDivElement>, Pick<AvatarProps, 'size' | 'shadow'> {
+export interface GridAvatarProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, Pick<AvatarProps, 'size' | 'shadow'> {
   src?: string[];
 }
 

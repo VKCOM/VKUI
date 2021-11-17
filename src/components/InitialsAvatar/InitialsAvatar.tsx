@@ -1,4 +1,5 @@
 import { HTMLAttributes } from 'react';
+import { HasRootRef } from '../../types';
 import { classNames } from '../../lib/classNames';
 import Avatar, { AvatarProps, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
 
@@ -19,7 +20,7 @@ export type InitialsAvatarTextGradients =
   | 'blue'
   | 'violet';
 
-export interface InitialsAvatarProps extends HTMLAttributes<HTMLDivElement>, Pick<AvatarProps, 'size'| 'shadow'> {
+export interface InitialsAvatarProps extends HTMLAttributes<HTMLDivElement>, HasRootRef<HTMLDivElement>, Pick<AvatarProps, 'size'| 'shadow'> {
   children?: React.ReactNode;
   gradientColor?: InitialsAvatarTextGradients | InitialsAvatarNumberGradients;
 }
