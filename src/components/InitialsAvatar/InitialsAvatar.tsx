@@ -1,4 +1,4 @@
-import { omit } from '../../lib/utils';
+import { HTMLAttributes } from 'react';
 import { classNames } from '../../lib/classNames';
 import Avatar, { AvatarProps, AVATAR_DEFAULT_SIZE } from '../Avatar/Avatar';
 
@@ -19,8 +19,7 @@ export type InitialsAvatarTextGradients =
   | 'blue'
   | 'violet';
 
-type ForbiddenAvatarProps = 'src' | 'mode';
-export interface InitialsAvatarProps extends Omit<AvatarProps, ForbiddenAvatarProps | 'children'> {
+export interface InitialsAvatarProps extends HTMLAttributes<HTMLDivElement>, Pick<AvatarProps, 'size'| 'shadow'> {
   children?: React.ReactNode;
   gradientColor?: InitialsAvatarTextGradients | InitialsAvatarNumberGradients;
 }
@@ -34,8 +33,6 @@ const COLORS_NUMBER_TO_TEXT_MAP: Record<InitialsAvatarNumberGradients, InitialsA
   6: 'violet',
 };
 
-const FORBIDDEN_AVATAR_PROPS_ARRAY: ForbiddenAvatarProps[] = ['src', 'mode'];
-
 function getInitialsFontSize(avatarSize: number) {
   const calculatedFontSize = Math.ceil(avatarSize * 0.36);
   const evenFix = calculatedFontSize % 2;
@@ -43,22 +40,22 @@ function getInitialsFontSize(avatarSize: number) {
 }
 
 export const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
+  size = AVATAR_DEFAULT_SIZE,
   children,
   gradientColor,
+  style,
   ...restProps
 }: InitialsAvatarProps) => {
   const gradientName = typeof gradientColor === 'string' ? gradientColor : COLORS_NUMBER_TO_TEXT_MAP[gradientColor];
 
-  restProps = omit(restProps, ...FORBIDDEN_AVATAR_PROPS_ARRAY as any);
-
   return (
     <Avatar
       {...restProps}
-      shadow={false}
       style={{
-        ...restProps.style,
-        fontSize: getInitialsFontSize(restProps.size || AVATAR_DEFAULT_SIZE),
+        ...style,
+        fontSize: getInitialsFontSize(size || AVATAR_DEFAULT_SIZE),
       }}
+      size={size}
       vkuiClass={classNames(
         'InitialsAvatar',
         `InitialsAvatar--color-${gradientName}`,

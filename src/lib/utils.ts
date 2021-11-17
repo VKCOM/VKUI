@@ -78,9 +78,3 @@ export function getTitleFromChildren(children: React.ReactNode): string {
 
   return label;
 }
-
-export const omit = <T extends object, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> => {
-  obj = { ...obj };
-  keys.forEach((key) => delete obj[key]);
-  return obj;
-};
