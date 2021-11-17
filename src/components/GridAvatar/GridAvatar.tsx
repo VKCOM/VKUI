@@ -7,7 +7,7 @@ import './GridAvatar.css';
 
 type ForbiddenAvatarProps = 'mode' | 'shadow';
 export interface GridAvatarProps extends Omit<AvatarProps, ForbiddenAvatarProps | 'src'> {
-  src: string[];
+  src?: string[];
 }
 
 const FORBIDDEN_AVATAR_PROPS_ARRAY: ForbiddenAvatarProps[] = ['mode', 'shadow'];
